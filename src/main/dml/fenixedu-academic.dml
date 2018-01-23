@@ -1475,7 +1475,11 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
 
             class accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption extends accounting.events.PenaltyExemption {
             }
-            
+
+            class accounting.events.gratuity.exemption.penalty.FixedAmountPenaltyExemption extends accounting.events.PenaltyExemption {
+                Money value;
+            }
+
         class accounting.events.gratuity.GratuityExemption extends accounting.Exemption {
         }
 
@@ -4457,6 +4461,13 @@ class phd.debts.ExternalScholarshipPhdGratuityContribuitionEvent extends account
 
 class accounting.events.gratuity.ExternalScholarshipGratuityContributionPR extends accounting.PostingRule {}
 
+class accounting.InterestRate {
+    LocalDate start;
+    LocalDate end;
+    BigDecimal value;
+}
+
+
 class phd.debts.ExternalScholarshipPhdGratuityContribuitionPR extends accounting.PostingRule {}
 
 class phd.debts.PhdGratuityExternalScholarshipExemption extends phd.debts.PhdEventExemption{}
@@ -4625,6 +4636,9 @@ public class log.StudentRegistrationTransferLog {
 class candidacy.FirstTimeDocumentsConfiguration {
 	protected JsonElement configurationProperties (REQUIRED);	
 }
+
+
+
 
 /*
  * Relations definitions
@@ -8821,6 +8835,15 @@ relation RootDomainObjectExemptionJustification {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.events.ExemptionJustification playsRole exemptionJustifications {
         multiplicity *;
+    }
+}
+
+relation BennuInterestRate {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
+    		multiplicity 1..1;
+    }
+    accounting.InterestRate playsRole interestRate {
+        multiplicity 0..*;
     }
 }
 

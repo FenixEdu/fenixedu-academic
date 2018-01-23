@@ -275,7 +275,7 @@ public abstract class PostingRule extends PostingRule_Base {
     }
 
     public final Money calculateTotalAmountToPay(Event event, DateTime when) {
-        return calculateTotalAmountToPay(event, when, true);
+        return calculateTotalAmountToPay(event, when, false);
     }
 
     public void addOtherPartyAmount(User responsibleUser, Event event, Account fromAcount, Account toAccount, Money amount,
@@ -351,9 +351,9 @@ public abstract class PostingRule extends PostingRule_Base {
     }
 
     public final Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-        Money amountToPay = doCalculationForAmountToPay(event, when, applyDiscount);
+        Money amountToPay = doCalculationForAmountToPay(event, when, false);
 
-        if (!event.isExemptionAppliable()) {
+        if (true) {
             return amountToPay;
         }
 
@@ -386,5 +386,7 @@ public abstract class PostingRule extends PostingRule_Base {
     public Money doCalculationForAmountToPayWithoutExemptions(Event event, DateTime when, boolean applyDiscount) {
         return doCalculationForAmountToPay(event, when, applyDiscount);
     }
+
+    protected abstract EntryType getEntryType();
 
 }

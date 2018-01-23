@@ -79,6 +79,11 @@ public class ExternalScholarshipPhdGratuityContribuitionPR extends ExternalSchol
     }
 
     @Override
+    protected EntryType getEntryType() {
+        return EntryType.EXTERNAL_SCOLARSHIP_PAYMENT;
+    }
+
+    @Override
     public AccountingTransaction depositAmount(User responsibleUser, Event event, Account fromAcount, Account toAccount,
             Money amount, AccountingTransactionDetailDTO transactionDetailDTO) {
         return depositAmount(responsibleUser, event, fromAcount, toAccount, amount, EntryType.EXTERNAL_SCOLARSHIP_PAYMENT,

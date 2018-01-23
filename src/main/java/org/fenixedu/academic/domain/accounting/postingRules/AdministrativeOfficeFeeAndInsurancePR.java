@@ -176,4 +176,9 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
             throw new DomainException("error.AdministrativeOfficeFeeAndInsurancePR.unsupported.entry.type");
         }
     }
+
+    @Override
+    protected EntryType getEntryType() {
+        return EntryType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE;
+    }
 }

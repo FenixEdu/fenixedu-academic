@@ -100,7 +100,7 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
 
     /**
      * Check gratuity pr.
-     * Check if a posting rule with gratuity event type already exists.
+     * Check if a posting rule with gratuity dueDate type already exists.
      * Such posting rule must exists first because standalone PR is calculated
      * based on grauity PR
      * 

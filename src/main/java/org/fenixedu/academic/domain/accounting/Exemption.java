@@ -22,6 +22,7 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.events.ExemptionJustification;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.LabelFormatter;
+import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
@@ -156,5 +157,7 @@ public abstract class Exemption extends Exemption_Base {
     public boolean isSecondCycleIndividualCandidacyExemption() {
         return false;
     }
+
+    public abstract Money getExemptionAmount(Money money);
 
 }

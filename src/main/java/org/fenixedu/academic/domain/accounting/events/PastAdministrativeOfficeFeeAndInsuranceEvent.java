@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.accounting.events;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -28,6 +29,8 @@ import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Money;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 public class PastAdministrativeOfficeFeeAndInsuranceEvent extends PastAdministrativeOfficeFeeAndInsuranceEvent_Base {
 
@@ -70,4 +73,8 @@ public class PastAdministrativeOfficeFeeAndInsuranceEvent extends PastAdministra
         return isOpen();
     }
 
+    @Override
+    protected Map<LocalDate, Money> getDueDateAmountMap(DateTime when) {
+        return Collections.singletonMap(getDueDateByPaymentCodes().toLocalDate(), getPostingRule().calculateTotalAmountToPay(this, when));
+    }
 }

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -56,6 +57,7 @@ import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
@@ -502,4 +504,19 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
         return getInsuranceExemption() != null;
     }
 
+    
+    @Override
+    protected Map<LocalDate, Money> getDueDateAmountMap(DateTime when) {
+        return Collections.singletonMap(getPossibleDueDate(), getPostingRule().calculateTotalAmountToPay(this, when));
+    }
+
+    private LocalDate getPossibleDueDate() {
+        final YearMonthDay ymd = getAdministrativeOfficeFeePaymentLimitDate();
+        return ymd != null ? ymd.plusDays(1).toDateTimeAtMidnight().toLocalDate() : getDueDateByPaymentCodes().toLocalDate();
+    }
+
+    @Override
+    public Map<LocalDate, Boolean> getDueDatePenaltyExemptionMap(DateTime when) {
+        return Collections.singletonMap(getPossibleDueDate(), hasAdministrativeOfficeFeeAndInsurancePenaltyExemption());
+    }
 }

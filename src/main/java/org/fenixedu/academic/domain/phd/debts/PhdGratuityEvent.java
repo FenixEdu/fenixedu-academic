@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.phd.debts;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -132,6 +133,11 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
     }
 
     @Override
+    public boolean isGratuity() {
+        return true;
+    }
+
+    @Override
     public boolean isTransferable() { return isOpen()  && !hasExternalScholarshipGratuityExemption(); }
 
     public boolean hasExternalScholarshipGratuityExemption() {
@@ -159,5 +165,10 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
     @Override
     public Set<EntryType> getPossibleEntryTypesForDeposit() {
         return Collections.singleton(EntryType.GRATUITY_FEE);
+    }
+
+    @Override
+    protected Map<LocalDate, Money> getDueDateAmountMap(DateTime when) {
+        return Collections.singletonMap(getLimitDateToPay().toLocalDate(), getPostingRule().calculateTotalAmountToPay(this, when));
     }
 }

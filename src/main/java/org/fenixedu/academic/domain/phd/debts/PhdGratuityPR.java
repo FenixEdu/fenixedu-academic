@@ -182,4 +182,8 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
         getPhdGratuityPaymentPeriodsSet().clear();
     }
 
+    @Override
+    protected EntryType getEntryType() {
+        return EntryType.PHD_GRATUITY_FEE;
+    }
 }

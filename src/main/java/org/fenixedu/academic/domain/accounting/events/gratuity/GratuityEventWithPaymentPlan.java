@@ -22,7 +22,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionDegree;
@@ -553,4 +555,21 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
         return true;
     }
 
+    @Override
+    protected Map<LocalDate, Money> getDueDateAmountMap(DateTime when) {
+        return getGratuityPaymentPlan().getInstallmentsSet().stream()
+//                   .filter(i -> !i.getEndDate(event).isAfter(when.toLocalDate()))
+                   .collect(Collectors.toMap(i -> i.getEndDate(this), i -> i.calculateBaseAmount(this)));
+    }
+
+    @Override
+    public Map<LocalDate, Boolean> getDueDatePenaltyExemptionMap(DateTime when) {
+            return getPenaltyExemptionsFor(InstallmentPenaltyExemption.class).stream().map(InstallmentPenaltyExemption.class::cast)
+                       .collect(Collectors.toMap(p1 -> p1.getInstallment().getEndDate(this), p -> Boolean.FALSE));
+    }
+
+    @Override
+    public PaymentPlan getPaymentPlan() {
+        return getGratuityPaymentPlan();
+    }
 }

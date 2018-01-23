@@ -18,6 +18,8 @@
  */
 package org.fenixedu.academic.domain.phd.debts;
 
+import java.util.Map;
+
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.Exemption;
@@ -25,7 +27,10 @@ import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdProgram;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
+import edu.emory.mathcs.backport.java.util.Collections;
 import pt.ist.fenixframework.Atomic;
 
 public class PhdRegistrationFee extends PhdRegistrationFee_Base {
@@ -100,4 +105,8 @@ public class PhdRegistrationFee extends PhdRegistrationFee_Base {
         return getProcess();
     }
 
+    @Override
+    public Map<LocalDate, Boolean> getDueDatePenaltyExemptionMap(DateTime when) {
+        return Collections.singletonMap(getDueDateByPaymentCodes().toLocalDate(), hasPhdRegistrationFeePenaltyExemption());
+    }
 }

@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.domain.accounting.postingRules;
 
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
@@ -45,10 +46,14 @@ public abstract class FixedAmountWithPenaltyPR extends FixedAmountWithPenaltyPR_
         }
     }
 
+    protected boolean isToApplyPenalty(Event event, DateTime when) {
+        return !FenixEduAcademicConfiguration.isToUseGlobalInterestRateTableForEventPenalties(event) && hasPenalty(event, when);
+    }
+
     @Override
     protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
         return super.doCalculationForAmountToPay(event, when, applyDiscount).add(
-                hasPenalty(event, when) ? getFixedAmountPenalty() : Money.ZERO);
+            isToApplyPenalty(event, when) ? getFixedAmountPenalty() : Money.ZERO);
     }
 
     @Override

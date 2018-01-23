@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain.accounting.installments;
 
 import java.math.BigDecimal;
 
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.PaymentPlan;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -49,10 +50,14 @@ public abstract class InstallmentWithPenalty extends InstallmentWithPenalty_Base
         }
     }
 
+    private boolean isToApplyPenalty(Event event, boolean applyPenalty) {
+        return !FenixEduAcademicConfiguration.isToUseGlobalInterestRateTableForEventPenalties(event) && applyPenalty;
+    }
+
     @Override
     public Money calculateAmount(Event event, DateTime when, BigDecimal discountPercentage, boolean applyPenalty) {
         return super.calculateAmount(event, when, discountPercentage, applyPenalty).add(
-                (applyPenalty ? calculatePenaltyAmount(event, when, discountPercentage) : Money.ZERO));
+                (isToApplyPenalty(event, applyPenalty) ? calculatePenaltyAmount(event, when, discountPercentage) : Money.ZERO));
     }
 
     abstract protected Money calculatePenaltyAmount(Event event, DateTime when, BigDecimal discountPercentage);

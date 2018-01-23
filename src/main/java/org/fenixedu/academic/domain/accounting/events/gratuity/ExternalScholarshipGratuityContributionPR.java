@@ -89,4 +89,9 @@ public class ExternalScholarshipGratuityContributionPR extends ExternalScholarsh
     public boolean isVisible() {
         return false;
     }
+
+    @Override
+    protected EntryType getEntryType() {
+        return EntryType.EXTERNAL_SCOLARSHIP_PAYMENT;
+    }
 }

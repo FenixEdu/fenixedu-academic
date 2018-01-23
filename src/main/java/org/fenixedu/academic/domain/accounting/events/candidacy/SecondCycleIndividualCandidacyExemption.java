@@ -23,6 +23,7 @@ import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.accounting.events.ExemptionJustification;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
@@ -87,5 +88,10 @@ public class SecondCycleIndividualCandidacyExemption extends SecondCycleIndividu
     @Override
     public boolean isSecondCycleIndividualCandidacyExemption() {
         return true;
+    }
+
+    @Override
+    public Money getExemptionAmount(Money money) {
+        return money;
     }
 }

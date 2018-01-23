@@ -22,6 +22,7 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -72,6 +73,11 @@ abstract public class PenaltyExemption extends PenaltyExemption_Base {
     @Override
     public boolean isPenaltyExemption() {
         return true;
+    }
+
+    @Override
+    public Money getExemptionAmount(Money money) {
+        return money;
     }
 
 }

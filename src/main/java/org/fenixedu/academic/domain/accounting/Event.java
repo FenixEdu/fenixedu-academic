@@ -18,16 +18,22 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.events.PenaltyExemption;
@@ -38,6 +44,7 @@ import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
+import org.fenixedu.academic.dto.accounting.EntryWithInstallmentDTO;
 import org.fenixedu.academic.dto.accounting.SibsTransactionDetailDTO;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
@@ -112,8 +119,7 @@ public abstract class Event extends Event_Base {
 
     @Override
     public EventState getEventState() {
-        throw new DomainException(
-                "error.org.fenixedu.academic.domain.accounting.Event.dot.not.call.this.method.directly.use.isInState.instead");
+        throw new DomainException("error.org.fenixedu.academic.domain.accounting.Event.dot.not.call.this.method.directly.use.isInState.instead");
     }
 
     protected EventState getCurrentEventState() {
@@ -124,8 +130,7 @@ public abstract class Event extends Event_Base {
         return super.getEventState() == eventState;
     }
 
-    public final Set<Entry> process(final User responsibleUser, final Collection<EntryDTO> entryDTOs,
-            final AccountingTransactionDetailDTO transactionDetail) {
+    public final Set<Entry> process(final User responsibleUser, final Collection<EntryDTO> entryDTOs, final AccountingTransactionDetailDTO transactionDetail) {
         if (entryDTOs.isEmpty()) {
             throw new DomainException("error.accounting.Event.process.requires.entries.to.be.processed");
         }
@@ -140,8 +145,7 @@ public abstract class Event extends Event_Base {
 
     }
 
-    public final Set<Entry> process(final User responsibleUser, final AccountingEventPaymentCode paymentCode,
-            final Money amountToPay, final SibsTransactionDetailDTO transactionDetailDTO) {
+    public final Set<Entry> process(final User responsibleUser, final AccountingEventPaymentCode paymentCode, final Money amountToPay, final SibsTransactionDetailDTO transactionDetailDTO) {
 
         checkConditionsToProcessEvent(transactionDetailDTO);
 
@@ -163,8 +167,7 @@ public abstract class Event extends Event_Base {
         return transactionDetail instanceof SibsTransactionDetailDTO;
     }
 
-    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
-            SibsTransactionDetailDTO transactionDetail) {
+    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay, SibsTransactionDetailDTO transactionDetail) {
 
         throw new UnsupportedOperationException("error.org.fenixedu.academic.domain.accounting.Event.operation.not.supported");
     }
@@ -398,17 +401,14 @@ public abstract class Event extends Event_Base {
 
     public Money getMaxDeductableAmountForLegalTaxes(final int civilYear) {
         if (isCancelled()) {
-            throw new DomainException(
-                    "error.accounting.Event.cannot.calculate.max.deductable.amount.for.legal.taxes.on.invalid.events");
+            throw new DomainException("error.accounting.Event.cannot.calculate.max.deductable.amount.for.legal.taxes.on.invalid.events");
         }
 
         if (isOpen() || !hasEventCloseDate()) {
             return calculatePayedAmountByPersonFor(civilYear);
         }
 
-        final Money maxAmountForCivilYear =
-                calculateTotalAmountToPay(getEventCloseDate()).subtract(getPayedAmountUntil(civilYear - 1)).subtract(
-                        calculatePayedAmountByOtherPartiesFor(civilYear));
+        final Money maxAmountForCivilYear = calculateTotalAmountToPay(getEventCloseDate()).subtract(getPayedAmountUntil(civilYear - 1)).subtract(calculatePayedAmountByOtherPartiesFor(civilYear));
 
         if (maxAmountForCivilYear.isPositive()) {
             final Money payedAmoutForPersonOnCivilYear = calculatePayedAmountByPersonFor(civilYear);
@@ -465,8 +465,7 @@ public abstract class Event extends Event_Base {
 
     public final void recalculateState(final DateTime whenRegistered) {
         if (isCancelled()) {
-            throw new DomainException(
-                    "error.org.fenixedu.academic.domain.accounting.Event.cannot.recalculate.state.on.cancelled.events");
+            throw new DomainException("error.org.fenixedu.academic.domain.accounting.Event.cannot.recalculate.state.on.cancelled.events");
         }
 
         internalRecalculateState(whenRegistered);
@@ -510,7 +509,7 @@ public abstract class Event extends Event_Base {
     /**
      * Returns the total amount less the amount already paid. In other others
      * returns the debt due to this event (if positive)
-     * 
+     *
      * @param whenRegistered
      * @return
      */
@@ -527,9 +526,217 @@ public abstract class Event extends Event_Base {
 
     }
 
-    private Money calculateTotalAmountToPay(DateTime whenRegistered) {
-        return getPostingRule().calculateTotalAmountToPay(this, whenRegistered);
+    public PaymentPlan getPaymentPlan() {
+        return null;
     }
+
+    private class CashFlowBox {
+        public Money interest;
+        public DateTime when;
+        public Money amount;
+        public DateTime currentTransactionDate;
+        public List<AccountingTransaction> transactions;
+        public Money exemptionValue;
+        public Event event;
+        public LocalDate dueDate;
+        public Money discountValue;
+        public boolean usedDiscountValue;
+        private Money discountedValue;
+        private boolean isToApplyPenalty;
+
+        public CashFlowBox(final Event event, final DateTime when) {
+            this.event = event;
+            this.transactions = new ArrayList<>(this.event.getSortedNonAdjustingTransactions());
+            this.when = when;
+            this.exemptionValue = Money.ZERO;
+            this.discountValue = this.event.getTotalDiscount();
+            this.discountedValue = Money.ZERO;
+            this.interest = Money.ZERO;
+            this.usedDiscountValue = false;
+            this.isToApplyPenalty = Boolean.TRUE;
+
+            if (transactions.isEmpty()) {
+                this.amount = Money.ZERO;
+                this.currentTransactionDate = when;
+            } else {
+                final AccountingTransaction transaction = transactions.remove(0);
+                this.amount = transaction.getAmountWithAdjustment();
+                this.currentTransactionDate = transaction.getWhenRegistered();
+            }
+
+        }
+
+        public boolean hasInterest() {
+            return interest.isPositive();
+        }
+
+        private boolean hasMoneyFor(final Money amount) {
+            return this.amount.greaterOrEqualThan(amount);
+        }
+
+        private boolean hasDiscountValue() {
+            return this.discountValue.isPositive();
+        }
+
+        public boolean subtractMoneyFor(final Money installmentOriginalAmount) {
+
+            if (hasDiscountValue() && this.discountValue.greaterOrEqualThan(installmentOriginalAmount)) {
+                usedDiscountValue = true;
+                this.discountValue = this.discountValue.subtract(installmentOriginalAmount);
+                return true;
+            }
+
+            Money installmentAmount = internalCalculateAmount(installmentOriginalAmount, this.currentTransactionDate, this.exemptionValue);
+
+            if (hasDiscountValue()) {
+                installmentAmount = installmentAmount.subtract(this.discountValue);
+                this.discountedValue = this.discountValue;
+            }
+
+            if (hasMoneyFor(installmentAmount)) {
+                this.amount = this.amount.subtract(installmentAmount);
+                this.discountValue = Money.ZERO;
+                return true;
+            }
+
+            if (this.transactions.isEmpty()) {
+                return false;
+            }
+
+            final AccountingTransaction transaction = this.transactions.remove(0);
+            this.amount = this.amount.add(transaction.getAmountWithAdjustment());
+            this.currentTransactionDate = transaction.getWhenRegistered();
+
+            return subtractMoneyFor(installmentOriginalAmount);
+        }
+
+        private Money internalCalculateAmount(Money installmentOriginalAmount, DateTime currentTransactionDate, Money exemptionAmount) {
+            Money amount = installmentOriginalAmount.subtract(exemptionAmount);
+
+            if (!amount.isPositive()) {
+                return Money.ZERO;
+            }
+
+            DateTime dueDateValue = dueDate.toDateTimeAtStartOfDay();
+
+            if (isToApplyPenalty && currentTransactionDate.isAfter(dueDateValue) && FenixEduAcademicConfiguration.isToUseGlobalInterestRateTableForEventPenalties(this.event)) {
+                this.interest = this.interest.add(InterestRate.getInterest(dueDate, amount, currentTransactionDate.toLocalDate()));
+            }
+
+            return amount;
+        }
+
+        private Money calculateAmount(Money installmentOriginalAmount, DateTime currentTransactionDate, Money exemptionAmount) {
+            final Money amount = installmentOriginalAmount.subtract(exemptionAmount);
+            if (amount.isNegative()) {
+                return Money.ZERO;
+            }
+            return amount;
+        }
+
+        public Money subtractRemainingFor(final Money installmentOriginalAmount) {
+                final Money result =
+                    internalCalculateAmount(installmentOriginalAmount,this.when, this.exemptionValue).subtract(this.discountValue).subtract(this.amount);
+                this.amount = this.exemptionValue = Money.ZERO; this.discountValue = Money.ZERO;
+                return result;
+        }
+
+        public Money calculateTotalAmountFor(final Money installmentOriginalAmount) {
+            final Money result;
+            if (subtractMoneyFor(installmentOriginalAmount)) {
+                if (usedDiscountValue) {
+                    result = Money.ZERO;
+                } else {
+                    result = calculateAmount(installmentOriginalAmount, this.currentTransactionDate, this.exemptionValue).subtract(this.discountedValue);
+                    this.discountedValue = Money.ZERO;
+                }
+            } else {
+                result = calculateAmount(installmentOriginalAmount, this.when, this.exemptionValue).subtract(this.discountedValue);
+                this.discountedValue = Money.ZERO;
+            }
+            usedDiscountValue = false;
+            return result;
+        }
+
+        public void setDueDateExemptionValueIsToApplyPenalty(LocalDate dueDate, Money exemptionValue, Boolean isToApplyPenalty) {
+            this.dueDate = dueDate;
+            this.exemptionValue = exemptionValue;
+            this.isToApplyPenalty = isToApplyPenalty;
+        }
+
+        public void resetInterest() {
+            this.interest = Money.ZERO;
+        }
+
+        public Money getInterest() {
+            return interest;
+        }
+    }
+
+    /**
+     * Should return entries representing the due date and the corresponding amount
+     *
+     * @return plot entry for the total amount divided by plot
+     */
+    protected Map<LocalDate, Money> getDueDateAmountMap(DateTime when) {
+        return Collections.singletonMap(getDueDateByPaymentCodes().toLocalDate(), getPostingRule().doCalculationForAmountToPay(this, when ,false));
+    }
+
+    public Map<LocalDate,Boolean> getDueDatePenaltyExemptionMap(DateTime when) {
+        return new HashMap<>();
+    }
+
+    private Money calculateTotalAmountToPay(DateTime whenRegistered) {
+        Map<LocalDate, Money> dueDateAmountMap = getDueDateAmountMap(whenRegistered);
+        Money baseAmount = dueDateAmountMap.values().stream().reduce(Money.ZERO, Money::add);
+
+//        final LocalDate localDate = dueDateAmountMap.entrySet().stream()
+//                                        .max(Map.Entry.comparingByKey())
+//                                        .map(Map.Entry::getKey)
+//                                        .orElseThrow(() -> new UnsupportedOperationException(String.format("event without debts: %s%n", getExternalId())));
+//
+//        LocalDate tmp = null;
+//        if (whenRegistered.isAfter(localDate.plusDays(1).toDateTimeAtStartOfDay())) {
+//            tmp = localDate;
+//        }
+//
+//        final LocalDate dueDate = tmp;
+        Map<LocalDate, Boolean> dueDatePenaltyExemptionMap = getDueDatePenaltyExemptionMap(whenRegistered);
+        Map<LocalDate, Money> dueDateExemptionMap = getExemptionValue(dueDateAmountMap, baseAmount);
+
+        CashFlowBox cashFlowBox = new CashFlowBox(this, whenRegistered);
+        return dueDateAmountMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(e -> {
+            cashFlowBox.setDueDateExemptionValueIsToApplyPenalty(e.getKey(), dueDateExemptionMap.getOrDefault(e.getKey(), Money.ZERO), dueDatePenaltyExemptionMap.getOrDefault(e.getKey(), Boolean.TRUE));
+            return cashFlowBox.calculateTotalAmountFor(e.getValue());
+        }).reduce(Money::add).orElse(Money.ZERO).add(cashFlowBox.interest);
+    }
+
+    private Map<LocalDate, Money> getExemptionValue(Map<LocalDate, Money> dueDateAmountMap, Money baseAmount) {
+        Money totalExemptionValue =
+            getExemptionsSet()
+                .stream()
+                .filter(e -> !(e instanceof PenaltyExemption))
+                .map(e -> e.getExemptionAmount(baseAmount))
+                .reduce(Money::add)
+                .orElse(Money.ZERO);
+
+        final Map<LocalDate, Money> dueDateExemptionMap = new HashMap<>();
+
+        if (totalExemptionValue.isZero()) {
+            return dueDateExemptionMap;
+        }
+
+        BigDecimal decimalTotalAmount = totalExemptionValue.getAmount();
+
+        dueDateAmountMap.forEach((date, amount) -> {
+            final BigDecimal decimalAmount = amount.getAmount();
+            dueDateExemptionMap.put(date, new Money(decimalAmount.divide(baseAmount.getAmount(), 6, RoundingMode.HALF_UP).multiply(decimalTotalAmount)));
+        });
+        
+        return dueDateExemptionMap;
+        //return new Money(totalExemptionValue.getAmount().divide(new BigDecimal(numberOfInstallments), 6, RoundingMode.HALF_UP));
+    }
+
 
     public Money getAmountToPay() {
         return calculateAmountToPay(new DateTime());
@@ -554,7 +761,76 @@ public abstract class Event extends Event_Base {
     }
 
     public List<EntryDTO> calculateEntries(DateTime when) {
-        return getPostingRule().calculateEntries(this, when);
+        final List<EntryDTO> result = new ArrayList<EntryDTO>();
+//        Money baseAmount = getPostingRule().doCalculationForAmountToPay(this, getWhenOccured().plusSeconds(1), false);
+        Map<LocalDate, Money> dueDateAmountMap = getDueDateAmountMap(when);
+
+        Money baseAmount = getDueDateAmountMap(when).values().stream().reduce(Money.ZERO, Money::add);
+
+        Map<LocalDate, Money> dueDateExemptionMap = getExemptionValue(dueDateAmountMap, baseAmount);
+        Map<LocalDate, Boolean> dueDatePenaltyExemptionMap = getDueDatePenaltyExemptionMap(when);
+
+        CashFlowBox cashFlowBox = new CashFlowBox(this, when);
+        Map<LocalDate, Money> amountsByInstallment = new HashMap<>();
+        Map<LocalDate, Money> interestByInstallment = new HashMap<>();
+
+        final EntryType entryType = getPostingRule().getEntryType();
+
+        dueDateAmountMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
+            cashFlowBox.setDueDateExemptionValueIsToApplyPenalty(entry.getKey(), dueDateExemptionMap.getOrDefault(entry.getKey(), Money.ZERO), dueDatePenaltyExemptionMap.getOrDefault(entry.getKey(), Boolean.TRUE));
+            boolean subtractMoneyFor = cashFlowBox.subtractMoneyFor(entry.getValue());
+            if (!subtractMoneyFor || cashFlowBox.hasInterest()) {
+                if (cashFlowBox.hasInterest()) {
+                    interestByInstallment.put(entry.getKey(), cashFlowBox.getInterest());
+                    cashFlowBox.resetInterest();
+                }
+                if (!subtractMoneyFor) {
+                    amountsByInstallment.put(entry.getKey(), cashFlowBox.subtractRemainingFor(entry.getValue()));
+                }
+            }
+        });
+
+        dueDateAmountMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
+            Money installmentAmount = amountsByInstallment.get(entry.getKey());
+            Money interestAmount = Optional.ofNullable(interestByInstallment.get(entry.getKey())).orElse(Money.ZERO);
+
+            if (installmentAmount != null && installmentAmount.isPositive()) {
+                EntryDTO bean = null;
+
+                PaymentPlan paymentPlan = getPaymentPlan();
+
+                if (paymentPlan != null) {
+                    Installment installment = paymentPlan.getInstallmentsSet().stream().filter(i -> i.getEndDate(this).equals(entry.getKey())).findAny().orElse(null);
+                    if (installment != null) {
+                        bean = new EntryWithInstallmentDTO(entryType, this, installmentAmount, getDescriptionForEntryType(entryType), installment);
+                    }
+                }
+
+                if (bean == null) {
+                    Money debtAmount = calculateAmountToPay(when).subtract(interestAmount);
+                    if (debtAmount.isPositive()) {
+                        bean = new EntryDTO(entryType, this, installmentAmount, getPayedAmount(when), debtAmount, getDescriptionForEntryType(entryType), debtAmount);
+                    }
+                }
+
+                if (bean != null) {
+                    result.add(bean);
+                }
+            }
+        });
+
+        // add interest entry
+
+        Money totalInterest = interestByInstallment.values().stream().reduce(Money.ZERO, Money::add);
+        if (totalInterest.isPositive()) {
+                EntryDTO e = new EntryDTO(entryType, this, totalInterest);
+                LabelFormatter descriptionForEntryType = getDescriptionForEntryType(entryType);
+                descriptionForEntryType.appendLabel(" / Juros");
+                e.setDescription(descriptionForEntryType);
+                result.add(e);
+        }
+
+        return result;
     }
 
     public void open() {
@@ -607,8 +883,7 @@ public abstract class Event extends Event_Base {
 
     }
 
-    protected Set<Entry> internalProcess(User responsibleUser, Collection<EntryDTO> entryDTOs,
-            AccountingTransactionDetailDTO transactionDetail) {
+    protected Set<Entry> internalProcess(User responsibleUser, Collection<EntryDTO> entryDTOs, AccountingTransactionDetailDTO transactionDetail) {
         return getPostingRule().process(responsibleUser, entryDTOs, this, getFromAccount(), getToAccount(), transactionDetail);
     }
 
@@ -766,33 +1041,26 @@ public abstract class Event extends Event_Base {
         return false;
     }
 
-    public final void addOtherPartyAmount(User responsibleUser, Party party, Money amount,
-            AccountingTransactionDetailDTO transactionDetailDTO) {
+    public final void addOtherPartyAmount(User responsibleUser, Party party, Money amount, AccountingTransactionDetailDTO transactionDetailDTO) {
 
-        getPostingRule().addOtherPartyAmount(responsibleUser, this, party.getAccountBy(AccountType.EXTERNAL), getToAccount(),
-                amount, transactionDetailDTO);
+        getPostingRule().addOtherPartyAmount(responsibleUser, this, party.getAccountBy(AccountType.EXTERNAL), getToAccount(), amount, transactionDetailDTO);
 
         recalculateState(transactionDetailDTO.getWhenRegistered());
     }
 
-    public final AccountingTransaction depositAmount(final User responsibleUser, final Money amount,
-            final AccountingTransactionDetailDTO transactionDetailDTO) {
+    public final AccountingTransaction depositAmount(final User responsibleUser, final Money amount, final AccountingTransactionDetailDTO transactionDetailDTO) {
 
-        final AccountingTransaction result =
-                getPostingRule().depositAmount(responsibleUser, this, getParty().getAccountBy(AccountType.EXTERNAL),
-                        getToAccount(), amount, transactionDetailDTO);
+        final AccountingTransaction result = getPostingRule().depositAmount(responsibleUser, this, getParty().getAccountBy(AccountType.EXTERNAL), getToAccount(), amount, transactionDetailDTO);
 
         recalculateState(transactionDetailDTO.getWhenRegistered());
 
         return result;
     }
 
-    public final AccountingTransaction depositAmount(final User responsibleUser, final Money amount, final EntryType entryType,
-            final AccountingTransactionDetailDTO transactionDetailDTO) {
+    public final AccountingTransaction depositAmount(final User responsibleUser, final Money amount, final EntryType entryType, final AccountingTransactionDetailDTO transactionDetailDTO) {
 
         final AccountingTransaction result =
-                getPostingRule().depositAmount(responsibleUser, this, getParty().getAccountBy(AccountType.EXTERNAL),
-                        getToAccount(), amount, entryType, transactionDetailDTO);
+            getPostingRule().depositAmount(responsibleUser, this, getParty().getAccountBy(AccountType.EXTERNAL), getToAccount(), amount, entryType, transactionDetailDTO);
 
         recalculateState(transactionDetailDTO.getWhenRegistered());
 
@@ -867,8 +1135,7 @@ public abstract class Event extends Event_Base {
 
     protected void checkRulesToDelete() {
         if (isClosed() || !getNonAdjustingTransactions().isEmpty()) {
-            throw new DomainException(
-                    "error.accounting.Event.cannot.delete.because.event.is.already.closed.or.has.transactions.associated");
+            throw new DomainException("error.accounting.Event.cannot.delete.because.event.is.already.closed.or.has.transactions.associated");
 
         }
     }
@@ -972,13 +1239,11 @@ public abstract class Event extends Event_Base {
 
         for (final Entry entryToTransfer : getPositiveEntries()) {
 
-            final AccountingTransactionDetailDTO transactionDetail =
-                    createAccountingTransactionDetailForTransfer(entryToTransfer.getAccountingTransaction());
+            final AccountingTransactionDetailDTO transactionDetail = createAccountingTransactionDetailForTransfer(entryToTransfer.getAccountingTransaction());
 
             targetEvent.depositAmount(responsible.getUser(), entryToTransfer.getAmountWithAdjustment(), transactionDetail);
 
-            entryToTransfer.getAccountingTransaction().reimburseWithoutRules(responsible.getUser(), PaymentMode.CASH,
-                    entryToTransfer.getAmountWithAdjustment());
+            entryToTransfer.getAccountingTransaction().reimburseWithoutRules(responsible.getUser(), PaymentMode.CASH, entryToTransfer.getAmountWithAdjustment());
         }
 
         cancel(responsible, justification);
@@ -995,18 +1260,14 @@ public abstract class Event extends Event_Base {
         }
 
         if (this == targetEvent) {
-            throw new DomainException(
-                    "error.org.fenixedu.academic.domain.accounting.Event.target.event.must.be.different.from.source");
+            throw new DomainException("error.org.fenixedu.academic.domain.accounting.Event.target.event.must.be.different.from.source");
         }
     }
 
     private AccountingTransactionDetailDTO createAccountingTransactionDetailForTransfer(final AccountingTransaction transaction) {
-        final String comments =
-                transaction.getEvent().getClass().getName() + ":" + transaction.getEvent().getExternalId() + ","
-                        + transaction.getClass().getName() + ":" + transaction.getExternalId();
+        final String comments = transaction.getEvent().getClass().getName() + ":" + transaction.getEvent().getExternalId() + "," + transaction.getClass().getName() + ":" + transaction.getExternalId();
 
-        return new AccountingTransactionDetailDTO(transaction.getTransactionDetail().getWhenRegistered(), PaymentMode.CASH,
-                comments);
+        return new AccountingTransactionDetailDTO(transaction.getTransactionDetail().getWhenRegistered(), PaymentMode.CASH, comments);
 
     }
 
@@ -1086,19 +1347,25 @@ public abstract class Event extends Event_Base {
         return false;
     }
 
-    public boolean isTransferable() { return false; }
+    public boolean isTransferable() {
+        return false;
+    }
 
     public abstract Unit getOwnerUnit();
 
     public SortedSet<AccountingTransaction> getSortedTransactionsForPresentation() {
-        final SortedSet<AccountingTransaction> result =
-                new TreeSet<AccountingTransaction>(AccountingTransaction.COMPARATOR_BY_WHEN_REGISTERED);
+        final SortedSet<AccountingTransaction> result = new TreeSet<AccountingTransaction>(AccountingTransaction.COMPARATOR_BY_WHEN_REGISTERED);
         result.addAll(getAdjustedTransactions());
         return result;
     }
 
     public Person getPerson() {
         return (Person) getParty();
+    }
+
+    public DateTime getDueDateByPaymentCodes() {
+        final YearMonthDay ymd = getPaymentCodesSet().stream().map(PaymentCode::getEndDate).max(YearMonthDay::compareTo).orElse(null);
+        return ymd != null ? ymd.plusDays(1).toDateTimeAtMidnight() : getWhenOccured();
     }
 
 }
