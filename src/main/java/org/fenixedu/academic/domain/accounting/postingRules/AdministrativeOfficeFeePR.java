@@ -18,26 +18,20 @@
  */
 package org.fenixedu.academic.domain.accounting.postingRules;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
-import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
-import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
-import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsurancePenaltyExemption;
+import org.fenixedu.academic.domain.accounting.events.administrativeOfficeFee.IAdministrativeOfficeFeeEvent;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base {
+public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base implements IAdministrativeOfficeFeeAndInsurancePR {
 
     protected AdministrativeOfficeFeePR() {
         super();
@@ -52,40 +46,14 @@ public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base {
     }
 
     @Override
-    protected boolean hasPenalty(Event event, DateTime when) {
-        if (event.hasAnyPenaltyExemptionsFor(AdministrativeOfficeFeeAndInsurancePenaltyExemption.class)) {
-            return false;
-        }
-
-        final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent =
-                (AdministrativeOfficeFeeAndInsuranceEvent) event;
+    protected Optional<LocalDate> getPenaltyDueDate(Event event) {
+        final IAdministrativeOfficeFeeEvent administrativeOfficeFeeEvent = (IAdministrativeOfficeFeeEvent) event;
 
         final YearMonthDay paymentEndDate =
-                administrativeOfficeFeeAndInsuranceEvent.getPaymentEndDate() != null ? administrativeOfficeFeeAndInsuranceEvent
-                        .getPaymentEndDate() : getWhenToApplyFixedAmountPenalty();
+            administrativeOfficeFeeEvent.getPaymentEndDate() != null ? administrativeOfficeFeeEvent
+                                                                                       .getPaymentEndDate() : getWhenToApplyFixedAmountPenalty();
 
-        final Money amountPayedUntilEndDate =
-                calculateAmountPayedUntilEndDate(administrativeOfficeFeeAndInsuranceEvent, paymentEndDate);
-
-        if (!when.toYearMonthDay().isAfter(paymentEndDate)) {
-            return false;
-        }
-
-        return amountPayedUntilEndDate.lessThan(getFixedAmount());
-
-    }
-
-    private Money calculateAmountPayedUntilEndDate(AdministrativeOfficeFeeAndInsuranceEvent event, YearMonthDay paymentEndDate) {
-        Money result = Money.ZERO;
-
-        for (final AccountingTransaction transaction : event.getNonAdjustingTransactions()) {
-            if (transaction.getToAccountEntry().getEntryType() == getEntryType()
-                    && !transaction.getWhenRegistered().toYearMonthDay().isAfter(paymentEndDate)) {
-                result = result.add(transaction.getAmountWithAdjustment());
-            }
-        }
-
-        return result;
+        return Optional.of(paymentEndDate.toLocalDate());
     }
 
     public AdministrativeOfficeFeePR edit(DateTime startDate, Money fixedAmount, Money penaltyAmount,
@@ -103,40 +71,22 @@ public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base {
     }
 
     @Override
-    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-        if (!applyDiscount) {
-            return amountToPay;
-        }
-
-        final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent =
-                (AdministrativeOfficeFeeAndInsuranceEvent) event;
-        return administrativeOfficeFeeAndInsuranceEvent.hasAdministrativeOfficeFeeAndInsuranceExemption() ? Money.ZERO : amountToPay;
+    public YearMonthDay getAdministrativeOfficeFeePaymentLimitDate(DateTime startDate, DateTime endDate) {
+        return getWhenToApplyFixedAmountPenalty();
     }
 
     @Override
-    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-        final List<EntryDTO> result = new ArrayList<EntryDTO>(super.calculateEntries(event, when));
-        Map<EntryType, Money> payedAmounts = new HashMap<EntryType, Money>();
-        final Iterator<EntryDTO> iterator = result.iterator();
-        while (iterator.hasNext()) {
-            final EntryDTO entryDTO = iterator.next();
-            Money payedAmount = payedAmounts.get(entryDTO.getEntryType());
-            if (payedAmount == null) {
-                payedAmount = event.getPayedAmountFor(entryDTO.getEntryType());
-            }
-            entryDTO.setAmountToPay(entryDTO.getAmountToPay().subtract(payedAmount));
-            if (!entryDTO.getAmountToPay().isPositive()) {
-                iterator.remove();
-                payedAmount = entryDTO.getAmountToPay().abs();
-                payedAmounts.put(entryDTO.getEntryType(), payedAmount);
-            } else {
-                payedAmounts.put(entryDTO.getEntryType(), Money.ZERO);
-                entryDTO.setPayedAmount(payedAmount);
-                entryDTO.setDebtAmount(entryDTO.getAmountToPay());
-            }
-        }
-
-        return result;
+    public Money getInsuranceAmount(DateTime startDate, DateTime endDate) {
+        return Money.ZERO;
     }
 
+    @Override
+    public Money getAdministrativeOfficeFeeAmount(Event event, DateTime startDate, DateTime endDate) {
+        return getFixedAmount();
+    }
+
+    @Override
+    public Money getAdministrativeOfficeFeePenaltyAmount(Event event, DateTime startDate, DateTime endDate) {
+        return getFixedAmountPenalty();
+    }
 }

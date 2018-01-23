@@ -22,6 +22,7 @@ import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.PaymentMode;
 import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
 import org.fenixedu.academic.dto.accounting.DepositAmountBean;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -29,13 +30,11 @@ public class DepositAmountOnEvent {
 
     @Atomic
     public static AccountingTransaction run(final DepositAmountBean depositAmountBean) {
-        return depositAmountBean.getEvent().depositAmount(
-                null,
+        return depositAmountBean.getEvent().depositAmount(Authenticate.getUser(),
                 depositAmountBean.getAmount(),
                 depositAmountBean.getEntryType(),
                 new AccountingTransactionDetailDTO(depositAmountBean.getWhenRegistered(), PaymentMode.CASH, depositAmountBean
                         .getReason()));
-
     }
 
 }

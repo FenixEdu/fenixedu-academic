@@ -64,7 +64,9 @@ public enum PaymentCodeType {
 
     SPECIAL_SEASON_ENROLMENT(24),
 
-    RECTORATE(99);
+    RECTORATE(99),
+
+    EVENT(22222); // this type digit is not used
 
     private int typeDigit;
 

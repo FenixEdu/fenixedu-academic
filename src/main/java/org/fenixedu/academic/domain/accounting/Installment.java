@@ -132,7 +132,7 @@ public class Installment extends Installment_Base {
         return calculateBaseAmount(event).multiply(BigDecimal.ONE.subtract(discountPercentage));
     }
 
-    protected Money calculateBaseAmount(Event event) {
+    public Money calculateBaseAmount(Event event) {
         return getAmount();
     }
 

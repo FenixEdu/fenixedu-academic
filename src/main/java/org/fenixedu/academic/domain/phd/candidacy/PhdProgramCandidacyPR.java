@@ -19,7 +19,6 @@
 package org.fenixedu.academic.domain.phd.candidacy;
 
 import org.fenixedu.academic.domain.accounting.EntryType;
-import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.util.Money;
@@ -42,16 +41,6 @@ public class PhdProgramCandidacyPR extends PhdProgramCandidacyPR_Base {
     public PhdProgramCandidacyPR edit(final Money amount) {
         deactivate();
         return new PhdProgramCandidacyPR(getServiceAgreementTemplate(), new DateTime().minus(1000), null, amount);
-    }
-
-    @Override
-    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-        final PhdProgramCandidacyEvent candidacyEvent = (PhdProgramCandidacyEvent) event;
-        if (candidacyEvent.hasPhdEventExemption()) {
-            amountToPay = amountToPay.subtract(candidacyEvent.getPhdEventExemption().getValue());
-        }
-
-        return amountToPay.isPositive() ? amountToPay : Money.ZERO;
     }
 
 }

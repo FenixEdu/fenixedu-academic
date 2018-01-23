@@ -36,6 +36,7 @@ import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.Qualification;
 import org.fenixedu.academic.domain.QualificationType;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
@@ -311,10 +312,8 @@ public class UTLScholarshipReportBeanFromRegistration implements Serializable, I
 
         StudentCurricularPlan lastStudentCurricularPlan = registration.getLastStudentCurricularPlan();
 
-        GratuityEventWithPaymentPlan event =
-                lastStudentCurricularPlan.getGratuityEvent(readCurrentExecutionYear(), GratuityEventWithPaymentPlan.class);
-
-        return event != null ? event.getOriginalAmountToPay() : Money.ZERO;
+        return lastStudentCurricularPlan.getGratuityEvent(readCurrentExecutionYear(), GratuityEventWithPaymentPlan.class).map
+                        (Event::getOriginalAmountToPay).findAny().orElse(Money.ZERO);
     }
 
     @Override

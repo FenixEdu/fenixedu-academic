@@ -27,13 +27,21 @@
 
 <h2><bean:message key="registration.show.regimes" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
-
 <p>
 	<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="externalId">
 		<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 	</html:link>
 </p>
 
+
+<logic:messagesPresent message="true">
+	<ul class="nobullet list6">
+		<html:messages id="messages" message="true"
+					   bundle="APPLICATION_RESOURCES">
+			<li><span class="error0"><bean:write name="messages" /></span></li>
+		</html:messages>
+	</ul>
+</logic:messagesPresent>
 
 <div style="float: right;">
 	<bean:define id="personID" name="registration" property="student.person.username"/>

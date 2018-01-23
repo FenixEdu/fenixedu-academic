@@ -18,30 +18,18 @@
  */
 package org.fenixedu.academic.domain.phd.debts;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
 
-import org.fenixedu.academic.domain.accounting.Account;
-import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventState;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
-import org.fenixedu.academic.domain.accounting.events.gratuity.ExternalScholarshipGratuityExemption;
-import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityExemption;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdProgramProcessState;
-import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
-import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.util.Money;
-import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -104,34 +92,8 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-        PhdGratuityEvent phdGratuityEvent = (PhdGratuityEvent) event;
-        Money gratuity = getGratuityByProcess(phdGratuityEvent.getPhdIndividualProgramProcess());
-        return gratuity;
-    }
-
-    @Override
-    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-        PhdGratuityEvent phdGratuityEvent = (PhdGratuityEvent) event;
-
-        amountToPay = adjustGratuityWithExmptions(phdGratuityEvent, amountToPay);
-
-        BigDecimal percentage = new BigDecimal(0);
-        for (Exemption exemption : phdGratuityEvent.getExemptionsSet()) {
-            if (exemption.isGratuityExemption()) {
-                percentage = percentage.add(((GratuityExemption) exemption).calculateDiscountPercentage(amountToPay));
-            } else if (exemption instanceof ExternalScholarshipGratuityExemption) {
-                percentage = percentage
-                        .add(((ExternalScholarshipGratuityExemption) exemption).calculateDiscountPercentage(amountToPay));
-            }
-        }
-
-        amountToPay = amountToPay.subtract(amountToPay.multiply(percentage));
-        if (amountToPay.lessOrEqualThan(Money.ZERO)) {
-            return Money.ZERO;
-        }
-
-        return amountToPay;
+    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
+        return getGratuityByProcess(((PhdGratuityEvent) event).getPhdIndividualProgramProcess());
     }
 
     private Money adjustGratuityWithExmptions(PhdGratuityEvent phdGratuityEvent, Money gratuity) {
@@ -156,25 +118,6 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
     }
 
     @Override
-    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-        return Collections.singletonList(new EntryDTO(EntryType.PHD_GRATUITY_FEE, event, calculateTotalAmountToPay(event, when),
-                event.getPayedAmount(), event.calculateAmountToPay(when), event
-                        .getDescriptionForEntryType(EntryType.PHD_GRATUITY_FEE), event.calculateAmountToPay(when)));
-    }
-
-    @Override
-    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
-            Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
-
-        if (entryDTOs.size() != 1) {
-            throw new DomainException("error.accounting.postingRules.gratuity.PhdGratuityPR.invalid.number.of.entryDTOs");
-        }
-
-        return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, EntryType.PHD_GRATUITY_FEE,
-                entryDTOs.iterator().next().getAmountToPay(), transactionDetail));
-    }
-
-    @Override
     public void removeOtherRelations() {
         for (PhdGratuityPaymentPeriod period : getPhdGratuityPaymentPeriodsSet()) {
             period.delete();
@@ -182,4 +125,8 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
         getPhdGratuityPaymentPeriodsSet().clear();
     }
 
+    @Override
+    protected EntryType getEntryType() {
+        return EntryType.PHD_GRATUITY_FEE;
+    }
 }

@@ -18,6 +18,9 @@
  */
 package org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty;
 
+import java.util.Collections;
+import java.util.Set;
+
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.Exemption;
@@ -25,6 +28,8 @@ import org.fenixedu.academic.domain.accounting.Installment;
 import org.fenixedu.academic.domain.accounting.events.PenaltyExemptionJustificationType;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
@@ -62,19 +67,20 @@ public class InstallmentPenaltyExemption extends InstallmentPenaltyExemption_Bas
     protected void init(PenaltyExemptionJustificationType penaltyExemptionType,
             GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan, Person responsible, Installment installment,
             String comments, YearMonthDay directiveCouncilDispatchDate) {
-        super.init(penaltyExemptionType, gratuityEventWithPaymentPlan, responsible, comments, directiveCouncilDispatchDate);
         checkParameters(installment);
-        checkRulesToCreate(gratuityEventWithPaymentPlan, installment);
         super.setInstallment(installment);
+        super.init(penaltyExemptionType, gratuityEventWithPaymentPlan, responsible, comments, directiveCouncilDispatchDate);
+        checkRulesToCreate(gratuityEventWithPaymentPlan, installment);
     }
 
     private void checkRulesToCreate(final GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan, final Installment installment) {
-        if (gratuityEventWithPaymentPlan.hasPenaltyExemptionFor(installment)) {
+        if (gratuityEventWithPaymentPlan
+                .getInstallmentPenaltyExemptions()
+                .stream()
+                .anyMatch(exemption -> exemption.getInstallment() == installment && exemption != this)) {
             throw new DomainException(
                     "error.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption.event.already.has.penalty.exemption.for.installment");
-
         }
-
     }
 
     private void checkParameters(Installment installment) {
@@ -90,4 +96,18 @@ public class InstallmentPenaltyExemption extends InstallmentPenaltyExemption_Bas
         super.delete();
     }
 
+    @Override
+    public boolean isForInterest() {
+        return true;
+    }
+
+    @Override
+    public boolean isForFine() {
+        return false;
+    }
+
+    @Override
+    public Set<LocalDate> getDueDates(DateTime when) {
+        return Collections.singleton(getInstallment().getEndDate(getEvent()));
+    }
 }

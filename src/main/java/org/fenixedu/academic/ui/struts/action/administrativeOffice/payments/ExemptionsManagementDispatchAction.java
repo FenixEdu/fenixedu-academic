@@ -210,7 +210,7 @@ public class ExemptionsManagementDispatchAction extends PaymentsManagementDispat
         request.setAttribute("createInstallmentPenaltyExemptionBean", new CreateInstallmentPenaltyExemptionBean(
                 (GratuityEventWithPaymentPlan) getGratuityEvent(request)));
 
-        // Logic to decide the view to show based on gratuity event should
+        // Logic to decide the view to show based on gratuity dueDate should
         // be placed here
         return mapping.findForward("createInstallmentPenaltyExemption");
 

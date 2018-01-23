@@ -18,12 +18,17 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
@@ -31,6 +36,9 @@ import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.core.signals.DomainObjectEvent;
+import org.fenixedu.bennu.core.signals.Signal;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -42,6 +50,8 @@ import org.joda.time.YearMonthDay;
  * 
  */
 public class AccountingTransaction extends AccountingTransaction_Base {
+
+    public static final String SIGNAL_ANNUL = AccountingTransaction.class.getName() + ".annul";
 
     public static Comparator<AccountingTransaction> COMPARATOR_BY_WHEN_REGISTERED = new Comparator<AccountingTransaction>() {
         @Override
@@ -79,6 +89,14 @@ public class AccountingTransaction extends AccountingTransaction_Base {
             AccountingTransactionDetail transactionDetail, AccountingTransaction transactionToAdjust) {
 
         checkParameters(event, debit, credit);
+
+        // check for operations after registered date
+        List<String> operationsAfter = event.getOperationsAfter(transactionDetail.getWhenProcessed());
+
+        if (!operationsAfter.isEmpty()) {
+            throw new DomainException("error.accounting.AccountingTransaction.cannot.create.transaction", operationsAfter
+                    .stream().collect(Collectors.joining(",")));
+        }
 
         super.setEvent(event);
         super.setResponsibleUser(responsibleUser);
@@ -220,15 +238,27 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 
         checkRulesToAnnul();
 
+        annulReceipts();
+
+        Signal.emit(SIGNAL_ANNUL, new DomainObjectEvent<AccountingTransaction>(this));
+
         reimburseWithoutRules(responsibleUser, getTransactionDetail().getPaymentMode(), getAmountWithAdjustment(), reason);
 
     }
 
     private void checkRulesToAnnul() {
-        if (getToAccountEntry().isAssociatedToAnyActiveReceipt()) {
-            throw new DomainException("error.accounting.AccountingTransaction.cannot.annul.while.associated.to.active.receipt");
+        final List<String> operationsAfter = getEvent().getOperationsAfter(getWhenProcessed());
+        if (!operationsAfter.isEmpty()) {
+            throw new DomainException("error.accounting.AccountingTransaction.cannot.annul.operations.after", operationsAfter
+                    .stream().collect(Collectors.joining(",")));
         }
+    }
 
+    private void annulReceipts() {
+        getToAccountEntry().getReceiptsSet().stream().filter(Receipt::isActive).forEach(r -> {
+            Person responsible = Optional.ofNullable(Authenticate.getUser()).map(User::getPerson).orElse(null);
+            r.annul(responsible);
+        });
     }
 
     private AccountingTransaction reimburse(User responsibleUser, PaymentMode paymentMode, Money amountToReimburse,
@@ -303,8 +333,15 @@ public class AccountingTransaction extends AccountingTransaction_Base {
         return getFromAccount().getParty() == party;
     }
 
-    public void delete() {
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        blockers.addAll(getEvent().getOperationsAfter(getWhenProcessed()));
+    }
 
+    public void delete() {
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
+        
         super.setAdjustedTransaction(null);
         for (; !getAdjustmentTransactionsSet().isEmpty(); getAdjustmentTransactionsSet().iterator().next().delete()) {
             ;

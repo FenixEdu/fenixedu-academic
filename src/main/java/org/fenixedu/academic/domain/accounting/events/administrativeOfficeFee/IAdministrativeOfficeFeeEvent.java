@@ -18,6 +18,8 @@
  */
 package org.fenixedu.academic.domain.accounting.events.administrativeOfficeFee;
 
-public interface IAdministrativeOfficeFeeEvent {
+import org.joda.time.YearMonthDay;
 
+public interface IAdministrativeOfficeFeeEvent {
+    YearMonthDay getPaymentEndDate();
 }

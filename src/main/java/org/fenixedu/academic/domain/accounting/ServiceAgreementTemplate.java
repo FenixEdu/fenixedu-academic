@@ -18,11 +18,9 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -108,16 +106,19 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
     }
 
     public PostingRule findPostingRuleBy(EventType eventType, DateTime startDate, DateTime endDate) {
-        final List<PostingRule> activePostingRulesInPeriod = new ArrayList<PostingRule>();
+        final Set<PostingRule> postingRulesBy = getPostingRulesBy(eventType, startDate, endDate);
+        return postingRulesBy.isEmpty() ? null : Collections.max(postingRulesBy, PostingRule.COMPARATOR_BY_START_DATE);
+    }
+
+    public Set<PostingRule> getPostingRulesBy(EventType eventType, DateTime startDate, DateTime endDate) {
+        final Set<PostingRule> activePostingRulesInPeriod = new HashSet<>();
         for (final PostingRule postingRule : getPostingRulesSet()) {
             if (postingRule.isActiveForPeriod(startDate, endDate) && postingRule.getEventType() == eventType) {
                 activePostingRulesInPeriod.add(postingRule);
             }
         }
 
-        return activePostingRulesInPeriod.isEmpty() ? null : Collections.max(activePostingRulesInPeriod,
-                PostingRule.COMPARATOR_BY_START_DATE);
-
+        return activePostingRulesInPeriod;
     }
 
     public PostingRule getPostingRuleByEventTypeAndDate(EventType eventType, DateTime when) {

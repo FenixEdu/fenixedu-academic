@@ -71,11 +71,6 @@ public class PhdRegistrationFee extends PhdRegistrationFee_Base {
         return getProcess().getPhdProgram();
     }
 
-    @Override
-    public boolean isExemptionAppliable() {
-        return true;
-    }
-
     public boolean hasPhdRegistrationFeePenaltyExemption() {
         return getPhdRegistrationFeePenaltyExemption() != null;
     }

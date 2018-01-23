@@ -42,7 +42,7 @@ public class EnrolmentCertificateRequestPR extends EnrolmentCertificateRequestPR
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
         final CertificateRequestEvent requestEvent = (CertificateRequestEvent) event;
         Money totalAmountToPay =
                 calculateAmountToPayWithUnits(requestEvent, true).add(calculateAmountToPayForPages(requestEvent));

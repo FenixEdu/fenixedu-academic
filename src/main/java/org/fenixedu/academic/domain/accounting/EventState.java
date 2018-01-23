@@ -18,9 +18,12 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
-public enum EventState {
+import org.joda.time.DateTime;
 
+public enum EventState {
     OPEN, CLOSED, CANCELLED;
+
+    public static final String EVENT_STATE_CHANGED = EventState.class.getSimpleName() + ".changed";
 
     public String getName() {
         return name();
@@ -34,4 +37,28 @@ public enum EventState {
         return EventState.class.getName() + "." + name();
     }
 
+    public static class ChangeStateEvent {
+
+        private final EventState newState;
+        private final Event event;
+        private final DateTime when;
+
+        public ChangeStateEvent(EventState newState, Event event, DateTime when) {
+            this.newState = newState;
+            this.event = event;
+            this.when = when;
+        }
+
+        public EventState getNewState() {
+            return newState;
+        }
+
+        public Event getEvent() {
+            return event;
+        }
+
+        public DateTime getWhen() {
+            return when;
+        }
+    }
 }

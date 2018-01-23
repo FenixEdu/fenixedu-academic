@@ -34,6 +34,37 @@
 	
 <br/>
 
+<html:link
+		action="/postingRules.do?method=prepareCreatePaymentPlan">
+	<bean:message key="label.payments.postingRules.createGratuityPaymentPlan" bundle="MANAGER_RESOURCES" />
+</html:link>
+<br/><br/>
+<html:link
+		action="/postingRules.do?method=prepareCreateGraduationGratuityPR">
+	<bean:message key="label.payments.postingRules.createGraduationGratuityPostingRule" bundle="MANAGER_RESOURCES" />
+</html:link>
+<br/><br/>
+<html:link
+		action="/postingRules.do?method=prepareCreateGraduationStandaloneEnrolmentGratuityPR">
+	<bean:message key="label.payments.postingRules.createGraduationStandaloneEnrolmentGratuityPostingRule" bundle="MANAGER_RESOURCES" />
+</html:link>
+<br/><br/>
+<html:link
+		action="/postingRules.do?method=prepareCreateEnrolmentGratuityPR">
+	<bean:message key="label.payments.postingRules.createEnrolmentGratuityPR" bundle="MANAGER_RESOURCES" />
+</html:link>
+<br/><br/>
+<html:link
+		action="/postingRules.do?method=prepareCreatePartialRegimePR">
+	<bean:message key="label.payments.postingRules.createPartialRegimePR" bundle="MANAGER_RESOURCES" />
+</html:link>
+<br/><br/>
+
+<html:link
+		action="/postingRules.do?method=prepare">
+	<bean:message key="label.back" bundle="APPLICATION_RESOURCES" />
+</html:link>
+
 <logic:present name="degreeCurricularPlans">
 
 <fr:view  name="degreeCurricularPlans" schema="DegreeCurricularPlan.view">
@@ -56,23 +87,5 @@
 </fr:view>
 </logic:present>
 	
-<html:link
-	action="/postingRules.do?method=prepareCreatePaymentPlan">
-	<bean:message key="label.payments.postingRules.createGratuityPaymentPlan" bundle="MANAGER_RESOURCES" />
-</html:link>
-<br/><br/>
-<html:link
-	action="/postingRules.do?method=prepareCreateGraduationGratuityPR">
-	<bean:message key="label.payments.postingRules.createGraduationGratuityPostingRule" bundle="MANAGER_RESOURCES" />
-</html:link>
-<br/><br/>
-<html:link
-	action="/postingRules.do?method=prepareCreateGraduationStandaloneEnrolmentGratuityPR">
-	<bean:message key="label.payments.postingRules.createGraduationStandaloneEnrolmentGratuityPostingRule" bundle="MANAGER_RESOURCES" />
-</html:link>
-<br/><br/>
-<html:link
-	action="/postingRules.do?method=prepare">
-	<bean:message key="label.back" bundle="APPLICATION_RESOURCES" />
-</html:link>
+
  

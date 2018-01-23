@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.phd.debts;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -26,6 +27,7 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.Exemption;
+import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdProgram;
@@ -104,11 +106,6 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
                 .appendLabel(")");
     }
 
-    @Override
-    public boolean isExemptionAppliable() {
-        return true;
-    }
-
     public DateTime getLimitDateToPay() {
         LocalDate whenFormalizedRegistration = getPhdIndividualProgramProcess().getWhenFormalizedRegistration();
 
@@ -129,6 +126,11 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
             return lastPaymentDay;
         }
 
+    }
+
+    @Override
+    public boolean isGratuity() {
+        return true;
     }
 
     @Override
@@ -159,5 +161,10 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
     @Override
     public Set<EntryType> getPossibleEntryTypesForDeposit() {
         return Collections.singleton(EntryType.GRATUITY_FEE);
+    }
+
+    @Override
+    public Map<LocalDate, Money> getDueDateAmountMap(PostingRule postingRule, DateTime when) {
+        return Collections.singletonMap(getLimitDateToPay().toLocalDate(), postingRule.calculateTotalAmountToPay(this, when));
     }
 }

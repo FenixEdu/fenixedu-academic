@@ -18,11 +18,8 @@
  */
 package org.fenixedu.academic.domain.accounting.postingRules.specializationDegree;
 
-import java.util.Collection;
-import java.util.Set;
+import java.util.Optional;
 
-import org.fenixedu.academic.domain.accounting.Account;
-import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
@@ -30,11 +27,9 @@ import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.accounting.events.specializationDegree.SpecializationDegreeRegistrationEvent;
 import org.fenixedu.academic.domain.accounting.postingRules.FixedAmountWithPenaltyPR;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
-import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.util.Money;
-import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 public class SpecializationDegreeRegistrationPR extends SpecializationDegreeRegistrationPR_Base {
 
@@ -50,8 +45,12 @@ public class SpecializationDegreeRegistrationPR extends SpecializationDegreeRegi
     }
 
     @Override
-    protected boolean hasPenalty(Event event, DateTime when) {
-        return hasPenaltyForRegistration((SpecializationDegreeRegistrationEvent) event);
+    protected Optional<LocalDate> getPenaltyDueDate(Event event) {
+        SpecializationDegreeRegistrationEvent specializationDegreeRegistrationEvent = (SpecializationDegreeRegistrationEvent) event;
+        if (specializationDegreeRegistrationEvent.hasRegistrationPeriodInDegreeCurricularPlan()) {
+            return Optional.of(specializationDegreeRegistrationEvent.getRegistrationPeriodInDegreeCurricularPlan().getEndDateDateTime().toLocalDate());
+        }
+        return Optional.empty();
     }
 
     private boolean hasPenaltyForRegistration(final SpecializationDegreeRegistrationEvent specializationDegreeRegistrationEvent) {
@@ -68,13 +67,7 @@ public class SpecializationDegreeRegistrationPR extends SpecializationDegreeRegi
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
-            Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
-        checkPreconditionsToProcess(event);
-        return super.internalProcess(user, entryDTOs, event, fromAccount, toAccount, transactionDetail);
-    }
-
-    private void checkPreconditionsToProcess(Event event) {
+    protected void checkIfCanAddAmount(Money amountToPay, Event event, DateTime when) {
         final SpecializationDegreeRegistrationEvent specializationDegreeRegistrationEvent =
                 (SpecializationDegreeRegistrationEvent) event;
         if (!specializationDegreeRegistrationEvent.hasRegistrationPeriodInDegreeCurricularPlan()) {

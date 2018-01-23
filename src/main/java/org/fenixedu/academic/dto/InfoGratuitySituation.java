@@ -129,7 +129,7 @@ public class InfoGratuitySituation extends InfoObject {
     }
 
     /**
-     * @return Returns the exemptionPercentage.
+     * @return Returns the exemptionValue.
      */
     public Integer getExemptionPercentage() {
         return exemptionPercentage;
@@ -137,7 +137,7 @@ public class InfoGratuitySituation extends InfoObject {
 
     /**
      * @param exemptionPercentage
-     *            The exemptionPercentage to set.
+     *            The exemptionValue to set.
      */
     public void setExemptionPercentage(Integer exemptionPercentage) {
         this.exemptionPercentage = exemptionPercentage;
@@ -251,7 +251,7 @@ public class InfoGratuitySituation extends InfoObject {
     @Override
     public String toString() {
         String result = new String();
-        result += "[InfoGratuitySituation: exemptionPercentage" + this.exemptionPercentage;
+        result += "[InfoGratuitySituation: exemptionValue" + this.exemptionPercentage;
         result += "\nexemptionType: " + this.exemptionType;
         result += "\nexemptionDescription: " + this.exemptionDescription;
         result += "\npayedValue: " + this.payedValue;

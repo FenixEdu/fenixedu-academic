@@ -27,7 +27,13 @@ import org.fenixedu.academic.domain.accounting.paymentPlanRules.IsPartialRegimeP
 import org.fenixedu.academic.domain.accounting.paymentPlanRules.PaymentPlanRule;
 import org.fenixedu.academic.domain.accounting.paymentPlanRules.PaymentPlanRuleFactory;
 import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 
+/**
+ * Use {@link org.fenixedu.academic.domain.accounting.events.gratuity.PartialRegimeEvent} and
+ * {@link org.fenixedu.academic.domain.accounting.events.gratuity.EnrolmentGratuityEvent} instead
+ */
+@Deprecated
 public class FullGratuityPaymentPlanForPartialRegime extends FullGratuityPaymentPlanForPartialRegime_Base {
 
     protected FullGratuityPaymentPlanForPartialRegime() {
@@ -38,7 +44,7 @@ public class FullGratuityPaymentPlanForPartialRegime extends FullGratuityPayment
             final DegreeCurricularPlanServiceAgreementTemplate serviceAgreementTemplate, final Boolean defaultPaymentPlan) {
         this();
         init(executionYear, serviceAgreementTemplate, defaultPaymentPlan);
-
+        throw new DomainException("Can't be created anymore");
     }
 
     @Override
