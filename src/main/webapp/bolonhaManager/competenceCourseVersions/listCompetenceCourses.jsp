@@ -27,6 +27,10 @@
 <%@page import="org.fenixedu.academic.ui.struts.action.BolonhaManager.CompetenceCourseInformationRequestBean"%><html:xhtml/>
 <%@page import="org.fenixedu.academic.domain.ExecutionSemester"%><html:xhtml/>
 
+<em><bean:message key="bolonhaManager" bundle="BOLONHA_MANAGER_RESOURCES"/></em>
+<h2><bean:message key="label.manage.versions" bundle="BOLONHA_MANAGER_RESOURCES"/></h2>
+<p>&nbsp;</p>
+
 <logic:iterate id="department" name="departments">
 
 	<h2><bean:write name="department" property="realName"/></h2>
@@ -85,8 +89,26 @@
 
 </logic:iterate>
 
+
+<table class="smallmargin mtop05 table-condensed table">
+	<logic:iterate id="competenceCourse" name="competenceCourses">
+		<logic:equal name="competenceCourse" property="approved" value="true">
+			<tr>
+				<td><span class="color2"><bean:write name="competenceCourse" property="code"/> - <bean:write name="competenceCourse" property="name"/></span></td>
+				<td class="aright">
+					<html:link action="/competenceCourses/manageVersions.do?method=showVersions" paramId="competenceCourseID" paramName="competenceCourse" paramProperty="externalId">
+						<bean:message bundle="BOLONHA_MANAGER_RESOURCES" key="label.view.versions"/>
+					</html:link>
+				</td>
+			</tr>
+		</logic:equal>
+	</logic:iterate>
+</table>
+
 <logic:equal name="departments" property="empty" value="true">
-	<em><bean:message key="notMemberInCompetenceCourseManagementGroup" bundle="BOLONHA_MANAGER_RESOURCES"/></em>
+	<logic:equal name="competenceCourses" property="empty" value="true">
+		<em><bean:message key="notMemberInCompetenceCourseManagementGroup" bundle="BOLONHA_MANAGER_RESOURCES"/></em>
+	</logic:equal>
 </logic:equal>
 
 </logic:notEmpty>

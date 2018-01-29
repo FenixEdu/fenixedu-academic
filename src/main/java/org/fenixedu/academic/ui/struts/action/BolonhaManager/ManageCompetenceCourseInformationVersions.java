@@ -21,6 +21,7 @@ package org.fenixedu.academic.ui.struts.action.BolonhaManager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletOutputStream;
@@ -69,8 +70,7 @@ import pt.ist.fenixframework.Atomic;
 
 @StrutsFunctionality(app = CompetenceCourseManagementApp.class, path = "versions", titleKey = "label.manage.versions")
 @Mapping(module = "bolonhaManager", path = "/competenceCourses/manageVersions")
-@Forwards({
-        @Forward(name = "showCourses", path = "/bolonhaManager/competenceCourseVersions/listCompetenceCourses.jsp"),
+@Forwards({ @Forward(name = "showCourses", path = "/bolonhaManager/competenceCourseVersions/listCompetenceCourses.jsp"),
         @Forward(name = "createVersions", path = "/bolonhaManager/competenceCourseVersions/createVersion.jsp"),
         @Forward(name = "viewVersions", path = "/bolonhaManager/competenceCourseVersions/viewVersions.jsp"),
         @Forward(name = "viewVersionDetails", path = "/bolonhaManager/competenceCourseVersions/viewVersionDetails.jsp"),
@@ -92,6 +92,11 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
                                 .isLoggedPersonAllowedToManageDepartmentCompetenceCourseInformations(dep))
                         .collect(Collectors.toList());
 
+        final Set<CompetenceCourse> taughtCompetenceCourses = AccessControl.getPerson()
+                .getProfessorships(ExecutionSemester.readActualExecutionSemester()).stream().filter(p -> p.isResponsibleFor())
+                .flatMap(p -> p.getExecutionCourse().getCompetenceCourses().stream()).collect(Collectors.toSet());
+
+        request.setAttribute("competenceCourses", taughtCompetenceCourses);
         request.setAttribute("departments", departments);
         request.setAttribute("requestBean", requestBean);
         return mapping.findForward("showCourses");
@@ -141,15 +146,8 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
         }
 
         if (bean == null) {
-            CompetenceCourseInformation courseInformation = course.findCompetenceCourseInformationForExecutionPeriod((period != null) ? period : ExecutionSemester
-                    .readActualExecutionSemester());
-            if (courseInformation != null) {
-                bean =
-                    new CompetenceCourseInformationRequestBean(courseInformation);
-            } else {
-                bean = new CompetenceCourseInformationRequestBean(course, (period != null) ? period : ExecutionSemester
-                        .readActualExecutionSemester());
-            }
+            bean = new CompetenceCourseInformationRequestBean(course.findCompetenceCourseInformationForExecutionPeriod(
+                    (period != null) ? period : ExecutionSemester.readActualExecutionSemester()));
         } else {
             if (information == null) {
                 bean.reset();
@@ -165,11 +163,10 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
         } else {
             if (information != null && information.getCompetenceCourseLoadsSet().size() > 0) {
                 load = new CompetenceCourseLoadBean(information.getCompetenceCourseLoadsSet().iterator().next());
-            } else if (period != null
-                    && course.findCompetenceCourseInformationForExecutionPeriod(period).getCompetenceCourseLoadsSet().size() > 0) {
-                load =
-                        new CompetenceCourseLoadBean(course.findCompetenceCourseInformationForExecutionPeriod(period)
-                                .getCompetenceCourseLoadsSet().iterator().next());
+            } else if (period != null && course.findCompetenceCourseInformationForExecutionPeriod(period)
+                    .getCompetenceCourseLoadsSet().size() > 0) {
+                load = new CompetenceCourseLoadBean(course.findCompetenceCourseInformationForExecutionPeriod(period)
+                        .getCompetenceCourseLoadsSet().iterator().next());
             } else {
                 load = new CompetenceCourseLoadBean();
             }

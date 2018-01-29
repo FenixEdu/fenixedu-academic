@@ -96,15 +96,43 @@
 		<bean:define id="schema" value="editCompetenceCourseInformation.common.simple" />
 	</logic:equal>
 
-	<fr:edit id="common-part" name="bean" schema="<%= schema %>">
+	<fr:edit id="common-part" name="bean">
+		<fr:schema type="org.fenixedu.academic.ui.struts.action.BolonhaManager.CompetenceCourseInformationRequestBean" bundle="BOLONHA_MANAGER_RESOURCES">
+			<fr:slot name="competenceCourse.name" readOnly="true"/>
+			<fr:slot name="name" key="label.proposedName" readOnly="true">
+				<fr:property name="size" value="60"/>
+			</fr:slot>
+			<fr:slot name="nameEn" key="label.proposedNameEn" readOnly="true">
+				<fr:property name="size" value="60"/>
+			</fr:slot>
+			<logic:equal name="proposal" value="true">
+				<fr:slot name="executionPeriod.qualifiedName" key="label.executionPeriod" readOnly="true" />
+			</logic:equal>
+			<logic:equal name="proposal" value="false">
+				<fr:slot name="executionPeriod" layout="menu-select-postback">
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionSemestersProvider"/>
+					<fr:property name="format" value="\${name} \${executionYear.year}"/>
+					<fr:property name="sortBy" value="executionYear.year=desc, semester=desc"/>
+				</fr:slot>				
+			</logic:equal>			
+			<fr:slot name="regime" layout="menu-select-postback" readOnly="true">	
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.RegimeTypeProvider"/>
+				<fr:property name="eachLayout" value=""/>
+			</fr:slot>
+			<fr:slot name="competenceCourseLevel" readOnly="true"/>
+			<fr:slot name="justification" layout="longText">
+				<fr:property name="rows" value="7"/>
+				<fr:property name="columns" value="70"/>
+			</fr:slot>	
+		</fr:schema>	
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 			<fr:property name="columnClasses" value="width12em,,tderror1 tdclear" />
 		</fr:layout>
 		<fr:destination name="postBack"
 			path="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competenceCourseID + "&method=prepareCreateVersion" + (request.getParameter("proposal") != null ? "&proposal=y" : "")%>" />
-	</fr:edit>
-
+	</fr:edit>	
+	
 	<logic:equal name="bean" property="loggedPersonAllowedToCreateChangeRequests" value="true">
 		<logic:equal name="proposal" value="false">
 			<logic:equal name="bean" property="requestDraftAvailable" value="false">
@@ -129,25 +157,25 @@
 		
 				<p class="mtop2 mbottom1 bold">4) Carga Horária</p>
 				<fr:edit id="editVersionLoad" name="beanLoad" visible="false" />
-				<fr:edit id="versionLoad" name="beanLoad" schema="<%= loadSchema  %>">
+				<fr:view name="beanLoad" schema="<%= loadSchema  %>">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 						<fr:property name="columnClasses" value="width12em,,tderror1 tdclear" />
 					</fr:layout>
 					<fr:destination name="loadInformationPostBack"
 						path="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competenceCourseID + "&method=prepareCreateVersion" + (request.getParameter("proposal") != null ? "&proposal=y" : "")%>" />
-				</fr:edit>
+				</fr:view>
 				<logic:equal name="beanLoad" property="sameInformationForBothPeriods"
 					value="false">
 					<logic:equal name="bean" property="regime" value="ANUAL">
 		
-						<fr:edit id="versionLoad2" name="beanLoad"
+						<fr:view name="beanLoad"
 							schema="editCompetenceCourseLoad.anual.diferent.info">
 							<fr:layout name="tabular">
 								<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 								<fr:property name="columnClasses" value="width12em,,tderror1 tdclear" />
 							</fr:layout>
-						</fr:edit>
+						</fr:view>
 					</logic:equal>
 				</logic:equal>
 				
@@ -188,25 +216,25 @@
 	
 				<p class="mtop2 mbottom1 bold bold">4) Carga Horária</p>
 				<fr:edit id="editVersionLoad" name="beanLoad" visible="false" />
-				<fr:edit id="versionLoad" name="beanLoad" schema="<%= loadSchema  %>">
+				<fr:view name="beanLoad" schema="<%= loadSchema  %>">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 						<fr:property name="columnClasses" value="width12em,,tderror1 tdclear" />
 					</fr:layout>
 					<fr:destination name="loadInformationPostBack"
 						path="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competenceCourseID + "&method=prepareCreateVersion" + (request.getParameter("proposal") != null ? "&proposal=y" : "") %>" />
-				</fr:edit>
+				</fr:view>
 				<logic:equal name="beanLoad" property="sameInformationForBothPeriods"
 					value="false">
 					<logic:equal name="bean" property="regime" value="ANUAL">
 									
-						<fr:edit id="versionLoad2" name="beanLoad"
+						<fr:view name="beanLoad"
 							schema="editCompetenceCourseLoad.anual.diferent.info">
 							<fr:layout name="tabular">
 								<fr:property name="classes" value="tstyle5 thlight thright" />
 								<fr:property name="columnClasses" value="width12em,,tderror1 tdclear" />
 							</fr:layout>
-						</fr:edit>
+						</fr:view>
 					</logic:equal>
 				</logic:equal>
 	
@@ -243,25 +271,25 @@
 	
 				<p class="mtop2 mbottom1 bold bold">4) Carga Horária</p>
 				<fr:edit id="editVersionLoad" name="beanLoad" visible="false" />
-				<fr:edit id="versionLoad" name="beanLoad" schema="<%= loadSchema  %>">
+				<fr:view name="beanLoad" schema="<%= loadSchema  %>">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 						<fr:property name="columnClasses" value="width12em,,tderror1 tdclear" />
 					</fr:layout>
 					<fr:destination name="loadInformationPostBack"
 						path="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competenceCourseID + "&method=prepareCreateVersion" + (request.getParameter("proposal") != null ? "&proposal=y" : "") %>" />
-				</fr:edit>
+				</fr:view>
 				<logic:equal name="beanLoad" property="sameInformationForBothPeriods"
 					value="false">
 					<logic:equal name="bean" property="regime" value="ANUAL">
 									
-						<fr:edit id="versionLoad2" name="beanLoad"
+						<fr:view name="beanLoad"
 							schema="editCompetenceCourseLoad.anual.diferent.info">
 							<fr:layout name="tabular">
 								<fr:property name="classes" value="tstyle5 thlight thright" />
 								<fr:property name="columnClasses" value="width12em,,tderror1 tdclear" />
 							</fr:layout>
-						</fr:edit>
+						</fr:view>
 					</logic:equal>
 				</logic:equal>
 	

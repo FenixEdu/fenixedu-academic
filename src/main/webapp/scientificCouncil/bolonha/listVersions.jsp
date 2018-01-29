@@ -18,6 +18,7 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+<%@page import="org.fenixedu.academic.service.services.bolonhaManager.CompetenceCourseManagementAccessControl"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -43,6 +44,7 @@
 	</tr>
 	
 	<logic:iterate id="changeRequest" name="changeRequests" type="org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformationChangeRequest">
+		<% if(CompetenceCourseManagementAccessControl.isLoggedPersonAllowedToApproveChangeRequestsPredicate(changeRequest)) { %>
 		<bean:define id="changeRequestID" name="changeRequest" property="externalId"/>
 		<bean:define id="competenceCourseID" name="changeRequest" property="competenceCourse.externalId"/>
 		<tr>
@@ -77,10 +79,10 @@
 						<bean:message key="label.reject" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 					</html:link>
 				</logic:notPresent>		
+				
 			</td>			
 		</tr>
-
-
+		<% } %>
 	</logic:iterate>
 	</table>
 </logic:notEmpty>

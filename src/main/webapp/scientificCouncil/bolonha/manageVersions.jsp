@@ -18,20 +18,52 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+<%@page import="org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformationChangeRequest"%>
+<%@page import="org.fenixedu.academic.service.services.bolonhaManager.CompetenceCourseManagementAccessControl"%>
+<%@page import="org.fenixedu.academic.domain.CompetenceCourse"%>
 <%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 
 <h2><bean:message key="label.version.manage" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
 
-<fr:view name="departments" schema="view.departments.with.requests">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle1 thlight"/>
-		<fr:property name="columnClasses" value=",acenter,acenter"/>
-		<fr:property name="sortBy" value="name"/>
-	</fr:layout>
-	<fr:destination name="viewDepartmentRequests" path="/competenceCourses/manageVersions.do?method=displayRequest&departmentID=${externalId}"/>
-</fr:view>
-
+<table class="tstyle1 thlight table">
+	<tr>
+		<th><bean:message key="label.name" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></th>
+		<th><bean:message key="label.draftCompetenceCourseInformationChangeRequestsCount" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></th>
+		<th><bean:message key="label.competenceCourseInformationChangeRequestsCount" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></th>
+	</tr>
+	<c:forEach items="${departments}" var="department">
+		<bean:define id="department" name="department" type="org.fenixedu.academic.domain.Department"/>
+		<%
+        int draftChangeRequestsCount = 0;
+        for (CompetenceCourse course : department.getDepartmentUnit().getCompetenceCourses()) {
+            for (CompetenceCourseInformationChangeRequest changeRequest : course.getCompetenceCourseInformationChangeRequestsSet()) {
+                if (changeRequest.getApproved() == null && CompetenceCourseManagementAccessControl.isLoggedPersonAllowedToApproveChangeRequestsPredicate(changeRequest)) {
+                    draftChangeRequestsCount++;
+                }
+            }            
+        }
+    	int changeRequestsCount = 0;
+        for (CompetenceCourse course : department.getDepartmentUnit().getCompetenceCourses()) {
+            for (CompetenceCourseInformationChangeRequest changeRequest : course.getCompetenceCourseInformationChangeRequestsSet()) {
+                if (CompetenceCourseManagementAccessControl.isLoggedPersonAllowedToApproveChangeRequestsPredicate(changeRequest)) {
+		            changeRequestsCount++;
+                }
+            }
+        }
+		%>
+		<tr>
+			<td>
+				<html:link action="competenceCourses/manageVersions.do?method=displayRequest" paramId="departmentID" paramName="department" paramProperty="externalId">
+					<c:out value="${department.name}"/>
+				</html:link>
+			</td>
+			<td class="acenter"><%= draftChangeRequestsCount %></td>
+			<td class="acenter"><%= changeRequestsCount %></td>
+		</tr>		
+	</c:forEach>
+</table>
