@@ -1153,6 +1153,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
         Partial attendedBegin;
         Partial attendedEnd;
         LocalDate whenCreated;
+        boolean mainQualification;
     }
 
     class Formation extends Qualification {
