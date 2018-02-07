@@ -90,7 +90,13 @@ public class StudentExternalEnrolmentsDA extends FenixDispatchAction {
             HttpServletResponse response) {
 
         request.setAttribute("registration", getRegistration(request, actionForm));
-        request.setAttribute("unit", UnitUtils.readEarthUnit());
+        
+        final String unitId = (String) getFromRequest(request, "unitId");
+        if (StringUtils.isNotBlank(unitId)) {
+            request.setAttribute("unit", FenixFramework.getDomainObject(unitId));
+        }
+        //request.setAttribute("unit", UnitUtils.readEarthUnit());
+        
         return mapping.findForward("chooseExternalUnit");
     }
 
