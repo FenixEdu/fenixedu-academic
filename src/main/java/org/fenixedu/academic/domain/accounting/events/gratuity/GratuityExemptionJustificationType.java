@@ -83,6 +83,9 @@ public enum GratuityExemptionJustificationType {
             return Arrays.asList(new GratuityExemptionJustificationType[] { SON_OF_DECORATED_MILITARY, SOCIAL_SHARE_GRANT_OWNER,
                     DIRECTIVE_COUNCIL_AUTHORIZATION, SEPARATION_CYCLES_AUTHORIZATION });
         }
+        if (degreeType.isSpecializationDegree()) {
+            return Arrays.asList(new GratuityExemptionJustificationType[] { DIRECTIVE_COUNCIL_AUTHORIZATION });
+        }
         throw new RuntimeException("Unknown degree type");
     }
 
