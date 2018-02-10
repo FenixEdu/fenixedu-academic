@@ -150,10 +150,15 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
         }
 
         if (bean == null) {
-            bean =
-                    new CompetenceCourseInformationRequestBean(
-                            course.findCompetenceCourseInformationForExecutionPeriod((period != null) ? period : ExecutionSemester
-                                    .readActualExecutionSemester()));
+            CompetenceCourseInformation courseInformation = course.findCompetenceCourseInformationForExecutionPeriod((period != null) ? period : ExecutionSemester
+                    .readActualExecutionSemester());
+            if (courseInformation != null) {
+                bean =
+                    new CompetenceCourseInformationRequestBean(courseInformation);
+            } else {
+                bean = new CompetenceCourseInformationRequestBean(course, (period != null) ? period : ExecutionSemester
+                        .readActualExecutionSemester());
+            }
         } else {
             if (information == null) {
                 bean.reset();
