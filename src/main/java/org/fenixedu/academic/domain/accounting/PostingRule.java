@@ -353,6 +353,7 @@ public abstract class PostingRule extends PostingRule_Base {
     public final Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
         Money amountToPay = doCalculationForAmountToPay(event, when, false);
 
+        //TODO
         if (true) {
             return amountToPay;
         }

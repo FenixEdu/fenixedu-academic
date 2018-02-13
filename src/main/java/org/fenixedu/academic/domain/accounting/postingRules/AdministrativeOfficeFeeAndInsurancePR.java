@@ -44,7 +44,7 @@ import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeFeeAndInsurancePR_Base {
+public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeFeeAndInsurancePR_Base implements IAdministrativeOfficeFeeAndInsurancePR {
 
     protected AdministrativeOfficeFeeAndInsurancePR() {
         super();
@@ -55,7 +55,6 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
         this();
         super.init(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE, startDate, endDate, serviceAgreementTemplate);
     }
-
     @Override
     protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
         final AnnualEvent annualEvent = (AnnualEvent) event;

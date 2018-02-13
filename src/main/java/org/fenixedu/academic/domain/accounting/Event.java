@@ -36,7 +36,9 @@ import java.util.TreeSet;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accounting.InterestRate.InterestRateBean;
 import org.fenixedu.academic.domain.accounting.events.PenaltyExemption;
+import org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.FixedAmountPenaltyExemption;
 import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -531,9 +533,11 @@ public abstract class Event extends Event_Base {
     }
 
     private class CashFlowBox {
-        public Money interest;
+        public List<InterestRateBean> interestRateBeans;
         public DateTime when;
         public Money amount;
+        public Money baseAmount;
+        public Money accumulatedPaymentsAmount;
         public DateTime currentTransactionDate;
         public List<AccountingTransaction> transactions;
         public Money exemptionValue;
@@ -542,16 +546,22 @@ public abstract class Event extends Event_Base {
         public Money discountValue;
         public boolean usedDiscountValue;
         private Money discountedValue;
+        private Money accumulatedInterestAmount;
+        private Money accumulatedPayedInterestAmount;
+
         private boolean isToApplyPenalty;
 
-        public CashFlowBox(final Event event, final DateTime when) {
+        public CashFlowBox(final Event event, final DateTime when, final Money baseAmount) {
+            this.baseAmount = baseAmount;
+            this.interestRateBeans = new ArrayList<>();
             this.event = event;
             this.transactions = new ArrayList<>(this.event.getSortedNonAdjustingTransactions());
             this.when = when;
+            this.accumulatedInterestAmount = Money.ZERO;
+            this.accumulatedPayedInterestAmount = Money.ZERO;
             this.exemptionValue = Money.ZERO;
             this.discountValue = this.event.getTotalDiscount();
             this.discountedValue = Money.ZERO;
-            this.interest = Money.ZERO;
             this.usedDiscountValue = false;
             this.isToApplyPenalty = Boolean.TRUE;
 
@@ -561,13 +571,14 @@ public abstract class Event extends Event_Base {
             } else {
                 final AccountingTransaction transaction = transactions.remove(0);
                 this.amount = transaction.getAmountWithAdjustment();
+                this.accumulatedPaymentsAmount = Money.ZERO;
                 this.currentTransactionDate = transaction.getWhenRegistered();
             }
 
         }
 
         public boolean hasInterest() {
-            return interest.isPositive();
+            return getInterest().isPositive();
         }
 
         private boolean hasMoneyFor(final Money amount) {
@@ -593,6 +604,18 @@ public abstract class Event extends Event_Base {
                 this.discountedValue = this.discountValue;
             }
 
+            if (this.amount.greaterThan(Money.ZERO) && this.accumulatedInterestAmount.greaterThan(Money.ZERO)) {
+                if (this.amount.greaterOrEqualThan(this.accumulatedInterestAmount)) {
+                    this.accumulatedPayedInterestAmount = this.accumulatedPayedInterestAmount.add(this.accumulatedInterestAmount);
+                    this.amount = this.amount.subtract(this.accumulatedInterestAmount);
+                    this.accumulatedInterestAmount = Money.ZERO;
+                } else {
+                    this.accumulatedPayedInterestAmount = this.accumulatedPayedInterestAmount.add(this.amount);
+                    this.accumulatedInterestAmount = this.accumulatedInterestAmount.subtract(this.amount);
+                    this.amount = Money.ZERO;
+                }
+            }
+
             if (hasMoneyFor(installmentAmount)) {
                 this.amount = this.amount.subtract(installmentAmount);
                 this.discountValue = Money.ZERO;
@@ -600,13 +623,20 @@ public abstract class Event extends Event_Base {
             }
 
             if (this.transactions.isEmpty()) {
+                this.currentTransactionDate = this.when;
                 return false;
+            }
+
+            if (this.dueDate.isAfter(this.currentTransactionDate.toLocalDate())) {
+                this.accumulatedPaymentsAmount = Money.ZERO;
+            } else {
+                this.accumulatedPaymentsAmount = this.amount;
+                this.dueDate = this.currentTransactionDate.toLocalDate();
             }
 
             final AccountingTransaction transaction = this.transactions.remove(0);
             this.amount = this.amount.add(transaction.getAmountWithAdjustment());
             this.currentTransactionDate = transaction.getWhenRegistered();
-
             return subtractMoneyFor(installmentOriginalAmount);
         }
 
@@ -620,7 +650,12 @@ public abstract class Event extends Event_Base {
             DateTime dueDateValue = dueDate.toDateTimeAtStartOfDay();
 
             if (isToApplyPenalty && currentTransactionDate.isAfter(dueDateValue) && FenixEduAcademicConfiguration.isToUseGlobalInterestRateTableForEventPenalties(this.event)) {
-                this.interest = this.interest.add(InterestRate.getInterest(dueDate, amount, currentTransactionDate.toLocalDate()));
+                Optional<InterestRateBean> interestBean = InterestRate.getInterestBean(dueDate, currentTransactionDate.toLocalDate(), amount.subtract(this.accumulatedPaymentsAmount));
+                if (interestBean.isPresent()) {
+                    InterestRateBean bean = interestBean.get();
+                    this.interestRateBeans.add(bean);
+                    this.accumulatedInterestAmount = this.accumulatedInterestAmount.add(bean.getInterest());
+                }
             }
 
             return amount;
@@ -628,7 +663,7 @@ public abstract class Event extends Event_Base {
 
         private Money calculateAmount(Money installmentOriginalAmount, DateTime currentTransactionDate, Money exemptionAmount) {
             final Money amount = installmentOriginalAmount.subtract(exemptionAmount);
-            if (amount.isNegative()) {
+            if (!amount.isPositive()) {
                 return Money.ZERO;
             }
             return amount;
@@ -636,8 +671,8 @@ public abstract class Event extends Event_Base {
 
         public Money subtractRemainingFor(final Money installmentOriginalAmount) {
                 final Money result =
-                    internalCalculateAmount(installmentOriginalAmount,this.when, this.exemptionValue).subtract(this.discountValue).subtract(this.amount);
-                this.amount = this.exemptionValue = Money.ZERO; this.discountValue = Money.ZERO;
+                    calculateAmount(installmentOriginalAmount,this.when, this.exemptionValue).subtract(this.discountValue).subtract(this.amount);
+                this.amount = this.exemptionValue = this.discountValue = Money.ZERO;
                 return result;
         }
 
@@ -665,11 +700,24 @@ public abstract class Event extends Event_Base {
         }
 
         public void resetInterest() {
-            this.interest = Money.ZERO;
+            this.interestRateBeans = new ArrayList<>();
         }
 
         public Money getInterest() {
-            return interest;
+            return interestRateBeans.stream().map(InterestRateBean::getInterest).reduce(Money.ZERO, Money::add).subtract(this.accumulatedPayedInterestAmount);
+        }
+
+        public Optional<InterestRateBean> getInterestBean() {
+            Optional<LocalDate> startDate = interestRateBeans.stream().map(i -> i.getInterval().getStart().toLocalDate()).min(LocalDate::compareTo);
+            Optional<LocalDate> endDate = interestRateBeans.stream().map(i -> i.getInterval().getEnd().toLocalDate()).max(LocalDate::compareTo);
+
+            if (!startDate.isPresent() || !endDate.isPresent() || this.baseAmount.isZero()) {
+                return Optional.empty();
+            }
+
+            InterestRateBean interestRateBean = new InterestRateBean(startDate.get().minusDays(1), endDate.get().minusDays(1), this.baseAmount);
+            interestRateBeans.stream().flatMap(i -> i.getPartials().stream()).forEach(interestRateBean::addPartial);
+            return Optional.of(interestRateBean);
         }
     }
 
@@ -686,7 +734,72 @@ public abstract class Event extends Event_Base {
         return new HashMap<>();
     }
 
+    public static class AmountInterestBean {
+        private final Money originalAmount;
+        private final Money amountInDebt;
+        private final Map<LocalDate, Money> dueDateAmountMap;
+        private final Map<LocalDate, Money> exemptionMap;
+        private final Optional<InterestRateBean> interestRateBean;
+        private final Money fixedAmountInterestExemption;
+
+        public AmountInterestBean(Money originalAmount, Money amountInDebt, Optional<InterestRateBean> interestRateBean, Map<LocalDate, Money> dueDateAmountMap, Map<LocalDate, Money> exemptionMap,
+            Money fixedAmountInterestExemption)  {
+            this.originalAmount = originalAmount;
+            this.amountInDebt = amountInDebt;
+            this.interestRateBean = interestRateBean;
+            this.dueDateAmountMap = dueDateAmountMap;
+            this.exemptionMap = exemptionMap;
+            this.fixedAmountInterestExemption = fixedAmountInterestExemption;
+        }
+
+        public Money getOriginalAmount() {
+            return originalAmount;
+        }
+        
+        public Money getAmount() {
+            return amountInDebt;
+        }
+
+        public Money getAmountWithInterest() {
+            return amountInDebt.add(getInterest());
+        }
+
+        // returns the due interest amount (does not deduct the fixed amount interest exemptions)
+        public Money getCalculatedInterest() {
+            return interestRateBean.map(InterestRateBean::getInterest).orElse(Money.ZERO);
+        }
+
+        // Returns the interest value without fixed amount interest exemptions
+        public Money getInterest() {
+            final Money interest = getCalculatedInterest().subtract(fixedAmountInterestExemption);
+            return interest.isPositive() ? interest : Money.ZERO;
+        }
+
+        public Optional<InterestRateBean> getInterestRateBean() {
+            return interestRateBean;
+        }
+
+        public Map<LocalDate, Money> getDueDateAmountMap() {
+            return dueDateAmountMap;
+        }
+
+        public Map<LocalDate, Money> getExemptionMap() {
+            return exemptionMap;
+        }
+    }
+    
     private Money calculateTotalAmountToPay(DateTime whenRegistered) {
+        return calculateTotalAmountToPayBean(whenRegistered).getAmountWithInterest();
+    }
+
+    public Money getFixedAmountPenaltyExemption() {
+        return getPenaltyExemptionsFor(FixedAmountPenaltyExemption.class).stream().map(FixedAmountPenaltyExemption.class::cast).map(FixedAmountPenaltyExemption::getValue).reduce(Money.ZERO,
+            Money::add);
+    }
+
+    public AmountInterestBean calculateTotalAmountToPayBean(DateTime whenRegistered) {
+
+
         Map<LocalDate, Money> dueDateAmountMap = getDueDateAmountMap(whenRegistered);
         Money baseAmount = dueDateAmountMap.values().stream().reduce(Money.ZERO, Money::add);
 
@@ -704,11 +817,17 @@ public abstract class Event extends Event_Base {
         Map<LocalDate, Boolean> dueDatePenaltyExemptionMap = getDueDatePenaltyExemptionMap(whenRegistered);
         Map<LocalDate, Money> dueDateExemptionMap = getExemptionValue(dueDateAmountMap, baseAmount);
 
-        CashFlowBox cashFlowBox = new CashFlowBox(this, whenRegistered);
-        return dueDateAmountMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(e -> {
-            cashFlowBox.setDueDateExemptionValueIsToApplyPenalty(e.getKey(), dueDateExemptionMap.getOrDefault(e.getKey(), Money.ZERO), dueDatePenaltyExemptionMap.getOrDefault(e.getKey(), Boolean.TRUE));
+        // subject amount to interest calculation
+        Money baseAmountWithoutExemptions = baseAmount.subtract(dueDateExemptionMap.values().stream().reduce(Money.ZERO, Money::add));
+        
+        CashFlowBox cashFlowBox = new CashFlowBox(this, whenRegistered, baseAmountWithoutExemptions);
+        Money amountToPay = dueDateAmountMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(e -> {
+            cashFlowBox
+                .setDueDateExemptionValueIsToApplyPenalty(e.getKey(), dueDateExemptionMap.getOrDefault(e.getKey(), Money.ZERO), dueDatePenaltyExemptionMap.getOrDefault(e.getKey(), Boolean.TRUE));
             return cashFlowBox.calculateTotalAmountFor(e.getValue());
-        }).reduce(Money::add).orElse(Money.ZERO).add(cashFlowBox.interest);
+        }).reduce(Money::add).orElse(Money.ZERO);
+
+        return new AmountInterestBean(baseAmount, amountToPay, cashFlowBox.getInterestBean(), dueDateAmountMap, dueDateExemptionMap, getFixedAmountPenaltyExemption());
     }
 
     private Map<LocalDate, Money> getExemptionValue(Map<LocalDate, Money> dueDateAmountMap, Money baseAmount) {
@@ -743,9 +862,7 @@ public abstract class Event extends Event_Base {
     }
 
     public Money getTotalAmountToPay(final DateTime whenRegistered) {
-        final Money totalAmountToPay = calculateTotalAmountToPay(whenRegistered);
-
-        return totalAmountToPay;
+        return calculateTotalAmountToPay(whenRegistered);
     }
 
     public Money getTotalAmountToPay() {
@@ -753,7 +870,11 @@ public abstract class Event extends Event_Base {
     }
 
     public Money getOriginalAmountToPay() {
-        return getTotalAmountToPay(getWhenOccured().plusSeconds(1));
+        return calculateTotalAmountToPayBean(getWhenOccured().plusSeconds(1)).getOriginalAmount();
+    }
+
+    public AmountInterestBean getOriginalAmountToPayBean() {
+        return calculateTotalAmountToPayBean(getWhenOccured().plusSeconds(1));
     }
 
     public List<EntryDTO> calculateEntries() {
@@ -770,7 +891,7 @@ public abstract class Event extends Event_Base {
         Map<LocalDate, Money> dueDateExemptionMap = getExemptionValue(dueDateAmountMap, baseAmount);
         Map<LocalDate, Boolean> dueDatePenaltyExemptionMap = getDueDatePenaltyExemptionMap(when);
 
-        CashFlowBox cashFlowBox = new CashFlowBox(this, when);
+        CashFlowBox cashFlowBox = new CashFlowBox(this, when, baseAmount);
         Map<LocalDate, Money> amountsByInstallment = new HashMap<>();
         Map<LocalDate, Money> interestByInstallment = new HashMap<>();
 
@@ -794,6 +915,9 @@ public abstract class Event extends Event_Base {
             Money installmentAmount = amountsByInstallment.get(entry.getKey());
             Money interestAmount = Optional.ofNullable(interestByInstallment.get(entry.getKey())).orElse(Money.ZERO);
 
+            LabelFormatter entryDescription = getDescriptionForEntryType(entryType);
+            entryDescription.appendLabel(String.format(" [ %s ]", entry.getKey().toString("dd-MM-yyyy")));
+
             if (installmentAmount != null && installmentAmount.isPositive()) {
                 EntryDTO bean = null;
 
@@ -802,14 +926,16 @@ public abstract class Event extends Event_Base {
                 if (paymentPlan != null) {
                     Installment installment = paymentPlan.getInstallmentsSet().stream().filter(i -> i.getEndDate(this).equals(entry.getKey())).findAny().orElse(null);
                     if (installment != null) {
-                        bean = new EntryWithInstallmentDTO(entryType, this, installmentAmount, getDescriptionForEntryType(entryType), installment);
+                        bean = new EntryWithInstallmentDTO(entryType, this, installmentAmount, entryDescription, installment);
                     }
                 }
 
                 if (bean == null) {
+
+                    // remove interest amount since adding a separate entry with total interest at the end
                     Money debtAmount = calculateAmountToPay(when).subtract(interestAmount);
                     if (debtAmount.isPositive()) {
-                        bean = new EntryDTO(entryType, this, installmentAmount, getPayedAmount(when), debtAmount, getDescriptionForEntryType(entryType), debtAmount);
+                        bean = new EntryDTO(entryType, this, installmentAmount, getPayedAmount(when), debtAmount, entryDescription, debtAmount);
                     }
                 }
 
@@ -819,7 +945,7 @@ public abstract class Event extends Event_Base {
             }
         });
 
-        // add interest entry
+        // add total interest entry
 
         Money totalInterest = interestByInstallment.values().stream().reduce(Money.ZERO, Money::add);
         if (totalInterest.isPositive()) {

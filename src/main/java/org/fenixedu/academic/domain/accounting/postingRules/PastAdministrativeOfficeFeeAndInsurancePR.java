@@ -37,8 +37,9 @@ import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
-public class PastAdministrativeOfficeFeeAndInsurancePR extends PastAdministrativeOfficeFeeAndInsurancePR_Base {
+public class PastAdministrativeOfficeFeeAndInsurancePR extends PastAdministrativeOfficeFeeAndInsurancePR_Base implements IAdministrativeOfficeFeeAndInsurancePR {
 
     protected PastAdministrativeOfficeFeeAndInsurancePR() {
         super();
@@ -106,5 +107,10 @@ public class PastAdministrativeOfficeFeeAndInsurancePR extends PastAdministrativ
     public boolean isVisible() {
         return false;
     }
+
+    public YearMonthDay getAdministrativeOfficeFeePaymentLimitDate(DateTime startDate, DateTime endDate) {
+        return endDate.toYearMonthDay();
+    }
+
 
 }

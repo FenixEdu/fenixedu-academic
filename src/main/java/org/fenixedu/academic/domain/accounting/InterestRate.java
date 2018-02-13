@@ -14,7 +14,6 @@ import org.joda.time.Days;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 
-import edu.emory.mathcs.backport.java.util.Collections;
 import pt.ist.fenixframework.FenixFramework;
 
 public class InterestRate extends InterestRate_Base {
@@ -112,8 +111,8 @@ public class InterestRate extends InterestRate_Base {
 
         public static String toString(Interval interval) {
             final String start = interval.getStart().toLocalDate().toString("yyyy-MM-dd");
-            final String end = interval.getEnd().toLocalDate().toString("yyyy-MM-dd");
-            return String.format("[%s,%s[", start, end);
+            final String end = interval.getEnd().toLocalDate().minusDays(1).toString("yyyy-MM-dd");
+            return String.format("[%s,%s]", start, end);
         }
 
         public class PartialInterestRateBean {
@@ -145,7 +144,8 @@ public class InterestRate extends InterestRate_Base {
 
             @Override
             public String toString() {
-                return String.format("%s (%s)/365 x %s %% x %s = %s", InterestRateBean.toString(overlap), numberOfDays, rate.toPlainString(), amount.toPlainString(), result.toPlainString());
+                return String.format("%s (%s) / %s x %s %% x %s = %s", InterestRateBean.toString(overlap), numberOfDays, NUMBER_OF_DAYS_PER_YEAR, rate.toPlainString(), amount.toPlainString(),
+                    result.toPlainString());
             }
         }
 
@@ -162,17 +162,25 @@ public class InterestRate extends InterestRate_Base {
         public Interval getInterval() {
             return interval;
         }
-        
+
+        public Money getAmount() {
+            return amount;
+        }
+
         public Money getInterest() {
             return partials.stream().map(PartialInterestRateBean::getResult).reduce(Money.ZERO, Money::add);
         }
 
         public void addPartial(Interval overlap, BigDecimal rate) {
-            partials.add(new PartialInterestRateBean(overlap, rate));
+            addPartial(new PartialInterestRateBean(overlap, rate));
+        }
+
+        public void addPartial(PartialInterestRateBean bean) {
+            this.partials.add(bean);
         }
 
         public List<PartialInterestRateBean> getPartials() {
-            return Collections.singletonList(partials);
+            return new ArrayList<>(this.partials);
         }
 
         @Override
@@ -205,7 +213,7 @@ public class InterestRate extends InterestRate_Base {
         return Optional.empty();
     }
 
-    public static Money getInterest(LocalDate dueDate, Money amount, LocalDate when) {
+    public static Money getInterest(LocalDate dueDate, LocalDate when, Money amount) {
         return getInterestBean(dueDate, when, amount).map(InterestRateBean::getInterest).orElse(Money.ZERO);
     }
 

@@ -565,7 +565,7 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     @Override
     public Map<LocalDate, Boolean> getDueDatePenaltyExemptionMap(DateTime when) {
             return getPenaltyExemptionsFor(InstallmentPenaltyExemption.class).stream().map(InstallmentPenaltyExemption.class::cast)
-                       .collect(Collectors.toMap(p1 -> p1.getInstallment().getEndDate(this), p -> Boolean.FALSE));
+                       .collect(Collectors.toMap(p1 -> p1.getInstallment().getEndDate(this), p -> Boolean.FALSE, (u,v) -> Boolean.FALSE));
     }
 
     @Override

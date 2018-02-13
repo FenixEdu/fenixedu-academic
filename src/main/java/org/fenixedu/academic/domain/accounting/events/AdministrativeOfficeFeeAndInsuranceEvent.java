@@ -44,6 +44,7 @@ import org.fenixedu.academic.domain.accounting.events.insurance.IInsuranceEvent;
 import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import org.fenixedu.academic.domain.accounting.postingRules.AdministrativeOfficeFeeAndInsurancePR;
 import org.fenixedu.academic.domain.accounting.postingRules.AdministrativeOfficeFeePR;
+import org.fenixedu.academic.domain.accounting.postingRules.IAdministrativeOfficeFeeAndInsurancePR;
 import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.candidacy.Candidacy;
@@ -148,7 +149,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
     }
 
     public YearMonthDay getAdministrativeOfficeFeePaymentLimitDate() {
-        return getPaymentEndDate() != null ? getPaymentEndDate() : getAdministrativeOfficeFeeAndInsurancePR()
+        return getPaymentEndDate() != null ? getPaymentEndDate() : ((IAdministrativeOfficeFeeAndInsurancePR)getPostingRule())
                 .getAdministrativeOfficeFeePaymentLimitDate(getStartDate(), getEndDate());
     }
 
