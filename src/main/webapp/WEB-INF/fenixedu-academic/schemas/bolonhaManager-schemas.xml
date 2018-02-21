@@ -216,7 +216,7 @@
 <schema name="view.reference" type="org.fenixedu.academic.domain.degreeStructure.BibliographicReferences$BibliographicReference" bundle="BOLONHA_MANAGER_RESOURCES">
 		<slot name="title"/>
 		<slot name="authors"/>
-	    <slot name="year"/>
+	    <slot name="year" key="year"/>
 		<slot name="reference"/>
 		<slot name="url"/>
 </schema>
@@ -228,7 +228,7 @@
 		<slot name="authors" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			<property name="size" value="70"/>
 		</slot>
-	    <slot name="year" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	    <slot name="year" key="year" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<slot name="reference" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			<property name="size" value="70"/>
 		</slot>
@@ -249,7 +249,7 @@
 		<slot name="authors" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			<property name="size" value="70"/>
 		</slot>
-	    <slot name="year" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	    <slot name="year" key="year" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<slot name="reference">
 			<property name="size" value="70"/>
 		</slot>
@@ -265,7 +265,7 @@
 		<slot name="authors" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			<property name="size" value="70"/>
 		</slot>
-	    <slot name="year" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	    <slot name="year" key="year" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<slot name="reference">
 			<property name="size" value="70"/>
 		</slot>

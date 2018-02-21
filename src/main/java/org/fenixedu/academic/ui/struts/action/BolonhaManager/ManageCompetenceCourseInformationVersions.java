@@ -39,6 +39,7 @@ import org.fenixedu.academic.domain.DegreeModuleScope;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation;
@@ -93,7 +94,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
                         .collect(Collectors.toList());
 
         final Set<CompetenceCourse> taughtCompetenceCourses = AccessControl.getPerson()
-                .getProfessorships(ExecutionSemester.readActualExecutionSemester()).stream().filter(p -> p.isResponsibleFor())
+                .getProfessorships(ExecutionYear.readCurrentExecutionYear()).stream().filter(p -> p.isResponsibleFor())
                 .flatMap(p -> p.getExecutionCourse().getCompetenceCourses().stream()).collect(Collectors.toSet());
 
         request.setAttribute("competenceCourses", taughtCompetenceCourses);

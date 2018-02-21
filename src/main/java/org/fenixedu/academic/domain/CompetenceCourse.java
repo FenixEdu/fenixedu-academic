@@ -975,11 +975,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return result;
     }
 
-    @Override
-    public void addCompetenceCourseInformations(CompetenceCourseInformation competenceCourseInformations) {
-        check(this, CompetenceCoursePredicates.writePredicate);
-        super.addCompetenceCourseInformations(competenceCourseInformations);
-    }
+//    @Override
+//    public void addCompetenceCourseInformations(CompetenceCourseInformation competenceCourseInformations) {
+//        check(this, CompetenceCoursePredicates.writePredicate);
+//        super.addCompetenceCourseInformations(competenceCourseInformations);
+//    }
 
     @Override
     public void addDepartments(Department departments) {
