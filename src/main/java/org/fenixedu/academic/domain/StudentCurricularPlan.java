@@ -2006,27 +2006,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return result;
     }
 
-    public Collection<CurricularCourse> getAllCurricularCoursesToDismissal(final ExecutionSemester executionSemester) {
-        final Collection<CurricularCourse> result = new HashSet<CurricularCourse>();
-        if (isBolonhaDegree()) {
-            for (final CycleType cycleType : getDegreeType().getSupportedCyclesToEnrol()) {
-                final CourseGroup courseGroup = getCourseGroupWithCycleTypeToCollectCurricularCourses(cycleType);
-                if (courseGroup != null) {
-                    for (final CurricularCourse curricularCourse : courseGroup.getAllCurricularCourses(executionSemester)) {
-                        if (!isApproved(curricularCourse)) {
-                            result.add(curricularCourse);
-                        }
-                    }
-                }
-            }
-        } else {
-            for (final CurricularCourse curricularCourse : getDegreeCurricularPlan().getCurricularCoursesSet()) {
-                if (curricularCourse.isActive(executionSemester) && !isApproved(curricularCourse)) {
-                    result.add(curricularCourse);
-                }
-            }
-        }
-        return result;
+    public Collection<CurricularCourse> getAllCurricularCoursesToDismissal(final ExecutionSemester input) {
+        return getCourseGroupsToApplyDismissals().stream().flatMap(group -> group.getAllCurricularCourses(input).stream())
+                .filter(course -> !isApproved(course)).collect(Collectors.toSet());
+    }
+
+    private Collection<CourseGroup> getCourseGroupsToApplyDismissals() {
+        return getRoot().getCurriculumGroups().stream().filter(i -> i.getDegreeModule() != null).map(i -> i.getDegreeModule())
+                .collect(Collectors.toSet());
     }
 
     public Collection<CurricularCourse> getAllCurricularCoursesToDismissal() {
