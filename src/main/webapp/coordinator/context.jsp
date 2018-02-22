@@ -57,6 +57,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><bean:message key="label.coordinator.management"/> <b class="caret"></b></a>
               <ul class="dropdown-menu">
+              <%--
                 <li>
                   <a href="${base}/viewCoordinationTeam.do?method=chooseExecutionYear&degreeCurricularPlanID=${dcp}">
                     <bean:message key="link.coordinator.degreeCurricularPlan.coordinationTeam"/>
@@ -72,12 +73,14 @@
                     <bean:message key="link.coordinator.degreeSite.management"/>
                   </a>
                 </li>
+              --%>
                 <c:if test="${degree.bolonhaDegree}">
                   <li>
                     <a href="${base}/degreeCurricularPlan/showDegreeCurricularPlanBolonha.faces?degreeCurricularPlanID=${dcp}&organizeBy=groups&showRules=false&hideCourses=false">
                       <bean:message key="link.coordinator.degreeCurricularPlan.management"/>
                     </a>
                   </li>
+                  <%--
                   <li>
                     <a href="${base}/degreeCurricularPlan/showAllCompetenceCourses.faces?degreeCurricularPlanID=${dcp}">
                       <bean:message key="list.competence.courses"/>
@@ -88,12 +91,15 @@
                       <bean:message key="link.equivalency.plan"/>
                     </a>
                   </li>
+                  --%>
                 </c:if>
+                <%--
                 <li>
                   <a href="${base}/sendEmail.do?method=sendEmail&degreeCurricularPlanID=${dcp}">
                     <bean:message key="link.coordinator.sendMail"/>
                   </a>
                 </li>
+                --%>
               </ul>
             </li>
           </c:if>
@@ -110,13 +116,16 @@
                     <bean:message key="list.students" />
                   </a>
                 </li>
+                 <%--
                 <li>
                   <a href="${base}/weeklyWorkLoad.do?method=prepare&degreeCurricularPlanID=${dcp}">
                     <bean:message key="link.weekly.work.load" />
                   </a>
                 </li>
+                --%>
               </ul>
             </li>
+            <%--
             <c:if test="${degree.degreeType.bolonhaDegree || degree.degreeType.integratedMasterDegree || degree.degreeType.bolonhaMasterDegree }">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><bean:message key="label.candidacies"/> <b class="caret"></b></a>
@@ -166,7 +175,9 @@
               </ul>
             </li>
           </c:if>
+          --%>
         </ul>
+         <%--
         <ul class="nav navbar-nav navbar-right">
           <li>
             <a href="${base}/searchDLog.do?method=prepareInit&degreeCurricularPlanID=${dcp}">
@@ -174,6 +185,7 @@
             </a>
           </li>
         </ul>
+         --%>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>

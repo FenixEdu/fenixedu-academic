@@ -180,6 +180,7 @@
                   <form-property type="java.lang.String" name="degreeCurricularPlanID"></form-property>
                   <form-property type="java.lang.String" name="organizedBy"></form-property>
                   <form-property initial="false" type="java.lang.Boolean" name="detailed"></form-property>
+                  <form-property type="java.lang.String" name="detailedType"></form-property>
                   <form-property type="java.lang.String" name="viewType"></form-property>
             </form-bean>
             <!-- PRINT ALL DOCUMENTS FORMS -->
