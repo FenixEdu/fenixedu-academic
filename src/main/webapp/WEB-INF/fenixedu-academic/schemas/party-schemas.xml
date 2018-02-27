@@ -80,22 +80,14 @@
 		<property name="size" value="50"/>
 	</slot>
 	<slot name="mobile" key="label.person.mobilePhone">
-    	<property name="size" value="15"/>
-		<property name="maxLength" value="15"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\d{4,15})?"/>
-            <property name="message" value="error.phone.invalidFormat"/>
-            <property name="key" value="true"/>
-        </validator>
+		<property name="size" value="30" />
+		<property name="maxLength" value="30" />
+        <validator class="org.fenixedu.academic.ui.renderers.validators.PhoneValidator"/>
     </slot>
 	<slot name="workPhone" key="label.person.workPhone">
-    	<property name="size" value="15"/>
-		<property name="maxLength" value="15"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\d{4,15})?"/>
-            <property name="message" value="error.phone.invalidFormat"/>
-            <property name="key" value="true"/>
-        </validator>
+		<property name="size" value="30" />
+		<property name="maxLength" value="30" />
+        <validator class="org.fenixedu.academic.ui.renderers.validators.PhoneValidator"/>
     </slot>
 	<slot name="email" key="label.person.email" validator="pt.ist.fenixWebFramework.renderers.validators.EmailValidator">
 		<property name="size" value="50"/>
@@ -109,31 +101,19 @@
 </schema>
 <schema name="org.fenixedu.academic.domain.Person.contact.info.without.email" type="org.fenixedu.academic.domain.Person"> 
 	<slot name="phone" key="label.person.telephone">
-    	<property name="size" value="15"/>
-		<property name="maxLength" value="15"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\d{4,15})?"/>
-            <property name="message" value="error.phone.invalidFormat"/>
-            <property name="key" value="true"/>
-        </validator>
+		<property name="size" value="30" />
+		<property name="maxLength" value="30" />
+        <validator class="org.fenixedu.academic.ui.renderers.validators.PhoneValidator"/>
     </slot>
 	<slot name="mobile" key="label.person.mobilePhone">
-    	<property name="size" value="15"/>
-		<property name="maxLength" value="15"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\d{4,15})?"/>
-            <property name="message" value="error.phone.invalidFormat"/>
-            <property name="key" value="true"/>
-        </validator>
+		<property name="size" value="30" />
+		<property name="maxLength" value="30" />
+        <validator class="org.fenixedu.academic.ui.renderers.validators.PhoneValidator"/>
     </slot>
 	<slot name="workPhone" key="label.person.workPhone">
-    	<property name="size" value="15"/>
-		<property name="maxLength" value="15"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\d{4,15})?"/>
-            <property name="message" value="error.phone.invalidFormat"/>
-            <property name="key" value="true"/>
-        </validator>
+		<property name="size" value="30" />
+		<property name="maxLength" value="30" />
+        <validator class="org.fenixedu.academic.ui.renderers.validators.PhoneValidator"/>
     </slot>
 	<slot name="email" hidden="true"/>
 	<slot name="webAddress" key="label.person.webSite">

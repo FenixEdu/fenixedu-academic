@@ -25,6 +25,7 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlValidator;
 
+@SuppressWarnings("serial")
 public class PhoneValidator extends HtmlValidator {
 
     public PhoneValidator() {
@@ -37,7 +38,10 @@ public class PhoneValidator extends HtmlValidator {
 
     @Override
     public void performValidation() {
-        setValid(PhoneUtil.isValidNumber(getComponent().getValue()));
+        final String value = getComponent().getValue();
+        // let the RequiredValidator do the work if this slot is actually required
+        final boolean isEmpty = value == null || value.trim().isEmpty();
+        setValid(isEmpty || PhoneUtil.isValidNumber(value));
     }
 
     @Override
