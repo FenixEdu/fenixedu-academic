@@ -36,11 +36,13 @@ import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.UriBuilder;
 
 import org.fenixedu.academic.domain.Attends;
+import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Attends.StudentAttendsStateType;
 import org.fenixedu.academic.domain.Mark;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.StudentGroup;
+import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.domain.util.email.ExecutionCourseSender;
 import org.fenixedu.academic.domain.util.email.Recipient;
@@ -125,8 +127,16 @@ public class AttendsSearchController extends ExecutionCourseController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public @ResponseBody ResponseEntity<String> listAttends() {
-        return new ResponseEntity<>(view(executionCourse.getAttendsSet().stream()
-                .filter(attendee -> attendee.getRegistration() != null)).toString(), HttpStatus.OK);
+        return new ResponseEntity<String>(
+                view(executionCourse.getAttendsSet().stream().filter(attendee -> attendee.getRegistration() != null
+                        && !hasEnrolmentAnnuled(attendee.getRegistration(), executionCourse))),
+                HttpStatus.OK);
+    }
+
+    static private boolean hasEnrolmentAnnuled(final Registration registration, final ExecutionCourse course) {
+        final Attends attends = registration == null ? null : registration.getAssociatedAttendsSet().stream()
+                .filter(a -> a.getExecutionCourse() == course).findAny().orElse(null);
+        return attends != null && attends.getEnrolment().isAnnulled();
     }
 
     @RequestMapping(value = "/studentSpreadsheet", method = RequestMethod.POST)
@@ -150,13 +160,13 @@ public class AttendsSearchController extends ExecutionCourseController {
                         addCell(getLabel("label.number"), attends.getRegistration().getNumber());
                         addCell(getLabel("label.name"), attends.getRegistration().getPerson().getName());
                         addCell(getLabel("label.email"), attends.getRegistration().getPerson().getDefaultEmailAddressValue());
-                        executionCourse.getGroupings().forEach(
-                                gr -> addCell(getLabel("label.projectGroup") + " " + gr.getName(), attends.getStudentGroupsSet()
-                                        .stream().filter(sg -> sg.getGrouping().equals(gr)).map(StudentGroup::getGroupNumber)
-                                        .map(gn -> gn.toString()).findAny().orElse("")));
-                        executionCourse.getShiftTypes().forEach(
-                                shiftType -> addCell(
-                                        getLabel("label.shift") + " " + shiftType.getFullNameTipoAula(),
+                        executionCourse.getGroupings()
+                                .forEach(gr -> addCell(getLabel("label.projectGroup") + " " + gr.getName(),
+                                        attends.getStudentGroupsSet().stream().filter(sg -> sg.getGrouping().equals(gr))
+                                                .map(StudentGroup::getGroupNumber).map(gn -> gn.toString()).findAny()
+                                                .orElse("")));
+                        executionCourse.getShiftTypes()
+                                .forEach(shiftType -> addCell(getLabel("label.shift") + " " + shiftType.getFullNameTipoAula(),
                                         Optional.ofNullable(
                                                 attends.getRegistration().getShiftFor(attends.getExecutionCourse(), shiftType))
                                                 .map(Shift::getNome).orElse("")));
@@ -172,30 +182,34 @@ public class AttendsSearchController extends ExecutionCourseController {
 
                         RegistrationState registrationState =
                                 attends.getRegistration().getLastRegistrationState(attends.getExecutionYear());
-                        addCell(getLabel("label.registration.state"), registrationState == null ? "" : registrationState
-                                .getStateType().getDescription());
+                        addCell(getLabel("label.registration.state"),
+                                registrationState == null ? "" : registrationState.getStateType().getDescription());
 
-                        addCell(getLabel("label.Degree"), attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan()
-                                .getPresentationName());
+                        addCell(getLabel("label.Degree"),
+                                attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan().getPresentationName());
 
-                        Collection<StudentStatuteBean> studentStatutes =
-                                attends.getRegistration().getStudent().getStatutes(executionCourse.getExecutionPeriod());
-                        if (studentStatutes.size() > 0) {
-                            addCell(getLabel("label.studentStatutes"),
-                                    studentStatutes.stream()
-                                            .map(st -> st.getStatuteType().getName().getContent()
-                                                    + (Strings.isNullOrEmpty(st.getStudentStatute().getComment()) ? "" : " ("
-                                                            + st.getStudentStatute().getComment() + ")"))
-                                            .collect(Collectors.joining(" | ")));
-                        }
+                        /*
+                         * Ignoring 'workingStudentTypes'
+                         */
+                        //                        if (attends.getRegistration().getStudent().hasWorkingStudentStatuteInPeriod(attends.getExecutionPeriod())) {
+                        //                            addCell(getLabel("label.workingStudents"),
+                        //                                    BundleUtil.getString(Bundle.ENUMERATION,
+                        //                                            WorkingStudentSelectionType.WORKING_STUDENT.getQualifiedName()));
+                        //                        } else {
+                        //                            addCell(getLabel("label.workingStudents"),
+                        //                                    BundleUtil.getString(Bundle.ENUMERATION,
+                        //                                            WorkingStudentSelectionType.NOT_WORKING_STUDENT.getQualifiedName()));
+                        //                        }
+
+                        addCell(getLabel("label.students.statutes"),
+                                attends.getRegistration().getStudent().getStatutes(attends.getExecutionPeriod()).stream()
+                                        .map(statute -> statute.getDescription()).collect(Collectors.joining("; ")));
                     }
                 });
 
         response.setContentType("application/vnd.ms-excel");
-        response.setHeader(
-                "Content-disposition",
-                String.format(
-                        "attachment; filename=%s.xls",
+        response.setHeader("Content-disposition",
+                String.format("attachment; filename=%s.xls",
                         Joiner.on(" - ")
                                 .join(executionCourse.getSigla(),
                                         BundleUtil.getString("resources.ApplicationResources", "label.students"))
@@ -223,21 +237,18 @@ public class AttendsSearchController extends ExecutionCourseController {
                         addCell(getLabel("label.username"), attends.getRegistration().getPerson().getUsername());
                         addCell(getLabel("label.number"), attends.getRegistration().getNumber());
                         addCell(getLabel("label.name"), attends.getRegistration().getPerson().getPresentationName());
-                        addCell(getLabel("label.Degree"), attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan()
-                                .getPresentationName());
+                        addCell(getLabel("label.Degree"),
+                                attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan().getPresentationName());
                         addCell(getLabel("label.attends.enrollmentState"),
                                 BundleUtil.getString(Bundle.ENUMERATION, attends.getAttendsStateType().getQualifiedName()));
-                        executionCourse.getAssociatedEvaluationsSet().forEach(
-                                ev -> addCell(
-                                        ev.getPresentationName(),
-                                        attends.getAssociatedMarksSet().stream().filter(mark -> mark.getEvaluation() == ev)
-                                                .map(Mark::getMark).findAny().orElse("")));
+                        executionCourse.getAssociatedEvaluationsSet()
+                                .forEach(ev -> addCell(ev.getPresentationName(), attends.getAssociatedMarksSet().stream()
+                                        .filter(mark -> mark.getEvaluation() == ev).map(Mark::getMark).findAny().orElse("")));
                     }
                 });
 
         response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-disposition", String.format(
-                "attachment; filename=%s.xls",
+        response.setHeader("Content-disposition", String.format("attachment; filename=%s.xls",
                 Joiner.on(" - ")
                         .join(executionCourse.getSigla(), BundleUtil.getString("resources.ApplicationResources", "label.grades"))
                         .replace(" ", "_")));
@@ -296,12 +307,11 @@ public class AttendsSearchController extends ExecutionCourseController {
             }
         }
 
-        String label =
-                String.format("%s : %s \n%s : %s \n%s : %s \n%s : %s",
-                        BundleUtil.getString(Bundle.APPLICATION, "label.selectStudents"), attendTypeValues,
-                        BundleUtil.getString(Bundle.APPLICATION, "label.attends.courses"), degreeNameValues,
-                        BundleUtil.getString(Bundle.APPLICATION, "label.selectShift"), shiftsValues,
-                        BundleUtil.getString(Bundle.APPLICATION, "label.studentStatutes"), studentStatuteTypesValues);
+        String label = String.format("%s : %s \n%s : %s \n%s : %s \n%s",
+                BundleUtil.getString(Bundle.APPLICATION, "label.selectStudents"), attendTypeValues,
+                BundleUtil.getString(Bundle.APPLICATION, "label.attends.courses"), degreeNameValues,
+                BundleUtil.getString(Bundle.APPLICATION, "label.selectShift"), shiftsValues, workingStudentsValues);
+
 
         Builder<Attends> builder = Stream.builder();
         for (JsonElement elem : new JsonParser().parse(filteredAttendsJson).getAsJsonArray()) {
@@ -313,14 +323,11 @@ public class AttendsSearchController extends ExecutionCourseController {
                 Group.users(builder.build().map(a -> a.getRegistration().getPerson().getUser()).filter(Objects::nonNull)
                         .sorted(User.COMPARATOR_BY_NAME));
         ArrayList<Recipient> recipients = new ArrayList<Recipient>();
-        recipients.add(Recipient.newInstance(label, users));
-        String sendEmailUrl =
-                UriBuilder
-                        .fromUri("/messaging/emails.do")
-                        .queryParam("method", "newEmail")
-                        .queryParam("sender", ExecutionCourseSender.newInstance(executionCourse).getExternalId())
-                        .queryParam("recipient", recipients.stream().filter(r -> r != null).map(r -> r.getExternalId()).toArray())
-                        .build().toString();
+        recipients.add(Recipient.newInstance(label, UserGroup.of(users)));
+        String sendEmailUrl = UriBuilder.fromUri("/messaging/emails.do").queryParam("method", "newEmail")
+                .queryParam("sender", ExecutionCourseSender.newInstance(executionCourse).getExternalId())
+                .queryParam("recipient", recipients.stream().filter(r -> r != null).map(r -> r.getExternalId()).toArray()).build()
+                .toString();
         String sendEmailWithChecksumUrl =
                 GenericChecksumRewriter.injectChecksumInUrl(request.getContextPath(), sendEmailUrl, session);
         return new RedirectView(sendEmailWithChecksumUrl, true);
