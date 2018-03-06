@@ -21,7 +21,7 @@ public class ServiceRequestType extends ServiceRequestType_Base {
     static final public Comparator<ServiceRequestType> COMPARE_BY_CATEGORY_THEN_BY_NAME = new Comparator<ServiceRequestType>() {
 
         @Override
-        public int compare(ServiceRequestType o1, ServiceRequestType o2) {
+        public int compare(final ServiceRequestType o1, final ServiceRequestType o2) {
             if (o1.getServiceRequestCategory() == null) {
                 return -1;
             }
@@ -51,6 +51,24 @@ public class ServiceRequestType extends ServiceRequestType_Base {
         setNotifyUponConclusion(notifyUponConclusion);
         setPrintable(printable);
         setRequestedOnline(requestedOnline);
+        setServiceRequestCategory(category);
+
+        checkRules();
+    }
+
+    protected ServiceRequestType(final String code, final LocalizedString name, final boolean active, final boolean payable,
+            final Boolean notifyUponConclusion, final Boolean printable, final Boolean requestedOnline,
+            final Boolean printableOnline, final ServiceRequestCategory category) {
+        this();
+
+        super.setCode(code);
+        super.setName(name);
+        setActive(active);
+        setPayable(payable);
+        setNotifyUponConclusion(notifyUponConclusion);
+        setPrintable(printable);
+        setRequestedOnline(requestedOnline);
+        setPrintableOnline(printableOnline);
         setServiceRequestCategory(category);
 
         checkRules();
@@ -102,6 +120,10 @@ public class ServiceRequestType extends ServiceRequestType_Base {
         return getRequestedOnline() == null ? false : getRequestedOnline();
     }
 
+    public boolean isPrintableOnline() {
+        return getPrintableOnline() == null ? false : getPrintableOnline();
+    }
+
     public boolean isLegacy() {
         return getAcademicServiceRequestType() != null;
     }
@@ -123,8 +145,26 @@ public class ServiceRequestType extends ServiceRequestType_Base {
         checkRules();
     }
 
+    @Atomic
+    public void edit(final String code, final LocalizedString name, final boolean active, final boolean payable,
+            final Boolean notifyUponConclusion, final Boolean printable, final Boolean requestedOnline,
+            final Boolean printableOnline, final ServiceRequestCategory category, final LocalizedString numberOfUnitsLabel) {
+        setCode(code);
+        setName(name);
+        setActive(active);
+        setPayable(payable);
+        setNotifyUponConclusion(notifyUponConclusion);
+        setPrintable(printable);
+        setRequestedOnline(requestedOnline);
+        setPrintableOnline(printableOnline);
+        setServiceRequestCategory(category);
+        setNumberOfUnitsLabel(null);
+
+        checkRules();
+    }
+
     @Override
-    protected void checkForDeletionBlockers(Collection<String> blockers) {
+    protected void checkForDeletionBlockers(final Collection<String> blockers) {
         if (getAcademicServiceRequestsSet().size() != 1) {
             blockers.add(
                     BundleUtil.getString(Bundle.APPLICATION, "error.ServiceRequestType.academicServiceRequestsSet.not.empty"));
@@ -168,7 +208,7 @@ public class ServiceRequestType extends ServiceRequestType_Base {
             return academicServiceRequest.getServiceRequestType();
         }
 
-        // Fallback 
+        // Fallback
         if (academicServiceRequest.isDocumentRequest()) {
             return findUnique(academicServiceRequest.getAcademicServiceRequestType(),
                     ((DocumentRequest) academicServiceRequest).getDocumentRequestType());
@@ -206,6 +246,14 @@ public class ServiceRequestType extends ServiceRequestType_Base {
             final boolean payable, final Boolean notifyUponConclusion, final Boolean printable, final Boolean requestedOnline,
             final ServiceRequestCategory category) {
         return new ServiceRequestType(code, name, active, payable, notifyUponConclusion, printable, requestedOnline, category);
+    }
+
+    @Atomic
+    public static ServiceRequestType create(final String code, final LocalizedString name, final boolean active,
+            final boolean payable, final Boolean notifyUponConclusion, final Boolean printable, final Boolean requestedOnline,
+            final Boolean printableOnline, final ServiceRequestCategory category) {
+        return new ServiceRequestType(code, name, active, payable, notifyUponConclusion, printable, requestedOnline,
+                printableOnline, category);
     }
 
     @Atomic

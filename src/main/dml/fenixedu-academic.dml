@@ -2757,6 +2757,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
     	Boolean notifyUponConclusion;
     	Boolean printable;
     	Boolean requestedOnline;
+    	Boolean printableOnline;
     	ServiceRequestCategory serviceRequestCategory;
     	LocalizedString numberOfUnitsLabel;
     }
