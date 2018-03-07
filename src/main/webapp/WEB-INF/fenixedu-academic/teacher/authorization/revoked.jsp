@@ -67,6 +67,7 @@ text-align: center;
 			<th><spring:message code="teacher.authorizations.period" ></spring:message></th>
 			<th><spring:message code="teacher.authorizations.category" ></spring:message></th>
 			<th><spring:message code="teacher.authorizations.lessonHours" ></spring:message></th>
+			<th><spring:message code="teacher.authorizations.workPercentageInInstitution" ></spring:message></th>
 			<th><spring:message code="teacher.authorizations.authorized" ></spring:message></th>
 			<th><spring:message code="teacher.authorizations.revoked" ></spring:message></th>
 		</thead>
@@ -96,6 +97,7 @@ text-align: center;
 					<td><c:out value="${auth.executionSemester.qualifiedName}"/></td>
 					<td><c:out value="${auth.teacherCategory.name.content}"/></td>
 					<td>${auth.lessonHours}</td>
+					<td>${auth.workPercentageInInstitution}</td>
 					<c:if test="${not empty auth.authorizer}">
 						<td><c:out value="${auth.authorizer.profile.displayName} (${auth.authorizer.username})"/></td>
 					</c:if>

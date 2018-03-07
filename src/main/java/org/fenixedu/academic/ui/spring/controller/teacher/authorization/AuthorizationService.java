@@ -27,6 +27,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Teacher;
@@ -135,7 +136,7 @@ public class AuthorizationService {
      */
     public TeacherAuthorization createTeacherAuthorization(FormBean bean) {
         return createTeacherAuthorization(bean.getUser(), bean.getDepartment(), bean.getPeriod(), bean.getCategory(),
-                bean.getContracted(), bean.getLessonHours());
+                bean.getContracted(), bean.getLessonHours(), bean.getWorkPercentageInInstitution());
     }
 
     /***
@@ -148,13 +149,14 @@ public class AuthorizationService {
      * @param category The teacher category
      * @param contracted true if the teacher is contracted, false if otherwise
      * @param lessonHours the number of hours the teacher must teacher
+     * @param workPercentageInInstitution the percentage of workload of teacher in this institution
      * @return the created {@link TeacherAuthorization} object
      * 
      */
 
     @Atomic(mode = TxMode.WRITE)
     public TeacherAuthorization createTeacherAuthorization(User user, Department department, ExecutionSemester semester,
-            TeacherCategory category, Boolean contracted, Double lessonHours) {
+            TeacherCategory category, Boolean contracted, Double lessonHours, Double workPercentageInInstitution) {
 
         Teacher teacher;
 
@@ -164,7 +166,8 @@ public class AuthorizationService {
             teacher = user.getPerson().getTeacher();
         }
 
-        return TeacherAuthorization.createOrUpdate(teacher, department, semester, category, contracted, lessonHours);
+        return TeacherAuthorization.createOrUpdate(teacher, department, semester, category, contracted, lessonHours,
+                workPercentageInInstitution);
     }
 
     /***
@@ -273,6 +276,7 @@ public class AuthorizationService {
                 addCell(message("teacher.authorizations.csv.column.3.departmentAcronym"), item.getDepartment().getAcronym());
                 addCell(message("teacher.authorizations.csv.column.4.lessonHours"), item.getLessonHours());
                 addCell(message("teacher.authorizations.csv.column.5.contracted"), item.isContracted() ? "Y" : "N");
+                addCell(message("teacher.authorizations.csv.column.6.workPercentageInInstitution"), item.getWorkPercentageInInstitution());
                 addCell(message("teacher.authorizations.displayname"), user.getProfile().getDisplayName());
                 addCell(message("teacher.authorizations.category"), item.getTeacherCategory().getName().getContent());
                 addCell(message("teacher.authorizations.department"), item.getDepartment().getNameI18n().getContent());
@@ -336,10 +340,11 @@ public class AuthorizationService {
                     String departmentAcronym = auth.get(message("teacher.authorizations.csv.column.3.departmentAcronym"));
                     String hoursValue = auth.get(message("teacher.authorizations.csv.column.4.lessonHours"));
                     String contractedValue = auth.get(message("teacher.authorizations.csv.column.5.contracted"));
+                    String workPercentageInInstitutionValue = auth.get(message("teacher.authorizations.csv.column.6.workPercentageInInstitution"));
 
                     if (Strings.isNullOrEmpty(username) && Strings.isNullOrEmpty(categoryCode)
                             && Strings.isNullOrEmpty(departmentAcronym) && Strings.isNullOrEmpty(hoursValue)
-                            && Strings.isNullOrEmpty(contractedValue)) {
+                            && Strings.isNullOrEmpty(contractedValue) && Strings.isNullOrEmpty(workPercentageInInstitutionValue)) {
                         // ignore empty line
                         return Optional.<TeacherAuthorization> empty();
                     }
@@ -377,9 +382,21 @@ public class AuthorizationService {
                     }
 
                     Boolean contracted = new Boolean("Y".equals(contractedValue));
+                    
+                    Double workPercentageInInstitution = null;
+
+                    if (StringUtils.isNotBlank(workPercentageInInstitutionValue)) {
+                        try {
+                            workPercentageInInstitution = Double.parseDouble(workPercentageInInstitutionValue);
+                        } catch (NumberFormatException nfe) {
+                            throw new RuntimeException(
+                                    message("teacher.authorizations.csv.column.6.workPercentageInInstitution.error",
+                                            workPercentageInInstitutionValue));
+                        }
+                    }
 
                     return Optional.<TeacherAuthorization> of(createTeacherAuthorization(user, department, period,
-                            category.get(), contracted, lessonHours));
+                            category.get(), contracted, lessonHours, workPercentageInInstitution));
 
                 }).filter(Optional::isPresent).map(Optional::get).collect(Collectors.toList());
     }

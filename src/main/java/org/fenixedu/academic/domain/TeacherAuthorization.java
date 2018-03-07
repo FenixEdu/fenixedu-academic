@@ -33,7 +33,7 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
     }
 
     protected TeacherAuthorization(Teacher teacher, Department department, ExecutionSemester executionSemester,
-            TeacherCategory teacherCategory, Boolean contracted, Double lessonHours) {
+            TeacherCategory teacherCategory, Boolean contracted, Double lessonHours, Double workPercentageInInstitution) {
         this();
         setTeacher(teacher);
         setDepartment(department);
@@ -41,11 +41,12 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
         setTeacherCategory(teacherCategory);
         setContracted(contracted);
         setLessonHours(lessonHours);
+        setWorkPercentageInInstitution(workPercentageInInstitution);
         setAuthorizer(Authenticate.getUser());
     }
 
-    public static TeacherAuthorization createOrUpdate(Teacher teacher, Department department,
-            ExecutionSemester executionSemester, TeacherCategory teacherCategory, Boolean contracted, Double lessonHours) {
+    public static TeacherAuthorization createOrUpdate(Teacher teacher, Department department, ExecutionSemester executionSemester,
+            TeacherCategory teacherCategory, Boolean contracted, Double lessonHours, Double workPercentageInInstitution) {
         Objects.requireNonNull(teacher);
         Objects.requireNonNull(department);
         Objects.requireNonNull(executionSemester);
@@ -61,7 +62,8 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
                 existing.revoke();
             }
         }
-        return new TeacherAuthorization(teacher, department, executionSemester, teacherCategory, contracted, lessonHours);
+        return new TeacherAuthorization(teacher, department, executionSemester, teacherCategory, contracted, lessonHours,
+                workPercentageInInstitution);
     }
 
     @Override
@@ -126,6 +128,12 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
     public Double getLessonHours() {
         // FIXME: Removed when framework support read-only slots
         return super.getLessonHours();
+    }
+    
+    @Override
+    public Double getWorkPercentageInInstitution() {
+        // FIXME: Removed when framework support read-only slots
+        return super.getWorkPercentageInInstitution();
     }
 
     @Override

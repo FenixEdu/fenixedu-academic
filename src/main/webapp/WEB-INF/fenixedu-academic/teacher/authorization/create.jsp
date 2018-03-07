@@ -87,6 +87,13 @@ ${portal.toolkit()}
 		</div>
 		
 		<div class="form-group">
+			<form:label for="lessonHours" path="workPercentageInInstitution" class="col-sm-1 control-label"><spring:message code="teacher.authorizations.workPercentageInInstitution" /></form:label>
+			<div class="col-sm-11">
+				<input id="lessonHours" name="workPercentageInInstitution" class="form-control" type="number" step="any" min="0"/>
+			</div>
+		</div>		
+		
+		<div class="form-group">
 			<div class="col-sm-push-1 col-sm-11">
 				<a class="btn btn-default" href="${authorizationsUrl}"><spring:message code="label.cancel"/></a>
 				<button type="submit" class="btn btn-primary"><spring:message code="label.create"/></button>

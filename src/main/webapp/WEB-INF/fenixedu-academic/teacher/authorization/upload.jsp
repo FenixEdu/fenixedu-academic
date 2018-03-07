@@ -96,6 +96,14 @@
 					<spring:message code="teacher.authorizations.csv.column.5.contracted.example"/>
 				</i>
 			</li>
+			<li>
+				<spring:message code="teacher.authorizations.csv.column.6.workPercentageInInstitution" />
+				<br />
+				<i>
+					<spring:message code="teacher.authorizations.csv.column.6.workPercentageInInstitution.example"/>
+				</i>
+			</li>
+			
 		</ol>
 	</div>
 </section>

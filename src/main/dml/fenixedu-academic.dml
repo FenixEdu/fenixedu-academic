@@ -1240,6 +1240,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
 	    protected Boolean contracted (REQUIRED);
 	    protected DateTime revokeTime;
         protected Double lessonHours (REQUIRED);
+        protected Double workPercentageInInstitution;
 	}
 
 	class TeacherCategory {

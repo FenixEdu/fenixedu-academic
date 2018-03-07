@@ -55,6 +55,7 @@
 					<th><spring:message code="teacher.authorizations.period" ></spring:message></th>
 					<th><spring:message code="teacher.authorizations.category" ></spring:message></th>
 					<th><spring:message code="teacher.authorizations.lessonHours" ></spring:message></th>
+					<th><spring:message code="teacher.authorizations.workPercentageInInstitution" ></spring:message></th>
 					<th><spring:message code="teacher.authorizations.authorized" ></spring:message></th>
 				</thead>
 				<tbody>
@@ -77,6 +78,7 @@
 							<td><c:out value="${auth.executionSemester.qualifiedName}"/></td>
 							<td><c:out value="${auth.teacherCategory.name.content}"/></td>
 							<td>${auth.lessonHours}</td>
+							<td>${auth.workPercentageInInstitution}</td>
 							<td><c:out value="${auth.authorizer.name} (${auth.authorizer.username})"/></td>
 						</tr>
 					</c:forEach>

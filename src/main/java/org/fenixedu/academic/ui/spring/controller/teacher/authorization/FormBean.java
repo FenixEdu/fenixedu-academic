@@ -27,6 +27,7 @@ public class FormBean extends SearchBean {
     private String username;
     private TeacherCategory category;
     private Double lessonHours;
+    private Double workPercentageInInstitution;
     private Boolean contracted;
     private Boolean revoked;
 
@@ -71,6 +72,14 @@ public class FormBean extends SearchBean {
 
     public void setLessonHours(Double lessonHours) {
         this.lessonHours = lessonHours;
+    }
+
+    public Double getWorkPercentageInInstitution() {
+        return workPercentageInInstitution;
+    }
+
+    public void setWorkPercentageInInstitution(Double workPercentageInInstitution) {
+        this.workPercentageInInstitution = workPercentageInInstitution;
     }
 
     public Boolean getRevoked() {
