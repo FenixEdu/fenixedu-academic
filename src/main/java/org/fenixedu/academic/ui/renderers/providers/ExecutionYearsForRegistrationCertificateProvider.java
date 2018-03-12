@@ -1,5 +1,5 @@
 /**
- * Copyright © 2002 Instituto Superior Técnico
+ * Copyright © 2018 Instituto Superior Técnico
  *
  * This file is part of FenixEdu Academic.
  *
@@ -16,28 +16,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.fenixedu.academic.ui.renderers.providers.executionCourse;
+/**
+ * 
+ */
+package org.fenixedu.academic.ui.renderers.providers;
 
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
-
-import org.fenixedu.academic.domain.space.SpaceUtils;
-import org.fenixedu.spaces.domain.Space;
+import org.fenixedu.academic.dto.student.RegistrationSelectExecutionYearBean;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
-public class RoomsForEducationProvider implements DataProvider {
+public class ExecutionYearsForRegistrationCertificateProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        Set<Space> rooms = new TreeSet<Space>(SpaceUtils.ROOM_COMPARATOR_BY_NAME);
-        rooms.addAll(SpaceUtils.allocatableSpaces()
-                .filter(space -> space.isActive())
-                .collect(Collectors.toList()));
-        return rooms;
+        return ((RegistrationSelectExecutionYearBean) source).getRegistration().getSortedCurriculumLinesExecutionYears();
     }
 
     @Override

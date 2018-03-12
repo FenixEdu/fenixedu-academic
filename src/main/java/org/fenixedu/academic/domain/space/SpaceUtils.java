@@ -88,7 +88,7 @@ public class SpaceUtils {
     }
 
     public static Stream<Space> allocatableSpaces() {
-        return Space.getSpaces().filter(space -> isRoom(space) || isRoomSubdivision(space)).sorted();
+        return Space.getSpaces().filter(space -> isAllocatable(space)).sorted();
     }
 
     public static Stream<Space> allocatableSpacesForEducation() {
@@ -124,6 +124,10 @@ public class SpaceUtils {
 
     public static List<Space> buildings() {
         return Space.getSpaces().filter(space -> isBuilding(space)).sorted().collect(Collectors.toList());
+    }
+    
+    public static boolean isAllocatable(Space space) {
+        return space.getClassification().isAllocatable();
     }
 
     public static boolean isCampus(Space space) {
