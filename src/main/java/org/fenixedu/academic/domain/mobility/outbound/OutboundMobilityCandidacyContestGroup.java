@@ -169,9 +169,9 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
                 spreadsheetCurricularInfo.addSpreadsheet(BundleUtil.getString(Bundle.ACADEMIC,
                         "label.mobility.candidates.options"));
         final Spreadsheet spreadsheetContactInformation =
-                spreadsheetOptions.addSpreadsheet(BundleUtil.getString(Bundle.ACADEMIC, "label.contact.information"));
+            spreadsheetOptions.addSpreadsheet(BundleUtil.getString(Bundle.ACADEMIC, "label.contact.information"));
         final Spreadsheet spreadsheetOtherCurricularInfo =
-                spreadsheetOptions.addSpreadsheet(BundleUtil.getString(Bundle.ACADEMIC, "label.other.curricular.info"));
+            spreadsheetContactInformation.addSpreadsheet(BundleUtil.getString(Bundle.ACADEMIC, "label.other.curricular.info"));
 
         final Set<Registration> processed = new HashSet<Registration>();
         for (final OutboundMobilityCandidacyContest contest : getOutboundMobilityCandidacyContestSet()) {
@@ -230,6 +230,7 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
                                 .getRegistrationProtocol().getDescription().getContent());
                         row2.setCell(getString("label.country"), country == null ? "" : country.getName());
                         row2.setCell(getString("label.university"), unit.getPresentationName());
+                        row2.setCell(getString("label.candidate.selected"), c.getSelected() == null ? "-" : (c.getSelected() ? getString("label.yes") : getString("label.no")));
                     }
 
                     final Row contactRow = spreadsheetContactInformation.addRow();
