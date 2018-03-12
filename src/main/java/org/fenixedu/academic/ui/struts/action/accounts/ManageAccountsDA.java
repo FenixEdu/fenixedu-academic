@@ -74,20 +74,20 @@ public class ManageAccountsDA extends FenixDispatchAction {
     public ActionForward showExistentPersonsWithSameMandatoryDetails(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         PersonBean bean = getRenderedObject("personBean");
-        Collection<Person> results;
+        Collection<Person> results = Collections.emptySet();
+        if (!Strings.isNullOrEmpty(bean.getDocumentIdNumber())) {
+            results = Person.findPersonByDocumentID(bean.getDocumentIdNumber());
+        }
         if (!Strings.isNullOrEmpty(bean.getGivenNames()) || !Strings.isNullOrEmpty(bean.getFamilyNames())) {
             String name =
                     Stream.of(bean.getGivenNames(), bean.getFamilyNames()).filter(n -> !Strings.isNullOrEmpty(n))
                             .collect(Collectors.joining(" "));
             Stream<Person> stream = Person.findPersonStream(name, Integer.MAX_VALUE);
-            if (!Strings.isNullOrEmpty(bean.getDocumentIdNumber())) {
-                stream = stream.filter(p -> p.getDocumentIdNumber().equals(bean.getDocumentIdNumber()));
+            if (results.isEmpty()) {
+                results = stream.collect(Collectors.toSet());
+            } else {
+                results.addAll(stream.collect(Collectors.toSet()));
             }
-            results = stream.collect(Collectors.toSet());
-        } else if (!Strings.isNullOrEmpty(bean.getDocumentIdNumber())) {
-            results = Person.findPersonByDocumentID(bean.getDocumentIdNumber());
-        } else {
-            results = Collections.emptySet();
         }
         request.setAttribute("resultPersons", results);
         request.setAttribute("createPerson", bean);

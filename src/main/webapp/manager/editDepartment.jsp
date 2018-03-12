@@ -28,7 +28,7 @@
 
 <html:xhtml/>
 
-<h2>Create Academic Office</h2>
+<h2>Edit Department</h2>
 <fr:edit id="office" name="bean" action="/manageAssociatedObjects.do?method=editDepartment">
     <fr:schema bundle="MANAGER_RESOURCES"
                type="org.fenixedu.academic.ui.struts.action.manager.ManageAssociatedObjects$AssociatedObjectsBean">
@@ -45,7 +45,7 @@
         <fr:slot name="realNameEn" key="label.real.name.en">
         </fr:slot>
 
-        <fr:slot name="username" key="label.username">
+        <fr:slot name="membersGroupExpression" key="label.groupExpression">
         </fr:slot>
 
     </fr:schema>
@@ -53,5 +53,6 @@
         <fr:property name="classes"
                      value="tstyle5 thleft thlight thmiddle mtop05"/>
         <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+        <fr:destination name="cancel" path="/manageAssociatedObjects.do?method=list"/>
     </fr:layout>
 </fr:edit>
