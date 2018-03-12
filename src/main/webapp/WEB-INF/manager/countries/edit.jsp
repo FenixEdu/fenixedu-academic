@@ -49,7 +49,7 @@ ${portal.toolkit()}
                 	<spring:message code="label.country.localized.name"/>
                 </label>
                 <div class="col-xs-4">
-                    <input bennu-localized-string type="text" name="localizedName" id="localizedName" value='<c:out value="${country.localizedName.toLocalizedString().json()}"/>' required/>
+                    <input bennu-localized-string type="text" name="localizedName" id="localizedName" value='<c:out value="${country.localizedName.json()}"/>' required/>
                 </div>
             </div>
             <div class="row">
