@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.phd.thesis.activities;
 
 import org.fenixedu.academic.domain.caseHandling.PreConditionNotValidException;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType;
 import org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean;
 import org.fenixedu.academic.domain.phd.PhdProgramProcessDocument;
 import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcess;
@@ -37,7 +38,12 @@ public class ReplaceDocument extends PhdThesisActivity {
     @Override
     protected PhdThesisProcess executeActivity(PhdThesisProcess process, User userView, Object object) {
         PhdProgramDocumentUploadBean documentBean = (PhdProgramDocumentUploadBean) object;
-        PhdProgramProcessDocument document = process.getLatestDocumentVersionFor(documentBean.getType());
+        PhdProgramProcessDocument document;
+        if (documentBean.getType() == PhdIndividualProgramDocumentType.JURY_REPORT_FEEDBACK) {
+            document = documentBean.getJuryElement().getLastFeedbackDocument();
+        } else {
+            document = process.getLatestDocumentVersionFor(documentBean.getType());
+        }
 
         document.replaceDocument(documentBean.getType(), documentBean.getRemarks(), documentBean.getFileContent(),
                 documentBean.getFilename(), AccessControl.getPerson());

@@ -1441,8 +1441,9 @@ public class Registration extends Registration_Base {
     }
 
     final public Set<SchoolClass> getSchoolClassesToEnrolBy(final ExecutionCourse executionCourse) {
-        Set<SchoolClass> schoolClasses =
-                executionCourse.getSchoolClassesBy(getActiveStudentCurricularPlan().getDegreeCurricularPlan());
+        StudentCurricularPlan scp = getActiveStudentCurricularPlan();
+        Set<SchoolClass> schoolClasses = scp != null ? executionCourse
+                .getSchoolClassesBy(scp.getDegreeCurricularPlan()) : new HashSet<SchoolClass>();
         return schoolClasses.isEmpty() ? executionCourse.getSchoolClasses() : schoolClasses;
     }
 
@@ -2218,9 +2219,7 @@ public class Registration extends Registration_Base {
 
     final public String getGraduateTitle(final ProgramConclusion programConclusion, final Locale locale) {
         if (programConclusion.isConclusionProcessed(this)) {
-            final ExecutionYear conclusionYear =
-                    programConclusion.groupFor(this).map(CurriculumGroup::getConclusionYear).orElse(null);
-            return getLastDegreeCurricularPlan().getGraduateTitle(conclusionYear, programConclusion, locale);
+           return programConclusion.groupFor(this).map(cg -> cg.getDegreeModule().getGraduateTitle(cg.getConclusionYear(), locale)).orElse(null);
         }
         throw new DomainException("Registration.hasnt.concluded.requested.cycle");
     }

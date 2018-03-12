@@ -181,8 +181,16 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
         return isVersioned();
     }
 
+    public boolean isReplaceableAndNotJuryReportFeedbackType() {
+        return isVersioned() && !isJuryReportFeedbackType();
+    }
+
     public boolean isOtherType() {
         return hasType(PhdIndividualProgramDocumentType.OTHER);
+    }
+
+    public boolean isJuryReportFeedbackType() {
+        return hasType(PhdIndividualProgramDocumentType.JURY_REPORT_FEEDBACK);
     }
 
     public boolean isVersioned() {

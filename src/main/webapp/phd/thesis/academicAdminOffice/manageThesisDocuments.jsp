@@ -94,7 +94,12 @@
 			<fr:link 	name="replaceDocument" 
 						link="<%= "/phdThesisProcess.do?method=prepareReplaceDocument&type=${documentType}&processId=" + processId %>" 
 						label="link.org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean.replace,PHD_RESOURCES" order="1" 
-						condition="replaceable"/>
+						condition="replaceableAndNotJuryReportFeedbackType"/>
+						
+			<fr:link 	name="replaceJuryReportFeedbackDocumentType" 
+						link="<%= "/phdThesisProcess.do?method=prepareReplaceDocument&juryElementId=${juryElement.externalId}&type=${documentType}&processId=" + processId %>" 
+						label="link.org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean.replace,PHD_RESOURCES" order="1" 
+						condition="juryReportFeedbackType"/>
 				
 			<fr:property name="linkFormat(delete)" value="/phdThesisProcess.do?method=deleteDocument&documentId=${externalId}&processId=${phdProgramProcess.externalId}"/>
 			<fr:property name="key(delete)" value="label.delete"/>

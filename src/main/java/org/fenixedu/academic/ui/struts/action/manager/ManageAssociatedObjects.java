@@ -40,6 +40,7 @@ import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOfficeType;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityType;
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum;
 import org.fenixedu.academic.domain.organizationalStructure.AggregateUnit;
@@ -69,7 +70,7 @@ import pt.ist.fenixframework.FenixFramework;
 @StrutsFunctionality(app = ManagerSystemManagementApp.class, path = "manage-associated-objects",
         titleKey = "title.manage.associated.objects")
 @Mapping(path = "/manageAssociatedObjects", module = "manager")
-@Forwards({ @Forward(name = "show", path = "/manager/listAssociatedObjects.jsp"),
+@Forwards({ 
         @Forward(name = "list", path = "/manager/listAssociatedObjects.jsp"),
         @Forward(name = "createDepartment", path = "/manager/createDepartment.jsp"),
         @Forward(name = "createEmptyDegree", path = "/manager/createEmptyDegree.jsp"),
@@ -78,7 +79,8 @@ import pt.ist.fenixframework.FenixFramework;
         @Forward(name = "createCompetenceCourseGroup", path = "/manager/createCompetenceCourseGroup.jsp"),
         @Forward(name = "associatePersonUnit", path = "/manager/associatePersonUnit.jsp"),
         @Forward(name = "createAcademicOffice", path = "/manager/createAcademicOffice.jsp"),
-        @Forward(name = "createDegreeType", path = "/manager/createDegreeType.jsp") })
+        @Forward(name = "createDegreeType", path = "/manager/createDegreeType.jsp") 
+})
 public class ManageAssociatedObjects extends FenixDispatchAction {
     public static class AssociatedObjectsBean implements Serializable {
         private boolean active;
@@ -93,6 +95,7 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         private List<Unit> units = new ArrayList<>();
         private Unit unit;
         private String username;
+        private String membersGroupExpression;
         private LocalizedString nameLS;
         private boolean teacher;
 
@@ -191,6 +194,14 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
 
         public void setUsername(String username) {
             this.username = username;
+        }
+
+        public String getMembersGroupExpression() {
+            return membersGroupExpression;
+        }
+
+        public void setMembersGroupExpression(String membersGroupExpression) {
+            this.membersGroupExpression = membersGroupExpression;
         }
 
         public YearMonthDay getStart() {
@@ -435,7 +446,13 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
     public ActionForward createDepartment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         AssociatedObjectsBean bean = getRenderedObject("department");
-        createDepartment(bean);
+        try {
+            createDepartment(bean);
+        } catch (final DomainException e) {
+            addActionMessage(request, e.getMessage(), e.getArgs());
+            request.setAttribute("bean", bean);
+            return mapping.findForward("createDepartment");
+        }
         return list(mapping, form, request, response);
     }
 
@@ -447,7 +464,6 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         department.setCode(bean.getCode());
         department.setName(bean.getName());
         department.setRealName(bean.getRealName());
-        department.setName(bean.getName());
         department.setRealNameEn(bean.getRealNameEn());
         department.setRootDomainObject(Bennu.getInstance());
         Unit departmentParent =
@@ -570,7 +586,14 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         AssociatedObjectsBean bean = getRenderedObject("admOffice");
 
-        createScientificArea(bean);
+        try {
+            createScientificArea(bean);
+        } catch (final DomainException e) {
+            addActionMessage(request, e.getMessage(), e.getArgs());
+            request.setAttribute("bean", bean);
+
+            return mapping.findForward("createScientificArea");
+        }
 
         return list(mapping, form, request, response);
     }
@@ -595,7 +618,13 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         AssociatedObjectsBean bean = getRenderedObject("admOffice");
 
-        createCompetenceCourseGroup(bean);
+        try {
+            createCompetenceCourseGroup(bean);
+        } catch (final DomainException e) {
+            addActionMessage(request, e.getMessage(), e.getArgs());
+            request.setAttribute("bean", bean);
+            return mapping.findForward("createCompetenceCourseGroup");
+        }
 
         return list(mapping, form, request, response);
     }
@@ -617,7 +646,7 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         associatedObjectsBean.setName(d.getName());
         associatedObjectsBean.setRealName(d.getRealName());
         associatedObjectsBean.setRealNameEn(d.getRealNameEn());
-        associatedObjectsBean.setUsername(d.getCompetenceCourseMembersGroup().getExpression());
+        associatedObjectsBean.setMembersGroupExpression(d.getCompetenceCourseMembersGroup().getExpression());
 
         request.setAttribute("bean", associatedObjectsBean);
 
@@ -634,7 +663,7 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
             d.setName(bean.getName());
             d.setRealName(bean.getRealName());
             d.setRealNameEn(bean.getRealNameEn());
-            d.setCompetenceCourseMembersGroup(User.findByUsername(bean.getUsername()).groupOf());
+            d.setCompetenceCourseMembersGroup(Group.parse(bean.getMembersGroupExpression()));
         });
 
         return list(mapping, form, request, response);

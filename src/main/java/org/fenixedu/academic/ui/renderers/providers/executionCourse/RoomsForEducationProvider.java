@@ -35,7 +35,7 @@ public class RoomsForEducationProvider implements DataProvider {
     public Object provide(Object source, Object currentValue) {
         Set<Space> rooms = new TreeSet<Space>(SpaceUtils.ROOM_COMPARATOR_BY_NAME);
         rooms.addAll(SpaceUtils.allocatableSpaces()
-                .filter(space -> space.isActive() && space.getClassification().getIsAllocatable())
+                .filter(space -> space.isActive())
                 .collect(Collectors.toList()));
         return rooms;
     }
