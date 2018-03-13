@@ -35,7 +35,7 @@
                 </c:when>
             </c:choose>
             <a class="btn btn-link btn-xs" href="${fr:checksumLink(pageContext.request, showCompetenceUrl)}"><spring:message code="label.show" text="Ver"/></a>
-        	<c:if test="${isBolonhaManager && competenceCourse.isApproved()}">
+        	<c:if test="${isBolonhaManager && !competenceCourse.isApproved()}">
 				<spring:url var="editCompetenceUrl" context="" value="/bolonhaManager/competenceCourses/editCompetenceCourse.faces?action=ccm&competenceCourseID={competenceCourse}">
 					<spring:param name="competenceCourse" value="${competenceCourse.externalId}"/>
 				</spring:url>
