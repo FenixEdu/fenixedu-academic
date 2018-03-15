@@ -35,6 +35,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <html:xhtml/>
 
+<script src="<%= request.getContextPath()%>/javaScript/jquery/jquery-ui.js" type="application/javascript"></script>
+
 <style>
   .sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
   .sortable li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; }
@@ -126,7 +128,7 @@
 														<% if (candidacyPeriod.isOpen()) { %>
 															<div style="float: right;">
 																<html:link action="<%= "/erasmusOutboundManagement.do?method=removeCandidacy&amp;candidacyOid=" + candidacy.getExternalId() %>"
-																		style="border-bottom: 0px;"><img src="../images/iconRemoveOff.png" alt="remove"></html:link>
+																		style="border-bottom: 0px;"><img src="<%= request.getContextPath() + "/images/iconRemoveOff.png"%>" alt="remove"></html:link>
 															</div>
 														<% } %>
 												</li>
