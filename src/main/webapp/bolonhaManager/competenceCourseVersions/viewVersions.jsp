@@ -20,6 +20,7 @@
 --%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
@@ -40,11 +41,13 @@
 	<li>
 		<html:link page="/competenceCourses/manageVersions.do?method=prepare"><bean:message key="label.back" bundle="APPLICATION_RESOURCES"/></html:link>
 	</li>
-	<li>
-		<html:link page="<%="/competenceCourses/manageVersions.do?method=prepareCreateVersion&competenceCourseID=" + competenceCourseID  %>">
-			<bean:message key="label.create.version" bundle="BOLONHA_MANAGER_RESOURCES"/>
-		</html:link>			
-	</li>
+	<c:if test="${competenceCourse.isApproved()}">
+		<li>
+			<html:link page="<%="/competenceCourses/manageVersions.do?method=prepareCreateVersion&competenceCourseID=" + competenceCourseID  %>">
+				<bean:message key="label.create.version" bundle="BOLONHA_MANAGER_RESOURCES"/>
+			</html:link>
+		</li>
+	</c:if>	
 </ul>
 
 
