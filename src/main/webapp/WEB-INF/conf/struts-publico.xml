@@ -173,7 +173,6 @@
       <message-resources null="false" key="GEP_RESOURCES" parameter="resources.GEPResources"></message-resources>
       <message-resources null="false" key="DEGREE_ADM_OFFICE" parameter="resources.DegreeAdministrativeOfficeResources"></message-resources>
       <message-resources null="false" key="CURRICULUM_HISTORIC_RESOURCES" parameter="resources.CurriculumHistoricResources"></message-resources>
-      <message-resources null="false" key="INQUIRIES_RESOURCES" parameter="resources.InquiriesResources"></message-resources>
       <message-resources null="false" key="PUBLIC_DEGREE_INFORMATION" parameter="resources.PublicDegreeInformation"></message-resources>
       <message-resources null="false" key="PUBLIC_DEPARTMENT_RESOURCES" parameter="resources.PublicDepartmentResources"></message-resources>
       <message-resources null="false" key="HOMEPAGE_RESOURCES" parameter="resources.HomepageResources"></message-resources>
