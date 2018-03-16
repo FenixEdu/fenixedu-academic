@@ -1928,7 +1928,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
         return Math.toIntExact(getAllCoursesGroups().stream().filter(cg -> cg.getParentCycleCourseGroups().contains(cycleCourseGroup))
                 .flatMap(cg -> cg.getChildContextsSet().stream()).filter(ctx -> ctx.getChildDegreeModule().isLeaf())
-                .map(curricularPeriodCollector).filter(curricularPeriodFilter).count());
+                .map(curricularPeriodCollector).filter(curricularPeriodFilter).distinct().count());
 
     }
 
