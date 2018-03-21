@@ -118,11 +118,26 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
                 @Override
                 public int compare(ExecutionCourse o1, ExecutionCourse o2) {
-                    final int cep = o1.getExecutionPeriod().compareTo(o2.getExecutionPeriod());
+                    final int cep = EXECUTION_COURSE_EXECUTION_PERIOD_COMPARATOR.compare(o1, o2);
                     if (cep != 0) {
                         return cep;
                     }
-                    final int c = Collator.getInstance().compare(o1.getNome(), o2.getNome());
+                    final int c = EXECUTION_COURSE_NAME_COMPARATOR.compare(o1, o2);
+                    return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
+                }
+
+            };
+
+    public static final Comparator<ExecutionCourse> EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_REVERSED_AND_NAME =
+            new Comparator<ExecutionCourse>() {
+
+                @Override
+                public int compare(ExecutionCourse o1, ExecutionCourse o2) {
+                    final int cep = EXECUTION_COURSE_EXECUTION_PERIOD_COMPARATOR.compare(o2, o1);
+                    if (cep != 0) {
+                        return cep;
+                    }
+                    final int c = EXECUTION_COURSE_NAME_COMPARATOR.compare(o1, o2);
                     return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
                 }
 
