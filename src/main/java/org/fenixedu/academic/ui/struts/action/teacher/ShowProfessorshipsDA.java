@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.ui.struts.action.teacher;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -41,9 +39,9 @@ import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
-import pt.ist.fenixframework.FenixFramework;
-
 import com.google.common.collect.Ordering;
+
+import pt.ist.fenixframework.FenixFramework;
 
 @StrutsFunctionality(app = TeacherTeachingApp.class, path = "manage-execution-course", titleKey = "link.manage.executionCourse")
 @Mapping(module = "teacher", path = "/showProfessorships")
@@ -66,7 +64,8 @@ public class ShowProfessorshipsDA extends FenixAction {
         }
         request.setAttribute("executionPeriod", selectedExecutionPeriod);
 
-        final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
+        final SortedSet<ExecutionCourse> executionCourses = new TreeSet<ExecutionCourse>(
+                Ordering.from(ExecutionCourse.EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_REVERSED_AND_NAME));
         request.setAttribute("executionCourses", executionCourses);
 
         final Person person = AccessControl.getPerson();

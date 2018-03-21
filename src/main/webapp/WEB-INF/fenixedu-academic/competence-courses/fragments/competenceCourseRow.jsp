@@ -35,7 +35,21 @@
                 </c:when>
             </c:choose>
             <a class="btn btn-link btn-xs" href="${fr:checksumLink(pageContext.request, showCompetenceUrl)}"><spring:message code="label.show" text="Ver"/></a>
-        
+        	<c:if test="${isBolonhaManager && !competenceCourse.isApproved()}">
+				<spring:url var="editCompetenceUrl" context="" value="/bolonhaManager/competenceCourses/editCompetenceCourse.faces?action=ccm&competenceCourseID={competenceCourse}">
+					<spring:param name="competenceCourse" value="${competenceCourse.externalId}"/>
+				</spring:url>
+				<spring:url var="deleteCompetenceUrl" context="" value="/bolonhaManager/competenceCourses/deleteCompetenceCourse.faces?action=ccm&competenceCourseID={competenceCourse}">
+					<spring:param name="competenceCourse" value="${competenceCourse.externalId}"/>
+				</spring:url>
+				<spring:url var="bibliographicReferenceUrl" context="" value="/bolonhaManager/competenceCourses/setCompetenceCourseBibliographicReference.faces?action=add&bibliographicReferenceID=-1&competenceCourseID={competenceCourse}">
+					<spring:param name="competenceCourse" value="${competenceCourse.externalId}"/>
+				</spring:url>
+				<a class="btn btn-link btn-xs" href="${fr:checksumLink(pageContext.request, editCompetenceUrl)}"><spring:message code="label.edit" text="Editar"/></a>
+				<a class="btn btn-link btn-xs" href="${fr:checksumLink(pageContext.request, deleteCompetenceUrl)}"><spring:message code="label.delete" text="Apagar"/></a>
+            	<a class="btn btn-link btn-xs" href="${fr:checksumLink(pageContext.request, bibliographicReferenceUrl)}"><spring:message code="label.bibliographicReference" text="Bibliografia"/></a>
+            </c:if>
+        	
             <!-- Versions Link -->
             <spring:url var="showVersionsUrl" context="" value="/bolonhaManager/competenceCourses/manageVersions.do?method=showVersions&competenceCourseID={competenceCourse}">
                 <spring:param name="competenceCourse" value="${competenceCourse.externalId}"/>
