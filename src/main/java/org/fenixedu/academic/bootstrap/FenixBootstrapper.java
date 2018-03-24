@@ -336,7 +336,7 @@ public class FenixBootstrapper {
             partyContact.setValid();
             partyContact.getPartyContactValidation().setState(PartyContactValidationState.VALID);
         }
-        Authenticate.mock(adminUser);
+        Authenticate.mock(adminUser, "FenixEdu Bootstrapper");
         AcademicOperationType.MANAGE_AUTHORIZATIONS.grant(adminUser);
         AcademicOperationType.MANAGE_ACADEMIC_CALENDARS.grant(adminUser);
     }
