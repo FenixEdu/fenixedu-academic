@@ -347,7 +347,8 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     }
 
     public Grade getEctsGrade(DateTime processingDate) {
-        return EctsTableIndex.convertGradeToEcts(getCurricularCourse(), this, getGrade(), processingDate);
+        final Grade normalizedEctsGrade = getNormalizedEctsGrade();
+        return normalizedEctsGrade == null ? EctsTableIndex.convertGradeToEcts(getCurricularCourse(), this, getGrade(), processingDate) : normalizedEctsGrade;
     }
 
     public String getEnrolmentTypeName() {
