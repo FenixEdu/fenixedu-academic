@@ -276,7 +276,7 @@
 
 <schema name="view.competenceCourseInformation" type="org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation" bundle="APPLICATION_RESOURCES">
 		<slot name="executionPeriod.executionYear.year" key="label.executionYear"/>
-		<slot name="executionPeriod.name" key="label.executionPeriod"/>
+<!-- 		<slot name="executionPeriod.name" key="label.executionPeriod"/> -->
 		<slot name="departmentUnit" key="label.department">
 			<property name="format" value="${acronym}" />
 		</slot>

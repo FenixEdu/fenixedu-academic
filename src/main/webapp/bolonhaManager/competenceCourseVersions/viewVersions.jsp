@@ -83,7 +83,7 @@
 	<table class="tstyle1 thlight tdcenter mtop05">
 	<tr>
 		<th><bean:message key="label.year" bundle="BOLONHA_MANAGER_RESOURCES"/></th>
-		<th><bean:message key="label.semester" bundle="BOLONHA_MANAGER_RESOURCES"/></th>
+<%-- 		<th><bean:message key="label.semester" bundle="BOLONHA_MANAGER_RESOURCES"/></th> --%>
 		<th><bean:message key="label.modificationRequestedBy" bundle="BOLONHA_MANAGER_RESOURCES"/></th>
 		<th><bean:message key="label.modificationsAnalisedBy" bundle="BOLONHA_MANAGER_RESOURCES"/></th>
 		<th><bean:message key="label.status" bundle="BOLONHA_MANAGER_RESOURCES"/></th>
@@ -95,7 +95,7 @@
 		<bean:define id="changeRequestID" name="changeRequest" property="externalId"/>
 		<tr>
 			<td><fr:view name="changeRequest" property="executionPeriod.executionYear.year"/></td>			
-			<td><fr:view name="changeRequest" property="executionPeriod.name"/></td>
+<%-- 			<td><fr:view name="changeRequest" property="executionPeriod.name"/></td> --%>
 			<td><fr:view name="changeRequest" property="requester" type="org.fenixedu.academic.domain.Person">
 					<fr:layout name="null-as-label">
 						<fr:property name="label" value="-"/>

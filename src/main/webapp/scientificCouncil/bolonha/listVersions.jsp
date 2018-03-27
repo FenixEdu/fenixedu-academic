@@ -35,7 +35,7 @@
 	<table class="tstyle2 thlight">
 	<tr>
 		<th class="nowrap"><bean:message key="label.year" bundle="BOLONHA_MANAGER_RESOURCES"/></th>
-		<th><bean:message key="label.semester" bundle="BOLONHA_MANAGER_RESOURCES"/></th>
+<%-- 		<th><bean:message key="label.semester" bundle="BOLONHA_MANAGER_RESOURCES"/></th> --%>
 		<th><bean:message key="label.competenceCourse" bundle="BOLONHA_MANAGER_RESOURCES"/></th>
 		<th><bean:message key="label.modificationRequestedBy" bundle="BOLONHA_MANAGER_RESOURCES"/></th>
 		<th><bean:message key="label.modificationsAnalisedBy" bundle="BOLONHA_MANAGER_RESOURCES"/></th>
@@ -49,7 +49,7 @@
 		<bean:define id="competenceCourseID" name="changeRequest" property="competenceCourse.externalId"/>
 		<tr>
 			<td><fr:view name="changeRequest" property="executionPeriod.executionYear.year"/></td>			
-			<td class="nowrap"><fr:view name="changeRequest" property="executionPeriod.name"/></td>
+<%-- 			<td class="nowrap"><fr:view name="changeRequest" property="executionPeriod.name"/></td> --%>
 			<td><fr:view name="changeRequest" property="competenceCourse.name"/></td>
 			<td><fr:view name="changeRequest" property="requester.name"/></td>
 			<td class="acenter">
