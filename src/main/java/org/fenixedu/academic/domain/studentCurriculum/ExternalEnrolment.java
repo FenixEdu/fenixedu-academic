@@ -34,6 +34,7 @@ import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degreeStructure.EctsConversionTable;
 import org.fenixedu.academic.domain.degreeStructure.EctsTableIndex;
+import org.fenixedu.academic.domain.degreeStructure.NoEctsComparabilityTableFound;
 import org.fenixedu.academic.domain.degreeStructure.RegimeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
@@ -244,6 +245,9 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
                     dismissals.add(dismissal);
                 }
             }
+        }
+        if (dismissals.isEmpty()) {
+            throw new NoEctsComparabilityTableFound(getExecutionPeriod().getAcademicInterval());
         }
         Dismissal dismissal = dismissals.iterator().next();
         if (dismissals.size() == 1) {
