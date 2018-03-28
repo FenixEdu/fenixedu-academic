@@ -34,6 +34,7 @@ import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
+import org.fenixedu.academic.domain.degreeStructure.EctsConversionTable;
 import org.fenixedu.academic.domain.degreeStructure.EctsTableIndex;
 import org.fenixedu.academic.domain.degreeStructure.OptionalCurricularCourse;
 import org.fenixedu.academic.domain.enrolment.DismissalCurriculumModuleWrapper;
@@ -347,7 +348,12 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     }
 
     public Grade getEctsGrade(DateTime processingDate) {
-        return EctsTableIndex.convertGradeToEcts(getCurricularCourse(), this, getGrade(), processingDate);
+        final Grade normalizedEctsGrade = getNormalizedEctsGrade();
+        return normalizedEctsGrade == null ? EctsTableIndex.convertGradeToEcts(getCurricularCourse(), this, getGrade(), processingDate) : normalizedEctsGrade;
+    }
+
+    public EctsConversionTable getEctsConversionTable(final DateTime processingDate) {
+        return EctsTableIndex.getEctsConversionTable(getCurricularCourse(), this, getGrade(), processingDate);
     }
 
     public String getEnrolmentTypeName() {

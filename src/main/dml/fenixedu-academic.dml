@@ -682,6 +682,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
         String page;
         EnrolmentEvaluationContext context;
         GradeScale gradeScale;
+        Grade normalizedEctsGrade;
     }
 
 	/* The field 'tempInstructions' is to be removed on next major version
@@ -3181,6 +3182,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
                 }
                 
             class studentCurriculum.Dismissal extends studentCurriculum.CurriculumLine {
+                Grade normalizedEctsGrade;
             }
 
                 class studentCurriculum.OptionalDismissal extends studentCurriculum.Dismissal {
@@ -3206,6 +3208,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
         YearMonthDay evaluationDate;
         Grade grade (REQUIRED);
         degreeStructure.RegimeType regime;
+        Grade normalizedEctsGrade;
     }
 
     class thesis.Thesis  {
@@ -12288,4 +12291,22 @@ relation BennuFirstTimeDocumentsConfiguration {
 	candidacy.FirstTimeDocumentsConfiguration playsRole firstTimeDocumentsConfiguration {
 		multiplicity 0..1;
 	}
+}
+
+relation EnrolmentEvaluationEctsConversionTable {
+    EnrolmentEvaluation playsRole enrolmentEvaluation {
+        multiplicity *;
+    }
+    degreeStructure.EctsConversionTable playsRole ectsConversionTable {
+        multiplicity 0..1;
+    }
+}
+
+relation ExternalEnrolmentEctsConversionTable {
+    studentCurriculum.ExternalEnrolment playsRole ExternalEnrolment {
+        multiplicity *;
+    }
+    degreeStructure.EctsConversionTable playsRole ectsConversionTable {
+        multiplicity 0..1;
+    }
 }

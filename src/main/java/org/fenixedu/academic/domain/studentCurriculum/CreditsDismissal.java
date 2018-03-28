@@ -30,8 +30,8 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.log.CreditsDismissalLog;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.EnrolmentAction;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 
 public class CreditsDismissal extends CreditsDismissal_Base {
@@ -158,7 +158,8 @@ public class CreditsDismissal extends CreditsDismissal_Base {
 
     @Override
     public Grade getEctsGrade(DateTime processingDate) {
-        return EctsTableIndex.convertGradeToEcts(getStudentCurricularPlan().getDegree(), this, getGrade(), processingDate);
+        final Grade normalizedEctsGrade = getNormalizedEctsGrade();
+        return normalizedEctsGrade == null ? EctsTableIndex.convertGradeToEcts(getStudentCurricularPlan().getDegree(), this, getGrade(), processingDate) : null;
     }
 
 }
