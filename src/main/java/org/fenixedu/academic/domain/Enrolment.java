@@ -664,6 +664,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return normalizedEctsGrade == null ? calculateNormalizedEctsGrade(scp, processingDate) : normalizedEctsGrade;
     }
 
+    @Override
+    public EctsConversionTable getEctsConversionTable(final StudentCurricularPlan scp, final DateTime processingDate) {
+        final EctsConversionTable table = getEctsConversionTable();
+        return table == null ? calculateEctsConversionTable(scp, processingDate, getGrade()) : table;
+    }
+
     private Grade calculateNormalizedEctsGrade(final StudentCurricularPlan scp, final DateTime processingDate) {
         final Grade grade = getGrade();
         final EctsConversionTable table = getEctsConversionTable();

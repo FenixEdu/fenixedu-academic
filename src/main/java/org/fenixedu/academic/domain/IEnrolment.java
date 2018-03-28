@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain;
 
 import java.util.Comparator;
 
+import org.fenixedu.academic.domain.degreeStructure.EctsConversionTable;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
 import org.fenixedu.academic.domain.thesis.Thesis;
@@ -63,6 +64,8 @@ public interface IEnrolment extends ICurriculumEntry {
 
     Grade getEctsGrade(StudentCurricularPlan scp, DateTime processingDate);
 
+    EctsConversionTable getEctsConversionTable(StudentCurricularPlan scp, DateTime processingDate);
+
     boolean isAnual();
 
     String getEnrolmentTypeName();
@@ -90,4 +93,5 @@ public interface IEnrolment extends ICurriculumEntry {
     Thesis getThesis();
 
     void delete();
+
 }

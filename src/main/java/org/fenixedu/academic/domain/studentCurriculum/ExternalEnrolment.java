@@ -230,6 +230,12 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
         return normalizedEctsGrade == null ? calculateNormalizedEctsGrade(scp, processingDate) : normalizedEctsGrade;
     }
 
+    @Override
+    public EctsConversionTable getEctsConversionTable(StudentCurricularPlan scp, DateTime processingDate) {
+        final EctsConversionTable table = getEctsConversionTable();
+        return table == null ? calculateEctsConversionTable(scp, processingDate, getGrade()) : table;
+    }
+
     private Grade calculateNormalizedEctsGrade(final StudentCurricularPlan scp, final DateTime processingDate) {
         final Grade grade = getGrade();
         final EctsConversionTable table = getEctsConversionTable();
