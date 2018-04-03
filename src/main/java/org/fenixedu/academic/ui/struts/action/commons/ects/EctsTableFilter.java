@@ -32,6 +32,7 @@ import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.ui.renderers.converters.AcademicIntervalConverter;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.StringNormalizer;
+import org.joda.time.DateTime;
 
 import com.google.common.io.CharStreams;
 
@@ -71,6 +72,8 @@ public class EctsTableFilter implements Serializable {
             return filter.type != null ? filter.type.getAllowedLevels() : Collections.emptyList();
         }
     }
+
+    DateTime processingDate;
 
     AcademicInterval executionInterval;
 
@@ -114,6 +117,14 @@ public class EctsTableFilter implements Serializable {
 
     public void setInputStream(InputStream inputStream) {
         this.inputStream = inputStream;
+    }
+
+    public DateTime getProcessingDate() {
+        return processingDate;
+    }
+
+    public void setProcessingDate(DateTime processingDate) {
+        this.processingDate = processingDate;
     }
 
     public String getContent() throws IOException {

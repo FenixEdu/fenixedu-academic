@@ -21,7 +21,10 @@ package org.fenixedu.academic.domain.degreeStructure;
 import org.fenixedu.academic.domain.CurricularYear;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.DomainObject;
@@ -74,6 +77,11 @@ public class EctsInstitutionConversionTable extends EctsInstitutionConversionTab
     public void delete() {
         setSchool(null);
         super.delete();
+    }
+
+    @Override
+    public LocalizedString getPresentationName() {
+        return BundleUtil.getLocalizedString(Bundle.ENUMERATION, getClass().getSimpleName() + ".presentation.name", getYear().getAcademicCalendarEntry().getTitle().getContent(), getSchool() == null ? "N/A" : getSchool().getName());
     }
 
 }

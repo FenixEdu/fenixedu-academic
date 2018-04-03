@@ -111,13 +111,22 @@
 		<fr:edit id="studentEnrolment-back" name="studentEnrolmentBean" visible="false" />
 		<html:cancel><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>
 	</fr:form>
-
 	<p class="mtop2 mbottom0"><strong><bean:message key="label.student.enrolments.executionPeriod" bundle="ACADEMIC_OFFICE_RESOURCES"/>: </strong></p>
 	<logic:notEmpty name="studentEnrolments">
-		<fr:view name="studentEnrolments" schema="student.show.enrolments">
+		<fr:view name="studentEnrolments">
+			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.Enrolment">
+				<fr:slot name="name" key="label.name" />
+				<fr:slot name="degreeModule.degreeCurricularPlan.name" key="label.degreeCurricularPlan" />
+				<fr:slot name="executionPeriod" layout="format" key="label.semester" >
+					<fr:property name="format" value="\${semester}º Sem \${executionYear.year}"/>
+				</fr:slot>
+				<fr:slot name="curriculumGroup.fullPath" key="label.group"/>
+				<fr:slot name="weigth" key="label.set.evaluation.enrolment.weight"/>
+				<fr:slot name="credits" key="label.ects.credits"/>
+			</fr:schema>
 			<fr:layout name="tabular">	 
 				<fr:property name="classes" value="tstyle2"/>
-		      	<fr:property name="columnClasses" value="nowrap,acenter,nowrap,smalltxt color888,acenter"/>
+		      	<fr:property name="columnClasses" value="nowrap,acenter,nowrap,smalltxt color888,acenter,acenter"/>
 				<fr:property name="sortBy" value="name"/>
 
 				<fr:property name="linkFormat(activate)" value="/studentEnrolments.do?method=activateEnrolment&enrolmentId=\${externalId}&scpID=\${studentCurricularPlan.externalId}&executionPeriodId=\${executionPeriod.externalId}" />
@@ -129,6 +138,13 @@
 				<fr:property name="key(annul)" value="label.enrolment.annul"/>
 				<fr:property name="bundle(annul)" value="ACADEMIC_OFFICE_RESOURCES"/>
 				<fr:property name="visibleIfNot(annul)" value="annulled"/>
+				
+				<academic:allowed operation="REPEAT_CONCLUSION_PROCESS" program="<%= degree %>">
+					<fr:property name="linkFormat(edit)" value="/studentEnrolments.do?method=prepareEditEnrolment&enrolmentId=\${externalId}&scpID=\${studentCurricularPlan.externalId}&executionPeriodId=\${executionPeriod.externalId}" />
+					<fr:property name="key(edit)" value="label.edit"/>
+					<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
+					<fr:property name="visibleIf(edit)" value="approved"/>
+				</academic:allowed>
 
 			</fr:layout>
 		</fr:view>

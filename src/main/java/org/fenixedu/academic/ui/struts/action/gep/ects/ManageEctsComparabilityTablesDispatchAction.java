@@ -74,6 +74,7 @@ import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 import org.fenixedu.commons.spreadsheet.SheetData;
 import org.fenixedu.commons.spreadsheet.SpreadsheetBuilder;
 import org.fenixedu.commons.spreadsheet.WorkbookExportFormat;
+import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.Atomic;
@@ -93,10 +94,26 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
         return mapping.findForward("index");
     }
 
+    public ActionForward setProcessingDate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+                                        HttpServletResponse response) {
+        EctsTableFilter filter = readFilter(request);
+        if (filter.getProcessingDate() != null) {
+            FenixFramework.atomic(() -> {
+                EctsTableIndex ectsTableIndex = EctsTableIndex.readOrCreateByYear(filter.getExecutionInterval());
+                ectsTableIndex.setProcessingDate(filter.getProcessingDate());
+            });
+        }
+        request.setAttribute("filter", filter);
+        return mapping.findForward("index");
+    }
+
     public ActionForward filterPostback(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         EctsTableFilter filter = readFilter(request);
         filter.setLevel(null);
+        if (filter.getExecutionInterval() != null) {
+            filter.setProcessingDate(EctsTableIndex.readOrCreateByYear(filter.getExecutionInterval()).getProcessingDate());
+        }
         request.setAttribute("filter", filter);
         return mapping.findForward("index");
     }
@@ -165,6 +182,11 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
             }
             if (request.getParameter("level") != null) {
                 filter.setLevel(EctsTableLevel.valueOf(request.getParameter("level")));
+            }
+            if (request.getParameter("processingDate") != null) {
+                filter.setProcessingDate(DateTime.parse(request.getParameter("processingDate")));
+            } else {
+                filter.setProcessingDate(null);
             }
         }
         return filter;

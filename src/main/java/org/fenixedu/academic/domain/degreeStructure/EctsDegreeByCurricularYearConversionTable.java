@@ -21,15 +21,17 @@ package org.fenixedu.academic.domain.degreeStructure;
 import org.fenixedu.academic.domain.CurricularYear;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.DomainObject;
 
 public class EctsDegreeByCurricularYearConversionTable extends EctsDegreeByCurricularYearConversionTable_Base {
 
-    protected EctsDegreeByCurricularYearConversionTable(Degree degree, AcademicInterval year, CurricularYear curricularYear,
-            EctsComparabilityTable table) {
+    protected EctsDegreeByCurricularYearConversionTable(Degree degree, AcademicInterval year, CurricularYear curricularYear, EctsComparabilityTable table) {
         super();
         init(year, curricularYear, table);
         setDegree(degree);
@@ -46,8 +48,7 @@ public class EctsDegreeByCurricularYearConversionTable extends EctsDegreeByCurri
 
     @Atomic
     public static void createConversionTable(Degree degree, AcademicInterval year, CurricularYear curricularYear, String[] table) {
-        EctsDegreeByCurricularYearConversionTable conversion =
-                EctsTableIndex.readOrCreateByYear(year).getEnrolmentTableBy(degree, curricularYear);
+        EctsDegreeByCurricularYearConversionTable conversion = EctsTableIndex.readOrCreateByYear(year).getEnrolmentTableBy(degree, curricularYear);
         EctsComparabilityTable ectsTable = EctsComparabilityTable.fromStringArray(table);
         if (conversion != null) {
             conversion.delete();
@@ -66,6 +67,12 @@ public class EctsDegreeByCurricularYearConversionTable extends EctsDegreeByCurri
     public void delete() {
         setDegree(null);
         super.delete();
+    }
+
+    @Override
+    public LocalizedString getPresentationName() {
+        return BundleUtil.getLocalizedString(Bundle.ENUMERATION, getClass().getSimpleName() + ".presentation.name", getYear().getAcademicCalendarEntry().getTitle().getContent(), getCurricularYear().getYear().toString(),
+            getDegree().getSigla());
     }
 
 }

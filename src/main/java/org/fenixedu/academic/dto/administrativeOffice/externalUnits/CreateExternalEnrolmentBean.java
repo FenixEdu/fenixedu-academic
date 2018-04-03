@@ -34,6 +34,7 @@ public class CreateExternalEnrolmentBean implements Serializable {
     private Grade grade;
     private YearMonthDay evaluationDate;
     private Double ectsCredits;
+    private Grade normalizedGrade;
 
     public CreateExternalEnrolmentBean() {
     }
@@ -88,5 +89,13 @@ public class CreateExternalEnrolmentBean implements Serializable {
 
     public void setEctsCredits(Double ectsCredits) {
         this.ectsCredits = ectsCredits;
+    }
+
+    public Grade getNormalizedGrade() {
+        return normalizedGrade;
+    }
+
+    public void setNormalizedGrade(Grade normalizedGrade) {
+        this.normalizedGrade = normalizedGrade;
     }
 }

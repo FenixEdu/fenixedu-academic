@@ -35,12 +35,11 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
@@ -55,6 +54,7 @@ import org.fenixedu.academic.domain.Evaluation;
 import org.fenixedu.academic.domain.Exam;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
@@ -3301,9 +3301,33 @@ public class Registration extends Registration_Base {
         return degreeInformations.iterator().next();
     }
 
+    private int getNumberOfTotalEnrolments(ExecutionInterval interval, Function<ExternalEnrolment,ExecutionInterval> executionIntervalProvider) {
+        StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
+        if (lastStudentCurricularPlan == null) {
+            return 0;
+        }
+
+        int countEnrolments = 0;
+        if (interval instanceof ExecutionSemester) {
+            countEnrolments = lastStudentCurricularPlan.countEnrolments((ExecutionSemester) interval);
+        } else if (interval instanceof ExecutionYear){
+            countEnrolments = lastStudentCurricularPlan.countEnrolments((ExecutionYear) interval);
+        }
+
+        long countExternalEnrolments = getExternalEnrolmentsSet().stream().filter(e -> executionIntervalProvider.apply(e) == interval).count();
+        return (int) (countEnrolments + countExternalEnrolments);
+    }
+
+    public int getNumberOfTotalEnrolments(ExecutionSemester interval) {
+        return getNumberOfTotalEnrolments(interval, ExternalEnrolment::getExecutionPeriod);
+    }
+
+    public int getNumberOfTotalEnrolments(ExecutionYear interval) {
+        return getNumberOfTotalEnrolments(interval, ExternalEnrolment::getExecutionYear);
+    }
+
     public int getNumberEnroledCurricularCoursesInCurrentYear() {
-        return getLastStudentCurricularPlan() == null ? 0 : getLastStudentCurricularPlan().countEnrolments(
-                ExecutionYear.readCurrentExecutionYear());
+        return getNumberOfTotalEnrolments(ExecutionYear.readCurrentExecutionYear());
     }
 
     public List<CycleCurriculumGroup> getInternalCycleCurriculumGrops() {
@@ -3366,18 +3390,7 @@ public class Registration extends Registration_Base {
     }
 
     public RegistrationState getLastActiveState() {
-        List<RegistrationState> activeStateList = new ArrayList<RegistrationState>();
-
-        CollectionUtils.select(getRegistrationStatesSet(), new Predicate() {
-
-            @Override
-            public boolean evaluate(Object arg0) {
-                return ((RegistrationState) arg0).getStateType().isActive();
-            }
-
-        }, activeStateList);
-
-        return !activeStateList.isEmpty() ? Collections.max(activeStateList, RegistrationState.DATE_COMPARATOR) : null;
+        return getRegistrationStatesSet().stream().filter(s -> s.getStateType().isActive()).max(RegistrationState.DATE_COMPARATOR).orElse(null);
     }
 
     public boolean hasDissertationEnrolment(final ExecutionDegree executionDegree) {
