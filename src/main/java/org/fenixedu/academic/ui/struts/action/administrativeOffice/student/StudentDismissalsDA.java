@@ -301,7 +301,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
             addActionMessage(request, "error.notAuthorized");
 
         } catch (final DomainException e) {
-            addActionMessage(request, e.getMessage());
+            addActionMessage(request, e.getMessage(), e.getArgs());
         }
 
         request.setAttribute("studentCurricularPlan", studentCurricularPlan);
