@@ -37,6 +37,8 @@ import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.InterestRate.InterestRateBean;
+import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
+import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator.Builder;
 import org.fenixedu.academic.domain.accounting.events.PenaltyExemption;
 import org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.FixedAmountPenaltyExemption;
 import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
@@ -532,194 +534,6 @@ public abstract class Event extends Event_Base {
         return null;
     }
 
-    private class CashFlowBox {
-        public List<InterestRateBean> interestRateBeans;
-        public DateTime when;
-        public Money amount;
-        public Money baseAmount;
-        public Money accumulatedPaymentsAmount;
-        public DateTime currentTransactionDate;
-        public List<AccountingTransaction> transactions;
-        public Money exemptionValue;
-        public Event event;
-        public LocalDate dueDate;
-        public Money discountValue;
-        public boolean usedDiscountValue;
-        private Money discountedValue;
-        private Money accumulatedInterestAmount;
-        private Money accumulatedPayedInterestAmount;
-
-        private boolean isToApplyPenalty;
-
-        public CashFlowBox(final Event event, final DateTime when, final Money baseAmount) {
-            this.baseAmount = baseAmount;
-            this.interestRateBeans = new ArrayList<>();
-            this.event = event;
-            this.transactions = new ArrayList<>(this.event.getSortedNonAdjustingTransactions());
-            this.when = when;
-            this.accumulatedInterestAmount = Money.ZERO;
-            this.accumulatedPayedInterestAmount = Money.ZERO;
-            this.exemptionValue = Money.ZERO;
-            this.discountValue = this.event.getTotalDiscount();
-            this.discountedValue = Money.ZERO;
-            this.usedDiscountValue = false;
-            this.isToApplyPenalty = Boolean.TRUE;
-
-            if (transactions.isEmpty()) {
-                this.amount = Money.ZERO;
-                this.currentTransactionDate = when;
-            } else {
-                final AccountingTransaction transaction = transactions.remove(0);
-                this.amount = transaction.getAmountWithAdjustment();
-                this.accumulatedPaymentsAmount = Money.ZERO;
-                this.currentTransactionDate = transaction.getWhenRegistered();
-            }
-
-        }
-
-        public boolean hasInterest() {
-            return getInterest().isPositive();
-        }
-
-        private boolean hasMoneyFor(final Money amount) {
-            return this.amount.greaterOrEqualThan(amount);
-        }
-
-        private boolean hasDiscountValue() {
-            return this.discountValue.isPositive();
-        }
-
-        public boolean subtractMoneyFor(final Money installmentOriginalAmount) {
-
-            if (hasDiscountValue() && this.discountValue.greaterOrEqualThan(installmentOriginalAmount)) {
-                usedDiscountValue = true;
-                this.discountValue = this.discountValue.subtract(installmentOriginalAmount);
-                return true;
-            }
-
-            Money installmentAmount = internalCalculateAmount(installmentOriginalAmount, this.currentTransactionDate, this.exemptionValue);
-
-            if (hasDiscountValue()) {
-                installmentAmount = installmentAmount.subtract(this.discountValue);
-                this.discountedValue = this.discountValue;
-            }
-
-            if (this.amount.greaterThan(Money.ZERO) && this.accumulatedInterestAmount.greaterThan(Money.ZERO)) {
-                if (this.amount.greaterOrEqualThan(this.accumulatedInterestAmount)) {
-                    this.accumulatedPayedInterestAmount = this.accumulatedPayedInterestAmount.add(this.accumulatedInterestAmount);
-                    this.amount = this.amount.subtract(this.accumulatedInterestAmount);
-                    this.accumulatedInterestAmount = Money.ZERO;
-                } else {
-                    this.accumulatedPayedInterestAmount = this.accumulatedPayedInterestAmount.add(this.amount);
-                    this.accumulatedInterestAmount = this.accumulatedInterestAmount.subtract(this.amount);
-                    this.amount = Money.ZERO;
-                }
-            }
-
-            if (hasMoneyFor(installmentAmount)) {
-                this.amount = this.amount.subtract(installmentAmount);
-                this.discountValue = Money.ZERO;
-                return true;
-            }
-
-            if (this.transactions.isEmpty()) {
-                this.currentTransactionDate = this.when;
-                return false;
-            }
-
-            if (this.dueDate.isAfter(this.currentTransactionDate.toLocalDate())) {
-                this.accumulatedPaymentsAmount = Money.ZERO;
-            } else {
-                this.accumulatedPaymentsAmount = this.amount;
-                this.dueDate = this.currentTransactionDate.toLocalDate();
-            }
-
-            final AccountingTransaction transaction = this.transactions.remove(0);
-            this.amount = this.amount.add(transaction.getAmountWithAdjustment());
-            this.currentTransactionDate = transaction.getWhenRegistered();
-            return subtractMoneyFor(installmentOriginalAmount);
-        }
-
-        private Money internalCalculateAmount(Money installmentOriginalAmount, DateTime currentTransactionDate, Money exemptionAmount) {
-            Money amount = installmentOriginalAmount.subtract(exemptionAmount);
-
-            if (!amount.isPositive()) {
-                return Money.ZERO;
-            }
-
-            DateTime dueDateValue = dueDate.toDateTimeAtStartOfDay();
-
-            if (isToApplyPenalty && currentTransactionDate.isAfter(dueDateValue) && FenixEduAcademicConfiguration.isToUseGlobalInterestRateTableForEventPenalties(this.event)) {
-                Optional<InterestRateBean> interestBean = InterestRate.getInterestBean(dueDate, currentTransactionDate.toLocalDate(), amount.subtract(this.accumulatedPaymentsAmount));
-                if (interestBean.isPresent()) {
-                    InterestRateBean bean = interestBean.get();
-                    this.interestRateBeans.add(bean);
-                    this.accumulatedInterestAmount = this.accumulatedInterestAmount.add(bean.getInterest());
-                }
-            }
-
-            return amount;
-        }
-
-        private Money calculateAmount(Money installmentOriginalAmount, DateTime currentTransactionDate, Money exemptionAmount) {
-            final Money amount = installmentOriginalAmount.subtract(exemptionAmount);
-            if (!amount.isPositive()) {
-                return Money.ZERO;
-            }
-            return amount;
-        }
-
-        public Money subtractRemainingFor(final Money installmentOriginalAmount) {
-                final Money result =
-                    calculateAmount(installmentOriginalAmount,this.when, this.exemptionValue).subtract(this.discountValue).subtract(this.amount);
-                this.amount = this.exemptionValue = this.discountValue = Money.ZERO;
-                return result;
-        }
-
-        public Money calculateTotalAmountFor(final Money installmentOriginalAmount) {
-            final Money result;
-            if (subtractMoneyFor(installmentOriginalAmount)) {
-                if (usedDiscountValue) {
-                    result = Money.ZERO;
-                } else {
-                    result = calculateAmount(installmentOriginalAmount, this.currentTransactionDate, this.exemptionValue).subtract(this.discountedValue);
-                    this.discountedValue = Money.ZERO;
-                }
-            } else {
-                result = calculateAmount(installmentOriginalAmount, this.when, this.exemptionValue).subtract(this.discountedValue);
-                this.discountedValue = Money.ZERO;
-            }
-            usedDiscountValue = false;
-            return result;
-        }
-
-        public void setDueDateExemptionValueIsToApplyPenalty(LocalDate dueDate, Money exemptionValue, Boolean isToApplyPenalty) {
-            this.dueDate = dueDate;
-            this.exemptionValue = exemptionValue;
-            this.isToApplyPenalty = isToApplyPenalty;
-        }
-
-        public void resetInterest() {
-            this.interestRateBeans = new ArrayList<>();
-        }
-
-        public Money getInterest() {
-            return interestRateBeans.stream().map(InterestRateBean::getInterest).reduce(Money.ZERO, Money::add).subtract(this.accumulatedPayedInterestAmount);
-        }
-
-        public Optional<InterestRateBean> getInterestBean() {
-            Optional<LocalDate> startDate = interestRateBeans.stream().map(i -> i.getInterval().getStart().toLocalDate()).min(LocalDate::compareTo);
-            Optional<LocalDate> endDate = interestRateBeans.stream().map(i -> i.getInterval().getEnd().toLocalDate()).max(LocalDate::compareTo);
-
-            if (!startDate.isPresent() || !endDate.isPresent() || this.baseAmount.isZero()) {
-                return Optional.empty();
-            }
-
-            InterestRateBean interestRateBean = new InterestRateBean(startDate.get().minusDays(1), endDate.get().minusDays(1), this.baseAmount);
-            interestRateBeans.stream().flatMap(i -> i.getPartials().stream()).forEach(interestRateBean::addPartial);
-            return Optional.of(interestRateBean);
-        }
-    }
 
     /**
      * Should return entries representing the due date and the corresponding amount
@@ -766,7 +580,7 @@ public abstract class Event extends Event_Base {
 
         // returns the due interest amount (does not deduct the fixed amount interest exemptions)
         public Money getCalculatedInterest() {
-            return interestRateBean.map(InterestRateBean::getInterest).orElse(Money.ZERO);
+            return interestRateBean.map(InterestRateBean::getInterest).map(Money::new).orElse(Money.ZERO);
         }
 
         // Returns the interest value without fixed amount interest exemptions
@@ -803,31 +617,49 @@ public abstract class Event extends Event_Base {
         Map<LocalDate, Money> dueDateAmountMap = getDueDateAmountMap(whenRegistered);
         Money baseAmount = dueDateAmountMap.values().stream().reduce(Money.ZERO, Money::add);
 
-//        final LocalDate localDate = dueDateAmountMap.entrySet().stream()
-//                                        .max(Map.Entry.comparingByKey())
-//                                        .map(Map.Entry::getKey)
-//                                        .orElseThrow(() -> new UnsupportedOperationException(String.format("event without debts: %s%n", getExternalId())));
-//
-//        LocalDate tmp = null;
-//        if (whenRegistered.isAfter(localDate.plusDays(1).toDateTimeAtStartOfDay())) {
-//            tmp = localDate;
-//        }
-//
-//        final LocalDate dueDate = tmp;
-        Map<LocalDate, Boolean> dueDatePenaltyExemptionMap = getDueDatePenaltyExemptionMap(whenRegistered);
+
         Map<LocalDate, Money> dueDateExemptionMap = getExemptionValue(dueDateAmountMap, baseAmount);
 
         // subject amount to interest calculation
-        Money baseAmountWithoutExemptions = baseAmount.subtract(dueDateExemptionMap.values().stream().reduce(Money.ZERO, Money::add));
         
-        CashFlowBox cashFlowBox = new CashFlowBox(this, whenRegistered, baseAmountWithoutExemptions);
-        Money amountToPay = dueDateAmountMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(e -> {
-            cashFlowBox
-                .setDueDateExemptionValueIsToApplyPenalty(e.getKey(), dueDateExemptionMap.getOrDefault(e.getKey(), Money.ZERO), dueDatePenaltyExemptionMap.getOrDefault(e.getKey(), Boolean.TRUE));
-            return cashFlowBox.calculateTotalAmountFor(e.getValue());
-        }).reduce(Money::add).orElse(Money.ZERO);
+        final DebtInterestCalculator calculator = getDebtInterestCalculator(whenRegistered);
+        final Money amountInDebt = new Money(calculator.getDebtAmount());
+        final Optional<InterestRateBean> interestRateBean = calculator.getInterestBean();
 
-        return new AmountInterestBean(baseAmount, amountToPay, cashFlowBox.getInterestBean(), dueDateAmountMap, dueDateExemptionMap, getFixedAmountPenaltyExemption());
+        return new AmountInterestBean(baseAmount, amountInDebt, interestRateBean, dueDateAmountMap, dueDateExemptionMap, getFixedAmountPenaltyExemption());
+        //return new AmountInterestBean(baseAmount, amountToPay, cashFlowBox.getInterestBean(), dueDateAmountMap, dueDateExemptionMap, getFixedAmountPenaltyExemption());
+    }
+
+    protected DebtInterestCalculator getDebtInterestCalculator(DateTime when) {
+        final Builder builder = new Builder(when);
+        final Map<LocalDate, Money> dueDateAmountMap = getDueDateAmountMap(when);
+        final Money baseAmount = dueDateAmountMap.values().stream().reduce(Money.ZERO, Money::add);
+
+        dueDateAmountMap.forEach((date, amount) -> {
+            builder.debt(date, amount.getAmount());
+        });
+
+        getNonAdjustingTransactions().forEach(e -> {
+            builder.payment(e.getWhenProcessed(), e.getWhenRegistered().toLocalDate(), e.getAmountWithAdjustment().getAmount());
+        });
+
+        this.getExemptionsSet().stream().filter(e -> !(e instanceof PenaltyExemption)).forEach(e -> {
+            builder.debtExemption(e.getWhenCreated(), e.getWhenCreated().toLocalDate(), e.getExemptionAmount(baseAmount).getAmount());
+        });
+
+        this.getDiscountsSet().forEach(d -> {
+            builder.debtExemption(d.getWhenCreated(), d.getWhenCreated().toLocalDate(), d.getAmount().getAmount());
+        });
+
+        getDueDatePenaltyExemptionMap(when).forEach((date, isToExempt) -> {
+            if (isToExempt) {
+                DateTime created = date.toDateTimeAtStartOfDay();
+                builder.interestExemption(created, date, dueDateAmountMap.get(date).getAmount());
+            }
+        });
+
+        builder.setToApplyInterest(FenixEduAcademicConfiguration.isToUseGlobalInterestRateTableForEventPenalties(this));
+        return builder.build();
     }
 
     private Map<LocalDate, Money> getExemptionValue(Map<LocalDate, Money> dueDateAmountMap, Money baseAmount) {
@@ -882,79 +714,49 @@ public abstract class Event extends Event_Base {
     }
 
     public List<EntryDTO> calculateEntries(DateTime when) {
-        final List<EntryDTO> result = new ArrayList<EntryDTO>();
-//        Money baseAmount = getPostingRule().doCalculationForAmountToPay(this, getWhenOccured().plusSeconds(1), false);
-        Map<LocalDate, Money> dueDateAmountMap = getDueDateAmountMap(when);
+        final List<EntryDTO> result = new ArrayList<>();
 
-        Money baseAmount = getDueDateAmountMap(when).values().stream().reduce(Money.ZERO, Money::add);
-
-        Map<LocalDate, Money> dueDateExemptionMap = getExemptionValue(dueDateAmountMap, baseAmount);
-        Map<LocalDate, Boolean> dueDatePenaltyExemptionMap = getDueDatePenaltyExemptionMap(when);
-
-        CashFlowBox cashFlowBox = new CashFlowBox(this, when, baseAmount);
-        Map<LocalDate, Money> amountsByInstallment = new HashMap<>();
-        Map<LocalDate, Money> interestByInstallment = new HashMap<>();
+        final DebtInterestCalculator debtInterestCalculator = getDebtInterestCalculator(when);
 
         final EntryType entryType = getPostingRule().getEntryType();
 
-        dueDateAmountMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
-            cashFlowBox.setDueDateExemptionValueIsToApplyPenalty(entry.getKey(), dueDateExemptionMap.getOrDefault(entry.getKey(), Money.ZERO), dueDatePenaltyExemptionMap.getOrDefault(entry.getKey(), Boolean.TRUE));
-            boolean subtractMoneyFor = cashFlowBox.subtractMoneyFor(entry.getValue());
-            if (!subtractMoneyFor || cashFlowBox.hasInterest()) {
-                if (cashFlowBox.hasInterest()) {
-                    interestByInstallment.put(entry.getKey(), cashFlowBox.getInterest());
-                    cashFlowBox.resetInterest();
-                }
-                if (!subtractMoneyFor) {
-                    amountsByInstallment.put(entry.getKey(), cashFlowBox.subtractRemainingFor(entry.getValue()));
-                }
-            }
-        });
-
-        dueDateAmountMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
-            Money installmentAmount = amountsByInstallment.get(entry.getKey());
-            Money interestAmount = Optional.ofNullable(interestByInstallment.get(entry.getKey())).orElse(Money.ZERO);
+        debtInterestCalculator.getDebtsOrderedByDueDate().forEach(d -> {
+            final Money openInterestAmount = new Money(d.getOpenInterestAmount());
+            final Money originalAmount = new Money(d.getOriginalAmount());
+            final Money amountToPay = new Money(d.getOpenAmount());
+            
 
             LabelFormatter entryDescription = getDescriptionForEntryType(entryType);
-            entryDescription.appendLabel(String.format(" [ %s ]", entry.getKey().toString("dd-MM-yyyy")));
+            entryDescription.appendLabel(String.format(" [ %s ]", d.getDueDate().toString("dd-MM-yyyy")));
 
-            if (installmentAmount != null && installmentAmount.isPositive()) {
+            if (amountToPay.isPositive()) {
                 EntryDTO bean = null;
-
                 PaymentPlan paymentPlan = getPaymentPlan();
+                Money payedAmount = new Money(d.getPaymentsAmount());
 
                 if (paymentPlan != null) {
-                    Installment installment = paymentPlan.getInstallmentsSet().stream().filter(i -> i.getEndDate(this).equals(entry.getKey())).findAny().orElse(null);
+                    Installment installment = paymentPlan.getInstallmentsSet().stream().filter(i -> i.getEndDate(this).equals(d.getDueDate())).findAny().orElse(null);
                     if (installment != null) {
-                        bean = new EntryWithInstallmentDTO(entryType, this, installmentAmount, entryDescription, installment);
+                        bean = new EntryWithInstallmentDTO(entryType, this, originalAmount, payedAmount, amountToPay, entryDescription, amountToPay);
+                        //bean = new EntryWithInstallmentDTO(entryType, this, new Money(openAmount), entryDescription, installment);
                     }
                 }
 
                 if (bean == null) {
-
-                    // remove interest amount since adding a separate entry with total interest at the end
-                    Money debtAmount = calculateAmountToPay(when).subtract(interestAmount);
-                    if (debtAmount.isPositive()) {
-                        bean = new EntryDTO(entryType, this, installmentAmount, getPayedAmount(when), debtAmount, entryDescription, debtAmount);
-                    }
+                    bean = new EntryDTO(entryType, this, originalAmount, payedAmount, amountToPay, entryDescription, amountToPay);
                 }
 
-                if (bean != null) {
-                    result.add(bean);
-                }
+                result.add(bean);
+            }
+
+            if (openInterestAmount.isPositive()) {
+                EntryDTO e = new EntryDTO(entryType, this, openInterestAmount);
+                entryDescription = getDescriptionForEntryType(entryType);
+                entryDescription.appendLabel(String.format(" [ %s ]  / Juros", d.getDueDate().toString("dd-MM-yyyy")));
+                e.setDescription(entryDescription);
+                result.add(e);
             }
         });
-
-        // add total interest entry
-
-        Money totalInterest = interestByInstallment.values().stream().reduce(Money.ZERO, Money::add);
-        if (totalInterest.isPositive()) {
-                EntryDTO e = new EntryDTO(entryType, this, totalInterest);
-                LabelFormatter descriptionForEntryType = getDescriptionForEntryType(entryType);
-                descriptionForEntryType.appendLabel(" / Juros");
-                e.setDescription(descriptionForEntryType);
-                result.add(e);
-        }
 
         return result;
     }

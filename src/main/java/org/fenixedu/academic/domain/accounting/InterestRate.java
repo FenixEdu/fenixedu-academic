@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Days;
 import org.joda.time.Interval;
@@ -73,7 +72,7 @@ public class InterestRate extends InterestRate_Base {
      * @param interval
      * @return the interest amount to apply, it can be 0 if no days overlap
      */
-    public Money getInterest(Money amount, Interval interval) {
+    public BigDecimal getInterest(BigDecimal amount, Interval interval) {
         return amount.multiply(getTax(interval));
     }
 
@@ -84,7 +83,7 @@ public class InterestRate extends InterestRate_Base {
      * @return the original value with interest, returns the same specified amount if no interest applies.
      */
     
-    public Money getAmountWithInterest(Money amount, Interval interval) {
+    public BigDecimal getAmountWithInterest(BigDecimal amount, Interval interval) {
         return amount.add(getInterest(amount, interval));
     }
 
@@ -103,7 +102,7 @@ public class InterestRate extends InterestRate_Base {
     }
 
 
-    private static LocalDate getLastDueDate(Map<LocalDate, Money> entries) {
+    private static LocalDate getLastDueDate(Map<LocalDate, BigDecimal> entries) {
         return entries.keySet().stream().min(Comparator.reverseOrder()).get();
     }
 
@@ -119,7 +118,7 @@ public class InterestRate extends InterestRate_Base {
             private final Interval overlap;
             private final int numberOfDays;
             private final BigDecimal rate;
-            private Money result;
+            private BigDecimal result;
 
             public PartialInterestRateBean(Interval overlap, BigDecimal rate) {
                 this.overlap = overlap;
@@ -128,8 +127,8 @@ public class InterestRate extends InterestRate_Base {
                 this.result = calculateResult();
             }
 
-            private Money calculateResult() {
-                BigDecimal absoluteTaxValue = rate.divide(BigDecimal.valueOf(100), 5, RoundingMode.UNNECESSARY);
+            private BigDecimal calculateResult() {
+                BigDecimal absoluteTaxValue = rate.divide(BigDecimal.valueOf(100), 10, RoundingMode.UNNECESSARY);
                 BigDecimal partial = absoluteTaxValue.multiply(BigDecimal.valueOf(this.numberOfDays)).divide(NUMBER_OF_DAYS_PER_YEAR, 5, RoundingMode.UP);
                 return amount.multiply(partial);
             }
@@ -138,7 +137,7 @@ public class InterestRate extends InterestRate_Base {
                 return rate;
             }
 
-            public Money getResult() {
+            public BigDecimal getResult() {
                 return result;
             }
 
@@ -149,11 +148,11 @@ public class InterestRate extends InterestRate_Base {
             }
         }
 
-        private Money amount;
+        private BigDecimal amount;
         private Interval interval;
         private List<PartialInterestRateBean> partials;
 
-        public InterestRateBean(LocalDate start, LocalDate end, Money amount) {
+        public InterestRateBean(LocalDate start, LocalDate end, BigDecimal amount) {
             this.amount = amount;
             this.interval = new Interval(start.plusDays(1).toDateTimeAtStartOfDay(), end.plusDays(1).toDateTimeAtStartOfDay());
             this.partials = new ArrayList<>();
@@ -163,12 +162,12 @@ public class InterestRate extends InterestRate_Base {
             return interval;
         }
 
-        public Money getAmount() {
+        public BigDecimal getAmount() {
             return amount;
         }
 
-        public Money getInterest() {
-            return partials.stream().map(PartialInterestRateBean::getResult).reduce(Money.ZERO, Money::add);
+        public BigDecimal getInterest() {
+            return partials.stream().map(PartialInterestRateBean::getResult).reduce(BigDecimal.ZERO, BigDecimal::add);
         }
 
         public void addPartial(Interval overlap, BigDecimal rate) {
@@ -186,9 +185,9 @@ public class InterestRate extends InterestRate_Base {
         @Override
         public String toString() {
             StringBuilder builder = new StringBuilder();
-            Money interest = getInterest();
+            BigDecimal interest = getInterest();
             builder.append(String.format("%s - %s + %s = %s%n", InterestRateBean.toString(interval), amount.toPlainString(), interest.toPlainString(), amount.add(interest).toPlainString()));
-            partials.stream().sorted(Comparator.comparing(p -> p.overlap.getStart())).forEach(p -> {
+            partials.stream().sorted(Comparator.comparing(p -> p.overlap.getEnd())).forEach(p -> {
                 builder.append(String.format("\t%s%n", p.toString()));
             });
 
@@ -196,7 +195,7 @@ public class InterestRate extends InterestRate_Base {
         }
     }
 
-    public static Optional<InterestRateBean> getInterestBean(LocalDate start, LocalDate end, Money amount) {
+    public static Optional<InterestRateBean> getInterestBean(LocalDate start, LocalDate end, BigDecimal amount) {
 
         if (end.isAfter(start)) {
             InterestRateBean bean = new InterestRateBean(start, end, amount);
@@ -213,8 +212,8 @@ public class InterestRate extends InterestRate_Base {
         return Optional.empty();
     }
 
-    public static Money getInterest(LocalDate dueDate, LocalDate when, Money amount) {
-        return getInterestBean(dueDate, when, amount).map(InterestRateBean::getInterest).orElse(Money.ZERO);
+    public static BigDecimal getInterest(LocalDate dueDate, LocalDate when, BigDecimal amount) {
+        return getInterestBean(dueDate, when, amount).map(InterestRateBean::getInterest).orElse(BigDecimal.ZERO);
     }
 
 

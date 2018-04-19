@@ -51,6 +51,7 @@
         <version.pt.ist.tidy>1.0</version.pt.ist.tidy>
         <version.taglibs.datetime>1.0.1</version.taglibs.datetime>
         <version.taglibs.strings>1.1.0</version.taglibs.strings>
+        <version.com.fasterxml.jackson.core.jackson-databind>2.8.5</version.com.fasterxml.jackson.core.jackson-databind>
     </properties>
 
     <issueManagement>
@@ -299,6 +300,11 @@
             <groupId>com.lowagie</groupId>
             <artifactId>itext</artifactId>
             <version>${version.com.lowagie.itext}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${version.com.fasterxml.jackson.core.jackson-databind}</version>
         </dependency>
     </dependencies>
 
