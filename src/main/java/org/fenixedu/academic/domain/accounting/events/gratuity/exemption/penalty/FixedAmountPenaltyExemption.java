@@ -16,4 +16,9 @@ public class FixedAmountPenaltyExemption extends FixedAmountPenaltyExemption_Bas
         setValue(value);
         super.init(justificationType, event, responsible, reason, dispatchDate.toYearMonthDay());
     }
+
+    @Override
+    public Money getExemptionAmount(Money money) {
+        return getValue();
+    }
 }

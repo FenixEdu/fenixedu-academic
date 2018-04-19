@@ -623,14 +623,14 @@ public abstract class Event extends Event_Base {
         // subject amount to interest calculation
         
         final DebtInterestCalculator calculator = getDebtInterestCalculator(whenRegistered);
-        final Money amountInDebt = new Money(calculator.getDebtAmount());
+        final Money amountInDebt = new Money(calculator.getDueAmount());
         final Optional<InterestRateBean> interestRateBean = calculator.getInterestBean();
 
         return new AmountInterestBean(baseAmount, amountInDebt, interestRateBean, dueDateAmountMap, dueDateExemptionMap, getFixedAmountPenaltyExemption());
         //return new AmountInterestBean(baseAmount, amountToPay, cashFlowBox.getInterestBean(), dueDateAmountMap, dueDateExemptionMap, getFixedAmountPenaltyExemption());
     }
 
-    protected DebtInterestCalculator getDebtInterestCalculator(DateTime when) {
+    public DebtInterestCalculator getDebtInterestCalculator(DateTime when) {
         final Builder builder = new Builder(when);
         final Map<LocalDate, Money> dueDateAmountMap = getDueDateAmountMap(when);
         final Money baseAmount = dueDateAmountMap.values().stream().reduce(Money.ZERO, Money::add);
@@ -640,23 +640,29 @@ public abstract class Event extends Event_Base {
         });
 
         getNonAdjustingTransactions().forEach(e -> {
-            builder.payment(e.getWhenProcessed(), e.getWhenRegistered().toLocalDate(), e.getAmountWithAdjustment().getAmount());
+            if (!e.getWhenRegistered().isAfter(when)) {
+                builder.payment(e.getWhenProcessed(), e.getWhenRegistered().toLocalDate(), e.getAmountWithAdjustment().getAmount());
+            }
         });
 
         this.getExemptionsSet().stream().filter(e -> !(e instanceof PenaltyExemption)).forEach(e -> {
-            builder.debtExemption(e.getWhenCreated(), e.getWhenCreated().toLocalDate(), e.getExemptionAmount(baseAmount).getAmount());
+            if (!e.getWhenCreated().isAfter(when)) {
+                builder.debtExemption(e.getWhenCreated(), e.getWhenCreated().toLocalDate(), e.getExemptionAmount(baseAmount).getAmount());
+            }
         });
 
         this.getDiscountsSet().forEach(d -> {
-            builder.debtExemption(d.getWhenCreated(), d.getWhenCreated().toLocalDate(), d.getAmount().getAmount());
-        });
-
-        getDueDatePenaltyExemptionMap(when).forEach((date, isToExempt) -> {
-            if (isToExempt) {
-                DateTime created = date.toDateTimeAtStartOfDay();
-                builder.interestExemption(created, date, dueDateAmountMap.get(date).getAmount());
+            if (!d.getWhenCreated().isAfter(when)) {
+                builder.debtExemption(d.getWhenCreated(), d.getWhenCreated().toLocalDate(), d.getAmount().getAmount());
             }
         });
+
+        getExemptionsSet()
+            .stream()
+            .filter(PenaltyExemption.class::isInstance)
+            .map(PenaltyExemption.class::cast)
+            .filter(e -> !e.getWhenCreated().isAfter(when))
+            .forEach(e -> builder.interestExemption(e.getWhenCreated(), e.getWhenCreated().toLocalDate(), e.getExemptionAmount(baseAmount).getAmount()));
 
         builder.setToApplyInterest(FenixEduAcademicConfiguration.isToUseGlobalInterestRateTableForEventPenalties(this));
         return builder.build();

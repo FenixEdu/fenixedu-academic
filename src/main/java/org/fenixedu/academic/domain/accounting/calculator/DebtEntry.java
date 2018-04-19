@@ -12,12 +12,14 @@ import org.fenixedu.academic.domain.accounting.calculator.DebtEntry.View.Simple;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.annotation.JsonView;
 
 /**
  * Created by Sérgio Silva (hello@fenixedu.org).
  */
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonTypeInfo(use = Id.NAME, include = As.PROPERTY, property = "type")
 @JsonSubTypes({
     @Type(value = Debt.class, name = "debt"),
     @Type(value = Interest.class, name = "interest")
@@ -62,7 +64,7 @@ abstract class DebtEntry implements Cloneable {
     }
     
     public BigDecimal getPayedAmount() {
-        return partialPayments.stream().map(PartialPayment::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+        return getAmount(partialPayment -> true);
     }
 
     private BigDecimal getAmount(Predicate<PartialPayment> filter) {
