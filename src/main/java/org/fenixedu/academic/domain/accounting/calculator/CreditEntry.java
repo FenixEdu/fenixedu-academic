@@ -110,30 +110,6 @@ abstract class CreditEntry implements Cloneable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof CreditEntry)) {
-            return false;
-        }
-
-        CreditEntry creditEntry = (CreditEntry) o;
-
-        if (date != null ? !date.equals(creditEntry.date) : creditEntry.date != null) {
-            return false;
-        }
-        return (amount != null ? amount.equals(creditEntry.amount) : creditEntry.amount == null);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = date != null ? date.hashCode() : 0;
-        result = 31 * result + (amount != null ? amount.hashCode() : 0);
-        return result;
-    }
-
-    @Override
     public String toString() {
         return getClass().getSimpleName() + "{" + "date=" + date + ", amount=" + amount + ", partialPayments=" + partialPayments + ", unusedAmount=" + getUnusedAmount() + ", usedAmount=" +
                    getUsedAmount()

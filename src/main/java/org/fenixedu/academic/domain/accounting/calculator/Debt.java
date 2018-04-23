@@ -83,31 +83,6 @@ public class Debt extends DebtEntry {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Debt)) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-
-        Debt debt = (Debt) o;
-
-        return (dueDate != null ? dueDate.equals(debt.dueDate) : debt.dueDate == null) && interests.equals(debt.interests);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (dueDate != null ? dueDate.hashCode() : 0);
-        result = 31 * result + interests.hashCode();
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "Debt{" + "dueDate=" + dueDate + ", interests=" + interests + ", open=" + isOpen() + ", openInterest=" + isOpenInterest() + ", openInterestAmount=" + getOpenInterestAmount() + "} "
                    + super.toString();

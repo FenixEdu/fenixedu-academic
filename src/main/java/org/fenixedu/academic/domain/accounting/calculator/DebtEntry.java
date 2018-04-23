@@ -86,25 +86,6 @@ abstract class DebtEntry implements Cloneable {
     public boolean isOpen() {
         return getOpenAmount().compareTo(BigDecimal.ZERO) > 0;
     }
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof DebtEntry)) {
-            return false;
-        }
-
-        DebtEntry debtEntry = (DebtEntry) o;
-
-        return (amount != null ? amount.equals(debtEntry.amount) : debtEntry.amount == null) && partialPayments.equals(debtEntry.partialPayments);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = amount != null ? amount.hashCode() : 0;
-        return result;
-    }
 
     @Override
     public String toString() {

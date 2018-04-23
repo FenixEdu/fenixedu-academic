@@ -54,33 +54,5 @@ class PartialPayment<T extends DebtEntry> {
         return "PartialPayment{" + "amount=" + amount + '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof PartialPayment)) {
-            return false;
-        }
-
-        PartialPayment<?> that = (PartialPayment<?>) o;
-
-        if (creditEntry != null ? !creditEntry.equals(that.creditEntry) : that.creditEntry != null) {
-            return false;
-        }
-        if (debtEntry != null ? !debtEntry.equals(that.debtEntry) : that.debtEntry != null) {
-            return false;
-        }
-        return amount != null ? amount.equals(that.amount) : that.amount == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = creditEntry != null ? creditEntry.hashCode() : 0;
-        result = 31 * result + (debtEntry != null ? debtEntry.hashCode() : 0);
-        result = 31 * result + (amount != null ? amount.hashCode() : 0);
-        return result;
-    }
-
 
 }

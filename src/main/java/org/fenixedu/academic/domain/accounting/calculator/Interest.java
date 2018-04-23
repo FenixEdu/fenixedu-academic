@@ -41,36 +41,12 @@ class Interest extends DebtEntry {
         return date;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Interest)) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-
-        Interest interest = (Interest) o;
-
-        return date != null ? date.equals(interest.date) : interest.date == null;
-    }
-
     public CreditEntry getOrigin() {
         return origin;
     }
 
     public InterestRateBean getInterestRateBean() {
         return interestRateBean;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        return result;
     }
 
     @Override
