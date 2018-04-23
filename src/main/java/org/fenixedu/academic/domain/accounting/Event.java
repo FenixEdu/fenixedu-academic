@@ -28,7 +28,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -36,11 +35,9 @@ import java.util.TreeSet;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.InterestRate.InterestRateBean;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator.Builder;
 import org.fenixedu.academic.domain.accounting.events.PenaltyExemption;
-import org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.FixedAmountPenaltyExemption;
 import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -520,14 +517,9 @@ public abstract class Event extends Event_Base {
     public Money calculateAmountToPay(DateTime whenRegistered) {
         final Money totalAmountToPay = calculateTotalAmountToPay(whenRegistered);
 
-        if (totalAmountToPay == null) {
-            return Money.ZERO;
-        }
+//        final Money remainingAmount = totalAmountToPay.subtract(getPayedAmount(whenRegistered));
 
-        final Money remainingAmount = totalAmountToPay.subtract(getPayedAmount(whenRegistered));
-
-        return remainingAmount.isPositive() ? remainingAmount : Money.ZERO;
-
+        return totalAmountToPay.isPositive() ? totalAmountToPay : Money.ZERO;
     }
 
     public PaymentPlan getPaymentPlan() {
@@ -548,86 +540,9 @@ public abstract class Event extends Event_Base {
         return new HashMap<>();
     }
 
-    public static class AmountInterestBean {
-        private final Money originalAmount;
-        private final Money amountInDebt;
-        private final Map<LocalDate, Money> dueDateAmountMap;
-        private final Map<LocalDate, Money> exemptionMap;
-        private final Optional<InterestRateBean> interestRateBean;
-        private final Money fixedAmountInterestExemption;
-
-        public AmountInterestBean(Money originalAmount, Money amountInDebt, Optional<InterestRateBean> interestRateBean, Map<LocalDate, Money> dueDateAmountMap, Map<LocalDate, Money> exemptionMap,
-            Money fixedAmountInterestExemption)  {
-            this.originalAmount = originalAmount;
-            this.amountInDebt = amountInDebt;
-            this.interestRateBean = interestRateBean;
-            this.dueDateAmountMap = dueDateAmountMap;
-            this.exemptionMap = exemptionMap;
-            this.fixedAmountInterestExemption = fixedAmountInterestExemption;
-        }
-
-        public Money getOriginalAmount() {
-            return originalAmount;
-        }
-        
-        public Money getAmount() {
-            return amountInDebt;
-        }
-
-        public Money getAmountWithInterest() {
-            return amountInDebt.add(getInterest());
-        }
-
-        // returns the due interest amount (does not deduct the fixed amount interest exemptions)
-        public Money getCalculatedInterest() {
-            return interestRateBean.map(InterestRateBean::getInterest).map(Money::new).orElse(Money.ZERO);
-        }
-
-        // Returns the interest value without fixed amount interest exemptions
-        public Money getInterest() {
-            final Money interest = getCalculatedInterest().subtract(fixedAmountInterestExemption);
-            return interest.isPositive() ? interest : Money.ZERO;
-        }
-
-        public Optional<InterestRateBean> getInterestRateBean() {
-            return interestRateBean;
-        }
-
-        public Map<LocalDate, Money> getDueDateAmountMap() {
-            return dueDateAmountMap;
-        }
-
-        public Map<LocalDate, Money> getExemptionMap() {
-            return exemptionMap;
-        }
-    }
-    
     private Money calculateTotalAmountToPay(DateTime whenRegistered) {
-        return calculateTotalAmountToPayBean(whenRegistered).getAmountWithInterest();
-    }
-
-    public Money getFixedAmountPenaltyExemption() {
-        return getPenaltyExemptionsFor(FixedAmountPenaltyExemption.class).stream().map(FixedAmountPenaltyExemption.class::cast).map(FixedAmountPenaltyExemption::getValue).reduce(Money.ZERO,
-            Money::add);
-    }
-
-    public AmountInterestBean calculateTotalAmountToPayBean(DateTime whenRegistered) {
-
-
-        Map<LocalDate, Money> dueDateAmountMap = getDueDateAmountMap(whenRegistered);
-        Money baseAmount = dueDateAmountMap.values().stream().reduce(Money.ZERO, Money::add);
-
-
-        Map<LocalDate, Money> dueDateExemptionMap = getExemptionValue(dueDateAmountMap, baseAmount);
-
-        // subject amount to interest calculation
-        
-        final DebtInterestCalculator calculator = getDebtInterestCalculator(whenRegistered);
-        final Money amountInDebt = new Money(calculator.getDueAmount());
-        final Optional<InterestRateBean> interestRateBean = calculator.getInterestBean();
-
-        return new AmountInterestBean(baseAmount, amountInDebt, interestRateBean, dueDateAmountMap, dueDateExemptionMap, getFixedAmountPenaltyExemption());
-        //return new AmountInterestBean(baseAmount, amountToPay, cashFlowBox.getInterestBean(), dueDateAmountMap, dueDateExemptionMap, getFixedAmountPenaltyExemption());
+        DebtInterestCalculator debtInterestCalculator = getDebtInterestCalculator(whenRegistered);
+        return new Money(debtInterestCalculator.getTotalDueAmount());
     }
 
     public DebtInterestCalculator getDebtInterestCalculator(DateTime when) {
@@ -708,11 +623,7 @@ public abstract class Event extends Event_Base {
     }
 
     public Money getOriginalAmountToPay() {
-        return calculateTotalAmountToPayBean(getWhenOccured().plusSeconds(1)).getOriginalAmount();
-    }
-
-    public AmountInterestBean getOriginalAmountToPayBean() {
-        return calculateTotalAmountToPayBean(getWhenOccured().plusSeconds(1));
+        return new Money(getDebtInterestCalculator(getWhenOccured().plusSeconds(1)).getDebtAmount());
     }
 
     public List<EntryDTO> calculateEntries() {

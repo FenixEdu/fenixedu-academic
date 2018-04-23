@@ -121,8 +121,18 @@ public class DebtInterestCalculator {
     public BigDecimal getInterestAmount () { return getInterestStream().map(Interest::getOriginalAmount).reduce(BigDecimal.ZERO, BigDecimal::add).setScale(2, BigDecimal.ROUND_HALF_UP); }
     public BigDecimal getDueAmount() { return debts.stream().map(Debt::getOpenAmount).reduce(BigDecimal.ZERO, BigDecimal::add).setScale(2, BigDecimal.ROUND_HALF_UP);}
     public BigDecimal getDueInterestAmount() { return debts.stream().map(Debt::getOpenInterestAmount).reduce(BigDecimal.ZERO, BigDecimal::add).setScale(2, BigDecimal.ROUND_HALF_UP);}
-    public BigDecimal getPayedDebtAmount() { return debts.stream().map(Debt::getPaymentsAmount).reduce(BigDecimal.ZERO, BigDecimal::add).setScale(2, BigDecimal.ROUND_HALF_UP);}
-    public BigDecimal getPayedInterestAmount() { return getInterestStream().map(Interest::getPaymentsAmount).reduce(BigDecimal.ZERO, BigDecimal::add).setScale(2, BigDecimal.ROUND_HALF_UP);}
+
+    public BigDecimal getTotalDueAmount() {
+        return debts.stream()
+                    .map(Debt::getOpenAmount)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add)
+                    .add(debts.stream().map(Debt::getOpenInterestAmount)
+                              .reduce(BigDecimal.ZERO,BigDecimal::add))
+                    .setScale(2, BigDecimal.ROUND_HALF_UP);
+    }
+    
+    public BigDecimal getPaidDebtAmount() { return debts.stream().map(Debt::getPaymentsAmount).reduce(BigDecimal.ZERO, BigDecimal::add).setScale(2, BigDecimal.ROUND_HALF_UP);}
+    public BigDecimal getPaidInterestAmount() { return getInterestStream().map(Interest::getPaymentsAmount).reduce(BigDecimal.ZERO, BigDecimal::add).setScale(2, BigDecimal.ROUND_HALF_UP);}
     public BigDecimal getDebtExemptionAmount() { return debts.stream().map(Debt::getDebtExemptionAmount).reduce(BigDecimal.ZERO, BigDecimal::add).setScale(2, BigDecimal.ROUND_HALF_UP);}
     public BigDecimal getInterestExemptionAmount() { return debts.stream().map(Debt::getInterestExemptionAmount).reduce(BigDecimal.ZERO, BigDecimal::add).setScale(2, BigDecimal.ROUND_HALF_UP);}
 
@@ -199,9 +209,9 @@ public class DebtInterestCalculator {
         row.setCell("datePaymentMap", toString(payments));
         row.setCell("interestAmount", getInterestAmount().toPlainString());
         row.setCell("interestDescription", getInterestBean().map(InterestRateBean::toString).orElse("-"));
-        row.setCell("payedDebtAmount", getPayedDebtAmount().toPlainString());
+        row.setCell("paidDebtAmount", getPaidDebtAmount().toPlainString());
         row.setCell("debtExemptionAmount", getDebtExemptionAmount().toPlainString());
-        row.setCell("payedInterestAmount", getPayedInterestAmount().toPlainString());
+        row.setCell("paidInterestAmount", getPaidInterestAmount().toPlainString());
         row.setCell("interestExemptionAmount", getInterestExemptionAmount().toPlainString());
         row.setCell("dueDebtAmount", getDueAmount().toPlainString());
         row.setCell("dueInterestAmount", getDueInterestAmount().toPlainString());

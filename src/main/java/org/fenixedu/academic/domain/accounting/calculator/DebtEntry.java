@@ -59,11 +59,11 @@ abstract class DebtEntry implements Cloneable {
     }
 
     public BigDecimal getOpenAmount() {
-        BigDecimal diff = getOriginalAmount().subtract(getPayedAmount());
+        BigDecimal diff = getOriginalAmount().subtract(getPaidAmount());
         return diff.compareTo(BigDecimal.ZERO) > 0 ? diff : BigDecimal.ZERO;
     }
     
-    public BigDecimal getPayedAmount() {
+    public BigDecimal getPaidAmount() {
         return getAmount(partialPayment -> true);
     }
 
@@ -108,8 +108,8 @@ abstract class DebtEntry implements Cloneable {
 
     @Override
     public String toString() {
-        return "amount=" + amount + ", partialPayments=" + partialPayments + ", originalAmount=" + getOriginalAmount() + ", openAmount=" + getOpenAmount() + ", payedAmount="
-                   + getPayedAmount() + ", open=" + isOpen();
+        return "amount=" + amount + ", partialPayments=" + partialPayments + ", originalAmount=" + getOriginalAmount() + ", openAmount=" + getOpenAmount() + ", paidAmount="
+                   + getPaidAmount() + ", open=" + isOpen();
     }
 
     abstract boolean isToDeposit(CreditEntry creditEntry);
