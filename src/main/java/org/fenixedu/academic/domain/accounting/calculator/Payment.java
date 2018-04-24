@@ -10,10 +10,6 @@ import org.joda.time.LocalDate;
  */
 public class Payment extends CreditEntry {
 
-    public Payment(LocalDate date, BigDecimal amount) {
-        super(date, amount);
-    }
-
     public Payment(DateTime created, LocalDate date, BigDecimal amount) {
         super(created, date, amount);
     }

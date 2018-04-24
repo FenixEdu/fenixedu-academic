@@ -38,7 +38,7 @@ public class DebtInterestCalculator {
         this.creditEntries.addAll(interestExemptions);
         this.isToApplyInterest = isToApplyInterest;
 
-        this.creditEntries.add(new Payment(when.toLocalDate(), BigDecimal.ZERO));
+        this.creditEntries.add(new Payment(when, when.toLocalDate(), BigDecimal.ZERO));
 
         calculate();
     }

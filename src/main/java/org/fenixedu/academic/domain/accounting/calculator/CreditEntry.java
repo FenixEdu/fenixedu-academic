@@ -38,9 +38,6 @@ abstract class CreditEntry implements Cloneable {
     @JsonView(Detailed.class)
     private final Set<PartialPayment> partialPayments = new HashSet<>();
 
-    public CreditEntry(LocalDate date, BigDecimal amount) {
-        this(date.toDateTimeAtStartOfDay(), date, amount);
-    }
 
     public CreditEntry(DateTime created, LocalDate date, BigDecimal amount) {
         this.created = created;
