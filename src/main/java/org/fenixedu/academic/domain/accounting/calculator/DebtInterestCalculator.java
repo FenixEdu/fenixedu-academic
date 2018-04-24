@@ -38,9 +38,8 @@ public class DebtInterestCalculator {
         this.creditEntries.addAll(interestExemptions);
         this.isToApplyInterest = isToApplyInterest;
 
-        if (!hasPayments()) {
-            creditEntries.add(new Payment(when.toLocalDate(), BigDecimal.ZERO));
-        }
+        this.creditEntries.add(new Payment(when.toLocalDate(), BigDecimal.ZERO));
+
         calculate();
     }
 
@@ -176,16 +175,16 @@ public class DebtInterestCalculator {
     private void calculate() {
 
         for (CreditEntry creditEntry : getPaymentsByCreationDate()) {
-            if (creditEntry.isToApplyInterest()) {
-                for (final Debt debt : getDebtsOrderedByDueDate()) {
-                    if (debt.isOpen() && isToApplyInterest) {
-                        Optional<InterestRateBean> interestRateBean = calculateInterest(debt.getDueDateForInterest(), creditEntry.getDate(), debt.getOpenAmount());
-                        interestRateBean.map(bean -> new Interest(creditEntry.getDate(), bean.getInterest(), creditEntry, bean)).ifPresent(debt::addInterest);
+            if (isToApplyInterest) {
+                if (creditEntry.isToApplyInterest()) {
+                    for (final Debt debt : getDebtsOrderedByDueDate()) {
+                        if (debt.isOpen() && isToApplyInterest) {
+                            Optional<InterestRateBean> interestRateBean = calculateInterest(debt.getDueDateForInterest(), creditEntry.getDate(), debt.getOpenAmount());
+                            interestRateBean.map(bean -> new Interest(creditEntry.getDate(), bean.getInterest(), creditEntry, bean)).ifPresent(debt::addInterest);
+                        }
                     }
                 }
-            }
             
-            if (isToApplyInterest) {
                 for (Debt debt : getDebtsOrderedByOpenInterest()) {
                     debt.depositInterest(creditEntry);
                 }
