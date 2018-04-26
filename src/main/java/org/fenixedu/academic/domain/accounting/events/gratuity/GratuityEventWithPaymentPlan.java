@@ -557,8 +557,7 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 
     @Override
     protected Map<LocalDate, Money> getDueDateAmountMap(DateTime when) {
-        return getGratuityPaymentPlan().getInstallmentsSet().stream()
-//                   .filter(i -> !i.getEndDate(event).isAfter(when.toLocalDate()))
+        return getGratuityPaymentPlan().getInstallmentsSet().stream().filter( i -> i.calculateBaseAmount(this).greaterThan(Money.ZERO))
                    .collect(Collectors.toMap(i -> i.getEndDate(this), i -> i.calculateBaseAmount(this)));
     }
 
