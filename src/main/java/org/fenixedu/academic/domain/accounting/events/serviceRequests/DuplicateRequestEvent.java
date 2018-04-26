@@ -47,4 +47,8 @@ public class DuplicateRequestEvent extends DuplicateRequestEvent_Base {
         return labelFormatter;
     }
 
+    @Override
+    public boolean isExemptionAppliable() {
+        return true;
+    }
 }
