@@ -29,4 +29,13 @@ public class Payment extends CreditEntry {
         return true;
     }
 
+    @Override
+    public boolean isToApplyFine() {
+        return true;
+    }
+
+    @Override
+    public boolean isForFine() {
+        return true;
+    }
 }

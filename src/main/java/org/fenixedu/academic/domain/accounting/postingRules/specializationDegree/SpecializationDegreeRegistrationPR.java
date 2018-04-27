@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.accounting.postingRules.specializationDegree;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.accounting.Account;
@@ -35,6 +36,7 @@ import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 public class SpecializationDegreeRegistrationPR extends SpecializationDegreeRegistrationPR_Base {
 
@@ -47,6 +49,15 @@ public class SpecializationDegreeRegistrationPR extends SpecializationDegreeRegi
         this();
         super.init(EntryType.REGISTRATION_FEE, EventType.SPECIALIZATION_DEGREE_REGISTRATION, startDate, endDate,
                 serviceAgreementTemplate, fixedAmount, fixedAmountPenalty);
+    }
+
+    @Override
+    protected Optional<LocalDate> getPenaltyDueDate(Event event) {
+        SpecializationDegreeRegistrationEvent specializationDegreeRegistrationEvent = (SpecializationDegreeRegistrationEvent) event;
+        if (specializationDegreeRegistrationEvent.hasRegistrationPeriodInDegreeCurricularPlan()) {
+            return Optional.of(specializationDegreeRegistrationEvent.getRegistrationPeriodInDegreeCurricularPlan().getEndDateDateTime().toLocalDate());
+        }
+        return Optional.empty();
     }
 
     @Override

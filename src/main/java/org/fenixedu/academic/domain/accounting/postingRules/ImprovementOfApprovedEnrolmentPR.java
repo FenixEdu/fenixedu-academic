@@ -21,6 +21,8 @@ package org.fenixedu.academic.domain.accounting.postingRules;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
@@ -42,6 +44,7 @@ import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrolmentPR_Base {
 
@@ -84,11 +87,10 @@ public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrol
     protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
         final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent =
                 (ImprovementOfApprovedEnrolmentEvent) event;
-        final boolean hasPenalty = hasPenalty(event, when);
 
         Money result = Money.ZERO;
         for (int i = 0; i < improvementOfApprovedEnrolmentEvent.getImprovementEnrolmentEvaluationsSet().size(); i++) {
-            result = result.add(hasPenalty ? getFixedAmountPenalty() : getFixedAmount());
+            result = result.add(getFixedAmount());
         }
 
         return result;
@@ -112,6 +114,27 @@ public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrol
             }
             return !getEnrolmentPeriodInImprovementOfApprovedEnrolment(enrolmentEvaluations.iterator().next()).containsDate(when);
         }
+    }
+
+    private Optional<LocalDate> getDueDate(Event event) {
+        final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent =
+            (ImprovementOfApprovedEnrolmentEvent) event;
+        final Set<EnrolmentEvaluation> enrolmentEvaluations =
+            improvementOfApprovedEnrolmentEvent.getImprovementEnrolmentEvaluationsSet();
+        if (enrolmentEvaluations.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(getEnrolmentPeriodInImprovementOfApprovedEnrolment(enrolmentEvaluations.iterator().next()).getEndDateDateTime().toLocalDate());
+    }
+    
+
+    @Override
+    public Map<LocalDate,Money> getDueDatePenaltyAmountMap(Event event) {
+        Optional<LocalDate> dueDate = getDueDate(event);
+        if (!dueDate.isPresent()) {
+            return Collections.emptyMap();
+        }
+        return Collections.singletonMap(dueDate.get(), getFixedAmountPenalty().subtract(getFixedAmount()));
     }
 
     private EnrolmentPeriodInImprovementOfApprovedEnrolment getEnrolmentPeriodInImprovementOfApprovedEnrolment(

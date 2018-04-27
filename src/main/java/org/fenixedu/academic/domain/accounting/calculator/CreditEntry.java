@@ -11,6 +11,11 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.annotation.JsonView;
 
 /**
@@ -18,6 +23,13 @@ import com.fasterxml.jackson.annotation.JsonView;
  */
 
 @JsonPropertyOrder({ "type", "created", "date", "amount" })
+@JsonTypeInfo(use = Id.NAME, include = As.PROPERTY, property = "type")
+@JsonSubTypes({
+    @Type(value = Payment.class, name = "payment"),
+    @Type(value = DebtExemption.class, name = "debtExemption"),
+    @Type(value = InterestExemption.class, name = "interestExemption"),
+    @Type(value = FineExemption.class, name = "fineExemption")
+})
 abstract class CreditEntry implements Cloneable {
 
     interface View {
@@ -49,7 +61,11 @@ abstract class CreditEntry implements Cloneable {
 
     public abstract boolean isForInterest();
 
+    public abstract boolean isForFine();
+
     public abstract boolean isToApplyInterest();
+
+    public abstract boolean isToApplyFine();
 
     public DateTime getCreated() {
         return created;

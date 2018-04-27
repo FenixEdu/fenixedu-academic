@@ -35,6 +35,9 @@ public class Debt extends DebtEntry {
     @JsonView(Detailed.class)
     private final Set<Interest> interests = new HashSet<>();
 
+    @JsonView(Detailed.class)
+    private final Set<Fine> fines = new HashSet<>();
+
     public Debt(LocalDate dueDate, BigDecimal amount) {
         super(amount);
         this.dueDate = dueDate;
@@ -49,6 +52,10 @@ public class Debt extends DebtEntry {
         return interests.stream().anyMatch(Interest::isOpen);
     }
 
+    public boolean isOpenFine() {
+        return fines.stream().anyMatch(Fine::isOpen);
+    }
+
     public LocalDate getDueDate() {
         return dueDate;
     }
@@ -57,13 +64,21 @@ public class Debt extends DebtEntry {
         this.interests.add(interest);
     }
 
+    public void addFine(Fine fine) {
+        this.fines.add(fine);
+    }
+
     public Set<Interest> getInterests() {
         return Collections.unmodifiableSet(interests);
     }
 
+    public Set<Fine> getFines() { return Collections.unmodifiableSet(fines); }
+
     public BigDecimal getOpenInterestAmount() {
         return interests.stream().map(Interest::getOpenAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
+
+    public BigDecimal getOpenFineAmount() { return fines.stream().map(Fine::getOpenAmount).reduce(BigDecimal.ZERO, BigDecimal::add); }
 
     public void depositInterest(CreditEntry creditEntry) {
         if (creditEntry.isForInterest()) {
@@ -71,11 +86,15 @@ public class Debt extends DebtEntry {
         }
     }
 
+    public void depositFine(CreditEntry creditEntry) {
+        if (creditEntry.isForFine()) {
+            getFines().stream().sorted(Comparator.comparing(Fine::getDate)).forEach(fine -> fine.deposit(creditEntry));
+        }
+    }
+
     public LocalDate getDueDateForInterest() {
         return getInterests().stream().map(Interest::getDate).max(Comparator.naturalOrder()).orElse(getDueDate());
     }
-
-    public
 
     @Override
     boolean isToDeposit(CreditEntry creditEntry) {

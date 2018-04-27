@@ -80,4 +80,7 @@ abstract public class PenaltyExemption extends PenaltyExemption_Base {
         return money;
     }
 
+    public boolean isForInterest() {
+        return false;
+    }
 }

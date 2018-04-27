@@ -8,15 +8,15 @@ import org.joda.time.LocalDate;
 /**
  * Created by Sérgio Silva (hello@fenixedu.org).
  */
-public class DebtExemption extends CreditEntry {
+public class FineExemption extends CreditEntry {
 
-    public DebtExemption(DateTime created, LocalDate date, BigDecimal amount) {
+    public FineExemption(DateTime created, LocalDate date, BigDecimal amount) {
         super(created, date, amount);
     }
 
     @Override
     public boolean isForDebt() {
-        return true;
+        return false;
     }
 
     @Override
@@ -36,6 +36,6 @@ public class DebtExemption extends CreditEntry {
 
     @Override
     public boolean isForFine() {
-        return false;
+        return true;
     }
 }

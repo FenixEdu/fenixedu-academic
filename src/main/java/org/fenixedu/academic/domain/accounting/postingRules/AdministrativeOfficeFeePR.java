@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.EntryType;
@@ -35,6 +36,7 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base {
@@ -52,6 +54,19 @@ public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base {
     }
 
     @Override
+    protected Optional<LocalDate> getPenaltyDueDate(Event event) {
+        final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent =
+            (AdministrativeOfficeFeeAndInsuranceEvent) event;
+
+        final YearMonthDay paymentEndDate =
+            administrativeOfficeFeeAndInsuranceEvent.getPaymentEndDate() != null ? administrativeOfficeFeeAndInsuranceEvent
+                                                                                       .getPaymentEndDate() : getWhenToApplyFixedAmountPenalty();
+
+        return Optional.of(paymentEndDate.toLocalDate());
+    }
+
+    @Override
+    @Deprecated
     protected boolean hasPenalty(Event event, DateTime when) {
         if (event.hasAnyPenaltyExemptionsFor(AdministrativeOfficeFeeAndInsurancePenaltyExemption.class)) {
             return false;
@@ -75,6 +90,7 @@ public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base {
 
     }
 
+    @Deprecated
     private Money calculateAmountPayedUntilEndDate(AdministrativeOfficeFeeAndInsuranceEvent event, YearMonthDay paymentEndDate) {
         Money result = Money.ZERO;
 

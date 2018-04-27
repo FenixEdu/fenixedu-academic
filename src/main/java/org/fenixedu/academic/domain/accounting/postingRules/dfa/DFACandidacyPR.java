@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.accounting.postingRules.dfa;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.accounting.Account;
@@ -35,6 +36,7 @@ import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 public class DFACandidacyPR extends DFACandidacyPR_Base {
 
@@ -51,12 +53,21 @@ public class DFACandidacyPR extends DFACandidacyPR_Base {
     }
 
     @Override
+    protected Optional<LocalDate> getPenaltyDueDate(Event event) {
+        final DFACandidacyEvent dfaCandidacyEvent = (DFACandidacyEvent) event;
+        if (dfaCandidacyEvent.hasCandidacyPeriodInDegreeCurricularPlan()) {
+            return Optional.of(dfaCandidacyEvent.getCandidacyPeriodInDegreeCurricularPlan().getEndDateDateTime().toLocalDate());
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    @Deprecated
     protected boolean hasPenalty(Event event, DateTime when) {
         final DFACandidacyEvent dfaCandidacyEvent = (DFACandidacyEvent) event;
         return dfaCandidacyEvent.hasCandidacyPeriodInDegreeCurricularPlan()
                 && !dfaCandidacyEvent.getCandidacyPeriodInDegreeCurricularPlan().containsDate(
                         dfaCandidacyEvent.getCandidacyDate());
-
     }
 
     public FixedAmountWithPenaltyPR edit(final Money fixedAmount, final Money penaltyAmount) {

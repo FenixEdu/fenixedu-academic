@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -26,39 +27,47 @@ public class DebtInterestCalculator {
 
     private List<Debt> debts = new ArrayList<>();
     private List<CreditEntry> creditEntries = new ArrayList<>();
+    private Map<LocalDate, BigDecimal> dueDateAmountFineMap = new HashMap<>();
+
     private CalculatorSerializer jsonSerializer;
     private boolean isToApplyInterest;
-    
 
-    private DebtInterestCalculator(DateTime when, List<Debt> debts, List<Payment> payments, List<DebtExemption> exemptions, List<InterestExemption> interestExemptions, boolean isToApplyInterest) {
+    private DebtInterestCalculator(DateTime when, List<Debt> debts, List<Payment> payments, List<DebtExemption> exemptions, List<InterestExemption> interestExemptions, List<FineExemption>
+                                                                                                                                                                            fineExemptions,
+                                   Map<LocalDate, BigDecimal> dueDateAmountFineMap, boolean isToApplyInterest) {
         this.jsonSerializer = new CalculatorSerializer();
         this.debts.addAll(debts);
         this.creditEntries.addAll(payments);
         this.creditEntries.addAll(exemptions);
         this.creditEntries.addAll(interestExemptions);
+        this.creditEntries.addAll(fineExemptions);
         this.isToApplyInterest = isToApplyInterest;
+        this.dueDateAmountFineMap = dueDateAmountFineMap;
 
         this.creditEntries.add(new Payment(when, when.toLocalDate(), BigDecimal.ZERO));
 
         calculate();
     }
 
-    interface PaymentPivotView extends CreditEntry.View.Detailed, PartialPayment.View.Simple, Debt.View.Simple, Interest.View.Simple {}
+    interface PaymentPivotView extends CreditEntry.View.Detailed, PartialPayment.View.Simple, Debt.View.Simple, Fine.View.Simple , Interest.View.Simple {
+    }
 
-    interface DebtPivotView extends Debt.View.Detailed , PartialPayment.View.Detailed, Interest.View.Simple, CreditEntry.View.Simple {}
+    interface DebtPivotView extends Debt.View.Detailed, PartialPayment.View.Detailed, Fine.View.Simple, Interest.View.Simple, CreditEntry.View.Simple {
+    }
 
     public static class Builder {
         private List<Debt> debts = new ArrayList<>();
         private List<Payment> payments = new ArrayList<>();
         private List<DebtExemption> debtExemptions = new ArrayList<>();
         private List<InterestExemption> interestExemptions = new ArrayList<>();
+        private List<FineExemption> fineExemptions = new ArrayList<>();
+        private Map<LocalDate, BigDecimal> fineTable = new HashMap<>();
         private DateTime when;
         private boolean toApplyInterest = true;
-        
+
         public Builder(DateTime when) {
             this.when = when;
         }
-
 
         public Builder debt(LocalDate dueDate, BigDecimal amount) {
             debts.add(new Debt(dueDate, amount));
@@ -67,6 +76,11 @@ public class DebtInterestCalculator {
 
         public Builder payment(DateTime created, LocalDate paymentDate, BigDecimal amount) {
             payments.add(new Payment(created, paymentDate, amount));
+            return this;
+        }
+
+        public Builder fine(LocalDate dueDate, BigDecimal amount) {
+            fineTable.put(dueDate, amount);
             return this;
         }
 
@@ -80,13 +94,18 @@ public class DebtInterestCalculator {
             return this;
         }
 
+        public Builder fineExemption(DateTime created, LocalDate paymentDate, BigDecimal amount) {
+            fineExemptions.add(new FineExemption(created, paymentDate, amount));
+            return this;
+        }
+
         public Builder setToApplyInterest(boolean isToApplyInterest) {
             this.toApplyInterest = isToApplyInterest;
             return this;
         }
 
         public DebtInterestCalculator build() {
-            return new DebtInterestCalculator(when, debts, payments, debtExemptions, interestExemptions, toApplyInterest);
+            return new DebtInterestCalculator(when, debts, payments, debtExemptions, interestExemptions, fineExemptions, fineTable, toApplyInterest);
         }
     }
 
@@ -94,12 +113,12 @@ public class DebtInterestCalculator {
         return this.creditEntries.stream().anyMatch(Payment.class::isInstance);
     }
 
-    private List<CreditEntry> getPaymentsByCreationDate() {
+    private List<CreditEntry> getCreditEntriesByCreationDate() {
         return creditEntries.stream().sorted(Comparator.comparing(CreditEntry::getCreated)).collect(Collectors.toList());
     }
 
     private List<Debt> getDebtsByDueDate() {
-        return debts.stream().sorted(Comparator.comparing(Debt::getDueDate)).collect(Collectors.toList());
+        return getDebtStream().sorted(Comparator.comparing(Debt::getDueDate)).collect(Collectors.toList());
     }
 
     public Optional<InterestRateBean> getInterestBean() {
@@ -115,36 +134,88 @@ public class DebtInterestCalculator {
         return Optional.of(interestRateBean);
     }
 
-    public BigDecimal getDebtAmount() { return debts.stream().map(Debt::getOriginalAmount).reduce(BigDecimal.ZERO, BigDecimal::add).setScale(2, BigDecimal.ROUND_HALF_UP); }
+    public BigDecimal getDebtAmount() {
+        return getDebtStream().map(Debt::getOriginalAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
 
-    public BigDecimal getInterestAmount () { return getInterestStream().map(Interest::getOriginalAmount).reduce(BigDecimal.ZERO, BigDecimal::add).setScale(2, BigDecimal.ROUND_HALF_UP); }
-    public BigDecimal getDueAmount() { return debts.stream().map(Debt::getOpenAmount).reduce(BigDecimal.ZERO, BigDecimal::add).setScale(2, BigDecimal.ROUND_HALF_UP);}
-    public BigDecimal getDueInterestAmount() { return debts.stream().map(Debt::getOpenInterestAmount).reduce(BigDecimal.ZERO, BigDecimal::add).setScale(2, BigDecimal.ROUND_HALF_UP);}
+    private Stream<Debt> getDebtStream() {
+        return debts.stream();
+    }
+
+    public BigDecimal getInterestAmount() {
+        return getInterestStream().map(Interest::getOriginalAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public BigDecimal getFineAmount() {
+        return getFineStream().map(Fine::getOriginalAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public BigDecimal getDueAmount() {
+        return getDebtStream().map(Debt::getOpenAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public BigDecimal getDueInterestAmount() {
+        return getDebtStream().map(Debt::getOpenInterestAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public BigDecimal getDueFineAmount() {
+        return getDebtStream().map(Debt::getOpenFineAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
 
     public BigDecimal getTotalDueAmount() {
-        return debts.stream()
-                    .map(Debt::getOpenAmount)
-                    .reduce(BigDecimal.ZERO, BigDecimal::add)
-                    .add(debts.stream().map(Debt::getOpenInterestAmount)
-                              .reduce(BigDecimal.ZERO,BigDecimal::add))
-                    .setScale(2, BigDecimal.ROUND_HALF_UP);
+        return Stream.of(getDueAmount(), getDueInterestAmount(), getDueFineAmount()).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
-    
-    public BigDecimal getPaidDebtAmount() { return debts.stream().map(Debt::getPaymentsAmount).reduce(BigDecimal.ZERO, BigDecimal::add).setScale(2, BigDecimal.ROUND_HALF_UP);}
-    public BigDecimal getPaidInterestAmount() { return getInterestStream().map(Interest::getPaymentsAmount).reduce(BigDecimal.ZERO, BigDecimal::add).setScale(2, BigDecimal.ROUND_HALF_UP);}
-    public BigDecimal getDebtExemptionAmount() { return debts.stream().map(Debt::getDebtExemptionAmount).reduce(BigDecimal.ZERO, BigDecimal::add).setScale(2, BigDecimal.ROUND_HALF_UP);}
-    public BigDecimal getInterestExemptionAmount() { return debts.stream().map(Debt::getInterestExemptionAmount).reduce(BigDecimal.ZERO, BigDecimal::add).setScale(2, BigDecimal.ROUND_HALF_UP);}
+
+    public BigDecimal getPaidDebtAmount() {
+        return getDebtStream().map(Debt::getPaymentsAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public BigDecimal getPaidInterestAmount() {
+        return getInterestStream().map(Interest::getPaymentsAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public BigDecimal getPaidFineAmount() {
+        return getFineStream().map(Fine::getPaymentsAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public BigDecimal getTotalPaidAmount() {
+        return Stream.of(getPaidDebtAmount(), getPaidInterestAmount(), getPaidFineAmount()).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public BigDecimal getDebtExemptionAmount() {
+        return getDebtStream().map(Debt::getDebtExemptionAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public BigDecimal getInterestExemptionAmount() {
+        return getDebtStream().map(Debt::getInterestExemptionAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public BigDecimal getFineExemptionAmount() {
+        return getDebtStream().map(Debt::getFineExemptionAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public BigDecimal getTotalAmount() {
+        return Stream.of(getDebtAmount(), getInterestAmount(), getFineAmount()).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
 
     private Stream<Interest> getInterestStream() {
-        return debts.stream().flatMap(d -> d.getInterests().stream());
+        return getDebtStream().flatMap(d -> d.getInterests().stream());
+    }
+
+    private Stream<Fine> getFineStream() {
+        return getDebtStream().flatMap(d -> d.getFines().stream());
     }
 
     private List<Debt> getDebtsOrderedByOpenInterest() {
-        return debts.stream().sorted(Comparator.comparing(Debt::getOpenInterestAmount)).collect(Collectors.toList());
+        return getDebtStream().sorted(Comparator.comparing(Debt::getOpenInterestAmount)).collect(Collectors.toList());
+    }
+
+    private List<Debt> getDebtsOrderedByOpenFine() {
+        return getDebtStream().sorted(Comparator.comparing(Debt::getOpenFineAmount)).collect(Collectors.toList());
     }
 
     public List<Debt> getDebtsOrderedByDueDate() {
-        return debts.stream().sorted(Comparator.comparing(Debt::getDueDate)).collect(Collectors.toList());
+        return getDebtStream().sorted(Comparator.comparing(Debt::getDueDate)).collect(Collectors.toList());
     }
 
     private Optional<InterestRateBean> calculateInterest(LocalDate start, LocalDate end, BigDecimal baseAmount) {
@@ -171,10 +242,8 @@ public class DebtInterestCalculator {
         }
     }
 
-
     private void calculate() {
-
-        for (CreditEntry creditEntry : getPaymentsByCreationDate()) {
+        for (CreditEntry creditEntry : getCreditEntriesByCreationDate()) {
             if (isToApplyInterest) {
                 if (creditEntry.isToApplyInterest()) {
                     for (final Debt debt : getDebtsOrderedByDueDate()) {
@@ -184,10 +253,28 @@ public class DebtInterestCalculator {
                         }
                     }
                 }
-            
+
                 for (Debt debt : getDebtsOrderedByOpenInterest()) {
                     debt.depositInterest(creditEntry);
                 }
+            }
+
+            if (!dueDateAmountFineMap.isEmpty()) {
+                if (creditEntry.isToApplyFine()) {
+                    for (final Debt debt : getDebtsOrderedByDueDate()) {
+                        if (debt.isOpen()) {
+                            dueDateAmountFineMap.forEach((dueDate, amount) -> {
+                                if (creditEntry.getDate().isAfter(dueDate)) {
+                                    debt.addFine(new Fine(creditEntry.getDate(), amount, creditEntry));
+                                }
+                            });
+                        }
+                    }
+                }
+                
+                for(Debt debt : getDebtsOrderedByOpenFine()) {
+                    debt.depositFine(creditEntry);
+                }                
             }
 
             for (Debt debt : getDebtsOrderedByDueDate()) {
@@ -200,7 +287,7 @@ public class DebtInterestCalculator {
         Spreadsheet spreadsheet = new Spreadsheet(spreadsheetName);
         Row row = spreadsheet.addRow();
 
-        Map<LocalDate, BigDecimal> debts = this.debts.stream().collect(Collectors.toMap(Debt::getDueDate, Debt::getOriginalAmount));
+        Map<LocalDate, BigDecimal> debts = getDebtStream().collect(Collectors.toMap(Debt::getDueDate, Debt::getOriginalAmount));
         Map<LocalDate, BigDecimal> payments = creditEntries.stream().collect(Collectors.toMap(CreditEntry::getDate, CreditEntry::getAmount));
 
         row.setCell("debtAmount", getDebtAmount().toPlainString());
@@ -212,6 +299,8 @@ public class DebtInterestCalculator {
         row.setCell("debtExemptionAmount", getDebtExemptionAmount().toPlainString());
         row.setCell("paidInterestAmount", getPaidInterestAmount().toPlainString());
         row.setCell("interestExemptionAmount", getInterestExemptionAmount().toPlainString());
+        row.setCell("paidFineAmount", getPaidFineAmount().toPlainString());
+        row.setCell("fineExemptionAmount", getFineExemptionAmount().toPlainString());
         row.setCell("dueDebtAmount", getDueAmount().toPlainString());
         row.setCell("dueInterestAmount", getDueInterestAmount().toPlainString());
 

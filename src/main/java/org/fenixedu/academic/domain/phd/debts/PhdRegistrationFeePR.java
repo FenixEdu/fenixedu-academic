@@ -18,6 +18,8 @@
  */
 package org.fenixedu.academic.domain.phd.debts;
 
+import java.util.Optional;
+
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
@@ -26,6 +28,7 @@ import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdProgramCalendarUtil;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 public class PhdRegistrationFeePR extends PhdRegistrationFeePR_Base {
 
@@ -66,6 +69,19 @@ public class PhdRegistrationFeePR extends PhdRegistrationFeePR_Base {
     }
 
     @Override
+    protected Optional<LocalDate> getPenaltyDueDate(Event event) {
+        final PhdRegistrationFee phdEvent = (PhdRegistrationFee) event;
+        final PhdIndividualProgramProcess process = phdEvent.getProcess();
+        LocalDate whenRatified = process.getCandidacyProcess().getWhenRatified();
+        if (whenRatified != null) {
+            return Optional.of(whenRatified.plusDays(20));
+        }
+        return Optional.empty();
+    }
+
+
+    @Override
+    @Deprecated
     protected boolean hasPenalty(final Event event, final DateTime when) {
         final PhdRegistrationFee phdEvent = (PhdRegistrationFee) event;
 

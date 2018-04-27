@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.accounting.postingRules.dfa;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.accounting.Account;
@@ -35,6 +36,7 @@ import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 public class DfaRegistrationPR extends DfaRegistrationPR_Base {
 
@@ -50,17 +52,27 @@ public class DfaRegistrationPR extends DfaRegistrationPR_Base {
     }
 
     @Override
+    protected Optional<LocalDate> getPenaltyDueDate(Event event) {
+        final DfaRegistrationEvent dfaRegistrationEvent = (DfaRegistrationEvent) event;
+        if (dfaRegistrationEvent.hasRegistrationPeriodInDegreeCurricularPlan()) {
+            return Optional.of(dfaRegistrationEvent.getRegistrationPeriodInDegreeCurricularPlan().getEndDateDateTime().toLocalDate());
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    @Deprecated
     protected boolean hasPenalty(Event event, DateTime when) {
         return hasPenaltyForRegistration((DfaRegistrationEvent) event)
                 && !hasPayedPenaltyForCandidacy((DfaRegistrationEvent) event);
     }
-
+    @Deprecated
     private boolean hasPenaltyForRegistration(final DfaRegistrationEvent dfaRegistrationEvent) {
         return dfaRegistrationEvent.hasRegistrationPeriodInDegreeCurricularPlan()
                 && !dfaRegistrationEvent.getRegistrationPeriodInDegreeCurricularPlan().containsDate(
                         dfaRegistrationEvent.getRegistrationDate());
     }
-
+    @Deprecated
     private boolean hasPayedPenaltyForCandidacy(final DfaRegistrationEvent dfaRegistrationEvent) {
         return dfaRegistrationEvent.hasCandidacyPeriodInDegreeCurricularPlan()
                 && !dfaRegistrationEvent.getCandidacyPeriodInDegreeCurricularPlan().containsDate(

@@ -536,6 +536,10 @@ public abstract class Event extends Event_Base {
         return Collections.singletonMap(getDueDateByPaymentCodes().toLocalDate(), getPostingRule().doCalculationForAmountToPay(this, when ,false));
     }
 
+    protected Map<LocalDate, Money> getDueDatePenaltyAmountMap() {
+        return getPostingRule().getDueDatePenaltyAmountMap(this);
+    }
+
     public Map<LocalDate,Boolean> getDueDatePenaltyExemptionMap(DateTime when) {
         return new HashMap<>();
     }
@@ -549,9 +553,14 @@ public abstract class Event extends Event_Base {
         final Builder builder = new Builder(when);
         final Map<LocalDate, Money> dueDateAmountMap = getDueDateAmountMap(when);
         final Money baseAmount = dueDateAmountMap.values().stream().reduce(Money.ZERO, Money::add);
+        final Map<LocalDate, Money> dueDatePenaltyAmountMap = getDueDatePenaltyAmountMap();
 
         dueDateAmountMap.forEach((date, amount) -> {
             builder.debt(date, amount.getAmount());
+        });
+
+        dueDatePenaltyAmountMap.forEach((date, amount) -> {
+            builder.fine(date, amount.getAmount());
         });
 
         getNonAdjustingTransactions().forEach(e -> {
@@ -577,7 +586,13 @@ public abstract class Event extends Event_Base {
             .filter(PenaltyExemption.class::isInstance)
             .map(PenaltyExemption.class::cast)
             .filter(e -> !e.getWhenCreated().isAfter(when))
-            .forEach(e -> builder.interestExemption(e.getWhenCreated(), e.getWhenCreated().toLocalDate(), e.getExemptionAmount(baseAmount).getAmount()));
+            .forEach(e -> {
+                if (e.isForInterest()) {
+                    builder.interestExemption(e.getWhenCreated(), e.getWhenCreated().toLocalDate(), e.getExemptionAmount(baseAmount).getAmount());
+                 } else {
+                    builder.fineExemption(e.getWhenCreated(), e.getWhenCreated().toLocalDate(), e.getExemptionAmount(baseAmount).getAmount());
+                }
+            });
 
         builder.setToApplyInterest(FenixEduAcademicConfiguration.isToUseGlobalInterestRateTableForEventPenalties(this));
         return builder.build();

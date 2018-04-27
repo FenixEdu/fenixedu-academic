@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.accounting.accountingTransactions.detail.SibsTransactionDetail;
@@ -36,6 +37,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
@@ -390,4 +392,7 @@ public abstract class PostingRule extends PostingRule_Base {
 
     protected abstract EntryType getEntryType();
 
+    public Map<LocalDate,Money> getDueDatePenaltyAmountMap(Event event) {
+        return Collections.emptyMap();
+    }
 }

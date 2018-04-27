@@ -58,6 +58,5 @@ public class ImprovementOfApprovedEnrolmentPenaltyExemption extends ImprovementO
         super.init(penaltyExemptionType, improvementOfApprovedEnrolmentEvent, responsible, comments, directiveCouncilDispatchDate);
     }
 
-    
 
 }

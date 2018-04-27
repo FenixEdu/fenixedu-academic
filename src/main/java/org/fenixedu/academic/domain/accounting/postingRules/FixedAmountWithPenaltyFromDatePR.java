@@ -18,6 +18,8 @@
  */
 package org.fenixedu.academic.domain.accounting.postingRules;
 
+import java.util.Optional;
+
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
@@ -25,6 +27,7 @@ import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 public class FixedAmountWithPenaltyFromDatePR extends FixedAmountWithPenaltyFromDatePR_Base {
@@ -80,4 +83,8 @@ public class FixedAmountWithPenaltyFromDatePR extends FixedAmountWithPenaltyFrom
 
     }
 
+    @Override
+    protected Optional<LocalDate> getPenaltyDueDate(Event event) {
+        return Optional.of(getWhenToApplyFixedAmountPenalty().toLocalDate());
+    }
 }

@@ -25,7 +25,17 @@ public class InterestExemption extends CreditEntry {
     }
 
     @Override
+    public boolean isForFine() {
+        return false;
+    }
+
+    @Override
     public boolean isToApplyInterest() {
+        return false;
+    }
+
+    @Override
+    public boolean isToApplyFine() {
         return false;
     }
 }

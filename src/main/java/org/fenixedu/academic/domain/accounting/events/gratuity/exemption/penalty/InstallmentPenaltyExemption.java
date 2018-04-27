@@ -90,4 +90,8 @@ public class InstallmentPenaltyExemption extends InstallmentPenaltyExemption_Bas
         super.delete();
     }
 
+    @Override
+    public boolean isForInterest() {
+        return true;
+    }
 }

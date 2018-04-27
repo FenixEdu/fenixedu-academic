@@ -22,7 +22,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 @JsonTypeInfo(use = Id.NAME, include = As.PROPERTY, property = "type")
 @JsonSubTypes({
     @Type(value = Debt.class, name = "debt"),
-    @Type(value = Interest.class, name = "interest")
+    @Type(value = Interest.class, name = "interest"),
+    @Type(value = Fine.class, name = "fine")
 })
 abstract class DebtEntry implements Cloneable {
     interface View {
@@ -81,6 +82,10 @@ abstract class DebtEntry implements Cloneable {
 
     public BigDecimal getInterestExemptionAmount() {
         return getAmount(partialPayment -> partialPayment.getCreditEntry() instanceof InterestExemption);
+    }
+
+    public BigDecimal getFineExemptionAmount() {
+        return getAmount(partialPayment -> partialPayment.getCreditEntry() instanceof FineExemption);
     }
 
     public boolean isOpen() {
