@@ -31,7 +31,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.poi.hssf.util.Region;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -279,23 +279,23 @@ public class DegreeTransferCandidacyProcessDA extends CandidacyProcessDA {
         spreadsheet.addHeader(BundleUtil.getString(Bundle.APPLICATION, "label.candidacy.enroledEcts"));
 
         // Id + Nº + Nome merge
-        spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 0, 2, (short) 1));
+        spreadsheet.getSheet().addMergedRegion(new CellRangeAddress(2, (short) 0, 2, (short) 1));
         // Degree name merge
-        spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 2, 3, (short) 2));
+        spreadsheet.getSheet().addMergedRegion(new CellRangeAddress(2, (short) 2, 3, (short) 2));
         // affinity merge
-        spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 3, 3, (short) 3));
+        spreadsheet.getSheet().addMergedRegion(new CellRangeAddress(2, (short) 3, 3, (short) 3));
         // degreeNature merge
-        spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 4, 3, (short) 4));
+        spreadsheet.getSheet().addMergedRegion(new CellRangeAddress(2, (short) 4, 3, (short) 4));
         // UCs merge
-        spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 5, 2, (short) 7));
+        spreadsheet.getSheet().addMergedRegion(new CellRangeAddress(2, (short) 5, 2, (short) 7));
         // A merge
-        spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 9, 3, (short) 9));
+        spreadsheet.getSheet().addMergedRegion(new CellRangeAddress(2, (short) 9, 3, (short) 9));
         // B merge
-        spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 10, 3, (short) 10));
+        spreadsheet.getSheet().addMergedRegion(new CellRangeAddress(2, (short) 10, 3, (short) 10));
         // C merge
-        spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 11, 3, (short) 11));
+        spreadsheet.getSheet().addMergedRegion(new CellRangeAddress(2, (short) 11, 3, (short) 11));
         // result merge
-        spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 12, 3, (short) 12));
+        spreadsheet.getSheet().addMergedRegion(new CellRangeAddress(2, (short) 12, 3, (short) 12));
     }
 
     private void createBody(final StyledExcelSpreadsheet excelSpreadsheet,

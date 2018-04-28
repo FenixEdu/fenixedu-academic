@@ -37,7 +37,7 @@
         <version.javax.ws.rs.javax.ws.rs.api>2.0</version.javax.ws.rs.javax.ws.rs.api>
         <version.joda.time.joda.time>2.9.7</version.joda.time.joda.time>
         <version.net.sourceforge.htmlcleaner.htmlcleaner>2.18</version.net.sourceforge.htmlcleaner.htmlcleaner>
-        <version.org.apache.poi.poi>3.11</version.org.apache.poi.poi>
+        <version.org.apache.poi.poi>3.17</version.org.apache.poi.poi>
         <version.org.fenixedu.bennu-renderers>5.1.1</version.org.fenixedu.bennu-renderers>
         <version.org.fenixedu.bennu>5.0.2</version.org.fenixedu.bennu>
         <version.org.fenixedu.fenixedu-commons>1.1.2</version.org.fenixedu.fenixedu-commons>

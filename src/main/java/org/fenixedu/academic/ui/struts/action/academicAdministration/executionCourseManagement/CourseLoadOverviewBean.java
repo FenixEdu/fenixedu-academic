@@ -29,6 +29,8 @@ import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.fenixedu.academic.domain.CourseLoad;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Department;
@@ -68,7 +70,7 @@ public class CourseLoadOverviewBean implements Serializable {
                         + "_" + executionSemester.getExecutionYear().getYear().replace('/', '_') + "_"
                         + executionSemester.getSemester());
         HSSFCellStyle normalStyle = spreadsheet.getExcelStyle().getValueStyle();
-        normalStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        normalStyle.setAlignment(HorizontalAlignment.CENTER);
 
         HSSFWorkbook wb = spreadsheet.getWorkbook();
         HSSFFont font = wb.createFont();
@@ -76,14 +78,14 @@ public class CourseLoadOverviewBean implements Serializable {
         font.setFontHeightInPoints((short) 8);
         HSSFCellStyle redStyle = wb.createCellStyle();
         redStyle.setFont(font);
-        redStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        redStyle.setAlignment(HorizontalAlignment.CENTER);
         redStyle.setFillForegroundColor(HSSFColor.ORANGE.index);
-        redStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+        redStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         HSSFCellStyle yellowStyle = wb.createCellStyle();
         yellowStyle.setFont(font);
-        yellowStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        yellowStyle.setAlignment(HorizontalAlignment.CENTER);
         yellowStyle.setFillForegroundColor(HSSFColor.YELLOW.index);
-        yellowStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+        yellowStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
         spreadsheet.newHeaderRow();
         spreadsheet.addHeader(BundleUtil.getString(Bundle.ACADEMIC, "label.department"));
