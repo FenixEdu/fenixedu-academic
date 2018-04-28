@@ -41,7 +41,7 @@ abstract class CreditEntry implements Cloneable {
     }
 
     @JsonView(Simple.class)
-    private final DateTime created;
+    private DateTime created;
     @JsonView(Simple.class)
     private final LocalDate date;
     @JsonView(Simple.class)
@@ -78,13 +78,6 @@ abstract class CreditEntry implements Cloneable {
     public BigDecimal getAmount() {
         return amount;
     }
-
-    @JsonView(Simple.class)
-    public String getType() {
-        return getClass().getSimpleName();
-    }
-
-    ;
 
     public void addPartialPayment(PartialPayment partialPayment) {
         if (partialPayment.getAmount().compareTo(getUnusedAmount()) <= 0) {
@@ -129,4 +122,7 @@ abstract class CreditEntry implements Cloneable {
                    + ", usedAmountInDebts=" + getUsedAmountInDebts() + ", usedAmountInInterests=" + getUsedAmountInInterests() + '}';
     }
 
+    public void setCreated(DateTime created) {
+        this.created = created;
+    }
 }

@@ -5,9 +5,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -28,6 +30,7 @@ public class DebtInterestCalculator {
     private List<Debt> debts = new ArrayList<>();
     private List<CreditEntry> creditEntries = new ArrayList<>();
     private Map<LocalDate, BigDecimal> dueDateAmountFineMap = new HashMap<>();
+    private Set<LocalDate> appliedFines = new HashSet<>();
 
     private CalculatorSerializer jsonSerializer;
     private boolean isToApplyInterest;
@@ -35,6 +38,7 @@ public class DebtInterestCalculator {
     private DebtInterestCalculator(DateTime when, List<Debt> debts, List<Payment> payments, List<DebtExemption> exemptions, List<InterestExemption> interestExemptions, List<FineExemption>
                                                                                                                                                                             fineExemptions,
                                    Map<LocalDate, BigDecimal> dueDateAmountFineMap, boolean isToApplyInterest) {
+
         this.jsonSerializer = new CalculatorSerializer();
         this.debts.addAll(debts);
         this.creditEntries.addAll(payments);
@@ -46,10 +50,23 @@ public class DebtInterestCalculator {
 
         this.creditEntries.add(new Payment(when, when.toLocalDate(), BigDecimal.ZERO));
 
+        if (!fineExemptions.isEmpty()) {
+            for (Debt debt : this.debts) {
+                DateTime zeroPaymentDate = debt.getDueDate().plusDays(1).toDateTimeAtStartOfDay();
+                this.creditEntries.add(new Payment(zeroPaymentDate, zeroPaymentDate.toLocalDate(), BigDecimal.ZERO));
+            }
+            for (FineExemption fineExemption : fineExemptions) {
+                for (Debt debt : this.debts) {
+                    DateTime zeroPaymentDate = debt.getDueDate().plusDays(1).toDateTimeAtStartOfDay();
+                    fineExemption.setCreated(zeroPaymentDate.plusSeconds(1));
+                }
+            }
+        }
+
         calculate();
     }
 
-    interface PaymentPivotView extends CreditEntry.View.Detailed, PartialPayment.View.Simple, Debt.View.Simple, Fine.View.Simple , Interest.View.Simple {
+    interface PaymentPivotView extends CreditEntry.View.Detailed, PartialPayment.View.Simple, Debt.View.Simple, Fine.View.Simple, Interest.View.Simple {
     }
 
     interface DebtPivotView extends Debt.View.Detailed, PartialPayment.View.Detailed, Fine.View.Simple, Interest.View.Simple, CreditEntry.View.Simple {
@@ -187,11 +204,11 @@ public class DebtInterestCalculator {
     }
 
     public BigDecimal getInterestExemptionAmount() {
-        return getDebtStream().map(Debt::getInterestExemptionAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+        return getDebtStream().flatMap(d -> d.getInterests().stream()).map(DebtEntry::getInterestExemptionAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public BigDecimal getFineExemptionAmount() {
-        return getDebtStream().map(Debt::getFineExemptionAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+        return getDebtStream().flatMap(d -> d.getFines().stream()).map(DebtEntry::getFineExemptionAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public BigDecimal getTotalAmount() {
@@ -264,23 +281,40 @@ public class DebtInterestCalculator {
                     for (final Debt debt : getDebtsOrderedByDueDate()) {
                         if (debt.isOpen()) {
                             dueDateAmountFineMap.forEach((dueDate, amount) -> {
-                                if (creditEntry.getDate().isAfter(dueDate)) {
+                                if (!appliedFines.contains(dueDate) && creditEntry.getDate().isAfter(dueDate)) {
                                     debt.addFine(new Fine(creditEntry.getDate(), amount, creditEntry));
+                                    appliedFines.add(dueDate);
                                 }
                             });
                         }
                     }
                 }
-                
-                for(Debt debt : getDebtsOrderedByOpenFine()) {
-                    debt.depositFine(creditEntry);
-                }                
             }
 
             for (Debt debt : getDebtsOrderedByDueDate()) {
                 debt.deposit(creditEntry);
             }
+
+            for (Debt debt : getDebtsOrderedByOpenFine()) {
+                debt.depositFine(creditEntry);
+            }
         }
+    }
+
+    public String exportToString() {
+        StringBuilder builder = new StringBuilder();
+        getDebtStream().forEach(debt -> {
+            builder.append(String.format("%s %s %s%n", debt.getClass().getSimpleName(), debt.getDueDate().toString("dd/MM/yyyy"), debt.getOriginalAmount()));
+        });
+        getCreditEntriesByCreationDate().forEach(creditEntry -> {
+            builder.append(String.format("%s %s %s %s%n", creditEntry.getClass().getSimpleName(),
+                                         creditEntry.getCreated().toString(),
+                                         creditEntry.getDate().toString("dd/MM/yyyy"),
+                                         creditEntry.getAmount().toPlainString()
+                           )
+            );
+        });
+        return builder.toString();
     }
 
     public Spreadsheet exportToXLS(String spreadsheetName) throws IOException {

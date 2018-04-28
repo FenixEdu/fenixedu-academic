@@ -69,7 +69,7 @@ abstract class DebtEntry implements Cloneable {
     }
 
     private BigDecimal getAmount(Predicate<PartialPayment> filter) {
-        return partialPayments.stream().filter(filter::test).map(PartialPayment::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+        return partialPayments.stream().filter(filter).map(PartialPayment::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public BigDecimal getPaymentsAmount() {
