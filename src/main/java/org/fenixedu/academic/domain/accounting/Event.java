@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.DomainObjectUtil;
@@ -38,6 +39,7 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator.Builder;
 import org.fenixedu.academic.domain.accounting.events.PenaltyExemption;
+import org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption;
 import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -554,9 +556,11 @@ public abstract class Event extends Event_Base {
         final Map<LocalDate, Money> dueDateAmountMap = getDueDateAmountMap(when);
         final Money baseAmount = dueDateAmountMap.values().stream().reduce(Money.ZERO, Money::add);
         final Map<LocalDate, Money> dueDatePenaltyAmountMap = getDueDatePenaltyAmountMap();
+        final Set<LocalDate> debtInterestExemptions = getDebtInterestExemptions(when);
+        
 
         dueDateAmountMap.forEach((date, amount) -> {
-            builder.debt(date, amount.getAmount());
+            builder.debt(date, amount.getAmount(), debtInterestExemptions.contains(date));
         });
 
         dueDatePenaltyAmountMap.forEach((date, amount) -> {
@@ -583,19 +587,30 @@ public abstract class Event extends Event_Base {
 
         getExemptionsSet()
             .stream()
-            .filter(PenaltyExemption.class::isInstance)
-            .map(PenaltyExemption.class::cast)
             .filter(e -> !e.getWhenCreated().isAfter(when))
+            .filter(PenaltyExemption.class::isInstance)
+            .filter(e -> !(e instanceof InstallmentPenaltyExemption))
+            .map(PenaltyExemption.class::cast)
             .forEach(e -> {
                 if (e.isForInterest()) {
                     builder.interestExemption(e.getWhenCreated(), e.getWhenCreated().toLocalDate(), e.getExemptionAmount(baseAmount).getAmount());
-                 } else {
+                } else {
                     builder.fineExemption(e.getWhenCreated(), e.getWhenCreated().toLocalDate(), e.getExemptionAmount(baseAmount).getAmount());
                 }
             });
 
         builder.setToApplyInterest(FenixEduAcademicConfiguration.isToUseGlobalInterestRateTableForEventPenalties(this));
         return builder.build();
+    }
+
+    private Set<LocalDate> getDebtInterestExemptions(DateTime when) {
+        return getExemptionsSet()
+            .stream()
+            .filter(e -> !e.getWhenCreated().isAfter(when))
+            .filter(InstallmentPenaltyExemption.class::isInstance)
+            .map(InstallmentPenaltyExemption.class::cast)
+            .map(i -> i.getInstallment().getEndDate(this))
+            .collect(Collectors.toSet());
     }
 
     private Map<LocalDate, Money> getExemptionValue(Map<LocalDate, Money> dueDateAmountMap, Money baseAmount) {

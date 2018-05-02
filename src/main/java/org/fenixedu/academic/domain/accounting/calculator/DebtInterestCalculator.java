@@ -35,8 +35,8 @@ public class DebtInterestCalculator {
     private CalculatorSerializer jsonSerializer;
     private boolean isToApplyInterest;
 
-    private DebtInterestCalculator(DateTime when, List<Debt> debts, List<Payment> payments, List<DebtExemption> exemptions, List<InterestExemption> interestExemptions, List<FineExemption>
-                                                                                                                                                                            fineExemptions,
+    private DebtInterestCalculator(DateTime when, List<Debt> debts, List<Payment> payments, List<DebtExemption> exemptions,
+                                   List<InterestExemption> interestExemptions, List<FineExemption> fineExemptions,
                                    Map<LocalDate, BigDecimal> dueDateAmountFineMap, boolean isToApplyInterest) {
 
         this.jsonSerializer = new CalculatorSerializer();
@@ -46,15 +46,18 @@ public class DebtInterestCalculator {
         this.creditEntries.addAll(interestExemptions);
         this.creditEntries.addAll(fineExemptions);
         this.isToApplyInterest = isToApplyInterest;
-        this.dueDateAmountFineMap = dueDateAmountFineMap;
+        this.dueDateAmountFineMap.putAll(dueDateAmountFineMap);
 
         this.creditEntries.add(new Payment(when, when.toLocalDate(), BigDecimal.ZERO));
 
         if (!fineExemptions.isEmpty()) {
+            // add payment of 0 to calculate the fine amount only once per debt due date
             for (Debt debt : this.debts) {
                 DateTime zeroPaymentDate = debt.getDueDate().plusDays(1).toDateTimeAtStartOfDay();
                 this.creditEntries.add(new Payment(zeroPaymentDate, zeroPaymentDate.toLocalDate(), BigDecimal.ZERO));
             }
+
+            // move fine exemption to be the first event after the created 0 payment above
             for (FineExemption fineExemption : fineExemptions) {
                 for (Debt debt : this.debts) {
                     DateTime zeroPaymentDate = debt.getDueDate().plusDays(1).toDateTimeAtStartOfDay();
@@ -87,7 +90,12 @@ public class DebtInterestCalculator {
         }
 
         public Builder debt(LocalDate dueDate, BigDecimal amount) {
-            debts.add(new Debt(dueDate, amount));
+            debts.add(new Debt(dueDate, amount, false));
+            return this;
+        }
+
+        public Builder debt(LocalDate dueDate, BigDecimal amount, boolean exemptInterest) {
+            debts.add(new Debt(dueDate, amount, exemptInterest));
             return this;
         }
 
@@ -264,7 +272,7 @@ public class DebtInterestCalculator {
             if (isToApplyInterest) {
                 if (creditEntry.isToApplyInterest()) {
                     for (final Debt debt : getDebtsOrderedByDueDate()) {
-                        if (debt.isOpen() && isToApplyInterest) {
+                        if (debt.isOpen() && !debt.isToExemptInterest()) {
                             Optional<InterestRateBean> interestRateBean = calculateInterest(debt.getDueDateForInterest(), creditEntry.getDate(), debt.getOpenAmount());
                             interestRateBean.map(bean -> new Interest(creditEntry.getDate(), bean.getInterest(), creditEntry, bean)).ifPresent(debt::addInterest);
                         }
@@ -304,7 +312,7 @@ public class DebtInterestCalculator {
     public String exportToString() {
         StringBuilder builder = new StringBuilder();
         getDebtStream().forEach(debt -> {
-            builder.append(String.format("%s %s %s%n", debt.getClass().getSimpleName(), debt.getDueDate().toString("dd/MM/yyyy"), debt.getOriginalAmount()));
+            builder.append(String.format("%s %s %s %s%n", debt.getClass().getSimpleName(), debt.getDueDate().toString("dd/MM/yyyy"), debt.getOriginalAmount(), debt.isToExemptInterest()));
         });
         getCreditEntriesByCreationDate().forEach(creditEntry -> {
             builder.append(String.format("%s %s %s %s%n", creditEntry.getClass().getSimpleName(),

@@ -21,4 +21,9 @@ public class FixedAmountPenaltyExemption extends FixedAmountPenaltyExemption_Bas
     public Money getExemptionAmount(Money money) {
         return getValue();
     }
+
+    @Override
+    public boolean isForInterest() {
+        return true;
+    }
 }
