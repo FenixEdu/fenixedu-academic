@@ -196,12 +196,17 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
     }
 
     public static ExecutionInterval getExecutionInterval(AcademicInterval academicInterval) {
+        ExecutionInterval executionInterval = null;
         for (ExecutionInterval interval : Bennu.getInstance().getExecutionIntervalsSet()) {
             if (interval.getAcademicInterval().equals(academicInterval)) {
-                return interval;
+                if (interval instanceof ExecutionYear) {
+                    return interval;
+                } else {
+                    executionInterval = interval;
+                }
             }
         }
-        return null;
+        return executionInterval;
     }
 
     public boolean isAfter(final ExecutionInterval input) {
