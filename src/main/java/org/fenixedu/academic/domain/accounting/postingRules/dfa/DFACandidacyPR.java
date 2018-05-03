@@ -61,15 +61,6 @@ public class DFACandidacyPR extends DFACandidacyPR_Base {
         return Optional.empty();
     }
 
-    @Override
-    @Deprecated
-    protected boolean hasPenalty(Event event, DateTime when) {
-        final DFACandidacyEvent dfaCandidacyEvent = (DFACandidacyEvent) event;
-        return dfaCandidacyEvent.hasCandidacyPeriodInDegreeCurricularPlan()
-                && !dfaCandidacyEvent.getCandidacyPeriodInDegreeCurricularPlan().containsDate(
-                        dfaCandidacyEvent.getCandidacyDate());
-    }
-
     public FixedAmountWithPenaltyPR edit(final Money fixedAmount, final Money penaltyAmount) {
 
         deactivate();

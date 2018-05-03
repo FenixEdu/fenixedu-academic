@@ -53,16 +53,13 @@ public abstract class FixedAmountWithPenaltyPR extends FixedAmountWithPenaltyPR_
 
     @Override
     protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-        return super.doCalculationForAmountToPay(event, when, applyDiscount).add(
-            hasPenalty(event, when) ? getFixedAmountPenalty() : Money.ZERO);
+        return super.doCalculationForAmountToPay(event, when, applyDiscount);
     }
 
     @Override
     public void setFixedAmountPenalty(Money fixedAmountPenalty) {
         throw new DomainException("error.accounting.postingRules.FixedAmountWithPenaltyPR.cannot.modify.fixedAmountPenalty");
     }
-
-    abstract protected boolean hasPenalty(Event event, DateTime when);
 
     abstract protected Optional<LocalDate> getPenaltyDueDate(Event event);
 

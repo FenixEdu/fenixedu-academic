@@ -60,11 +60,6 @@ public class SpecializationDegreeRegistrationPR extends SpecializationDegreeRegi
         return Optional.empty();
     }
 
-    @Override
-    protected boolean hasPenalty(Event event, DateTime when) {
-        return hasPenaltyForRegistration((SpecializationDegreeRegistrationEvent) event);
-    }
-
     private boolean hasPenaltyForRegistration(final SpecializationDegreeRegistrationEvent specializationDegreeRegistrationEvent) {
         return specializationDegreeRegistrationEvent.hasRegistrationPeriodInDegreeCurricularPlan()
                 && !specializationDegreeRegistrationEvent.getRegistrationPeriodInDegreeCurricularPlan().containsDate(

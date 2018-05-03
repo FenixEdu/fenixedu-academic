@@ -60,26 +60,6 @@ public class DfaRegistrationPR extends DfaRegistrationPR_Base {
         return Optional.empty();
     }
 
-    @Override
-    @Deprecated
-    protected boolean hasPenalty(Event event, DateTime when) {
-        return hasPenaltyForRegistration((DfaRegistrationEvent) event)
-                && !hasPayedPenaltyForCandidacy((DfaRegistrationEvent) event);
-    }
-    @Deprecated
-    private boolean hasPenaltyForRegistration(final DfaRegistrationEvent dfaRegistrationEvent) {
-        return dfaRegistrationEvent.hasRegistrationPeriodInDegreeCurricularPlan()
-                && !dfaRegistrationEvent.getRegistrationPeriodInDegreeCurricularPlan().containsDate(
-                        dfaRegistrationEvent.getRegistrationDate());
-    }
-    @Deprecated
-    private boolean hasPayedPenaltyForCandidacy(final DfaRegistrationEvent dfaRegistrationEvent) {
-        return dfaRegistrationEvent.hasCandidacyPeriodInDegreeCurricularPlan()
-                && !dfaRegistrationEvent.getCandidacyPeriodInDegreeCurricularPlan().containsDate(
-                        dfaRegistrationEvent.getCandidacyDate());
-
-    }
-
     public FixedAmountWithPenaltyPR edit(final Money fixedAmount, final Money penaltyAmount) {
 
         deactivate();

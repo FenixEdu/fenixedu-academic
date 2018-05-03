@@ -25,13 +25,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
-import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsurancePenaltyExemption;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.util.Money;
@@ -63,45 +61,6 @@ public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base {
                                                                                        .getPaymentEndDate() : getWhenToApplyFixedAmountPenalty();
 
         return Optional.of(paymentEndDate.toLocalDate());
-    }
-
-    @Override
-    @Deprecated
-    protected boolean hasPenalty(Event event, DateTime when) {
-        if (event.hasAnyPenaltyExemptionsFor(AdministrativeOfficeFeeAndInsurancePenaltyExemption.class)) {
-            return false;
-        }
-
-        final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent =
-                (AdministrativeOfficeFeeAndInsuranceEvent) event;
-
-        final YearMonthDay paymentEndDate =
-                administrativeOfficeFeeAndInsuranceEvent.getPaymentEndDate() != null ? administrativeOfficeFeeAndInsuranceEvent
-                        .getPaymentEndDate() : getWhenToApplyFixedAmountPenalty();
-
-        final Money amountPayedUntilEndDate =
-                calculateAmountPayedUntilEndDate(administrativeOfficeFeeAndInsuranceEvent, paymentEndDate);
-
-        if (!when.toYearMonthDay().isAfter(paymentEndDate)) {
-            return false;
-        }
-
-        return amountPayedUntilEndDate.lessThan(getFixedAmount());
-
-    }
-
-    @Deprecated
-    private Money calculateAmountPayedUntilEndDate(AdministrativeOfficeFeeAndInsuranceEvent event, YearMonthDay paymentEndDate) {
-        Money result = Money.ZERO;
-
-        for (final AccountingTransaction transaction : event.getNonAdjustingTransactions()) {
-            if (transaction.getToAccountEntry().getEntryType() == getEntryType()
-                    && !transaction.getWhenRegistered().toYearMonthDay().isAfter(paymentEndDate)) {
-                result = result.add(transaction.getAmountWithAdjustment());
-            }
-        }
-
-        return result;
     }
 
     public AdministrativeOfficeFeePR edit(DateTime startDate, Money fixedAmount, Money penaltyAmount,

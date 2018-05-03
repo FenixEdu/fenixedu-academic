@@ -36,7 +36,6 @@ import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent;
-import org.fenixedu.academic.domain.accounting.events.ImprovementOfApprovedEnrolmentPenaltyExemption;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
 import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
@@ -99,21 +98,6 @@ public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrol
     @Override
     protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
         return amountToPay;
-    }
-
-    private boolean hasPenalty(final Event event, final DateTime when) {
-        if (event.hasAnyPenaltyExemptionsFor(ImprovementOfApprovedEnrolmentPenaltyExemption.class)) {
-            return false;
-        } else {
-            final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent =
-                    (ImprovementOfApprovedEnrolmentEvent) event;
-            final Set<EnrolmentEvaluation> enrolmentEvaluations =
-                    improvementOfApprovedEnrolmentEvent.getImprovementEnrolmentEvaluationsSet();
-            if (enrolmentEvaluations.isEmpty()) {
-                return false;
-            }
-            return !getEnrolmentPeriodInImprovementOfApprovedEnrolment(enrolmentEvaluations.iterator().next()).containsDate(when);
-        }
     }
 
     private Optional<LocalDate> getDueDate(Event event) {

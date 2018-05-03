@@ -68,11 +68,6 @@ public class FixedAmountWithPenaltyFromDatePR extends FixedAmountWithPenaltyFrom
                 "error.accounting.postingRules.FixedAmountWithPenaltyFromDatePR.cannot.modify.whenToApplyFixedAmountPenalty");
     }
 
-    @Override
-    protected boolean hasPenalty(Event event, DateTime when) {
-        return when.toYearMonthDay().isAfter(getWhenToApplyFixedAmountPenalty());
-    }
-
     public FixedAmountWithPenaltyFromDatePR edit(Money fixedAmount, Money penaltyAmount,
             YearMonthDay whenToApplyFixedAmountPenalty) {
 
