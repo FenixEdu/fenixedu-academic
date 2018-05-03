@@ -28,6 +28,10 @@ public class Debt extends DebtEntry {
 
         }
     }
+    @JsonView(Simple.class)
+    private final boolean exemptFine;
+    
+    @JsonView(Simple.class)
     private final boolean exemptInterest;
 
     @JsonView(Simple.class)
@@ -39,10 +43,11 @@ public class Debt extends DebtEntry {
     @JsonView(Detailed.class)
     private final Set<Fine> fines = new HashSet<>();
 
-    public Debt(LocalDate dueDate, BigDecimal amount, boolean exemptInterest) {
+    public Debt(LocalDate dueDate, BigDecimal amount, boolean exemptInterest, boolean exemptFine) {
         super(amount);
         this.dueDate = dueDate;
         this.exemptInterest = exemptInterest;
+        this.exemptFine = exemptFine;
     }
 
     @Override
@@ -112,5 +117,7 @@ public class Debt extends DebtEntry {
     public boolean isToExemptInterest() {
         return exemptInterest;
     }
+
+    public boolean isToExemptFine() { return exemptFine; }
 
 }

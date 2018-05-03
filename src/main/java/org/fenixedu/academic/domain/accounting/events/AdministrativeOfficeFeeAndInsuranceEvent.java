@@ -507,7 +507,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 
     
     @Override
-    protected Map<LocalDate, Money> getDueDateAmountMap(DateTime when) {
+    public Map<LocalDate, Money> getDueDateAmountMap(DateTime when) {
         return Collections.singletonMap(getPossibleDueDate(), getPostingRule().calculateTotalAmountToPay(this, when));
     }
 
@@ -516,8 +516,4 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
         return ymd != null ? ymd.plusDays(1).toDateTimeAtMidnight().toLocalDate() : getDueDateByPaymentCodes().toLocalDate();
     }
 
-    @Override
-    public Map<LocalDate, Boolean> getDueDatePenaltyExemptionMap(DateTime when) {
-        return Collections.singletonMap(getPossibleDueDate(), hasAdministrativeOfficeFeeAndInsurancePenaltyExemption());
-    }
 }

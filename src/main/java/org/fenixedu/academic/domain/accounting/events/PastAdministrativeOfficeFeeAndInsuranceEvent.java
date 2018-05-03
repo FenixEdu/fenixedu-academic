@@ -74,7 +74,7 @@ public class PastAdministrativeOfficeFeeAndInsuranceEvent extends PastAdministra
     }
 
     @Override
-    protected Map<LocalDate, Money> getDueDateAmountMap(DateTime when) {
+    public Map<LocalDate, Money> getDueDateAmountMap(DateTime when) {
         return Collections.singletonMap(getDueDateByPaymentCodes().toLocalDate(), getPostingRule().calculateTotalAmountToPay(this, when));
     }
 }

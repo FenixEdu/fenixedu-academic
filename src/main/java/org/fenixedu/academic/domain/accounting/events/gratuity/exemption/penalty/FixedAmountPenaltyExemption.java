@@ -26,4 +26,9 @@ public class FixedAmountPenaltyExemption extends FixedAmountPenaltyExemption_Bas
     public boolean isForInterest() {
         return true;
     }
+
+    @Override
+    public boolean isForFine() {
+        return false;
+    }
 }

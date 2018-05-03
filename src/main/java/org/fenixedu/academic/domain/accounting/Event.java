@@ -18,13 +18,10 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +36,7 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator.Builder;
 import org.fenixedu.academic.domain.accounting.events.PenaltyExemption;
+import org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.FixedAmountPenaltyExemption;
 import org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption;
 import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
@@ -534,16 +532,12 @@ public abstract class Event extends Event_Base {
      *
      * @return plot entry for the total amount divided by plot
      */
-    protected Map<LocalDate, Money> getDueDateAmountMap(DateTime when) {
+    public Map<LocalDate, Money> getDueDateAmountMap(DateTime when) {
         return Collections.singletonMap(getDueDateByPaymentCodes().toLocalDate(), getPostingRule().doCalculationForAmountToPay(this, when ,false));
     }
 
     protected Map<LocalDate, Money> getDueDatePenaltyAmountMap() {
         return getPostingRule().getDueDatePenaltyAmountMap(this);
-    }
-
-    public Map<LocalDate,Boolean> getDueDatePenaltyExemptionMap(DateTime when) {
-        return new HashMap<>();
     }
 
     private Money calculateTotalAmountToPay(DateTime whenRegistered) {
@@ -557,10 +551,11 @@ public abstract class Event extends Event_Base {
         final Money baseAmount = dueDateAmountMap.values().stream().reduce(Money.ZERO, Money::add);
         final Map<LocalDate, Money> dueDatePenaltyAmountMap = getDueDatePenaltyAmountMap();
         final Set<LocalDate> debtInterestExemptions = getDebtInterestExemptions(when);
+        final Set<LocalDate> debtFineExemptions = getDebtFineExemptions(when);
         
 
         dueDateAmountMap.forEach((date, amount) -> {
-            builder.debt(date, amount.getAmount(), debtInterestExemptions.contains(date));
+            builder.debt(date, amount.getAmount(), debtInterestExemptions.contains(date), debtFineExemptions.contains(date));
         });
 
         dueDatePenaltyAmountMap.forEach((date, amount) -> {
@@ -573,7 +568,7 @@ public abstract class Event extends Event_Base {
             }
         });
 
-        this.getExemptionsSet().stream().filter(e -> !(e instanceof PenaltyExemption)).forEach(e -> {
+        this.getExemptionsSet().stream().filter(e -> !e.isPenaltyExemption()).forEach(e -> {
             if (!e.getWhenCreated().isAfter(when)) {
                 builder.debtExemption(e.getWhenCreated(), e.getWhenCreated().toLocalDate(), e.getExemptionAmount(baseAmount).getAmount());
             }
@@ -588,19 +583,26 @@ public abstract class Event extends Event_Base {
         getExemptionsSet()
             .stream()
             .filter(e -> !e.getWhenCreated().isAfter(when))
-            .filter(PenaltyExemption.class::isInstance)
-            .filter(e -> !(e instanceof InstallmentPenaltyExemption))
-            .map(PenaltyExemption.class::cast)
+            .filter(FixedAmountPenaltyExemption.class::isInstance)
+            .map(FixedAmountPenaltyExemption.class::cast)
             .forEach(e -> {
                 if (e.isForInterest()) {
                     builder.interestExemption(e.getWhenCreated(), e.getWhenCreated().toLocalDate(), e.getExemptionAmount(baseAmount).getAmount());
-                } else {
-                    builder.fineExemption(e.getWhenCreated(), e.getWhenCreated().toLocalDate(), e.getExemptionAmount(baseAmount).getAmount());
                 }
             });
 
         builder.setToApplyInterest(FenixEduAcademicConfiguration.isToUseGlobalInterestRateTableForEventPenalties(this));
         return builder.build();
+    }
+
+    private Set<LocalDate> getDebtFineExemptions(DateTime when) {
+        return getExemptionsSet()
+                   .stream()
+                   .filter(e -> !e.getWhenCreated().isAfter(when))
+                   .filter(PenaltyExemption.class::isInstance)
+                   .map(PenaltyExemption.class::cast)
+                   .flatMap(e -> e.getDueDates(when).stream())
+                   .collect(Collectors.toSet());
     }
 
     private Set<LocalDate> getDebtInterestExemptions(DateTime when) {
@@ -612,33 +614,6 @@ public abstract class Event extends Event_Base {
             .map(i -> i.getInstallment().getEndDate(this))
             .collect(Collectors.toSet());
     }
-
-    private Map<LocalDate, Money> getExemptionValue(Map<LocalDate, Money> dueDateAmountMap, Money baseAmount) {
-        Money totalExemptionValue =
-            getExemptionsSet()
-                .stream()
-                .filter(e -> !(e instanceof PenaltyExemption))
-                .map(e -> e.getExemptionAmount(baseAmount))
-                .reduce(Money::add)
-                .orElse(Money.ZERO);
-
-        final Map<LocalDate, Money> dueDateExemptionMap = new HashMap<>();
-
-        if (totalExemptionValue.isZero()) {
-            return dueDateExemptionMap;
-        }
-
-        BigDecimal decimalTotalAmount = totalExemptionValue.getAmount();
-
-        dueDateAmountMap.forEach((date, amount) -> {
-            final BigDecimal decimalAmount = amount.getAmount();
-            dueDateExemptionMap.put(date, new Money(decimalAmount.divide(baseAmount.getAmount(), 6, RoundingMode.HALF_UP).multiply(decimalTotalAmount)));
-        });
-        
-        return dueDateExemptionMap;
-        //return new Money(totalExemptionValue.getAmount().divide(new BigDecimal(numberOfInstallments), 6, RoundingMode.HALF_UP));
-    }
-
 
     public Money getAmountToPay() {
         return calculateAmountToPay(new DateTime());
@@ -668,6 +643,7 @@ public abstract class Event extends Event_Base {
         final EntryType entryType = getPostingRule().getEntryType();
 
         debtInterestCalculator.getDebtsOrderedByDueDate().forEach(d -> {
+            final Money openFineAmount = new Money(d.getOpenFineAmount());
             final Money openInterestAmount = new Money(d.getOpenInterestAmount());
             final Money originalAmount = new Money(d.getOriginalAmount());
             final Money amountToPay = new Money(d.getOpenAmount());
@@ -700,6 +676,14 @@ public abstract class Event extends Event_Base {
                 EntryDTO e = new EntryDTO(entryType, this, openInterestAmount);
                 entryDescription = getDescriptionForEntryType(entryType);
                 entryDescription.appendLabel(String.format(" [ %s ]  / Juros", d.getDueDate().toString("dd-MM-yyyy")));
+                e.setDescription(entryDescription);
+                result.add(e);
+            }
+
+            if (openFineAmount.isPositive()) {
+                EntryDTO e = new EntryDTO(entryType, this, openInterestAmount);
+                entryDescription = getDescriptionForEntryType(entryType);
+                entryDescription.appendLabel(String.format(" [ %s ]  / Multa", d.getDueDate().toString("dd-MM-yyyy")));
                 e.setDescription(entryDescription);
                 result.add(e);
             }

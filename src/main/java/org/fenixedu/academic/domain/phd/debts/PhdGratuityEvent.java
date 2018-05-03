@@ -168,7 +168,7 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
     }
 
     @Override
-    protected Map<LocalDate, Money> getDueDateAmountMap(DateTime when) {
+    public Map<LocalDate, Money> getDueDateAmountMap(DateTime when) {
         return Collections.singletonMap(getLimitDateToPay().toLocalDate(), getPostingRule().calculateTotalAmountToPay(this, when));
     }
 }

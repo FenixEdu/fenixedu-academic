@@ -19,7 +19,6 @@
 package org.fenixedu.academic.domain.accounting.events;
 
 import java.util.Collection;
-import java.util.Map;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.EnrolmentEvaluation;
@@ -27,10 +26,6 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
-
-import edu.emory.mathcs.backport.java.util.Collections;
 
 public class ImprovementOfApprovedEnrolmentEvent extends ImprovementOfApprovedEnrolmentEvent_Base {
 
@@ -83,8 +78,4 @@ public class ImprovementOfApprovedEnrolmentEvent extends ImprovementOfApprovedEn
 
     }
 
-    @Override
-    public Map<LocalDate, Boolean> getDueDatePenaltyExemptionMap(DateTime when) {
-        return Collections.singletonMap(getDueDateByPaymentCodes().toLocalDate(), hasImprovementOfApprovedEnrolmentPenaltyExemption());
-    }
 }

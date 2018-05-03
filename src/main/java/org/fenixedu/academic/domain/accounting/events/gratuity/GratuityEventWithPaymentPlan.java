@@ -556,15 +556,9 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     }
 
     @Override
-    protected Map<LocalDate, Money> getDueDateAmountMap(DateTime when) {
+    public Map<LocalDate, Money> getDueDateAmountMap(DateTime when) {
         return getGratuityPaymentPlan().getInstallmentsSet().stream().filter( i -> i.calculateBaseAmount(this).greaterThan(Money.ZERO))
                    .collect(Collectors.toMap(i -> i.getEndDate(this), i -> i.calculateBaseAmount(this)));
-    }
-
-    @Override
-    public Map<LocalDate, Boolean> getDueDatePenaltyExemptionMap(DateTime when) {
-            return getPenaltyExemptionsFor(InstallmentPenaltyExemption.class).stream().map(InstallmentPenaltyExemption.class::cast)
-                       .collect(Collectors.toMap(p1 -> p1.getInstallment().getEndDate(this), p -> Boolean.FALSE, (u,v) -> Boolean.FALSE));
     }
 
     @Override

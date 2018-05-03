@@ -18,6 +18,9 @@
  */
 package org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty;
 
+import java.util.Collections;
+import java.util.Set;
+
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.Exemption;
@@ -25,6 +28,8 @@ import org.fenixedu.academic.domain.accounting.Installment;
 import org.fenixedu.academic.domain.accounting.events.PenaltyExemptionJustificationType;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
@@ -93,5 +98,15 @@ public class InstallmentPenaltyExemption extends InstallmentPenaltyExemption_Bas
     @Override
     public boolean isForInterest() {
         return true;
+    }
+
+    @Override
+    public boolean isForFine() {
+        return false;
+    }
+
+    @Override
+    public Set<LocalDate> getDueDates(DateTime when) {
+        return Collections.singleton(getInstallment().getEndDate(getEvent()));
     }
 }

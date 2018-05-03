@@ -36,7 +36,7 @@ public class DebtInterestCalculator {
     private boolean isToApplyInterest;
 
     private DebtInterestCalculator(DateTime when, List<Debt> debts, List<Payment> payments, List<DebtExemption> exemptions,
-                                   List<InterestExemption> interestExemptions, List<FineExemption> fineExemptions,
+                                   List<InterestExemption> interestExemptions,
                                    Map<LocalDate, BigDecimal> dueDateAmountFineMap, boolean isToApplyInterest) {
 
         this.jsonSerializer = new CalculatorSerializer();
@@ -44,27 +44,10 @@ public class DebtInterestCalculator {
         this.creditEntries.addAll(payments);
         this.creditEntries.addAll(exemptions);
         this.creditEntries.addAll(interestExemptions);
-        this.creditEntries.addAll(fineExemptions);
         this.isToApplyInterest = isToApplyInterest;
         this.dueDateAmountFineMap.putAll(dueDateAmountFineMap);
 
         this.creditEntries.add(new Payment(when, when.toLocalDate(), BigDecimal.ZERO));
-
-        if (!fineExemptions.isEmpty()) {
-            // add payment of 0 to calculate the fine amount only once per debt due date
-            for (Debt debt : this.debts) {
-                DateTime zeroPaymentDate = debt.getDueDate().plusDays(1).toDateTimeAtStartOfDay();
-                this.creditEntries.add(new Payment(zeroPaymentDate, zeroPaymentDate.toLocalDate(), BigDecimal.ZERO));
-            }
-
-            // move fine exemption to be the first event after the created 0 payment above
-            for (FineExemption fineExemption : fineExemptions) {
-                for (Debt debt : this.debts) {
-                    DateTime zeroPaymentDate = debt.getDueDate().plusDays(1).toDateTimeAtStartOfDay();
-                    fineExemption.setCreated(zeroPaymentDate.plusSeconds(1));
-                }
-            }
-        }
 
         calculate();
     }
@@ -80,7 +63,6 @@ public class DebtInterestCalculator {
         private List<Payment> payments = new ArrayList<>();
         private List<DebtExemption> debtExemptions = new ArrayList<>();
         private List<InterestExemption> interestExemptions = new ArrayList<>();
-        private List<FineExemption> fineExemptions = new ArrayList<>();
         private Map<LocalDate, BigDecimal> fineTable = new HashMap<>();
         private DateTime when;
         private boolean toApplyInterest = true;
@@ -90,12 +72,12 @@ public class DebtInterestCalculator {
         }
 
         public Builder debt(LocalDate dueDate, BigDecimal amount) {
-            debts.add(new Debt(dueDate, amount, false));
+            debts.add(new Debt(dueDate, amount, false, false));
             return this;
         }
 
-        public Builder debt(LocalDate dueDate, BigDecimal amount, boolean exemptInterest) {
-            debts.add(new Debt(dueDate, amount, exemptInterest));
+        public Builder debt(LocalDate dueDate, BigDecimal amount, boolean exemptInterest, boolean exemptFine) {
+            debts.add(new Debt(dueDate, amount, exemptInterest, exemptFine));
             return this;
         }
 
@@ -119,18 +101,13 @@ public class DebtInterestCalculator {
             return this;
         }
 
-        public Builder fineExemption(DateTime created, LocalDate paymentDate, BigDecimal amount) {
-            fineExemptions.add(new FineExemption(created, paymentDate, amount));
-            return this;
-        }
-
         public Builder setToApplyInterest(boolean isToApplyInterest) {
             this.toApplyInterest = isToApplyInterest;
             return this;
         }
 
         public DebtInterestCalculator build() {
-            return new DebtInterestCalculator(when, debts, payments, debtExemptions, interestExemptions, fineExemptions, fineTable, toApplyInterest);
+            return new DebtInterestCalculator(when, debts, payments, debtExemptions, interestExemptions, fineTable, toApplyInterest);
         }
     }
 
@@ -287,7 +264,7 @@ public class DebtInterestCalculator {
             if (!dueDateAmountFineMap.isEmpty()) {
                 if (creditEntry.isToApplyFine()) {
                     for (final Debt debt : getDebtsOrderedByDueDate()) {
-                        if (debt.isOpen()) {
+                        if (debt.isOpen() && !debt.isToExemptFine()) {
                             dueDateAmountFineMap.forEach((dueDate, amount) -> {
                                 if (!appliedFines.contains(dueDate) && creditEntry.getDate().isAfter(dueDate)) {
                                     debt.addFine(new Fine(creditEntry.getDate(), amount, creditEntry));
