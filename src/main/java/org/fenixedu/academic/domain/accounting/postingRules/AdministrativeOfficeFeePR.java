@@ -18,11 +18,6 @@
  */
 package org.fenixedu.academic.domain.accounting.postingRules;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.fenixedu.academic.domain.accounting.EntryType;
@@ -31,7 +26,6 @@ import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -75,43 +69,6 @@ public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base {
 
         return new AdministrativeOfficeFeePR(startDate.minus(1000), null, getServiceAgreementTemplate(), fixedAmount,
                 penaltyAmount, whenToApplyFixedAmountPenalty);
-    }
-
-    @Override
-    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-        if (!applyDiscount) {
-            return amountToPay;
-        }
-
-        final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent =
-                (AdministrativeOfficeFeeAndInsuranceEvent) event;
-        return administrativeOfficeFeeAndInsuranceEvent.hasAdministrativeOfficeFeeAndInsuranceExemption() ? Money.ZERO : amountToPay;
-    }
-
-    @Override
-    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-        final List<EntryDTO> result = new ArrayList<EntryDTO>(super.calculateEntries(event, when));
-        Map<EntryType, Money> payedAmounts = new HashMap<EntryType, Money>();
-        final Iterator<EntryDTO> iterator = result.iterator();
-        while (iterator.hasNext()) {
-            final EntryDTO entryDTO = iterator.next();
-            Money payedAmount = payedAmounts.get(entryDTO.getEntryType());
-            if (payedAmount == null) {
-                payedAmount = event.getPayedAmountFor(entryDTO.getEntryType());
-            }
-            entryDTO.setAmountToPay(entryDTO.getAmountToPay().subtract(payedAmount));
-            if (!entryDTO.getAmountToPay().isPositive()) {
-                iterator.remove();
-                payedAmount = entryDTO.getAmountToPay().abs();
-                payedAmounts.put(entryDTO.getEntryType(), payedAmount);
-            } else {
-                payedAmounts.put(entryDTO.getEntryType(), Money.ZERO);
-                entryDTO.setPayedAmount(payedAmount);
-                entryDTO.setDebtAmount(entryDTO.getAmountToPay());
-            }
-        }
-
-        return result;
     }
 
 }

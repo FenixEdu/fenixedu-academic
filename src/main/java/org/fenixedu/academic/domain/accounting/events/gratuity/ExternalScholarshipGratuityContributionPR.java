@@ -18,20 +18,13 @@
  */
 package org.fenixedu.academic.domain.accounting.events.gratuity;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
 import org.fenixedu.academic.domain.accounting.Account;
 import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
-import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
@@ -52,30 +45,6 @@ public class ExternalScholarshipGratuityContributionPR extends ExternalScholarsh
     @Override
     protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
         return ((ExternalScholarshipGratuityContributionEvent) event).getTotalValue();
-    }
-
-    @Override
-    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-        return amountToPay;
-    }
-
-    @Override
-    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-        return Collections.singletonList(new EntryDTO(EntryType.EXTERNAL_CONTRIBUTION_PAYMENT, event, calculateTotalAmountToPay(
-                event, when), event.getPayedAmount(), event.calculateAmountToPay(when), event
-                .getDescriptionForEntryType(EntryType.EXTERNAL_CONTRIBUTION_PAYMENT), event.calculateAmountToPay(when)));
-    }
-
-    @Override
-    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
-            Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
-
-        if (entryDTOs.size() != 1) {
-            throw new DomainException("error.accounting.postingRules.gratuity.GratuityContributionPR.invalid.number.of.entryDTOs");
-        }
-
-        return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount,
-                EntryType.EXTERNAL_CONTRIBUTION_PAYMENT, entryDTOs.iterator().next().getAmountToPay(), transactionDetail));
     }
 
     @Override

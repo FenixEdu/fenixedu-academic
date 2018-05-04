@@ -45,7 +45,6 @@ import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
-import org.fenixedu.academic.dto.accounting.EntryWithInstallmentDTO;
 import org.fenixedu.academic.dto.accounting.SibsTransactionDetailDTO;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
@@ -532,12 +531,12 @@ public abstract class Event extends Event_Base {
      *
      * @return plot entry for the total amount divided by plot
      */
-    public Map<LocalDate, Money> getDueDateAmountMap(DateTime when) {
-        return Collections.singletonMap(getDueDateByPaymentCodes().toLocalDate(), getPostingRule().doCalculationForAmountToPay(this, when ,false));
+    public final Map<LocalDate, Money> getDueDateAmountMap(DateTime when) {
+        return getDueDateAmountMap(getPostingRule(), when);
     }
 
-    protected Map<LocalDate, Money> getDueDatePenaltyAmountMap() {
-        return getPostingRule().getDueDatePenaltyAmountMap(this);
+    public Map<LocalDate, Money> getDueDateAmountMap(PostingRule postingRule, DateTime when) {
+        return Collections.singletonMap(getDueDateByPaymentCodes().toLocalDate(), postingRule.doCalculationForAmountToPay(this, when ,false));
     }
 
     private Money calculateTotalAmountToPay(DateTime whenRegistered) {
@@ -546,10 +545,14 @@ public abstract class Event extends Event_Base {
     }
 
     public DebtInterestCalculator getDebtInterestCalculator(DateTime when) {
+        return getDebtInterestCalculator(getPostingRule(), when);
+    }
+
+    public DebtInterestCalculator getDebtInterestCalculator(PostingRule postingRule, DateTime when) {
         final Builder builder = new Builder(when);
-        final Map<LocalDate, Money> dueDateAmountMap = getDueDateAmountMap(when);
+        final Map<LocalDate, Money> dueDateAmountMap = getDueDateAmountMap(postingRule, when);
         final Money baseAmount = dueDateAmountMap.values().stream().reduce(Money.ZERO, Money::add);
-        final Map<LocalDate, Money> dueDatePenaltyAmountMap = getDueDatePenaltyAmountMap();
+        final Map<LocalDate, Money> dueDatePenaltyAmountMap = postingRule.getDueDatePenaltyAmountMap(this);
         final Set<LocalDate> debtInterestExemptions = getDebtInterestExemptions(when);
         final Set<LocalDate> debtFineExemptions = getDebtFineExemptions(when);
         
@@ -636,60 +639,7 @@ public abstract class Event extends Event_Base {
     }
 
     public List<EntryDTO> calculateEntries(DateTime when) {
-        final List<EntryDTO> result = new ArrayList<>();
-
-        final DebtInterestCalculator debtInterestCalculator = getDebtInterestCalculator(when);
-
-        final EntryType entryType = getPostingRule().getEntryType();
-
-        debtInterestCalculator.getDebtsOrderedByDueDate().forEach(d -> {
-            final Money openFineAmount = new Money(d.getOpenFineAmount());
-            final Money openInterestAmount = new Money(d.getOpenInterestAmount());
-            final Money originalAmount = new Money(d.getOriginalAmount());
-            final Money amountToPay = new Money(d.getOpenAmount());
-            
-
-            LabelFormatter entryDescription = getDescriptionForEntryType(entryType);
-            entryDescription.appendLabel(String.format(" [ %s ]", d.getDueDate().toString("dd-MM-yyyy")));
-
-            if (amountToPay.isPositive()) {
-                EntryDTO bean = null;
-                PaymentPlan paymentPlan = getPaymentPlan();
-                Money payedAmount = new Money(d.getPaymentsAmount());
-
-                if (paymentPlan != null) {
-                    Installment installment = paymentPlan.getInstallmentsSet().stream().filter(i -> i.getEndDate(this).equals(d.getDueDate())).findAny().orElse(null);
-                    if (installment != null) {
-                        bean = new EntryWithInstallmentDTO(entryType, this, originalAmount, payedAmount, amountToPay, entryDescription, amountToPay);
-                        //bean = new EntryWithInstallmentDTO(entryType, this, new Money(openAmount), entryDescription, installment);
-                    }
-                }
-
-                if (bean == null) {
-                    bean = new EntryDTO(entryType, this, originalAmount, payedAmount, amountToPay, entryDescription, amountToPay);
-                }
-
-                result.add(bean);
-            }
-
-            if (openInterestAmount.isPositive()) {
-                EntryDTO e = new EntryDTO(entryType, this, openInterestAmount);
-                entryDescription = getDescriptionForEntryType(entryType);
-                entryDescription.appendLabel(String.format(" [ %s ]  / Juros", d.getDueDate().toString("dd-MM-yyyy")));
-                e.setDescription(entryDescription);
-                result.add(e);
-            }
-
-            if (openFineAmount.isPositive()) {
-                EntryDTO e = new EntryDTO(entryType, this, openInterestAmount);
-                entryDescription = getDescriptionForEntryType(entryType);
-                entryDescription.appendLabel(String.format(" [ %s ]  / Multa", d.getDueDate().toString("dd-MM-yyyy")));
-                e.setDescription(entryDescription);
-                result.add(e);
-            }
-        });
-
-        return result;
+        return getPostingRule().calculateEntries(this, when);
     }
 
     public void open() {

@@ -22,8 +22,6 @@ import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
-import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
-import org.fenixedu.academic.domain.accounting.events.insurance.InsuranceEvent;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 
@@ -41,24 +39,6 @@ public class InsurancePR extends InsurancePR_Base {
     @Override
     protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
         return getFixedAmount();
-    }
-
-    @Override
-    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-        if (event instanceof InsuranceEvent) {
-            InsuranceEvent insuranceEvent = (InsuranceEvent) event;
-            if (insuranceEvent.hasInsuranceExemption()) {
-                return Money.ZERO;
-            }
-        } else if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent) {
-            final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent =
-                    (AdministrativeOfficeFeeAndInsuranceEvent) event;
-            if (administrativeOfficeFeeAndInsuranceEvent.hasInsuranceExemption()) {
-                return Money.ZERO;
-            }
-        }
-
-        return amountToPay;
     }
 
     @Override

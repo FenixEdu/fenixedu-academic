@@ -49,16 +49,6 @@ public class PhdRegistrationFeePR extends PhdRegistrationFeePR_Base {
     }
 
     @Override
-    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-        final PhdRegistrationFee feeEvent = (PhdRegistrationFee) event;
-        if (feeEvent.hasPhdEventExemption()) {
-            amountToPay = amountToPay.subtract(feeEvent.getPhdEventExemption().getValue());
-        }
-
-        return amountToPay.isPositive() ? amountToPay : Money.ZERO;
-    }
-
-    @Override
     protected Optional<LocalDate> getPenaltyDueDate(Event event) {
         final PhdRegistrationFee phdEvent = (PhdRegistrationFee) event;
         final PhdIndividualProgramProcess process = phdEvent.getProcess();

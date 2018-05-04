@@ -20,33 +20,22 @@ package org.fenixedu.academic.domain.accounting.postingRules.gratuity;
 
 import java.math.BigDecimal;
 import java.text.MessageFormat;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.Enrolment;
-import org.fenixedu.academic.domain.accounting.Account;
-import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
-import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityExemption;
-import org.fenixedu.academic.domain.accounting.events.gratuity.PercentageGratuityExemption;
-import org.fenixedu.academic.domain.accounting.events.gratuity.ValueGratuityExemption;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
-import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
-import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.util.Money;
-import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
 public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR_Base {
@@ -113,13 +102,6 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
     }
 
     @Override
-    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-        return Collections.singletonList(new EntryDTO(getEntryType(), event, calculateTotalAmountToPay(event, when), event
-                .getPayedAmount(), event.calculateAmountToPay(when), event.getDescriptionForEntryType(getEntryType()), event
-                .calculateAmountToPay(when)));
-    }
-
-    @Override
     protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
         final GratuityEvent gratuityEvent = (GratuityEvent) event;
 
@@ -129,29 +111,6 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
         }
 
         return result;
-    }
-
-    @Override
-    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-        final GratuityEvent gratuityEvent = (GratuityEvent) event;
-
-        if(gratuityEvent.hasExternalScholarshipGratuityExemption()) {
-            amountToPay = amountToPay.subtract(gratuityEvent.getExternalScholarshipGratuityExemption().getValue());
-        }
-
-        if(gratuityEvent.hasGratuityExemption()){
-            GratuityExemption gratuityExemption = gratuityEvent.getGratuityExemption();
-            if (gratuityExemption.isValueExemption()) {
-                amountToPay = amountToPay.subtract(((ValueGratuityExemption) gratuityExemption).getValue());
-            } else {
-                PercentageGratuityExemption percentageGratuityExemption = (PercentageGratuityExemption) gratuityExemption;
-                BigDecimal percentage = percentageGratuityExemption.getPercentage();
-                Money toRemove = amountToPay.multiply(percentage);
-                amountToPay = amountToPay.subtract(toRemove);
-            }
-        }
-
-        return amountToPay.isNegative() ? Money.ZERO : amountToPay;
     }
 
     /**
@@ -235,31 +194,6 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
             result.put(degree, result.get(degree).add(ects));
         } else {
             result.put(degree, ects);
-        }
-    }
-
-    @Override
-    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
-            Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
-
-        if (entryDTOs.size() != 1) {
-            throw new DomainException(
-                    "error.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.invalid.number.of.entryDTOs");
-        }
-
-        checkIfCanAddAmount(entryDTOs.iterator().next().getAmountToPay(), event, transactionDetail.getWhenRegistered());
-
-        return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, getEntryType(), entryDTOs
-                .iterator().next().getAmountToPay(), transactionDetail));
-    }
-
-    private void checkIfCanAddAmount(Money amountToPay, Event event, DateTime whenRegistered) {
-        final Money totalFinalAmount = event.getPayedAmount().add(amountToPay);
-
-        if (totalFinalAmount.lessThan(calculateTotalAmountToPay(event, whenRegistered))) {
-            throw new DomainExceptionWithLabelFormatter(
-                    "error.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.amount.being.payed.must.be.equal.to.amount.in.debt",
-                    event.getDescriptionForEntryType(getEntryType()));
         }
     }
 

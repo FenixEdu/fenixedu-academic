@@ -19,10 +19,8 @@
 package org.fenixedu.academic.domain.accounting.postingRules.serviceRequests;
 
 import org.fenixedu.academic.domain.accounting.EntryType;
-import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
-import org.fenixedu.academic.domain.accounting.events.serviceRequests.DegreeFinalizationCertificateRequestEvent;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 
@@ -50,18 +48,4 @@ public class DegreeFinalizationCertificateRequestPR extends DegreeFinalizationCe
                 baseAmount, amountPerUnit, amountPerPage, maximumAmount);
     }
 
-    @Override
-    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-        final DegreeFinalizationCertificateRequestEvent requestEvent = (DegreeFinalizationCertificateRequestEvent) event;
-
-        if (requestEvent.hasAcademicEventExemption()) {
-            return amountToPay.subtract(requestEvent.getAcademicEventExemption().getValue());
-        }
-
-        if (amountToPay.isNegative()) {
-            return Money.ZERO;
-        }
-
-        return amountToPay;
-    }
 }

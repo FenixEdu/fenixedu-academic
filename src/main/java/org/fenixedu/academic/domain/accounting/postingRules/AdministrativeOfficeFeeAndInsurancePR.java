@@ -63,26 +63,21 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
                         getPostingRuleForInsurance(annualEvent.getStartDate(), annualEvent.getEndDate())
                                 .calculateTotalAmountToPay(event, when, applyDiscount));
     }
-
-    @Override
-    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-        return amountToPay;
-    }
-
+    
     @Override
     public List<EntryDTO> calculateEntries(Event event, DateTime when) {
 
         final List<EntryDTO> result = new ArrayList<EntryDTO>();
         final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent =
-                (AdministrativeOfficeFeeAndInsuranceEvent) event;
+            (AdministrativeOfficeFeeAndInsuranceEvent) event;
         final AnnualEvent annualEvent = (AnnualEvent) event;
         if (administrativeOfficeFeeAndInsuranceEvent.hasToPayAdministrativeOfficeFee()) {
             result.addAll(getPostingRuleForAdministrativeOfficeFee(annualEvent.getStartDate(), annualEvent.getEndDate())
-                    .calculateEntries(event, when));
+                              .calculateEntries(event, when));
         }
         if (administrativeOfficeFeeAndInsuranceEvent.hasToPayInsurance()) {
             result.addAll(getPostingRuleForInsurance(annualEvent.getStartDate(), annualEvent.getEndDate()).calculateEntries(
-                    event, when));
+                event, when));
         }
 
         return result;
@@ -180,4 +175,5 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
     protected EntryType getEntryType() {
         return EntryType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE;
     }
+
 }

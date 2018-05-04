@@ -27,6 +27,7 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.Exemption;
+import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdProgram;
@@ -168,7 +169,7 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
     }
 
     @Override
-    public Map<LocalDate, Money> getDueDateAmountMap(DateTime when) {
-        return Collections.singletonMap(getLimitDateToPay().toLocalDate(), getPostingRule().calculateTotalAmountToPay(this, when));
+    public Map<LocalDate, Money> getDueDateAmountMap(PostingRule postingRule, DateTime when) {
+        return Collections.singletonMap(getLimitDateToPay().toLocalDate(), postingRule.calculateTotalAmountToPay(this, when));
     }
 }

@@ -19,11 +19,8 @@
 package org.fenixedu.academic.domain.accounting.postingRules.candidacy;
 
 import org.fenixedu.academic.domain.accounting.EntryType;
-import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
-import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
-import org.fenixedu.academic.domain.accounting.events.AcademicEventExemption;
 import org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
@@ -39,26 +36,6 @@ public class StandaloneIndividualCandidacyPR extends StandaloneIndividualCandida
         this();
         init(EntryType.STANDALONE_INDIVIDUAL_CANDIDACY_FEE, EventType.STANDALONE_INDIVIDUAL_CANDIDACY, startDate, endDate,
                 serviceAgreementTemplate, fixedAmount);
-    }
-
-    @Override
-    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-        if (event.getExemptionsSet().isEmpty()) {
-            return amountToPay;
-        }
-
-        for (Exemption exemption : event.getExemptionsSet()) {
-            if (exemption.isAcademicEventExemption()) {
-                AcademicEventExemption academicEventExemption = (AcademicEventExemption) exemption;
-                amountToPay = amountToPay.subtract(academicEventExemption.getValue());
-            }
-        }
-
-        if (amountToPay.isNegative()) {
-            return Money.ZERO;
-        }
-
-        return amountToPay;
     }
 
     @Override

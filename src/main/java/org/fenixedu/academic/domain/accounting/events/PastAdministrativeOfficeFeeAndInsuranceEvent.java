@@ -26,6 +26,7 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
+import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Money;
@@ -74,7 +75,7 @@ public class PastAdministrativeOfficeFeeAndInsuranceEvent extends PastAdministra
     }
 
     @Override
-    public Map<LocalDate, Money> getDueDateAmountMap(DateTime when) {
-        return Collections.singletonMap(getDueDateByPaymentCodes().toLocalDate(), getPostingRule().calculateTotalAmountToPay(this, when));
+    public Map<LocalDate, Money> getDueDateAmountMap(PostingRule postingRule, DateTime when) {
+        return Collections.singletonMap(getDueDateByPaymentCodes().toLocalDate(), postingRule.calculateTotalAmountToPay(this, when));
     }
 }

@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -27,11 +28,15 @@ import java.util.Map;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.accounting.accountingTransactions.detail.SibsTransactionDetail;
+import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
 import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
+import org.fenixedu.academic.dto.accounting.EntryWithInstallmentDTO;
 import org.fenixedu.academic.dto.accounting.SibsTransactionDetailDTO;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
@@ -353,28 +358,100 @@ public abstract class PostingRule extends PostingRule_Base {
     }
 
     public final Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-        Money amountToPay = doCalculationForAmountToPay(event, when, false);
-
-        //TODO
-        if (true) {
-            return amountToPay;
-        }
-
-        return subtractFromExemptions(event, when, applyDiscount, amountToPay);
+        return doCalculationForAmountToPay(event, when, false);
     }
 
     protected abstract Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount);
-
-    protected abstract Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay);
 
     public PaymentCodeType calculatePaymentCodeTypeFromEvent(Event event, DateTime when, boolean applyDiscount) {
         throw new DomainException("error.accounting.PostingRule.cannot.calculate.payment.code.type");
     }
 
-    abstract public List<EntryDTO> calculateEntries(Event event, DateTime when);
+    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
+            return calculateEntriesForFineAndInterest(event, when);
+    }
 
-    abstract protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
-            Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail);
+    public List<EntryDTO> calculateEntriesForFineAndInterest(Event event, DateTime when) {
+        final List<EntryDTO> result = new ArrayList<>();
+
+        final DebtInterestCalculator debtInterestCalculator = event.getDebtInterestCalculator(this, when);
+
+        final EntryType entryType = getEntryType();
+
+        debtInterestCalculator.getDebtsOrderedByDueDate().forEach(d -> {
+            final Money openFineAmount = new Money(d.getOpenFineAmount());
+            final Money openInterestAmount = new Money(d.getOpenInterestAmount());
+            final Money originalAmount = new Money(d.getOriginalAmount());
+            final Money amountToPay = new Money(d.getOpenAmount());
+
+
+            LabelFormatter entryDescription = event.getDescriptionForEntryType(entryType);
+            entryDescription.appendLabel(String.format(" [ %s ]", d.getDueDate().toString("dd-MM-yyyy")));
+
+            if (amountToPay.isPositive()) {
+                EntryDTO bean = null;
+                PaymentPlan paymentPlan = event.getPaymentPlan();
+                Money payedAmount = new Money(d.getPaymentsAmount());
+
+                if (paymentPlan != null) {
+                    Installment installment = paymentPlan.getInstallmentsSet().stream().filter(i -> i.getEndDate(event).equals(d.getDueDate())).findAny().orElse(null);
+                    if (installment != null) {
+                        bean = new EntryWithInstallmentDTO(entryType, event, originalAmount, payedAmount, amountToPay, entryDescription, amountToPay);
+                        ((EntryWithInstallmentDTO) bean).setInstallment(installment);
+                        //bean = new EntryWithInstallmentDTO(entryType, this, new Money(openAmount), entryDescription, installment);
+                    }
+                }
+
+                if (bean == null) {
+                    bean = new EntryDTO(entryType, event, originalAmount, payedAmount, amountToPay, entryDescription, amountToPay);
+                }
+
+                result.add(bean);
+            }
+
+            if (openInterestAmount.isPositive()) {
+                EntryDTO e = new EntryDTO(entryType, event, openInterestAmount);
+                entryDescription = event.getDescriptionForEntryType(entryType);
+                entryDescription.appendLabel(String.format(" [ %s ]  / Juros", d.getDueDate().toString("dd-MM-yyyy")));
+                e.setDescription(entryDescription);
+                result.add(e);
+            }
+
+            if (openFineAmount.isPositive()) {
+                EntryDTO e = new EntryDTO(entryType, event, openFineAmount);
+                entryDescription = event.getDescriptionForEntryType(entryType);
+                entryDescription.appendLabel(String.format(" [ %s ]  / Multa", d.getDueDate().toString("dd-MM-yyyy")));
+                e.setDescription(entryDescription);
+                result.add(e);
+            }
+        });
+
+        return result;
+    }
+
+    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
+            Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
+          final Set<AccountingTransaction> result = new HashSet<>();
+            Money totalEntriesAmount = Money.ZERO;
+
+            for(EntryDTO entryDTO : entryDTOs) {
+                result.add(makeAccountingTransaction(user, event, fromAccount, toAccount, getEntryType(), entryDTO.getAmountToPay(), transactionDetail));
+                totalEntriesAmount = totalEntriesAmount.add(entryDTO.getAmountToPay());
+            }
+
+            checkIfCanAddAmount(totalEntriesAmount, event, transactionDetail.getWhenRegistered());
+
+            return result;
+    }
+
+    protected void checkIfCanAddAmount(Money amountToPay, Event event, DateTime when) {
+        if (event.calculateAmountToPay(when).greaterThan(amountToPay)) {
+            throw new DomainExceptionWithLabelFormatter(
+                "error.accounting.postingRules.gratuity.PastDegreeGratuityPR.amount.being.payed.must.be.equal.to.amout.in.debt",
+                event.getDescriptionForEntryType(getEntryType()));
+        }
+
+    }
 
     static public Collection<PostingRule> findPostingRules(final EventType eventType) {
         final Collection<PostingRule> result = new HashSet<PostingRule>();
@@ -394,5 +471,13 @@ public abstract class PostingRule extends PostingRule_Base {
 
     public Map<LocalDate,Money> getDueDatePenaltyAmountMap(Event event) {
         return Collections.emptyMap();
+    }
+
+    public boolean isToApplyPenalty(Event event) {
+        return !getDueDatePenaltyAmountMap(event).isEmpty();
+    }
+
+    public boolean isToApplyInterest(Event event) {
+        return event.isGratuity();
     }
 }

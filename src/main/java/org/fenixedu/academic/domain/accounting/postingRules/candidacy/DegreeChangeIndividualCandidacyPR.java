@@ -18,13 +18,8 @@
  */
 package org.fenixedu.academic.domain.accounting.postingRules.candidacy;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
-import org.fenixedu.academic.domain.accounting.Account;
-import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
@@ -33,14 +28,10 @@ import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.accounting.events.candidacy.DegreeChangeIndividualCandidacyEvent;
 import org.fenixedu.academic.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacy;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
-import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.util.Money;
-import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
 public class DegreeChangeIndividualCandidacyPR extends DegreeChangeIndividualCandidacyPR_Base {
@@ -80,13 +71,6 @@ public class DegreeChangeIndividualCandidacyPR extends DegreeChangeIndividualCan
     }
 
     @Override
-    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-        final Money amountToPay = calculateTotalAmountToPay(event, when);
-        return Collections.singletonList(new EntryDTO(getEntryType(), event, amountToPay, Money.ZERO, amountToPay, event
-                .getDescriptionForEntryType(getEntryType()), amountToPay));
-    }
-
-    @Override
     protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
         DegreeChangeIndividualCandidacy individualCandidacy =
                 ((DegreeChangeIndividualCandidacyEvent) event).getIndividualCandidacy();
@@ -102,11 +86,6 @@ public class DegreeChangeIndividualCandidacyPR extends DegreeChangeIndividualCan
                 return getAmountForExternalStudent();
             }
         }
-    }
-
-    @Override
-    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-        return amountToPay;
     }
 
     @Override
@@ -149,28 +128,6 @@ public class DegreeChangeIndividualCandidacyPR extends DegreeChangeIndividualCan
             }
         }
         return false;
-    }
-
-    @Override
-    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
-            Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
-        if (entryDTOs.size() != 1) {
-            throw new DomainException("error.DegreeChangeIndividualCandidacyPR.invalid.number.of.entryDTOs");
-        }
-
-        final EntryDTO entryDTO = entryDTOs.iterator().next();
-        checkIfCanAddAmount(entryDTO.getAmountToPay(), event, transactionDetail.getWhenRegistered());
-
-        return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, entryDTO.getEntryType(),
-                entryDTO.getAmountToPay(), transactionDetail));
-    }
-
-    private void checkIfCanAddAmount(final Money amountToPay, final Event event, final DateTime when) {
-        if (amountToPay.compareTo(calculateTotalAmountToPay(event, when)) < 0) {
-            throw new DomainExceptionWithLabelFormatter(
-                    "error.DegreeChangeIndividualCandidacyPR.amount.being.payed.must.match.amount.to.pay",
-                    event.getDescriptionForEntryType(getEntryType()));
-        }
     }
 
     public DegreeChangeIndividualCandidacyPR edit(final Money amountForInstitutionStudent, final Money amountForExternalStudent) {

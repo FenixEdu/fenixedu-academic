@@ -40,6 +40,7 @@ import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.accounting.PaymentCodeState;
 import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 import org.fenixedu.academic.domain.accounting.PaymentPlan;
+import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption;
 import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import org.fenixedu.academic.domain.accounting.paymentCodes.InstallmentPaymentCode;
@@ -556,7 +557,7 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     }
 
     @Override
-    public Map<LocalDate, Money> getDueDateAmountMap(DateTime when) {
+    public Map<LocalDate, Money> getDueDateAmountMap(PostingRule postingRule, DateTime when) {
         return getGratuityPaymentPlan().getInstallmentsSet().stream().filter( i -> i.calculateBaseAmount(this).greaterThan(Money.ZERO))
                    .collect(Collectors.toMap(i -> i.getEndDate(this), i -> i.calculateBaseAmount(this)));
     }

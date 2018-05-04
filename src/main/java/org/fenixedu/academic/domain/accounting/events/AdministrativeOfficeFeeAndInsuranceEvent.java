@@ -39,6 +39,7 @@ import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.accounting.PaymentCodeState;
 import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 import org.fenixedu.academic.domain.accounting.PaymentMode;
+import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.accounting.events.administrativeOfficeFee.IAdministrativeOfficeFeeEvent;
 import org.fenixedu.academic.domain.accounting.events.insurance.IInsuranceEvent;
 import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
@@ -507,8 +508,8 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 
     
     @Override
-    public Map<LocalDate, Money> getDueDateAmountMap(DateTime when) {
-        return Collections.singletonMap(getPossibleDueDate(), getPostingRule().calculateTotalAmountToPay(this, when));
+    public Map<LocalDate, Money> getDueDateAmountMap(PostingRule postingRule, DateTime when) {
+        return Collections.singletonMap(getPossibleDueDate(), postingRule.calculateTotalAmountToPay(this, when));
     }
 
     private LocalDate getPossibleDueDate() {

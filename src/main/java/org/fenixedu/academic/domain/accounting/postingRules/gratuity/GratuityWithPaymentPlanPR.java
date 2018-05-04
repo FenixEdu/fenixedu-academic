@@ -19,12 +19,9 @@
 package org.fenixedu.academic.domain.accounting.postingRules.gratuity;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -40,6 +37,7 @@ import org.fenixedu.academic.domain.accounting.accountingTransactions.Installmen
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
 import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.dto.accounting.EntryWithInstallmentDTO;
@@ -71,49 +69,12 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base im
         return getPaymentPlan(event).calculateTotalAmount(event, when, discountPercentage);
     }
 
-    @Override
-    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-        return amountToPay;
-    }
-
     public BigDecimal getDiscountPercentage(final Event event) {
         PaymentPlan paymentPlan = getPaymentPlan(event);
         if (paymentPlan == null) {
             throw new DomainException("error.event.not.associated.paymentPlan", event.getClass().getName());
         }
         return ((GratuityEventWithPaymentPlan) event).calculateDiscountPercentage(paymentPlan.calculateBaseAmount(event));
-    }
-
-    @Override
-    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-        final List<EntryDTO> result = new ArrayList<EntryDTO>();
-        final Map<Installment, Money> amountsByInstallment =
-                getPaymentPlan(event).calculateInstallmentRemainingAmounts(event, when, getDiscountPercentage(event));
-
-        for (final Installment installment : getPaymentPlan(event).getInstallmentsSortedByEndDate()) {
-            final Money installmentAmount = amountsByInstallment.get(installment);
-
-            if (installmentAmount == null || !installmentAmount.isPositive()) {
-                continue;
-            }
-
-            result.add(new EntryWithInstallmentDTO(EntryType.GRATUITY_FEE, event, installmentAmount, event
-                    .getDescriptionForEntryType(getEntryType()), installment));
-
-        }
-
-        if (needsTotalAmountEntry(getPaymentPlan(event), result, event, when)) {
-            final Money amountToPay = event.calculateAmountToPay(when);
-            result.add(new EntryDTO(EntryType.GRATUITY_FEE, event, amountToPay, event.getPayedAmount(), amountToPay, event
-                    .getDescriptionForEntryType(getEntryType()), amountToPay));
-        }
-
-        return result;
-    }
-
-    private boolean needsTotalAmountEntry(final PaymentPlan paymentPlan, List<EntryDTO> result, final Event event,
-            final DateTime when) {
-        return (paymentPlan.getInstallmentsSet().size() != 1 && paymentPlan.getInstallmentsSet().size() == result.size());
     }
 
     @Override
@@ -125,14 +86,14 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base im
         if (entryDTOs.size() > 1) {
             final Set<AccountingTransaction> result = new HashSet<AccountingTransaction>();
             for (final EntryDTO each : entryDTOs) {
-                if (!(each instanceof EntryWithInstallmentDTO)) {
-//                    throw new DomainExceptionWithLabelFormatter(
-//                            "error.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR.cannot.mix.installments.with.total.payments",
-//                            event.getDescriptionForEntryType(getEntryType()));
+                if (each instanceof EntryWithInstallmentDTO) {
+                    result.add(internalProcessInstallment(user, fromAccount, toAccount, each, gratuityEventWithPaymentPlan,
+                                                          transactionDetail));
+                }
+                else {
+                    result.add(makeAccountingTransaction(user, each.getEvent(), fromAccount, toAccount, each.getEntryType(), each.getAmountToPay(), transactionDetail));
                 }
 
-                result.add(internalProcessInstallment(user, fromAccount, toAccount, each, gratuityEventWithPaymentPlan,
-                        transactionDetail));
             }
 
             return result;
@@ -183,9 +144,9 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base im
 
     private void checkIfCanAddAmount(EntryDTO entryDTO, DateTime whenRegistered, Event event) {
         if (entryDTO.getAmountToPay().compareTo(event.calculateAmountToPay(whenRegistered)) < 0) {
-//            throw new DomainExceptionWithLabelFormatter(
-//                    "error.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR.amount.to.pay.must.match.value",
-//                    event.getDescriptionForEntryType(getEntryType()));
+            throw new DomainExceptionWithLabelFormatter(
+                    "error.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR.amount.to.pay.must.match.value",
+                    event.getDescriptionForEntryType(getEntryType()));
         }
     }
 
@@ -194,9 +155,9 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base im
                 getPaymentPlan(event).calculateRemainingAmountFor(entryDTO.getInstallment(), event, whenRegistered,
                         getDiscountPercentage(event));
         if (entryDTO.getAmountToPay().compareTo(installmentAmount) < 0) {
-//            throw new DomainExceptionWithLabelFormatter(
-//                    "error.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR.amount.to.pay.must.match.value",
-//                    event.getDescriptionForEntryType(getEntryType()));
+            throw new DomainExceptionWithLabelFormatter(
+                    "error.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR.amount.to.pay.must.match.value",
+                    event.getDescriptionForEntryType(getEntryType()));
         }
 
     }

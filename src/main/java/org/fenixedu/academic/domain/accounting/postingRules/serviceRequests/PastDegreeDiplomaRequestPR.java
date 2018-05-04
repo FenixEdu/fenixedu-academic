@@ -18,24 +18,12 @@
  */
 package org.fenixedu.academic.domain.accounting.postingRules.serviceRequests;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
-import org.fenixedu.academic.domain.accounting.Account;
-import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.accounting.events.serviceRequests.PastDegreeDiplomaRequestEvent;
-import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
-import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
-import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.util.Money;
-import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
 public class PastDegreeDiplomaRequestPR extends PastDegreeDiplomaRequestPR_Base {
@@ -51,43 +39,8 @@ public class PastDegreeDiplomaRequestPR extends PastDegreeDiplomaRequestPR_Base 
     }
 
     @Override
-    public List<EntryDTO> calculateEntries(final Event event, final DateTime when) {
-        return Collections.singletonList(new EntryDTO(getEntryType(), event, calculateTotalAmountToPay(event, when), event
-                .getPayedAmount(), event.calculateAmountToPay(when), event.getDescriptionForEntryType(getEntryType()), event
-                .calculateAmountToPay(when)));
-    }
-
-    @Override
     protected Money doCalculationForAmountToPay(final Event event, final DateTime when, final boolean applyDiscount) {
         return ((PastDegreeDiplomaRequestEvent) event).getPastAmount();
-    }
-
-    @Override
-    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-        return amountToPay;
-    }
-
-    @Override
-    protected Set<AccountingTransaction> internalProcess(final User user, final Collection<EntryDTO> entryDTOs,
-            final Event event, final Account fromAccount, final Account toAccount,
-            final AccountingTransactionDetailDTO transactionDetail) {
-
-        if (entryDTOs.size() != 1) {
-            throw new DomainException("error.accounting.postingRules.invalid.number.of.entryDTOs");
-        }
-
-        checkIfCanAddAmount(entryDTOs.iterator().next().getAmountToPay(), event, transactionDetail.getWhenRegistered());
-
-        return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, getEntryType(), entryDTOs
-                .iterator().next().getAmountToPay(), transactionDetail));
-    }
-
-    private void checkIfCanAddAmount(final Money amountToPay, final Event event, final DateTime when) {
-        if (event.calculateAmountToPay(when).greaterThan(amountToPay)) {
-            throw new DomainExceptionWithLabelFormatter(
-                    "error.accounting.postingRules.amount.being.payed.must.be.equal.to.amout.in.debt",
-                    event.getDescriptionForEntryType(getEntryType()));
-        }
     }
 
     @Override
