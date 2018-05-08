@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.reports;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.Attends;
+import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
@@ -73,6 +74,7 @@ public class EtiReportFile extends EtiReportFile_Base {
         }
         spreadsheet.setHeader("tipo Aluno");
         spreadsheet.setHeader("número inscricoes anteriores");
+        spreadsheet.setHeader("número inscricoes anteriores - via competência");
         spreadsheet.setHeader("código disciplina execução");
 
         for (final Degree degree : Degree.readNotEmptyDegrees()) {
@@ -133,12 +135,15 @@ public class EtiReportFile extends EtiReportFile_Base {
         row.setCell(enrolment.getGradeValue());
 
         for (EvaluationSeason season : seasons) {
-            row.setCell(enrolment.getFinalEnrolmentEvaluationBySeason(season).map(EnrolmentEvaluation::getGradeValue)
-                    .orElse(null));
+            row.setCell(
+                    enrolment.getFinalEnrolmentEvaluationBySeason(season).map(EnrolmentEvaluation::getGradeValue).orElse(null));
         }
 
         row.setCell(registration.getRegistrationProtocol().getCode());
-        row.setCell(countPreviousEnrolments(curricularCourse, executionSemesterForPreviousEnrolmentCount, student));
+        row.setCell(
+                String.valueOf(countPreviousEnrolmentsCC(curricularCourse, executionSemesterForPreviousEnrolmentCount, student)));
+        row.setCell(countAllPreviousEnrolments(curricularCourse.getCompetenceCourse(), executionSemesterForPreviousEnrolmentCount,
+                student));
         Attends attends = null; // enrolment.getAttendsFor(executionSemester);
         for (final Attends a : enrolment.getAttendsSet()) {
             if (a.isFor(executionSemester)) {
@@ -155,7 +160,19 @@ public class EtiReportFile extends EtiReportFile_Base {
         }
     }
 
-    private String countPreviousEnrolments(final CurricularCourse curricularCourse, final ExecutionSemester executionPeriod,
+    private String countAllPreviousEnrolments(final CompetenceCourse competenceCourse, final ExecutionSemester executionPeriod,
+            final Student student) {
+        int count = 0;
+        if (competenceCourse == null) {
+            return Integer.toString(count);
+        }
+        for (CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCoursesSet()) {
+            count = count + countPreviousEnrolmentsCC(curricularCourse, executionPeriod, student);
+        }
+        return Integer.toString(count);
+    }
+
+    private int countPreviousEnrolmentsCC(final CurricularCourse curricularCourse, final ExecutionSemester executionPeriod,
             final Student student) {
         int count = 0;
         for (final CurriculumModule curriculumModule : curricularCourse.getCurriculumModulesSet()) {
@@ -168,6 +185,6 @@ public class EtiReportFile extends EtiReportFile_Base {
                 }
             }
         }
-        return Integer.toString(count);
+        return count;
     }
 }
