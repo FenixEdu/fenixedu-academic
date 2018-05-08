@@ -40,6 +40,7 @@ import org.fenixedu.academic.domain.curriculum.EnrollmentCondition;
 import org.fenixedu.academic.domain.curriculum.EnrollmentState;
 import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationContext;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
+import org.fenixedu.academic.domain.degreeStructure.EctsConversionTable;
 import org.fenixedu.academic.domain.degreeStructure.EctsTableIndex;
 import org.fenixedu.academic.domain.enrolment.EnroledEnrolmentWrapper;
 import org.fenixedu.academic.domain.enrolment.ExternalDegreeEnrolmentWrapper;
@@ -642,23 +643,51 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return enrolmentEvaluation == null ? Grade.createEmptyGrade() : enrolmentEvaluation.getGrade();
     }
 
+    private EctsConversionTable getEctsConversionTable() {
+        final EnrolmentEvaluation enrolmentEvaluation = getFinalEnrolmentEvaluation();
+        return enrolmentEvaluation == null ? null : enrolmentEvaluation.getEctsConversionTable();
+    }
+
+    private Grade getNormalizedEctsGrade() {
+        final EnrolmentEvaluation enrolmentEvaluation = getFinalEnrolmentEvaluation();
+        return enrolmentEvaluation == null ? null : enrolmentEvaluation.getNormalizedEctsGrade();
+    }
+
     @Override
     final public String getGradeValue() {
         return getGrade().getValue();
     }
 
     @Override
-    public Grade getEctsGrade(StudentCurricularPlan scp, DateTime processingDate) {
-        Grade grade = getGrade();
-        if (getEnrolmentWrappersSet().size() > 0) {
-            Set<Dismissal> dismissals = new HashSet<Dismissal>();
-            for (EnrolmentWrapper wrapper : getEnrolmentWrappersSet()) {
+    public Grade getEctsGrade(final StudentCurricularPlan scp, final DateTime processingDate) {
+        final Grade normalizedEctsGrade = getNormalizedEctsGrade();
+        return normalizedEctsGrade == null ? calculateNormalizedEctsGrade(scp, processingDate) : normalizedEctsGrade;
+    }
+
+    @Override
+    public EctsConversionTable getEctsConversionTable(final StudentCurricularPlan scp, final DateTime processingDate) {
+        final EctsConversionTable table = getEctsConversionTable();
+        return table == null ? calculateEctsConversionTable(scp, processingDate, getGrade()) : table;
+    }
+
+    private Grade calculateNormalizedEctsGrade(final StudentCurricularPlan scp, final DateTime processingDate) {
+        final Grade grade = getGrade();
+        final EctsConversionTable table = getEctsConversionTable();
+        final EctsConversionTable tableForCalculation = table == null ? calculateEctsConversionTable(scp, processingDate, grade) : table;
+        return tableForCalculation.convert(grade);
+    }
+
+    private EctsConversionTable calculateEctsConversionTable(final StudentCurricularPlan scp, final DateTime processingDate, final Grade grade) {
+        final Set<InternalEnrolmentWrapper> wrappers = getEnrolmentWrappersSet();
+        if (wrappers.size() > 0) {
+            final Set<Dismissal> dismissals = new HashSet<Dismissal>();
+            for (final EnrolmentWrapper wrapper : wrappers) {
                 if (wrapper.getCredits().getStudentCurricularPlan().isBolonhaDegree()) {
                     if (!wrapper.getCredits().getStudentCurricularPlan().equals(scp)) {
                         continue;
                     }
                 }
-                for (Dismissal dismissal : wrapper.getCredits().getDismissalsSet()) {
+                for (final Dismissal dismissal : wrapper.getCredits().getDismissalsSet()) {
                     dismissals.add(dismissal);
                 }
             }
@@ -666,10 +695,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
                 Dismissal dismissal = dismissals.iterator().next();
                 if (dismissal instanceof OptionalDismissal || dismissal instanceof CreditsDismissal
                         || dismissal.getCurricularCourse().isOptionalCurricularCourse()) {
-                    return EctsTableIndex.convertGradeToEcts(scp.getDegree(), dismissal, grade, processingDate);
+                    return EctsTableIndex.getEctsConversionTable(scp.getDegree(), dismissal, grade, processingDate);
                 } else {
                     CurricularCourse curricularCourse = dismissal.getCurricularCourse();
-                    return EctsTableIndex.convertGradeToEcts(curricularCourse, dismissal, grade, processingDate);
+                    return EctsTableIndex.getEctsConversionTable(curricularCourse, dismissal, grade, processingDate);
                 }
             } else if (dismissals.size() > 1) {
                 // if more than one exists we can't base the conversion on the
@@ -677,12 +706,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
                 // of the sources.
                 for (Dismissal dismissal : dismissals) {
                     if (dismissal.getParentCycleCurriculumGroup() != null) {
-                        return EctsTableIndex.convertGradeToEcts(scp.getDegree(), dismissal, grade, processingDate);
+                        return EctsTableIndex.getEctsConversionTable(scp.getDegree(), dismissal, grade, processingDate);
                     }
                 }
             }
         }
-        return EctsTableIndex.convertGradeToEcts(getCurricularCourse(), this, grade, processingDate);
+        return EctsTableIndex.getEctsConversionTable(getCurricularCourse(), this, grade, processingDate);
     }
 
     @Override

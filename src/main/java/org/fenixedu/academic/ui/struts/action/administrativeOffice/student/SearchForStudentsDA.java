@@ -38,6 +38,8 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
+import com.google.common.base.Strings;
+
 @StrutsFunctionality(app = AcademicAdminStudentsApp.class, path = "search-for-students",
         titleKey = "link.studentOperations.viewStudents", accessGroup = "academic(scope=OFFICE)")
 @Mapping(path = "/students", module = "academicAdministration")
@@ -49,7 +51,14 @@ public class SearchForStudentsDA extends FenixDispatchAction {
     public ActionForward prepareSearch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
+        final String username = request.getParameter("username");
+
         StudentsSearchBean studentsSearchBean = getRenderedObject();
+
+        if (!Strings.isNullOrEmpty(username)) {
+            studentsSearchBean = new StudentsSearchBean();
+            studentsSearchBean.setUsername(username);
+        }
 
         if (studentsSearchBean == null) { // 1st time
             studentsSearchBean = new StudentsSearchBean();
