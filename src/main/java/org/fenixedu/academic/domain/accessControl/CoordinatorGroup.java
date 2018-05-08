@@ -88,19 +88,20 @@ public class CoordinatorGroup extends FenixGroup {
     public String[] getPresentationNameKeyArgs() {
         List<String> parts = new ArrayList<>();
         String connector = "";
+        String responsibleQualifier = "";
         if (degreeType != null) {
             parts.add(degreeType.getName().getContent());
         }
         if (degree != null) {
             parts.add(degree.getPresentationName());
         }
-        if (responsible != null) {
-            parts.add(responsible.toString());
-        }
         if (!parts.isEmpty()) {
             connector = BundleUtil.getString(Bundle.GROUP, "label.name.connector.default");
         }
-        return new String[] { connector, Joiner.on(", ").join(parts) };
+        if (responsible != null) {
+            responsibleQualifier = BundleUtil.getString(Bundle.GROUP, String.format("label.name.CoordinatorGroup.responsible.%s", responsible.toString()));
+        }
+        return new String[] { responsibleQualifier, connector, Joiner.on(", ").join(parts) };
     }
 
     @Override
