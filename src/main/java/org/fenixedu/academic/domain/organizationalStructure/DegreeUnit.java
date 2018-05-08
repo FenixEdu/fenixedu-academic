@@ -37,10 +37,10 @@ public class DegreeUnit extends DegreeUnit_Base {
         super.setType(PartyTypeEnum.DEGREE_UNIT);
     }
 
-    public static DegreeUnit createNewInternalDegreeUnit(LocalizedString unitName, String unitNameCard,
-            Integer costCenterCode, String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
-            AccountabilityType accountabilityType, String webAddress, Degree degree, UnitClassification classification,
-            Boolean canBeResponsibleOfSpaces, Space campus) {
+    public static DegreeUnit createNewInternalDegreeUnit(final LocalizedString unitName, final String unitNameCard,
+            final Integer costCenterCode, final String acronym, final YearMonthDay beginDate, final YearMonthDay endDate,
+            final Unit parentUnit, final AccountabilityType accountabilityType, final String webAddress, final Degree degree,
+            final UnitClassification classification, final Boolean canBeResponsibleOfSpaces, final Space campus) {
 
         DegreeUnit degreeUnit = new DegreeUnit();
         degreeUnit.init(unitName, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification, null,
@@ -54,10 +54,10 @@ public class DegreeUnit extends DegreeUnit_Base {
     }
 
     @Override
-    public void edit(LocalizedString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
-            YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
-            Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
-            Space campus) {
+    public void edit(final LocalizedString unitName, final String unitNameCard, final Integer unitCostCenter,
+            final String acronym, final YearMonthDay beginDate, final YearMonthDay endDate, final String webAddress,
+            final UnitClassification classification, final Department department, final Degree degree,
+            final AdministrativeOffice administrativeOffice, final Boolean canBeResponsibleOfSpaces, final Space campus) {
 
         super.edit(unitName, unitNameCard, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department,
                 degree, administrativeOffice, canBeResponsibleOfSpaces, campus);
@@ -67,7 +67,7 @@ public class DegreeUnit extends DegreeUnit_Base {
     }
 
     @Override
-    public Accountability addParentUnit(Unit parentUnit, AccountabilityType accountabilityType) {
+    public Accountability addParentUnit(final Unit parentUnit, final AccountabilityType accountabilityType) {
         if (parentUnit != null && !parentUnit.isInternal()) {
             throw new DomainException("error.unit.invalid.parentUnit");
         }
@@ -75,7 +75,7 @@ public class DegreeUnit extends DegreeUnit_Base {
     }
 
     @Override
-    public void setAcronym(String acronym) {
+    public void setAcronym(final String acronym) {
         if (StringUtils.isEmpty(acronym)) {
             throw new DomainException("error.unit.empty.acronym");
         }
@@ -83,7 +83,7 @@ public class DegreeUnit extends DegreeUnit_Base {
     }
 
     @Override
-    public void setType(PartyTypeEnum partyTypeEnum) {
+    public void setType(final PartyTypeEnum partyTypeEnum) {
         throw new DomainException("unit.impossible.set.type");
     }
 
@@ -93,15 +93,15 @@ public class DegreeUnit extends DegreeUnit_Base {
     }
 
     @Override
-    public void setDegree(Degree degree) {
+    public void setDegree(final Degree degree) {
         if (degree == null) {
             throw new DomainException("error.DegreeUnit.empty.degree");
         }
         super.setDegree(degree);
     }
 
-    public void edit(final Collection<Unit> parentUnits, final MultiLanguageString name, final String acronym,
-            final LocalDate begin, final LocalDate end) {
+    public void edit(final Collection<Unit> parentUnits, final LocalizedString name, final String acronym, final LocalDate begin,
+            final LocalDate end) {
 
         setPartyName(name);
         setAcronym(acronym);
@@ -114,7 +114,7 @@ public class DegreeUnit extends DegreeUnit_Base {
         super.delete();
     }
 
-    private static void checkIfAlreadyExistsOneDegreeWithSameAcronym(DegreeUnit degreeUnit) {
+    private static void checkIfAlreadyExistsOneDegreeWithSameAcronym(final DegreeUnit degreeUnit) {
         for (Unit unit : UnitUtils.readInstitutionUnit().getAllSubUnits()) {
             if (!unit.equals(degreeUnit) && unit.isDegreeUnit() && degreeUnit.getAcronym().equalsIgnoreCase(unit.getAcronym())) {
                 throw new DomainException("error.unit.already.exists.unit.with.same.name.or.acronym");

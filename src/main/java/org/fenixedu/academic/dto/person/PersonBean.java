@@ -47,7 +47,7 @@ import pt.ist.fenixframework.Atomic.TxMode;
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * @author - Angela Almeida (argelina@ist.utl.pt)
- * 
+ *
  */
 public class PersonBean implements Serializable {
 
@@ -146,22 +146,21 @@ public class PersonBean implements Serializable {
     private String emailConfirmation;
 
     private String eidentifier;
-    
-    private String identificationDocumentSeriesNumber;
 
     public PersonBean() {
         super();
     }
 
-    public PersonBean(String name, String identificationNumber, IDDocumentType idDocumentType, YearMonthDay dateOfBirth) {
+    public PersonBean(final String name, final String identificationNumber, final IDDocumentType idDocumentType,
+            final YearMonthDay dateOfBirth) {
         setName(name);
         setDocumentIdNumber(identificationNumber);
         setIdDocumentType(idDocumentType);
         setDateOfBirth(dateOfBirth);
     }
 
-    public PersonBean(String name, String identificationNumber, IDDocumentType idDocumentType, YearMonthDay dateOfBirth,
-            Integer studentNumber) {
+    public PersonBean(final String name, final String identificationNumber, final IDDocumentType idDocumentType,
+            final YearMonthDay dateOfBirth, final Integer studentNumber) {
         setName(name);
         setDocumentIdNumber(identificationNumber);
         setIdDocumentType(idDocumentType);
@@ -169,7 +168,7 @@ public class PersonBean implements Serializable {
         setStudentNumber(studentNumber);
     }
 
-    public PersonBean(IndividualCandidacyPersonalDetails details) {
+    public PersonBean(final IndividualCandidacyPersonalDetails details) {
         if (details.isInternal()) {
             initPerson(details.getPerson());
         } else {
@@ -179,7 +178,7 @@ public class PersonBean implements Serializable {
         initPersonBeanFromPersonalDetails(details);
     }
 
-    public PersonBean(Person person) {
+    public PersonBean(final Person person) {
         initPerson(person);
     }
 
@@ -236,9 +235,8 @@ public class PersonBean implements Serializable {
                 setDistrictOfResidence(physicalAddress.getDistrictOfResidence());
             }
 
-            setMobile(
-                    person.hasDefaultMobilePhone() ? person.getDefaultMobilePhone().getNumber() : person.getPendingMobilePhones()
-                            .stream().map(MobilePhone::getNumber).findFirst().orElse(null));
+            setMobile(person.hasDefaultMobilePhone() ? person.getDefaultMobilePhone().getNumber() : person
+                    .getPendingMobilePhones().stream().map(MobilePhone::getNumber).findFirst().orElse(null));
             setWebAddress(person.hasDefaultWebAddress() ? person.getDefaultWebAddress().getUrl() : null);
             setEmailAvailable(person.getAvailableEmail());
             setHomepageAvailable(person.getAvailableWebSite());
@@ -246,7 +244,7 @@ public class PersonBean implements Serializable {
         }
     }
 
-    private void initPerson(Person person) {
+    private void initPerson(final Person person) {
         setNickname(person.getNickname());
         setGivenNames(person.getGivenNames());
         setFamilyNames(person.getFamilyNames());
@@ -295,10 +293,10 @@ public class PersonBean implements Serializable {
         setHomepageAvailable(person.getAvailableWebSite());
 
         setPerson(person);
-        
+
         setIdentificationDocumentSeriesNumber(person.getIdentificationDocumentSeriesNumberValue());
-        
-        if(Strings.isNullOrEmpty(getIdentificationDocumentSeriesNumber())) {
+
+        if (Strings.isNullOrEmpty(getIdentificationDocumentSeriesNumber())) {
             setIdentificationDocumentSeriesNumber(person.getIdentificationDocumentExtraDigitValue());
         }
     }
@@ -307,7 +305,7 @@ public class PersonBean implements Serializable {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(final String address) {
         this.address = address;
     }
 
@@ -315,7 +313,7 @@ public class PersonBean implements Serializable {
         return area;
     }
 
-    public void setArea(String area) {
+    public void setArea(final String area) {
         this.area = area;
     }
 
@@ -323,7 +321,7 @@ public class PersonBean implements Serializable {
         return areaCode;
     }
 
-    public void setAreaCode(String areaCode) {
+    public void setAreaCode(final String areaCode) {
         this.areaCode = areaCode;
     }
 
@@ -331,7 +329,7 @@ public class PersonBean implements Serializable {
         return areaOfAreaCode;
     }
 
-    public void setAreaOfAreaCode(String areaOfAreaCode) {
+    public void setAreaOfAreaCode(final String areaOfAreaCode) {
         this.areaOfAreaCode = areaOfAreaCode;
     }
 
@@ -339,7 +337,7 @@ public class PersonBean implements Serializable {
         return countryOfBirth;
     }
 
-    public void setCountryOfBirth(Country countryOfBirth) {
+    public void setCountryOfBirth(final Country countryOfBirth) {
         this.countryOfBirth = countryOfBirth;
     }
 
@@ -347,7 +345,7 @@ public class PersonBean implements Serializable {
         return countryOfResidence;
     }
 
-    public void setCountryOfResidence(Country countryOfResidence) {
+    public void setCountryOfResidence(final Country countryOfResidence) {
         this.countryOfResidence = countryOfResidence;
     }
 
@@ -359,7 +357,7 @@ public class PersonBean implements Serializable {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(YearMonthDay dateOfBirth) {
+    public void setDateOfBirth(final YearMonthDay dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -367,7 +365,7 @@ public class PersonBean implements Serializable {
         return districtOfBirth;
     }
 
-    public void setDistrictOfBirth(String districtOfBirth) {
+    public void setDistrictOfBirth(final String districtOfBirth) {
         this.districtOfBirth = districtOfBirth;
     }
 
@@ -376,7 +374,7 @@ public class PersonBean implements Serializable {
                 .getName() : districtOfResidence;
     }
 
-    public void setDistrictOfResidence(String districtOfResidence) {
+    public void setDistrictOfResidence(final String districtOfResidence) {
         this.districtOfResidence = districtOfResidence;
     }
 
@@ -384,7 +382,7 @@ public class PersonBean implements Serializable {
         return this.districtSubdivisionOfResidenceObject;
     }
 
-    public void setDistrictSubdivisionOfResidenceObject(DistrictSubdivision districtSubdivision) {
+    public void setDistrictSubdivisionOfResidenceObject(final DistrictSubdivision districtSubdivision) {
         this.districtSubdivisionOfResidenceObject = districtSubdivision;
     }
 
@@ -392,15 +390,16 @@ public class PersonBean implements Serializable {
         return districtSubdivisionOfBirth;
     }
 
-    public void setDistrictSubdivisionOfBirth(String districtSubdivisionOfBirth) {
+    public void setDistrictSubdivisionOfBirth(final String districtSubdivisionOfBirth) {
         this.districtSubdivisionOfBirth = districtSubdivisionOfBirth;
     }
 
     public String getDistrictSubdivisionOfResidence() {
-        return getDistrictSubdivisionOfResidenceObject() != null ? getDistrictSubdivisionOfResidenceObject().getName() : districtSubdivisionOfResidence;
+        return getDistrictSubdivisionOfResidenceObject() != null ? getDistrictSubdivisionOfResidenceObject()
+                .getName() : districtSubdivisionOfResidence;
     }
 
-    public void setDistrictSubdivisionOfResidence(String districtSubdivisionOfResidence) {
+    public void setDistrictSubdivisionOfResidence(final String districtSubdivisionOfResidence) {
         this.districtSubdivisionOfResidence = districtSubdivisionOfResidence;
     }
 
@@ -408,7 +407,7 @@ public class PersonBean implements Serializable {
         return documentIdEmissionDate;
     }
 
-    public void setDocumentIdEmissionDate(YearMonthDay documentIdEmissionDate) {
+    public void setDocumentIdEmissionDate(final YearMonthDay documentIdEmissionDate) {
         this.documentIdEmissionDate = documentIdEmissionDate;
     }
 
@@ -416,7 +415,7 @@ public class PersonBean implements Serializable {
         return documentIdEmissionLocation;
     }
 
-    public void setDocumentIdEmissionLocation(String documentIdEmissionLocation) {
+    public void setDocumentIdEmissionLocation(final String documentIdEmissionLocation) {
         this.documentIdEmissionLocation = documentIdEmissionLocation;
     }
 
@@ -424,7 +423,7 @@ public class PersonBean implements Serializable {
         return documentIdExpirationDate;
     }
 
-    public void setDocumentIdExpirationDate(YearMonthDay documentIdExpirationDate) {
+    public void setDocumentIdExpirationDate(final YearMonthDay documentIdExpirationDate) {
         this.documentIdExpirationDate = documentIdExpirationDate;
     }
 
@@ -432,7 +431,7 @@ public class PersonBean implements Serializable {
         return documentIdNumber;
     }
 
-    public void setDocumentIdNumber(String documentIdNumber) {
+    public void setDocumentIdNumber(final String documentIdNumber) {
         this.documentIdNumber = documentIdNumber;
     }
 
@@ -440,7 +439,7 @@ public class PersonBean implements Serializable {
         return identificationDocumentSeriesNumber;
     }
 
-    public void setIdentificationDocumentSeriesNumber(String identificationDocumentSeriesNumber) {
+    public void setIdentificationDocumentSeriesNumber(final String identificationDocumentSeriesNumber) {
         this.identificationDocumentSeriesNumber = identificationDocumentSeriesNumber;
     }
 
@@ -448,7 +447,7 @@ public class PersonBean implements Serializable {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(final String email) {
         this.email = email;
     }
 
@@ -456,7 +455,7 @@ public class PersonBean implements Serializable {
         return fatherName;
     }
 
-    public void setFatherName(String fatherName) {
+    public void setFatherName(final String fatherName) {
         this.fatherName = fatherName;
     }
 
@@ -464,7 +463,7 @@ public class PersonBean implements Serializable {
         return gender;
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(final Gender gender) {
         this.gender = gender;
     }
 
@@ -472,7 +471,7 @@ public class PersonBean implements Serializable {
         return idDocumentType;
     }
 
-    public void setIdDocumentType(IDDocumentType idDocumentType) {
+    public void setIdDocumentType(final IDDocumentType idDocumentType) {
         this.idDocumentType = idDocumentType;
     }
 
@@ -480,7 +479,7 @@ public class PersonBean implements Serializable {
         return isEmailAvailable;
     }
 
-    public void setEmailAvailable(boolean isEmailAvailable) {
+    public void setEmailAvailable(final boolean isEmailAvailable) {
         this.isEmailAvailable = isEmailAvailable;
     }
 
@@ -488,7 +487,7 @@ public class PersonBean implements Serializable {
         return isHomepageAvailable;
     }
 
-    public void setHomepageAvailable(boolean isHomepageAvailable) {
+    public void setHomepageAvailable(final boolean isHomepageAvailable) {
         this.isHomepageAvailable = isHomepageAvailable;
     }
 
@@ -496,7 +495,7 @@ public class PersonBean implements Serializable {
         return maritalStatus == null ? MaritalStatus.UNKNOWN : maritalStatus;
     }
 
-    public void setMaritalStatus(MaritalStatus maritalStatus) {
+    public void setMaritalStatus(final MaritalStatus maritalStatus) {
         this.maritalStatus = maritalStatus;
     }
 
@@ -504,7 +503,7 @@ public class PersonBean implements Serializable {
         return mobile;
     }
 
-    public void setMobile(String mobileNumber) {
+    public void setMobile(final String mobileNumber) {
         this.mobile = mobileNumber;
     }
 
@@ -512,7 +511,7 @@ public class PersonBean implements Serializable {
         return motherName;
     }
 
-    public void setMotherName(String motherName) {
+    public void setMotherName(final String motherName) {
         this.motherName = motherName;
     }
 
@@ -520,7 +519,7 @@ public class PersonBean implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -528,7 +527,7 @@ public class PersonBean implements Serializable {
         return givenNames;
     }
 
-    public void setGivenNames(String givenNames) {
+    public void setGivenNames(final String givenNames) {
         this.givenNames = givenNames;
     }
 
@@ -536,7 +535,7 @@ public class PersonBean implements Serializable {
         return familyNames;
     }
 
-    public void setFamilyNames(String familyNames) {
+    public void setFamilyNames(final String familyNames) {
         this.familyNames = familyNames;
     }
 
@@ -544,7 +543,7 @@ public class PersonBean implements Serializable {
         return nationality;
     }
 
-    public void setNationality(Country nationality) {
+    public void setNationality(final Country nationality) {
         this.nationality = nationality;
     }
 
@@ -552,7 +551,7 @@ public class PersonBean implements Serializable {
         return parishOfBirth;
     }
 
-    public void setParishOfBirth(String parishOfBirth) {
+    public void setParishOfBirth(final String parishOfBirth) {
         this.parishOfBirth = parishOfBirth;
     }
 
@@ -560,7 +559,7 @@ public class PersonBean implements Serializable {
         return parishOfResidence;
     }
 
-    public void setParishOfResidence(String parishOfResidence) {
+    public void setParishOfResidence(final String parishOfResidence) {
         this.parishOfResidence = parishOfResidence;
     }
 
@@ -568,7 +567,7 @@ public class PersonBean implements Serializable {
         return phone;
     }
 
-    public void setPhone(String phoneNumber) {
+    public void setPhone(final String phoneNumber) {
         this.phone = phoneNumber;
     }
 
@@ -576,7 +575,7 @@ public class PersonBean implements Serializable {
         return workPhone;
     }
 
-    public void setWorkPhone(String workPhone) {
+    public void setWorkPhone(final String workPhone) {
         this.workPhone = workPhone;
     }
 
@@ -584,7 +583,7 @@ public class PersonBean implements Serializable {
         return professionType;
     }
 
-    public void setProfessionType(ProfessionType professionType) {
+    public void setProfessionType(final ProfessionType professionType) {
         this.professionType = professionType;
     }
 
@@ -592,7 +591,7 @@ public class PersonBean implements Serializable {
         return professionalCondition;
     }
 
-    public void setProfessionalCondition(ProfessionalSituationConditionType professionalCondition) {
+    public void setProfessionalCondition(final ProfessionalSituationConditionType professionalCondition) {
         this.professionalCondition = professionalCondition;
     }
 
@@ -600,7 +599,7 @@ public class PersonBean implements Serializable {
         return profession;
     }
 
-    public void setProfession(String profession) {
+    public void setProfession(final String profession) {
         this.profession = profession;
     }
 
@@ -608,7 +607,7 @@ public class PersonBean implements Serializable {
         return fiscalCountry;
     }
 
-    public void setFiscalCountry(Country fiscalCountry) {
+    public void setFiscalCountry(final Country fiscalCountry) {
         this.fiscalCountry = fiscalCountry;
     }
 
@@ -619,7 +618,7 @@ public class PersonBean implements Serializable {
         return socialSecurityNumber;
     }
 
-    public void setSocialSecurityNumber(String socialSecurityNumber) {
+    public void setSocialSecurityNumber(final String socialSecurityNumber) {
         this.socialSecurityNumber = socialSecurityNumber;
     }
 
@@ -627,7 +626,7 @@ public class PersonBean implements Serializable {
         return socialSecurityNumber;
     }
 
-    public void setFiscalCode(String value) {
+    public void setFiscalCode(final String value) {
         this.socialSecurityNumber = value;
     }
 
@@ -635,7 +634,7 @@ public class PersonBean implements Serializable {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(final String username) {
         this.username = username;
     }
 
@@ -643,7 +642,7 @@ public class PersonBean implements Serializable {
         return webAddress;
     }
 
-    public void setWebAddress(String webAddress) {
+    public void setWebAddress(final String webAddress) {
         this.webAddress = webAddress;
     }
 
@@ -651,7 +650,7 @@ public class PersonBean implements Serializable {
         return person;
     }
 
-    public void setPerson(Person person) {
+    public void setPerson(final Person person) {
         this.person = person;
     }
 
@@ -702,7 +701,7 @@ public class PersonBean implements Serializable {
         return studentNumber;
     }
 
-    public void setStudentNumber(Integer studentNumber) {
+    public void setStudentNumber(final Integer studentNumber) {
         this.studentNumber = studentNumber;
     }
 
@@ -726,24 +725,16 @@ public class PersonBean implements Serializable {
         return nickname;
     }
 
-    public void setNickname(String nickname) {
+    public void setNickname(final String nickname) {
         this.nickname = nickname;
     }
 
     public Person save() {
         return save(getPerson());
     }
-    
-    public String getIdentificationDocumentSeriesNumber() {
-        return identificationDocumentSeriesNumber;
-    }
-    
-    public void setIdentificationDocumentSeriesNumber(String identificationDocumentSeriesNumber) {
-        this.identificationDocumentSeriesNumber = identificationDocumentSeriesNumber;
-    }
 
     @Atomic(mode = TxMode.WRITE)
-    public Person save(Person person) {
+    public Person save(final Person person) {
         person.getProfile().changeName(this.getGivenNames(), this.getFamilyNames(), null);
 
         person.setGender(this.getGender());

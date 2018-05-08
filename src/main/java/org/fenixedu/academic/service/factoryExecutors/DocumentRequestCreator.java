@@ -34,8 +34,8 @@ import org.fenixedu.academic.domain.treasury.ITreasuryBridgeAPI;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
 import org.fenixedu.academic.service.services.commons.FactoryExecutor;
 import org.fenixedu.academic.service.services.serviceRequests.documentRequests.CreatePastDiplomaRequest;
-import org.fenixedu.bennu.signals.DomainObjectEvent;
-import org.fenixedu.bennu.signals.Signal;
+import org.fenixedu.bennu.core.signals.DomainObjectEvent;
+import org.fenixedu.bennu.core.signals.Signal;
 
 import pt.ist.fenixframework.Atomic;
 

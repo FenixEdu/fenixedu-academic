@@ -20,8 +20,8 @@ package org.fenixedu.academic.domain.enrolmentPeriods;
 
 import org.fenixedu.academic.domain.EnrolmentPeriod;
 import org.fenixedu.academic.domain.EnrolmentPeriodInClasses;
-import org.fenixedu.academic.domain.EnrolmentPeriodInClassesMobility;
 import org.fenixedu.academic.domain.EnrolmentPeriodInClassesCandidate;
+import org.fenixedu.academic.domain.EnrolmentPeriodInClassesMobility;
 import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCourses;
 import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCoursesCandidate;
 import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCoursesFlunkedSeason;
@@ -98,7 +98,7 @@ public enum EnrolmentPeriodType {
         protected Class<? extends EnrolmentPeriod> getClassFor() {
             return EnrolmentPeriodInClassesMobility.class;
         }
-    };
+    },
 
     ENROLMENT_PERIOD_IN_CURRICULAR_COURSES_CANDIDATE {
 
@@ -118,7 +118,7 @@ public enum EnrolmentPeriodType {
 
     protected abstract Class<? extends EnrolmentPeriod> getClassFor();
 
-    public boolean is(EnrolmentPeriod enrolmentPeriod) {
+    public boolean is(final EnrolmentPeriod enrolmentPeriod) {
         return this.getClassFor().equals(enrolmentPeriod.getClass());
     }
 
@@ -126,7 +126,7 @@ public enum EnrolmentPeriodType {
         return false;
     }
 
-    public static EnrolmentPeriodType readTypeByClass(Class<? extends EnrolmentPeriod> clazz) {
+    public static EnrolmentPeriodType readTypeByClass(final Class<? extends EnrolmentPeriod> clazz) {
         EnrolmentPeriodType[] values = EnrolmentPeriodType.values();
 
         for (EnrolmentPeriodType enrolmentPeriodType : values) {

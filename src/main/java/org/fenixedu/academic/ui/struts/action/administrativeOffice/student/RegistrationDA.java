@@ -44,6 +44,7 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.EctsGraduationGradeConversionTable;
 import org.fenixedu.academic.domain.degreeStructure.EctsTableIndex;
+import org.fenixedu.academic.domain.degreeStructure.NoEctsComparabilityTableFound;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
@@ -420,13 +421,17 @@ public class RegistrationDA extends StudentRegistrationDA {
                 academicInterval = conclusionBean.getConclusionYear().getAcademicInterval();
             }
 
-            final EctsGraduationGradeConversionTable ectsGraduationGradeConversionTable =
-                    EctsTableIndex.getGraduationGradeConversionTable(registrationCurriculumBean.getRegistration().getDegree(),
-                            cycleType, academicInterval, processingDate);
-            request.setAttribute("ectsGradeConversionTable",
-                    ectsGraduationGradeConversionTable.getEctsTable().toString().split(""));
-            request.setAttribute("ectsGradePercentagesTable",
-                    ectsGraduationGradeConversionTable.getPercentages().toString().split(":"));
+            try {
+                EctsGraduationGradeConversionTable ectsGraduationGradeConversionTable =
+                        EctsTableIndex.getGraduationGradeConversionTable(registrationCurriculumBean.getRegistration().getDegree(),
+                                cycleType, academicInterval, processingDate);
+                request.setAttribute("ectsGradeConversionTable",
+                        ectsGraduationGradeConversionTable.getEctsTable().toString().split(""));
+                request.setAttribute("ectsGradePercentagesTable",
+                        ectsGraduationGradeConversionTable.getPercentages().toString().split(":"));
+            } catch (NoEctsComparabilityTableFound noEctsException) {
+                // qubExtension
+            }
         }
     }
 

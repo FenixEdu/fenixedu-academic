@@ -30,8 +30,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.stream.Stream;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -61,14 +61,12 @@ import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessState;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
-import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.dto.student.StudentStatuteBean;
 import org.fenixedu.academic.predicate.StudentPredicates;
 import org.fenixedu.academic.util.InvocationResult;
 import org.fenixedu.academic.util.StudentPersonalDataAuthorizationChoice;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.domain.UserLoginPeriod;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -80,7 +78,7 @@ public class Student extends Student_Base {
     public final static Comparator<Student> NAME_COMPARATOR = new Comparator<Student>() {
 
         @Override
-        public int compare(Student o1, Student o2) {
+        public int compare(final Student o1, final Student o2) {
             return o1.getPerson().getName().compareTo(o2.getPerson().getName());
         }
 
@@ -89,13 +87,13 @@ public class Student extends Student_Base {
     public final static Comparator<Student> NUMBER_COMPARATOR = new Comparator<Student>() {
 
         @Override
-        public int compare(Student o1, Student o2) {
+        public int compare(final Student o1, final Student o2) {
             return o1.getNumber().compareTo(o2.getNumber());
         }
 
     };
 
-    public Student(Person person, Integer number) {
+    public Student(final Person person, Integer number) {
         super();
         setPerson(person);
         if (number == null || readStudentByNumber(number) != null) {
@@ -105,7 +103,7 @@ public class Student extends Student_Base {
         setRootDomainObject(Bennu.getInstance());
     }
 
-    public static Student createStudentWithCustomNumber(Person person, Integer number) {
+    public static Student createStudentWithCustomNumber(final Person person, final Integer number) {
         if (number == null) {
             return new Student(person, null);
         }
@@ -124,12 +122,11 @@ public class Student extends Student_Base {
         return student;
     }
 
-    public Student(Person person) {
+    public Student(final Person person) {
         this(person, null);
     }
 
     public static Student readStudentByNumber(final Integer number) {
-        for (final StudentNumber sn : Bennu.getInstance().getStudentNumbersSet()) {
         return Bennu.getInstance().getStudentNumbersSet().stream().filter(sn -> sn.getNumber().equals(number))
                 .map(StudentNumber::getStudent).findAny().orElse(null);
     }
@@ -138,8 +135,8 @@ public class Student extends Student_Base {
         return getPerson().getName();
     }
 
-    public Collection<Registration> getRegistrationsMatchingDegreeType(java.util.function.Predicate<DegreeType> predicate) {
-        List<Registration> result = new ArrayList<Registration>();
+    public Collection<Registration> getRegistrationsMatchingDegreeType(final java.util.function.Predicate<DegreeType> predicate) {
+        List<Registration> result = new ArrayList<>();
         for (Registration registration : getRegistrationsSet()) {
             if (predicate.test(registration.getDegreeType())) {
                 result.add(registration);
@@ -161,13 +158,12 @@ public class Student extends Student_Base {
         return false;
     }
 
-    public Registration readRegistrationByDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
-        return getRegistrationStream()
-            .filter(r -> r.getStudentCurricularPlan(degreeCurricularPlan) != null)
-            .findAny().orElse(null);
+    public Registration readRegistrationByDegreeCurricularPlan(final DegreeCurricularPlan degreeCurricularPlan) {
+        return getRegistrationStream().filter(r -> r.getStudentCurricularPlan(degreeCurricularPlan) != null).findAny()
+                .orElse(null);
     }
 
-    public Registration readRegistrationByDegree(Degree degree) {
+    public Registration readRegistrationByDegree(final Degree degree) {
         for (final Registration registration : this.getRegistrationsSet()) {
             if (registration.getDegree() == degree) {
                 return registration;
@@ -176,9 +172,9 @@ public class Student extends Student_Base {
         return null;
     }
 
-    public Collection<Registration> getRegistrationsByDegreeTypeAndExecutionPeriod(DegreeType degreeType,
-            ExecutionSemester executionSemester) {
-        List<Registration> result = new ArrayList<Registration>();
+    public Collection<Registration> getRegistrationsByDegreeTypeAndExecutionPeriod(final DegreeType degreeType,
+            final ExecutionSemester executionSemester) {
+        List<Registration> result = new ArrayList<>();
         for (Registration registration : getRegistrationsSet()) {
             if (registration.getDegreeType().equals(degreeType)
                     && registration.hasStudentCurricularPlanInExecutionPeriod(executionSemester)) {
@@ -188,9 +184,9 @@ public class Student extends Student_Base {
         return result;
     }
 
-    public Collection<Registration> getRegistrationsByDegreeTypes(DegreeType... degreeTypes) {
+    public Collection<Registration> getRegistrationsByDegreeTypes(final DegreeType... degreeTypes) {
         List<DegreeType> degreeTypesList = Arrays.asList(degreeTypes);
-        List<Registration> result = new ArrayList<Registration>();
+        List<Registration> result = new ArrayList<>();
         for (Registration registration : getRegistrationsSet()) {
             if (degreeTypesList.contains(registration.getDegreeType())) {
                 result.add(registration);
@@ -208,7 +204,7 @@ public class Student extends Student_Base {
      */
     @Deprecated
     public List<Registration> getActiveRegistrations() {
-        final List<Registration> result = new ArrayList<Registration>();
+        final List<Registration> result = new ArrayList<>();
         for (final Registration registration : getRegistrationsSet()) {
             if (registration.isActive()) {
                 result.add(registration);
@@ -218,7 +214,7 @@ public class Student extends Student_Base {
     }
 
     public List<Registration> getConcludedRegistrations() {
-        final List<Registration> result = new ArrayList<Registration>();
+        final List<Registration> result = new ArrayList<>();
         for (final Registration registration : getRegistrationsSet()) {
             if (registration.isRegistrationConclusionProcessed()) {
                 result.add(registration);
@@ -228,7 +224,7 @@ public class Student extends Student_Base {
     }
 
     public List<Registration> getActiveRegistrationsIn(final ExecutionSemester executionSemester) {
-        final List<Registration> result = new ArrayList<Registration>();
+        final List<Registration> result = new ArrayList<>();
         for (final Registration registration : getRegistrationsSet()) {
             if (registration.hasActiveLastState(executionSemester)) {
                 result.add(registration);
@@ -276,24 +272,23 @@ public class Student extends Student_Base {
      * @deprecated method is never used... delete it
      */
     @Deprecated
-    public boolean hasSpecialSeasonEnrolments(ExecutionYear executionYear) {
+    public boolean hasSpecialSeasonEnrolments(final ExecutionYear executionYear) {
         for (Registration registration : getRegistrationsSet()) {
-            if (registration.getStudentCurricularPlan(executionSemester) == null) {
+            if (registration.getStudentCurricularPlan(executionYear) == null) {
                 continue;
             }
 
-            if ((executionYear.isAfter(registration.getStartExecutionYear()))
-                    && (registration.getStudentCurricularPlan(executionYear).isEnroledInSpecialSeason(executionYear))) {
+            if (executionYear.isAfter(registration.getStartExecutionYear())
+                    && registration.getStudentCurricularPlan(executionYear).isEnroledInSpecialSeason(executionYear)) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean hasSpecialSeasonEnrolments(ExecutionSemester executionSemester) {
-        return getRegistrationStream()
-                .anyMatch(r -> (executionSemester.getExecutionYear().isAfter(r.getStartExecutionYear()))
-                        && (r.getStudentCurricularPlan(executionSemester).isEnroledInSpecialSeason(executionSemester)));
+    public boolean hasSpecialSeasonEnrolments(final ExecutionSemester executionSemester) {
+        return getRegistrationStream().anyMatch(r -> executionSemester.getExecutionYear().isAfter(r.getStartExecutionYear())
+                && r.getStudentCurricularPlan(executionSemester).isEnroledInSpecialSeason(executionSemester));
     }
 
     public static Integer generateStudentNumber() {
@@ -314,12 +309,12 @@ public class Student extends Student_Base {
         return getActualExecutionYearStudentData().getResidenceCandidacy();
     }
 
-    public void setResidenceCandidacyForCurrentExecutionYear(String observations) {
+    public void setResidenceCandidacyForCurrentExecutionYear(final String observations) {
         createCurrentYearStudentData();
         getActualExecutionYearStudentData().setResidenceCandidacy(new ResidenceCandidacies(observations));
     }
 
-    public void setResidenceCandidacy(ResidenceCandidacies residenceCandidacy) {
+    public void setResidenceCandidacy(final ResidenceCandidacies residenceCandidacy) {
         ExecutionYear executionYear =
                 ExecutionYear.getExecutionYearByDate(residenceCandidacy.getCreationDateDateTime().toYearMonthDay());
         StudentDataByExecutionYear studentData = getStudentDataByExecutionYear(executionYear);
@@ -346,11 +341,12 @@ public class Student extends Student_Base {
                 .getAuthorizationChoice();
     }
 
-    public void setPersonalDataAuthorization(StudentPersonalDataAuthorizationChoice authorization) {
+    public void setPersonalDataAuthorization(final StudentPersonalDataAuthorizationChoice authorization) {
         new StudentDataShareAuthorization(this, authorization);
     }
 
-    public void setStudentPersonalDataStudentsAssociationAuthorization(StudentPersonalDataAuthorizationChoice authorization) {
+    public void setStudentPersonalDataStudentsAssociationAuthorization(
+            final StudentPersonalDataAuthorizationChoice authorization) {
         new StudentDataShareStudentsAssociationAuthorization(this, authorization);
     }
 
@@ -380,7 +376,7 @@ public class Student extends Student_Base {
         return getPersonalDataAuthorizationAt(new DateTime());
     }
 
-    public StudentDataShareAuthorization getPersonalDataAuthorizationAt(DateTime when) {
+    public StudentDataShareAuthorization getPersonalDataAuthorizationAt(final DateTime when) {
         StudentDataShareAuthorization target = null;
         for (StudentDataShareAuthorization authorization : getStudentDataShareAuthorizationSet()) {
             if (authorization.isStudentDataShareAuthorization() && authorization.getSince().isBefore(when)) {
@@ -406,7 +402,7 @@ public class Student extends Student_Base {
         }
     }
 
-    private StudentDataByExecutionYear createStudentDataForExecutionYear(ExecutionYear executionYear) {
+    private StudentDataByExecutionYear createStudentDataForExecutionYear(final ExecutionYear executionYear) {
         if (getStudentDataByExecutionYear(executionYear) == null) {
             return new StudentDataByExecutionYear(this, executionYear);
         }
@@ -441,7 +437,7 @@ public class Student extends Student_Base {
     }
 
     public List<Registration> getRegistrationsFor(final AdministrativeOffice administrativeOffice) {
-        final List<Registration> result = new ArrayList<Registration>();
+        final List<Registration> result = new ArrayList<>();
         for (final Registration registration : getRegistrationsSet()) {
             if (registration.isForOffice(administrativeOffice)) {
                 result.add(registration);
@@ -450,7 +446,7 @@ public class Student extends Student_Base {
         return result;
     }
 
-    public boolean hasActiveRegistrationForOffice(Unit office) {
+    public boolean hasActiveRegistrationForOffice(final Unit office) {
         Set<Registration> registrations = getRegistrationsSet();
         for (Registration registration : registrations) {
             if (registration.isActiveForOffice(office)) {
@@ -470,7 +466,7 @@ public class Student extends Student_Base {
         return false;
     }
 
-    public boolean attends(ExecutionCourse executionCourse) {
+    public boolean attends(final ExecutionCourse executionCourse) {
         for (final Registration registration : getRegistrationsSet()) {
             if (registration.attends(executionCourse)) {
                 return true;
@@ -506,7 +502,7 @@ public class Student extends Student_Base {
     }
 
     public Set<ExecutionSemester> getEnroledExecutionPeriods() {
-        Set<ExecutionSemester> result = new TreeSet<ExecutionSemester>(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
+        Set<ExecutionSemester> result = new TreeSet<>(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
         for (Registration registration : getRegistrationsSet()) {
             result.addAll(registration.getEnrolmentsExecutionPeriods());
         }
@@ -518,7 +514,7 @@ public class Student extends Student_Base {
     }
 
     public Collection<StudentStatuteBean> getStatutes(final ExecutionSemester executionSemester) {
-        final List<StudentStatuteBean> result = new ArrayList<StudentStatuteBean>();
+        final List<StudentStatuteBean> result = new ArrayList<>();
         for (final StudentStatute statute : getStudentStatutesSet()) {
             if (statute.isValidInExecutionPeriod(executionSemester)) {
                 result.add(new StudentStatuteBean(statute, executionSemester));
@@ -538,7 +534,7 @@ public class Student extends Student_Base {
     }
 
     public Collection<StudentStatuteBean> getStatutesValidOnAnyExecutionSemesterFor(final ExecutionYear executionYear) {
-        final Collection<StudentStatuteBean> result = new ArrayList<StudentStatuteBean>();
+        final Collection<StudentStatuteBean> result = new ArrayList<>();
         for (final StudentStatute statute : getStudentStatutesSet()) {
             if (statute.isValidOnAnyExecutionPeriodFor(executionYear)) {
                 result.add(new StudentStatuteBean(statute));
@@ -553,7 +549,7 @@ public class Student extends Student_Base {
     }
 
     public Collection<StudentStatuteBean> getAllStatutes() {
-        List<StudentStatuteBean> result = new ArrayList<StudentStatuteBean>();
+        List<StudentStatuteBean> result = new ArrayList<>();
         for (StudentStatute statute : getStudentStatutesSet()) {
             result.add(new StudentStatuteBean(statute));
         }
@@ -566,14 +562,14 @@ public class Student extends Student_Base {
     }
 
     public Collection<StudentStatuteBean> getAllStatutesSplittedByExecutionPeriod() {
-        List<StudentStatuteBean> result = new ArrayList<StudentStatuteBean>();
+        List<StudentStatuteBean> result = new ArrayList<>();
         for (ExecutionSemester executionSemester : getEnroledExecutionPeriods()) {
             result.addAll(getStatutes(executionSemester));
         }
         return result;
     }
 
-    public boolean isSenior(ExecutionYear executionYear) {
+    public boolean isSenior(final ExecutionYear executionYear) {
         for (StudentStatute statute : getStudentStatutesSet()) {
             if (statute.isValidOn(executionYear) && statute.getType().isSeniorStatute()) {
                 return true;
@@ -593,7 +589,7 @@ public class Student extends Student_Base {
     }
 
     public Set<Enrolment> getApprovedEnrolments() {
-        final Set<Enrolment> aprovedEnrolments = new HashSet<Enrolment>();
+        final Set<Enrolment> aprovedEnrolments = new HashSet<>();
         for (final Registration registration : getRegistrationsSet()) {
             aprovedEnrolments.addAll(registration.getApprovedEnrolments());
         }
@@ -601,7 +597,7 @@ public class Student extends Student_Base {
     }
 
     public List<Enrolment> getApprovedEnrolments(final AdministrativeOffice administrativeOffice) {
-        final List<Enrolment> aprovedEnrolments = new ArrayList<Enrolment>();
+        final List<Enrolment> aprovedEnrolments = new ArrayList<>();
         for (final Registration registration : getRegistrationsFor(administrativeOffice)) {
             aprovedEnrolments.addAll(registration.getApprovedEnrolments());
         }
@@ -609,7 +605,7 @@ public class Student extends Student_Base {
     }
 
     public Set<Enrolment> getDismissalApprovedEnrolments() {
-        Set<Enrolment> aprovedEnrolments = new HashSet<Enrolment>();
+        Set<Enrolment> aprovedEnrolments = new HashSet<>();
         for (Registration registration : getRegistrationsSet()) {
             for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
                 aprovedEnrolments.addAll(studentCurricularPlan.getDismissalApprovedEnrolments());
@@ -637,7 +633,7 @@ public class Student extends Student_Base {
     }
 
     public Collection<StudentCurricularPlan> getAllStudentCurricularPlans() {
-        final Set<StudentCurricularPlan> result = new HashSet<StudentCurricularPlan>();
+        final Set<StudentCurricularPlan> result = new HashSet<>();
         for (final Registration registration : getRegistrationsSet()) {
             result.addAll(registration.getStudentCurricularPlansSet());
         }
@@ -654,8 +650,8 @@ public class Student extends Student_Base {
         return null;
     }
 
-    public SortedSet<Attends> getAttendsForExecutionPeriod(ExecutionSemester executionSemester) {
-        SortedSet<Attends> attends = new TreeSet<Attends>(Attends.ATTENDS_COMPARATOR_BY_EXECUTION_COURSE_NAME);
+    public SortedSet<Attends> getAttendsForExecutionPeriod(final ExecutionSemester executionSemester) {
+        SortedSet<Attends> attends = new TreeSet<>(Attends.ATTENDS_COMPARATOR_BY_EXECUTION_COURSE_NAME);
         for (Registration registration : getRegistrationsSet()) {
             attends.addAll(registration.getAttendsForExecutionPeriod(executionSemester));
         }
@@ -663,7 +659,7 @@ public class Student extends Student_Base {
     }
 
     public List<Registration> getRegistrationsToEnrolByStudent() {
-        final List<Registration> result = new ArrayList<Registration>();
+        final List<Registration> result = new ArrayList<>();
         for (final Registration registration : getRegistrationsSet()) {
             if (registration.isEnrolmentByStudentAllowed()) {
                 result.add(registration);
@@ -675,7 +671,7 @@ public class Student extends Student_Base {
     }
 
     public List<Registration> getRegistrationsToEnrolInShiftByStudent() {
-        final List<Registration> result = new ArrayList<Registration>();
+        final List<Registration> result = new ArrayList<>();
         for (final Registration registration : getRegistrationsSet()) {
             if (registration.isEnrolmentByStudentInShiftsAllowed()) {
                 result.add(registration);
@@ -685,7 +681,7 @@ public class Student extends Student_Base {
         return result;
     }
 
-    public boolean isCurrentlyEnroled(DegreeCurricularPlan degreeCurricularPlan) {
+    public boolean isCurrentlyEnroled(final DegreeCurricularPlan degreeCurricularPlan) {
         for (Registration registration : getRegistrationsSet()) {
             final RegistrationState registrationState = registration.getActiveState();
             if (!registration.isActive() && registrationState.getStateType() != RegistrationStateType.TRANSITED) {
@@ -708,7 +704,7 @@ public class Student extends Student_Base {
     }
 
     public Set<Enrolment> getDissertationEnrolments() {
-        final Set<Enrolment> result = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_REVERSE_EXECUTION_PERIOD_AND_NAME_AND_ID);
+        final Set<Enrolment> result = new TreeSet<>(Enrolment.COMPARATOR_BY_REVERSE_EXECUTION_PERIOD_AND_NAME_AND_ID);
         for (final Registration registration : getRegistrationsSet()) {
             for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
                 result.addAll(studentCurricularPlan.getDissertationEnrolments());
@@ -721,28 +717,28 @@ public class Student extends Student_Base {
         return getDissertationEnrolment(null);
     }
 
-    final public TreeSet<Enrolment> getDissertationEnrolments(DegreeCurricularPlan degreeCurricularPlan) {
-        final TreeSet<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
+    final public TreeSet<Enrolment> getDissertationEnrolments(final DegreeCurricularPlan degreeCurricularPlan) {
+        final TreeSet<Enrolment> enrolments = new TreeSet<>(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
         for (final Registration registration : getRegistrationsSet()) {
             enrolments.addAll(registration.getDissertationEnrolments(degreeCurricularPlan));
         }
         return enrolments;
     }
 
-    final public Enrolment getDissertationEnrolment(DegreeCurricularPlan degreeCurricularPlan,
+    final public Enrolment getDissertationEnrolment(final DegreeCurricularPlan degreeCurricularPlan,
             final ExecutionYear executionYear) {
         TreeSet<Enrolment> enrolments = getDissertationEnrolments(degreeCurricularPlan);
         CollectionUtils.filter(enrolments, new Predicate() {
 
             @Override
-            public boolean evaluate(Object enrolment) {
+            public boolean evaluate(final Object enrolment) {
                 return ((Enrolment) enrolment).getExecutionYear().equals(executionYear);
             }
         });
         return enrolments.isEmpty() ? null : enrolments.last();
     }
 
-    final public Enrolment getDissertationEnrolment(DegreeCurricularPlan degreeCurricularPlan) {
+    final public Enrolment getDissertationEnrolment(final DegreeCurricularPlan degreeCurricularPlan) {
         TreeSet<Enrolment> enrolments = getDissertationEnrolments(degreeCurricularPlan);
         return enrolments.isEmpty() ? null : enrolments.last();
     }
@@ -752,8 +748,7 @@ public class Student extends Student_Base {
     }
 
     public Stream<Registration> getRegistrationStream() {
-        return super.getRegistrationsSet().stream()
-                .filter(r -> !r.isTransition());
+        return super.getRegistrationsSet().stream().filter(r -> !r.isTransition());
     }
 
     /**
@@ -763,7 +758,7 @@ public class Student extends Student_Base {
      */
     @Override
     public Set<Registration> getRegistrationsSet() {
-        final Set<Registration> result = new HashSet<Registration>();
+        final Set<Registration> result = new HashSet<>();
         for (final Registration registration : super.getRegistrationsSet()) {
             if (!registration.isTransition()) {
                 result.add(registration);
@@ -783,7 +778,7 @@ public class Student extends Student_Base {
     }
 
     public List<Registration> getTransitionRegistrations() {
-        final List<Registration> result = new ArrayList<Registration>();
+        final List<Registration> result = new ArrayList<>();
         for (final Registration registration : super.getRegistrationsSet()) {
             if (registration.isTransition()) {
                 result.add(registration);
@@ -794,7 +789,7 @@ public class Student extends Student_Base {
 
     public List<Registration> getTransitionRegistrationsForDegreeCurricularPlansManagedByCoordinator(final Person coordinator) {
         check(this, StudentPredicates.checkIfLoggedPersonIsCoordinator);
-        final List<Registration> result = new ArrayList<Registration>();
+        final List<Registration> result = new ArrayList<>();
         for (final Registration registration : super.getRegistrationsSet()) {
             if (registration.isTransition() && coordinator.isCoordinatorFor(registration.getLastDegreeCurricularPlan(),
                     ExecutionYear.readCurrentExecutionYear())) {
@@ -805,7 +800,7 @@ public class Student extends Student_Base {
     }
 
     public List<Registration> getTransitedRegistrations() {
-        List<Registration> result = new ArrayList<Registration>();
+        List<Registration> result = new ArrayList<>();
         for (Registration registration : super.getRegistrationsSet()) {
             if (registration.isTransited()) {
                 result.add(registration);
@@ -830,7 +825,7 @@ public class Student extends Student_Base {
 
     /**
      * Check if there is any debt until given execution year (exclusive)
-     * 
+     *
      * @param executionYear
      */
     public boolean isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt(final ExecutionYear executionYear) {
@@ -839,7 +834,7 @@ public class Student extends Student_Base {
 
     /**
      * Check if there is any debt until given execution year (exclusive)
-     * 
+     *
      * @param executionYear
      */
     private boolean isAnyAdministrativeOfficeFeeAndInsuranceInDebtUntil(final ExecutionYear executionYear) {
@@ -855,7 +850,7 @@ public class Student extends Student_Base {
     }
 
     public List<Registration> getRegistrationsFor(final DegreeCurricularPlan degreeCurricularPlan) {
-        final List<Registration> result = new ArrayList<Registration>();
+        final List<Registration> result = new ArrayList<>();
         for (final Registration registration : super.getRegistrationsSet()) {
             for (final DegreeCurricularPlan degreeCurricularPlanToTest : registration.getDegreeCurricularPlans()) {
                 if (degreeCurricularPlanToTest.equals(degreeCurricularPlan)) {
@@ -877,7 +872,7 @@ public class Student extends Student_Base {
     }
 
     public List<Registration> getRegistrationsFor(final Degree degree) {
-        final List<Registration> result = new ArrayList<Registration>();
+        final List<Registration> result = new ArrayList<>();
         for (final Registration registration : super.getRegistrationsSet()) {
             if (registration.getDegree() == degree) {
                 result.add(registration);
@@ -891,8 +886,8 @@ public class Student extends Student_Base {
     }
 
     public Registration getActiveRegistrationFor(final DegreeCurricularPlan degreeCurricularPlan) {
-        return getActiveRegistrationStream().filter(r -> r.getLastDegreeCurricularPlan() == degreeCurricularPlan)
-            .findAny().orElse(null);
+        return getActiveRegistrationStream().filter(r -> r.getLastDegreeCurricularPlan() == degreeCurricularPlan).findAny()
+                .orElse(null);
     }
 
     public boolean hasActiveRegistrationFor(final DegreeCurricularPlan degreeCurricularPlan) {
@@ -920,7 +915,7 @@ public class Student extends Student_Base {
         return false;
     }
 
-    public Registration getTransitionRegistrationFor(DegreeCurricularPlan degreeCurricularPlan) {
+    public Registration getTransitionRegistrationFor(final DegreeCurricularPlan degreeCurricularPlan) {
         for (final Registration registration : getTransitionRegistrations()) {
             if (registration.getLastDegreeCurricularPlan() == degreeCurricularPlan) {
                 return registration;
@@ -941,15 +936,15 @@ public class Student extends Student_Base {
     }
 
     public SortedSet<ExternalEnrolment> getSortedExternalEnrolments() {
-        final SortedSet<ExternalEnrolment> result = new TreeSet<ExternalEnrolment>(ExternalEnrolment.COMPARATOR_BY_NAME);
+        final SortedSet<ExternalEnrolment> result = new TreeSet<>(ExternalEnrolment.COMPARATOR_BY_NAME);
         for (final Registration registration : getRegistrationsSet()) {
             result.addAll(registration.getExternalEnrolmentsSet());
         }
         return result;
     }
 
-    public Collection<? extends Forum> getForuns(ExecutionSemester executionSemester) {
-        final Collection<Forum> res = new HashSet<Forum>();
+    public Collection<? extends Forum> getForuns(final ExecutionSemester executionSemester) {
+        final Collection<Forum> res = new HashSet<>();
         for (Registration registration : getRegistrationsSet()) {
             for (Attends attends : registration.getAssociatedAttendsSet()) {
                 if (attends.getExecutionPeriod() == executionSemester) {
@@ -997,14 +992,14 @@ public class Student extends Student_Base {
     }
 
     public Collection<CurriculumLineLog> getCurriculumLineLogs(final ExecutionSemester executionSemester) {
-        final Collection<CurriculumLineLog> res = new HashSet<CurriculumLineLog>();
+        final Collection<CurriculumLineLog> res = new HashSet<>();
         for (final Registration registration : getRegistrationsSet()) {
             res.addAll(registration.getCurriculumLineLogs(executionSemester));
         }
         return res;
     }
 
-    public boolean hasActiveStatuteInPeriod(StatuteType statuteType, ExecutionSemester executionSemester) {
+    public boolean hasActiveStatuteInPeriod(final StatuteType statuteType, final ExecutionSemester executionSemester) {
         for (StudentStatute studentStatute : getStudentStatutesSet()) {
             if (studentStatute.getType() == statuteType && studentStatute.isValidInExecutionPeriod(executionSemester)) {
                 return true;
@@ -1013,7 +1008,7 @@ public class Student extends Student_Base {
         return false;
     }
 
-    public boolean hasWorkingStudentStatuteInPeriod(ExecutionSemester executionSemester) {
+    public boolean hasWorkingStudentStatuteInPeriod(final ExecutionSemester executionSemester) {
         for (StudentStatute studentStatute : getStudentStatutesSet()) {
             if (studentStatute.getType().isWorkingStudentStatute()
                     && studentStatute.isValidInExecutionPeriod(executionSemester)) {
@@ -1057,7 +1052,7 @@ public class Student extends Student_Base {
 
     public Collection<? extends AcademicServiceRequest> getAcademicServiceRequests(
             final Class<? extends AcademicServiceRequest> clazz) {
-        final Set<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
+        final Set<AcademicServiceRequest> result = new HashSet<>();
         for (final Registration registration : getRegistrationsSet()) {
             result.addAll(registration.getAcademicServiceRequests(clazz));
         }
@@ -1065,7 +1060,7 @@ public class Student extends Student_Base {
     }
 
     public Collection<ExecutionYear> getEnrolmentsExecutionYears() {
-        Set<ExecutionYear> executionYears = new HashSet<ExecutionYear>();
+        Set<ExecutionYear> executionYears = new HashSet<>();
         for (final Registration registration : getRegistrationsSet()) {
             executionYears.addAll(registration.getEnrolmentsExecutionYears());
         }
@@ -1077,21 +1072,18 @@ public class Student extends Student_Base {
     }
 
     public Attends getAttends(final ExecutionCourse executionCourse) {
-        return getRegistrationStream()
-            .flatMap(r -> r.getAssociatedAttendsSet().stream())
-            .filter(a -> a.isFor(executionCourse))
-            .findAny().orElse(null);
+        return getRegistrationStream().flatMap(r -> r.getAssociatedAttendsSet().stream()).filter(a -> a.isFor(executionCourse))
+                .findAny().orElse(null);
     }
 
     public boolean hasAttends(final ExecutionCourse executionCourse) {
-        return getRegistrationStream(
-                ).flatMap(r -> r.getAssociatedAttendsSet().stream())
-                .anyMatch(a -> a.isFor(executionCourse));
+        return getRegistrationStream().flatMap(r -> r.getAssociatedAttendsSet().stream()).anyMatch(a -> a.isFor(executionCourse));
     }
 
     public boolean hasAnyMissingPersonalInformation() {
         final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-        if (getRegistrationStream().anyMatch(r -> r.isValidForRAIDES() && r.hasMissingPersonalInformation(currentExecutionYear))) {
+        if (getRegistrationStream()
+                .anyMatch(r -> r.isValidForRAIDES() && r.hasMissingPersonalInformation(currentExecutionYear))) {
             return true;
         }
 
@@ -1112,7 +1104,7 @@ public class Student extends Student_Base {
         return false;
     }
 
-    public boolean isValidAndActivePhdProcess(PhdIndividualProgramProcess phdProcess) {
+    public boolean isValidAndActivePhdProcess(final PhdIndividualProgramProcess phdProcess) {
         return FenixEduAcademicConfiguration.getConfiguration().getRaidesRequestInfo() && phdProcess.isProcessActive()
                 && hasValidInsuranceEvent();
     }
@@ -1123,7 +1115,7 @@ public class Student extends Student_Base {
     }
 
     public List<PersonalInformationBean> getPersonalInformationsWithMissingInformation() {
-        final List<PersonalInformationBean> result = new ArrayList<PersonalInformationBean>();
+        final List<PersonalInformationBean> result = new ArrayList<>();
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
         for (final Registration registration : getRegistrationsSet()) {
@@ -1159,7 +1151,7 @@ public class Student extends Student_Base {
     }
 
     @Atomic
-    public void acceptRegistrationsFromOtherStudent(java.util.Collection<Registration> otherRegistrations) {
+    public void acceptRegistrationsFromOtherStudent(final java.util.Collection<Registration> otherRegistrations) {
         Collection<Registration> registrations = super.getRegistrationsSet();
         registrations.addAll(otherRegistrations);
     }
@@ -1171,12 +1163,9 @@ public class Student extends Student_Base {
     }
 
     public boolean shouldHaveStudentRole() {
-        final boolean activeRegistration = getRegistrationStream()
-                .map(r -> r.getLastStateType())
-                .filter(st -> st != null)
-                .anyMatch(st -> (st.isActive() && st != RegistrationStateType.SCHOOLPARTCONCLUDED)
-                        || st == RegistrationStateType.FLUNKED
-                        || st == RegistrationStateType.INTERRUPTED
+        final boolean activeRegistration = getRegistrationStream().map(r -> r.getLastStateType()).filter(st -> st != null)
+                .anyMatch(st -> st.isActive() && st != RegistrationStateType.SCHOOLPARTCONCLUDED
+                        || st == RegistrationStateType.FLUNKED || st == RegistrationStateType.INTERRUPTED
                         || st == RegistrationStateType.MOBILITY);
         if (activeRegistration) {
             return true;
@@ -1184,7 +1173,7 @@ public class Student extends Student_Base {
 
         for (final PhdIndividualProgramProcess process : getPerson().getPhdIndividualProgramProcessesSet()) {
             final PhdIndividualProgramProcessState state = process.getActiveState();
-            if ((state.isActive() && state != PhdIndividualProgramProcessState.CONCLUDED)
+            if (state.isActive() && state != PhdIndividualProgramProcessState.CONCLUDED
                     || state == PhdIndividualProgramProcessState.SUSPENDED || state == PhdIndividualProgramProcessState.FLUNKED) {
                 return true;
             }
@@ -1194,11 +1183,10 @@ public class Student extends Student_Base {
 
     public PersonalIngressionData getLatestPersonalIngressionData() {
         final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-        final Comparator<PersonalIngressionData> comparator = Collections.reverseOrder(PersonalIngressionData.COMPARATOR_BY_EXECUTION_YEAR);
-        return getPersonalIngressionsDataSet().stream()
-            .filter(pid -> !pid.getExecutionYear().isAfter(currentExecutionYear))
-            .sorted(comparator)
-            .findFirst().orElse(null);
+        final Comparator<PersonalIngressionData> comparator =
+                Collections.reverseOrder(PersonalIngressionData.COMPARATOR_BY_EXECUTION_YEAR);
+        return getPersonalIngressionsDataSet().stream().filter(pid -> !pid.getExecutionYear().isAfter(currentExecutionYear))
+                .sorted(comparator).findFirst().orElse(null);
     }
 
     public PersonalIngressionData getPersonalIngressionDataByExecutionYear(final ExecutionYear executionYear) {

@@ -9,8 +9,9 @@
         <relativePath />
     </parent>
 
-    <artifactId>fenixedu-academic</artifactId>
-    <version>8.5.0-SNAPSHOT</version>
+	<groupId>com.qubit.solution.fenixedu</groupId>
+    <artifactId>fenixedu-academic-core</artifactId>
+    <version>8.3.0</version>
     <packaging>jar</packaging>
 
     <name>FenixEdu Academic</name>
@@ -39,7 +40,7 @@
         <version.net.sourceforge.htmlcleaner.htmlcleaner>2.18</version.net.sourceforge.htmlcleaner.htmlcleaner>
         <version.org.apache.poi.poi>3.11</version.org.apache.poi.poi>
         <version.org.fenixedu.bennu-renderers>5.1.1</version.org.fenixedu.bennu-renderers>
-        <version.org.fenixedu.bennu>5.0.2</version.org.fenixedu.bennu>
+        <version.org.fenixedu.bennu>6.0.0-FORK</version.org.fenixedu.bennu>
         <version.org.fenixedu.fenixedu-commons>1.1.2</version.org.fenixedu.fenixedu-commons>
         <version.org.fenixedu.fenixedu-spaces>2.0.0</version.org.fenixedu.fenixedu-spaces>
         <version.org.imgscalr.imgscalr-lib>4.2</version.org.imgscalr.imgscalr-lib>
@@ -104,6 +105,13 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <additionalparam>-Xdoclint:none</additionalparam>
+                </configuration>
+            </plugin>            
         </plugins>
     </build>
 
@@ -112,11 +120,6 @@
             <groupId>org.fenixedu</groupId>
             <artifactId>fenixedu-spaces</artifactId>
             <version>${version.org.fenixedu.fenixedu-spaces}</version>
-        </dependency>
-        <dependency>
-            <groupId>taglibs</groupId>
-            <artifactId>string</artifactId>
-            <version>1.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.fenixedu</groupId>
@@ -141,6 +144,11 @@
         <dependency>
             <groupId>org.fenixedu</groupId>
             <artifactId>bennu-spring</artifactId>
+            <version>${version.org.fenixedu.bennu}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.fenixedu</groupId>
+            <artifactId>bennu-cas-client</artifactId>
             <version>${version.org.fenixedu.bennu}</version>
         </dependency>
         <dependency>
@@ -306,15 +314,34 @@
         </dependency>
     </dependencies>
 
-    <repositories>
-        <repository>
-            <id>ulisboa-repo</id>
-            <url>http://nexus.ulisboa.pt:8081/nexus/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>fenixedu-maven-repository</id>
-            <url>https://repo.fenixedu.org/fenixedu-maven-repository</url>
-        </repository>
-    </repositories>
+	<distributionManagement>
+		<repository>
+			<id>qubIT-repo</id>
+			<url>https://repository.qub-it.com/nexus/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>qubIT-repo</id>
+			<url>https://repository.qub-it.com/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<repositories>
+		<repository>
+			<id>ulisboa-repo</id>
+			<url>http://nexus.ulisboa.pt:8081/nexus/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>qubIT-repo-obfuscated</id>
+			<url>https://repository.qub-it.com/nexus/content/repositories/nexus_obfuscated</url>
+		</repository>
+		<repository>
+			<id>qubIT-repo-public</id>
+			<url>https://repository.qub-it.com/nexus/content/groups/public</url>
+		</repository>
+		<repository>
+			<id>qubIT-repo</id>
+			<url>https://repository.qub-it.com/nexus/content/groups/qubITRepo</url>
+		</repository>
+	</repositories>
 
 </project>

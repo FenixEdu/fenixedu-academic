@@ -39,39 +39,39 @@ import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
 import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.service.services.bolonhaManager.CompetenceCourseManagementAccessControl;
-import org.fenixedu.academic.util.MultiLanguageString;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 /**
  * Represents a set of attributes that defines a CompetenceCourse in a given
  * period of time.
- * 
+ *
  * <pre>
- * 
+ *
  * This attributes can be:
  * - Deparment which belongs;
  * - Name, descriptions, goals and bibliographic references;
  * - Study and work load (number hours of theoretical or pratical classes)
- * 
+ *
  * </pre>
- * 
+ *
  * In the perspective of a CompetenceCourse we can see this class as a version
  * of attributes that defines it. The start period of the version is done by an
  * association with ExecutionSemester.
- * 
+ *
  * A CompetenceCourseInformation (the version of the CompetenceCourse) belongs
  * to a CompetenceCourseGroupUnit which belongs to a DepartmentUnit.
- * 
+ *
  * @see CompetenceCourse
  * @see CompetenceCourseGroupUnit
- * 
+ *
  */
 public class CompetenceCourseInformation extends CompetenceCourseInformation_Base {
 
     static public final Comparator<CompetenceCourseInformation> COMPARATORY_BY_EXECUTION_PERIOD =
             new Comparator<CompetenceCourseInformation>() {
                 @Override
-                public int compare(CompetenceCourseInformation o1, CompetenceCourseInformation o2) {
+                public int compare(final CompetenceCourseInformation o1, final CompetenceCourseInformation o2) {
                     return o1.getExecutionPeriod().compareTo(o2.getExecutionPeriod());
                 }
             };
@@ -81,7 +81,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setRootDomainObject(Bennu.getInstance());
     }
 
-    public CompetenceCourseInformation(CompetenceCourseInformation existingInformation) {
+    public CompetenceCourseInformation(final CompetenceCourseInformation existingInformation) {
         this(existingInformation.getName(), existingInformation.getNameEn(), existingInformation.getBasic(),
                 existingInformation.getRegime(), existingInformation.getCompetenceCourseLevel(),
                 existingInformation.getExecutionPeriod(), existingInformation.getCompetenceCourseGroupUnit());
@@ -100,8 +100,9 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setProgramEn(existingInformation.getProgramEn());
     }
 
-    public CompetenceCourseInformation(String name, String nameEn, Boolean basic, RegimeType regimeType,
-            CompetenceCourseLevel competenceCourseLevel, ExecutionSemester period, CompetenceCourseGroupUnit unit) {
+    public CompetenceCourseInformation(final String name, final String nameEn, final Boolean basic, final RegimeType regimeType,
+            final CompetenceCourseLevel competenceCourseLevel, final ExecutionSemester period,
+            final CompetenceCourseGroupUnit unit) {
 
         this();
         checkParameters(name, nameEn, basic, regimeType, competenceCourseLevel, unit);
@@ -123,7 +124,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         return getCompetenceCourseGroupUnit().getDepartmentUnit();
     }
 
-    private void checkParameters(String name, String nameEn, Boolean basic, RegimeType regimeType,
+    private void checkParameters(final String name, final String nameEn, final Boolean basic, final RegimeType regimeType,
             CompetenceCourseLevel competenceCourseLevel) {
 
         if (name == null || nameEn == null || basic == null || regimeType == null) {
@@ -134,8 +135,8 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         }
     }
 
-    private void checkParameters(String name, String nameEn, Boolean basic, RegimeType regimeType,
-            CompetenceCourseLevel competenceCourseLevel, CompetenceCourseGroupUnit unit) {
+    private void checkParameters(final String name, final String nameEn, final Boolean basic, final RegimeType regimeType,
+            final CompetenceCourseLevel competenceCourseLevel, final CompetenceCourseGroupUnit unit) {
 
         checkParameters(name, nameEn, basic, regimeType, competenceCourseLevel);
         if (unit == null || !unit.isCompetenceCourseGroupUnit()) {
@@ -143,8 +144,8 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         }
     }
 
-    public void edit(String name, String nameEn, Boolean basic, CompetenceCourseLevel competenceCourseLevel,
-            CompetenceCourseGroupUnit unit) {
+    public void edit(final String name, final String nameEn, final Boolean basic,
+            final CompetenceCourseLevel competenceCourseLevel, final CompetenceCourseGroupUnit unit) {
         checkParameters(name, nameEn, basic, getRegime(), competenceCourseLevel, unit);
         setName(name);
         setNameEn(nameEn);
@@ -153,7 +154,8 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setCompetenceCourseGroupUnit(unit);
     }
 
-    public void edit(String name, String nameEn, Boolean basic, CompetenceCourseLevel competenceCourseLevel) {
+    public void edit(final String name, final String nameEn, final Boolean basic,
+            final CompetenceCourseLevel competenceCourseLevel) {
         checkParameters(name, nameEn, basic, getRegime(), competenceCourseLevel);
         setName(name);
         setNameEn(nameEn);
@@ -161,8 +163,8 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setCompetenceCourseLevel(competenceCourseLevel);
     }
 
-    public void edit(String objectives, String program, String evaluationMethod, String objectivesEn, String programEn,
-            String evaluationMethodEn) {
+    public void edit(final String objectives, final String program, final String evaluationMethod, final String objectivesEn,
+            final String programEn, final String evaluationMethodEn) {
         setObjectives(objectives);
         setProgram(program);
         setEvaluationMethod(evaluationMethod);
@@ -207,20 +209,20 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setRegime(input.equals(AcademicPeriod.SEMESTER) ? RegimeType.SEMESTRIAL : RegimeType.ANUAL);
     }
 
-    public MultiLanguageString getNameI18N() {
-        MultiLanguageString result = new MultiLanguageString();
+    public LocalizedString getNameI18N() {
+        LocalizedString result = new LocalizedString();
 
         if (!StringUtils.isEmpty(getName())) {
-            result = result.with(MultiLanguageString.pt, getName());
+            result = result.with(org.fenixedu.academic.util.LocaleUtils.PT, getName());
         }
         if (!StringUtils.isEmpty(getNameEn())) {
-            result = result.with(MultiLanguageString.en, getNameEn());
+            result = result.with(org.fenixedu.academic.util.LocaleUtils.EN, getNameEn());
         }
 
         return result;
     }
 
-    public void setNameI18N(final MultiLanguageString input) {
+    public void setNameI18N(final LocalizedString input) {
         if (input != null) {
             setName(input.getContent(Locale.getDefault()));
             setNameEn(input.getContent(Locale.ENGLISH));
@@ -230,20 +232,20 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         }
     }
 
-    public MultiLanguageString getObjectivesI18N() {
-        MultiLanguageString result = new MultiLanguageString();
+    public LocalizedString getObjectivesI18N() {
+        LocalizedString result = new LocalizedString();
 
         if (!StringUtils.isEmpty(getObjectives())) {
-            result = result.with(MultiLanguageString.pt, getObjectives());
+            result = result.with(org.fenixedu.academic.util.LocaleUtils.PT, getObjectives());
         }
         if (!StringUtils.isEmpty(getObjectivesEn())) {
-            result = result.with(MultiLanguageString.en, getObjectivesEn());
+            result = result.with(org.fenixedu.academic.util.LocaleUtils.EN, getObjectivesEn());
         }
 
         return result;
     }
 
-    public void setObjectivesI18N(final MultiLanguageString input) {
+    public void setObjectivesI18N(final LocalizedString input) {
         if (input != null) {
             setObjectives(input.getContent(Locale.getDefault()));
             setObjectivesEn(input.getContent(Locale.ENGLISH));
@@ -253,20 +255,20 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         }
     }
 
-    public MultiLanguageString getProgramI18N() {
-        MultiLanguageString result = new MultiLanguageString();
+    public LocalizedString getProgramI18N() {
+        LocalizedString result = new LocalizedString();
 
         if (!StringUtils.isEmpty(getProgram())) {
-            result = result.with(MultiLanguageString.pt, getProgram());
+            result = result.with(org.fenixedu.academic.util.LocaleUtils.PT, getProgram());
         }
         if (!StringUtils.isEmpty(getProgramEn())) {
-            result = result.with(MultiLanguageString.en, getProgramEn());
+            result = result.with(org.fenixedu.academic.util.LocaleUtils.EN, getProgramEn());
         }
 
         return result;
     }
 
-    public void setProgramI18N(final MultiLanguageString input) {
+    public void setProgramI18N(final LocalizedString input) {
         if (input != null) {
             setProgram(input.getContent(Locale.getDefault()));
             setProgramEn(input.getContent(Locale.ENGLISH));
@@ -276,20 +278,20 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         }
     }
 
-    public MultiLanguageString getEvaluationMethodI18N() {
-        MultiLanguageString result = new MultiLanguageString();
+    public LocalizedString getEvaluationMethodI18N() {
+        LocalizedString result = new LocalizedString();
 
         if (!StringUtils.isEmpty(getEvaluationMethod())) {
-            result = result.with(MultiLanguageString.pt, getEvaluationMethod());
+            result = result.with(org.fenixedu.academic.util.LocaleUtils.PT, getEvaluationMethod());
         }
         if (!StringUtils.isEmpty(getEvaluationMethodEn())) {
-            result = result.with(MultiLanguageString.en, getEvaluationMethodEn());
+            result = result.with(org.fenixedu.academic.util.LocaleUtils.EN, getEvaluationMethodEn());
         }
 
         return result;
     }
 
-    public void setEvaluationMethodI18N(final MultiLanguageString input) {
+    public void setEvaluationMethodI18N(final LocalizedString input) {
         if (input != null) {
             setEvaluationMethod(input.getContent(Locale.getDefault()));
             setEvaluationMethodEn(input.getContent(Locale.ENGLISH));
@@ -327,11 +329,11 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         super.deleteDomainObject();
     }
 
-    public BibliographicReference getBibliographicReference(Integer oid) {
+    public BibliographicReference getBibliographicReference(final Integer oid) {
         return getBibliographicReferences().getBibliographicReference(oid);
     }
 
-    public Double getTheoreticalHours(Integer order) {
+    public Double getTheoreticalHours(final Integer order) {
         double result = 0.0;
         for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
             result += competenceCourseLoad.getTheoreticalHours();
@@ -339,7 +341,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         return result;
     }
 
-    public Double getProblemsHours(Integer order) {
+    public Double getProblemsHours(final Integer order) {
         double result = 0.0;
         for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
             result += competenceCourseLoad.getProblemsHours();
@@ -347,7 +349,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         return result;
     }
 
-    public Double getLaboratorialHours(Integer order) {
+    public Double getLaboratorialHours(final Integer order) {
         double result = 0.0;
         for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
             result += competenceCourseLoad.getLaboratorialHours();
@@ -355,7 +357,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         return result;
     }
 
-    public Double getSeminaryHours(Integer order) {
+    public Double getSeminaryHours(final Integer order) {
         double result = 0.0;
         for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
             result += competenceCourseLoad.getSeminaryHours();
@@ -363,7 +365,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         return result;
     }
 
-    public Double getFieldWorkHours(Integer order) {
+    public Double getFieldWorkHours(final Integer order) {
         double result = 0.0;
         for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
             result += competenceCourseLoad.getFieldWorkHours();
@@ -371,7 +373,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         return result;
     }
 
-    public Double getTrainingPeriodHours(Integer order) {
+    public Double getTrainingPeriodHours(final Integer order) {
         double result = 0.0;
         for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
             result += competenceCourseLoad.getTrainingPeriodHours();
@@ -379,7 +381,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         return result;
     }
 
-    public Double getTutorialOrientationHours(Integer order) {
+    public Double getTutorialOrientationHours(final Integer order) {
         double result = 0.0;
         for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
             result += competenceCourseLoad.getTutorialOrientationHours();
@@ -387,7 +389,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         return result;
     }
 
-    public Double getOtherHours(Integer order) {
+    public Double getOtherHours(final Integer order) {
         double result = 0.0;
         for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
             result += competenceCourseLoad.getOtherHours();
@@ -395,7 +397,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         return result;
     }
 
-    public Double getAutonomousWorkHours(Integer order) {
+    public Double getAutonomousWorkHours(final Integer order) {
         BigDecimal result = new BigDecimal(0.0);
         for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
             result = result.add(new BigDecimal(competenceCourseLoad.getAutonomousWorkHours()));
@@ -405,7 +407,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         return result.doubleValue();
     }
 
-    public Double getContactLoad(Integer order) {
+    public Double getContactLoad(final Integer order) {
         BigDecimal result = new BigDecimal(0.0);
         for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
             result = result.add(new BigDecimal(competenceCourseLoad.getContactLoad()));
@@ -415,7 +417,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         return result.doubleValue();
     }
 
-    public Double getTotalLoad(Integer order) {
+    public Double getTotalLoad(final Integer order) {
         BigDecimal result = new BigDecimal(0.0);
         for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
             result = result.add(new BigDecimal(competenceCourseLoad.getTotalLoad()));
@@ -425,7 +427,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         return result.doubleValue();
     }
 
-    public double getEctsCredits(Integer order) {
+    public double getEctsCredits(final Integer order) {
         double result = 0.0;
         for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
             result += competenceCourseLoad.getEctsCredits();
@@ -441,7 +443,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         }
 
         if (isAnual()) {
-            final List<CompetenceCourseLoadBean> result = new ArrayList<CompetenceCourseLoadBean>();
+            final List<CompetenceCourseLoadBean> result = new ArrayList<>();
 
             for (final CompetenceCourseLoad competenceCourseLoad : getCompetenceCourseLoadsSet()) {
                 result.add(new CompetenceCourseLoadBean(competenceCourseLoad));
@@ -476,7 +478,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     }
 
     public List<CompetenceCourseInformationChangeRequest> getCompetenceCourseInformationChangeRequest() {
-        final List<CompetenceCourseInformationChangeRequest> requests = new ArrayList<CompetenceCourseInformationChangeRequest>();
+        final List<CompetenceCourseInformationChangeRequest> requests = new ArrayList<>();
         for (final CompetenceCourseInformationChangeRequest request : this.getCompetenceCourse()
                 .getCompetenceCourseInformationChangeRequestsSet()) {
             if (request.getExecutionPeriod().equals(this.getExecutionPeriod())) {

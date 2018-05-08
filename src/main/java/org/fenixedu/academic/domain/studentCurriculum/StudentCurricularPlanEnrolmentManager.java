@@ -45,8 +45,8 @@ import org.fenixedu.academic.domain.enrolment.OptionalDegreeModuleToEnrol;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.treasury.ITreasuryBridgeAPI;
-import org.fenixedu.bennu.signals.DomainObjectEvent;
-import org.fenixedu.bennu.signals.Signal;
+import org.fenixedu.bennu.core.signals.DomainObjectEvent;
+import org.fenixedu.bennu.core.signals.Signal;
 
 public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlanEnrolment {
 

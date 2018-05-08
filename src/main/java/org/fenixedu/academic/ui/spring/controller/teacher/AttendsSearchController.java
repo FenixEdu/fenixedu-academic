@@ -36,8 +36,8 @@ import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.UriBuilder;
 
 import org.fenixedu.academic.domain.Attends;
-import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Attends.StudentAttendsStateType;
+import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Mark;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Shift;
@@ -87,7 +87,7 @@ public class AttendsSearchController extends ExecutionCourseController {
     CSRFTokenBean csrfTokenBean;
 
     @ModelAttribute("csrf")
-    public CSRFTokenBean getCSRF(){
+    public CSRFTokenBean getCSRF() {
         return csrfTokenBean;
     }
 
@@ -127,9 +127,9 @@ public class AttendsSearchController extends ExecutionCourseController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public @ResponseBody ResponseEntity<String> listAttends() {
-        return new ResponseEntity<String>(
+        return new ResponseEntity<>(
                 view(executionCourse.getAttendsSet().stream().filter(attendee -> attendee.getRegistration() != null
-                        && !hasEnrolmentAnnuled(attendee.getRegistration(), executionCourse))),
+                        && !hasEnrolmentAnnuled(attendee.getRegistration(), executionCourse))).toString(),
                 HttpStatus.OK);
     }
 
@@ -188,22 +188,16 @@ public class AttendsSearchController extends ExecutionCourseController {
                         addCell(getLabel("label.Degree"),
                                 attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan().getPresentationName());
 
-                        /*
-                         * Ignoring 'workingStudentTypes'
-                         */
-                        //                        if (attends.getRegistration().getStudent().hasWorkingStudentStatuteInPeriod(attends.getExecutionPeriod())) {
-                        //                            addCell(getLabel("label.workingStudents"),
-                        //                                    BundleUtil.getString(Bundle.ENUMERATION,
-                        //                                            WorkingStudentSelectionType.WORKING_STUDENT.getQualifiedName()));
-                        //                        } else {
-                        //                            addCell(getLabel("label.workingStudents"),
-                        //                                    BundleUtil.getString(Bundle.ENUMERATION,
-                        //                                            WorkingStudentSelectionType.NOT_WORKING_STUDENT.getQualifiedName()));
-                        //                        }
-
-                        addCell(getLabel("label.students.statutes"),
-                                attends.getRegistration().getStudent().getStatutes(attends.getExecutionPeriod()).stream()
-                                        .map(statute -> statute.getDescription()).collect(Collectors.joining("; ")));
+                        Collection<StudentStatuteBean> studentStatutes =
+                                attends.getRegistration().getStudent().getStatutes(executionCourse.getExecutionPeriod());
+                        if (studentStatutes.size() > 0) {
+                            addCell(getLabel("label.studentStatutes"),
+                                    studentStatutes.stream()
+                                            .map(st -> st.getStatuteType().getName().getContent()
+                                                    + (Strings.isNullOrEmpty(st.getStudentStatute().getComment()) ? "" : " ("
+                                                            + st.getStudentStatute().getComment() + ")"))
+                                            .collect(Collectors.joining(" | ")));
+                        }
                     }
                 });
 
@@ -307,11 +301,11 @@ public class AttendsSearchController extends ExecutionCourseController {
             }
         }
 
-        String label = String.format("%s : %s \n%s : %s \n%s : %s \n%s",
+        String label = String.format("%s : %s \n%s : %s \n%s : %s \n%s : %s",
                 BundleUtil.getString(Bundle.APPLICATION, "label.selectStudents"), attendTypeValues,
                 BundleUtil.getString(Bundle.APPLICATION, "label.attends.courses"), degreeNameValues,
-                BundleUtil.getString(Bundle.APPLICATION, "label.selectShift"), shiftsValues, workingStudentsValues);
-
+                BundleUtil.getString(Bundle.APPLICATION, "label.selectShift"), shiftsValues,
+                BundleUtil.getString(Bundle.APPLICATION, "label.studentStatutes"), studentStatuteTypesValues);
 
         Builder<Attends> builder = Stream.builder();
         for (JsonElement elem : new JsonParser().parse(filteredAttendsJson).getAsJsonArray()) {
@@ -319,11 +313,10 @@ public class AttendsSearchController extends ExecutionCourseController {
             builder.accept(FenixFramework.getDomainObject(object.get("id").getAsString()));
         }
 
-        Group users =
-                Group.users(builder.build().map(a -> a.getRegistration().getPerson().getUser()).filter(Objects::nonNull)
-                        .sorted(User.COMPARATOR_BY_NAME));
+        Group users = Group.users(builder.build().map(a -> a.getRegistration().getPerson().getUser()).filter(Objects::nonNull)
+                .sorted(User.COMPARATOR_BY_NAME));
         ArrayList<Recipient> recipients = new ArrayList<Recipient>();
-        recipients.add(Recipient.newInstance(label, UserGroup.of(users)));
+        recipients.add(Recipient.newInstance(label, users));
         String sendEmailUrl = UriBuilder.fromUri("/messaging/emails.do").queryParam("method", "newEmail")
                 .queryParam("sender", ExecutionCourseSender.newInstance(executionCourse).getExternalId())
                 .queryParam("recipient", recipients.stream().filter(r -> r != null).map(r -> r.getExternalId()).toArray()).build()

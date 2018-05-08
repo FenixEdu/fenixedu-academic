@@ -23,10 +23,10 @@ import java.util.Locale;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.signals.DomainObjectEvent;
-import org.fenixedu.bennu.signals.Signal;
+import org.fenixedu.bennu.core.signals.DomainObjectEvent;
+import org.fenixedu.bennu.core.signals.Signal;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +41,7 @@ public class DegreeInfo extends DegreeInfo_Base {
 
     public static Comparator<DegreeInfo> COMPARATOR_BY_EXECUTION_YEAR = new Comparator<DegreeInfo>() {
         @Override
-        public int compare(DegreeInfo info1, DegreeInfo info2) {
+        public int compare(final DegreeInfo info1, final DegreeInfo info2) {
             int result = ExecutionYear.COMPARATOR_BY_YEAR.compare(info1.getExecutionYear(), info2.getExecutionYear());
             if (result != 0) {
                 return result;
@@ -50,7 +50,7 @@ public class DegreeInfo extends DegreeInfo_Base {
         }
     };
 
-    public DegreeInfo(Degree degree, ExecutionYear executionYear) {
+    public DegreeInfo(final Degree degree, final ExecutionYear executionYear) {
         super();
         setRootDomainObject(Bennu.getInstance());
 
@@ -67,7 +67,7 @@ public class DegreeInfo extends DegreeInfo_Base {
 
         new DegreeInfoCandidacy(this);
         new DegreeInfoFuture(this);
-        Signal.emit(DEGREE_INFO_CREATION_EVENT, new DomainObjectEvent<DegreeInfo>(this));
+        Signal.emit(DEGREE_INFO_CREATION_EVENT, new DomainObjectEvent<>(this));
 
     }
 
@@ -88,7 +88,7 @@ public class DegreeInfo extends DegreeInfo_Base {
     }
 
     @Override
-    public void setName(LocalizedString name) {
+    public void setName(final LocalizedString name) {
         if (hasSameName(name)) {
             return;
         }
@@ -107,24 +107,24 @@ public class DegreeInfo extends DegreeInfo_Base {
     private boolean hasSameName(final LocalizedString name) {
         return hasName() && getName().equals(name);
     }
-    
-    public void setGraduationNextLevelAccess(MultiLanguageString graduationNextLevelAccess) {
+
+    public void setGraduationNextLevelAccess(final LocalizedString graduationNextLevelAccess) {
         getDegreeInfoFuture().setGraduationNextLevelAccess(graduationNextLevelAccess);
     }
 
-    public MultiLanguageString getGraduationNextLevelAccess() {
+    public LocalizedString getGraduationNextLevelAccess() {
         return getDegreeInfoFuture().getGraduationNextLevelAccess();
     }
 
-    public void setProfessionalStatute(MultiLanguageString professionalStatute) {
+    public void setProfessionalStatute(final LocalizedString professionalStatute) {
         getDegreeInfoFuture().setProfessionalStatute(professionalStatute);
     }
 
-    public MultiLanguageString getProfessionalStatute() {
+    public LocalizedString getProfessionalStatute() {
         return getDegreeInfoFuture().getProfessionalStatute();
     }
-    
-    public DegreeInfo(DegreeInfo degreeInfo, ExecutionYear executionYear) {
+
+    public DegreeInfo(final DegreeInfo degreeInfo, final ExecutionYear executionYear) {
         this(degreeInfo.getDegree(), executionYear);
 
         setName(degreeInfo.getName());
@@ -236,51 +236,51 @@ public class DegreeInfo extends DegreeInfo_Base {
         return getDegreeInfoCandidacy().getTestIngression();
     }
 
-    public void setAccessRequisites(LocalizedString accessRequisites) {
+    public void setAccessRequisites(final LocalizedString accessRequisites) {
         getDegreeInfoCandidacy().setAccessRequisites(accessRequisites);
     }
 
-    public void setCandidacyDocuments(LocalizedString candidacyDocuments) {
+    public void setCandidacyDocuments(final LocalizedString candidacyDocuments) {
         getDegreeInfoCandidacy().setCandidacyDocuments(candidacyDocuments);
     }
 
-    public void setCandidacyPeriod(LocalizedString candidacyPeriod) {
+    public void setCandidacyPeriod(final LocalizedString candidacyPeriod) {
         getDegreeInfoCandidacy().setCandidacyPeriod(candidacyPeriod);
     }
 
-    public void setClassifications(LocalizedString classifications) {
+    public void setClassifications(final LocalizedString classifications) {
         getDegreeInfoFuture().setClassifications(classifications);
     }
 
-    public void setDesignedFor(LocalizedString designedFor) {
+    public void setDesignedFor(final LocalizedString designedFor) {
         getDegreeInfoFuture().setDesignedFor(designedFor);
     }
 
-    public void setEnrolmentPeriod(LocalizedString enrolmentPeriod) {
+    public void setEnrolmentPeriod(final LocalizedString enrolmentPeriod) {
         getDegreeInfoCandidacy().setEnrolmentPeriod(enrolmentPeriod);
     }
 
-    public void setObjectives(LocalizedString objectives) {
+    public void setObjectives(final LocalizedString objectives) {
         getDegreeInfoFuture().setObjectives(objectives);
     }
 
-    public void setProfessionalExits(LocalizedString professionalExits) {
+    public void setProfessionalExits(final LocalizedString professionalExits) {
         getDegreeInfoFuture().setProfessionalExits(professionalExits);
     }
 
-    public void setQualificationLevel(LocalizedString qualificationLevel) {
+    public void setQualificationLevel(final LocalizedString qualificationLevel) {
         getDegreeInfoFuture().setQualificationLevel(qualificationLevel);
     }
 
-    public void setRecognitions(LocalizedString recognitions) {
+    public void setRecognitions(final LocalizedString recognitions) {
         getDegreeInfoFuture().setRecognitions(recognitions);
     }
 
-    public void setSelectionResultDeadline(LocalizedString selectionResultDeadline) {
+    public void setSelectionResultDeadline(final LocalizedString selectionResultDeadline) {
         getDegreeInfoCandidacy().setSelectionResultDeadline(selectionResultDeadline);
     }
 
-    public void setTestIngression(LocalizedString testIngression) {
+    public void setTestIngression(final LocalizedString testIngression) {
         getDegreeInfoCandidacy().setTestIngression(testIngression);
     }
 
@@ -308,7 +308,7 @@ public class DegreeInfo extends DegreeInfo_Base {
      * #dsimoes @13JAN2016
      * Any change to the name are now allowed.
      */
-    public static boolean isEditable(DegreeInfo dinfo) {
+    public static boolean isEditable(final DegreeInfo dinfo) {
         return true;
 //        final DegreeCurricularPlan firstDegreeCurricularPlan = dinfo.getDegree().getFirstDegreeCurricularPlan();
 //        final DegreeCurricularPlan lastActiveDegreeCurricularPlan = dinfo.getDegree().getLastActiveDegreeCurricularPlan();

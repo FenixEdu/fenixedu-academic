@@ -28,8 +28,8 @@ import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
-import org.fenixedu.bennu.signals.DomainObjectEvent;
-import org.fenixedu.bennu.signals.Signal;
+import org.fenixedu.bennu.core.signals.DomainObjectEvent;
+import org.fenixedu.bennu.core.signals.Signal;
 
 abstract public class CertificateRequest extends CertificateRequest_Base {
 

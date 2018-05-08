@@ -88,12 +88,12 @@ public class FenixBootstrapper {
     final static Locale EN = new Locale("en");
 
     @Bootstrap
-    public static List<BootstrapError> boostrap(SchoolSetupSection schoolSetupSection, PortalSection portalSection,
-            AdminUserSection adminSection) {
+    public static List<BootstrapError> boostrap(final SchoolSetupSection schoolSetupSection, final PortalSection portalSection,
+            final AdminUserSection adminSection) {
 
         if (Planet.getEarth().getByAlfa3(schoolSetupSection.getCountryCode()) == null
-                || !Planet.getEarth().getByAlfa3(schoolSetupSection.getCountryCode()).alpha3.equals(schoolSetupSection
-                        .getCountryCode())) {
+                || !Planet.getEarth().getByAlfa3(schoolSetupSection.getCountryCode()).alpha3
+                        .equals(schoolSetupSection.getCountryCode())) {
             return singletonList(new BootstrapError(SchoolSetupSection.class, "getCountryCode", "bootstrapper.error.contry",
                     Bundle.APPLICATION));
         }
@@ -107,11 +107,11 @@ public class FenixBootstrapper {
         createDistrictAndDistrictSubdivision();
         createOrganizationalStructure();
 
-        EvaluationSeason normalSeason = createEvaluationSeason("EN", "RS", "NORMAL", true, false, false, false);
-        EvaluationConfiguration.getInstance().setDefaultEvaluationSeason(normalSeason);
-        createEvaluationSeason("MN", "GI", "IMPROVEMENT", false, true, false, false);
-        createEvaluationSeason("AE", "SA", "SPECIAL_AUTHORIZATION", false, false, true, false);
-        createEvaluationSeason("EE", "SS", "SPECIAL_SEASON", false, false, false, true);
+//        EvaluationSeason normalSeason = createEvaluationSeason("EN", "RS", "NORMAL", true, false, false, false);
+//        EvaluationConfiguration.getInstance().setDefaultEvaluationSeason(normalSeason);
+//        createEvaluationSeason("MN", "GI", "IMPROVEMENT", false, true, false, false);
+//        createEvaluationSeason("AE", "SA", "SPECIAL_AUTHORIZATION", false, false, true, false);
+//        createEvaluationSeason("EE", "SS", "SPECIAL_SEASON", false, false, false, true);
         //new CreateExecutionYears().doIt();
         //new CreateResources().doIt();
 
@@ -172,17 +172,15 @@ public class FenixBootstrapper {
         LocalizedString description =
                 LocalizedString.fromJson(new JsonParser().parse("{\"pt-PT\":\"Normal\",\"en-GB\":\"Normal\"}"));
 
-        RegistrationProtocol registrationProtocol =
-                new RegistrationProtocol("NORMAL", description, true, true, true, false, false, false, false, false, false, true,
-                        false);
+        RegistrationProtocol registrationProtocol = new RegistrationProtocol("NORMAL", description, true, true, true, false,
+                false, false, false, false, false, true, false);
     }
 
     public static class CreateOrganizationalStructure {
-        public void doIt(PortalSection portalSection, SchoolSetupSection schoolSetupSection) {
+        public void doIt(final PortalSection portalSection, final SchoolSetupSection schoolSetupSection) {
             final CountryUnit countryUnit = getCountryUnit(Country.readDefault().getName());
-            final UniversityUnit universityUnit =
-                    createUniversityUnit(countryUnit, schoolSetupSection.getUniversityName(),
-                            schoolSetupSection.getUniversityAcronym());
+            final UniversityUnit universityUnit = createUniversityUnit(countryUnit, schoolSetupSection.getUniversityName(),
+                    schoolSetupSection.getUniversityAcronym());
             final SchoolUnit institutionUnit =
                     createSchoolUnit(universityUnit, portalSection.getOrganizationName(), schoolSetupSection.getSchoolAcronym());
             Bennu.getInstance().setInstitutionUnit(institutionUnit);
@@ -196,7 +194,7 @@ public class FenixBootstrapper {
             //createDegreeUnits(degreeUnits);
         }
 
-        private void setRegistryGenerator(SchoolUnit institutionUnit) {
+        private void setRegistryGenerator(final SchoolUnit institutionUnit) {
             institutionUnit.setRegistryCodeGenerator(new InstitutionRegistryCodeGenerator());
         }
 
@@ -214,8 +212,8 @@ public class FenixBootstrapper {
 
         private UniversityUnit createUniversityUnit(final CountryUnit countryUnit, final String universityName,
                 final String universityAcronym) {
-            return UniversityUnit.createNewUniversityUnit(new LocalizedString(Locale.getDefault(), universityName), null,
-                    null, universityAcronym, new YearMonthDay(), null, countryUnit, null, null, false, null);
+            return UniversityUnit.createNewUniversityUnit(new LocalizedString(Locale.getDefault(), universityName), null, null,
+                    universityAcronym, new YearMonthDay(), null, countryUnit, null, null, false, null);
         }
 
         private AggregateUnit createAggregateUnit(final Unit parentUnit, final String unitName) {
@@ -248,7 +246,7 @@ public class FenixBootstrapper {
         new CurricularYear(Integer.valueOf(6), 2);
     }
 
-    private static Country createCountries(SchoolSetupSection schoolSection) {
+    private static Country createCountries(final SchoolSetupSection schoolSection) {
         Country defaultCountry = null;
         for (pt.ist.standards.geographic.Country metaData : Planet.getEarth().getPlaces()) {
             String localizedNamePT = null;
@@ -308,10 +306,8 @@ public class FenixBootstrapper {
             final String code = metaData.alpha2;
             final String threeLetterCode = metaData.alpha3;
 
-            final Country country =
-                    new Country(countryName,
-                            new LocalizedString(PT, nationalityPT).append(new LocalizedString(
-                                    EN, nationalityEN)), code, threeLetterCode);
+            final Country country = new Country(countryName,
+                    new LocalizedString(PT, nationalityPT).append(new LocalizedString(EN, nationalityEN)), code, threeLetterCode);
             if (StringUtils.equals(threeLetterCode, schoolSection.getCountryCode().toUpperCase())) {
                 defaultCountry = country;
             }
@@ -325,7 +321,7 @@ public class FenixBootstrapper {
 
     }
 
-    static void createManagerUser(AdminUserSection adminSection, SchoolSetupSection schoolSetupSection) {
+    static void createManagerUser(final AdminUserSection adminSection, final SchoolSetupSection schoolSetupSection) {
         User adminUser = User.findByUsername(adminSection.getAdminUsername());
         final Person person = new Person(adminUser.getProfile());
         RoleType.grant(RoleType.SCIENTIFIC_COUNCIL, adminUser);
@@ -342,7 +338,7 @@ public class FenixBootstrapper {
             partyContact.setValid();
             partyContact.getPartyContactValidation().setState(PartyContactValidationState.VALID);
         }
-        Authenticate.mock(adminUser, "FenixEdu Bootstrapper");
+        Authenticate.mock(adminUser, "TODO: CHANGE ME");
         AcademicOperationType.MANAGE_AUTHORIZATIONS.grant(adminUser);
         AcademicOperationType.MANAGE_ACADEMIC_CALENDARS.grant(adminUser);
     }
@@ -361,16 +357,15 @@ public class FenixBootstrapper {
 
     private static void createAccountabilityTypeEnums() {
         for (final AccountabilityTypeEnum accountabilityTypeEnum : AccountabilityTypeEnum.values()) {
-            new AccountabilityType(accountabilityTypeEnum, new LocalizedString(Locale.getDefault(),
-                    accountabilityTypeEnum.getName()));
+            new AccountabilityType(accountabilityTypeEnum,
+                    new LocalizedString(Locale.getDefault(), accountabilityTypeEnum.getName()));
         }
     }
 
     private static void createOrganizationalStructure() {
         final Bennu rootDomainObject = Bennu.getInstance();
-        final PlanetUnit planetUnit =
-                PlanetUnit.createNewPlanetUnit(new LocalizedString(Locale.getDefault(), "Earth"), null, null, "E",
-                        new YearMonthDay(), null, null, null, null, false, null);
+        final PlanetUnit planetUnit = PlanetUnit.createNewPlanetUnit(new LocalizedString(Locale.getDefault(), "Earth"), null,
+                null, "E", new YearMonthDay(), null, null, null, null, false, null);
         rootDomainObject.setEarthUnit(planetUnit);
 
         createCountryUnits(rootDomainObject, planetUnit);
@@ -391,28 +386,29 @@ public class FenixBootstrapper {
             if (academicServiceRequestType == AcademicServiceRequestType.DOCUMENT) {
                 continue;
             } else if (academicServiceRequestType == AcademicServiceRequestType.DIPLOMA_REQUEST) {
-                ServiceRequestType.createLegacy(academicServiceRequestType.name(), new LocalizedString(new Locale("PT", "pt"),
-                        academicServiceRequestType.getLocalizedName()), false, academicServiceRequestType,
-                        DocumentRequestType.DIPLOMA_REQUEST, true, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE,
-                        ServiceRequestCategory.SERVICES);
+                ServiceRequestType.createLegacy(academicServiceRequestType.name(),
+                        new LocalizedString(new Locale("PT", "pt"), academicServiceRequestType.getLocalizedName()), false,
+                        academicServiceRequestType, DocumentRequestType.DIPLOMA_REQUEST, true, Boolean.FALSE, Boolean.FALSE,
+                        Boolean.FALSE, ServiceRequestCategory.SERVICES);
                 continue;
             } else if (academicServiceRequestType == AcademicServiceRequestType.DIPLOMA_SUPPLEMENT_REQUEST) {
-                ServiceRequestType.createLegacy(academicServiceRequestType.name(), new LocalizedString(new Locale("PT", "pt"),
-                        academicServiceRequestType.getLocalizedName()), false, academicServiceRequestType,
-                        DocumentRequestType.DIPLOMA_SUPPLEMENT_REQUEST, true, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE,
-                        ServiceRequestCategory.SERVICES);
+                ServiceRequestType.createLegacy(academicServiceRequestType.name(),
+                        new LocalizedString(new Locale("PT", "pt"), academicServiceRequestType.getLocalizedName()), false,
+                        academicServiceRequestType, DocumentRequestType.DIPLOMA_SUPPLEMENT_REQUEST, true, Boolean.FALSE,
+                        Boolean.FALSE, Boolean.FALSE, ServiceRequestCategory.SERVICES);
                 continue;
             } else if (academicServiceRequestType == AcademicServiceRequestType.REGISTRY_DIPLOMA_REQUEST) {
-                ServiceRequestType.createLegacy(academicServiceRequestType.name(), new LocalizedString(new Locale("PT", "pt"),
-                        academicServiceRequestType.getLocalizedName()), false, academicServiceRequestType,
-                        DocumentRequestType.REGISTRY_DIPLOMA_REQUEST, true, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE,
-                        ServiceRequestCategory.SERVICES);
+                ServiceRequestType.createLegacy(academicServiceRequestType.name(),
+                        new LocalizedString(new Locale("PT", "pt"), academicServiceRequestType.getLocalizedName()), false,
+                        academicServiceRequestType, DocumentRequestType.REGISTRY_DIPLOMA_REQUEST, true, Boolean.FALSE,
+                        Boolean.FALSE, Boolean.FALSE, ServiceRequestCategory.SERVICES);
                 continue;
             }
 
-            ServiceRequestType.createLegacy(academicServiceRequestType.name(), new LocalizedString(new Locale("PT", "pt"),
-                    academicServiceRequestType.getLocalizedName()), false, academicServiceRequestType, null, true, Boolean.FALSE,
-                    Boolean.FALSE, Boolean.FALSE, ServiceRequestCategory.SERVICES);
+            ServiceRequestType.createLegacy(academicServiceRequestType.name(),
+                    new LocalizedString(new Locale("PT", "pt"), academicServiceRequestType.getLocalizedName()), false,
+                    academicServiceRequestType, null, true, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE,
+                    ServiceRequestCategory.SERVICES);
         }
 
         for (final DocumentRequestType documentRequestType : DocumentRequestType.values()) {
@@ -426,11 +422,11 @@ public class FenixBootstrapper {
             }
 
             // By default create all legacy ServiceRequestTypes as Services -> Then configurate accordingly
-            ServiceRequestType.createLegacy(
-                    documentRequestType.name(),
+            ServiceRequestType.createLegacy(documentRequestType.name(),
                     BundleUtil.getLocalizedString("resources.EnumerationResources",
-                            "DocumentRequestType." + documentRequestType.name()), false, AcademicServiceRequestType.DOCUMENT,
-                    documentRequestType, true, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, ServiceRequestCategory.SERVICES);
+                            "DocumentRequestType." + documentRequestType.name()),
+                    false, AcademicServiceRequestType.DOCUMENT, documentRequestType, true, Boolean.FALSE, Boolean.FALSE,
+                    Boolean.FALSE, ServiceRequestCategory.SERVICES);
         }
     }
 

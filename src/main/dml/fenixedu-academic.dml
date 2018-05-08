@@ -12387,6 +12387,7 @@ relation BennuFirstTimeDocumentsConfiguration {
 	candidacy.FirstTimeDocumentsConfiguration playsRole firstTimeDocumentsConfiguration {
 		multiplicity 0..1;
 	}
+}
 
 /* ServiceRequestType */
 

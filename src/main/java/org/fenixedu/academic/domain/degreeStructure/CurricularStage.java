@@ -26,6 +26,9 @@ import org.fenixedu.commons.i18n.I18N;
 
 public enum CurricularStage {
 
+    /*TODO: review modules that still use OLD value*/
+    OLD,
+
     DRAFT,
 
     PUBLISHED,
