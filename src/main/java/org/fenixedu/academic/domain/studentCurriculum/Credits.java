@@ -67,10 +67,10 @@ public class Credits extends Credits_Base {
     public Credits(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
             Collection<IEnrolment> enrolments, Double credits, ExecutionSemester executionSemester) {
         this();
-        init(studentCurricularPlan, curriculumGroup, enrolments, new HashSet<CurricularCourse>(0), credits, executionSemester);
+        init(studentCurricularPlan, curriculumGroup, enrolments, new HashSet<>(0), credits, executionSemester);
     }
 
-    final protected void initExecutionPeriod(ExecutionSemester executionSemester) {
+    private void initExecutionPeriod(ExecutionSemester executionSemester) {
         if (executionSemester == null) {
             throw new DomainException("error.credits.wrong.arguments");
         }
@@ -112,7 +112,7 @@ public class Credits extends Credits_Base {
     private void checkGivenCredits(final StudentCurricularPlan studentCurricularPlan, final CourseGroup courseGroup,
             final Double credits, final ExecutionSemester executionSemester) {
         if (courseGroup.isBolonhaDegree()
-                && !allowsEctsCredits(studentCurricularPlan, courseGroup, executionSemester, credits.doubleValue())) {
+                && !allowsEctsCredits(studentCurricularPlan, courseGroup, executionSemester, credits)) {
             throw new DomainException("error.credits.invalid.credits", credits.toString());
         }
     }
@@ -120,8 +120,8 @@ public class Credits extends Credits_Base {
     private boolean allowsEctsCredits(final StudentCurricularPlan studentCurricularPlan, final CourseGroup courseGroup,
             final ExecutionSemester executionSemester, final double ectsCredits) {
         final double ectsCreditsForCourseGroup =
-                studentCurricularPlan.getCreditsConcludedForCourseGroup(courseGroup).doubleValue();
-        if (ectsCredits + ectsCreditsForCourseGroup > courseGroup.getMaxEctsCredits(executionSemester).doubleValue()) {
+            studentCurricularPlan.getCreditsConcludedForCourseGroup(courseGroup);
+        if (ectsCredits + ectsCreditsForCourseGroup > courseGroup.getMaxEctsCredits(executionSemester)) {
             return false;
         }
         if (courseGroup.isCycleCourseGroup() || courseGroup.isRoot()) {
@@ -170,7 +170,7 @@ public class Credits extends Credits_Base {
     }
 
     final public Collection<IEnrolment> getIEnrolments() {
-        final Set<IEnrolment> result = new HashSet<IEnrolment>();
+        final Set<IEnrolment> result = new HashSet<>();
         for (final EnrolmentWrapper enrolmentWrapper : this.getEnrolmentsSet()) {
             IEnrolment enrolment = enrolmentWrapper.getIEnrolment();
             if (enrolment != null) {
@@ -180,7 +180,7 @@ public class Credits extends Credits_Base {
         return result;
     }
 
-    final public boolean hasIEnrolments(final IEnrolment iEnrolment) {
+    final boolean hasIEnrolments(final IEnrolment iEnrolment) {
         for (final EnrolmentWrapper enrolmentWrapper : this.getEnrolmentsSet()) {
             if (enrolmentWrapper.getIEnrolment() == iEnrolment) {
                 return true;
@@ -190,10 +190,6 @@ public class Credits extends Credits_Base {
         return false;
     }
 
-    final public boolean hasAnyIEnrolments() {
-        return !getEnrolmentsSet().isEmpty();
-    }
-
     @Override
     final public Double getGivenCredits() {
         if (super.getGivenCredits() == null) {
@@ -201,7 +197,7 @@ public class Credits extends Credits_Base {
             for (Dismissal dismissal : getDismissalsSet()) {
                 bigDecimal = bigDecimal.add(new BigDecimal(dismissal.getEctsCredits()));
             }
-            return Double.valueOf(bigDecimal.doubleValue());
+            return bigDecimal.doubleValue();
         }
         return super.getGivenCredits();
     }
@@ -221,12 +217,12 @@ public class Credits extends Credits_Base {
     }
 
     protected void disconnect() {
-        for (; !getDismissalsSet().isEmpty(); getDismissalsSet().iterator().next().deleteFromCredits()) {
-            ;
+        while (!getDismissalsSet().isEmpty()) {
+            getDismissalsSet().iterator().next().deleteFromCredits();
         }
 
-        for (; !getEnrolmentsSet().isEmpty(); getEnrolmentsSet().iterator().next().delete()) {
-            ;
+        while (!getEnrolmentsSet().isEmpty()) {
+            getEnrolmentsSet().iterator().next().delete();
         }
 
         setStudentCurricularPlan(null);
@@ -240,14 +236,6 @@ public class Credits extends Credits_Base {
             result = result + enrolment.getEctsCredits();
         }
         return result;
-    }
-
-    final public boolean hasGivenCredits() {
-        return getGivenCredits() != null;
-    }
-
-    final public boolean hasGivenCredits(final Double ectsCredits) {
-        return hasGivenCredits() && getGivenCredits().equals(ectsCredits);
     }
 
     public boolean isTemporary() {
@@ -299,20 +287,6 @@ public class Credits extends Credits_Base {
 
     public String getDescription() {
         return BundleUtil.getString("resources.StudentResources", "label.dismissal.Credits");
-    }
-
-    public boolean isAllEnrolmentsAreExternal() {
-        if (getEnrolmentsSet().isEmpty()) {
-            return false;
-        }
-
-        for (EnrolmentWrapper wrapper : getEnrolmentsSet()) {
-            if (!wrapper.getIEnrolment().isExternalEnrolment()) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
 }

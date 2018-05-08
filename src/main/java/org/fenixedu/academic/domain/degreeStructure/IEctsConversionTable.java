@@ -19,17 +19,20 @@
 package org.fenixedu.academic.domain.degreeStructure;
 
 import org.fenixedu.academic.domain.CurricularYear;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.DomainObject;
 
 public interface IEctsConversionTable {
-    public DomainObject getTargetEntity();
+    DomainObject getTargetEntity();
 
-    public EctsComparabilityTable getEctsTable();
+    EctsComparabilityTable getEctsTable();
 
-    public EctsComparabilityPercentages getPercentages();
+    EctsComparabilityPercentages getPercentages();
 
-    public CurricularYear getCurricularYear();
+    CurricularYear getCurricularYear();
 
-    public CycleType getCycle();
+    CycleType getCycle();
+
+    LocalizedString getPresentationName();
 }

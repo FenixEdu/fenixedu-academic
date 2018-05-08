@@ -32,6 +32,7 @@ public class ExternalCurricularCourseEnrolmentBean implements Serializable {
     private ExecutionSemester executionSemester;
     private YearMonthDay evaluationDate;
     private Grade grade;
+    private Grade normalizedGrade;
     private Double ectsCredits;
 
     public ExternalCurricularCourseEnrolmentBean(final ExternalCurricularCourse externalCurricularCourse) {
@@ -80,5 +81,13 @@ public class ExternalCurricularCourseEnrolmentBean implements Serializable {
 
     public void setEctsCredits(Double ectsCredits) {
         this.ectsCredits = ectsCredits;
+    }
+
+    public Grade getNormalizedGrade() {
+        return normalizedGrade;
+    }
+
+    public void setNormalizedGrade(Grade normalizedGrade) {
+        this.normalizedGrade = normalizedGrade;
     }
 }

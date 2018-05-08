@@ -21,7 +21,10 @@ package org.fenixedu.academic.domain.degreeStructure;
 import org.fenixedu.academic.domain.CurricularYear;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.DomainObject;
@@ -37,7 +40,7 @@ public class EctsDegreeGraduationGradeConversionTable extends EctsDegreeGraduati
     }
 
     protected EctsDegreeGraduationGradeConversionTable(Degree degree, AcademicInterval year, CycleType cycle,
-            EctsComparabilityTable table, EctsComparabilityPercentages percentages) {
+                                                       EctsComparabilityTable table, EctsComparabilityPercentages percentages) {
         super();
         init(year, cycle, table, percentages);
         setDegree(degree);
@@ -54,9 +57,9 @@ public class EctsDegreeGraduationGradeConversionTable extends EctsDegreeGraduati
 
     @Atomic
     public static void createConversionTable(Degree degree, AcademicInterval year, CycleType cycle, String[] table,
-            String[] percentages) {
+                                             String[] percentages) {
         EctsDegreeGraduationGradeConversionTable conversion =
-                EctsTableIndex.readOrCreateByYear(year).getGraduationTableBy(degree, cycle);
+            EctsTableIndex.readOrCreateByYear(year).getGraduationTableBy(degree, cycle);
         if (degree.getDegreeType().isComposite()) {
             if (cycle == null) {
                 throw new ConversionTableCycleIsRequiredInIntegratedMasterDegree();
@@ -85,6 +88,15 @@ public class EctsDegreeGraduationGradeConversionTable extends EctsDegreeGraduati
     public void delete() {
         setDegree(null);
         super.delete();
+    }
+
+    @Override
+    public LocalizedString getPresentationName() {
+        return BundleUtil.getLocalizedString(Bundle.ENUMERATION,
+                                             getClass().getSimpleName() + ".presentation.name",
+                                             getYear().getAcademicCalendarEntry().getTitle().getContent(),
+                                             getCycle() == null ? "-" : getCycle().getDescription(),
+                                             getDegree().getSigla());
     }
 
 }

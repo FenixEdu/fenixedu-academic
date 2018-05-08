@@ -2306,6 +2306,9 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
         AcademicInterval year;
     }
 
+    class degreeStructure.EmptyConversionTable extends degreeStructure.EctsConversionTable {
+    }
+
     class degreeStructure.EctsCompetenceCourseConversionTable extends degreeStructure.EctsConversionTable {
     }
 
@@ -12308,5 +12311,23 @@ relation ExternalEnrolmentEctsConversionTable {
     }
     degreeStructure.EctsConversionTable playsRole ectsConversionTable {
         multiplicity 0..1;
+    }
+}
+
+relation CurriculumModuleRootDomainObject {
+    studentCurriculum.CurriculumModule playsRole curriculumModule {
+        multiplicity *;
+    }
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
+    		multiplicity 0..1;
+    }
+}
+
+relation EmptyConversionTableRootDomainObject {
+    degreeStructure.EmptyConversionTable playsRole emptyConversionTable {
+        multiplicity 0..1;
+    }
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
+        multiplicity 1..1;
     }
 }

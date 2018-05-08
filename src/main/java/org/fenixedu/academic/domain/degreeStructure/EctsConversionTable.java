@@ -38,6 +38,9 @@ public abstract class EctsConversionTable extends EctsConversionTable_Base imple
     }
 
     public Grade convert(Grade grade) {
+        if (grade.isEmpty()) {
+            return grade;
+        }
         switch (grade.getGradeScale()) {
         case TYPE20:
             return Grade.createGrade(getEctsTable().convert(grade.getIntegerValue()), GradeScale.TYPEECTS);

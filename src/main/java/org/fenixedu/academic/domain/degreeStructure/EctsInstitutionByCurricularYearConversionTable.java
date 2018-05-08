@@ -21,15 +21,17 @@ package org.fenixedu.academic.domain.degreeStructure;
 import org.fenixedu.academic.domain.CurricularYear;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.DomainObject;
 
 public class EctsInstitutionByCurricularYearConversionTable extends EctsInstitutionByCurricularYearConversionTable_Base {
 
-    protected EctsInstitutionByCurricularYearConversionTable(Unit school, AcademicInterval year, CycleType cycle,
-            CurricularYear curricularYear, EctsComparabilityTable table) {
+    protected EctsInstitutionByCurricularYearConversionTable(Unit school, AcademicInterval year, CycleType cycle, CurricularYear curricularYear, EctsComparabilityTable table) {
         super();
         init(year, curricularYear, table);
         setSchool(school);
@@ -46,10 +48,8 @@ public class EctsInstitutionByCurricularYearConversionTable extends EctsInstitut
     }
 
     @Atomic
-    public static void createConversionTable(Unit ist, AcademicInterval year, CycleType cycleType, CurricularYear curricularYear,
-            String[] table) {
-        EctsInstitutionByCurricularYearConversionTable conversion =
-                EctsTableIndex.readOrCreateByYear(year).getEnrolmentTableBy(ist, curricularYear, cycleType);
+    public static void createConversionTable(Unit ist, AcademicInterval year, CycleType cycleType, CurricularYear curricularYear, String[] table) {
+        EctsInstitutionByCurricularYearConversionTable conversion = EctsTableIndex.readOrCreateByYear(year).getEnrolmentTableBy(ist, curricularYear, cycleType);
         EctsComparabilityTable ectsTable = EctsComparabilityTable.fromStringArray(table);
         if (conversion != null) {
             conversion.delete();
@@ -63,6 +63,13 @@ public class EctsInstitutionByCurricularYearConversionTable extends EctsInstitut
     public void delete() {
         setSchool(null);
         super.delete();
+    }
+
+    @Override
+    public LocalizedString getPresentationName() {
+        return BundleUtil.getLocalizedString(Bundle.ENUMERATION, getClass().getSimpleName() + ".presentation.name", getYear().getAcademicCalendarEntry().getTitle().getContent(),
+            getCurricularYear() == null ? "N/A" : getCurricularYear().getYear().toString(), getCycle() == null ? "N/A" : getCycle().getDescription(),
+            getSchool() == null ? "N/A" : getSchool().getName());
     }
 
 }

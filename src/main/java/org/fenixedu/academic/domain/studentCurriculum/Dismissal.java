@@ -349,11 +349,28 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 
     public Grade getEctsGrade(DateTime processingDate) {
         final Grade normalizedEctsGrade = getNormalizedEctsGrade();
-        return normalizedEctsGrade == null ? EctsTableIndex.convertGradeToEcts(getCurricularCourse(), this, getGrade(), processingDate) : normalizedEctsGrade;
+        if (normalizedEctsGrade != null) {
+            return normalizedEctsGrade;
+        }
+        return getEctsConversionTable(processingDate).convert(getGrade());
     }
 
     public EctsConversionTable getEctsConversionTable(final DateTime processingDate) {
-        return EctsTableIndex.getEctsConversionTable(getCurricularCourse(), this, getGrade(), processingDate);
+        if (getCredits().isEquivalence()) {
+            return EctsTableIndex.getEctsConversionTable(getCurricularCourse(), this, processingDate);
+        }
+
+        /*
+          This is not suppose to happen since this method should only be called
+          in the context of an equivalence.
+          For dismissals that are not equivalences, the origins are used to calculate this grade.
+          Since it is possible to have multiple origins, this method can't decide which value should return.
+
+          An instance of this class where {@link #getCredits()} {@link Credits#isEquivalence()} is false will not be part of the @{link Curriculum} entries.
+          Instead the origins {@link Substitution#getAverageEntries(ExecutionYear)} will be used.
+         */
+        throw new UnsupportedOperationException(String.format("%s: Not supposed to be called for %s with Credits %s%n", getExternalId(), getClass().getSimpleName(), getCredits().getClass()
+                                                                                                                                                                                .getSimpleName()));
     }
 
     public String getEnrolmentTypeName() {

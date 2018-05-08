@@ -124,7 +124,7 @@
         </tr>
     </table>
 
-	<logic:present name="ectsGradeConversionTable">
+	<logic:present name="visibleEctsConvertedGrade">
 		<h4><bean:message key="label.gradeConversionTable" bundle="ACADEMIC_OFFICE_RESOURCES"/></h4>
 	    <table class="tstyle4 thlight tdcenter mtop15">
 		    <tr>
@@ -160,8 +160,8 @@
 			<h4><bean:message key="label.grades" bundle="ACADEMIC_OFFICE_RESOURCES"/></h4>
 			<fr:view name="curriculum">
 				<logic:present name="ectsGradeConversionTable">
-					<fr:layout> <fr:property name="visibleEctsConvertedGrade" value="true"/> </fr:layout>
-				</logic:present>
+					<fr:layout> <fr:property name="visibleEctsConvertedGrade" value="false"/> </fr:layout>
+				</logic:present>                              
 			</fr:view>
 		</p>
 	

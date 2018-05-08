@@ -28,7 +28,10 @@ import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
+import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -85,7 +88,26 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
         super.setIngressionYear(ingressionYear);
         super.setConclusionYear(conclusionYear);
         super.setActive(true);
+        persistNormalizedGradeInformation(bean.getCurriculumForConclusion());
         Signal.emit(ConclusionProcessVersion.CREATE_SIGNAL, new DomainObjectEvent<ConclusionProcessVersion>(this));
+    }
+
+    private void persistNormalizedGradeInformation(ICurriculum curriculumForConclusion) {
+        final DateTime conclusionDate = getConclusionDate().toDateTimeAtStartOfDay();
+        final StudentCurricularPlan studentCurricularPlan = curriculumForConclusion.getStudentCurricularPlan();
+        curriculumForConclusion.getCurriculumEntries().forEach(entry -> {
+            if (entry instanceof Enrolment) {
+                ((Enrolment) entry).setEctsGrade(((Enrolment) entry).getEctsGrade(studentCurricularPlan, conclusionDate));
+                ((Enrolment) entry).setEctsConversionTable(((Enrolment) entry).getEctsConversionTable(studentCurricularPlan, conclusionDate));
+            }
+            if (entry instanceof Dismissal && ((Dismissal) entry).getCredits().isEquivalence()) {
+                ((Dismissal) entry).setNormalizedEctsGrade(((Dismissal) entry).getEctsGrade(conclusionDate));
+            }
+            if (entry instanceof ExternalEnrolment) {
+                ((ExternalEnrolment) entry).setNormalizedEctsGrade(((ExternalEnrolment) entry).getEctsGrade(studentCurricularPlan, conclusionDate));
+                ((ExternalEnrolment) entry).setEctsConversionTable(((ExternalEnrolment) entry).getEctsConversionTable(studentCurricularPlan, conclusionDate));
+            }
+        });
     }
 
     protected void update(final Person responsible, final Grade finalGrade, final Grade rawGrade, final Grade descriptiveGrade,

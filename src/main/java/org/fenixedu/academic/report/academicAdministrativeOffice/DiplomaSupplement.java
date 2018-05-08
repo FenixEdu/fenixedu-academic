@@ -46,12 +46,14 @@ import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdDiplomaSupplementRequest;
 import org.fenixedu.academic.domain.serviceRequests.IDiplomaSupplementRequest;
+import org.fenixedu.academic.domain.serviceRequests.RegistrationAcademicServiceRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DiplomaSupplementRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.student.curriculum.ExtraCurricularActivity;
 import org.fenixedu.academic.domain.student.curriculum.ExtraCurricularActivityType;
+import org.fenixedu.academic.domain.student.curriculum.ICurriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
@@ -395,16 +397,22 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
     }
 
     private void addEntriesParameters() {
-        final List<AcademicUnitEntry> identifiers = new ArrayList<AcademicUnitEntry>();
+        final List<IdentifiableEntry> identifiers = new ArrayList<>();
 
         if (getDocumentRequest().hasRegistration()) {
             Registration registration = getDocumentRequest().getRegistration();
             final List<DiplomaSupplementEntry> entries = new ArrayList<DiplomaSupplementEntry>();
             final Map<Unit, String> academicUnitIdentifiers = new HashMap<Unit, String>();
+            Double equivalenceCredits;
 
-            for (ICurriculumEntry entry : registration.getCurriculum(getDocumentRequest().getRequestedCycle())
-                    .getCurriculumEntries()) {
-                entries.add(new DiplomaSupplementEntry(entry, academicUnitIdentifiers));
+            final ICurriculum curriculum = registration.getCurriculum(getDocumentRequest().getRequestedCycle());
+            BigDecimal remainingCredits = curriculum.getRemainingCredits();
+
+            for (ICurriculumEntry entry : curriculum.getCurriculumEntries()) {
+                DiplomaSupplementEntry diplomaSupplementEntry = new DiplomaSupplementEntry(entry, academicUnitIdentifiers);
+                if (!diplomaSupplementEntry.isEquivalence) {
+                    entries.add(diplomaSupplementEntry);
+                }
             }
 
             Collections.sort(entries);
@@ -413,9 +421,23 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
             for (final Entry<Unit, String> entry2 : academicUnitIdentifiers.entrySet()) {
                 identifiers.add(new AcademicUnitEntry(entry2));
             }
+
+            if (!remainingCredits.equals(BigDecimal.ZERO)) {
+                final StringBuilder builder = new StringBuilder();
+                builder.append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "documents.remainingCreditsInfo"));
+                builder.append(": ");
+                builder.append(remainingCredits.toString());
+                builder.append(" ");
+                builder.append(getCreditsDescription());
+                builder.append(".");
+                identifiers.add(new IdentifiableEntry("*", builder.toString()));
+            }
+
+
         } else {
             addParameter("entries", new ArrayList<DiplomaSupplementEntry>());
         }
+
 
         addParameter("academicUnitIdentifiers", identifiers);
     }
@@ -448,7 +470,9 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
         private final String ectsScale;
 
-        private final String academicUnitId;
+        private String academicUnitId;
+
+        private boolean isEquivalence = false;
 
         public DiplomaSupplementEntry(final ICurriculumEntry entry, final Map<Unit, String> academicUnitIdentifiers) {
             this.entry = entry;
@@ -469,6 +493,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
                                 processingDate).getValue();
             } else if (entry instanceof Dismissal && ((Dismissal) entry).getCredits().isEquivalence()) {
                 Dismissal dismissal = (Dismissal) entry;
+                this.isEquivalence = true;
                 this.type = BundleUtil.getString(Bundle.ENUMERATION, getLocale(), dismissal.getEnrolmentTypeName());
                 this.duration =
                         BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
@@ -537,13 +562,48 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
     }
 
-    public class AcademicUnitEntry {
-        private final String identifier;
+    public static class IdentifiableEntry {
+        private String identifier;
+        private String name;
 
-        private final String name;
+        protected IdentifiableEntry() {
 
-        public AcademicUnitEntry(final Entry<Unit, String> entry) {
-            this.identifier = entry.getValue();
+        }
+        
+        public IdentifiableEntry(String identifier, String name) {
+            this.identifier = identifier;
+            this.name = name;
+        }
+
+        public String getIdentifier() {
+            return identifier;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setIdentifier(String identifier) {
+            this.identifier = identifier;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getPresentationName() {
+            return String.format("[%s] %s",  getIdentifier(), getName());
+        }
+    }
+
+    public class AcademicUnitEntry extends IdentifiableEntry {
+
+        AcademicUnitEntry(final Entry<Unit, String> entry) {
+            setIdentifier(entry.getValue());
+            setName(getEntryName(entry));
+        }
+
+        private String getEntryName(Entry<Unit, String> entry) {
             Unit unit = entry.getKey();
             String name = getMLSTextContent(unit.getNameI18n());
             List<Unit> univs = unit.getParentUnits().stream().filter(u -> u.isUniversityUnit()).collect(Collectors.toList());
@@ -555,15 +615,12 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
                     name = getMLSTextContent(univs.iterator().next().getNameI18n()) + ", " + name;
                 }
             }
-            this.name = name;
-        }
-
-        public String getIdentifier() {
-            return identifier;
-        }
-
-        public String getName() {
             return name;
+        }
+
+        @Override
+        public String getPresentationName() {
+            return String.format("[%s] %s %s", getIdentifier(), BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.four.three.table.legend.one"), getName());
         }
     }
 
