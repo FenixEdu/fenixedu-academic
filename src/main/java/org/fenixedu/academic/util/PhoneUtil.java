@@ -95,6 +95,8 @@ public class PhoneUtil {
                 if (numberText.startsWith("00")) {
                     numberText = numberText.replaceFirst("00", "+");
                 }
+                
+                numberText = numberText.replaceAll("[^0-9+]","");
 
                 try {
                     final PhoneNumber phoneNumber = PHONE_UTIL.parse(numberText, null);
