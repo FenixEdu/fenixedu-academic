@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.domain.organizationalStructure;
 
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 
@@ -43,9 +44,12 @@ public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
             throw new DomainException("error.PartySocialSecurityNumber.invalid.socialSecurityNumber");
         }
 
-        for (final PartySocialSecurityNumber securityNumber : Bennu.getInstance().getPartySocialSecurityNumbersSet()) {
-            if (securityNumber != this && securityNumber.hasSocialSecurityNumber(socialSecurityNumber)) {
-                throw new DomainException("error.PartySocialSecurityNumber.number.already.exists");
+        String defaultSocialSecurityNumber = FenixEduAcademicConfiguration.getConfiguration().getDefaultSocialSecurityNumber();
+        if (defaultSocialSecurityNumber == null || !defaultSocialSecurityNumber.equals(socialSecurityNumber)) {
+            for (final PartySocialSecurityNumber securityNumber : Bennu.getInstance().getPartySocialSecurityNumbersSet()) {
+                if (securityNumber != this && securityNumber.hasSocialSecurityNumber(socialSecurityNumber)) {
+                    throw new DomainException("error.PartySocialSecurityNumber.number.already.exists");
+                }
             }
         }
     }
