@@ -21,10 +21,10 @@ package org.fenixedu.academic.domain.candidacy;
 import java.util.Random;
 
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
-import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.messaging.core.domain.Message;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -62,20 +62,27 @@ public class GenericApplicationRecomentation extends GenericApplicationRecomenta
                         getGenericApplication().getName(), getGenericApplication().getGenericApplicationPeriod().getTitle()
                                 .getContent(), generateConfirmationLink());
 
-        new Message(getRootDomainObject().getSystemSender(), getEmail(), subject, body);
+        Message.fromSystem()
+                .replyToSender()
+                .singleBcc(getEmail())
+                .subject(subject)
+                .textBody(body)
+                .send();
     }
 
     @Atomic
     public void sendEmailForRecommendationDelete() {
-        final String subject =
-                BundleUtil.getString(Bundle.CANDIDATE, "label.application.recomentation.email.subject", getGenericApplication()
-                        .getName());
-        final String body =
-                BundleUtil.getString(Bundle.CANDIDATE, "label.application.recomentation.email.delete.body", getTitle(),
-                        getName(), getGenericApplication().getName(), getGenericApplication().getGenericApplicationPeriod()
-                                .getTitle().getContent());
+        final String subject = BundleUtil.getString(Bundle.CANDIDATE, "label.application.recomentation.email.subject",
+                getGenericApplication().getName());
 
-        new Message(getRootDomainObject().getSystemSender(), getEmail(), subject, body);
+        final String body = BundleUtil.getString(Bundle.CANDIDATE, "label.application.recomentation.email.delete.body",
+                getTitle(), getName(), getGenericApplication().getName(),
+                getGenericApplication().getGenericApplicationPeriod().getTitle().getContent());
+
+        Message.fromSystem().replyToSender()
+                .singleBcc(getEmail())
+                .subject(subject).textBody(body)
+                .send();
     }
 
     private String generateConfirmationLink() {

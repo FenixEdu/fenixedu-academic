@@ -39,7 +39,6 @@ import org.fenixedu.academic.domain.accessControl.UnitGroup;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.util.email.UnitBasedSender;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.spaces.domain.Space;
@@ -111,7 +110,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
     }
 
     public List<CompetenceCourse> getCompetenceCourses(CurricularStage curricularStage) {
-        List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
+        List<CompetenceCourse> result = new ArrayList<>();
         for (ScientificAreaUnit scientificAreaUnit : getScientificAreaUnits()) {
             for (CompetenceCourseGroupUnit competenceCourseGroupUnit : scientificAreaUnit.getCompetenceCourseGroupUnits()) {
                 for (CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
@@ -125,14 +124,13 @@ public class DepartmentUnit extends DepartmentUnit_Base {
     }
 
     public List<ScientificAreaUnit> getScientificAreaUnits() {
-        final SortedSet<ScientificAreaUnit> result =
-                new TreeSet<ScientificAreaUnit>(ScientificAreaUnit.COMPARATOR_BY_NAME_AND_ID);
+        final SortedSet<ScientificAreaUnit> result = new TreeSet<>(ScientificAreaUnit.COMPARATOR_BY_NAME_AND_ID);
         for (Unit unit : getSubUnits()) {
             if (unit.isScientificAreaUnit()) {
                 result.add((ScientificAreaUnit) unit);
             }
         }
-        return new ArrayList<ScientificAreaUnit>(result);
+        return new ArrayList<>(result);
     }
 
     @Override
@@ -232,7 +230,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
             groups.add(TeacherGroup.get(department, currentYear));
             groups.add(UnitGroup.recursiveWorkers(department.getDepartmentUnit()));
 
-            SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+            SortedSet<Degree> degrees = new TreeSet<>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
             degrees.addAll(department.getDegreesSet());
 
             for (Degree degree : degrees) {
@@ -245,7 +243,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 
     public static List<DepartmentUnit> readAllDepartmentUnits() {
         List<Unit> units = readAllUnits();
-        List<DepartmentUnit> departments = new ArrayList<DepartmentUnit>();
+        List<DepartmentUnit> departments = new ArrayList<>();
         for (Unit unit : units) {
             if (unit instanceof DepartmentUnit && unit.getType().equals(PartyTypeEnum.DEPARTMENT)) {
                 departments.add((DepartmentUnit) unit);
@@ -255,21 +253,12 @@ public class DepartmentUnit extends DepartmentUnit_Base {
     }
 
     @Override
-    public UnitBasedSender getOneUnitBasedSender() {
-        if (!getUnitBasedSenderSet().isEmpty()) {
-            return getUnitBasedSenderSet().iterator().next();
-        } else {
-            return UnitBasedSender.newInstance(this);
-        }
-    }
-
-    @Override
     public boolean hasDepartment() {
         return getDepartment() != null;
     }
 
     public Set<ExecutionCourse> getAllExecutionCoursesByExecutionPeriod(final ExecutionSemester executionSemester) {
-        Set<ExecutionCourse> executionCourses = new HashSet<ExecutionCourse>();
+        Set<ExecutionCourse> executionCourses = new HashSet<>();
         for (CompetenceCourse competenceCourse : getCompetenceCourses()) {
             competenceCourse.getExecutionCoursesByExecutionPeriod(executionSemester, executionCourses);
         }

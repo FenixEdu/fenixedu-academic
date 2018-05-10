@@ -107,7 +107,10 @@ public abstract class PhdCandidacyPeriod extends PhdCandidacyPeriod_Base {
         super.edit(start, end);
     }
 
+    // TODO: remove this when PHD alerts are fully migrated to messaging MessageTemplates
     public abstract String getEmailMessageBodyForRefereeForm(final PhdCandidacyReferee referee);
+
+    public abstract void sendEmailForRefereeForm(final PhdCandidacyReferee referee);
 
     public abstract LocalizedString getEmailMessageSubjectForMissingCandidacyValidation(
             final PhdIndividualProgramProcess process);

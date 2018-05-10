@@ -41,9 +41,6 @@ import org.fenixedu.academic.domain.documents.GeneratedDocument;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequest;
-import org.fenixedu.academic.domain.util.email.Message;
-import org.fenixedu.academic.domain.util.email.Recipient;
-import org.fenixedu.academic.domain.util.email.Sender;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestCreateBean;
 import org.fenixedu.academic.predicate.AccessControl;
@@ -51,6 +48,7 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.messaging.core.domain.Message;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
@@ -63,39 +61,28 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     private static final String SERVICE_REQUEST_NUMBER_YEAR_SEPARATOR = "/";
 
-    public static final Comparator<AcademicServiceRequest> COMPARATOR_BY_NUMBER = new Comparator<AcademicServiceRequest>() {
-        @Override
-        public int compare(AcademicServiceRequest o1, AcademicServiceRequest o2) {
-            return o1.getServiceRequestNumber().compareTo(o2.getServiceRequestNumber());
+    public static final Comparator<AcademicServiceRequest> COMPARATOR_BY_NUMBER =
+            Comparator.comparing(AcademicServiceRequest_Base::getServiceRequestNumber);
+
+    public static final Comparator<AcademicServiceRequest> EXECUTION_YEAR_COMPARATOR = (o1, o2) -> {
+        if (o1.getExecutionYear() == null && o2.getExecutionYear() == null) {
+            return 0;
+        } else if (o1.getExecutionYear() != null && o2.getExecutionYear() == null) {
+            return 1;
+        } else if (o1.getExecutionYear() == null && o2.getExecutionYear() != null) {
+            return -1;
         }
+
+        return ExecutionYear.COMPARATOR_BY_YEAR.compare(o1.getExecutionYear(), o2.getExecutionYear());
     };
 
-    public static final Comparator<AcademicServiceRequest> EXECUTION_YEAR_COMPARATOR = new Comparator<AcademicServiceRequest>() {
-        @Override
-        public int compare(AcademicServiceRequest o1, AcademicServiceRequest o2) {
-            if (o1.getExecutionYear() == null && o2.getExecutionYear() == null) {
-                return 0;
-            } else if (o1.getExecutionYear() != null && o2.getExecutionYear() == null) {
-                return 1;
-            } else if (o1.getExecutionYear() == null && o2.getExecutionYear() != null) {
-                return -1;
-            }
+    public static final Comparator<AcademicServiceRequest> EXECUTION_YEAR_AND_OID_COMPARATOR = (o1, o2) -> {
+        final ComparatorChain comparatorChain = new ComparatorChain();
+        comparatorChain.addComparator(EXECUTION_YEAR_COMPARATOR);
+        comparatorChain.addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
 
-            return ExecutionYear.COMPARATOR_BY_YEAR.compare(o1.getExecutionYear(), o2.getExecutionYear());
-        }
+        return comparatorChain.compare(o1, o2);
     };
-
-    public static final Comparator<AcademicServiceRequest> EXECUTION_YEAR_AND_OID_COMPARATOR =
-            new Comparator<AcademicServiceRequest>() {
-                @Override
-                public int compare(AcademicServiceRequest o1, AcademicServiceRequest o2) {
-                    final ComparatorChain comparatorChain = new ComparatorChain();
-                    comparatorChain.addComparator(EXECUTION_YEAR_COMPARATOR);
-                    comparatorChain.addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
-
-                    return comparatorChain.compare(o1, o2);
-                }
-            };
 
     protected AcademicServiceRequest() {
         super();
@@ -161,7 +148,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     final public boolean isUrgentRequest() {
-        return getUrgentRequest().booleanValue();
+        return getUrgentRequest();
     }
 
     public boolean isFreeProcessed() {
@@ -299,7 +286,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
             if (((SpecialSeasonRequest) this).getDeferred() == null) {
                 throw new DomainException("special.season.request.deferment.cant.be.null");
             }
-            if (((SpecialSeasonRequest) this).getDeferred() == true) {
+            if (((SpecialSeasonRequest) this).getDeferred()) {
                 body += "\n" + BundleUtil.getString(Bundle.APPLICATION, "mail.academicServiceRequest.concluded.messageSSR4A");
             } else {
                 body += "\n" + BundleUtil.getString(Bundle.APPLICATION, "mail.academicServiceRequest.concluded.messageSSR4B");
@@ -311,9 +298,12 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
         }
 
-        final Sender sender = getAdministrativeOffice().getUnit().getUnitBasedSenderSet().iterator().next();
-        final Recipient recipient = new Recipient(getPerson().getUser().groupOf());
-        new Message(sender, sender.getReplyTosSet(), recipient.asCollection(), getDescription(), body, "");
+        Message.from(getAdministrativeOffice().getUnit().getSender())
+                .replyToSender()
+                .to(getPerson().getPersonGroup())
+                .subject(getDescription())
+                .textBody(body)
+                .send();
     }
 
     @Atomic

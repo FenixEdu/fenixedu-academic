@@ -51,7 +51,8 @@
 				 schema="markSheet.send.mail.choose.markSheets" layout="tabular-editable">
 			<fr:layout>
 				<fr:property name="classes" value="tstyle4 thlight mtop05"/>
-			    <fr:property name="columnClasses" value=",,"/>
+			    <fr:property name="columnClasses" value="acenter,,"/>
+				<fr:property name="sortBy" value="curricularCourseName" />
 			</fr:layout>
 		</fr:edit>
 		<html:submit><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.write.mail"/></html:submit>
@@ -67,8 +68,7 @@
 				 schema="markSheet.send.mail.choose.executionCourses" layout="tabular-editable">
 			<fr:layout>
 				<fr:property name="classes" value="tstyle4 thlight mtop05"/>
-			    <fr:property name="columnClasses" value="acenter,,acenter,acenter"/>
-			    
+			    <fr:property name="columnClasses" value="acenter,,acenter,acenter,"/>
 			    <fr:property name="sortBy" value="executionCourse.name" />
 			</fr:layout>
 		</fr:edit>

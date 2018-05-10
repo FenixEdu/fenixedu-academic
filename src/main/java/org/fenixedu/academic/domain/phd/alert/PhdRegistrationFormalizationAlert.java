@@ -27,13 +27,12 @@ import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdProgramCalendarUtil;
-import org.fenixedu.academic.domain.util.email.Message;
-import org.fenixedu.academic.domain.util.email.Recipient;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.messaging.core.domain.Message;
 import org.joda.time.LocalDate;
 
 public class PhdRegistrationFormalizationAlert extends PhdRegistrationFormalizationAlert_Base {
@@ -90,8 +89,10 @@ public class PhdRegistrationFormalizationAlert extends PhdRegistrationFormalizat
         Set<Person> members = group.getMembers().map(User::getPerson).collect(Collectors.toSet());
         new PhdAlertMessage(getProcess(), members, getFormattedSubject(), getFormattedBody());
 
-        new Message(getSender(), new Recipient(group), buildMailSubject(), buildMailBody());
-
+        Message.from(getSender()).to(group)
+                .subject(buildMailSubject())
+                .textBody(buildMailBody())
+                .send();
     }
 
     @Override

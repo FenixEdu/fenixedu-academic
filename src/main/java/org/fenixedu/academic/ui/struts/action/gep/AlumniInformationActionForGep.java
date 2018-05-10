@@ -27,10 +27,7 @@ import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 @StrutsFunctionality(app = GepAlumniApp.class, path = "search", titleKey = "label.alumni.search")
 @Mapping(module = "gep", path = "/alumni")
-@Forwards({ @Forward(name = "removeRecipients", path = "/gep/alumni/removeRecipients.jsp"),
-        @Forward(name = "manageRecipients", path = "/gep/alumni/manageRecipients.jsp"),
-        @Forward(name = "alumni.showAlumniStatistics", path = "/gep/alumni/alumniStatistics.jsp"),
-        @Forward(name = "addRecipients", path = "/gep/alumni/addRecipients.jsp"),
+@Forwards({ @Forward(name = "alumni.showAlumniStatistics", path = "/gep/alumni/alumniStatistics.jsp"),
         @Forward(name = "alumni.showAlumniDetails", path = "/gep/alumni/alumniDetails.jsp") })
 public class AlumniInformationActionForGep extends AlumniInformationAction {
 

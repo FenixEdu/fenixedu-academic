@@ -38,9 +38,6 @@ import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.domain.util.email.ExecutionCourseSender;
-import org.fenixedu.academic.domain.util.email.Message;
-import org.fenixedu.academic.domain.util.email.Recipient;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.predicate.ResourceAllocationRolePredicates;
 import org.fenixedu.academic.util.Bundle;
@@ -48,6 +45,7 @@ import org.fenixedu.academic.util.DiaSemana;
 import org.fenixedu.academic.util.WeekDay;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.messaging.core.domain.Message;
 import org.joda.time.Duration;
 
 import pt.ist.fenixframework.Atomic;
@@ -55,31 +53,20 @@ import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class Shift extends Shift_Base {
 
-    public static final Comparator<Shift> SHIFT_COMPARATOR_BY_NAME = new Comparator<Shift>() {
+    public static final Comparator<Shift> SHIFT_COMPARATOR_BY_NAME =
+            (o1, o2) -> Collator.getInstance().compare(o1.getNome(), o2.getNome());
 
-        @Override
-        public int compare(Shift o1, Shift o2) {
-            return Collator.getInstance().compare(o1.getNome(), o2.getNome());
+    public static final Comparator<Shift> SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS = (o1, o2) -> {
+        final int ce = o1.getExecutionCourse().getNome().compareTo(o2.getExecutionCourse().getNome());
+        if (ce != 0) {
+            return ce;
         }
-
-    };
-
-    public static final Comparator<Shift> SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS = new Comparator<Shift>() {
-
-        @Override
-        public int compare(Shift o1, Shift o2) {
-            final int ce = o1.getExecutionCourse().getNome().compareTo(o2.getExecutionCourse().getNome());
-            if (ce != 0) {
-                return ce;
-            }
-            final int cs = o1.getShiftTypesIntegerComparator().compareTo(o2.getShiftTypesIntegerComparator());
-            if (cs != 0) {
-                return cs;
-            }
-            final int cl = o1.getLessonsStringComparator().compareTo(o2.getLessonsStringComparator());
-            return cl == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : cl;
+        final int cs = o1.getShiftTypesIntegerComparator().compareTo(o2.getShiftTypesIntegerComparator());
+        if (cs != 0) {
+            return cs;
         }
-
+        final int cl = o1.getLessonsStringComparator().compareTo(o2.getLessonsStringComparator());
+        return cl == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : cl;
     };
 
     static {
@@ -110,7 +97,7 @@ public class Shift extends Shift_Base {
             throw new DomainException("error.Shift.with.this.name.already.exists");
         }
 
-        if (newCapacity != null && getStudentsSet().size() > newCapacity.intValue()) {
+        if (newCapacity != null && getStudentsSet().size() > newCapacity) {
             throw new DomainException("errors.exception.invalid.finalAvailability");
         }
 
@@ -136,7 +123,7 @@ public class Shift extends Shift_Base {
 
     @Override
     public Set<StudentGroup> getAssociatedStudentGroupsSet() {
-        Set<StudentGroup> result = new HashSet<StudentGroup>();
+        Set<StudentGroup> result = new HashSet<>();
         for (StudentGroup sg : super.getAssociatedStudentGroupsSet()) {
             if (sg.getValid()) {
                 result.add(sg);
@@ -207,7 +194,7 @@ public class Shift extends Shift_Base {
     }
 
     public List<ShiftType> getTypes() {
-        List<ShiftType> result = new ArrayList<ShiftType>();
+        List<ShiftType> result = new ArrayList<>();
         for (CourseLoad courseLoad : getCourseLoadsSet()) {
             result.add(courseLoad.getType());
         }
@@ -215,7 +202,7 @@ public class Shift extends Shift_Base {
     }
 
     public SortedSet<ShiftType> getSortedTypes() {
-        SortedSet<ShiftType> result = new TreeSet<ShiftType>();
+        SortedSet<ShiftType> result = new TreeSet<>();
         for (CourseLoad courseLoad : getCourseLoadsSet()) {
             result.add(courseLoad.getType());
         }
@@ -336,7 +323,7 @@ public class Shift extends Shift_Base {
     }
 
     public SortedSet<Lesson> getLessonsOrderedByWeekDayAndStartTime() {
-        final SortedSet<Lesson> lessons = new TreeSet<Lesson>(Lesson.LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME);
+        final SortedSet<Lesson> lessons = new TreeSet<>(Lesson.LESSON_COMPARATOR_BY_WEEKDAY_AND_STARTTIME);
         lessons.addAll(getAssociatedLessonsSet());
         return lessons;
     }
@@ -359,7 +346,7 @@ public class Shift extends Shift_Base {
     }
 
     public boolean reserveForStudent(final Registration registration) {
-        final boolean result = getLotacao().intValue() > getStudentsSet().size();
+        final boolean result = getLotacao() > getStudentsSet().size();
         if (result || isResourceAllocationManager()) {
             GroupsAndShiftsManagementLog.createLog(getExecutionCourse(), Bundle.MESSAGING,
                     "log.executionCourse.groupAndShifts.shifts.attends.added", registration.getNumber().toString(), getNome(),
@@ -375,7 +362,7 @@ public class Shift extends Shift_Base {
     }
 
     public SortedSet<ShiftEnrolment> getShiftEnrolmentsOrderedByDate() {
-        final SortedSet<ShiftEnrolment> shiftEnrolments = new TreeSet<ShiftEnrolment>(ShiftEnrolment.COMPARATOR_BY_DATE);
+        final SortedSet<ShiftEnrolment> shiftEnrolments = new TreeSet<>(ShiftEnrolment.COMPARATOR_BY_DATE);
         shiftEnrolments.addAll(getShiftEnrolmentsSet());
         return shiftEnrolments;
     }
@@ -436,7 +423,7 @@ public class Shift extends Shift_Base {
     }
 
     public List<Summary> getExtraSummaries() {
-        List<Summary> result = new ArrayList<Summary>();
+        List<Summary> result = new ArrayList<>();
         Set<Summary> summaries = getAssociatedSummariesSet();
         for (Summary summary : summaries) {
             if (summary.isExtraSummary()) {
@@ -519,13 +506,11 @@ public class Shift extends Shift_Base {
                 getExecutionCourse().getNome(), getExecutionCourse().getDegreePresentationString());
         registration.removeShifts(this);
 
-        ExecutionCourseSender sender = ExecutionCourseSender.newInstance(executionCourse);
-        Collection<Recipient> recipients =
-                Collections.singletonList(new Recipient(registration.getPerson().getUser().groupOf()));
-        final String subject = BundleUtil.getString(Bundle.APPLICATION, "label.shift.remove.subject");
-        final String body = BundleUtil.getString(Bundle.APPLICATION, "label.shift.remove.body", getNome());
-
-        new Message(sender, sender.getConcreteReplyTos(), recipients, subject, body, "");
+        Message.from(executionCourse.getSender()).replyToSender()
+                .to(registration.getPerson().getPersonGroup())
+                .subject(BundleUtil.getString(Bundle.APPLICATION, "label.shift.remove.subject"))
+                .textBody(BundleUtil.getString(Bundle.APPLICATION, "label.shift.remove.body", getNome()))
+                .send();
     }
 
     public boolean hasAnyStudentsInAssociatedStudentGroups() {
@@ -586,7 +571,7 @@ public class Shift extends Shift_Base {
     }
 
     public List<StudentGroup> getAssociatedStudentGroups(Grouping grouping) {
-        List<StudentGroup> result = new ArrayList<StudentGroup>();
+        List<StudentGroup> result = new ArrayList<>();
         for (StudentGroup studentGroup : getAssociatedStudentGroupsSet()) {
             if (studentGroup.getGrouping() == grouping) {
                 result.add(studentGroup);
