@@ -26,6 +26,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.messaging.core.ui.MessageBean;
+import org.fenixedu.messaging.core.ui.MessagingUtils;
 
 public class UnitMailSenderAction extends FenixDispatchAction {
 
@@ -35,6 +37,8 @@ public class UnitMailSenderAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        return EmailsDA.sendEmail(request, getUnit(request).getOneUnitBasedSender());
+        MessageBean messageBean = new MessageBean();
+        messageBean.setSender(getUnit(request).getSender());
+        return MessagingUtils.redirectToNewMessage(request, response, messageBean);
     }
 }

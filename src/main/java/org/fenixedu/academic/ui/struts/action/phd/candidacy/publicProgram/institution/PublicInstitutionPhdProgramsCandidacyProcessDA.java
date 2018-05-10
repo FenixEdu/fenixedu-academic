@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.PublicCandidacyHashCode;
 import org.fenixedu.academic.domain.QualificationBean;
@@ -84,10 +85,38 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.messaging.core.domain.Message;
+import org.fenixedu.messaging.core.template.DeclareMessageTemplate;
+import org.fenixedu.messaging.core.template.TemplateParameter;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+
+
+@DeclareMessageTemplate(id = "phd.submission.email.for.candidacy.message.template",
+        description = "phd.submission.email.for.candidacy.message.description",
+        subject = "phd.submission.email.for.candidacy.message.subject",
+        text = "phd.submission.email.for.candidacy.message.body",
+        parameters = {
+                @TemplateParameter(id = "institutionAcronym", description = "phd.submission.email.for.candidacy.message.parameter.institutionAcronym"),
+                @TemplateParameter(id = "candidacyLink", description = "phd.submission.email.for.candidacy.message.parameter.candidacyLink"),
+                @TemplateParameter(id = "hashCodeValue", description = "phd.submission.email.for.candidacy.message.parameter.hashCodeValue")
+        },
+        bundle = Bundle.PHD
+)
+@DeclareMessageTemplate(id = "phd.application.submission.success.email.message.template",
+        description = "phd.application.submission.success.email.message.description",
+        subject = "phd.application.submission.success.email.message.subject",
+        text = "phd.application.submission.success.email.message.body",
+        parameters = {
+                @TemplateParameter(id = "institutionAcronym", description = "phd.application.submission.success.email.message.parameter.institutionAcronym"),
+                @TemplateParameter(id = "candidacyLink", description = "phd.application.submission.success.email.message.parameter.candidacyLink"),
+                @TemplateParameter(id = "hashCodeValue", description = "phd.application.submission.success.email.message.parameter.hashCodeValue"),
+                @TemplateParameter(id = "processNumber", description = "phd.application.submission.success.email.message.parameter.processNumber"),
+        },
+        bundle = Bundle.PHD
+)
 
 @StrutsFunctionality(app = PublicPhdApp.class, path = "candidacy", titleKey = "title.public.phd.program.candidacy")
 @Mapping(path = "/applications/phd/phdProgramApplicationProcess", module = "publico")
@@ -215,14 +244,14 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
     }
 
     private void sendSubmissionEmailForCandidacy(final PublicCandidacyHashCode hashCode, final HttpServletRequest request) {
-        final String subject =
-                BundleUtil.getString(Bundle.PHD, "message.phd.institution.application.email.subject.send.link.to.submission",
-                        Unit.getInstitutionAcronym());
-        final String body =
-                BundleUtil.getString(Bundle.PHD, "message.phd.institution.email.body.send.link.to.submission",
-                        Unit.getInstitutionAcronym());
-        hashCode.sendEmail(subject, String.format(body,
-                InstitutionPhdCandidacyProcessProperties.getPublicCandidacySubmissionLink(I18N.getLocale()), hashCode.getValue()));
+        Message.fromSystem().replyToSender()
+                .singleBcc(hashCode.getEmail())
+                .template("phd.submission.email.for.candidacy.message.template")
+                    .parameter("institutionAcronym", Unit.getInstitutionAcronym())
+                    .parameter("candidacyLink", InstitutionPhdCandidacyProcessProperties.getPublicCandidacySubmissionLink(I18N.getLocale()))
+                    .parameter("hashCodeValue", hashCode.getValue())
+                    .and()
+                .wrapped().send();
     }
 
     /*
@@ -352,14 +381,15 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
         // TODO: if candidacy period exists, then change body message to send
         // candidacy limit end date
 
-        final String subject =
-                BundleUtil.getString(Bundle.PHD, "message.phd.institution.email.subject.application.submited",
-                        Unit.getInstitutionAcronym());
-        final String body =
-                BundleUtil.getString(Bundle.PHD, "message.phd.institution.email.body.application.submited",
-                        Unit.getInstitutionAcronym());
-        hashCode.sendEmail(subject, String.format(body, hashCode.getPhdProgramCandidacyProcess().getProcessNumber(),
-                InstitutionPhdCandidacyProcessProperties.getPublicCandidacyAccessLink(I18N.getLocale()), hashCode.getValue()));
+        Message.fromSystem().replyToSender()
+                .singleBcc(hashCode.getEmail())
+                .template("phd.application.submission.success.email.message.template")
+                    .parameter("institutionAcronym", Unit.getInstitutionAcronym())
+                    .parameter("candidacyLink", InstitutionPhdCandidacyProcessProperties.getPublicCandidacySubmissionLink(I18N.getLocale()))
+                    .parameter("hashCodeValue", hashCode.getValue())
+                    .parameter("processNumber", hashCode.getPhdProgramCandidacyProcess().getProcessNumber())
+                    .and()
+                .wrapped().send();
     }
 
     /*
@@ -396,9 +426,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
     }
 
     private boolean validateProcess(final HttpServletRequest request, final PhdIndividualProgramProcess process) {
-        boolean result = true;
-
-        return validateProcessDocuments(request, process) && result;
+        return validateProcessDocuments(request, process);
     }
 
     private boolean validateProcessDocuments(final HttpServletRequest request, final PhdIndividualProgramProcess process) {

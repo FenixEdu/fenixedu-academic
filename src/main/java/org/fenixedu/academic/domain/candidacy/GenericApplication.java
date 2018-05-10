@@ -25,11 +25,13 @@ import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.period.GenericApplicationPeriod;
 import org.fenixedu.academic.domain.person.IDDocumentType;
-import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
+import org.fenixedu.messaging.core.domain.Message;
+import org.fenixedu.messaging.core.domain.MessagingSystem;
 import pt.ist.fenixframework.Atomic;
 
 import com.google.common.base.Charsets;
@@ -79,7 +81,12 @@ public class GenericApplication extends GenericApplication_Base {
                 BundleUtil.getString(Bundle.CANDIDATE, "label.application.email.body", getApplicationNumber(),
                         generateConfirmationLink(), getGenericApplicationPeriod().getTitle().getContent(),
                         Unit.getInstitutionAcronym());
-        new Message(getRootDomainObject().getSystemSender(), getEmail(), subject, body);
+        Message.fromSystem()
+                .replyToSender()
+                .singleBcc(getEmail())
+                .subject(subject)
+                .textBody(body)
+                .send();
     }
 
     private String generateConfirmationLink() {

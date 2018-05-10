@@ -29,6 +29,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -77,6 +78,7 @@ import org.fenixedu.academic.domain.organizationalStructure.Accountability;
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityType;
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.person.Gender;
 import org.fenixedu.academic.domain.person.IDDocumentType;
 import org.fenixedu.academic.domain.person.IdDocument;
@@ -105,6 +107,8 @@ import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.commons.i18n.LocalizedString.Builder;
+import org.fenixedu.messaging.core.domain.MessagingSystem;
+import org.fenixedu.messaging.core.domain.Sender;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.Months;
@@ -546,9 +550,17 @@ public class Person extends Person_Base {
         }
     }
 
-    @Override
-    public void setDisableSendEmails(Boolean disableSendEmails) {
-        super.setDisableSendEmails(disableSendEmails);
+    public boolean getDisableSendEmails(){
+        return MessagingSystem.getInstance().isOptedOut(getUser());
+    }
+
+    public void setDisableSendEmails(boolean disableSendEmails) {
+        if (disableSendEmails){
+            MessagingSystem.getInstance().optOut(getUser());
+        }
+        else {
+            MessagingSystem.getInstance().optIn(getUser());
+        }
         getProfile().setEmail(getEmailForSendingEmails());
     }
 
@@ -590,7 +602,7 @@ public class Person extends Person_Base {
     }
 
     public static Collection<Person> readByDocumentIdNumber(final String documentIdNumber) {
-        final Collection<Person> result = new HashSet<Person>();
+        final Collection<Person> result = new HashSet<>();
         for (final IdDocument idDocument : IdDocument.find(documentIdNumber)) {
             result.add(idDocument.getPerson());
         }
@@ -604,7 +616,7 @@ public class Person extends Person_Base {
     }
 
     public static Collection<Person> findByDateOfBirth(final YearMonthDay dateOfBirth, final Collection<Person> persons) {
-        final List<Person> result = new ArrayList<Person>();
+        final List<Person> result = new ArrayList<>();
         for (final Person person : persons) {
             if (person.getDateOfBirthYearMonthDay() == null || person.getDateOfBirthYearMonthDay().equals(dateOfBirth)) {
                 result.add(person);
@@ -623,19 +635,13 @@ public class Person extends Person_Base {
 
     public static Collection<Person> readPersonsByNameAndRoleType(final String name, final RoleType roleType) {
         final Collection<Person> people = findPerson(name);
-        for (final Iterator<Person> iter = people.iterator(); iter.hasNext();) {
-            final Person person = iter.next();
-            if (!roleType.isMember(person.getUser())) {
-                iter.remove();
-            }
-        }
+        people.removeIf(person -> !roleType.isMember(person.getUser()));
         return people;
     }
 
     public SortedSet<StudentCurricularPlan> getActiveStudentCurricularPlansSortedByDegreeTypeAndDegreeName() {
         final SortedSet<StudentCurricularPlan> studentCurricularPlans =
-                new TreeSet<StudentCurricularPlan>(
-                        StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME);
+                new TreeSet<>(StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME);
         for (final Registration registration : getStudentsSet()) {
             final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
             if (studentCurricularPlan != null) {
@@ -646,7 +652,7 @@ public class Person extends Person_Base {
     }
 
     public Set<Attends> getCurrentAttends() {
-        final Set<Attends> attends = new HashSet<Attends>();
+        final Set<Attends> attends = new HashSet<>();
         for (final Registration registration : getStudentsSet()) {
             for (final Attends attend : registration.getAssociatedAttendsSet()) {
                 final ExecutionCourse executionCourse = attend.getExecutionCourse();
@@ -660,7 +666,7 @@ public class Person extends Person_Base {
     }
 
     private Set<Event> getEventsFromType(final Class<? extends Event> clazz) {
-        final Set<Event> events = new HashSet<Event>();
+        final Set<Event> events = new HashSet<>();
 
         for (final Event event : getEventsSet()) {
             if (clazz.isAssignableFrom(event.getClass())) {
@@ -681,7 +687,7 @@ public class Person extends Person_Base {
 
     public Set<Event> getNotPayedEventsPayableOn(final AdministrativeOffice administrativeOffice, final Class eventClass,
             final boolean withInstallments) {
-        final Set<Event> result = new HashSet<Event>();
+        final Set<Event> result = new HashSet<>();
 
         Set<Event> events = getEventsFromType(eventClass);
         for (final Event event : events) {
@@ -699,7 +705,7 @@ public class Person extends Person_Base {
     }
 
     public Set<Event> getNotPayedEvents() {
-        final Set<Event> result = new HashSet<Event>();
+        final Set<Event> result = new HashSet<>();
         for (final Event event : getAcademicEvents()) {
             if (event.isOpen()) {
                 result.add(event);
@@ -725,7 +731,7 @@ public class Person extends Person_Base {
     }
 
     public List<Event> getPayedEvents(final Class eventClass) {
-        final List<Event> result = new ArrayList<Event>();
+        final List<Event> result = new ArrayList<>();
         Set<Event> events = getEventsFromType(eventClass);
         for (final Event event : events) {
             if (event.isClosed()) {
@@ -741,7 +747,7 @@ public class Person extends Person_Base {
     }
 
     public List<Event> getEventsWithPayments() {
-        final List<Event> result = new ArrayList<Event>();
+        final List<Event> result = new ArrayList<>();
         for (final Event event : getAcademicEvents()) {
             if (!event.isCancelled() && event.hasAnyPayments()) {
                 result.add(event);
@@ -756,7 +762,7 @@ public class Person extends Person_Base {
     }
 
     public Set<Entry> getPaymentsWithoutReceiptByAdministrativeOffices(final Set<AdministrativeOffice> administrativeOffices) {
-        final Set<Entry> result = new HashSet<Entry>();
+        final Set<Entry> result = new HashSet<>();
 
         for (final Event event : getAcademicEvents()) {
             if (!event.isCancelled() && isPayableOnAnyOfAdministrativeOffices(administrativeOffices, event)) {
@@ -768,7 +774,7 @@ public class Person extends Person_Base {
     }
 
     public Set<Entry> getPayments(final Class eventClass) {
-        final Set<Entry> result = new HashSet<Entry>();
+        final Set<Entry> result = new HashSet<>();
         Set<Event> events = getEventsFromType(eventClass);
         for (final Event event : events) {
             if (!event.isCancelled()) {
@@ -792,7 +798,7 @@ public class Person extends Person_Base {
 
     public Set<? extends Event> getEventsByEventTypes(final Collection<EventType> eventTypes) {
 
-        final Set<Event> result = new HashSet<Event>();
+        final Set<Event> result = new HashSet<>();
 
         for (final EventType eventType : eventTypes) {
             for (final Event event : getAcademicEvents()) {
@@ -811,7 +817,7 @@ public class Person extends Person_Base {
     }
 
     public Set<? extends Event> getEventsByEventTypeAndClass(final EventType eventType, final Class<? extends Event> clazz) {
-        final Set<Event> result = new HashSet<Event>();
+        final Set<Event> result = new HashSet<>();
 
         for (final Event event : getEventsSet()) {
             if (!event.isCancelled() && event.getEventType() == eventType && (clazz == null || event.getClass().equals(clazz))) {
@@ -823,7 +829,7 @@ public class Person extends Person_Base {
     }
 
     public Set<AnnualEvent> getAnnualEventsFor(final ExecutionYear executionYear) {
-        final Set<AnnualEvent> result = new HashSet<AnnualEvent>();
+        final Set<AnnualEvent> result = new HashSet<>();
         for (final Event event : getEventsSet()) {
             if (event instanceof AnnualEvent) {
                 final AnnualEvent annualEvent = (AnnualEvent) event;
@@ -841,7 +847,7 @@ public class Person extends Person_Base {
     }
 
     public Set<InsuranceEvent> getNotCancelledInsuranceEvents() {
-        final Set<InsuranceEvent> result = new HashSet<InsuranceEvent>();
+        final Set<InsuranceEvent> result = new HashSet<>();
 
         for (final Event event : getEventsByEventType(EventType.INSURANCE)) {
             final InsuranceEvent specificEvent = (InsuranceEvent) event;
@@ -854,7 +860,7 @@ public class Person extends Person_Base {
     }
 
     public Set<InsuranceEvent> getNotCancelledInsuranceEventsUntil(final ExecutionYear executionYear) {
-        final Set<InsuranceEvent> result = new HashSet<InsuranceEvent>();
+        final Set<InsuranceEvent> result = new HashSet<>();
 
         for (final Event event : getEventsByEventType(EventType.INSURANCE)) {
             final InsuranceEvent specificEvent = (InsuranceEvent) event;
@@ -884,7 +890,7 @@ public class Person extends Person_Base {
 
     public Set<AdministrativeOfficeFeeAndInsuranceEvent> getNotCancelledAdministrativeOfficeFeeAndInsuranceEvents(
             final AdministrativeOffice office) {
-        final Set<AdministrativeOfficeFeeAndInsuranceEvent> result = new HashSet<AdministrativeOfficeFeeAndInsuranceEvent>();
+        final Set<AdministrativeOfficeFeeAndInsuranceEvent> result = new HashSet<>();
 
         for (final Event event : getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE)) {
             final AdministrativeOfficeFeeAndInsuranceEvent specificEvent = (AdministrativeOfficeFeeAndInsuranceEvent) event;
@@ -898,7 +904,7 @@ public class Person extends Person_Base {
 
     public Set<AdministrativeOfficeFeeAndInsuranceEvent> getNotCancelledAdministrativeOfficeFeeAndInsuranceEventsUntil(
             final AdministrativeOffice office, final ExecutionYear executionYear) {
-        final Set<AdministrativeOfficeFeeAndInsuranceEvent> result = new HashSet<AdministrativeOfficeFeeAndInsuranceEvent>();
+        final Set<AdministrativeOfficeFeeAndInsuranceEvent> result = new HashSet<>();
 
         for (final Event event : getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE)) {
             final AdministrativeOfficeFeeAndInsuranceEvent specificEvent = (AdministrativeOfficeFeeAndInsuranceEvent) event;
@@ -929,7 +935,7 @@ public class Person extends Person_Base {
     }
 
     public Set<Event> getEventsSupportingPaymentByOtherParties() {
-        final Set<Event> result = new HashSet<Event>();
+        final Set<Event> result = new HashSet<>();
         for (final Event event : getEventsSet()) {
             if (!event.isCancelled() && event.isOtherPartiesPaymentsSupported()) {
                 result.add(event);
@@ -940,7 +946,7 @@ public class Person extends Person_Base {
     }
 
     public List<PaymentCode> getPaymentCodesBy(final PaymentCodeType paymentCodeType) {
-        final List<PaymentCode> result = new ArrayList<PaymentCode>();
+        final List<PaymentCode> result = new ArrayList<>();
         for (final PaymentCode paymentCode : getPaymentCodesSet()) {
             if (paymentCode.getType() == paymentCodeType) {
                 result.add(paymentCode);
@@ -965,7 +971,7 @@ public class Person extends Person_Base {
     }
 
     public List<Event> getEventsWithExemptionAppliable() {
-        final List<Event> result = new ArrayList<Event>();
+        final List<Event> result = new ArrayList<>();
         for (final Event event : getEventsSet()) {
             if (!event.isCancelled() && event.isExemptionAppliable()) {
                 result.add(event);
@@ -985,7 +991,7 @@ public class Person extends Person_Base {
     }
 
     public Set<Receipt> getReceiptsByAdministrativeOffices(final Set<AdministrativeOffice> administrativeOffices) {
-        final Set<Receipt> result = new HashSet<Receipt>();
+        final Set<Receipt> result = new HashSet<>();
         for (final Receipt receipt : getReceiptsSet()) {
             for (final AdministrativeOffice administrativeOffice : administrativeOffices) {
                 if (receipt.isFromAdministrativeOffice(administrativeOffice)) {
@@ -1012,7 +1018,7 @@ public class Person extends Person_Base {
 
     @Deprecated
     public Set<Registration> getStudents() {
-        return getStudent() != null ? getStudent().getRegistrationsSet() : Collections.<Registration> emptySet();
+        return getStudent() != null ? getStudent().getRegistrationsSet() : Collections.emptySet();
     }
 
     @Deprecated
@@ -1031,7 +1037,7 @@ public class Person extends Person_Base {
     }
 
     public SortedSet<String> getOrganizationalUnitsPresentation() {
-        final SortedSet<String> organizationalUnits = new TreeSet<String>();
+        final SortedSet<String> organizationalUnits = new TreeSet<>();
         for (final Accountability accountability : getParentsSet()) {
             if (isOrganizationalUnitsForPresentation(accountability)) {
                 final Party party = accountability.getParentParty();
@@ -1072,11 +1078,11 @@ public class Person extends Person_Base {
 
     @Deprecated
     public boolean hasAvailableWebSite() {
-        return getAvailableWebSite() != null && getAvailableWebSite().booleanValue();
+        return getAvailableWebSite() != null && getAvailableWebSite();
     }
 
     public Collection<ExecutionDegree> getCoordinatedExecutionDegrees(final DegreeCurricularPlan degreeCurricularPlan) {
-        final Set<ExecutionDegree> result = new TreeSet<ExecutionDegree>(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
+        final Set<ExecutionDegree> result = new TreeSet<>(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
         for (final Coordinator coordinator : getCoordinatorsSet()) {
             if (coordinator.getExecutionDegree().getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
                 result.add(coordinator.getExecutionDegree());
@@ -1141,7 +1147,7 @@ public class Person extends Person_Base {
     }
 
     public static Collection<Person> findPersonByDocumentID(final String documentIDValue) {
-        final Collection<Person> people = new ArrayList<Person>();
+        final Collection<Person> people = new ArrayList<>();
         if (!StringUtils.isEmpty(documentIDValue)) {
             for (final IdDocument idDocument : IdDocument.find(documentIDValue)) {
                 people.add(idDocument.getPerson());
@@ -1226,7 +1232,7 @@ public class Person extends Person_Base {
     }
 
     public List<Photograph> getPhotographHistory() {
-        final LinkedList<Photograph> history = new LinkedList<Photograph>();
+        final LinkedList<Photograph> history = new LinkedList<>();
         for (Photograph photo = super.getPersonalPhoto(); photo != null; photo = photo.getPrevious()) {
             history.addFirst(photo);
         }
@@ -1307,7 +1313,7 @@ public class Person extends Person_Base {
     }
 
     public List<Formation> getFormations() {
-        final List<Formation> formations = new ArrayList<Formation>();
+        final List<Formation> formations = new ArrayList<>();
         for (final Qualification qualification : getAssociatedQualificationsSet()) {
             if (qualification instanceof Formation) {
                 formations.add((Formation) qualification);
@@ -1322,7 +1328,7 @@ public class Person extends Person_Base {
     }
 
     public Set<AnnualIRSDeclarationDocument> getAnnualIRSDocuments() {
-        final Set<AnnualIRSDeclarationDocument> result = new HashSet<AnnualIRSDeclarationDocument>();
+        final Set<AnnualIRSDeclarationDocument> result = new HashSet<>();
 
         for (final GeneratedDocument each : getAddressedDocumentSet()) {
             if (each instanceof AnnualIRSDeclarationDocument) {
@@ -1396,7 +1402,7 @@ public class Person extends Person_Base {
     }
 
     public Set<PhdAlertMessage> getUnreadedPhdAlertMessages() {
-        final Set<PhdAlertMessage> result = new HashSet<PhdAlertMessage>();
+        final Set<PhdAlertMessage> result = new HashSet<>();
 
         for (final PhdAlertMessage message : getPhdAlertMessagesSet()) {
             if (!message.isReaded()) {
@@ -1419,7 +1425,7 @@ public class Person extends Person_Base {
     }
 
     public List<Professorship> getProfessorships(final ExecutionSemester executionSemester) {
-        final List<Professorship> professorships = new ArrayList<Professorship>();
+        final List<Professorship> professorships = new ArrayList<>();
         for (final Professorship professorship : getProfessorshipsSet()) {
             if (professorship.getExecutionCourse().getExecutionPeriod().equals(executionSemester)) {
                 professorships.add(professorship);
@@ -1429,7 +1435,7 @@ public class Person extends Person_Base {
     }
 
     public List<Professorship> getProfessorships(final ExecutionYear executionYear) {
-        final List<Professorship> professorships = new ArrayList<Professorship>();
+        final List<Professorship> professorships = new ArrayList<>();
         for (final Professorship professorship : getProfessorshipsSet()) {
             if (professorship.getExecutionCourse().getExecutionPeriod().getExecutionYear().equals(executionYear)) {
                 professorships.add(professorship);
@@ -1453,8 +1459,7 @@ public class Person extends Person_Base {
     }
 
     public EmailAddress getEmailAddressForSendingEmails() {
-        final Boolean disableSendEmails = getDisableSendEmails();
-        if (disableSendEmails != null && disableSendEmails.booleanValue()) {
+        if (getDisableSendEmails()) {
             return null;
         }
         final EmailAddress defaultEmailAddress = getDefaultEmailAddress();
@@ -1633,8 +1638,7 @@ public class Person extends Person_Base {
     }
 
     public boolean isOptOutAvailable() {
-        Group optOutGroup = Bennu.getInstance().getSystemSender().getOptOutGroup();
-        return optOutGroup.isMember(this.getUser());
+        return MessagingSystem.getInstance().isOptOutAvailable(this.getUser());
     }
 
     @Deprecated
@@ -1893,5 +1897,26 @@ public class Person extends Person_Base {
 
     public static Group convertToUserGroup(Collection<Person> persons) {
         return Group.users(persons.stream().map(Person::getUser).filter(Objects::nonNull));
+    }
+
+    @Override
+    public Sender getSender() {
+        return Optional.ofNullable(super.getSender()).orElseGet(this::buildDefaultSender);
+    }
+
+    @Atomic
+    private Sender buildDefaultSender() {
+        Sender sender = Sender
+                .from(Installation.getInstance().getInstituitionalEmailAddress("noreply"))
+                .as(createFromName())
+                .replyTo(AccessControl.getPerson().getDefaultEmailAddressValue())
+                .members(getPersonGroup())
+                .build();
+        setSender(sender);
+        return sender;
+    }
+
+    private String createFromName() {
+        return String.format("%s (%s)", Unit.getInstitutionAcronym(), getName());
     }
 }

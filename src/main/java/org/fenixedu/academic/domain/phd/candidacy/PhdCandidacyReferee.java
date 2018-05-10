@@ -26,8 +26,6 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.alert.PhdCandidacyRefereeAlert;
-import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -84,20 +82,11 @@ public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
 
     @Atomic
     public void sendEmail() {
-        sendEmail(createSubject(), createBody());
-    }
-
-    private String createSubject() {
-        return String.format(BundleUtil.getString(Bundle.PHD, "message.phd.email.subject.referee"), getCandidatePerson()
-                .getName(), getCandidatePerson().getName());
+        getPhdProgramCandidacyProcess().getPublicPhdCandidacyPeriod().sendEmailForRefereeForm(this);
     }
 
     public Person getCandidatePerson() {
         return getPhdProgramCandidacyProcess().getPerson();
-    }
-
-    private String createBody() {
-        return getPhdProgramCandidacyProcess().getPublicPhdCandidacyPeriod().getEmailMessageBodyForRefereeForm(this);
     }
 
     public void delete() {
@@ -113,35 +102,11 @@ public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
         setPhdProgramCandidacyProcess(null);
         setRootDomainObject(null);
 
-        List<PhdCandidacyRefereeAlert> alerts = new ArrayList<PhdCandidacyRefereeAlert>();
-        alerts.addAll(getAlertsSet());
+        List<PhdCandidacyRefereeAlert> alerts = new ArrayList<>(getAlertsSet());
 
         for (PhdCandidacyRefereeAlert phdCandidacyRefereeAlert : alerts) {
             removeAlerts(phdCandidacyRefereeAlert);
         }
-    }
-
-    public String getRefereeSubmissionFormLinkPt() {
-        if (getPhdProgramCandidacyProcess().getPublicPhdCandidacyPeriod().isInstitutionCandidacyPeriod()) {
-            InstitutionPhdCandidacyPeriod publicPhdCandidacyPeriod =
-                    (InstitutionPhdCandidacyPeriod) getPhdProgramCandidacyProcess().getPublicPhdCandidacyPeriod();
-
-            return publicPhdCandidacyPeriod.getRefereeSubmissionFormLinkPt(this);
-        }
-
-        return null;
-    }
-
-    public String getRefereeSubmissionFormLinkEn() {
-        if (getPhdProgramCandidacyProcess().getPublicPhdCandidacyPeriod().isInstitutionCandidacyPeriod()) {
-            InstitutionPhdCandidacyPeriod publicPhdCandidacyPeriod =
-                    (InstitutionPhdCandidacyPeriod) getPhdProgramCandidacyProcess().getPublicPhdCandidacyPeriod();
-
-            return publicPhdCandidacyPeriod.getRefereeSubmissionFormLinkEn(this);
-        }
-
-        return null;
-
     }
 
 }
