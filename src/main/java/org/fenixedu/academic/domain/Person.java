@@ -35,6 +35,7 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.accounting.AcademicEvent;
 import org.fenixedu.academic.domain.accounting.Entry;
@@ -1633,8 +1634,8 @@ public class Person extends Person_Base {
     }
 
     public boolean isOptOutAvailable() {
-        Group optOutGroup = Bennu.getInstance().getSystemSender().getOptOutGroup();
-        return optOutGroup.isMember(this.getUser());
+        return BooleanUtils.isTrue(getDisableSendEmails()) || Bennu.getInstance().getSystemSender()
+                                       .getOptOutGroup().isMember(this.getUser());
     }
 
     @Deprecated
