@@ -316,12 +316,12 @@
 
 	<distributionManagement>
 		<repository>
-			<id>qubIT-repo</id>
-			<url>https://repository.qub-it.com/nexus/content/repositories/releases/</url>
+			<id>ulisboa-repo</id>
+			<url>https://nexjen.ulisboa.pt/nexus/content/repositories/releases/</url>
 		</repository>
 		<snapshotRepository>
-			<id>qubIT-repo</id>
-			<url>https://repository.qub-it.com/nexus/content/repositories/snapshots/</url>
+			<id>ulisboa-repo</id>
+			<url>https://nexjen.ulisboa.pt/nexus/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 
@@ -331,16 +331,8 @@
 			<url>http://nexus.ulisboa.pt:8081/nexus/content/groups/public/</url>
 		</repository>
 		<repository>
-			<id>qubIT-repo-obfuscated</id>
-			<url>https://repository.qub-it.com/nexus/content/repositories/nexus_obfuscated</url>
-		</repository>
-		<repository>
-			<id>qubIT-repo-public</id>
-			<url>https://repository.qub-it.com/nexus/content/groups/public</url>
-		</repository>
-		<repository>
-			<id>qubIT-repo</id>
-			<url>https://repository.qub-it.com/nexus/content/groups/qubITRepo</url>
+			<id>fenixedu-maven-repository</id>
+			<url>https://repo.fenixedu.org/fenixedu-maven-repository</url>
 		</repository>
 	</repositories>
 
