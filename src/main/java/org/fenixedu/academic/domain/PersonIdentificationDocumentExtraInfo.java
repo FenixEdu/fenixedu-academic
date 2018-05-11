@@ -26,5 +26,9 @@ public abstract class PersonIdentificationDocumentExtraInfo extends PersonIdenti
         super();
         setRegisteredInSystemTimestamp(new DateTime());
     }
+    
+    public void clearValue() {
+        super.setValue("");
+    }
 
 }

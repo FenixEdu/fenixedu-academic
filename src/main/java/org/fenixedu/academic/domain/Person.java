@@ -513,11 +513,11 @@ public class Person extends Person_Base {
         setNameOfFather(personBean.getFatherName());
 
         if (getPersonIdentificationDocumentExtraInfo(IdentificationDocumentExtraDigit.class) != null) {
-            getPersonIdentificationDocumentExtraInfo(IdentificationDocumentExtraDigit.class).setValue("");
+            getPersonIdentificationDocumentExtraInfo(IdentificationDocumentExtraDigit.class).clearValue();
         }
 
         if (getPersonIdentificationDocumentExtraInfo(IdentificationDocumentSeriesNumber.class) != null) {
-            getPersonIdentificationDocumentExtraInfo(IdentificationDocumentSeriesNumber.class).setValue("");
+            getPersonIdentificationDocumentExtraInfo(IdentificationDocumentSeriesNumber.class).clearValue();
         }
 
         if (getIdDocumentType() == IDDocumentType.IDENTITY_CARD) {
@@ -1562,13 +1562,13 @@ public class Person extends Person_Base {
      */
     public String getIdentificationDocumentSeriesNumber() {
         if (getIdDocumentType() == IDDocumentType.IDENTITY_CARD) {
-        	String seriesNumber = getIdentificationDocumentSeriesNumberValue();
-        	String extraDigit = getIdentificationDocumentExtraDigitValue();
-        	if (seriesNumber != null) {
-        		return seriesNumber;
-        	} else if (extraDigit != null) {
-        		return extraDigit;
-        	}
+            String seriesNumber = getIdentificationDocumentSeriesNumberValue();
+            String extraDigit = getIdentificationDocumentExtraDigitValue();
+            if (StringUtils.isNotBlank(seriesNumber)) {
+                return seriesNumber;
+            } else if (StringUtils.isNotBlank(extraDigit)) {
+                return extraDigit;
+            }
         }
         return "";
     }
