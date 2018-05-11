@@ -1557,6 +1557,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public String getName() {
         return getNome();
     }
+    
+    public String getCode() {
+        return getCompetenceCourses().stream().map(cc -> cc.getCode()).distinct().collect(Collectors.joining(", "));
+    }
 
     public String getPrettyAcronym() {
         return getSigla().replaceAll("[0-9]", "");
