@@ -23,6 +23,7 @@ import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.accounting.events.insurance.IInsuranceEvent;
 import org.fenixedu.academic.domain.accounting.events.insurance.InsuranceEvent;
+import org.fenixedu.academic.domain.accounting.postingRules.InsurancePR;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.Money;
@@ -87,6 +88,12 @@ public class InsuranceExemption extends InsuranceExemption_Base {
 
     @Override
     public Money getExemptionAmount(Money money) {
-        return money;
+        final Event event = getEvent();
+        if (event instanceof InsuranceEvent) {
+            return ((InsurancePR)event.getPostingRule()).getFixedAmount();
+        } else if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent){
+            return ((AdministrativeOfficeFeeAndInsuranceEvent)event).getInsuranceAmount();
+        }
+        throw new DomainException("no amount for type %s%n", event.getClass().getSimpleName());
     }
 }

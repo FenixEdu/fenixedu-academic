@@ -89,6 +89,7 @@ public class AdministrativeOfficeFeeAndInsuranceExemption extends Administrative
 
     @Override
     public Money getExemptionAmount(Money money) {
-        return money;
+        final AdministrativeOfficeFeeAndInsuranceEvent event = (AdministrativeOfficeFeeAndInsuranceEvent) getEvent();
+        return event.getInsuranceAmount().add(event.getAdministrativeOfficeFeeAmount());
     }
 }

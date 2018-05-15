@@ -288,9 +288,13 @@ public class DebtInterestCalculator {
 
     public String exportToString() {
         StringBuilder builder = new StringBuilder();
+
         getDebtStream().forEach(debt -> {
-            builder.append(String.format("%s %s %s %s%n", debt.getClass().getSimpleName(), debt.getDueDate().toString("dd/MM/yyyy"), debt.getOriginalAmount(), debt.isToExemptInterest()));
+            builder.append(String.format("%s %s %s %s %s%n", debt.getClass().getSimpleName(),
+                                         debt.getDueDate().toString("dd/MM/yyyy"),
+                debt.getOriginalAmount(), debt.isToExemptInterest(), debt.isToExemptFine()));
         });
+
         getCreditEntriesByCreationDate().forEach(creditEntry -> {
             builder.append(String.format("%s %s %s %s%n", creditEntry.getClass().getSimpleName(),
                                          creditEntry.getCreated().toString(),

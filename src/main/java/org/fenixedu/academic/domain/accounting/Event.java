@@ -529,7 +529,6 @@ public abstract class Event extends Event_Base {
     /**
      * Should return entries representing the due date and the corresponding amount
      *
-     * @return plot entry for the total amount divided by plot
      */
     public final Map<LocalDate, Money> getDueDateAmountMap(DateTime when) {
         return getDueDateAmountMap(getPostingRule(), when);
