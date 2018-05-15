@@ -67,19 +67,20 @@ public class InstallmentPenaltyExemption extends InstallmentPenaltyExemption_Bas
     protected void init(PenaltyExemptionJustificationType penaltyExemptionType,
             GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan, Person responsible, Installment installment,
             String comments, YearMonthDay directiveCouncilDispatchDate) {
-        super.init(penaltyExemptionType, gratuityEventWithPaymentPlan, responsible, comments, directiveCouncilDispatchDate);
         checkParameters(installment);
-        checkRulesToCreate(gratuityEventWithPaymentPlan, installment);
         super.setInstallment(installment);
+        super.init(penaltyExemptionType, gratuityEventWithPaymentPlan, responsible, comments, directiveCouncilDispatchDate);
+        checkRulesToCreate(gratuityEventWithPaymentPlan, installment);
     }
 
     private void checkRulesToCreate(final GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan, final Installment installment) {
-        if (gratuityEventWithPaymentPlan.hasPenaltyExemptionFor(installment)) {
+        if (gratuityEventWithPaymentPlan
+                .getInstallmentPenaltyExemptions()
+                .stream()
+                .anyMatch(exemption -> exemption.getInstallment() == installment && exemption != this)) {
             throw new DomainException(
                     "error.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption.event.already.has.penalty.exemption.for.installment");
-
         }
-
     }
 
     private void checkParameters(Installment installment) {
