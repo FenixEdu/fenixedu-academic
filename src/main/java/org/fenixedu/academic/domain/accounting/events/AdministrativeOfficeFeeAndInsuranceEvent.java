@@ -46,6 +46,7 @@ import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPayme
 import org.fenixedu.academic.domain.accounting.postingRules.AdministrativeOfficeFeeAndInsurancePR;
 import org.fenixedu.academic.domain.accounting.postingRules.AdministrativeOfficeFeePR;
 import org.fenixedu.academic.domain.accounting.postingRules.IAdministrativeOfficeFeeAndInsurancePR;
+import org.fenixedu.academic.domain.accounting.postingRules.PastAdministrativeOfficeFeeAndInsurancePR;
 import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.candidacy.Candidacy;
@@ -141,12 +142,12 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
         return getAdministrativeOfficeFeePayedAmount().lessThan(getAdministrativeOfficeFeeAmount());
     }
 
-    private AdministrativeOfficeFeeAndInsurancePR getAdministrativeOfficeFeeAndInsurancePR() {
-        return (AdministrativeOfficeFeeAndInsurancePR) getPostingRule();
+    private IAdministrativeOfficeFeeAndInsurancePR getAdministrativeOfficeFeeAndInsurancePR() {
+        return (IAdministrativeOfficeFeeAndInsurancePR) getPostingRule();
     }
 
     public Money getAdministrativeOfficeFeeAmount() {
-        return getAdministrativeOfficeFeeAndInsurancePR().getAdministrativeOfficeFeeAmount(getStartDate(), getEndDate());
+        return getAdministrativeOfficeFeeAndInsurancePR().getAdministrativeOfficeFeeAmount(this,getStartDate(), getEndDate());
     }
 
     public YearMonthDay getAdministrativeOfficeFeePaymentLimitDate() {
@@ -155,11 +156,18 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
     }
 
     public Money getAdministrativeOfficeFeePenaltyAmount() {
-        return getAdministrativeOfficeFeeAndInsurancePR().getAdministrativeOfficeFeePenaltyAmount(getStartDate(), getEndDate());
+        return getAdministrativeOfficeFeeAndInsurancePR().getAdministrativeOfficeFeePenaltyAmount(this,getStartDate(), getEndDate());
     }
 
     public Money getInsuranceAmount() {
-        return getAdministrativeOfficeFeeAndInsurancePR().getInsuranceAmount(getStartDate(), getEndDate());
+        PostingRule postingRule = getPostingRule();
+        if (postingRule instanceof AdministrativeOfficeFeeAndInsurancePR) {
+            return ((AdministrativeOfficeFeeAndInsurancePR)postingRule).getInsuranceAmount(getStartDate(), getEndDate());
+        } else if (postingRule instanceof PastAdministrativeOfficeFeeAndInsurancePR) {
+            return Money.ZERO;
+        } else {
+            throw new UnsupportedOperationException(String.format("no value for %s%n", postingRule.getClass()));
+        }
     }
 
     @Override

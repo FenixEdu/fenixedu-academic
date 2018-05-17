@@ -56,5 +56,18 @@ public class PastAdministrativeOfficeFeeAndInsurancePR extends PastAdministrativ
         return endDate.toYearMonthDay();
     }
 
+    @Override
+    public Money getInsuranceAmount(DateTime startDate, DateTime endDate) {
+        return Money.ZERO;
+    }
 
+    @Override
+    public Money getAdministrativeOfficeFeeAmount(Event event, DateTime startDate, DateTime endDate) {
+        return ((PastAdministrativeOfficeFeeAndInsuranceEvent) event).getPastAdministrativeOfficeFeeAndInsuranceAmount();
+    }
+
+    @Override
+    public Money getAdministrativeOfficeFeePenaltyAmount(Event event, DateTime startDate, DateTime endDate) {
+        return Money.ZERO;
+    }
 }

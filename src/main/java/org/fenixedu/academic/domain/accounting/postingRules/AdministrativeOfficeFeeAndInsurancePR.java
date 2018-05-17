@@ -136,20 +136,22 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
         return false;
     }
 
-    public Money getAdministrativeOfficeFeeAmount(DateTime startDate, DateTime endDate) {
-        return getPostingRuleForAdministrativeOfficeFee(startDate, endDate).getFixedAmount();
-    }
-
     public YearMonthDay getAdministrativeOfficeFeePaymentLimitDate(DateTime startDate, DateTime endDate) {
         return getPostingRuleForAdministrativeOfficeFee(startDate, endDate).getWhenToApplyFixedAmountPenalty();
     }
 
-    public Money getAdministrativeOfficeFeePenaltyAmount(DateTime startDate, DateTime endDate) {
-        return getPostingRuleForAdministrativeOfficeFee(startDate, endDate).getFixedAmountPenalty();
-    }
-
     public Money getInsuranceAmount(DateTime startDate, DateTime endDate) {
         return getPostingRuleForInsurance(startDate, endDate).getFixedAmount();
+    }
+
+    @Override
+    public Money getAdministrativeOfficeFeeAmount(Event event, DateTime startDate, DateTime endDate) {
+        return getPostingRuleForAdministrativeOfficeFee(startDate, endDate).getFixedAmount();
+    }
+
+    @Override
+    public Money getAdministrativeOfficeFeePenaltyAmount(Event event, DateTime startDate, DateTime endDate) {
+        return getPostingRuleForAdministrativeOfficeFee(startDate, endDate).getFixedAmountPenalty();
     }
 
     @Override

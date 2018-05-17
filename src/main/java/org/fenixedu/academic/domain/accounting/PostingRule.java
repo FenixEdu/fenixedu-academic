@@ -368,10 +368,6 @@ public abstract class PostingRule extends PostingRule_Base {
     }
 
     public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-            return calculateEntriesForFineAndInterest(event, when);
-    }
-
-    public List<EntryDTO> calculateEntriesForFineAndInterest(Event event, DateTime when) {
         final List<EntryDTO> result = new ArrayList<>();
 
         final DebtInterestCalculator debtInterestCalculator = event.getDebtInterestCalculator(this, when);
