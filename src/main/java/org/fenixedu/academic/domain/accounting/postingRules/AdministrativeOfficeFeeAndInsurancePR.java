@@ -1,38 +1,24 @@
 /**
  * Copyright © 2002 Instituto Superior Técnico
- *
+ * <p>
  * This file is part of FenixEdu Academic.
- *
+ * <p>
  * FenixEdu Academic is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * FenixEdu Academic is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.fenixedu.academic.domain.accounting.postingRules;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.fenixedu.academic.domain.accounting.Account;
-import org.fenixedu.academic.domain.accounting.AccountingTransaction;
-import org.fenixedu.academic.domain.accounting.Entry;
-import org.fenixedu.academic.domain.accounting.EntryType;
-import org.fenixedu.academic.domain.accounting.Event;
-import org.fenixedu.academic.domain.accounting.EventType;
-import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
+import org.fenixedu.academic.domain.accounting.*;
 import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import org.fenixedu.academic.domain.accounting.events.AnnualEvent;
 import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate;
@@ -46,7 +32,10 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeFeeAndInsurancePR_Base implements IAdministrativeOfficeFeeAndInsurancePR {
+import java.util.*;
+
+public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeFeeAndInsurancePR_Base
+        implements IAdministrativeOfficeFeeAndInsurancePR {
 
     protected AdministrativeOfficeFeeAndInsurancePR() {
         super();
@@ -57,36 +46,30 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
         this();
         super.init(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE, startDate, endDate, serviceAgreementTemplate);
     }
-    @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-        final AnnualEvent annualEvent = (AnnualEvent) event;
-        return getPostingRuleForAdministrativeOfficeFee(annualEvent.getStartDate(), annualEvent.getEndDate())
-                .calculateTotalAmountToPay(event, when, applyDiscount).add(
-                        getPostingRuleForInsurance(annualEvent.getStartDate(), annualEvent.getEndDate())
-                                .calculateTotalAmountToPay(event, when, applyDiscount));
+
+    @Override protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+        throw new UnsupportedOperationException("use getAdministrativeOfficeFeeAmount and getInsuranceAmount");
     }
-    
-    @Override
-    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
+
+    @Override public List<EntryDTO> calculateEntries(Event event, DateTime when) {
 
         final List<EntryDTO> result = new ArrayList<EntryDTO>();
         final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent =
-            (AdministrativeOfficeFeeAndInsuranceEvent) event;
+                (AdministrativeOfficeFeeAndInsuranceEvent) event;
         final AnnualEvent annualEvent = (AnnualEvent) event;
         if (administrativeOfficeFeeAndInsuranceEvent.hasToPayAdministrativeOfficeFee()) {
             result.addAll(getPostingRuleForAdministrativeOfficeFee(annualEvent.getStartDate(), annualEvent.getEndDate())
-                              .calculateEntries(event, when));
+                    .calculateEntries(event, when));
         }
         if (administrativeOfficeFeeAndInsuranceEvent.hasToPayInsurance()) {
-            result.addAll(getPostingRuleForInsurance(annualEvent.getStartDate(), annualEvent.getEndDate()).calculateEntries(
-                event, when));
+            result.addAll(getPostingRuleForInsurance(annualEvent.getStartDate(), annualEvent.getEndDate())
+                    .calculateEntries(event, when));
         }
 
         return result;
     }
 
-    @Override
-    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
+    @Override protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
             Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 
         final Set<AccountingTransaction> result = new HashSet<AccountingTransaction>();
@@ -96,21 +79,22 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
 
             if (entryDTO.getEntryType() == EntryType.INSURANCE_FEE) {
 
-                createdEntries.addAll(getPostingRuleForInsurance(annualEvent.getStartDate(), annualEvent.getEndDate()).process(
-                        user, Collections.singletonList(entryDTO), event, fromAccount, toAccount, transactionDetail));
+                createdEntries.addAll(getPostingRuleForInsurance(annualEvent.getStartDate(), annualEvent.getEndDate())
+                        .process(user, Collections.singletonList(entryDTO), event, fromAccount, toAccount, transactionDetail));
 
             } else if (entryDTO.getEntryType() == EntryType.ADMINISTRATIVE_OFFICE_FEE) {
-                createdEntries.addAll(getPostingRuleForAdministrativeOfficeFee(annualEvent.getStartDate(),
-                        annualEvent.getEndDate()).process(user, Collections.singletonList(entryDTO), event, fromAccount,
-                        toAccount, transactionDetail));
+                createdEntries
+                        .addAll(getPostingRuleForAdministrativeOfficeFee(annualEvent.getStartDate(), annualEvent.getEndDate())
+                                .process(user, Collections.singletonList(entryDTO), event, fromAccount, toAccount,
+                                        transactionDetail));
             } else {
                 throw new DomainException(
                         "error.accounting.postingRules.AdministrativeOfficeFeeAndInsurancePR.invalid.entry.type");
             }
         }
 
-        ((AdministrativeOfficeFeeAndInsuranceEvent) event).changePaymentCodeState(transactionDetail.getWhenRegistered(),
-                transactionDetail.getPaymentMode());
+        ((AdministrativeOfficeFeeAndInsuranceEvent) event)
+                .changePaymentCodeState(transactionDetail.getWhenRegistered(), transactionDetail.getPaymentMode());
 
         for (final Entry entry : createdEntries) {
             result.add(entry.getAccountingTransaction());
@@ -120,21 +104,20 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
     }
 
     private FixedAmountPR getPostingRuleForInsurance(DateTime startDate, DateTime endDate) {
-        return (FixedAmountPR) getServiceAgreementTemplateForInsurance().findPostingRuleBy(EventType.INSURANCE, startDate,
-                endDate);
+        return (FixedAmountPR) getServiceAgreementTemplateForInsurance()
+                .findPostingRuleBy(EventType.INSURANCE, startDate, endDate);
     }
 
     private AdministrativeOfficeFeePR getPostingRuleForAdministrativeOfficeFee(DateTime startDate, DateTime endDate) {
-        return (AdministrativeOfficeFeePR) getServiceAgreementTemplate().findPostingRuleBy(EventType.ADMINISTRATIVE_OFFICE_FEE,
-                startDate, endDate);
+        return (AdministrativeOfficeFeePR) getServiceAgreementTemplate()
+                .findPostingRuleBy(EventType.ADMINISTRATIVE_OFFICE_FEE, startDate, endDate);
     }
 
     public UnitServiceAgreementTemplate getServiceAgreementTemplateForInsurance() {
         return Bennu.getInstance().getInstitutionUnit().getUnitServiceAgreementTemplate();
     }
 
-    @Override
-    public boolean isVisible() {
+    @Override public boolean isVisible() {
         return false;
     }
 
@@ -146,44 +129,39 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
         return getPostingRuleForInsurance(startDate, endDate).getFixedAmount();
     }
 
-    @Override
-    public Money getAdministrativeOfficeFeeAmount(Event event, DateTime startDate, DateTime endDate) {
+    @Override public Money getAdministrativeOfficeFeeAmount(Event event, DateTime startDate, DateTime endDate) {
         return getPostingRuleForAdministrativeOfficeFee(startDate, endDate).getFixedAmount();
     }
 
-    @Override
-    public Money getAdministrativeOfficeFeePenaltyAmount(Event event, DateTime startDate, DateTime endDate) {
+    @Override public Money getAdministrativeOfficeFeePenaltyAmount(Event event, DateTime startDate, DateTime endDate) {
         return getPostingRuleForAdministrativeOfficeFee(startDate, endDate).getFixedAmountPenalty();
     }
 
-    @Override
-    public AccountingTransaction depositAmount(User responsibleUser, Event event, Account fromAcount, Account toAccount,
+    @Override public AccountingTransaction depositAmount(User responsibleUser, Event event, Account fromAcount, Account toAccount,
             Money amount, EntryType entryType, AccountingTransactionDetailDTO transactionDetailDTO) {
 
         final AnnualEvent annualEvent = (AnnualEvent) event;
 
         if (entryType == EntryType.INSURANCE_FEE) {
-            return getPostingRuleForInsurance(annualEvent.getStartDate(), annualEvent.getEndDate()).depositAmount(
-                    responsibleUser, event, fromAcount, toAccount, amount, transactionDetailDTO);
+            return getPostingRuleForInsurance(annualEvent.getStartDate(), annualEvent.getEndDate())
+                    .depositAmount(responsibleUser, event, fromAcount, toAccount, amount, transactionDetailDTO);
 
         } else if (entryType == EntryType.ADMINISTRATIVE_OFFICE_FEE) {
-            return getPostingRuleForAdministrativeOfficeFee(annualEvent.getStartDate(), annualEvent.getEndDate()).depositAmount(
-                    responsibleUser, event, fromAcount, toAccount, amount, transactionDetailDTO);
+            return getPostingRuleForAdministrativeOfficeFee(annualEvent.getStartDate(), annualEvent.getEndDate())
+                    .depositAmount(responsibleUser, event, fromAcount, toAccount, amount, transactionDetailDTO);
 
         } else {
             throw new DomainException("error.AdministrativeOfficeFeeAndInsurancePR.unsupported.entry.type");
         }
     }
 
-    @Override
-    protected EntryType getEntryType() {
+    @Override protected EntryType getEntryType() {
         return EntryType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE;
     }
 
-    @Override
-    public Map<LocalDate, Money> getDueDatePenaltyAmountMap(Event event) {
+    @Override public Map<LocalDate, Money> getDueDatePenaltyAmountMap(Event event) {
         final AnnualEvent annualEvent = (AnnualEvent) event;
         return getPostingRuleForAdministrativeOfficeFee(annualEvent.getStartDate(), annualEvent.getEndDate())
-                   .getDueDatePenaltyAmountMap(annualEvent);
+                .getDueDatePenaltyAmountMap(annualEvent);
     }
 }
