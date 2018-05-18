@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.accounting.Account;
@@ -42,6 +43,7 @@ import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeFeeAndInsurancePR_Base implements IAdministrativeOfficeFeeAndInsurancePR {
@@ -178,4 +180,10 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
         return EntryType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE;
     }
 
+    @Override
+    public Map<LocalDate, Money> getDueDatePenaltyAmountMap(Event event) {
+        final AnnualEvent annualEvent = (AnnualEvent) event;
+        return getPostingRuleForAdministrativeOfficeFee(annualEvent.getStartDate(), annualEvent.getEndDate())
+                   .getDueDatePenaltyAmountMap(annualEvent);
+    }
 }
