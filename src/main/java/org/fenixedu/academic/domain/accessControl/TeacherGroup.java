@@ -194,7 +194,7 @@ public class TeacherGroup extends FenixGroup {
 
     @Override
     public boolean isMember(User user) {
-        if (user == null) {
+        if (user == null || user.getPerson() == null) {
             return false;
         }
         if (user.getPerson().getTeacher() != null) {
@@ -207,21 +207,15 @@ public class TeacherGroup extends FenixGroup {
                         }
                     }
                 }
-                if (executionCourse != null) {
-                    if (course.equals(executionCourse)) {
-                        return true;
-                    }
-                }
-                if (campus != null) {
-                    if (course.functionsAt(campus)) {
-                        return true;
-                    }
-                }
-            }
-            if (department != null) {
-                if (department.equals(user.getPerson().getTeacher().getLastDepartment(getExecutionYear().getAcademicInterval()))) {
+                if (executionCourse != null && course.equals(executionCourse)) {
                     return true;
                 }
+                if (campus != null && course.functionsAt(campus)) {
+                    return true;
+                }
+            }
+            if (department != null && department.equals(user.getPerson().getTeacher().getLastDepartment(getExecutionYear().getAcademicInterval()))) {
+                return true;
             }
         }
         return false;
