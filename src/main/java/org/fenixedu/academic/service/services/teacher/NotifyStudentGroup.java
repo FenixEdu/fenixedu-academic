@@ -20,21 +20,19 @@ package org.fenixedu.academic.service.services.teacher;
 
 import static org.fenixedu.academic.predicate.AccessControl.check;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.ProjectSubmission;
-import org.fenixedu.academic.domain.util.email.ExecutionCourseSender;
-import org.fenixedu.academic.domain.util.email.Message;
-import org.fenixedu.academic.domain.util.email.Recipient;
-import org.fenixedu.academic.domain.util.email.Sender;
 import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.domain.groups.NamedGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
+import org.fenixedu.commons.i18n.LocalizedString;
+import org.fenixedu.messaging.core.domain.Message;
 import pt.ist.fenixframework.Atomic;
 
 public class NotifyStudentGroup {
@@ -43,18 +41,17 @@ public class NotifyStudentGroup {
     public static void run(ProjectSubmission submission, ExecutionCourse course, Person person) {
         check(RolePredicates.TEACHER_PREDICATE);
 
-        Set<Person> recievers = new HashSet<Person>();
+        Set<Person> receivers = submission.getStudentGroup().getAttendsSet().stream()
+                .map(attend -> attend.getRegistration().getStudent().getPerson()).collect(Collectors.toSet());
 
-        for (Attends attend : submission.getStudentGroup().getAttendsSet()) {
-            recievers.add(attend.getRegistration().getStudent().getPerson());
-        }
+        final LocalizedString groupName =
+                BundleUtil.getLocalizedString(Bundle.GLOBAL, "label.group", submission.getStudentGroup().getGroupNumber().toString());
 
-        final String groupName =
-                BundleUtil.getString(Bundle.GLOBAL, "label.group", new String[] { submission.getStudentGroup().getGroupNumber()
-                        .toString() });
-        Sender sender = ExecutionCourseSender.newInstance(course);
-        Recipient recipient = new Recipient(groupName, Person.convertToUserGroup(recievers));
-        new Message(sender, sender.getConcreteReplyTos(), recipient.asCollection(), submission.getProject().getName(),
-                submission.getTeacherObservation(), "");
+        Message.from(course.getSender())
+                .replyToSender()
+                .to(new NamedGroup(groupName, Person.convertToUserGroup(receivers)))
+                .subject(submission.getProject().getName())
+                .textBody(submission.getTeacherObservation())
+                .send();
     }
 }

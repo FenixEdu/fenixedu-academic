@@ -18,12 +18,11 @@
  */
 package org.fenixedu.academic.domain.candidacy;
 
-import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.FileUtils;
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.messaging.core.domain.Message;
 
 public class GenericApplicationLetterOfRecomentation extends GenericApplicationLetterOfRecomentation_Base {
 
@@ -57,13 +56,15 @@ public class GenericApplicationLetterOfRecomentation extends GenericApplicationL
     }
 
     public void sendEmailForRecommendationUploadNotification() {
-        final String subject =
-                BundleUtil.getString(Bundle.CANDIDATE, "label.application.recomentation.upload.notification.email.subject");
-        final String body =
-                BundleUtil.getString(Bundle.CANDIDATE, "label.application.recomentation.upload.notification.email.body",
+        final String subject = BundleUtil.getString(Bundle.CANDIDATE, "label.application.recomentation.upload.notification.email.subject");
+
+        final String body = BundleUtil.getString(Bundle.CANDIDATE, "label.application.recomentation.upload.notification.email.body",
                         getRecomentation().getName(), getRecomentation().getInstitution());
 
-        new Message(Bennu.getInstance().getSystemSender(), getRecomentation().getGenericApplication().getEmail(), subject, body);
+        Message.fromSystem().replyToSender()
+                .singleBcc(getRecomentation().getGenericApplication().getEmail())
+                .subject(subject).textBody(body)
+                .send();
     }
 
 }

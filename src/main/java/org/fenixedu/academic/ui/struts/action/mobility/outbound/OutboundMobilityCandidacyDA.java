@@ -39,9 +39,6 @@ import org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyC
 import org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyPeriod;
 import org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption;
 import org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacySubmission;
-import org.fenixedu.academic.domain.util.email.EmailBean;
-import org.fenixedu.academic.domain.util.email.PersonSender;
-import org.fenixedu.academic.domain.util.email.Recipient;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication.AcademicAdminCandidaciesApp;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
@@ -53,8 +50,13 @@ import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
+import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 
+import org.fenixedu.bennu.core.domain.groups.NamedGroup;
+import org.fenixedu.messaging.core.ui.MessageBean;
+import org.fenixedu.messaging.core.ui.MessagingUtils;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 
@@ -64,8 +66,7 @@ import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumR
 @Forwards({ @Forward(name = "prepare", path = "/mobility/outbound/OutboundMobilityCandidacy.jsp"),
         @Forward(name = "viewContest", path = "/mobility/outbound/viewContest.jsp"),
         @Forward(name = "manageCandidacies", path = "/mobility/outbound/manageCandidacies.jsp"),
-        @Forward(name = "viewCandidate", path = "/mobility/outbound/viewCandidate.jsp"),
-        @Forward(name = "sendEmail", path = "/messaging/emails.do?method=newEmail") })
+        @Forward(name = "viewCandidate", path = "/mobility/outbound/viewCandidate.jsp")})
 public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
 
     @EntryPoint
@@ -438,32 +439,25 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
     }
 
     public ActionForward sendEmailToCandidates(final ActionMapping mapping, final ActionForm actionForm,
-            final HttpServletRequest request, final HttpServletResponse response) throws IOException {
+            final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         final OutboundMobilityCandidacyPeriod period = getDomainObject(request, "candidacyPeriodOid");
         final OutboundMobilityCandidacyContestGroup mobilityGroup = getDomainObject(request, "mobilityGroupOid");
 
-        final String toGroupName =
-                BundleUtil.getString(Bundle.ACADEMIC, "label.send.email.to.candidates.group.to.name",
+        final LocalizedString toGroupName =
+                BundleUtil.getLocalizedString(Bundle.ACADEMIC, "label.send.email.to.candidates.group.to.name",
                         mobilityGroup.getDescription(), period.getExecutionInterval().getName());
         final Group group =
                 Group.users(period.getOutboundMobilityCandidacySubmissionSet().stream()
                         .filter(s -> s.hasContestInGroup(mobilityGroup)).map(s -> s.getRegistration().getPerson().getUser()));
 
-        final Recipient recipient = Recipient.newInstance(toGroupName, group);
-        final EmailBean bean = new EmailBean();
-        bean.setRecipients(Collections.singletonList(recipient));
+        final NamedGroup namedGroup = new NamedGroup(toGroupName, group);
 
-        final Person person = AccessControl.getPerson();
-        if (person != null) {
-            final PersonSender sender = person.getSender();
-            if (sender != null) {
-                bean.setSender(sender);
-            }
-        }
+        final MessageBean messageBean = new MessageBean();
+        messageBean.setLockedSender(AccessControl.getPerson().getSender());
+        messageBean.addAdHocRecipient(namedGroup);
+        messageBean.selectRecipient(namedGroup);
 
-        request.setAttribute("emailBean", bean);
-
-        return mapping.findForward("sendEmail");
+        return MessagingUtils.redirectToNewMessage(request, response, messageBean);
     }
 
     public ActionForward deleteOption(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,

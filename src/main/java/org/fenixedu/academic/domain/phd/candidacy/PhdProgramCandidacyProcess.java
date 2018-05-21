@@ -114,7 +114,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
         }
     }
 
-    static private List<Activity> activities = new ArrayList<Activity>();
+    static private List<Activity> activities = new ArrayList<>();
     static {
         activities.add(new UploadDocuments());
         activities.add(new DeleteDocument());
@@ -301,7 +301,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     public boolean isValidatedByCandidate() {
-        return getValidatedByCandidate() != null && getValidatedByCandidate().booleanValue();
+        return getValidatedByCandidate() != null && getValidatedByCandidate();
     }
 
     public boolean isOngoingApplicationAndValidatedByApplicant() {
@@ -535,7 +535,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
         return hasPhdProgram() ? getPhdProgram().getDegree().getLastActiveDegreeCurricularPlan() : null;
     }
 
-    PhdProgram getPhdProgram() {
+    public PhdProgram getPhdProgram() {
         return getIndividualProgramProcess().getPhdProgram();
     }
 
@@ -560,7 +560,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     public boolean hasActiveRegistrationFor(DegreeCurricularPlan degreeCurricularPlan) {
-        return getPerson().getStudent() != null ? getPerson().getStudent().hasActiveRegistrationFor(degreeCurricularPlan) : false;
+        return getPerson().getStudent() != null && getPerson().getStudent().hasActiveRegistrationFor(degreeCurricularPlan);
     }
 
     public LocalDate getWhenStartedStudies() {

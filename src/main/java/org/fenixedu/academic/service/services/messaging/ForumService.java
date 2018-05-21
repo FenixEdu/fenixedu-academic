@@ -21,25 +21,22 @@
  */
 package org.fenixedu.academic.service.services.messaging;
 
-import java.text.MessageFormat;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.messaging.ConversationMessage;
 import org.fenixedu.academic.domain.messaging.ConversationThread;
 import org.fenixedu.academic.domain.messaging.ForumSubscription;
 import org.fenixedu.academic.domain.person.RoleType;
-import org.fenixedu.academic.domain.util.email.Message;
-import org.fenixedu.academic.domain.util.email.Recipient;
-import org.fenixedu.academic.domain.util.email.SystemSender;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.HtmlToTextConverterUtil;
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.messaging.core.domain.Message;
+
+import java.text.MessageFormat;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br>
@@ -62,9 +59,9 @@ public abstract class ForumService {
     private void notifyEmailSubscribers(ConversationMessage conversationMessage) {
         final Set<User> readers =
                 conversationMessage.getConversationThread().getForum().getReadersGroup().getMembers().collect(Collectors.toSet());
-        final Set<Person> teachers = new HashSet<Person>();
-        final Set<Person> students = new HashSet<Person>();
-        final Set<ForumSubscription> subscriptionsToRemove = new HashSet<ForumSubscription>();
+        final Set<Person> teachers = new HashSet<>();
+        final Set<Person> students = new HashSet<>();
+        final Set<ForumSubscription> subscriptionsToRemove = new HashSet<>();
 
         for (final ForumSubscription subscription : conversationMessage.getConversationThread().getForum()
                 .getForumSubscriptionsSet()) {
@@ -103,8 +100,8 @@ public abstract class ForumService {
             Person nextToLastMessageReplier = nextToLastConversationMessage.getCreator();
             if (!conversationMessage.getConversationThread().getForum()
                     .isPersonReceivingMessagesByEmail(nextToLastMessageReplier)) {
-                final Set<Person> teachers = new HashSet<Person>();
-                final Set<Person> students = new HashSet<Person>();
+                final Set<Person> teachers = new HashSet<>();
+                final Set<Person> students = new HashSet<>();
                 if (RoleType.TEACHER.isMember(nextToLastMessageReplier.getUser())) {
                     teachers.add(nextToLastMessageReplier);
                 } else {
@@ -119,9 +116,12 @@ public abstract class ForumService {
 
     private void sendEmailToPersons(Set<Person> persons, String personsName, String subject, String body) {
         if (!persons.isEmpty()) {
-            final Recipient recipient = new Recipient(getString("label.teachers"), Person.convertToUserGroup(persons));
-            SystemSender systemSender = Bennu.getInstance().getSystemSender();
-            new Message(systemSender, systemSender.getConcreteReplyTos(), recipient.asCollection(), subject, body, "");
+            Message.fromSystem()
+                    .replyToSender()
+                    .bcc(Person.convertToUserGroup(persons))
+                    .subject(subject)
+                    .textBody(body)
+                    .send();
         }
     }
 
@@ -134,19 +134,14 @@ public abstract class ForumService {
     }
 
     private String getEmailFormattedSubject(ConversationThread conversationThread) {
-        String emailSubject = MessageFormat.format(getString("forum.email.subject"), conversationThread.getTitle());
-
-        return emailSubject;
+        return MessageFormat.format(getString("forum.email.subject"), conversationThread.getTitle());
     }
 
     private String getEmailFormattedBody(ConversationMessage conversationMessage, boolean isForTeacher) {
         String emailBodyAsText = HtmlToTextConverterUtil.convertToText(conversationMessage.getBody().getContent());
 
-        String emailFormattedBody =
-                MessageFormat.format(getString("forum.email.body"), conversationMessage.getCreator().getName(),
-                        conversationMessage.getConversationThread().getTitle(), conversationMessage.getConversationThread()
-                                .getForum().getName(), emailBodyAsText);
-
-        return emailFormattedBody;
+        return MessageFormat.format(getString("forum.email.body"), conversationMessage.getCreator().getName(),
+                conversationMessage.getConversationThread().getTitle(),
+                conversationMessage.getConversationThread().getForum().getName(), emailBodyAsText);
     }
 }
