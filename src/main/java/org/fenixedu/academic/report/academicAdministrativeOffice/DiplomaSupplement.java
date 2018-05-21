@@ -29,12 +29,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.DegreeOfficialPublication;
 import org.fenixedu.academic.domain.DegreeSpecializationArea;
+import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
@@ -483,14 +485,18 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
                 IEnrolment enrolment = (IEnrolment) entry;
                 this.type = BundleUtil.getString(Bundle.ENUMERATION, getLocale(), enrolment.getEnrolmentTypeName());
                 this.duration =
-                        BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
-                                enrolment.isAnual() ? "diploma.supplement.annual" : "diploma.supplement.semestral");
+                    BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                                         enrolment.isAnual() ? "diploma.supplement.annual" : "diploma.supplement.semestral");
 
-                this.ectsScale =
-                        enrolment
-                                .getEctsGrade(getDocumentRequest().getRegistration()
-                                        .getStudentCurricularPlan(getDocumentRequest().getRequestedCycle()),
-                                processingDate).getValue();
+                Grade ectsGrade = enrolment.getEctsGrade(getRegistration()
+                                                             .getStudentCurricularPlan(getDocumentRequest().getRequestedCycle()),
+                                                         processingDate);
+
+                if (ectsGrade == null) {
+                    throw new DomainException(Optional.of(Bundle.ACADEMIC), "diploma.supplement.missing.ects.grade",
+                                              enrolment.getDescription());
+                }
+                this.ectsScale = ectsGrade.getValue();
             } else if (entry instanceof Dismissal && ((Dismissal) entry).getCredits().isEquivalence()) {
                 Dismissal dismissal = (Dismissal) entry;
                 this.isEquivalence = true;
