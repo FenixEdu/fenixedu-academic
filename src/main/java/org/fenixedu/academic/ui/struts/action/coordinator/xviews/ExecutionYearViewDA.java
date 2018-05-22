@@ -150,7 +150,7 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
                 attending++;
             } else if (grade.isApproved()) {
                 approved++;
-                if (grade.getGradeScale() == GradeScale.TYPE20) {
+                if (grade.getGradeScale() == GradeScale.TYPE20 && grade.isNumeric()) {
                     sum = sum.add(grade.getNumericValue());
                     quantity++;
                 }
@@ -198,7 +198,7 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
                 attending++;
             } else if (grade.isApproved()) {
                 approved++;
-                if (grade.getGradeScale() == GradeScale.TYPE20) {
+                if (grade.getGradeScale() == GradeScale.TYPE20 && grade.isNumeric()) {
                     sum = sum.add(grade.getNumericValue());
                     quantity++;
                 }
