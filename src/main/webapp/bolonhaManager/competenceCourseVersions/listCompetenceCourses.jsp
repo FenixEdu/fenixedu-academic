@@ -111,10 +111,8 @@
 	</logic:equal>
 </logic:equal>
 
-</logic:notEmpty>
-
-<logic:empty name="departments">
-    <p>
-        <em><bean:message key="no.current.department.working.place" bundle="BOLONHA_MANAGER_RESOURCES"/></em>
-    </p>
-</logic:empty>
+<%-- <logic:empty name="departments"> --%>
+<!--     <p> -->
+<%--         <em><bean:message key="no.current.department.working.place" bundle="BOLONHA_MANAGER_RESOURCES"/></em> --%>
+<!--     </p> -->
+<%-- </logic:empty> --%>
