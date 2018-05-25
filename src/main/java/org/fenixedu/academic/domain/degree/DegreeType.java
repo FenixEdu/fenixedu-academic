@@ -226,5 +226,9 @@ public class DegreeType extends DegreeType_Base implements Comparable<DegreeType
         }
         return nonNull.and(one);
     }
+    
+    public boolean isActive() {
+        return super.getActive() == null || super.getActive();
+    }
 
 }

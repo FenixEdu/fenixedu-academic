@@ -548,6 +548,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
 	    public boolean dfa;
 	    protected CycleTypes cycles (REQUIRED);
 	    protected CycleTypes cyclesToEnrol (REQUIRED);
+	    public Boolean active;
 	}
 
     class Degree extends AcademicProgram {
