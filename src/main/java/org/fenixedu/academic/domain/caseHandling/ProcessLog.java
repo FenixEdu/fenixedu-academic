@@ -20,8 +20,10 @@ package org.fenixedu.academic.domain.caseHandling;
 
 import java.util.Comparator;
 
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
 public class ProcessLog extends ProcessLog_Base {
@@ -61,6 +63,27 @@ public class ProcessLog extends ProcessLog_Base {
         } else {
             setWhenDateTime(new org.joda.time.DateTime(date.getTime()));
         }
+    }
+
+    public String getUserPresentationName() {
+        String userName = getUserName();
+        User user = User.findByUsername(userName);
+        return user == null ? userName : user.getPerson().getPresentationName();
+    }
+
+    public String getActivityId() {
+        String activity = getActivity();
+        String errorResult = '!' + activity + '!';
+        String activityDescription = BundleUtil.getString(Bundle.CASE_HANDLEING, activity);
+
+        if (activityDescription.equals(errorResult)) {
+            String activityType = activity.substring(activity.lastIndexOf(".") + 1, activity.lastIndexOf("$"));
+            String activitySpecialization = activity.substring(activity.lastIndexOf("$") + 1);
+
+            activityDescription = activityType + " - " + activitySpecialization;
+        }
+
+        return activityDescription;
     }
 
 }
