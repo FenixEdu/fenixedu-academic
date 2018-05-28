@@ -42,6 +42,7 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 import org.fenixedu.commons.spreadsheet.StyledExcelSpreadsheet;
+import org.fenixedu.messaging.core.domain.Sender;
 import org.fenixedu.messaging.core.ui.MessageBean;
 import org.fenixedu.messaging.core.ui.MessagingUtils;
 import org.joda.time.DateTime;
@@ -206,8 +207,8 @@ public class AlumniCerimonyDA extends FenixDispatchAction {
         return MessagingUtils.redirectToNewMessage(request, response, messageBean);
     }
 
-    private org.fenixedu.messaging.core.domain.Sender getPublicRelationsSender() {
-        for (final org.fenixedu.messaging.core.domain.Sender sender : org.fenixedu.messaging.core.domain.Sender.available()) {
+    private Sender getPublicRelationsSender() {
+        for (final Sender sender : Sender.available()) {
             if (sender.getName().equalsIgnoreCase("Técnico Lisboa (Gabinete de Comunicação e Relações Públicas)")) {
                 return sender;
             }

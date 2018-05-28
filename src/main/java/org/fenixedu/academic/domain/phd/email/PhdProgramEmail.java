@@ -26,6 +26,7 @@ import org.fenixedu.academic.domain.phd.PhdProgram;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.messaging.core.domain.Sender;
 import org.joda.time.DateTime;
 import pt.ist.fenixframework.Atomic;
 
@@ -52,7 +53,7 @@ public class PhdProgramEmail extends PhdProgramEmail_Base {
     }
 
     @Override
-    protected org.fenixedu.messaging.core.domain.Sender getSender() {
+    protected Sender getSender() {
         return getPhdProgram().getPhdProgramUnit().getSender();
     }
 

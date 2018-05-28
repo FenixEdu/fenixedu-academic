@@ -23,7 +23,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.thesis.Thesis;
@@ -45,7 +44,7 @@ public abstract class ThesisServiceWithMailNotification {
 
     private void sendEmail(Thesis thesis) {
         Message.from(AccessControl.getPerson().getSender())
-                .singleBcc(getEmails(thesis))
+                .singleBcc(getReceiversEmails(thesis))
                 .subject(getSubject(thesis))
                 .textBody(getMessage(thesis))
                 .send();
@@ -58,10 +57,6 @@ public abstract class ThesisServiceWithMailNotification {
     protected String getMessage(Locale locale, String key, Object... args) {
         String template = BundleUtil.getString(Bundle.MESSAGING, locale, key);
         return MessageFormat.format(template, args);
-    }
-
-    private String getEmails(Thesis thesis) {
-        return getReceiversEmails(thesis).stream().collect(Collectors.joining(", "));
     }
 
     protected abstract String getSubject(Thesis thesis);
