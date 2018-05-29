@@ -180,7 +180,7 @@ public class GOPSendMessageService implements NotificationService {
         if (StringUtils.isNotEmpty(emails)) {
             Message.from(getGOPSender())
                     .replyToSender()
-                    .singleBcc(emails)
+                    .singleBcc(emails.split(","))
                     .subject(subject)
                     .textBody(body)
                     .send();

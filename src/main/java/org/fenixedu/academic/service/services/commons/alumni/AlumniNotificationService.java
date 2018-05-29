@@ -33,12 +33,10 @@ import org.fenixedu.messaging.core.domain.Message;
 
 public class AlumniNotificationService {
 
-    private static void sendEmail(final Group recipients, final String subject, final String body,
-            final String bccs) {
+    private static void sendEmail(final Group recipients, final String subject, final String body) {
         Message.fromSystem()
                 .replyToSender()
                 .to(recipients)
-                .singleBcc(bccs)
                 .subject(subject)
                 .textBody(body)
                 .send();
@@ -138,7 +136,7 @@ public class AlumniNotificationService {
                 MessageFormat.format(BundleUtil.getString(Bundle.ALUMNI, "alumni.public.username.login.url"), alumni.getStudent()
                         .getPerson().getFirstAndLastName(), alumni.getLoginUsername());
 
-        sendEmail(getAlumniRecipients(alumni), subject, body, null);
+        sendEmail(getAlumniRecipients(alumni), subject, body);
     }
 
 }

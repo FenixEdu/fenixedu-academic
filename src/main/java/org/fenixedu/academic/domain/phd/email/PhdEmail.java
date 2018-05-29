@@ -24,6 +24,7 @@ import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.messaging.core.domain.Message;
+import org.fenixedu.messaging.core.domain.Sender;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -67,7 +68,7 @@ public abstract class PhdEmail extends PhdEmail_Base {
         Message.from(getSender())
                 .replyTo(getReplyTo())
                 .to(getRecipients())
-                .singleBcc(getBccs())
+                .singleBcc(getBccs().split(","))
                 .subject(getSubject().getContent(LocaleUtils.PT))
                 .textBody(getBody().getContent(LocaleUtils.PT))
                 .send();
@@ -91,7 +92,7 @@ public abstract class PhdEmail extends PhdEmail_Base {
 
     protected abstract String getReplyTo();
 
-    protected abstract org.fenixedu.messaging.core.domain.Sender getSender();
+    protected abstract Sender getSender();
 
     protected abstract Group getRecipients();
 
