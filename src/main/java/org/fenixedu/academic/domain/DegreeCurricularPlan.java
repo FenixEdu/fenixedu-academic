@@ -266,10 +266,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public void edit(final String name, final CurricularStage stage, final DegreeCurricularPlanState state,
             final GradeScale gradeScale, final ExecutionYear beginExecutionInterval) {
 
+        /*
+         * Allow degree curricular plans approved without program conclusion 
         if (stage.equals(CurricularStage.APPROVED)
                 && !getAllCoursesGroups().stream().map(CourseGroup::getProgramConclusion).anyMatch(Objects::nonNull)) {
             throw new DomainException("error.degreeCurricularPlan.missing.program.conclusion");
         }
+        */
 
         if (isApproved()
                 && (name != null && !getName().equals(name) || gradeScale != null && !getGradeScale().equals(gradeScale))) {
