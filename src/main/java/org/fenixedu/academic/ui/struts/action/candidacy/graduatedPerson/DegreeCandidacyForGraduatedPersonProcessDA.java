@@ -349,6 +349,7 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
         final Row row = spreadsheet.addRow();
         row.setCell(degreeCandidacyForGraduatedPersonProcess.getProcessCode());
         row.setCell(degreeCandidacyForGraduatedPersonProcess.getPersonalDetails().getName());
+        row.setCell(degreeCandidacyForGraduatedPersonProcess.getPersonalDetails().getEmail());
         row.setCell(degreeCandidacyForGraduatedPersonProcess.getPersonalDetails().getIdDocumentType().getLocalizedName());
         row.setCell(degreeCandidacyForGraduatedPersonProcess.getPersonalDetails().getDocumentIdNumber());
         row.setCell(degreeCandidacyForGraduatedPersonProcess.getPersonalDetails().getCountry().getCountryNationality()
