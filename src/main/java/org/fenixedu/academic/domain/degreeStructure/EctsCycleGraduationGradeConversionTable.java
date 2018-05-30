@@ -21,15 +21,17 @@ package org.fenixedu.academic.domain.degreeStructure;
 import org.fenixedu.academic.domain.CurricularYear;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.DomainObject;
 
 public class EctsCycleGraduationGradeConversionTable extends EctsCycleGraduationGradeConversionTable_Base {
 
-    protected EctsCycleGraduationGradeConversionTable(Unit institution, AcademicInterval year, CycleType type,
-            EctsComparabilityTable table, EctsComparabilityPercentages percentages) {
+    protected EctsCycleGraduationGradeConversionTable(Unit institution, AcademicInterval year, CycleType type, EctsComparabilityTable table, EctsComparabilityPercentages percentages) {
         super();
         init(year, type, table, percentages);
         setSchool(institution);
@@ -45,8 +47,7 @@ public class EctsCycleGraduationGradeConversionTable extends EctsCycleGraduation
     }
 
     @Atomic
-    public static void createConversionTable(Unit institution, AcademicInterval year, CycleType type, String[] table,
-            String[] percentages) {
+    public static void createConversionTable(Unit institution, AcademicInterval year, CycleType type, String[] table, String[] percentages) {
         EctsCycleGraduationGradeConversionTable conversion = EctsTableIndex.readOrCreateByYear(year).getGraduationTableBy(type);
         EctsComparabilityTable ectsTable = EctsComparabilityTable.fromStringArray(table);
         EctsComparabilityPercentages ectsPercentages = EctsComparabilityPercentages.fromStringArray(percentages);
@@ -67,6 +68,12 @@ public class EctsCycleGraduationGradeConversionTable extends EctsCycleGraduation
     public void delete() {
         setSchool(null);
         super.delete();
+    }
+
+    @Override
+    public LocalizedString getPresentationName() {
+        return BundleUtil
+                   .getLocalizedString(Bundle.ENUMERATION, getClass().getSimpleName() + ".presentation.name", getYear().getAcademicCalendarEntry().getTitle().getContent(), getCycle().getDescription(), getSchool().getName());
     }
 
 }

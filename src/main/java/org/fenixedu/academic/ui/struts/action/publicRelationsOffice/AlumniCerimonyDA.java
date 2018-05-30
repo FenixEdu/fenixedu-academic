@@ -18,19 +18,7 @@
  */
 package org.fenixedu.academic.ui.struts.action.publicRelationsOffice;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.nio.charset.Charset;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
-
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.google.common.io.CharStreams;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -44,11 +32,9 @@ import org.fenixedu.academic.domain.contacts.PartyContact;
 import org.fenixedu.academic.domain.contacts.Phone;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
-import org.fenixedu.academic.domain.util.email.Recipient;
-import org.fenixedu.academic.domain.util.email.Sender;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
-import org.fenixedu.academic.ui.struts.action.messaging.EmailsDA;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -56,11 +42,23 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 import org.fenixedu.commons.spreadsheet.StyledExcelSpreadsheet;
+import org.fenixedu.messaging.core.domain.Sender;
+import org.fenixedu.messaging.core.ui.MessageBean;
+import org.fenixedu.messaging.core.ui.MessagingUtils;
 import org.joda.time.DateTime;
-
-import com.google.common.io.CharStreams;
-
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.nio.charset.Charset;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 @StrutsFunctionality(app = PublicRelationsApplication.class, path = "alumni-cerimony",
         titleKey = "label.publicRelationOffice.alumniCerimony.inquiries")
@@ -199,14 +197,19 @@ public class AlumniCerimonyDA extends FenixDispatchAction {
     public ActionForward sendEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final CerimonyInquiry cerimonyInquiry = getDomainObject(request, "cerimonyInquiryId");
-        final Sender sender = getPublicRelationsSender();
-        final Recipient recipient = cerimonyInquiry.createRecipient();
-        return EmailsDA.sendEmail(request, sender, recipient);
+        final Group recipient = cerimonyInquiry.createRecipient();
+
+        MessageBean messageBean = new MessageBean();
+        messageBean.setLockedSender(getPublicRelationsSender());
+        messageBean.addAdHocRecipient(recipient);
+        messageBean.selectRecipient(recipient);
+
+        return MessagingUtils.redirectToNewMessage(request, response, messageBean);
     }
 
     private Sender getPublicRelationsSender() {
-        for (final Sender sender : Sender.getAvailableSenders()) {
-            if (sender.getFromName().equalsIgnoreCase("Gabinete de Comunica��o e Rela��es P�blicas")) {
+        for (final Sender sender : Sender.available()) {
+            if (sender.getName().equalsIgnoreCase("Técnico Lisboa (Gabinete de Comunicação e Relações Públicas)")) {
                 return sender;
             }
         }
@@ -268,7 +271,7 @@ public class AlumniCerimonyDA extends FenixDispatchAction {
                 }
             }
             sheet.addCell(contacts.toString());
-            sheet.addCell((inquiryAnswer != null ? inquiryAnswer.getText() : new String("-")));
+            sheet.addCell((inquiryAnswer != null ? inquiryAnswer.getText() : "-"));
             sheet.addCell(getDegrees(person));
             sheet.addCell(inquiryPerson.getComment());
         }
@@ -278,7 +281,7 @@ public class AlumniCerimonyDA extends FenixDispatchAction {
         final StringBuilder stringBuilder = new StringBuilder();
         final Student student = person.getStudent();
         if (student != null) {
-            final Set<String> names = new TreeSet<String>();
+            final Set<String> names = new TreeSet<>();
             for (final Registration registration : student.getRegistrationsSet()) {
                 final Degree degree = registration.getDegree();
                 names.add(degree.getSigla());

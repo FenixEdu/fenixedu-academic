@@ -89,11 +89,6 @@
                     </a>
                   </li>
                 </c:if>
-                <li>
-                  <a href="${base}/sendEmail.do?method=sendEmail&degreeCurricularPlanID=${dcp}">
-                    <bean:message key="link.coordinator.sendMail"/>
-                  </a>
-                </li>
               </ul>
             </li>
           </c:if>

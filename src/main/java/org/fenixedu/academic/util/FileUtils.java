@@ -22,22 +22,15 @@
  */
 package org.fenixedu.academic.util;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import com.google.common.io.ByteStreams;
+import com.google.common.io.Files;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+
+import java.io.*;
 import java.util.UUID;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-
-import org.fenixedu.academic.domain.exceptions.DomainException;
-
-import com.google.common.io.ByteStreams;
-import com.google.common.io.Files;
 
 /**
  * @author Luis Cruz
@@ -116,6 +109,11 @@ public class FileUtils {
             while (zipEntry != null) {
                 zipEntry.getName();
                 zipContentFile = new File(tempDir, zipEntry.getName());
+
+                if(!zipContentFile.getCanonicalPath().startsWith(tempDir.getCanonicalPath())) {
+                    throw new IOException("Malformed zip entry " + zipEntry.getName());
+                }
+
                 zipContentFileParentDir = zipContentFile.getParentFile();
                 zipContentFileParentDir.mkdirs();
 

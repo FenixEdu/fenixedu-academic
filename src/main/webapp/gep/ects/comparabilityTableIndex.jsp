@@ -1,4 +1,6 @@
-<%--
+<%@ page import="org.fenixedu.bennu.core.i18n.BundleUtil" %>
+<%@ page import="org.fenixedu.academic.util.Bundle" %>
+<%@ page import="org.fenixedu.academic.ui.struts.action.commons.ects.EctsTableFilter" %><%--
 
     Copyright © 2002 Instituto Superior Técnico
 
@@ -25,6 +27,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
+
+
 <html:xhtml />
 
 <h2><bean:message bundle="GEP_RESOURCES" key="title.ects.tablesManagement" /></h2>
@@ -37,12 +41,46 @@
     <html:hidden property="method" value="filterPostback" />
     <fr:edit id="filter" name="filter">
         <fr:schema bundle="DOMAIN_RESOURCES"
-            type="org.fenixedu.academic.ui.struts.action.commons.ects.EctsTableFilter">
-            <fr:slot name="executionInterval" layout="menu-select" required="true" key="label.ExecutionYear.year">
+                   type="org.fenixedu.academic.ui.struts.action.commons.ects.EctsTableFilter">
+            <fr:slot name="executionInterval" layout="menu-select-postback" required="true" key="label.ExecutionYear.year">
                 <fr:property name="format" value="${pathName}" />
                 <fr:property name="providerClass"
-                    value="org.fenixedu.academic.ui.struts.action.commons.ects.EctsTableFilter$ExecutionIntervalProvider" />
+                             value="org.fenixedu.academic.ui.struts.action.commons.ects.EctsTableFilter$ExecutionIntervalProvider" />
+				<fr:destination name="/manageEctsComparabilityTables.do?method=filterPostback" />
             </fr:slot>
+            <fr:slot name="processingDate" required="false" key="label.processing.date">
+            </fr:slot>
+        </fr:schema>
+        <fr:layout name="tabular">
+            <fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop05" />
+            <fr:property name="columnClasses" value=",,tdclear tderror1" />
+        </fr:layout>
+	</fr:edit>
+    <%
+        EctsTableFilter filter = (EctsTableFilter) request.getAttribute("filter");
+        String executionYear ="";
+        String processingDate = "";
+        if (filter != null) {
+            executionYear = filter.getExecutionInterval() == null ? "" : filter.getExecutionInterval().getPathName();
+            processingDate = filter.getProcessingDate() == null ? "" : filter.getProcessingDate().toString("dd/MM/yyyy hh:mm");
+        }
+    %>
+   
+    <script type="text/javascript">
+        msg = "<%= BundleUtil.getString(Bundle.GEP, "label.gep.ects.confirm.processing.date", executionYear, processingDate) %>";
+    </script>
+	<html:submit onclick="if (confirm(msg)) { this.form.method.value='setProcessingDate'; return true;}">
+        <bean:message key="button.submit" bundle="COMMON_RESOURCES" />
+    </html:submit>
+
+</fr:form>
+
+
+<fr:form action="/manageEctsComparabilityTables.do">
+    <html:hidden property="method" value="filterPostback" />
+    <fr:edit id="filter" name="filter">
+        <fr:schema bundle="DOMAIN_RESOURCES"
+            type="org.fenixedu.academic.ui.struts.action.commons.ects.EctsTableFilter">
             <fr:slot name="type" layout="menu-postback" required="true" key="label.ects.EctsTableType">
                 <fr:destination name="/manageEctsComparabilityTables.do?method=filterPostback" />
             </fr:slot>

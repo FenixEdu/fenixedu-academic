@@ -23,8 +23,8 @@ import java.util.Locale;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
+import org.fenixedu.academic.domain.degreeStructure.EctsConversionTable;
 import org.fenixedu.academic.domain.degreeStructure.EctsTableIndex;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.log.CreditsDismissalLog;
@@ -41,7 +41,7 @@ public class CreditsDismissal extends CreditsDismissal_Base {
     }
 
     public CreditsDismissal(Credits credits, CurriculumGroup curriculumGroup,
-            Collection<CurricularCourse> noEnrolCurricularCourses) {
+                            Collection<CurricularCourse> noEnrolCurricularCourses) {
         checkIfCanCreate(credits, noEnrolCurricularCourses, curriculumGroup);
         init(credits, curriculumGroup);
         checkParameters(credits);
@@ -52,21 +52,21 @@ public class CreditsDismissal extends CreditsDismissal_Base {
     }
 
     private void checkIfCanCreate(final Credits credits, final Collection<CurricularCourse> noEnrolCurricularCourses,
-            final CurriculumGroup curriculumGroup) {
+                                  final CurriculumGroup curriculumGroup) {
 
         for (final Dismissal dismissal : curriculumGroup.getChildDismissals()) {
             if (dismissal.isCreditsDismissal()) {
                 final CreditsDismissal creditsDismissal = (CreditsDismissal) dismissal;
                 if (isSimilar(credits, noEnrolCurricularCourses, creditsDismissal)) {
                     throw new DomainException("error.CreditsDismissal.already.exists.similar", curriculumGroup.getName()
-                            .getContent());
+                                                                                                              .getContent());
                 }
             }
         }
     }
 
     private boolean isSimilar(final Credits credits, final Collection<CurricularCourse> curricularCourses,
-            final CreditsDismissal creditsDismissalToCheck) {
+                              final CreditsDismissal creditsDismissalToCheck) {
         boolean result = true;
         result &= hasSameEctsCredits(credits.getGivenCredits(), creditsDismissalToCheck);
         result &= hasSameSourceIEnrolments(credits.getIEnrolments(), creditsDismissalToCheck);
@@ -83,7 +83,7 @@ public class CreditsDismissal extends CreditsDismissal_Base {
     @Override
     public boolean isApproved(CurricularCourse curricularCourse, ExecutionSemester executionSemester) {
         return (executionSemester == null || getExecutionPeriod().isBeforeOrEquals(executionSemester))
-                && hasEquivalentNoEnrolCurricularCourse(curricularCourse);
+                   && hasEquivalentNoEnrolCurricularCourse(curricularCourse);
     }
 
     private boolean hasEquivalentNoEnrolCurricularCourse(CurricularCourse curricularCourse) {
@@ -108,7 +108,7 @@ public class CreditsDismissal extends CreditsDismissal_Base {
     @Override
     public LocalizedString getName() {
         return new LocalizedString(org.fenixedu.academic.util.LocaleUtils.PT, BundleUtil.getString(Bundle.ACADEMIC, new Locale("pt", "PT"),
-                "label.group.credits"));
+                                                                                                   "label.group.credits"));
     }
 
     @Override
@@ -136,14 +136,14 @@ public class CreditsDismissal extends CreditsDismissal_Base {
     @Override
     public boolean isSimilar(final Dismissal dismissal) {
         return dismissal.isCreditsDismissal() && hasSameSourceIEnrolments(getSourceIEnrolments(), dismissal)
-                && hasSameNoEnrolCurricularCourses(getNoEnrolCurricularCoursesSet(), (CreditsDismissal) dismissal)
-                && hasSameEctsCredits(getEctsCredits(), (CreditsDismissal) dismissal);
+                   && hasSameNoEnrolCurricularCourses(getNoEnrolCurricularCoursesSet(), (CreditsDismissal) dismissal)
+                   && hasSameEctsCredits(getEctsCredits(), (CreditsDismissal) dismissal);
     }
 
     private boolean hasSameNoEnrolCurricularCourses(final Collection<CurricularCourse> curricularCourses,
-            final CreditsDismissal dismissal) {
+                                                    final CreditsDismissal dismissal) {
         return curricularCourses.containsAll(dismissal.getNoEnrolCurricularCoursesSet())
-                && curricularCourses.size() == dismissal.getNoEnrolCurricularCoursesSet().size();
+                   && curricularCourses.size() == dismissal.getNoEnrolCurricularCoursesSet().size();
     }
 
     private boolean hasSameEctsCredits(final Double ectsCredits, final CreditsDismissal dismissal) {
@@ -153,13 +153,11 @@ public class CreditsDismissal extends CreditsDismissal_Base {
     @Override
     protected void createCurriculumLineLog(final EnrolmentAction action) {
         new CreditsDismissalLog(action, getRegistration(), getCurriculumGroup(), getCredits(), getExecutionPeriod(),
-                getCurrentUser());
+                                getCurrentUser());
     }
 
     @Override
-    public Grade getEctsGrade(DateTime processingDate) {
-        final Grade normalizedEctsGrade = getNormalizedEctsGrade();
-        return normalizedEctsGrade == null ? EctsTableIndex.convertGradeToEcts(getStudentCurricularPlan().getDegree(), this, getGrade(), processingDate) : null;
+    public EctsConversionTable getEctsConversionTable(DateTime processingDate) {
+        return EctsTableIndex.getEctsConversionTable(getStudentCurricularPlan().getDegree(), this, processingDate);
     }
-
 }

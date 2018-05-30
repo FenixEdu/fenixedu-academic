@@ -143,61 +143,6 @@
 		<slot name="mobilePhone" layout="boolean" key="label.mobile" />
 	</schema>
 
-	<schema name="alumni.gep.remove.recipients" type="org.fenixedu.academic.domain.util.email.EmailBean" bundle="MESSAGING_RESOURCES">
-	    <slot name="recipients" layout="option-select" key="label.receiversGroup">
-	        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.EmailRecipientsProvider" />
-	        <property name="eachSchema" value="alumni.gep.email.recipient.selectItem"/>
-	        <property name="eachLayout" value="values"/>
-	        <property name="classes" value="nobullet noindent"/>
-	        <property name="sortBy" value="toName=desc"/>
-	    </slot>
-	</schema>
-	
-	<schema name="alumni.gep.email.recipient.selectItem" type="org.fenixedu.academic.domain.util.email.Recipient">
-		<slot name="toName"/>
-	</schema>
-
-	<schema name="alumni.gep.show.recipients" type="org.fenixedu.academic.domain.util.email.Recipient" bundle="MESSAGING_RESOURCES">
-		<slot name="toName"/>
-	</schema>
-
-	<schema name="alumni.gep.email.recipient.create" type="org.fenixedu.academic.dto.alumni.AlumniMailSendToBean" bundle="GEP_RESOURCES">
-		<slot name="degreeType" key="label.alumni.degreeType" layout="menu-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">			
-			<property name="destination" value="degreeTypePostback" />
-	        <property name="key" value="true" />
-	        <property name="defaultText" value="label.dropDown.all" />
-	        <property name="bundle" value="ENUMERATION_RESOURCES" />
-            <property name="format" value="${name.content}" />
-		</slot>
-		<slot name="degrees" key="label.degrees" layout="option-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-			<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.alumni.AlumniSearchDegreeProvider" />
-			<property name="eachSchema" value="alumni.gep.degree"/>
-			<property name="eachLayout" value="values"/>
-			<property name="classes" value="nobullet noindent"/>
-			<property name="sortBy" value="presentationName"/>
-		</slot>
-		<slot name="endExecutionYear" key="label.alumni.registration.year.end" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-			<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
-			<property name="format" value="${year}" />
-			<property name="classes" value="dinline" />
-		</slot>
-	</schema>
-
-	<schema name="alumni.gep.email.recipient.infoNotUpdated.create" type="org.fenixedu.academic.dto.alumni.AlumniInfoNotUpdatedBean" bundle="GEP_RESOURCES">
-		<slot name="professionalInfo" key="label.alumni.professional.info"/>
-		<slot name="formationInfo" key="label.alumni.formation.info"/>
-		<slot name="personalDataInfo" key="label.alumni.personalData.info"/>
-		<slot name="daysNotUpdated" key="label.alumni.notUpdated.info">			
-			<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator" />
-			<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-			<property name="size" value="5" />
-			<property name="maxLength" value="4"/>
-			<property name="formatText" value="label.alumni.days"/>
-			<property name="key" value="true"/>
-			<property name="bundle" value="GEP_RESOURCES"/>			
-		</slot>
-	</schema>
-	
 	<schema name="alumni.gep.degree" type="org.fenixedu.academic.domain.Degree">
 		<slot name="presentationName"/>
 	</schema>

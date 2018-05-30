@@ -119,16 +119,14 @@
 		if (event.keyCode == 27) {
 			ToggleGradeInput(toggle1, toggle2);
 		}
-	};
-
-	function ToggleGradeInput (toggle1, toggle2) {
+    }
+    function ToggleGradeInput (toggle1, toggle2) {
 		var t1 = '#' + toggle1;
 		$(t1).toggle();
 		var t2 = '#' + toggle2;
 		$(t2).toggle();
-	};
-
-	function SaveGrade (candidacySubmissionOid, inputBox, gradeText, toggle1, toggle2) {
+    }
+    function SaveGrade (candidacySubmissionOid, inputBox, gradeText, toggle1, toggle2) {
 		var gt = '#' + gradeText;
 		var ib = '#' + inputBox;
 		var grade = $(ib).val();
@@ -152,13 +150,12 @@
 	                $(gt).removeClass("savedGrade").fadeIn(550);             
 	            });
 			});
-	};
-
-	function ViewCandidate (personOid) {
+    }
+    function ViewCandidate (personOid) {
 		document.getElementById('mobilityGradeForm').method.value = 'viewCandidate';
 		document.getElementById('mobilityGradeForm').personOid.value = personOid;		
 		document.getElementById('mobilityGradeForm').submit();
-	};
+    }
 </script>
 
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound"/></h2>
@@ -205,7 +202,10 @@
 </ul></td>
 <td style="vertical-align: top;"><ul>
 	<li>
-		<html:link href="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?method=sendEmailToCandidates&mobilityGroupOid=" + mobilityGroup.getExternalId() + "&candidacyPeriodOid=" + outboundMobilityContextBean.getCandidacyPeriods().first().getExternalId() %>">
+		<html:link href="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?method=sendEmailToCandidates" +
+			"&mobilityGroupOid=" + mobilityGroup.getExternalId() +
+			"&candidacyPeriodOid=" + outboundMobilityContextBean.getCandidacyPeriods().first().getExternalId()
+		%>">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.send.email.to.candidates"/>
 		</html:link>
 	</li>

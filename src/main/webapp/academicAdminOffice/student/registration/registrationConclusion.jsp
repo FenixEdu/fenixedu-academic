@@ -213,6 +213,7 @@
 				<fr:view name="registrationConclusionBean" property="curriculumForConclusion">
 					<fr:layout>
 						<fr:property name="visibleCurricularYearEntries" value="false" />
+						<fr:property name="visibleEctsConvertedGrade" value="true" />
 					</fr:layout>
 				</fr:view>
 			</p>

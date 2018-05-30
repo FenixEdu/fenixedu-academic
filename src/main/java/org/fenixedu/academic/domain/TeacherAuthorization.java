@@ -61,6 +61,7 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
                 existing.revoke();
             }
         }
+        teacher.getPerson().getUser().openLoginPeriod();
         return new TeacherAuthorization(teacher, department, executionSemester, teacherCategory, contracted, lessonHours);
     }
 

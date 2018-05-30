@@ -42,7 +42,6 @@ import org.fenixedu.academic.domain.curricularRules.executors.RuleResultMessage;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.service.services.commons.ExecuteFactoryMethod;
 import org.fenixedu.academic.service.services.commons.FactoryExecutor;
-import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.commons.FenixActionForward;
 import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -116,10 +115,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
      * true if the field is present and not empty. False otherwhise.
      */
     protected boolean verifyStringParameterInForm(DynaValidatorForm dynaForm, String field) {
-        if (dynaForm.get(field) != null && !dynaForm.get(field).equals("")) {
-            return true;
-        }
-        return false;
+        return dynaForm.get(field) != null && !dynaForm.get(field).equals("");
     }
 
     /*
@@ -127,10 +123,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
      * the field is not empty. False otherwise.
      */
     protected boolean verifyParameterInRequest(HttpServletRequest request, String field) {
-        if (request.getParameter(field) != null && !request.getParameter(field).equals("")) {
-            return true;
-        }
-        return false;
+        return request.getParameter(field) != null && !request.getParameter(field).equals("");
     }
 
     protected Integer getInteger(final DynaActionForm dynaActionForm, final String string) {
@@ -227,11 +220,11 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         return forward;
     }
 
-    protected Object executeFactoryMethod() throws FenixServiceException {
+    protected Object executeFactoryMethod() {
         return executeFactoryMethod(getFactoryObject());
     }
 
-    protected Object executeFactoryMethod(FactoryExecutor executor) throws FenixServiceException {
+    protected Object executeFactoryMethod(FactoryExecutor executor) {
         return ExecuteFactoryMethod.run(executor);
     }
 
@@ -419,5 +412,4 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     protected void atomic(Runnable runnable) {
         FenixFramework.atomic(runnable);
     }
-
 }

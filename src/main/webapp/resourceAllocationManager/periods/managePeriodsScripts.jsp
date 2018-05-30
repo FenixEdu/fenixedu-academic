@@ -484,7 +484,7 @@ a,input,.symbol {
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/jqTheme/ui.all.css">
 
-<script src="${pageContext.request.contextPath}/javaScript/jquery/jquery-ui.js"></script>
+<script src="<%= request.getContextPath()%>org.joda.time.DateTimeorg.joda.time.DateTime/javaScript/jquery/jquery-ui.js"></script>
 
 <script type="text/javascript">
 

@@ -25,13 +25,14 @@ import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.dto.administrativeOffice.studentEnrolment.ExternalCurricularCourseEnrolmentBean;
 
 import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
 
 public class CreateExternalEnrolments {
 
-    @Atomic
+    @Atomic(mode = TxMode.WRITE)
     public static void run(final Registration registration, final List<ExternalCurricularCourseEnrolmentBean> beans) {
         for (final ExternalCurricularCourseEnrolmentBean bean : beans) {
-            new ExternalEnrolment(registration, bean.getExternalCurricularCourse(), bean.getGrade(), bean.getExecutionPeriod(),
+            new ExternalEnrolment(registration, bean.getExternalCurricularCourse(), bean.getGrade(), bean.getNormalizedGrade(), bean.getExecutionPeriod(),
                     bean.getEvaluationDate(), bean.getEctsCredits());
         }
     }

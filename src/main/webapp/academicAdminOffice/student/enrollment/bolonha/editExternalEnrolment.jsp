@@ -29,6 +29,14 @@
 
 <bean:define id="externalCurricularCourseId">&oid=<bean:write name="externalEnrolmentBean" property="externalCurricularCourse.externalId" /></bean:define>
 
+<fr:hasMessages>
+	<ul class="nobullet list6">
+		<fr:messages>
+			<li><span class="error0"><fr:message/></span></li>
+		</fr:messages>
+	</ul>
+</fr:hasMessages>
+
 <html:messages property="error" message="true" id="errMsg" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<p>
 		<span class="error0"><!-- Error messages go here --><bean:write name="errMsg" /></span>

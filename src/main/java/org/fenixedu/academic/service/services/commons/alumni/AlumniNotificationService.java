@@ -19,33 +19,41 @@
 package org.fenixedu.academic.service.services.commons.alumni;
 
 import java.text.MessageFormat;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 import org.fenixedu.academic.domain.Alumni;
 import org.fenixedu.academic.domain.AlumniIdentityCheckRequest;
 import org.fenixedu.academic.domain.AlumniRequestType;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
-import org.fenixedu.academic.domain.util.email.Message;
-import org.fenixedu.academic.domain.util.email.Recipient;
-import org.fenixedu.academic.domain.util.email.SystemSender;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.fenixedu.messaging.core.domain.Message;
 
 public class AlumniNotificationService {
 
-    private static void sendEmail(final Collection<Recipient> recipients, final String subject, final String body,
-            final String bccs) {
-        SystemSender systemSender = Bennu.getInstance().getSystemSender();
-        new Message(systemSender, systemSender.getConcreteReplyTos(), recipients, subject, body, bccs);
+    private static void sendEmail(final Group recipients, final String subject, final String body) {
+        Message.fromSystem()
+                .replyToSender()
+                .to(recipients)
+                .subject(subject)
+                .textBody(body)
+                .send();
     }
 
-    private static List<Recipient> getAlumniRecipients(Alumni alumni) {
-        return Collections.singletonList(Recipient.newInstance(alumni.getStudent().getPerson().getUser().groupOf()));
+    private static void sendEmail(final String subject, final String body,
+            final String bccs) {
+        Message.fromSystem()
+                .replyToSender()
+                .singleBcc(bccs)
+                .subject(subject)
+                .textBody(body)
+                .send();
+    }
+
+    private static Group getAlumniRecipients(Alumni alumni) {
+        return alumni.getStudent().getPerson().getPersonGroup();
     }
 
     protected static void sendPublicAccessMail(final Alumni alumni, final String alumniEmail) {
@@ -57,7 +65,7 @@ public class AlumniNotificationService {
                 BundleUtil.getString(Bundle.ALUMNI, "alumni.public.registration.url", person.getFirstAndLastName(),
                         getRegisterConclusionURL(alumni));
 
-        sendEmail(Collections.EMPTY_LIST, subject, body, alumniEmail);
+        sendEmail(subject, body, alumniEmail);
     }
 
     public static String getRegisterConclusionURL(final Alumni alumni) {
@@ -66,7 +74,7 @@ public class AlumniNotificationService {
             fenixURL += "/";
         }
         return MessageFormat.format(BundleUtil.getString(Bundle.ALUMNI, "alumni.public.registration.conclusion.url"), fenixURL,
-                alumni.getExternalId().toString(), alumni.getUrlRequestToken());
+                alumni.getExternalId(), alumni.getUrlRequestToken());
     }
 
     protected static void sendIdentityCheckEmail(AlumniIdentityCheckRequest request, Boolean approval) {
@@ -116,7 +124,7 @@ public class AlumniNotificationService {
                                     getRegisterConclusionURL(request.getAlumni()));
         }
 
-        sendEmail(Collections.EMPTY_LIST, subject, body, request.getContactEmail());
+        sendEmail(subject, body, request.getContactEmail());
     }
 
     protected static void sendRegistrationSuccessMail(final Alumni alumni) {
@@ -128,7 +136,7 @@ public class AlumniNotificationService {
                 MessageFormat.format(BundleUtil.getString(Bundle.ALUMNI, "alumni.public.username.login.url"), alumni.getStudent()
                         .getPerson().getFirstAndLastName(), alumni.getLoginUsername());
 
-        sendEmail(getAlumniRecipients(alumni), subject, body, null);
+        sendEmail(getAlumniRecipients(alumni), subject, body);
     }
 
 }
