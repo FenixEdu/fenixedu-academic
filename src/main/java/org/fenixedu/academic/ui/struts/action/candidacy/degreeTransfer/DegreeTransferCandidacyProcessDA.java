@@ -411,6 +411,7 @@ public class DegreeTransferCandidacyProcessDA extends CandidacyProcessDA {
 
         result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.processCode"));
         result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.name"));
+        result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.email"));
         result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.identificationType"));
         result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.identificationNumber"));
         result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.nationality"));
@@ -432,6 +433,7 @@ public class DegreeTransferCandidacyProcessDA extends CandidacyProcessDA {
         final Row row = spreadsheet.addRow();
         row.setCell(degreeTransferIndividualCandidacyProcess.getProcessCode());
         row.setCell(degreeTransferIndividualCandidacyProcess.getPersonalDetails().getName());
+        row.setCell(degreeTransferIndividualCandidacyProcess.getPersonalDetails().getEmail());
         row.setCell(degreeTransferIndividualCandidacyProcess.getPersonalDetails().getIdDocumentType().getLocalizedName());
         row.setCell(degreeTransferIndividualCandidacyProcess.getPersonalDetails().getDocumentIdNumber());
         row.setCell(degreeTransferIndividualCandidacyProcess.getPersonalDetails().getCountry().getCountryNationality()

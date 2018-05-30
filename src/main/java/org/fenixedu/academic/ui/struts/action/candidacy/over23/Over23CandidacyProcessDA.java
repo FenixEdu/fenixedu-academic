@@ -324,6 +324,7 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
 
         result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.processCode"));
         result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.name"));
+        result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.email"));
         result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.identificationType"));
         result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.identificationNumber"));
         result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.nationality"));
@@ -342,6 +343,7 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
             final Row row = spreadsheet.addRow();
             row.setCell(over23IndividualCandidacyProcess.getProcessCode());
             row.setCell(over23IndividualCandidacyProcess.getPersonalDetails().getName());
+            row.setCell(over23IndividualCandidacyProcess.getPersonalDetails().getEmail());
             row.setCell(over23IndividualCandidacyProcess.getPersonalDetails().getIdDocumentType().getLocalizedName());
             row.setCell(over23IndividualCandidacyProcess.getPersonalDetails().getDocumentIdNumber());
             row.setCell(over23IndividualCandidacyProcess.getPersonalDetails().getCountry() != null ? over23IndividualCandidacyProcess

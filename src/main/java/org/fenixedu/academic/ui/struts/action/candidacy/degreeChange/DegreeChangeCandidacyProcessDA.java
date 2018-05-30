@@ -489,6 +489,7 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
 
         result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.processCode"));
         result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.name"));
+        result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.email"));
         result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.identificationType"));
         result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.identificationNumber"));
         result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.nationality"));
@@ -509,6 +510,7 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
         final Row row = spreadsheet.addRow();
         row.setCell(degreeChangeIndividualCandidacyProcess.getProcessCode());
         row.setCell(degreeChangeIndividualCandidacyProcess.getPersonalDetails().getName());
+        row.setCell(degreeChangeIndividualCandidacyProcess.getPersonalDetails().getEmail());
         row.setCell(degreeChangeIndividualCandidacyProcess.getPersonalDetails().getIdDocumentType().getLocalizedName());
         row.setCell(degreeChangeIndividualCandidacyProcess.getPersonalDetails().getDocumentIdNumber());
         if (degreeChangeIndividualCandidacyProcess.getPersonalDetails().getCountry() != null) {

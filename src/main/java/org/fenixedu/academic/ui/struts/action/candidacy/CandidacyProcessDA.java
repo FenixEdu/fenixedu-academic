@@ -438,6 +438,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 
         result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.processCode"));
         result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.name"));
+        result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.email"));
         result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.identificationType"));
         result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.identificationNumber"));
         result.add(BundleUtil.getString(Bundle.CANDIDATE, "label.spreadsheet.nationality"));
