@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,6 +50,7 @@ import org.fenixedu.academic.domain.candidacyProcess.exceptions.HashCodeForEmail
 import org.fenixedu.academic.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean;
 import org.fenixedu.academic.domain.caseHandling.Activity;
 import org.fenixedu.academic.domain.caseHandling.Process;
+import org.fenixedu.academic.domain.caseHandling.ProcessLog;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
@@ -557,6 +560,13 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
     public ActionForward listProcessAllowedActivities(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         final IndividualCandidacyProcess process = getProcess(request);
+
+        final Set<ProcessLog> logs = new TreeSet<ProcessLog>(ProcessLog.COMPARATOR_BY_WHEN);
+        for (final ProcessLog log : process.getProcessLogsSet()) {
+            logs.add(log);
+        }
+
+        request.setAttribute("logs", logs);
         request.setAttribute("activities", getAllowedActivities(process));
         return mapping.findForward("list-allowed-activities");
     }

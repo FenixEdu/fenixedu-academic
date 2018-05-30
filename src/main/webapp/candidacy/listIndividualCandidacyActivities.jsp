@@ -167,4 +167,16 @@
 		</fr:view>
 	</logic:notEmpty>
 
+	<%-- show logs--%>
+
+	<br/>
+	<h2 style="margin-top: 1em;"><bean:message key="label.process.logs.name" bundle="CANDIDATE_RESOURCES"/></h2>
+
+	<fr:view name="logs" schema="ProcessLog.view">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+	        <fr:property name="columnClasses" value="width12em,,"/>
+		</fr:layout>
+	</fr:view>
+
 </logic:notEmpty>
