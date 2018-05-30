@@ -26,11 +26,6 @@ public class MessagingApplication {
     private static final String ACCESS_GROUP = "role(MESSAGING)";
     private static final String HINT = "Messaging";
 
-    @StrutsApplication(descriptionKey = "label.emails", path = "emails", titleKey = "label.emails", bundle = BUNDLE,
-            accessGroup = ACCESS_GROUP, hint = HINT)
-    public static class MessagingEmailsApp {
-    }
-
     @StrutsApplication(descriptionKey = "label.navheader.search", path = "search", titleKey = "label.navheader.search",
             bundle = BUNDLE, accessGroup = ACCESS_GROUP, hint = HINT)
     public static class MessagingSearchApp {

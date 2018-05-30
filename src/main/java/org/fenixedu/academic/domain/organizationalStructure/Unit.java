@@ -37,10 +37,11 @@ import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExternalCurricularCourse;
+import org.fenixedu.academic.domain.Installation;
 import org.fenixedu.academic.domain.NonAffiliatedTeacher;
+import org.fenixedu.academic.domain.accessControl.UnitGroup;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.util.email.UnitBasedSender;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LocaleUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -48,6 +49,7 @@ import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.StringNormalizer;
 import org.fenixedu.commons.i18n.LocalizedString;
+import org.fenixedu.messaging.core.domain.Sender;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
@@ -142,7 +144,7 @@ public class Unit extends Unit_Base {
             new UnitCostCenterCode(this, costCenterCode);
         } else if (unitCostCenterCode != null && costCenterCode != null) {
             unitCostCenterCode.setCostCenterCode(costCenterCode);
-        } else if (unitCostCenterCode != null && costCenterCode == null) {
+        } else if (unitCostCenterCode != null) {
             unitCostCenterCode.delete();
         }
     }
@@ -257,7 +259,7 @@ public class Unit extends Unit_Base {
 
     public List<Unit> getTopUnits() {
         Unit unit = this;
-        List<Unit> allTopUnits = new ArrayList<Unit>();
+        List<Unit> allTopUnits = new ArrayList<>();
         if (unit.hasAnyParentUnits()) {
             for (Unit parentUnit : this.getParentUnits()) {
                 if (!parentUnit.hasAnyParentUnits() && !allTopUnits.contains(parentUnit)) {
@@ -291,9 +293,7 @@ public class Unit extends Unit_Base {
                     return (DepartmentUnit) parentUnit;
                 } else if (parentUnit.hasAnyParentUnits()) {
                     Unit departmentUnit = parentUnit.getDepartmentUnit();
-                    if (departmentUnit == null) {
-                        continue;
-                    } else {
+                    if (departmentUnit != null) {
                         return (DepartmentUnit) departmentUnit;
                     }
                 }
@@ -311,7 +311,7 @@ public class Unit extends Unit_Base {
     }
 
     private List<Unit> getSubUnitsByState(YearMonthDay currentDate, boolean state) {
-        List<Unit> allSubUnits = new ArrayList<Unit>();
+        List<Unit> allSubUnits = new ArrayList<>();
         for (Unit subUnit : this.getSubUnits()) {
             if (subUnit.isActive(currentDate) == state) {
                 allSubUnits.add(subUnit);
@@ -329,7 +329,7 @@ public class Unit extends Unit_Base {
     }
 
     private List<Unit> getParentUnitsByState(YearMonthDay currentDate, boolean state) {
-        List<Unit> allParentUnits = new ArrayList<Unit>();
+        List<Unit> allParentUnits = new ArrayList<>();
         for (Unit subUnit : this.getParentUnits()) {
             if (subUnit.isActive(currentDate) == state) {
                 allParentUnits.add(subUnit);
@@ -347,7 +347,7 @@ public class Unit extends Unit_Base {
     }
 
     private List<Unit> getSubUnitsByState(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum, boolean state) {
-        List<Unit> allSubUnits = new ArrayList<Unit>();
+        List<Unit> allSubUnits = new ArrayList<>();
         for (Unit subUnit : getSubUnits(accountabilityTypeEnum)) {
             if (subUnit.isActive(currentDate) == state) {
                 allSubUnits.add(subUnit);
@@ -366,7 +366,7 @@ public class Unit extends Unit_Base {
 
     private List<Unit> getSubUnitsByState(YearMonthDay currentDate, List<AccountabilityTypeEnum> accountabilityTypeEnums,
             boolean state) {
-        List<Unit> allSubUnits = new ArrayList<Unit>();
+        List<Unit> allSubUnits = new ArrayList<>();
         for (Unit subUnit : this.getSubUnits(accountabilityTypeEnums)) {
             if (subUnit.isActive(currentDate) == state) {
                 allSubUnits.add(subUnit);
@@ -376,63 +376,56 @@ public class Unit extends Unit_Base {
     }
 
     public List<Unit> getAllInactiveParentUnits(YearMonthDay currentDate) {
-        Set<Unit> allInactiveParentUnits = new HashSet<Unit>();
-        allInactiveParentUnits.addAll(getInactiveParentUnits(currentDate));
+        Set<Unit> allInactiveParentUnits = new HashSet<>(getInactiveParentUnits(currentDate));
         for (Unit subUnit : getParentUnits()) {
             allInactiveParentUnits.addAll(subUnit.getAllInactiveParentUnits(currentDate));
         }
-        return new ArrayList<Unit>(allInactiveParentUnits);
+        return new ArrayList<>(allInactiveParentUnits);
     }
 
     public List<Unit> getAllActiveParentUnits(YearMonthDay currentDate) {
-        Set<Unit> allActiveParentUnits = new HashSet<Unit>();
-        allActiveParentUnits.addAll(getActiveParentUnits(currentDate));
+        Set<Unit> allActiveParentUnits = new HashSet<>(getActiveParentUnits(currentDate));
         for (Unit subUnit : getParentUnits()) {
             allActiveParentUnits.addAll(subUnit.getAllActiveParentUnits(currentDate));
         }
-        return new ArrayList<Unit>(allActiveParentUnits);
+        return new ArrayList<>(allActiveParentUnits);
     }
 
     public List<Unit> getAllInactiveSubUnits(YearMonthDay currentDate) {
-        Set<Unit> allInactiveSubUnits = new HashSet<Unit>();
-        allInactiveSubUnits.addAll(getInactiveSubUnits(currentDate));
+        Set<Unit> allInactiveSubUnits = new HashSet<>(getInactiveSubUnits(currentDate));
         for (Unit subUnit : getSubUnits()) {
             allInactiveSubUnits.addAll(subUnit.getAllInactiveSubUnits(currentDate));
         }
-        return new ArrayList<Unit>(allInactiveSubUnits);
+        return new ArrayList<>(allInactiveSubUnits);
     }
 
     public List<Unit> getAllActiveSubUnits(YearMonthDay currentDate) {
-        Set<Unit> allActiveSubUnits = new HashSet<Unit>();
-        allActiveSubUnits.addAll(getActiveSubUnits(currentDate));
+        Set<Unit> allActiveSubUnits = new HashSet<>(getActiveSubUnits(currentDate));
         for (Unit subUnit : getSubUnits()) {
             allActiveSubUnits.addAll(subUnit.getAllActiveSubUnits(currentDate));
         }
-        return new ArrayList<Unit>(allActiveSubUnits);
+        return new ArrayList<>(allActiveSubUnits);
     }
 
     public List<Unit> getAllActiveSubUnits(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum) {
-        Set<Unit> allActiveSubUnits = new HashSet<Unit>();
-        allActiveSubUnits.addAll(getActiveSubUnits(currentDate, accountabilityTypeEnum));
+        Set<Unit> allActiveSubUnits = new HashSet<>(getActiveSubUnits(currentDate, accountabilityTypeEnum));
         for (Unit subUnit : getSubUnits(accountabilityTypeEnum)) {
             allActiveSubUnits.addAll(subUnit.getAllActiveSubUnits(currentDate));
         }
-        return new ArrayList<Unit>(allActiveSubUnits);
+        return new ArrayList<>(allActiveSubUnits);
     }
 
     public List<Unit> getAllInactiveSubUnits(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum) {
-        Set<Unit> allInactiveSubUnits = new HashSet<Unit>();
-        allInactiveSubUnits.addAll(getInactiveSubUnits(currentDate, accountabilityTypeEnum));
+        Set<Unit> allInactiveSubUnits = new HashSet<>(getInactiveSubUnits(currentDate, accountabilityTypeEnum));
         for (Unit subUnit : getSubUnits(accountabilityTypeEnum)) {
             allInactiveSubUnits.addAll(subUnit.getAllInactiveSubUnits(currentDate));
         }
-        return new ArrayList<Unit>(allInactiveSubUnits);
+        return new ArrayList<>(allInactiveSubUnits);
     }
 
     public Collection<Unit> getAllSubUnits() {
-        Set<Unit> allSubUnits = new HashSet<Unit>();
         Collection<Unit> subUnits = getSubUnits();
-        allSubUnits.addAll(subUnits);
+        Set<Unit> allSubUnits = new HashSet<>(subUnits);
         for (Unit subUnit : subUnits) {
             allSubUnits.addAll(subUnit.getAllSubUnits());
         }
@@ -440,9 +433,8 @@ public class Unit extends Unit_Base {
     }
 
     public Collection<Unit> getAllParentUnits() {
-        Set<Unit> allParentUnits = new HashSet<Unit>();
         Collection<Unit> parentUnits = getParentUnits();
-        allParentUnits.addAll(parentUnits);
+        Set<Unit> allParentUnits = new HashSet<>(parentUnits);
         for (Unit subUnit : parentUnits) {
             allParentUnits.addAll(subUnit.getAllParentUnits());
         }
@@ -513,16 +505,20 @@ public class Unit extends Unit_Base {
         return (Collection<Unit>) getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, Unit.class);
     }
 
+    @Override
+    public Sender getSender() {
+        return Optional.ofNullable(super.getSender()).orElseGet(this::buildDefaultSender);
+    }
+
     @Atomic
-    /*
-     * @See UnitMailSenderAction
-     */
-    public UnitBasedSender getOneUnitBasedSender() {
-        if (!getUnitBasedSenderSet().isEmpty()) {
-            return getUnitBasedSenderSet().iterator().next();
-        } else {
-            return UnitBasedSender.newInstance(this);
-        }
+    protected Sender buildDefaultSender() {
+        Sender sender = Sender
+                .from(Installation.getInstance().getInstituitionalEmailAddress("noreply"))
+                .as(String.format("%s (%s)", Unit.getInstitutionAcronym(), getName()))
+                .members(UnitGroup.recursiveWorkers(this))
+                .build();
+        setSender(sender);
+        return sender;
     }
 
     public int getUnitDepth() {
@@ -572,7 +568,7 @@ public class Unit extends Unit_Base {
     }
 
     public static List<Unit> readAllUnits() {
-        final List<Unit> allUnits = new ArrayList<Unit>();
+        final List<Unit> allUnits = new ArrayList<>();
         for (final Party party : Bennu.getInstance().getPartysSet()) {
             if (party.isUnit()) {
                 allUnits.add((Unit) party);
@@ -606,7 +602,7 @@ public class Unit extends Unit_Base {
     }
 
     public static List<Unit> readUnitsByAcronym(String acronym, boolean shouldNormalize) {
-        List<Unit> result = new ArrayList<Unit>();
+        List<Unit> result = new ArrayList<>();
         if (!StringUtils.isEmpty(acronym.trim())) {
             UnitAcronym unitAcronymByAcronym = UnitAcronym.readUnitAcronymByAcronym(acronym, shouldNormalize);
             if (unitAcronymByAcronym != null) {
@@ -660,8 +656,7 @@ public class Unit extends Unit_Base {
         }
         for (final Party party : Bennu.getInstance().getExternalInstitutionUnit().getSubUnits()) {
             if (!party.isPerson() && unitName.equalsIgnoreCase(party.getName())) {
-                final Unit unit = (Unit) party;
-                return unit;
+                return (Unit) party;
             }
         }
         return null;
@@ -765,7 +760,7 @@ public class Unit extends Unit_Base {
 
     public List<Unit> getParentUnitsPath(boolean addInstitutionalUnit) {
 
-        List<Unit> parentUnits = new ArrayList<Unit>();
+        List<Unit> parentUnits = new ArrayList<>();
         Unit searchedUnit = this;
         Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
         Unit institutionUnit = UnitUtils.readInstitutionUnit();
@@ -819,7 +814,7 @@ public class Unit extends Unit_Base {
     }
 
     public SortedSet<Unit> getSortedExternalChilds() {
-        final SortedSet<Unit> result = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);
+        final SortedSet<Unit> result = new TreeSet<>(Unit.COMPARATOR_BY_NAME_AND_ID);
         for (final Unit unit : getSubUnits()) {
             if (!unit.isInternal()) {
                 result.add(unit);
@@ -829,7 +824,7 @@ public class Unit extends Unit_Base {
     }
 
     public List<ExternalCurricularCourse> getAllExternalCurricularCourses() {
-        return new ArrayList<ExternalCurricularCourse>(getExternalCurricularCoursesSet());
+        return new ArrayList<>(getExternalCurricularCoursesSet());
     }
 
     public LocalizedString getNameI18n() {
@@ -851,13 +846,11 @@ public class Unit extends Unit_Base {
      * @return Groups to used as recipients
      */
     public List<Group> getGroups() {
-        List<Group> groups = new ArrayList<Group>();
-        groups.addAll(getDefaultGroups());
-        return groups;
+        return new ArrayList<>(getDefaultGroups());
     }
 
     protected List<Group> getDefaultGroups() {
-        return new ArrayList<Group>();
+        return new ArrayList<>();
     }
 
     static public LocalizedString getInstitutionName() {

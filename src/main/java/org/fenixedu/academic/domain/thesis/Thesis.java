@@ -60,9 +60,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.FieldIsRequiredException;
 import org.fenixedu.academic.domain.organizationalStructure.ScientificCouncilUnit;
 import org.fenixedu.academic.domain.student.Student;
-import org.fenixedu.academic.domain.util.email.Message;
-import org.fenixedu.academic.domain.util.email.Recipient;
-import org.fenixedu.academic.domain.util.email.Sender;
 import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.predicate.ThesisPredicates;
@@ -76,6 +73,7 @@ import org.fenixedu.bennu.core.signals.DomainObjectEvent;
 import org.fenixedu.bennu.core.signals.Signal;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.commons.i18n.LocalizedString;
+import org.fenixedu.messaging.core.domain.Message;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
@@ -408,7 +406,7 @@ public class Thesis extends Thesis_Base {
     }
 
     protected static Collection<Thesis> getThesisInState(Degree degree, ExecutionYear year, ThesisState state) {
-        List<Thesis> theses = new ArrayList<Thesis>();
+        List<Thesis> theses = new ArrayList<>();
 
         for (Thesis thesis : Bennu.getInstance().getThesesSet()) {
             if (thesis.getState() != state) {
@@ -454,10 +452,7 @@ public class Thesis extends Thesis_Base {
     }
 
     public static Collection<Thesis> getApprovedThesis(Degree degree, ExecutionYear executionYear) {
-        List<Thesis> result = new ArrayList<Thesis>();
-        result.addAll(getThesisInState(degree, executionYear, ThesisState.APPROVED));
-
-        return result;
+        return new ArrayList<>(getThesisInState(degree, executionYear, ThesisState.APPROVED));
     }
 
     public static Collection<Thesis> getRevisionThesis() {
@@ -469,10 +464,7 @@ public class Thesis extends Thesis_Base {
     }
 
     public static Collection<Thesis> getRevisionThesis(Degree degree, ExecutionYear executionYear) {
-        List<Thesis> result = new ArrayList<Thesis>();
-        result.addAll(getThesisInState(degree, executionYear, ThesisState.REVISION));
-
-        return result;
+        return new ArrayList<>(getThesisInState(degree, executionYear, ThesisState.REVISION));
     }
 
     public static Collection<Thesis> getConfirmedThesis() {
@@ -500,11 +492,7 @@ public class Thesis extends Thesis_Base {
     }
 
     public boolean hasCredits() {
-        if (isEvaluated() && hasFinalEnrolmentEvaluation()) {
-            return true;
-        } else {
-            return false;
-        }
+        return isEvaluated() && hasFinalEnrolmentEvaluation();
     }
 
     private ExecutionDegree getExecutionDegree(final Enrolment enrolment) {
@@ -527,11 +515,9 @@ public class Thesis extends Thesis_Base {
             throw new DomainException("thesis.creation.not.allowed.because.out.of.period");
         }
 
-        if (enrolment != null) {
-            CurricularCourse curricularCourse = enrolment.getCurricularCourse();
-            if (!curricularCourse.isDissertation()) {
-                throw new DomainException("thesis.enrolment.notDissertationEnrolment");
-            }
+        CurricularCourse curricularCourse = enrolment.getCurricularCourse();
+        if (!curricularCourse.isDissertation()) {
+            throw new DomainException("thesis.enrolment.notDissertationEnrolment");
         }
 
         super.setEnrolment(enrolment);
@@ -636,7 +622,7 @@ public class Thesis extends Thesis_Base {
 
             setState(ThesisState.APPROVED);
 
-            Signal.emit(PROPOSAL_APPROVED_SIGNAL, new DomainObjectEvent<Thesis>(this));
+            Signal.emit(PROPOSAL_APPROVED_SIGNAL, new DomainObjectEvent<>(this));
         }
     }
 
@@ -659,7 +645,7 @@ public class Thesis extends Thesis_Base {
 
     private void sendRejectionEmail(final String rejectionComment) {
 
-        final Collection<Person> persons = new HashSet<Person>();
+        final Collection<Person> persons = new HashSet<>();
         final ExecutionYear executionYear = getEnrolment().getExecutionYear();
         for (ScientificCommission member : getDegree().getScientificCommissionMembers(executionYear)) {
             if (member.isContact()) {
@@ -670,21 +656,23 @@ public class Thesis extends Thesis_Base {
         Set<Person> orientationPersons = getOrientationPersons();
         persons.addAll(orientationPersons);
 
-        final Recipient recipient = new Recipient("Membros da tese " + getTitle().getContent(), Person.convertToUserGroup(persons));
         final String studentNumber = getStudent().getNumber().toString();
         final String title = getFinalFullTitle().getContent();
         final String subject = getMessage("message.thesis.reject.submission.email.subject", studentNumber);
         final String body = getMessage("message.thesis.reject.submission.email.body", studentNumber, title, rejectionComment);
 
         //
-        final Sender sender = ScientificCouncilUnit.getScientificCouncilUnit().getUnitBasedSenderSet().iterator().next();
 
-        new Message(sender, sender.getConcreteReplyTos(), recipient.asCollection(), subject, body, "");
+        Message.from(ScientificCouncilUnit.getScientificCouncilUnit().getSender())
+                .replyToSender()
+                .to(Person.convertToUserGroup(persons))
+                .subject(subject)
+                .textBody(body)
+                .send();
     }
 
     protected String getMessage(final String key, final Object... args) {
-        final String message = BundleUtil.getString(Bundle.SCIENTIFIC, key);
-        return MessageFormat.format(message, args);
+        return MessageFormat.format(BundleUtil.getString(Bundle.SCIENTIFIC, key), args);
     }
 
     // Not an actual state change... but it is an aparent state change (whatever
@@ -976,7 +964,7 @@ public class Thesis extends Thesis_Base {
     }
 
     private Teacher getExecutionCourseTeacher() {
-        final List<Teacher> teachers = new ArrayList<Teacher>();
+        final List<Teacher> teachers = new ArrayList<>();
 
         final ExecutionCourse executionCourse = getExecutionCourse();
         if (executionCourse != null) {
@@ -1193,7 +1181,7 @@ public class Thesis extends Thesis_Base {
     }
 
     public List<ThesisCondition> getStudentConditions() {
-        List<ThesisCondition> conditions = new ArrayList<ThesisCondition>();
+        List<ThesisCondition> conditions = new ArrayList<>();
 
         if (getDiscussed() == null) {
             conditions.add(new ThesisCondition("thesis.student.discussionDate.missing"));
@@ -1223,7 +1211,7 @@ public class Thesis extends Thesis_Base {
     }
 
     public List<ThesisCondition> getConditions() {
-        List<ThesisCondition> conditions = new ArrayList<ThesisCondition>();
+        List<ThesisCondition> conditions = new ArrayList<>();
 
         conditions.addAll(getGeneralConditions());
         conditions.addAll(getOrientationConditions());
@@ -1233,7 +1221,7 @@ public class Thesis extends Thesis_Base {
     }
 
     public Collection<ThesisCondition> getGeneralConditions() {
-        List<ThesisCondition> conditions = new ArrayList<ThesisCondition>();
+        List<ThesisCondition> conditions = new ArrayList<>();
 
         // check too few persons
         int count = getJuryParticipantCount();
@@ -1250,7 +1238,7 @@ public class Thesis extends Thesis_Base {
     }
 
     public List<ThesisCondition> getOrientationConditions() {
-        List<ThesisCondition> conditions = new ArrayList<ThesisCondition>();
+        List<ThesisCondition> conditions = new ArrayList<>();
 
         List<ThesisEvaluationParticipant> orientation = getOrientation();
         if (orientation.isEmpty()) {
@@ -1275,7 +1263,7 @@ public class Thesis extends Thesis_Base {
     }
 
     public List<ThesisCondition> getJuryConditions() {
-        List<ThesisCondition> conditions = new ArrayList<ThesisCondition>();
+        List<ThesisCondition> conditions = new ArrayList<>();
 
         Person president = getParticipationPerson(getPresident());
 
@@ -1293,7 +1281,7 @@ public class Thesis extends Thesis_Base {
                 final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
                 if (executionDegree != null) {
                     for (ScientificCommission member : executionDegree.getScientificCommissionMembersSet()) {
-                        isMember = isMember || president == member.getPerson();
+                        isMember = president == member.getPerson();
 
                         if (isMember) {
                             break;
@@ -1311,7 +1299,7 @@ public class Thesis extends Thesis_Base {
             conditions.add(new ThesisCondition("thesis.condition.people.vowels.two.required"));
         } else {
             // check duplicated person within jury
-            Set<Person> juryPersons = new HashSet<Person>();
+            Set<Person> juryPersons = new HashSet<>();
             //only vowels to separate the president's case
             for (ThesisEvaluationParticipant vowel : getVowels()) {
                 if (vowel.getPerson() != null) {
@@ -1552,7 +1540,7 @@ public class Thesis extends Thesis_Base {
 
     public static Set<Thesis> getThesesByParticipationType(final Person person,
             final ThesisParticipationType thesisParticipationType) {
-        final Set<Thesis> theses = new HashSet<Thesis>();
+        final Set<Thesis> theses = new HashSet<>();
         for (final ThesisEvaluationParticipant thesisEvaluationParticipant : person.getThesisEvaluationParticipantsSet()) {
             if (thesisParticipationType == thesisEvaluationParticipant.getType()) {
                 final Thesis thesis = thesisEvaluationParticipant.getThesis();
@@ -1582,7 +1570,7 @@ public class Thesis extends Thesis_Base {
     }
 
     public List<Locale> getLanguages() {
-        final List<Locale> result = new ArrayList<Locale>();
+        final List<Locale> result = new ArrayList<>();
 
         add(result, getKeywords());
         add(result, getThesisAbstract());

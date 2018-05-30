@@ -55,12 +55,12 @@ import org.fenixedu.academic.domain.messaging.ConversationThread;
 import org.fenixedu.academic.domain.messaging.ExecutionCourseForum;
 import org.fenixedu.academic.domain.messaging.ForumSubscription;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.domain.util.email.ExecutionCourseSender;
 import org.fenixedu.academic.service.ServiceMonitoring;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
 import org.fenixedu.commons.i18n.LocalizedString;
 
+import org.fenixedu.messaging.core.domain.Sender;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 
@@ -86,12 +86,12 @@ public class MergeExecutionCourses {
     }
 
     @FunctionalInterface
-    public static interface SubDomainMergeHandler {
-        default public Set<String> mergeBlockers(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
-            return Collections.<String> emptySet();
+    public interface SubDomainMergeHandler {
+        default Set<String> mergeBlockers(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
+            return Collections.emptySet();
         }
 
-        public void merge(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) throws FenixServiceException;
+        void merge(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) throws FenixServiceException;
     }
 
     private static final ConcurrentLinkedQueue<SubDomainMergeHandler> handlers = new ConcurrentLinkedQueue<>();
@@ -105,14 +105,13 @@ public class MergeExecutionCourses {
             @Override
             public Set<String> mergeBlockers(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
                 if (!isMergeAllowed(executionCourseFrom, executionCourseTo)) {
-                    return Collections.<String> singleton("Cannot merge courses of different periods");
+                    return Collections.singleton("Cannot merge courses of different periods");
                 }
-                return Collections.<String> emptySet();
-            };
+                return Collections.emptySet();
+            }
 
             @Override
-            public void merge(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo)
-                    throws FenixServiceException {
+            public void merge(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
                 copyShifts(executionCourseFrom, executionCourseTo);
             }
         });
@@ -168,7 +167,7 @@ public class MergeExecutionCourses {
 
     private static boolean haveShiftsWithSameName(final ExecutionCourse executionCourseFrom,
             final ExecutionCourse executionCourseTo) {
-        final Set<String> shiftNames = new HashSet<String>();
+        final Set<String> shiftNames = new HashSet<>();
         for (final Shift shift : executionCourseFrom.getAssociatedShifts()) {
             shiftNames.add(shift.getNome());
         }
@@ -187,17 +186,12 @@ public class MergeExecutionCourses {
     }
 
     private static void copySummaries(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
-        final List<Summary> associatedSummaries = new ArrayList<Summary>();
-        associatedSummaries.addAll(executionCourseFrom.getAssociatedSummariesSet());
-        for (final Summary summary : associatedSummaries) {
-            summary.setExecutionCourse(executionCourseTo);
-        }
+        executionCourseFrom.getAssociatedSummariesSet().forEach(summary -> summary.setExecutionCourse(executionCourseTo));
     }
 
     private static void copyGroupPropertiesExecutionCourse(final ExecutionCourse executionCourseFrom,
             final ExecutionCourse executionCourseTo) {
-        final List<ExportGrouping> associatedGroupPropertiesExecutionCourse = new ArrayList<ExportGrouping>();
-        associatedGroupPropertiesExecutionCourse.addAll(executionCourseFrom.getExportGroupingsSet());
+        final List<ExportGrouping> associatedGroupPropertiesExecutionCourse = new ArrayList<>(executionCourseFrom.getExportGroupingsSet());
 
         for (final ExportGrouping groupPropertiesExecutionCourse : associatedGroupPropertiesExecutionCourse) {
             if (executionCourseTo.hasGrouping(groupPropertiesExecutionCourse.getGrouping())) {
@@ -236,9 +230,9 @@ public class MergeExecutionCourses {
     }
 
     private static void copyShifts(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
-        final List<Shift> associatedShifts = new ArrayList<Shift>(executionCourseFrom.getAssociatedShifts());
+        final List<Shift> associatedShifts = new ArrayList<>(executionCourseFrom.getAssociatedShifts());
         for (final Shift shift : associatedShifts) {
-            List<CourseLoad> courseLoadsFrom = new ArrayList<CourseLoad>(shift.getCourseLoadsSet());
+            List<CourseLoad> courseLoadsFrom = new ArrayList<>(shift.getCourseLoadsSet());
             for (Iterator<CourseLoad> iter = courseLoadsFrom.iterator(); iter.hasNext();) {
                 CourseLoad courseLoadFrom = iter.next();
                 CourseLoad courseLoadTo = executionCourseTo.getCourseLoadByShiftType(courseLoadFrom.getType());
@@ -255,8 +249,7 @@ public class MergeExecutionCourses {
     }
 
     private static void copyLessonsInstances(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
-        final List<LessonInstance> associatedLessons =
-                new ArrayList<LessonInstance>(executionCourseFrom.getAssociatedLessonInstances());
+        final List<LessonInstance> associatedLessons = new ArrayList<>(executionCourseFrom.getAssociatedLessonInstances());
         for (final LessonInstance lessonInstance : associatedLessons) {
             CourseLoad courseLoadFrom = lessonInstance.getCourseLoad();
             CourseLoad courseLoadTo = executionCourseTo.getCourseLoadByShiftType(courseLoadFrom.getType());
@@ -295,7 +288,7 @@ public class MergeExecutionCourses {
         }
 
         final Iterator<Attends> associatedAttendsFromDestination = executionCourseTo.getAttendsSet().iterator();
-        final Map<String, Attends> alreadyAttendingDestination = new HashMap<String, Attends>();
+        final Map<String, Attends> alreadyAttendingDestination = new HashMap<>();
         while (associatedAttendsFromDestination.hasNext()) {
             Attends attend = associatedAttendsFromDestination.next();
             Registration registration = attend.getRegistration();
@@ -307,8 +300,7 @@ public class MergeExecutionCourses {
                 alreadyAttendingDestination.put(number.toString(), attend);
             }
         }
-        final List<Attends> associatedAttendsFromSource = new ArrayList<Attends>();
-        associatedAttendsFromSource.addAll(executionCourseFrom.getAttendsSet());
+        final List<Attends> associatedAttendsFromSource = new ArrayList<>(executionCourseFrom.getAttendsSet());
         for (final Attends attend : associatedAttendsFromSource) {
             if (!alreadyAttendingDestination.containsKey(attend.getRegistration().getNumber().toString())) {
                 attend.setDisciplinaExecucao(executionCourseTo);
@@ -343,8 +335,7 @@ public class MergeExecutionCourses {
         return null;
     }
 
-    private static void copyForuns(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
-            throws FenixServiceException {
+    private static void copyForuns(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
 
         while (!executionCourseFrom.getForuns().isEmpty()) {
             ExecutionCourseForum sourceForum = executionCourseFrom.getForuns().iterator().next();
@@ -373,11 +364,11 @@ public class MergeExecutionCourses {
             if (targetForumSubscription == null) {
                 sourceForumSubscription.setForum(targetForum);
             } else {
-                if (sourceForumSubscription.getReceivePostsByEmail() == true) {
+                if (sourceForumSubscription.getReceivePostsByEmail()) {
                     targetForumSubscription.setReceivePostsByEmail(true);
                 }
 
-                if (sourceForumSubscription.getFavorite() == true) {
+                if (sourceForumSubscription.getFavorite()) {
                     targetForumSubscription.setFavorite(true);
                 }
                 sourceForum.removeForumSubscriptions(sourceForumSubscription);
@@ -428,8 +419,7 @@ public class MergeExecutionCourses {
 
     private static void copySenderMessages(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
         if (executionCourseFrom.getSender() != null) {
-            ExecutionCourseSender courseSenderTo = ExecutionCourseSender.newInstance(executionCourseTo);
-            courseSenderTo.getMessagesSet().addAll(executionCourseFrom.getSender().getMessagesSet());
+            executionCourseTo.getSender().getMessageSet().addAll(executionCourseFrom.getSender().getMessageSet());
         }
     }
 

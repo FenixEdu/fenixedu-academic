@@ -70,7 +70,7 @@
 			<fr:schema type="org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcessBean" bundle="PHD_RESOURCES">
 				<fr:slot name="program" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.candidacy.publicProgram.institution.PhdProgramsProviderForPublicCandidacy" />
-					<fr:property name="format" value="\${name}" />
+					<fr:property name="format" value="\${name.content}" />
 					<fr:property name="sortBy" value="name" /> 
 				</fr:slot>
 			</fr:schema>
@@ -139,7 +139,7 @@
 					<fr:property name="size" value="20"/>
 				</fr:slot>
 			    <fr:slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-					<fr:property name="format" value="\${localizedName}"/>
+					<fr:property name="format" value="\${localizedName.content}"/>
 					<fr:property name="sortBy" value="localizedName=asc" />
 					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 				</fr:slot>

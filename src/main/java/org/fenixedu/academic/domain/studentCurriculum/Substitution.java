@@ -54,7 +54,7 @@ public class Substitution extends Substitution_Base {
     public Substitution(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
             Collection<IEnrolment> enrolments, Double credits, ExecutionSemester executionSemester) {
         this();
-        init(studentCurricularPlan, curriculumGroup, enrolments, new HashSet<CurricularCourse>(0), credits, executionSemester);
+        init(studentCurricularPlan, curriculumGroup, enrolments, new HashSet<>(0), credits, executionSemester);
     }
 
     @Override
@@ -119,7 +119,7 @@ public class Substitution extends Substitution_Base {
     @Override
     @SuppressWarnings("unchecked")
     public Collection<ICurriculumEntry> getAverageEntries(final ExecutionYear executionYear) {
-        final Collection<ICurriculumEntry> result = new HashSet<ICurriculumEntry>();
+        final Collection<ICurriculumEntry> result = new HashSet<>();
 
         for (final EnrolmentWrapper enrolmentWrapper : this.getEnrolmentsSet()) {
             final IEnrolment enrolment = enrolmentWrapper.getIEnrolment();

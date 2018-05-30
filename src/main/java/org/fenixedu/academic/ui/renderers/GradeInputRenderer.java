@@ -169,7 +169,7 @@ public class GradeInputRenderer extends InputRenderer {
                 GradeConverter gradeConverter = (GradeConverter) htmlGradeTextInput.getConverter();
                 GradeScale gradeScale = gradeConverter.getGradeScale();
 
-                String value = getComponent().getValue().trim();
+                String value = getComponent ().getValue().trim();
                 if (value != null && value.length() > 0) {
                     if (gradeScale == null) {
                         setValid(false);

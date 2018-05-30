@@ -18,16 +18,6 @@
  */
 package org.fenixedu.academic.ui.struts.action.teacher;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -40,21 +30,29 @@ import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.accessControl.SearchDegreeStudentsGroup;
-import org.fenixedu.academic.domain.util.email.CoordinatorSender;
-import org.fenixedu.academic.domain.util.email.ExecutionCourseSender;
-import org.fenixedu.academic.domain.util.email.Recipient;
-import org.fenixedu.academic.domain.util.email.Sender;
 import org.fenixedu.academic.dto.teacher.executionCourse.SearchExecutionCourseAttendsBean;
 import org.fenixedu.academic.ui.struts.action.coordinator.DegreeCoordinatorIndex;
-import org.fenixedu.academic.ui.struts.action.messaging.EmailsDA;
 import org.fenixedu.academic.ui.struts.action.teacher.executionCourse.ExecutionCourseBaseAction;
 import org.fenixedu.academic.util.CollectionPager;
 import org.fenixedu.academic.util.WorkingStudentSelectionType;
-import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.struts.annotations.Mapping;
-
+import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
+import org.fenixedu.bennu.core.domain.groups.NamedGroup;
+import org.fenixedu.messaging.core.ui.MessageBean;
+import org.fenixedu.messaging.core.ui.MessagingUtils;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Mapping(path = "/searchECAttends", module = "teacher", functionality = ManageExecutionCourseDA.class)
 public class SearchExecutionCourseAttendsAction extends ExecutionCourseBaseAction {
@@ -88,7 +86,7 @@ public class SearchExecutionCourseAttendsAction extends ExecutionCourseBaseActio
         SearchExecutionCourseAttendsBean searchExecutionCourseAttendsBean;
         if (executionCourseID != null) {
             searchExecutionCourseAttendsBean =
-                    new SearchExecutionCourseAttendsBean(FenixFramework.<ExecutionCourse> getDomainObject(executionCourseID));
+                    new SearchExecutionCourseAttendsBean(FenixFramework.getDomainObject(executionCourseID));
         } else {
             searchExecutionCourseAttendsBean = new SearchExecutionCourseAttendsBean(executionCourse);
         }
@@ -101,7 +99,7 @@ public class SearchExecutionCourseAttendsAction extends ExecutionCourseBaseActio
 
         String attendsStates = request.getParameter("attendsStates");
         if (attendsStates != null) {
-            List<StudentAttendsStateType> list = new ArrayList<StudentAttendsStateType>();
+            List<StudentAttendsStateType> list = new ArrayList<>();
             for (String attendsState : attendsStates.split(":")) {
                 list.add(StudentAttendsStateType.valueOf(attendsState));
             }
@@ -110,7 +108,7 @@ public class SearchExecutionCourseAttendsAction extends ExecutionCourseBaseActio
 
         String workingStudentTypes = request.getParameter("workingStudentTypes");
         if (workingStudentTypes != null) {
-            List<WorkingStudentSelectionType> list = new ArrayList<WorkingStudentSelectionType>();
+            List<WorkingStudentSelectionType> list = new ArrayList<>();
             for (String workingStudentType : workingStudentTypes.split(":")) {
                 list.add(WorkingStudentSelectionType.valueOf(workingStudentType));
             }
@@ -119,19 +117,19 @@ public class SearchExecutionCourseAttendsAction extends ExecutionCourseBaseActio
 
         String degreeCurricularPlans = request.getParameter("degreeCurricularPlans");
         if (degreeCurricularPlans != null) {
-            List<DegreeCurricularPlan> list = new ArrayList<DegreeCurricularPlan>();
+            List<DegreeCurricularPlan> list = new ArrayList<>();
             for (String degreeCurricularPlan : degreeCurricularPlans.split(":")) {
-                list.add(FenixFramework.<DegreeCurricularPlan> getDomainObject(degreeCurricularPlan));
+                list.add(FenixFramework.getDomainObject(degreeCurricularPlan));
             }
             searchExecutionCourseAttendsBean.setDegreeCurricularPlans(list);
         }
 
         String shifts = request.getParameter("shifts");
         if (shifts != null) {
-            List<Shift> list = new ArrayList<Shift>();
+            List<Shift> list = new ArrayList<>();
             for (String shift : shifts.split(":")) {
                 if (!StringUtils.isEmpty(shift)) {
-                    list.add(FenixFramework.<Shift> getDomainObject(shift));
+                    list.add(FenixFramework.getDomainObject(shift));
                 }
             }
             searchExecutionCourseAttendsBean.setShifts(list);
@@ -143,9 +141,9 @@ public class SearchExecutionCourseAttendsAction extends ExecutionCourseBaseActio
     private void prepareAttendsCollectionPages(HttpServletRequest request,
             SearchExecutionCourseAttendsBean searchExecutionCourseAttendsBean, ExecutionCourse executionCourse) {
         Collection<Attends> executionCourseAttends = searchExecutionCourseAttendsBean.getAttendsResult();
-        List<Attends> listExecutionCourseAttends = new ArrayList<Attends>(executionCourseAttends);
-        Collections.sort(listExecutionCourseAttends, Attends.COMPARATOR_BY_STUDENT_NUMBER);
-        final CollectionPager<Attends> pager = new CollectionPager<Attends>(listExecutionCourseAttends, 50);
+        List<Attends> listExecutionCourseAttends = new ArrayList<>(executionCourseAttends);
+        listExecutionCourseAttends.sort(Attends.COMPARATOR_BY_STUDENT_NUMBER);
+        final CollectionPager<Attends> pager = new CollectionPager<>(listExecutionCourseAttends, 50);
         request.setAttribute("numberOfPages", (listExecutionCourseAttends.size() / 50) + 1);
 
         final String pageParameter = request.getParameter("pageNumber");
@@ -156,7 +154,7 @@ public class SearchExecutionCourseAttendsAction extends ExecutionCourseBaseActio
 
         executionCourse.searchAttends(attendsPagesBean);
 
-        Map<Integer, Integer> enrolmentsNumberMap = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> enrolmentsNumberMap = new HashMap<>();
         for (Attends attends : pager.getCollection()) {
             executionCourse.addAttendsToEnrolmentNumberMap(attends, enrolmentsNumberMap);
         }
@@ -169,29 +167,31 @@ public class SearchExecutionCourseAttendsAction extends ExecutionCourseBaseActio
     }
 
     public ActionForward sendEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
-        ExecutionCourse executionCourse;
-        Group studentsGroup = null;
-        String label;
-        Sender sender;
+            HttpServletResponse response) throws IOException {
+        MessageBean messageBean = new MessageBean();
+
         SearchExecutionCourseAttendsBean bean = getRenderedObject("mailViewState");
+        SearchDegreeStudentsGroup degreeStudentsGroup =
+                SearchDegreeStudentsGroup.parse((String) getFromRequestOrForm(request, (DynaActionForm) form, "searchGroup"));
+
         if (bean != null) {
-            executionCourse = bean.getExecutionCourse();
-            studentsGroup = bean.getAttendsGroup();
-            label = bean.getLabel();
-            sender = ExecutionCourseSender.newInstance(executionCourse);
-        } else {
-            SearchDegreeStudentsGroup degreeStudentsGroup =
-                    SearchDegreeStudentsGroup.parse((String) getFromRequestOrForm(request, (DynaActionForm) form, "searchGroup"));
-            label = degreeStudentsGroup.getLabel();
+            NamedGroup attendsGroup = new NamedGroup(new LocalizedString(I18N.getLocale(),bean.getLabel()), bean.getAttendsGroup());
+            messageBean.setLockedSender(bean.getExecutionCourse().getSender());
+            messageBean.addAdHocRecipient(attendsGroup);
+            messageBean.selectRecipient(attendsGroup);
+        }
+        else {
+
+            NamedGroup degreeStudents = new NamedGroup(new LocalizedString(I18N.getLocale(),degreeStudentsGroup.getLabel()), degreeStudentsGroup.getUserGroup());
+
             String executionDegreeId = (String) getFromRequestOrForm(request, (DynaActionForm) form, "executionDegreeId");
-            studentsGroup = degreeStudentsGroup.getUserGroup();
             ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
-            sender = CoordinatorSender.newInstance(executionDegree.getDegree());
+            messageBean.setLockedSender(executionDegree.getDegree().getSender());
+            messageBean.addAdHocRecipient(degreeStudents);
+            messageBean.selectRecipient(degreeStudents);
         }
 
-        Recipient recipient = Recipient.newInstance(label, studentsGroup);
-        return EmailsDA.sendEmail(request, sender, recipient);
+        return MessagingUtils.redirectToNewMessage(request, response, messageBean);
     }
 
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {

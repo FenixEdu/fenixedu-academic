@@ -43,7 +43,6 @@
 		<span class="error0"><!-- Error messages go here --><bean:write name="errMsg" /></span>
 	</p>
 </html:messages>
-
 <logic:notEmpty name="externalCurricularCourseEnrolmentBeans">
 
 	<bean:define id="contextInformation" name="contextInformation" />

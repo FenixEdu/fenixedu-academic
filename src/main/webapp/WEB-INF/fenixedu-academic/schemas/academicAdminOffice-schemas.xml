@@ -1019,8 +1019,11 @@
 	</slot>
 	<slot name="grade" layout="grade-input" key="label.studentDismissal.grade" >
 		<property name="maxLength" value="5" />
-		<property name="required" value="true" />
 		<property name="size" value="5" />
+	</slot>
+	<slot name="normalizedGrade" layout="grade-input" key="label.normalized.grade" >
+		<property name="maxLength" value="2" />
+		<property name="size" value="2" />
 	</slot>
 	<slot name="ectsCredits" key="label.ects.credits" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
@@ -1179,16 +1182,20 @@
 
 <schema name="CreateExternalEnrolmentBean.edit" bundle="ACADEMIC_OFFICE_RESOURCES" 
 		type="org.fenixedu.academic.dto.administrativeOffice.externalUnits.CreateExternalEnrolmentBean" >
-		
+
+	<slot name="externalCurricularCourse.code" read-only="true" key="label.code"/>
 	<slot name="externalCurricularCourse.name" read-only="true" key="label.externalUnits.externalCurricularCourse"/>
 	<slot name="studentNumber" key="label.number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="10" />
 	</slot>
 	<slot name="grade" layout="grade-input" key="label.studentDismissal.grade" >
 		<property name="maxLength" value="5" />
-		<property name="required" value="true" />
 		<property name="size" value="5" />
-	</slot>	
+	</slot>
+	<slot name="normalizedGrade" layout="grade-input" key="label.normalized.grade" >
+		<property name="maxLength" value="2" />
+		<property name="size" value="2" />
+	</slot>
 	<slot name="ectsCredits" key="label.ects.credits" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="10" />
 	</slot>
@@ -1209,8 +1216,11 @@
 	<slot name="studentNumber" read-only="true" key="label.number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="grade" layout="grade-input" key="label.studentDismissal.grade" >
 		<property name="maxLength" value="5" />
-		<property name="required" value="true" />
 		<property name="size" value="5" />
+	</slot>
+	<slot name="normalizedGrade" layout="grade-input" key="label.normalized.grade" >
+		<property name="maxLength" value="2" />
+		<property name="size" value="2" />
 	</slot>
 	<slot name="ectsCredits" key="label.ects.credits" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="executionPeriod" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
@@ -1240,6 +1250,7 @@
 	<slot name="creationDateDateTime" key="label.enrolment.date" layout="no-time" read-only="true"/>
 	<slot name="externalCurricularCourse.fullPathName" key="label.externalUnits.externalCurricularCourse" read-only="true"/>
 	<slot name="grade" key="label.studentDismissal.grade" read-only="true"/>
+	<slot name="normalizedEctsGrade" key="label.normalized.grade" read-only="true" layout="null-as-label"/>
 	<slot name="ectsCredits" key="label.ects.credits" read-only="true"/>
 	<slot name="executionPeriod" key="label.executionPeriod" layout="format" read-only="true">
 		<property name="format" value="${semester}º semestre - ${executionYear.year}" />

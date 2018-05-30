@@ -40,12 +40,12 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleType;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
-import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.academic.util.predicates.ResultCollection;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -81,6 +81,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     public CurriculumModule() {
         super();
         setCreationDateDateTime(new DateTime());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void deleteRecursive() {
@@ -91,6 +92,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
         DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         setDegreeModule(null);
         setCurriculumGroup(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -337,7 +339,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
     abstract public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester);
 
-    abstract public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(final ExecutionSemester executionSemester);
+    abstract public Set getDegreeModulesToEvaluate(final ExecutionSemester executionSemester);
 
     abstract public Enrolment getApprovedEnrolment(final CurricularCourse curricularCourse);
 

@@ -448,3 +448,4 @@
 
 		
 		</div>
+<script src="<%= request.getContextPath()%>/javaScript/jquery/jquery-ui.js" type="application/javascript"></script>

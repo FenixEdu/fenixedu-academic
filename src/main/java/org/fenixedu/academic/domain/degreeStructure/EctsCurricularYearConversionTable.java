@@ -38,4 +38,5 @@ public abstract class EctsCurricularYearConversionTable extends EctsCurricularYe
         super.delete();
     }
 
+
 }

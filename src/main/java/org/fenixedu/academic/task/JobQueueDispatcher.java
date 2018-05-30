@@ -30,11 +30,11 @@ import org.fenixedu.academic.domain.QueueJob;
 import org.fenixedu.academic.domain.QueueJobResult;
 import org.fenixedu.academic.domain.QueueJobResultFile;
 import org.fenixedu.academic.domain.QueueJobWithFile;
-import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.scheduler.CronTask;
 import org.fenixedu.bennu.scheduler.annotation.Task;
+import org.fenixedu.messaging.core.domain.Message;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -97,11 +97,16 @@ public class JobQueueDispatcher extends CronTask {
         job.setRootDomainObjectQueueUndone(null);
         job.setJobEndTime(new DateTime());
         if (job.getPerson() != null) {
-            List<String> emails = new ArrayList<String>();
+            List<String> emails = new ArrayList<>();
             emails.add(job.getPerson().getInstitutionalOrDefaultEmailAddressValue());
             String subject = "Pedido de " + job.getDescription() + " concluido";
             String body = "O seu pedido de " + job.getDescription() + " já se encontra disponível no sistema Fénix.";
-            new Message(Bennu.getInstance().getSystemSender(), job.getPerson().getEmailForSendingEmails(), subject, body);
+            Message.fromSystem()
+                    .replyToSender()
+                    .singleBcc(job.getPerson().getEmailForSendingEmails())
+                    .subject(subject)
+                    .textBody(body)
+                    .send();
         }
     }
 
@@ -118,8 +123,12 @@ public class JobQueueDispatcher extends CronTask {
                     "Viva\n\n" + "O trabalho com o externalId de " + job.getExternalId() + " falhou mais de 3 vezes.\n\n"
                             + "Request Time : " + job.getRequestDate() + "\n" + "Start Time : " + job.getJobStartTime() + "\n"
                             + "User : " + getQueueJobResponsibleName(job) + "\n" + "\n\n Error Stack Trace:\n" + sw.toString();
-            new Message(Bennu.getInstance().getSystemSender(),
-                    Bennu.getInstance().getSystemSender().getGroupRecipient(Group.managers()), subject, body);
+            Group tos = Group.managers();
+            Message.fromSystem()
+                    .to(tos)
+                    .subject(subject)
+                    .textBody(body)
+                    .send();
         }
     }
 }

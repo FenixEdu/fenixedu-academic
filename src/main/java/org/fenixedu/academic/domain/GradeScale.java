@@ -353,7 +353,7 @@ public enum GradeScale {
         @Override
         public boolean belongsTo(String value) {
             return value.equals("A") || value.equals("B") || value.equals("C") || value.equals("D") || value.equals("E")
-                    || value.equals("F") || value.equals(NA);
+                    || value.equals("F") || value.equals("-") || value.equals(NA);
         }
 
         @Override

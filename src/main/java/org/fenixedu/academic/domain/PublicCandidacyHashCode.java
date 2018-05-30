@@ -18,18 +18,15 @@
  */
 package org.fenixedu.academic.domain;
 
-import static org.apache.commons.lang.StringUtils.isEmpty;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.messaging.core.domain.Message;
+import org.joda.time.DateTime;
+import pt.ist.fenixframework.Atomic;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import org.fenixedu.academic.domain.util.email.Message;
-import org.fenixedu.academic.domain.util.email.SystemSender;
-import org.fenixedu.bennu.core.domain.Bennu;
-import org.joda.time.DateTime;
-
-import pt.ist.fenixframework.Atomic;
+import static org.apache.commons.lang.StringUtils.isEmpty;
 
 abstract public class PublicCandidacyHashCode extends PublicCandidacyHashCode_Base {
 
@@ -41,8 +38,11 @@ abstract public class PublicCandidacyHashCode extends PublicCandidacyHashCode_Ba
 
     @Atomic
     public void sendEmail(final String fromSubject, final String body) {
-        SystemSender systemSender = getRootDomainObject().getSystemSender();
-        new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, fromSubject, body, getEmail());
+        Message.fromSystem().replyToSender()
+                .singleBcc(getEmail())
+                .subject(fromSubject)
+                .textBody(body)
+                .send();
     }
 
     public boolean isFromDegreeOffice() {
@@ -74,7 +74,7 @@ abstract public class PublicCandidacyHashCode extends PublicCandidacyHashCode_Ba
     }
 
     protected static List<PublicCandidacyHashCode> getHashCodesAssociatedWithEmail(final String email) {
-        final List<PublicCandidacyHashCode> result = new ArrayList<PublicCandidacyHashCode>();
+        final List<PublicCandidacyHashCode> result = new ArrayList<>();
         for (final PublicCandidacyHashCode hashCode : Bennu.getInstance().getCandidacyHashCodesSet()) {
             if (hashCode.getEmail().equals(email)) {
                 result.add(hashCode);
