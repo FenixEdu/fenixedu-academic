@@ -25,6 +25,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.OptionalEnrolment;
+import org.fenixedu.academic.domain.degreeStructure.EctsConversionTable;
 import org.fenixedu.academic.domain.degreeStructure.NoEctsComparabilityTableFound;
 import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
@@ -281,6 +282,11 @@ public class CurriculumRenderer extends InputRenderer {
             executionYearCell.setText("Ano Lectivo");
             executionYearCell.setClasses(getGradeCellClass());
             executionYearCell.setColspan(2);
+
+            if (isVisibleEctsConvertedGrade()) {
+                generateCellWithText(groupRow, BundleUtil.getString(Bundle.APPLICATION, "label.grade.comparability.table"),
+                                     getGradeCellClass());
+            }
         }
 
         private void generateRows(HtmlTable mainTable, Set<ICurriculumEntry> entries, int level) {
@@ -300,16 +306,20 @@ public class CurriculumRenderer extends InputRenderer {
             }
             
             generateGradeCell(enrolmentRow, entry);
+            EctsConversionTable ectsTable = null;
 
             if (isVisibleEctsConvertedGrade()) {
                 String ectsGrade = null;
                 try {
                     if (entry instanceof IEnrolment) {
                         IEnrolment enrolment = (IEnrolment) entry;
-                        ectsGrade = enrolment.getEctsGrade(curriculum.getStudentCurricularPlan(), new DateTime()).getValue();
+                        ectsTable = enrolment.getEctsConversionTable(curriculum.getStudentCurricularPlan(), new DateTime());
+                        Grade grade = enrolment.getEctsGrade(curriculum.getStudentCurricularPlan(), new DateTime());
+                        ectsGrade = grade == null ? null : grade.getValue();
                     } else if (entry instanceof Dismissal && ((Dismissal) entry).getCredits().isEquivalence()) {
                         Dismissal dismissal = (Dismissal) entry;
                         ectsGrade = dismissal.getEctsGrade(new DateTime()).getValue();
+                        ectsTable = dismissal.getEctsConversionTable(new DateTime());
                     }
                 }catch(NoEctsComparabilityTableFound noEctsException) {
                     logger.warn("There is no ects table for {}", entry.getExternalId());
@@ -320,6 +330,10 @@ public class CurriculumRenderer extends InputRenderer {
             generateWeightCell(enrolmentRow, entry);
             generateExecutionYearCell(enrolmentRow, entry);
             generateSemesterCell(enrolmentRow, entry);
+            if (isVisibleEctsConvertedGrade()) {
+                generateConversionTableCell(enrolmentRow, ectsTable);
+            }
+
         }
 
         private void generateCodeAndNameCell(final HtmlTableRow enrolmentRow, final ICurriculumEntry entry, final int level,
@@ -356,7 +370,12 @@ public class CurriculumRenderer extends InputRenderer {
         }
 
         private void generateConvertedGradeCell(HtmlTableRow enrolmentRow, final String grade) {
-            generateCellWithText(enrolmentRow, Strings.isNullOrEmpty(grade) ? "-" : grade, getGradeCellClass());
+            String gradeText = Strings.isNullOrEmpty(grade) ? "-" : grade;
+            generateCellWithText(enrolmentRow, gradeText, getGradeCellClass());
+        }
+
+        private void generateConversionTableCell(HtmlTableRow enrolmentRow, final EctsConversionTable table) {
+            generateCellWithText(enrolmentRow, table == null ? "-" : table.getPresentationName().getContent(), getGradeCellClass());
         }
 
         private void generateWeightCell(HtmlTableRow enrolmentRow, final ICurriculumEntry entry) {

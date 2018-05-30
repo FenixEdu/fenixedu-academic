@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.ui.struts.action.administrativeOffice.gradeSubmission;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -34,18 +35,20 @@ import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.MarkSheet;
 import org.fenixedu.academic.domain.accessControl.TeachersWithGradesToSubmitGroup;
 import org.fenixedu.academic.domain.accessControl.TeachersWithMarkSheetsToConfirmGroup;
-import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
-import org.fenixedu.academic.domain.util.email.Recipient;
-import org.fenixedu.academic.domain.util.email.UnitBasedSender;
 import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.GradesToSubmitExecutionCourseSendMailBean;
 import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetSendMailBean;
 import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetToConfirmSendMailBean;
-import org.fenixedu.academic.ui.struts.action.messaging.EmailsDA;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
+import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
+import org.fenixedu.bennu.core.domain.groups.NamedGroup;
+import org.fenixedu.messaging.core.domain.Sender;
+import org.fenixedu.messaging.core.ui.MessageBean;
+import org.fenixedu.messaging.core.ui.MessagingUtils;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 @Mapping(path = "/markSheetSendMail", module = "academicAdministration", formBean = "markSheetSendMailForm",
@@ -87,18 +90,16 @@ public class SendMailMarkSheetDispatchAction extends MarkSheetDispatchAction {
         Collection<ExecutionCourse> executionCourses =
                 bean.getExecutionPeriod().getExecutionCoursesWithDegreeGradesToSubmit(bean.getDegreeCurricularPlan());
         if (!markSheets.isEmpty()) {
-            Map<CurricularCourse, MarkSheetToConfirmSendMailBean> map =
-                    new HashMap<CurricularCourse, MarkSheetToConfirmSendMailBean>();
+            Map<CurricularCourse, MarkSheetToConfirmSendMailBean> map = new HashMap<>();
             for (MarkSheet markSheet : markSheets) {
                 if (map.get(markSheet.getCurricularCourse()) == null) {
                     map.put(markSheet.getCurricularCourse(), new MarkSheetToConfirmSendMailBean(markSheet, true));
                 }
             }
-            bean.setMarkSheetToConfirmSendMailBean(new ArrayList<MarkSheetToConfirmSendMailBean>(map.values()));
+            bean.setMarkSheetToConfirmSendMailBean(new ArrayList<>(map.values()));
         }
         if (!executionCourses.isEmpty()) {
-            Collection<GradesToSubmitExecutionCourseSendMailBean> executionCoursesBean =
-                    new ArrayList<GradesToSubmitExecutionCourseSendMailBean>();
+            Collection<GradesToSubmitExecutionCourseSendMailBean> executionCoursesBean = new ArrayList<>();
             for (ExecutionCourse course : executionCourses) {
                 executionCoursesBean.add(new GradesToSubmitExecutionCourseSendMailBean(bean.getDegreeCurricularPlan(), course,
                         true));
@@ -110,23 +111,38 @@ public class SendMailMarkSheetDispatchAction extends MarkSheetDispatchAction {
     }
 
     public ActionForward prepareMarkSheetsToConfirmSendMail(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) {
+            HttpServletRequest request, HttpServletResponse response) throws IOException {
         MarkSheetSendMailBean bean = (MarkSheetSendMailBean) RenderUtils.getViewState("sendMailBean").getMetaObject().getObject();
-        Group teachersGroup = TeachersWithMarkSheetsToConfirmGroup.get(bean.getExecutionPeriod(), bean.getDegreeCurricularPlan());
+        Sender sender = bean.getDegree().getAdministrativeOffice().getUnit().getSender();
+
         String message = getResources(request, "ACADEMIC_OFFICE_RESOURCES").getMessage("label.markSheets.to.confirm.send.mail");
-        Recipient recipient = Recipient.newInstance(message, teachersGroup);
-        UnitBasedSender sender = bean.getDegree().getAdministrativeOffice().getUnit().getUnitBasedSenderSet().iterator().next();
-        return EmailsDA.sendEmail(request, sender, recipient);
+        Group teachersGroup = TeachersWithMarkSheetsToConfirmGroup.get(bean.getExecutionPeriod(), bean.getDegreeCurricularPlan());
+        NamedGroup namedGroup = new NamedGroup(new LocalizedString(I18N.getLocale(), message), teachersGroup);
+
+        MessageBean messageBean = new MessageBean();
+        messageBean.setLockedSender(sender);
+        messageBean.addAdHocRecipient(namedGroup);
+        messageBean.selectRecipient(namedGroup);
+
+        return MessagingUtils.redirectToNewMessage(request, response, messageBean);
     }
 
+
     public ActionForward prepareGradesToSubmitSendMail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
+            HttpServletResponse response) throws IOException {
         MarkSheetSendMailBean bean = (MarkSheetSendMailBean) RenderUtils.getViewState("sendMailBean").getMetaObject().getObject();
+
+        Sender sender = bean.getDegree().getAdministrativeOffice().getUnit().getSender();
+
         Group teachersGroup = TeachersWithGradesToSubmitGroup.get(bean.getExecutionPeriod(), bean.getDegreeCurricularPlan());
         String message = getResources(request, "ACADEMIC_OFFICE_RESOURCES").getMessage("label.grades.to.submit.send.mail");
-        Recipient recipient = Recipient.newInstance(message, teachersGroup);
-        UnitBasedSender sender =
-                AdministrativeOffice.readDegreeAdministrativeOffice().getUnit().getUnitBasedSenderSet().iterator().next();
-        return EmailsDA.sendEmail(request, sender, recipient);
+        NamedGroup namedGroup = new NamedGroup(new LocalizedString(I18N.getLocale(), message), teachersGroup);
+
+        MessageBean messageBean = new MessageBean();
+        messageBean.setLockedSender(sender);
+        messageBean.addAdHocRecipient(namedGroup);
+        messageBean.selectRecipient(namedGroup);
+
+        return MessagingUtils.redirectToNewMessage(request, response, messageBean);
     }
 }

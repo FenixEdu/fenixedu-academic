@@ -19,11 +19,9 @@
 package org.fenixedu.academic.report.academicAdministrativeOffice;
 
 import java.text.MessageFormat;
-import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.degree.DegreeType;
@@ -50,9 +48,7 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
         Registration registration = getDocumentRequest().getRegistration();
         final Person coordinator = getAdministrativeOffice().getCoordinator().getPerson();
 
-        final List<Enrolment> enrolments =
-                (List<Enrolment>) getDocumentRequest().getRegistration().getEnrolments(getExecutionYear());
-        Integer numberEnrolments = Integer.valueOf(enrolments.size());
+        final int numberEnrolments = getDocumentRequest().getRegistration().getNumberOfTotalEnrolments(getExecutionYear());
 
         String coordinatorTitle = getCoordinatorGender(coordinator);
 

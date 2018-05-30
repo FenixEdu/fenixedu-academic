@@ -374,6 +374,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
         final Row row = spreadsheet.addRow();
         row.setCell(secondCycleIndividualCandidacyProcess.getProcessCode());
         row.setCell(secondCycleIndividualCandidacyProcess.getPersonalDetails().getName());
+        row.setCell(secondCycleIndividualCandidacyProcess.getPersonalDetails().getEmail());
         row.setCell(secondCycleIndividualCandidacyProcess.getPersonalDetails().getIdDocumentType().getLocalizedName());
         row.setCell(secondCycleIndividualCandidacyProcess.getPersonalDetails().getDocumentIdNumber());
 

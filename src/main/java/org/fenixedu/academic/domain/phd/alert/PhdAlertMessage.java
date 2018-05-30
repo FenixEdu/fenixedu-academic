@@ -24,28 +24,26 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
-import org.fenixedu.academic.domain.util.email.Message;
-import org.fenixedu.academic.domain.util.email.UnitBasedSender;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.messaging.core.domain.Message;
+import org.fenixedu.messaging.core.domain.Sender;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
 
 public class PhdAlertMessage extends PhdAlertMessage_Base {
 
-    static final public Comparator<PhdAlertMessage> COMPARATOR_BY_WHEN_CREATED_AND_ID = new Comparator<PhdAlertMessage>() {
-        @Override
-        public int compare(PhdAlertMessage m1, PhdAlertMessage m2) {
-            int comp = m1.getWhenCreated().compareTo(m2.getWhenCreated());
-            return (comp != 0) ? comp : DomainObjectUtil.COMPARATOR_BY_ID.compare(m1, m2);
-        }
+    static final public Comparator<PhdAlertMessage> COMPARATOR_BY_WHEN_CREATED_AND_ID = (m1, m2) -> {
+        int comp = m1.getWhenCreated().compareTo(m2.getWhenCreated());
+        return (comp != 0) ? comp : DomainObjectUtil.COMPARATOR_BY_ID.compare(m1, m2);
     };
 
     protected PhdAlertMessage() {
@@ -150,7 +148,7 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
     }
 
     public boolean isReaded() {
-        return getReaded().booleanValue();
+        return getReaded();
     }
 
     public boolean isFor(Person person) {
@@ -158,7 +156,7 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
     }
 
     public List<PhdAlert> getAlertsPossibleResponsibleForMessageGeneration() {
-        List<PhdAlert> result = new ArrayList<PhdAlert>();
+        List<PhdAlert> result = new ArrayList<>();
         Collection<PhdAlert> alerts = getProcess().getAlertsSet();
 
         for (PhdAlert phdAlert : alerts) {
@@ -170,25 +168,15 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
         return result;
     }
 
-    protected UnitBasedSender getSender() {
+    protected Sender getSender() {
         AdministrativeOffice administrativeOffice = this.getProcess().getAdministrativeOffice();
-        return administrativeOffice.getUnit().getUnitBasedSenderSet().iterator().next();
+        return administrativeOffice.getUnit().getSender();
     }
 
     public List<Message> getEmailsWithMatchWithThisMessage() {
-        List<Message> result = new ArrayList<Message>();
-
-        UnitBasedSender sender = getSender();
-
-        Collection<Message> messages = sender.getMessagesSet();
-
-        for (Message message : messages) {
-            if (getSubject().getContent().contentEquals(message.getSubject())) {
-                result.add(message);
-            }
-        }
-
-        return result;
+        return getSender().getMessageSet().stream()
+                .filter(message -> getSubject().getContent().contentEquals(message.getSubject().toString()))
+                .collect(Collectors.toList());
     }
 
 }

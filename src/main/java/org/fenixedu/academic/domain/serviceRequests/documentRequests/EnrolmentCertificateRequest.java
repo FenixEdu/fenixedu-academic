@@ -20,11 +20,14 @@ package org.fenixedu.academic.domain.serviceRequests.documentRequests;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
 
 public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Base {
@@ -77,7 +80,11 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
 
     @Override
     final public Integer getNumberOfUnits() {
-        return getEntriesToReport().size() + getExtraCurricularEntriesToReport().size() + getPropaedeuticEntriesToReport().size();
+        return getEntriesToReport().size() + getExtraCurricularEntriesToReport().size() + getPropaedeuticEntriesToReport().size() + getExternalEnrolments().size();
+    }
+
+    final public Collection<ExternalEnrolment> getExternalEnrolments() {
+        return getRegistration().getExternalEnrolmentsSet().stream().filter(e -> Objects.equals(e.getExecutionYear(), getExecutionYear())).collect(Collectors.toSet());
     }
 
     final public Collection<Enrolment> getEntriesToReport() {

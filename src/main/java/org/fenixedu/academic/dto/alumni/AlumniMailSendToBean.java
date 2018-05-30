@@ -18,18 +18,16 @@
  */
 package org.fenixedu.academic.dto.alumni;
 
-import java.io.Serializable;
-import java.util.List;
-
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accessControl.StudentsConcludedInExecutionYearGroup;
 import org.fenixedu.academic.domain.degree.DegreeType;
-import org.fenixedu.academic.domain.util.email.Recipient;
-import org.fenixedu.academic.domain.util.email.Sender;
 import org.fenixedu.bennu.core.groups.Group;
-
+import org.fenixedu.messaging.core.domain.Sender;
 import pt.ist.fenixframework.Atomic;
+
+import java.io.Serializable;
+import java.util.List;
 
 public class AlumniMailSendToBean implements Serializable {
 
@@ -76,6 +74,6 @@ public class AlumniMailSendToBean implements Serializable {
         for (Degree degree : getDegrees()) {
             group = group.or(StudentsConcludedInExecutionYearGroup.get(degree, getEndExecutionYear()));
         }
-        sender.addRecipients(Recipient.newInstance(group));
+        sender.addRecipient(group);
     }
 }

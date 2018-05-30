@@ -20,7 +20,6 @@ package org.fenixedu.academic.ui.spring.controller.teacher;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
@@ -33,7 +32,6 @@ import java.util.stream.Stream.Builder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.core.UriBuilder;
 
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.Attends.StudentAttendsStateType;
@@ -42,8 +40,6 @@ import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.StudentGroup;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
-import org.fenixedu.academic.domain.util.email.ExecutionCourseSender;
-import org.fenixedu.academic.domain.util.email.Recipient;
 import org.fenixedu.academic.dto.student.StudentStatuteBean;
 import org.fenixedu.academic.ui.struts.action.teacher.ManageExecutionCourseDA;
 import org.fenixedu.academic.util.Bundle;
@@ -51,9 +47,13 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.spring.security.CSRFTokenBean;
+import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.commons.spreadsheet.SheetData;
 import org.fenixedu.commons.spreadsheet.SpreadsheetBuilder;
 import org.fenixedu.commons.spreadsheet.WorkbookExportFormat;
+import org.fenixedu.bennu.core.domain.groups.NamedGroup;
+import org.fenixedu.messaging.core.ui.MessageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,6 +64,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.google.common.base.Joiner;
@@ -73,7 +74,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixframework.FenixFramework;
 
 @Controller
@@ -131,10 +131,10 @@ public class AttendsSearchController extends ExecutionCourseController {
 
     @RequestMapping(value = "/studentSpreadsheet", method = RequestMethod.POST)
     public void generateSpreadsheet(@RequestParam String filteredAttendsJson, HttpServletResponse response) throws IOException {
-        Set<Attends> attends = new TreeSet<Attends>(Attends.COMPARATOR_BY_STUDENT_NUMBER);
+        Set<Attends> attends = new TreeSet<>(Attends.COMPARATOR_BY_STUDENT_NUMBER);
         for (JsonElement elem : new JsonParser().parse(filteredAttendsJson).getAsJsonArray()) {
             JsonObject object = elem.getAsJsonObject();
-            attends.add((Attends) FenixFramework.getDomainObject(object.get("id").getAsString()));
+            attends.add(FenixFramework.getDomainObject(object.get("id").getAsString()));
         }
 
         final SpreadsheetBuilder builder = new SpreadsheetBuilder();
@@ -153,7 +153,7 @@ public class AttendsSearchController extends ExecutionCourseController {
                         executionCourse.getGroupings().forEach(
                                 gr -> addCell(getLabel("label.projectGroup") + " " + gr.getName(), attends.getStudentGroupsSet()
                                         .stream().filter(sg -> sg.getGrouping().equals(gr)).map(StudentGroup::getGroupNumber)
-                                        .map(gn -> gn.toString()).findAny().orElse("")));
+                                        .map(Object::toString).findAny().orElse("")));
                         executionCourse.getShiftTypes().forEach(
                                 shiftType -> addCell(
                                         getLabel("label.shift") + " " + shiftType.getFullNameTipoAula(),
@@ -248,60 +248,27 @@ public class AttendsSearchController extends ExecutionCourseController {
 
     @RequestMapping(value = "/sendEmail", method = RequestMethod.POST)
     public RedirectView sendEmail(Model model, HttpServletRequest request, HttpSession session,
-            @RequestParam("filteredAttendsJson") String filteredAttendsJson, @RequestParam("filtersJson") String filtersJson) {
-        String attendTypeValues = "", degreeNameValues = "", shiftsValues = "", studentStatuteTypesValues = "";
+            @RequestParam("filteredAttendsJson") String filteredAttendsJson, @RequestParam("filtersJson") String filtersJson,
+            final RedirectAttributes redirectAttributes) {
 
         JsonObject filters = new JsonParser().parse(filtersJson).getAsJsonObject();
-        for (JsonElement elem : filters.get("attendsStates").getAsJsonArray()) {
-            JsonObject object = elem.getAsJsonObject();
-            if (object.get("value").getAsBoolean()) {
-                if (!attendTypeValues.isEmpty()) {
-                    attendTypeValues += ", ";
-                }
-                attendTypeValues += object.get("type");
-            }
-        }
 
-        for (JsonElement elem : filters.get("curricularPlans").getAsJsonArray()) {
-            JsonObject object = elem.getAsJsonObject();
-            if (object.get("value").getAsBoolean()) {
-                if (!degreeNameValues.isEmpty()) {
-                    degreeNameValues += ", ";
-                }
-                degreeNameValues += object.get("name");
-            }
-        }
-
-        for (JsonElement elem : filters.get("shifts").getAsJsonArray()) {
-            JsonObject object = elem.getAsJsonObject();
-            if (object.get("value").getAsBoolean()) {
-                if (!shiftsValues.isEmpty()) {
-                    shiftsValues += ", ";
-                }
-                shiftsValues += object.get("name");
-            }
-        }
+        StringBuilder attendTypeValues = parseFilters(filters, "attendsStates", "type");
+        StringBuilder degreeNameValues = parseFilters(filters, "curricularPlans", "name");
+        StringBuilder shiftsValues = parseFilters(filters, "shifts", "name");
+        StringBuilder studentStatuteTypesValues = parseFilters(filters, "studentStatuteTypes", "name");
 
         JsonObject noStatuteObject = filters.get("noStudentStatuteTypes").getAsJsonObject();
         if (noStatuteObject.get("value").getAsBoolean()) {
-            studentStatuteTypesValues += noStatuteObject.get("shortName");
-        }
-        for (JsonElement elem : filters.get("studentStatuteTypes").getAsJsonArray()) {
-            JsonObject object = elem.getAsJsonObject();
-            if (object.get("value").getAsBoolean()) {
-                if (!studentStatuteTypesValues.isEmpty()) {
-                    studentStatuteTypesValues += ", ";
-                }
-                studentStatuteTypesValues += object.get("name");
-            }
+            studentStatuteTypesValues.append(noStatuteObject.get("shortName"));
         }
 
         String label =
                 String.format("%s : %s \n%s : %s \n%s : %s \n%s : %s",
-                        BundleUtil.getString(Bundle.APPLICATION, "label.selectStudents"), attendTypeValues,
-                        BundleUtil.getString(Bundle.APPLICATION, "label.attends.courses"), degreeNameValues,
-                        BundleUtil.getString(Bundle.APPLICATION, "label.selectShift"), shiftsValues,
-                        BundleUtil.getString(Bundle.APPLICATION, "label.studentStatutes"), studentStatuteTypesValues);
+                        BundleUtil.getString(Bundle.APPLICATION, "label.selectStudents"), attendTypeValues.toString(),
+                        BundleUtil.getString(Bundle.APPLICATION, "label.attends.courses"), degreeNameValues.toString(),
+                        BundleUtil.getString(Bundle.APPLICATION, "label.selectShift"), shiftsValues.toString(),
+                        BundleUtil.getString(Bundle.APPLICATION, "label.studentStatutes"), studentStatuteTypesValues.toString());
 
         Builder<Attends> builder = Stream.builder();
         for (JsonElement elem : new JsonParser().parse(filteredAttendsJson).getAsJsonArray()) {
@@ -312,18 +279,29 @@ public class AttendsSearchController extends ExecutionCourseController {
         Group users =
                 Group.users(builder.build().map(a -> a.getRegistration().getPerson().getUser()).filter(Objects::nonNull)
                         .sorted(User.COMPARATOR_BY_NAME));
-        ArrayList<Recipient> recipients = new ArrayList<Recipient>();
-        recipients.add(Recipient.newInstance(label, users));
-        String sendEmailUrl =
-                UriBuilder
-                        .fromUri("/messaging/emails.do")
-                        .queryParam("method", "newEmail")
-                        .queryParam("sender", ExecutionCourseSender.newInstance(executionCourse).getExternalId())
-                        .queryParam("recipient", recipients.stream().filter(r -> r != null).map(r -> r.getExternalId()).toArray())
-                        .build().toString();
-        String sendEmailWithChecksumUrl =
-                GenericChecksumRewriter.injectChecksumInUrl(request.getContextPath(), sendEmailUrl, session);
-        return new RedirectView(sendEmailWithChecksumUrl, true);
 
+        NamedGroup named = new NamedGroup(new LocalizedString(I18N.getLocale(),label) ,users);
+
+        MessageBean bean = new MessageBean();
+        bean.setLockedSender(executionCourse.getSender());
+        bean.addAdHocRecipient(named);
+        bean.selectRecipient(named);
+        redirectAttributes.addFlashAttribute("messageBean",bean);
+        return new RedirectView("/messaging/message", true);
+
+    }
+
+    private StringBuilder parseFilters(JsonObject filters, String type, String name) {
+        StringBuilder result = new StringBuilder();
+        for (JsonElement elem : filters.get(type).getAsJsonArray()) {
+            JsonObject object = elem.getAsJsonObject();
+            if (object.get("value").getAsBoolean()) {
+                if (result.length() > 0) {
+                    result.append(", ");
+                }
+                result.append(object.get(name));
+            }
+        }
+        return result;
     }
 }

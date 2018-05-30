@@ -32,6 +32,7 @@ import java.util.TreeSet;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.Qualification;
 import org.fenixedu.academic.domain.QualificationType;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
@@ -423,7 +424,7 @@ public class UTLScholarshipReportBeanFromRegistration implements Serializable, I
             for (final CurriculumLine enrolment : registration.getLastStudentCurricularPlan().getAllCurriculumLines()) {
                 if (enrolment.isDismissal()) {
                     Dismissal dismissal = (Dismissal) enrolment;
-                    if (!dismissal.getCredits().isAllEnrolmentsAreExternal()) {
+                    if (dismissal.getCredits().getIEnrolments().stream().anyMatch(IEnrolment::isEnrolment)) {
                         continue;
                     }
                 }
@@ -451,7 +452,7 @@ public class UTLScholarshipReportBeanFromRegistration implements Serializable, I
         for (final CurriculumLine curriculumLine : list) {
             if (curriculumLine.isDismissal()) {
                 Dismissal dismissal = (Dismissal) curriculumLine;
-                if (!dismissal.getCredits().isAllEnrolmentsAreExternal()) {
+                if (dismissal.getCredits().getIEnrolments().stream().anyMatch(IEnrolment::isEnrolment)) {
                     continue;
                 }
             }

@@ -60,15 +60,16 @@
 
 <logic:notEmpty name="cerimonyInquiry" property="cerimonyInquiryPerson">
 	<p class="mvert05">
-		<html:link
-			page="<%= "/alumniCerimony.do?method=exportInfoToExcel&cerimonyInquiryId=" + cerimonyInquiryId.toString() %>">
+		<html:link page="<%= "/alumniCerimony.do?method=exportInfoToExcel&cerimonyInquiryId=" + cerimonyInquiryId.toString() %>">
 			<html:image border="0"
-				src="<%= request.getContextPath() + "/images/excel.gif"%>"
-				altKey="excel" bundle="IMAGE_RESOURCES"></html:image>
+						src="<%= request.getContextPath() + "/images/excel.gif"%>"
+						altKey="excel" bundle="IMAGE_RESOURCES"></html:image>
 		</html:link>
 		<bean:size id="personCount"	name="cerimonyInquiry" property="cerimonyInquiryPerson" />
 		<bean:message key="label.publicRelationOffice.alumniCerimony.inquiry.people.count" bundle="APPLICATION_RESOURCES" arg0="<%= personCount.toString() %>" />
-		<html:link page="/alumniCerimony.do?method=sendEmail" paramId="cerimonyInquiryId" paramName="cerimonyInquiry" paramProperty="externalId"><bean:message bundle="APPLICATION_RESOURCES" key="title.sendEmail"/></html:link>
+		<html:link page="/alumniCerimony.do?method=sendEmail" paramId="cerimonyInquiryId" paramName="cerimonyInquiry" paramProperty="externalId">
+			<bean:message bundle="APPLICATION_RESOURCES" key="title.sendEmail"/>
+		</html:link>
 	</p>
 
 

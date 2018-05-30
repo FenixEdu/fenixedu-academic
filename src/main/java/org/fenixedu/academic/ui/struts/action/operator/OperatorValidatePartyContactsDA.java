@@ -20,7 +20,6 @@ package org.fenixedu.academic.ui.struts.action.operator;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -36,11 +35,9 @@ import org.fenixedu.academic.domain.contacts.ContactRoot;
 import org.fenixedu.academic.domain.contacts.PartyContactValidation;
 import org.fenixedu.academic.domain.contacts.PhysicalAddressValidation;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
-import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.predicates.AndPredicate;
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -48,6 +45,7 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
+import org.fenixedu.messaging.core.domain.Message;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -64,8 +62,7 @@ public class OperatorValidatePartyContactsDA extends FenixDispatchAction {
             HttpServletResponse response) {
 
         Predicate<PartyContactValidation> predicate =
-                new AndPredicate<PartyContactValidation>(PartyContactValidation.PREDICATE_INVALID,
-                        PhysicalAddressValidation.PREDICATE_FILE);
+                new AndPredicate<>(PartyContactValidation.PREDICATE_INVALID, PhysicalAddressValidation.PREDICATE_FILE);
 
         final Collection<PartyContactValidation> partyContactValidation =
                 ContactRoot.getInstance().getInvalidPartyContactValidationsSet();
@@ -75,7 +72,7 @@ public class OperatorValidatePartyContactsDA extends FenixDispatchAction {
     }
 
     private static <T> List<T> filter(Collection<T> collection, Predicate<T> predicate) {
-        final List<T> result = new ArrayList<T>();
+        final List<T> result = new ArrayList<>();
         for (final T each : collection) {
             if (predicate.test(each)) {
                 result.add(each);
@@ -109,8 +106,11 @@ public class OperatorValidatePartyContactsDA extends FenixDispatchAction {
         }
         final String sendingEmail = person.getEmailForSendingEmails();
         if (!StringUtils.isEmpty(sendingEmail)) {
-            new Message(Bennu.getInstance().getSystemSender(), Collections.EMPTY_LIST, Collections.EMPTY_LIST, subject, body,
-                    sendingEmail);
+            Message.fromSystem()
+                    .singleBcc(sendingEmail)
+                    .subject(subject)
+                    .textBody(body)
+                    .send();
         }
     }
 

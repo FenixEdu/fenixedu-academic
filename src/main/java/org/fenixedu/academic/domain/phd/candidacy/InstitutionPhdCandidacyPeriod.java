@@ -29,14 +29,32 @@ import org.fenixedu.academic.domain.period.CandidacyPeriod;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdProgram;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LocaleUtils;
+import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.academic.util.phd.InstitutionPhdCandidacyProcessProperties;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.messaging.core.domain.Message;
+import org.fenixedu.messaging.core.template.DeclareMessageTemplate;
+import org.fenixedu.messaging.core.template.TemplateParameter;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
 
+@DeclareMessageTemplate(id = "phd.referee.link.email.message.template",
+        description = "phd.referee.link.email.message.description",
+        subject = "phd.referee.link.email.message.subject",
+        text = "phd.referee.link.email.message.body",
+        parameters = {
+                @TemplateParameter(id = "candidateName", description = "phd.referee.link.email.message.parameter.candidateName"),
+                @TemplateParameter(id = "institutionName", description = "phd.referee.link.email.message.parameter.institutionName"),
+                @TemplateParameter(id = "refereeLink", description = "phd.referee.link.email.message.parameter.refereeLink"),
+                @TemplateParameter(id = "hashCodeValue", description = "phd.referee.link.email.message.parameter.hashCodeValue"),
+                @TemplateParameter(id = "programName", description = "phd.referee.link.email.message.parameter.programName")
+        },
+        bundle = Bundle.PHD
+)
 public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod_Base {
 
     protected InstitutionPhdCandidacyPeriod() {
@@ -151,37 +169,45 @@ public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod
         return (InstitutionPhdCandidacyPeriod) mostRecentCandidacyPeriod;
     }
 
+    // TODO: remove this when PHD alerts are fully migrated to messaging MessageTemplates
     @Override
     public String getEmailMessageBodyForRefereeForm(final PhdCandidacyReferee referee) {
         final ExecutionYear executionYear = ExecutionYear.readByDateTime(referee.getPhdProgramCandidacyProcess().getCandidacyDate());
         return MessageFormat.format(String.format(BundleUtil.getString(Bundle.PHD, "message.phd.institution.email.body.referee"),
-                referee.getPhdProgramCandidacyProcess().getPhdProgram().getName(executionYear).getContent(org.fenixedu.academic.util.LocaleUtils.EN),
+                referee.getPhdProgramCandidacyProcess().getPhdProgram().getName(executionYear).getContent(LocaleUtils.EN),
                 InstitutionPhdCandidacyProcessProperties.getPublicCandidacyRefereeFormLink(new Locale("en", "EN")),
                 referee.getValue(),
-                referee.getPhdProgramCandidacyProcess().getPhdProgram().getName(executionYear).getContent(org.fenixedu.academic.util.LocaleUtils.PT),
+                referee.getPhdProgramCandidacyProcess().getPhdProgram().getName(executionYear).getContent(LocaleUtils.PT),
                 InstitutionPhdCandidacyProcessProperties.getPublicCandidacyRefereeFormLink(new Locale("pt", "PT")),
                 referee.getValue()), Unit.getInstitutionName().getContent());
     }
 
-    public String getRefereeSubmissionFormLinkPt(final PhdCandidacyReferee referee) {
-        return String.format("%s?hash=%s&locale=pt_PT",
-                InstitutionPhdCandidacyProcessProperties.getPublicCandidacyRefereeFormLink(new Locale("pt", "PT")),
-                referee.getValue());
-    }
+    @Override
+    public void sendEmailForRefereeForm(final PhdCandidacyReferee referee) {
 
-    public String getRefereeSubmissionFormLinkEn(final PhdCandidacyReferee referee) {
-        return String.format("%s?hash=%s&locale=en_EN",
-                InstitutionPhdCandidacyProcessProperties.getPublicCandidacyRefereeFormLink(new Locale("en", "EN")),
-                referee.getValue());
+        final ExecutionYear executionYear = ExecutionYear.readByDateTime(referee.getPhdProgramCandidacyProcess().getCandidacyDate());
+        final String programName = referee.getPhdProgramCandidacyProcess().getPhdProgram().getName(executionYear).getContent(I18N.getLocale());
+        final String refereeLink = InstitutionPhdCandidacyProcessProperties.getPublicCandidacyRefereeFormLink(I18N.getLocale());
+
+        Message.fromSystem().replyToSender()
+                .singleBcc(referee.getEmail())
+                .template("phd.referee.link.email.message.template")
+                .parameter("institutionName", Unit.getInstitutionName().getContent(I18N.getLocale()))
+                .parameter("refereeLink", refereeLink)
+                .parameter("hashCodeValue", referee.getValue())
+                .parameter("programName", programName)
+                .parameter("candidateName", referee.getCandidatePerson().getName())
+                .and()
+                .wrapped().send();
     }
 
     @Override
     public LocalizedString getEmailMessageSubjectForMissingCandidacyValidation(PhdIndividualProgramProcess process) {
         return new LocalizedString().with(
-                org.fenixedu.academic.util.LocaleUtils.PT,
+                LocaleUtils.PT,
                 MessageFormat.format(BundleUtil.getString(Bundle.PHD, Locale.forLanguageTag("pt"),
                         "message.phd.institution.email.subject.missing.candidacy.validation"), Unit.getInstitutionAcronym()))
-                .with(org.fenixedu.academic.util.LocaleUtils.EN,
+                .with(LocaleUtils.EN,
                         MessageFormat.format(BundleUtil.getString(Bundle.PHD, Locale.ENGLISH,
                                 "message.phd.institution.email.subject.missing.candidacy.validation"), Unit
                                 .getInstitutionAcronym()));
@@ -200,7 +226,7 @@ public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod
                         InstitutionPhdCandidacyProcessProperties.getPublicCandidacyAccessLink(new Locale("en", "EN")), process
                                 .getCandidacyProcess().getCandidacyHashCode().getValue()), Unit.getInstitutionAcronym());
 
-        return new LocalizedString().with(org.fenixedu.academic.util.LocaleUtils.EN, englishBody).with(org.fenixedu.academic.util.LocaleUtils.PT, portugueseBody);
+        return new LocalizedString().with(LocaleUtils.EN, englishBody).with(LocaleUtils.PT, portugueseBody);
     }
 
     public static InstitutionPhdCandidacyPeriod readNextCandidacyPeriod() {

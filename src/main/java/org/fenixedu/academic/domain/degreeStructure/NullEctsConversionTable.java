@@ -21,6 +21,9 @@ package org.fenixedu.academic.domain.degreeStructure;
 import java.io.Serializable;
 
 import org.fenixedu.academic.domain.CurricularYear;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.DomainObject;
 
@@ -76,5 +79,10 @@ public class NullEctsConversionTable implements IEctsConversionTable, Serializab
     @Override
     public CycleType getCycle() {
         return cycle;
+    }
+
+    @Override
+    public LocalizedString getPresentationName() {
+        return BundleUtil.getLocalizedString(Bundle.ENUMERATION, getClass().getSimpleName() + "presentation.name");
     }
 }

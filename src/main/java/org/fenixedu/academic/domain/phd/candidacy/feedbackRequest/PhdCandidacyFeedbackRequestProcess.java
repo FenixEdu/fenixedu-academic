@@ -18,12 +18,6 @@
  */
 package org.fenixedu.academic.domain.phd.candidacy.feedbackRequest;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.caseHandling.Activity;
@@ -44,14 +38,17 @@ import org.fenixedu.academic.domain.phd.access.PhdExternalOperationBean;
 import org.fenixedu.academic.domain.phd.access.PhdProcessAccessType;
 import org.fenixedu.academic.domain.phd.alert.AlertService;
 import org.fenixedu.academic.domain.phd.alert.AlertService.AlertMessage;
-import org.fenixedu.academic.domain.util.email.Message;
-import org.fenixedu.academic.domain.util.email.SystemSender;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.phd.PhdProperties;
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.messaging.core.domain.Message;
 import org.joda.time.DateTime;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequestProcess_Base {
 
@@ -342,8 +339,12 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
         }
 
         private void email(String email, String subject, String body) {
-            final SystemSender sender = Bennu.getInstance().getSystemSender();
-            new Message(sender, sender.getConcreteReplyTos(), null, null, null, subject, body, Collections.singleton(email));
+            Message.fromSystem()
+                    .replyToSender()
+                    .singleBcc(email)
+                    .subject(subject)
+                    .textBody(body)
+                    .send();
         }
     }
 
@@ -442,7 +443,7 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 
     }
 
-    static private List<Activity> activities = new ArrayList<Activity>();
+    static private List<Activity> activities = new ArrayList<>();
     static {
         activities.add(new EditSharedDocumentTypes());
         activities.add(new AddPhdCandidacyFeedbackRequestElements());

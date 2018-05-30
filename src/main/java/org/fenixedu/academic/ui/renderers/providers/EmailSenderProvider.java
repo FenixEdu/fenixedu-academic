@@ -18,8 +18,7 @@
  */
 package org.fenixedu.academic.ui.renderers.providers;
 
-import org.fenixedu.academic.domain.util.email.Sender;
-
+import org.fenixedu.messaging.core.domain.Sender;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -28,7 +27,7 @@ public class EmailSenderProvider implements DataProvider {
 
     @Override
     public Object provide(final Object source, final Object currentValue) {
-        return Sender.getAvailableSenders();
+        return Sender.available();
     }
 
     @Override

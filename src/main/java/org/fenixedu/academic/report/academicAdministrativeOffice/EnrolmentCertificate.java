@@ -24,6 +24,7 @@ import java.util.TreeSet;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR;
@@ -201,8 +202,8 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
         final EnrolmentCertificateRequest request = getDocumentRequest();
 
         if (request.getDetailed()) {
-            final Collection<Enrolment> enrolments =
-                    new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_EXECUTION_YEAR_AND_NAME_AND_ID);
+            final Collection<IEnrolment> enrolments =
+                    new TreeSet<>(Enrolment.COMPARATOR_BY_EXECUTION_YEAR_AND_NAME_AND_ID);
 
             enrolments.addAll(request.getEntriesToReport());
             reportEnrolments(result, enrolments);
@@ -220,38 +221,44 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
             }
             enrolments.clear();
 
+            enrolments.addAll(request.getExternalEnrolments());
+            if (!enrolments.isEmpty()) {
+                reportRemainingEnrolments(result, enrolments, "Externas");
+            }
+
             result.append(generateEndLine());
         }
 
         return result.toString();
     }
 
-    final private void reportEnrolments(final StringBuilder result, final Collection<Enrolment> enrolments) {
-        for (final Enrolment enrolment : enrolments) {
+    final private void reportEnrolments(final StringBuilder result, final Collection<IEnrolment> enrolments) {
+        for (final IEnrolment enrolment : enrolments) {
             reportEnrolment(result, enrolment);
         }
     }
 
-    final private void reportRemainingEnrolments(final StringBuilder result, final Collection<Enrolment> enrolments,
+    final private void reportRemainingEnrolments(final StringBuilder result, final Collection<IEnrolment> enrolments,
             final String title) {
         result.append(generateEndLine()).append(LINE_BREAK).append(title).append(":").append(LINE_BREAK);
 
-        for (final Enrolment enrolment : enrolments) {
+        for (final IEnrolment enrolment : enrolments) {
             reportEnrolment(result, enrolment);
         }
     }
 
-    final private void reportEnrolment(final StringBuilder result, final Enrolment enrolment) {
+    final private void reportEnrolment(final StringBuilder result, final IEnrolment enrolment) {
         result.append(
                 FenixStringTools.multipleLineRightPadWithSuffix(getPresentationNameFor(enrolment).toUpperCase(), LINE_LENGTH,
                         END_CHAR, getCreditsInfo(enrolment))).append(LINE_BREAK);
     }
 
-    final private String getCreditsInfo(final Enrolment enrolment) {
+    final private String getCreditsInfo(final IEnrolment enrolment) {
         final StringBuilder result = new StringBuilder();
 
         if (getDocumentRequest().isToShowCredits()) {
-            result.append(enrolment.getCurricularCourse().getEctsCredits(enrolment.getExecutionPeriod()).toString()).append(
+
+            result.append(enrolment.getEctsCreditsForCurriculum().toString()).append(
                     getCreditsDescription());
         }
 
