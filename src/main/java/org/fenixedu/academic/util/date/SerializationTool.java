@@ -28,22 +28,29 @@ public class SerializationTool {
 
     public static String yearMonthDaySerialize(final YearMonthDay yearMonthDay) {
         if (yearMonthDay != null) {
-            final String dateString =
-                    String.format("%04d-%02d-%02d", yearMonthDay.get(DateTimeFieldType.year()),
-                            yearMonthDay.get(DateTimeFieldType.monthOfYear()), yearMonthDay.get(DateTimeFieldType.dayOfMonth()));
+            final String dateString = String.format("%04d-%02d-%02d", yearMonthDay.get(DateTimeFieldType.year()),
+                    yearMonthDay.get(DateTimeFieldType.monthOfYear()), yearMonthDay.get(DateTimeFieldType.dayOfMonth()));
             return dateString;
         }
         return null;
     }
 
-    public static YearMonthDay yearMonthDayDeserialize(String string) {
-        if (!StringUtils.isEmpty(string)) {
-            int year = Integer.parseInt(string.substring(0, 4));
-            int month = Integer.parseInt(string.substring(5, 7));
-            int day = Integer.parseInt(string.substring(8, 10));
-            return year == 0 || month == 0 || day == 0 ? null : new YearMonthDay(year, month, day);
+    public static YearMonthDay yearMonthDayDeserialize(final String string) {
+        if (StringUtils.isBlank(string)) {
+            return null;
         }
-        return null;
+
+        String[] tokens = string.split("\\-");
+        if (tokens.length != 3) {
+            System.err.println("Something went wrong with this object. Will be set to null - " + string);
+            return null;
+        }
+
+        int year = Integer.parseInt(tokens[0]);
+        int month = Integer.parseInt(tokens[1]);
+        int day = Integer.parseInt(tokens[2]);
+
+        return year == 0 || month == 0 || day == 0 ? null : new YearMonthDay(year, month, day);
     }
 
     public static String intervalSerialize(final Interval interval) {
