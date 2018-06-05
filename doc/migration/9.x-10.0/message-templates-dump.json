@@ -1,0 +1,123 @@
+[{
+	  "id": "requestRoom.message.template",
+	  "subject": {
+	    "pt-PT": "[{{ courseNames | join(\u0027,\u0027) }}] Requisição de Sala para {{ test.Description }}",
+	    "en-GB": "[{{ courseNames | join(\u0027,\u0027) }}] Room request for {{ test.Description }}"
+	  },
+	  "body": {
+	    "pt-PT": "Foi efectuado um pedido de requisição de sala para {{ test.Description }} da(s) disciplina(s) {{ courseNames | join(\u0027,\u0027) }} do(s) curso(s) {{ degreeNames | join(\u0027,\u0027) }} no dia {{ test.Day.Time | date(\"dd/MM/yyyy\") }} das {{ test.Beginning.Time | date(\"HH:mm\") }} às {{ test.End.Time | date(\"HH:mm\") }}.",
+	    "en-GB": "A room request was issued for {{ test.Description }} of course(s) {{ courseNames | join(\u0027,\u0027) }} of degree(s) {{ degreeNames | join(\u0027,\u0027) }} on {{ test.Day.Time | date(\"dd/MM/yyyy\") }} from {{ test.Beginning.Time | date(\"HH:mm\") }} to {{ test.End.Time | date(\"HH:mm\") }}."
+	  },
+	  "html": {}
+	},
+	{
+	  "id": "phd.submission.email.for.candidacy.message.template",
+	  "subject": {
+	    "pt-PT": "{{ institutionAcronym }} - Programas Doutorais: Submissão do formulário de candidatura",
+	    "en-GB": "{{ institutionAcronym }} - Doctoral Programs: Access to application submission form"
+	  },
+	  "body": {
+	    "pt-PT": "Caro Candidato,\n\nBem vindo ao processo de admissão dos Programas Doutorais do {{ institutionAcronym }}!\n\nDeverá aceder ao formulário de candidatura através do seguinte link:\n{{ candidacyLink }}?hash\u003d{{ hashCodeValue }}\n\nSe pretender esclarecer alguma dúvida ou obter mais informação sobre os Programas Doutorais do {{ institutionAcronym }} por favor contacte-nos através do email npfc@ist.utl.pt ou visite o site:\nhttp://www.ist.utl.pt/pt/candidatos/candidaturas/doutoramentos/\n\nObrigado,\n\nNúcleo de Pós-Graduação e Formação Contínua\nhttp://npfc.ist.utl.pt/",
+	    "en-GB": "Dear Prospective Student,\n\nWelcome to the {{ institutionAcronym }} - Doctoral Programs admission process!\n\nYou can access your application using the following link:\n{{ candidacyLink }}?hash\u003d{{ hashCodeValue }}\n\nIf you have any further questions concerning the Doctoral Programs and the application, please contact us at npfc@ist.utl.pt or visit the following page:\nhttp://www.ist.utl.pt/en/prospective-students/admissions/PhD/\n\nThank you,\n\nPost-Graduate and Vocational Training Unit\nhttp://npfc.ist.utl.pt/"
+	  },
+	  "html": {}
+	},
+	{
+	  "id": "requestChangeRoom.message.template",
+	  "subject": {
+	    "pt-PT": "Alteração : [{{ courseNames | join(\u0027,\u0027) }}] Requisição de Sala para {{ test.Description }}",
+	    "en-GB": "Change : [{{ courseNames | join(\u0027,\u0027) }}] Room request for {{ test.Description }}"
+	  },
+	  "body": {
+	    "pt-PT": "O pedido de requisição de sala para {{ test.Description }} da(s) disciplina(s) {{ courseNames | join(\u0027,\u0027) }} do(s) cursos(s) {{ degreeNames | join(\u0027,\u0027) }} efecuado em {{ test.requestRoomSentDateString }} para o dia {{ oldTestDates[0] | date(\"dd/MM/yyyy\") }} das {{ oldTestDates[1] | date(\"HH:mm\") }} às {{ oldTestDates[2] | date(\"HH:mm\") }} foi alterado para o dia {{ test.Day.Time | date(\"dd/MM/yyyy\") }} das {{ test.Beginning.Time | date(\"HH:mm\") }} às {{ test.End.Time | date(\"HH:mm\") }}.",
+	    "en-GB": "The room request for {{ test.Description }} of course(s) {{ courseNames | join(\u0027,\u0027) }} of degree(s) {{ degreeNames | join(\u0027,\u0027) }} made on {{ test.requestRoomSentDateString }} for {{ oldTestDates[0] | date(\"dd/MM/yyyy\") }} from {{ oldTestDates[1] | date(\"HH:mm\") }} to {{ oldTestDates[2] | date(\"HH:mm\") }} was changed for the day {{ test.Day.Time | date(\"dd/MM/yyyy\") }} from {{ test.Beginning.Time | date(\"HH:mm\") }} to {{ test.End.Time | date(\"HH:mm\") }}."
+	  },
+	  "html": {}
+	},
+	{
+	  "id": "error.mobility.report.mail.template",
+	  "subject": {
+	    "pt-PT": "{{ subjectUnit }} MOBILITY - Erro na submissão de uma candidatura Mobilidade",
+	    "en-GB": "{{ subjectUnit }} MOBILITY - Mobility Application submission ended with error"
+	  },
+	  "body": {
+	    "pt-PT": "{% macro addString(text) %}\n    {{ text | default(\"«« empty »»\") }}\n{% endmacro %}\nErrors ocurred while submitting an application. The data used for the application is listed below. If needed, please send this email to the support team, with no modifications.\n\nPersonal data entered:\nName........:  {{ addString(personBean.Name) }}\nGender........: {{ addString(personBean.Gender.LocalizedName) }}\nDate of Birth........: {{ addString(personDateOfBirth) }}\nDocumentation Number........: {{ addString(personBean.DocumentIdNumber) }}\nNationality........: {{ addString(personBean.Nationality.LocalizedName.Content) }}\nAddress........: {{ addString(personBean.Address) }}\nZip-Code........: {{ addString(personBean.AreaCode) }}\nCity........:  {{ addString(personBean.Area) }}\nCountry of Residence........: {{ addString(personBean.CountryOfResidence.LocalizedName.Content) }}\nPhone........: {{ addString(personBean.Phone) }}\nEmail........: {{ addString(personBean.Email) }}\nEmail Confirmation........:  {{ addString(personBean.EmailConfirmation) }}\nStudent Number........: {{ addString(mobilityBean.PersonNumber) }}\n\nMobility Data Entered:\nSelected Country........: {{ addString(mobilityStudentDataBean.SelectedCountry.LocalizedName.Content) }}\nSelected Univ........: {{ addString(mobilityStudentDataBean.SelectedUniversity.PresentationName) }}\nSchool Level........: {{ addString(mobilityStudentDataBean.SchoolLevel.LocalizedName) }}\nOther School Level........: {{ addString(mobilityStudentDataBean.OtherSchoolLevel) }}\nExchange Coord Name........: {{ addString(mobilityStudentDataBean.HomeInstitutionExchangeCoordinatorName) }}\nHas Diploma/Degree........: {{ addString(mobilityStudentDataBean.HasDiplomaOrDegree.toString) }}\nDiploma Name........: {{ addString(mobilityStudentDataBean.DiplomaName) }}\nDiploma Year........: {{ addString(mobilityStudentDataBean.DiplomaConclusionYear) }}\nExperience Research........: {{ addString(mobilityStudentDataBean.ExperienceCarryingOutProject) }}\nDate of Arrival........: {{ addString(dateOfArrival) }}\nDate of Departure........: {{ addString(dateOfDeparture) }}\nTypes of Programme........: {{ addString(mobilityStudentDataBean.TypeOfProgrammeList) }}\nThesis Main Subject........:  {{ addString(mobilityStudentDataBean.MainSubjectThesis) }}\nHas contacted Staff........: {{ addString(mobilityStudentDataBean.HasContactedOtherStaff) }}\nStaff Name........: {{ addString(mobilityStudentDataBean.NameOfContact) }}\nApplying for period........: {{ addString(mobilityStudentDataBean.ApplyFor.LocalizedName) }}\nObservations........: {{ addString(individualCandidacyProcessBean.Observations) }}\n\nMobility Program, Degree and Courses:\nSelected Program........: {{ addString(mobilityStudentDataBean.SelectedMobilityProgram.Name.Content) }}\nChosen Degree........: {{ addString(mobilityBean.Degree.PresentationName) }}\nChosen Courses........: {% for curricularCourse in mobilityBean.SortedSelectedCurricularCourses %} \n    [{{ curricularCourse.Degree.Sigla }}] {% if curricularCourse.NameI18N.Content is empty or curricularCourse.NameI18N.Content is null %}{{ curricularCourse.Name }};{% else %}{{ curricularCourse.NameI18N.Content }}; {% endif %}{% endfor %}\n\n\nThe information below is addressed to the support team. Please do not modify this information in any way.\n\nException key: {{ exception.Key }}\nException args:  \n{% if exception.Args.length \u003e 1 %}{{ exception.Args | join(\" , \") | default(\"«« no args »»\") }}{% else %}{{ exception.Args | default(\"«« no args »»\") }}{% endif %}\n\nException stacktrace:\n{{ stacktrace }}",
+	    "en-GB": "{% macro addString(text) %}\n    {{ text | default(\"«« empty »»\") }}\n{% endmacro %}\nErrors ocurred while submitting an application. The data used for the application is listed below. If needed, please send this email to the support team, with no modifications.\n\nPersonal data entered:\nName........:  {{ addString(personBean.Name) }}\nGender........: {{ addString(personBean.Gender.LocalizedName) }}\nDate of Birth........: {{ addString(personDateOfBirth) }}\nDocumentation Number........: {{ addString(personBean.DocumentIdNumber) }}\nNationality........: {{ addString(personBean.Nationality.LocalizedName.Content) }}\nAddress........: {{ addString(personBean.Address) }}\nZip-Code........: {{ addString(personBean.AreaCode) }}\nCity........:  {{ addString(personBean.Area) }}\nCountry of Residence........: {{ addString(personBean.CountryOfResidence.LocalizedName.Content) }}\nPhone........: {{ addString(personBean.Phone) }}\nEmail........: {{ addString(personBean.Email) }}\nEmail Confirmation........:  {{ addString(personBean.EmailConfirmation) }}\nStudent Number........: {{ addString(mobilityBean.PersonNumber) }}\n\nMobility Data Entered:\nSelected Country........: {{ addString(mobilityStudentDataBean.SelectedCountry.LocalizedName.Content) }}\nSelected Univ........: {{ addString(mobilityStudentDataBean.SelectedUniversity.PresentationName) }}\nSchool Level........: {{ addString(mobilityStudentDataBean.SchoolLevel.LocalizedName) }}\nOther School Level........: {{ addString(mobilityStudentDataBean.OtherSchoolLevel) }}\nExchange Coord Name........: {{ addString(mobilityStudentDataBean.HomeInstitutionExchangeCoordinatorName) }}\nHas Diploma/Degree........: {{ addString(mobilityStudentDataBean.HasDiplomaOrDegree.toString) }}\nDiploma Name........: {{ addString(mobilityStudentDataBean.DiplomaName) }}\nDiploma Year........: {{ addString(mobilityStudentDataBean.DiplomaConclusionYear) }}\nExperience Research........: {{ addString(mobilityStudentDataBean.ExperienceCarryingOutProject) }}\nDate of Arrival........: {{ addString(dateOfArrival) }}\nDate of Departure........: {{ addString(dateOfDeparture) }}\nTypes of Programme........: {{ addString(mobilityStudentDataBean.TypeOfProgrammeList) }}\nThesis Main Subject........:  {{ addString(mobilityStudentDataBean.MainSubjectThesis) }}\nHas contacted Staff........: {{ addString(mobilityStudentDataBean.HasContactedOtherStaff) }}\nStaff Name........: {{ addString(mobilityStudentDataBean.NameOfContact) }}\nApplying for period........: {{ addString(mobilityStudentDataBean.ApplyFor.LocalizedName) }}\nObservations........: {{ addString(individualCandidacyProcessBean.Observations) }}\n\nMobility Program, Degree and Courses:\nSelected Program........: {{ addString(mobilityStudentDataBean.SelectedMobilityProgram.Name.Content) }}\nChosen Degree........: {{ addString(mobilityBean.Degree.PresentationName) }}\nChosen Courses........: {% for curricularCourse in mobilityBean.SortedSelectedCurricularCourses %} \n    [{{ curricularCourse.Degree.Sigla }}] {% if curricularCourse.NameI18N.Content is empty or curricularCourse.NameI18N.Content is null %}{{ curricularCourse.Name }};{% else %}{{ curricularCourse.NameI18N.Content }}; {% endif %}{% endfor %}\n\n\nThe information below is addressed to the support team. Please do not modify this information in any way.\n\nException key: {{ exception.Key }}\nException args:  \n{% if exception.Args.length \u003e 1 %}{{ exception.Args | join(\" , \") | default(\"«« no args »»\") }}{% else %}{{ exception.Args | default(\"«« no args »»\") }}{% endif %}\n\nException stacktrace:\n{{ stacktrace }}"
+	  },
+	  "html": {}
+	},
+	{
+	  "id": "phd.referee.link.email.message.template",
+	  "subject": {
+	    "pt-PT": "Formulário de Recomendação para {{ candidateName }}",
+	    "en-GB": "Reference Letter Form for {{ candidateName }}"
+	  },
+	  "body": {
+	    "pt-PT": "O candidato descrito no cabeçalho requisitou a sua recomendação para o Programa Doutoral {{ programName }} do {{ institutionName }}.\n\nPor favor, use o link indicado abaixo para submeter os dados e a carta de recomendação em formato PDF. \nO tamanho do documento submetido não deverá ultrapassar os 8MB.\n\n{{ refereeLink }}?hash\u003d{{ hashCodeValue }}\u0026locale\u003dpt_PT\n\nAgradeçemos a sua colaboração.  Se tem alguma questão relativa à candidatura por favor contacte-nos: npfc@ist.utl.pt\n\nObrigado,\n\nNúcleo de Pós-Graduação e Formação Contínua\nhttp://npfc.ist.utl.pt/",
+	    "en-GB": "The applicant listed above has requested your recommendation to the Doctoral Programme of {{ programName }} of {{ institutionName }} (http://www.ist.utl.pt/en/).\n\nPlease use the link below to submit information and/or enter your letter of recommendation in PDF format. \nThe document must be in PDF format and the size is limited to 8MB.\n\n{{ refereeLink }}?hash\u003d{{ hashCodeValue }}\n\nThank you for taking the time to respond. If you have any questions, please do not hesitate to contact us by email: npfc@ist.utl.pt\n\nThank you,\n\nPost-Graduate and Vocational Training Unit\nhttp://npfc.ist.utl.pt/"
+	  },
+	  "html": {}
+	},
+	{
+	  "id": "phd.application.submission.success.email.message.template",
+	  "subject": {
+	    "pt-PT": "{{ institutionAcronym }} - Programas Doutorais: Submissão da Candidatura",
+	    "en-GB": "{{ institutionAcronym }} - Phd Programs: Application Submission"
+	  },
+	  "body": {
+	    "pt-PT": "Caro Candidato,\n\nA sua candidatura ao Programa Doutoral do {{ institutionAcronym }} foi enviada com sucesso.\n\nO seu processo de candidatura está referenciado com o código {{ processNumber }}. Utilize esta referência para futuros  contactos relativos à candidatura.\n\nRelembre-se que a sua candidatura ainda não se encontra completa. Deverá usar o link abaixo para aceder à página da sua candidatura e poder concluí-la:\n{{ candidacyLink }}?hash\u003d{{ hashCodeValue }}\n\nSe pretender esclarecer alguma dúvida ou obter mais informação sobre os Programas Doutorais  do {{ institutionAcronym }} por favor contacte-nos através do email npfc@ist.utl.pt ou visite o site:\nhttp://www.ist.utl.pt/pt/candidatos/candidaturas/doutoramentos/\n\nObrigado,\n\nNúcleo de Pós-Graduação e Formação Contínua\nhttp://npfc.ist.utl.pt/",
+	    "en-GB": "Dear Prospective Student,\n\nYour application process to the {{ institutionAcronym }} Doctoral Programme was successfully created.\n\nThe process reference is {{ processNumber }}. Use this reference in any further contacts concerning your application.\n\nYou can verify your application data and complete the application using the following link:\n{{ candidacyLink }}?hash\u003d{{ hashCodeValue }}\n\nOnce you have completed all the required information please click \"Submit application\" to complete the application process.\n\nIf you have any further questions concerning the Doctoral Programs and the application, please contact us at npfc@ist.utl.pt or visit the following page:\nhttp://www.ist.utl.pt/en/prospective-students/admissions/PhD/\n\nThank you,\n\nPost-Graduate and Vocational Training Unit\nhttp://npfc.ist.utl.pt/"
+	  },
+	  "html": {}
+	},
+	{
+	  "id": "org.fenixedu.academic.service.changeStudentsShift.message.template",
+	  "subject": {
+	    "pt-PT": "Alteração de turnos",
+	    "en-GB": "Change of shift"
+	  },
+	  "body": {
+	    "pt-PT": "Devido a alterações nos horários, a sua reserva no turno {{ oldShift.nome }}{% if newShift is null %} foi removida. Deverá efectuar uma nova reserva no turno que pretende.{% else %} foi transferida para o turno {{ newShift.nome }}.{% endif%}",
+	    "en-GB": "Due to changes in schedules, your shift reservation in {{ oldShift.nome }}{% if newShift is null %} was removed. You should make a new reservation at the turn you want.{% else %} was transferred to the shift {{ newShift.nome }}.{% endif%}"
+	  },
+	  "html": {}
+	},
+	{
+	  "id": "phd.epfl.referee.link.email.message.template",
+	  "subject": {
+	    "pt-PT": "Formulário de Recomendação para {{ candidateName }}",
+	    "en-GB": "Reference Letter Form for {{ candidateName }}"
+	  },
+	  "body": {
+	    "pt-PT": "The applicant listed above has requested your recommendation to the FCT Doctoral Programmes - {{ programFocusArea }}.\n\nPlease use the link below to submit information and/or enter your letter of recommendation in PDF format.\nThe size of the uploaded document is limited to 8MB.\n\nRecommendation form\n{{ refereeLink }}?locale\u003den\u0026hash\u003d{{ hashCodeValue }}\n\nThank you for taking the time to respond. If you have any questions, please do not hesitate to contact us by email at fct-doctoral-programmes@ist.utl.pt.\n\nO prazo para a submissão da informação é {{ candidacyPeriodEndDate }}.",
+	    "en-GB": "The applicant listed above has requested your recommendation to the FCT Doctoral Programmes - {{ programFocusArea }}.\n\nPlease use the link below to submit information and/or enter your letter of recommendation in PDF format.\nThe size of the uploaded document is limited to 8MB.\n\nRecommendation form\n{{ refereeLink }}?locale\u003den\u0026hash\u003d{{ hashCodeValue }}\n\nThank you for taking the time to respond. If you have any questions, please do not hesitate to contact us by email fct-doctoral-programmes@tecnico.ulisboa.pt.\n\nThe information from the referees necessary to validate the application can be submitted by the deadline of {{ candidacyPeriodEndDate }}."
+	  },
+	  "html": {}
+	},
+	{
+	  "id": "reserve.room.notify.message.template",
+	  "subject": {
+	    "pt-PT": "Reserva de Sala",
+	    "en-GB": "Room Reservation"
+	  },
+	  "body": {
+	    "pt-PT": "O seu pedido encontra-se resolvido.\n\nNúmero do Pedido: {{ request.Identification }}\nPedido: {{ request.Subject | default(\"-\") }}\n\nMarcações: {% for occupation in request.OccupationSet %}\n\t{{ occupation.Summary }}-{% for space in occupation.Spaces %}{{ space.Name }} {% endfor %}\n{% endfor %}\n{% if request.OccupationSet is empty %}Não foram realizadas marcações.{% endif %}\n\nDescrição:\n{{ request.Description | default(\"-\") }}\n\nÚltimo Comentário:\n{{ lastComment.Description }}",
+	    "en-GB": "Your request is resolved.\n\nOrder Number: {{ request.Identification }}\nRequest: {{ request.Subject | default(\"-\") }}\n\nMarkings: {% for occupation in request.OccupationSet %}\n\t{{ occupation.Summary }}-{% for space in occupation.Spaces %}{{ space.Name }} {% endfor %}\n{% endfor %}\n{% if request.OccupationSet is empty %}No markings were made.{% endif %}\n\nDescription:\n{{ request.Description | default(\"-\") }}\n\nLast Comment:\n{{ lastComment.Description }}"
+	  },
+	  "html": {}
+	},
+	{
+	  "id": "org.fenixedu.messaging.message.wrapper",
+	  "subject": {
+	    "pt-PT": "{{subject.getContent(locale) | default(subject.getContent(preferredLocale)) | default(subject.content)}}",
+	    "en-GB": "{{subject.getContent(locale) | default(subject.getContent(preferredLocale)) | default(subject.content)}}"
+	  },
+	  "body": {
+	    "pt-PT": "{{textBody.getContent(locale) | default(textBody.getContent(preferredLocale)) | default(textBody.content)}}\n\n---\nEsta mensagem foi enviada em nome do(a) {{sender.name}}{% if bccs is not empty %}, para os seguintes destinatários:{% for bcc in bccs | sort %}\n\n\t{{bcc.presentationName}}{% endfor %}{% else %}.{% endif %}",
+	    "en-GB": "{{textBody.getContent(locale) | default(textBody.getContent(preferredLocale)) | default(textBody.content)}}\n\n---\nThis message was sent by {{sender.name}}{% if bccs is not empty %}, to the following recipients:{% for bcc in bccs | sort %}\n\n\t{{bcc.presentationName}}{% endfor %}{% else %}.{% endif %}"
+	  },
+	  "html": {
+	    "pt-PT": "{{htmlBody.getContent(locale) | default(htmlBody.getContent(preferredLocale)) | default(htmlBody.content)}}",
+	    "en-GB": "{{htmlBody.getContent(locale) | default(htmlBody.getContent(preferredLocale)) | default(htmlBody.content)}}"
+	  }
+	}]
