@@ -31,4 +31,8 @@ public abstract class PersonIdentificationDocumentExtraInfo extends PersonIdenti
         super.setValue("");
     }
 
+    public void forceValue(String value) {
+        super.setValue(value);
+    }    
+    
 }
