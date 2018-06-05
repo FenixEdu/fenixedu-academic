@@ -19,7 +19,9 @@
 package org.fenixedu.academic.ui.struts.action.scientificCouncil;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,7 +59,8 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        request.setAttribute("departments", Bennu.getInstance().getDepartmentsSet());
+        request.setAttribute("departments", Bennu.getInstance().getDepartmentsSet().stream()
+                .sorted(Comparator.comparing(Department::getName)).collect(Collectors.toList()));
 
         return mapping.findForward("manageVersions");
     }
@@ -115,9 +118,8 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
 
     private CompetenceCourseInformationChangeRequest getChangeRequest(HttpServletRequest request) {
         String competenceCourseInformationChangeRequestId = request.getParameter("changeRequestID");
-        CompetenceCourseInformationChangeRequest changeRequest =
-                (CompetenceCourseInformationChangeRequest) FenixFramework
-                        .getDomainObject(competenceCourseInformationChangeRequestId);
+        CompetenceCourseInformationChangeRequest changeRequest = (CompetenceCourseInformationChangeRequest) FenixFramework
+                .getDomainObject(competenceCourseInformationChangeRequestId);
         return changeRequest;
     }
 

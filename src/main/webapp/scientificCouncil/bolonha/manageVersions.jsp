@@ -40,21 +40,19 @@
 		<bean:define id="department" name="department" type="org.fenixedu.academic.domain.Department"/>
 		<%
         int draftChangeRequestsCount = 0;
-        for (CompetenceCourse course : department.getDepartmentUnit().getCompetenceCourses()) {
-            for (CompetenceCourseInformationChangeRequest changeRequest : course.getCompetenceCourseInformationChangeRequestsSet()) {
-                if (changeRequest.getApproved() == null && CompetenceCourseManagementAccessControl.isLoggedPersonAllowedToApproveChangeRequestsPredicate(changeRequest)) {
-                    draftChangeRequestsCount++;
-                }
-            }            
-        }
     	int changeRequestsCount = 0;
-        for (CompetenceCourse course : department.getDepartmentUnit().getCompetenceCourses()) {
-            for (CompetenceCourseInformationChangeRequest changeRequest : course.getCompetenceCourseInformationChangeRequestsSet()) {
-                if (CompetenceCourseManagementAccessControl.isLoggedPersonAllowedToApproveChangeRequestsPredicate(changeRequest)) {
-		            changeRequestsCount++;
-                }
-            }
-        }
+    	if(department.getDepartmentUnit() != null){
+	        for (CompetenceCourse course : department.getDepartmentUnit().getCompetenceCourses()) {
+	            for (CompetenceCourseInformationChangeRequest changeRequest : course.getCompetenceCourseInformationChangeRequestsSet()) {
+	                if (changeRequest.getApproved() == null && CompetenceCourseManagementAccessControl.isLoggedPersonAllowedToApproveChangeRequestsPredicate(changeRequest)) {
+	                    draftChangeRequestsCount++;
+	                }
+	                if (CompetenceCourseManagementAccessControl.isLoggedPersonAllowedToApproveChangeRequestsPredicate(changeRequest)) {
+			            changeRequestsCount++;
+	                }
+	            }            
+	        }
+    	}
 		%>
 		<tr>
 			<td>
