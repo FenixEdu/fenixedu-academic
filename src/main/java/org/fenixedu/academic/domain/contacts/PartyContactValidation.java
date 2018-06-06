@@ -32,27 +32,34 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
 
         private final PartyContactValidationState state;
 
-        public PartyContactValidationPredicate(PartyContactValidationState state) {
+        public PartyContactValidationPredicate(final PartyContactValidationState state) {
             this.state = state;
         }
 
         @Override
-        public boolean test(PartyContactValidation t) {
+        public boolean test(final PartyContactValidation t) {
             return t.getState().equals(state);
         }
 
     }
 
-    public static final PartyContactValidationPredicate PREDICATE_INVALID = new PartyContactValidationPredicate(
-            PartyContactValidationState.INVALID);
-    public static final PartyContactValidationPredicate PREDICATE_VALID = new PartyContactValidationPredicate(
-            PartyContactValidationState.VALID);
-    public static final PartyContactValidationPredicate PREDICATE_REFUSED = new PartyContactValidationPredicate(
-            PartyContactValidationState.REFUSED);
+    public static final PartyContactValidationPredicate PREDICATE_INVALID =
+            new PartyContactValidationPredicate(PartyContactValidationState.INVALID);
+    public static final PartyContactValidationPredicate PREDICATE_VALID =
+            new PartyContactValidationPredicate(PartyContactValidationState.VALID);
+    public static final PartyContactValidationPredicate PREDICATE_REFUSED =
+            new PartyContactValidationPredicate(PartyContactValidationState.REFUSED);
 
     public PartyContactValidation() {
         super();
         reset();
+    }
+
+    @Atomic
+    public void delete() {
+        setContactRoot(null);
+        setPartyContact(null);
+        deleteDomainObject();
     }
 
     public void reset() {
@@ -62,19 +69,19 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
         setToken(null);
     }
 
-    public void init(PartyContact contact) {
+    public void init(final PartyContact contact) {
         setPartyContact(contact);
         if (contact.isDefault()) {
             setToBeDefault(Boolean.TRUE);
         }
     }
 
-    public PartyContactValidation(PartyContact contact) {
+    public PartyContactValidation(final PartyContact contact) {
         this();
         init(contact);
     }
 
-    private boolean validate(boolean result) {
+    private boolean validate(final boolean result) {
         if (isInvalid()) {
             if (result) {
                 setValid();
@@ -86,7 +93,7 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
     }
 
     @Atomic
-    public Boolean processValidation(String token) {
+    public Boolean processValidation(final String token) {
 
         if (isRefused()) {
             return false;
@@ -127,7 +134,7 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
         }
     }
 
-    private void setNotValidState(PartyContactValidationState state) {
+    private void setNotValidState(final PartyContactValidationState state) {
         if (getContactRoot() == null) {
             setContactRoot(ContactRoot.getInstance());
         }
@@ -151,7 +158,7 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
         }
     }
 
-    private boolean isState(PartyContactValidationState state) {
+    private boolean isState(final PartyContactValidationState state) {
         return state.equals(getState());
     }
 
@@ -169,7 +176,7 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
 
     @Override
     @Atomic
-    public void setState(PartyContactValidationState state) {
+    public void setState(final PartyContactValidationState state) {
         switch (state) {
         case INVALID:
             setInvalid();

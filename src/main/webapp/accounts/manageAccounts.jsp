@@ -27,6 +27,10 @@
 
 <h2 class="page-header"><bean:message key="link.accountmanagement.manageaccounts" bundle="MANAGER_RESOURCES" /></h2>
 
+<html:messages id="message" message="true" bundle="ALUMNI_RESOURCES">
+    <p class="mbottom05 mtop15"><span class="error"><!-- Error messages go here --><bean:write name="message" /></span></p>
+</html:messages>
+
 <fr:form action="/accounts/manageAccounts.do?method=search">
 	<fr:edit id="searchParameters" name="searchParameters">
 		<fr:schema type="org.fenixedu.academic.ui.struts.action.accounts.SearchParametersBean" bundle="MANAGER_RESOURCES">
@@ -62,5 +66,11 @@
 			<fr:slot name="profile.email" key="label.email" />
 			<fr:slot name="dateOfBirth" />
 		</fr:schema>
+        <fr:layout>
+            <fr:property name="linkFormat(delete)" value="/accounts/manageAccounts.do?method=deletePerson&personId=\${externalId}"/>
+            <fr:property name="key(delete)" value="label.delete"/>      
+            <fr:property name="confirmationKey(delete)" value="label.manager.delete.person" />
+            <fr:property name="confirmationBundle(delete)" value="MANAGER_RESOURCES"/>
+        </fr:layout>
 	</fr:view>
 </logic:present>

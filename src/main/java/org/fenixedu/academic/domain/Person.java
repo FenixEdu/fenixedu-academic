@@ -102,9 +102,9 @@ import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
-import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.bennu.core.signals.DomainObjectEvent;
 import org.fenixedu.bennu.core.signals.Signal;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.commons.i18n.LocalizedString.Builder;
 import org.joda.time.DateTime;
@@ -129,7 +129,7 @@ public class Person extends Person_Base {
     }
 
     @Override
-    public void setUser(User user) {
+    public void setUser(final User user) {
         super.setUser(user);
         if (getProfile() != null) {
             getProfile().setAvatarUrl(
@@ -210,13 +210,13 @@ public class Person extends Person_Base {
         setIdDocumentType(idDocumentType);
     }
 
-    public void setIdentificationAndNames(String documentIdNumber, final IDDocumentType idDocumentType, final String givenNames,
-            final String familyNames) {
+    public void setIdentificationAndNames(final String documentIdNumber, final IDDocumentType idDocumentType,
+            final String givenNames, final String familyNames) {
         getProfile().changeName(givenNames, familyNames, null);
         setIdentification(documentIdNumber, idDocumentType);
     }
 
-    public void setGivenNames(String newGivenNames) {
+    public void setGivenNames(final String newGivenNames) {
         UserProfile profile = getProfile();
         profile.changeName(newGivenNames, profile.getFamilyNames(), profile.getDisplayName());
     }
@@ -225,7 +225,7 @@ public class Person extends Person_Base {
         return getProfile().getDisplayName();
     }
 
-    public void setDisplayName(String newDisplayName) {
+    public void setDisplayName(final String newDisplayName) {
         UserProfile profile = getProfile();
         try {
             profile.changeName(profile.getGivenNames(), profile.getFamilyNames(), newDisplayName);
@@ -234,12 +234,12 @@ public class Person extends Person_Base {
         }
     }
 
-    public void setFamilyNames(String newFamilyNames) {
+    public void setFamilyNames(final String newFamilyNames) {
         UserProfile profile = getProfile();
         profile.changeName(profile.getGivenNames(), newFamilyNames, profile.getDisplayName());
     }
 
-    public void setNames(String newGivenName, String newFamilyName, String newDisplayName) {
+    public void setNames(final String newGivenName, final String newFamilyName, final String newDisplayName) {
         UserProfile profile = getProfile();
         try {
             profile.changeName(newGivenName, newFamilyName, newDisplayName);
@@ -260,17 +260,17 @@ public class Person extends Person_Base {
 
     /**
      * Creates a new Person, associated to the given {@link UserProfile}.
-     * 
+     *
      * Note that this constructor does NOT create a {@link User}.
-     * 
+     *
      * @param profile
      *            The profile to associate with the created person.
      */
-    public Person(UserProfile profile) {
+    public Person(final UserProfile profile) {
         this(profile, true);
     }
 
-    private Person(UserProfile profile, boolean emitSignal) {
+    private Person(final UserProfile profile, final boolean emitSignal) {
 
         super();
         setProfile(profile);
@@ -286,9 +286,9 @@ public class Person extends Person_Base {
     /**
      * Creates a new Person and its correspondent {@link UserProfile}, using the data provided
      * in the parameter bean.
-     * 
+     *
      * Note that this constructor does NOT create a {@link User}.
-     * 
+     *
      * @param personBean
      *            The bean containing information about the person to be created.
      */
@@ -304,9 +304,9 @@ public class Person extends Person_Base {
      * Creates a new Person and its correspondent {@link UserProfile}, using the data provided
      * in the parameter bean. It also allows the caller to specify whether the email is to be automatically validated by the
      * system.
-     * 
+     *
      * Note that this constructor does NOT create a {@link User}.
-     * 
+     *
      * @param personBean
      *            The bean containing information about the person to be created.
      * @param validateEmail
@@ -335,12 +335,12 @@ public class Person extends Person_Base {
     /**
      * Creates a new Person and its correspondent {@link UserProfile} and optionally a {@link User}, using the data provided in
      * the personal details.
-     * 
+     *
      * @param candidacyPersonalDetails
      *            The personal details containing information about the person to be created.
      * @param createUser true if a user is to be created, false otherwise.
      */
-    public Person(final IndividualCandidacyPersonalDetails candidacyPersonalDetails, boolean createUser) {
+    public Person(final IndividualCandidacyPersonalDetails candidacyPersonalDetails, final boolean createUser) {
         this(new UserProfile(candidacyPersonalDetails.getGivenNames(), candidacyPersonalDetails.getFamilyNames(), null,
                 candidacyPersonalDetails.getEmail(), Locale.getDefault()), false);
         if (createUser) {
@@ -370,7 +370,7 @@ public class Person extends Person_Base {
     /**
      * Creates a new Person and its correspondent {@link UserProfile} and {@link User}, using the data provided in the personal
      * details.
-     * 
+     *
      * @param candidacyPersonalDetails
      *            The personal details containing information about the person to be created.
      */
@@ -420,7 +420,8 @@ public class Person extends Person_Base {
         this.setExpirationDateOfDocumentIdYearMonthDay(candidacyExternalDetails.getExpirationDateOfDocumentIdYearMonthDay());
         this.setGender(candidacyExternalDetails.getGender());
         getProfile().changeName(candidacyExternalDetails.getGivenNames(), candidacyExternalDetails.getFamilyNames(), null);
-        this.editSocialSecurityNumber(candidacyExternalDetails.getFiscalCountry(), candidacyExternalDetails.getSocialSecurityNumber());
+        this.editSocialSecurityNumber(candidacyExternalDetails.getFiscalCountry(),
+                candidacyExternalDetails.getSocialSecurityNumber());
 
         final PhysicalAddressData physicalAddressData = new PhysicalAddressData(candidacyExternalDetails.getAddress(),
                 candidacyExternalDetails.getAreaCode(), getAreaOfAreaCode(), candidacyExternalDetails.getArea(),
@@ -533,13 +534,18 @@ public class Person extends Person_Base {
     }
 
     /**
-     * 
+     *
      * IMPORTANT: This method is evil and should NOT be used! You are NOT God!
-     * 
+     *
      **/
     @Override
     public void delete() {
         DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
+        for (PartyContact partyContact : getPartyContactsSet()) {
+            partyContact.setActive(Boolean.FALSE);
+            partyContact.delete();
+        }
+
         if (getPersonalPhotoEvenIfRejected() != null) {
             getPersonalPhotoEvenIfRejected().delete();
         }
@@ -560,6 +566,10 @@ public class Person extends Person_Base {
             ;
         }
 
+        for (PersonInformationLog log : getPersonInformationLogsSet()) {
+            log.delete();
+        }
+
         super.setCountry(null);
         super.setCountryOfBirth(null);
         setProfile(null);
@@ -568,20 +578,20 @@ public class Person extends Person_Base {
     }
 
     @Override
-    protected void checkForDeletionBlockers(Collection<String> blockers) {
+    protected void checkForDeletionBlockers(final Collection<String> blockers) {
         super.checkForDeletionBlockers(blockers);
-        if (!(getPartyContactsSet().isEmpty() && getChildsSet().isEmpty() && getParentsSet().isEmpty()
-                && getExportGroupingReceiversSet().isEmpty() && getAssociatedQualificationsSet().isEmpty()
-                && getAssociatedAlteredCurriculumsSet().isEmpty() && getEnrolmentEvaluationsSet().isEmpty()
-                && getExportGroupingSendersSet().isEmpty() && getResponsabilityTransactionsSet().isEmpty()
-                && getGuidesSet().isEmpty() && getTeacher() == null && getInternalParticipantsSet().isEmpty()
-                && getCreatedQualificationsSet().isEmpty() && getCreateJobsSet().isEmpty())) {
+        if (!(getChildsSet().isEmpty() && getParentsSet().isEmpty() && getExportGroupingReceiversSet().isEmpty()
+                && getAssociatedQualificationsSet().isEmpty() && getAssociatedAlteredCurriculumsSet().isEmpty()
+                && getEnrolmentEvaluationsSet().isEmpty() && getExportGroupingSendersSet().isEmpty()
+                && getResponsabilityTransactionsSet().isEmpty() && getGuidesSet().isEmpty() && getTeacher() == null
+                && getInternalParticipantsSet().isEmpty() && getCreatedQualificationsSet().isEmpty()
+                && getCreateJobsSet().isEmpty())) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.person.cannot.be.deleted"));
         }
     }
 
     @Override
-    public void setDisableSendEmails(Boolean disableSendEmails) {
+    public void setDisableSendEmails(final Boolean disableSendEmails) {
         super.setDisableSendEmails(disableSendEmails);
         getProfile().setEmail(getEmailForSendingEmails());
     }
@@ -1208,7 +1218,7 @@ public class Person extends Person_Base {
         return isPhotoAvailableToPerson(AccessControl.getPerson());
     }
 
-    public boolean isPhotoAvailableToPerson(Person requester) {
+    public boolean isPhotoAvailableToPerson(final Person requester) {
         if (isPhotoPubliclyAvailable()) {
             return true;
         }
@@ -1696,7 +1706,7 @@ public class Person extends Person_Base {
      * LOGGING METHODS AND OVERRIDES *
      ********************************/
 
-    private void logSetter(String keyTypeOfData, String oldValue, String newValue, String keyLabel) {
+    private void logSetter(final String keyTypeOfData, final String oldValue, final String newValue, final String keyLabel) {
 
         final String personViewed = PersonInformationLog.getPersonNameForLogDescription(this);
         if (oldValue.compareTo(newValue) != 0) {
@@ -1707,14 +1717,16 @@ public class Person extends Person_Base {
         }
     }
 
-    private void logSetterNullString(String keyInfoType, String oldValue, String newValue, String keyLabel) {
+    private void logSetterNullString(final String keyInfoType, final String oldValue, final String newValue,
+            final String keyLabel) {
         String argNew, argOld;
         argOld = valueToUpdateIfNewNotNull(BundleUtil.getString(Bundle.APPLICATION, "label.empty"), oldValue);
         argNew = valueToUpdateIfNewNotNull(BundleUtil.getString(Bundle.APPLICATION, "label.empty"), newValue);
         logSetter(keyInfoType, argOld, argNew, keyLabel);
     }
 
-    private void logSetterNullYearMonthDay(String keyInfoType, YearMonthDay oldValue, YearMonthDay newValue, String keyLabel) {
+    private void logSetterNullYearMonthDay(final String keyInfoType, final YearMonthDay oldValue, final YearMonthDay newValue,
+            final String keyLabel) {
         Object argNew, argOld;
         String strNew, strOld;
         argOld = valueToUpdateIfNewNotNull(BundleUtil.getString(Bundle.HTML, "text.dateEmpty"), oldValue);
@@ -1734,7 +1746,8 @@ public class Person extends Person_Base {
         logSetter(keyInfoType, strOld, strNew, keyLabel);
     }
 
-    private void logSetterNullEnum(String keyInfoType, IPresentableEnum oldValue, IPresentableEnum newValue, String keyLabel) {
+    private void logSetterNullEnum(final String keyInfoType, final IPresentableEnum oldValue, final IPresentableEnum newValue,
+            final String keyLabel) {
         Object argNew, argOld;
         String strNew, strOld;
         argOld = valueToUpdateIfNewNotNull(BundleUtil.getString(Bundle.APPLICATION, "label.empty"), oldValue);
@@ -1755,19 +1768,19 @@ public class Person extends Person_Base {
     }
 
     @Override
-    public void setGender(Gender arg) {
+    public void setGender(final Gender arg) {
         logSetterNullEnum("log.personInformation.edit.generalTemplate.personalData", getGender(), arg, "label.gender");
         super.setGender(arg);
     }
 
     @Override
-    public void setProfession(String arg) {
+    public void setProfession(final String arg) {
         logSetterNullString("log.personInformation.edit.generalTemplate.personalData", getProfession(), arg, "label.occupation");
         super.setProfession(arg);
     }
 
     @Override
-    public void setMaritalStatus(MaritalStatus arg) {
+    public void setMaritalStatus(final MaritalStatus arg) {
         // avmc: logic here is different: null value is converted to UNKNOWN
         MaritalStatus argToSet;
         if (arg != null) {
@@ -1781,34 +1794,34 @@ public class Person extends Person_Base {
     }
 
     @Override
-    public void setEmissionLocationOfDocumentId(String arg) {
+    public void setEmissionLocationOfDocumentId(final String arg) {
         logSetterNullString("log.personInformation.edit.generalTemplate.personalId", getEmissionLocationOfDocumentId(), arg,
                 "label.documentIdEmissionLocation");
         super.setEmissionLocationOfDocumentId(arg);
     }
 
     @Override
-    public void setEmissionDateOfDocumentIdYearMonthDay(YearMonthDay arg) {
+    public void setEmissionDateOfDocumentIdYearMonthDay(final YearMonthDay arg) {
         logSetterNullYearMonthDay("log.personInformation.edit.generalTemplate.personalId",
                 getEmissionDateOfDocumentIdYearMonthDay(), arg, "label.documentIdEmissionDate");
         super.setEmissionDateOfDocumentIdYearMonthDay(arg);
     }
 
     @Override
-    public void setExpirationDateOfDocumentIdYearMonthDay(YearMonthDay arg) {
+    public void setExpirationDateOfDocumentIdYearMonthDay(final YearMonthDay arg) {
         logSetterNullYearMonthDay("log.personInformation.edit.generalTemplate.personalId",
                 getExpirationDateOfDocumentIdYearMonthDay(), arg, "label.documentIdExpirationDate");
         super.setExpirationDateOfDocumentIdYearMonthDay(arg);
     }
 
     @Override
-    public void setEidentifier(String arg) {
+    public void setEidentifier(final String arg) {
         logSetterNullString("log.personInformation.edit.generalTemplate.personalId", getEidentifier(), arg, "label.eidentifier");
         super.setEidentifier(arg);
     }
 
     @Override
-    public void setDateOfBirthYearMonthDay(YearMonthDay arg) {
+    public void setDateOfBirthYearMonthDay(final YearMonthDay arg) {
         logSetterNullYearMonthDay("log.personInformation.edit.generalTemplate.filiation", getDateOfBirthYearMonthDay(), arg,
                 "label.dateOfBirth");
         super.setDateOfBirthYearMonthDay(arg);
@@ -1816,7 +1829,7 @@ public class Person extends Person_Base {
 
     // Nationality
     @Override
-    public void setCountry(Country arg) {
+    public void setCountry(final Country arg) {
         String argNew, argOld;
 
         if (getCountry() != null) {
@@ -1843,21 +1856,21 @@ public class Person extends Person_Base {
     }
 
     @Override
-    public void setParishOfBirth(String arg) {
+    public void setParishOfBirth(final String arg) {
         logSetterNullString("log.personInformation.edit.generalTemplate.filiation", getParishOfBirth(), arg,
                 "label.parishOfBirth");
         super.setParishOfBirth(arg);
     }
 
     @Override
-    public void setDistrictSubdivisionOfBirth(String arg) {
+    public void setDistrictSubdivisionOfBirth(final String arg) {
         logSetterNullString("log.personInformation.edit.generalTemplate.filiation", getDistrictSubdivisionOfBirth(), arg,
                 "label.districtSubdivisionOfBirth");
         super.setDistrictSubdivisionOfBirth(arg);
     }
 
     @Override
-    public void setDistrictOfBirth(String arg) {
+    public void setDistrictOfBirth(final String arg) {
         logSetterNullString("log.personInformation.edit.generalTemplate.filiation", getDistrictOfBirth(), arg,
                 "label.districtOfBirth");
         super.setDistrictOfBirth(arg);
@@ -1865,7 +1878,7 @@ public class Person extends Person_Base {
 
     // Not to be confused with Nationality
     @Override
-    public void setCountryOfBirth(Country arg) {
+    public void setCountryOfBirth(final Country arg) {
         String argNew, argOld;
 
         if (getCountryOfBirth() != null) {
@@ -1884,44 +1897,44 @@ public class Person extends Person_Base {
     }
 
     @Override
-    public void setNameOfMother(String arg) {
+    public void setNameOfMother(final String arg) {
         logSetterNullString("log.personInformation.edit.generalTemplate.filiation", getNameOfMother(), arg, "label.nameOfMother");
         super.setNameOfMother(arg);
     }
 
     @Override
-    public void setNameOfFather(String arg) {
+    public void setNameOfFather(final String arg) {
         logSetterNullString("log.personInformation.edit.generalTemplate.filiation", getNameOfFather(), arg, "label.nameOfFather");
         super.setNameOfFather(arg);
     }
 
     @Override
-    public void logCreateContact(PartyContact contact) {
+    public void logCreateContact(final PartyContact contact) {
         contact.logCreate(this);
     }
 
     @Override
-    public void logEditContact(PartyContact contact, boolean propertiesChanged, boolean valueChanged, boolean createdNewContact,
-            String newValue) {
+    public void logEditContact(final PartyContact contact, final boolean propertiesChanged, final boolean valueChanged,
+            final boolean createdNewContact, final String newValue) {
         contact.logEdit(this, propertiesChanged, valueChanged, createdNewContact, newValue);
     }
 
     @Override
-    public void logDeleteContact(PartyContact contact) {
+    public void logDeleteContact(final PartyContact contact) {
         contact.logDelete(this);
     }
 
     @Override
-    public void logValidContact(PartyContact contact) {
+    public void logValidContact(final PartyContact contact) {
         contact.logValid(this);
     }
 
     @Override
-    public void logRefuseContact(PartyContact contact) {
+    public void logRefuseContact(final PartyContact contact) {
         contact.logRefuse(this);
     }
 
-    public static Group convertToUserGroup(Collection<Person> persons) {
+    public static Group convertToUserGroup(final Collection<Person> persons) {
         return Group.users(persons.stream().map(Person::getUser).filter(Objects::nonNull));
     }
 }

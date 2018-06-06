@@ -47,13 +47,13 @@ public abstract class PartyContact extends PartyContact_Base {
     private static final Map<Class<? extends PartyContact>, ContactResolver<? extends PartyContact>> DEFAULT_RESOLVERS =
             new HashMap<>();
 
-    private static ContactResolver<? extends PartyContact> getResolver(Class<?> class1) {
+    private static ContactResolver<? extends PartyContact> getResolver(final Class<?> class1) {
         synchronized (DEFAULT_RESOLVERS) {
             return DEFAULT_RESOLVERS.get(class1);
         }
     }
 
-    public static void setResolver(Class<? extends PartyContact> class1, ContactResolver<?> contactResolver) {
+    public static void setResolver(final Class<? extends PartyContact> class1, final ContactResolver<?> contactResolver) {
         synchronized (DEFAULT_RESOLVERS) {
             DEFAULT_RESOLVERS.put(class1, contactResolver);
         }
@@ -61,9 +61,9 @@ public abstract class PartyContact extends PartyContact_Base {
 
     public static Comparator<PartyContact> COMPARATOR_BY_TYPE = new Comparator<PartyContact>() {
         @Override
-        public int compare(PartyContact contact, PartyContact otherContact) {
+        public int compare(final PartyContact contact, final PartyContact otherContact) {
             int result = contact.getType().compareTo(otherContact.getType());
-            return (result == 0) ? DomainObjectUtil.COMPARATOR_BY_ID.compare(contact, otherContact) : result;
+            return result == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(contact, otherContact) : result;
         }
     };
 
@@ -114,7 +114,7 @@ public abstract class PartyContact extends PartyContact_Base {
     }
 
     @Override
-    public void setVisibleToPublic(Boolean visibleToPublic) {
+    public void setVisibleToPublic(final Boolean visibleToPublic) {
         super.setVisibleToPublic(visibleToPublic);
         if (visibleToPublic.booleanValue()) {
             super.setVisibleToStudents(Boolean.TRUE);
@@ -123,7 +123,7 @@ public abstract class PartyContact extends PartyContact_Base {
     }
 
     @Override
-    public void setVisibleToStudents(Boolean visibleToStudents) {
+    public void setVisibleToStudents(final Boolean visibleToStudents) {
         super.setVisibleToStudents(visibleToStudents);
         if (!visibleToStudents.booleanValue()) {
             super.setVisibleToPublic(Boolean.FALSE);
@@ -131,7 +131,7 @@ public abstract class PartyContact extends PartyContact_Base {
     }
 
     @Override
-    public void setVisibleToStaff(Boolean visibleToStaff) {
+    public void setVisibleToStaff(final Boolean visibleToStaff) {
         super.setVisibleToStaff(visibleToStaff);
         if (!visibleToStaff.booleanValue()) {
             super.setVisibleToPublic(Boolean.FALSE);
@@ -272,12 +272,16 @@ public abstract class PartyContact extends PartyContact_Base {
                     validation.setContactRoot(null);
                 }
             }
+        } else {
+            if (getPartyContactValidation() != null) {
+                getPartyContactValidation().delete();
+            }
+            setParty(null);
+            setContactRoot(null);
+            setPrevPartyContact(null);
+            deleteDomainObject();
         }
 
-        // setResearcher(null);
-        // setParty(null);
-        // setRootDomainObject(null);
-        // super.deleteDomainObject();
     }
 
     protected void checkRulesToDelete() {
@@ -298,7 +302,7 @@ public abstract class PartyContact extends PartyContact_Base {
         return getType().name();
     }
 
-    public static Set<PartyContact> readPartyContactsOfType(Class<? extends PartyContact>... contactClasses) {
+    public static Set<PartyContact> readPartyContactsOfType(final Class<? extends PartyContact>... contactClasses) {
         Set<PartyContact> contacts = new HashSet<PartyContact>();
 
         for (Class<? extends PartyContact> clazz : contactClasses) {
@@ -359,10 +363,10 @@ public abstract class PartyContact extends PartyContact_Base {
      * class info (args)
      **************************************************************************/
 
-    public void logCreate(Person person) {
+    public void logCreate(final Person person) {
     }
 
-    protected void logCreateAux(Person person, String typeKey) {
+    protected void logCreateAux(final Person person, final String typeKey) {
         final String infoLabel = BundleUtil.getString(Bundle.APPLICATION, typeKey);
         final String personViewed = PersonInformationLog.getPersonNameForLogDescription(person);
 
@@ -377,11 +381,12 @@ public abstract class PartyContact extends PartyContact_Base {
                 personViewed);
     }
 
-    public void logEdit(Person person, boolean propertiesChanged, boolean valueChanged, boolean createdNewContact, String newValue) {
+    public void logEdit(final Person person, final boolean propertiesChanged, final boolean valueChanged,
+            final boolean createdNewContact, final String newValue) {
     }
 
-    protected void logEditAux(Person person, boolean propertiesChanged, boolean valueChanged, boolean createdNewContact,
-            String newValue, String typeKey) {
+    protected void logEditAux(final Person person, final boolean propertiesChanged, final boolean valueChanged,
+            final boolean createdNewContact, final String newValue, final String typeKey) {
         final String infoLabel = BundleUtil.getString(Bundle.APPLICATION, typeKey);
         final String personViewed = PersonInformationLog.getPersonNameForLogDescription(person);
 
@@ -421,8 +426,8 @@ public abstract class PartyContact extends PartyContact_Base {
                         // new value differs from old, and a new temporary
                         // contact was created
                         PersonInformationLog.createLog(person, Bundle.MESSAGING,
-                                "log.personInformation.contact.generic.edit.need.valid.values", infoLabel, getPrevPartyContact()
-                                        .getPresentationValue(), newValue, personViewed);
+                                "log.personInformation.contact.generic.edit.need.valid.values", infoLabel,
+                                getPrevPartyContact().getPresentationValue(), newValue, personViewed);
                     } else if (createdNewContact) {
                         // only a new temporary contact was created
                         PersonInformationLog.createLog(person, Bundle.MESSAGING,
@@ -454,10 +459,10 @@ public abstract class PartyContact extends PartyContact_Base {
         }
     }
 
-    public void logDelete(Person person) {
+    public void logDelete(final Person person) {
     }
 
-    public void logDeleteAux(Person person, String typeKey) {
+    public void logDeleteAux(final Person person, final String typeKey) {
         final String infoLabel = BundleUtil.getString(Bundle.APPLICATION, typeKey);
         final String personViewed = PersonInformationLog.getPersonNameForLogDescription(person);
 
@@ -489,10 +494,10 @@ public abstract class PartyContact extends PartyContact_Base {
         }
     }
 
-    public void logValid(Person person) {
+    public void logValid(final Person person) {
     }
 
-    public void logValidAux(Person person, String typeKey) {
+    public void logValidAux(final Person person, final String typeKey) {
         final String infoLabel = BundleUtil.getString(Bundle.APPLICATION, typeKey);
         final String personViewed = PersonInformationLog.getPersonNameForLogDescription(person);
 
@@ -512,16 +517,16 @@ public abstract class PartyContact extends PartyContact_Base {
             } else {
                 // previous is different, display previous value
                 PersonInformationLog.createLog(person, Bundle.MESSAGING,
-                        "log.personInformation.contact.generic.edit.need.valid.values.accepted", infoLabel, getPrevPartyContact()
-                                .getPresentationValue(), this.getPresentationValue(), personViewed);
+                        "log.personInformation.contact.generic.edit.need.valid.values.accepted", infoLabel,
+                        getPrevPartyContact().getPresentationValue(), this.getPresentationValue(), personViewed);
             }
         }
     }
 
-    public void logRefuse(Person person) {
+    public void logRefuse(final Person person) {
     }
 
-    public void logRefuseAux(Person person, String typeKey) {
+    public void logRefuseAux(final Person person, final String typeKey) {
         final String infoLabel = BundleUtil.getString(Bundle.APPLICATION, typeKey);
         final String personViewed = PersonInformationLog.getPersonNameForLogDescription(person);
 
@@ -541,14 +546,14 @@ public abstract class PartyContact extends PartyContact_Base {
             } else {
                 // previous is different, display previous value
                 PersonInformationLog.createLog(person, Bundle.MESSAGING,
-                        "log.personInformation.contact.generic.edit.need.valid.values.rejected", infoLabel, getPrevPartyContact()
-                                .getPresentationValue(), this.getPresentationValue(), personViewed);
+                        "log.personInformation.contact.generic.edit.need.valid.values.rejected", infoLabel,
+                        getPrevPartyContact().getPresentationValue(), this.getPresentationValue(), personViewed);
             }
         }
     }
 
-    private static Set<PartyContact> getAllInstancesOf(Class<? extends PartyContact> type) {
-        return ContactRoot.getInstance().getPartyContactsSet().stream().filter((type)::isInstance).collect(Collectors.toSet());
+    private static Set<PartyContact> getAllInstancesOf(final Class<? extends PartyContact> type) {
+        return ContactRoot.getInstance().getPartyContactsSet().stream().filter(type::isInstance).collect(Collectors.toSet());
     }
 
     public boolean isToBeValidated() {

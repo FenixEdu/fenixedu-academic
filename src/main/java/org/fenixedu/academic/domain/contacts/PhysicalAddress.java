@@ -41,7 +41,7 @@ public class PhysicalAddress extends PhysicalAddress_Base {
 
     public static Comparator<PhysicalAddress> COMPARATOR_BY_ADDRESS = new Comparator<PhysicalAddress>() {
         @Override
-        public int compare(PhysicalAddress contact, PhysicalAddress otherContact) {
+        public int compare(final PhysicalAddress contact, final PhysicalAddress otherContact) {
             final String address = contact.getAddress();
             final String otherAddress = otherContact.getAddress();
             int result = 0;
@@ -56,8 +56,8 @@ public class PhysicalAddress extends PhysicalAddress_Base {
         }
     };
 
-    static public PhysicalAddress createPhysicalAddress(final Party party, final PhysicalAddressData data, PartyContactType type,
-            Boolean isDefault) {
+    static public PhysicalAddress createPhysicalAddress(final Party party, final PhysicalAddressData data,
+            final PartyContactType type, final Boolean isDefault) {
         return new PhysicalAddress(party, type, isDefault, data);
     }
 
@@ -67,7 +67,7 @@ public class PhysicalAddress extends PhysicalAddress_Base {
     }
 
     protected PhysicalAddress(final Party party, final PartyContactType type, final boolean defaultContact,
-            PhysicalAddressData data) {
+            final PhysicalAddressData data) {
         this();
         super.init(party, type, defaultContact);
         setVisibleToPublic(Boolean.FALSE);
@@ -125,15 +125,14 @@ public class PhysicalAddress extends PhysicalAddress_Base {
 
     @Override
     public void deleteWithoutCheckRules() {
+        setCountryOfResidence(null);
         super.deleteWithoutCheckRules();
-        // setCountryOfResidence(null);
-
     }
 
     @Override
     public void delete() {
+        setCountryOfResidence(null);
         super.delete();
-        // setCountryOfResidence(null);
     }
 
     @Override
@@ -152,7 +151,7 @@ public class PhysicalAddress extends PhysicalAddress_Base {
     }
 
     @Override
-    public boolean hasValue(String value) {
+    public boolean hasValue(final String value) {
         return false;
     }
 
@@ -163,33 +162,34 @@ public class PhysicalAddress extends PhysicalAddress_Base {
             final PhysicalAddressValidation physicalAddressValidation = (PhysicalAddressValidation) getPartyContactValidation();
             physicalAddressValidation.setValid();
             final String userName = AccessControl.getPerson() == null ? "-" : AccessControl.getPerson().getUsername();
-            physicalAddressValidation.setDescription(BundleUtil.getString(Bundle.ACADEMIC,
-                    "label.contacts.physicalAddress.validation.description", userName));
+            physicalAddressValidation.setDescription(
+                    BundleUtil.getString(Bundle.ACADEMIC, "label.contacts.physicalAddress.validation.description", userName));
         }
     }
 
     @Override
-    public void logCreate(Person person) {
+    public void logCreate(final Person person) {
         logCreateAux(person, "label.partyContacts.PhysicalAddress");
     }
 
     @Override
-    public void logEdit(Person person, boolean propertiesChanged, boolean valueChanged, boolean createdNewContact, String newValue) {
+    public void logEdit(final Person person, final boolean propertiesChanged, final boolean valueChanged,
+            final boolean createdNewContact, final String newValue) {
         logEditAux(person, propertiesChanged, valueChanged, createdNewContact, newValue, "label.partyContacts.PhysicalAddress");
     }
 
     @Override
-    public void logDelete(Person person) {
+    public void logDelete(final Person person) {
         logDeleteAux(person, "label.partyContacts.PhysicalAddress");
     }
 
     @Override
-    public void logValid(Person person) {
+    public void logValid(final Person person) {
         logValidAux(person, "label.partyContacts.PhysicalAddress");
     }
 
     @Override
-    public void logRefuse(Person person) {
+    public void logRefuse(final Person person) {
         logRefuseAux(person, "label.partyContacts.PhysicalAddress");
     }
 

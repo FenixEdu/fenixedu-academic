@@ -44,6 +44,7 @@ import com.google.common.base.Strings;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
+import pt.ist.fenixframework.FenixFramework;
 
 @StrutsFunctionality(app = AccountManagementApp.class, path = "manage-accounts",
         titleKey = "link.accountmanagement.manageaccounts")
@@ -55,35 +56,35 @@ import pt.ist.fenixframework.Atomic.TxMode;
 public class ManageAccountsDA extends FenixDispatchAction {
 
     @EntryPoint
-    public ActionForward manageAccounts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
+    public ActionForward manageAccounts(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+            final HttpServletResponse response) {
         request.setAttribute("searchParameters", new SearchParametersBean());
         return mapping.findForward("manageAccounts");
     }
 
-    public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward search(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+            final HttpServletResponse response) {
         SearchParametersBean parameters = getRenderedObject("searchParameters");
         request.setAttribute("matches", parameters.search());
         return mapping.findForward("manageAccounts");
     }
 
-    public ActionForward prepareCreatePerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward prepareCreatePerson(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+            final HttpServletResponse response) throws Exception {
         request.setAttribute("personBean", new PersonBean());
         return mapping.findForward("createPerson");
     }
 
-    public ActionForward showExistentPersonsWithSameMandatoryDetails(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward showExistentPersonsWithSameMandatoryDetails(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         PersonBean bean = getRenderedObject("personBean");
         Collection<Person> results = Collections.emptySet();
         if (!Strings.isNullOrEmpty(bean.getDocumentIdNumber())) {
             results = Person.findPersonByDocumentID(bean.getDocumentIdNumber());
         }
         if (!Strings.isNullOrEmpty(bean.getGivenNames()) || !Strings.isNullOrEmpty(bean.getFamilyNames())) {
-            String name =
-                    Stream.of(bean.getGivenNames(), bean.getFamilyNames()).filter(n -> !Strings.isNullOrEmpty(n))
-                            .collect(Collectors.joining(" "));
+            String name = Stream.of(bean.getGivenNames(), bean.getFamilyNames()).filter(n -> !Strings.isNullOrEmpty(n))
+                    .collect(Collectors.joining(" "));
             Stream<Person> stream = Person.findPersonStream(name, Integer.MAX_VALUE);
             if (results.isEmpty()) {
                 results = stream.collect(Collectors.toSet());
@@ -96,14 +97,14 @@ public class ManageAccountsDA extends FenixDispatchAction {
         return mapping.findForward("createPerson");
     }
 
-    public ActionForward prepareCreatePersonFillInformation(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareCreatePersonFillInformation(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         request.setAttribute("personBean", getRenderedObject("personBean"));
         return mapping.findForward("createPersonFillInfo");
     }
 
-    public ActionForward createNewPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward createNewPerson(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         final PersonBean bean = getRenderedObject();
         try {
             Person person = createAccount(bean);
@@ -129,26 +130,26 @@ public class ManageAccountsDA extends FenixDispatchAction {
         return person;
     }
 
-    public ActionForward invalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward invalid(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            final HttpServletResponse response) throws Exception {
         PersonBean bean = getRenderedObject();
         request.setAttribute("personBean", bean);
-        
-        return mapping.findForward("createPersonFillInfo");
-    }
-    
-    public ActionForward createNewPersonPostback(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        PersonBean bean = getRenderedObject();
-        request.setAttribute("personBean", bean);
-        
-        RenderUtils.invalidateViewState();
-        
+
         return mapping.findForward("createPersonFillInfo");
     }
 
-    public ActionForward viewPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward createNewPersonPostback(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+        PersonBean bean = getRenderedObject();
+        request.setAttribute("personBean", bean);
+
+        RenderUtils.invalidateViewState();
+
+        return mapping.findForward("createPersonFillInfo");
+    }
+
+    public ActionForward viewPerson(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+            final HttpServletResponse response) throws Exception {
         final Person person = getDomainObject(request, "personId");
         return viewPerson(person, mapping, request);
     }
@@ -160,62 +161,82 @@ public class ManageAccountsDA extends FenixDispatchAction {
         request.setAttribute("editPersonalInfo", false);
         request.setAttribute("person", person);
         request.setAttribute("personBean", personBean);
-        
+
         return mapping.findForward("viewPerson");
     }
-    
-    public ActionForward prepareEditPersonalData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
+
+    public ActionForward prepareEditPersonalData(final ActionMapping mapping, final ActionForm form,
+            final HttpServletRequest request, final HttpServletResponse response) {
         final Person person = getDomainObject(request, "personId");
         final PersonBean personBean = new PersonBean(person);
-        
+
         request.setAttribute("editPersonalInfo", true);
         request.setAttribute("person", person);
         request.setAttribute("personBean", personBean);
-        
+
         return mapping.findForward("viewPerson");
     }
-    
-    public ActionForward editPersonalDataInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+
+    public ActionForward editPersonalDataInvalid(final ActionMapping mapping, final ActionForm form,
+            final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         final Person person = getDomainObject(request, "personId");
         final PersonBean personBean = getRenderedObject("personBean");
-        
+
         request.setAttribute("editPersonalInfo", true);
         request.setAttribute("person", person);
         request.setAttribute("personBean", personBean);
-        
+
         return mapping.findForward("viewPerson");
     }
-    
-    public ActionForward editPersonalDataPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+
+    public ActionForward editPersonalDataPostback(final ActionMapping mapping, final ActionForm form,
+            final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         final Person person = getDomainObject(request, "personId");
         final PersonBean personBean = getRenderedObject("personBean");
-        
+
         request.setAttribute("editPersonalInfo", true);
         request.setAttribute("person", person);
         request.setAttribute("personBean", personBean);
-        
+
         RenderUtils.invalidateViewState();
-        
+
         return mapping.findForward("viewPerson");
     }
-    
-    public ActionForward editPersonalData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+
+    public ActionForward editPersonalData(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+            final HttpServletResponse response) throws Exception {
         final Person person = getDomainObject(request, "personId");
         final PersonBean personBean = getRenderedObject("personBean");
-        
+
         try {
             personBean.save();
-            
+
             return viewPerson(person, mapping, request);
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage(), e.getArgs());
-            
+
             return editPersonalDataInvalid(mapping, form, request, response);
         }
     }
-    
+
+    public ActionForward deletePerson(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+            final HttpServletResponse response) throws Exception {
+        final Person person = getDomainObject(request, "personId");
+
+        try {
+            FenixFramework.atomic(() -> {
+                User user = person.getUser();
+                person.delete();
+                if (user != null) {
+                    user.delete();
+                }
+            });
+            return manageAccounts(mapping, form, request, response);
+        } catch (DomainException e) {
+            addActionMessage("error", request, e.getLocalizedMessage());
+
+            return manageAccounts(mapping, form, request, response);
+        }
+    }
+
 }

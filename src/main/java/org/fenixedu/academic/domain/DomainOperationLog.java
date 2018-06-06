@@ -24,6 +24,8 @@ import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
+import pt.ist.fenixframework.Atomic;
+
 public class DomainOperationLog extends DomainOperationLog_Base {
 
     protected static final String SEPARATOR = " - ";
@@ -32,7 +34,7 @@ public class DomainOperationLog extends DomainOperationLog_Base {
     public static final Comparator<DomainOperationLog> COMPARATOR_BY_WHEN_DATETIME = new Comparator<DomainOperationLog>() {
 
         @Override
-        public int compare(DomainOperationLog domainOperationLog1, DomainOperationLog domainOperationLog2) {
+        public int compare(final DomainOperationLog domainOperationLog1, final DomainOperationLog domainOperationLog2) {
             final DateTime dateTime1 = domainOperationLog1.getWhenDateTime();
             final DateTime dateTime2 = domainOperationLog2.getWhenDateTime();
             int res = dateTime2.compareTo(dateTime1);
@@ -47,6 +49,7 @@ public class DomainOperationLog extends DomainOperationLog_Base {
         this.setWhenDateTime(new DateTime());
     }
 
+    @Atomic
     public void delete() {
         setPerson(null);
         setRootDomainObject(null);

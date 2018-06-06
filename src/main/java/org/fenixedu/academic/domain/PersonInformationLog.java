@@ -21,18 +21,27 @@ package org.fenixedu.academic.domain;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
+import pt.ist.fenixframework.Atomic;
+
 public class PersonInformationLog extends PersonInformationLog_Base {
 
     public PersonInformationLog() {
         super();
     }
 
-    public PersonInformationLog(Person personViewed, String description) {
+    public PersonInformationLog(final Person personViewed, final String description) {
         super();
         if (getPersonViewed() == null) {
             setPersonViewed(personViewed);
         }
         setDescription(description);
+    }
+
+    @Override
+    @Atomic
+    public void delete() {
+        setPersonViewed(null);
+        super.delete();
     }
 
     public String getPersonName() {
@@ -43,20 +52,21 @@ public class PersonInformationLog extends PersonInformationLog_Base {
         return getPerson() != null ? getPerson().getUsername() : StringUtils.EMPTY;
     }
 
-    private static String generateLabelDescription(String bundle, String key, String... args) {
+    private static String generateLabelDescription(final String bundle, final String key, final String... args) {
         return BundleUtil.getString(bundle, key, args).trim();
     }
 
-    public static PersonInformationLog createLog(Person personViewed, String bundle, String key, String... args) {
+    public static PersonInformationLog createLog(final Person personViewed, final String bundle, final String key,
+            final String... args) {
         final String label = generateLabelDescription(bundle, key, args);
         return new PersonInformationLog(personViewed, label);
     }
 
-    public static String getPersonNameForLogDescription(Person person) {
+    public static String getPersonNameForLogDescription(final Person person) {
         String personViewed;
-        if ((person.getUsername() != null) && !(person.getUsername().isEmpty())) {
+        if (person.getUsername() != null && !person.getUsername().isEmpty()) {
             personViewed = person.getUsername();
-        } else if ((person.getPartyName() != null) && !(person.getPartyName().isEmpty())) {
+        } else if (person.getPartyName() != null && !person.getPartyName().isEmpty()) {
             personViewed = person.getName();
         } else {
             personViewed = "ID:" + person.getExternalId();

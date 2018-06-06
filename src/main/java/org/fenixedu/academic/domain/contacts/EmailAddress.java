@@ -39,7 +39,7 @@ public class EmailAddress extends EmailAddress_Base {
 
     public static Comparator<EmailAddress> COMPARATOR_BY_EMAIL = new Comparator<EmailAddress>() {
         @Override
-        public int compare(EmailAddress contact, EmailAddress otherContact) {
+        public int compare(final EmailAddress contact, final EmailAddress otherContact) {
             final String value = contact.getValue();
             final String otherValue = otherContact.getValue();
             int result = 0;
@@ -50,25 +50,27 @@ public class EmailAddress extends EmailAddress_Base {
             } else if (otherValue != null) {
                 result = -1;
             }
-            return (result == 0) ? COMPARATOR_BY_TYPE.compare(contact, otherContact) : result;
+            return result == 0 ? COMPARATOR_BY_TYPE.compare(contact, otherContact) : result;
         }
     };
 
-    public static EmailAddress createEmailAddress(Party party, String email, PartyContactType type, Boolean isDefault,
-            Boolean visibleToPublic, Boolean visibleToStudents, Boolean visibleToStaff) {
-        final Supplier<EmailAddress> supplier = () -> new EmailAddress(party, type, visibleToPublic, visibleToStudents, visibleToStaff, isDefault, email);
+    public static EmailAddress createEmailAddress(final Party party, final String email, final PartyContactType type,
+            final Boolean isDefault, final Boolean visibleToPublic, final Boolean visibleToStudents,
+            final Boolean visibleToStaff) {
+        final Supplier<EmailAddress> supplier =
+                () -> new EmailAddress(party, type, visibleToPublic, visibleToStudents, visibleToStaff, isDefault, email);
         return createEmailAddress(supplier, party, email);
     }
 
-    public static EmailAddress createEmailAddress(Party party, String email, PartyContactType type, boolean isDefault) {
+    public static EmailAddress createEmailAddress(final Party party, final String email, final PartyContactType type,
+            final boolean isDefault) {
         final Supplier<EmailAddress> supplier = () -> new EmailAddress(party, type, isDefault, email);
         return createEmailAddress(supplier, party, email);
     }
 
     private static EmailAddress createEmailAddress(final Supplier<EmailAddress> supplier, final Party party, final String email) {
         return StringUtils.isEmpty(email) ? null : party.getEmailAddressStream()
-                .filter(ea -> email.equalsIgnoreCase(ea.getValue()))
-                .findAny().orElseGet(supplier);
+                .filter(ea -> email.equalsIgnoreCase(ea.getValue())).findAny().orElseGet(supplier);
     }
 
     protected EmailAddress() {
@@ -98,19 +100,19 @@ public class EmailAddress extends EmailAddress_Base {
     }
 
     @Override
-    public void setDefaultContact(Boolean defaultContact) {
+    public void setDefaultContact(final Boolean defaultContact) {
         super.setDefaultContact(defaultContact);
         updateProfileEmail();
     }
 
     @Override
-    public void setValue(String value) {
+    public void setValue(final String value) {
         super.setValue(value);
         updateProfileEmail();
     }
 
     @Override
-    public void setType(PartyContactType type) {
+    public void setType(final PartyContactType type) {
         if (PartyContactType.INSTITUTIONAL.equals(type)) {
             throw new DomainException("error.domain.contacts.EmailAddress.can.only.have.one.institutional.emailAddress");
         }
@@ -163,8 +165,8 @@ public class EmailAddress extends EmailAddress_Base {
 
     @Override
     protected void processDelete() {
-        super.processDelete();
         updateProfileEmail();
+        super.processDelete();
     }
 
     static public EmailAddress find(final String emailAddressString) {
@@ -180,8 +182,7 @@ public class EmailAddress extends EmailAddress_Base {
     }
 
     public static Stream<EmailAddress> findAllActiveAndValid(final String emailAddressString) {
-        return ContactRoot.getInstance().getPartyContactsSet().stream()
-                .filter(partyContact -> partyContact.isEmailAddress())
+        return ContactRoot.getInstance().getPartyContactsSet().stream().filter(partyContact -> partyContact.isEmailAddress())
                 .map(partyContact -> (EmailAddress) partyContact)
                 .filter(emailAddress -> emailAddress.hasValue(emailAddressString))
                 .filter(emailAddress -> emailAddress.isActiveAndValid());
@@ -195,27 +196,28 @@ public class EmailAddress extends EmailAddress_Base {
     }
 
     @Override
-    public void logCreate(Person person) {
+    public void logCreate(final Person person) {
         logCreateAux(person, "label.partyContacts.EmailAddress");
     }
 
     @Override
-    public void logEdit(Person person, boolean propertiesChanged, boolean valueChanged, boolean createdNewContact, String newValue) {
+    public void logEdit(final Person person, final boolean propertiesChanged, final boolean valueChanged,
+            final boolean createdNewContact, final String newValue) {
         logEditAux(person, propertiesChanged, valueChanged, createdNewContact, newValue, "label.partyContacts.EmailAddress");
     }
 
     @Override
-    public void logDelete(Person person) {
+    public void logDelete(final Person person) {
         logDeleteAux(person, "label.partyContacts.EmailAddress");
     }
 
     @Override
-    public void logValid(Person person) {
+    public void logValid(final Person person) {
         logValidAux(person, "label.partyContacts.EmailAddress");
     }
 
     @Override
-    public void logRefuse(Person person) {
+    public void logRefuse(final Person person) {
         logRefuseAux(person, "label.partyContacts.EmailAddress");
     }
 
