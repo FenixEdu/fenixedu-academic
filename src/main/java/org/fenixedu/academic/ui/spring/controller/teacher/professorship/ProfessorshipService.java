@@ -22,6 +22,7 @@ import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Set;
@@ -35,6 +36,7 @@ import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.academic.domain.TeacherAuthorization;
+import org.fenixedu.academic.domain.TeacherCategory;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.reports.GepReportFile;
 import org.fenixedu.academic.ui.spring.controller.teacher.authorization.AuthorizationService;
@@ -141,14 +143,20 @@ public class ProfessorshipService {
             protected void makeLine(Professorship item) {
                 final User user = item.getTeacher().getPerson().getUser();
                 final ExecutionCourse course = item.getExecutionCourse();
+                final ExecutionSemester executionSemester = course.getExecutionPeriod();
+                final TeacherCategory category = item.getPerson().getTeacher().getCategory();
+                final Optional<Department> department =
+                            item.getPerson().getTeacher().getDepartment(executionSemester.getAcademicInterval());
 
                 addCell(message("teacher.professorships.csv.column.1.username"), user.getUsername());
                 addCell(message("teacher.professorships.csv.column.2.name"), user.getProfile().getDisplayName());
                 addCell(message("teacher.professorships.csv.column.3.courseCode"), GepReportFile.getExecutionCourseCode(course));
                 addCell(message("teacher.professorships.csv.column.4.courseName"), course.getNome());
-                addCell(message("teacher.professorships.csv.column.5.semester"), GepReportFile.getExecutionSemesterCode(course
-                        .getExecutionPeriod()));
+                addCell(message("teacher.professorships.csv.column.5.semester"), GepReportFile.getExecutionSemesterCode(executionSemester));
                 addCell(message("teacher.authorizations.csv.column.6.responsible"), item.isResponsibleFor() ? "Y" : "N");
+                addCell(message("teacher.authorizations.csv.column.7.professorship.code"), GepReportFile.getProfessorshipCode(item));
+                addCell(message("teacher.authorizations.csv.column.8.category"), category != null ? category.getName().getContent() : "");
+                addCell(message("teacher.authorizations.csv.column.9.department"), department.isPresent() ? department.get().getName() : "");
             }
         });
 
