@@ -570,6 +570,10 @@ public class Person extends Person_Base {
             log.delete();
         }
 
+        for (PersonIdentificationDocumentExtraInfo extraInfo : getPersonIdentificationDocumentExtraInfoSet()) {
+            extraInfo.delete();
+        }
+
         super.setCountry(null);
         super.setCountryOfBirth(null);
         setProfile(null);

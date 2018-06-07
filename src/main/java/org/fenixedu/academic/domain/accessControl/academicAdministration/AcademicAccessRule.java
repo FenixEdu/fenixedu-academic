@@ -38,6 +38,7 @@ import org.fenixedu.bennu.core.groups.Group;
 import org.joda.time.DateTime;
 
 public class AcademicAccessRule extends AcademicAccessRule_Base implements Comparable<AcademicAccessRule> {
+
     public static abstract class AcademicAccessTarget implements AccessTarget {
         public abstract void write(AcademicAccessRule academicAccessRule, AcademicOperationType operation);
     }
@@ -45,7 +46,7 @@ public class AcademicAccessRule extends AcademicAccessRule_Base implements Compa
     public static class AcademicProgramAccessTarget extends AcademicAccessTarget {
         private final AcademicProgram program;
 
-        public AcademicProgramAccessTarget(AcademicProgram program) {
+        public AcademicProgramAccessTarget(final AcademicProgram program) {
             this.program = program;
         }
 
@@ -54,7 +55,7 @@ public class AcademicAccessRule extends AcademicAccessRule_Base implements Compa
         }
 
         @Override
-        public void write(AcademicAccessRule academicAccessRule, AcademicOperationType operation) {
+        public void write(final AcademicAccessRule academicAccessRule, final AcademicOperationType operation) {
             if (!operation.isProgramAllowedAsTarget()) {
                 throw new DomainException("error.persistent.authorization.group.does.not.allow.offices");
             }
@@ -65,7 +66,7 @@ public class AcademicAccessRule extends AcademicAccessRule_Base implements Compa
     public static class AdministrativeOfficeAccessTarget extends AcademicAccessTarget {
         private final AdministrativeOffice office;
 
-        public AdministrativeOfficeAccessTarget(AdministrativeOffice office) {
+        public AdministrativeOfficeAccessTarget(final AdministrativeOffice office) {
             this.office = office;
         }
 
@@ -74,7 +75,7 @@ public class AcademicAccessRule extends AcademicAccessRule_Base implements Compa
         }
 
         @Override
-        public void write(AcademicAccessRule academicAccessRule, AcademicOperationType operation) {
+        public void write(final AcademicAccessRule academicAccessRule, final AcademicOperationType operation) {
             if (!operation.isOfficeAllowedAsTarget()) {
                 throw new DomainException("error.persistent.authorization.group.does.not.allow.offices");
             }
@@ -82,7 +83,8 @@ public class AcademicAccessRule extends AcademicAccessRule_Base implements Compa
         }
     }
 
-    public AcademicAccessRule(AcademicOperationType operation, Group whoCanAccess, Set<AcademicAccessTarget> whatCanAffect) {
+    public AcademicAccessRule(final AcademicOperationType operation, final Group whoCanAccess,
+            final Set<AcademicAccessTarget> whatCanAffect) {
         super();
         setOperation(operation);
         setPersistentGroup(whoCanAccess.toPersistentGroup());
@@ -114,7 +116,8 @@ public class AcademicAccessRule extends AcademicAccessRule_Base implements Compa
                 getOfficeSet().stream().map(AdministrativeOfficeAccessTarget::new)).collect(Collectors.toSet());
     }
 
-    public AcademicAccessRule changeProgramsAndOffices(Set<AcademicProgram> programs, Set<AdministrativeOffice> offices) {
+    public AcademicAccessRule changeProgramsAndOffices(final Set<AcademicProgram> programs,
+            final Set<AdministrativeOffice> offices) {
         Set<AccessTarget> targets = new HashSet<>();
         if (programs != null) {
             programs.stream().forEach(p -> targets.add(new AcademicProgramAccessTarget(p)));
@@ -134,20 +137,20 @@ public class AcademicAccessRule extends AcademicAccessRule_Base implements Compa
         return AccessRuleSystem.accessRules().filter(r -> r instanceof AcademicAccessRule).map(r -> (AcademicAccessRule) r);
     }
 
-    public static Stream<AcademicAccessRule> accessRules(DateTime when) {
+    public static Stream<AcademicAccessRule> accessRules(final DateTime when) {
         return AccessRuleSystem.accessRules(when).filter(r -> r instanceof AcademicAccessRule).map(r -> (AcademicAccessRule) r);
     }
 
-    protected static Stream<AcademicAccessRule> filter(AcademicOperationType function) {
+    protected static Stream<AcademicAccessRule> filter(final AcademicOperationType function) {
         return accessRules().filter(r -> r.getOperation().equals(function));
     }
 
-    protected static Stream<AcademicAccessRule> filter(AcademicOperationType function, DateTime when) {
+    protected static Stream<AcademicAccessRule> filter(final AcademicOperationType function, final DateTime when) {
         return accessRules(when).filter(r -> r.getOperation().equals(function));
     }
 
-    protected static Stream<AcademicAccessRule> filter(AcademicOperationType function, Set<AcademicProgram> programs,
-            Set<AdministrativeOffice> offices) {
+    protected static Stream<AcademicAccessRule> filter(final AcademicOperationType function, final Set<AcademicProgram> programs,
+            final Set<AdministrativeOffice> offices) {
         Stream<AcademicAccessRule> stream = filter(function);
         if (programs != null && !programs.isEmpty()) {
             stream = stream.filter(r -> r.getFullProgramSet().collect(Collectors.toSet()).containsAll(programs));
@@ -158,8 +161,8 @@ public class AcademicAccessRule extends AcademicAccessRule_Base implements Compa
         return stream;
     }
 
-    protected static Stream<AcademicAccessRule> filter(AcademicOperationType function, Set<AcademicProgram> programs,
-            Set<AdministrativeOffice> offices, DateTime when) {
+    protected static Stream<AcademicAccessRule> filter(final AcademicOperationType function, final Set<AcademicProgram> programs,
+            final Set<AdministrativeOffice> offices, final DateTime when) {
         Stream<AcademicAccessRule> stream = filter(function, when);
         if (programs != null && !programs.isEmpty()) {
             stream = stream.filter(r -> r.getFullProgramSet().collect(Collectors.toSet()).containsAll(programs));
@@ -170,72 +173,82 @@ public class AcademicAccessRule extends AcademicAccessRule_Base implements Compa
         return stream;
     }
 
-    public static Stream<User> getMembers(Predicate<? super AcademicAccessRule> filter) {
+    public static Stream<User> getMembers(final Predicate<? super AcademicAccessRule> filter) {
         return AcademicAccessRule.accessRules().filter(filter).map(AccessRule::getWhoCanAccess)
                 .flatMap(group -> group.getMembers());
     }
 
-    public static Stream<User> getMembers(AcademicOperationType function, Set<AcademicProgram> programs,
-            Set<AdministrativeOffice> offices) {
+    public static Stream<User> getMembers(final AcademicOperationType function, final Set<AcademicProgram> programs,
+            final Set<AdministrativeOffice> offices) {
         return filter(function, programs, offices).map(AccessRule::getWhoCanAccess).flatMap(group -> group.getMembers());
     }
 
-    public static Stream<User> getMembers(Predicate<? super AcademicAccessRule> filter, DateTime when) {
+    public static Stream<User> getMembers(final Predicate<? super AcademicAccessRule> filter, final DateTime when) {
         return AcademicAccessRule.accessRules(when).filter(filter).map(AccessRule::getWhoCanAccess)
                 .flatMap(group -> group.getMembers(when));
     }
 
-    public static Stream<User> getMembers(AcademicOperationType function, Set<AcademicProgram> programs,
-            Set<AdministrativeOffice> offices, DateTime when) {
+    public static Stream<User> getMembers(final AcademicOperationType function, final Set<AcademicProgram> programs,
+            final Set<AdministrativeOffice> offices, final DateTime when) {
         return filter(function, programs, offices, when).map(AccessRule::getWhoCanAccess)
                 .flatMap(group -> group.getMembers(when));
     }
 
-    public static boolean isMember(User user, Predicate<? super AcademicAccessRule> filter) {
+    public static boolean isMember(final User user, final Predicate<? super AcademicAccessRule> filter) {
         return AcademicAccessRule.accessRules().filter(filter).anyMatch(group -> group.isMember(user));
     }
 
-    public static boolean isMember(User user, AcademicOperationType function, Set<AcademicProgram> programs,
-            Set<AdministrativeOffice> offices) {
+    public static boolean isMember(final User user, final AcademicOperationType function, final Set<AcademicProgram> programs,
+            final Set<AdministrativeOffice> offices) {
         return filter(function, programs, offices).anyMatch(group -> group.isMember(user));
     }
 
-    public static boolean isMember(User user, Predicate<? super AcademicAccessRule> filter, DateTime when) {
+    public static boolean isMember(final User user, final Predicate<? super AcademicAccessRule> filter, final DateTime when) {
         return AcademicAccessRule.accessRules(when).filter(filter).anyMatch(group -> group.isMember(user, when));
     }
 
-    public static boolean isMember(User user, AcademicOperationType function, Set<AcademicProgram> programs,
-            Set<AdministrativeOffice> offices, DateTime when) {
+    public static boolean isMember(final User user, final AcademicOperationType function, final Set<AcademicProgram> programs,
+            final Set<AdministrativeOffice> offices, final DateTime when) {
         return filter(function, programs, offices, when).anyMatch(group -> group.isMember(user, when));
     }
 
-    public static Stream<AcademicProgram> getProgramsAccessibleToFunction(AcademicOperationType function, User user) {
+    public static Stream<AcademicProgram> getProgramsAccessibleToFunction(final AcademicOperationType function, final User user) {
         return filter(function).filter(r -> r.getWhoCanAccess().isMember(user)).flatMap(r -> r.getFullProgramSet());
     }
 
-    public static boolean isProgramAccessibleToFunction(AcademicOperationType function, AcademicProgram program, User user) {
+    public static boolean isProgramAccessibleToFunction(final AcademicOperationType function, final AcademicProgram program,
+            final User user) {
         return filter(function).filter(r -> r.getWhoCanAccess().isMember(user)).flatMap(r -> r.getFullProgramSet())
                 .anyMatch(p -> p.equals(program));
     }
 
-    public static Stream<Degree> getDegreesAccessibleToFunction(AcademicOperationType function, User user) {
+    public static Stream<Degree> getDegreesAccessibleToFunction(final AcademicOperationType function, final User user) {
         return getProgramsAccessibleToFunction(function, user).filter(p -> p instanceof Degree).map(p -> (Degree) p);
     }
 
-    public static Stream<PhdProgram> getPhdProgramsAccessibleToFunction(AcademicOperationType function, User user) {
+    public static Stream<PhdProgram> getPhdProgramsAccessibleToFunction(final AcademicOperationType function, final User user) {
         return getProgramsAccessibleToFunction(function, user).filter(p -> p instanceof PhdProgram).map(p -> (PhdProgram) p);
     }
 
-    public static Stream<DegreeType> getDegreeTypesAccessibleToFunction(AcademicOperationType function, User user) {
+    public static Stream<DegreeType> getDegreeTypesAccessibleToFunction(final AcademicOperationType function, final User user) {
         return getProgramsAccessibleToFunction(function, user).map(p -> p.getDegreeType()).filter(java.util.Objects::nonNull);
     }
 
-    public static Stream<AdministrativeOffice> getOfficesAccessibleToFunction(AcademicOperationType function, User user) {
+    public static Stream<AdministrativeOffice> getOfficesAccessibleToFunction(final AcademicOperationType function,
+            final User user) {
         return filter(function).filter(r -> r.getWhoCanAccess().isMember(user)).flatMap(r -> r.getOfficeSet().stream());
     }
 
     @Override
-    public int compareTo(AcademicAccessRule o) {
+    public void delete() {
+        getProgramSet().clear();
+        getOfficeSet().clear();
+
+        super.delete();
+    }
+
+    @Override
+    public int compareTo(final AcademicAccessRule o) {
         int op = getOperation().compareTo(o.getOperation());
         if (op != 0) {
             return op;

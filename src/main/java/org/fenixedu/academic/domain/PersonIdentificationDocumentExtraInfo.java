@@ -20,19 +20,30 @@ package org.fenixedu.academic.domain;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixframework.Atomic;
+
 public abstract class PersonIdentificationDocumentExtraInfo extends PersonIdentificationDocumentExtraInfo_Base {
 
     public PersonIdentificationDocumentExtraInfo() {
         super();
         setRegisteredInSystemTimestamp(new DateTime());
     }
-    
+
+    @Atomic
+    public void delete() {
+
+        setRootDomainObject(null);
+        setPerson(null);
+
+        deleteDomainObject();
+    }
+
     public void clearValue() {
         super.setValue("");
     }
 
-    public void forceValue(String value) {
+    public void forceValue(final String value) {
         super.setValue(value);
-    }    
-    
+    }
+
 }

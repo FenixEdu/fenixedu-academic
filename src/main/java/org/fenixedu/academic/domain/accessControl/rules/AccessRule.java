@@ -23,11 +23,22 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.UserDeletionListener;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
+
 public abstract class AccessRule extends AccessRule_Base {
+
+    static {
+        FenixFramework.getDomainModel().registerDeletionListener(User.class, u -> {
+            UserDeletionListener.deleteUser(u);
+        });
+    }
+
     protected AccessRule() {
         super();
         setRuleSystem(AccessRuleSystem.getInstance());
@@ -59,7 +70,7 @@ public abstract class AccessRule extends AccessRule_Base {
         return super.getOperation();
     }
 
-    public <R extends AccessRule> Optional<R> changeOperation(AccessOperation<R, ?> operation) {
+    public <R extends AccessRule> Optional<R> changeOperation(final AccessOperation<R, ?> operation) {
         return change(operation, getWhoCanAccess(), getWhatCanAffect());
     }
 
@@ -67,34 +78,34 @@ public abstract class AccessRule extends AccessRule_Base {
         return super.getPersistentGroup().toGroup();
     }
 
-    protected boolean isMember(User user) {
+    protected boolean isMember(final User user) {
         return getWhoCanAccess().isMember(user);
     }
 
-    protected boolean isMember(User user, DateTime when) {
+    protected boolean isMember(final User user, final DateTime when) {
         return getWhoCanAccess().isMember(user, when);
     }
 
-    public <R extends AccessRule, T extends AccessTarget> Optional<R> changeWhoCanAccess(Group whoCanAccess) {
+    public <R extends AccessRule, T extends AccessTarget> Optional<R> changeWhoCanAccess(final Group whoCanAccess) {
         return change((AccessOperation<R, T>) getOperation(), whoCanAccess, getWhatCanAffect());
     }
 
     public abstract <T extends AccessTarget> Set<T> getWhatCanAffect();
 
-    public <R extends AccessRule, T extends AccessTarget> Optional<R> changeWhatCanAffect(Set<T> whatCanAffect) {
+    public <R extends AccessRule, T extends AccessTarget> Optional<R> changeWhatCanAffect(final Set<T> whatCanAffect) {
         return change((AccessOperation<R, T>) getOperation(), getWhoCanAccess(), whatCanAffect);
     }
 
-    public <T extends AccessRule> Optional<T> grant(User user) {
+    public <T extends AccessRule> Optional<T> grant(final User user) {
         return changeWhoCanAccess(getWhoCanAccess().grant(user));
     }
 
-    public <T extends AccessRule> Optional<T> revoke(User user) {
+    public <T extends AccessRule> Optional<T> revoke(final User user) {
         return changeWhoCanAccess(getWhoCanAccess().revoke(user));
     }
 
-    protected <R extends AccessRule, T extends AccessTarget> Optional<R> change(AccessOperation<R, T> operation,
-            Group whoCanAccess, Set<T> whatCanAffect) {
+    protected <R extends AccessRule, T extends AccessTarget> Optional<R> change(final AccessOperation<R, T> operation,
+            final Group whoCanAccess, final Set<T> whatCanAffect) {
         Objects.requireNonNull(operation);
         Objects.requireNonNull(whoCanAccess);
         Objects.requireNonNull(whatCanAffect);
@@ -110,4 +121,16 @@ public abstract class AccessRule extends AccessRule_Base {
         setDeletedFromRuleSystem(getRuleSystem());
         setRuleSystem(null);
     }
+
+    @Atomic
+    public void delete() {
+
+        setRuleSystem(null);
+        setDeletedFromRuleSystem(null);
+        setPersistentGroup(null);
+        setCreator(null);
+
+        deleteDomainObject();
+    }
+
 }
