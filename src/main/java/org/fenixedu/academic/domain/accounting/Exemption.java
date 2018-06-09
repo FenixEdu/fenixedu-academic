@@ -18,6 +18,8 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
+import java.util.Collection;
+
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.events.ExemptionJustification;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -90,6 +92,7 @@ public abstract class Exemption extends Exemption_Base {
     }
 
     public void delete(final boolean recalculateEventState) {
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         setRootDomainObject(null);
         super.setResponsible(null);
         getExemptionJustification().delete();
@@ -100,6 +103,12 @@ public abstract class Exemption extends Exemption_Base {
         }
 
         super.deleteDomainObject();
+    }
+
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+
     }
 
     public void removeResponsible() {

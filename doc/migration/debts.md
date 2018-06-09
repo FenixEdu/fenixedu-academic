@@ -8,3 +8,6 @@
     - https://gist.github.com/sergiofbsilva/996ab3fbe01f3edb561e585762b58e02
     - Adapt closedEventsFile location
     - https://gist.github.com/sergiofbsilva/632fb828b1e65e2df0f975d65fd25031
+
+3. On the configuration.properties set the following property
+    - use.global.interest.rate.table.for.event.penalties = true

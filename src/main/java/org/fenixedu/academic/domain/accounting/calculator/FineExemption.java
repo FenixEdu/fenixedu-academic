@@ -10,8 +10,8 @@ import org.joda.time.LocalDate;
  */
 public class FineExemption extends CreditEntry {
 
-    public FineExemption(DateTime created, LocalDate date, BigDecimal amount) {
-        super(created, date, amount);
+    public FineExemption(String id, DateTime created, LocalDate date, BigDecimal amount) {
+        super(id, created, date, amount);
     }
 
     @Override

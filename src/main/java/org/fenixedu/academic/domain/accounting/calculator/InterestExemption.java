@@ -10,8 +10,8 @@ import org.joda.time.LocalDate;
  */
 public class InterestExemption extends CreditEntry {
 
-    public InterestExemption(DateTime created, LocalDate date, BigDecimal amount) {
-        super(created, date, amount);
+    public InterestExemption(String id, DateTime created, LocalDate date, BigDecimal amount) {
+        super(id, created, date, amount);
     }
 
     @Override

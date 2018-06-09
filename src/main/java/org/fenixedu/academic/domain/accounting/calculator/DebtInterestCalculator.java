@@ -47,7 +47,7 @@ public class DebtInterestCalculator {
         this.isToApplyInterest = isToApplyInterest;
         this.dueDateAmountFineMap.putAll(dueDateAmountFineMap);
 
-        this.creditEntries.add(new Payment(when, when.toLocalDate(), BigDecimal.ZERO));
+        this.creditEntries.add(new Payment("zeroPayment", when, when.toLocalDate(), BigDecimal.ZERO));
 
         calculate();
     }
@@ -81,8 +81,8 @@ public class DebtInterestCalculator {
             return this;
         }
 
-        public Builder payment(DateTime created, LocalDate paymentDate, BigDecimal amount) {
-            payments.add(new Payment(created, paymentDate, amount));
+        public Builder payment(String id, DateTime created, LocalDate paymentDate, BigDecimal amount) {
+            payments.add(new Payment(id, created, paymentDate, amount));
             return this;
         }
 
@@ -91,13 +91,13 @@ public class DebtInterestCalculator {
             return this;
         }
 
-        public Builder debtExemption(DateTime created, LocalDate paymentDate, BigDecimal amount) {
-            debtExemptions.add(new DebtExemption(created, paymentDate, amount));
+        public Builder debtExemption(String id, DateTime created, LocalDate paymentDate, BigDecimal amount) {
+            debtExemptions.add(new DebtExemption(id, created, paymentDate, amount));
             return this;
         }
 
-        public Builder interestExemption(DateTime created, LocalDate paymentDate, BigDecimal amount) {
-            interestExemptions.add(new InterestExemption(created, paymentDate, amount));
+        public Builder interestExemption(String id, DateTime created, LocalDate paymentDate, BigDecimal amount) {
+            interestExemptions.add(new InterestExemption(id, created, paymentDate, amount));
             return this;
         }
 
@@ -111,16 +111,16 @@ public class DebtInterestCalculator {
         }
     }
 
-    private boolean hasPayments() {
-        return this.creditEntries.stream().anyMatch(Payment.class::isInstance);
+    public Stream<Payment> getPayments() {
+        return this.creditEntries.stream().filter(Payment.class::isInstance).map(Payment.class::cast);
+    }
+
+    public Optional<Payment> getPaymentById(String id) {
+        return getPayments().filter(p -> p.getId().equals(id)).findAny();
     }
 
     private List<CreditEntry> getCreditEntriesByCreationDate() {
         return creditEntries.stream().sorted(Comparator.comparing(CreditEntry::getCreated)).collect(Collectors.toList());
-    }
-
-    private List<Debt> getDebtsByDueDate() {
-        return getDebtStream().sorted(Comparator.comparing(Debt::getDueDate)).collect(Collectors.toList());
     }
 
     public Optional<InterestRateBean> getInterestBean() {
