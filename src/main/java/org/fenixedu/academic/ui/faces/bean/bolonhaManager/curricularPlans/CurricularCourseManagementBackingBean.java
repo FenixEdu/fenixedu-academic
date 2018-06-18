@@ -21,12 +21,12 @@
  */
 package org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularPlans;
 
-import pt.ist.fenixframework.FenixFramework;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
@@ -76,6 +76,8 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
+
+import pt.ist.fenixframework.FenixFramework;
 
 public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
@@ -806,9 +808,10 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             return result;
         }
 
-        for (ExecutionDegree executionDegree : executionDegrees) {
-            result.add(new SelectItem(executionDegree.getExecutionYear().getExternalId(), executionDegree.getExecutionYear()
-                    .getYear()));
+        for (ExecutionDegree executionDegree : executionDegrees.stream()
+                .sorted(Comparator.comparing(ExecutionDegree::getExecutionYear).reversed()).collect(Collectors.toList())) {
+            result.add(new SelectItem(executionDegree.getExecutionYear().getExternalId(),
+                    executionDegree.getExecutionYear().getYear()));
         }
 
         if (getExecutionYearID() == null) {

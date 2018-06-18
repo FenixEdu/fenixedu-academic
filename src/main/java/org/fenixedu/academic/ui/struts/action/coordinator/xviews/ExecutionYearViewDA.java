@@ -21,11 +21,13 @@ package org.fenixedu.academic.ui.struts.action.coordinator.xviews;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -70,7 +72,8 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
     private JsonArray computeExecutionYearsForDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
         JsonArray executionYears = new JsonArray();
         //TODO: CHECK IF THIS IS THE VALID WAY TO DO THINGS; IMPORTED FROM PREVIOUS CODE
-        for (ExecutionYear year : Bennu.getInstance().getExecutionYearsSet()) {
+        for (ExecutionYear year : Bennu.getInstance().getExecutionYearsSet().stream().sorted(Comparator.reverseOrder())
+                .collect(Collectors.toList())) {
             if (year.isInclusivelyBetween(degreeCurricularPlan.getInauguralExecutionYear(),
                     degreeCurricularPlan.getLastExecutionYear())) {
                 executionYears.add(executionYearToJson(year));
