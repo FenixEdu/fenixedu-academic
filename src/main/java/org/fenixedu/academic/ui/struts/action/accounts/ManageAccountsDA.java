@@ -20,6 +20,7 @@ package org.fenixedu.academic.ui.struts.action.accounts;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -30,14 +31,22 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.util.email.Message;
+import org.fenixedu.academic.domain.util.email.Recipient;
+import org.fenixedu.academic.domain.util.email.SystemSender;
 import org.fenixedu.academic.dto.person.PersonBean;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.exceptions.DomainException;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.portal.domain.PortalConfiguration;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import com.google.common.base.Strings;
 
@@ -228,6 +237,7 @@ public class ManageAccountsDA extends FenixDispatchAction {
                 User user = person.getUser();
                 person.delete();
                 if (user != null) {
+                    sendLastEmail(user);
                     user.delete();
                 }
             });
@@ -237,6 +247,29 @@ public class ManageAccountsDA extends FenixDispatchAction {
 
             return manageAccounts(mapping, form, request, response);
         }
+    }
+
+    private void sendLastEmail(final User user) {
+        final Recipient recipient = new Recipient(user.groupOf());
+        SystemSender systemSender = Bennu.getInstance().getSystemSender();
+        LocalizedString institutionName = Bennu.getInstance().getInstitutionUnit().getNameI18n();
+        String supportEmail = PortalConfiguration.getInstance().getSupportEmailAddress();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(BundleUtil.getString(Bundle.STUDENT, new Locale("pt"), "label.account.ManageAccountsDA.email.subject"));
+        sb.append("//");
+        sb.append(BundleUtil.getString(Bundle.STUDENT, new Locale("en"), "label.account.ManageAccountsDA.email.subject"));
+        String subject = sb.toString();
+
+        sb = new StringBuilder();
+        sb.append(BundleUtil.getString(Bundle.STUDENT, new Locale("pt"), "label.account.ManageAccountsDA.email.body",
+                institutionName.getContent(new Locale("pt")) + " da Universidade de Lisboa", supportEmail));
+        sb.append("\n=================================\n");
+        sb.append(BundleUtil.getString(Bundle.STUDENT, new Locale("en"), "label.account.ManageAccountsDA.email.body",
+                institutionName.getContent(new Locale("en")) + " of the Universidade de Lisboa", supportEmail));
+        String body = sb.toString();
+
+        new Message(systemSender, recipient, subject, body);
     }
 
 }
