@@ -41,6 +41,7 @@ import java.util.stream.Stream;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.WordUtils;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -51,10 +52,10 @@ import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 public class Department extends Department_Base {
 
@@ -79,8 +80,8 @@ public class Department extends Department_Base {
     }
 
     public List<Teacher> getAllTeachers(ExecutionSemester semester) {
-        return getTeacherAuthorizationStream().filter(a -> a.getExecutionSemester().equals(semester)).map(TeacherAuthorization::getTeacher)
-                .distinct().collect(Collectors.toList());
+        return getTeacherAuthorizationStream().filter(a -> a.getExecutionSemester().equals(semester))
+                .map(TeacherAuthorization::getTeacher).distinct().collect(Collectors.toList());
     }
 
     public List<Teacher> getAllTeachers(ExecutionYear executionYear) {
@@ -116,10 +117,8 @@ public class Department extends Department_Base {
         return cycles;
     }
 
-    public String getAcronym() {
-        final int begin = this.getRealName().indexOf("(");
-        final int end = this.getRealName().indexOf(")");
-        return this.getRealName().substring(begin + 1, end);
+    public String getAcronym() {        
+        return StringUtils.isNotBlank(getCode()) ? getCode() : WordUtils.initials(getName()).replaceAll("[a-z]", "");
     }
 
     public List<CompetenceCourse> getBolonhaCompetenceCourses() {
