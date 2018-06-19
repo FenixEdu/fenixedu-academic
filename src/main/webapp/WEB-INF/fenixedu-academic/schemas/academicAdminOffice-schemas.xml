@@ -970,12 +970,17 @@
 
 <schema name="Dismissal.with.fullPath" bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.studentCurriculum.Dismissal" >
 	<slot name="fullPath"/>
+	<slot name="code" layout="format">
+		<property name="format" value="(${}) " />
+	</slot>
 </schema>
 
 <schema name="equivalence.view" bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.domain.IEnrolment" >
 	<slot name="description"/>
+	<slot name="code" layout="format">
+		<property name="format" value="(${}) " />
+	</slot>
 </schema>
-
 
 <schema name="student.Dismissal.view.dismissals.for.bolonha.transition" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="org.fenixedu.academic.domain.studentCurriculum.Credits" >
