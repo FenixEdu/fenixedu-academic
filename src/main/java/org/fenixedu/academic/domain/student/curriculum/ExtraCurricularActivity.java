@@ -42,7 +42,6 @@ import pt.ist.fenixframework.Atomic;
  * @author Pedro Santos (pedro.miguel.santos@ist.utl.pt)
  */
 public class ExtraCurricularActivity extends ExtraCurricularActivity_Base {
-    private static final int MAX_ACTIVITIES = 5;
 
     public ExtraCurricularActivity(Student student, ExtraCurricularActivityType type, Interval interval) {
         super();
@@ -64,9 +63,6 @@ public class ExtraCurricularActivity extends ExtraCurricularActivity_Base {
             if (activity.getType().equals(type) && activity.getActivityInterval().overlaps(interval)) {
                 throw new DomainException("error.extraCurricularActivity.overlaping");
             }
-        }
-        if (existing.size() == MAX_ACTIVITIES) {
-            throw new DomainException("error.extraCurricularActivity.maxActivitiesLimitReached", Integer.toString(MAX_ACTIVITIES));
         }
     }
 
