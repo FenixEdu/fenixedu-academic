@@ -13,7 +13,7 @@ To start developing using FenixEdu Academic you should take a look at our docume
 
 It includes tutorials and examples so you can learn how to use FenixEdu Academic
 
-##Issue Tracking
+## Issue Tracking
 
 Issue Tracking for the FenixEdu Academic project is done in the [FenixEdu JIRA](https://jira.fenixedu.org/browse/ACADEMIC).
 
