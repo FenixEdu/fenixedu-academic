@@ -22,6 +22,7 @@
 <%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 
 <fp:select actionClass="org.fenixedu.academic.ui.struts.action.scientificCouncil.ScientificCouncilApplication$ScientificCompetenceCoursesManagement" />
 
@@ -56,6 +57,25 @@
 	<h:outputText value="#{CompetenceCourseManagement.scientificAreaUnitName} > #{CompetenceCourseManagement.competenceCourseGroupUnitName}</li>" escape="false"/>
 	<h:outputText value="</ul>" escape="false"/>
 
+    <logic:present role="(role(SCIENTIFIC_COUNCIL) | role(BOLONHA_MANAGER))">
+        <h:outputLink value="#{facesContext.externalContext.requestContextPath}/scientificCouncil/competenceCourses/transferCompetenceCourse.faces">
+            <h:outputText value="#{scouncilBundle['transfer']}"/>
+            <f:param name="competenceCourseID" value="#{CompetenceCourseManagement.competenceCourse.externalId}"/>
+            <f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
+        </h:outputLink>
+        <h:form>
+        <h:panelGroup rendered="#{CompetenceCourseManagement.stage != 'DRAFT'}">
+            <fc:commandLink rendered="#{CompetenceCourseManagement.stage == 'PUBLISHED'}" action="#{CompetenceCourseManagement.changeCompetenceCourseState}" value="#{scouncilBundle['approve']}">
+                <f:param name="competenceCourseID" value="#{CompetenceCourseManagement.competenceCourse.externalId}"/>
+                <f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
+            </fc:commandLink>
+            <fc:commandLink rendered="#{CompetenceCourseManagement.stage == 'APPROVED'}" action="#{CompetenceCourseManagement.changeCompetenceCourseState}" value="#{scouncilBundle['disapprove']}">
+                <f:param name="competenceCourseID" value="#{CompetenceCourseManagement.competenceCourse.externalId}"/>
+                <f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
+            </fc:commandLink>
+        </h:panelGroup>
+        </h:form>
+    </logic:present>
 	
 	<h:outputText value="<p class='mtop15 mbottom0'><strong>#{scouncilBundle['activeCurricularPlans']}: </strong></p>" escape="false"/>
 	<h:panelGroup rendered="#{empty CompetenceCourseManagement.competenceCourse.associatedCurricularCourses}">
