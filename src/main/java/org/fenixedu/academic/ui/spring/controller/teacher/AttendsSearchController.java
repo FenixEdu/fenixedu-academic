@@ -236,8 +236,9 @@ public class AttendsSearchController extends ExecutionCourseController {
                         addCell(getLabel("label.attends.enrollmentState"),
                                 BundleUtil.getString(Bundle.ENUMERATION, attends.getAttendsStateType().getQualifiedName()));
                         executionCourse.getAssociatedEvaluationsSet()
-                                .forEach(ev -> addCell(ev.getPresentationName(), attends.getAssociatedMarksSet().stream()
-                                        .filter(mark -> mark.getEvaluation() == ev).map(Mark::getMark).findAny().orElse("")));
+                                .forEach(ev -> addCell(ev.getPresentationName(),
+                                        attends.getAssociatedMarksSet().stream().filter(mark -> mark.getEvaluation() == ev)
+                                                .map(Mark::getMark).filter(mark -> mark != null).findAny().orElse("")));
                     }
                 });
 
