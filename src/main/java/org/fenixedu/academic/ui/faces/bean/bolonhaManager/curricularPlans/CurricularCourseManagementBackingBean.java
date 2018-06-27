@@ -808,11 +808,8 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             return result;
         }
 
-        for (ExecutionDegree executionDegree : executionDegrees.stream()
-                .sorted(Comparator.comparing(ExecutionDegree::getExecutionYear).reversed()).collect(Collectors.toList())) {
-            result.add(new SelectItem(executionDegree.getExecutionYear().getExternalId(),
-                    executionDegree.getExecutionYear().getYear()));
-        }
+        executionDegrees.stream().map(ed -> ed.getExecutionYear()).sorted(Comparator.reverseOrder()).limit(4)
+                .forEach(ey -> result.add(new SelectItem(ey.getExternalId(), ey.getYear())));
 
         if (getExecutionYearID() == null) {
             setExecutionYearID(getDegreeCurricularPlan().getMostRecentExecutionDegree().getExecutionYear().getExternalId());

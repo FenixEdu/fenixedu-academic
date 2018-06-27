@@ -27,7 +27,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,17 +45,16 @@ import org.fenixedu.academic.domain.GradeScale;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.coordinator.DegreeCoordinatorIndex;
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
-import pt.ist.fenixframework.FenixFramework;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/analytics", module = "coordinator", functionality = DegreeCoordinatorIndex.class)
 @Forwards({ @Forward(name = "showHome", path = "/coordinator/analytics/home.jsp") })
@@ -71,15 +69,10 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
 
     private JsonArray computeExecutionYearsForDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
         JsonArray executionYears = new JsonArray();
-        //TODO: CHECK IF THIS IS THE VALID WAY TO DO THINGS; IMPORTED FROM PREVIOUS CODE
-        for (ExecutionYear year : Bennu.getInstance().getExecutionYearsSet().stream().sorted(Comparator.reverseOrder())
-                .collect(Collectors.toList())) {
-            if (year.isInclusivelyBetween(degreeCurricularPlan.getInauguralExecutionYear(),
-                    degreeCurricularPlan.getLastExecutionYear())) {
-                executionYears.add(executionYearToJson(year));
-            }
 
-        }
+        degreeCurricularPlan.getExecutionDegreesSet().stream().map(ed -> ed.getExecutionYear()).sorted(Comparator.reverseOrder())
+                .limit(4).forEach(ey -> executionYears.add(executionYearToJson(ey)));
+
         return executionYears;
     }
 
