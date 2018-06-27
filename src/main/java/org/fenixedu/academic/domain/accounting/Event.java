@@ -29,6 +29,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.DomainObjectUtil;
@@ -52,6 +53,7 @@ import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -572,7 +574,7 @@ public abstract class Event extends Event_Base {
             }
         });
 
-        this.getExemptionsSet().stream().filter(e -> !e.isPenaltyExemption()).forEach(e -> {
+        getDebtExemptions().forEach(e -> {
             if (!e.getWhenCreated().isAfter(when)) {
                 builder.debtExemption(e.getExternalId(),e.getWhenCreated(), e.getWhenCreated().toLocalDate(), e.getExemptionAmount
                         (baseAmount).getAmount());
@@ -601,6 +603,10 @@ public abstract class Event extends Event_Base {
 
         builder.setToApplyInterest(FenixEduAcademicConfiguration.isToUseGlobalInterestRateTableForEventPenalties(this));
         return builder.build();
+    }
+
+    private Stream<Exemption> getDebtExemptions() {
+        return this.getExemptionsSet().stream().filter(e -> !e.isPenaltyExemption());
     }
 
     private Set<LocalDate> getDebtFineExemptions(DateTime when) {
@@ -1110,7 +1116,7 @@ public abstract class Event extends Event_Base {
     }
 
     public void addDiscount(final Person responsible, final Money amount) {
-        addDiscounts(new Discount(responsible, amount));
+        new Discount(this, responsible, amount);
     }
 
     public Money getTotalDiscount() {
@@ -1182,25 +1188,41 @@ public abstract class Event extends Event_Base {
         return ymd != null ? ymd.plusDays(1).toDateTimeAtMidnight() : getWhenOccured();
     }
 
-    public String getOperationsAfter(DateTime when) {
-//        getNonAdjustingTransactions().forEach(e -> {
-//            if (!e.getWhenRegistered().isAfter(when)) {
-//                builder.payment(e.getWhenProcessed(), e.getWhenRegistered().toLocalDate(), e.getAmountWithAdjustment().getAmount());
-//            }
-//        });
-//
-//        this.getExemptionsSet().stream().filter(e -> !e.isPenaltyExemption()).forEach(e -> {
-//            if (!e.getWhenCreated().isAfter(when)) {
-//                builder.debtExemption(e.getWhenCreated(), e.getWhenCreated().toLocalDate(), e.getExemptionAmount(baseAmount).getAmount());
-//            }
-//        });
-//
-//        this.getDiscountsSet().forEach(d -> {
-//            if (!d.getWhenCreated().isAfter(when)) {
-//                builder.debtExemption(d.getWhenCreated(), d.getWhenCreated().toLocalDate(), d.getAmount().getAmount());
-//            }
-//        });
-        return "-";
+    public List<String> getOperationsAfter(DateTime when) {
+        List<String> result = new ArrayList<>();
+        getNonAdjustingTransactions().forEach(e -> {
+            if (e.getWhenRegistered().isAfter(when)) {
+                result.add(getOperationLabel(e));
+            }
+        });
+
+        getDebtExemptions().forEach(e -> {
+            if (e.getWhenCreated().isAfter(when)) {
+                result.add(getOperationsAfter(e));
+            }
+        });
+
+        this.getDiscountsSet().forEach(d -> {
+            if (d.getWhenCreated().isAfter(when)) {
+                result.add(getOperationLabel(d));
+            }
+        });
+        return result;
+    }
+
+    private String getOperationLabel(Discount d) {
+        return BundleUtil.getString(Bundle.ACADEMIC, "label.accounting.operation.after.discount", d.getWhenCreated().toString());
+    }
+
+    private String getOperationsAfter(Exemption e) {
+        return BundleUtil.getString(Bundle.ACADEMIC, "label.accounting.operation.after.exemption", e.getDescription().toString(),e
+                .getWhenCreated()
+                .toString());
+    }
+
+    private String getOperationLabel(AccountingTransaction e) {
+        return BundleUtil.getString(Bundle.ACADEMIC, "label.accounting.operation.after.transaction", e
+                .getWhenRegistered().toString());
     }
 
 }

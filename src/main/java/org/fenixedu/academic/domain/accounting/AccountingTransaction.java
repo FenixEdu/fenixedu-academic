@@ -18,9 +18,12 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -78,6 +81,14 @@ public class AccountingTransaction extends AccountingTransaction_Base {
             AccountingTransactionDetail transactionDetail, AccountingTransaction transactionToAdjust) {
 
         checkParameters(event, debit, credit);
+
+        // check for operations after registered date
+        List<String> operationsAfter = event.getOperationsAfter(transactionDetail.getWhenRegistered());
+
+        if (!operationsAfter.isEmpty()) {
+            throw new DomainException("error.accounting.AccountingTransaction.cannot.create.transaction", operationsAfter
+                    .stream().collect(Collectors.joining(",")));
+        }
 
         super.setEvent(event);
         super.setResponsibleUser(responsibleUser);
@@ -224,6 +235,11 @@ public class AccountingTransaction extends AccountingTransaction_Base {
             throw new DomainException("error.accounting.AccountingTransaction.cannot.annul.while.associated.to.active.receipt");
         }
 
+        final List<String> operationsAfter = getEvent().getOperationsAfter(getWhenRegistered());
+        if (!operationsAfter.isEmpty()) {
+            throw new DomainException("error.accounting.AccountingTransaction.cannot.annul.operations.after", operationsAfter
+                    .stream().collect(Collectors.joining(",")));
+        }
     }
 
     private AccountingTransaction reimburse(User responsibleUser, PaymentMode paymentMode, Money amountToReimburse,
@@ -298,8 +314,15 @@ public class AccountingTransaction extends AccountingTransaction_Base {
         return getFromAccount().getParty() == party;
     }
 
-    public void delete() {
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        blockers.addAll(getEvent().getOperationsAfter(getWhenRegistered()));
+    }
 
+    public void delete() {
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
+        
         super.setAdjustedTransaction(null);
         for (; !getAdjustmentTransactionsSet().isEmpty(); getAdjustmentTransactionsSet().iterator().next().delete()) {
             ;

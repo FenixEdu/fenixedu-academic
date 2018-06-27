@@ -18,6 +18,10 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Money;
@@ -34,12 +38,22 @@ public class Discount extends Discount_Base {
         setWhenCreated(new DateTime());
     }
 
-    Discount(final Person person, final Money amount) {
+    Discount(final Event event, final Person person, final Money amount) {
         this();
+        checkEvent(event);
         checkAmount(amount);
         setAmount(amount);
+        setEvent(event);
         if (person != null) {
             setUsername(person.getUsername());
+        }
+    }
+
+    public void checkEvent(Event event) {
+        final List<String> operationsAfter = event.getOperationsAfter(getWhenCreated());
+        if (!operationsAfter.isEmpty()) {
+            throw new DomainException("error.accounting.Discount.cannot.create.operations.after", operationsAfter.stream()
+                    .collect(Collectors.joining(",")));
         }
     }
 
@@ -49,8 +63,15 @@ public class Discount extends Discount_Base {
         }
     }
 
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        blockers.addAll(getEvent().getOperationsAfter(getWhenCreated()));
+    }
+
     @Atomic
     public void delete() {
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         setEvent(null);
         setRootDomainObject(null);
         super.deleteDomainObject();

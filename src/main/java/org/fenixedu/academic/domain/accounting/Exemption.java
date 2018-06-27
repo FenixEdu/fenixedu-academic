@@ -19,6 +19,8 @@
 package org.fenixedu.academic.domain.accounting;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.events.ExemptionJustification;
@@ -65,6 +67,14 @@ public abstract class Exemption extends Exemption_Base {
         if (exemptionJustification == null) {
             throw new DomainException("error.accounting.Exemption.exemptionJustification.cannot.be.null");
         }
+
+        //check for operations after this one being created
+        
+        final List<String> operationsAfter = event.getOperationsAfter(getWhenCreated());
+        if (!operationsAfter.isEmpty()) {
+            throw new DomainException("error.accounting.Exemption.cannot.create.operations.after", operationsAfter.stream()
+                    .collect(Collectors.joining(",")));
+        }
     }
 
     @Override
@@ -108,7 +118,7 @@ public abstract class Exemption extends Exemption_Base {
     @Override
     protected void checkForDeletionBlockers(Collection<String> blockers) {
         super.checkForDeletionBlockers(blockers);
-
+        blockers.addAll(getEvent().getOperationsAfter(getWhenCreated()));
     }
 
     public void removeResponsible() {
