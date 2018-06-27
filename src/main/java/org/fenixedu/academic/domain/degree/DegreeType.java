@@ -230,5 +230,9 @@ public class DegreeType extends DegreeType_Base implements Comparable<DegreeType
     public boolean isActive() {
         return super.getActive() == null || super.getActive();
     }
+    
+    public static Stream<DegreeType> allActive() {
+        return Bennu.getInstance().getDegreeTypeSet().stream().filter(dt -> dt.isActive());
+    }
 
 }
