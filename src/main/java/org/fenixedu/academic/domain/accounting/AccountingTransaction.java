@@ -83,7 +83,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
         checkParameters(event, debit, credit);
 
         // check for operations after registered date
-        List<String> operationsAfter = event.getOperationsAfter(transactionDetail.getWhenRegistered());
+        List<String> operationsAfter = event.getOperationsAfter(transactionDetail.getWhenProcessed());
 
         if (!operationsAfter.isEmpty()) {
             throw new DomainException("error.accounting.AccountingTransaction.cannot.create.transaction", operationsAfter
@@ -235,7 +235,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
             throw new DomainException("error.accounting.AccountingTransaction.cannot.annul.while.associated.to.active.receipt");
         }
 
-        final List<String> operationsAfter = getEvent().getOperationsAfter(getWhenRegistered());
+        final List<String> operationsAfter = getEvent().getOperationsAfter(getWhenProcessed());
         if (!operationsAfter.isEmpty()) {
             throw new DomainException("error.accounting.AccountingTransaction.cannot.annul.operations.after", operationsAfter
                     .stream().collect(Collectors.joining(",")));
@@ -317,7 +317,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     @Override
     protected void checkForDeletionBlockers(Collection<String> blockers) {
         super.checkForDeletionBlockers(blockers);
-        blockers.addAll(getEvent().getOperationsAfter(getWhenRegistered()));
+        blockers.addAll(getEvent().getOperationsAfter(getWhenProcessed()));
     }
 
     public void delete() {

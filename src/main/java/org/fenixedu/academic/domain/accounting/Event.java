@@ -1191,7 +1191,7 @@ public abstract class Event extends Event_Base {
     public List<String> getOperationsAfter(DateTime when) {
         List<String> result = new ArrayList<>();
         getNonAdjustingTransactions().forEach(e -> {
-            if (e.getWhenRegistered().isAfter(when)) {
+            if (e.getWhenProcessed().isAfter(when)) {
                 result.add(getOperationLabel(e));
             }
         });
@@ -1222,7 +1222,7 @@ public abstract class Event extends Event_Base {
 
     private String getOperationLabel(AccountingTransaction e) {
         return BundleUtil.getString(Bundle.ACADEMIC, "label.accounting.operation.after.transaction", e
-                .getWhenRegistered().toString());
+                .getWhenProcessed().toString());
     }
 
 }
