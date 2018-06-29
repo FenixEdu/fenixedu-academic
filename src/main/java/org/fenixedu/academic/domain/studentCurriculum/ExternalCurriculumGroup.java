@@ -112,15 +112,6 @@ public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
     }
 
     @Override
-    public Set<ICurricularRule> getCurricularRules(ExecutionSemester executionSemester) {
-        final Set<ICurricularRule> result = super.getCurricularRules(executionSemester);
-        result.add(new CreditsLimitInExternalCycle(getRootCurriculumGroup().getCycleCurriculumGroup(
-                getCycleType().getSourceCycleAffinity()), this));
-
-        return result;
-    }
-
-    @Override
     public boolean isExternal() {
         return true;
     }
