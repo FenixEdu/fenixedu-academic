@@ -57,7 +57,7 @@
 			<fr:property name="classes" value="tstyle4 thlight mtop05" />
 			<fr:property name="columnClasses"
 				value=",acenter,,aright,aright,aright,acenter" />
-			
+
 			<fr:property name="linkFormat(detail)" value="/paymentsManagement.do?method=showPaymentsForEvent&amp;eventId=${externalId}" />
 			<fr:property name="key(detail)" value="label.details" />
 			<fr:property name="bundle(detail)" value="APPLICATION_RESOURCES" />
@@ -102,6 +102,13 @@
 			<fr:property name="order(transfer)" value="3" />
 			<fr:property name="visibleIf(transfer)" value="transferable" />
 
+			<fr:property name="linkFormat(summary)" value="<%= request.getContextPath() + "/accounting-management/${externalId}/summary" %>" />
+			<fr:property name="key(summary)" value="label.accounting.event.summary" />
+			<fr:property name="bundle(summary)" value="APPLICATION_RESOURCES" />
+			<fr:property name="visibleIf(summary)" value="notCancelled" />
+			<fr:property name="order(summary)" value="6" />
+			<fr:property name="contextRelative(summary)" value="false"/>
+			<fr:property name="moduleRelative(summary)" value="false"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>

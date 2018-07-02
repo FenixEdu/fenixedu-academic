@@ -26,7 +26,7 @@ class Fine extends DebtEntry {
     private final CreditEntry origin;
 
     public Fine(LocalDate date, BigDecimal amount, CreditEntry origin) {
-        super(amount);
+        super("", date.toDateTimeAtStartOfDay(), date, "", amount);
         this.date = date;
         this.origin = origin;
     }

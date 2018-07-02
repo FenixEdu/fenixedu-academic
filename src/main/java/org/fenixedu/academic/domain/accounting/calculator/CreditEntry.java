@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.accounting.calculator.CreditEntry.View.Detailed;
-import org.fenixedu.academic.domain.accounting.calculator.CreditEntry.View.Simple;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -30,41 +29,23 @@ import com.fasterxml.jackson.annotation.JsonView;
     @Type(value = InterestExemption.class, name = "interestExemption"),
     @Type(value = FineExemption.class, name = "fineExemption")
 })
-abstract class CreditEntry implements Cloneable {
+public abstract class CreditEntry extends AccountingEntry implements Cloneable {
 
     interface View {
-        interface Simple {
+        interface Simple extends AccountingEntry.View.Simple {
+
         }
 
         interface Detailed extends Simple {
         }
     }
 
-    @JsonView(Simple.class)
-    private final String id;
-
-    @JsonView(Simple.class)
-    private DateTime created;
-
-    @JsonView(Simple.class)
-    private final LocalDate date;
-
-    @JsonView(Simple.class)
-    private final String description;
-
-    @JsonView(Simple.class)
-    private final BigDecimal amount;
-
     @JsonView(Detailed.class)
     private final Set<PartialPayment> partialPayments = new HashSet<>();
 
 
     public CreditEntry(String id, DateTime created, LocalDate date, String description, BigDecimal amount) {
-        this.id = id;
-        this.created = created;
-        this.date = date;
-        this.amount = amount;
-        this.description = description;
+        super(id, created, date, description, amount);
     }
 
     public abstract boolean isForDebt();
@@ -76,20 +57,6 @@ abstract class CreditEntry implements Cloneable {
     public abstract boolean isToApplyInterest();
 
     public abstract boolean isToApplyFine();
-
-    public String getId() { return id; }
-    
-    public DateTime getCreated() {
-        return created;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
 
     public void addPartialPayment(PartialPayment partialPayment) {
         if (partialPayment.getAmount().compareTo(getUnusedAmount()) <= 0) {
@@ -129,16 +96,10 @@ abstract class CreditEntry implements Cloneable {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "{" + "date=" + date + ", amount=" + amount + ", partialPayments=" + partialPayments + ", unusedAmount=" + getUnusedAmount() + ", usedAmount=" +
+        return getClass().getSimpleName() + "{" + "date=" + getDate() + ", amount=" + getAmount() + ", partialPayments=" +
+                partialPayments + ", unusedAmount=" + getUnusedAmount() + ", usedAmount=" +
                    getUsedAmount()
                    + ", usedAmountInDebts=" + getUsedAmountInDebts() + ", usedAmountInInterests=" + getUsedAmountInInterests() + '}';
     }
 
-    public void setCreated(DateTime created) {
-        this.created = created;
-    }
-
-    public String getDescription() {
-        return description;
-    }
 }

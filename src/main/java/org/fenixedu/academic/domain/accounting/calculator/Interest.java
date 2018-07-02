@@ -20,25 +20,17 @@ class Interest extends DebtEntry {
         interface Detailed extends Simple, DebtEntry.View.Detailed {}
     }
 
-    @JsonView(Simple.class)
-    private final LocalDate date;
-
     @JsonView(Detailed.class)
     private final CreditEntry origin;
 
 
     @JsonView(Simple.class)
     private final InterestRateBean interestRateBean;
-    
+
     public Interest(LocalDate date, BigDecimal amount, CreditEntry origin, InterestRateBean interestRateBean) {
-        super(amount);
-        this.date = date;
+        super("", date.toDateTimeAtStartOfDay(), date, "", amount);
         this.origin = origin;
         this.interestRateBean = interestRateBean;
-    }
-
-    public LocalDate getDate() {
-        return date;
     }
 
     public CreditEntry getOrigin() {
@@ -51,7 +43,7 @@ class Interest extends DebtEntry {
 
     @Override
     public String toString() {
-        return "Interest{" + "date=" + date + "} " + super.toString();
+        return "Interest{" + "date=" + getDate() + "} " + super.toString();
     }
 
     @Override

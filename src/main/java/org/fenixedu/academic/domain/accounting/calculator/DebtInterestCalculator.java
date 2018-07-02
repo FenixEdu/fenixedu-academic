@@ -46,8 +46,7 @@ public class DebtInterestCalculator {
         this.creditEntries.addAll(interestExemptions);
         this.isToApplyInterest = isToApplyInterest;
         this.dueDateAmountFineMap.putAll(dueDateAmountFineMap);
-
-        this.creditEntries.add(new Payment("zeroPayment", when, when.toLocalDate(), "Pagamento 0", BigDecimal.ZERO));
+        this.creditEntries.add(new PaymentPlaceholder(when));
 
         calculate();
     }
@@ -71,13 +70,12 @@ public class DebtInterestCalculator {
             this.when = when;
         }
 
-        public Builder debt(LocalDate dueDate, BigDecimal amount) {
-            debts.add(new Debt(dueDate, amount, false, false));
-            return this;
+        public Builder debt(String id, DateTime created, LocalDate dueDate, String description, BigDecimal amount) {
+            return debt(id, created, dueDate, description, amount, false,false);
         }
 
-        public Builder debt(LocalDate dueDate, BigDecimal amount, boolean exemptInterest, boolean exemptFine) {
-            debts.add(new Debt(dueDate, amount, exemptInterest, exemptFine));
+        public Builder debt(String id, DateTime created, LocalDate dueDate, String description, BigDecimal amount, boolean exemptInterest, boolean exemptFine) {
+            debts.add(new Debt(id, created, dueDate, description, amount, exemptInterest, exemptFine));
             return this;
         }
 
@@ -112,7 +110,7 @@ public class DebtInterestCalculator {
     }
 
     public Stream<Payment> getPayments() {
-        return this.creditEntries.stream().filter(Payment.class::isInstance).map(Payment.class::cast);
+        return this.creditEntries.stream().filter(c -> c.getClass().equals(Payment.class)).map(Payment.class::cast);
     }
 
     public Optional<Payment> getPaymentById(String id) {
@@ -121,6 +119,22 @@ public class DebtInterestCalculator {
 
     private List<CreditEntry> getCreditEntriesByCreationDate() {
         return creditEntries.stream().sorted(Comparator.comparing(CreditEntry::getCreated)).collect(Collectors.toList());
+    }
+
+    public List<CreditEntry> getCreditEntries() {
+        return getCreditEntryStream().collect(Collectors.toList());
+    }
+
+    private Stream<CreditEntry> getCreditEntryStream() {
+        return creditEntries.stream().sorted(Comparator.comparing(AccountingEntry::getCreated))
+                .filter(c -> ! (c instanceof PaymentPlaceholder));
+    }
+
+    public List<AccountingEntry> getAccountingEntries() {
+        return Stream.concat(debts.stream(),
+                getCreditEntryStream()).sorted(Comparator.comparing(AccountingEntry::getCreated)
+                                                         .thenComparing(AccountingEntry::getDate))
+                .collect(Collectors.toList());
     }
 
     public Optional<InterestRateBean> getInterestBean() {

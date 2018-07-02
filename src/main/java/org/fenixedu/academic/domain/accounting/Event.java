@@ -559,7 +559,8 @@ public abstract class Event extends Event_Base {
         
 
         dueDateAmountMap.forEach((date, amount) -> {
-            builder.debt(date, amount.getAmount(), debtInterestExemptions.contains(date), debtFineExemptions.contains(date));
+            builder.debt(getExternalId(), getWhenOccured(), date, getDescriptionForEntryType(postingRule.getEntryType()).toString(),
+                    amount.getAmount(), debtInterestExemptions.contains(date), debtFineExemptions.contains(date));
         });
 
         dueDatePenaltyAmountMap.forEach((date, amount) -> {

@@ -7,7 +7,8 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 import org.fenixedu.academic.domain.accounting.calculator.DebtEntry.View.Detailed;
-import org.fenixedu.academic.domain.accounting.calculator.DebtEntry.View.Simple;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
@@ -21,29 +22,27 @@ import com.fasterxml.jackson.annotation.JsonView;
  */
 @JsonTypeInfo(use = Id.NAME, include = As.PROPERTY, property = "type")
 @JsonSubTypes({
-    @Type(value = Debt.class, name = "debt"),
-    @Type(value = Interest.class, name = "interest"),
-    @Type(value = Fine.class, name = "fine")
+        @Type(value = Debt.class, name = "debt"),
+        @Type(value = Interest.class, name = "interest"),
+        @Type(value = Fine.class, name = "fine")
 })
-abstract class DebtEntry implements Cloneable {
+abstract class DebtEntry extends AccountingEntry implements Cloneable {
     interface View {
-        interface Simple {
+        interface Simple extends AccountingEntry.View.Simple {
 
         }
-        interface Detailed {
+        interface Detailed extends Simple {
 
         }
     }
 
-    @JsonView(Simple.class)
-    private final BigDecimal amount;
+    public DebtEntry(String id, DateTime created, LocalDate date, String description, BigDecimal amount) {
+        super(id, created, date, description, amount);
+    }
 
     @JsonView(Detailed.class)
     private final Set<PartialPayment> partialPayments = new HashSet<>();
 
-    public DebtEntry(BigDecimal amount) {
-        this.amount = amount;
-    }
 
     public void addPartialPayment(CreditEntry creditEntry, BigDecimal amount) {
         PartialPayment<DebtEntry> partialPayment = new PartialPayment<>(creditEntry, this, amount);
@@ -56,14 +55,14 @@ abstract class DebtEntry implements Cloneable {
     }
 
     public BigDecimal getOriginalAmount() {
-        return amount;
+        return getAmount();
     }
 
     public BigDecimal getOpenAmount() {
         BigDecimal diff = getOriginalAmount().subtract(getPaidAmount());
         return diff.compareTo(BigDecimal.ZERO) > 0 ? diff : BigDecimal.ZERO;
     }
-    
+
     public BigDecimal getPaidAmount() {
         return getAmount(partialPayment -> true);
     }
@@ -94,8 +93,9 @@ abstract class DebtEntry implements Cloneable {
 
     @Override
     public String toString() {
-        return "amount=" + amount + ", partialPayments=" + partialPayments + ", originalAmount=" + getOriginalAmount() + ", openAmount=" + getOpenAmount() + ", paidAmount="
-                   + getPaidAmount() + ", open=" + isOpen();
+        return "amount=" + getAmount() + ", partialPayments=" + partialPayments + ", originalAmount=" + getOriginalAmount() + ", "
+                + "openAmount=" + getOpenAmount() + ", paidAmount="
+                + getPaidAmount() + ", open=" + isOpen();
     }
 
     abstract boolean isToDeposit(CreditEntry creditEntry);

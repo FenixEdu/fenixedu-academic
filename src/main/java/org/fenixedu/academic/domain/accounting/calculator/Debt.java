@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.fenixedu.academic.domain.accounting.calculator.Debt.View.Detailed;
 import org.fenixedu.academic.domain.accounting.calculator.Debt.View.Simple;
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -34,18 +35,15 @@ public class Debt extends DebtEntry {
     @JsonView(Simple.class)
     private final boolean exemptInterest;
 
-    @JsonView(Simple.class)
-    private final LocalDate dueDate;
-
     @JsonView(Detailed.class)
     private final Set<Interest> interests = new HashSet<>();
 
     @JsonView(Detailed.class)
     private final Set<Fine> fines = new HashSet<>();
 
-    public Debt(LocalDate dueDate, BigDecimal amount, boolean exemptInterest, boolean exemptFine) {
-        super(amount);
-        this.dueDate = dueDate;
+    public Debt(String id, DateTime created, LocalDate dueDate, String description, BigDecimal amount, boolean exemptInterest,
+            boolean exemptFine) {
+        super(id, created, dueDate, description, amount);
         this.exemptInterest = exemptInterest;
         this.exemptFine = exemptFine;
     }
@@ -64,7 +62,7 @@ public class Debt extends DebtEntry {
     }
 
     public LocalDate getDueDate() {
-        return dueDate;
+        return getDate();
     }
 
     public void addInterest(Interest interest) {
@@ -110,7 +108,8 @@ public class Debt extends DebtEntry {
 
     @Override
     public String toString() {
-        return "Debt{" + "dueDate=" + dueDate + ", interests=" + interests + ", open=" + isOpen() + ", openInterest=" + isOpenInterest() + ", openInterestAmount=" + getOpenInterestAmount() + "} "
+        return "Debt{" + "dueDate=" + getDueDate() + ", interests=" + interests + ", open=" + isOpen() + ", openInterest=" +
+                isOpenInterest() + ", openInterestAmount=" + getOpenInterestAmount() + "} "
                    + super.toString();
     }
 
