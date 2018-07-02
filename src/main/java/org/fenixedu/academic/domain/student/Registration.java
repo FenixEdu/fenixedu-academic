@@ -544,11 +544,6 @@ public class Registration extends Registration_Base {
                 .sorted(StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE.reversed());
     }
 
-    final private CycleCurriculumGroup getCycleCurriculumGroup(final CycleType cycleType) {
-        return getStudentCurricularPlanStream().map(scp -> scp.getCycle(cycleType)).filter(Objects::nonNull).findFirst()
-                .orElse(null);
-    }
-
     public static Boolean getEnrolmentsAllowStudentToChooseAffinityCycle() {
         return FenixEduAcademicConfiguration.getConfiguration().getEnrolmentsAllowStudentToChooseAffinityCycle();
     }
@@ -587,7 +582,10 @@ public class Registration extends Registration_Base {
         }
 
         if (getDegreeType().isBolonhaType()) {
-            final StudentCurricularPlan studentCurricularPlan = getLastStudentCurricularPlan();
+            
+            final StudentCurricularPlan studentCurricularPlan =
+                    getStudentCurricularPlansSet().size() == 1 ? getLastStudentCurricularPlan() : getStudentCurricularPlan(
+                            executionYear);
             if (studentCurricularPlan == null) {
                 return Curriculum.createEmpty(executionYear);
             }
@@ -596,12 +594,13 @@ public class Registration extends Registration_Base {
                 return studentCurricularPlan.getCurriculum(when, executionYear);
             }
 
-            final CycleCurriculumGroup cycleCurriculumGroup = getCycleCurriculumGroup(cycleType);
+            final CycleCurriculumGroup cycleCurriculumGroup = studentCurricularPlan.getCycle(cycleType);
             if (cycleCurriculumGroup == null) {
                 return Curriculum.createEmpty(executionYear);
             }
 
             return cycleCurriculumGroup.getCurriculum(when, executionYear);
+            
         } else {
             final List<StudentCurricularPlan> sortedSCPs = getSortedStudentCurricularPlans();
             final ListIterator<StudentCurricularPlan> sortedSCPsIterator = sortedSCPs.listIterator(sortedSCPs.size());
