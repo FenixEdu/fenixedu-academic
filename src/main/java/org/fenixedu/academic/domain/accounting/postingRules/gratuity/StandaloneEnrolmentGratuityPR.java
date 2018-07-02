@@ -32,11 +32,16 @@ import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
+import org.fenixedu.academic.domain.accounting.events.gratuity.StandaloneEnrolmentGratuityEvent;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.util.Money;
+import org.fenixedu.bennu.core.signals.DomainObjectEvent;
+import org.fenixedu.bennu.core.signals.Signal;
 import org.joda.time.DateTime;
+
+import pt.ist.fenixframework.FenixFramework;
 
 public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR_Base {
 
@@ -100,6 +105,26 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
             throw new DomainException("error.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.must.have.gratuityPR");
         }
     }
+
+    static {
+        Signal.register(Enrolment.SIGNAL_CREATED, (DomainObjectEvent<Enrolment> wrapper) -> {
+            Enrolment enrolment = wrapper.getInstance();
+            if (enrolment.getStudentCurricularPlan().getGratuityEventsSet()
+                    .stream()
+                    .anyMatch(e -> e instanceof StandaloneEnrolmentGratuityEvent && e.getExecutionYear().equals(enrolment.getExecutionYear()))) {
+                throw new DomainException("Can't enroll since exists standalone gratuity event");
+            }
+        });
+
+        FenixFramework.getDomainModel().registerDeletionBlockerListener(Enrolment.class, ((enrolment, collection) -> {
+            if (enrolment.getStudentCurricularPlan().getGratuityEventsSet()
+                    .stream()
+                    .anyMatch(e -> e instanceof StandaloneEnrolmentGratuityEvent && e.getExecutionYear().equals(enrolment.getExecutionYear()))) {
+                throw new DomainException("Can't delete enrolment since exists standalone gratuity event");
+            }
+        }));
+    }
+
 
     @Override
     protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {

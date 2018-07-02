@@ -65,8 +65,7 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base im
 
     @Override
     protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-        final BigDecimal discountPercentage = applyDiscount ? getDiscountPercentage(event) : BigDecimal.ZERO;
-        return getPaymentPlan(event).calculateTotalAmount(event, when, discountPercentage);
+        throw new DomainException("not to be used anymore");
     }
 
     public BigDecimal getDiscountPercentage(final Event event) {

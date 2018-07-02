@@ -100,7 +100,7 @@ public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrol
     
 
     @Override
-    public Map<LocalDate,Money> getDueDatePenaltyAmountMap(Event event) {
+    public Map<LocalDate,Money> getDueDatePenaltyAmountMap(Event event, DateTime when) {
         Optional<LocalDate> dueDate = getDueDate(event);
         if (!dueDate.isPresent()) {
             return Collections.emptyMap();

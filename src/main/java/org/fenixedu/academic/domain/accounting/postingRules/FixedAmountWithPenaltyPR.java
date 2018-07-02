@@ -52,11 +52,6 @@ public abstract class FixedAmountWithPenaltyPR extends FixedAmountWithPenaltyPR_
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-        return super.doCalculationForAmountToPay(event, when, applyDiscount);
-    }
-
-    @Override
     public void setFixedAmountPenalty(Money fixedAmountPenalty) {
         throw new DomainException("error.accounting.postingRules.FixedAmountWithPenaltyPR.cannot.modify.fixedAmountPenalty");
     }
@@ -64,7 +59,7 @@ public abstract class FixedAmountWithPenaltyPR extends FixedAmountWithPenaltyPR_
     abstract protected Optional<LocalDate> getPenaltyDueDate(Event event);
 
     @Override
-    public Map<LocalDate, Money> getDueDatePenaltyAmountMap(Event event) {
+    public Map<LocalDate, Money> getDueDatePenaltyAmountMap(Event event, DateTime when) {
         Optional<LocalDate> penaltyDueDate = getPenaltyDueDate(event);
         if (penaltyDueDate.isPresent()) {
             return Collections.singletonMap(penaltyDueDate.get(), getFixedAmountPenalty());

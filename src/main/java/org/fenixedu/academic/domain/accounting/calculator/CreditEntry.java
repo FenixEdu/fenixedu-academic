@@ -50,17 +50,21 @@ abstract class CreditEntry implements Cloneable {
     private final LocalDate date;
 
     @JsonView(Simple.class)
+    private final String description;
+
+    @JsonView(Simple.class)
     private final BigDecimal amount;
 
     @JsonView(Detailed.class)
     private final Set<PartialPayment> partialPayments = new HashSet<>();
 
 
-    public CreditEntry(String id, DateTime created, LocalDate date, BigDecimal amount) {
+    public CreditEntry(String id, DateTime created, LocalDate date, String description, BigDecimal amount) {
         this.id = id;
         this.created = created;
         this.date = date;
         this.amount = amount;
+        this.description = description;
     }
 
     public abstract boolean isForDebt();
@@ -132,5 +136,9 @@ abstract class CreditEntry implements Cloneable {
 
     public void setCreated(DateTime created) {
         this.created = created;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

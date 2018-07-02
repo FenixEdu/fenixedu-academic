@@ -18,23 +18,12 @@
  */
 package org.fenixedu.academic.domain.accounting.postingRules.gratuity;
 
-import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
-import org.fenixedu.academic.domain.accounting.Account;
-import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.events.gratuity.PastDegreeGratuityEvent;
 import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
-import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
-import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
-import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.util.Money;
-import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
 public class PastDegreeGratuityPR extends PastDegreeGratuityPR_Base {
@@ -50,12 +39,7 @@ public class PastDegreeGratuityPR extends PastDegreeGratuityPR_Base {
 
     @Override
     protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-        final Money amountToPay = ((PastDegreeGratuityEvent) event).getPastDegreeGratuityAmount();
-        final PastDegreeGratuityEvent pastDegreeGratuityEvent = (PastDegreeGratuityEvent) event;
-        final BigDecimal discountPercentage =
-                applyDiscount ? pastDegreeGratuityEvent.calculateDiscountPercentage(amountToPay) : BigDecimal.ZERO;
-
-        return amountToPay.multiply(BigDecimal.ONE.subtract(discountPercentage));
+        return ((PastDegreeGratuityEvent) event).getPastDegreeGratuityAmount();
     }
 
     @Override

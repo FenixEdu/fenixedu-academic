@@ -465,15 +465,8 @@ public abstract class PostingRule extends PostingRule_Base {
 
     protected abstract EntryType getEntryType();
 
-    public Map<LocalDate,Money> getDueDatePenaltyAmountMap(Event event) {
+    public Map<LocalDate,Money> getDueDatePenaltyAmountMap(Event event, DateTime when) {
         return Collections.emptyMap();
     }
 
-    public boolean isToApplyPenalty(Event event) {
-        return !getDueDatePenaltyAmountMap(event).isEmpty();
-    }
-
-    public boolean isToApplyInterest(Event event) {
-        return event.isGratuity();
-    }
 }

@@ -18,7 +18,21 @@
  */
 package org.fenixedu.academic.domain.accounting.postingRules;
 
-import org.fenixedu.academic.domain.accounting.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.fenixedu.academic.domain.accounting.Account;
+import org.fenixedu.academic.domain.accounting.AccountingTransaction;
+import org.fenixedu.academic.domain.accounting.Entry;
+import org.fenixedu.academic.domain.accounting.EntryType;
+import org.fenixedu.academic.domain.accounting.Event;
+import org.fenixedu.academic.domain.accounting.EventType;
+import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import org.fenixedu.academic.domain.accounting.events.AnnualEvent;
 import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate;
@@ -31,8 +45,6 @@ import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
-
-import java.util.*;
 
 public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeFeeAndInsurancePR_Base
         implements IAdministrativeOfficeFeeAndInsurancePR {
@@ -159,9 +171,9 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
         return EntryType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE;
     }
 
-    @Override public Map<LocalDate, Money> getDueDatePenaltyAmountMap(Event event) {
+    @Override public Map<LocalDate, Money> getDueDatePenaltyAmountMap(Event event, DateTime when) {
         final AnnualEvent annualEvent = (AnnualEvent) event;
         return getPostingRuleForAdministrativeOfficeFee(annualEvent.getStartDate(), annualEvent.getEndDate())
-                .getDueDatePenaltyAmountMap(annualEvent);
+                .getDueDatePenaltyAmountMap(annualEvent, when);
     }
 }

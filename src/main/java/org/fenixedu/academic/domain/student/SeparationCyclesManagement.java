@@ -143,7 +143,8 @@ public class SeparationCyclesManagement {
         moveExtraCurriculumGroupInformation(oldStudentCurricularPlan, newStudentCurricularPlan);
         moveExtraAttends(oldStudentCurricularPlan, newStudentCurricularPlan);
         tryRemoveOldSecondCycle(oldSecondCycle);
-        moveGratuityEventsInformation(oldStudentCurricularPlan, newStudentCurricularPlan);
+        //TODO : cannot simply move events information between events
+        //moveGratuityEventsInformation(oldStudentCurricularPlan, newStudentCurricularPlan);
         createAdministrativeOfficeFeeAndInsurance(newStudentCurricularPlan);
 
         markOldRegistrationWithConcludedState(oldStudentCurricularPlan);

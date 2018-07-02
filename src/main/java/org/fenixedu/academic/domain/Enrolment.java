@@ -242,6 +242,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     public void delete() {
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         checkRulesToDelete();
         createCurriculumLineLog(EnrolmentAction.UNENROL);
         deleteInformation();

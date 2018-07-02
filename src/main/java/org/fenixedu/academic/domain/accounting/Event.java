@@ -553,7 +553,7 @@ public abstract class Event extends Event_Base {
         final Builder builder = new Builder(when);
         final Map<LocalDate, Money> dueDateAmountMap = getDueDateAmountMap(postingRule, when);
         final Money baseAmount = dueDateAmountMap.values().stream().reduce(Money.ZERO, Money::add);
-        final Map<LocalDate, Money> dueDatePenaltyAmountMap = postingRule.getDueDatePenaltyAmountMap(this);
+        final Map<LocalDate, Money> dueDatePenaltyAmountMap = postingRule.getDueDatePenaltyAmountMap(this, when);
         final Set<LocalDate> debtInterestExemptions = getDebtInterestExemptions(when);
         final Set<LocalDate> debtFineExemptions = getDebtFineExemptions(when);
         
@@ -566,25 +566,25 @@ public abstract class Event extends Event_Base {
             builder.fine(date, amount.getAmount());
         });
 
-        getNonAdjustingTransactions().forEach(e -> {
-            if (!e.getWhenRegistered().isAfter(when)) {
-                builder.payment(e.getExternalId(), e.getWhenProcessed(), e.getWhenRegistered().toLocalDate(), e
-                        .getAmountWithAdjustment()
-                        .getAmount());
+        getNonAdjustingTransactions().forEach(t -> {
+            if (!t.getWhenProcessed().isAfter(when)) {
+                builder.payment(t.getExternalId(), t.getWhenProcessed(), t.getWhenRegistered().toLocalDate(), t
+                        .getDescriptionForEntryType(postingRule.getEntryType()).toString(),
+                        t.getAmountWithAdjustment().getAmount());
             }
         });
 
         getDebtExemptions().forEach(e -> {
             if (!e.getWhenCreated().isAfter(when)) {
-                builder.debtExemption(e.getExternalId(),e.getWhenCreated(), e.getWhenCreated().toLocalDate(), e.getExemptionAmount
-                        (baseAmount).getAmount());
+                builder.debtExemption(e.getExternalId(),e.getWhenCreated(), e.getWhenCreated().toLocalDate(), e.getDescription
+                        ().toString(),e.getExemptionAmount(baseAmount).getAmount());
             }
         });
 
         this.getDiscountsSet().forEach(d -> {
             if (!d.getWhenCreated().isAfter(when)) {
-                builder.debtExemption(d.getExternalId(), d.getWhenCreated(), d.getWhenCreated().toLocalDate(), d.getAmount()
-                        .getAmount());
+                builder.debtExemption(d.getExternalId(), d.getWhenCreated(), d.getWhenCreated().toLocalDate(),"Desconto",
+                        d.getAmount().getAmount());
             }
         });
 
@@ -596,8 +596,7 @@ public abstract class Event extends Event_Base {
             .forEach(e -> {
                 if (e.isForInterest()) {
                     builder.interestExemption(e.getExternalId(),e.getWhenCreated(), e.getWhenCreated().toLocalDate(), e
-                            .getExemptionAmount
-                            (baseAmount).getAmount());
+                            .getDescription().toString(), e.getExemptionAmount(baseAmount).getAmount());
                 }
             });
 

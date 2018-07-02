@@ -47,7 +47,7 @@ public class DebtInterestCalculator {
         this.isToApplyInterest = isToApplyInterest;
         this.dueDateAmountFineMap.putAll(dueDateAmountFineMap);
 
-        this.creditEntries.add(new Payment("zeroPayment", when, when.toLocalDate(), BigDecimal.ZERO));
+        this.creditEntries.add(new Payment("zeroPayment", when, when.toLocalDate(), "Pagamento 0", BigDecimal.ZERO));
 
         calculate();
     }
@@ -81,8 +81,8 @@ public class DebtInterestCalculator {
             return this;
         }
 
-        public Builder payment(String id, DateTime created, LocalDate paymentDate, BigDecimal amount) {
-            payments.add(new Payment(id, created, paymentDate, amount));
+        public Builder payment(String id, DateTime created, LocalDate paymentDate, String description, BigDecimal amount) {
+            payments.add(new Payment(id, created, paymentDate, description, amount));
             return this;
         }
 
@@ -91,13 +91,13 @@ public class DebtInterestCalculator {
             return this;
         }
 
-        public Builder debtExemption(String id, DateTime created, LocalDate paymentDate, BigDecimal amount) {
-            debtExemptions.add(new DebtExemption(id, created, paymentDate, amount));
+        public Builder debtExemption(String id, DateTime created, LocalDate paymentDate, String description, BigDecimal amount) {
+            debtExemptions.add(new DebtExemption(id, created, paymentDate, description, amount));
             return this;
         }
 
-        public Builder interestExemption(String id, DateTime created, LocalDate paymentDate, BigDecimal amount) {
-            interestExemptions.add(new InterestExemption(id, created, paymentDate, amount));
+        public Builder interestExemption(String id, DateTime created, LocalDate paymentDate, String description, BigDecimal amount) {
+            interestExemptions.add(new InterestExemption(id, created, paymentDate, description, amount));
             return this;
         }
 

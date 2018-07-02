@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.accounting.postingRules;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
@@ -28,6 +29,9 @@ import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
+import org.joda.time.LocalDate;
+
+import edu.emory.mathcs.backport.java.util.Collections;
 
 public class ResidencePR extends ResidencePR_Base {
 
@@ -38,14 +42,19 @@ public class ResidencePR extends ResidencePR_Base {
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    public Map<LocalDate, Money> getDueDatePenaltyAmountMap(Event event, DateTime when) {
         ResidenceEvent residenceEvent = (ResidenceEvent) event;
-        Money baseValue = residenceEvent.getRoomValue();
         if (residenceEvent.getPaymentLimitDate().isAfter(when)) {
-            return baseValue;
+            return Collections.emptyMap();
         }
-        return baseValue.add(getPenaltyPerDay().multiply(
+
+        return Collections.singletonMap(residenceEvent.getPaymentLimitDate(), getPenaltyPerDay().multiply(
                 BigDecimal.valueOf(Days.daysBetween(residenceEvent.getPaymentLimitDate(), when).getDays())));
+    }
+
+    @Override
+    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+        return ((ResidenceEvent) event).getRoomValue();
     }
 
 }
