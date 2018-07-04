@@ -82,7 +82,12 @@ public enum CurricularRuleType {
     public boolean isPreventsAutomaticEnrolment() {
         return Arrays.asList(
 
-                CurricularRuleType.ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR
+                CurricularRuleType.ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR,
+
+                CurricularRuleType.MINIMUM_NUMBER_OF_CREDITS_TO_ENROL,
+                
+                CurricularRuleType.PRECEDENCY_BETWEEN_DEGREE_MODULES
+                
 
         ).contains(this);
     }
