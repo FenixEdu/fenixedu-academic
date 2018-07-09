@@ -225,6 +225,10 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
         return calculateCredits();
     }
 
+    public double getCalculatedEctsCredits(ExecutionYear executionYear) {
+        return getCurriculumGroup().calculateCreditsConcluded(executionYear);
+    }
+
     public ICurriculum getCurriculumForConclusion() {
         return getCurriculumGroup().getCurriculum();
     }
