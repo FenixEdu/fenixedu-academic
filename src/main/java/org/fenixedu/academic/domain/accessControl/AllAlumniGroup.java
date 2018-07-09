@@ -31,6 +31,7 @@ import org.fenixedu.bennu.core.groups.GroupStrategy;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
+@Deprecated
 @GroupOperator("allAlumni")
 public class AllAlumniGroup extends GroupStrategy {
 
