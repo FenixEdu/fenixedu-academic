@@ -152,12 +152,9 @@ public class Entry extends Entry_Base {
     }
 
     private Money getTotalAdjustedAmount() {
-        Money result = Money.ZERO;
-        for (final AccountingTransaction transaction : getAccountingTransaction().getAdjustmentTransactionsSet()) {
-            result = result.add(transaction.getEntryFor(getAccount()).getOriginalAmount());
-        }
-
-        return result;
+        return getAccountingTransaction().getAdjustmentTransactionStream()
+            .map(t -> t.getEntryFor(getAccount()).getOriginalAmount())
+            .reduce(Money.ZERO, Money::add);
     }
 
     public boolean isAdjusting() {
