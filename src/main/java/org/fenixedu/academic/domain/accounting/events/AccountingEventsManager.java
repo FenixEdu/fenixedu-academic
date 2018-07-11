@@ -31,6 +31,7 @@ import org.fenixedu.academic.domain.accounting.events.gratuity.EnrolmentGratuity
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import org.fenixedu.academic.domain.accounting.events.gratuity.SpecializationDegreeGratuityEvent;
 import org.fenixedu.academic.domain.accounting.events.insurance.InsuranceEvent;
+import org.fenixedu.academic.domain.accounting.paymentPlanRules.IsAlienRule;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
@@ -51,6 +52,8 @@ public class AccountingEventsManager {
         final Set<Enrolment> standaloneCurriculumGroupAndEnrolmentsFor = getStandaloneEnrolments(studentCurricularPlan,
                 executionYear);
 
+        IsAlienRule isAlienRule = new IsAlienRule();
+
         if (standaloneCurriculumGroupAndEnrolmentsFor.isEmpty()) {
             result.addMessage(
                     Bundle.APPLICATION,
@@ -58,7 +61,7 @@ public class AccountingEventsManager {
         } else {
             for (Enrolment enrolment : standaloneCurriculumGroupAndEnrolmentsFor) {
                 EnrolmentGratuityEvent.create(studentCurricularPlan.getPerson(), enrolment, EventType
-                        .STANDALONE_ENROLMENT_GRATUITY);
+                        .STANDALONE_ENROLMENT_GRATUITY, isAlienRule.isAppliableFor(studentCurricularPlan, executionYear));
             }
             result =  InvocationResult.createSuccess();
         }

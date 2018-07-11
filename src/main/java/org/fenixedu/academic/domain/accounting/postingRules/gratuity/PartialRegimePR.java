@@ -22,10 +22,10 @@ public class PartialRegimePR extends PartialRegimePR_Base {
 
     public PartialRegimePR(DateTime startDate, DateTime endDate, ServiceAgreementTemplate
             serviceAgreementTemplate, Money amount, Integer numberOfDaysToStartApplyingInterest, boolean forAliens) {
-        super.init(EntryType.GRATUITY_FEE, EventType.PARTIAL_REGIME_GRATUITY, startDate, endDate, serviceAgreementTemplate);
         setNumberOfDaysToStartApplyingInterest(numberOfDaysToStartApplyingInterest);
         setAmount(amount);
         setForAliens(forAliens);
+        super.init(EntryType.GRATUITY_FEE, EventType.PARTIAL_REGIME_GRATUITY, startDate, endDate, serviceAgreementTemplate);
     }
 
     @Override
