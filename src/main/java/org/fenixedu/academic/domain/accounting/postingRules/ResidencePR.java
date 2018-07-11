@@ -48,8 +48,9 @@ public class ResidencePR extends ResidencePR_Base {
             return Collections.emptyMap();
         }
 
-        return Collections.singletonMap(residenceEvent.getPaymentLimitDate(), getPenaltyPerDay().multiply(
-                BigDecimal.valueOf(Days.daysBetween(residenceEvent.getPaymentLimitDate(), when).getDays())));
+        final BigDecimal daysBetween = BigDecimal.valueOf(Days.daysBetween(residenceEvent.getPaymentLimitDate(), when).getDays());
+        final Money amount = getPenaltyPerDay().multiply(daysBetween);
+        return Collections.singletonMap(residenceEvent.getPaymentLimitDate().toLocalDate(), amount);
     }
 
     @Override
