@@ -25,7 +25,7 @@ import org.fenixedu.academic.domain.student.RegistrationProtocol;
 
 public class IsAlienRule implements PaymentPlanRule {
 
-    IsAlienRule() {
+    public IsAlienRule() {
     }
 
     @Override

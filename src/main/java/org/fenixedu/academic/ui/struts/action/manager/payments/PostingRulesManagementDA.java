@@ -55,7 +55,9 @@ import org.fenixedu.academic.dto.accounting.paymentPlan.InstallmentBean;
 import org.fenixedu.academic.dto.accounting.paymentPlan.PaymentPlanBean;
 import org.fenixedu.academic.dto.accounting.paymentPlan.StandaloneInstallmentBean;
 import org.fenixedu.academic.dto.accounting.postingRule.CreateDFAGratuityPostingRuleBean;
+import org.fenixedu.academic.dto.accounting.postingRule.CreateEnrolmentGratuityPRBean;
 import org.fenixedu.academic.dto.accounting.postingRule.CreateGratuityPostingRuleBean;
+import org.fenixedu.academic.dto.accounting.postingRule.CreatePartialRegimePRBean;
 import org.fenixedu.academic.dto.accounting.postingRule.CreateSpecializationDegreeGratuityPostingRuleBean;
 import org.fenixedu.academic.dto.accounting.postingRule.CreateStandaloneEnrolmentGratuityPRBean;
 import org.fenixedu.academic.service.services.accounting.PostingRulesManager;
@@ -105,6 +107,10 @@ import pt.ist.fenixframework.FenixFramework;
                 path = "/manager/payments/postingRules/management/graduation/showGraduationDegreeCurricularPlanPostingRules.jsp"),
         @Forward(name = "createGraduationStandaloneEnrolmentGratuityPR",
                 path = "/manager/payments/postingRules/management/graduation/createGraduationStandaloneEnrolmentGratuityPR.jsp"),
+        @Forward(name = "createEnrolmentGratuityPR",
+                path = "/manager/payments/postingRules/management/graduation/createEnrolmentGratuityPR.jsp"),
+        @Forward(name = "createPartialRegimePR",
+                path = "/manager/payments/postingRules/management/graduation/createPartialRegimePR.jsp"),
         @Forward(name = "createSpecializationDegreeGratuityPR",
                 path = "/manager/payments/postingRules/management/specializationDegree/createSpecializationDegreeGratuityPR.jsp"),
         @Forward(name = "createDEAGratuityPR", path = "/manager/payments/postingRules/management/dea/createDEAGratuityPR.jsp"),
@@ -113,7 +119,6 @@ import pt.ist.fenixframework.FenixFramework;
 
         @Forward(name = "prepareEditFCTScolarshipPostingRule",
                 path = "/manager/payments/postingRules/management/prepareEditFCTScolarshipPostingRule.jsp"),
-
         @Forward(name = "showFCTScolarshipPostingRules",
                 path = "/manager/payments/postingRules/management/showFCTScolarshipPostingRules.jsp"),
         @Forward(name = "prepareAddFCTPostingRule",
@@ -601,6 +606,96 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
         return mapping.findForward("createGraduationStandaloneEnrolmentGratuityPR");
     }
 
+    public ActionForward prepareCreateEnrolmentGratuityPRInvalid(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+
+        request.setAttribute("createPostingRuleBean", getRenderedObject("createPostingRuleBean"));
+        return mapping.findForward("createEnrolmentGratuityPR");
+    }
+
+    public ActionForward prepareCreateEnrolmentGratuityPRPostback(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+
+        final Object object = getRenderedObject("createPostingRuleBean");
+        RenderUtils.invalidateViewState();
+        request.setAttribute("createPostingRuleBean", object);
+
+        return mapping.findForward("createEnrolmentGratuityPR");
+    }
+    public ActionForward prepareCreateEnrolmentGratuityPR(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+
+        final CreateEnrolmentGratuityPRBean bean = new CreateEnrolmentGratuityPRBean();
+
+        request.setAttribute("createPostingRuleBean", bean);
+
+        return mapping.findForward("createEnrolmentGratuityPR");
+    }
+
+    public ActionForward createEnrolmentGratuityPR(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+
+        final CreateEnrolmentGratuityPRBean bean = getRenderedObject("createPostingRuleBean");
+
+        try {
+            PostingRulesManager.createEnrolmentGratuityPR(bean);
+        } catch (DomainException e) {
+            addActionMessage(request, e.getKey(), e.getArgs());
+
+            request.setAttribute("createPostingRuleBean", bean);
+
+            return mapping.findForward("createEnrolmentGratuityPR");
+
+        }
+
+        return manageGraduationRules(mapping, form, request, response);
+    }
+
+    public ActionForward prepareCreatePartialRegimePRInvalid(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+
+        request.setAttribute("createPostingRuleBean", getRenderedObject("createPostingRuleBean"));
+        return mapping.findForward("createPartialRegimePR");
+    }
+
+    public ActionForward prepareCreatePartialRegimePRPostback(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+
+        final Object object = getRenderedObject("createPostingRuleBean");
+        RenderUtils.invalidateViewState();
+        request.setAttribute("createPostingRuleBean", object);
+
+        return mapping.findForward("createPartialRegimePR");
+    }
+    public ActionForward prepareCreatePartialRegimePR(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+
+        final CreatePartialRegimePRBean bean = new CreatePartialRegimePRBean();
+
+        request.setAttribute("createPostingRuleBean", bean);
+
+        return mapping.findForward("createPartialRegimePR");
+    }
+
+    public ActionForward createPartialRegimePR(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+
+        final CreatePartialRegimePRBean bean = getRenderedObject("createPostingRuleBean");
+
+        try {
+            PostingRulesManager.createPartialRegimePR(bean);
+        } catch (DomainException e) {
+            addActionMessage(request, e.getKey(), e.getArgs());
+
+            request.setAttribute("createPostingRuleBean", bean);
+
+            return mapping.findForward("createPartialRegimePR");
+
+        }
+
+        return manageGraduationRules(mapping, form, request, response);
+    }
+
     public ActionForward prepareCreateGraduationStandaloneEnrolmentGratuityPRInvalid(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
 
@@ -624,7 +719,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
         final CreateStandaloneEnrolmentGratuityPRBean bean = getRenderedObject("createPostingRuleBean");
 
         try {
-            PostingRulesManager.createStandaloneGraduationGratuityPostingRule(bean);
+            PostingRulesManager.createGraduationGratuityPostingRule(bean);
         } catch (DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
 

@@ -1318,6 +1318,12 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
                 class accounting.events.gratuity.SpecializationDegreeGratuityEvent extends accounting.events.gratuity.GratuityEvent {
                 }
 
+                class accounting.events.gratuity.EnrolmentGratuityEvent extends accounting.events.gratuity.GratuityEvent {
+                }
+
+                class accounting.events.gratuity.PartialRegimeEvent extends accounting.events.gratuity.GratuityEvent {
+                }
+
             class accounting.events.insurance.InsuranceEvent extends accounting.events.AnnualEvent {
             }
 
@@ -1789,6 +1795,18 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
                 BigDecimal ectsForYear;
                 BigDecimal gratuityFactor;
                 BigDecimal ectsFactor;
+            }
+
+            class accounting.postingRules.gratuity.EnrolmentGratuityPR extends accounting.postingRules.GenericSingleEntryTypePR {
+                protected boolean forAliens;
+                protected BigDecimal amountPerEcts;
+                protected Integer numberOfDaysToStartApplyingInterest;
+            }
+
+            class accounting.postingRules.gratuity.PartialRegimePR extends accounting.postingRules.GenericSingleEntryTypePR {
+                protected boolean forAliens;
+                protected Money amount;
+                protected Integer numberOfDaysToStartApplyingInterest;
             }
             
             class accounting.postingRules.serviceRequests.EquivalencePlanRequestPR extends accounting.postingRules.GenericSingleEntryTypePR {
@@ -12146,6 +12164,36 @@ relation EmptyConversionTableRootDomainObject {
         multiplicity 0..1;
     }
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
+        multiplicity 1..1;
+    }
+}
+
+relation EnrolmentEventPostingRule {
+    accounting.events.gratuity.EnrolmentGratuityEvent playsRole enrolmentEvent {
+        multiplicity *;
+    }
+
+    protected accounting.postingRules.gratuity.EnrolmentGratuityPR playsRole eventPostingRule {
+        multiplicity 1..1;
+    }
+}
+
+relation EnrolmentEventEnrolment {
+    protected accounting.events.gratuity.EnrolmentGratuityEvent playsRole event {
+        multiplicity 0..1;
+    }
+
+    protected Enrolment playsRole enrolment {
+        multiplicity 1..1;
+    }
+}
+
+relation PartialRegimeEventPostingRule {
+    accounting.events.gratuity.PartialRegimeEvent playsRole partialRegimeEvent {
+        multiplicity *;
+    }
+
+    protected accounting.PostingRule playsRole eventPostingRule {
         multiplicity 1..1;
     }
 }
