@@ -37,7 +37,7 @@ public class InsurancePR extends InsurancePR_Base {
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
         return getFixedAmount();
     }
 

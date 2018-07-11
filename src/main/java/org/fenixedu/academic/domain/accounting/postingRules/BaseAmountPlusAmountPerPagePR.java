@@ -66,7 +66,7 @@ abstract public class BaseAmountPlusAmountPerPagePR extends BaseAmountPlusAmount
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
         final Money result = isUrgent(event) ? getBaseAmount().multiply(BigDecimal.valueOf(2d)) : getBaseAmount();
         return result.add(getAmountForPages(event));
     }

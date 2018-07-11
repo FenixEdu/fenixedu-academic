@@ -53,7 +53,7 @@ public class SpecialSeasonEnrolmentPR extends SpecialSeasonEnrolmentPR_Base {
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
         final SpecialSeasonEnrolmentEvent specialSeasonEnrolmentEvent = (SpecialSeasonEnrolmentEvent) event;
         final int numberOfEnrolments = specialSeasonEnrolmentEvent.getSpecialSeasonEnrolmentEvaluationsSet().size();
         return getFixedAmount().multiply(numberOfEnrolments);

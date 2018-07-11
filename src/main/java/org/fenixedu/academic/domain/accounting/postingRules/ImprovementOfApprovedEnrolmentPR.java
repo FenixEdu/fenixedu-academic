@@ -75,7 +75,7 @@ public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrol
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
         final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent =
                 (ImprovementOfApprovedEnrolmentEvent) event;
 

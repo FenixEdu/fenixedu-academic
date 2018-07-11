@@ -61,7 +61,7 @@ public class AccountingEventsManager {
         } else {
             for (Enrolment enrolment : standaloneCurriculumGroupAndEnrolmentsFor) {
                 EnrolmentGratuityEvent.create(studentCurricularPlan.getPerson(), enrolment, EventType
-                        .STANDALONE_ENROLMENT_GRATUITY, isAlienRule.isAppliableFor(studentCurricularPlan, executionYear));
+                        .STANDALONE_PER_ENROLMENT_GRATUITY, isAlienRule.isAppliableFor(studentCurricularPlan, executionYear));
             }
             result =  InvocationResult.createSuccess();
         }

@@ -39,7 +39,7 @@ public class PastFreeSolicitationAcademicRequestPR extends PastFreeSolicitationA
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(final Event event, final DateTime when, final boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(final Event event, final DateTime when) {
         return ((PastFreeSolicitationAcademicRequestEvent) event).getPastAmount();
     }
 

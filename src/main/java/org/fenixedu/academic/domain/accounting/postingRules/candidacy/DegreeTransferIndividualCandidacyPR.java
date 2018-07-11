@@ -72,7 +72,7 @@ public class DegreeTransferIndividualCandidacyPR extends DegreeTransferIndividua
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event eventArg, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event eventArg, DateTime when) {
         final DegreeTransferIndividualCandidacyEvent event = (DegreeTransferIndividualCandidacyEvent) eventArg;
         DegreeTransferIndividualCandidacy individualCandidacy = event.getIndividualCandidacy();
         final PrecedentDegreeInformation information = individualCandidacy.getRefactoredPrecedentDegreeInformation();

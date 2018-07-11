@@ -282,7 +282,7 @@ public abstract class PostingRule extends PostingRule_Base {
     }
 
     public final Money calculateTotalAmountToPay(Event event, DateTime when) {
-        return calculateTotalAmountToPay(event, when, false);
+        return doCalculationForAmountToPay(event, when);
     }
 
     public void addOtherPartyAmount(User responsibleUser, Event event, Account fromAcount, Account toAccount, Money amount,
@@ -298,7 +298,7 @@ public abstract class PostingRule extends PostingRule_Base {
     }
 
     protected void checkRulesToAddOtherPartyAmount(Event event, Money amount) {
-        if (amount.greaterThan(calculateTotalAmountToPay(event, event.getWhenOccured(), false))) {
+        if (amount.greaterThan(calculateTotalAmountToPay(event, event.getWhenOccured()))) {
             throw new DomainException(
                     "error.accounting.PostingRule.cannot.add.other.party.amount.that.exceeds.event.amount.to.pay");
         }
@@ -357,11 +357,7 @@ public abstract class PostingRule extends PostingRule_Base {
         return getEventType().equals(eventType);
     }
 
-    public final Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-        return doCalculationForAmountToPay(event, when, false);
-    }
-
-    protected abstract Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount);
+    protected abstract Money doCalculationForAmountToPay(Event event, DateTime when);
 
     public PaymentCodeType calculatePaymentCodeTypeFromEvent(Event event, DateTime when, boolean applyDiscount) {
         throw new DomainException("error.accounting.PostingRule.cannot.calculate.payment.code.type");
@@ -457,10 +453,6 @@ public abstract class PostingRule extends PostingRule_Base {
             }
         }
         return result;
-    }
-
-    public Money doCalculationForAmountToPayWithoutExemptions(Event event, DateTime when, boolean applyDiscount) {
-        return doCalculationForAmountToPay(event, when, applyDiscount);
     }
 
     protected abstract EntryType getEntryType();

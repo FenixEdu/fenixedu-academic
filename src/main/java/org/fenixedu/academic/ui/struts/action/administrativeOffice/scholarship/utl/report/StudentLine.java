@@ -42,6 +42,7 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Qualification;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accounting.AccountingTransaction;
+import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.Installment;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import org.fenixedu.academic.domain.degree.DegreeType;
@@ -346,14 +347,10 @@ public class StudentLine implements java.io.Serializable {
             return Money.ZERO;
         }
 
-        GratuityEventWithPaymentPlan event =
-                getStudentCurricularPlan().getGratuityEvent(getForExecutionYear(), GratuityEventWithPaymentPlan.class);
+        return
+                getStudentCurricularPlan().getGratuityEvent(getForExecutionYear(), GratuityEventWithPaymentPlan.class).map
+                        (Event::getOriginalAmountToPay).orElse(Money.ZERO);
 
-        if (event == null) {
-            return Money.ZERO;
-        }
-
-        return event.getOriginalAmountToPay();
     }
 
     public LocalDate getFirstInstallmentPaymentLocalDate() {
@@ -362,7 +359,8 @@ public class StudentLine implements java.io.Serializable {
         }
 
         GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan =
-                getStudentCurricularPlan().getGratuityEvent(getForExecutionYear(), GratuityEventWithPaymentPlan.class);
+                getStudentCurricularPlan().getGratuityEvent(getForExecutionYear(), GratuityEventWithPaymentPlan.class)
+                        .orElseThrow(UnsupportedOperationException::new);
 
         Installment firstInstallment = gratuityEventWithPaymentPlan.getInstallments().iterator().next();
 

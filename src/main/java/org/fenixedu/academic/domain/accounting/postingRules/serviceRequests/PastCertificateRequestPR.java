@@ -38,7 +38,7 @@ public class PastCertificateRequestPR extends PastCertificateRequestPR_Base {
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(final Event event, final DateTime when, final boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(final Event event, final DateTime when) {
         return ((PastCertificateRequestEvent) event).getPastAmount();
     }
 

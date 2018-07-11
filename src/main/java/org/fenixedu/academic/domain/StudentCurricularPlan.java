@@ -30,6 +30,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -1539,20 +1540,26 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return null;
     }
 
-    final public <T extends GratuityEvent> T getGratuityEvent(final ExecutionYear executionYear,
-            final Class<? extends GratuityEvent> type) {
-        for (final GratuityEvent gratuityEvent : getGratuityEventsSet()) {
-            if (!gratuityEvent.isCancelled() && gratuityEvent.getExecutionYear() == executionYear
-                    && gratuityEvent.getClass().equals(type)) {
-                return (T) gratuityEvent;
-            }
+    final public <T extends GratuityEvent> Optional<T> getGratuityEvent(final ExecutionYear executionYear,
+            final Class<T> type) {
+        return getGratuityEvent(executionYear, type, true);
+    }
+
+    final public <T extends GratuityEvent> Optional<T> getGratuityEvent(final ExecutionYear executionYear,
+            final Class<T> type, boolean excludeCanceled) {
+
+        Stream<T> eventStream = getGratuityEventsSet().stream().filter(g -> g.getExecutionYear().equals(executionYear))
+                .filter(g -> g.getClass().equals(type)).map(type::cast);
+
+        if (excludeCanceled) {
+            eventStream = eventStream.filter(g -> !g.isCancelled());
         }
 
-        return null;
+        return eventStream.findAny();
     }
 
     final public boolean hasGratuityEvent(final ExecutionYear executionYear, final Class<? extends GratuityEvent> type) {
-        return getGratuityEvent(executionYear, type) != null;
+        return getGratuityEvent(executionYear, type).isPresent();
     }
 
     final public Set<GratuityEvent> getNotPayedGratuityEvents() {

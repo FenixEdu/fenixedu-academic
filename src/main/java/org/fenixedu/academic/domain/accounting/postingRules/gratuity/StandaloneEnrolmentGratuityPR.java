@@ -117,7 +117,8 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
         });
 
         FenixFramework.getDomainModel().registerDeletionBlockerListener(Enrolment.class, ((enrolment, collection) -> {
-            if (enrolment.getStudentCurricularPlan().getGratuityEventsSet()
+            // the first scp check must be done since this is invoked for the curriculum module deletion blockers
+            if (enrolment.getStudentCurricularPlan() != null && enrolment.getStudentCurricularPlan().getGratuityEventsSet()
                     .stream()
                     .anyMatch(e -> e instanceof StandaloneEnrolmentGratuityEvent && e.getExecutionYear().equals(enrolment.getExecutionYear()))) {
                 throw new DomainException("Can't delete enrolment since exists standalone gratuity event");
@@ -127,7 +128,7 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
 
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
         final GratuityEvent gratuityEvent = (GratuityEvent) event;
 
         Money result = Money.ZERO;

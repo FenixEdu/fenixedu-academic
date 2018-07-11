@@ -26,9 +26,13 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.signals.DomainObjectEvent;
+import org.fenixedu.bennu.core.signals.Signal;
 import org.joda.time.DateTime;
 
 public class RegistrationRegime extends RegistrationRegime_Base {
+
+    public static final String SIGNAL_CREATED = RegistrationRegime.class.getSimpleName() + ".created";
 
     static public Comparator<RegistrationRegime> COMPARATOR_BY_EXECUTION_YEAR = new Comparator<RegistrationRegime>() {
         @Override
@@ -52,6 +56,7 @@ public class RegistrationRegime extends RegistrationRegime_Base {
         super.setRegistration(registration);
         super.setExecutionYear(executionYear);
         super.setRegimeType(type);
+        Signal.emit(SIGNAL_CREATED, new DomainObjectEvent<RegistrationRegime>(this));
     }
 
     private void checkParameters(final Registration registration, final ExecutionYear executionYear,
@@ -97,6 +102,7 @@ public class RegistrationRegime extends RegistrationRegime_Base {
     }
 
     public void delete() {
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         setRegistration(null);
         setExecutionYear(null);
         setRootDomainObject(null);

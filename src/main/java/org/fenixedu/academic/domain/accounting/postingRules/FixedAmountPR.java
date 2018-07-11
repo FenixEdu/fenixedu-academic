@@ -82,7 +82,7 @@ public class FixedAmountPR extends FixedAmountPR_Base {
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
         return getFixedAmount();
     }
 

@@ -135,7 +135,7 @@ abstract public class DFAGratuityPR extends DFAGratuityPR_Base implements IGratu
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
         final Money result;
         if (((GratuityEvent) event).isCustomEnrolmentModel()) {
             result = calculateDFAGratuityTotalAmountToPay(event);

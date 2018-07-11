@@ -12193,7 +12193,7 @@ relation PartialRegimeEventPostingRule {
         multiplicity *;
     }
 
-    protected accounting.PostingRule playsRole eventPostingRule {
+    protected accounting.postingRules.gratuity.PartialRegimePR playsRole eventPostingRule {
         multiplicity 1..1;
     }
 }

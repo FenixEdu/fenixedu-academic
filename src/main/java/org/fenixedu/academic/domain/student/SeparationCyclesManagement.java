@@ -34,6 +34,7 @@ import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.OptionalEnrolment;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.Installment;
 import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.accounting.PaymentCodeState;
@@ -581,7 +582,7 @@ public class SeparationCyclesManagement {
 
         if (!oldStudentCurricularPlan.hasGratuityEvent(getExecutionYear(), GratuityEventWithPaymentPlan.class)
                 || oldStudentCurricularPlan.getGratuityEvent(getExecutionYear(), GratuityEventWithPaymentPlan.class)
-                        .isCancelled()) {
+                        .map(Event::isCancelled).orElse(false)) {
             return;
         }
 
@@ -591,9 +592,11 @@ public class SeparationCyclesManagement {
         }
 
         final GratuityEvent firstEvent =
-                oldStudentCurricularPlan.getGratuityEvent(getExecutionYear(), GratuityEventWithPaymentPlan.class);
+                oldStudentCurricularPlan.getGratuityEvent(getExecutionYear(), GratuityEventWithPaymentPlan.class).orElseThrow(
+                        UnsupportedOperationException::new);
         final GratuityEvent secondEvent =
-                newStudentCurricularPlan.getGratuityEvent(getExecutionYear(), GratuityEventWithPaymentPlan.class);
+                newStudentCurricularPlan.getGratuityEvent(getExecutionYear(), GratuityEventWithPaymentPlan.class).orElseThrow(
+                        UnsupportedOperationException::new);
 
         if (!firstEvent.isGratuityEventWithPaymentPlan() || !secondEvent.isGratuityEventWithPaymentPlan()) {
             throw new DomainException("error.SeparationCyclesManagement.unexpected.event.types");

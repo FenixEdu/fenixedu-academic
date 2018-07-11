@@ -59,7 +59,7 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
         super.init(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE, startDate, endDate, serviceAgreementTemplate);
     }
 
-    @Override protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    @Override protected Money doCalculationForAmountToPay(Event event, DateTime when) {
         throw new UnsupportedOperationException("use getAdministrativeOfficeFeeAmount and getInsuranceAmount");
     }
 

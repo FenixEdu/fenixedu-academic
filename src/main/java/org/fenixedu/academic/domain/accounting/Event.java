@@ -536,8 +536,8 @@ public abstract class Event extends Event_Base {
         return getDueDateAmountMap(getPostingRule(), when);
     }
 
-    public Map<LocalDate, Money> getDueDateAmountMap(PostingRule postingRule, DateTime when) {
-        return Collections.singletonMap(getDueDateByPaymentCodes().toLocalDate(), postingRule.doCalculationForAmountToPay(this, when ,false));
+    public Map getDueDateAmountMap(PostingRule postingRule, DateTime when) {
+        return Collections.singletonMap(getDueDateByPaymentCodes().toLocalDate(), postingRule.doCalculationForAmountToPay(this, when));
     }
 
     private Money calculateTotalAmountToPay(DateTime whenRegistered) {

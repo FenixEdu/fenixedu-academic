@@ -1,18 +1,23 @@
 package org.fenixedu.academic.domain.accounting.events.gratuity;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.accounting.paymentPlanRules.IsAlienRule;
 import org.fenixedu.academic.domain.accounting.postingRules.gratuity.EnrolmentGratuityPR;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.student.RegistrationRegimeType;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.signals.DomainObjectEvent;
 import org.fenixedu.bennu.core.signals.Signal;
@@ -26,24 +31,14 @@ public class EnrolmentGratuityEvent extends EnrolmentGratuityEvent_Base {
 
     static {
         Signal.register(Enrolment.SIGNAL_CREATED, (DomainObjectEvent<Enrolment> wrapper) -> {
-            final Enrolment enrolment = wrapper.getInstance();
-            if (enrolment.getStudentCurricularPlan().getRegistration().isActive() && enrolment.getStudentCurricularPlan()
-                    .getRegistration().hasToPayGratuityOrInsurance()) {
-                enrolment.getGratuityEvent().orElseGet(() -> {
-                    final IsAlienRule isAlienRule = new IsAlienRule();
-                    if (enrolment.getStudentCurricularPlan().isEmptyDegree() || enrolment.getCurriculumGroup().isStandalone()) {
-                        return create(enrolment.getPerson(), enrolment, EventType.STANDALONE_PER_ENROLMENT_GRATUITY,
-                                isAlienRule.isAppliableFor(enrolment.getStudentCurricularPlan(), enrolment.getExecutionYear()));
-                    }
-                    return null;
-                });
-            }
+            create(wrapper.getInstance());
         });
     }
 
     protected EnrolmentGratuityEvent(Person person, Enrolment enrolment, EnrolmentGratuityPR postingRule) {
         super();
-        final AdministrativeOffice administrativeOffice = enrolment.getAcademicUnit().getAdministrativeOffice();
+        final AdministrativeOffice administrativeOffice =
+                enrolment.getDegreeCurricularPlanOfStudent().getDegree().getAdministrativeOffice();
         final StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
         final ExecutionYear executionYear = enrolment.getExecutionYear();
 
@@ -58,6 +53,39 @@ public class EnrolmentGratuityEvent extends EnrolmentGratuityEvent_Base {
     private static DomainException cantCreateEvent(Enrolment enrolment) {
         return new DomainException("No matching EnrolmentGratuityPR for enrolment gratuity event",
                 enrolment.getStudentCurricularPlan().getName());
+    }
+
+    /***
+     * Creates an @{link EnrolmentGratuityEvent} if necessary
+     * Checks if the enrolment is a standalone or partial regime enrolment.
+     * @param enrolment the enrolment to associate the event
+     * @return an {@link Optional} with the event if already existed or just created
+     */
+    public static Optional<EnrolmentGratuityEvent> create(Enrolment enrolment) {
+        if (enrolment.getStudentCurricularPlan().getRegistration().isActive() && enrolment.getStudentCurricularPlan()
+                .getRegistration().hasToPayGratuityOrInsurance()) {
+            return Optional.ofNullable(enrolment.getGratuityEvent().orElseGet(() -> {
+                EventType eventType = null;
+                if (enrolment.getStudentCurricularPlan().isEmptyDegree() || enrolment.isStandalone()) {
+                    eventType = EventType.STANDALONE_PER_ENROLMENT_GRATUITY;
+                } else {
+                    if (RegistrationRegimeType.PARTIAL_TIME.equals(enrolment.getStudentCurricularPlan().getRegistration()
+                            .getRegimeType(enrolment.getExecutionYear()))) {
+                        eventType = EventType.PARTIAL_REGIME_ENROLMENT_GRATUITY;
+                    }
+                }
+
+                if (eventType != null) {
+                    final IsAlienRule isAlienRule = new IsAlienRule();
+                    boolean forAliens =
+                            isAlienRule.isAppliableFor(enrolment.getStudentCurricularPlan(), enrolment.getExecutionYear());
+                    return create(enrolment.getPerson(), enrolment, eventType, forAliens);
+                }
+
+                return null;
+            }));
+        }
+        return Optional.empty();
     }
 
     public static EnrolmentGratuityEvent create(Person person, Enrolment enrolment, EventType eventType, boolean forAliens) {
@@ -97,10 +125,33 @@ public class EnrolmentGratuityEvent extends EnrolmentGratuityEvent_Base {
 
     @Override
     public Map<LocalDate, Money> getDueDateAmountMap(PostingRule postingRule, DateTime when) {
-        Money enrolmentAmount = postingRule.doCalculationForAmountToPayWithoutExemptions(this, when, false);
+        Money enrolmentAmount = postingRule.calculateTotalAmountToPay(this, when);
         LocalDate dueDate =
                 getWhenOccured().toLocalDate().plusDays(getEventPostingRule().getNumberOfDaysToStartApplyingInterest());
         return Collections.<LocalDate, Money>singletonMap(dueDate, enrolmentAmount);
     }
 
+    @Override
+    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        final LabelFormatter result = new LabelFormatter();
+        result.appendLabel(getEventType().getQualifiedName(), Bundle.ENUMERATION);
+        if (getEventPostingRule().isForAliens()) {
+            result.appendLabel(" (");
+            result.appendLabel("label.forAliens", Bundle.APPLICATION);
+            result.appendLabel(" )");
+        }
+        result.appendLabel(" - ");
+        result.appendLabel(getEnrolment().getName().getContent());
+
+        result.appendLabel(" (");
+        result.appendLabel(getEnrolment().getExecutionPeriod().getQualifiedName());
+        result.appendLabel(")");
+
+        result.appendLabel(" - ");
+        result.appendLabel(getEnrolment().getEctsCreditsForCurriculum().toPlainString());
+        result.appendLabel(" ");
+        result.appendLabel("label.ects", Bundle.APPLICATION);
+        
+        return result;
+    }
 }

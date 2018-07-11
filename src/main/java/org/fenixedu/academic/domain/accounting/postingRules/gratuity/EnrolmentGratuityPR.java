@@ -32,7 +32,7 @@ public class EnrolmentGratuityPR extends EnrolmentGratuityPR_Base {
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
         final BigDecimal ectsCreditsForCurriculum = ((EnrolmentGratuityEvent) event).getEnrolment().getEctsCreditsForCurriculum();
         return new Money(getAmountPerEcts().multiply(ectsCreditsForCurriculum));
     }
