@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
+import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.accounting.events.gratuity.EnrolmentGratuityEvent;
 import org.fenixedu.academic.util.Bundle;
@@ -24,10 +25,10 @@ public class EnrolmentGratuityPR extends EnrolmentGratuityPR_Base {
     public EnrolmentGratuityPR(DateTime startDate, DateTime endDate, EventType eventType, ServiceAgreementTemplate
             serviceAgreementTemplate, BigDecimal amountPerEcts, Integer numberOfDaysToStartApplyingInterest, boolean
             forAliens) {
-        super.init(EntryType.GRATUITY_FEE, eventType, startDate, endDate, serviceAgreementTemplate);
         setAmountPerEcts(amountPerEcts);
         setNumberOfDaysToStartApplyingInterest(numberOfDaysToStartApplyingInterest);
         setForAliens(forAliens);
+        super.init(EntryType.GRATUITY_FEE, eventType, startDate, endDate, serviceAgreementTemplate);
     }
 
     @Override
@@ -59,5 +60,13 @@ public class EnrolmentGratuityPR extends EnrolmentGratuityPR_Base {
         }
         
         return BundleUtil.getString(Bundle.APPLICATION, key, getAmountPerEcts().toPlainString(), getNumberOfDaysToStartApplyingInterest().toString());
+    }
+
+    @Override
+    public boolean overlaps(PostingRule postingRule) {
+        if(super.overlaps(postingRule)) {
+            return ((EnrolmentGratuityPR)postingRule).isForAliens() == isForAliens();
+        }
+        return false;
     }
 }

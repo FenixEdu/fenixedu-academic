@@ -27,7 +27,9 @@ public class EnrolmentGratuityEvent extends EnrolmentGratuityEvent_Base {
     static {
         Signal.register(Enrolment.SIGNAL_CREATED, (DomainObjectEvent<Enrolment> wrapper) -> {
             final Enrolment enrolment = wrapper.getInstance();
-            enrolment.getGratuityEvent().orElseGet(() ->{
+            if (enrolment.getStudentCurricularPlan().getRegistration().isActive() && enrolment.getStudentCurricularPlan()
+                    .getRegistration().hasToPayGratuityOrInsurance()) {
+                enrolment.getGratuityEvent().orElseGet(() -> {
                     final IsAlienRule isAlienRule = new IsAlienRule();
                     if (enrolment.getStudentCurricularPlan().isEmptyDegree() || enrolment.getCurriculumGroup().isStandalone()) {
                         return create(enrolment.getPerson(), enrolment, EventType.STANDALONE_PER_ENROLMENT_GRATUITY,
@@ -35,6 +37,7 @@ public class EnrolmentGratuityEvent extends EnrolmentGratuityEvent_Base {
                     }
                     return null;
                 });
+            }
         });
     }
 
@@ -65,8 +68,6 @@ public class EnrolmentGratuityEvent extends EnrolmentGratuityEvent_Base {
                         .getPostingRulesBy(eventType, executionYear.getBeginLocalDate().toDateTimeAtStartOfDay(),
                                 executionYear.getEndLocalDate().toDateTimeAtStartOfDay());
 
-
-
         if (!postingRules.stream().allMatch(EnrolmentGratuityPR.class::isInstance)) {
             throw cantCreateEvent(enrolment);
         }
@@ -77,8 +78,7 @@ public class EnrolmentGratuityEvent extends EnrolmentGratuityEvent_Base {
 
         return enrolment.getGratuityEvent().orElseGet(() -> {
             try {
-                return FenixFramework.atomic(
-                        () -> new EnrolmentGratuityEvent(person, enrolment, enrolmentGratuityPR));
+                return FenixFramework.atomic(() -> new EnrolmentGratuityEvent(person, enrolment, enrolmentGratuityPR));
             } catch (Exception e) {
                 throw cantCreateEvent(enrolment);
             }
