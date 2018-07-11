@@ -72,7 +72,6 @@ import org.fenixedu.academic.util.DateFormatUtil;
 import org.fenixedu.academic.util.LocaleUtils;
 import org.fenixedu.academic.util.ProposalState;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.signals.DomainObjectEvent;
 import org.fenixedu.bennu.core.signals.Signal;
@@ -387,9 +386,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     // Delete Method
     public void delete() {
         DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
-        if (getSender() != null) {
-            getSender().getRecipients().clear();
-            getSender().delete();
+        if (super.getSender() != null) {
+            final Sender sender = super.getSender();
+            setSender(null);
+            sender.delete();
         }
         if (getEvaluationMethod() != null) {
             getEvaluationMethod().delete();
@@ -425,6 +425,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         getAssociatedCurricularCoursesSet().clear();
         getNonAffiliatedTeachersSet().clear();
         getTeacherGroupSet().clear();
+        getStudentGroupSet().clear();
+        getSpecialCriteriaOverExecutionCourseGroupSet().clear();
         setExecutionPeriod(null);
         setRootDomainObject(null);
         super.deleteDomainObject();
@@ -463,16 +465,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                 blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
             }
         }
-
-        if (!getStudentGroupSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION,
-                    "error.executionCourse.cannotDeleteExecutionCourseUsedInAccessControl"));
-        }
-        if (!getSpecialCriteriaOverExecutionCourseGroupSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION,
-                    "error.executionCourse.cannotDeleteExecutionCourseUsedInAccessControl"));
-        }
-
     }
 
     private void removeFinalEvaluations() {

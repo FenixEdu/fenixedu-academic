@@ -170,6 +170,12 @@ public class Unit extends Unit_Base {
             getParentsSet().iterator().next().delete();
         }
 
+        if (super.getSender() != null){
+            final Sender sender = super.getSender();
+            setSender(null);
+            sender.delete();
+        }
+
         getUnitName().delete();
 
         setRootDomainObjectForEarthUnit(null);

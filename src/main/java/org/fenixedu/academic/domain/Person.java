@@ -522,6 +522,12 @@ public class Person extends Person_Base {
             getStudent().delete();
         }
 
+        if (super.getSender() != null) {
+            final Sender sender = super.getSender();
+            setSender(null);
+            sender.delete();
+        }
+
         getThesisEvaluationParticipantsSet().clear();
 
         for (; !getIdDocumentsSet().isEmpty(); getIdDocumentsSet().iterator().next().delete()) {
@@ -1910,7 +1916,7 @@ public class Person extends Person_Base {
         Sender sender = Sender
                 .from(Installation.getInstance().getInstituitionalEmailAddress("noreply"))
                 .as(createFromName())
-                .replyTo(AccessControl.getPerson().getDefaultEmailAddressValue())
+                .replyTo(getDefaultEmailAddressValue())
                 .members(getPersonGroup())
                 .build();
         setSender(sender);

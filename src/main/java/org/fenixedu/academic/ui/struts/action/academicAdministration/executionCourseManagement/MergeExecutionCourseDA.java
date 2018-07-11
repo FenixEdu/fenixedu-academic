@@ -71,8 +71,6 @@ public class MergeExecutionCourseDA extends FenixDispatchAction {
     public ActionForward chooseDegreesAndExecutionPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
 
-        Boolean previousOrEqualSemester = false;
-
         DegreesMergeBean degreeBean = getRenderedObject("degreeBean");
         request.setAttribute("degreeBean", degreeBean);
         RenderUtils.invalidateViewState();
@@ -80,7 +78,7 @@ public class MergeExecutionCourseDA extends FenixDispatchAction {
         AcademicInterval choosedSemester = degreeBean.getAcademicInterval();
         AcademicInterval actualSemester = ExecutionSemester.readActualExecutionSemester().getAcademicInterval();
 
-        previousOrEqualSemester = choosedSemester.isBefore(actualSemester) || choosedSemester.isEqualOrEquivalent(actualSemester);
+        Boolean previousOrEqualSemester = choosedSemester.isBefore(actualSemester) || choosedSemester.isEqualOrEquivalent(actualSemester);
 
         request.setAttribute("previousOrEqualSemester", previousOrEqualSemester);
 
@@ -88,16 +86,14 @@ public class MergeExecutionCourseDA extends FenixDispatchAction {
                 && degreeBean.getSourceDegree().getExecutionCourses(degreeBean.getAcademicInterval()).isEmpty()) {
             addActionMessage("error", request, "message.merge.execution.courses.degreesHasNoCourses");
             return mapping.findForward("chooseDegreesAndExecutionPeriod");
-        } else {
-            if (degreeBean.getDestinationDegree().getExecutionCourses(degreeBean.getAcademicInterval()).isEmpty()) {
-                addActionMessage("error", request, "message.merge.execution.courses.destinationDegreeHasNoCourses");
-                return mapping.findForward("chooseDegreesAndExecutionPeriod");
-            } else {
-                if (degreeBean.getSourceDegree().getExecutionCourses(degreeBean.getAcademicInterval()).isEmpty()) {
-                    addActionMessage("error", request, "message.merge.execution.courses.sourceDegreeHasNoCourses");
-                    return mapping.findForward("chooseDegreesAndExecutionPeriod");
-                }
-            }
+        }
+        else if (degreeBean.getDestinationDegree().getExecutionCourses(degreeBean.getAcademicInterval()).isEmpty()) {
+            addActionMessage("error", request, "message.merge.execution.courses.destinationDegreeHasNoCourses");
+            return mapping.findForward("chooseDegreesAndExecutionPeriod");
+        }
+        else if (degreeBean.getSourceDegree().getExecutionCourses(degreeBean.getAcademicInterval()).isEmpty()) {
+            addActionMessage("error", request, "message.merge.execution.courses.sourceDegreeHasNoCourses");
+            return mapping.findForward("chooseDegreesAndExecutionPeriod");
         }
         return mapping.findForward("chooseExecutionCourses");
     }
@@ -127,10 +123,8 @@ public class MergeExecutionCourseDA extends FenixDispatchAction {
 
         try {
             MergeExecutionCourses.merge(destinationExecutionCourse, sourceExecutionCourse);
-        } catch (DomainException ex) {
-            error = true;
-            addActionMessage("error", request, ex.getLocalizedMessage());
-        } catch (FenixServiceException ex) {
+        }
+        catch (DomainException | FenixServiceException ex) {
             error = true;
             addActionMessage("error", request, ex.getLocalizedMessage());
         }

@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.accounting;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -146,6 +147,10 @@ public class AccountingTransaction extends AccountingTransaction_Base {
         return Collections.unmodifiableSet(super.getAdjustmentTransactionsSet());
     }
 
+    public Stream<AccountingTransaction> getAdjustmentTransactionStream() {
+        return super.getAdjustmentTransactionsSet().stream();
+    }
+
     @Override
     public void removeAdjustmentTransactions(AccountingTransaction adjustmentTransactions) {
         throw new DomainException(
@@ -175,7 +180,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     }
 
     private Entry getEntry(boolean positive) {
-        for (final Entry entry : getEntriesSet()) {
+        for (final Entry entry : super.getEntriesSet()) {
             if (entry.isPositiveAmount() == positive) {
                 return entry;
             }
@@ -276,11 +281,11 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     }
 
     public boolean hasBeenAdjusted() {
-        return !getAdjustmentTransactionsSet().isEmpty();
+        return !super.getAdjustmentTransactionsSet().isEmpty();
     }
 
     public Entry getEntryFor(final Account account) {
-        for (final Entry accountingEntry : getEntriesSet()) {
+        for (final Entry accountingEntry : super.getEntriesSet()) {
             if (accountingEntry.getAccount() == account) {
                 return accountingEntry;
             }

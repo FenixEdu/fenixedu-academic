@@ -11818,7 +11818,7 @@ relation PersistentSpecialCriteriaOverExecutionCourseGroupExecutionCourse {
         multiplicity *;
     }
     public ExecutionCourse playsRole executionCourse {
-        multiplicity 1..1;
+        multiplicity 0..1;
     }
 }
 

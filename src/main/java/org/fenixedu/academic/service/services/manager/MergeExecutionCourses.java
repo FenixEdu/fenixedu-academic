@@ -134,11 +134,7 @@ public class MergeExecutionCourses {
 
     @Atomic(mode = TxMode.WRITE)
     public static void merge(ExecutionCourse executionCourseTo, ExecutionCourse executionCourseFrom) throws FenixServiceException {
-        if (executionCourseFrom == null) {
-            throw new InvalidArgumentsServiceException();
-        }
-
-        if (executionCourseTo == null) {
+        if (executionCourseFrom == null || executionCourseTo == null) {
             throw new InvalidArgumentsServiceException();
         }
 

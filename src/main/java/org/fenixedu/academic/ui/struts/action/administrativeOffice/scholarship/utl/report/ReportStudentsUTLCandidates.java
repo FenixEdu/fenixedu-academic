@@ -27,6 +27,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -380,7 +381,7 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
     private CellStyle headerBackgroundStyle(final HSSFWorkbook wb) {
         CellStyle style = wb.createCellStyle();
         style.setFillBackgroundColor(IndexedColors.AQUA.getIndex());
-        style.setFillPattern(CellStyle.BIG_SPOTS);
+        style.setFillPattern(FillPatternType.BIG_SPOTS);
 
         return style;
     }

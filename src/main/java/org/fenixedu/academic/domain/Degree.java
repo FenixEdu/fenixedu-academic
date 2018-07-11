@@ -277,8 +277,10 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         }
 
         // checkDeletion assures that site is deletable
-        if (getSender() != null) {
+        if (super.getSender() != null) {
+            final Sender sender = super.getSender();
             setSender(null);
+            sender.delete();
         }
 
         setUnit(null);
@@ -1405,7 +1407,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         Sender sender = Sender
                 .from(Installation.getInstance().getInstituitionalEmailAddress("noreply"))
                 .as(createFromName())
-                .replyTo(AccessControl.getPerson().getDefaultEmailAddressValue())
                 .members(CoordinatorGroup.get(this))
                 .recipients(cycleGroups)
                 .recipients(current,teachers,students)
