@@ -410,13 +410,13 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
                 final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
 
                 if (getAdministratedCycleTypes().contains(CycleType.FIRST_CYCLE)) {
-                    fillSpreadSheetBolonhaInfo(spreadsheet, registration, studentCurricularPlan.getCycle(CycleType.FIRST_CYCLE));
+                    fillSpreadSheetBolonhaInfo(spreadsheet, registration, studentCurricularPlan.getCycle(CycleType.FIRST_CYCLE), executionYear);
                 }
                 if (getAdministratedCycleTypes().contains(CycleType.SECOND_CYCLE)) {
-                    fillSpreadSheetBolonhaInfo(spreadsheet, registration, studentCurricularPlan.getCycle(CycleType.SECOND_CYCLE));
+                    fillSpreadSheetBolonhaInfo(spreadsheet, registration, studentCurricularPlan.getCycle(CycleType.SECOND_CYCLE), executionYear);
                 }
                 if (getAdministratedCycleTypes().contains(CycleType.THIRD_CYCLE)) {
-                    fillSpreadSheetBolonhaInfo(spreadsheet, registration, studentCurricularPlan.getCycle(CycleType.THIRD_CYCLE));
+                    fillSpreadSheetBolonhaInfo(spreadsheet, registration, studentCurricularPlan.getCycle(CycleType.THIRD_CYCLE), executionYear);
                 }
 
                 spreadsheet.addCell(registrationWithStateForExecutionYearBean.getPersonalDataAuthorization());
@@ -578,17 +578,17 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
     }
 
     private void fillSpreadSheetBolonhaInfo(StyledExcelSpreadsheet spreadsheet, Registration registration,
-            CycleCurriculumGroup cycle) {
+            CycleCurriculumGroup cycle, ExecutionYear executionYear) {
         if ((cycle != null) && (!cycle.isExternal())) {
             RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration, cycle);
-            fillSpreadSheetRegistrationInfo(spreadsheet, registrationConclusionBean, registrationConclusionBean.isConcluded());
+            fillSpreadSheetRegistrationInfo(spreadsheet, registrationConclusionBean, registrationConclusionBean.isConcluded(), executionYear);
         } else {
             fillSpreadSheetEmptyCells(spreadsheet);
         }
     }
 
     private void fillSpreadSheetRegistrationInfo(StyledExcelSpreadsheet spreadsheet,
-            RegistrationConclusionBean registrationConclusionBean, boolean isConcluded) {
+            RegistrationConclusionBean registrationConclusionBean, boolean isConcluded, ExecutionYear executionYear) {
         spreadsheet.addCell(BundleUtil.getString(Bundle.APPLICATION, "label." + (isConcluded ? "yes" : "no") + ".capitalized"));
 
         spreadsheet.addCell(isConcluded ? registrationConclusionBean.getConclusionDate().toString(YMD_FORMAT) : EMPTY);
@@ -602,7 +602,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
         spreadsheet.addCell(BundleUtil.getString(Bundle.APPLICATION,
                 "label." + (registrationConclusionBean.isConclusionProcessed() ? "yes" : "no") + ".capitalized"));
 
-        spreadsheet.addCell(registrationConclusionBean.getCalculatedEctsCredits());
+        spreadsheet.addCell(registrationConclusionBean.getCalculatedEctsCredits(executionYear));
     }
 
     private void fillSpreadSheetEmptyCells(StyledExcelSpreadsheet spreadsheet) {
