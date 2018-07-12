@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
@@ -271,6 +272,11 @@ public abstract class Event extends Event_Base {
             }
         }
         return result;
+    }
+
+    public Stream<AccountingTransaction> getNonAdjustingTransactionStream() {
+        return super.getAccountingTransactionsSet().stream()
+            .filter(at -> !at.isAdjustingTransaction() && at.getAmountWithAdjustment().isPositive());
     }
 
     public List<AccountingTransaction> getAllAdjustedAccountingTransactions() {
@@ -906,6 +912,10 @@ public abstract class Event extends Event_Base {
     @Override
     public Set<Exemption> getExemptionsSet() {
         return Collections.unmodifiableSet(super.getExemptionsSet());
+    }
+
+    public Stream<Exemption> getExemptionsStream() {
+        return super.getExemptionsSet().stream();
     }
 
     @Override
