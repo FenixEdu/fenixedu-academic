@@ -31,7 +31,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base {
+public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base implements IAdministrativeOfficeFeeAndInsurancePR {
 
     protected AdministrativeOfficeFeePR() {
         super();
@@ -71,4 +71,23 @@ public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base {
                 penaltyAmount, whenToApplyFixedAmountPenalty);
     }
 
+    @Override
+    public YearMonthDay getAdministrativeOfficeFeePaymentLimitDate(DateTime startDate, DateTime endDate) {
+        return getWhenToApplyFixedAmountPenalty();
+    }
+
+    @Override
+    public Money getInsuranceAmount(DateTime startDate, DateTime endDate) {
+        return Money.ZERO;
+    }
+
+    @Override
+    public Money getAdministrativeOfficeFeeAmount(Event event, DateTime startDate, DateTime endDate) {
+        return getFixedAmount();
+    }
+
+    @Override
+    public Money getAdministrativeOfficeFeePenaltyAmount(Event event, DateTime startDate, DateTime endDate) {
+        return getFixedAmountPenalty();
+    }
 }

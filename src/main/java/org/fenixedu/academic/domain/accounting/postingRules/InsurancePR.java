@@ -24,8 +24,9 @@ import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
-public class InsurancePR extends InsurancePR_Base {
+public class InsurancePR extends InsurancePR_Base implements IAdministrativeOfficeFeeAndInsurancePR {
 
     protected InsurancePR() {
         super();
@@ -47,4 +48,23 @@ public class InsurancePR extends InsurancePR_Base {
         return new InsurancePR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), fixedAmount);
     }
 
+    @Override
+    public YearMonthDay getAdministrativeOfficeFeePaymentLimitDate(DateTime startDate, DateTime endDate) {
+        return endDate.toYearMonthDay();
+    }
+
+    @Override
+    public Money getInsuranceAmount(DateTime startDate, DateTime endDate) {
+        return getFixedAmount();
+    }
+
+    @Override
+    public Money getAdministrativeOfficeFeeAmount(Event event, DateTime startDate, DateTime endDate) {
+        return Money.ZERO;
+    }
+
+    @Override
+    public Money getAdministrativeOfficeFeePenaltyAmount(Event event, DateTime startDate, DateTime endDate) {
+        return Money.ZERO;
+    }
 }

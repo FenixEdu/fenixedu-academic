@@ -34,6 +34,10 @@ import org.fenixedu.academic.dto.accounting.SibsTransactionDetailDTO;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
 
+/***
+ * Use {@link EnrolmentEvaluationEvent} instead
+ */
+@Deprecated
 public class SpecialSeasonEnrolmentEvent extends SpecialSeasonEnrolmentEvent_Base {
 
     protected SpecialSeasonEnrolmentEvent() {

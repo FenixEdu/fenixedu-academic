@@ -27,6 +27,10 @@ import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 
+/***
+ * Use {@link EnrolmentEvaluationEvent} instead
+ */
+@Deprecated
 public class ImprovementOfApprovedEnrolmentEvent extends ImprovementOfApprovedEnrolmentEvent_Base {
 
     protected ImprovementOfApprovedEnrolmentEvent() {
