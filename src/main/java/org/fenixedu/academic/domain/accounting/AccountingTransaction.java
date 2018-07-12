@@ -33,6 +33,8 @@ import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.signals.DomainObjectEvent;
+import org.fenixedu.bennu.core.signals.Signal;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -44,6 +46,8 @@ import org.joda.time.YearMonthDay;
  * 
  */
 public class AccountingTransaction extends AccountingTransaction_Base {
+
+    public static final String SIGNAL_ANNUL = AccountingTransaction.class.getName() + ".annul";
 
     public static Comparator<AccountingTransaction> COMPARATOR_BY_WHEN_REGISTERED = new Comparator<AccountingTransaction>() {
         @Override
@@ -225,6 +229,8 @@ public class AccountingTransaction extends AccountingTransaction_Base {
         }
 
         checkRulesToAnnul();
+
+        Signal.emit(SIGNAL_ANNUL, new DomainObjectEvent<AccountingTransaction>(this));
 
         reimburseWithoutRules(responsibleUser, getTransactionDetail().getPaymentMode(), getAmountWithAdjustment(), reason);
 

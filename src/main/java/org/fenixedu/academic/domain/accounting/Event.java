@@ -54,6 +54,7 @@ import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.signals.Signal;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -851,9 +852,11 @@ public abstract class Event extends Event_Base {
     }
 
     protected void changeState(EventState state, DateTime when) {
+        Signal.emit(EventState.EVENT_STATE_CHANGED, new EventState.ChangeStateEvent(state, this, when));
         super.setEventState(state);
         super.setEventStateDate(when);
     }
+
 
     public boolean isOtherPartiesPaymentsSupported() {
         return false;
