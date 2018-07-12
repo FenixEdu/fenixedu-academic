@@ -665,17 +665,26 @@ public abstract class Event extends Event_Base {
         cancel(responsible, null);
     }
 
-    public void cancel(final Person responsible, final String cancelJustification) {
+    public void forceCancel(final Person responsible, final String cancelJustification) {
         if (isCancelled()) {
             return;
         }
-
-        checkRulesToCancel(responsible);
-
         changeState(EventState.CANCELLED, new DateTime());
         super.setResponsibleForCancel(responsible);
         super.setCancelJustification(cancelJustification);
         closeNonProcessedCodes();
+    }
+
+    public void cancel(final Person responsible, final String cancelJustification) {
+        if (!isOpen()) {
+            throw new DomainException("error.accounting.Event.only.open.events.can.be.cancelled");
+        }
+
+        if (getPayedAmount().isPositive()) {
+            throw new DomainException("error.accounting.Event.cannot.cancel.events.with.payed.amount.greater.than.zero");
+        }
+
+        forceCancel(responsible, cancelJustification);
     }
 
     public void cancel(final String cancelJustification) {
@@ -690,17 +699,6 @@ public abstract class Event extends Event_Base {
         changeState(EventState.CANCELLED, new DateTime());
         super.setCancelJustification(cancelJustification);
         closeNonProcessedCodes();
-    }
-
-    private void checkRulesToCancel(final Person responsible) {
-        if (!isOpen()) {
-            throw new DomainException("error.accounting.Event.only.open.events.can.be.cancelled");
-        }
-
-        if (getPayedAmount().isPositive()) {
-            throw new DomainException("error.accounting.Event.cannot.cancel.events.with.payed.amount.greater.than.zero");
-        }
-
     }
 
     protected Set<Entry> internalProcess(User responsibleUser, Collection<EntryDTO> entryDTOs, AccountingTransactionDetailDTO transactionDetail) {
