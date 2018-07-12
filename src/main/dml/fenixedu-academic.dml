@@ -1336,6 +1336,9 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
         	class accounting.events.SpecialSeasonEnrolmentEvent extends accounting.events.EnrolmentEvent {
         	}
 
+        	class accounting.events.EnrolmentEvaluationEvent extends accounting.AcademicEvent {
+        	}
+
         class accounting.events.dfa.DFACandidacyEvent extends accounting.AcademicEvent {
         }
         
@@ -7012,6 +7015,24 @@ relation EnrolmentEvaluationSpecialSeasonEnrolmentEvent {
         multiplicity *;
     }
     accounting.events.SpecialSeasonEnrolmentEvent playsRole specialSeasonEnrolmentEvent;
+}
+
+relation EnrolmentEvaluationEvent {
+    EnrolmentEvaluation playsRole enrolmentEvaluation {
+        multiplicity 1..1;
+    }
+    accounting.events.EnrolmentEvaluationEvent playsRole enrolmentEvaluationEvent {
+        multiplicity 0..1;
+    }
+}
+
+relation EnrolmentEvaluationEventPostingRule {
+    protected accounting.PostingRule playsRole enrolmentEvaluationPostingRule {
+        multiplicity 1..1;
+    }
+    protected accounting.events.EnrolmentEvaluationEvent playsRole enrolmentEvaluationEvent {
+        multiplicity 0..*;
+    }
 }
 
 relation EnrolmentEvaluationResponsiblePerson {

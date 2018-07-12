@@ -27,7 +27,7 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 
-public class SpecialSeasonEnrolmentPR extends SpecialSeasonEnrolmentPR_Base {
+public class SpecialSeasonEnrolmentPR extends SpecialSeasonEnrolmentPR_Base implements IEnrolmentEvaluationPR {
 
     protected SpecialSeasonEnrolmentPR() {
         super();
@@ -59,4 +59,8 @@ public class SpecialSeasonEnrolmentPR extends SpecialSeasonEnrolmentPR_Base {
         return getFixedAmount().multiply(numberOfEnrolments);
     }
 
+    @Override
+    public Money getFixedAmountPenalty() {
+        return Money.ZERO;
+    }
 }

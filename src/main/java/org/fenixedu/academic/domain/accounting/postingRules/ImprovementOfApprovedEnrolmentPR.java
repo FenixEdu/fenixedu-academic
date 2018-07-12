@@ -21,7 +21,6 @@ package org.fenixedu.academic.domain.accounting.postingRules;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.EnrolmentEvaluation;
@@ -31,13 +30,14 @@ import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
+import org.fenixedu.academic.domain.accounting.events.EnrolmentEvaluationEvent;
 import org.fenixedu.academic.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrolmentPR_Base {
+public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrolmentPR_Base implements IEnrolmentEvaluationPR {
 
     protected ImprovementOfApprovedEnrolmentPR() {
         super();
@@ -75,27 +75,25 @@ public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrol
     }
 
     @Override
+    /***
+     * will not be used for {@link EnrolmentEvaluationEvent}
+     */
     protected Money doCalculationForAmountToPay(Event event, DateTime when) {
-        final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent =
-                (ImprovementOfApprovedEnrolmentEvent) event;
-
-        Money result = Money.ZERO;
-        for (int i = 0; i < improvementOfApprovedEnrolmentEvent.getImprovementEnrolmentEvaluationsSet().size(); i++) {
-            result = result.add(getFixedAmount());
-        }
-
-        return result;
+        return getFixedAmount().multiply(((ImprovementOfApprovedEnrolmentEvent) event).getImprovementEnrolmentEvaluationsSet().size());
     }
 
     private Optional<LocalDate> getDueDate(Event event) {
-        final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent =
-            (ImprovementOfApprovedEnrolmentEvent) event;
-        final Set<EnrolmentEvaluation> enrolmentEvaluations =
-            improvementOfApprovedEnrolmentEvent.getImprovementEnrolmentEvaluationsSet();
-        if (enrolmentEvaluations.isEmpty()) {
-            return Optional.empty();
+        Optional<EnrolmentEvaluation> enrolmentEvaluation;
+
+        if (event instanceof EnrolmentEvaluationEvent) {
+            enrolmentEvaluation = Optional.of(((EnrolmentEvaluationEvent) event).getEnrolmentEvaluation());
+        } else {
+            enrolmentEvaluation = ((ImprovementOfApprovedEnrolmentEvent) event).getImprovementEnrolmentEvaluationsSet().stream()
+                    .findAny();
         }
-        return Optional.of(getEnrolmentPeriodInImprovementOfApprovedEnrolment(enrolmentEvaluations.iterator().next()).getEndDateDateTime().toLocalDate());
+
+        return enrolmentEvaluation.map(this::getEnrolmentPeriodInImprovementOfApprovedEnrolment).map
+                (EnrolmentPeriodInImprovementOfApprovedEnrolment::getEndDateDateTime).map(DateTime::toLocalDate);
     }
     
 

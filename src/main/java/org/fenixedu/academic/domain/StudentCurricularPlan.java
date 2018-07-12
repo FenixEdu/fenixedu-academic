@@ -42,8 +42,8 @@ import org.apache.commons.collections.Transformer;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
+import org.fenixedu.academic.domain.accounting.events.EnrolmentEvaluationEvent;
 import org.fenixedu.academic.domain.accounting.events.EnrolmentOutOfPeriodEvent;
-import org.fenixedu.academic.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
@@ -1697,15 +1697,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     final public void createEnrolmentEvaluationForImprovement(final Collection<Enrolment> toCreate, final Person person,
             final ExecutionSemester executionSemester) {
 
-        final Collection<EnrolmentEvaluation> created = new HashSet<EnrolmentEvaluation>();
 
         for (final Enrolment enrolment : toCreate) {
-            created.add(enrolment.createEnrolmentEvaluationForImprovement(person, executionSemester));
+            final EnrolmentEvaluation enrolmentEvaluationForImprovement =
+                    enrolment.createEnrolmentEvaluationForImprovement(person, executionSemester);
+            if (isToPayImprovementOfApprovedEnrolments()) {
+                EnrolmentEvaluationEvent.create(enrolmentEvaluationForImprovement);
+            }
         }
 
-        if (isToPayImprovementOfApprovedEnrolments()) {
-            new ImprovementOfApprovedEnrolmentEvent(this.getDegree().getAdministrativeOffice(), getPerson(), created);
-        }
+
     }
 
     private boolean isToPayImprovementOfApprovedEnrolments() {
