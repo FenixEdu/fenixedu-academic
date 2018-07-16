@@ -22,7 +22,7 @@
         <version.com.github.axet.kaptcha>0.0.9</version.com.github.axet.kaptcha>
         <version.com.google.code.gson.gson>2.8.0</version.com.google.code.gson.gson>
         <version.com.google.guava.guava>21.0</version.com.google.guava.guava>
-        <version.com.googlecode.libphonenumber.libphonenumber>8.2.0</version.com.googlecode.libphonenumber.libphonenumber>
+        <version.com.googlecode.libphonenumber.libphonenumber>8.9.9</version.com.googlecode.libphonenumber.libphonenumber>
         <version.com.lowagie.itext>2.0.8</version.com.lowagie.itext>
         <version.com.sun.mail.javax.mail>1.5.6</version.com.sun.mail.javax.mail>
         <version.com.twilio.sdk.twilio-java-sdk>3.3.9</version.com.twilio.sdk.twilio-java-sdk>
