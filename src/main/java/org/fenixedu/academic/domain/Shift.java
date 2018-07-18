@@ -86,17 +86,25 @@ public class Shift extends Shift_Base {
         Registration.getRelationShiftStudent().addListener(new ShiftStudentListener());
     }
 
-    public Shift(final ExecutionCourse executionCourse, Collection<ShiftType> types, final Integer lotacao) {
-//        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageShifts);
+    public Shift(final ExecutionCourse executionCourse, Collection<ShiftType> types, final Integer lotacao,
+            final String shiftName) {
         super();
         setRootDomainObject(Bennu.getInstance());
         shiftTypeManagement(types, executionCourse);
         setLotacao(lotacao);
-        executionCourse.setShiftNames();
+        setNome(shiftName);
+
+        if (StringUtils.isBlank(shiftName)) {
+            executionCourse.setShiftNames();
+        }
 
         if (getCourseLoadsSet().isEmpty()) {
             throw new DomainException("error.Shift.empty.courseLoads");
         }
+    }
+
+    public Shift(final ExecutionCourse executionCourse, Collection<ShiftType> types, final Integer lotacao) {
+        this(executionCourse, types, lotacao, null);
     }
 
     public void edit(List<ShiftType> newTypes, Integer newCapacity, ExecutionCourse newExecutionCourse, String newName,
