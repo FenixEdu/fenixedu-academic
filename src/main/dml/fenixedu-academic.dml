@@ -2581,6 +2581,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
             DateTime lastValidationRequestDate;
 			Boolean disableSendEmails;
 			boolean photoAvailable;
+			DateTime dataProcessingTermsReadDate;
         }
 
 		class PersonIdentificationDocumentExtraInfo  {
