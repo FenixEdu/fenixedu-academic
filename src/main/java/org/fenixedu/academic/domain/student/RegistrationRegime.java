@@ -23,12 +23,21 @@ import java.util.Comparator;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.accounting.Event;
+import org.fenixedu.academic.domain.accounting.EventType;
+import org.fenixedu.academic.domain.accounting.events.gratuity.EnrolmentGratuityEvent;
+import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
 import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.core.signals.DomainObjectEvent;
+import org.fenixedu.bennu.core.signals.Signal;
 import org.joda.time.DateTime;
 
 public class RegistrationRegime extends RegistrationRegime_Base {
+
+    public static final String SIGNAL_CREATED = RegistrationRegime.class.getSimpleName() + ".created";
 
     static public Comparator<RegistrationRegime> COMPARATOR_BY_EXECUTION_YEAR = new Comparator<RegistrationRegime>() {
         @Override
@@ -52,6 +61,7 @@ public class RegistrationRegime extends RegistrationRegime_Base {
         super.setRegistration(registration);
         super.setExecutionYear(executionYear);
         super.setRegimeType(type);
+        Signal.emit(SIGNAL_CREATED, new DomainObjectEvent<RegistrationRegime>(this));
     }
 
     private void checkParameters(final Registration registration, final ExecutionYear executionYear,
@@ -97,10 +107,23 @@ public class RegistrationRegime extends RegistrationRegime_Base {
     }
 
     public void delete() {
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
+        clearPartialRegimeEvents();
         setRegistration(null);
         setExecutionYear(null);
         setRootDomainObject(null);
         super.deleteDomainObject();
+    }
+
+    private void clearPartialRegimeEvents() {
+        StudentCurricularPlan studentCurricularPlan = getRegistration().getStudentCurricularPlan(getExecutionYear());
+        studentCurricularPlan.getGratuityEvent(getExecutionYear(), GratuityEvent.class).filter(Event::canBeCanceled).forEach(partialRegimeEvent -> {
+                    partialRegimeEvent.cancel(Authenticate.getUser().getPerson(), "Partial regime was deleted.");
+        });
+        studentCurricularPlan.getGratuityEvent(getExecutionYear(), EnrolmentGratuityEvent.class).filter(e -> e.getEventType()
+                == EventType.PARTIAL_REGIME_ENROLMENT_GRATUITY && e.canBeCanceled()).forEach(enrolmentGratuityEvent -> {
+                    enrolmentGratuityEvent.cancel(Authenticate.getUser().getPerson(), "Partial regime was deleted.");
+        });
     }
 
     public boolean isFor(final ExecutionYear executionYear) {

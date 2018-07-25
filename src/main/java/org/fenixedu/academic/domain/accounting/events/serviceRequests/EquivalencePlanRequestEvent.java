@@ -69,8 +69,4 @@ public class EquivalencePlanRequestEvent extends EquivalencePlanRequestEvent_Bas
         return getAcademicServiceRequest().getNumberOfEquivalences();
     }
 
-    @Override
-    public boolean isExemptionAppliable() {
-        return true;
-    }
 }

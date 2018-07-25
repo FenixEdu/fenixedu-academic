@@ -48,6 +48,8 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
+import io.jsonwebtoken.lang.Objects;
+
 public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandidacy_Base {
 
     private DegreeChangeIndividualCandidacy() {
@@ -393,6 +395,15 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
     @Override
     public void setSeriesCandidacyGrade(BigDecimal value) {
         getDegreeChangeIndividualCandidacySeriesGrade().setSeriesCandidacyGrade(value);
+    }
+
+    @Override
+    public void setUtlStudent(Boolean newUtlStudent) {
+        Boolean utlStudent = super.getUtlStudent();
+        if (getEvent() != null && !Objects.nullSafeEquals(utlStudent, newUtlStudent)) {
+            throw new DomainException("Can't change this since an event is already created");
+        }
+        super.setUtlStudent(newUtlStudent);
     }
 
 }

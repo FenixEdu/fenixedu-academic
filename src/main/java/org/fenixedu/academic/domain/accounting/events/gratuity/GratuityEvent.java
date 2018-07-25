@@ -41,26 +41,7 @@ import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-
 public abstract class GratuityEvent extends GratuityEvent_Base {
-
-    static {
-
-        getRelationGratuityEventStudentCurricularPlan().addListener(new RelationAdapter<StudentCurricularPlan, GratuityEvent>() {
-            @Override
-            public void beforeAdd(StudentCurricularPlan studentCurricularPlan, GratuityEvent gratuityEvent) {
-                if (gratuityEvent != null
-                        && studentCurricularPlan != null
-                        && studentCurricularPlan.getRegistration().hasGratuityEvent(gratuityEvent.getExecutionYear(),
-                                gratuityEvent.getClass())) {
-                    throw new DomainException(
-                            "error.accounting.events.gratuity.GratuityEvent.person.already.has.gratuity.event.in.registration.and.year");
-
-                }
-            }
-        });
-    }
 
     protected GratuityEvent() {
         super();
@@ -123,9 +104,11 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
     @Override
     public LabelFormatter getDescription() {
         final LabelFormatter labelFormatter = super.getDescription();
+
         labelFormatter.appendLabel(" ");
-        labelFormatter.appendLabel(getDegree().getDegreeType().getName().getContent()).appendLabel(" - ");
-        labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ");
+//        labelFormatter.appendLabel(getDegree().getDegreeType().getName().getContent()).appendLabel(" - ");
+//        labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ");
+        labelFormatter.appendLabel(getDegree().getSigla()).appendLabel(" - ");
         labelFormatter.appendLabel(getExecutionYear().getYear());
         return labelFormatter;
     }
@@ -208,7 +191,7 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
     }
 
     private Money calculateTotalAmountToPayWithoutDiscount(final DateTime when) {
-        return getPostingRule().calculateTotalAmountToPay(this, when, false);
+        return getPostingRule().calculateTotalAmountToPay(this, when);
     }
 
     public boolean isGratuityExemptionAvailable() {

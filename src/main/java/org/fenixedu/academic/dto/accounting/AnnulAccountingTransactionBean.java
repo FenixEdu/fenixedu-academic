@@ -37,6 +37,9 @@ public class AnnulAccountingTransactionBean implements Serializable {
 
     private String reason;
 
+    public AnnulAccountingTransactionBean() {
+    }
+
     public AnnulAccountingTransactionBean(final AccountingTransaction transaction) {
         setTransaction(transaction);
     }

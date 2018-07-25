@@ -41,8 +41,8 @@ import org.apache.commons.collections.Transformer;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
+import org.fenixedu.academic.domain.accounting.events.EnrolmentEvaluationEvent;
 import org.fenixedu.academic.domain.accounting.events.EnrolmentOutOfPeriodEvent;
-import org.fenixedu.academic.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
@@ -1539,20 +1539,26 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return null;
     }
 
-    final public <T extends GratuityEvent> T getGratuityEvent(final ExecutionYear executionYear,
-            final Class<? extends GratuityEvent> type) {
-        for (final GratuityEvent gratuityEvent : getGratuityEventsSet()) {
-            if (!gratuityEvent.isCancelled() && gratuityEvent.getExecutionYear() == executionYear
-                    && gratuityEvent.getClass().equals(type)) {
-                return (T) gratuityEvent;
-            }
+    final public <T extends GratuityEvent> Stream<T> getGratuityEvent(final ExecutionYear executionYear,
+            final Class<T> type) {
+        return getGratuityEvent(executionYear, type, true);
+    }
+
+    final public <T extends GratuityEvent> Stream<T> getGratuityEvent(final ExecutionYear executionYear,
+            final Class<T> type, boolean excludeCanceled) {
+
+        Stream<T> eventStream = getGratuityEventsSet().stream().filter(g -> g.getExecutionYear().equals(executionYear))
+                .filter(type::isInstance).map(type::cast);
+
+        if (excludeCanceled) {
+            eventStream = eventStream.filter(g -> !g.isCancelled());
         }
 
-        return null;
+        return eventStream;
     }
 
     final public boolean hasGratuityEvent(final ExecutionYear executionYear, final Class<? extends GratuityEvent> type) {
-        return getGratuityEvent(executionYear, type) != null;
+        return getGratuityEvent(executionYear, type).count() > 0;
     }
 
     final public Set<GratuityEvent> getNotPayedGratuityEvents() {
@@ -1690,15 +1696,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     final public void createEnrolmentEvaluationForImprovement(final Collection<Enrolment> toCreate, final Person person,
             final ExecutionSemester executionSemester) {
 
-        final Collection<EnrolmentEvaluation> created = new HashSet<EnrolmentEvaluation>();
 
         for (final Enrolment enrolment : toCreate) {
-            created.add(enrolment.createEnrolmentEvaluationForImprovement(person, executionSemester));
+            final EnrolmentEvaluation enrolmentEvaluationForImprovement =
+                    enrolment.createEnrolmentEvaluationForImprovement(person, executionSemester);
+            if (isToPayImprovementOfApprovedEnrolments()) {
+                EnrolmentEvaluationEvent.create(enrolmentEvaluationForImprovement);
+            }
         }
 
-        if (isToPayImprovementOfApprovedEnrolments()) {
-            new ImprovementOfApprovedEnrolmentEvent(this.getDegree().getAdministrativeOffice(), getPerson(), created);
-        }
+
     }
 
     private boolean isToPayImprovementOfApprovedEnrolments() {

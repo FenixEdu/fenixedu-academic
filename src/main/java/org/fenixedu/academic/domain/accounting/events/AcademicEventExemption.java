@@ -102,4 +102,8 @@ public class AcademicEventExemption extends AcademicEventExemption_Base {
         return true;
     }
 
+    @Override
+    public Money getExemptionAmount(Money amount) {
+        return getValue();
+    }
 }

@@ -75,6 +75,7 @@ public class AccountingTransactionDetail extends AccountingTransactionDetail_Bas
     }
 
     void delete() {
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         super.setTransaction(null);
         setRootDomainObject(null);
         super.deleteDomainObject();

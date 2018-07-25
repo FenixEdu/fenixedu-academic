@@ -22,7 +22,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionDegree;
@@ -38,6 +40,7 @@ import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.accounting.PaymentCodeState;
 import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 import org.fenixedu.academic.domain.accounting.PaymentPlan;
+import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption;
 import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import org.fenixedu.academic.domain.accounting.paymentCodes.InstallmentPaymentCode;
@@ -464,11 +467,6 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
         return getGratuityPaymentPlan().getInstallmentsSortedByEndDate();
     }
 
-    @Override
-    public boolean isExemptionAppliable() {
-        return true;
-    }
-
     public List<InstallmentPenaltyExemption> getInstallmentPenaltyExemptions() {
         final List<InstallmentPenaltyExemption> result = new ArrayList<InstallmentPenaltyExemption>();
         for (final Exemption exemption : getExemptionsSet()) {
@@ -553,4 +551,14 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
         return true;
     }
 
+    @Override
+    public Map<LocalDate, Money> getDueDateAmountMap(PostingRule postingRule, DateTime when) {
+        return getGratuityPaymentPlan().getInstallmentsSet().stream().filter( i -> i.calculateBaseAmount(this).greaterThan(Money.ZERO))
+                   .collect(Collectors.toMap(i -> i.getEndDate(this), i -> i.calculateBaseAmount(this)));
+    }
+
+    @Override
+    public PaymentPlan getPaymentPlan() {
+        return getGratuityPaymentPlan();
+    }
 }

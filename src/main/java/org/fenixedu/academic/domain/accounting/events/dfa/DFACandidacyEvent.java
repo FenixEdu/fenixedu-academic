@@ -147,9 +147,4 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
         super.disconnect();
     }
 
-    @Override
-    public boolean isExemptionAppliable() {
-        return true;
-    }
-
 }

@@ -23,8 +23,10 @@ import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.accounting.events.insurance.IInsuranceEvent;
 import org.fenixedu.academic.domain.accounting.events.insurance.InsuranceEvent;
+import org.fenixedu.academic.domain.accounting.postingRules.InsurancePR;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -82,5 +84,16 @@ public class InsuranceExemption extends InsuranceExemption_Base {
 
     public String getKindDescription() {
         return BundleUtil.getString(Bundle.ENUMERATION, this.getClass().getSimpleName() + ".kindDescription");
+    }
+
+    @Override
+    public Money getExemptionAmount(Money money) {
+        final Event event = getEvent();
+        if (event instanceof InsuranceEvent) {
+            return ((InsurancePR)event.getPostingRule()).getFixedAmount();
+        } else if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent){
+            return ((AdministrativeOfficeFeeAndInsuranceEvent)event).getInsuranceAmount();
+        }
+        throw new DomainException("no amount for type %s%n", event.getClass().getSimpleName());
     }
 }

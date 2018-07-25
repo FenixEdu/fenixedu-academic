@@ -18,6 +18,10 @@
  */
 package org.fenixedu.academic.domain.accounting.postingRules;
 
+import java.util.Collections;
+import java.util.Map;
+import java.util.Optional;
+
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
@@ -25,6 +29,8 @@ import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+
 
 public abstract class FixedAmountWithPenaltyPR extends FixedAmountWithPenaltyPR_Base {
 
@@ -46,16 +52,18 @@ public abstract class FixedAmountWithPenaltyPR extends FixedAmountWithPenaltyPR_
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-        return super.doCalculationForAmountToPay(event, when, applyDiscount).add(
-                hasPenalty(event, when) ? getFixedAmountPenalty() : Money.ZERO);
-    }
-
-    @Override
     public void setFixedAmountPenalty(Money fixedAmountPenalty) {
         throw new DomainException("error.accounting.postingRules.FixedAmountWithPenaltyPR.cannot.modify.fixedAmountPenalty");
     }
 
-    abstract protected boolean hasPenalty(Event event, DateTime when);
+    abstract protected Optional<LocalDate> getPenaltyDueDate(Event event);
 
+    @Override
+    public Map<LocalDate, Money> getDueDatePenaltyAmountMap(Event event, DateTime when) {
+        Optional<LocalDate> penaltyDueDate = getPenaltyDueDate(event);
+        if (penaltyDueDate.isPresent()) {
+            return Collections.singletonMap(penaltyDueDate.get(), getFixedAmountPenalty());
+        }
+        return Collections.emptyMap();
+    }
 }

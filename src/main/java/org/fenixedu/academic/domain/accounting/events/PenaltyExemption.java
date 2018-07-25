@@ -18,12 +18,16 @@
  */
 package org.fenixedu.academic.domain.accounting.events;
 
+import java.util.Set;
+
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 abstract public class PenaltyExemption extends PenaltyExemption_Base {
@@ -74,4 +78,20 @@ abstract public class PenaltyExemption extends PenaltyExemption_Base {
         return true;
     }
 
+    @Override
+    public Money getExemptionAmount(Money money) {
+        return money;
+    }
+
+    public boolean isForInterest() {
+        return false;
+    }
+
+    public boolean isForFine() {
+        return true;
+    }
+
+    public Set<LocalDate> getDueDates(DateTime when) {
+        return getEvent().getDueDateAmountMap(when).keySet();
+    }
 }

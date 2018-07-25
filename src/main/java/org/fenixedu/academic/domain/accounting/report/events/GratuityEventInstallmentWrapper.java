@@ -19,7 +19,6 @@
 package org.fenixedu.academic.domain.accounting.report.events;
 
 import java.math.BigDecimal;
-import java.util.Map;
 
 import org.fenixedu.academic.domain.accounting.Installment;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
@@ -78,16 +77,6 @@ public class GratuityEventInstallmentWrapper implements InstallmentWrapper {
 
     @Override
     public String getRemainingAmount(final DateTime when) {
-        Map<Installment, Money> calculateInstallmentRemainingAmounts =
-                event.getGratuityPaymentPlan().calculateInstallmentRemainingAmounts(event, when,
-                        event.getPostingRule().getDiscountPercentage(event));
-
-        for (Map.Entry<Installment, Money> entry : calculateInstallmentRemainingAmounts.entrySet()) {
-            if (entry.getKey() == this.installment) {
-                return entry.getValue().toPlainString();
-            }
-        }
-
-        return Money.ZERO.toPlainString();
+        return event.getDueDateAmountMap(when).getOrDefault(this.installment.getEndDate(event), Money.ZERO).toPlainString();
     }
 }

@@ -76,4 +76,8 @@ public class PhdEventExemption extends PhdEventExemption_Base {
         return true;
     }
 
+    @Override
+    public Money getExemptionAmount(Money money) {
+        return getValue();
+    }
 }
