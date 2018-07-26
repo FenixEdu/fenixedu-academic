@@ -8,12 +8,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Days;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.FenixFramework;
+
+import static org.fenixedu.academic.domain.InterestRateLog.createLog;
 
 public class InterestRate extends InterestRate_Base {
 
@@ -26,6 +30,14 @@ public class InterestRate extends InterestRate_Base {
     private InterestRate(LocalDate start, LocalDate end, BigDecimal value) {
         super();
         setRootDomainObject(Bennu.getInstance());
+        setStart(start);
+        setEnd(end);
+        setValue(value);
+        createLog(Bundle.MESSAGING, "log.interestRate.created", start.toString(), end.toString(), value.toString());
+    }
+
+    public void edit(LocalDate start, LocalDate end, BigDecimal value) {
+        createLog(Bundle.MESSAGING, "log.interestRate.edited", getStart().toString(), start.toString(), getEnd().toString(), end.toString(), getValue().toString(), value.toString());
         setStart(start);
         setEnd(end);
         setValue(value);
@@ -82,7 +94,6 @@ public class InterestRate extends InterestRate_Base {
      * @param interval the interval
      * @return the original value with interest, returns the same specified amount if no interest applies.
      */
-    
     public BigDecimal getAmountWithInterest(BigDecimal amount, Interval interval) {
         return amount.add(getInterest(amount, interval));
     }
@@ -91,16 +102,46 @@ public class InterestRate extends InterestRate_Base {
         return getStart().equals(start) && getEnd().equals(end) && getValue().equals(value);
     }
 
-    public static InterestRate getOrCreate(LocalDate start, LocalDate end, BigDecimal value) {
-        return Bennu.getInstance().getInterestRateSet().stream().filter(i -> i.matches(start, end, value)).findAny().orElseGet(() -> {
-            try {
-                return FenixFramework.atomic(() -> new InterestRate(start, end, value));
-            } catch (Exception e) {
-                throw new Error(e);
-            }
-        });
+    private static boolean isValidRange(LocalDate start, LocalDate end) {
+        return start.isBefore(end);
     }
 
+    private static boolean isValidValue(BigDecimal value) {
+        return value.compareTo(BigDecimal.valueOf(0)) >= 0 && value.compareTo(BigDecimal.valueOf(100)) <= 0;
+    }
+
+    private boolean overlap(LocalDate start, LocalDate end) {
+        return !(getStart().isAfter(end) || getEnd().isBefore(start));
+    }
+
+    public static InterestRate getOrCreate(LocalDate start, LocalDate end, BigDecimal value) throws FenixActionException {
+        if(isValidRange(start, end))
+            if(isValidValue(value))
+                return Bennu.getInstance().getInterestRateSet().stream().filter(i -> i.overlap(start, end)).findAny().orElseGet(() -> {
+                    try {
+                        return FenixFramework.atomic(() -> new InterestRate(start, end, value));
+                    } catch (Exception e) {
+                        throw new Error(e);
+                    }
+                });
+            else
+                throw new InvalidValueException(value);
+        else
+            throw new InvalidDateRangeException(start, end);
+    }
+
+    public void editIfValid(LocalDate start, LocalDate end, BigDecimal value) throws FenixActionException {
+        if (isValidRange(start, end))
+            if(isValidValue(value))
+                if (Bennu.getInstance().getInterestRateSet().stream().noneMatch(i -> !i.equals(this) && i.overlap(start, end)))
+                    FenixFramework.atomic(() -> {
+                        edit(start, end, value);
+                    });
+            else
+                throw new InvalidValueException(value);
+        else
+            throw new InvalidDateRangeException(start, end);
+    }
 
     private static LocalDate getLastDueDate(Map<LocalDate, BigDecimal> entries) {
         return entries.keySet().stream().min(Comparator.reverseOrder()).get();
@@ -221,4 +262,17 @@ public class InterestRate extends InterestRate_Base {
     public String toString() {
         return "InterestRate{" + "start=" + getStart() + ", end=" + getEnd() + ", value=" + getValue() + ", externalId='" + getExternalId() + '\'' + "} " + super.toString();
     }
+
+    public static class InvalidDateRangeException extends FenixActionException {
+        public InvalidDateRangeException(LocalDate start, LocalDate end) {
+            super("error.endDateMustBeGreaterThanStartDate", start, end);
+        }
+    }
+
+    public static class InvalidValueException extends FenixActionException {
+        public InvalidValueException(BigDecimal value) {
+            super("error.valueMustBeBetween0And100", value);
+        }
+    }
+
 }

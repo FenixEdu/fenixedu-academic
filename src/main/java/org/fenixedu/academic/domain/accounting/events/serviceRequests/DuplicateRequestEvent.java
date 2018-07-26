@@ -46,5 +46,4 @@ public class DuplicateRequestEvent extends DuplicateRequestEvent_Base {
 
         return labelFormatter;
     }
-
 }

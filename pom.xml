@@ -307,11 +307,10 @@
             <version>${version.com.fasterxml.jackson.core.jackson-databind}</version>
         </dependency>
         <dependency>
-    <groupId>eu.europa.ec.taxud</groupId>
-    <artifactId>tin-algorithm</artifactId>
-    <version>5.2.2_PUBLIC</version>
-</dependency>
-
+            <groupId>eu.europa.ec.taxud</groupId>
+            <artifactId>tin-algorithm</artifactId>
+            <version>5.2.2_PUBLIC</version>
+        </dependency>
     </dependencies>
 
     <repositories>
