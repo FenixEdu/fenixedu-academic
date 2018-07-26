@@ -831,7 +831,10 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
     
     class  PersonInformationLog extends DomainOperationLog {
     }
-        
+
+    class InterestRateLog extends DomainOperationLog {
+    }
+
     class CourseLoad  {
         ShiftType type;
         BigDecimal totalQuantity;
@@ -8911,6 +8914,16 @@ relation BennuInterestRate {
     		multiplicity 1..1;
     }
     accounting.InterestRate playsRole interestRate {
+        multiplicity 0..*;
+    }
+}
+
+relation BennuInterestRateLog {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectInterestRateLog {
+        multiplicity 1..1;
+    }
+
+    InterestRateLog playsRole interestRateLog  {
         multiplicity 0..*;
     }
 }
