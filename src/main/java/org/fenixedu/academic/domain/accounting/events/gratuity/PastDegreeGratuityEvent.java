@@ -65,11 +65,6 @@ public class PastDegreeGratuityEvent extends PastDegreeGratuityEvent_Base {
     }
 
     @Override
-    public boolean isExemptionAppliable() {
-        return true;
-    }
-
-    @Override
     public Set<EntryType> getPossibleEntryTypesForDeposit() {
         return Collections.singleton(EntryType.GRATUITY_FEE);
     }

@@ -106,6 +106,23 @@ public class RegistrationDataByExecutionYear extends RegistrationDataByExecution
         checkRules();
     }
 
+    @Override
+    public void setEnrolmentModel(EnrolmentModel newEnrolmentModel) {
+        if (newEnrolmentModel != null && newEnrolmentModel != EnrolmentModel.COMPLETE) {
+            throw new DomainException("Can't change this since an event is already created");
+        }
+        super.setEnrolmentModel(newEnrolmentModel);
+//        final StudentCurricularPlan studentCurricularPlan = getRegistration().getStudentCurricularPlan(getExecutionYear());
+//        if (studentCurricularPlan != null) {
+//            if (studentCurricularPlan.getGratuityEventsSet().stream().anyMatch(GratuityEvent::isDfaGratuityEvent)) {
+//                if (!Objects.nullSafeEquals(newEnrolmentModel, enrolmentModel)) {
+//                    throw new DomainException("Can't change this since an event is already created");
+//                }
+//            }
+//        }
+
+    }
+
     //methods to provide public visibility over protected slots
 
     @Override
@@ -122,4 +139,5 @@ public class RegistrationDataByExecutionYear extends RegistrationDataByExecution
     public Registration getRegistration() {
         return super.getRegistration();
     }
+
 }

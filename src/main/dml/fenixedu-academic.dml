@@ -1292,6 +1292,10 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
         class accounting.events.AnnualEvent extends accounting.AcademicEvent {
         }
 
+            class accounting.events.AdministrativeOfficeFeeEvent extends accounting.events.AnnualEvent {
+                YearMonthDay paymentEndDate;
+            }
+
             class accounting.events.AdministrativeOfficeFeeAndInsuranceEvent extends accounting.events.AnnualEvent {
                 YearMonthDay paymentEndDate;
             }
@@ -1319,6 +1323,15 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
                 class accounting.events.gratuity.SpecializationDegreeGratuityEvent extends accounting.events.gratuity.GratuityEvent {
                 }
 
+                class accounting.events.gratuity.EnrolmentGratuityEvent extends accounting.events.gratuity.GratuityEvent {
+                    BigDecimal ects;
+                    LocalizedString courseName;
+                    String executionPeriodName;
+                }
+
+                class accounting.events.gratuity.PartialRegimeEvent extends accounting.events.gratuity.GratuityEvent {
+                }
+
             class accounting.events.insurance.InsuranceEvent extends accounting.events.AnnualEvent {
             }
 
@@ -1329,6 +1342,9 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
     	    }
 
         	class accounting.events.SpecialSeasonEnrolmentEvent extends accounting.events.EnrolmentEvent {
+        	}
+
+        	class accounting.events.EnrolmentEvaluationEvent extends accounting.AcademicEvent {
         	}
 
         class accounting.events.dfa.DFACandidacyEvent extends accounting.AcademicEvent {
@@ -1476,7 +1492,11 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
 
             class accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption extends accounting.events.PenaltyExemption {
             }
-            
+
+            class accounting.events.gratuity.exemption.penalty.FixedAmountPenaltyExemption extends accounting.events.PenaltyExemption {
+                Money value;
+            }
+
         class accounting.events.gratuity.GratuityExemption extends accounting.Exemption {
         }
 
@@ -1566,6 +1586,26 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
         
         class accounting.paymentCodes.rectorate.RectoratePaymentCode extends accounting.PaymentCode {
         }
+
+        class accounting.paymentCodes.EventPaymentCode extends accounting.PaymentCode {
+        }
+
+        class accounting.paymentCodes.EventPaymentCodeEntry {
+            Money amount;
+            DateTime created;
+            LocalDate dueDate;
+        }
+
+        class accounting.paymentCodes.PaymentCodePool {
+            Money minAmount;
+            Money maxAmount;
+            int minSize;
+            int prefix;
+            int sequenceCode;
+            int numberOfMonths;
+        }
+
+
 
     class accounting.PaymentCodeMapping  {
     }
@@ -1786,6 +1826,18 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
                 BigDecimal ectsForYear;
                 BigDecimal gratuityFactor;
                 BigDecimal ectsFactor;
+            }
+
+            class accounting.postingRules.gratuity.EnrolmentGratuityPR extends accounting.postingRules.GenericSingleEntryTypePR {
+                protected boolean forAliens;
+                protected BigDecimal amountPerEcts;
+                protected Integer numberOfDaysToStartApplyingInterest;
+            }
+
+            class accounting.postingRules.gratuity.PartialRegimePR extends accounting.postingRules.GenericSingleEntryTypePR {
+                protected boolean forAliens;
+                protected Money amount;
+                protected Integer numberOfDaysToStartApplyingInterest;
             }
             
             class accounting.postingRules.serviceRequests.EquivalencePlanRequestPR extends accounting.postingRules.GenericSingleEntryTypePR {
@@ -4456,6 +4508,13 @@ class phd.debts.ExternalScholarshipPhdGratuityContribuitionEvent extends account
 
 class accounting.events.gratuity.ExternalScholarshipGratuityContributionPR extends accounting.PostingRule {}
 
+class accounting.InterestRate {
+    LocalDate start;
+    LocalDate end;
+    BigDecimal value;
+}
+
+
 class phd.debts.ExternalScholarshipPhdGratuityContribuitionPR extends accounting.PostingRule {}
 
 class phd.debts.PhdGratuityExternalScholarshipExemption extends phd.debts.PhdEventExemption{}
@@ -4608,7 +4667,9 @@ class accessControl.PersistentUnitGroup extends .org.fenixedu.bennu.core.domain.
 
 class accessControl.PersistentThesisReadersGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
-class accessControl.PersistentAlumniGroup extends accessControl.FenixPredicateGroup;
+class accessControl.PersistentAlumniGroup extends accessControl.FenixPredicateGroup {
+    public Boolean registered;
+}
 
 class accessControl.PersistentProfessorshipsGroup extends accessControl.FenixPredicateGroup {
 	public Boolean externalAuthorizations (REQUIRED);
@@ -4624,6 +4685,9 @@ public class log.StudentRegistrationTransferLog {
 class candidacy.FirstTimeDocumentsConfiguration {
 	protected JsonElement configurationProperties (REQUIRED);	
 }
+
+
+
 
 /*
  * Relations definitions
@@ -6981,6 +7045,24 @@ relation EnrolmentEvaluationSpecialSeasonEnrolmentEvent {
     accounting.events.SpecialSeasonEnrolmentEvent playsRole specialSeasonEnrolmentEvent;
 }
 
+relation EnrolmentEvaluationEvent {
+    EnrolmentEvaluation playsRole enrolmentEvaluation {
+        multiplicity 1..1;
+    }
+    accounting.events.EnrolmentEvaluationEvent playsRole enrolmentEvaluationEvent {
+        multiplicity 0..1;
+    }
+}
+
+relation EnrolmentEvaluationEventPostingRule {
+    protected accounting.PostingRule playsRole enrolmentEvaluationPostingRule {
+        multiplicity 1..1;
+    }
+    protected accounting.events.EnrolmentEvaluationEvent playsRole enrolmentEvaluationEvent {
+        multiplicity 0..*;
+    }
+}
+
 relation EnrolmentEvaluationResponsiblePerson {
     EnrolmentEvaluation playsRole enrolmentEvaluations {
         multiplicity *;
@@ -8820,6 +8902,15 @@ relation RootDomainObjectExemptionJustification {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.events.ExemptionJustification playsRole exemptionJustifications {
         multiplicity *;
+    }
+}
+
+relation BennuInterestRate {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
+    		multiplicity 1..1;
+    }
+    accounting.InterestRate playsRole interestRate {
+        multiplicity 0..*;
     }
 }
 
@@ -12123,5 +12214,73 @@ relation EmptyConversionTableRootDomainObject {
     }
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
         multiplicity 1..1;
+    }
+}
+
+relation EnrolmentEventPostingRule {
+    accounting.events.gratuity.EnrolmentGratuityEvent playsRole enrolmentEvent {
+        multiplicity *;
+    }
+
+    protected accounting.postingRules.gratuity.EnrolmentGratuityPR playsRole eventPostingRule {
+        multiplicity 1..1;
+    }
+}
+
+relation EnrolmentEventEnrolment {
+    protected accounting.events.gratuity.EnrolmentGratuityEvent playsRole event {
+        multiplicity 0..1;
+    }
+
+    protected Enrolment playsRole enrolment {
+        multiplicity 0..1;
+    }
+}
+
+relation PartialRegimeEventPostingRule {
+    accounting.events.gratuity.PartialRegimeEvent playsRole partialRegimeEvent {
+        multiplicity *;
+    }
+
+    protected accounting.postingRules.gratuity.PartialRegimePR playsRole eventPostingRule {
+        multiplicity 1..1;
+    }
+}
+
+relation EventPaymentCodeEventPaymentCodeEntry {
+        accounting.paymentCodes.EventPaymentCode playsRole paymentCode {
+            multiplicity 1..1;
+        }
+
+        accounting.paymentCodes.EventPaymentCodeEntry playsRole eventPaymentCodeEntry {
+            multiplicity *;
+        }
+}
+
+relation EventEventPaymentCodeEntry {
+         accounting.Event playsRole event {
+             multiplicity 1..1;
+         }
+
+         accounting.paymentCodes.EventPaymentCodeEntry playsRole eventPaymentCodeEntry {
+             multiplicity *;
+         }
+ }
+
+relation BennuPaymentCodePool {
+    accounting.paymentCodes.PaymentCodePool playsRole paymentCodePool {
+        multiplicity 0..1;
+    }
+    .org.fenixedu.bennu.core.domain.Bennu playsRole bennu {
+        multiplicity 1..1;
+    }
+}
+
+relation PaymentCodePoolCodes {
+    accounting.paymentCodes.PaymentCodePool playsRole paymentCodePool {
+        multiplicity 1..1;
+    }
+    accounting.paymentCodes.EventPaymentCode playsRole paymentCode {
+        multiplicity 0..*;
     }
 }

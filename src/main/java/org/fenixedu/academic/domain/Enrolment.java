@@ -35,6 +35,7 @@ import java.util.stream.Stream;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.academic.domain.accounting.events.gratuity.EnrolmentGratuityEvent;
 import org.fenixedu.academic.domain.curriculum.CurricularCourseType;
 import org.fenixedu.academic.domain.curriculum.EnrollmentCondition;
 import org.fenixedu.academic.domain.curriculum.EnrollmentState;
@@ -242,11 +243,14 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     public void delete() {
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         checkRulesToDelete();
         createCurriculumLineLog(EnrolmentAction.UNENROL);
         deleteInformation();
         setEvaluationSeason(null);
-
+        if (getEvent() != null) {
+            getEvent().cancel(Authenticate.getUser().getPerson(), "Enrolment was deleted.");
+        }
         super.delete();
     }
 
@@ -1387,4 +1391,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         }
     }
 
+    public Optional<EnrolmentGratuityEvent> getGratuityEvent() {
+        return Optional.ofNullable(super.getEvent());
+    }
 }

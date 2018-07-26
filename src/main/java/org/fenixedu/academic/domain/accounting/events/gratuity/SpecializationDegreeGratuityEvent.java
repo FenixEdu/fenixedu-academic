@@ -106,11 +106,6 @@ public class SpecializationDegreeGratuityEvent extends SpecializationDegreeGratu
     }
 
     @Override
-    public boolean isExemptionAppliable() {
-        return true;
-    }
-
-    @Override
     protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
             SibsTransactionDetailDTO transactionDetail) {
         return internalProcess(responsibleUser,

@@ -18,29 +18,19 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.events.ExemptionJustification;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.LabelFormatter;
+import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-
 public abstract class Exemption extends Exemption_Base {
-
-    static {
-        getRelationExemptionEvent().addListener(new RelationAdapter<Exemption, Event>() {
-
-            @Override
-            public void beforeAdd(Exemption exemption, Event event) {
-                if (event != null && !event.isExemptionAppliable()) {
-                    throw new DomainException("error.accounting.Exemption.event.does.not.support.exemption");
-                }
-            }
-        });
-
-    }
 
     protected Exemption() {
         super();
@@ -61,6 +51,14 @@ public abstract class Exemption extends Exemption_Base {
         }
         if (exemptionJustification == null) {
             throw new DomainException("error.accounting.Exemption.exemptionJustification.cannot.be.null");
+        }
+
+        //check for operations after this one being created
+        
+        final List<String> operationsAfter = event.getOperationsAfter(getWhenCreated());
+        if (!operationsAfter.isEmpty()) {
+            throw new DomainException("error.accounting.Exemption.cannot.create.operations.after", operationsAfter.stream()
+                    .collect(Collectors.joining(",")));
         }
     }
 
@@ -89,6 +87,7 @@ public abstract class Exemption extends Exemption_Base {
     }
 
     public void delete(final boolean recalculateEventState) {
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         setRootDomainObject(null);
         super.setResponsible(null);
         getExemptionJustification().delete();
@@ -99,6 +98,12 @@ public abstract class Exemption extends Exemption_Base {
         }
 
         super.deleteDomainObject();
+    }
+
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        blockers.addAll(getEvent().getOperationsAfter(getWhenCreated()));
     }
 
     public void removeResponsible() {
@@ -156,5 +161,7 @@ public abstract class Exemption extends Exemption_Base {
     public boolean isSecondCycleIndividualCandidacyExemption() {
         return false;
     }
+
+    public abstract Money getExemptionAmount(Money money);
 
 }

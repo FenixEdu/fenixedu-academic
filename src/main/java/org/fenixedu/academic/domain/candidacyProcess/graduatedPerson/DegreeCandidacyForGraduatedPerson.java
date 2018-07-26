@@ -44,6 +44,8 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
 
+import io.jsonwebtoken.lang.Objects;
+
 public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduatedPerson_Base {
 
     private DegreeCandidacyForGraduatedPerson() {
@@ -69,6 +71,15 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
         if (bean.getInternalPersonCandidacy()) {
             createDebt(person);
         }
+    }
+
+    @Override
+    public void setUtlStudent(Boolean newUtlStudent) {
+        Boolean utlStudent = super.getUtlStudent();
+        if (getEvent() != null && !Objects.nullSafeEquals(utlStudent, newUtlStudent)) {
+            throw new DomainException("Can't change this since an event is already created");
+        }
+        super.setUtlStudent(newUtlStudent);
     }
 
     @Override

@@ -27,7 +27,9 @@ import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.accounting.postingRules.gratuity.DFAGratuityByAmountPerEctsPR;
 import org.fenixedu.academic.domain.accounting.postingRules.gratuity.DFAGratuityByNumberOfEnrolmentsPR;
+import org.fenixedu.academic.domain.accounting.postingRules.gratuity.EnrolmentGratuityPR;
 import org.fenixedu.academic.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR;
+import org.fenixedu.academic.domain.accounting.postingRules.gratuity.PartialRegimePR;
 import org.fenixedu.academic.domain.accounting.postingRules.gratuity.PastDegreeGratuityPR;
 import org.fenixedu.academic.domain.accounting.postingRules.gratuity.SpecializationDegreeGratuityByAmountPerEctsPR;
 import org.fenixedu.academic.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR;
@@ -37,7 +39,9 @@ import org.fenixedu.academic.dto.accounting.paymentPlan.InstallmentBean;
 import org.fenixedu.academic.dto.accounting.paymentPlan.PaymentPlanBean;
 import org.fenixedu.academic.dto.accounting.paymentPlan.StandaloneInstallmentBean;
 import org.fenixedu.academic.dto.accounting.postingRule.CreateDFAGratuityPostingRuleBean;
+import org.fenixedu.academic.dto.accounting.postingRule.CreateEnrolmentGratuityPRBean;
 import org.fenixedu.academic.dto.accounting.postingRule.CreateGratuityPostingRuleBean;
+import org.fenixedu.academic.dto.accounting.postingRule.CreatePartialRegimePRBean;
 import org.fenixedu.academic.dto.accounting.postingRule.CreateSpecializationDegreeGratuityPostingRuleBean;
 import org.fenixedu.academic.dto.accounting.postingRule.CreateStandaloneEnrolmentGratuityPRBean;
 import org.fenixedu.academic.service.services.accounting.gratuity.paymentPlan.GratuityPaymentPlanManager;
@@ -77,8 +81,24 @@ public class PostingRulesManager {
 
     }
 
+
     @Atomic
-    static public void createStandaloneGraduationGratuityPostingRule(final CreateStandaloneEnrolmentGratuityPRBean bean) {
+    static public void createEnrolmentGratuityPR(final CreateEnrolmentGratuityPRBean bean) {
+        if (bean.getRule() == EnrolmentGratuityPR.class) {
+            for (final DegreeCurricularPlan degreeCurricularPlan : bean.getDegreeCurricularPlans()) {
+                final ServiceAgreementTemplate serviceAgreementTemplate = degreeCurricularPlan.getServiceAgreementTemplate();
+                deactivateExistingEnrolmentGratuityPR(bean.getEventType(), bean.getStartDate(), serviceAgreementTemplate, bean
+                        .isForAliens());
+                new EnrolmentGratuityPR(bean.getStartDate(), null, bean.getEventType(), serviceAgreementTemplate, bean
+                        .getAmountPerEcts(), bean.getNumberOfDaysToStartApplyingInterest(), bean.isForAliens());
+            }
+        } else {
+            throw new RuntimeException("Unexpected rule type for gratuity posting rule");
+        }
+    }
+
+    @Atomic
+    static public void createEnrolmentGratuityPR(final CreateStandaloneEnrolmentGratuityPRBean bean) {
 
         if (bean.getRule() == StandaloneEnrolmentGratuityPR.class) {
             for (final DegreeCurricularPlan degreeCurricularPlan : bean.getDegreeCurricularPlans()) {
@@ -103,6 +123,35 @@ public class PostingRulesManager {
         final PostingRule existingPostingRule = serviceAgreementTemplate.findPostingRuleByEventTypeAndDate(eventType, when);
 
         if (existingPostingRule != null) {
+            existingPostingRule.deactivate(when);
+        }
+    }
+
+    private static void deactivateExistingEnrolmentGratuityPR(final EventType eventType, final DateTime when,
+            final ServiceAgreementTemplate serviceAgreementTemplate, boolean forAliens) {
+        if (!serviceAgreementTemplate.hasPostingRuleFor(eventType, when)) {
+            return;
+        }
+
+        final EnrolmentGratuityPR existingPostingRule = (EnrolmentGratuityPR) serviceAgreementTemplate.findPostingRuleByEventTypeAndDate(eventType,
+                when);
+        
+        if (existingPostingRule != null && existingPostingRule.isForAliens() == forAliens) {
+            existingPostingRule.deactivate(when);
+        }
+    }
+
+    private static void deactivateExistingPartialRegimePR(final EventType eventType, final DateTime when,
+            final ServiceAgreementTemplate serviceAgreementTemplate, boolean forAliens) {
+        if (!serviceAgreementTemplate.hasPostingRuleFor(eventType, when)) {
+            return;
+        }
+
+        final PartialRegimePR existingPostingRule = (PartialRegimePR) serviceAgreementTemplate
+                .findPostingRuleByEventTypeAndDate(eventType,
+                when);
+
+        if (existingPostingRule != null && existingPostingRule.isForAliens() == forAliens) {
             existingPostingRule.deactivate(when);
         }
     }
@@ -185,6 +234,21 @@ public class PostingRulesManager {
                     ectsFactor);
         } else {
             throw new DomainException("StandaloneEnrolmentGratuityPR.DegreeCurricularPlanServiceAgreementTemplate.cannot.be.null");
+        }
+    }
+
+    @Atomic
+    public static void createPartialRegimePR(CreatePartialRegimePRBean bean) {
+        if (bean.getRule() == PartialRegimePR.class) {
+            for (final DegreeCurricularPlan degreeCurricularPlan : bean.getDegreeCurricularPlans()) {
+                final ServiceAgreementTemplate serviceAgreementTemplate = degreeCurricularPlan.getServiceAgreementTemplate();
+                deactivateExistingPartialRegimePR(EventType.PARTIAL_REGIME_GRATUITY, bean.getStartDate(),
+                        serviceAgreementTemplate, bean.isForAliens());
+                new PartialRegimePR(bean.getStartDate(), null, serviceAgreementTemplate, bean
+                        .getAmount(), bean.getNumberOfDaysToStartApplyingInterest(), bean.isForAliens());
+            }
+        } else {
+            throw new RuntimeException("Unexpected rule type for gratuity posting rule");
         }
     }
 }

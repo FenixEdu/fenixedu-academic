@@ -20,10 +20,8 @@ package org.fenixedu.academic.domain.accounting.postingRules;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
-import org.fenixedu.academic.domain.accounting.AcademicEvent;
 import org.fenixedu.academic.domain.accounting.Account;
 import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.EntryType;
@@ -84,30 +82,8 @@ public class FixedAmountPR extends FixedAmountPR_Base {
     }
 
     @Override
-    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-        final Money totalAmountToPay = calculateTotalAmountToPay(event, when);
-        return Collections.singletonList(new EntryDTO(getEntryType(), event, totalAmountToPay, Money.ZERO, totalAmountToPay,
-                event.getDescriptionForEntryType(getEntryType()), totalAmountToPay));
-    }
-
-    @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
         return getFixedAmount();
-    }
-
-    @Override
-    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-
-        if (event instanceof AcademicEvent) {
-            final AcademicEvent requestEvent = (AcademicEvent) event;
-            if (requestEvent.hasAcademicEventExemption()) {
-                amountToPay = amountToPay.subtract(requestEvent.getAcademicEventExemption().getValue());
-            }
-
-            return amountToPay.isPositive() ? amountToPay : Money.ZERO;
-        }
-
-        return amountToPay;
     }
 
     public FixedAmountPR edit(final Money fixedAmount) {

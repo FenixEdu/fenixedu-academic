@@ -28,9 +28,10 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -266,18 +267,18 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
     private class CandidacyXLSExporter extends SpreadsheetXLSExporter {
 
         @Override
-        protected void exportXLSLine(final HSSFSheet sheet, final HSSFCellStyle cellStyle, final List<Object> cells,
+        protected void exportXLSLine(final Sheet sheet, final CellStyle cellStyle, final List<Object> cells,
                 final int offset) {
 
-            final HSSFRow row = sheet.createRow(sheet.getLastRowNum() + offset);
-            cellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+            final org.apache.poi.ss.usermodel.Row row = sheet.createRow(sheet.getLastRowNum() + offset);
+            cellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 
             int count = 0;
             for (final Object cellValue : cells) {
                 if (++count == 3) {
-                    cellStyle.setAlignment(HSSFCellStyle.ALIGN_LEFT);
+                    cellStyle.setAlignment(HorizontalAlignment.LEFT);
                 } else {
-                    cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+                    cellStyle.setAlignment(HorizontalAlignment.CENTER);
                 }
                 addColumn(cellStyle, row, cellValue);
             }

@@ -46,9 +46,4 @@ public class StandaloneIndividualCandidacyEvent extends StandaloneIndividualCand
         return EntryType.STANDALONE_INDIVIDUAL_CANDIDACY_FEE;
     }
 
-    @Override
-    public boolean isExemptionAppliable() {
-        return true;
-    }
-
 }

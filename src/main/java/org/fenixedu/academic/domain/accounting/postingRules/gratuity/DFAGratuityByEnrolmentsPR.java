@@ -29,6 +29,10 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 
+/***
+ * No more {@link org.fenixedu.academic.domain.student.EnrolmentModel} usage
+ */
+@Deprecated
 public class DFAGratuityByEnrolmentsPR extends DFAGratuityByEnrolmentsPR_Base {
     private static final int SCALE_FOR_INTERMEDIATE_CALCULATIONS = 8;
 

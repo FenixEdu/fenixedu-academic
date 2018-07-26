@@ -75,7 +75,7 @@ public class PersonSearcher {
                     Stream.concat(Stream.of(User.findByUsername(query)).filter(Objects::nonNull).map(User::getProfile),
                             UserProfile.searchByName(query, Integer.MAX_VALUE)).limit(maxHits);
         } else if (!Strings.isNullOrEmpty(username)) {
-            stream = Stream.of(User.findByUsername(query)).filter(Objects::nonNull).map(User::getProfile);
+            stream = Stream.of(User.findByUsername(username)).filter(Objects::nonNull).map(User::getProfile);
         } else if (!Strings.isNullOrEmpty(name)) {
             stream = UserProfile.searchByName(name, maxHits);
         } else {

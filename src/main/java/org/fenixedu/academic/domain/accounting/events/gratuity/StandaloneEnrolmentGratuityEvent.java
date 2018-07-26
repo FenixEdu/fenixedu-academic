@@ -134,9 +134,4 @@ public class StandaloneEnrolmentGratuityEvent extends StandaloneEnrolmentGratuit
         return Collections.singleton(transaction.getToAccountEntry());
     }
 
-    @Override
-    public boolean isExemptionAppliable() {
-        return true;
-    }
-
 }

@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.phd.debts;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
@@ -49,5 +50,10 @@ public class PhdGratuityFineExemption extends PhdGratuityFineExemption_Base {
             throw new DomainException("error.already.has.fine.exemption");
         }
         return new PhdGratuityFineExemption(responsible, event, justification);
+    }
+
+    @Override
+    public Money getExemptionAmount(Money money) {
+        return money;
     }
 }

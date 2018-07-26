@@ -18,10 +18,13 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
-import java.util.stream.Stream;
-
+import com.google.common.base.Objects;
 import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.annotation.GroupArgument;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
@@ -31,7 +34,7 @@ import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
-import com.google.common.base.Objects;
+import java.util.stream.Stream;
 
 @GroupOperator("alumni")
 public class AlumniGroup extends FenixGroup {
@@ -39,6 +42,9 @@ public class AlumniGroup extends FenixGroup {
 
     @GroupArgument("")
     private Degree degree;
+
+    @GroupArgument
+    private Boolean registered;
 
     private AlumniGroup() {
         super();
@@ -49,6 +55,16 @@ public class AlumniGroup extends FenixGroup {
         this.degree = degree;
     }
 
+    private AlumniGroup(Degree degree, Boolean registered) {
+        this(degree);
+        this.registered = registered;
+    }
+
+    private AlumniGroup(Boolean registered) {
+        this();
+        this.registered = registered;
+    }
+
     public static AlumniGroup get() {
         return new AlumniGroup();
     }
@@ -57,10 +73,20 @@ public class AlumniGroup extends FenixGroup {
         return new AlumniGroup(degree);
     }
 
+    public static AlumniGroup get(Degree degree, Boolean registered) {
+        return new AlumniGroup(degree, registered);
+    }
+
+    public static AlumniGroup get(Boolean registered) {
+        return new AlumniGroup(registered);
+    }
+
     @Override
     public String[] getPresentationNameKeyArgs() {
-        return new String[] { degree == null ? "" : BundleUtil.getString(Bundle.GROUP, "label.name.connector.default")
-                + degree.getPresentationName() };
+        return new String[] {
+                registered == null ? "": BundleUtil.getString(Bundle.GROUP, "label.name.registered." + registered.toString()),
+                degree == null ? "" : BundleUtil.getString(Bundle.GROUP, "label.name.connector.default") + degree.getPresentationName()
+        };
     }
 
     @Override
@@ -70,8 +96,25 @@ public class AlumniGroup extends FenixGroup {
 
     @Override
     public Stream<User> getMembers(DateTime when) {
-        return Bennu.getInstance().getAlumnisSet().stream().map(alumni -> alumni.getStudent().getPerson().getUser())
-                .filter(u -> u != null).filter(u -> degree == null || isMember(u, when));
+        Stream<Student> students = Bennu.getInstance().getStudentsSet().stream();
+
+        if (registered == null) {
+            students = students.filter(student -> student.getAlumni() != null || hasConcludedRegistration(student) || isAlumni(student));
+        }
+        else if (registered) {
+            students = students.filter(student -> student.getAlumni() != null && isAlumni(student));
+        }
+        else {
+            students = students.filter(student -> student.getAlumni() == null && hasConcludedRegistration(student) && !isAlumni(student));
+        }
+
+        // If degree is set, filter out the alumni that didn't conclude the specified degree
+        if (degree != null) {
+            students = students.filter(this::isDegreeConcluded);
+        }
+
+        // Join students in a collection of users
+        return students.map(student -> student.getPerson().getUser());
     }
 
     @Override
@@ -81,31 +124,51 @@ public class AlumniGroup extends FenixGroup {
 
     @Override
     public boolean isMember(User user, DateTime when) {
-        if (user == null || user.getPerson().getStudent() == null || user.getPerson().getStudent().getAlumni() == null) {
-            return false;
-        }
-        if (degree != null) {
-            for (Registration registration : user.getPerson().getStudent().getRegistrationsFor(degree)) {
-                if (registration.isRegistrationConclusionProcessed()) {
-                    return true;
-                }
-            }
-            return false;
-        }
-        return true;
+        return user != null
+                && user.getPerson() != null
+                && user.getPerson().getStudent() != null
+                && (degree == null || isDegreeConcluded(user.getPerson().getStudent())) // If degree is set, check for its conclusion
+                && (registered != null // If registered is not set, allow any
+                        || (user.getPerson().getStudent().getAlumni() != null
+                                || hasConcludedRegistration(user.getPerson().getStudent())
+                                || isAlumni(user.getPerson().getStudent())))
+                && ((registered != null && !registered) // If registered is set to true, only allow registered Alumni
+                        || (user.getPerson().getStudent().getAlumni() != null && isAlumni(user.getPerson().getStudent())))
+                && ((registered != null && registered) // If registered is set to false, only allow non registered Alumni
+                        || (user.getPerson().getStudent().getAlumni() == null
+                                && hasConcludedRegistration(user.getPerson().getStudent())
+                                && !isAlumni(user.getPerson().getStudent())));
+    }
+
+    private boolean hasConcludedRegistration(Student student) {
+        return student.hasAnyRegistrationInState(RegistrationStateType.CONCLUDED)
+                || student.hasAnyRegistrationInState(RegistrationStateType.STUDYPLANCONCLUDED);
+    }
+    
+    private boolean isDegreeConcluded(Student student) {
+        return student.getRegistrationsFor(degree).stream().anyMatch(Registration::isRegistrationConclusionProcessed);
+    }
+
+    private boolean isAlumni(Student student) {
+        return student
+                .getRegistrationsSet()
+                .stream()
+                .anyMatch(registration -> ProgramConclusion
+                        .conclusionsFor(registration)
+                        .filter(ProgramConclusion::isAlumniProvider)
+                        .anyMatch(conclusion -> conclusion.groupFor(registration)
+                                .map(CurriculumGroup::isConclusionProcessed).orElse(false)));
+
     }
 
     @Override
     public PersistentGroup toPersistentGroup() {
-        return PersistentAlumniGroup.getInstance(degree);
+        return PersistentAlumniGroup.getInstance(degree, registered);
     }
 
     @Override
     public boolean equals(Object object) {
-        if (object instanceof AlumniGroup) {
-            return Objects.equal(degree, ((AlumniGroup) object).degree);
-        }
-        return false;
+        return object instanceof AlumniGroup && Objects.equal(degree, ((AlumniGroup) object).degree);
     }
 
     @Override

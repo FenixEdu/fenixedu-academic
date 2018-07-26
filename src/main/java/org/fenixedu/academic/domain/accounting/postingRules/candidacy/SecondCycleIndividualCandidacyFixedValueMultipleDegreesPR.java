@@ -47,7 +47,7 @@ public class SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR extends
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
         return getFixedAmount();
     }
 

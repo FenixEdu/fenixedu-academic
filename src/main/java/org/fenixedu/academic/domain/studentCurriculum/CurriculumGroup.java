@@ -1317,6 +1317,10 @@ public class CurriculumGroup extends CurriculumGroup_Base {
         return super.getCreditsConcluded();
     }
 
+    final public Double calculateCreditsConcluded(ExecutionYear executionYear) {
+        return getCreditsConcluded(executionYear);
+    }
+
 	@Override
 	public Stream<CurriculumLine> getCurriculumLineStream() {
 		return getCurriculumModulesSet().stream().flatMap(m -> m.getCurriculumLineStream());

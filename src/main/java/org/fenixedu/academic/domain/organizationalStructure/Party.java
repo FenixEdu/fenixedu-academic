@@ -465,7 +465,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 
             final Party party = PartySocialSecurityNumber.readPartyBySocialSecurityNumber(socialSecurityNumber);
             if (party != null && party != this) {
-                throw new DomainException("error.party.existing.contributor.number");
+                //throw new DomainException("error.party.existing.contributor.number");
             } else {
                 if (getPartySocialSecurityNumber() != null) {
                     getPartySocialSecurityNumber().setSocialSecurityNumber(socialSecurityNumber);

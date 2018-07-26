@@ -92,7 +92,7 @@ public class PartialRegimeInstallment extends PartialRegimeInstallment_Base {
      * Formula: 0.5 x Amount x (1 + EnroledEcts / ectsForAmount)
      */
     @Override
-    protected Money calculateBaseAmount(Event event) {
+    public Money calculateBaseAmount(Event event) {
         final BigDecimal enroledEcts = getEnroledEcts((GratuityEvent) event);
         if (enroledEcts.compareTo(BigDecimal.ZERO) == 0) {
             return Money.ZERO;
