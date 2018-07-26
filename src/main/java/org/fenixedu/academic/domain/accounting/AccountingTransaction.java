@@ -239,7 +239,6 @@ public class AccountingTransaction extends AccountingTransaction_Base {
         checkRulesToAnnul();
 
         annulReceipts();
-
         Signal.emit(SIGNAL_ANNUL, new DomainObjectEvent<AccountingTransaction>(this));
 
         reimburseWithoutRules(responsibleUser, getTransactionDetail().getPaymentMode(), getAmountWithAdjustment(), reason);
