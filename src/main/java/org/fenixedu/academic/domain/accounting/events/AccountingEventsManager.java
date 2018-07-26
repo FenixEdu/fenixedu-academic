@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.domain.accounting.events;
 
+import java.util.Collections;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.Enrolment;
@@ -40,7 +41,6 @@ import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.InvocationResult;
 
-import edu.emory.mathcs.backport.java.util.Collections;
 import pt.ist.fenixframework.Atomic;
 
 public class AccountingEventsManager {
