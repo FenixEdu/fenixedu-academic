@@ -18,9 +18,6 @@
  */
 package org.fenixedu.academic.domain.accounting.postingRules.candidacy;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
@@ -28,7 +25,6 @@ import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
 import org.fenixedu.academic.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacy;
-import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 
@@ -52,36 +48,15 @@ public class SecondCycleIndividualCandidacyPR extends SecondCycleIndividualCandi
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
         SecondCycleIndividualCandidacyEvent secondCycleEvent = (SecondCycleIndividualCandidacyEvent) event;
-        return super.doCalculationForAmountToPay(event, when, applyDiscount).multiply(
+        return super.doCalculationForAmountToPay(event, when).multiply(
                 ((SecondCycleIndividualCandidacy) secondCycleEvent.getIndividualCandidacy()).getSelectedDegreesSet().size());
-    }
-
-    @Override
-    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-        final SecondCycleIndividualCandidacyEvent candidacyEvent = (SecondCycleIndividualCandidacyEvent) event;
-
-        if (candidacyEvent.hasSecondCycleIndividualCandidacyExemption()) {
-            return Money.ZERO;
-        }
-
-        return amountToPay;
     }
 
     @Override
     public PaymentCodeType calculatePaymentCodeTypeFromEvent(Event event, DateTime when, boolean applyDiscount) {
         return PaymentCodeType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY_PROCESS;
-    }
-
-    @Override
-    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-        final Money totalAmountToPay = calculateTotalAmountToPay(event, when);
-        final Money payedAmount = event.getPayedAmount(when);
-        return Collections
-                .singletonList(new EntryDTO(getEntryType(), event, totalAmountToPay, payedAmount, totalAmountToPay
-                        .subtract(payedAmount), event.getDescriptionForEntryType(getEntryType()), totalAmountToPay
-                        .subtract(payedAmount)));
     }
 
 }

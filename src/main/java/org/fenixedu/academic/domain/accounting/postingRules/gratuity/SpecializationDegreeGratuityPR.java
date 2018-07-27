@@ -19,27 +19,17 @@
 package org.fenixedu.academic.domain.accounting.postingRules.gratuity;
 
 import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.accounting.Account;
-import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
-import org.fenixedu.academic.domain.accounting.events.gratuity.SpecializationDegreeGratuityEvent;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
-import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
-import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
-import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
 public abstract class SpecializationDegreeGratuityPR extends SpecializationDegreeGratuityPR_Base implements IGratuityPR {
@@ -87,25 +77,11 @@ public abstract class SpecializationDegreeGratuityPR extends SpecializationDegre
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
-            Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
-
-        if (entryDTOs.size() != 1) {
-            throw new DomainException(
-                    "error.accounting.postingRules.gratuity.SpecializationDegreeGratuityPR.invalid.number.of.entryDTOs");
-        }
-
-        checkIfCanAddAmount(entryDTOs.iterator().next().getAmountToPay(), event, transactionDetail.getWhenRegistered());
-
-        return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, getEntryType(), entryDTOs
-                .iterator().next().getAmountToPay(), transactionDetail));
-    }
-
-    private void checkIfCanAddAmount(Money amountToAdd, Event event, DateTime when) {
+    protected void checkIfCanAddAmount(Money amountToPay, Event event, DateTime when) {
         if (((GratuityEvent) event).isCustomEnrolmentModel()) {
-            checkIfCanAddAmountForCustomEnrolmentModel(event, when, amountToAdd);
+            checkIfCanAddAmountForCustomEnrolmentModel(event, when, amountToPay);
         } else {
-            checkIfCanAddAmountForCompleteEnrolmentModel(amountToAdd, event, when);
+            checkIfCanAddAmountForCompleteEnrolmentModel(amountToPay, event, when);
         }
     }
 
@@ -157,7 +133,7 @@ public abstract class SpecializationDegreeGratuityPR extends SpecializationDegre
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
         final Money result;
         if (((GratuityEvent) event).isCustomEnrolmentModel()) {
             result = calculateSpecializationDegreeGratuityTotalAmountToPay(event);
@@ -168,25 +144,7 @@ public abstract class SpecializationDegreeGratuityPR extends SpecializationDegre
         return result;
     }
 
-    @Override
-    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-        final BigDecimal discountPercentage = applyDiscount ? getDiscountPercentage(event, amountToPay) : BigDecimal.ZERO;
-
-        return amountToPay.multiply(BigDecimal.ONE.subtract(discountPercentage));
-    }
-
     abstract protected Money calculateSpecializationDegreeGratuityTotalAmountToPay(Event event);
-
-    private BigDecimal getDiscountPercentage(final Event event, final Money amount) {
-        return ((SpecializationDegreeGratuityEvent) event).calculateDiscountPercentage(amount);
-    }
-
-    @Override
-    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-        return Collections.singletonList(new EntryDTO(getEntryType(), event, calculateTotalAmountToPay(event, when), event
-                .getPayedAmount(), event.calculateAmountToPay(when), event.getDescriptionForEntryType(getEntryType()), event
-                .calculateAmountToPay(when)));
-    }
 
     @Override
     public Money getDefaultGratuityAmount(ExecutionYear executionYear) {

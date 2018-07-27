@@ -32,6 +32,7 @@ public class CreateStandaloneEnrolmentGratuityPRBean extends CreateGratuityPosti
 
     private BigDecimal ectsFactor;
 
+
     public CreateStandaloneEnrolmentGratuityPRBean() {
         super();
         super.setRule(StandaloneEnrolmentGratuityPR.class);

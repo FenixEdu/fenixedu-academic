@@ -77,4 +77,8 @@ public class ValueGratuityExemption extends ValueGratuityExemption_Base {
         return true;
     }
 
+    @Override
+    public Money getExemptionAmount(Money money) {
+        return getValue();
+    }
 }

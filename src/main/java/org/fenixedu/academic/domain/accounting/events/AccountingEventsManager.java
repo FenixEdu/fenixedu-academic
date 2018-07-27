@@ -18,15 +18,21 @@
  */
 package org.fenixedu.academic.domain.accounting.events;
 
+import java.util.Set;
+
+import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.events.gratuity.DfaGratuityEvent;
+import org.fenixedu.academic.domain.accounting.events.gratuity.EnrolmentGratuityEvent;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
+import org.fenixedu.academic.domain.accounting.events.gratuity.PartialRegimeEvent;
 import org.fenixedu.academic.domain.accounting.events.gratuity.SpecializationDegreeGratuityEvent;
-import org.fenixedu.academic.domain.accounting.events.gratuity.StandaloneEnrolmentGratuityEvent;
 import org.fenixedu.academic.domain.accounting.events.insurance.InsuranceEvent;
+import org.fenixedu.academic.domain.accounting.paymentPlanRules.IsAlienRule;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
@@ -34,6 +40,7 @@ import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.InvocationResult;
 
+import edu.emory.mathcs.backport.java.util.Collections;
 import pt.ist.fenixframework.Atomic;
 
 public class AccountingEventsManager {
@@ -41,29 +48,36 @@ public class AccountingEventsManager {
     public InvocationResult createStandaloneEnrolmentGratuityEvent(final StudentCurricularPlan studentCurricularPlan,
             final ExecutionYear executionYear) {
 
-        if (hasStandaloneCurriculumGroupAndEnrolmentsFor(studentCurricularPlan, executionYear)
-                && !studentCurricularPlan.hasGratuityEvent(executionYear, StandaloneEnrolmentGratuityEvent.class)) {
+        InvocationResult result = InvocationResult.createInsuccess();
 
-            new StandaloneEnrolmentGratuityEvent(getAdministrativeOffice(studentCurricularPlan),
-                    studentCurricularPlan.getPerson(), studentCurricularPlan, executionYear);
+        final Set<Enrolment> standaloneCurriculumGroupAndEnrolmentsFor = getStandaloneEnrolments(studentCurricularPlan,
+                executionYear);
 
-            return InvocationResult.createSuccess();
+        IsAlienRule isAlienRule = new IsAlienRule();
 
+        if (standaloneCurriculumGroupAndEnrolmentsFor.isEmpty()) {
+            result.addMessage(
+                    Bundle.APPLICATION,
+                    "error.accounting.events.AccountingEventsManager.registration.for.student.does.not.respect.requirements.to.create.standalone.gratuity.event");
+        } else {
+            for (Enrolment enrolment : standaloneCurriculumGroupAndEnrolmentsFor) {
+                EnrolmentGratuityEvent.create(studentCurricularPlan.getPerson(), enrolment, EventType
+                        .STANDALONE_PER_ENROLMENT_GRATUITY, isAlienRule.isAppliableFor(studentCurricularPlan, executionYear));
+            }
+            result =  InvocationResult.createSuccess();
         }
-
-        final InvocationResult result = InvocationResult.createInsuccess();
-        result.addMessage(
-                Bundle.APPLICATION,
-                "error.accounting.events.AccountingEventsManager.registration.for.student.does.not.respect.requirements.to.create.standalone.gratuity.event");
-
+        
         return result;
-
     }
 
-    private boolean hasStandaloneCurriculumGroupAndEnrolmentsFor(final StudentCurricularPlan studentCurricularPlan,
+    private Set<Enrolment> getStandaloneEnrolments(final StudentCurricularPlan studentCurricularPlan,
             final ExecutionYear executionYear) {
-        return studentCurricularPlan.hasStandaloneCurriculumGroup()
-                && studentCurricularPlan.getStandaloneCurriculumGroup().hasEnrolment(executionYear);
+
+        if (!studentCurricularPlan.hasStandaloneCurriculumGroup()) {
+            return Collections.emptySet();
+        }
+
+        return studentCurricularPlan.getStandaloneCurriculumGroup().getEnrolmentsBy(executionYear);
     }
 
     public InvocationResult createGratuityEvent(final StudentCurricularPlan studentCurricularPlan,
@@ -91,8 +105,8 @@ public class AccountingEventsManager {
             return createStandaloneEnrolmentGratuityEvent(studentCurricularPlan, executionYear);
         }
 
-        return createGratuityEventWithPaymentPlan(studentCurricularPlan, executionYear, checkConditions);
-
+        return PartialRegimeEvent.create(studentCurricularPlan.getRegistration(), executionYear).map
+                (p -> InvocationResult.createSuccess()).orElseGet(() -> createGratuityEventWithPaymentPlan(studentCurricularPlan, executionYear, checkConditions));
     }
 
     private InvocationResult createDfaGratuityEvent(StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear,
@@ -228,9 +242,11 @@ public class AccountingEventsManager {
                 return result;
 
             }
-
-            new AdministrativeOfficeFeeAndInsuranceEvent(getAdministrativeOffice(studentCurricularPlan),
-                    studentCurricularPlan.getPerson(), executionYear);
+              new AdministrativeOfficeFeeEvent(getAdministrativeOffice(studentCurricularPlan), studentCurricularPlan.getPerson
+                      (), executionYear);
+              new InsuranceEvent(studentCurricularPlan.getPerson(), executionYear);
+//            new AdministrativeOfficeFeeAndInsuranceEvent(getAdministrativeOffice(studentCurricularPlan),
+//                    studentCurricularPlan.getPerson(), executionYear);
         }
 
         return result;

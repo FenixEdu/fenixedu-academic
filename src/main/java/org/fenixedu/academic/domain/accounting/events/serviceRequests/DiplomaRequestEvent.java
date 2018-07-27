@@ -24,6 +24,7 @@ import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.serviceRequests.RegistrationAcademicServiceRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DiplomaRequest;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
@@ -78,10 +79,16 @@ abstract public class DiplomaRequestEvent extends DiplomaRequestEvent_Base {
 
     private void fillDescription(final LabelFormatter labelFormatter) {
         labelFormatter.appendLabel(" (");
-        final DiplomaRequest request = (DiplomaRequest) getAcademicServiceRequest();
-        if (request.getRequestedCycle() != null) {
-            labelFormatter.appendLabel(request.getRequestedCycle().getQualifiedName(), Bundle.ENUMERATION).appendLabel(" ")
-                    .appendLabel("label.of", Bundle.APPLICATION).appendLabel(" ");
+
+        final RegistrationAcademicServiceRequest request = getAcademicServiceRequest();
+        
+        if (request instanceof DiplomaRequest) {
+            if (((DiplomaRequest)request).getRequestedCycle() != null) {
+                labelFormatter.appendLabel(((DiplomaRequest)request).getRequestedCycle().getQualifiedName(), Bundle.ENUMERATION).appendLabel(" ")
+                        .appendLabel("label.of", Bundle.APPLICATION).appendLabel(" ");
+            }
+        } else {
+            labelFormatter.appendLabel(" ");
         }
 
         labelFormatter.appendLabel(getDegree().getDegreeType().getName().getContent());
@@ -96,11 +103,6 @@ abstract public class DiplomaRequestEvent extends DiplomaRequestEvent_Base {
     public PostingRule getPostingRule() {
         return getAdministrativeOffice().getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(),
                 getAcademicServiceRequest().getRequestDate());
-    }
-
-    @Override
-    public boolean isExemptionAppliable() {
-        return true;
     }
 
 }

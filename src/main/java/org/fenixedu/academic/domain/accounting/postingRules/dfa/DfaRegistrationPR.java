@@ -18,11 +18,8 @@
  */
 package org.fenixedu.academic.domain.accounting.postingRules.dfa;
 
-import java.util.Collection;
-import java.util.Set;
+import java.util.Optional;
 
-import org.fenixedu.academic.domain.accounting.Account;
-import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
@@ -30,11 +27,9 @@ import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.accounting.events.dfa.DfaRegistrationEvent;
 import org.fenixedu.academic.domain.accounting.postingRules.FixedAmountWithPenaltyPR;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
-import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.util.Money;
-import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 public class DfaRegistrationPR extends DfaRegistrationPR_Base {
 
@@ -50,22 +45,12 @@ public class DfaRegistrationPR extends DfaRegistrationPR_Base {
     }
 
     @Override
-    protected boolean hasPenalty(Event event, DateTime when) {
-        return hasPenaltyForRegistration((DfaRegistrationEvent) event)
-                && !hasPayedPenaltyForCandidacy((DfaRegistrationEvent) event);
-    }
-
-    private boolean hasPenaltyForRegistration(final DfaRegistrationEvent dfaRegistrationEvent) {
-        return dfaRegistrationEvent.hasRegistrationPeriodInDegreeCurricularPlan()
-                && !dfaRegistrationEvent.getRegistrationPeriodInDegreeCurricularPlan().containsDate(
-                        dfaRegistrationEvent.getRegistrationDate());
-    }
-
-    private boolean hasPayedPenaltyForCandidacy(final DfaRegistrationEvent dfaRegistrationEvent) {
-        return dfaRegistrationEvent.hasCandidacyPeriodInDegreeCurricularPlan()
-                && !dfaRegistrationEvent.getCandidacyPeriodInDegreeCurricularPlan().containsDate(
-                        dfaRegistrationEvent.getCandidacyDate());
-
+    protected Optional<LocalDate> getPenaltyDueDate(Event event) {
+        final DfaRegistrationEvent dfaRegistrationEvent = (DfaRegistrationEvent) event;
+        if (dfaRegistrationEvent.hasRegistrationPeriodInDegreeCurricularPlan()) {
+            return Optional.of(dfaRegistrationEvent.getRegistrationPeriodInDegreeCurricularPlan().getEndDateDateTime().toLocalDate());
+        }
+        return Optional.empty();
     }
 
     public FixedAmountWithPenaltyPR edit(final Money fixedAmount, final Money penaltyAmount) {
@@ -76,13 +61,7 @@ public class DfaRegistrationPR extends DfaRegistrationPR_Base {
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
-            Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
-        checkPreconditionsToProcess(event);
-        return super.internalProcess(user, entryDTOs, event, fromAccount, toAccount, transactionDetail);
-    }
-
-    private void checkPreconditionsToProcess(Event event) {
+    protected void checkIfCanAddAmount(Money amountToPay, Event event, DateTime when) {
         final DfaRegistrationEvent dfaRegistrationEvent = (DfaRegistrationEvent) event;
         if (!dfaRegistrationEvent.hasRegistrationPeriodInDegreeCurricularPlan()) {
             throw new DomainException(

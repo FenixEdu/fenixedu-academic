@@ -36,6 +36,12 @@ public class EntryWithInstallmentDTO extends EntryDTO implements Serializable {
         setInstallment(installment);
     }
 
+    public EntryWithInstallmentDTO(EntryType entryType, Event event, Money totalAmount, Money payedAmount, Money amountToPay,
+                                   LabelFormatter description, Money debtAmount) {
+        super(entryType, event, totalAmount, payedAmount, amountToPay, description, debtAmount);
+        setInstallment(installment);
+    }
+
     public EntryWithInstallmentDTO(EntryType entryType, Event event, Money amountToPay, Installment installment) {
         super(entryType, event, amountToPay);
         setInstallment(installment);

@@ -165,11 +165,6 @@ public class InsuranceEvent extends InsuranceEvent_Base implements IInsuranceEve
                 Collections.singletonList(new EntryDTO(EntryType.INSURANCE_FEE, this, amountToPay)), transactionDetail);
     }
 
-    @Override
-    public boolean isExemptionAppliable() {
-        return true;
-    }
-
     public boolean hasInsuranceExemption() {
         return getInsuranceExemption() != null;
     }

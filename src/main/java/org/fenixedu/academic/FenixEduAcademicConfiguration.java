@@ -18,11 +18,19 @@
  */
 package org.fenixedu.academic;
 
+import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.commons.configuration.ConfigurationInvocationHandler;
 import org.fenixedu.commons.configuration.ConfigurationManager;
 import org.fenixedu.commons.configuration.ConfigurationProperty;
 
 public class FenixEduAcademicConfiguration {
+
+    private static boolean useGlobalInterestRateTableForEventPenalties;
+
+    static {
+        setUseGlobalInterestRateTableForEventPenalties(getConfiguration().useGlobalInterestRateTableForEventPenalties());
+    }
+    
     @ConfigurationManager(description = "FenixEdu Academic Configuration")
     public interface ConfigurationProperties {
 
@@ -125,10 +133,21 @@ public class FenixEduAcademicConfiguration {
 
         @ConfigurationProperty(key="maximum.number.of.credits.for.enrolment", defaultValue = "40.5")
         public double getMaximumNumberOfCreditsForEnrolment();
+
+        @ConfigurationProperty(key="use.global.interest.rate.table.for.event.penalties", defaultValue = "false")
+        public boolean useGlobalInterestRateTableForEventPenalties();
     }
 
     public static ConfigurationProperties getConfiguration() {
         return ConfigurationInvocationHandler.getConfiguration(ConfigurationProperties.class);
+    }
+
+    public static boolean isToUseGlobalInterestRateTableForEventPenalties(Event event) {
+        return useGlobalInterestRateTableForEventPenalties && event.isGratuity();
+    }
+
+    public static void setUseGlobalInterestRateTableForEventPenalties(boolean value) {
+        useGlobalInterestRateTableForEventPenalties = value;
     }
 
 }

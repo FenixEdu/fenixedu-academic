@@ -46,11 +46,6 @@ public class SecondCycleIndividualCandidacyEvent extends SecondCycleIndividualCa
         return AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
     }
 
-    @Override
-    public boolean isExemptionAppliable() {
-        return true;
-    }
-
     public boolean hasSecondCycleIndividualCandidacyExemption() {
         return getSecondCycleIndividualCandidacyExemption() != null;
     }

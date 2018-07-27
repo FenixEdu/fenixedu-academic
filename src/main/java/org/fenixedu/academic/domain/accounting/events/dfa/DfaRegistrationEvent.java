@@ -165,9 +165,4 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
         return true;
     }
 
-    @Override
-    public boolean isExemptionAppliable() {
-        return true;
-    }
-
 }

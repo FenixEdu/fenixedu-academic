@@ -76,22 +76,19 @@
 		<li><html:link action="<%="/payments.do?method=showEventsWithPaymentCodes&amp;personId=" + personId%>">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.paymentCodes" />
 		</html:link></li>
-
-	</ul>
-	<ul>
 		<li><html:link action="<%="/payments.do?method=showEventsWithPayments&amp;personId=" + personId%>">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.extract" />
 		</html:link></li>
 	</ul>
-	
-	
-	<br/>
-	<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documents"/></strong>
 	<ul>
-		<li><html:link action="<%="/generatedDocuments.do?method=showAnnualIRSDocumentsInPayments&amp;personId=" + personId%>">
-			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.new.irs.annual.document" />
+		<li><html:link action="<%="/paymentsManagement.do?method=showEvents&personId=" + personId%>">
+			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.advanced.payments" />
 		</html:link></li>
 	</ul>
-
-
+	<%--<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documents"/></strong>--%>
+	<%--<ul>--%>
+		<%--<li><html:link action="<%="/generatedDocuments.do?method=showAnnualIRSDocumentsInPayments&amp;personId=" + personId%>">--%>
+			<%--<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.new.irs.annual.document" />--%>
+		<%--</html:link></li>--%>
+	<%--</ul>--%>
 </fr:form>

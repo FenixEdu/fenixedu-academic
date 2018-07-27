@@ -157,7 +157,18 @@ public enum EventType {
 
     EXTERNAL_CONTRIBUTION,
 
-    DUPLICATE_REQUEST;
+    DUPLICATE_REQUEST,
+
+    PARTIAL_REGIME_ENROLMENT_GRATUITY,
+
+    /**
+     * this event type is for standalone enrolments for students registered in any degree (empty and others)
+     */
+    STANDALONE_PER_ENROLMENT_GRATUITY,
+
+
+    PARTIAL_REGIME_GRATUITY
+    ;
 
     final static List<EventType> GRATUITY_EVENTS = Arrays.asList(EventType.GRATUITY, EventType.STANDALONE_ENROLMENT_GRATUITY);
 
