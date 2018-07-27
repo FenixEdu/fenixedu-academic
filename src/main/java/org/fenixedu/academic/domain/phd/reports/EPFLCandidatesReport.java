@@ -52,8 +52,6 @@ public class EPFLCandidatesReport extends PhdReport {
 
         setHeaders(sheet);
 
-        setHeaders(sheet);
-
         int i = 2;
         for (PhdIndividualProgramProcess process : processes) {
             if (isProcessFromEPFL(process) && process.isAllowedToManageProcess(Authenticate.getUser())) {
@@ -92,7 +90,8 @@ public class EPFLCandidatesReport extends PhdReport {
         String documentIdNumber = process.getPerson().getDocumentIdNumber();
         String documentIdTypeName = process.getPerson().getIdDocumentType().getLocalizedName();
         final ExecutionYear executionYear = process.getExecutionYear();
-        final String phdProgramName = process.getPhdProgram() != null ? process.getPhdProgram().getName(executionYear).getContent() : "";
+        final String phdProgramName =
+                process.getPhdProgram() != null ? process.getPhdProgram().getName(executionYear).getContent() : "";
         String focusArea =
                 process.getPhdProgramFocusArea() != null ? process.getPhdProgramFocusArea().getName().getContent() : "";
 
