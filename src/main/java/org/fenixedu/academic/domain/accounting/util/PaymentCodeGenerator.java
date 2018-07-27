@@ -29,3 +29,4 @@ public abstract class PaymentCodeGenerator {
 
     public abstract boolean isCodeMadeByThisFactory(final PaymentCode paymentCode);
 }
+

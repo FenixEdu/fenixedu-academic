@@ -79,4 +79,8 @@ public class PercentageGratuityExemption extends PercentageGratuityExemption_Bas
         return true;
     }
 
+    @Override
+    public Money getExemptionAmount(Money money) {
+        return money.multiply(getPercentage());
+    }
 }

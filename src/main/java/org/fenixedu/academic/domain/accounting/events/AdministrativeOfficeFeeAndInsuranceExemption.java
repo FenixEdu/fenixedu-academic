@@ -24,6 +24,7 @@ import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -84,5 +85,11 @@ public class AdministrativeOfficeFeeAndInsuranceExemption extends Administrative
 
     public String getKindDescription() {
         return BundleUtil.getString(Bundle.ENUMERATION, this.getClass().getSimpleName() + ".kindDescription");
+    }
+
+    @Override
+    public Money getExemptionAmount(Money money) {
+        final AdministrativeOfficeFeeAndInsuranceEvent event = (AdministrativeOfficeFeeAndInsuranceEvent) getEvent();
+        return event.getInsuranceAmount().add(event.getAdministrativeOfficeFeeAmount());
     }
 }

@@ -64,11 +64,6 @@ abstract public class PhdEvent extends PhdEvent_Base {
         return getPhdProgram().getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(), getWhenOccured());
     }
 
-    @Override
-    public boolean isExemptionAppliable() {
-        return true;
-    }
-
     public boolean hasPhdEventExemption() {
         return getPhdEventExemption() != null;
     }

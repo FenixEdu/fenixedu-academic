@@ -19,7 +19,6 @@
 package org.fenixedu.academic.domain.phd.debts;
 
 import org.fenixedu.academic.domain.accounting.EntryType;
-import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.util.Money;
@@ -43,13 +42,4 @@ public class PhdThesisRequestFeePR extends PhdThesisRequestFeePR_Base {
         return new PhdThesisRequestFeePR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), fixedAmount);
     }
 
-    @Override
-    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-        final PhdThesisRequestFee requestEvent = (PhdThesisRequestFee) event;
-        if (requestEvent.hasPhdEventExemption()) {
-            amountToPay = amountToPay.subtract(requestEvent.getPhdEventExemption().getValue());
-        }
-
-        return amountToPay.isPositive() ? amountToPay : Money.ZERO;
-    }
 }

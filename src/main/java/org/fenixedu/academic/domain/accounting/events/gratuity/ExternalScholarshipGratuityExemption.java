@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.accounting.events.gratuity;
 
-import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -32,6 +30,8 @@ import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.util.Money;
+
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class ExternalScholarshipGratuityExemption extends ExternalScholarshipGratuityExemption_Base {
 
@@ -87,5 +87,10 @@ public class ExternalScholarshipGratuityExemption extends ExternalScholarshipGra
         setDocument(null);
         document.delete();
         super.delete();
+    }
+
+    @Override
+    public Money getExemptionAmount(Money money) {
+        return getValue();
     }
 }

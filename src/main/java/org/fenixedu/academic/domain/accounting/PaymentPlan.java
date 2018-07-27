@@ -22,14 +22,13 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
 import org.fenixedu.academic.domain.accounting.paymentPlanRules.PaymentPlanRule;
 import org.fenixedu.academic.domain.accounting.paymentPlanRules.PaymentPlanRuleManager;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -132,165 +131,21 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
         return result;
     }
 
-    public Money calculateTotalAmount(final Event event, final DateTime when, final BigDecimal discountPercentage) {
-
-        Money result = Money.ZERO;
-        for (final Money amount : calculateInstallmentTotalAmounts(event, when, discountPercentage).values()) {
-            result = result.add(amount);
-        }
-
-        return result;
-    }
-
-    private Map<Installment, Money> calculateInstallmentTotalAmounts(final Event event, final DateTime when,
-            final BigDecimal discountPercentage) {
-
-        final Map<Installment, Money> result = new HashMap<Installment, Money>();
-        final CashFlowBox cashFlowBox = new CashFlowBox(event, when, discountPercentage);
-
-        for (final Installment installment : getInstallmentsSortedByEndDate()) {
-            result.put(installment, cashFlowBox.calculateTotalAmountFor(installment));
-
-        }
-
-        return result;
-    }
-
-    private class CashFlowBox {
-        public DateTime when;
-        public Money amount;
-        public DateTime currentTransactionDate;
-        public List<AccountingTransaction> transactions;
-        public BigDecimal discountPercentage;
-        public Event event;
-        public Money discountValue;
-        public boolean usedDiscountValue;
-        private Money discountedValue;
-
-        public CashFlowBox(final Event event, final DateTime when, final BigDecimal discountPercentage) {
-            this.event = event;
-            this.transactions = new ArrayList<AccountingTransaction>(event.getSortedNonAdjustingTransactions());
-            this.when = when;
-            this.discountPercentage = discountPercentage;
-            this.discountValue = event.getTotalDiscount();
-            this.discountedValue = Money.ZERO;
-            this.usedDiscountValue = false;
-
-            if (transactions.isEmpty()) {
-                this.amount = Money.ZERO;
-                this.currentTransactionDate = when;
-            } else {
-                final AccountingTransaction transaction = transactions.remove(0);
-                this.amount = transaction.getAmountWithAdjustment();
-                this.currentTransactionDate = transaction.getWhenRegistered();
-            }
-
-        }
-
-        private boolean hasMoneyFor(final Money amount) {
-            return this.amount.greaterOrEqualThan(amount);
-        }
-
-        private boolean hasDiscountValue() {
-            return this.discountValue.isPositive();
-        }
-
-        public boolean subtractMoneyFor(final Installment installment) {
-
-            if (hasDiscountValue() && this.discountValue.greaterOrEqualThan(installment.getAmount())) {
-                usedDiscountValue = true;
-                this.discountValue = this.discountValue.subtract(installment.getAmount());
-                return true;
-            }
-
-            Money installmentAmount =
-                    installment.calculateAmount(this.event, this.currentTransactionDate, this.discountPercentage,
-                            isToApplyPenalty(this.event, installment));
-
-            if (hasDiscountValue()) {
-                installmentAmount = installmentAmount.subtract(this.discountValue);
-                this.discountedValue = this.discountValue;
-            }
-
-            if (hasMoneyFor(installmentAmount)) {
-                this.amount = this.amount.subtract(installmentAmount);
-                this.discountValue = Money.ZERO;
-                return true;
-            }
-
-            if (this.transactions.isEmpty()) {
-                return false;
-            }
-
-            final AccountingTransaction transaction = this.transactions.remove(0);
-            this.amount = this.amount.add(transaction.getAmountWithAdjustment());
-            this.currentTransactionDate = transaction.getWhenRegistered();
-
-            return subtractMoneyFor(installment);
-        }
-
-        public Money subtractRemainingFor(final Installment installment) {
-            final Money result =
-                    installment
-                            .calculateAmount(this.event, this.when, this.discountPercentage,
-                                    isToApplyPenalty(this.event, installment)).subtract(this.discountValue).subtract(this.amount);
-            this.amount = this.discountValue = Money.ZERO;
-            return result;
-        }
-
-        public Money calculateTotalAmountFor(final Installment installment) {
-            final Money result;
-            if (subtractMoneyFor(installment)) {
-                if (usedDiscountValue) {
-                    result = Money.ZERO;
-                } else {
-                    result =
-                            installment.calculateAmount(this.event, this.currentTransactionDate, this.discountPercentage,
-                                    isToApplyPenalty(this.event, installment)).subtract(this.discountedValue);
-                    this.discountedValue = Money.ZERO;
-                }
-            } else {
-                result =
-                        installment.calculateAmount(this.event, this.when, this.discountPercentage,
-                                isToApplyPenalty(this.event, installment)).subtract(this.discountedValue);
-                this.discountedValue = Money.ZERO;
-            }
-            usedDiscountValue = false;
-            return result;
-        }
-    }
-
-    public Map<Installment, Money> calculateInstallmentRemainingAmounts(final Event event, final DateTime when,
-            final BigDecimal discountPercentage) {
-        final Map<Installment, Money> result = new HashMap<Installment, Money>();
-        final CashFlowBox cashFlowBox = new CashFlowBox(event, when, discountPercentage);
-
-        for (final Installment installment : getInstallmentsSortedByEndDate()) {
-
-            if (!cashFlowBox.subtractMoneyFor(installment)) {
-                result.put(installment, cashFlowBox.subtractRemainingFor(installment));
-            }
-        }
-
-        return result;
-
-    }
-
     public Money calculateRemainingAmountFor(final Installment installment, final Event event, final DateTime when,
             final BigDecimal discountPercentage) {
 
-        final Map<Installment, Money> amountsByInstallment =
-                calculateInstallmentRemainingAmounts(event, when, discountPercentage);
-        final Money installmentAmount = amountsByInstallment.get(installment);
+        DebtInterestCalculator debtInterestCalculator = event.getDebtInterestCalculator(when);
 
-        return (installmentAmount != null) ? installmentAmount : Money.ZERO;
+        BigDecimal installmentOpenAmount = debtInterestCalculator.getDebtsOrderedByDueDate().stream()
+                .filter(d -> d.getDueDate().equals(installment.getEndDate(event))).findAny().map(d -> d.getOpenAmount())
+                .orElse(BigDecimal.ZERO);
+
+        return new Money(installmentOpenAmount);
     }
 
     public boolean isInstallmentInDebt(final Installment installment, final Event event, final DateTime when,
             final BigDecimal discountPercentage) {
-
         return calculateRemainingAmountFor(installment, event, when, discountPercentage).isPositive();
-
     }
 
     public Installment getInstallmentByOrder(int order) {

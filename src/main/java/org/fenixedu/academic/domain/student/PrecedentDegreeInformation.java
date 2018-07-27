@@ -20,8 +20,6 @@ package org.fenixedu.academic.domain.student;
 
 import java.util.Comparator;
 
-import jvstm.cps.ConsistencyPredicate;
-
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.SchoolLevelType;
@@ -34,6 +32,9 @@ import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.dto.candidacy.PrecedentDegreeInformationBean;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
+
+import io.jsonwebtoken.lang.Objects;
+import jvstm.cps.ConsistencyPredicate;
 
 /**
  * <pre>
@@ -357,6 +358,29 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 
     public boolean isCandidacyInternal() {
         return getCandidacyInternal() != null && getCandidacyInternal();
+    }
+
+    private boolean hasEvent() {
+        return getIndividualCandidacy() != null && getIndividualCandidacy().getEvent() != null;
+    }
+
+    @Override
+    public void setInstitution(Unit newInstitution) {
+        Unit institution = super.getInstitution();
+        if (hasEvent() && !Objects.nullSafeEquals(institution, newInstitution)) {
+            throw new DomainException("Can't change this since an event is already created");
+        }
+        super.setInstitution(newInstitution);
+    }
+
+    @Override
+    public void setCandidacyInternal(Boolean newCandidacyInternal) {
+        Boolean candidacyInternal = super.getCandidacyInternal();
+        if (getIndividualCandidacy()!= null && getIndividualCandidacy().getEvent() != null && !Objects.nullSafeEquals(candidacyInternal,
+                newCandidacyInternal)) {
+            throw new DomainException("Can't change this since an event is already created");
+        }
+        super.setCandidacyInternal(newCandidacyInternal);
     }
 
     public boolean isCandidacyExternal() {

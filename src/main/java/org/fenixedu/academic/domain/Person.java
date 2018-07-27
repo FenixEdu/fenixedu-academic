@@ -978,14 +978,7 @@ public class Person extends Person_Base {
     }
 
     public List<Event> getEventsWithExemptionAppliable() {
-        final List<Event> result = new ArrayList<>();
-        for (final Event event : getEventsSet()) {
-            if (!event.isCancelled() && event.isExemptionAppliable()) {
-                result.add(event);
-            }
-        }
-
-        return result;
+        return getEventsSet().stream().filter(e -> !e.isCancelled()).collect(Collectors.toList());
     }
 
     public Money getMaxDeductableAmountForLegalTaxes(final EventType eventType, final int civilYear) {

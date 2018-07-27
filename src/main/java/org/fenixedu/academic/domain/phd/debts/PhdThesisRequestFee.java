@@ -65,11 +65,6 @@ public class PhdThesisRequestFee extends PhdThesisRequestFee_Base {
     }
 
     @Override
-    public boolean isExemptionAppliable() {
-        return true;
-    }
-
-    @Override
     public PhdIndividualProgramProcess getPhdIndividualProgramProcess() {
         return getProcess();
     }

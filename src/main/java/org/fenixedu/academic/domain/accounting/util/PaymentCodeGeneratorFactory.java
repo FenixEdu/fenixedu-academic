@@ -27,7 +27,8 @@ public class PaymentCodeGeneratorFactory {
     private static final IndividualCandidacyPaymentCodeGenerator individualCandidacyPaymentCodeGenerator =
             new IndividualCandidacyPaymentCodeGenerator();
     private static final RectoratePaymentCodeGenerator rectoratePaymentCodeGenerator = new RectoratePaymentCodeGenerator();
-
+    private static final EventPaymentCodeGenerator EVENT_PAYMENT_CODE_GENERATOR = new EventPaymentCodeGenerator();
+    
     public static PaymentCodeGenerator getGenerator(PaymentCodeType type) {
         switch (type) {
         case TOTAL_GRATUITY:
@@ -54,6 +55,8 @@ public class PaymentCodeGeneratorFactory {
             return individualCandidacyPaymentCodeGenerator;
         case RECTORATE:
             return rectoratePaymentCodeGenerator;
+        case EVENT:
+            return EVENT_PAYMENT_CODE_GENERATOR;
         default:
             return null;
         }

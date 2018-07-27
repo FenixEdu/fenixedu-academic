@@ -73,11 +73,11 @@ public class CertificateRequestPR extends CertificateRequestPR_Base {
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
         final CertificateRequestEvent certificateRequestEvent = (CertificateRequestEvent) event;
         Money totalAmountToPay =
                 isUrgent(certificateRequestEvent) ? getBaseAmount().multiply(BigDecimal.valueOf(2)).add(getAmountForUnits(event)) : super
-                        .doCalculationForAmountToPay(event, when, applyDiscount);
+                        .doCalculationForAmountToPay(event, when);
         totalAmountToPay = totalAmountToPay.add(calculateAmountToPayForPages(certificateRequestEvent));
 
         return totalAmountToPay;

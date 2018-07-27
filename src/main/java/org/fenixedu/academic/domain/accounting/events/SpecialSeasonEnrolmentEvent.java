@@ -29,11 +29,16 @@ import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.dto.accounting.SibsTransactionDetailDTO;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
 
+/***
+ * Use {@link EnrolmentEvaluationEvent} instead
+ */
+@Deprecated
 public class SpecialSeasonEnrolmentEvent extends SpecialSeasonEnrolmentEvent_Base {
 
     protected SpecialSeasonEnrolmentEvent() {
@@ -44,6 +49,7 @@ public class SpecialSeasonEnrolmentEvent extends SpecialSeasonEnrolmentEvent_Bas
             final Collection<EnrolmentEvaluation> enrolmentEvaluations) {
         this();
         init(administrativeOffice, EventType.SPECIAL_SEASON_ENROLMENT, person, enrolmentEvaluations);
+        throw new DomainException("Can't be created anymore");
     }
 
     @Override
@@ -62,11 +68,6 @@ public class SpecialSeasonEnrolmentEvent extends SpecialSeasonEnrolmentEvent_Bas
     @Override
     protected Set<EnrolmentEvaluation> getAllEnrolmentEvaluationsSet() {
         return getSpecialSeasonEnrolmentEvaluationsSet();
-    }
-
-    @Override
-    public boolean isExemptionAppliable() {
-        return false;
     }
 
 }

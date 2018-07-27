@@ -26,7 +26,12 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 
+/***
+ * Use {@link EnrolmentEvaluationEvent} instead
+ */
+@Deprecated
 public class ImprovementOfApprovedEnrolmentEvent extends ImprovementOfApprovedEnrolmentEvent_Base {
 
     protected ImprovementOfApprovedEnrolmentEvent() {
@@ -37,6 +42,7 @@ public class ImprovementOfApprovedEnrolmentEvent extends ImprovementOfApprovedEn
             final Collection<EnrolmentEvaluation> enrolmentEvaluations) {
         this();
         init(administrativeOffice, EventType.IMPROVEMENT_OF_APPROVED_ENROLMENT, person, enrolmentEvaluations);
+        throw new DomainException("Can't be created anymore");
     }
 
     @Override
@@ -61,11 +67,6 @@ public class ImprovementOfApprovedEnrolmentEvent extends ImprovementOfApprovedEn
         }
 
         return null;
-    }
-
-    @Override
-    public boolean isExemptionAppliable() {
-        return true;
     }
 
     @Override
