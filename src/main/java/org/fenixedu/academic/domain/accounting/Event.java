@@ -472,7 +472,7 @@ public abstract class Event extends Event_Base {
             throw new DomainException("error.org.fenixedu.academic.domain.accounting.Event.cannot.recalculate.state.on.cancelled.events");
         }
 
-        internalRecalculateState(whenRegistered);
+        internalRecalculateState(whenRegistered.plusSeconds(1));
     }
 
     protected void internalRecalculateState(final DateTime whenRegistered) {
