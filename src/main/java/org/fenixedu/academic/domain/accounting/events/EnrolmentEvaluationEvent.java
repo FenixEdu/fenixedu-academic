@@ -1,5 +1,6 @@
 package org.fenixedu.academic.domain.accounting.events;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
@@ -20,7 +21,6 @@ import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import edu.emory.mathcs.backport.java.util.Collections;
 import pt.ist.fenixframework.FenixFramework;
 
 public class EnrolmentEvaluationEvent extends EnrolmentEvaluationEvent_Base {

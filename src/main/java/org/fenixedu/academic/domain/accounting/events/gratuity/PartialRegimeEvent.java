@@ -1,5 +1,6 @@
 package org.fenixedu.academic.domain.accounting.events.gratuity;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -27,7 +28,6 @@ import org.fenixedu.bennu.core.signals.Signal;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import edu.emory.mathcs.backport.java.util.Collections;
 import pt.ist.fenixframework.FenixFramework;
 
 public class PartialRegimeEvent extends PartialRegimeEvent_Base {
@@ -164,7 +164,7 @@ public class PartialRegimeEvent extends PartialRegimeEvent_Base {
         Money amount = postingRule.calculateTotalAmountToPay(this, when);
         LocalDate dueDate =
                 getWhenOccured().toLocalDate().plusDays(getEventPostingRule().getNumberOfDaysToStartApplyingInterest());
-        return Collections.<LocalDate, Money>singletonMap(dueDate, amount);
+        return Collections.singletonMap(dueDate, amount);
     }
 
     @Override

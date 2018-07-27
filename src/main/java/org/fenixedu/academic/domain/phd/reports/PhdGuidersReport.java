@@ -48,8 +48,6 @@ public class PhdGuidersReport extends PhdReport {
         List<PhdIndividualProgramProcess> processes =
                 PhdIndividualProgramProcess.search(bean.getExecutionYear(), bean.getPredicates());
 
-        setHeaders(sheet);
-
         for (PhdIndividualProgramProcess process : processes) {
             if (process.isAllowedToManageProcess(Authenticate.getUser())) {
                 fillProcess(process, sheet);

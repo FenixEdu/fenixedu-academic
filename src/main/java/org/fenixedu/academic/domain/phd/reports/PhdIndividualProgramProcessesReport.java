@@ -46,8 +46,6 @@ public class PhdIndividualProgramProcessesReport extends PhdReport {
         List<PhdIndividualProgramProcess> processes =
                 PhdIndividualProgramProcess.search(bean.getExecutionYear(), bean.getPredicates());
 
-        setHeaders(sheet);
-
         int i = 2;
         for (PhdIndividualProgramProcess process : processes) {
             if (!process.isAllowedToManageProcess(Authenticate.getUser())) {
@@ -71,14 +69,16 @@ public class PhdIndividualProgramProcessesReport extends PhdReport {
         String documentIdNumber = process.getPerson().getDocumentIdNumber();
         String documentIdTypeName = process.getPerson().getIdDocumentType().getLocalizedName();
         final ExecutionYear executionYear = process.getExecutionYear();
-        String phdProgramName = process.getPhdProgram() != null ? process.getPhdProgram().getName(executionYear).getContent() : "";
+        String phdProgramName =
+                process.getPhdProgram() != null ? process.getPhdProgram().getName(executionYear).getContent() : "";
         String focusArea =
                 process.getPhdProgramFocusArea() != null ? process.getPhdProgramFocusArea().getName().getContent() : "";
 
         String activeStateName = process.getActiveState().getLocalizedName();
         LocalDate whenStartStudies = process.getWhenStartedStudies();
-        DateTime stateDate = process.getMostRecentState().getStateDate() != null ? process.getMostRecentState()
-                .getStateDate() : process.getMostRecentState().getWhenCreated();
+        DateTime stateDate =
+                process.getMostRecentState().getStateDate() != null ? process.getMostRecentState().getStateDate() : process
+                        .getMostRecentState().getWhenCreated();
         Boolean migratedProcess = process.getPhdConfigurationIndividualProgramProcess().isMigratedProcess();
         String studentEmail = process.getPerson().getEmailForSendingEmails();
 

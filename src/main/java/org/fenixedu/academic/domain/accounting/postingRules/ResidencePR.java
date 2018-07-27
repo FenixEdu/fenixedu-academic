@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.accounting.postingRules;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.Map;
 
 import org.fenixedu.academic.domain.accounting.EntryType;
@@ -31,7 +32,6 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
-import edu.emory.mathcs.backport.java.util.Collections;
 
 public class ResidencePR extends ResidencePR_Base {
 
