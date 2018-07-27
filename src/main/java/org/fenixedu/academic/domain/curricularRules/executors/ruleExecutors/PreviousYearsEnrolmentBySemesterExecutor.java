@@ -48,9 +48,11 @@ import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
+import org.fenixedu.academic.domain.enrolment.EnroledCurriculumModuleWrapper;
 import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 
@@ -160,9 +162,20 @@ public class PreviousYearsEnrolmentBySemesterExecutor extends CurricularRuleExec
                 .getAllChildDegreeModulesToEvaluateFor(sourceDegreeModuleToEvaluate.getDegreeModule())) {
             if (degreeModuleToEvaluate.isLeaf()) {
 
-                if (degreeModuleToEvaluate.isAnnualCurricularCourse(enrolmentContext.getExecutionPeriod().getExecutionYear())
-                        && degreeModuleToEvaluate.getContext() == null) {
-                    continue;
+                if (degreeModuleToEvaluate.isAnnualCurricularCourse(enrolmentContext.getExecutionPeriod().getExecutionYear())) {
+
+                    if (degreeModuleToEvaluate.getContext() == null) {
+                        continue;
+                    }
+
+                    if (degreeModuleToEvaluate.isEnroled()) {
+                        final ICurriculumEntry curriculumEntry =
+                                (ICurriculumEntry) ((EnroledCurriculumModuleWrapper) degreeModuleToEvaluate)
+                                        .getCurriculumModule();
+                        if (curriculumEntry.getExecutionPeriod() != enrolmentContext.getExecutionPeriod()) {
+                            continue;
+                        }
+                    }
                 }
 
                 if (degreeModuleToEvaluate.getContext() == null) {
