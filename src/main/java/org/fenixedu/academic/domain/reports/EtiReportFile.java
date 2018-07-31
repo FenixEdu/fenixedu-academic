@@ -92,7 +92,7 @@ public class EtiReportFile extends EtiReportFile_Base {
                                             if (curricularCourse.isAnual()) {
                                                 addEtiRow(spreadsheet, curricularCourse.getDegree(), curricularCourse, enrolment,
                                                         executionSemester, executionSemester, seasons);
-                                                if (executionSemester.getSemester().intValue() == 1) {
+                                                if (executionSemester.getSemester() == 1) {
                                                     final ExecutionSemester nextSemester =
                                                             executionSemester.getNextExecutionPeriod();
                                                     addEtiRow(spreadsheet, curricularCourse.getDegree(), curricularCourse,
@@ -166,25 +166,18 @@ public class EtiReportFile extends EtiReportFile_Base {
         if (competenceCourse == null) {
             return Integer.toString(count);
         }
-        for (CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCoursesSet()) {
-            count = count + countPreviousEnrolmentsCC(curricularCourse, executionPeriod, student);
-        }
+        count = competenceCourse.getAssociatedCurricularCoursesSet().stream()
+                .mapToInt(cc -> countPreviousEnrolmentsCC(cc, executionPeriod, student)).sum();
         return Integer.toString(count);
     }
 
     private int countPreviousEnrolmentsCC(final CurricularCourse curricularCourse, final ExecutionSemester executionPeriod,
             final Student student) {
-        int count = 0;
-        for (final CurriculumModule curriculumModule : curricularCourse.getCurriculumModulesSet()) {
-            if (curriculumModule.isEnrolment()) {
-                final Enrolment enrolment = (Enrolment) curriculumModule;
-                if (executionPeriod.compareTo(enrolment.getExecutionPeriod()) > 0) {
-                    if (enrolment.getStudentCurricularPlan().getRegistration().getStudent() == student) {
-                        count++;
-                    }
-                }
-            }
-        }
-        return count;
+        return (int) curricularCourse.getCurriculumModulesSet().stream()
+                .filter(CurriculumModule::isEnrolment)
+                .map(curriculumModule -> (Enrolment) curriculumModule)
+                .filter(enrolment -> executionPeriod.compareTo(enrolment.getExecutionPeriod()) > 0)
+                .filter(enrolment -> enrolment.getStudentCurricularPlan().getRegistration().getStudent() == student)
+                .count();
     }
 }

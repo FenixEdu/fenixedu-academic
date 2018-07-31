@@ -117,11 +117,9 @@ public class RaidesSpecializationReportFile extends RaidesSpecializationReportFi
                         executionYear, cycleType, concluded, conclusionDate, null, false);
 
         // Total de ECTS concluídos até ao fim do ano lectivo anterior ao que se referem os dados  no curso actual
-        double totalEctsConcludedUntilPreviousYear = 0d;
-        for (final CycleCurriculumGroup cycleCurriculumGroup : studentCurricularPlan.getInternalCycleCurriculumGrops()) {
-            totalEctsConcludedUntilPreviousYear +=
-                    cycleCurriculumGroup.getCreditsConcluded(executionYear.getPreviousExecutionYear());
-        }
+        double totalEctsConcludedUntilPreviousYear = studentCurricularPlan.getInternalCycleCurriculumGrops().stream()
+                .mapToDouble(cycleCurriculumGroup -> cycleCurriculumGroup.getCreditsConcluded(executionYear.getPreviousExecutionYear()))
+                .sum();
 
         // Total de ECTS necessários para a conclusão
         if (concluded) {

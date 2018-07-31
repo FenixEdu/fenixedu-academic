@@ -18,11 +18,9 @@
  */
 package org.fenixedu.academic.domain.reports;
 
-import java.util.Collections;
 import java.util.LinkedList;
+import java.util.stream.Collectors;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.student.Registration;
@@ -56,17 +54,12 @@ public class FlunkedReportFile extends FlunkedReportFile_Base {
         for (final Degree degree : Degree.readNotEmptyDegrees()) {
             if (checkDegreeType(getDegreeType(), degree)) {
                 for (final Registration registration : degree.getRegistrationsSet()) {
-                    LinkedList<RegistrationState> states = new LinkedList<RegistrationState>();
-                    states.addAll(registration.getRegistrationStatesSet());
-                    CollectionUtils.filter(states, new Predicate() {
-                        @Override
-                        public boolean evaluate(Object item) {
-                            return ((RegistrationState) item).getExecutionYear() != null
-                                    && ((RegistrationState) item).getExecutionYear().equals(getExecutionYear());
-                        }
-                    });
-                    Collections.sort(states, RegistrationState.DATE_COMPARATOR);
-                    if (!states.isEmpty() && states.getLast().getStateType().equals(RegistrationStateType.FLUNKED)) {
+                    LinkedList<RegistrationState> states = registration.getRegistrationStatesSet().stream()
+                            .filter(item -> item.getExecutionYear() != null && item.getExecutionYear().equals(getExecutionYear()))
+                            .sorted(RegistrationState.DATE_COMPARATOR)
+                            .collect(Collectors.toCollection(LinkedList::new));
+
+                    if (!states.isEmpty() && states.getLast().getStateType() == RegistrationStateType.FLUNKED) {
                         final Row row = spreadsheet.addRow();
                         row.setCell(registration.getNumber());
                         CycleType cycleType = registration.getCycleType(states.getLast().getExecutionYear());

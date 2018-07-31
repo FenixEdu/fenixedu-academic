@@ -23,6 +23,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CompetenceCourse;
@@ -58,6 +59,11 @@ public abstract class GepReportFile extends GepReportFile_Base {
         super();
     }
 
+    @Override
+    public Priority getPriority() {
+        return Priority.LOW;
+    }
+
     public static String getExecutionSemesterCode(ExecutionSemester executionSemester) {
         return executionSemester.getSemester() + CODE_SEPARATOR + executionSemester.getYear();
     }
@@ -90,8 +96,8 @@ public abstract class GepReportFile extends GepReportFile_Base {
 
     public static String getWrittenEvaluationCode(WrittenEvaluation writtenEvaluation) {
         StringBuilder code =
-                new StringBuilder().append(writtenEvaluation.getInterval().toString()).append(writtenEvaluation.getFullName())
-                        .append(writtenEvaluation.getEvaluationType().toString());
+                new StringBuilder().append(writtenEvaluation.getInterval()).append(writtenEvaluation.getFullName())
+                        .append(writtenEvaluation.getEvaluationType());
         writtenEvaluation.getAssociatedExecutionCoursesSet().stream().forEach(ec -> code.append(getExecutionCourseCode(ec)));
         return Hashing.murmur3_128().hashBytes(code.toString().getBytes(StandardCharsets.UTF_8)).toString();
     }
@@ -173,12 +179,8 @@ public abstract class GepReportFile extends GepReportFile_Base {
     }
 
     protected boolean isActive(final Degree degree) {
-        for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
-            if (checkExecutionYear(getExecutionYear(), degreeCurricularPlan)) {
-                return true;
-            }
-        }
-        return false;
+        return degree.getDegreeCurricularPlansSet().stream()
+                .anyMatch(degreeCurricularPlan -> checkExecutionYear(getExecutionYear(), degreeCurricularPlan));
     }
 
     protected String normalize(final String text) {
@@ -234,7 +236,7 @@ public abstract class GepReportFile extends GepReportFile_Base {
             } else if ((source = findSourceRegistrationByEquivalencePlan(current)) != null) {
                 path.addAll(getFullRegistrationPath(source));
             }
-            Collections.sort(path, Registration.COMPARATOR_BY_START_DATE);
+            path.sort(Registration.COMPARATOR_BY_START_DATE);
             return path;
         } else {
             return Collections.singletonList(current);
@@ -242,11 +244,9 @@ public abstract class GepReportFile extends GepReportFile_Base {
     }
 
     protected static boolean isValidSourceLink(Registration source) {
-        return source.getActiveStateType().equals(RegistrationStateType.TRANSITED)
-                || source.getActiveStateType().equals(RegistrationStateType.FLUNKED)
-                || source.getActiveStateType().equals(RegistrationStateType.INTERNAL_ABANDON)
-                || source.getActiveStateType().equals(RegistrationStateType.EXTERNAL_ABANDON)
-                || source.getActiveStateType().equals(RegistrationStateType.INTERRUPTED);
+        return Stream.of(RegistrationStateType.TRANSITED, RegistrationStateType.FLUNKED, RegistrationStateType.INTERNAL_ABANDON,
+                RegistrationStateType.EXTERNAL_ABANDON, RegistrationStateType.INTERRUPTED)
+                .anyMatch(registrationStateType -> source.getActiveStateType() == registrationStateType);
     }
 
     private static Registration findSourceRegistrationByEquivalencePlan(Registration targetRegistration) {

@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.reports;
 
 import java.math.BigDecimal;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.Branch;
 import org.fenixedu.academic.domain.CompetenceCourse;
@@ -238,26 +239,18 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
     }
 
     private String findResponsibleTeachers(final ExecutionCourse executionCourse) {
-        final StringBuilder stringBuilder = new StringBuilder();
-        for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
-            if (professorship.isResponsibleFor()) {
-                if (stringBuilder.length() > 0) {
-                    stringBuilder.append(", ");
-                }
-                stringBuilder.append(professorship.getTeacher().getPerson().getUsername());
-            }
-        }
-        return stringBuilder.length() == 0 ? " " : stringBuilder.toString();
+        final String stringBuilder = executionCourse.getProfessorshipsSet().stream()
+                .filter(Professorship::isResponsibleFor)
+                .map(professorship -> professorship.getTeacher().getPerson().getUsername())
+                .collect(Collectors.joining(", "));
+        return stringBuilder.isEmpty() ? " " : stringBuilder;
     }
 
     private DegreeModuleScope findDegreeModuleScope(final CurricularCourse curricularCourse,
             final ExecutionSemester executionPeriod) {
-        for (final DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
-            if (degreeModuleScope.isActiveForExecutionPeriod(executionPeriod)) {
-                return degreeModuleScope;
-            }
-        }
-        return null;
+        return curricularCourse.getDegreeModuleScopes().stream()
+                .filter(degreeModuleScope -> degreeModuleScope.isActiveForExecutionPeriod(executionPeriod))
+                .findFirst().orElse(null);
     }
 
     private BigDecimal findTotalCourseLoad(final CompetenceCourseLoad competenceCourseLoad,
@@ -272,7 +265,7 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
             // executionCourse, ShiftType.TEORICO_PRATICA));
             // bigDecimal =
             // bigDecimal.multiply(BigDecimal.valueOf(CompetenceCourseLoad.NUMBER_OF_WEEKS));
-            bigDecimal = bigDecimal.add(BigDecimal.valueOf(competenceCourseLoad.getTotalLoad().doubleValue()));
+            bigDecimal = bigDecimal.add(BigDecimal.valueOf(competenceCourseLoad.getTotalLoad()));
             return bigDecimal;
         }
         BigDecimal load = findCourseLoadFromExecutionCourse(competenceCourseLoad, executionCourse, shiftType);

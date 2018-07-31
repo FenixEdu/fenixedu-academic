@@ -205,7 +205,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
         try (PreparedStatement prepareStatement = connection.prepareStatement("SELECT OID FROM EVENT");
                 ResultSet executeQuery = prepareStatement.executeQuery()) {
 
-            List<String> result = new ArrayList<String>();
+            List<String> result = new ArrayList<>();
             while (executeQuery.next()) {
                 result.add(executeQuery.getString(1));
             }
@@ -226,7 +226,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
         Integer blockRead = 0;
 
-        final List<EventBean> result = Collections.synchronizedList(new ArrayList<EventBean>());
+        final List<EventBean> result = Collections.synchronizedList(new ArrayList<>());
 
         while (blockRead < allEventsExternalIds.size()) {
             Integer inc = BLOCK;
@@ -536,7 +536,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
         Integer blockRead = 0;
 
-        final List<ExemptionBean> result = Collections.synchronizedList(new ArrayList<ExemptionBean>());
+        final List<ExemptionBean> result = Collections.synchronizedList(new ArrayList<>());
 
         while (blockRead < allEventsExternalIds.size()) {
             Integer inc = BLOCK;
@@ -636,7 +636,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     private List<ExemptionBean> writeExemptionInformation(Event event) {
         Set<Exemption> exemptionsSet = event.getExemptionsSet();
 
-        List<ExemptionBean> result = new ArrayList<ExemptionBean>();
+        List<ExemptionBean> result = new ArrayList<>();
 
         for (Exemption exemption : exemptionsSet) {
 
@@ -673,7 +673,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
         Integer blockRead = 0;
 
-        final List<AccountingTransactionBean> result = Collections.synchronizedList(new ArrayList<AccountingTransactionBean>());
+        final List<AccountingTransactionBean> result = Collections.synchronizedList(new ArrayList<>());
 
         while (blockRead < allEventsExternalIds.size()) {
             Integer inc = BLOCK;
@@ -740,7 +740,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     }
 
     private List<AccountingTransactionBean> writeTransactionInformation(Event event) {
-        List<AccountingTransactionBean> result = new ArrayList<AccountingTransactionBean>();
+        List<AccountingTransactionBean> result = new ArrayList<>();
 
         for (AccountingTransaction transaction : event.getNonAdjustingTransactions()) {
 
@@ -858,7 +858,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     }
 
     public static List<EventReportQueueJob> retrieveAllGeneratedReports() {
-        List<EventReportQueueJob> reports = new ArrayList<EventReportQueueJob>();
+        List<EventReportQueueJob> reports = new ArrayList<>();
 
         CollectionUtils.select(Bennu.getInstance().getQueueJobSet(), new Predicate() {
 
@@ -873,7 +873,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     }
 
     public static List<EventReportQueueJob> retrieveDoneGeneratedReports() {
-        List<EventReportQueueJob> reports = new ArrayList<EventReportQueueJob>();
+        List<EventReportQueueJob> reports = new ArrayList<>();
 
         CollectionUtils.select(Bennu.getInstance().getQueueJobSet(), new Predicate() {
 
@@ -926,16 +926,9 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
             return list;
         }
 
-        List<EventReportQueueJob> result = new ArrayList<EventReportQueueJob>();
-
-        for (EventReportQueueJob eventReportQueueJob : list) {
-
-            if (offices.contains(eventReportQueueJob.getForAdministrativeOffice())) {
-                result.add(eventReportQueueJob);
-            }
-        }
-
-        return result;
+        return list.stream()
+                .filter(eventReportQueueJob -> offices.contains(eventReportQueueJob.getForAdministrativeOffice()))
+                .collect(Collectors.toList());
     }
 
     private static String valueOrNull(Object obj) {

@@ -27,7 +27,6 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.fenixedu.academic.domain.Alumni;
 import org.fenixedu.academic.domain.AlumniIdentityCheckRequest;
 import org.fenixedu.academic.domain.DomainObjectUtil;
@@ -35,8 +34,11 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Formation;
 import org.fenixedu.academic.domain.Job;
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.QueueJob;
 import org.fenixedu.academic.domain.QueueJobResult;
+import org.fenixedu.academic.domain.QueueJob_Base;
 import org.fenixedu.academic.domain.contacts.EmailAddress;
+import org.fenixedu.academic.domain.contacts.PartyContact;
 import org.fenixedu.academic.domain.contacts.Phone;
 import org.fenixedu.academic.domain.contacts.PhysicalAddress;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -105,22 +107,20 @@ public class AlumniReportFile extends AlumniReportFile_Base {
     private List<Spreadsheet> buildReport() {
 
         final Spreadsheet curriculumData = new Spreadsheet("ALUMNI_CURRICULUM_DATA");
-        curriculumData.setHeaders(new String[] { "NOME", "NUMERO_ALUNO", "CURSO", "INICIO", "CONCLUSAO", "DESCRICAO",
-                "EMPREGADO ACTUALMENTE" });
+        curriculumData.setHeaders("NOME", "NUMERO_ALUNO", "CURSO", "INICIO", "CONCLUSAO", "DESCRICAO", "EMPREGADO ACTUALMENTE");
 
         final Spreadsheet personalData = new Spreadsheet("ALUMNI_PERSONAL_DATA");
-        personalData.setHeaders(new String[] { "NOME", "NUMERO_ALUNO", "DATA_NASCIMENTO", "MORADA", "COD_POSTAL", "LOCALIDADE",
-                "PAIS", "EMAIL_PESSOAL", "EMAIL_ENVIAR", "TELEFONE", "REGISTADO EM" });
+        personalData.setHeaders("NOME", "NUMERO_ALUNO", "DATA_NASCIMENTO", "MORADA", "COD_POSTAL", "LOCALIDADE", "PAIS",
+                "EMAIL_PESSOAL", "EMAIL_ENVIAR", "TELEFONE", "REGISTADO EM");
 
         final Spreadsheet jobData = new Spreadsheet("ALUMNI_JOB_DATA");
-        jobData.setHeaders(new String[] { "IDENTIFICADOR", "NOME", "NUMERO_ALUNO", "EMPREGADOR", "CIDADE", "PAIS",
-                "COD_AREA_NEGOCIO", "AREA_NEGOCIO", "POSICAO", "DATA_INICIO", "DATA_FIM", "TIPO_CONTRATO", "FORMA_COLOCACAO",
-                "REMUN_MENSAL_BRUTA", "TIPO_SALARIO", "DATA_ALTERACAO", "DATA_REGISTO" });
+        jobData.setHeaders("IDENTIFICADOR", "NOME", "NUMERO_ALUNO", "EMPREGADOR", "CIDADE", "PAIS", "COD_AREA_NEGOCIO",
+                "AREA_NEGOCIO", "POSICAO", "DATA_INICIO", "DATA_FIM", "TIPO_CONTRATO", "FORMA_COLOCACAO", "REMUN_MENSAL_BRUTA",
+                "TIPO_SALARIO", "DATA_ALTERACAO", "DATA_REGISTO");
 
         final Spreadsheet formationData = new Spreadsheet("ALUMNI_FORMATION_DATA");
-        formationData.setHeaders(new String[] { "IDENTIFICADOR", "NOME", "NUMERO_ALUNO", "TIPO", "GRAU", "INSTITUICAO",
-                "COD_AREA_EDUCATIVA", "AREA_EDUCATIVA", "INICIO", "CONCLUSAO", "CREDITOS_ECTS", "NUMERO_HORAS", "DATA_ALTERACAO",
-                "DATA_REGISTO" });
+        formationData.setHeaders("IDENTIFICADOR", "NOME", "NUMERO_ALUNO", "TIPO", "GRAU", "INSTITUICAO", "COD_AREA_EDUCATIVA",
+                "AREA_EDUCATIVA", "INICIO", "CONCLUSAO", "CREDITOS_ECTS", "NUMERO_HORAS", "DATA_ALTERACAO", "DATA_REGISTO");
 
         int count = 0;
 
@@ -160,7 +160,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
 
         }
 
-        List<Spreadsheet> sheets = new ArrayList<Spreadsheet>(4);
+        List<Spreadsheet> sheets = new ArrayList<>(4);
         sheets.add(curriculumData);
         sheets.add(personalData);
         sheets.add(jobData);
@@ -177,7 +177,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
             if (registration.isBolonha()) {
                 if (registration.hasConcluded()) {
                     final SortedSet<CycleCurriculumGroup> concludeCycles =
-                            new TreeSet<CycleCurriculumGroup>(CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE_AND_ID);
+                            new TreeSet<>(CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE_AND_ID);
                     concludeCycles.addAll(registration.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops());
                     Row row = sheet.addRow();
                     row.setCell(alumniName);
@@ -242,14 +242,14 @@ public class AlumniReportFile extends AlumniReportFile_Base {
             return person.getStudent().getAlumni().getLastPersonalAddress();
         }
 
-        SortedSet<PhysicalAddress> addressSet = new TreeSet<PhysicalAddress>(DomainObjectUtil.COMPARATOR_BY_ID);
+        SortedSet<PhysicalAddress> addressSet = new TreeSet<>(DomainObjectUtil.COMPARATOR_BY_ID);
         addressSet.addAll(person.getPhysicalAddresses());
         return !addressSet.isEmpty() && addressSet.last() != null ? addressSet.last() : null;
     }
 
     public EmailAddress getPersonalEmail(final Person person) {
         return person.getEmailAddressStream()
-                .filter(e -> e.isPersonalType())
+                .filter(PartyContact::isPersonalType)
                 .findAny().orElse(null);
     }
 
@@ -262,12 +262,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
             return person.getStudent().getAlumni().getPersonalPhone();
         }
 
-        for (Phone phone : person.getPhones()) {
-            if (phone.isPersonalType()) {
-                return phone;
-            }
-        }
-        return null;
+        return person.getPhones().stream().filter(PartyContact::isPersonalType).findFirst().orElse(null);
     }
 
     public Boolean hasPersonalPhone(final Person person) {
@@ -347,17 +342,9 @@ public class AlumniReportFile extends AlumniReportFile_Base {
     }
 
     public static List<AlumniReportFile> readDoneJobs() {
-        List<AlumniReportFile> reportFileList = new ArrayList<AlumniReportFile>();
-
-        CollectionUtils.select(ExecutionYear.readCurrentExecutionYear().getAlumniReportFilesSet(), new Predicate() {
-
-            @Override
-            public boolean evaluate(Object arg0) {
-                return ((AlumniReportFile) arg0).getDone();
-            }
-        }, reportFileList);
-
-        return reportFileList;
+        return ExecutionYear.readCurrentExecutionYear().getAlumniReportFilesSet().stream()
+                .filter(QueueJob_Base::getDone)
+                .collect(Collectors.toList());
     }
 
     public static List<AlumniReportFile> readUndoneJobs() {
@@ -366,17 +353,9 @@ public class AlumniReportFile extends AlumniReportFile_Base {
     }
 
     public static List<AlumniReportFile> readPendingJobs() {
-        List<AlumniReportFile> reportFileList = new ArrayList<AlumniReportFile>();
-
-        CollectionUtils.select(ExecutionYear.readCurrentExecutionYear().getAlumniReportFilesSet(), new Predicate() {
-
-            @Override
-            public boolean evaluate(Object arg0) {
-                return ((AlumniReportFile) arg0).getIsNotDoneAndNotCancelled();
-            }
-        }, reportFileList);
-
-        return reportFileList;
+        return ExecutionYear.readCurrentExecutionYear().getAlumniReportFilesSet().stream()
+                .filter(QueueJob::getIsNotDoneAndNotCancelled)
+                .collect(Collectors.toList());
     }
 
     public static Boolean canRequestReport() {
