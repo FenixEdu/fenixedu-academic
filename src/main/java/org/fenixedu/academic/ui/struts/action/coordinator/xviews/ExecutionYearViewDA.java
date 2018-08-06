@@ -112,9 +112,9 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
         Set<Enrolment> enrolments = new HashSet<Enrolment>();
         for (StudentCurricularPlan scp : degreeCurricularPlan.getStudentCurricularPlansSet()) {
             for (Enrolment enrol : scp.getEnrolmentsSet()) {
-                if (enrol.getExecutionPeriod().getExecutionYear() == executionYear
-                        && enrol.getParentCycleCurriculumGroup() != null
-                        && degreeCurricularPlan.getCycleCourseGroup(enrol.getParentCycleCurriculumGroup().getCycleType()) != null) {
+                if (enrol.getExecutionPeriod().getExecutionYear() == executionYear && enrol.isActive()
+                        && enrol.getParentCycleCurriculumGroup() != null && degreeCurricularPlan
+                                .getCycleCourseGroup(enrol.getParentCycleCurriculumGroup().getCycleType()) != null) {
                     enrolments.add(enrol);
                 }
             }
