@@ -164,6 +164,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     public void delete() {
         checkRulesToDelete();
 
+        setEctsConversionTable(null);
         setExecutionPeriod(null);
         setExternalCurricularCourse(null);
         setRegistration(null);
