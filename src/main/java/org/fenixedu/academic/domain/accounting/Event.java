@@ -28,7 +28,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.stream.Stream;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -551,6 +551,8 @@ public abstract class Event extends Event_Base {
         return getDebtInterestCalculator(getPostingRule(), when);
     }
 
+    public static BiFunction<AccountingTransaction, DateTime, Boolean> paymentsPredicate = (t, when) -> !t.getWhenProcessed().isAfter(when);
+
     protected DebtInterestCalculator getDebtInterestCalculator(PostingRule postingRule, DateTime when) {
         final Builder builder = new Builder(when);
         final Map<LocalDate, Money> dueDateAmountMap = getDueDateAmountMap(postingRule, when);
@@ -570,7 +572,7 @@ public abstract class Event extends Event_Base {
         });
 
         getNonAdjustingTransactions().forEach(t -> {
-            if (!t.getWhenProcessed().isAfter(when)) {
+            if (paymentsPredicate.apply(t, when)) {
                 builder.payment(t.getExternalId(), t.getWhenProcessed(), t.getWhenRegistered().toLocalDate(), t
                         .getDescriptionForEntryType(postingRule.getEntryType()).toString(),
                         t.getAmountWithAdjustment().getAmount());
