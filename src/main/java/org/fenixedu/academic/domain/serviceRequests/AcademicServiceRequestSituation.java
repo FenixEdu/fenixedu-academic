@@ -56,7 +56,7 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
         super.setCreationDate(new DateTime());
     }
 
-    private AcademicServiceRequestSituation(final AcademicServiceRequest academicServiceRequest,
+    public AcademicServiceRequestSituation(final AcademicServiceRequest academicServiceRequest,
             final AcademicServiceRequestBean academicServiceRequestBean) {
         this();
         init(academicServiceRequest, academicServiceRequestBean);
@@ -111,30 +111,10 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
         }
     }
 
-//    @Override
-//    public void setAcademicServiceRequest(AcademicServiceRequest academicServiceRequest) {
-//        throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.cannot.modify.academicServiceRequest");
-//    }
-
-    @Override
-    public void setCreator(Person reponsible) {
-        throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.cannot.modify.creator");
-    }
-
     @Override
     public void setAcademicServiceRequestSituationType(AcademicServiceRequestSituationType academicServiceRequestSituationType) {
         throw new DomainException(
                 "error.serviceRequests.AcademicServiceRequestSituation.cannot.modify.academicServiceRequestSituationType");
-    }
-
-    @Override
-    public void setCreationDate(DateTime creationDate) {
-        throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.cannot.modify.creationDate");
-    }
-
-    @Override
-    public void setJustification(String justification) {
-        throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.cannot.modify.justification");
     }
 
     public boolean isDelivered() {
@@ -188,7 +168,7 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
         return getSituationDate();
     }
 
-    static AcademicServiceRequestSituation create(final AcademicServiceRequest academicServiceRequest,
+    public static AcademicServiceRequestSituation create(final AcademicServiceRequest academicServiceRequest,
             final AcademicServiceRequestBean academicServiceRequestBean) {
 
         AcademicServiceRequestSituation situation = null;

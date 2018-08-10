@@ -144,8 +144,17 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
         situationBean.setSituationDate(getRequestDate().toYearMonthDay());
         createAcademicServiceRequestSituations(situationBean);
 
+        checkRules();
+    }
+    
+    protected void checkRules() {
+        // Ensure that are no service requests with same number and year
+        if(getRootDomainObject().getAcademicServiceRequestsSet().stream().filter(e -> e.getServiceRequestNumberYear().equals(getServiceRequestNumberYear())).count() > 1) {
+            throw new DomainException("error.serviceRequests.AcademicServiceRequest.duplicate.serviceRequestNumberYear");
+        }
     }
 
+    
     private int getServiceRequestYear() {
         return getAcademicServiceRequestYear().getYear();
     }
@@ -466,9 +475,11 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     @Override
     final public void setServiceRequestNumber(Integer serviceRequestNumber) {
-        throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.modify.serviceRequestNumber");
+        super.setServiceRequestNumber(serviceRequestNumber);
+        
+        checkRules();
     }
-
+    
     final public String getServiceRequestNumberYear() {
         return getServiceRequestNumber() + SERVICE_REQUEST_NUMBER_YEAR_SEPARATOR + getServiceRequestYear();
     }
