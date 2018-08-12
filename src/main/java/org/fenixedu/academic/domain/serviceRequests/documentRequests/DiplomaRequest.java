@@ -45,7 +45,6 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.events.serviceRequests.DiplomaRequestEvent;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
-import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.IDiplomaRequest;
 import org.fenixedu.academic.domain.serviceRequests.RegistryCode;
@@ -75,7 +74,14 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
         super.init(bean);
 
         checkParameters(bean);
+
         setProgramConclusion(bean.getProgramConclusion());
+        RegistryCode code = bean.getRegistryCode();
+        if (code != null) {
+            setRegistryCode(code);
+        } else {
+            getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
+        }
         if (isPayedUponCreation() && !isFree()) {
             DiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
         }
@@ -87,24 +93,23 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
             throw new DomainException("error.program.conclusion.empty");
         }
 
-        if (getRegistration().isBolonha() && !getRegistration().getDegreeType().isAdvancedFormationDiploma()
-                && !getRegistration().getDegreeType().isAdvancedSpecializationDiploma()) {
-            final RegistryDiplomaRequest registryRequest = getRegistration().getRegistryDiplomaRequest(getProgramConclusion());
-            if (registryRequest == null) {
-                throw new DomainException("DiplomaRequest.registration.withoutRegistryRequest");
-            } else if (registryRequest.isPayedUponCreation() && registryRequest.getEvent() != null
-                    && !registryRequest.getEvent().isPayed()) {
+        RegistryCode code = bean.getRegistryCode();
+
+        if (code != null) {
+            if (code.getDiploma() != null) {
+                throw new DomainException("DiplomaRequest.registration.diplomaAlreadyExistsForCode");
+            }
+            final RegistryDiplomaRequest registryDiplomaRequest = code.getRegistryDiploma();
+            if (registryDiplomaRequest == null) {
                 throw new DomainException("DiplomaRequest.registration.withoutPayedRegistryRequest");
             }
-        }
-
-        checkForDuplicate(bean.getProgramConclusion());
-    }
-
-    private void checkForDuplicate(final ProgramConclusion programConclusion) {
-        final DiplomaRequest diplomaRequest = getRegistration().getDiplomaRequest(programConclusion);
-        if (diplomaRequest != null && diplomaRequest != this) {
-            throw new DomainException("DiplomaRequest.diploma.already.requested");
+            if (registryDiplomaRequest.isPayedUponCreation() && registryDiplomaRequest.getEvent() != null
+                    && !registryDiplomaRequest.getEvent().isPayed()) {
+                throw new DomainException("DiplomaRequest.registration.withoutPayedRegistryRequest");
+            }
+        } else if (getRegistration().isBolonha() && !getRegistration().getDegreeType().isAdvancedFormationDiploma()
+                && !getRegistration().getDegreeType().isAdvancedSpecializationDiploma()) {
+            throw new DomainException("DiplomaRequest.registration.withoutRegistryCode");
         }
     }
 
@@ -174,8 +179,6 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
                 throw new DomainException("DiplomaRequest.diploma.not.available");
             }
 
-            checkForDuplicate(getProgramConclusion());
-
             if (!getProgramConclusion().isConclusionProcessed(getRegistration())) {
                 throw new DomainException("DiplomaRequest.registration.not.submited.to.conclusion.process");
             }
@@ -196,23 +199,9 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
                 throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
             }
 
-            if (!getRegistration().getDegreeType().isAdvancedFormationDiploma()
-                    && !getRegistration().getDegreeType().isAdvancedSpecializationDiploma()) {
-                RegistryCode code = getRegistryCode();
-                if (code != null) {
-                    if (!code.getDocumentRequestSet().contains(this)) {
-                        code.addDocumentRequest(this);
-                        getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
-                    }
-                } else {
-                    // FIXME: later, when all legacy diplomas are dealt with,
-                    // the
-                    // code can never be null, as it is created in the DR
-                    // request
-                    // that is a pre-requisite for this request.
-                    getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
-                    getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
-                }
+            if (!getRegistration().getDegreeType().isAdvancedFormationDiploma() && !getRegistration().getDegreeType()
+                    .isAdvancedSpecializationDiploma()) {
+                getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
             }
 
             if (getLastGeneratedDocument() == null) {
@@ -276,20 +265,11 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
         return false;
     }
 
-    public void generateRegistryCode() {
-        if (getRegistryCode() == null) {
-            getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
-            getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
-        }
+    public void addToRectorateBatch() {
+        getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
         if (getLastGeneratedDocument() == null) {
             generateDocument();
         }
-    }
-
-    @Override
-    public RegistryCode getRegistryCode() {
-        RegistryDiplomaRequest registry = getRegistration().getRegistryDiplomaRequest(getProgramConclusion());
-        return registry != null ? registry.getRegistryCode() : super.getRegistryCode();
     }
 
     @Override
@@ -318,9 +298,10 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
     }
 
     @Override
-    public boolean isCanGenerateRegistryCode() {
-        return isSendToExternalEntitySituationAccepted() && !hasRegistryCode()
-                && !getProgramConclusion().getGraduationTitle().isEmpty();
+    public boolean isManuallySentToRectorate() {
+        return isSendToExternalEntitySituationAccepted() && !getProgramConclusion().getGraduationTitle().isEmpty() && (
+                getRegistration().getDegreeType().isAdvancedFormationDiploma() || getRegistration().getDegreeType()
+                        .isAdvancedSpecializationDiploma());
     }
 
     @Override

@@ -36,10 +36,12 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
@@ -135,6 +137,7 @@ import org.slf4j.LoggerFactory;
 import com.google.common.base.Strings;
 
 import pt.ist.fenixframework.Atomic;
+
 
 public class Registration extends Registration_Base {
 
@@ -2615,53 +2618,51 @@ public class Registration extends Registration_Base {
     }
 
     final public DiplomaRequest getDiplomaRequest(final ProgramConclusion programConclusion) {
-        for (final DocumentRequest documentRequest : getDocumentRequests()) {
-            if (documentRequest.isDiploma() && !documentRequest.finishedUnsuccessfully()) {
-                final DiplomaRequest diplomaRequest = (DiplomaRequest) documentRequest;
-                if (programConclusion == null || programConclusion.equals(diplomaRequest.getProgramConclusion())) {
-                    return diplomaRequest;
-                }
-            }
-        }
+        return getLatestRequest(getDiplomaRequests(programConclusion));
+    }
 
-        return null;
+    final public Set<DiplomaRequest> getDiplomaRequests(final ProgramConclusion programConclusion) {
+        return getRequests(DocumentRequest::isDiploma,
+                programConclusion == null ? null : dr->dr.getProgramConclusion().equals(programConclusion));
     }
 
     final public PastDiplomaRequest getPastDiplomaRequest() {
-        for (final DocumentRequest documentRequest : getDocumentRequests()) {
-            if (documentRequest.isPastDiploma() && !documentRequest.finishedUnsuccessfully()) {
-                return (PastDiplomaRequest) documentRequest;
-            }
-        }
-        return null;
+        return getLatestRequest(getPastDiplomaRequests());
     }
 
-    final public RegistryDiplomaRequest getRegistryDiplomaRequest(final CycleType cycleType) {
-        return getRegistryDiplomaRequest(getLastStudentCurricularPlan().getCycleCourseGroup(cycleType).getProgramConclusion());
+    final public Set<PastDiplomaRequest> getPastDiplomaRequests() {
+        return getRequests(DocumentRequest::isPastDiploma,null);
     }
 
     final public RegistryDiplomaRequest getRegistryDiplomaRequest(final ProgramConclusion programConclusion) {
-        for (final DocumentRequest documentRequest : getDocumentRequests()) {
-            if (documentRequest.isRegistryDiploma() && !documentRequest.finishedUnsuccessfully()) {
-                final RegistryDiplomaRequest registryDiplomaRequest = (RegistryDiplomaRequest) documentRequest;
-                if (programConclusion == null || programConclusion.equals(registryDiplomaRequest.getProgramConclusion())) {
-                    return registryDiplomaRequest;
-                }
-            }
-        }
-        return null;
+        return getLatestRequest(getRegistryDiplomaRequests(programConclusion));
+    }
+
+    final public Set<RegistryDiplomaRequest> getRegistryDiplomaRequests(final ProgramConclusion programConclusion) {
+        return getRequests(DocumentRequest::isRegistryDiploma,
+                programConclusion == null ? null : rdr->rdr.getProgramConclusion().equals(programConclusion));
     }
 
     final public DiplomaSupplementRequest getDiplomaSupplementRequest(final ProgramConclusion programConclusion) {
-        for (final DocumentRequest documentRequest : getDocumentRequests()) {
-            if (documentRequest.isDiplomaSupplement() && !documentRequest.finishedUnsuccessfully()) {
-                final DiplomaSupplementRequest diplomaSupplementRequest = (DiplomaSupplementRequest) documentRequest;
-                if (programConclusion == null || programConclusion.equals(diplomaSupplementRequest.getProgramConclusion())) {
-                    return diplomaSupplementRequest;
-                }
-            }
+        return getLatestRequest(getDiplomaSupplementRequests(programConclusion));
+    }
+    final public Set<DiplomaSupplementRequest> getDiplomaSupplementRequests(final ProgramConclusion programConclusion) {
+        return getRequests(DocumentRequest::isDiplomaSupplement,
+                programConclusion == null ? null : dsr->dsr.getProgramConclusion().equals(programConclusion));
+    }
+
+    private <T extends AcademicServiceRequest> T getLatestRequest(Collection<T> requests){
+        return requests.stream().sorted(Comparator.comparing(AcademicServiceRequest::getCreationDate).reversed())
+                .findFirst().orElse(null);
+    }
+    private <T extends DocumentRequest> Set<T> getRequests(Predicate<DocumentRequest> typePredicate,
+            Predicate<T> hasSameProgramConclusion) {
+        Stream<T> requests = getDocumentRequests().stream().filter(dr -> typePredicate.test(dr) && !dr.finishedUnsuccessfully())
+                .map(dr->(T)dr);
+        if(hasSameProgramConclusion != null) {
+            requests = requests.filter(hasSameProgramConclusion);
         }
-        return null;
+        return requests.collect(Collectors.toSet());
     }
 
     final public Collection<DocumentRequest> getDocumentRequests() {
@@ -3390,7 +3391,11 @@ public class Registration extends Registration_Base {
     }
 
     public RegistrationState getLastActiveState() {
-        return getRegistrationStatesSet().stream().filter(s -> s.getStateType().isActive()).max(RegistrationState.DATE_COMPARATOR).orElse(null);
+        List<RegistrationState> activeStateList = new ArrayList<RegistrationState>();
+
+        CollectionUtils.select(getRegistrationStatesSet(),arg0->((RegistrationState) arg0).getStateType().isActive(), activeStateList);
+
+        return !activeStateList.isEmpty() ? Collections.max(activeStateList, RegistrationState.DATE_COMPARATOR) : null;
     }
 
     public boolean hasDissertationEnrolment(final ExecutionDegree executionDegree) {

@@ -36,6 +36,14 @@
 				<fr:property name="providerClass" value="org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdDocumentRequestTypeProvider" />
 				<fr:property name="destination" value="postback" />
 			</fr:slot>
+			<fr:slot name="registryCode" key="label.documentRequestsManagement.searchDocumentRequests.registry.code" bundle="ACADEMIC_OFFICE_RESOURCES"
+					 layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				<fr:property name="providerClass"
+							 value="org.fenixedu.academic.ui.renderers.providers.documentRequests.AssociatePhdRegistryCodesProvider"/>
+				<fr:property name="format" value="${description}"/>
+				<fr:property name="sortBy" value="code"/>
+				<fr:property name="nullOptionHidden" value="true"/>
+			</fr:slot>
 			<fr:slot name="requestDate" required="true" />
 			<fr:slot name="urgentRequest" />
 			<fr:slot name="freeProcessed" />			

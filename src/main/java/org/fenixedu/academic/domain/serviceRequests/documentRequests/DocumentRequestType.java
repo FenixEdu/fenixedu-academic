@@ -49,7 +49,7 @@ public enum DocumentRequestType {
 
     REGISTRY_DIPLOMA_REQUEST(true, false),
 
-    DIPLOMA_REQUEST(false, false),
+    DIPLOMA_REQUEST(true, false),
 
     DIPLOMA_SUPPLEMENT_REQUEST(true, false, false, false, false, true),
 

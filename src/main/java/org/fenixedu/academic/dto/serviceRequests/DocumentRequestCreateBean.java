@@ -34,6 +34,7 @@ import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UnitName;
+import org.fenixedu.academic.domain.serviceRequests.RegistryCode;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentPurposeType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
 import org.fenixedu.academic.domain.student.MobilityProgram;
@@ -122,6 +123,8 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
     private Integer numberOfCourseLoads;
 
     private Unit institution;
+
+    private RegistryCode registryCode;
 
     private Integer numberOfPrograms;
 
@@ -238,6 +241,15 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
     public void setExceptionalConclusionDate(YearMonthDay exceptionalConclusionDate) {
         this.exceptionalConclusionDate = exceptionalConclusionDate;
     }
+
+    public RegistryCode getRegistryCode() {
+        return registryCode;
+    }
+
+    public void setRegistryCode(RegistryCode registryCode) {
+        this.registryCode = registryCode;
+    }
+
 
     public Integer getYear() {
         return this.year;

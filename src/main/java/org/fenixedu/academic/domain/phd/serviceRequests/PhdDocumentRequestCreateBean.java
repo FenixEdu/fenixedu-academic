@@ -18,7 +18,9 @@
  */
 package org.fenixedu.academic.domain.phd.serviceRequests;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Person;
@@ -28,6 +30,7 @@ import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdDipl
 import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdDocumentRequest;
 import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
 import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.certificates.PhdFinalizationCertificateRequest;
+import org.fenixedu.academic.domain.serviceRequests.RegistryCode;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
 
@@ -38,6 +41,9 @@ public class PhdDocumentRequestCreateBean extends PhdAcademicServiceRequestCreat
 
     private String givenNames;
     private String familyNames;
+
+    private RegistryCode registryCode;
+    private List<RegistryCode> associateCodes;
 
     private DocumentRequestType documentRequestType;
 
@@ -75,6 +81,22 @@ public class PhdDocumentRequestCreateBean extends PhdAcademicServiceRequestCreat
 
     public void setFamilyNames(String familyNames) {
         this.familyNames = familyNames;
+    }
+
+    public RegistryCode getRegistryCode() {
+        return registryCode;
+    }
+
+    public void setRegistryCode(RegistryCode registryCode) {
+        this.registryCode = registryCode;
+    }
+
+    public List<RegistryCode> getAssociateCodes() {
+        return associateCodes != null ? new ArrayList<>(associateCodes) : new ArrayList<>();
+    }
+
+    public void setAssociateCodes(List<RegistryCode> associateCodes) {
+        this.associateCodes =  associateCodes != null ? new ArrayList<>(associateCodes) : new ArrayList<>();
     }
 
     public DocumentRequestType getDocumentRequestType() {

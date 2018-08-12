@@ -1256,48 +1256,44 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean hasDiplomaRequest() {
-        for (PhdAcademicServiceRequest academicServiceRequest : getPhdAcademicServiceRequestsSet()) {
-            if (academicServiceRequest.isDiploma() && !academicServiceRequest.isCancelled()
-                    && !academicServiceRequest.isRejected()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public PhdRegistryDiplomaRequest getRegistryDiplomaRequest() {
-        for (PhdAcademicServiceRequest academicServiceRequest : getPhdAcademicServiceRequestsSet()) {
-            if (academicServiceRequest.isRegistryDiploma() && !academicServiceRequest.isCancelled()
-                    && !academicServiceRequest.isRejected()) {
-                return (PhdRegistryDiplomaRequest) academicServiceRequest;
-            }
-        }
-
-        return null;
+        return getDiplomaRequest() != null;
     }
 
     public boolean hasRegistryDiplomaRequest() {
         return getRegistryDiplomaRequest() != null;
     }
 
-    public PhdDiplomaRequest getDiplomaRequest() {
-        for (PhdAcademicServiceRequest academicServiceRequest : getPhdAcademicServiceRequestsSet()) {
-            if (academicServiceRequest.isDiploma() && !academicServiceRequest.isCancelled()
-                    && !academicServiceRequest.isRejected()) {
-                return (PhdDiplomaRequest) academicServiceRequest;
-            }
-        }
-
-        return null;
+    final public PhdDiplomaRequest getDiplomaRequest() {
+        return getLatestRequest(getDiplomaRequests());
     }
 
-    public PhdDiplomaSupplementRequest getDiplomaSupplementRequest() {
-        if (!hasRegistryDiplomaRequest()) {
-            return null;
-        }
+    final public Set<PhdDiplomaRequest> getDiplomaRequests() {
+        return getRequests(PhdDiplomaRequest.class);
+    }
 
-        return getRegistryDiplomaRequest().getDiplomaSupplement();
+    final public PhdRegistryDiplomaRequest getRegistryDiplomaRequest() {
+        return getLatestRequest(getRegistryDiplomaRequests());
+    }
+
+    final public Set<PhdRegistryDiplomaRequest> getRegistryDiplomaRequests() {
+        return getRequests(PhdRegistryDiplomaRequest.class);
+    }
+
+    final public PhdDiplomaSupplementRequest getDiplomaSupplementRequest() {
+        return getLatestRequest(getDiplomaSupplementRequests());
+    }
+
+    final public Set<PhdDiplomaSupplementRequest> getDiplomaSupplementRequests() {
+        return getRequests(PhdDiplomaSupplementRequest.class);
+    }
+
+    private <T extends PhdAcademicServiceRequest> T getLatestRequest(Collection<T> requests){
+        return requests.stream().sorted(Comparator.comparing(PhdAcademicServiceRequest::getCreationDate).reversed())
+                .findFirst().orElse(null);
+    }
+    private <T extends PhdAcademicServiceRequest> Set<T> getRequests(Class<T> c) {
+        return getPhdAcademicServiceRequestsSet().stream().filter(dr -> c.isInstance(dr) && !dr.finishedUnsuccessfully())
+                .map(c::cast).collect(Collectors.toSet());
     }
 
     public PhdConclusionProcess getLastConclusionProcess() {

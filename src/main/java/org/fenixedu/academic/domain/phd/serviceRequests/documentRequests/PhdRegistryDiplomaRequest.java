@@ -34,6 +34,7 @@ import org.fenixedu.academic.domain.phd.serviceRequests.PhdAcademicServiceReques
 import org.fenixedu.academic.domain.phd.serviceRequests.PhdDocumentRequestCreateBean;
 import org.fenixedu.academic.domain.phd.thesis.PhdThesisFinalGrade;
 import org.fenixedu.academic.domain.serviceRequests.IRegistryDiplomaRequest;
+import org.fenixedu.academic.domain.serviceRequests.RegistryCode;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IRectorateSubmissionBatchDocumentEntry;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
@@ -73,20 +74,28 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
             PhdRegistryDiplomaRequestEvent.create(getAdministrativeOffice(), getPhdIndividualProgramProcess().getPerson(), this);
         }
 
+        RegistryCode code = bean.getRegistryCode();
+        if (code != null) {
+            setRegistryCode(code);
+        } else {
+            code = getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
+            bean.setRegistryCode(code);
+        }
+
         setDiplomaSupplement(PhdDiplomaSupplementRequest.create(bean));
     }
 
     private void checkParameters(final PhdDocumentRequestCreateBean bean) {
         PhdIndividualProgramProcess process = bean.getPhdIndividualProgramProcess();
-        if (process.hasRegistryDiplomaRequest()) {
-            throw new PhdDomainOperationException("error.registryDiploma.alreadyRequested");
+        RegistryCode code = bean.getRegistryCode();
+
+        if(code != null) {
+            if (code.getPhdRegistryDiploma() != null) {
+                throw new PhdDomainOperationException("error.registryDiploma.alreadyRequested");
+            }
         }
 
-        if (!process.isBolonha()) {
-            return;
-        }
-
-        if (process.hasDiplomaRequest()) {
+        if (process.isBolonha() && process.hasDiplomaRequest()) {
             throw new PhdDomainOperationException("error.registryDiploma.alreadyHasDiplomaRequest");
         }
 
@@ -203,18 +212,7 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
                 throw new PhdDomainOperationException("AcademicServiceRequest.hasnt.been.payed");
             }
 
-            if (getRegistryCode() == null) {
-
-                PhdDiplomaRequest diplomaRequest = getPhdIndividualProgramProcess().getDiplomaRequest();
-
-                if (diplomaRequest != null && diplomaRequest.hasRegistryCode()) {
-                    diplomaRequest.getRegistryCode().addDocumentRequest(this);
-                } else {
-                    getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
-                }
-
-                getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
-            }
+            getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
 
             if (getLastGeneratedDocument() == null) {
                 generateDocument();

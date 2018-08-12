@@ -70,44 +70,34 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
             PhdDiplomaRequestEvent.create(getAdministrativeOffice(), getPhdIndividualProgramProcess().getPerson(), this);
         }
 
-        applyRegistryCode();
-    }
-
-    private void applyRegistryCode() {
-        RegistryCode code = getRegistryCode();
+        RegistryCode code = bean.getRegistryCode();
         if (code != null) {
-            if (!code.getDocumentRequestSet().contains(this)) {
-                code.addDocumentRequest(this);
-            }
+            setRegistryCode(code);
         } else {
             getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
         }
     }
 
+
     private void checkParameters(final PhdDocumentRequestCreateBean bean) {
         PhdIndividualProgramProcess process = bean.getPhdIndividualProgramProcess();
+        RegistryCode code = bean.getRegistryCode();
 
-        if (process.hasDiplomaRequest()) {
-            throw new PhdDomainOperationException("error.phdDiploma.alreadyHasDiplomaRequest");
-        }
-
-        checkRegistryDiplomaRequest(process);
-    }
-
-    private void checkRegistryDiplomaRequest(PhdIndividualProgramProcess process) {
-
-        if (!process.isBolonha()) {
-            return;
-        }
-
-        if (!process.hasRegistryDiplomaRequest()) {
-            throw new PhdDomainOperationException("error.phdDiploma.registryDiploma.must.be.requested");
-        }
-
-        PhdRegistryDiplomaRequest phdRegistryDiploma = process.getRegistryDiplomaRequest();
-
-        if (phdRegistryDiploma.isPayedUponCreation() && !phdRegistryDiploma.getEvent().isPayed()) {
-            throw new PhdDomainOperationException("error.phdDiploma.registryDiploma.must.be.payed");
+        if(code == null) {
+            if(process.isBolonha()) {
+                throw new PhdDomainOperationException("error.phdDiploma.codeRequired");
+            }
+        } else {
+            if (code.getPhdDiploma() != null) {
+                throw new PhdDomainOperationException("error.phdDiploma.alreadyHasDiplomaRequest");
+            }
+            PhdRegistryDiplomaRequest phdRegistryDiploma = code.getPhdRegistryDiploma();
+            if (phdRegistryDiploma == null) {
+                throw new PhdDomainOperationException("error.phdDiploma.registryDiploma.must.be.requested");
+            }
+            if (phdRegistryDiploma.isPayedUponCreation() && !phdRegistryDiploma.getEvent().isPayed()) {
+                throw new PhdDomainOperationException("error.phdDiploma.registryDiploma.must.be.payed");
+            }
         }
     }
 
@@ -154,18 +144,6 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
     @Override
     public boolean hasPersonalInfo() {
         return true;
-    }
-
-    @Override
-    public RegistryCode getRegistryCode() {
-        PhdIndividualProgramProcess phdIndividualProgramProcess = getPhdIndividualProgramProcess();
-        RegistryCode registryCode = null;
-
-        if (phdIndividualProgramProcess.hasRegistryDiplomaRequest()) {
-            registryCode = phdIndividualProgramProcess.getRegistryDiplomaRequest().getRegistryCode();
-        }
-
-        return registryCode != null ? registryCode : super.getRegistryCode();
     }
 
     @Override

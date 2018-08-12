@@ -28,6 +28,7 @@ import org.fenixedu.academic.domain.phd.exceptions.PhdDomainOperationException;
 import org.fenixedu.academic.domain.phd.serviceRequests.PhdDocumentRequestCreateBean;
 import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
 import org.fenixedu.academic.domain.serviceRequests.RectorateSubmissionBatch;
+import org.fenixedu.academic.domain.serviceRequests.RegistryCode;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.academic.report.academicAdministrativeOffice.AdministrativeOfficeDocument;
@@ -48,9 +49,15 @@ public class PhdFinalizationCertificateRequest extends PhdFinalizationCertificat
 
         this.init(bean);
 
-        PhdRegistryDiplomaRequest registryDiplomaRequest = getPhdIndividualProgramProcess().getRegistryDiplomaRequest();
+        RegistryCode code = bean.getRegistryCode();
 
-        if (registryDiplomaRequest == null) {
+        if(code == null) {
+            throw new PhdDomainOperationException("error.PhdFinalizationCertificateRequest.codeRequired");
+        }
+        setRegistryCode(code);
+
+        PhdRegistryDiplomaRequest registryDiplomaRequest = code.getPhdRegistryDiploma();
+        if(registryDiplomaRequest == null) {
             throw new PhdDomainOperationException("error.PhdFinalizationCertificateRequest.registry.diploma.request.none");
         }
 
@@ -71,14 +78,6 @@ public class PhdFinalizationCertificateRequest extends PhdFinalizationCertificat
             PhdFinalizationCertificateRequestEvent.create(getAdministrativeOffice(), getPerson(), this);
         }
 
-        if (!bean.getPhdIndividualProgramProcess().isBolonha()) {
-            return;
-        }
-
-        if (getPhdIndividualProgramProcess().getRegistryDiplomaRequest() == null) {
-            throw new PhdDomainOperationException("error.PhdFinalizationCertificateRequest.registry.diploma.not.requested");
-        }
-
     }
 
     @Override
@@ -92,7 +91,7 @@ public class PhdFinalizationCertificateRequest extends PhdFinalizationCertificat
 
         super.internalChangeState(academicServiceRequestBean);
         if (academicServiceRequestBean.isToProcess()) {
-            PhdRegistryDiplomaRequest registryDiplomaRequest = getPhdIndividualProgramProcess().getRegistryDiplomaRequest();
+            PhdRegistryDiplomaRequest registryDiplomaRequest = getRegistryCode().getPhdRegistryDiploma();
 
             if (registryDiplomaRequest == null) {
                 throw new PhdDomainOperationException("error.PhdFinalizationCertificateRequest.registry.diploma.request.none");
