@@ -128,7 +128,8 @@ public class DebtInterestCalculator {
     }
 
     private Stream<CreditEntry> getCreditEntryStream() {
-        return creditEntries.stream().sorted(Comparator.comparing(CreditEntry::getCreated).thenComparing(CreditEntry::getId));
+        return creditEntries.stream().sorted(Comparator.comparing(CreditEntry::getCreated).thenComparing(CreditEntry::getDate)
+                .thenComparing(CreditEntry::getId));
     }
 
     public List<AccountingEntry> getAccountingEntries() {

@@ -479,7 +479,7 @@ public abstract class Event extends Event_Base {
         final DateTime previousStateDate = getEventStateDate();
         final EventState previousState = super.getEventState();
 
-        if (isOpen()) {
+        if (getEventState() == EventState.OPEN) {
             if (canCloseEvent(whenRegistered)) {
                 closeNonProcessedCodes();
                 closeEvent();
