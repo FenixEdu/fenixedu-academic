@@ -24,18 +24,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<style type="text/css">
-	input[type="checkbox"][readonly] {
-		pointer-events: none;
-	}
-</style>
-
-<script type="text/javascript">
-	$(document).ready(function() {
-	    $("input[type=checkbox]:checked").attr('readonly', '');
-	});
-</script>
-
 <bean:define id="personId" name="paymentsManagementDTO" property="person.externalId" />
 <fr:form action='<%= "/payments.do?personId=" + personId %>'>
 
