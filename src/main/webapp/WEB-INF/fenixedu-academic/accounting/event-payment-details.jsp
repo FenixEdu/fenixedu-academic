@@ -85,7 +85,7 @@
                 <dl>
                     <dt>Data de processamento:</dt>
                     <dd>
-                        <time datetime="${processedDate.toString('yyyy-MM-dd')}">${processedDate.toString('dd/MM/yyyy')}</time>
+                        <time datetime="${processedDate.toString('yyyy-MM-dd hh:mm:ss')}">${processedDate.toString('dd/MM/yyyy hh:mm:ss')}</time>
                     </dd>
                 </dl>
             </section>
@@ -98,7 +98,7 @@
                 </dl>
                 <c:forEach var="payment" items="${payments}" varStatus="paymentLoop">
                     <c:set var="debtEntryIndex" value="#{paymentLoop.index + 1}"/>
-                    <c:set var="totalPaidAmount" value="#{payment.amountUsedInDebt + payment.amountUsedInInterest}"/>
+                    <c:set var="totalPaidAmount" value="#{payment.amountUsedInDebt + payment.amountUsedInInterest + payment.amountUsedInFine}"/>
                     <dl>
                         <dt><spring:message code="accounting.event.details.debt.name" arguments="${debtEntryIndex}"/></dt>
                         <dd><c:out value="${totalPaidAmount.toPlainString()}"/><span>€</span></dd>
@@ -122,7 +122,7 @@
                 <th>Data limite</th>
                 <th>Total Pago</th>
                 <th>Dívida</th>
-                <th>Juros</th>
+                <th>Juros/Multas</th>
                 <th><span class="sr-only">Acções</span></th>
             </tr>
             </thead>
@@ -135,7 +135,8 @@
             <c:if test="${not empty payments}">
                 <c:forEach var="payment" items="${payments}" varStatus="paymentLoop">
                     <c:set var="debtEntryIndex" value="#{paymentLoop.index + 1}"/>
-                    <c:set var="totalPaidAmount" value="#{payment.amountUsedInDebt + payment.amountUsedInInterest}"/>
+                    <c:set var="amountUsedInInterestOrFine" value="#{payment.amountUsedInInterest + payment.amountUsedInFine}"/>
+                    <c:set var="totalPaidAmount" value="#{payment.amountUsedInDebt + payment.amountUsedInInterest + payment.amountUsedInFine}"/>
                     <tr>
                         <td><spring:message code="accounting.event.details.debt.name" arguments="${debtEntryIndex}"/></td>
                         <td>
@@ -143,7 +144,7 @@
                         </td>
                         <td><c:out value="${totalPaidAmount.toPlainString()}"/><span>€</span></td>
                         <td><c:out value="${payment.amountUsedInDebt.toPlainString()}"/><span>€</span></td>
-                        <td><c:out value="${payment.amountUsedInInterest.toPlainString()}"/><span>€</span></td>
+                        <td><c:out value="${amountUsedInInterestOrFine}"/><span>€</span></td>
 
                         <spring:url value="../../{event}/debt/{debtDueDate}/details" var="debtUrl">
                             <spring:param name="event" value="${event.externalId}"/>
