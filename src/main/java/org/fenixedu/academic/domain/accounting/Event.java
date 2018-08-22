@@ -138,7 +138,7 @@ public abstract class Event extends Event_Base {
 
         final Set<Entry> result = internalProcess(responsibleUser, entryDTOs, transactionDetail);
 
-        recalculateState(transactionDetail.getWhenRegistered());
+        recalculateState(new DateTime());
 
         return result;
 
@@ -150,7 +150,7 @@ public abstract class Event extends Event_Base {
 
         final Set<Entry> result = internalProcess(responsibleUser, paymentCode, amountToPay, transactionDetailDTO);
 
-        recalculateState(transactionDetailDTO.getWhenRegistered());
+        recalculateState(new DateTime());
 
         return result;
 
@@ -872,14 +872,14 @@ public abstract class Event extends Event_Base {
 
         getPostingRule().addOtherPartyAmount(responsibleUser, this, party.getAccountBy(AccountType.EXTERNAL), getToAccount(), amount, transactionDetailDTO);
 
-        recalculateState(transactionDetailDTO.getWhenRegistered());
+        recalculateState(new DateTime());
     }
 
     public final AccountingTransaction depositAmount(final User responsibleUser, final Money amount, final AccountingTransactionDetailDTO transactionDetailDTO) {
 
         final AccountingTransaction result = getPostingRule().depositAmount(responsibleUser, this, getParty().getAccountBy(AccountType.EXTERNAL), getToAccount(), amount, transactionDetailDTO);
 
-        recalculateState(transactionDetailDTO.getWhenRegistered());
+        recalculateState(new DateTime());
 
         return result;
     }
@@ -889,7 +889,7 @@ public abstract class Event extends Event_Base {
         final AccountingTransaction result =
             getPostingRule().depositAmount(responsibleUser, this, getParty().getAccountBy(AccountType.EXTERNAL), getToAccount(), amount, entryType, transactionDetailDTO);
 
-        recalculateState(transactionDetailDTO.getWhenRegistered());
+        recalculateState(new DateTime());
 
         return result;
     }
