@@ -323,18 +323,18 @@ public abstract class PostingRule extends PostingRule_Base {
 
     }
 
-    public AccountingTransaction depositAmount(final User responsibleUser, final Event event, final Account fromAcount,
+    public AccountingTransaction depositAmount(final User responsibleUser, final Event event, final Account fromAccount,
             final Account toAccount, final Money amount, final AccountingTransactionDetailDTO transactionDetailDTO) {
         throw new DomainException("error.accounting.PostingRule.does.not.implement.deposit.amount");
     }
 
-    public AccountingTransaction depositAmount(final User responsibleUser, final Event event, final Account fromAcount,
+    public AccountingTransaction depositAmount(final User responsibleUser, final Event event, final Account fromAccount,
             final Account toAccount, final Money amount, final EntryType entryType,
             final AccountingTransactionDetailDTO transactionDetailDTO) {
 
         checkEntryTypeForDeposit(event, entryType);
 
-        return makeAccountingTransaction(responsibleUser, event, fromAcount, toAccount, entryType, amount, transactionDetailDTO);
+        return makeAccountingTransaction(responsibleUser, event, fromAccount, toAccount, entryType, amount, transactionDetailDTO);
     }
 
     protected void checkEntryTypeForDeposit(final Event event, final EntryType entryType) {

@@ -48,9 +48,9 @@ public class ExternalScholarshipGratuityContributionPR extends ExternalScholarsh
     }
 
     @Override
-    public AccountingTransaction depositAmount(User responsibleUser, Event event, Account fromAcount, Account toAccount,
+    public AccountingTransaction depositAmount(User responsibleUser, Event event, Account fromAccount, Account toAccount,
             Money amount, AccountingTransactionDetailDTO transactionDetailDTO) {
-        return depositAmount(responsibleUser, event, fromAcount, toAccount, amount, EntryType.EXTERNAL_CONTRIBUTION_PAYMENT,
+        return depositAmount(responsibleUser, event, fromAccount, toAccount, amount, EntryType.EXTERNAL_CONTRIBUTION_PAYMENT,
                 transactionDetailDTO);
     }
 
