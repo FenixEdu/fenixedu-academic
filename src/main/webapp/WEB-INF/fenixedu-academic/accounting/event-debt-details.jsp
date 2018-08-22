@@ -73,7 +73,7 @@
                 </dl>
                 <dl>
                     <dt><spring:message code="accounting.event.details.debt.paid" text="Paid"/></dt>
-                    <c:set var="paidAmount" value="#{debt.paidAmount + debt.paidInterestAmount}"/>
+                    <c:set var="paidAmount" value="#{debt.paidAmount + debt.paidInterestAmount + debt.paidFineAmount}"/>
                     <dd><c:out value="${paidAmount}"/><span>€</span></dd>
                 </dl>
             </div>
@@ -96,7 +96,7 @@
                         <th>Data de criação</th>
                         <th>Pago</th>
                         <th>Divida</th>
-                        <th>Juros</th>
+                        <th>Juros/Multas</th>
                         <th><span class="sr-only">Acções</span></th>
                     </tr>
                     </thead>
@@ -108,12 +108,13 @@
                     </c:if>
                     <c:if test="${not empty payments}">
                     <c:forEach var="paymentSummary" items="${payments}">
+                        <c:set var="amountUsedInInterestOrFine" value="#{paymentSummary.amountUsedInInterest + paymentSummary.amountUsedInFine}"/>
                         <tr>
-                            <td><time datetime="${paymentSummary.created.toString('yyyy-MM-dd')}"><c:out value="${paymentSummary.created.toString('dd/MM/yyyy')}"/> </time></td>
+                            <td><time datetime="${paymentSummary.created.toString('yyyy-MM-dd hh:mm:ss')}"><c:out value="${paymentSummary.created.toString('dd/MM/yyyy hh:mm:ss')}"/> </time></td>
                             <td><time datetime="${paymentSummary.date.toString('yyyy-MM-dd')}"><c:out value="${paymentSummary.date.toString('dd/MM/yyyy')}"/> </time></td>
                             <td><c:out value="${paymentSummary.amount.toPlainString()}"/><span>€</span></td>
                             <td><c:out value="${paymentSummary.amountUsedInDebt.toPlainString()}"/><span>€</span></td>
-                            <td><c:out value="${paymentSummary.amountUsedInInterest.toPlainString()}"/><span>€</span></td>
+                            <td><c:out value="${amountUsedInInterestOrFine}"/><span>€</span></td>
                             <spring:url value="../../../{event}/{payment}/details" var="paymentUrl" scope="request">
                                 <spring:param name="event" value="${eventId}"/>
                                 <spring:param name="payment" value="${paymentSummary.id}"/>

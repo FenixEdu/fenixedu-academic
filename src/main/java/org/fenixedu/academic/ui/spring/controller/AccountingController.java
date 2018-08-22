@@ -98,7 +98,9 @@ public abstract class AccountingController {
                 .orElseThrow(UnsupportedOperationException::new);
         final List<AccountingManagementService.PaymentSummary> paymentSummaries =
                 accountingManagementService.createPaymentSummaries(debt);
-        paymentSummaries.sort(Comparator.comparing(AccountingManagementService.PaymentSummary::getCreated).reversed());
+        paymentSummaries.sort(Comparator.comparing(AccountingManagementService.PaymentSummary::getCreated)
+                .thenComparing(AccountingManagementService.PaymentSummary::getDate)
+                .thenComparing(AccountingManagementService.PaymentSummary::getId).reversed());
 
         model.addAttribute("eventId", event.getExternalId());
         model.addAttribute("eventDescription", event.getDescription());
