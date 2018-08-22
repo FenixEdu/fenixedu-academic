@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonView;
  * Created by Sérgio Silva (hello@fenixedu.org).
  */
 @JsonPropertyOrder({"type", "date", "amount","origin"})
-class Fine extends DebtEntry {
+public class Fine extends DebtEntry {
     interface View {
         interface Simple extends DebtEntry.View.Simple {}
         interface Detailed extends Simple, DebtEntry.View.Detailed {}
@@ -25,8 +25,11 @@ class Fine extends DebtEntry {
     @JsonView(Detailed.class)
     private final CreditEntry origin;
 
-    public Fine(LocalDate date, BigDecimal amount, CreditEntry origin) {
+    private final DebtEntry target;
+
+    public Fine(LocalDate date, BigDecimal amount, DebtEntry debtEntry, CreditEntry origin) {
         super("", date.toDateTimeAtStartOfDay(), date, "", amount);
+        this.target = debtEntry;
         this.date = date;
         this.origin = origin;
     }
@@ -47,5 +50,9 @@ class Fine extends DebtEntry {
     @Override
     boolean isToDeposit(CreditEntry creditEntry) {
         return creditEntry.isForFine();
+    }
+
+    public DebtEntry getTarget() {
+        return target;
     }
 }

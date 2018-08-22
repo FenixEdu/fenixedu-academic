@@ -286,7 +286,7 @@ public class DebtInterestCalculator {
                         if (debt.isOpen() && !debt.isToExemptFine()) {
                             dueDateAmountFineMap.forEach((dueDate, amount) -> {
                                 if (!appliedFines.contains(dueDate) && creditEntry.getDate().isAfter(dueDate)) {
-                                    debt.addFine(new Fine(creditEntry.getDate(), amount, creditEntry));
+                                    debt.addFine(new Fine(creditEntry.getDate(), amount, debt, creditEntry));
                                     appliedFines.add(dueDate);
                                 }
                             });
