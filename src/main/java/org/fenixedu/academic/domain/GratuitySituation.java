@@ -22,12 +22,6 @@
  */
 package org.fenixedu.academic.domain;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 import org.fenixedu.academic.domain.accounting.paymentCodes.GratuitySituationPaymentCode;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Student;
@@ -37,10 +31,14 @@ import org.fenixedu.academic.domain.transactions.PaymentType;
 import org.fenixedu.academic.domain.transactions.TransactionType;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
+
+import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -111,7 +109,7 @@ public class GratuitySituation extends GratuitySituation_Base {
         }
 
         if (this.getExemptionValue() != null) {
-            exemptionValue += this.getExemptionValue().doubleValue();
+            exemptionValue += this.getExemptionValue();
         }
         return exemptionValue;
     }
@@ -132,39 +130,9 @@ public class GratuitySituation extends GratuitySituation_Base {
     }
 
     private List<GratuityTransaction> getTransactionsUntil(final YearMonthDay date) {
-        final List<GratuityTransaction> result = new ArrayList<GratuityTransaction>();
-
-        for (final GratuityTransaction gratuityTransaction : getTransactionListSet()) {
-            if (gratuityTransaction.getTransactionDateDateTime().toYearMonthDay().compareTo(date) <= 0) {
-                result.add(gratuityTransaction);
-            }
-        }
-
-        return result;
-    }
-
-    public GratuitySituationPaymentCode calculatePaymentCode() {
-        updateValues();
-
-        if (!hasPaymentCode()) {
-            createPaymentCode();
-        } else {
-            updatePaymentCode();
-        }
-
-        return super.getPaymentCode();
-    }
-
-    private void updatePaymentCode() {
-        super.getPaymentCode().update(new YearMonthDay(), calculatePaymentCodeEndDate(), new Money(getRemainingValue()),
-                new Money(getRemainingValue()));
-    }
-
-    private void createPaymentCode() {
-        GratuitySituationPaymentCode
-                .create(PaymentCodeType.PRE_BOLONHA_MASTER_DEGREE_TOTAL_GRATUITY, new YearMonthDay(),
-                        calculatePaymentCodeEndDate(), new Money(getRemainingValue()), new Money(getRemainingValue()),
-                        getStudent(), this);
+        return getTransactionListSet().stream()
+                .filter(gratuityTransaction -> gratuityTransaction.getTransactionDateDateTime().toYearMonthDay().compareTo(date) <= 0)
+                .collect(Collectors.toList());
     }
 
     private Student getStudent() {
@@ -178,10 +146,6 @@ public class GratuitySituation extends GratuitySituation_Base {
     @Override
     public GratuitySituationPaymentCode getPaymentCode() {
         throw new DomainException("error.GratuitySituation.paymentCode.cannot.be.accessed.directly");
-    }
-
-    public boolean hasPaymentCode() {
-        return (super.getPaymentCode() != null);
     }
 
     private double calculatePenalty(final double remainingValue) {
@@ -276,17 +240,6 @@ public class GratuitySituation extends GratuitySituation_Base {
         return super.getHasPenaltyExemption() != null && super.getHasPenaltyExemption();
     }
 
-    private YearMonthDay calculatePaymentCodeEndDate() {
-        final YearMonthDay now = new YearMonthDay();
-        final YearMonthDay endPaymentDate = getEndPaymentDate();
-        return now.isAfter(endPaymentDate) ? calculateNextEndDate(now) : endPaymentDate;
-    }
-
-    protected YearMonthDay calculateNextEndDate(final YearMonthDay yearMonthDay) {
-        final YearMonthDay nextMonth = yearMonthDay.plusMonths(1);
-        return new YearMonthDay(nextMonth.getYear(), nextMonth.getMonthOfYear(), 1).minusDays(1);
-    }
-
     private boolean isPayedUsingPhases() {
         return !getGratuityValues().getPaymentPhaseListSet().isEmpty();
     }
@@ -344,32 +297,6 @@ public class GratuitySituation extends GratuitySituation_Base {
     @Override
     public void setRemainingValue(Double value) {
         throw new DomainException("error.org.fenixedu.academic.domain.GratuitySituation.cannot.modify.value");
-    }
-
-    public void editPenaltyExemption(final Boolean hasPenaltyExemption, final String justification) {
-        setHasPenaltyExemption(hasPenaltyExemption);
-        if (hasPenaltyExemption != null && hasPenaltyExemption) {
-            setPenaltyExemptionDate(new YearMonthDay());
-            setPenaltyExemptionUser(Authenticate.getUser());
-            setPenaltyExemptionJustification(justification);
-        } else {
-            setPenaltyExemptionDate(null);
-            setPenaltyExemptionUser(null);
-            setPenaltyExemptionJustification(null);
-        }
-    }
-
-    public Money getPayedAmountBetween(DateTime startDate, DateTime endDate) {
-        Money result = Money.ZERO;
-
-        for (final GratuityTransaction transaction : getTransactionListSet()) {
-            if (!transaction.getTransactionDateDateTime().isBefore(startDate)
-                    && !transaction.getTransactionDateDateTime().isAfter(endDate)) {
-                result = result.add(transaction.getValueWithAdjustment());
-            }
-        }
-
-        return result;
     }
 
     @Deprecated

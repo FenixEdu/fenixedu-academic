@@ -375,13 +375,9 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
     }
 
     private Collection<Event> searchOpenEventsWithPaymentCodes(HttpServletRequest request, final Person person) {
-        final Collection<Event> events = new HashSet<Event>();
-        for (final Event event : person.getNotPayedEvents()) {
-            if (event.isOpen() && event.hasNonProcessedPaymentCodes()) {
-                events.add(event);
-            }
-        }
-        return events;
+        return person.getNotPayedEvents().stream()
+                .filter(event -> event.isOpen() && event.hasNonProcessedPaymentCodes())
+                .collect(Collectors.toSet());
     }
 
 }

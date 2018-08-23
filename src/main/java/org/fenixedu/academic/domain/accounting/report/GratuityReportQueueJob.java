@@ -26,9 +26,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.QueueJob;
@@ -296,13 +295,7 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
         }
 
         public List<TransactionEntryDetail> getNonAdjustingTransactions() {
-            List<TransactionEntryDetail> transactionList = new ArrayList<TransactionEntryDetail>();
-
-            for (AccountingTransaction transaction : event.getNonAdjustingTransactions()) {
-                transactionList.add(new TransactionEntryDetail(transaction));
-            }
-
-            return transactionList;
+            return event.getNonAdjustingTransactions().stream().map(TransactionEntryDetail::new).collect(Collectors.toList());
         }
     }
 
@@ -334,13 +327,7 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
         }
 
         public List<TransactionEntryDetail> getBoundAdjustingTransactions() {
-            List<TransactionEntryDetail> adjustmentTransactions = new ArrayList<TransactionEntryDetail>();
-
-            for (AccountingTransaction adjustment : transaction.getAdjustmentTransactionsSet()) {
-                adjustmentTransactions.add(new TransactionEntryDetail(adjustment));
-            }
-
-            return adjustmentTransactions;
+            return transaction.getAdjustmentTransactionsSet().stream().map(TransactionEntryDetail::new).collect(Collectors.toList());
         }
 
         public String getJustification() {
@@ -419,13 +406,7 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
             return true;
         }
 
-        for (final Enrolment enrolment : enrolmentsToCalculateGratuity) {
-            if (enrolment.getDegreeCurricularPlanOfDegreeModule().getDegree().isDEA()) {
-                return true;
-            }
-        }
-
-        return false;
+        return enrolmentsToCalculateGratuity.stream().anyMatch(enrolment -> enrolment.getDegreeCurricularPlanOfDegreeModule().getDegree().isDEA());
 
     }
 
@@ -443,37 +424,15 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
     }
 
     public static List<GratuityReportQueueJob> retrieveAllGeneratedReports(final ExecutionYear executionYear) {
-        List<GratuityReportQueueJob> reports = new ArrayList<GratuityReportQueueJob>();
-
-        CollectionUtils.select(executionYear.getGratuityReportQueueJobsSet(), new Predicate() {
-
-            @Override
-            public boolean evaluate(Object arg0) {
-                GratuityReportQueueJob gratuityQueueJob = (GratuityReportQueueJob) arg0;
-
-                return gratuityQueueJob.getDone();
-            }
-
-        }, reports);
-
-        return reports;
+         return executionYear.getGratuityReportQueueJobsSet().stream()
+                .filter(QueueJob::getDone)
+                .collect(Collectors.toList());
     }
 
     public static List<GratuityReportQueueJob> retrieveNotGeneratedReports(final ExecutionYear executionYear) {
-        List<GratuityReportQueueJob> reports = new ArrayList<GratuityReportQueueJob>();
-
-        CollectionUtils.select(executionYear.getGratuityReportQueueJobsSet(), new Predicate() {
-
-            @Override
-            public boolean evaluate(Object arg0) {
-                GratuityReportQueueJob gratuityQueueJob = (GratuityReportQueueJob) arg0;
-
-                return !gratuityQueueJob.getDone();
-            }
-
-        }, reports);
-
-        return reports;
+        return executionYear.getGratuityReportQueueJobsSet().stream()
+                .filter(gratuityReportQueueJob -> !gratuityReportQueueJob.getDone())
+                .collect(Collectors.toList());
     }
 
     public static boolean canRequestReportGeneration() {

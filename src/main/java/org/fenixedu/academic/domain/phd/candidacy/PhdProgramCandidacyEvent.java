@@ -28,6 +28,8 @@ import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
+import org.fenixedu.academic.domain.accounting.paymentCodes.EventPaymentCodeEntry;
+import org.fenixedu.academic.domain.accounting.paymentCodes.EventPaymentCodeEntry_Base;
 import org.fenixedu.academic.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;

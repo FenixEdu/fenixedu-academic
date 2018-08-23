@@ -21,8 +21,6 @@ package org.fenixedu.academic.domain.accounting.paymentCodes;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.PersonAccount;
-import org.fenixedu.academic.domain.accounting.PaymentCode;
-import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
@@ -30,50 +28,12 @@ import org.fenixedu.academic.domain.transactions.InsuranceTransaction;
 import org.fenixedu.academic.domain.transactions.PaymentType;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
-import org.joda.time.YearMonthDay;
 
+@Deprecated
 public class MasterDegreeInsurancePaymentCode extends MasterDegreeInsurancePaymentCode_Base {
 
-    protected MasterDegreeInsurancePaymentCode() {
+    private MasterDegreeInsurancePaymentCode() {
         super();
-    }
-
-    private MasterDegreeInsurancePaymentCode(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
-            final YearMonthDay endDate, final Money minAmount, final Money maxAmount, final Student student,
-            final ExecutionYear executionYear) {
-        this();
-        init(paymentCodeType, startDate, endDate, minAmount, maxAmount, student, executionYear);
-    }
-
-    private void init(PaymentCodeType paymentCodeType, YearMonthDay startDate, YearMonthDay endDate, Money minAmount,
-            Money maxAmount, Student student, ExecutionYear executionYear) {
-        super.init(paymentCodeType, startDate, endDate, minAmount, maxAmount, student.getPerson());
-
-        checkParameters(executionYear, student);
-        super.setExecutionYear(executionYear);
-    }
-
-    private void checkParameters(final ExecutionYear executionYear, final Student student) {
-        if (executionYear == null) {
-            throw new DomainException(
-                    "error.accounting.paymentCodes.MasterDegreeInsurancePaymentCode.executionYear.cannot.be.null");
-        }
-
-        if (student == null) {
-            throw new DomainException("error.accounting.paymentCodes.MasterDegreeInsurancePaymentCode.student.cannot.be.null");
-        }
-    }
-
-    public static MasterDegreeInsurancePaymentCode create(final YearMonthDay startDate, final YearMonthDay endDate,
-            final Money minAmount, final Money maxAmount, final Student student, final ExecutionYear executionYear) {
-
-        if (PaymentCode.canGenerateNewCode(MasterDegreeInsurancePaymentCode.class,
-                PaymentCodeType.PRE_BOLONHA_MASTER_DEGREE_INSURANCE, student.getPerson())) {
-            return new MasterDegreeInsurancePaymentCode(PaymentCodeType.PRE_BOLONHA_MASTER_DEGREE_INSURANCE, startDate, endDate,
-                    minAmount, maxAmount, student, executionYear);
-        }
-
-        throw new DomainException("error.accounting.paymentCodes.MasterDegreeInsurancePaymentCode.could.not.generate.new.code");
     }
 
     @Override
@@ -97,12 +57,10 @@ public class MasterDegreeInsurancePaymentCode extends MasterDegreeInsurancePayme
     }
 
     private static Registration getActiveRegistrationByDegreeType(Student student) {
-        for (Registration registration : student.getRegistrationsSet()) {
-            if (registration.getDegreeType().isPreBolonhaMasterDegree() && registration.isActive()) {
-                return registration;
-            }
-        }
-        return null;
+        return student.getRegistrationsSet().stream()
+                .filter(registration -> registration.getDegreeType().isPreBolonhaMasterDegree())
+                .filter(Registration::isActive)
+                .findFirst().orElse(null);
     }
 
     @Override

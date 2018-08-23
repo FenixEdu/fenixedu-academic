@@ -33,6 +33,7 @@ import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
+@Deprecated
 public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base {
 
     private static final Logger logger = LoggerFactory.getLogger(AccountingEventPaymentCode.class);

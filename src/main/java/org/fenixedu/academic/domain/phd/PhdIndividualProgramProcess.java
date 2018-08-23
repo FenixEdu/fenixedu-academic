@@ -31,9 +31,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.AcademicProgram;
-import org.fenixedu.academic.domain.Alert;
 import org.fenixedu.academic.domain.CompetenceCourse;
-import org.fenixedu.academic.domain.Coordinator;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Job;
@@ -43,8 +41,8 @@ import org.fenixedu.academic.domain.Qualification;
 import org.fenixedu.academic.domain.QualificationBean;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
+import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
-import org.fenixedu.academic.domain.accounting.events.insurance.InsuranceEvent;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.candidacy.PersonalInformationBean;
 import org.fenixedu.academic.domain.caseHandling.Activity;
@@ -63,7 +61,6 @@ import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcessBean
 import org.fenixedu.academic.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import org.fenixedu.academic.domain.phd.candidacy.PhdThesisSubjectOrderBean;
 import org.fenixedu.academic.domain.phd.conclusion.PhdConclusionProcess;
-import org.fenixedu.academic.domain.phd.debts.PhdGratuityEvent;
 import org.fenixedu.academic.domain.phd.guidance.PhdGuidanceDocument;
 import org.fenixedu.academic.domain.phd.individualProcess.activities.AbandonIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.individualProcess.activities.AcceptEnrolments;
@@ -123,6 +120,7 @@ import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdDipl
 import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdDiplomaSupplementRequest;
 import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
 import org.fenixedu.academic.domain.phd.thesis.PhdThesisFinalGrade;
+import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
@@ -536,37 +534,20 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     static public List<PhdIndividualProgramProcess> search(final ExecutionYear year,
             final Predicate<PhdIndividualProgramProcess> searchPredicate) {
 
-        final Set<PhdIndividualProgramProcess> processesToSearch = new HashSet<PhdIndividualProgramProcess>();
-        for (final PhdIndividualProgramProcessNumber phdIndividualProgramProcessNumber : Bennu.getInstance()
-                .getPhdIndividualProcessNumbersSet()) {
-            if (year == null || phdIndividualProgramProcessNumber.getProcess().getExecutionYear().equals(year)) {
-                processesToSearch.add(phdIndividualProgramProcessNumber.getProcess());
-            }
-        }
-
-        return filter(processesToSearch, searchPredicate);
+        return Bennu.getInstance().getPhdIndividualProcessNumbersSet().stream()
+                .filter(phdIndividualProgramProcessNumber -> year == null ||
+                        phdIndividualProgramProcessNumber.getProcess().getExecutionYear().equals(year))
+                .map(PhdIndividualProgramProcessNumber::getProcess)
+                .filter(searchPredicate)
+                .collect(Collectors.toList());
     }
 
     private static <T> List<T> filter(Collection<T> collection, Predicate<T> predicate) {
-        final List<T> result = new ArrayList<T>();
-        for (final T each : collection) {
-            if (predicate.test(each)) {
-                result.add(each);
-            }
-        }
-        return result;
+        return collection.stream().filter(predicate).collect(Collectors.toList());
     }
 
     public Set<PhdAlert> getActiveAlerts() {
-        final Set<PhdAlert> result = new HashSet<PhdAlert>();
-
-        for (final PhdAlert each : getAlertsSet()) {
-            if (each.isActive()) {
-                result.add(each);
-            }
-        }
-
-        return result;
+        return getAlertsSet().stream().filter(PhdAlert::isActive).collect(Collectors.toSet());
     }
 
     public Set<PhdAlertMessage> getUnreadAlertMessagesForLoggedPerson() {
@@ -574,15 +555,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public Set<PhdAlertMessage> getUnreadedAlertMessagesFor(final Person person) {
-        final Set<PhdAlertMessage> result = new HashSet<PhdAlertMessage>();
-
-        for (final PhdAlertMessage each : getAlertMessagesSet()) {
-            if (!each.isReaded() && each.isFor(person)) {
-                result.add(each);
-            }
-        }
-
-        return result;
+        return getAlertMessagesSet().stream().filter(each -> !each.isReaded() && each.isFor(person)).collect(Collectors.toSet());
     }
 
     public Set<PhdAlertMessage> getAlertMessagesForLoggedPerson() {
@@ -590,15 +563,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public Set<PhdAlertMessage> getAlertMessagesFor(Person person) {
-        final Set<PhdAlertMessage> result = new HashSet<PhdAlertMessage>();
-
-        for (final PhdAlertMessage each : getAlertMessagesSet()) {
-            if (each.isFor(person)) {
-                result.add(each);
-            }
-        }
-
-        return result;
+        return getAlertMessagesSet().stream().filter(each -> each.isFor(person)).collect(Collectors.toSet());
     }
 
     public boolean isValidatedByCandidate() {
@@ -614,13 +579,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     private boolean hasAnyActiveAlertFor(Class<? extends PhdAlert> type) {
-        for (final Alert alert : getActiveAlerts()) {
-            if (alert.getClass().equals(type)) {
-                return true;
-            }
-        }
-
-        return false;
+        return getActiveAlerts().stream().anyMatch(alert -> alert.getClass().equals(type));
     }
 
     public boolean hasAnyRegistrationFormalizationActiveAlert() {
@@ -706,12 +665,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
                 beginActiveDate = null;
             }
         }
-        for (Interval activeInterval : activeStatesIntervals) {
-            if (interval.overlaps(activeInterval)) {
-                return true;
-            }
-        }
-        return (activeStatesIntervals.size() == 0 && beginActiveDate != null);
+        return activeStatesIntervals.stream().anyMatch(interval::overlaps) || (activeStatesIntervals.isEmpty() && beginActiveDate != null);
     }
 
     public Student getStudent() {
@@ -727,11 +681,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
                 .getExecutionDegreeByAcademicInterval(ExecutionYear.readCurrentExecutionYear().getAcademicInterval());
 
         if (executionDegree != null) {
-            for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
-                if (coordinator.getPerson() == person) {
-                    return true;
-                }
-            }
+            return executionDegree.getCoordinatorsListSet().stream().anyMatch(coordinator -> coordinator.getPerson() == person);
         }
 
         return false;
@@ -742,13 +692,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean isGuider(Person person) {
-        for (final PhdParticipant guiding : getGuidingsSet()) {
-            if (guiding.isFor(person)) {
-                return true;
-            }
-        }
-
-        return false;
+        return getGuidingsSet().stream().anyMatch(guiding -> guiding.isFor(person));
     }
 
     public boolean isGuider(PhdParticipant participant) {
@@ -756,13 +700,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean isAssistantGuider(Person person) {
-        for (final PhdParticipant guiding : getAssistantGuidingsSet()) {
-            if (guiding.isFor(person)) {
-                return true;
-            }
-        }
-
-        return false;
+        return getAssistantGuidingsSet().stream().anyMatch(guiding -> guiding.isFor(person));
     }
 
     public boolean isAssistantGuider(PhdParticipant participant) {
@@ -837,21 +775,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     protected boolean hasPhdAlert(final Class<? extends PhdAlert> clazz) {
-        for (final Alert alert : getAlertsSet()) {
-            if (clazz.isAssignableFrom(alert.getClass())) {
-                return true;
-            }
-        }
-        return false;
+        return getAlertsSet().stream().anyMatch(alert -> clazz.isAssignableFrom(alert.getClass()));
     }
 
     public PhdParticipant getParticipant(final Person person) {
-        for (final PhdParticipant participant : getParticipantsSet()) {
-            if (participant.isFor(person)) {
-                return participant;
-            }
-        }
-        return null;
+        return getParticipantsSet().stream().filter(participant -> participant.isFor(person)).findFirst().orElse(null);
     }
 
     public boolean isParticipant(final Person person) {
@@ -887,13 +815,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
             return Collections.emptySet();
         }
 
-        final Collection<CompetenceCourse> result = new HashSet<CompetenceCourse>();
-        for (PhdStudyPlanEntry entry : getStudyPlan().getEntriesSet()) {
-            if (entry.isInternalEntry()) {
-                result.add(((InternalPhdStudyPlanEntry) entry).getCompetenceCourse());
-            }
-        }
-        return result;
+        return getStudyPlan().getEntriesSet().stream()
+                .filter(PhdStudyPlanEntry::isInternalEntry)
+                .map(entry -> ((InternalPhdStudyPlanEntry) entry).getCompetenceCourse())
+                .collect(Collectors.toSet());
     }
 
     public LocalDate getConclusionDate() {
@@ -937,17 +862,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     protected List<PhdProgramProcessState> getActiveStates() {
-        List<PhdProgramProcessState> result = new ArrayList<PhdProgramProcessState>();
-        org.apache.commons.collections.CollectionUtils.select(getStates(), new org.apache.commons.collections.Predicate() {
-
-            @Override
-            public boolean evaluate(Object arg0) {
-                return ((PhdProgramProcessState) arg0).getType().isActive();
-            }
-
-        }, result);
-
-        return result;
+        return getStates().stream()
+                .filter(process -> process.getType().isActive())
+                .collect(Collectors.toList());
     }
 
     protected boolean hasActiveStates() {
@@ -976,12 +893,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean getHasStartedStudies() {
-        for (PhdProgramProcessState state : this.getActiveStates()) {
-            if (state.getType().equals(PhdIndividualProgramProcessState.WORK_DEVELOPMENT)) {
-                return true;
-            }
-        }
-        return false;
+        return this.getActiveStates().stream().anyMatch(state -> state.getType().equals(PhdIndividualProgramProcessState.WORK_DEVELOPMENT));
     }
 
     public boolean isProcessActive() {
@@ -1003,19 +915,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public Set<PhdGuidanceDocument> getLatestGuidanceDocumentVersions() {
-        Set<PhdGuidanceDocument> documents = new HashSet<PhdGuidanceDocument>();
-
-        org.apache.commons.collections.CollectionUtils.select(getLatestDocumentVersions(),
-                new org.apache.commons.collections.Predicate() {
-
-                    @Override
-                    public boolean evaluate(Object arg0) {
-                        return ((PhdProgramProcessDocument) arg0).getDocumentType().isForGuidance();
-                    }
-
-                }, documents);
-
-        return documents;
+        return getLatestDocumentVersions().stream()
+                .filter(process -> process.getDocumentType().isForGuidance())
+                .map(process -> ((PhdGuidanceDocument) process))
+                .collect(Collectors.toSet());
     }
 
     public static class PublicPhdIndividualProgramProcess extends PhdIndividualProgramProcess {
@@ -1079,16 +982,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
             return null;
         }
 
-        for (final PhdMigrationProcess migrationProcess : Bennu.getInstance().getPhdMigrationProcessesSet()) {
-            for (final PhdMigrationIndividualProcessData processData : migrationProcess
-                    .getPhdMigrationIndividualProcessDataSet()) {
-                if (processData.getNumber().equals(getPhdStudentNumber())) {
-                    return processData;
-                }
-            }
-        }
+        return Bennu.getInstance().getPhdMigrationProcessesSet().stream()
+                .flatMap(migrationProcess -> migrationProcess.getPhdMigrationIndividualProcessDataSet().stream())
+                .filter(processData -> processData.getNumber().equals(getPhdStudentNumber()))
+                .findFirst().orElse(null);
 
-        return null;
     }
 
     public PhdMigrationGuiding getAssociatedMigrationGuiding() {
@@ -1112,15 +1010,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     private PhdMigrationGuiding getAssociatedMigrationgGuidingOrAssistant(String guiderId) {
-        for (final PhdMigrationProcess migrationProcess : Bennu.getInstance().getPhdMigrationProcessesSet()) {
-            for (final PhdMigrationGuiding guidingData : migrationProcess.getPhdMigrationGuidingSet()) {
-                if (guidingData.getTeacherId().equals(guiderId)) {
-                    return guidingData;
-                }
-            }
-        }
+        return Bennu.getInstance().getPhdMigrationProcessesSet().stream()
+                .flatMap(migrationProcess -> migrationProcess.getPhdMigrationGuidingSet().stream())
+                .filter(guidingData -> guidingData.getTeacherId().equals(guiderId))
+                .findFirst().orElse(null);
 
-        return null;
     }
 
     static public List<PhdMigrationIndividualProcessData> searchMigrationProcesses(final ExecutionYear year,
@@ -1205,46 +1099,22 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     private boolean hasAnyNotPayedInsuranceEventUntil(final ExecutionYear executionYear) {
-        for (final InsuranceEvent event : getPerson().getNotCancelledInsuranceEventsUntil(executionYear)) {
-            if (event.isInDebt()) {
-                return true;
-            }
-        }
-
-        return false;
+        return getPerson().getNotCancelledInsuranceEventsUntil(executionYear).stream().anyMatch(Event::isInDebt);
     }
 
     private boolean hasAnyNotPayedAdministrativeOfficeFeeAndInsuranceEventUntil(final AdministrativeOffice office,
             final ExecutionYear executionYear) {
-        for (final AdministrativeOfficeFeeAndInsuranceEvent event : getPerson()
-                .getNotCancelledAdministrativeOfficeFeeAndInsuranceEventsUntil(office, executionYear)) {
-            if (event.isInDebt()) {
-                return true;
-            }
-        }
-
-        return false;
+        return getPerson().getNotCancelledAdministrativeOfficeFeeAndInsuranceEventsUntil(office, executionYear).stream()
+                .anyMatch(AdministrativeOfficeFeeAndInsuranceEvent::isInDebt);
     }
 
     private boolean hasAnyNotPayedInsuranceEvents() {
-        for (final InsuranceEvent event : getPerson().getNotCancelledInsuranceEvents()) {
-            if (event.isInDebt()) {
-                return true;
-            }
-        }
-
-        return false;
+        return getPerson().getNotCancelledInsuranceEvents().stream().anyMatch(Event::isInDebt);
     }
 
     private boolean hasAnyNotPayedAdministrativeOfficeFeeAndInsuranceEvents(final AdministrativeOffice office) {
-        for (final AdministrativeOfficeFeeAndInsuranceEvent event : getPerson()
-                .getNotCancelledAdministrativeOfficeFeeAndInsuranceEvents(office)) {
-            if (event.isInDebt()) {
-                return true;
-            }
-        }
-
-        return false;
+        return getPerson().getNotCancelledAdministrativeOfficeFeeAndInsuranceEvents(office).stream()
+                .anyMatch(AdministrativeOfficeFeeAndInsuranceEvent::isInDebt);
     }
 
     final public boolean hasInsuranceDebtsCurrently() {
@@ -1256,25 +1126,17 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean hasDiplomaRequest() {
-        for (PhdAcademicServiceRequest academicServiceRequest : getPhdAcademicServiceRequestsSet()) {
-            if (academicServiceRequest.isDiploma() && !academicServiceRequest.isCancelled()
-                    && !academicServiceRequest.isRejected()) {
-                return true;
-            }
-        }
-
-        return false;
+        return getPhdAcademicServiceRequestsSet().stream()
+                .filter(AcademicServiceRequest::isDiploma)
+                .anyMatch(academicServiceRequest -> !academicServiceRequest.isCancelled() && !academicServiceRequest.isRejected());
     }
 
     public PhdRegistryDiplomaRequest getRegistryDiplomaRequest() {
-        for (PhdAcademicServiceRequest academicServiceRequest : getPhdAcademicServiceRequestsSet()) {
-            if (academicServiceRequest.isRegistryDiploma() && !academicServiceRequest.isCancelled()
-                    && !academicServiceRequest.isRejected()) {
-                return (PhdRegistryDiplomaRequest) academicServiceRequest;
-            }
-        }
+        return (PhdRegistryDiplomaRequest) getPhdAcademicServiceRequestsSet().stream()
+                .filter(AcademicServiceRequest::isRegistryDiploma)
+                .filter(academicServiceRequest -> !academicServiceRequest.isCancelled() && !academicServiceRequest.isRejected())
+                .findFirst().orElse(null);
 
-        return null;
     }
 
     public boolean hasRegistryDiplomaRequest() {
@@ -1282,14 +1144,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public PhdDiplomaRequest getDiplomaRequest() {
-        for (PhdAcademicServiceRequest academicServiceRequest : getPhdAcademicServiceRequestsSet()) {
-            if (academicServiceRequest.isDiploma() && !academicServiceRequest.isCancelled()
-                    && !academicServiceRequest.isRejected()) {
-                return (PhdDiplomaRequest) academicServiceRequest;
-            }
-        }
-
-        return null;
+        return (PhdDiplomaRequest) getPhdAcademicServiceRequestsSet().stream()
+                .filter(AcademicServiceRequest::isDiploma)
+                .filter(academicServiceRequest -> !academicServiceRequest.isCancelled() && !academicServiceRequest.isRejected())
+                .findFirst().orElse(null);
     }
 
     public PhdDiplomaSupplementRequest getDiplomaSupplementRequest() {
@@ -1328,53 +1186,20 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public List<PhdAcademicServiceRequest> getNewAcademicServiceRequests() {
-        List<PhdAcademicServiceRequest> result = new ArrayList<PhdAcademicServiceRequest>();
-
-        for (PhdAcademicServiceRequest request : getPhdAcademicServiceRequestsSet()) {
-            if (!request.isNewRequest()) {
-                continue;
-            }
-
-            result.add(request);
-        }
-
-        return result;
+        return getPhdAcademicServiceRequestsSet().stream().filter(AcademicServiceRequest::isNewRequest).collect(Collectors.toList());
     }
 
     public List<PhdAcademicServiceRequest> getProcessingAcademicServiceRequests() {
-        List<PhdAcademicServiceRequest> result = new ArrayList<PhdAcademicServiceRequest>();
-
-        for (PhdAcademicServiceRequest request : getPhdAcademicServiceRequestsSet()) {
-            if (request.isNewRequest()) {
-                continue;
-            }
-
-            if (request.isDelivered() || request.isDeliveredSituationAccepted()) {
-                continue;
-            }
-
-            if (request.isCancelled() || request.isRejected()) {
-                continue;
-            }
-
-            result.add(request);
-        }
-
-        return result;
+        return getPhdAcademicServiceRequestsSet().stream()
+                .filter(request -> !request.isNewRequest())
+                .filter(request -> !request.isDelivered() && !request.isDeliveredSituationAccepted())
+                .filter(request -> !request.isCancelled() && !request.isRejected()).collect(Collectors.toList());
     }
 
     public List<PhdAcademicServiceRequest> getToDeliverAcademicServiceRequests() {
-        List<PhdAcademicServiceRequest> result = new ArrayList<PhdAcademicServiceRequest>();
-
-        for (PhdAcademicServiceRequest request : getPhdAcademicServiceRequestsSet()) {
-            if (!request.isDeliveredSituationAccepted()) {
-                continue;
-            }
-
-            result.add(request);
-        }
-
-        return result;
+        return getPhdAcademicServiceRequestsSet().stream()
+                .filter(AcademicServiceRequest::isDeliveredSituationAccepted)
+                .collect(Collectors.toList());
     }
 
     public List<PhdAcademicServiceRequest> getHistoricalAcademicServiceRequests() {
@@ -1401,22 +1226,13 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public int getHighestThesisSubjectOrder() {
-        int highestOrder = 0;
-        for (ThesisSubjectOrder order : getThesisSubjectOrdersSet()) {
-            if (order.getSubjectOrder() > highestOrder) {
-                highestOrder = order.getSubjectOrder();
-            }
-        }
-        return highestOrder;
+        return getThesisSubjectOrdersSet().stream()
+                .map(ThesisSubjectOrder_Base::getSubjectOrder).mapToInt(order -> order)
+                .filter(order -> order >= 0).max().orElse(0);
     }
 
     public boolean hasPhdGratuityEventForYear(int year) {
-        for (PhdGratuityEvent event : getPhdGratuityEventsSet()) {
-            if (event.getYear() == year && !event.isCancelled()) {
-                return true;
-            }
-        }
-        return false;
+        return getPhdGratuityEventsSet().stream().anyMatch(event -> event.getYear() == year && !event.isCancelled());
     }
 
     public AdministrativeOffice getAdministrativeOffice() {
