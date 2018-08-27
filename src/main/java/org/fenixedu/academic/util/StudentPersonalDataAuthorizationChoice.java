@@ -24,7 +24,10 @@ package org.fenixedu.academic.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.google.common.base.Splitter;
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 /**
@@ -33,23 +36,21 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
  */
 public enum StudentPersonalDataAuthorizationChoice {
 
-    PROFESSIONAL_ENDS(false), /*
+    PROFESSIONAL_ENDS, /*
                               * only to professional ends (job propositions, scholarships, internship, etc)
                               */
-    SEVERAL_ENDS(false), /*
+    SEVERAL_ENDS, /*
                          * several non comercial ends (biographic, recreational, cultural, etc)
                          */
-    ALL_ENDS(true), /* all ends, including comercial ones */
+    ALL_ENDS, /* all ends, including comercial ones */
 
-    NO_END(false), /* doesn't authorize the use of the data */
+    NO_END, /* doesn't authorize the use of the data */
 
-    STUDENTS_ASSOCIATION(true); /* allows for the student association */
+    JOB_PLATFORM,
 
-    private boolean forStudentsAssociation;
+    JOB_PLATFORM_AND_OTHERS,
 
-    private StudentPersonalDataAuthorizationChoice(boolean forStudentsAssociation) {
-        setForStudentsAssociation(forStudentsAssociation);
-    }
+    STUDENTS_ASSOCIATION; /* allows for the student association */
 
     public String getName() {
         return name();
@@ -67,16 +68,12 @@ public enum StudentPersonalDataAuthorizationChoice {
         return BundleUtil.getString(Bundle.ENUMERATION, getQualifiedName());
     }
 
-    public static List<StudentPersonalDataAuthorizationChoice> getGeneralPersonalDataAuthorizationsTypes() {
-        List<StudentPersonalDataAuthorizationChoice> authorizationsTypes =
-                new ArrayList<StudentPersonalDataAuthorizationChoice>();
-        StudentPersonalDataAuthorizationChoice[] values = StudentPersonalDataAuthorizationChoice.values();
-        for (StudentPersonalDataAuthorizationChoice studentPersonalDataAuthorizationChoice : values) {
-            if (!studentPersonalDataAuthorizationChoice.isForStudentsAssociation()) {
-                authorizationsTypes.add(studentPersonalDataAuthorizationChoice);
-            }
-        }
-        return authorizationsTypes;
+    public static String activeValues() {
+        return FenixEduAcademicConfiguration.getConfiguration().activeStudentPersonalDataAuthorizationChoices();
+    }
+
+    public static List<StudentPersonalDataAuthorizationChoice> active() {
+        return Splitter.on(",").splitToList(FenixEduAcademicConfiguration.getConfiguration().activeStudentPersonalDataAuthorizationChoices()).stream().map(String::trim).map(StudentPersonalDataAuthorizationChoice::valueOf).collect(Collectors.toList());
     }
 
     public static StudentPersonalDataAuthorizationChoice getPersonalDataAuthorizationForStudentsAssociationType(
@@ -86,13 +83,5 @@ public enum StudentPersonalDataAuthorizationChoice {
         } else {
             return NO_END;
         }
-    }
-
-    public void setForStudentsAssociation(boolean forStudentsAssociation) {
-        this.forStudentsAssociation = forStudentsAssociation;
-    }
-
-    public boolean isForStudentsAssociation() {
-        return forStudentsAssociation;
     }
 }
