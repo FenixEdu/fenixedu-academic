@@ -407,6 +407,7 @@ public abstract class PostingRule extends PostingRule_Base {
                 entryDescription = event.getDescriptionForEntryType(entryType);
                 entryDescription.appendLabel(String.format(" [ %s ]  / Juros", d.getDueDate().toString("dd-MM-yyyy")));
                 e.setDescription(entryDescription);
+                e.setForPenalty(true);
                 result.add(e);
             }
 
@@ -416,6 +417,7 @@ public abstract class PostingRule extends PostingRule_Base {
                 entryDescription = event.getDescriptionForEntryType(entryType);
                 entryDescription.appendLabel(String.format(" [ %s ]  / Multa", d.getDueDate().toString("dd-MM-yyyy")));
                 e.setDescription(entryDescription);
+                e.setForPenalty(true);
                 result.add(e);
             }
         });

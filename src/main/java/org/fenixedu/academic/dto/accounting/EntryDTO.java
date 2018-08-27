@@ -29,6 +29,8 @@ public class EntryDTO implements Serializable {
 
     private boolean selected;
 
+    private boolean isForPenalty;
+
     private EntryType entryType;
 
     private Event event;
@@ -45,17 +47,15 @@ public class EntryDTO implements Serializable {
 
     public EntryDTO(EntryType entryType, Event event, Money totalAmount, Money payedAmount, Money amountToPay,
             LabelFormatter description, Money debtAmount) {
-        setEntryType(entryType);
-        setEvent(event);
+        this(entryType, event, amountToPay);
         setTotalAmount(totalAmount);
         setPayedAmount(payedAmount);
-        setAmountToPay(amountToPay);
         setDescription(description);
         setDebtAmount(debtAmount);
-
     }
 
     public EntryDTO(EntryType entryType, Event event, Money amountToPay) {
+        setForPenalty(false);
         setEntryType(entryType);
         setEvent(event);
         setAmountToPay(amountToPay);
@@ -125,4 +125,59 @@ public class EntryDTO implements Serializable {
         return this.debtAmount;
     }
 
+    public void setForPenalty(boolean forPenalty) {
+        isForPenalty = forPenalty;
+    }
+    
+    public boolean isForPenalty() {
+        return isForPenalty;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof EntryDTO)) {
+            return false;
+        }
+
+        EntryDTO entryDTO = (EntryDTO) o;
+
+        if (isForPenalty() != entryDTO.isForPenalty()) {
+            return false;
+        }
+        if (getEntryType() != entryDTO.getEntryType()) {
+            return false;
+        }
+        if (getEvent() != null ? !getEvent().equals(entryDTO.getEvent()) : entryDTO.getEvent() != null) {
+            return false;
+        }
+        if (getTotalAmount() != null ? !getTotalAmount().equals(entryDTO.getTotalAmount()) : entryDTO.getTotalAmount() != null) {
+            return false;
+        }
+        if (getPayedAmount() != null ? !getPayedAmount().equals(entryDTO.getPayedAmount()) : entryDTO.getPayedAmount() != null) {
+            return false;
+        }
+        if (getAmountToPay() != null ? !getAmountToPay().equals(entryDTO.getAmountToPay()) : entryDTO.getAmountToPay() != null) {
+            return false;
+        }
+        if (getDescription() != null ? !getDescription().toString().equals(entryDTO.getDescription().toString()) : entryDTO.getDescription() != null) {
+            return false;
+        }
+        return getDebtAmount() != null ? getDebtAmount().equals(entryDTO.getDebtAmount()) : entryDTO.getDebtAmount() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (isForPenalty() ? 1 : 0);
+        result = 31 * result + (getEntryType() != null ? getEntryType().hashCode() : 0);
+        result = 31 * result + (getEvent() != null ? getEvent().hashCode() : 0);
+        result = 31 * result + (getTotalAmount() != null ? getTotalAmount().hashCode() : 0);
+        result = 31 * result + (getPayedAmount() != null ? getPayedAmount().hashCode() : 0);
+        result = 31 * result + (getAmountToPay() != null ? getAmountToPay().hashCode() : 0);
+        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
+        result = 31 * result + (getDebtAmount() != null ? getDebtAmount().hashCode() : 0);
+        return result;
+    }
 }
