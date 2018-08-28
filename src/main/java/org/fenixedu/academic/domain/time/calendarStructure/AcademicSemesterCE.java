@@ -46,7 +46,9 @@ public class AcademicSemesterCE extends AcademicSemesterCE_Base {
     public void delete(AcademicCalendarRootEntry rootEntry) {
         if (!isVirtual()) {
             ExecutionSemester executionSemester = ExecutionSemester.getExecutionPeriod(this);
-            executionSemester.delete();
+            if (executionSemester != null) {
+                executionSemester.delete();
+            }
         }
         super.delete(rootEntry);
     }

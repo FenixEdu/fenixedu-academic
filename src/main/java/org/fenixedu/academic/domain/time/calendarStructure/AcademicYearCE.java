@@ -43,7 +43,9 @@ public class AcademicYearCE extends AcademicYearCE_Base {
     public void delete(AcademicCalendarRootEntry rootEntry) {
         if (!isVirtual()) {
             ExecutionYear executionYear = ExecutionYear.getExecutionYear(this);
-            executionYear.delete();
+            if (executionYear != null) {
+                executionYear.delete();
+            }
         }
         super.delete(rootEntry);
     }
