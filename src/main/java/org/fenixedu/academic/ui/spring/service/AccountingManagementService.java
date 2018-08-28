@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 import org.fenixedu.academic.domain.accounting.calculator.CreditEntry;
 import org.fenixedu.academic.domain.accounting.calculator.Debt;
 import org.fenixedu.academic.domain.accounting.calculator.DebtEntry;
+import org.fenixedu.academic.domain.accounting.calculator.Fine;
 import org.fenixedu.academic.domain.accounting.calculator.Interest;
 import org.fenixedu.academic.domain.accounting.calculator.PartialPayment;
 import org.fenixedu.academic.domain.accounting.calculator.Payment;
@@ -36,8 +37,9 @@ public class AccountingManagementService {
         final BigDecimal amount;
         final BigDecimal amountUsedInDebt;
         final BigDecimal amountUsedInInterest;
+        final BigDecimal amountUsedInFine;
 
-        public PaymentSummary(String id, String description, DateTime created, LocalDate date, BigDecimal amount, BigDecimal amountUsedInDebt, BigDecimal amountUsedInInterest) {
+        public PaymentSummary(String id, String description, DateTime created, LocalDate date, BigDecimal amount, BigDecimal amountUsedInDebt, BigDecimal amountUsedInInterest,  BigDecimal amountUsedInFine) {
             this.id = id;
             this.description = description;
             this.created = created;
@@ -45,6 +47,7 @@ public class AccountingManagementService {
             this.amount = amount;
             this.amountUsedInDebt = amountUsedInDebt;
             this.amountUsedInInterest = amountUsedInInterest;
+            this.amountUsedInFine = amountUsedInFine;
         }
 
         public String getId() {
@@ -71,23 +74,26 @@ public class AccountingManagementService {
             return amountUsedInInterest;
         }
 
+        public BigDecimal getAmountUsedInFine() {
+            return amountUsedInFine;
+        }
+
         public BigDecimal getAmount() {
             return amount;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "PaymentSummary{" + "id='" + id + '\'' + ", description='" + description + '\'' + ", created=" + created
                     + ", date=" + date + ", amount=" + amount + ", amountUsedInDebt=" + amountUsedInDebt
-                    + ", amountUsedInInterest=" + amountUsedInInterest + '}';
+                    + ", amountUsedInInterest=" + amountUsedInInterest + ", amountUsedInFine=" + amountUsedInFine + '}';
         }
     }
 
     public static class PaymentSummaryWithDebt extends PaymentSummary {
         private final DebtEntry debtEntry;
 
-        public PaymentSummaryWithDebt(String id, String description, DateTime created, LocalDate date, BigDecimal amount, BigDecimal amountUsedInDebt, BigDecimal amountUsedInInterest, DebtEntry debtEntry) {
-            super(id, description, created, date , amount, amountUsedInDebt, amountUsedInInterest);
+        public PaymentSummaryWithDebt(String id, String description, DateTime created, LocalDate date, BigDecimal amount, BigDecimal amountUsedInDebt, BigDecimal amountUsedInInterest, BigDecimal amountUsedInFine, DebtEntry debtEntry) {
+            super(id, description, created, date , amount, amountUsedInDebt, amountUsedInInterest, amountUsedInFine);
             this.debtEntry = debtEntry;
         }
 
@@ -100,19 +106,20 @@ public class AccountingManagementService {
         final List<PaymentSummary> paymentSummaries = new ArrayList<>();
         final Multimap<CreditEntry, PartialPayment> creditEntryPartialPaymentMultimap = HashMultimap.create();
 
-        Stream.concat(debt.getPartialPayments().stream(), debt.getInterests().stream().flatMap(i -> i.getPartialPayments()
-                .stream())).distinct().forEach(pp -> {
-            creditEntryPartialPaymentMultimap.put(pp.getCreditEntry(), pp);
-        });
+        Stream.concat(debt.getPartialPayments().stream(), Stream.concat(debt.getInterests().stream().flatMap(i -> i.getPartialPayments().stream()), debt.getFines().stream().flatMap(i -> i.getPartialPayments().stream())))
+                .distinct()
+                .forEach(pp -> creditEntryPartialPaymentMultimap.put(pp.getCreditEntry(), pp));
 
         for (CreditEntry creditEntry : creditEntryPartialPaymentMultimap.keySet()) {
             final BigDecimal amountUsedInDebts = creditEntryPartialPaymentMultimap.get(creditEntry).stream().filter(c -> c
                     .getDebtEntry() == debt).map(PartialPayment::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
             final BigDecimal amountUsedInInterest = creditEntryPartialPaymentMultimap.get(creditEntry).stream().filter(c -> c
                     .getDebtEntry() instanceof Interest).map(PartialPayment::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+            final BigDecimal amountUsedInFine = creditEntryPartialPaymentMultimap.get(creditEntry).stream().filter(c -> c
+                    .getDebtEntry() instanceof Fine).map(PartialPayment::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
 
             PaymentSummary paymentSummary = new PaymentSummary(creditEntry.getId(), creditEntry.getDescription(), creditEntry
-                    .getCreated(), creditEntry.getDate(), creditEntry.getAmount(), amountUsedInDebts, amountUsedInInterest);
+                    .getCreated(), creditEntry.getDate(), creditEntry.getAmount(), amountUsedInDebts, amountUsedInInterest, amountUsedInFine);
 
             paymentSummaries.add(paymentSummary);
         }
@@ -130,7 +137,11 @@ public class AccountingManagementService {
             DebtEntry debtEntry = partialPayment.getDebtEntry();
             if (debtEntry instanceof Interest) {
                 debtEntryPartialPaymentMultimap.put(((Interest) debtEntry).getTarget(), partialPayment);
-            } else {
+            }
+            else if (debtEntry instanceof Fine){
+                debtEntryPartialPaymentMultimap.put(((Fine) debtEntry).getTarget(), partialPayment);
+            }
+            else {
                 debtEntryPartialPaymentMultimap.put(debtEntry, partialPayment);
             }
         }
@@ -138,16 +149,21 @@ public class AccountingManagementService {
         for (DebtEntry debtEntry : debtEntryPartialPaymentMultimap.keySet()) {
             BigDecimal amountUsedInDebt = BigDecimal.ZERO;
             BigDecimal amountUsedInInterest = BigDecimal.ZERO;
+            BigDecimal amountUsedInFine = BigDecimal.ZERO;
             Collection<PartialPayment> partialPayments = debtEntryPartialPaymentMultimap.get(debtEntry);
             for (PartialPayment partialPayment : partialPayments) {
                 if (partialPayment.getDebtEntry() instanceof Interest) {
                     amountUsedInInterest = amountUsedInInterest.add(partialPayment.getAmount());
-                } else {
+                }
+                else if (partialPayment.getDebtEntry() instanceof Fine) {
+                    amountUsedInFine = amountUsedInFine.add(partialPayment.getAmount());
+                }
+                else {
                     amountUsedInDebt = amountUsedInDebt.add(partialPayment.getAmount());
                 }
             }
             paymentSummaryWithDebtSet.add(new PaymentSummaryWithDebt(debtEntry.getId(), payment.getDescription(), payment
-                    .getCreated(), payment.getDate(), amountUsedInDebt.add(amountUsedInInterest), amountUsedInDebt, amountUsedInInterest,
+                    .getCreated(), payment.getDate(), amountUsedInDebt.add(amountUsedInInterest.add(amountUsedInFine)), amountUsedInDebt, amountUsedInInterest, amountUsedInFine,
                     debtEntry));
         }
 

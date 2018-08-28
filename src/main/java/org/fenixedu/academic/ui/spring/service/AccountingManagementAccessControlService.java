@@ -65,7 +65,10 @@ public class AccountingManagementAccessControlService {
 
     private Set<AdministrativeOffice> getAdminOffices(Event event) {
         if (event instanceof AcademicEvent) {
-            return Collections.singleton(((AcademicEvent) event).getAdministrativeOffice());
+            final AdministrativeOffice administrativeOffice = ((AcademicEvent) event).getAdministrativeOffice();
+            if (administrativeOffice != null) {
+                return Collections.singleton(administrativeOffice);
+            }
         }
         return Collections.emptySet();
     }

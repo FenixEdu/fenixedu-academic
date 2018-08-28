@@ -285,7 +285,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
                         getToAccount()), new Entry(EntryType.ADJUSTMENT, amountToReimburse, getFromAccount()),
                         new AccountingTransactionDetail(reimburseDate, paymentMode, comments), this);
 
-        getEvent().recalculateState(getWhenRegistered());
+        getEvent().recalculateState(new DateTime());
 
         return transaction;
     }

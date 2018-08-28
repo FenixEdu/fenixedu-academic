@@ -58,6 +58,10 @@ public class Debt extends DebtEntry {
         return BigDecimalUtil.sum(interests.stream(), Interest::getPaidAmount);
     }
 
+    public BigDecimal getPaidFineAmount() {
+        return BigDecimalUtil.sum(fines.stream(), Fine::getPaidAmount);
+    }
+
     public boolean isOpenInterest() {
         return interests.stream().anyMatch(Interest::isOpen);
     }
