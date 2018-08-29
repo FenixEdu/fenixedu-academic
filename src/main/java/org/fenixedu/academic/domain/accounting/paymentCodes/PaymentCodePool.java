@@ -1,23 +1,30 @@
 package org.fenixedu.academic.domain.accounting.paymentCodes;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.Event;
+import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.LocalDate;
 
+import com.google.common.collect.Lists;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class PaymentCodePool extends PaymentCodePool_Base {
-    
+
+    private static final int CHUNK_SIZE = 10000;
+
     protected PaymentCodePool() {
         super();
     }
@@ -39,27 +46,37 @@ public class PaymentCodePool extends PaymentCodePool_Base {
     }
 
 
-    private Predicate<EventPaymentCode> paymentCodeHasOpenEvent = code -> code.getEvent().map(Event::isOpen).orElse(false);
-    private Predicate<EventPaymentCode> paymentCodeIsUnused = EventPaymentCode::isInUsed;
+    private static Predicate<EventPaymentCode> paymentCodeHasOpenEvent = code -> code.getEvent().map(Event::isOpen).orElse(false);
+    private static Predicate<EventPaymentCode> paymentCodeIsUsed = EventPaymentCode::isInUsed;
 
-    public void setup(User responsible, LocalDate start) {
-        getPaymentCodeStream().filter(code -> paymentCodeHasOpenEvent.or(paymentCodeIsUnused.negate()).test(code)).forEach(
-                code -> code.edit(start, start.plusMonths(getNumberOfMonths())));
-        enforceMinSize(responsible, start);
-        if (getMinSize() != getPaymentCodeSet().size()) {
-            throw new DomainException("Can't proceed");
-        }
+    public void refreshPaymentCodes(LocalDate start) {
+        final List<EventPaymentCode> paymentCodesToRefresh =
+                getPaymentCodeStream()
+                        .filter(paymentCodeHasOpenEvent.or(paymentCodeIsUsed.negate()))
+                        .filter(p -> !p.getStartDate().toLocalDate().equals(start))
+                        .collect(Collectors.toList());
+        
+        Lists.partition(paymentCodesToRefresh, CHUNK_SIZE).forEach(codes -> {
+            FenixFramework.atomic(() -> {
+                codes.forEach(code -> code.edit(start, start.plusMonths(getNumberOfMonths())));
+            });
+        });
     }
 
     private Stream<EventPaymentCode> getPaymentCodeStream() {
         return getPaymentCodeSet().stream();
     }
 
-    private void enforceMinSize(User responsible, LocalDate start) {
-        int numberOfCodesInUsed = (int) getPaymentCodeStream().filter(EventPaymentCode::isInUsed).count();
-        if (numberOfCodesInUsed < getMinSize()) {
-            int numberOfCodesToBeCreated = getMinSize() - numberOfCodesInUsed;
-            int CHUNK_SIZE = 10000;
+    public EventPaymentCode getAvailablePaymentCode() {
+        return getPaymentCodeStream().filter(paymentCodeIsUsed.negate())
+                .min(Comparator.comparing(PaymentCode::getWhenCreated))
+                .orElseThrow(() -> new DomainException("no.available.payment.codes.in.pool"));
+    }
+
+    public void enforceMinSize(User responsible, LocalDate start) {
+        int numberOfAvailableCodes = (int) getPaymentCodeStream().filter(paymentCodeIsUsed.negate()).count();
+        if (numberOfAvailableCodes < getMinSize()) {
+            int numberOfCodesToBeCreated = getMinSize() - numberOfAvailableCodes;
 
             int chunks = numberOfCodesToBeCreated / CHUNK_SIZE;
             int remainder = numberOfCodesToBeCreated % CHUNK_SIZE;
@@ -77,6 +94,9 @@ public class PaymentCodePool extends PaymentCodePool_Base {
                     createNewCode(responsible.getPerson(), start);
                 });
             });
+        }
+        if (getMinSize() != getPaymentCodeSet().size()) {
+            throw new DomainException("Can't proceed");
         }
     }
 

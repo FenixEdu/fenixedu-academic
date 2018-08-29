@@ -19,7 +19,6 @@
 package org.fenixedu.academic.domain.accounting;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.Person;
@@ -35,7 +34,6 @@ import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
-import org.joda.time.YearMonthDay;
 
 public class ResidenceEvent extends ResidenceEvent_Base {
 
@@ -119,26 +117,6 @@ public class ResidenceEvent extends ResidenceEvent_Base {
     @Override
     public Money getAmountToPay() {
         return calculateAmountToPay(new DateTime());
-    }
-
-    @Override
-    protected List<AccountingEventPaymentCode> createPaymentCodes() {
-        final EntryDTO entryDTO = calculateEntries(new DateTime()).iterator().next();
-
-        return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.RESIDENCE_FEE, new YearMonthDay(),
-                getPaymentLimitDate().toYearMonthDay(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getPerson()));
-    }
-
-    @Override
-    protected List<AccountingEventPaymentCode> updatePaymentCodes() {
-        final EntryDTO entryDTO = calculateEntries(new DateTime()).iterator().next();
-        getNonProcessedPaymentCodes()
-                .iterator()
-                .next()
-                .update(new YearMonthDay(), getPaymentLimitDate().toYearMonthDay(), entryDTO.getAmountToPay(),
-                        entryDTO.getAmountToPay());
-
-        return getNonProcessedPaymentCodes();
     }
 
     @Override

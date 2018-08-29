@@ -18,15 +18,11 @@
  */
 package org.fenixedu.academic.domain.candidacyProcess;
 
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import java.util.stream.Collectors;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Attends;
@@ -51,13 +47,8 @@ import org.joda.time.LocalDate;
 abstract public class IndividualCandidacyProcess extends IndividualCandidacyProcess_Base {
 
     static final public Comparator<IndividualCandidacyProcess> COMPARATOR_BY_CANDIDACY_PERSON =
-            new Comparator<IndividualCandidacyProcess>() {
-                @Override
-                public int compare(IndividualCandidacyProcess o1, IndividualCandidacyProcess o2) {
-                    return IndividualCandidacyPersonalDetails.COMPARATOR_BY_NAME_AND_ID.compare(o1.getPersonalDetails(),
-                            o2.getPersonalDetails());
-                }
-            };
+            (o1, o2) -> IndividualCandidacyPersonalDetails.COMPARATOR_BY_NAME_AND_ID.compare(o1.getPersonalDetails(),
+                    o2.getPersonalDetails());
 
     protected IndividualCandidacyProcess() {
         super();
@@ -288,16 +279,11 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
             return null;
         }
 
-        Set<IndividualCandidacyProcess> candidacies = getAllInstancesOf(individualCandidacyProcessClass);
+        return getAllInstancesOf(individualCandidacyProcessClass).stream()
+                .filter(individualCandidacyProcess -> email.equals(individualCandidacyProcess.getPersonalDetails().getEmail()))
+                .filter(individualCandidacyProcess -> accessHash.equals(individualCandidacyProcess.getAccessHash()))
+                .findFirst().orElse(null);
 
-        for (IndividualCandidacyProcess individualCandidacyProcess : candidacies) {
-            if (email.equals(individualCandidacyProcess.getPersonalDetails().getEmail())
-                    && accessHash.equals(individualCandidacyProcess.getAccessHash())) {
-                return individualCandidacyProcess;
-            }
-        }
-
-        return null;
     }
 
     public static <T extends IndividualCandidacyProcess> T findIndividualCandidacyProcessByCode(
@@ -319,24 +305,17 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     }
 
     public IndividualCandidacyDocumentFile getActiveFileForType(IndividualCandidacyDocumentFileType type) {
-        for (IndividualCandidacyDocumentFile document : this.getCandidacy().getDocumentsSet()) {
-            if (document.getCandidacyFileType().equals(type) && document.getCandidacyFileActive()) {
-                return document;
-            }
-        }
+        return this.getCandidacy().getDocumentsSet().stream()
+                .filter(document -> document.getCandidacyFileType().equals(type))
+                .filter(IndividualCandidacyDocumentFile::getCandidacyFileActive)
+                .findFirst().orElse(null);
 
-        return null;
     }
 
     public List<IndividualCandidacyDocumentFile> getAllFilesForType(IndividualCandidacyDocumentFileType type) {
-        List<IndividualCandidacyDocumentFile> files = new ArrayList<IndividualCandidacyDocumentFile>();
-        for (IndividualCandidacyDocumentFile document : this.getCandidacy().getDocumentsSet()) {
-            if (document.getCandidacyFileType().equals(type)) {
-                files.add(document);
-            }
-        }
-
-        return files;
+        return this.getCandidacy().getDocumentsSet().stream()
+                .filter(document -> document.getCandidacyFileType().equals(type))
+                .collect(Collectors.toList());
     }
 
     public void bindIndividualCandidacyDocumentFile(CandidacyProcessDocumentUploadBean uploadBean) {
@@ -352,13 +331,11 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     public abstract List<IndividualCandidacyDocumentFileType> getMissingRequiredDocumentFiles();
 
     public List<ExecutionCourse> getMissingShifts() {
-        HashSet<ExecutionCourse> missingShifts = new HashSet<ExecutionCourse>();
-        for (Attends attends : this.getCandidacy().getPersonalDetails().getPerson().getCurrentAttends()) {
-            if (!attends.hasAllShiftEnrolments()) {
-                missingShifts.add(attends.getExecutionCourse());
-            }
-        }
-        return new ArrayList<ExecutionCourse>(missingShifts);
+        return this.getCandidacy().getPersonalDetails().getPerson().getCurrentAttends().stream()
+                .filter(attends -> !attends.hasAllShiftEnrolments())
+                .map(Attends::getExecutionCourse)
+                .distinct()
+                .collect(Collectors.toList());
     }
 
     public boolean isProcessMissingRequiredDocumentFiles() {
@@ -366,20 +343,9 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     }
 
     public List<IndividualCandidacyDocumentFile> getActiveDocumentFiles() {
-        List<IndividualCandidacyDocumentFile> documentList = new ArrayList<IndividualCandidacyDocumentFile>();
-
-        CollectionUtils.select(getCandidacy().getDocumentsSet(), new Predicate() {
-
-            @Override
-            public boolean evaluate(Object arg0) {
-                IndividualCandidacyDocumentFile file = (IndividualCandidacyDocumentFile) arg0;
-
-                return file.getCandidacyFileActive();
-            }
-
-        }, documentList);
-
-        return documentList;
+        return getCandidacy().getDocumentsSet().stream()
+                .filter(IndividualCandidacyDocumentFile::getCandidacyFileActive)
+                .collect(Collectors.toList());
     }
 
     public Boolean getAllRequiredFilesUploaded() {

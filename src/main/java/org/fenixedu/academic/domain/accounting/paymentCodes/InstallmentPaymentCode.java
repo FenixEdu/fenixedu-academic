@@ -24,9 +24,7 @@ import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Student;
-import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.Money;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.YearMonthDay;
 
 @Deprecated
@@ -46,9 +44,9 @@ public class InstallmentPaymentCode extends InstallmentPaymentCode_Base {
     public static InstallmentPaymentCode create(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
             final YearMonthDay endDate, final Event event, final Installment installment, final Money minAmount,
             final Money maxAmount, final Student student) {
-        return PaymentCode.canGenerateNewCode(InstallmentPaymentCode.class, paymentCodeType, student.getPerson()) ? new InstallmentPaymentCode(
-                paymentCodeType, startDate, endDate, event, installment, minAmount, maxAmount, student) : findAndReuseExistingCode(
-                paymentCodeType, startDate, endDate, event, minAmount, maxAmount, student, installment);
+        return PaymentCode.canGenerateNewCode(InstallmentPaymentCode.class, paymentCodeType, student.getPerson()) ?
+                new InstallmentPaymentCode(paymentCodeType, startDate, endDate, event, installment, minAmount, maxAmount, student) :
+                findAndReuseExistingCode(paymentCodeType, startDate, endDate, event, minAmount, maxAmount, student, installment);
 
     }
 
