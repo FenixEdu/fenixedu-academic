@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Person;
@@ -62,7 +63,7 @@ public class PersonRotationPaymentCodeGenerator extends PaymentCodeGenerator {
     @Override
     public boolean canGenerateNewCode(final PaymentCodeType paymentCodeType, final Person person) {
         final PaymentCode lastPaymentCode = findLastPaymentCode(paymentCodeType, person);
-        return (lastPaymentCode == null) ? true : (getSignificantNumberForCodeGeneration(lastPaymentCode) + 1 <= 99);
+        return lastPaymentCode == null || getSignificantNumberForCodeGeneration(lastPaymentCode) + 1 <= 99;
     }
 
     @Override
@@ -72,12 +73,9 @@ public class PersonRotationPaymentCodeGenerator extends PaymentCodeGenerator {
     }
 
     private PaymentCode findLastPaymentCode(final PaymentCodeType paymentCodeType, Person person) {
-        final List<PaymentCode> paymentCodes = new ArrayList<PaymentCode>();
-        for (PaymentCode code : person.getPaymentCodesBy(paymentCodeType)) {
-            if (isCodeMadeByThisFactory(code)) {
-                paymentCodes.add(code);
-            }
-        }
+        final List<PaymentCode> paymentCodes = person.getPaymentCodesBy(paymentCodeType).stream()
+                        .filter(this::isCodeMadeByThisFactory)
+                        .collect(Collectors.toList());
         return paymentCodes.isEmpty() ? null : Collections.max(paymentCodes, COMPARATOR_BY_PAYMENT_CODE_CONTROL_DIGITS);
     }
 

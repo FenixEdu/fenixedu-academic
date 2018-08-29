@@ -21,6 +21,7 @@ package org.fenixedu.academic.service.services.accounting;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accounting.PaymentCode;
@@ -86,15 +87,10 @@ public class SearchPaymentCodesByExecutionYear implements AutoCompleteProvider<P
 
     private Collection<PaymentCode> findAnnualEventsPaymentCodeFor(final String paymentCodeValue,
             final ExecutionYear executionYear) {
-        final Collection<PaymentCode> result = new ArrayList<PaymentCode>();
-        for (final AnnualEvent event : executionYear.getAnnualEventsSet()) {
-            for (final AccountingEventPaymentCode code : event.getAllPaymentCodes()) {
-                if (code.getCode().startsWith(paymentCodeValue)) {
-                    result.add(code);
-                }
-            }
-        }
-        return result;
+        return executionYear.getAnnualEventsSet().stream()
+                .flatMap(event -> event.getAllPaymentCodes().stream())
+                .filter(code -> code.getCode().startsWith(paymentCodeValue))
+                .collect(Collectors.toList());
     }
 
     private ExecutionYear getExecutionYear(final String oid) {

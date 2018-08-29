@@ -425,8 +425,8 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
     }
 
     public static List<GratuityReportQueueJob> retrieveAllGeneratedReports(final ExecutionYear executionYear) {
-        return executionYear.getGratuityReportQueueJobsSet().stream()
-                .filter(QueueJob_Base::getDone)
+         return executionYear.getGratuityReportQueueJobsSet().stream()
+                .filter(QueueJob::getDone)
                 .collect(Collectors.toList());
     }
 

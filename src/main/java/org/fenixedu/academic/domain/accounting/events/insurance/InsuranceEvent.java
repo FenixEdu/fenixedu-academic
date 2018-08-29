@@ -20,7 +20,6 @@ package org.fenixedu.academic.domain.accounting.events.insurance;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -32,7 +31,6 @@ import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.Exemption;
-import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -45,7 +43,6 @@ import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
-import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
@@ -128,31 +125,13 @@ public class InsuranceEvent extends InsuranceEvent_Base implements IInsuranceEve
         return Bennu.getInstance().getInstitutionUnit();
     }
 
-    @Override
-    protected List<AccountingEventPaymentCode> updatePaymentCodes() {
-        final EntryDTO entryDTO = calculateEntries(new DateTime()).iterator().next();
-        getNonProcessedPaymentCodes().iterator().next()
-                .update(new YearMonthDay(), calculatePaymentCodeEndDate(), entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
-
-        return getNonProcessedPaymentCodes();
-
-    }
-
-    @Override
-    protected List<AccountingEventPaymentCode> createPaymentCodes() {
-        final EntryDTO entryDTO = calculateEntries(new DateTime()).iterator().next();
-
-        return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.INSURANCE, new YearMonthDay(),
-                calculatePaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getPerson()));
-    }
-
     private YearMonthDay calculatePaymentCodeEndDate() {
         return calculateNextEndDate(new YearMonthDay());
     }
 
     @Override
     public Set<EntryType> getPossibleEntryTypesForDeposit() {
-        final Set<EntryType> result = new HashSet<EntryType>();
+        final Set<EntryType> result = new HashSet<>();
         result.add(EntryType.INSURANCE_FEE);
 
         return result;
@@ -170,13 +149,7 @@ public class InsuranceEvent extends InsuranceEvent_Base implements IInsuranceEve
     }
 
     public Exemption getInsuranceExemption() {
-        for (final Exemption exemption : getExemptionsSet()) {
-            if (exemption.isForInsurance()) {
-                return exemption;
-            }
-        }
-
-        return null;
+        return getExemptionsSet().stream().filter(Exemption::isForInsurance).findFirst().orElse(null);
     }
 
     @Override

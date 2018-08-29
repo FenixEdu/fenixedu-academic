@@ -33,8 +33,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Stream;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.fenixedu.academic.domain.accounting.events.gratuity.EnrolmentGratuityEvent;
 import org.fenixedu.academic.domain.curriculum.CurricularCourseType;
 import org.fenixedu.academic.domain.curriculum.EnrollmentCondition;
@@ -406,44 +404,22 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
         // FIXME this is completly wrong, there may be more than one execution
         // course for this curricular course
-        ExecutionCourse currentExecutionCourse =
-                (ExecutionCourse) CollectionUtils.find(getCurricularCourse().getAssociatedExecutionCoursesSet(), new Predicate() {
 
-                    @Override
-                    final public boolean evaluate(Object arg0) {
-                        ExecutionCourse executionCourse = (ExecutionCourse) arg0;
-                        if (executionCourse.getExecutionPeriod() == executionSemester
-                                && executionCourse.getEntryPhase() == EntryPhase.FIRST_PHASE) {
-                            return true;
-                        }
-                        return false;
-                    }
-
-                });
+        ExecutionCourse currentExecutionCourse = getCurricularCourse().getAssociatedExecutionCoursesSet().stream()
+                .filter(executionCourse -> executionCourse.getExecutionPeriod() == executionSemester)
+                .filter(executionCourse -> executionCourse.getEntryPhase() == EntryPhase.FIRST_PHASE)
+                .findFirst().orElse(null);
 
         if (currentExecutionCourse != null) {
-            Collection attends = currentExecutionCourse.getAttendsSet();
-            Attends attend = (Attends) CollectionUtils.find(attends, new Predicate() {
+            Attends attend = currentExecutionCourse.getAttendsSet().stream()
+                    .filter(attend1 -> attend1.getRegistration().equals(registration))
+                    .findFirst().orElseGet(() -> getStudent().getAttends(currentExecutionCourse));
 
-                @Override
-                public boolean evaluate(Object arg0) {
-                    Attends attend = (Attends) arg0;
-                    if (attend.getRegistration().equals(registration)) {
-                        return true;
-                    }
-                    return false;
-                }
-
-            });
-
-            if (attend == null) {
-                attend = getStudent().getAttends(currentExecutionCourse);
-
-                if (attend != null) {
-                    attend.setRegistration(registration);
-                } else {
-                    attend = new Attends(registration, currentExecutionCourse);
-                }
+            if (attend != null) {
+                attend.setRegistration(registration);
+            }
+            else {
+                attend = new Attends(registration, currentExecutionCourse);
             }
             attend.setEnrolment(this);
         }

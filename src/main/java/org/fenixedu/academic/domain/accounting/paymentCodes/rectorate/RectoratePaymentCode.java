@@ -18,27 +18,18 @@
  */
 package org.fenixedu.academic.domain.accounting.paymentCodes.rectorate;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.PaymentCode;
-import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
-import org.joda.time.YearMonthDay;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Deprecated
 public class RectoratePaymentCode extends RectoratePaymentCode_Base {
-
-    protected RectoratePaymentCode(final YearMonthDay startDate, final YearMonthDay endDate, final Money minAmount,
-            final Money maxAmount) {
-        super();
-        init(PaymentCodeType.RECTORATE, startDate, endDate, minAmount, maxAmount, null);
-    }
 
     @Override
     protected void internalProcess(Person person, Money amount, DateTime whenRegistered, String sibsTransactionId, String comments) {
@@ -50,24 +41,12 @@ public class RectoratePaymentCode extends RectoratePaymentCode_Base {
         return true;
     }
 
-    public static RectoratePaymentCode create(final LocalDate startDate, final LocalDate endDate, final Money minAmount,
-            final Money maxAmount) {
-        return new RectoratePaymentCode(startDate.toDateTimeAtStartOfDay().toYearMonthDay(), endDate.toDateTimeAtStartOfDay()
-                .toYearMonthDay(), minAmount, maxAmount);
-    }
-
     public static List<RectoratePaymentCode> getAllRectoratePaymentCodes() {
-        List<RectoratePaymentCode> result = new ArrayList<RectoratePaymentCode>();
-
-        Collection<PaymentCode> paymentCodes = Bennu.getInstance().getPaymentCodesSet();
-
-        for (PaymentCode paymentCode : paymentCodes) {
-            if (paymentCode.isForRectorate() && !StringUtils.isEmpty(paymentCode.getCode())) {
-                result.add((RectoratePaymentCode) paymentCode);
-            }
-        }
-
-        return result;
+        return Bennu.getInstance().getPaymentCodesSet().stream()
+                .filter(PaymentCode::isForRectorate)
+                .filter(paymentCode -> !StringUtils.isEmpty(paymentCode.getCode()))
+                .map(paymentCode -> (RectoratePaymentCode) paymentCode)
+                .collect(Collectors.toList());
     }
 
 }

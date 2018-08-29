@@ -18,9 +18,10 @@
  */
 package org.fenixedu.academic.domain.accounting.paymentCodes;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.Event;
@@ -34,6 +35,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
 
+@Deprecated
 public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCode_Base {
 
     protected IndividualCandidacyPaymentCode(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
@@ -44,9 +46,9 @@ public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCo
 
     public static IndividualCandidacyPaymentCode create(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
             final YearMonthDay endDate, final Money minAmount, final Money maxAmount) {
-        return PaymentCode.canGenerateNewCode(IndividualCandidacyPaymentCode.class, paymentCodeType, null) ? new IndividualCandidacyPaymentCode(
-                paymentCodeType, startDate, endDate, minAmount, maxAmount) : findAndReuseExistingCode(paymentCodeType, startDate,
-                endDate, minAmount, maxAmount);
+        return PaymentCode.canGenerateNewCode(IndividualCandidacyPaymentCode.class, paymentCodeType, null) ?
+                new IndividualCandidacyPaymentCode(paymentCodeType, startDate, endDate, minAmount, maxAmount) :
+                findAndReuseExistingCode(paymentCodeType, startDate, endDate, minAmount, maxAmount);
 
     }
 
@@ -74,23 +76,14 @@ public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCo
 
     public static List<IndividualCandidacyPaymentCode> getAvailablePaymentCodes(final PaymentCodeType paymentCodeType,
             final YearMonthDay date) {
-        List<IndividualCandidacyPaymentCode> result = new ArrayList<IndividualCandidacyPaymentCode>();
 
         Set<PaymentCode> individualCandidacyPaymentCodes = Bennu.getInstance().getPaymentCodesSet();
-        for (PaymentCode paymentCode : individualCandidacyPaymentCodes) {
 
-            if (!(paymentCode instanceof IndividualCandidacyPaymentCode)) {
-                continue;
-            }
-
-            IndividualCandidacyPaymentCode individualCandidacyPaymentCode = (IndividualCandidacyPaymentCode) paymentCode;
-
-            if (individualCandidacyPaymentCode.isAvailable(paymentCodeType, date)) {
-                result.add(individualCandidacyPaymentCode);
-            }
-        }
-
-        return result;
+        return individualCandidacyPaymentCodes.stream()
+                .filter(paymentCode -> paymentCode instanceof IndividualCandidacyPaymentCode)
+                .map(paymentCode -> (IndividualCandidacyPaymentCode) paymentCode)
+                .filter(individualCandidacyPaymentCode -> individualCandidacyPaymentCode.isAvailable(paymentCodeType, date))
+                .collect(Collectors.toList());
     }
 
     protected void init(final PaymentCodeType paymentCodeType, YearMonthDay startDate, YearMonthDay endDate, Money minAmount,
@@ -116,8 +109,9 @@ public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCo
 
     protected static IndividualCandidacyPaymentCode getAvailablePaymentCodeForReuse() {
         return (IndividualCandidacyPaymentCode) Bennu.getInstance().getPaymentCodesSet().stream()
-                .filter((IndividualCandidacyPaymentCode.class)::isInstance).filter(PaymentCode::isAvailableForReuse)
-                .sorted(PaymentCode.COMPARATOR_BY_END_DATE).findFirst()
+                .filter((IndividualCandidacyPaymentCode.class)::isInstance)
+                .filter(PaymentCode::isAvailableForReuse)
+                .min(PaymentCode.COMPARATOR_BY_END_DATE)
                 .orElse(null);
     }
 
@@ -142,17 +136,10 @@ public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCo
     @Atomic
     public static List<IndividualCandidacyPaymentCode> createPaymentCodes(PaymentCodeType type, LocalDate beginDate,
             LocalDate endDate, Money minimum, Money maximum, Integer numberOfPaymentCodes) {
-
-        List<IndividualCandidacyPaymentCode> result = new ArrayList<IndividualCandidacyPaymentCode>();
-
-        for (int i = 0; i < numberOfPaymentCodes; i++) {
-
-            result.add(IndividualCandidacyPaymentCode.create(type, beginDate.toDateTimeAtStartOfDay().toYearMonthDay(), endDate
-                    .toDateTimeAtStartOfDay().toYearMonthDay(), minimum, maximum));
-        }
-
-        return result;
-
+        return IntStream.range(0, numberOfPaymentCodes)
+                .mapToObj(i -> create(type, beginDate.toDateTimeAtStartOfDay().toYearMonthDay(),
+                        endDate.toDateTimeAtStartOfDay().toYearMonthDay(), minimum, maximum))
+                .collect(Collectors.toList());
     }
 
 }
