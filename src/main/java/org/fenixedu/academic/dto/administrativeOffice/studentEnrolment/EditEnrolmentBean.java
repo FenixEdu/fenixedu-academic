@@ -21,6 +21,7 @@ import org.fenixedu.academic.domain.degreeStructure.EctsInstitutionByCurricularY
 import org.fenixedu.academic.domain.degreeStructure.EctsInstitutionConversionTable;
 import org.fenixedu.academic.domain.degreeStructure.EctsTableIndex;
 import org.fenixedu.academic.domain.degreeStructure.EmptyConversionTable;
+import org.fenixedu.academic.domain.degreeStructure.NoEctsComparabilityTableFound;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.ui.renderers.providers.AbstractDomainObjectProvider;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -170,17 +171,44 @@ public class EditEnrolmentBean implements Serializable {
 
         private void fillup(Set<EctsConversionTable> ectsTables, Enrolment enrolment, CurricularCourse curricularCourse, Degree degree, EctsTableIndex ectsTableIndex) {
             if (ectsTableIndex != null) {
-                ectsTables.add(ectsTableIndex.getEnrolmentTableBy(curricularCourse.getCompetenceCourse()));
-                ectsTables.add(ectsTableIndex.getEctsConversionTable(degree, enrolment));
+                try {
+                    ectsTables.add(ectsTableIndex.getEnrolmentTableBy(curricularCourse.getCompetenceCourse()));
+                } catch (NoEctsComparabilityTableFound e) {
+                    // don't add this table to the list
+                }
+                try {
+                    ectsTables.add(ectsTableIndex.getEctsConversionTable(degree, enrolment));
+                } catch (NoEctsComparabilityTableFound e) {
+                    // don't add this table to the list
+                }
+                
                 if (enrolment.getParentCycleCurriculumGroup() == null) {
-                    ectsTables.add(ectsTableIndex.getEctsConversionTable(Bennu.getInstance().getInstitutionUnit(), enrolment));
+                    try {
+                        ectsTables.add(ectsTableIndex.getEctsConversionTable(Bennu.getInstance().getInstitutionUnit(), enrolment));
+                    }catch (NoEctsComparabilityTableFound e) {
+                        // don't add this table to the list
+                    }
                 } else{
                     CurricularYear curricularYear =
                         CurricularYear.readByYear(enrolment.getParentCycleCurriculumGroup()
                                                            .getCurriculum(enrolment.getExecutionYear()).getCurricularYear());
-                    ectsTables.add(ectsTableIndex.getEnrolmentTableBy(degree, curricularYear));
-                    ectsTables.add(ectsTableIndex.getEctsConversionTable(Bennu.getInstance().getInstitutionUnit(), enrolment, curricularYear));
-                    ectsTables.add(ectsTableIndex.getEctsConversionTable(Bennu.getInstance().getInstitutionUnit(), enrolment));
+                    try{
+                        ectsTables.add(ectsTableIndex.getEnrolmentTableBy(degree, curricularYear));
+                    }catch (NoEctsComparabilityTableFound e){
+                        // don't add this table to the list
+
+                    }
+                    try {
+                        ectsTables.add(ectsTableIndex.getEctsConversionTable(Bennu.getInstance().getInstitutionUnit(), enrolment, curricularYear));
+                    }catch (NoEctsComparabilityTableFound e) {
+                        // don't add this table to the list
+                    }
+
+                    try {
+                        ectsTables.add(ectsTableIndex.getEctsConversionTable(Bennu.getInstance().getInstitutionUnit(), enrolment));
+                    }catch (NoEctsComparabilityTableFound e) {
+                        // don't add this table to the list
+                    }
                 }
             }
         }
