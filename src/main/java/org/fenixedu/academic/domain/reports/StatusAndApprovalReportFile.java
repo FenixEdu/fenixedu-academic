@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain.reports;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Enrolment;
@@ -29,7 +30,6 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
-import org.fenixedu.academic.dto.student.StudentStatuteBean;
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
 
@@ -160,15 +160,10 @@ public class StatusAndApprovalReportFile extends StatusAndApprovalReportFile_Bas
                                 row.setCell(executionSemester.getExecutionYear().getYear());
                                 row.setCell(executionSemester.getSemester().toString());
                                 setDegreeCells(row, degree);
-                                final StringBuilder stringBuilder = new StringBuilder();
-                                for (final StudentStatuteBean studentStatuteBean : registration.getStudent().getStatutes(
-                                        executionSemester)) {
-                                    if (stringBuilder.length() > 0) {
-                                        stringBuilder.append(", ");
-                                    }
-                                    stringBuilder.append(studentStatuteBean.getStudentStatute().getType().getName().getContent());
-                                }
-                                row.setCell(stringBuilder.toString());
+                                final String stringBuilder = registration.getStudent().getStatutes(executionSemester).stream()
+                                        .map(statuteBean -> statuteBean.getStudentStatute().getType().getName().getContent())
+                                        .collect(Collectors.joining(", "));
+                                row.setCell(stringBuilder);
                                 CycleType cycleType = registration.getCycleType(executionSemester.getExecutionYear());
                                 row.setCell(cycleType != null ? cycleType.getDescription() : "");
                                 row.setCell(registration.getRegimeType(executionSemester.getExecutionYear()).getLocalizedName());

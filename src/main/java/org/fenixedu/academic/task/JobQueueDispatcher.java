@@ -20,10 +20,8 @@ package org.fenixedu.academic.task;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.QueueJob;
@@ -80,7 +78,8 @@ public class JobQueueDispatcher extends CronTask {
     }
 
     public String getQueueJobResponsibleName(final QueueJob queueJob) {
-        return queueJob.getPerson() != null ? queueJob.getPerson().getName() + "(" + queueJob.getPerson().getUsername() + ")" : "system";
+        return queueJob.getPerson() == null ? "system" :
+                String.format("%s(%s)", queueJob.getPerson().getName(), queueJob.getPerson().getUsername());
     }
 
     @Atomic(mode = TxMode.WRITE)
@@ -97,10 +96,8 @@ public class JobQueueDispatcher extends CronTask {
         job.setRootDomainObjectQueueUndone(null);
         job.setJobEndTime(new DateTime());
         if (job.getPerson() != null) {
-            List<String> emails = new ArrayList<>();
-            emails.add(job.getPerson().getInstitutionalOrDefaultEmailAddressValue());
-            String subject = "Pedido de " + job.getDescription() + " concluido";
-            String body = "O seu pedido de " + job.getDescription() + " já se encontra disponível no sistema Fénix.";
+            String subject = String.format("Pedido de %s concluido", job.getDescription());
+            String body = String.format("O seu pedido de %s já se encontra disponível no sistema Fénix.", job.getDescription());
             Message.fromSystem()
                     .replyToSender()
                     .singleBcc(job.getPerson().getEmailForSendingEmails())
@@ -118,7 +115,7 @@ public class JobQueueDispatcher extends CronTask {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             t.printStackTrace(pw);
-            String subject = "Job " + job.getClass().getName() + "failed 3 times";
+            String subject = String.format("Job %s failed 3 times", job.getClass().getName());
             String body =
                     "Viva\n\n" + "O trabalho com o externalId de " + job.getExternalId() + " falhou mais de 3 vezes.\n\n"
                             + "Request Time : " + job.getRequestDate() + "\n" + "Start Time : " + job.getJobStartTime() + "\n"

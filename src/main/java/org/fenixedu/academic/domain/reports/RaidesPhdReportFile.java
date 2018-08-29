@@ -34,9 +34,7 @@ import org.fenixedu.academic.domain.phd.PhdParticipant;
 import org.fenixedu.academic.domain.phd.PhdProgram;
 import org.fenixedu.academic.domain.phd.PhdProgramProcessState;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.domain.student.StudentStatute;
 import org.fenixedu.academic.domain.studentCurriculum.Credits;
-import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -407,14 +405,8 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
         }
 
         // Bolseiro (info. oficial)
-        boolean sasFound = false;
-        for (StudentStatute statute : process.getStudent().getStudentStatutesSet()) {
-            if (statute.getType().isGrantOwnerStatute()
-                    && statute.isValidInExecutionPeriod(executionYear.getFirstExecutionPeriod())) {
-                sasFound = true;
-                break;
-            }
-        }
+        boolean sasFound = process.getStudent().getStudentStatutesSet().stream()
+                .anyMatch(statute -> statute.getType().isGrantOwnerStatute() && statute.isValidInExecutionPeriod(executionYear.getFirstExecutionPeriod()));
         row.setCell(String.valueOf(sasFound));
 
         // Grau Precedente
@@ -460,31 +452,25 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
         if (registration != null) {
 
             // Total de ECTS inscritos no total do ano
-            double totalCreditsEnrolled = 0d;
-            for (Enrolment enrollment : registration.getLastStudentCurricularPlan().getEnrolmentsByExecutionYear(executionYear)) {
-                totalCreditsEnrolled += enrollment.getEctsCredits();
-            }
+            double totalCreditsEnrolled =
+                    registration.getLastStudentCurricularPlan().getEnrolmentsByExecutionYear(executionYear).stream()
+                            .mapToDouble(Enrolment::getEctsCredits).sum();
             row.setCell(totalCreditsEnrolled);
 
             // Total de ECTS concluídos até ao fim do ano lectivo anterior (1º
             // Semestre do ano lectivo actual) ao que se
             // referem os dados (neste caso até ao fim de 2008) no curso actual
-            for (final CycleCurriculumGroup cycleCurriculumGroup : registration.getLastStudentCurricularPlan()
-                    .getInternalCycleCurriculumGrops()) {
-
-                // We can use current year because only the first semester has
-                // occured
-                totalEctsConcludedUntilPreviousYear += cycleCurriculumGroup.getCreditsConcluded(executionYear);
-            }
+            // We can use current year because only the first semester has
+            // occured
+            totalEctsConcludedUntilPreviousYear =
+                    registration.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops().stream()
+                            .mapToDouble(cycleCurriculumGroup -> cycleCurriculumGroup.getCreditsConcluded(executionYear)).sum();
             row.setCell(totalEctsConcludedUntilPreviousYear);
 
             // Nº ECTS equivalência/substituição/dispensa
-            double totalCreditsDismissed = 0d;
-            for (Credits credits : registration.getLastStudentCurricularPlan().getCreditsSet()) {
-                if (credits.isEquivalence()) {
-                    totalCreditsDismissed += credits.getEnrolmentsEcts();
-                }
-            }
+            double totalCreditsDismissed =
+                    registration.getLastStudentCurricularPlan().getCreditsSet().stream().filter(Credits::isEquivalence)
+                            .mapToDouble(Credits::getEnrolmentsEcts).sum();
             row.setCell(totalCreditsDismissed);
 
         } else {

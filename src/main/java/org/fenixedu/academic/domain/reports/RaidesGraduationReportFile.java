@@ -25,7 +25,6 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule.ConclusionValue;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
@@ -82,13 +81,9 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 
                         }
 
-                        boolean isToAddRegistration = false;
-                        for (RegistrationState state : registration.getRegistrationStates(executionYear)) {
-                            if (state.isActive() || state.getStateType() == RegistrationStateType.CONCLUDED) {
-                                isToAddRegistration = true;
-                                break;
-                            }
-                        }
+                        boolean isToAddRegistration = registration.getRegistrationStates(executionYear).stream()
+                                .anyMatch(state -> state.isActive() || state.getStateType() == RegistrationStateType.CONCLUDED);
+
                         if (isToAddRegistration
                                 && (cycleCGroup.isConcluded(executionYear.getPreviousExecutionYear()) == ConclusionValue.CONCLUDED)) {
                             reportRaidesGraduate(spreadsheet, registration, studentCurricularPlan,

@@ -32,6 +32,7 @@ import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.QueueJob;
 import org.fenixedu.academic.domain.QueueJobResult;
+import org.fenixedu.academic.domain.QueueJob_Base;
 import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.Receipt;
 import org.fenixedu.academic.domain.accounting.events.AnnualEvent;
@@ -115,17 +116,17 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
     private Spreadsheet buildReport() {
         final Spreadsheet spreadsheet = new Spreadsheet(getFilename());
 
-        spreadsheet.setHeaders(new String[] { "Aluno", "Nome", "Nº Contribuinte", "Ano", "Curso", "Tipo de Curso",
-                "Valor Em Dívida", "Valor Total", "Valor Pago", "Valor Reembolsável", "Tipo de Isenção", "Valor de Isenção",
-                "Percentagem de Isenção", "Motivo", "Data de criação", "Data de entrada do pagamento", "Montante inicial",
-                "Montante ajustado", "Modo de pagamento", "Data de entrada do ajuste", "Montante do ajuste", "Justificação" });
+        spreadsheet.setHeaders("Aluno", "Nome", "Nº Contribuinte", "Ano", "Curso", "Tipo de Curso", "Valor Em Dívida",
+                "Valor Total", "Valor Pago", "Valor Reembolsável", "Tipo de Isenção", "Valor de Isenção", "Percentagem de Isenção",
+                "Motivo", "Data de criação", "Data de entrada do pagamento", "Montante inicial", "Montante ajustado",
+                "Modo de pagamento", "Data de entrada do ajuste", "Montante do ajuste", "Justificação");
 
         int i = 0;
         for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
             GratuityEventEntry entry = new GratuityEventEntry(gratuityEvent);
 
             for (TransactionEntryDetail transaction : entry.getNonAdjustingTransactions()) {
-                if (GratuityReportQueueJobType.DATE_INTERVAL.equals(getType())) {
+                if (GratuityReportQueueJobType.DATE_INTERVAL == getType()) {
                     if (transaction.getWhenRegisteredDateTime().isBefore(getBeginDate())) {
                         continue;
                     }
@@ -335,7 +336,7 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
         }
 
         public boolean hasReceipts() {
-            return transaction.getToAccountEntry().getReceiptsSet().size() > 0;
+            return !transaction.getToAccountEntry().getReceiptsSet().isEmpty();
         }
 
         public String[] getReceiptContributorsNameForOtherParties() {
@@ -343,7 +344,7 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
                 return new ArrayList<String>().toArray(new String[0]);
             }
 
-            List<String> contributorsNames = new ArrayList<String>();
+            List<String> contributorsNames = new ArrayList<>();
             for (Receipt receipt : transaction.getEntryFor(transaction.getFromAccount()).getReceiptsSet()) {
                 if (!Strings.isNullOrEmpty(receipt.getContributorName())) {
                     contributorsNames.add(receipt.getContributorName());
@@ -359,15 +360,15 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
     }
 
     protected Set<GratuityEvent> getGratuityEvents() {
-        final Set<GratuityEvent> result = new HashSet<GratuityEvent>();
+        final Set<GratuityEvent> result = new HashSet<>();
 
         int i = 0;
         List<ExecutionYear> executionYearList = null;
 
-        if (GratuityReportQueueJobType.DATE_INTERVAL.equals(getType())) {
-            executionYearList = new ArrayList<ExecutionYear>();
-            executionYearList.addAll(Bennu.getInstance().getExecutionYearsSet());
-        } else if (GratuityReportQueueJobType.EXECUTION_YEAR.equals(getType())) {
+        if (GratuityReportQueueJobType.DATE_INTERVAL == getType()) {
+            executionYearList = new ArrayList<>(Bennu.getInstance().getExecutionYearsSet());
+        }
+        else if (GratuityReportQueueJobType.EXECUTION_YEAR == getType()) {
             executionYearList = Collections.singletonList(getExecutionYear());
         }
 
