@@ -49,7 +49,7 @@ public class DegreeChangeIndividualCandidacyEvent extends DegreeChangeIndividual
         this();
         super.init(candidacy, EventType.DEGREE_CHANGE_INDIVIDUAL_CANDIDACY, person);
 
-        attachAvailablePaymentCode(person);
+        calculatePaymentCodeEntry();
     }
 
     @Override

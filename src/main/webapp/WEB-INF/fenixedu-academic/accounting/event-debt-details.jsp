@@ -34,6 +34,8 @@
     <spring:param name="event" value="${eventId}"/>
 </spring:url>
 
+<c:set var="totalAmount" value="#{debt.openAmount + debt.openInterestAmount}"/>
+
 <div class="container-fluid">
     <header>
         <div class="row">
@@ -42,9 +44,11 @@
                 <h3><c:out value="${eventDescription}"/></h3>
                 <h1><spring:message code="accounting.event.details.debt.name" arguments="${debtIndex}"/> </h1>
             </div>
-            <div class="col-md-2">
-                <a class="btn btn-primary btn-block" href="${payUrl}"><spring:message code="accounting.event.action.pay" text="Pay"/></a>
-            </div>
+            <c:if test="${totalAmount > 0 && isEventOwner}">
+                <div class="col-md-2">
+                    <a class="btn btn-primary btn-block" href="${payUrl}"><spring:message code="accounting.event.action.pay" text="Pay"/></a>
+                </div>
+            </c:if>
         </div>
     </header>
     <div class="row">
@@ -52,7 +56,6 @@
             <div class="overall-description">
                 <dl>
                     <dt><spring:message code="accounting.event.details.amount.pay" text="To pay"/></dt>
-                    <c:set var="totalAmount" value="#{debt.openAmount + debt.openInterestAmount}"/>
                     <dd><c:out value="${totalAmount}"/><span>€</span></dd>
                 </dl>
                 <dl>
@@ -61,7 +64,12 @@
                 </dl>
                 <dl>
                     <dt><spring:message code="accounting.event.details.interestOrFines.amount.pay" text="Interest"/></dt>
-                    <dd><c:out value="${debt.openInterestAmount}"/><span>€</span></dd>
+                    <dd>
+                        <c:out value="${debt.openInterestAmount.toPlainString() + debt.openFineAmount}"/><span>€</span>
+                        <c:if test="${debt.isToExemptInterest() || debt.isToExemptFine()}">
+                            <spring:message code="accounting.event.details.debt.hasExemption" text="(Exemption)"/>
+                        </c:if>
+                    </dd>
                 </dl>
                 <dl>
                     <dt><spring:message code="accounting.event.details.original.debt.amount" text="Original amount"/></dt>
@@ -93,7 +101,7 @@
                     <thead>
                     <tr>
                         <th>Data de processamento</th>
-                        <th>Data de criação</th>
+                        <th>Data de pagamento</th>
                         <th>Pago</th>
                         <th>Divida</th>
                         <th>Juros/Multas</th>
@@ -110,7 +118,7 @@
                     <c:forEach var="paymentSummary" items="${payments}">
                         <c:set var="amountUsedInInterestOrFine" value="#{paymentSummary.amountUsedInInterest + paymentSummary.amountUsedInFine}"/>
                         <tr>
-                            <td><time datetime="${paymentSummary.created.toString('yyyy-MM-dd hh:mm:ss')}"><c:out value="${paymentSummary.created.toString('dd/MM/yyyy hh:mm:ss')}"/> </time></td>
+                            <td><time datetime="${paymentSummary.created.toString('yyyy-MM-dd HH:mm:ss')}"><c:out value="${paymentSummary.created.toString('dd/MM/yyyy HH:mm:ss')}"/> </time></td>
                             <td><time datetime="${paymentSummary.date.toString('yyyy-MM-dd')}"><c:out value="${paymentSummary.date.toString('dd/MM/yyyy')}"/> </time></td>
                             <td><c:out value="${paymentSummary.amount.toPlainString()}"/><span>€</span></td>
                             <td><c:out value="${paymentSummary.amountUsedInDebt.toPlainString()}"/><span>€</span></td>

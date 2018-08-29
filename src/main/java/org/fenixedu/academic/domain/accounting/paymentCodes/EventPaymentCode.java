@@ -5,24 +5,21 @@ import java.util.Optional;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.PaymentCodeType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.dto.accounting.SibsTransactionDetailDTO;
 import org.fenixedu.academic.util.Money;
+import org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDetailLine;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.consistencyPredicates.ConsistencyPredicate;
 
-public class EventPaymentCode extends EventPaymentCode_Base {
+public class EventPaymentCode extends EventPaymentCode_Base implements IEventPaymentCode {
 
     public EventPaymentCode(Person creator, LocalDate startDate, LocalDate endDate, Money minAmount, Money
             maxAmount) {
         init(PaymentCodeType.EVENT, startDate.toDateMidnight().toYearMonthDay(), endDate.toDateTimeAtMidnight().toYearMonthDay(), minAmount,
                 maxAmount, creator);
-    }
-
-    @ConsistencyPredicate
-    public boolean checkEntries() {
-        final long count = getEventPaymentCodeEntrySet().stream().map(EventPaymentCodeEntry::getEvent).distinct().count();
-        return count == 0 || count == 1;
     }
 
     public boolean isInUsed() {
@@ -47,14 +44,13 @@ public class EventPaymentCode extends EventPaymentCode_Base {
     }
 
     @Override
-    protected void internalProcess(Person person, Money amount, DateTime whenRegistered, String sibsTransactionId, String comments) {
-//        event.process(person.getUser(), this, amount,
-//                new SibsTransactionDetailDTO(whenRegistered, sibsTransactionId, getCode(), comments));
-    }
-
-    @Override
     public void delete() {
         setPaymentCodePool(null);
         super.delete();
+    }
+
+    @Override protected void internalProcess(Person person, SibsIncommingPaymentFileDetailLine sibsDetailLine) {
+        final Event event = getEvent().orElseThrow(() -> new DomainException("invalid.payment.code.missing.event"));
+        event.process(person.getUser(), this, sibsDetailLine.getAmount(), new SibsTransactionDetailDTO(sibsDetailLine, sibsDetailLine.getWhenOccuredTransaction(), sibsDetailLine.getSibsTransactionId(), getCode(), ""));
     }
 }

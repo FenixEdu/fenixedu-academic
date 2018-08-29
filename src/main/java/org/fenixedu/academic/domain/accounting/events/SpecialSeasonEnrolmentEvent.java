@@ -27,7 +27,7 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.Entry;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
-import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
+import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
@@ -53,7 +53,7 @@ public class SpecialSeasonEnrolmentEvent extends SpecialSeasonEnrolmentEvent_Bas
     }
 
     @Override
-    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+    protected Set<Entry> internalProcess(User responsibleUser, PaymentCode paymentCode, Money amountToPay,
             SibsTransactionDetailDTO transactionDetail) {
         return internalProcess(responsibleUser,
                 Collections.singletonList(new EntryDTO(EntryType.SPECIAL_SEASON_ENROLMENT_FEE, this, amountToPay)),

@@ -71,10 +71,6 @@
                         <dt>Responsável:</dt>
                         <dd><c:out value="${transactionDetail.responsibleUser.person.presentationName}"/></dd>
                     </dl>
-                    <dl>
-                        <dt>Motivo:</dt>
-                        <dd><c:out value="${transactionDetail.transactionDetail.comments}"/></dd>
-                    </dl>
                 </c:if>
                 <dl>
                     <dt>Data de pagamento:</dt>
@@ -85,9 +81,15 @@
                 <dl>
                     <dt>Data de processamento:</dt>
                     <dd>
-                        <time datetime="${processedDate.toString('yyyy-MM-dd hh:mm:ss')}">${processedDate.toString('dd/MM/yyyy hh:mm:ss')}</time>
+                        <time datetime="${processedDate.toString('yyyy-MM-dd HH:mm:ss')}">${processedDate.toString('dd/MM/yyyy HH:mm:ss')}</time>
                     </dd>
                 </dl>
+                <c:if test="${transactionDetail.transactionDetail.paymentMode == 'CASH'}">
+                    <dl>
+                        <dt>Motivo:</dt>
+                        <dd><c:out value="${transactionDetail.transactionDetail.comments}"/></dd>
+                    </dl>
+                </c:if>
             </section>
         </div>
         <div class="col-md-5 col-md-offset-2">

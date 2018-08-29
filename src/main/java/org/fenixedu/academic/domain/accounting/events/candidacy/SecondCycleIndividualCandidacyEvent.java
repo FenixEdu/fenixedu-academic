@@ -38,7 +38,7 @@ public class SecondCycleIndividualCandidacyEvent extends SecondCycleIndividualCa
         this();
         super.init(candidacy, EventType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY, person);
 
-        attachAvailablePaymentCode(person);
+        calculatePaymentCodeEntry();
     }
 
     @Override

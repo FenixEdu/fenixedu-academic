@@ -7,6 +7,7 @@ import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.accounting.AnnulAccountingTransactionBean;
+import org.fenixedu.academic.dto.accounting.DepositAmountBean;
 import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.service.services.accounting.AnnulAccountingTransaction;
@@ -14,7 +15,6 @@ import org.fenixedu.academic.service.services.accounting.DeleteExemption;
 import org.fenixedu.academic.ui.spring.service.AccountingManagementAccessControlService;
 import org.fenixedu.academic.ui.spring.service.AccountingManagementService;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.spring.portal.SpringFunctionality;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixframework.DomainObject;
 
@@ -54,8 +55,8 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
     }
 
     @RequestMapping("{event}/summary")
-    public String summary(@PathVariable Event event, Model model) {
-        accessControlService.checkPaymentManager(event, Authenticate.getUser());
+    public String summary(@PathVariable Event event, User user, Model model) {
+        accessControlService.checkPaymentManager(event, user);
         final DebtInterestCalculator debtInterestCalculator = event.getDebtInterestCalculator(new DateTime());
         model.addAttribute("entrypointUrl", entrypointUrl());
         model.addAttribute("eventUsername", event.getPerson().getUsername());
@@ -76,8 +77,8 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
     }
 
     @RequestMapping("{event}/delete/{transaction}")
-    public String delete(@PathVariable DomainObject transaction, @PathVariable Event event, Model model) {
-        accessControlService.checkPaymentManager(event, Authenticate.getUser());
+    public String delete(@PathVariable DomainObject transaction, @PathVariable Event event, User user, Model model) {
+        accessControlService.checkPaymentManager(event, user);
         if (transaction instanceof AccountingTransaction) {
             model.addAttribute("annulAccountingTransactionBean", new AnnulAccountingTransactionBean((AccountingTransaction) transaction));
             model.addAttribute("event", event);
@@ -103,23 +104,75 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
             throw new UnsupportedOperationException(String.format("Can't delete unknown transaction %s%n", transaction.getClass
                     ().getSimpleName()));
         }
-        return redirectToSummary(event);
+        return redirectToEventDetails(event);
     }
 
     @RequestMapping(value = "{event}/deleteTransaction", method = RequestMethod.POST)
-    public String deleteTransaction(@PathVariable Event event, Model model,
-            @ModelAttribute("annulAccountingTransactionBean") AnnulAccountingTransactionBean annulAccountingTransactionBean){
-        accessControlService.checkPaymentManager(event, Authenticate.getUser());
+    public String deleteTransaction(@PathVariable Event event, User user, Model model,
+            @ModelAttribute AnnulAccountingTransactionBean annulAccountingTransactionBean){
+        accessControlService.checkPaymentManager(event, user);
         try {
             AnnulAccountingTransaction.run(annulAccountingTransactionBean);
         }
         catch (DomainException e){
             model.addAttribute("error", e.getLocalizedMessage());
         }
-        return redirectToSummary(event);
+        return redirectToEventDetails(event);
     }
 
-    private String redirectToSummary(@PathVariable Event event) {
-        return String.format("redirect:/%s/%s/summary", REQUEST_MAPPING, event.getExternalId());
+
+    @RequestMapping(value = "{event}/deposit", method = RequestMethod.GET)
+    public String deposit(@PathVariable Event event, User user, Model model){
+        accessControlService.checkPaymentManager(event, user);
+
+        model.addAttribute("person", event.getPerson());
+        model.addAttribute("event", event);
+        model.addAttribute("depositAmountBean", new DepositAmountBean());
+
+        return view("event-deposit");
+    }
+
+    @RequestMapping(value = "{event}/depositAmount", method = RequestMethod.POST)
+    public String depositAmount(@PathVariable Event event, User user, Model model, @ModelAttribute DepositAmountBean depositAmountBean) {
+        accessControlService.checkPaymentManager(event, user);
+
+        try {
+            accountingManagementService.depositAmount(event, user, depositAmountBean);
+        }
+        catch (DomainException e) {
+            model.addAttribute("error", e.getLocalizedMessage());
+            return deposit(event, user, model);
+        }
+
+        return redirectToEventDetails(event);
+    }
+
+    @RequestMapping(value = "{event}/cancel", method = RequestMethod.GET)
+    public String cancel(@PathVariable Event event, User user, Model model) {
+        accessControlService.checkPaymentManager(event, user);
+
+        model.addAttribute("person", event.getPerson());
+        model.addAttribute("event", event);
+
+        return view("event-cancel");
+    }
+
+    @RequestMapping(value = "{event}/cancelEvent", method = RequestMethod.POST)
+    public String cancelEvent(@PathVariable Event event, User user, Model model, @RequestParam String justification) {
+        accessControlService.checkPaymentManager(event, user);
+
+        try {
+            accountingManagementService.cancelEvent(event, user.getPerson(), justification);
+        }
+        catch (DomainException e) {
+            model.addAttribute("error", e.getLocalizedMessage());
+            return cancel(event, user, model);
+        }
+
+        return redirectToEventDetails(event);
+    }
+
+    private String redirectToEventDetails(@PathVariable Event event) {
+        return String.format("redirect:/%s/%s/details", REQUEST_MAPPING, event.getExternalId());
     }
 }

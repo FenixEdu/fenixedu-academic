@@ -21,34 +21,25 @@ package org.fenixedu.academic.dto.accounting;
 import java.io.Serializable;
 
 import org.fenixedu.academic.domain.accounting.EntryType;
-import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class DepositAmountBean implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     private EntryType entryType;
 
-    private Event event;
-
     private Money amount;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private DateTime whenRegistered;
 
     private String reason;
 
-    public DepositAmountBean(final Event event) {
-        setEvent(event);
+    public DepositAmountBean() {
         setWhenRegistered(new DateTime());
-    }
-
-    public Event getEvent() {
-        return this.event;
     }
 
     public Money getAmount() {
@@ -73,10 +64,6 @@ public class DepositAmountBean implements Serializable {
 
     public void setReason(String reason) {
         this.reason = reason;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
     }
 
     public EntryType getEntryType() {

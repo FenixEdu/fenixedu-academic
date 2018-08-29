@@ -18,35 +18,21 @@
  */
 package org.fenixedu.academic.domain.accounting.paymentCodes.rectorate;
 
-import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.util.Money;
-import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDetailLine;
 import org.joda.time.DateTime;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Deprecated
 public class RectoratePaymentCode extends RectoratePaymentCode_Base {
 
-    @Override
-    protected void internalProcess(Person person, Money amount, DateTime whenRegistered, String sibsTransactionId, String comments) {
+    @Override protected void internalProcess(Person person, SibsIncommingPaymentFileDetailLine sibsDetailLine) {
 
     }
 
     @Override
     public boolean isForRectorate() {
         return true;
-    }
-
-    public static List<RectoratePaymentCode> getAllRectoratePaymentCodes() {
-        return Bennu.getInstance().getPaymentCodesSet().stream()
-                .filter(PaymentCode::isForRectorate)
-                .filter(paymentCode -> !StringUtils.isEmpty(paymentCode.getCode()))
-                .map(paymentCode -> (RectoratePaymentCode) paymentCode)
-                .collect(Collectors.toList());
     }
 
 }

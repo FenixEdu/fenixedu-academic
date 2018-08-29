@@ -18,20 +18,6 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.function.BiFunction;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
@@ -42,7 +28,6 @@ import org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty
 import org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption;
 import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import org.fenixedu.academic.domain.accounting.paymentCodes.EventPaymentCodeEntry;
-import org.fenixedu.academic.domain.accounting.paymentCodes.EventPaymentCodeEntry_Base;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
@@ -61,6 +46,20 @@ import org.fenixedu.bennu.core.signals.Signal;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.function.BiFunction;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public abstract class Event extends Event_Base {
 
@@ -143,7 +142,7 @@ public abstract class Event extends Event_Base {
 
     }
 
-    public final Set<Entry> process(final User responsibleUser, final AccountingEventPaymentCode paymentCode, final Money amountToPay, final SibsTransactionDetailDTO transactionDetailDTO) {
+    public final Set<Entry> process(final User responsibleUser, final PaymentCode paymentCode, final Money amountToPay, final SibsTransactionDetailDTO transactionDetailDTO) {
 
         checkConditionsToProcessEvent(transactionDetailDTO);
 
@@ -165,7 +164,7 @@ public abstract class Event extends Event_Base {
         return transactionDetail instanceof SibsTransactionDetailDTO;
     }
 
-    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay, SibsTransactionDetailDTO transactionDetail) {
+    protected Set<Entry> internalProcess(User responsibleUser, PaymentCode paymentCode, Money amountToPay, SibsTransactionDetailDTO transactionDetail) {
 
         throw new UnsupportedOperationException("error.org.fenixedu.academic.domain.accounting.Event.operation.not.supported");
     }
@@ -563,6 +562,10 @@ public abstract class Event extends Event_Base {
                     builder.interestExemption(e.getExternalId(),e.getWhenCreated(), e.getWhenCreated().toLocalDate(), e
                             .getDescription().toString(), e.getExemptionAmount(baseAmount).getAmount());
                 }
+                if (e.isForFine()) {
+                    builder.fineExemption(e.getExternalId(),e.getWhenCreated(), e.getWhenCreated().toLocalDate(), e
+                            .getDescription().toString(), e.getExemptionAmount(baseAmount).getAmount());
+                }
             });
 
         builder.setToApplyInterest(FenixEduAcademicConfiguration.isToUseGlobalInterestRateTableForEventPenalties(this));
@@ -684,13 +687,12 @@ public abstract class Event extends Event_Base {
     public Optional<EventPaymentCodeEntry> getAvailablePaymentCodeEntry() {
         return getEventPaymentCodeEntrySet().stream()
                 .filter(e -> e.getPaymentCode().isNew())
-                .findAny();
+                .max(Comparator.comparing(EventPaymentCodeEntry::getCreated));
     }
 
     public EventPaymentCodeEntry calculatePaymentCodeEntry() {
-        final DateTime now = DateTime.now();
-        final Money amount = calculateAmountToPay(now);
-        return EventPaymentCodeEntry.getOrCreate(this, amount, now.toLocalDate());
+        final Money amount = calculateAmountToPay(DateTime.now());
+        return EventPaymentCodeEntry.getOrCreate(this, amount);
     }
 
     public List<AccountingEventPaymentCode> getNonProcessedPaymentCodes() {

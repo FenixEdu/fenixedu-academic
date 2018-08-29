@@ -23,6 +23,7 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.transactions.PaymentType;
 import org.fenixedu.academic.util.Money;
+import org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDetailLine;
 import org.joda.time.DateTime;
 
 @Deprecated
@@ -37,10 +38,8 @@ public class GratuitySituationPaymentCode extends GratuitySituationPaymentCode_B
         throw new DomainException("error.accounting.paymentCodes.GratuitySituationPaymentCode.cannot.modify.gratuitySituation");
     }
 
-    @Override
-    protected void internalProcess(Person responsiblePerson, Money amount, DateTime whenRegistered, String sibsTransactionId,
-            String comments) {
-        getGratuitySituation().processAmount(responsiblePerson, amount, whenRegistered, PaymentType.SIBS);
+    @Override protected void internalProcess(Person person, SibsIncommingPaymentFileDetailLine sibsDetailLine) {
+        getGratuitySituation().processAmount(person, sibsDetailLine.getAmount(), sibsDetailLine.getWhenOccuredTransaction(), PaymentType.SIBS);
     }
 
     @Override

@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.ResidenceManagementUnit;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
@@ -120,7 +119,7 @@ public class ResidenceEvent extends ResidenceEvent_Base {
     }
 
     @Override
-    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+    protected Set<Entry> internalProcess(User responsibleUser, PaymentCode paymentCode, Money amountToPay,
             SibsTransactionDetailDTO transactionDetail) {
         return internalProcess(responsibleUser,
                 Collections.singletonList(new EntryDTO(EntryType.RESIDENCE_FEE, this, amountToPay)), transactionDetail);

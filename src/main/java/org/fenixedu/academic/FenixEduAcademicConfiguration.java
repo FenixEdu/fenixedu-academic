@@ -142,6 +142,12 @@ public class FenixEduAcademicConfiguration {
 
         @ConfigurationProperty(key="active.student.personal.data.authorization.choices", defaultValue = "NO_END")
         public String activeStudentPersonalDataAuthorizationChoices();
+
+        @ConfigurationProperty(key = "max.new.payment.codes.per.event", defaultValue = "3")
+        public Integer getMaxNewPaymentCodesPerEvent();
+
+        @ConfigurationProperty(key = "max.days.between.promise.and.payment", defaultValue = "2")
+        public Integer getMaxDaysBetweenPromiseAndPayment();
     }
 
     public static ConfigurationProperties getConfiguration() {

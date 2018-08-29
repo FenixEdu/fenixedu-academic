@@ -20,8 +20,6 @@ package org.fenixedu.academic.domain.accounting.events.serviceRequests;
 
 import java.util.Set;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
@@ -64,16 +62,9 @@ public class PartialRegistrationRegimeRequestEvent extends PartialRegistrationRe
         Set<PostingRule> activePostingRules =
                 getAdministrativeOffice().getServiceAgreementTemplate().getActivePostingRules(
                         getExecutionYear().getBeginDateYearMonthDay().toDateTimeAtMidnight());
-
-        return (PostingRule) CollectionUtils.find(activePostingRules, new Predicate() {
-
-            @Override
-            public boolean evaluate(Object arg0) {
-                return ((PostingRule) arg0).getEventType().equals(getEventType())
-                        && ((PartialRegistrationRegimeRequestPR) arg0).getExecutionYear().equals(
-                                getAcademicServiceRequest().getExecutionYear());
-            }
-
-        });
+        return activePostingRules.stream()
+                .filter(postingRule -> postingRule.getEventType() == getEventType())
+                .filter(postingRule -> ((PartialRegistrationRegimeRequestPR) postingRule).getExecutionYear() == getAcademicServiceRequest().getExecutionYear())
+                .findFirst().orElse(null);
     }
 }

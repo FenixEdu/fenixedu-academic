@@ -29,7 +29,7 @@ import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.Entry;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
-import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
+import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.dto.accounting.SibsTransactionDetailDTO;
 import org.fenixedu.academic.util.Bundle;
@@ -88,7 +88,7 @@ public class StandaloneEnrolmentGratuityEvent extends StandaloneEnrolmentGratuit
      * This method deposits amount to pay directly in event
      */
     @Override
-    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+    protected Set<Entry> internalProcess(User responsibleUser, PaymentCode paymentCode, Money amountToPay,
             SibsTransactionDetailDTO transactionDetail) {
         final AccountingTransaction transaction =
                 depositAmount(responsibleUser, amountToPay, EntryType.STANDALONE_ENROLMENT_GRATUITY_FEE, transactionDetail);

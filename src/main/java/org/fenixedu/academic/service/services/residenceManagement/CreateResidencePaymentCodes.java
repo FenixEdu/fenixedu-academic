@@ -35,6 +35,6 @@ public class CreateResidencePaymentCodes {
 
     @Atomic
     public static void run(Collection<ResidenceEvent> events) {
-        events.forEach(event -> EventPaymentCodeEntry.getOrCreate(event, event.getRoomValue(), new LocalDate()));
+        events.forEach(event -> EventPaymentCodeEntry.getOrCreate(event, event.getRoomValue()));
     }
 }

@@ -237,9 +237,7 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
         final ProcessResult result = new ProcessResult(request);
         result.addMessage("label.manager.SIBS.processingFile", file.getName());
 
-        FileInputStream fileInputStream = null;
-        try {
-            fileInputStream = new FileInputStream(file);
+        try (FileInputStream fileInputStream = new FileInputStream(file)) {
             final Person person = AccessControl.getPerson();
             final SibsIncommingPaymentFile sibsFile = SibsIncommingPaymentFile.parse(file.getName(), fileInputStream);
 
@@ -256,26 +254,19 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
 
             result.addMessage("label.manager.SIBS.creatingReport");
 
-            if (!result.hasFailed()) {
-                if (SibsPaymentFileProcessReport.hasAny(sibsFile.getWhenProcessedBySibs(), sibsFile.getVersion())) {
-                    result.addMessage("warning.manager.SIBS.reportAlreadyProcessed");
-                } else {
-                    try {
-                        createSibsFileReport(sibsFile, result);
-                    } catch (Exception ex) {
-                        result.addError("error.manager.SIBS.reportException", getMessage(ex));
-                    }
-                }
-            } else {
+            if (result.hasFailed()) {
                 result.addError("error.manager.SIBS.nonProcessedCodes");
+            } else if (SibsPaymentFileProcessReport.hasAny(sibsFile.getWhenProcessedBySibs(), sibsFile.getVersion())) {
+                result.addMessage("warning.manager.SIBS.reportAlreadyProcessed");
+            } else {
+                try {
+                    createSibsFileReport(sibsFile, result);
+                } catch (Exception ex) {
+                    result.addError("error.manager.SIBS.reportException", getMessage(ex));
+                }
             }
 
             result.addMessage("label.manager.SIBS.done");
-
-        } finally {
-            if (fileInputStream != null) {
-                fileInputStream.close();
-            }
         }
     }
 
@@ -295,12 +286,12 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
             result.addMessage("warning.manager.SIBS.invalidCode", codeToProcess.getCode());
         }
 
-        if (codeToProcess.isProcessed() && codeToProcess.getWhenUpdated().isBefore(detailLine.getWhenOccuredTransaction())) {
+        if (codeToProcess.isProcessed() && codeToProcess.matches(detailLine)) {
             result.addMessage("warning.manager.SIBS.codeAlreadyProcessed", codeToProcess.getCode());
+            return;
         }
 
-        codeToProcess.process(person, detailLine.getAmount(), detailLine.getWhenOccuredTransaction(),
-                detailLine.getSibsTransactionId(), StringUtils.EMPTY);
+        codeToProcess.process(person, detailLine);
 
     }
 

@@ -31,7 +31,7 @@ import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.Exemption;
-import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
+import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
@@ -138,7 +138,7 @@ public class InsuranceEvent extends InsuranceEvent_Base implements IInsuranceEve
     }
 
     @Override
-    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+    protected Set<Entry> internalProcess(User responsibleUser, PaymentCode paymentCode, Money amountToPay,
             SibsTransactionDetailDTO transactionDetail) {
         return internalProcess(responsibleUser,
                 Collections.singletonList(new EntryDTO(EntryType.INSURANCE_FEE, this, amountToPay)), transactionDetail);

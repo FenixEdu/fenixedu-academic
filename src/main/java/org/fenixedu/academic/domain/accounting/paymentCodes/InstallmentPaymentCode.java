@@ -20,10 +20,6 @@ package org.fenixedu.academic.domain.accounting.paymentCodes;
 
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.Installment;
-import org.fenixedu.academic.domain.accounting.PaymentCode;
-import org.fenixedu.academic.domain.accounting.PaymentCodeType;
-import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.YearMonthDay;
 
@@ -34,58 +30,10 @@ public class InstallmentPaymentCode extends InstallmentPaymentCode_Base {
         super();
     }
 
-    private InstallmentPaymentCode(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
-            final YearMonthDay endDate, final Event event, final Installment installment, final Money minAmount,
-            final Money maxAmount, final Student student) {
-        this();
-        init(paymentCodeType, startDate, endDate, event, installment, minAmount, maxAmount, student);
-    }
-
-    public static InstallmentPaymentCode create(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
-            final YearMonthDay endDate, final Event event, final Installment installment, final Money minAmount,
-            final Money maxAmount, final Student student) {
-        return PaymentCode.canGenerateNewCode(InstallmentPaymentCode.class, paymentCodeType, student.getPerson()) ?
-                new InstallmentPaymentCode(paymentCodeType, startDate, endDate, event, installment, minAmount, maxAmount, student) :
-                findAndReuseExistingCode(paymentCodeType, startDate, endDate, event, minAmount, maxAmount, student, installment);
-
-    }
-
-    protected static InstallmentPaymentCode findAndReuseExistingCode(final PaymentCodeType paymentCodeType,
-            final YearMonthDay startDate, final YearMonthDay endDate, final Event event, final Money minAmount,
-            final Money maxAmount, final Student student, final Installment installment) {
-        for (PaymentCode code : student.getPerson().getPaymentCodesBy(paymentCodeType)) {
-            if (code.isAvailableForReuse() && getPaymentCodeGenerator(paymentCodeType).isCodeMadeByThisFactory(code)) {
-                InstallmentPaymentCode accountingEventPaymentCode = ((InstallmentPaymentCode) code);
-                accountingEventPaymentCode.reuse(startDate, endDate, minAmount, maxAmount, event);
-                return accountingEventPaymentCode;
-            }
-        }
-        return null;
-    }
-
     public void reuse(YearMonthDay startDate, YearMonthDay endDate, Money minAmount, Money maxAmount, Event event,
             Installment installment) {
         super.reuse(startDate, endDate, minAmount, maxAmount, event);
         super.setInstallment(installment);
-
-    }
-
-    protected void init(final PaymentCodeType paymentCodeType, YearMonthDay startDate, YearMonthDay endDate, final Event event,
-            Installment installment, final Money minAmount, final Money maxAmount, final Student student) {
-        super.init(paymentCodeType, startDate, endDate, event, minAmount, maxAmount, student.getPerson());
-        checkParameters(installment, student);
-        super.setInstallment(installment);
-
-    }
-
-    private void checkParameters(Installment installment, final Student student) {
-        if (installment == null) {
-            throw new DomainException("error.accounting.paymentCodes.InstallmentPaymentCode.installment.cannot.be.null");
-        }
-
-        if (student == null) {
-            throw new DomainException("error.accounting.paymentCodes.InstallmentPaymentCode.student.cannot.be.null");
-        }
 
     }
 

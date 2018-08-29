@@ -19,20 +19,24 @@
 package org.fenixedu.academic.dto.accounting;
 
 import org.fenixedu.academic.domain.accounting.PaymentMode;
+import org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDetailLine;
 import org.joda.time.DateTime;
 
 public class SibsTransactionDetailDTO extends AccountingTransactionDetailDTO {
+
+    private SibsIncommingPaymentFileDetailLine sibsDetailLine;
 
     private String sibsTransactionId;
 
     private String sibsCode;
 
-    public SibsTransactionDetailDTO(DateTime whenRegistered, String sibsTransactionId, String sibsCode) {
-        this(whenRegistered, sibsTransactionId, sibsCode, null);
+    public SibsTransactionDetailDTO(SibsIncommingPaymentFileDetailLine sibsDetailLine, DateTime whenRegistered, String sibsTransactionId, String sibsCode) {
+        this(sibsDetailLine, whenRegistered, sibsTransactionId, sibsCode, null);
     }
 
-    public SibsTransactionDetailDTO(DateTime whenRegistered, String sibsTransactionId, String sibsCode, String comments) {
+    public SibsTransactionDetailDTO(SibsIncommingPaymentFileDetailLine sibsDetailLine, DateTime whenRegistered, String sibsTransactionId, String sibsCode, String comments) {
         super(whenRegistered, PaymentMode.ATM, comments);
+        this.sibsDetailLine = sibsDetailLine;
         this.sibsTransactionId = sibsTransactionId;
         this.sibsCode = sibsCode;
 
@@ -54,9 +58,17 @@ public class SibsTransactionDetailDTO extends AccountingTransactionDetailDTO {
         this.sibsCode = sibsCode;
     }
 
+
     @Override
     public boolean isSibsTransactionDetail() {
         return true;
     }
 
+    public SibsIncommingPaymentFileDetailLine getSibsDetailLine() {
+        return sibsDetailLine;
+    }
+
+    public void setSibsDetailLine(SibsIncommingPaymentFileDetailLine sibsDetailLine) {
+        this.sibsDetailLine = sibsDetailLine;
+    }
 }

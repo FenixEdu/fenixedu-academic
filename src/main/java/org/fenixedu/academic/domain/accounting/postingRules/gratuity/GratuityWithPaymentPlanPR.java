@@ -174,7 +174,7 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base im
             Account to, EntryType entryType, Money amount, Installment installment,
             AccountingTransactionDetailDTO transactionDetail) {
         return new InstallmentAccountingTransaction(responsibleUser, event, makeEntry(entryType, amount.negate(), from),
-                makeEntry(entryType, amount, to), installment, makeAccountingTransactionDetail(transactionDetail));
+                makeEntry(entryType, amount, to), installment, makeAccountingTransactionDetail(event, transactionDetail));
     }
 
     @Override

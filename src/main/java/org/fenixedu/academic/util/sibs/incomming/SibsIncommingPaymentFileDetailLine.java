@@ -18,15 +18,21 @@
  */
 package org.fenixedu.academic.util.sibs.incomming;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Objects;
 
+import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 
-public class SibsIncommingPaymentFileDetailLine {
+public class SibsIncommingPaymentFileDetailLine implements Serializable {
 
     private static final String DATE_TIME_FORMAT = "yyyyMMddHHmm";
+    private static final long serialVersionUID = 6203220766899694357L;
 
     private DateTime whenOccuredTransaction;
 
@@ -36,16 +42,22 @@ public class SibsIncommingPaymentFileDetailLine {
 
     private String code;
 
-    private static final int[] FIELD_SIZES = new int[] { 1, 2, 4, 8, 12, 10, 5, 2, 10, 5, 15, 9, 1, 1, 12, 3 };
+    private SibsIncommingPaymentFileHeader header;
 
-    public static SibsIncommingPaymentFileDetailLine buildFrom(String rawLine) {
+    private String rawLine;
+
+    private static final int[] FIELD_SIZES = { 1, 2, 4, 8, 12, 10, 5, 2, 10, 20, 0, 9, 1, 1, 12, 3 };
+
+    public static SibsIncommingPaymentFileDetailLine buildFrom(SibsIncommingPaymentFileHeader header, String rawLine) {
         final String[] fields = splitLine(rawLine);
-        return new SibsIncommingPaymentFileDetailLine(getWhenOccuredTransactionFrom(fields), getAmountFrom(fields),
+        return new SibsIncommingPaymentFileDetailLine(rawLine, header, getWhenOccuredTransactionFrom(fields), getAmountFrom(fields),
                 getSibsTransactionIdFrom(fields), getCodeFrom(fields));
     }
 
-    private SibsIncommingPaymentFileDetailLine(DateTime whenOccuredTransactionFrom, Money amountFrom,
+    private SibsIncommingPaymentFileDetailLine(String rawLine, SibsIncommingPaymentFileHeader header, DateTime whenOccuredTransactionFrom, Money amountFrom,
             String sibsTransactionIdFrom, String codeFrom) {
+        this.rawLine = rawLine;
+        this.header = header;
         this.whenOccuredTransaction = whenOccuredTransactionFrom;
         this.amount = amountFrom;
         this.sibsTransactionId = sibsTransactionIdFrom;
@@ -112,5 +124,38 @@ public class SibsIncommingPaymentFileDetailLine {
 
     public void setWhenOccuredTransaction(DateTime whenOccuredTransaction) {
         this.whenOccuredTransaction = whenOccuredTransaction;
+    }
+
+    public String export() {
+        return String.format("%s%n%s", header.getRawHeader(), rawLine);
+    }
+
+    public static SibsIncommingPaymentFileDetailLine importFromString(String rawHeaderAndLine) {
+        if (Strings.isNullOrEmpty(rawHeaderAndLine)) {
+            return null;
+        }
+        final List<String> headerAndLine = Splitter.on("\n").splitToList(rawHeaderAndLine);
+
+        if (headerAndLine.size() != 2) {
+            throw new UnsupportedOperationException("SibsIncommingPaymentFileDetailLine not formatted accordingly:" + rawHeaderAndLine);
+        }
+
+        final SibsIncommingPaymentFileHeader sibsIncommingPaymentFileHeader = SibsIncommingPaymentFileHeader.buildFrom(headerAndLine.get(0));
+        return buildFrom(sibsIncommingPaymentFileHeader, headerAndLine.get(1));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        SibsIncommingPaymentFileDetailLine that = (SibsIncommingPaymentFileDetailLine) o;
+        return Objects.equals(header, that.header) && Objects.equals(rawLine, that.rawLine);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(whenOccuredTransaction, amount, sibsTransactionId, code, header, rawLine);
     }
 }

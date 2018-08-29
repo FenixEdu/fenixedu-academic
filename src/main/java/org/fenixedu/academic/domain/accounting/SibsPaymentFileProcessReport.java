@@ -18,28 +18,22 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.accounting.sibsPaymentFileProcessReport.SibsPaymentFileProcessReportDTO;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
-
 import pt.ist.fenixframework.Atomic;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_Base {
 
     static final public Comparator<SibsPaymentFileProcessReport> COMPARATOR_BY_SIBS_PROCESS_DATE =
-            new Comparator<SibsPaymentFileProcessReport>() {
-                @Override
-                public int compare(SibsPaymentFileProcessReport o1, SibsPaymentFileProcessReport o2) {
-                    return o1.getWhenProcessedBySibs().compareTo(o2.getWhenProcessedBySibs());
-                }
-            };
+            Comparator.comparing(SibsPaymentFileProcessReport::getWhenProcessedBySibs);
 
     public SibsPaymentFileProcessReport(SibsPaymentFileProcessReportDTO sibsPaymentFileProcessReportDTO) {
         super();
@@ -91,7 +85,7 @@ public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_B
     }
 
     private void checkRulesToCreate(SibsPaymentFileProcessReportDTO sibsPaymentFileProcessReportDTO) {
-        if (SibsPaymentFileProcessReport.readBy(sibsPaymentFileProcessReportDTO.getWhenProcessedBySibs(),
+        if (readBy(sibsPaymentFileProcessReportDTO.getWhenProcessedBySibs(),
                 sibsPaymentFileProcessReportDTO.getFileVersion()) != null) {
             throw new DomainException(
                     "error.org.fenixedu.academic.domain.accounting.SibsPaymentFileProcessReport.file.already.processed");
@@ -118,15 +112,10 @@ public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_B
     }
 
     static public SibsPaymentFileProcessReport readBy(final YearMonthDay date, final Integer fileVersion) {
-        for (final SibsPaymentFileProcessReport sibsPaymentFileProcessReport : Bennu.getInstance()
-                .getSibsPaymentFileProcessReportsSet()) {
-            if (sibsPaymentFileProcessReport.getWhenProcessedBySibs().isEqual(date)
-                    && sibsPaymentFileProcessReport.getFileVersion().equals(fileVersion)) {
-                return sibsPaymentFileProcessReport;
-            }
-        }
-
-        return null;
+        return Bennu.getInstance().getSibsPaymentFileProcessReportsSet().stream()
+                .filter(sibsPaymentFileProcessReport -> sibsPaymentFileProcessReport.getWhenProcessedBySibs().isEqual(date))
+                .filter(sibsPaymentFileProcessReport -> sibsPaymentFileProcessReport.getFileVersion().equals(fileVersion))
+                .findFirst().orElse(null);
     }
 
     static public boolean hasAny(final YearMonthDay date, final Integer fileVersion) {
@@ -138,14 +127,10 @@ public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_B
     }
 
     static public List<SibsPaymentFileProcessReport> readAllBetween(final LocalDate startDate, final LocalDate endDate) {
-        final List<SibsPaymentFileProcessReport> result = new ArrayList<SibsPaymentFileProcessReport>();
-        for (final SibsPaymentFileProcessReport report : Bennu.getInstance().getSibsPaymentFileProcessReportsSet()) {
-            if (report.getWhenProcessedBySibs().compareTo(startDate) >= 0
-                    && report.getWhenProcessedBySibs().compareTo(endDate) <= 0) {
-                result.add(report);
-            }
-        }
-        return result;
+        return Bennu.getInstance().getSibsPaymentFileProcessReportsSet().stream()
+                .filter(report -> report.getWhenProcessedBySibs().compareTo(startDate) >= 0)
+                .filter(report -> report.getWhenProcessedBySibs().compareTo(endDate) <= 0)
+                .collect(Collectors.toList());
 
     }
 

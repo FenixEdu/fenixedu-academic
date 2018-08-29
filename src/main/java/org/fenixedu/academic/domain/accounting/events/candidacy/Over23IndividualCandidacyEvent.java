@@ -35,7 +35,7 @@ public class Over23IndividualCandidacyEvent extends Over23IndividualCandidacyEve
         this();
         super.init(candidacy, EventType.OVER23_INDIVIDUAL_CANDIDACY, person);
 
-        attachAvailablePaymentCode(person);
+        calculatePaymentCodeEntry();
     }
 
     @Override

@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain.accounting.accountingTransactions.detail;
 
 import org.fenixedu.academic.domain.accounting.PaymentMode;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDetailLine;
 import org.joda.time.DateTime;
 
 public class SibsTransactionDetail extends SibsTransactionDetail_Base {
@@ -28,9 +29,10 @@ public class SibsTransactionDetail extends SibsTransactionDetail_Base {
         super();
     }
 
-    public SibsTransactionDetail(DateTime whenRegistered, String sibsTransactionId, String sibsCode, String comments) {
+    public SibsTransactionDetail(SibsIncommingPaymentFileDetailLine sibsDetailLine, DateTime whenRegistered, String sibsTransactionId, String sibsCode, String comments) {
         this();
         init(whenRegistered, sibsTransactionId, sibsCode, comments);
+        super.setSibsLine(sibsDetailLine);
     }
 
     protected void init(DateTime whenRegistered, String sibsTransactionId, String sibsCode, String comments) {
@@ -68,4 +70,7 @@ public class SibsTransactionDetail extends SibsTransactionDetail_Base {
         throw new DomainException("error.accounting.accountingTransactions.detail.SibsTransactionDetail.cannot.modify.sibsCode");
     }
 
+    @Override public void setSibsLine(SibsIncommingPaymentFileDetailLine sibsLine) {
+        throw new DomainException("error.accounting.accountingTransactions.detail.SibsTransactionDetail.cannot.modify.sibsLine");
+    }
 }

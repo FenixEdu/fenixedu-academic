@@ -20,12 +20,11 @@ package org.fenixedu.academic.domain.accounting.paymentCodes;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.Event;
-import org.fenixedu.academic.domain.accounting.PaymentCode;
-import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 import org.fenixedu.academic.domain.accounting.events.insurance.InsuranceEvent;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.accounting.SibsTransactionDetailDTO;
 import org.fenixedu.academic.util.Money;
+import org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDetailLine;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
@@ -33,8 +32,10 @@ import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
+import java.util.Optional;
+
 @Deprecated
-public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base {
+public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base implements IEventPaymentCode {
 
     private static final Logger logger = LoggerFactory.getLogger(AccountingEventPaymentCode.class);
 
@@ -54,39 +55,6 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
 
     protected AccountingEventPaymentCode() {
         super();
-    }
-
-    protected AccountingEventPaymentCode(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
-            final YearMonthDay endDate, final Event event, final Money minAmount, final Money maxAmount, final Person person) {
-        this();
-        init(paymentCodeType, startDate, endDate, event, minAmount, maxAmount, person);
-    }
-
-    public static AccountingEventPaymentCode create(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
-            final YearMonthDay endDate, final Event event, final Money minAmount, final Money maxAmount, final Person person) {
-        return PaymentCode.canGenerateNewCode(AccountingEventPaymentCode.class, paymentCodeType, person) ? new AccountingEventPaymentCode(
-                paymentCodeType, startDate, endDate, event, minAmount, maxAmount, person) : findAndReuseExistingCode(
-                paymentCodeType, startDate, endDate, event, minAmount, maxAmount, person);
-    }
-
-    protected static AccountingEventPaymentCode findAndReuseExistingCode(final PaymentCodeType paymentCodeType,
-            final YearMonthDay startDate, final YearMonthDay endDate, final Event event, final Money minAmount,
-            final Money maxAmount, final Person person) {
-        for (PaymentCode code : person.getPaymentCodesBy(paymentCodeType)) {
-            if (code.isAvailableForReuse() && getPaymentCodeGenerator(paymentCodeType).isCodeMadeByThisFactory(code)) {
-                AccountingEventPaymentCode accountingEventPaymentCode = ((AccountingEventPaymentCode) code);
-                accountingEventPaymentCode.reuse(startDate, endDate, minAmount, maxAmount, event);
-                return accountingEventPaymentCode;
-            }
-        }
-        return null;
-    }
-
-    protected void init(final PaymentCodeType paymentCodeType, YearMonthDay startDate, YearMonthDay endDate, Event event,
-            Money minAmount, Money maxAmount, Person person) {
-        super.init(paymentCodeType, startDate, endDate, minAmount, maxAmount, person);
-        checkParameters(event, person);
-        super.setAccountingEvent(event);
     }
 
     protected void checkParameters(Event event, final Person person) {
@@ -116,8 +84,8 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
         super.setAccountingEvent(event);
     }
 
-    @Override
-    protected void internalProcess(Person person, Money amount, DateTime whenRegistered, String sibsTransactionId, String comments) {
+
+    @Override protected void internalProcess(Person person, SibsIncommingPaymentFileDetailLine sibsDetailLine) {
         final Event event = getAccountingEvent();
         if (event.isCancelled()) {
             logger.warn("############################ PROCESSING CODE FOR CANCELLED EVENT ###############################");
@@ -126,8 +94,9 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
             logger.warn("################################################################################################");
         }
 
-        event.process(person.getUser(), this, amount, new SibsTransactionDetailDTO(whenRegistered, sibsTransactionId, getCode(),
-                comments));
+        event.process(person.getUser(), this,
+                sibsDetailLine.getAmount(), new SibsTransactionDetailDTO(sibsDetailLine,sibsDetailLine.getWhenOccuredTransaction(),
+                        sibsDetailLine.getSibsTransactionId(), getCode(), ""));
     }
 
     @Override
@@ -148,4 +117,7 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
         return true;
     }
 
+    @Override public Optional<Event> getEvent() {
+        return Optional.ofNullable(getAccountingEvent());
+    }
 }

@@ -29,14 +29,14 @@
 	<spring:param name="event" value="${event.externalId}"/>
 </spring:url>
 
-<spring:url value="../../{event}/summary" var="summaryUrl">
+<spring:url value="../../{event}/details" var="detailsUrl">
 	<spring:param name="event" value="${event.externalId}"/>
 </spring:url>
 
 <header>
 	<div class="row">
 		<div class="col-sm-12">
-			<p><a href="${summaryUrl}" class="btn btn-default"><spring:message code="label.back" text="Back"/></a></p>
+			<p><a href="${detailsUrl}" class="btn btn-default"><spring:message code="label.back" text="Back"/></a></p>
 			<h2><spring:message code="label.payments.annulTransaction"/></h2>
 		</div>
 	</div>
@@ -75,7 +75,7 @@
 			<button class="btn btn-primary" type="submit">
 				<spring:message code="label.submit"/>
 			</button>
-            <a href="${summaryUrl}"><spring:message code="label.cancel"/></>
+            <a href="${detailsUrl}" class="btn btn-default"><spring:message code="label.cancel"/><a/>
 		</div>
 	</div>
 </form:form>

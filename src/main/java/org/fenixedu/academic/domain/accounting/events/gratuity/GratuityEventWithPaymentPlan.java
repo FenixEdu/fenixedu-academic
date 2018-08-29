@@ -25,6 +25,7 @@ import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.Entry;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Installment;
+import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.accounting.PaymentCodeState;
 import org.fenixedu.academic.domain.accounting.PaymentPlan;
 import org.fenixedu.academic.domain.accounting.PostingRule;
@@ -177,13 +178,13 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     }
 
     @Override
-    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+    protected Set<Entry> internalProcess(User responsibleUser, PaymentCode paymentCode, Money amountToPay,
             SibsTransactionDetailDTO transactionDetail) {
         return internalProcess(responsibleUser, Collections.singletonList(buildEntryDTOFrom(paymentCode, amountToPay)),
                 transactionDetail);
     }
 
-    private EntryDTO buildEntryDTOFrom(final AccountingEventPaymentCode paymentCode, final Money amountToPay) {
+    private EntryDTO buildEntryDTOFrom(final PaymentCode paymentCode, final Money amountToPay) {
         if (paymentCode instanceof InstallmentPaymentCode) {
             return new EntryWithInstallmentDTO(EntryType.GRATUITY_FEE, this, amountToPay,
                     ((InstallmentPaymentCode) paymentCode).getInstallment());

@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4 col-sm-12">
+                <div class="col-md-5 col-sm-12">
                     <div class="overall-description">
                         <dl>
                             <dt><spring:message code="label.name" text="Name"/></dt>
@@ -124,7 +124,12 @@
                                     <td style="width: 100px;">
                                         <time datetime="${event.whenOccured.toString('yyyy-MM-dd')}">${event.whenOccured.toString('dd/MM/yyyy')}</time>
                                     </td>
-                                    <td style="width: 70%;"><c:out value="${event.description}"/></td>
+                                    <td style="width: 70%;">
+                                        <c:out value="${event.description}"/>
+                                        <c:if test="${event.currentEventState == 'CANCELLED'}">
+                                            <span class="text-danger"> (Cancelada)</span>
+                                        </c:if>
+                                    </td>
                                     <td><c:out value="${event.totalAmount}"/></td>
                                     <td style="text-align: right;"><a href="${eventUrl}"><spring:message code="label.details"
                                                                                                          text="Details"/></a></td>

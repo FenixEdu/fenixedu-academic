@@ -31,6 +31,14 @@
     <spring:param name="event" value="${eventId}"/>
 </spring:url>
 
+<spring:url var="depositUrl" value="../{event}/deposit">
+    <spring:param name="event" value="${eventId}"/>
+</spring:url>
+
+<spring:url var="cancelUrl" value="../{event}/cancel">
+    <spring:param name="event" value="${eventId}"/>
+</spring:url>
+
 <spring:url var="backUrl" value="${entrypointUrl}">
     <spring:param name="user" value="${eventUsername}"/>
 </spring:url>
@@ -42,9 +50,7 @@
                 <p><a href="${backUrl}" class="btn btn-default"><spring:message code="label.back" text="Back"/></a></p>
                 <h1><c:out value="${eventDescription}"/></h1>
             </div>
-            <div class="col-md-2">
-                <a class="btn btn-primary btn-block" href="${payUrl}"><spring:message code="accounting.event.action.pay" text="Pay"/></a>
-            </div>
+
         </div>
         <div class="row">
             <div class="col-md-4 col-sm-12">
@@ -71,7 +77,18 @@
                     </dl>
                 </div>
             </div>
+            <div class="col-md-2 col-md-push-2">
+                <c:if test="${eventTotalAmountToPay > 0 && isEventOwner}">
+                    <a class="btn btn-primary btn-block" href="${payUrl}"><spring:message code="accounting.event.action.pay" text="Pay"/></a>
+                </c:if>
+                <c:if test="${isPaymentManager}">
+                    <a class="btn btn-default btn-block" href="${depositUrl}"><spring:message code="accounting.event.action.deposit" text="Deposit"/></a>
+                    <%--<a class="btn btn-default btn-block" href=""><spring:message code="accounting.event.action.exempt" text="Exept"/></a>--%>
+                    <a class="btn btn-danger btn-block" href="${cancelUrl}"><spring:message code="accounting.event.action.cancel" text="Cancel"/></a>
+                </c:if>
+            </div>
         </div>
+        <div class="row">
     </header>
     <div class="row">
         <div class="col-md-12">
@@ -89,7 +106,7 @@
                             <c:when test="${!debt.open}">
                                 <c:set var="cardClass" value="fully-paid"/>
                             </c:when>
-                            <c:when test="${debt.isAfterDueDate(currentDate)}">
+                            <c:when test="${debt.isAfterDueDate(currentDate) && !(debt.isToExemptInterest() || debt.isToExemptFine())}">
                                 <c:set var="cardClass" value="passed-limit"/>
                             </c:when>
                             <c:otherwise>
@@ -108,7 +125,7 @@
                                     <c:when test="${!debt.open}">
                                         <spring:message code="accounting.event.details.debt.paid" text="Paid"/>
                                     </c:when>
-                                    <c:when test="${debt.isAfterDueDate(currentDate)}">
+                                    <c:when test="${debt.isAfterDueDate(currentDate) && !(debt.isToExemptInterest() || debt.isToExemptFine())}">
                                         <spring:message code="accounting.event.details.debt.due.with.interest" text="Due with interest"/>
                                     </c:when>
                                     <c:otherwise>
@@ -125,8 +142,13 @@
                                 <dd><c:out value="${debt.openAmount.toPlainString()}"/><span>€</span></dd>
                             </dl>
                             <dl class="details">
-                                <dt><spring:message code="accounting.event.details.debt.interestOrFines" text="Interest"/>:</dt>
-                                <dd><c:out value="${debt.openInterestAmount.toPlainString() + debt.openFineAmount}"/><span>€</span></dd>
+                                <dt><spring:message code="accounting.event.details.debt.interestOrFines" text="Interest/Fines"/>:</dt>
+                                <dd>
+                                    <c:out value="${debt.openInterestAmount.toPlainString() + debt.openFineAmount}"/><span>€</span>
+                                    <c:if test="${debt.isToExemptInterest() || debt.isToExemptFine()}">
+                                        <spring:message code="accounting.event.details.debt.hasExemption" text="(Exemption)"/>
+                                    </c:if>
+                                </dd>
                             </dl>
                             <dl class="details">
                                 <dt><spring:message code="accounting.event.details.debt" text="Installment"/>:</dt>
@@ -148,7 +170,7 @@
     <div class="row">
         <div class="col-md-12">
             <header>
-                <h2>Pagamentos</h2>
+                <h2>Pagamentos e Isenções</h2>
             </header>
         </div>
     </div>
@@ -158,7 +180,7 @@
                 <thead>
                 <tr>
                     <th>Data de processamento</th>
-                    <th>Data de criação</th>
+                    <th>Data de pagamento</th>
                     <th>Tipo</th>
                     <th>Pago</th>
                     <th>Divida</th>
@@ -173,20 +195,29 @@
                     </tr>
                 </c:if>
                 <c:if test="${not empty payments}">
-                <c:forEach var="payment" items="${payments}">
+                <c:forEach var="payment" items="${payments}" varStatus="loop">
                     <spring:url value="../{event}/{payment}/details" var="paymentUrl">
                         <spring:param name="event" value="${eventId}"/>
                         <spring:param name="payment" value="${payment.id}"/>
                     </spring:url>
+                    <spring:url value="../{event}/delete/{entry}" var="deleteEntryUrl">
+                        <spring:param name="event" value="${eventId}"/>
+                        <spring:param name="entry" value="${payment.id}"/>
+                    </spring:url>
                     <c:set var="usedAmountInInterestsOrFines" value="#{payment.usedAmountInInterests + payment.usedAmountInFines}"/>
                     <tr>
-                        <td><time datetime="${payment.created.toString("yyyy-MM-dd hh:mm:ss")}">${payment.created.toString("dd/MM/yyyy hh:mm:ss")}</time></td>
+                        <td><time datetime="${payment.created.toString("yyyy-MM-dd HH:mm:ss")}">${payment.created.toString("dd/MM/yyyy HH:mm:ss")}</time></td>
                         <td><time datetime="${payment.date.toString("yyyy-MM-dd")}">${payment.date.toString("dd/MM/yyyy")}</time></td>
                         <td><c:out value="${payment.typeDescription.content}"/></td>
                         <td><c:out value="${payment.amount}"/><span>€</span></td>
                         <td><c:out value="${payment.usedAmountInDebts}"/><span>€</span></td>
                         <td><c:out value="${usedAmountInInterestsOrFines}"/><span>€</span></td>
-                        <td style="text-align: right;"><a href="${paymentUrl}">Ver Pagamento</a></td>
+                        <td style="text-align: right;">
+                            <a href="${paymentUrl}">Ver Detalhes</a>
+                            <c:if test="${isPaymentManager && loop.first}">
+                                <span>, </span><a href="${deleteEntryUrl}" onclick="return confirm('Are you sure?')">Anular</a>
+                            </c:if>
+                        </td>
                     </tr>
                 </c:forEach>
                 </c:if>

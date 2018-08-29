@@ -18,18 +18,13 @@
  */
 package org.fenixedu.academic.domain.accounting.events.candidacy;
 
-import java.util.Collections;
-import java.util.Set;
-
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.Account;
 import org.fenixedu.academic.domain.accounting.Entry;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
-import org.fenixedu.academic.domain.accounting.PaymentCodeType;
+import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.accounting.PostingRule;
-import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
-import org.fenixedu.academic.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacy;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -40,7 +35,9 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
-import org.joda.time.YearMonthDay;
+
+import java.util.Collections;
+import java.util.Set;
 
 public abstract class IndividualCandidacyEvent extends IndividualCandidacyEvent_Base {
 
@@ -55,15 +52,6 @@ public abstract class IndividualCandidacyEvent extends IndividualCandidacyEvent_
         setIndividualCandidacy(candidacy);
     }
 
-    protected void attachAvailablePaymentCode(final Person person) {
-        YearMonthDay candidacyDate = getIndividualCandidacy().getCandidacyDate().toDateTimeAtStartOfDay().toYearMonthDay();
-        IndividualCandidacyPaymentCode paymentCode =
-                IndividualCandidacyPaymentCode.getAvailablePaymentCodeAndUse(getPaymentCodeType(), candidacyDate, this, person);
-        if (paymentCode == null) {
-            throw new DomainException("error.IndividualCandidacyEvent.invalid.payment.code");
-        }
-    }
-
     protected void checkParameters(final IndividualCandidacy candidacy, final AdministrativeOffice administrativeOffice) {
         if (candidacy == null) {
             throw new DomainException("error.IndividualCandidacyEvent.invalid.candidacy");
@@ -74,14 +62,6 @@ public abstract class IndividualCandidacyEvent extends IndividualCandidacyEvent_
     }
 
     abstract protected AdministrativeOffice readAdministrativeOffice();
-
-    public PaymentCodeType getPaymentCodeType() {
-        PostingRule postingRule =
-                getAdministrativeOffice().getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(),
-                        getWhenOccured());
-
-        return postingRule.calculatePaymentCodeTypeFromEvent(this, getWhenOccured(), false);
-    }
 
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
@@ -113,7 +93,7 @@ public abstract class IndividualCandidacyEvent extends IndividualCandidacyEvent_
     }
 
     @Override
-    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+    protected Set<Entry> internalProcess(User responsibleUser, PaymentCode paymentCode, Money amountToPay,
             SibsTransactionDetailDTO transactionDetail) {
         return internalProcess(responsibleUser, Collections.singletonList(new EntryDTO(getEntryType(), this, amountToPay)),
                 transactionDetail);

@@ -82,7 +82,7 @@ public class SibsIncommingPaymentFile {
                 if (isHeader(line)) {
                     header = SibsIncommingPaymentFileHeader.buildFrom(line);
                 } else if (isDetail(line)) {
-                    detailLines.add(SibsIncommingPaymentFileDetailLine.buildFrom(line));
+                    detailLines.add(SibsIncommingPaymentFileDetailLine.buildFrom(header, line));
                 } else if (isFooter(line)) {
                     footer = SibsIncommingPaymentFileFooter.buildFrom(line);
                 } else {

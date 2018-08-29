@@ -54,18 +54,16 @@ public enum PenaltyExemptionJustificationType {
     public static List<PenaltyExemptionJustificationType> getValuesFor(EventType eventType) {
         switch (eventType) {
         case ADMINISTRATIVE_OFFICE_FEE_INSURANCE:
-            return Arrays.asList(new PenaltyExemptionJustificationType[] { ENROLMENT_AFTER_EQUIVALENCE,
-                    DIRECTIVE_COUNCIL_AUTHORIZATION, NUCLEUS_COORDINATOR_AUTHORIZATION });
+            return Arrays.asList(ENROLMENT_AFTER_EQUIVALENCE, DIRECTIVE_COUNCIL_AUTHORIZATION, NUCLEUS_COORDINATOR_AUTHORIZATION);
         case GRATUITY:
-            return Arrays.asList(new PenaltyExemptionJustificationType[] { SOCIAL_SHARE_GRANT_OWNER, ENROLMENT_AFTER_EQUIVALENCE,
-                    DIRECTIVE_COUNCIL_AUTHORIZATION, NUCLEUS_COORDINATOR_AUTHORIZATION, SEPARATION_CYCLES_AUTHORIZATION });
+            return Arrays.asList(SOCIAL_SHARE_GRANT_OWNER, ENROLMENT_AFTER_EQUIVALENCE, DIRECTIVE_COUNCIL_AUTHORIZATION,
+                    NUCLEUS_COORDINATOR_AUTHORIZATION, SEPARATION_CYCLES_AUTHORIZATION);
         case IMPROVEMENT_OF_APPROVED_ENROLMENT:
-            return Arrays.asList(new PenaltyExemptionJustificationType[] { NUCLEUS_COORDINATOR_AUTHORIZATION });
+            return Collections.singletonList(NUCLEUS_COORDINATOR_AUTHORIZATION);
         case PHD_REGISTRATION_FEE:
-            return Arrays.asList(new PenaltyExemptionJustificationType[] { DIRECTIVE_COUNCIL_AUTHORIZATION,
-                    NUCLEUS_COORDINATOR_AUTHORIZATION });
+            return Arrays.asList(DIRECTIVE_COUNCIL_AUTHORIZATION, NUCLEUS_COORDINATOR_AUTHORIZATION);
         default:
-            return Collections.EMPTY_LIST;
+            return Collections.emptyList();
         }
 
     }

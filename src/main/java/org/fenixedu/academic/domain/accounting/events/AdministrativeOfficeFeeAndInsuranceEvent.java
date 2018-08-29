@@ -35,6 +35,7 @@ import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventState;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.Exemption;
+import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.accounting.PaymentMode;
 import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.accounting.events.administrativeOfficeFee.IAdministrativeOfficeFeeEvent;
@@ -188,7 +189,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
     }
 
     @Override
-    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+    protected Set<Entry> internalProcess(User responsibleUser, PaymentCode paymentCode, Money amountToPay,
             SibsTransactionDetailDTO transactionDetail) {
         return internalProcess(responsibleUser, buildEntryDTOsFrom(amountToPay), transactionDetail);
     }

@@ -1,5 +1,26 @@
 package org.fenixedu.academic.ui.spring.service;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accounting.AccountingTransaction;
+import org.fenixedu.academic.domain.accounting.Event;
+import org.fenixedu.academic.domain.accounting.PaymentMode;
+import org.fenixedu.academic.domain.accounting.calculator.CreditEntry;
+import org.fenixedu.academic.domain.accounting.calculator.Debt;
+import org.fenixedu.academic.domain.accounting.calculator.DebtEntry;
+import org.fenixedu.academic.domain.accounting.calculator.Fine;
+import org.fenixedu.academic.domain.accounting.calculator.Interest;
+import org.fenixedu.academic.domain.accounting.calculator.PartialPayment;
+import org.fenixedu.academic.domain.accounting.calculator.Payment;
+import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
+import org.fenixedu.academic.dto.accounting.DepositAmountBean;
+import org.fenixedu.bennu.core.domain.User;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.springframework.stereotype.Service;
+import pt.ist.fenixframework.Atomic;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,20 +29,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Stream;
-
-import org.fenixedu.academic.domain.accounting.calculator.CreditEntry;
-import org.fenixedu.academic.domain.accounting.calculator.Debt;
-import org.fenixedu.academic.domain.accounting.calculator.DebtEntry;
-import org.fenixedu.academic.domain.accounting.calculator.Fine;
-import org.fenixedu.academic.domain.accounting.calculator.Interest;
-import org.fenixedu.academic.domain.accounting.calculator.PartialPayment;
-import org.fenixedu.academic.domain.accounting.calculator.Payment;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
-import org.springframework.stereotype.Service;
-
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
 
 /**
  * Created by Sérgio Silva (hello@fenixedu.org).
@@ -168,5 +175,16 @@ public class AccountingManagementService {
         }
 
         return paymentSummaryWithDebtSet;
+    }
+
+    @Atomic
+    public AccountingTransaction depositAmount(final Event event, final User depositor, final DepositAmountBean depositAmountBean) {
+        return event.depositAmount(depositor, depositAmountBean.getAmount(), depositAmountBean.getEntryType(),
+                new AccountingTransactionDetailDTO(depositAmountBean.getWhenRegistered(), PaymentMode.CASH, depositAmountBean.getReason()));
+    }
+
+    @Atomic
+    public void cancelEvent(final Event event, final Person responsible, final String justification) {
+        event.cancel(responsible, justification);
     }
 }

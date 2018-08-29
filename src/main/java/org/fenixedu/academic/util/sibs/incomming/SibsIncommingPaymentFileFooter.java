@@ -22,7 +22,7 @@ import org.fenixedu.academic.util.Money;
 
 public class SibsIncommingPaymentFileFooter {
 
-    private static final int[] FIELD_SIZES = new int[] { 1, 8, 17, 12, 12, 50 };
+    private static final int[] FIELD_SIZES = { 1, 8, 17, 12, 12, 50 };
 
     private Money transactionsTotalAmount;
 

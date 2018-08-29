@@ -36,7 +36,7 @@ public class DegreeCandidacyForGraduatedPersonEvent extends DegreeCandidacyForGr
         this();
         super.init(candidacy, EventType.DEGREE_CANDIDACY_FOR_GRADUATED_PERSON, person);
 
-        attachAvailablePaymentCode(person);
+        calculatePaymentCodeEntry();
     }
 
     @Override

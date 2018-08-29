@@ -27,6 +27,7 @@ import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.transactions.InsuranceTransaction;
 import org.fenixedu.academic.domain.transactions.PaymentType;
 import org.fenixedu.academic.util.Money;
+import org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDetailLine;
 import org.joda.time.DateTime;
 
 @Deprecated
@@ -41,10 +42,9 @@ public class MasterDegreeInsurancePaymentCode extends MasterDegreeInsurancePayme
         throw new DomainException("error.accounting.paymentCodes.MasterDegreeInsurancePaymentCode.cannot.modify.executionYear");
     }
 
-    @Override
-    protected void internalProcess(Person responsiblePerson, Money amount, DateTime whenRegistered, String sibsTransactionId,
-            String comments) {
-        new InsuranceTransaction(amount.getAmount(), whenRegistered, PaymentType.SIBS, responsiblePerson, getPersonAccount(),
+    @Override protected void internalProcess(Person person, SibsIncommingPaymentFileDetailLine sibsDetailLine) {
+        new InsuranceTransaction(sibsDetailLine.getAmount().getAmount(), sibsDetailLine.getWhenOccuredTransaction(), PaymentType.SIBS,
+                person, getPersonAccount(),
                 getExecutionYear(), getRegistration());
     }
 

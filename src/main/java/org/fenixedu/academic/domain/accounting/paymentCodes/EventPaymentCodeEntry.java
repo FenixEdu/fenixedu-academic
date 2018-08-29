@@ -1,10 +1,10 @@
 package org.fenixedu.academic.domain.accounting.paymentCodes;
 
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 import pt.ist.fenixframework.Atomic;
 
 /***
@@ -17,21 +17,23 @@ public class EventPaymentCodeEntry extends EventPaymentCodeEntry_Base {
         setCreated(new DateTime());
     }
 
-    protected EventPaymentCodeEntry(EventPaymentCode eventPaymentCode, Event event, Money amount, LocalDate dueDate) {
-        super();
+    protected EventPaymentCodeEntry(EventPaymentCode eventPaymentCode, Event event, Money amount) {
+        this();
         setEvent(event);
         setPaymentCode(eventPaymentCode);
         setAmount(amount);
-        setDueDate(dueDate);
+        setDueDate(getCreated().plusDays(FenixEduAcademicConfiguration.getConfiguration().getMaxDaysBetweenPromiseAndPayment()).toLocalDate());
     }
 
     @Atomic(mode = Atomic.TxMode.WRITE)
-    public static EventPaymentCodeEntry create(Event event, Money amount, LocalDate dueDate){
-        return new EventPaymentCodeEntry(Bennu.getInstance().getPaymentCodePool().getAvailablePaymentCode(), event, amount, dueDate);
+    public static EventPaymentCodeEntry create(Event event, Money amount) {
+        final EventPaymentCodeEntry eventPaymentCodeEntry = new EventPaymentCodeEntry(Bennu.getInstance().getPaymentCodePool().getAvailablePaymentCode(), event, amount);
+        eventPaymentCodeEntry.getPaymentCode().setPerson(event.getPerson());
+        return eventPaymentCodeEntry;
     }
 
-    public static EventPaymentCodeEntry getOrCreate(Event event, Money amount, LocalDate dueDate){
-        return event.getAvailablePaymentCodeEntry().orElseGet(() -> create(event, amount, dueDate));
+    public static EventPaymentCodeEntry getOrCreate(Event event, Money amount){
+        return event.getAvailablePaymentCodeEntry().orElseGet(() -> create(event, amount));
     }
 
 }

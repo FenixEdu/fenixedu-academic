@@ -27,7 +27,7 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.Entry;
 import org.fenixedu.academic.domain.accounting.EntryType;
-import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
+import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Student;
@@ -79,7 +79,7 @@ public class SpecializationDegreeGratuityEvent extends SpecializationDegreeGratu
     }
 
     @Override
-    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+    protected Set<Entry> internalProcess(User responsibleUser, PaymentCode paymentCode, Money amountToPay,
             SibsTransactionDetailDTO transactionDetail) {
         return internalProcess(responsibleUser,
                 Collections.singletonList(new EntryDTO(EntryType.GRATUITY_FEE, this, amountToPay)), transactionDetail);

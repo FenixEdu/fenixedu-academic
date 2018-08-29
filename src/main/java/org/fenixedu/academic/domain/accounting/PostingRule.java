@@ -25,10 +25,14 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.accounting.accountingTransactions.detail.SibsTransactionDetail;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
+import org.fenixedu.academic.domain.accounting.paymentCodes.EventPaymentCodeEntry;
+import org.fenixedu.academic.domain.accounting.paymentCodes.EventPaymentCodeEntry_Base;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
 import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
@@ -262,19 +266,37 @@ public abstract class PostingRule extends PostingRule_Base {
     protected AccountingTransaction makeAccountingTransaction(User responsibleUser, Event event, Account from, Account to,
             EntryType entryType, Money amount, AccountingTransactionDetailDTO transactionDetail) {
         return new AccountingTransaction(responsibleUser, event, makeEntry(entryType, amount.negate(), from), makeEntry(
-                entryType, amount, to), makeAccountingTransactionDetail(transactionDetail));
+                entryType, amount, to), makeAccountingTransactionDetail(event, transactionDetail));
     }
 
-    protected AccountingTransactionDetail makeAccountingTransactionDetail(AccountingTransactionDetailDTO transactionDetailDTO) {
+    protected AccountingTransactionDetail makeAccountingTransactionDetail(Event event, AccountingTransactionDetailDTO transactionDetailDTO) {
         if (transactionDetailDTO instanceof SibsTransactionDetailDTO) {
             final SibsTransactionDetailDTO sibsTransactionDetailDTO = (SibsTransactionDetailDTO) transactionDetailDTO;
-            return new SibsTransactionDetail(sibsTransactionDetailDTO.getWhenRegistered(),
+
+            DateTime whenRegistered = getWhenRegisteredForEvent(event, sibsTransactionDetailDTO)
+                    ;
+
+            return new SibsTransactionDetail(sibsTransactionDetailDTO.getSibsDetailLine(), whenRegistered,
                     sibsTransactionDetailDTO.getSibsTransactionId(), sibsTransactionDetailDTO.getSibsCode(),
                     sibsTransactionDetailDTO.getComments());
         } else {
             return new AccountingTransactionDetail(transactionDetailDTO.getWhenRegistered(),
                     transactionDetailDTO.getPaymentMode(), transactionDetailDTO.getComments());
         }
+    }
+
+    /**
+     * Returns effective date of payment for event.
+     * If the payment is registered after the due date of the entry, returns the registered date of the payment
+     * Otherwise, returns the creation date of the entry (for freezing purposes of penalty calculations)
+     */
+    private DateTime getWhenRegisteredForEvent(Event event, SibsTransactionDetailDTO sibsTransactionDetailDTO) {
+        return event.getEventPaymentCodeEntrySet().stream()
+                .filter(entry -> entry.getPaymentCode().getCode().equals(sibsTransactionDetailDTO.getSibsCode()))
+                .filter(entry -> !sibsTransactionDetailDTO.getWhenRegistered().toLocalDate().isAfter(entry.getDueDate()))
+                .findAny()
+                .map(EventPaymentCodeEntry::getCreated)
+                .orElse(sibsTransactionDetailDTO.getWhenRegistered());
     }
 
     public boolean isVisible() {

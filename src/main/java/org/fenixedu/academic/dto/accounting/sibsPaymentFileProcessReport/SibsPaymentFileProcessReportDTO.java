@@ -34,6 +34,7 @@ import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWith
 import org.fenixedu.academic.domain.accounting.events.gratuity.StandaloneEnrolmentGratuityEvent;
 import org.fenixedu.academic.domain.accounting.events.insurance.InsuranceEvent;
 import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
+import org.fenixedu.academic.domain.accounting.paymentCodes.EventPaymentCode;
 import org.fenixedu.academic.domain.accounting.paymentCodes.GratuitySituationPaymentCode;
 import org.fenixedu.academic.domain.accounting.paymentCodes.MasterDegreeInsurancePaymentCode;
 import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyEvent;
@@ -314,18 +315,53 @@ public class SibsPaymentFileProcessReportDTO {
         if (paymentCode.isForRectorate()) {
             addAmountForRectorate(detailLine.getAmount());
         } else if (paymentCode instanceof AccountingEventPaymentCode) {
-            addAmountForEvent(detailLine, paymentCode);
+            addAmountForAccountingEvent(detailLine, paymentCode);
         } else if (paymentCode instanceof GratuitySituationPaymentCode) {
             addAmountForGratuitySituation(detailLine, (GratuitySituationPaymentCode) paymentCode);
         } else if (paymentCode instanceof MasterDegreeInsurancePaymentCode) {
             addAfterGraduationInsuranceAmount(detailLine.getAmount());
+        } else if (paymentCode instanceof EventPaymentCode) {
+            addAmountForEvent(detailLine, paymentCode);
         } else {
             throw new UnsupportedOperationException("Unknown payment code type");
         }
     }
 
-    private void addAmountForEvent(final SibsIncommingPaymentFileDetailLine detailLine, final PaymentCode paymentCode) {
+    private void addAmountForAccountingEvent(final SibsIncommingPaymentFileDetailLine detailLine, final PaymentCode paymentCode) {
         final Event event = ((AccountingEventPaymentCode) paymentCode).getAccountingEvent();
+        if (event instanceof GratuityEventWithPaymentPlan) {
+            addAmountForGratuityEvent(detailLine, (GratuityEventWithPaymentPlan) event);
+        } else if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent) {
+            addAmountForAdministrativeOfficeAndInsuranceEvent(detailLine, (AdministrativeOfficeFeeAndInsuranceEvent) event);
+        } else if (event instanceof DfaGratuityEvent) {
+            addDfaGratuityAmount(detailLine.getAmount());
+        } else if (event instanceof InsuranceEvent) {
+            addAfterGraduationInsuranceAmount(detailLine.getAmount());
+        } else if (event instanceof ResidenceEvent) {
+            addResidenceAmount(detailLine.getAmount());
+        } else if (event instanceof SecondCycleIndividualCandidacyEvent) {
+            addSecondCycleIndividualCandidacyAmount(detailLine.getAmount());
+        } else if (event instanceof DegreeChangeIndividualCandidacyEvent) {
+            addDegreeChangeIndividualCandidacyAmount(detailLine.getAmount());
+        } else if (event instanceof DegreeCandidacyForGraduatedPersonEvent) {
+            addDegreeCandidacyForGraduatedPersonAmount(detailLine.getAmount());
+        } else if (event instanceof DegreeTransferIndividualCandidacyEvent) {
+            addDegreeTransferIndividualCandidacyAmount(detailLine.getAmount());
+        } else if (event instanceof StandaloneEnrolmentGratuityEvent) {
+            addStandaloneEnrolmentGratuityEventAmount(detailLine.getAmount());
+        } else if (event instanceof Over23IndividualCandidacyEvent) {
+            addOver23IndividualCandidacyEventAmount(detailLine.getAmount());
+        } else if (event instanceof PhdProgramCandidacyEvent) {
+            addPhdProgramCandidacyEventAmount(detailLine.getAmount());
+        } else if (event instanceof SpecialSeasonEnrolmentEvent) {
+            addSpecialSeasonEnrolmentEventAmount(detailLine.getAmount());
+        } else {
+            throw new IllegalArgumentException("Unknown accounting event " + event.getClass().getName());
+        }
+    }
+
+    private void addAmountForEvent(final SibsIncommingPaymentFileDetailLine detailLine, final PaymentCode paymentCode) {
+        final Event event = ((EventPaymentCode) paymentCode).getEvent().orElseThrow(() -> new IllegalArgumentException("No event associated with EventPaymentCode"));
         if (event instanceof GratuityEventWithPaymentPlan) {
             addAmountForGratuityEvent(detailLine, (GratuityEventWithPaymentPlan) event);
         } else if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent) {

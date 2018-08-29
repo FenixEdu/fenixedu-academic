@@ -32,7 +32,7 @@ public class AccountingManagementAccessControlService {
             throw new UnsupportedOperationException("Unauthorized");
         }
 
-        if (isPaymentManager(user, getAdminOffices(event))) {
+        if (isPaymentManager(event, user)) {
             return;
         }
 
@@ -51,6 +51,10 @@ public class AccountingManagementAccessControlService {
                                 null));
 
         return group.isMember(user);
+    }
+
+    public boolean isPaymentManager(final Event event, final User user) {
+        return isPaymentManager(user, getAdminOffices(event));
     }
 
     public boolean isEventOwner(final Event event, final User user) {

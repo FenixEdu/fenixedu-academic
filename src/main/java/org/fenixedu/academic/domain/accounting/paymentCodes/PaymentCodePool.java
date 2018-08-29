@@ -73,7 +73,7 @@ public class PaymentCodePool extends PaymentCodePool_Base {
                 .orElseThrow(() -> new DomainException("no.available.payment.codes.in.pool"));
     }
 
-    public void enforceMinSize(User responsible, LocalDate start) {
+    public void enforceMinSize(LocalDate start) {
         int numberOfAvailableCodes = (int) getPaymentCodeStream().filter(paymentCodeIsUsed.negate()).count();
         if (numberOfAvailableCodes < getMinSize()) {
             int numberOfCodesToBeCreated = getMinSize() - numberOfAvailableCodes;
@@ -84,14 +84,14 @@ public class PaymentCodePool extends PaymentCodePool_Base {
             IntStream.range(0, chunks).forEach(i -> {
                 FenixFramework.atomic(() -> {
                     IntStream.range(0, CHUNK_SIZE).forEach(j -> {
-                        createNewCode(responsible.getPerson(), start);
+                        createNewCode(null,  start);
                     });
                 });
             });
             
             FenixFramework.atomic(() -> {
                 IntStream.range(0, remainder).forEach(i -> {
-                    createNewCode(responsible.getPerson(), start);
+                    createNewCode(null, start);
                 });
             });
         }

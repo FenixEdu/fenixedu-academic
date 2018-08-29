@@ -86,6 +86,9 @@ public abstract class AccountingController {
         model.addAttribute("eventFineAmountToPay", debtInterestCalculator.getDueFineAmount());
         model.addAttribute("eventOriginalAmountToPay", event.getOriginalAmountToPay());
 
+        model.addAttribute("isEventOwner", accessControlService.isEventOwner(event, Authenticate.getUser()));
+        model.addAttribute("isPaymentManager", accessControlService.isPaymentManager(event, Authenticate.getUser()));
+
         return view("event-details");
     }
 
@@ -107,6 +110,7 @@ public abstract class AccountingController {
         model.addAttribute("debtIndex", debtsOrderedByDueDate.indexOf(debt) + 1);
         model.addAttribute("debt", debt);
         model.addAttribute("payments", paymentSummaries);
+        model.addAttribute("isEventOwner", accessControlService.isEventOwner(event, Authenticate.getUser()));
         return view("event-debt-details");
     }
 

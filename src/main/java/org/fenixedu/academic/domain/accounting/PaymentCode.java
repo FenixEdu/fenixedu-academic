@@ -24,11 +24,12 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.util.PaymentCodeGenerator;
-import org.fenixedu.academic.domain.accounting.util.PaymentCodeGeneratorFactory;
+import org.fenixedu.academic.domain.accounting.accountingTransactions.detail.SibsTransactionDetail;
+import org.fenixedu.academic.domain.accounting.paymentCodes.PaymentCodePool;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.Money;
+import org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDetailLine;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
@@ -74,7 +75,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
 
         checkParameters(paymentCodeType, startDate, endDate, minAmount, maxAmount, person);
 
-        super.setCode(getPaymentCodeGenerator(paymentCodeType).generateNewCodeFor(paymentCodeType, person));
+        super.setCode(PaymentCodePool.getInstance().generateNewCode());
 
         super.setType(paymentCodeType);
         super.setStartDate(startDate);
@@ -198,20 +199,34 @@ public abstract class PaymentCode extends PaymentCode_Base {
     }
 
     @Atomic
-    public void process(Person responsiblePerson, Money amount, DateTime whenRegistered, String sibsTransactionId, String comments) {
-
-        if (isProcessed()) {
-            return;
-        }
-
+    public final void process(Person responsiblePerson, SibsIncommingPaymentFileDetailLine sibsDetailLine) {
         if (isInvalid()) {
             throw new DomainException("error.accounting.PaymentCode.cannot.process.invalid.codes");
         }
 
-        internalProcess(responsiblePerson, amount, whenRegistered, sibsTransactionId, comments);
+        if (matches(sibsDetailLine)) {
+            throw new DomainException("error.accounting.PaymentCode.cannot.process.the.same.code");
+        }
+
+        internalProcess(responsiblePerson, sibsDetailLine);
         if (!getType().isReusable()) {
             setState(PaymentCodeState.PROCESSED);
         }
+    }
+
+
+    public boolean matches (SibsIncommingPaymentFileDetailLine sibsDetailLine) {
+        final Person person = getPerson();
+        if (person == null) {
+            return false;
+        }
+
+        return person.getEventsSet()
+                .stream()
+                .flatMap(event -> event.getAccountingTransactionsSet().stream().map(AccountingTransaction::getTransactionDetail))
+                .filter(SibsTransactionDetail.class::isInstance)
+                .map(SibsTransactionDetail.class::cast)
+                .anyMatch(sibsTransactionDetail -> sibsDetailLine.equals(sibsTransactionDetail.getSibsLine()));
     }
 
     public void delete() {
@@ -232,15 +247,10 @@ public abstract class PaymentCode extends PaymentCode_Base {
         return BundleUtil.getString(Bundle.ENUMERATION, getType().getQualifiedName());
     }
 
-    abstract protected void internalProcess(final Person person, final Money amount, final DateTime whenRegistered,
-            final String sibsTransactionId, final String comments);
+    protected abstract void internalProcess(final Person person, SibsIncommingPaymentFileDetailLine sibsDetailLine);
 
     public PaymentCodeMapping getOldPaymentCodeMapping(final ExecutionYear executionYear) {
         return getOldPaymentCodeMappingsSet().stream().filter(mapping -> mapping.has(executionYear)).findFirst().orElse(null);
-    }
-
-    protected static PaymentCodeGenerator getPaymentCodeGenerator(PaymentCodeType paymentCodeType) {
-        return PaymentCodeGeneratorFactory.getGenerator(paymentCodeType);
     }
 
     static public PaymentCode readByCode(final String code) {
@@ -250,11 +260,6 @@ public abstract class PaymentCode extends PaymentCode_Base {
         return Bennu.getInstance().getPaymentCodesSet().stream()
                 .filter(paymentCode -> paymentCode.getCode().equals(code))
                 .findFirst().orElse(null);
-    }
-
-    public static boolean canGenerateNewCode(Class<? extends PaymentCode> paymentCodeClass, PaymentCodeType paymentCodeType,
-            final Person person) {
-        return getPaymentCodeGenerator(paymentCodeType).canGenerateNewCode(paymentCodeType, person);
     }
 
     public boolean isInstallmentPaymentCode() {

@@ -65,58 +65,6 @@
 			<fr:property name="contextRelative(detail)" value="false"/>
 			<fr:property name="moduleRelative(detail)" value="false"/>
 
-			<%--<fr:property name="linkFormat(detail)" value="/paymentsManagement.do?method=showPaymentsForEvent&amp;eventId=${externalId}" />--%>
-			<%--<fr:property name="key(detail)" value="label.details" />--%>
-			<%--<fr:property name="bundle(detail)" value="APPLICATION_RESOURCES" />--%>
-			<%--<fr:property name="visibleIf(detail)" value="notCancelled" />--%>
-			<%--<fr:property name="order(detail)" value="0" />--%>
-			
-			<fr:property name="linkFormat(deposit)" value="/paymentsManagement.do?method=prepareDepositAmount&amp;eventId=${externalId}" />
-			<fr:property name="key(deposit)" value="label.deposit" />
-			<fr:property name="bundle(deposit)" value="APPLICATION_RESOURCES" />
-			<fr:property name="visibleIf(deposit)" value="depositSupported" />
-			<fr:property name="order(deposit)" value="2" />
-			
-			<%--<fr:property name="linkFormat(transferPaymentsAndCancel)" value="/paymentsManagement.do?method=prepareTransferPaymentsToOtherEventAndCancel&amp;eventId=${externalId}" />--%>
-			<%--<fr:property name="key(transferPaymentsAndCancel)" value="label.payments.transferPaymentsAndCancel" />--%>
-			<%--<fr:property name="bundle(transferPaymentsAndCancel)" value="ACADEMIC_OFFICE_RESOURCES" />--%>
-			<%--<fr:property name="visibleIf(transferPaymentsAndCancel)" value="notCancelled" />--%>
-			<%--<fr:property name="order(transferPaymentsAndCancel)" value="2" />--%>
-			
-			<%--<fr:property name="linkFormat(open)" value="/paymentsManagement.do?method=openEvent&amp;eventId=${externalId}" />--%>
-			<%--<fr:property name="key(open)" value="label.open" />--%>
-			<%--<fr:property name="bundle(open)" value="APPLICATION_RESOURCES" />--%>
-			<%--<fr:property name="order(open)" value="3" />--%>
-			<%--<fr:property name="visibleIfNot(open)" value="open" />--%>
-			<%--<fr:property name="confirmationKey(open)" value="label.payments.events.confirmOpen" />--%>
-			<%--<fr:property name="confirmationBundle(open)" value="ACADEMIC_OFFICE_RESOURCES"></fr:property>--%>
-			
-			<%--<fr:property name="linkFormat(changePaymentPlan)" value="/paymentsManagement.do?method=prepareChangePaymentPlan&amp;eventId=${externalId}" />--%>
-			<%--<fr:property name="key(changePaymentPlan)" value="label.change.paymentPlan" />--%>
-			<%--<fr:property name="bundle(changePaymentPlan)" value="APPLICATION_RESOURCES" />--%>
-			<%--<fr:property name="order(changePaymentPlan)" value="4" />--%>
-			<%--<fr:property name="visibleIf(changePaymentPlan)" value="paymentPlanChangeAllowed" />--%>
-
-			<fr:property name="linkFormat(cancel)" value="/paymentsManagement.do?method=prepareCancelEvent&amp;eventId=${externalId}" />
-			<fr:property name="key(cancel)" value="label.cancel" />
-			<fr:property name="bundle(cancel)" value="APPLICATION_RESOURCES" />
-			<fr:property name="order(cancel)" value="3" />
-			<fr:property name="visibleIfNot(cancel)" value="cancelled" />
-
-			<%--<fr:property name="linkFormat(transfer)" value="/paymentsManagement.do?method=prepareTransferDebt&amp;eventId=${externalId}" />--%>
-			<%--<fr:property name="key(transfer)" value="label.transfer.debt" />--%>
-			<%--<fr:property name="bundle(transfer)" value="ACADEMIC_OFFICE_RESOURCES" />--%>
-			<%--<fr:property name="order(transfer)" value="3" />--%>
-			<%--<fr:property name="visibleIf(transfer)" value="transferable" />--%>
-
-			<fr:property name="linkFormat(summary)" value="<%= request.getContextPath() + "/accounting-management/${externalId}/summary" %>" />
-			<fr:property name="key(summary)" value="label.accounting.event.summary" />
-			<fr:property name="bundle(summary)" value="APPLICATION_RESOURCES" />
-			<fr:property name="visibleIf(summary)" value="notCancelled" />
-			<fr:property name="order(summary)" value="4" />
-			<fr:property name="contextRelative(summary)" value="false"/>
-			<fr:property name="moduleRelative(summary)" value="false"/>
-
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
@@ -130,10 +78,3 @@
 		<bean:message key="label.back" bundle="APPLICATION_RESOURCES" />
 	</html:cancel>
 </fr:form>
-
-<bean:define id="personId" name="person" property="externalId" />
-<p>
-	<html:link action="/paymentsManagement.do?method=prepareViewEventsToCancel" paramId="personId" paramName="personId">
-		<bean:message key="link.view.events.for.cancellation" bundle="MANAGER_RESOURCES" />
-	</html:link>
-</p>

@@ -37,15 +37,15 @@ public class DebtInterestCalculator {
     private CalculatorSerializer jsonSerializer;
     private boolean isToApplyInterest;
 
-    private DebtInterestCalculator(DateTime when, List<Debt> debts, List<Payment> payments, List<DebtExemption> exemptions,
-                                   List<InterestExemption> interestExemptions,
-                                   Map<LocalDate, BigDecimal> dueDateAmountFineMap, boolean isToApplyInterest) {
+    private DebtInterestCalculator(DateTime when, List<Debt> debts, List<Payment> payments, List<DebtExemption> exemptions, List<InterestExemption> interestExemptions,
+            List<FineExemption> fineExemptions, Map<LocalDate, BigDecimal> dueDateAmountFineMap, boolean isToApplyInterest) {
 
         this.jsonSerializer = new CalculatorSerializer();
         this.debts.addAll(debts);
         this.creditEntries.addAll(payments);
         this.creditEntries.addAll(exemptions);
         this.creditEntries.addAll(interestExemptions);
+        this.creditEntries.addAll(fineExemptions);
         this.isToApplyInterest = isToApplyInterest;
         this.dueDateAmountFineMap.putAll(dueDateAmountFineMap);
         this.creditEntries.add(new PaymentPlaceholder(when));
@@ -64,7 +64,8 @@ public class DebtInterestCalculator {
         private List<Payment> payments = new ArrayList<>();
         private List<DebtExemption> debtExemptions = new ArrayList<>();
         private List<InterestExemption> interestExemptions = new ArrayList<>();
-        private Map<LocalDate, BigDecimal> fineTable = new HashMap<>();
+        private List<FineExemption> fineExemptions = new ArrayList<>();
+        private Map<LocalDate, BigDecimal> fineMap = new HashMap<>();
         private DateTime when;
         private boolean toApplyInterest = true;
 
@@ -87,7 +88,7 @@ public class DebtInterestCalculator {
         }
 
         public Builder fine(LocalDate dueDate, BigDecimal amount) {
-            fineTable.put(dueDate, amount);
+            fineMap.put(dueDate, amount);
             return this;
         }
 
@@ -101,13 +102,18 @@ public class DebtInterestCalculator {
             return this;
         }
 
+        public Builder fineExemption(String id, DateTime created, LocalDate paymentDate, String description, BigDecimal amount) {
+            fineExemptions.add(new FineExemption(id, created, paymentDate, description, amount));
+            return this;
+        }
+
         public Builder setToApplyInterest(boolean isToApplyInterest) {
             this.toApplyInterest = isToApplyInterest;
             return this;
         }
 
         public DebtInterestCalculator build() {
-            return new DebtInterestCalculator(when, debts, payments, debtExemptions, interestExemptions, fineTable, toApplyInterest);
+            return new DebtInterestCalculator(when, debts, payments, debtExemptions, interestExemptions, fineExemptions, fineMap, toApplyInterest);
         }
     }
 
@@ -293,15 +299,16 @@ public class DebtInterestCalculator {
                         }
                     }
                 }
+
+                for (Debt debt : getDebtsOrderedByOpenFine()) {
+                    debt.depositFine(creditEntry);
+                }
             }
 
             for (Debt debt : getDebtsOrderedByDueDate()) {
                 debt.deposit(creditEntry);
             }
 
-            for (Debt debt : getDebtsOrderedByOpenFine()) {
-                debt.depositFine(creditEntry);
-            }
         }
     }
 

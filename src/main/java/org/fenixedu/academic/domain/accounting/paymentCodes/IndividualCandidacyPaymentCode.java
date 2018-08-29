@@ -18,102 +18,12 @@
  */
 package org.fenixedu.academic.domain.accounting.paymentCodes;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.Event;
-import org.fenixedu.academic.domain.accounting.PaymentCode;
-import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.Money;
-import org.fenixedu.bennu.core.domain.Bennu;
-import org.joda.time.LocalDate;
-import org.joda.time.YearMonthDay;
-
-import pt.ist.fenixframework.Atomic;
 
 @Deprecated
 public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCode_Base {
-
-    protected IndividualCandidacyPaymentCode(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
-            final YearMonthDay endDate, final Money minAmount, final Money maxAmount) {
-        super();
-        init(paymentCodeType, startDate, endDate, minAmount, maxAmount);
-    }
-
-    public static IndividualCandidacyPaymentCode create(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
-            final YearMonthDay endDate, final Money minAmount, final Money maxAmount) {
-        return PaymentCode.canGenerateNewCode(IndividualCandidacyPaymentCode.class, paymentCodeType, null) ?
-                new IndividualCandidacyPaymentCode(paymentCodeType, startDate, endDate, minAmount, maxAmount) :
-                findAndReuseExistingCode(paymentCodeType, startDate, endDate, minAmount, maxAmount);
-
-    }
-
-    public static IndividualCandidacyPaymentCode getAvailablePaymentCodeAndUse(final PaymentCodeType paymentCodeType,
-            final YearMonthDay date, Event event, Person person) {
-        Set<PaymentCode> individualCandidacyPaymentCodes = Bennu.getInstance().getPaymentCodesSet();
-
-        for (PaymentCode paymentCode : individualCandidacyPaymentCodes) {
-
-            if (!(paymentCode instanceof IndividualCandidacyPaymentCode)) {
-                continue;
-            }
-
-            IndividualCandidacyPaymentCode individualCandidacyPaymentCode = (IndividualCandidacyPaymentCode) paymentCode;
-
-            if (individualCandidacyPaymentCode.isAvailable(paymentCodeType, date)) {
-                individualCandidacyPaymentCode.use(event, person);
-
-                return individualCandidacyPaymentCode;
-            }
-        }
-
-        return null;
-    }
-
-    public static List<IndividualCandidacyPaymentCode> getAvailablePaymentCodes(final PaymentCodeType paymentCodeType,
-            final YearMonthDay date) {
-
-        Set<PaymentCode> individualCandidacyPaymentCodes = Bennu.getInstance().getPaymentCodesSet();
-
-        return individualCandidacyPaymentCodes.stream()
-                .filter(paymentCode -> paymentCode instanceof IndividualCandidacyPaymentCode)
-                .map(paymentCode -> (IndividualCandidacyPaymentCode) paymentCode)
-                .filter(individualCandidacyPaymentCode -> individualCandidacyPaymentCode.isAvailable(paymentCodeType, date))
-                .collect(Collectors.toList());
-    }
-
-    protected void init(final PaymentCodeType paymentCodeType, YearMonthDay startDate, YearMonthDay endDate, Money minAmount,
-            Money maxAmount) {
-        super.init(paymentCodeType, startDate, endDate, minAmount, maxAmount, null);
-    }
-
-    protected Boolean isAvailable(final PaymentCodeType paymentCodeType, final YearMonthDay date) {
-        return this.getType().equals(paymentCodeType) && !this.getStartDate().isAfter(date) && !this.getEndDate().isBefore(date)
-                && this.getPerson() == null;
-    }
-
-    protected static IndividualCandidacyPaymentCode findAndReuseExistingCode(final PaymentCodeType paymentCodeType,
-            final YearMonthDay startDate, final YearMonthDay endDate, final Money minAmount, final Money maxAmount) {
-
-        IndividualCandidacyPaymentCode paymentCode = getAvailablePaymentCodeForReuse();
-        paymentCode.reuse(startDate, endDate, minAmount, maxAmount, null);
-        paymentCode.setType(paymentCodeType);
-        paymentCode.setPerson(null);
-
-        return paymentCode;
-    }
-
-    protected static IndividualCandidacyPaymentCode getAvailablePaymentCodeForReuse() {
-        return (IndividualCandidacyPaymentCode) Bennu.getInstance().getPaymentCodesSet().stream()
-                .filter((IndividualCandidacyPaymentCode.class)::isInstance)
-                .filter(PaymentCode::isAvailableForReuse)
-                .min(PaymentCode.COMPARATOR_BY_END_DATE)
-                .orElse(null);
-    }
 
     @Override
     protected void checkParameters(Event event, final Person person) {
@@ -124,22 +34,6 @@ public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCo
         if (person == null) {
             throw new DomainException("error.accounting.paymentCodes.IndividualCandidacyPaymentCode.person.cannot.be.null");
         }
-    }
-
-    protected void use(Event event, Person person) {
-        checkParameters(event, person);
-
-        this.setPerson(person);
-        this.setAccountingEvent(event);
-    }
-
-    @Atomic
-    public static List<IndividualCandidacyPaymentCode> createPaymentCodes(PaymentCodeType type, LocalDate beginDate,
-            LocalDate endDate, Money minimum, Money maximum, Integer numberOfPaymentCodes) {
-        return IntStream.range(0, numberOfPaymentCodes)
-                .mapToObj(i -> create(type, beginDate.toDateTimeAtStartOfDay().toYearMonthDay(),
-                        endDate.toDateTimeAtStartOfDay().toYearMonthDay(), minimum, maximum))
-                .collect(Collectors.toList());
     }
 
 }

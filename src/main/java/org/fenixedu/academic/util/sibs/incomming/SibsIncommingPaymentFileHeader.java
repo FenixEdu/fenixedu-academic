@@ -27,20 +27,23 @@ public class SibsIncommingPaymentFileHeader {
 
     private static final String DATE_FORMAT = "yyyyMMdd";
 
-    private static final int[] FIELD_SIZES = new int[] { 1, 4, 8, 8, 9, 9, 5, 3, 2, 4, 47 };
+    private static final int[] FIELD_SIZES = { 1, 4, 8, 8, 9, 9, 5, 3, 2, 4, 47 };
+
+    private String rawHeader;
 
     private YearMonthDay whenProcessedBySibs;
 
     private Integer version;
 
-    private SibsIncommingPaymentFileHeader(YearMonthDay whenProcessedBySibs, Integer version) {
+    private SibsIncommingPaymentFileHeader(String rawHeader, YearMonthDay whenProcessedBySibs, Integer version) {
         this.whenProcessedBySibs = whenProcessedBySibs;
         this.version = version;
+        this.rawHeader = rawHeader;
     }
 
     public static SibsIncommingPaymentFileHeader buildFrom(String rawLine) {
         final String[] fields = splitLine(rawLine);
-        return new SibsIncommingPaymentFileHeader(getWhenProcessedBySibsFrom(fields), getVersionFrom(fields));
+        return new SibsIncommingPaymentFileHeader(rawLine, getWhenProcessedBySibsFrom(fields), getVersionFrom(fields));
     }
 
     private static YearMonthDay getWhenProcessedBySibsFrom(String[] fields) {
@@ -73,4 +76,7 @@ public class SibsIncommingPaymentFileHeader {
         return version;
     }
 
+    public String getRawHeader() {
+        return rawHeader;
+    }
 }

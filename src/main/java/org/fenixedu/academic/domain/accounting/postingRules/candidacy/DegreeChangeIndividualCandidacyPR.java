@@ -112,22 +112,13 @@ public class DegreeChangeIndividualCandidacyPR extends DegreeChangeIndividualCan
         }
 
         final List<Registration> registrations = event.getCandidacyStudent().getRegistrationsFor(event.getCandidacyDegree());
-        for (final Registration registration : event.getCandidacyStudent().getRegistrationsSet()) {
-            if (!registrations.contains(registration) && !registration.isCanceled()) {
-                return true;
-            }
-        }
 
-        return false;
+        return event.getCandidacyStudent().getRegistrationsSet().stream()
+                .anyMatch(registration -> !registrations.contains(registration) && !registration.isCanceled());
     }
 
     private boolean belongsToInstitutionGroup(final Unit unit) {
-        for (final Unit parent : getRootDomainObject().getInstitutionUnit().getParentUnits()) {
-            if (parent.hasSubUnit(unit)) {
-                return true;
-            }
-        }
-        return false;
+        return getRootDomainObject().getInstitutionUnit().getParentUnits().stream().anyMatch(parent -> parent.hasSubUnit(unit));
     }
 
     public DegreeChangeIndividualCandidacyPR edit(final Money amountForInstitutionStudent, final Money amountForExternalStudent) {
