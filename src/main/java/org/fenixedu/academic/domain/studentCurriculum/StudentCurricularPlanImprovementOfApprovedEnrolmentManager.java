@@ -28,6 +28,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.accounting.EnrolmentBlocker;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.ImprovementOfApprovedEnrolment;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.EnrolmentResultType;
@@ -48,7 +50,7 @@ public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends 
             throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
         }
 
-        if (getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt()) {
+        if (EnrolmentBlocker.enrolmentBlocker.isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt(getStudentCurricularPlan(), ExecutionYear.readCurrentExecutionYear())) {
             throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
         }
 

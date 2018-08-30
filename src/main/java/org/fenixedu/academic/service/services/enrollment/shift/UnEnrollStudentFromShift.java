@@ -39,7 +39,7 @@ public class UnEnrollStudentFromShift {
         if (registration == null) {
             throw new StudentNotFoundServiceException();
         }
-        if (registration.getPayedTuition() == null || registration.getPayedTuition().equals(Boolean.FALSE)) {
+        if (!Boolean.TRUE.equals(registration.getPayedTuition())) {
             throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
         }
 
