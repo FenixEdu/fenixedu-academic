@@ -1,4 +1,4 @@
-<%--
+<%@ page import="org.fenixedu.academic.util.StudentPersonalDataAuthorizationChoice" %><%--
 
     Copyright © 2002 Instituto Superior Técnico
 
@@ -24,6 +24,16 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
+<style>
+    .infoop p {
+        margin-top: 0;
+    }
+
+    .job-platform-info {
+        margin-top: 20px;
+    }
+</style>
+
 <em><bean:message key="title.student.portalTitle" bundle="STUDENT_RESOURCES" /></em>
 <h2><bean:message key="label.enrollment.personalData.inquiry" /></h2>
 
@@ -37,8 +47,9 @@
 
     <fr:edit name="student" schema="Student.editPersonalDataAuthorization">
         <fr:schema type="org.fenixedu.academic.domain.student.Student" bundle="APPLICATION_RESOURCES">
-            <fr:slot name="personalDataAuthorization" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
-                <fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.student.PersonalDataAuthorizationProvider" />
+            <fr:slot name="personalDataAuthorization" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="radio">
+                <fr:property name="defaultOptionHidden" value="true" />
+                <fr:property name="includedValues" value="<%= StudentPersonalDataAuthorizationChoice.activeValues() %>" />
             </fr:slot>
         </fr:schema>
         <fr:layout name="tabular">
@@ -49,7 +60,11 @@
 
 
     <div class="infoop">
-        <bean:message key="label.data.authorization.information.enrolment" bundle="STUDENT_RESOURCES" />
+        <bean:message key="label.data.authorization.information" bundle="STUDENT_RESOURCES" />
+    </div>
+
+    <div class="infoop job-platform-info">
+        <bean:message key="label.data.authorization.information.job_platform_info" bundle="STUDENT_RESOURCES" />
     </div>
 
     <p>
