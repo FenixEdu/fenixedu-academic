@@ -179,12 +179,16 @@ public class EmailAddress extends EmailAddress_Base {
         return null;
     }
 
-    public static Stream<EmailAddress> findAllActiveAndValid(final String emailAddressString) {
+    public static Stream<EmailAddress> findAll(final String emailAddressString) {
         return ContactRoot.getInstance().getPartyContactsSet().stream()
-                .filter(partyContact -> partyContact.isEmailAddress())
+                .filter(PartyContact::isEmailAddress)
                 .map(partyContact -> (EmailAddress) partyContact)
-                .filter(emailAddress -> emailAddress.hasValue(emailAddressString))
-                .filter(emailAddress -> emailAddress.isActiveAndValid());
+                .filter(emailAddress -> emailAddress.hasValue(emailAddressString));
+    }
+
+    public static Stream<EmailAddress> findAllActiveAndValid(final String emailAddressString) {
+        return findAll(emailAddressString)
+                .filter(PartyContact::isActiveAndValid);
     }
 
     private void updateProfileEmail() {
