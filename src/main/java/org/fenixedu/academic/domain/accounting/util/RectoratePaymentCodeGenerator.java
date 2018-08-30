@@ -22,12 +22,14 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 import org.fenixedu.academic.domain.accounting.paymentCodes.rectorate.RectoratePaymentCode;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,18 +37,15 @@ public class RectoratePaymentCodeGenerator extends PaymentCodeGenerator {
 
     private static final Logger logger = LoggerFactory.getLogger(RectoratePaymentCodeGenerator.class);
 
-    public static Comparator<PaymentCode> COMPARATOR_BY_PAYMENT_SEQUENTIAL_DIGITS = new Comparator<PaymentCode>() {
-        @Override
-        public int compare(PaymentCode leftPaymentCode, PaymentCode rightPaymentCode) {
-            final String leftSequentialNumber = getSequentialNumber(leftPaymentCode);
-            final String rightSequentialNumber = getSequentialNumber(rightPaymentCode);
+    public static Comparator<PaymentCode> COMPARATOR_BY_PAYMENT_SEQUENTIAL_DIGITS = (leftPaymentCode, rightPaymentCode) -> {
+        final String leftSequentialNumber = getSequentialNumber(leftPaymentCode);
+        final String rightSequentialNumber = getSequentialNumber(rightPaymentCode);
 
-            int comparationResult = leftSequentialNumber.compareTo(rightSequentialNumber);
+        int comparationResult = leftSequentialNumber.compareTo(rightSequentialNumber);
 
-            logger.info("left [{}], right [{}], result [{}]", leftSequentialNumber, rightSequentialNumber, comparationResult);
+        logger.info("left [{}], right [{}], result [{}]", leftSequentialNumber, rightSequentialNumber, comparationResult);
 
-            return (comparationResult == 0) ? leftPaymentCode.getExternalId().compareTo(rightPaymentCode.getExternalId()) : comparationResult;
-        }
+        return (comparationResult == 0) ? leftPaymentCode.getExternalId().compareTo(rightPaymentCode.getExternalId()) : comparationResult;
     };
 
     private static final String CODE_FILLER = "0";
@@ -56,7 +55,7 @@ public class RectoratePaymentCodeGenerator extends PaymentCodeGenerator {
     @Override
     public boolean canGenerateNewCode(PaymentCodeType paymentCodeType, Person person) {
         final PaymentCode lastPaymentCode = findLastPaymentCode();
-        return lastPaymentCode == null ? true : Integer.valueOf(getSequentialNumber(lastPaymentCode)) < 999999;
+        return lastPaymentCode == null || Integer.valueOf(getSequentialNumber(lastPaymentCode)) < 999999;
     }
 
     private PaymentCode findLastPaymentCode() {
@@ -87,9 +86,7 @@ public class RectoratePaymentCodeGenerator extends PaymentCodeGenerator {
     }
 
     private static String getSequentialNumber(PaymentCode paymentCode) {
-        String sequentialNumber = paymentCode.getCode().substring(1, paymentCode.getCode().length() - NUM_CONTROL_DIGITS);
-
-        return sequentialNumber;
+        return paymentCode.getCode().substring(1, paymentCode.getCode().length() - NUM_CONTROL_DIGITS);
     }
 
 }

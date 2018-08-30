@@ -51,13 +51,14 @@ public abstract class PaymentCode extends PaymentCode_Base {
         }
     };
 
-    public static Comparator<PaymentCode> COMPARATOR_BY_END_DATE = new Comparator<PaymentCode>() {
-        @Override
-        public int compare(PaymentCode leftPaymentCode, PaymentCode rightPaymentCode) {
-            int comparationResult = leftPaymentCode.getEndDate().compareTo(rightPaymentCode.getEndDate());
-            return (comparationResult == 0) ? leftPaymentCode.getExternalId().compareTo(rightPaymentCode.getExternalId()) : comparationResult;
-        }
+    public static Comparator<PaymentCode> COMPARATOR_BY_END_DATE = (leftPaymentCode, rightPaymentCode) -> {
+        int comparationResult = leftPaymentCode.getEndDate().compareTo(rightPaymentCode.getEndDate());
+        return (comparationResult == 0) ? leftPaymentCode.getExternalId().compareTo(rightPaymentCode.getExternalId()) : comparationResult;
     };
+
+    @Override public PaymentCodeType getType() {
+        return super.getType();
+    }
 
     protected PaymentCode() {
         super();
@@ -130,16 +131,6 @@ public abstract class PaymentCode extends PaymentCode_Base {
     @Override
     public void setCode(String code) {
         throw new DomainException("error.accounting.PaymentCode.cannot.modify.code");
-    }
-
-    @Override
-    public void setStartDate(YearMonthDay startDate) {
-        throw new DomainException("error.org.fenixedu.academic.domain.accounting.PaymentCode.cannot.modify.startDate");
-    }
-
-    @Override
-    public void setEndDate(YearMonthDay endDate) {
-        throw new DomainException("error.org.fenixedu.academic.domain.accounting.PaymentCode.cannot.modify.endDate");
     }
 
     @Override
@@ -245,12 +236,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
             final String sibsTransactionId, final String comments);
 
     public PaymentCodeMapping getOldPaymentCodeMapping(final ExecutionYear executionYear) {
-        for (final PaymentCodeMapping mapping : getOldPaymentCodeMappingsSet()) {
-            if (mapping.has(executionYear)) {
-                return mapping;
-            }
-        }
-        return null;
+        return getOldPaymentCodeMappingsSet().stream().filter(mapping -> mapping.has(executionYear)).findFirst().orElse(null);
     }
 
     protected static PaymentCodeGenerator getPaymentCodeGenerator(PaymentCodeType paymentCodeType) {
@@ -261,12 +247,9 @@ public abstract class PaymentCode extends PaymentCode_Base {
         if (StringUtils.isEmpty(code)) {
             return null;
         }
-        for (final PaymentCode paymentCode : Bennu.getInstance().getPaymentCodesSet()) {
-            if (paymentCode.getCode().equals(code)) {
-                return paymentCode;
-            }
-        }
-        return null;
+        return Bennu.getInstance().getPaymentCodesSet().stream()
+                .filter(paymentCode -> paymentCode.getCode().equals(code))
+                .findFirst().orElse(null);
     }
 
     public static boolean canGenerateNewCode(Class<? extends PaymentCode> paymentCodeClass, PaymentCodeType paymentCodeType,

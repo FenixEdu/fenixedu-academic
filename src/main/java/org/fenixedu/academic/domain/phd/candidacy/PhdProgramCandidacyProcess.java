@@ -200,15 +200,8 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     public static boolean hasOnlineApplicationForPeriod(final Person person, PhdCandidacyPeriod phdCandidacyPeriod) {
-        Collection<PhdIndividualProgramProcess> phdIndividualProgramProcesses = person.getPhdIndividualProgramProcessesSet();
-
-        for (PhdIndividualProgramProcess phdIndividualProgramProcess : phdIndividualProgramProcesses) {
-            if (phdCandidacyPeriod == phdIndividualProgramProcess.getCandidacyProcess().getPublicPhdCandidacyPeriod()) {
-                return true;
-            }
-        }
-
-        return false;
+        return person.getPhdIndividualProgramProcessesSet().stream()
+                .anyMatch(programProcess -> phdCandidacyPeriod == programProcess.getCandidacyProcess().getPublicPhdCandidacyPeriod());
     }
 
     public boolean isPublicCandidacy() {
@@ -576,15 +569,9 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     public PhdCandidacyReferee getCandidacyRefereeByEmail(final String email) {
-        Collection<PhdCandidacyReferee> candidacyReferees = getCandidacyRefereesSet();
-
-        for (PhdCandidacyReferee phdCandidacyReferee : candidacyReferees) {
-            if (phdCandidacyReferee.getEmail().trim().equals(email.trim())) {
-                return phdCandidacyReferee;
-            }
-        }
-
-        return null;
+        return getCandidacyRefereesSet().stream()
+                .filter(phdCandidacyReferee -> phdCandidacyReferee.getEmail().trim().equals(email.trim()))
+                .findFirst().orElse(null);
     }
 
     @Override

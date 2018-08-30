@@ -84,7 +84,7 @@ import pt.ist.fenixframework.FenixFramework;
         @Forward(name = "showPaymentCodesForEvent", path = "/academicAdminOffice/payments/showPaymentCodesForEvent.jsp") })
 public class PaymentsManagementDispatchAction extends FenixDispatchAction {
 
-    protected PaymentsManagementDTO searchNotPayedEventsForPerson(HttpServletRequest request, Person person) {
+    protected PaymentsManagementDTO searchNotPayedEventsForPerson(Person person) {
 
         final PaymentsManagementDTO paymentsManagementDTO = new PaymentsManagementDTO(person);
         for (final Event event : person.getNotPayedEvents()) {
@@ -98,7 +98,7 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) {
 
         try {
-            request.setAttribute("paymentsManagementDTO", searchNotPayedEventsForPerson(request, getPerson(request)));
+            request.setAttribute("paymentsManagementDTO", searchNotPayedEventsForPerson(getPerson(request)));
 
         } catch (DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
@@ -187,13 +187,34 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
 
         request.setAttribute("paymentsManagementDTO", paymentsManagementDTO);
 
-        if (paymentsManagementDTO.getSelectedEntries().isEmpty()) {
+        final List<EntryDTO> selectedEntries = paymentsManagementDTO.getSelectedEntries();
+
+        if (selectedEntries.isEmpty()) {
             addActionMessage("context", request, "error.payments.payment.entries.selection.is.required");
             return mapping.findForward("showEvents");
-
-        } else {
-            return mapping.findForward("preparePayment");
         }
+
+        final List<EntryDTO> eventPenaltyEntries = getEventPenaltyEntries(searchNotPayedEventsForPerson(getPerson(request))
+                .getEntryDTOs());
+        final List<EntryDTO> selectedEventPenaltyEntries = getEventPenaltyEntries(selectedEntries);
+
+        final Set<Event> missingPenaltyEntriesEvents = selectedEntries.stream().map(EntryDTO::getEvent).distinct()
+                .flatMap(e -> eventPenaltyEntries.stream().filter(pe -> pe.getEvent() == e))
+                .filter(pe -> !selectedEventPenaltyEntries.contains(pe)).map(EntryDTO::getEvent).collect(Collectors.toSet());
+
+        if (!missingPenaltyEntriesEvents.isEmpty()) {
+            missingPenaltyEntriesEvents.forEach(e -> {
+                addActionMessage("context", request, "error.payments.payment.penalty.entries.selection.is.required",e
+                        .getDescription().toString());
+            });
+            return mapping.findForward("showEvents");
+        }
+
+        return mapping.findForward("preparePayment");
+    }
+
+    private List<EntryDTO> getEventPenaltyEntries(List<EntryDTO> entries) {
+        return entries.stream().filter(EntryDTO::isForPenalty).collect(Collectors.toList());
     }
 
     public ActionForward preparePaymentUsingContributorPartyPostback(ActionMapping mapping, ActionForm form,
@@ -354,13 +375,9 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
     }
 
     private Collection<Event> searchOpenEventsWithPaymentCodes(HttpServletRequest request, final Person person) {
-        final Collection<Event> events = new HashSet<Event>();
-        for (final Event event : person.getNotPayedEvents()) {
-            if (event.isOpen() && event.hasNonProcessedPaymentCodes()) {
-                events.add(event);
-            }
-        }
-        return events;
+        return person.getNotPayedEvents().stream()
+                .filter(event -> event.isOpen() && event.hasNonProcessedPaymentCodes())
+                .collect(Collectors.toSet());
     }
 
 }

@@ -114,10 +114,9 @@ public abstract class CreditEntry extends AccountingEntry implements Cloneable {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "{" + "date=" + getDate() + ", amount=" + getAmount() + ", partialPayments=" +
-                partialPayments + ", unusedAmount=" + getUnusedAmount() + ", usedAmount=" +
-                   getUsedAmount()
-                   + ", usedAmountInDebts=" + getUsedAmountInDebts() + ", usedAmountInInterests=" + getUsedAmountInInterests() + '}';
+        return String.format("%s{date=%s, amount=%s, partialPayments=%s, unusedAmount=%s, usedAmount=%s, usedAmountInDebts=%s, usedAmountInInterests=%s, usedAmountInFines=%s}",
+                        getClass().getSimpleName(), getDate(), getAmount(), partialPayments, getUnusedAmount(), getUsedAmount(),
+                        getUsedAmountInDebts(), getUsedAmountInInterests(), getUsedAmountInFines());
     }
 
 }

@@ -23,7 +23,9 @@ import static org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPl
 
 import org.fenixedu.academic.domain.EnrolmentPeriod;
 import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.accounting.EnrolmentBlocker;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
@@ -110,7 +112,7 @@ public class StudentCurricularPlanEnrolmentPreConditions {
      */
     static EnrolmentPreConditionResult checkDebts(StudentCurricularPlan scp) {
 
-        if (scp.getRegistration().getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt()) {
+        if (EnrolmentBlocker.enrolmentBlocker.isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt(scp, ExecutionYear.readCurrentExecutionYear())) {
             return createFalse("error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
         }
 

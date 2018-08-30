@@ -1,16 +1,9 @@
 package org.fenixedu.academic.ui.spring.controller;
 
-import java.io.IOException;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.Discount;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.Exemption;
-import org.fenixedu.academic.domain.accounting.calculator.CreditEntry;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.accounting.AnnulAccountingTransactionBean;
@@ -31,9 +24,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixframework.DomainObject;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 
 /**
@@ -60,6 +57,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
     public String summary(@PathVariable Event event, Model model) {
         accessControlService.checkPaymentManager(event, Authenticate.getUser());
         final DebtInterestCalculator debtInterestCalculator = event.getDebtInterestCalculator(new DateTime());
+        model.addAttribute("entrypointUrl", entrypointUrl());
         model.addAttribute("eventUsername", event.getPerson().getUsername());
         model.addAttribute("creditEntries", debtInterestCalculator.getCreditEntries());
         model.addAttribute("debtCalculator", debtInterestCalculator);
@@ -105,7 +103,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
             throw new UnsupportedOperationException(String.format("Can't delete unknown transaction %s%n", transaction.getClass
                     ().getSimpleName()));
         }
-        return summary(event, model);
+        return redirectToSummary(event);
     }
 
     @RequestMapping(value = "{event}/deleteTransaction", method = RequestMethod.POST)
@@ -118,7 +116,10 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
         catch (DomainException e){
             model.addAttribute("error", e.getLocalizedMessage());
         }
-        return summary(event, model);
+        return redirectToSummary(event);
     }
 
+    private String redirectToSummary(@PathVariable Event event) {
+        return String.format("redirect:/%s/%s/summary", REQUEST_MAPPING, event.getExternalId());
+    }
 }

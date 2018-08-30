@@ -20,59 +20,16 @@ package org.fenixedu.academic.domain.accounting.paymentCodes;
 
 import org.fenixedu.academic.domain.GratuitySituation;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.PaymentCode;
-import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.transactions.PaymentType;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
-import org.joda.time.YearMonthDay;
 
+@Deprecated
 public class GratuitySituationPaymentCode extends GratuitySituationPaymentCode_Base {
 
     protected GratuitySituationPaymentCode() {
         super();
-    }
-
-    private GratuitySituationPaymentCode(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
-            final YearMonthDay endDate, final Money minAmount, final Money maxAmount, final Student student,
-            final GratuitySituation gratuitySituation) {
-        this();
-        init(paymentCodeType, startDate, endDate, minAmount, maxAmount, student, gratuitySituation);
-    }
-
-    private void init(PaymentCodeType paymentCodeType, YearMonthDay startDate, YearMonthDay endDate, Money minAmount,
-            Money maxAmount, Student student, GratuitySituation gratuitySituation) {
-
-        super.init(paymentCodeType, startDate, endDate, minAmount, maxAmount, student.getPerson());
-
-        checkParameters(gratuitySituation, student);
-        super.setGratuitySituation(gratuitySituation);
-
-    }
-
-    private void checkParameters(GratuitySituation gratuitySituation, final Student student) {
-        if (gratuitySituation == null) {
-            throw new DomainException(
-                    "error.accounting.paymentCodes.GratuitySituationPaymentCode.gratuitySituation.cannot.be.null");
-        }
-
-        if (student == null) {
-            throw new DomainException("error.accounting.paymentCodes.GratuitySituationPaymentCode.student.cannot.be.null");
-        }
-    }
-
-    public static GratuitySituationPaymentCode create(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
-            final YearMonthDay endDate, final Money minAmount, final Money maxAmount, final Student student,
-            final GratuitySituation gratuitySituation) {
-
-        if (PaymentCode.canGenerateNewCode(GratuitySituationPaymentCode.class, paymentCodeType, student.getPerson())) {
-            return new GratuitySituationPaymentCode(paymentCodeType, startDate, endDate, minAmount, maxAmount, student,
-                    gratuitySituation);
-        }
-
-        throw new DomainException("error.accounting.paymentCodes.MasterDegreeInsurancePaymentCode.could.not.generate.new.code");
     }
 
     @Override

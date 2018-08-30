@@ -178,13 +178,14 @@
                         <spring:param name="event" value="${eventId}"/>
                         <spring:param name="payment" value="${payment.id}"/>
                     </spring:url>
+                    <c:set var="usedAmountInInterestsOrFines" value="#{payment.usedAmountInInterests + payment.usedAmountInFines}"/>
                     <tr>
-                        <td><time datetime="${payment.created.toString("yyyy-MM-dd")}">${payment.created.toString("dd/MM/yyyy")}</time></td>
+                        <td><time datetime="${payment.created.toString("yyyy-MM-dd hh:mm:ss")}">${payment.created.toString("dd/MM/yyyy hh:mm:ss")}</time></td>
                         <td><time datetime="${payment.date.toString("yyyy-MM-dd")}">${payment.date.toString("dd/MM/yyyy")}</time></td>
                         <td><c:out value="${payment.typeDescription.content}"/></td>
                         <td><c:out value="${payment.amount}"/><span>€</span></td>
                         <td><c:out value="${payment.usedAmountInDebts}"/><span>€</span></td>
-                        <td><c:out value="${payment.usedAmountInInterests}"/><span>€</span></td>
+                        <td><c:out value="${usedAmountInInterestsOrFines}"/><span>€</span></td>
                         <td style="text-align: right;"><a href="${paymentUrl}">Ver Pagamento</a></td>
                     </tr>
                 </c:forEach>

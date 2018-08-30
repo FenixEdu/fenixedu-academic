@@ -62,43 +62,39 @@ public class EctsLabelDegreeReportFile extends EctsLabelDegreeReportFile_Base {
     }
 
     private void createEctsLabelDegreesHeader(final Spreadsheet spreadsheet) {
-        spreadsheet.setHeaders(new String[] {
+        spreadsheet.setHeaders("Nome",
 
-        "Nome",
+                "Nome Inglês",
 
-        "Nome Inglês",
+                "Tipo Curso",
 
-        "Tipo Curso",
+                "Duração em anos",
 
-        "Duração em anos",
+                "Duração em Semanas de Estudo",
 
-        "Duração em Semanas de Estudo",
+                "Créditos ECTS",
 
-        "Créditos ECTS",
+                "Requisitos de Ingresso",
 
-        "Requisitos de Ingresso",
+                "Requisitos de Ingresso (inglês)",
 
-        "Requisitos de Ingresso (inglês)",
+                "Objectivos Educacionais",
 
-        "Objectivos Educacionais",
+                "Objectivos Educacionais (inglês)",
 
-        "Objectivos Educacionais (inglês)",
+                "Acesso a um nível superior de estudos",
 
-        "Acesso a um nível superior de estudos",
+                "Acesso a um nível superior de estudos (inglês)",
 
-        "Acesso a um nível superior de estudos (inglês)",
+                "Normas e Regulamentos",
 
-        "Normas e Regulamentos",
+                "Normas e Regulamentos (inglês)",
 
-        "Normas e Regulamentos (inglês)",
+                "Coordenador",
 
-        "Coordenador",
+                "Contactos",
 
-        "Contactos",
-
-        "Contactos (inglês)"
-
-        });
+                "Contactos (inglês)");
     }
 
     private String getResponsibleCoordinatorNames(final DegreeCurricularPlan degreeCurricularPlan,

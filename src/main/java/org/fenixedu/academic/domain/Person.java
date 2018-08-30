@@ -836,17 +836,12 @@ public class Person extends Person_Base {
     }
 
     public Set<AnnualEvent> getAnnualEventsFor(final ExecutionYear executionYear) {
-        final Set<AnnualEvent> result = new HashSet<>();
-        for (final Event event : getEventsSet()) {
-            if (event instanceof AnnualEvent) {
-                final AnnualEvent annualEvent = (AnnualEvent) event;
-                if (annualEvent.isFor(executionYear) && !annualEvent.isCancelled()) {
-                    result.add(annualEvent);
-                }
-            }
-        }
 
-        return result;
+        return getEventsSet().stream()
+                .filter(event -> event instanceof AnnualEvent)
+                .map(event -> (AnnualEvent) event)
+                .filter(annualEvent -> annualEvent.isFor(executionYear) && !annualEvent.isCancelled())
+                .collect(Collectors.toSet());
     }
 
     public boolean hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(final ExecutionYear executionYear) {
@@ -854,41 +849,26 @@ public class Person extends Person_Base {
     }
 
     public Set<InsuranceEvent> getNotCancelledInsuranceEvents() {
-        final Set<InsuranceEvent> result = new HashSet<>();
-
-        for (final Event event : getEventsByEventType(EventType.INSURANCE)) {
-            final InsuranceEvent specificEvent = (InsuranceEvent) event;
-            if (!specificEvent.isCancelled()) {
-                result.add(specificEvent);
-            }
-        }
-
-        return result;
+        return getEventsByEventType(EventType.INSURANCE).stream()
+                .map(event -> (InsuranceEvent) event)
+                .filter(specificEvent -> !specificEvent.isCancelled())
+                .collect(Collectors.toSet());
     }
 
     public Set<InsuranceEvent> getNotCancelledInsuranceEventsUntil(final ExecutionYear executionYear) {
-        final Set<InsuranceEvent> result = new HashSet<>();
-
-        for (final Event event : getEventsByEventType(EventType.INSURANCE)) {
-            final InsuranceEvent specificEvent = (InsuranceEvent) event;
-            if (!specificEvent.isCancelled() && specificEvent.getExecutionYear().isBeforeOrEquals(executionYear)) {
-                result.add(specificEvent);
-            }
-        }
-
-        return result;
+        return getEventsByEventType(EventType.INSURANCE).stream()
+                .map(event -> (InsuranceEvent) event)
+                .filter(specificEvent -> !specificEvent.isCancelled())
+                .filter(specificEvent -> specificEvent.getExecutionYear().isBeforeOrEquals(executionYear))
+                .collect(Collectors.toSet());
     }
 
     public InsuranceEvent getInsuranceEventFor(final ExecutionYear executionYear) {
-        for (final Event event : getEventsByEventType(EventType.INSURANCE)) {
-            final InsuranceEvent insuranceEvent = (InsuranceEvent) event;
-            if (!insuranceEvent.isCancelled() && insuranceEvent.isFor(executionYear)) {
-                return insuranceEvent;
-            }
-        }
-
-        return null;
-
+        return getEventsByEventType(EventType.INSURANCE).stream()
+                .map(event -> (InsuranceEvent) event)
+                .filter(insuranceEvent -> !insuranceEvent.isCancelled())
+                .filter(insuranceEvent -> insuranceEvent.isFor(executionYear))
+                .findFirst().orElse(null);
     }
 
     public boolean hasInsuranceEventFor(final ExecutionYear executionYear) {
@@ -897,44 +877,29 @@ public class Person extends Person_Base {
 
     public Set<AdministrativeOfficeFeeAndInsuranceEvent> getNotCancelledAdministrativeOfficeFeeAndInsuranceEvents(
             final AdministrativeOffice office) {
-        final Set<AdministrativeOfficeFeeAndInsuranceEvent> result = new HashSet<>();
-
-        for (final Event event : getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE)) {
-            final AdministrativeOfficeFeeAndInsuranceEvent specificEvent = (AdministrativeOfficeFeeAndInsuranceEvent) event;
-            if (!specificEvent.isCancelled() && specificEvent.getAdministrativeOffice() == office) {
-                result.add(specificEvent);
-            }
-        }
-
-        return result;
+        return getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE).stream()
+                .map(event -> (AdministrativeOfficeFeeAndInsuranceEvent) event)
+                .filter(specificEvent -> !specificEvent.isCancelled())
+                .filter(specificEvent -> specificEvent.getAdministrativeOffice() == office)
+                .collect(Collectors.toSet());
     }
 
     public Set<AdministrativeOfficeFeeAndInsuranceEvent> getNotCancelledAdministrativeOfficeFeeAndInsuranceEventsUntil(
             final AdministrativeOffice office, final ExecutionYear executionYear) {
-        final Set<AdministrativeOfficeFeeAndInsuranceEvent> result = new HashSet<>();
-
-        for (final Event event : getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE)) {
-            final AdministrativeOfficeFeeAndInsuranceEvent specificEvent = (AdministrativeOfficeFeeAndInsuranceEvent) event;
-            if (!specificEvent.isCancelled() && specificEvent.getAdministrativeOffice() == office
-                    && specificEvent.getExecutionYear().isBeforeOrEquals(executionYear)) {
-                result.add(specificEvent);
-            }
-        }
-
-        return result;
+        return getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE).stream()
+                .map(event -> (AdministrativeOfficeFeeAndInsuranceEvent) event)
+                .filter(specificEvent -> !specificEvent.isCancelled())
+                .filter(specificEvent -> specificEvent.getAdministrativeOffice() == office)
+                .filter(specificEvent -> specificEvent.getExecutionYear().isBeforeOrEquals(executionYear))
+                .collect(Collectors.toSet());
     }
 
     public AdministrativeOfficeFeeAndInsuranceEvent getAdministrativeOfficeFeeInsuranceEventFor(final ExecutionYear executionYear) {
-        for (final Event event : getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE)) {
-            final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent =
-                    (AdministrativeOfficeFeeAndInsuranceEvent) event;
-            if (!administrativeOfficeFeeAndInsuranceEvent.isCancelled()
-                    && administrativeOfficeFeeAndInsuranceEvent.isFor(executionYear)) {
-                return administrativeOfficeFeeAndInsuranceEvent;
-            }
-        }
-
-        return null;
+        return getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE).stream()
+                .map(event -> (AdministrativeOfficeFeeAndInsuranceEvent) event)
+                .filter(administrativeOfficeFeeAndInsuranceEvent -> !administrativeOfficeFeeAndInsuranceEvent.isCancelled())
+                .filter(administrativeOfficeFeeAndInsuranceEvent -> administrativeOfficeFeeAndInsuranceEvent.isFor(executionYear))
+                .findFirst().orElse(null);
     }
 
     public boolean hasAdministrativeOfficeFeeInsuranceEventFor(final ExecutionYear executionYear) {
@@ -942,35 +907,18 @@ public class Person extends Person_Base {
     }
 
     public Set<Event> getEventsSupportingPaymentByOtherParties() {
-        final Set<Event> result = new HashSet<>();
-        for (final Event event : getEventsSet()) {
-            if (!event.isCancelled() && event.isOtherPartiesPaymentsSupported()) {
-                result.add(event);
-            }
-        }
-
-        return result;
+        return getEventsSet().stream()
+                .filter(event -> !event.isCancelled())
+                .filter(Event::isOtherPartiesPaymentsSupported)
+                .collect(Collectors.toSet());
     }
 
     public List<PaymentCode> getPaymentCodesBy(final PaymentCodeType paymentCodeType) {
-        final List<PaymentCode> result = new ArrayList<>();
-        for (final PaymentCode paymentCode : getPaymentCodesSet()) {
-            if (paymentCode.getType() == paymentCodeType) {
-                result.add(paymentCode);
-            }
-        }
-
-        return result;
+        return getPaymentCodesSet().stream().filter(paymentCode -> paymentCode.getType() == paymentCodeType).collect(Collectors.toList());
     }
 
     public PaymentCode getPaymentCodeBy(final String code) {
-        for (final PaymentCode paymentCode : getPaymentCodesSet()) {
-            if (paymentCode.getCode().equals(code)) {
-                return paymentCode;
-            }
-        }
-
-        return null;
+        return getPaymentCodesSet().stream().filter(paymentCode -> paymentCode.getCode().equals(code)).findFirst().orElse(null);
     }
 
     public Set<GratuityEvent> getGratuityEvents() {
@@ -1033,7 +981,7 @@ public class Person extends Person_Base {
 
     @Deprecated
     public Set<Registration> getStudentsSet() {
-        return getStudent() != null ? getStudent().getRegistrationsSet() : Collections.EMPTY_SET;
+        return getStudent() != null ? getStudent().getRegistrationsSet() : Collections.emptySet();
     }
 
     public SortedSet<String> getOrganizationalUnitsPresentation() {

@@ -24,7 +24,6 @@ import java.util.Set;
 
 import java.util.stream.Collectors;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.ExecutionInterval;
@@ -94,49 +93,33 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
     }
 
     public static <T extends CandidacyProcess> T getCandidacyProcessByDate(Class<T> clazz, final DateTime date) {
-        for (T process : getAllInstancesOf(clazz)) {
-            if (process.getCandidacyPeriod() != null && process.getCandidacyPeriod().isOpen(date)) {
-                return process;
-            }
-        }
-
-        return null;
+        return getAllInstancesOf(clazz).stream()
+                .filter(process -> process.getCandidacyPeriod() != null)
+                .filter(process -> process.getCandidacyPeriod().isOpen(date))
+                .findFirst().orElse(null);
     }
 
     public static <T extends CandidacyProcess> T getCandidacyProcessByExecutionInterval(Class<T> clazz,
             final ExecutionInterval executionInterval) {
-        for (T process : getAllInstancesOf(clazz)) {
-            if (process.getCandidacyPeriod() != null
-                    && executionInterval.equals(process.getCandidacyPeriod().getExecutionInterval())) {
-                return process;
-            }
-        }
-
-        return null;
+        return getAllInstancesOf(clazz).stream()
+                .filter(process -> process.getCandidacyPeriod() != null)
+                .filter(process -> executionInterval.equals(process.getCandidacyPeriod().getExecutionInterval()))
+                .findFirst().orElse(null);
     }
 
     public IndividualCandidacyProcess getChildProcessByDocumentId(IDDocumentType type, String identification) {
-        for (IndividualCandidacyProcess individualCandidacyProcess : getChildProcessesSet()) {
-            if (individualCandidacyProcess.getCandidacy() != null
-                    && identification
-                            .equals(individualCandidacyProcess.getCandidacy().getPersonalDetails().getDocumentIdNumber())
-                    && type.equals(individualCandidacyProcess.getCandidacy().getPersonalDetails().getIdDocumentType())) {
-                return individualCandidacyProcess;
-            }
-        }
-
-        return null;
+        return getChildProcessesSet().stream()
+                .filter(process -> process.getCandidacy() != null)
+                .filter(process -> identification.equals(process.getCandidacy().getPersonalDetails().getDocumentIdNumber()))
+                .filter(process -> type.equals(process.getCandidacy().getPersonalDetails().getIdDocumentType()))
+                .findFirst().orElse(null);
     }
 
     public IndividualCandidacyProcess getOpenChildProcessByDocumentId(IDDocumentType documentType, String documentId) {
-        for (IndividualCandidacyProcess child : this.getChildProcessesSet()) {
-            if (documentId.equalsIgnoreCase(child.getCandidacy().getPersonalDetails().getDocumentIdNumber())
-                    && !child.isCandidacyCancelled()) {
-                return child;
-            }
-        }
-
-        return null;
+        return this.getChildProcessesSet().stream()
+                .filter(child -> documentId.equalsIgnoreCase(child.getCandidacy().getPersonalDetails().getDocumentIdNumber()))
+                .filter(child -> !child.isCandidacyCancelled())
+                .findFirst().orElse(null);
     }
 
     public IndividualCandidacyProcess getOpenChildProcessByEidentifier(final String eidentifier) {
@@ -144,56 +127,31 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
             return null;
         }
 
-        for (IndividualCandidacyProcess child : this.getChildProcessesSet()) {
-            if (child.isCandidacyCancelled()) {
-                continue;
-            }
-
-            if (StringUtils.isEmpty(child.getPersonalDetails().getEidentifier())) {
-                continue;
-            }
-
-            if (eidentifier.equalsIgnoreCase(child.getPersonalDetails().getEidentifier())) {
-                return child;
-            }
-        }
-
-        return null;
+        return this.getChildProcessesSet().stream().filter(child -> !child.isCandidacyCancelled())
+                .filter(child -> !StringUtils.isEmpty(child.getPersonalDetails().getEidentifier()))
+                .filter(child -> eidentifier.equalsIgnoreCase(child.getPersonalDetails().getEidentifier()))
+                .findFirst().orElse(null);
     }
 
     public List<IndividualCandidacyProcess> getChildsWithMissingRequiredDocuments() {
-        List<IndividualCandidacyProcess> childs = new ArrayList<IndividualCandidacyProcess>();
-
-        CollectionUtils.select(getChildProcessesSet(), new Predicate() {
-
-            @Override
-            public boolean evaluate(Object arg0) {
-                IndividualCandidacyProcess process = (IndividualCandidacyProcess) arg0;
-                return !process.isCandidacyCancelled() && process.isProcessMissingRequiredDocumentFiles();
-            }
-
-        }, childs);
-
-        return childs;
+        return getChildProcessesSet().stream()
+                .filter(process -> !process.isCandidacyCancelled())
+                .filter(IndividualCandidacyProcess::isProcessMissingRequiredDocumentFiles)
+                .collect(Collectors.toList());
     }
 
     public List<IndividualCandidacyProcess> getChildsWithMissingShifts() {
-        List<IndividualCandidacyProcess> childs = new ArrayList<IndividualCandidacyProcess>();
+        List<IndividualCandidacyProcess> childs = new ArrayList<>();
 
-        CollectionUtils.select(getChildProcessesSet(), new Predicate() {
-
-            @Override
-            public boolean evaluate(Object arg0) {
-                boolean hasNotMissingShifts = true;
-                IndividualCandidacyProcess process = (IndividualCandidacyProcess) arg0;
-                for (Attends attends : process.getCandidacy().getPersonalDetails().getPerson().getCurrentAttends()) {
-                    if (!attends.hasAllShiftEnrolments()) {
-                        hasNotMissingShifts = false;
-                    }
+        CollectionUtils.select(getChildProcessesSet(), arg0 -> {
+            boolean hasNotMissingShifts = true;
+            IndividualCandidacyProcess process = (IndividualCandidacyProcess) arg0;
+            for (Attends attends : process.getCandidacy().getPersonalDetails().getPerson().getCurrentAttends()) {
+                if (!attends.hasAllShiftEnrolments()) {
+                    hasNotMissingShifts = false;
                 }
-                return !process.isCandidacyCancelled() && !hasNotMissingShifts;
             }
-
+            return !process.isCandidacyCancelled() && !hasNotMissingShifts;
         }, childs);
 
         return childs;

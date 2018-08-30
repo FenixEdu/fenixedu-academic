@@ -18,15 +18,18 @@
  */
 package org.fenixedu.academic.domain;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.messaging.core.domain.Message;
-import org.joda.time.DateTime;
-import pt.ist.fenixframework.Atomic;
+import static org.apache.commons.lang.StringUtils.isEmpty;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import static org.apache.commons.lang.StringUtils.isEmpty;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.messaging.core.domain.Message;
+import org.joda.time.DateTime;
+
+import pt.ist.fenixframework.Atomic;
 
 abstract public class PublicCandidacyHashCode extends PublicCandidacyHashCode_Base {
 
@@ -83,4 +86,5 @@ abstract public class PublicCandidacyHashCode extends PublicCandidacyHashCode_Ba
         return result;
     }
 
+    public abstract Optional<User> getUser();
 }

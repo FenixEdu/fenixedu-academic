@@ -92,7 +92,7 @@ public class DissertationsWithExternalAffiliationsReportFile extends Dissertatio
 
                 if (enrolment.getIsFirstTime() == null) {
                     row.setCell("Indeterminado");
-                } else if (enrolment.getIsFirstTime() == true) {
+                } else if (enrolment.getIsFirstTime()) {
                     row.setCell("Sim");
                 } else {
                     row.setCell("Nao");

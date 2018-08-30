@@ -109,13 +109,13 @@
 			</fr:slot>
 			<fr:slot name="otherSchoolLevel" />
 			<fr:slot name="countryWhereFinishedPreviousCompleteDegree" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-				<fr:property name="format" value="${localizedName}"/>
+				<fr:property name="format" value="${localizedName.content}"/>
 				<fr:property name="sortBy" value="name=asc" />
 				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 			</fr:slot>	
 			<% if (personalInformationBean.isHightSchoolCountryFieldRequired()) { %>
 				<fr:slot name="countryWhereFinishedHighSchoolLevel" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-					<fr:property name="format" value="${localizedName}"/>
+					<fr:property name="format" value="${localizedName.content}"/>
 					<fr:property name="sortBy" value="name=asc" />
 					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 				</fr:slot>
@@ -182,7 +182,7 @@
 	<fr:edit id="personalInformationBean.editPersonalInformation" name="personalInformationBean">
 		<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.candidacy.PersonalInformationBean">
 			<fr:slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-					<fr:property name="format" value="${localizedName}"/>
+					<fr:property name="format" value="${localizedName.content}"/>
 					<fr:property name="sortBy" value="name=asc" />
 					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 				</fr:slot>

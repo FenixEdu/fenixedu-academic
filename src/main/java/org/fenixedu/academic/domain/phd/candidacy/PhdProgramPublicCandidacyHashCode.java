@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.domain.phd.candidacy;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.apache.commons.lang.StringUtils;
@@ -27,6 +28,7 @@ import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdProgram;
 import org.fenixedu.academic.util.phd.PhdProperties;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -107,6 +109,15 @@ public class PhdProgramPublicCandidacyHashCode extends PhdProgramPublicCandidacy
 
     public String getAccessLink() {
         return PhdProperties.getPublicCandidacyAccessLink() + getValue();
+    }
+
+    @Override
+    public Optional<User> getUser() {
+        try {
+            return Optional.ofNullable(getPhdProgramCandidacyProcess().getPerson().getUser());
+        } catch (NullPointerException npe) {
+            return Optional.empty();
+        }
     }
 
 }

@@ -23,9 +23,9 @@ import java.util.Collection;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
@@ -322,18 +322,9 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     }
 
     private List<Registration> getNotCanceledRegistrationsFor(final Person person, final Degree selectedDegree) {
-        List<Registration> registrationsFor = person.getStudent().getRegistrationsFor(selectedDegree);
-        List<Registration> notCanceledRegistrationsForDegree = new ArrayList<Registration>();
-
-        for (Registration registration : registrationsFor) {
-            if (registration.isCanceled()) {
-                continue;
-            }
-
-            notCanceledRegistrationsForDegree.add(registration);
-        }
-
-        return notCanceledRegistrationsForDegree;
+        return person.getStudent().getRegistrationsFor(selectedDegree).stream()
+                .filter(registration -> !registration.isCanceled())
+                .collect(Collectors.toList());
     }
 
     protected boolean personHasOneOfDegrees(final Person person, final Set<Degree> selectedDegrees) {
@@ -341,13 +332,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
             return false;
         }
 
-        for (Degree degree : selectedDegrees) {
-            if (person.getStudent().hasActiveRegistrationFor(degree)) {
-                return true;
-            }
-        }
-
-        return false;
+        return selectedDegrees.stream().anyMatch(degree -> person.getStudent().hasActiveRegistrationFor(degree));
     }
 
     public void editObservations(final IndividualCandidacyProcessBean bean) {
@@ -389,25 +374,11 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     }
 
     public List<Formation> getConcludedFormationList() {
-        return new ArrayList<Formation>(CollectionUtils.select(getFormationsSet(), new Predicate() {
-
-            @Override
-            public boolean evaluate(Object arg0) {
-                return ((Formation) arg0).getConcluded();
-            }
-
-        }));
+        return getFormationsSet().stream().filter(Formation::getConcluded).collect(Collectors.toList());
     }
 
     public List<Formation> getNonConcludedFormationList() {
-        return new ArrayList<Formation>(CollectionUtils.select(getFormationsSet(), new Predicate() {
-
-            @Override
-            public boolean evaluate(Object arg0) {
-                return !((Formation) arg0).getConcluded();
-            }
-
-        }));
+        return getFormationsSet().stream().filter(formation -> !formation.getConcluded()).collect(Collectors.toList());
     }
 
     public void editFormationEntries(List<FormationBean> formationConcludedBeanList,
@@ -445,12 +416,9 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
     private void editFormationEntry(List<FormationBean> formationConcludedBeanList, List<Formation> formationsToBeRemovedList,
             final Formation formation) {
-        FormationBean bean = (FormationBean) CollectionUtils.find(formationConcludedBeanList, new Predicate() {
-            @Override
-            public boolean evaluate(Object arg0) {
-                FormationBean bean = (FormationBean) arg0;
-                return bean.getFormation() == formation;
-            }
+        FormationBean bean = (FormationBean) CollectionUtils.find(formationConcludedBeanList, arg0 -> {
+            FormationBean bean1 = (FormationBean) arg0;
+            return bean1.getFormation() == formation;
         });
 
         if (bean == null) {

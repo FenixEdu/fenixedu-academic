@@ -27,6 +27,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.accounting.PaymentCodeType;
+import org.fenixedu.academic.domain.accounting.events.candidacy.IndividualCandidacyEvent;
+import org.fenixedu.academic.domain.accounting.events.candidacy.Over23IndividualCandidacyEvent;
 import org.fenixedu.academic.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.manager.ManagerApplications.ManagerPaymentsApp;
@@ -119,7 +121,6 @@ public class CandidacyProcessPaymentCodesManagementDA extends FenixDispatchActio
     public ActionForward createPaymentCodes(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
             final HttpServletResponse response) {
         CandidacyProcessPaymentCodeBean bean = getRenderedObject("bean");
-
         List<IndividualCandidacyPaymentCode> paymentCodes =
                 IndividualCandidacyPaymentCode.createPaymentCodes(bean.getType(), bean.getBeginDate(), bean.getEndDate(),
                         new Money(bean.getMinAmount()), new Money(bean.getMaxAmount()), bean.getNumberOfPaymentCodes());

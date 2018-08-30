@@ -61,12 +61,12 @@ public abstract class GenericSingleEntryTypePR extends GenericSingleEntryTypePR_
     }
 
     @Override
-    public AccountingTransaction depositAmount(User responsibleUser, Event event, Account fromAcount, Account toAccount,
+    public AccountingTransaction depositAmount(User responsibleUser, Event event, Account fromAccount, Account toAccount,
             Money amount, AccountingTransactionDetailDTO transactionDetailDTO) {
 
         checkEntryTypeForDeposit(event, getEntryType());
 
-        return makeAccountingTransaction(responsibleUser, event, fromAcount, toAccount, getEntryType(), amount,
+        return makeAccountingTransaction(responsibleUser, event, fromAccount, toAccount, getEntryType(), amount,
                 transactionDetailDTO);
     }
 

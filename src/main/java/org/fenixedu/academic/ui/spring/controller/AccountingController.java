@@ -19,7 +19,6 @@ import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -43,7 +42,6 @@ public abstract class AccountingController {
         this.servletContext = servletContext;
     }
 
-    @ModelAttribute("entrypointUrl")
     public abstract String entrypointUrl();
 
     @RequestMapping("{user}")
@@ -72,6 +70,8 @@ public abstract class AccountingController {
         final List<CreditEntry> creditEntries = debtInterestCalculator.getCreditEntries();
         Collections.reverse(creditEntries);
 
+        model.addAttribute("entrypointUrl", entrypointUrl());
+
         model.addAttribute("eventUsername", event.getPerson().getUsername());
         model.addAttribute("debts", debtInterestCalculator.getDebtsOrderedByDueDate());
         model.addAttribute("payments", creditEntries);
@@ -98,7 +98,9 @@ public abstract class AccountingController {
                 .orElseThrow(UnsupportedOperationException::new);
         final List<AccountingManagementService.PaymentSummary> paymentSummaries =
                 accountingManagementService.createPaymentSummaries(debt);
-        paymentSummaries.sort(Comparator.comparing(AccountingManagementService.PaymentSummary::getCreated).reversed());
+        paymentSummaries.sort(Comparator.comparing(AccountingManagementService.PaymentSummary::getCreated)
+                .thenComparing(AccountingManagementService.PaymentSummary::getDate)
+                .thenComparing(AccountingManagementService.PaymentSummary::getId).reversed());
 
         model.addAttribute("eventId", event.getExternalId());
         model.addAttribute("eventDescription", event.getDescription());
