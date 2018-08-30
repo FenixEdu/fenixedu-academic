@@ -28,6 +28,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.accounting.EnrolmentBlocker;
 import org.fenixedu.academic.domain.curricularRules.EnrolmentInSpecialSeasonEvaluation;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfECTSInSpecialSeasonEvaluation;
@@ -62,7 +64,7 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
 
     @Override
     protected void checkDebts() {
-        if (getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt(getExecutionYear())) {
+        if (EnrolmentBlocker.enrolmentBlocker.isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt(getStudentCurricularPlan(), ExecutionYear.readCurrentExecutionYear())) {
             throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
         }
     }

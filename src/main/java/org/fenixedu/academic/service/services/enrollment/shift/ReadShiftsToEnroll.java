@@ -51,7 +51,7 @@ public class ReadShiftsToEnroll {
             throw new FenixServiceException("errors.impossible.operation");
         }
 
-        if (registration.getPayedTuition() == null || registration.getPayedTuition().equals(Boolean.FALSE)) {
+        if (!Boolean.TRUE.equals(registration.getPayedTuition())) {
             if (!registration.getInterruptedStudies()) {
                 throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
             }

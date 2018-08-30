@@ -29,7 +29,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.accounting.EnrolmentBlocker;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
@@ -106,7 +108,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
         final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
         request.setAttribute("executionSemesterID", executionSemester.getExternalId());
 
-        if (studentCurricularPlan.getRegistration().getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt()) {
+        if (EnrolmentBlocker.enrolmentBlocker.isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt(studentCurricularPlan, ExecutionYear.readCurrentExecutionYear())) {
             request.setAttribute("debtsMessage",
                     "error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
         }
