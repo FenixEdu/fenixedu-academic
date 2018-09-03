@@ -112,8 +112,8 @@ public class InterestRate extends InterestRate_Base {
     }
 
     public static InterestRate getOrCreate(LocalDate start, LocalDate end, BigDecimal value) throws FenixActionException {
-        if(isValidRange(start, end))
-            if(isValidValue(value))
+        if(isValidRange(start, end)) {
+            if (isValidValue(value)) {
                 return Bennu.getInstance().getInterestRateSet().stream().filter(i -> i.overlap(start, end)).findAny().orElseGet(() -> {
                     try {
                         return FenixFramework.atomic(() -> new InterestRate(start, end, value));
@@ -121,23 +121,31 @@ public class InterestRate extends InterestRate_Base {
                         throw new Error(e);
                     }
                 });
-            else
+            }
+            else {
                 throw new InvalidValueException(value);
-        else
+            }
+        }
+        else {
             throw new InvalidDateRangeException(start, end);
+        }
     }
 
     public void editIfValid(LocalDate start, LocalDate end, BigDecimal value) throws FenixActionException {
-        if (isValidRange(start, end))
-            if(isValidValue(value))
+        if (isValidRange(start, end)) {
+            if (isValidValue(value)) {
                 if (Bennu.getInstance().getInterestRateSet().stream().noneMatch(i -> !i.equals(this) && i.overlap(start, end)))
                     FenixFramework.atomic(() -> {
                         edit(start, end, value);
                     });
-            else
+            }
+            else {
                 throw new InvalidValueException(value);
-        else
+            }
+        }
+        else {
             throw new InvalidDateRangeException(start, end);
+        }
     }
 
     private static LocalDate getLastDueDate(Map<LocalDate, BigDecimal> entries) {
