@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.contacts;
 import java.util.Comparator;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.PostalCodeValidator;
 import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -88,14 +89,22 @@ public class PhysicalAddress extends PhysicalAddress_Base {
             return;
         }
         if (!data.equals(new PhysicalAddressData(this))) {
-            super.setAddress(data.getAddress());
-            super.setAreaCode(data.getAreaCode());
-            super.setAreaOfAreaCode(data.getAreaOfAreaCode());
-            super.setArea(data.getArea());
-            super.setParishOfResidence(data.getParishOfResidence());
-            super.setDistrictSubdivisionOfResidence(data.getDistrictSubdivisionOfResidence());
-            super.setDistrictOfResidence(data.getDistrictOfResidence());
-            super.setCountryOfResidence(data.getCountryOfResidence());
+            final Country country = data.getCountryOfResidence();
+            if (country == null) {
+                throw new DomainException("label.address.invalid.no.country");
+            }
+            final String areaCode = data.getAreaCode();
+            if (areaCode == null || !PostalCodeValidator.isValidAreaCode(country.getCode(), areaCode)) {
+                throw new DomainException("label.address.invalid.postCode.for.country", country.getCode(), areaCode);
+            }
+            setAddress(data.getAddress());
+            setAreaCode(areaCode);
+            setAreaOfAreaCode(data.getAreaOfAreaCode());
+            setArea(data.getArea());
+            setParishOfResidence(data.getParishOfResidence());
+            setDistrictSubdivisionOfResidence(data.getDistrictSubdivisionOfResidence());
+            setDistrictOfResidence(data.getDistrictOfResidence());
+            setCountryOfResidence(country);
             if (!waitsValidation()) {
                 new PhysicalAddressValidation(this);
             }

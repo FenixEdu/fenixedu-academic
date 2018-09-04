@@ -50,8 +50,11 @@ import org.fenixedu.academic.domain.contacts.WebAddress;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.DateTime;
+
+import eu.europa.ec.taxud.tin.algorithm.TINValid;
 
 public abstract class Party extends Party_Base implements Comparable<Party> {
 
@@ -452,26 +455,34 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     public String getSocialSecurityNumber() {
-        return getPartySocialSecurityNumber() != null ? getPartySocialSecurityNumber().getSocialSecurityNumber() : null;
+        final PartySocialSecurityNumber partySocialSecurityNumber = getPartySocialSecurityNumber();
+        return partySocialSecurityNumber != null ? partySocialSecurityNumber.getSocialSecurityNumber() : null;
     }
 
     public void setSocialSecurityNumber(String socialSecurityNumber) {
         socialSecurityNumber = StringUtils.trimToNull(socialSecurityNumber);
         if (socialSecurityNumber != null && !StringUtils.isBlank(socialSecurityNumber)) {
+            final String tinCountryCode = socialSecurityNumber.length() > 2
+                    && Character.isAlphabetic(socialSecurityNumber.charAt(0))
+                    && Character.isAlphabetic(socialSecurityNumber.charAt(1)) ?
+                            socialSecurityNumber.substring(0, 2) : null;
+            if ("PT999999990".equals(socialSecurityNumber) || tinCountryCode == null || TINValid.checkTIN(tinCountryCode, socialSecurityNumber.substring(2)) != 0) {
+                throw new DomainException("label.person.details.vatNumber.invalid", tinCountryCode, socialSecurityNumber);
+            }
+
             if (getPartySocialSecurityNumber() != null
                     && socialSecurityNumber.equals(getPartySocialSecurityNumber().getSocialSecurityNumber())) {
                 return;
             }
-
-            final Party party = PartySocialSecurityNumber.readPartyBySocialSecurityNumber(socialSecurityNumber);
-            if (party != null && party != this) {
-                //throw new DomainException("error.party.existing.contributor.number");
+            if (getPartySocialSecurityNumber() != null) {
+                getPartySocialSecurityNumber().setSocialSecurityNumber(socialSecurityNumber);
             } else {
-                if (getPartySocialSecurityNumber() != null) {
-                    getPartySocialSecurityNumber().setSocialSecurityNumber(socialSecurityNumber);
-                } else {
-                    new PartySocialSecurityNumber(this, socialSecurityNumber);
-                }
+                new PartySocialSecurityNumber(this, socialSecurityNumber);
+            }
+        } else {
+            final PartySocialSecurityNumber partySocialSecurityNumber = getPartySocialSecurityNumber();
+            if (partySocialSecurityNumber != null) {
+                partySocialSecurityNumber.delete();
             }
         }
     }
