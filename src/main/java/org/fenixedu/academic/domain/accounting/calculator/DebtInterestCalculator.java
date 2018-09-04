@@ -112,7 +112,7 @@ public class DebtInterestCalculator {
     }
 
     public Stream<Payment> getPayments() {
-        return this.creditEntries.stream().filter(c -> c.getClass().equals(Payment.class)).map(Payment.class::cast);
+        return getCreditEntryStream().filter(c -> c.getClass().equals(Payment.class)).map(Payment.class::cast);
     }
 
     public Optional<Payment> getPaymentById(String id) {
