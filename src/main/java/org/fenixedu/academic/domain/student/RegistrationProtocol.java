@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.domain.student;
 
+import java.util.Collection;
 import java.util.Comparator;
 
 import org.fenixedu.academic.domain.DomainObjectUtil;
@@ -25,6 +26,8 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.LocalizedString;
+
+import com.google.common.base.Strings;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -144,6 +147,32 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
 
     public boolean attemptAlmaMatterFromPrecedent() {
         return getAttemptAlmaMatterFromPrecedent() != null && getAttemptAlmaMatterFromPrecedent().booleanValue();
+    }
+    
+    public void delete() {
+        super.setRootDomainObject(null);
+        super.deleteDomainObject();
+    }
+
+    @Override
+    public void setCode(String code) {
+        if (Strings.isNullOrEmpty(code)) {
+            throw new DomainException("error.RegistrationProtocol.code.cannot.be.null");
+        }
+
+        if (findAll().stream().anyMatch(rp -> rp != this && rp.getCode().equalsIgnoreCase(code))) {
+            throw new DomainException("error.RegistrationProtocol.duplicated.code", code);
+        }
+
+        super.setCode(code);
+    }
+
+    static public Collection<RegistrationProtocol> findAll() {
+        return Bennu.getInstance().getRegistrationProtocolsSet();
+    }
+
+    static public RegistrationProtocol findByCode(String code) {
+        return findAll().stream().filter(rp -> rp.getCode().equals(code)).findFirst().orElse(null);
     }
 
 }
