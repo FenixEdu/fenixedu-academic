@@ -128,7 +128,8 @@ public class DebtInterestCalculator {
     }
 
     private Stream<CreditEntry> getCreditEntryStream() {
-        return creditEntries.stream().sorted(Comparator.comparing(CreditEntry::getCreated).thenComparing(CreditEntry::getId));
+        return creditEntries.stream().sorted(Comparator.comparing(CreditEntry::getCreated).thenComparing(CreditEntry::getDate)
+                .thenComparing(CreditEntry::getId));
     }
 
     public List<AccountingEntry> getAccountingEntries() {
@@ -285,7 +286,7 @@ public class DebtInterestCalculator {
                         if (debt.isOpen() && !debt.isToExemptFine()) {
                             dueDateAmountFineMap.forEach((dueDate, amount) -> {
                                 if (!appliedFines.contains(dueDate) && creditEntry.getDate().isAfter(dueDate)) {
-                                    debt.addFine(new Fine(creditEntry.getDate(), amount, creditEntry));
+                                    debt.addFine(new Fine(creditEntry.getDate(), amount, debt, creditEntry));
                                     appliedFines.add(dueDate);
                                 }
                             });

@@ -20,15 +20,14 @@ package org.fenixedu.academic.domain.reports;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences;
@@ -161,13 +160,10 @@ public class EctsLabelCurricularCourseReportFile extends EctsLabelCurricularCour
     }
 
     private String getTeachers(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
-        final StringBuilder builder = new StringBuilder();
-        for (final ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester)) {
-            for (final Professorship professorship : executionCourse.getProfessorshipsSortedAlphabetically()) {
-                builder.append(professorship.getPerson().getName()).append("; ");
-            }
-        }
-        return builder.toString();
+        return curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester).stream()
+                .flatMap(executionCourse -> executionCourse.getProfessorshipsSortedAlphabetically().stream())
+                .map(professorship -> professorship.getPerson().getName() + "; ")
+                .collect(Collectors.joining());
     }
 
     private BibliographicReferences getBibliographicReferences(final CurricularCourse curricularCourse,
@@ -178,26 +174,16 @@ public class EctsLabelCurricularCourseReportFile extends EctsLabelCurricularCour
 
     private String getBibliographicReferences(final List<BibliographicReference> references) {
         Collections.sort(references);
-        final StringBuilder stringBuilder = new StringBuilder();
-        for (final BibliographicReference bibliographicReference : references) {
-            if (stringBuilder.length() > 0) {
-                stringBuilder.append("; ");
-            }
-            stringBuilder.append(bibliographicReference.getTitle());
-            stringBuilder.append(", ");
-            stringBuilder.append(bibliographicReference.getAuthors());
-            stringBuilder.append(", ");
-            stringBuilder.append(bibliographicReference.getYear());
-            stringBuilder.append(", ");
-            stringBuilder.append(bibliographicReference.getReference());
-        }
-        return stringBuilder.toString();
+        return references.stream()
+                .map(bibliographicReference -> String.format("%s, %s, %s, %s", bibliographicReference.getTitle(), bibliographicReference.getAuthors(),
+                                bibliographicReference.getYear(), bibliographicReference.getReference()))
+                .collect(Collectors.joining("; "));
     }
 
     private ExecutionSemester getExecutionSemester(final Context context, final ExecutionYear executionYear) {
         final CurricularPeriod curricularPeriod = context.getCurricularPeriod();
         if (curricularPeriod.getAcademicPeriod().getName().equals("SEMESTER")) {
-            return (curricularPeriod.getChildOrder().intValue() == 1) ? executionYear.getFirstExecutionPeriod() : executionYear
+            return (curricularPeriod.getChildOrder() == 1) ? executionYear.getFirstExecutionPeriod() : executionYear
                     .getLastExecutionPeriod();
         } else {
             return executionYear.getFirstExecutionPeriod();

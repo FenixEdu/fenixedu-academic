@@ -18,6 +18,12 @@
  */
 package org.fenixedu.academic.ui.struts.action.publico;
 
+import static org.fenixedu.academic.domain.PublicCandidacyHashCode.getPublicCandidacyCodeByHash;
+
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Stream;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,28 +33,30 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.PublicCandidacyHashCode;
+import org.fenixedu.academic.domain.contacts.EmailAddress;
+import org.fenixedu.academic.domain.contacts.PartyContact;
+import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.service.services.exceptions.PasswordInitializationException;
 import org.fenixedu.academic.service.services.person.InitializePassword;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.publico.candidacies.erasmus.ErasmusIndividualCandidacyProcessPublicDA;
+import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
-@Mapping(module = "external", path = "/internationalRegistration", scope = "request", parameter = "method", validate = true,
-        formBean = "internationalRegistrationForm", formBeanClass = InternationalRegistrationForm.class,
-        functionality = ErasmusIndividualCandidacyProcessPublicDA.class)
+@Mapping(module = "external", path = "/internationalRegistration", scope = "request", parameter = "method", validate = true, formBean = "internationalRegistrationForm", formBeanClass = InternationalRegistrationForm.class, functionality = ErasmusIndividualCandidacyProcessPublicDA.class)
 @Forwards({ @Forward(name = "international-registration", path = "/publico/candidacy/internationalRegistration_bd.jsp"),
         @Forward(name = "success", path = "/publico/candidacy/internationalRegistrationSuccess_bd.jsp") })
 public class InternationalRegistrationDA extends FenixDispatchAction {
 
-    public ActionForward showInternationalRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward showInternationalRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
-        Person person = readPersonByCandidacyHashCode(request.getParameter("hash"));
+        Optional<Person> person = readPersonByCandidacyHashCode(request.getParameter("hash"));
 
         if (person != null) {
-            request.setAttribute("person", person);
+            request.setAttribute("person", person.get());
             return mapping.findForward("international-registration");
         } else {
             return setError(request, mapping, "internationalRegistration.error.invalidLink", "international-registration", null);
@@ -56,21 +64,24 @@ public class InternationalRegistrationDA extends FenixDispatchAction {
 
     }
 
-    public ActionForward updateUserPassword(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward updateUserPassword(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
         if ((form == null) || !(form instanceof InternationalRegistrationForm)) {
             return setError(request, mapping, "internationalRegistration.error.invalidLink", "international-registration", null);
         }
 
         InternationalRegistrationForm registrationForm = (InternationalRegistrationForm) form;
-        Person person = readPersonByCandidacyHashCode(registrationForm.getHashCode());
+        Optional<Person> optionalPerson = readPersonByCandidacyHashCode(registrationForm.getHashCode());
 
-        request.setAttribute("person", person);
-
-        if (person == null) {
+        if (!optionalPerson.isPresent()) {
             return setError(request, mapping, "internationalRegistration.error.invalidLink", "international-registration", null);
         }
+
+        final Person person = optionalPerson.get();
+
+
+        request.setAttribute("person", person);
 
         if (!StringUtils.equals(registrationForm.getPassword(), registrationForm.getRetypedPassword())) {
             return setError(request, mapping, "internationalRegistration.error.passwordsDontMatch", "international-registration",
@@ -89,15 +100,26 @@ public class InternationalRegistrationDA extends FenixDispatchAction {
         } catch (Exception e) {
             return setError(request, mapping, "internationalRegistration.error.registering", "international-registration", e);
         }
+
+
         return mapping.findForward("success");
     }
 
-    private Person readPersonByCandidacyHashCode(String hashCode) {
+    private Optional<Person> readPersonByCandidacyHashCode(String hashCode) {
         if (!StringUtils.isEmpty(hashCode)) {
-            PublicCandidacyHashCode publicCandidacyHashCode = PublicCandidacyHashCode.getPublicCandidacyCodeByHash(hashCode);
-            return publicCandidacyHashCode != null ? Person.readPersonByEmailAddress(publicCandidacyHashCode.getEmail()) : null;
+            final PublicCandidacyHashCode publicCandidacyHashCode = getPublicCandidacyCodeByHash(hashCode);
+            if (publicCandidacyHashCode != null) {
+                return Optional.ofNullable(Stream.concat(EmailAddress.findAllActiveAndValid(publicCandidacyHashCode.getEmail()),
+                                    Stream.of(EmailAddress.find(publicCandidacyHashCode.getEmail())))
+                        .filter(Objects::nonNull)
+                        .map(PartyContact::getParty)
+                        .filter(Party::isPerson)
+                        .map(Person.class::cast)
+                        .filter(p -> p.getUser() != null)
+                        .findAny().orElseGet(() -> publicCandidacyHashCode.getUser().map(User::getPerson).orElse(null)));
+            }
         }
-        return null;
+        return Optional.empty();
     }
 
 }

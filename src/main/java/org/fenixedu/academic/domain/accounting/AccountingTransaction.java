@@ -53,15 +53,13 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 
     public static final String SIGNAL_ANNUL = AccountingTransaction.class.getName() + ".annul";
 
-    public static Comparator<AccountingTransaction> COMPARATOR_BY_WHEN_REGISTERED = new Comparator<AccountingTransaction>() {
-        @Override
-        public int compare(AccountingTransaction leftAccountingTransaction, AccountingTransaction rightAccountingTransaction) {
-            int comparationResult =
-                    leftAccountingTransaction.getWhenRegistered().compareTo(rightAccountingTransaction.getWhenRegistered());
-            return (comparationResult == 0) ? leftAccountingTransaction.getExternalId().compareTo(
-                    rightAccountingTransaction.getExternalId()) : comparationResult;
-        }
-    };
+    public static Comparator<AccountingTransaction> COMPARATOR_BY_WHEN_REGISTERED =
+            (leftAccountingTransaction, rightAccountingTransaction) -> {
+                int comparationResult =
+                        leftAccountingTransaction.getWhenRegistered().compareTo(rightAccountingTransaction.getWhenRegistered());
+                return (comparationResult == 0) ? leftAccountingTransaction.getExternalId().compareTo(
+                        rightAccountingTransaction.getExternalId()) : comparationResult;
+            };
 
     protected AccountingTransaction() {
         super();
@@ -94,8 +92,8 @@ public class AccountingTransaction extends AccountingTransaction_Base {
         List<String> operationsAfter = event.getOperationsAfter(transactionDetail.getWhenProcessed());
 
         if (!operationsAfter.isEmpty()) {
-            throw new DomainException("error.accounting.AccountingTransaction.cannot.create.transaction", operationsAfter
-                    .stream().collect(Collectors.joining(",")));
+            throw new DomainException("error.accounting.AccountingTransaction.cannot.create.transaction",
+                    String.join(",", operationsAfter));
         }
 
         super.setEvent(event);
@@ -249,8 +247,8 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     private void checkRulesToAnnul() {
         final List<String> operationsAfter = getEvent().getOperationsAfter(getWhenProcessed());
         if (!operationsAfter.isEmpty()) {
-            throw new DomainException("error.accounting.AccountingTransaction.cannot.annul.operations.after", operationsAfter
-                    .stream().collect(Collectors.joining(",")));
+            throw new DomainException("error.accounting.AccountingTransaction.cannot.annul.operations.after",
+                    String.join(",", operationsAfter));
         }
     }
 
@@ -285,7 +283,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
                         getToAccount()), new Entry(EntryType.ADJUSTMENT, amountToReimburse, getFromAccount()),
                         new AccountingTransactionDetail(reimburseDate, paymentMode, comments), this);
 
-        getEvent().recalculateState(getWhenRegistered());
+        getEvent().recalculateState(new DateTime());
 
         return transaction;
     }

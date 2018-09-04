@@ -85,8 +85,8 @@ public class WrittenEvaluationReportFile extends WrittenEvaluationReportFile_Bas
                                 rooms.append(", ");
                             }
                             rooms.append(room.getName());
-                            examVacancy += room.<Integer> getMetadata("examCapacity").orElse(0).intValue();
-                            normalVacancy += room.getAllocatableCapacity().intValue();
+                            examVacancy += room.<Integer>getMetadata("examCapacity").orElse(0);
+                            normalVacancy += room.getAllocatableCapacity();
                         }
                         row.setCell(rooms.toString());
                         row.setCell(examVacancy);

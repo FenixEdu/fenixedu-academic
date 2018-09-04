@@ -26,7 +26,6 @@ import java.util.Random;
 import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.PaymentCode;
@@ -40,16 +39,13 @@ import org.fenixedu.bennu.core.domain.Bennu;
  */
 public class IndividualCandidacyPaymentCodeGenerator extends PaymentCodeGenerator {
 
-    public static Comparator<PaymentCode> COMPARATOR_BY_PAYMENT_SEQUENTIAL_DIGITS = new Comparator<PaymentCode>() {
-        @Override
-        public int compare(PaymentCode leftPaymentCode, PaymentCode rightPaymentCode) {
-            final String leftSequentialNumber = getSequentialNumber(leftPaymentCode);
-            final String rightSequentialNumber = getSequentialNumber(rightPaymentCode);
+    public static Comparator<PaymentCode> COMPARATOR_BY_PAYMENT_SEQUENTIAL_DIGITS = (leftPaymentCode, rightPaymentCode) -> {
+        final String leftSequentialNumber = getSequentialNumber(leftPaymentCode);
+        final String rightSequentialNumber = getSequentialNumber(rightPaymentCode);
 
-            int comparationResult = leftSequentialNumber.compareTo(rightSequentialNumber);
+        int comparationResult = leftSequentialNumber.compareTo(rightSequentialNumber);
 
-            return (comparationResult == 0) ? leftPaymentCode.getExternalId().compareTo(rightPaymentCode.getExternalId()) : comparationResult;
-        }
+        return (comparationResult == 0) ? leftPaymentCode.getExternalId().compareTo(rightPaymentCode.getExternalId()) : comparationResult;
     };
 
     private static final String CODE_FILLER = "0";
@@ -61,7 +57,7 @@ public class IndividualCandidacyPaymentCodeGenerator extends PaymentCodeGenerato
     @Override
     public boolean canGenerateNewCode(PaymentCodeType paymentCodeType, Person person) {
         final PaymentCode lastPaymentCode = findLastPaymentCode(paymentCodeType);
-        return lastPaymentCode == null ? true : Integer.valueOf(getSequentialNumber(lastPaymentCode)) < 9999;
+        return lastPaymentCode == null || Integer.valueOf(getSequentialNumber(lastPaymentCode)) < 9999;
     }
 
     private PaymentCode findLastPaymentCode(PaymentCodeType paymentCodeType) {
@@ -75,15 +71,10 @@ public class IndividualCandidacyPaymentCodeGenerator extends PaymentCodeGenerato
             final PaymentCodeType paymentCodeType) {
         Set<PaymentCode> allPaymentCodes = Bennu.getInstance().getPaymentCodesSet();
 
-        List<IndividualCandidacyPaymentCode> outputList = new ArrayList<IndividualCandidacyPaymentCode>();
-        CollectionUtils.select(allPaymentCodes, new Predicate() {
-
-            @Override
-            public boolean evaluate(Object arg0) {
-                PaymentCode paymentCode = (PaymentCode) arg0;
-                return paymentCodeType.equals(paymentCode.getType());
-            }
-
+        List<IndividualCandidacyPaymentCode> outputList = new ArrayList<>();
+        CollectionUtils.select(allPaymentCodes, arg0 -> {
+            PaymentCode paymentCode = (PaymentCode) arg0;
+            return paymentCodeType.equals(paymentCode.getType());
         }, outputList);
 
         return outputList;
@@ -105,10 +96,7 @@ public class IndividualCandidacyPaymentCodeGenerator extends PaymentCodeGenerato
     }
 
     private static String getSequentialNumber(PaymentCode paymentCode) {
-        String sequentialNumber =
-                paymentCode.getCode().substring(1, paymentCode.getCode().length() - NUM_CONTROL_DIGITS - NUM_TYPE_DIGITS);
-
-        return sequentialNumber;
+        return paymentCode.getCode().substring(1, paymentCode.getCode().length() - NUM_CONTROL_DIGITS - NUM_TYPE_DIGITS);
     }
 
     @Override

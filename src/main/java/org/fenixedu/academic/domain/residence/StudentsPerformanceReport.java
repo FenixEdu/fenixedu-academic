@@ -21,19 +21,19 @@ package org.fenixedu.academic.domain.residence;
 import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.GradeScale;
 import org.fenixedu.academic.domain.IEnrolment;
+import org.fenixedu.academic.domain.QueueJob;
 import org.fenixedu.academic.domain.QueueJobResult;
+import org.fenixedu.academic.domain.QueueJob_Base;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
@@ -103,64 +103,28 @@ public class StudentsPerformanceReport extends StudentsPerformanceReport_Base {
     }
 
     public static List<StudentsPerformanceReport> readGeneratedReports(final ExecutionSemester executionSemester) {
-        List<StudentsPerformanceReport> generatedReports = new ArrayList<StudentsPerformanceReport>();
-
-        CollectionUtils.select(executionSemester.getStudentsPerformanceReportsSet(), new Predicate() {
-
-            @Override
-            public boolean evaluate(Object arg0) {
-                return ((StudentsPerformanceReport) arg0).getDone();
-            }
-
-        }, generatedReports);
-
-        return generatedReports;
+        return executionSemester.getStudentsPerformanceReportsSet().stream()
+                .filter(QueueJob_Base::getDone)
+                .collect(Collectors.toList());
     }
 
     public static List<StudentsPerformanceReport> readNotGeneratedReports(final ExecutionSemester executionSemester) {
-        List<StudentsPerformanceReport> generatedReports = new ArrayList<StudentsPerformanceReport>();
-
-        CollectionUtils.select(executionSemester.getStudentsPerformanceReportsSet(), new Predicate() {
-
-            @Override
-            public boolean evaluate(Object arg0) {
-                return !((StudentsPerformanceReport) arg0).getDone();
-            }
-
-        }, generatedReports);
-
-        return generatedReports;
+        return executionSemester.getStudentsPerformanceReportsSet().stream()
+                .filter(studentsPerformanceReport -> !studentsPerformanceReport.getDone())
+                .collect(Collectors.toList());
     }
 
-    public static final Comparator<StudentsPerformanceReport> COMPARE_BY_REQUEST_DATE =
-            new Comparator<StudentsPerformanceReport>() {
-
-                @Override
-                public int compare(StudentsPerformanceReport o1, StudentsPerformanceReport o2) {
-                    return o1.getRequestDate().compareTo(o2.getRequestDate());
-                }
-
-            };
+    public static final Comparator<StudentsPerformanceReport> COMPARE_BY_REQUEST_DATE = Comparator.comparing(QueueJob_Base::getRequestDate);
 
     public static StudentsPerformanceReport readPendingReport(final ExecutionSemester executionSemester) {
-        List<StudentsPerformanceReport> pendingReports = new ArrayList<StudentsPerformanceReport>();
+        List<StudentsPerformanceReport> pendingReports =
+                executionSemester.getStudentsPerformanceReportsSet().stream()
+                        .filter(QueueJob::getIsNotDoneAndNotCancelled)
+                        .sorted(Collections.reverseOrder(COMPARE_BY_REQUEST_DATE))
+                        .collect(Collectors.toList());
 
-        CollectionUtils.select(executionSemester.getStudentsPerformanceReportsSet(), new Predicate() {
+        return pendingReports.isEmpty() ? null : pendingReports.iterator().next();
 
-            @Override
-            public boolean evaluate(Object arg0) {
-                return ((StudentsPerformanceReport) arg0).getIsNotDoneAndNotCancelled();
-            }
-
-        }, pendingReports);
-
-        if (pendingReports.isEmpty()) {
-            return null;
-        }
-
-        Collections.sort(pendingReports, Collections.reverseOrder(COMPARE_BY_REQUEST_DATE));
-
-        return pendingReports.iterator().next();
     }
 
     public static boolean hasPendingReports(final ExecutionSemester executionSemester) {
@@ -230,7 +194,7 @@ public class StudentsPerformanceReport extends StudentsPerformanceReport_Base {
         for (final ICurriculumEntry entry : entries) {
             if (entry.getGrade().isNumeric()) {
                 final BigDecimal weigth = entry.getWeigthForCurriculum();
-                if (GradeScale.TYPE20.equals(entry.getGrade().getGradeScale())) {
+                if (GradeScale.TYPE20 == entry.getGrade().getGradeScale()) {
                     sum = sum.add(entry.getGrade().getNumericValue());
                 }
             }
@@ -277,8 +241,8 @@ public class StudentsPerformanceReport extends StudentsPerformanceReport_Base {
     private Spreadsheet createSpreadsheet() {
         final Spreadsheet spreadsheet = new Spreadsheet("students");
 
-        spreadsheet.setHeaders(new String[] { "Num Aluno", "Nome", "Tipo Curso", "Curso", "Ciclo", "Ects Aprovados",
-                "Ects Total", "Soma classificacoes", "Num Aprovadas * 20", "A", "B", "100 * (A + B)" });
+        spreadsheet.setHeaders("Num Aluno", "Nome", "Tipo Curso", "Curso", "Ciclo", "Ects Aprovados", "Ects Total",
+                "Soma classificacoes", "Num Aprovadas * 20", "A", "B", "100 * (A + B)");
 
         return spreadsheet;
     }
@@ -291,8 +255,7 @@ public class StudentsPerformanceReport extends StudentsPerformanceReport_Base {
         row.setCell(student.getPerson().getName());
         row.setCell(studentCurricularPlan.getDegreeType().getName().getContent());
         row.setCell(studentCurricularPlan.getName());
-        row.setCell(studentCurricularPlan.getRegistration().getCycleType(getExecutionSemester().getExecutionYear())
-                .getDescription());
+        row.setCell(studentCurricularPlan.getRegistration().getCycleType(getExecutionSemester().getExecutionYear()).getDescription());
         row.setCell(getApprovedECTS(student).toPlainString());
         row.setCell(getEnrolledECTS(student).toPlainString());
         row.setCell(getApprovedGradeValuesSum(student));

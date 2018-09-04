@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.candidacyProcess;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -33,6 +34,7 @@ import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityEmailTempl
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.period.MobilityApplicationPeriod;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
@@ -59,6 +61,15 @@ public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandi
     @Override
     public boolean hasCandidacyProcess() {
         return getIndividualCandidacyProcess() != null;
+    }
+
+    @Override
+    public Optional<User> getUser() {
+        try {
+            return Optional.ofNullable(getIndividualCandidacyProcess().getPersonalDetails().getPerson().getUser());
+        } catch (NullPointerException npe) {
+            return Optional.empty();
+        }
     }
 
     @Override

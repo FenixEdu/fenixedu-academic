@@ -18,14 +18,11 @@
  */
 package org.fenixedu.academic.domain.phd;
 
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -35,12 +32,9 @@ import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 
 public class PhdProgramFocusArea extends PhdProgramFocusArea_Base {
-    static public Comparator<PhdProgramFocusArea> COMPARATOR_BY_NAME = new Comparator<PhdProgramFocusArea>() {
-        @Override
-        public int compare(PhdProgramFocusArea o1, PhdProgramFocusArea o2) {
-            int result = o1.getName().compareTo(o2.getName());
-            return (result != 0) ? result : DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2);
-        }
+    static public Comparator<PhdProgramFocusArea> COMPARATOR_BY_NAME = (o1, o2) -> {
+        int result = o1.getName().compareTo(o2.getName());
+        return (result != 0) ? result : DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2);
     };
 
     private PhdProgramFocusArea() {
@@ -75,49 +69,27 @@ public class PhdProgramFocusArea extends PhdProgramFocusArea_Base {
     }
 
     public boolean hasPhdProgramFor(final Degree degree) {
-        for (final PhdProgram program : getPhdProgramsSet()) {
-            if (program.getDegree() != null && program.getDegree().equals(degree)) {
-                return true;
-            }
-        }
-        return false;
+        return getPhdProgramsSet().stream().anyMatch(program -> program.getDegree() != null && program.getDegree().equals(degree));
     }
 
     public List<ExternalPhdProgram> getAssociatedExternalPhdProgramsForCollaborationType(
             final PhdIndividualProgramCollaborationType type) {
-        List<ExternalPhdProgram> externalPhdProgramList = new ArrayList<ExternalPhdProgram>();
-
-        CollectionUtils.select(getExternalPhdProgramsSet(), new Predicate() {
-
-            @Override
-            public boolean evaluate(Object object) {
-                return ((ExternalPhdProgram) object).isForCollaborationType(type);
-            }
-
-        }, externalPhdProgramList);
-
-        return externalPhdProgramList;
+        return getExternalPhdProgramsSet().stream()
+                .filter(externalPhdProgram -> externalPhdProgram.isForCollaborationType(type))
+                .collect(Collectors.toList());
     }
 
     public static PhdProgramFocusArea readPhdProgramFocusAreaByName(final String name) {
-        return (PhdProgramFocusArea) CollectionUtils.find(Bennu.getInstance().getPhdProgramFocusAreasSet(), new Predicate() {
-
-            @Override
-            public boolean evaluate(Object arg0) {
-                return name.equals(((PhdProgramFocusArea) arg0).getName().getContent());
-            }
-
-        });
+        return Bennu.getInstance().getPhdProgramFocusAreasSet().stream()
+                .filter(phdProgramFocusArea -> name.equals(phdProgramFocusArea.getName().getContent()))
+                .findFirst().orElse(null);
     }
 
     public static Set<PhdProgramFocusArea> getActivePhdProgramFocusAreas() {
-        final Set<PhdProgramFocusArea> result = new HashSet<PhdProgramFocusArea>();
-        for (final PhdProgramFocusArea area : Bennu.getInstance().getPhdProgramFocusAreasSet()) {
-            if (area.getActive() != null && area.getActive().booleanValue()) {
-                result.add(area);
-            }
-        }
-        return result;
+        return Bennu.getInstance().getPhdProgramFocusAreasSet().stream()
+                .filter(area -> area.getActive() != null)
+                .filter(PhdProgramFocusArea::getActive)
+                .collect(Collectors.toSet());
     }
 
 }

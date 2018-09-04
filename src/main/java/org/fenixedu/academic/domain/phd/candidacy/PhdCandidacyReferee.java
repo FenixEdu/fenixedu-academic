@@ -20,12 +20,14 @@ package org.fenixedu.academic.domain.phd.candidacy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.alert.PhdCandidacyRefereeAlert;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -106,6 +108,15 @@ public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
 
         for (PhdCandidacyRefereeAlert phdCandidacyRefereeAlert : alerts) {
             removeAlerts(phdCandidacyRefereeAlert);
+        }
+    }
+
+    @Override
+    public Optional<User> getUser() {
+        try {
+            return Optional.ofNullable(getPhdProgramCandidacyProcess().getPerson().getUser());
+        } catch (NullPointerException npe) {
+            return Optional.empty();
         }
     }
 

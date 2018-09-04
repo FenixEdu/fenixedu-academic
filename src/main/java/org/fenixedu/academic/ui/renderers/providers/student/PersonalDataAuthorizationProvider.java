@@ -28,7 +28,7 @@ public class PersonalDataAuthorizationProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        return StudentPersonalDataAuthorizationChoice.getGeneralPersonalDataAuthorizationsTypes();
+        return StudentPersonalDataAuthorizationChoice.active();
     }
 
     @Override

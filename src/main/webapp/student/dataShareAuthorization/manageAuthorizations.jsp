@@ -1,3 +1,4 @@
+<%@ page import="org.fenixedu.academic.util.StudentPersonalDataAuthorizationChoice" %>
 <%--
 
     Copyright © 2002 Instituto Superior Técnico
@@ -26,6 +27,16 @@
 
 <html:xhtml />
 
+<style>
+    #main-content-wrapper div.col-sm-10 ul {
+        list-style: none;
+    }
+
+    .job-platform-info {
+        margin-top: 20px;
+    }
+</style>
+
 <logic:present name="student">
     <h2><bean:message key="title.student.dataShareAuthorizations" bundle="STUDENT_RESOURCES" /></h2>
 
@@ -42,10 +53,10 @@
     <fr:form action="/studentDataShareAuthorization.do?method=saveAuthorization">
         <fr:edit id="studentDataShareAuthorization" name="student">
             <fr:schema bundle="STUDENT_RESOURCES" type="org.fenixedu.academic.domain.student.Student">
-                <fr:slot name="personalDataAuthorization" key="label.student.dataShareAuthorization" layout="menu-postback"
+                <fr:slot name="personalDataAuthorization" key="label.student.dataShareAuthorization" layout="radio-postback"
                     required="true">
                     <fr:property name="defaultOptionHidden" value="true" />
-                    <fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.student.PersonalDataAuthorizationProvider" />
+                    <fr:property name="includedValues" value="<%= StudentPersonalDataAuthorizationChoice.activeValues() %>" />
                 </fr:slot>
             </fr:schema>
             <fr:layout name="tabular">
@@ -57,5 +68,9 @@
     
     <div class="infoop">
     	<bean:message key="label.data.authorization.information" bundle="STUDENT_RESOURCES" />
+    </div>
+
+    <div class="infoop job-platform-info">
+        <bean:message key="label.data.authorization.information.job_platform_info" bundle="STUDENT_RESOURCES" />
     </div>
 </logic:present>

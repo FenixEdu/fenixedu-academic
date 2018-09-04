@@ -56,4 +56,9 @@ public class PhdGratuityFineExemption extends PhdGratuityFineExemption_Base {
     public Money getExemptionAmount(Money money) {
         return money;
     }
+
+    @Override
+    public boolean isPenaltyExemption() {
+        return true;
+    }
 }

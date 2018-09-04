@@ -19,7 +19,6 @@
 package org.fenixedu.academic.domain.accounting.events;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -36,9 +35,6 @@ import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventState;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.Exemption;
-import org.fenixedu.academic.domain.accounting.PaymentCode;
-import org.fenixedu.academic.domain.accounting.PaymentCodeState;
-import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 import org.fenixedu.academic.domain.accounting.PaymentMode;
 import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.accounting.events.administrativeOfficeFee.IAdministrativeOfficeFeeEvent;
@@ -50,8 +46,6 @@ import org.fenixedu.academic.domain.accounting.postingRules.IAdministrativeOffic
 import org.fenixedu.academic.domain.accounting.postingRules.PastAdministrativeOfficeFeeAndInsurancePR;
 import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
-import org.fenixedu.academic.domain.candidacy.Candidacy;
-import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
@@ -76,7 +70,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
     static {
         getRelationPersonAccountingEvent().addListener(new RelationAdapter<Party, Event>() {
             @Override public void beforeAdd(Party party, Event event) {
-                if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent && party != null && party instanceof Person) {
+                if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent && party instanceof Person) {
                     Person person = (Person) party;
                     final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent =
                             (AdministrativeOfficeFeeAndInsuranceEvent) event;
@@ -189,122 +183,8 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
         return dueDateAmountMap;
     }
 
-    @Override protected List<AccountingEventPaymentCode> createPaymentCodes() {
-        AccountingEventPaymentCode paymentCode = findPaymentCodeInStudentCandidacy();
-
-        if (paymentCode != null) {
-            paymentCode.setAccountingEvent(this);
-            return Collections.singletonList(paymentCode);
-
-        }
-
-        final Money totalAmount = calculateTotalAmount();
-        return Collections.singletonList(AccountingEventPaymentCode
-                .create(PaymentCodeType.ADMINISTRATIVE_OFFICE_FEE_AND_INSURANCE, new YearMonthDay(),
-                        calculatePaymentCodeEndDate(), this, totalAmount, totalAmount, getPerson()));
-    }
-
-    private AccountingEventPaymentCode findPaymentCodeInStudentCandidacy() {
-        if (getPerson().getStudent() == null) {
-            return null;
-        }
-
-        if (getPerson().getStudent().getActiveRegistrationsIn(getExecutionYear().getFirstExecutionPeriod()).size() != 1) {
-            return null;
-        }
-
-        StudentCandidacy studentCandidacy = getActiveDgesCandidacy(getPerson());
-
-        if (studentCandidacy == null) {
-            return null;
-        }
-
-        for (PaymentCode paymentCode : studentCandidacy.getAvailablePaymentCodesSet()) {
-            if (!paymentCode.isNew()) {
-                continue;
-            }
-
-            if (!paymentCode.getClass().equals(AccountingEventPaymentCode.class)) {
-                continue;
-            }
-
-            AccountingEventPaymentCode accountingEventPaymentCode = (AccountingEventPaymentCode) paymentCode;
-            if (accountingEventPaymentCode.getAccountingEvent() != null) {
-                continue;
-            }
-
-            if (!PaymentCodeType.ADMINISTRATIVE_OFFICE_FEE_AND_INSURANCE.equals(accountingEventPaymentCode.getType())) {
-                continue;
-            }
-
-            if (!getExecutionYear().containsDate(accountingEventPaymentCode.getStartDate().toDateTimeAtMidnight())) {
-                continue;
-            }
-
-            return accountingEventPaymentCode;
-        }
-
-        return null;
-    }
-
-    private StudentCandidacy getActiveDgesCandidacy(Person person) {
-        for (Candidacy candidacy : person.getCandidaciesSet()) {
-            if (!candidacy.isActive()) {
-                continue;
-            }
-
-            if (!(candidacy instanceof StudentCandidacy)) {
-                continue;
-            }
-
-            return (StudentCandidacy) candidacy;
-        }
-
-        return null;
-    }
-
-    @Override protected List<AccountingEventPaymentCode> updatePaymentCodes() {
-        final Money totalAmount = calculateTotalAmount();
-        final AccountingEventPaymentCode nonProcessedPaymentCode = getNonProcessedPaymentCode();
-
-        if (nonProcessedPaymentCode != null) {
-            nonProcessedPaymentCode.update(new YearMonthDay(), calculatePaymentCodeEndDate(), totalAmount, totalAmount);
-        } else {
-            final AccountingEventPaymentCode paymentCode = getCancelledPaymentCode();
-            if (paymentCode != null) {
-                paymentCode.update(new YearMonthDay(), calculatePaymentCodeEndDate(), totalAmount, totalAmount);
-                paymentCode.setState(PaymentCodeState.NEW);
-            }
-        }
-
-        return getNonProcessedPaymentCodes();
-    }
-
-    private AccountingEventPaymentCode getCancelledPaymentCode() {
-        return (getCancelledPaymentCodes().isEmpty() ? null : getCancelledPaymentCodes().iterator().next());
-    }
-
     private AccountingEventPaymentCode getNonProcessedPaymentCode() {
         return (getNonProcessedPaymentCodes().isEmpty() ? null : getNonProcessedPaymentCodes().iterator().next());
-    }
-
-    private YearMonthDay calculatePaymentCodeEndDate() {
-        final YearMonthDay today = new YearMonthDay();
-        final YearMonthDay administrativeOfficeFeePaymentLimitDate = getAdministrativeOfficeFeePaymentLimitDate();
-        return today.isBefore(
-                administrativeOfficeFeePaymentLimitDate) ? administrativeOfficeFeePaymentLimitDate : calculateNextEndDate(today);
-    }
-
-    private Money calculateTotalAmount() {
-        Money totalAmount = Money.ZERO;
-        for (final EntryDTO entryDTO : calculateEntries()) {
-            totalAmount = totalAmount.add(entryDTO.getAmountToPay());
-        }
-        return totalAmount;
-    }
-
-    public AccountingEventPaymentCode calculatePaymentCode() {
-        return calculatePaymentCodes().iterator().next();
     }
 
     @Override
@@ -324,7 +204,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
     }
 
     private List<EntryDTO> buildEntryDTOsFrom(final Money amountToPay) {
-        final List<EntryDTO> result = new ArrayList<EntryDTO>(2);
+        final List<EntryDTO> result = new ArrayList<>(2);
         Money insuranceAmountToDiscount = Money.ZERO;
         if (hasToPayInsurance()) {
             insuranceAmountToDiscount = getInsuranceAmount();
@@ -368,13 +248,10 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
     }
 
     public AdministrativeOfficeFeeAndInsurancePenaltyExemption getAdministrativeOfficeFeeAndInsurancePenaltyExemption() {
-        for (final Exemption exemption : getExemptionsSet()) {
-            if (exemption instanceof AdministrativeOfficeFeeAndInsurancePenaltyExemption) {
-                return (AdministrativeOfficeFeeAndInsurancePenaltyExemption) exemption;
-            }
-        }
+        return (AdministrativeOfficeFeeAndInsurancePenaltyExemption) getExemptionsSet().stream()
+                .filter(exemption -> exemption instanceof AdministrativeOfficeFeeAndInsurancePenaltyExemption)
+                .findFirst().orElse(null);
 
-        return null;
     }
 
     public boolean hasAdministrativeOfficeFeeAndInsuranceExemption() {
@@ -382,13 +259,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
     }
 
     public Exemption getAdministrativeOfficeFeeAndInsuranceExemption() {
-        for (final Exemption exemption : getExemptionsSet()) {
-            if (exemption.isForAdministrativeOfficeFee()) {
-                return exemption;
-            }
-        }
-
-        return null;
+        return getExemptionsSet().stream().filter(Exemption::isForAdministrativeOfficeFee).findFirst().orElse(null);
     }
 
     @Override public void setPaymentEndDate(YearMonthDay paymentEndDate) {
@@ -450,19 +321,8 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
         return result;
     }
 
-    @Override public Money calculateAmountToPay(DateTime whenRegistered) {
-        Money result = super.calculateAmountToPay(whenRegistered);
-        if (result.isZero()) {
-            return result;
-        }
-
-        result = result.subtract(getPerson().hasInsuranceEventFor(getExecutionYear()) ? getInsuranceAmount() : Money.ZERO);
-
-        return result.isPositive() ? result : Money.ZERO;
-    }
-
     @Override public Set<EntryType> getPossibleEntryTypesForDeposit() {
-        final Set<EntryType> result = new HashSet<EntryType>();
+        final Set<EntryType> result = new HashSet<>();
         result.add(EntryType.ADMINISTRATIVE_OFFICE_FEE);
         result.add(EntryType.INSURANCE_FEE);
 
@@ -486,15 +346,16 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
     }
 
     @Override public boolean isInState(final EventState eventState) {
-        if (eventState == EventState.OPEN) {
-            return isOpen();
-        } else if (eventState == EventState.CLOSED) {
-            return isClosed();
-        } else if (eventState == EventState.CANCELLED) {
-            return isCancelled();
-        } else {
-            throw new DomainException(
-                    "error.org.fenixedu.academic.domain.accounting.events.gratuity.DfaGratuityEvent.unexpected.state.to.test");
+        switch (eventState) {
+            case OPEN:
+                return isOpen();
+            case CLOSED:
+                return isClosed();
+            case CANCELLED:
+                return isCancelled();
+            default:
+                throw new DomainException(
+                        "error.org.fenixedu.academic.domain.accounting.events.gratuity.DfaGratuityEvent.unexpected.state.to.test");
         }
     }
 
@@ -503,14 +364,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
     }
 
     public Exemption getInsuranceExemption() {
-        for (final Exemption exemption : getExemptionsSet()) {
-            if (exemption.isForInsurance()) {
-                return exemption;
-            }
-        }
-
-        return null;
-
+        return getExemptionsSet().stream().filter(Exemption::isForInsurance).findFirst().orElse(null);
     }
 
     public boolean hasInsuranceExemption() {

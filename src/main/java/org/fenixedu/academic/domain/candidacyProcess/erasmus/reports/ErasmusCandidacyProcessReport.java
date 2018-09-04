@@ -63,12 +63,7 @@ public class ErasmusCandidacyProcessReport extends ErasmusCandidacyProcessReport
 
     public IndividualCandidacyDocumentFile getUploadedDocumentByType(Collection<IndividualCandidacyDocumentFile> documentsList,
             IndividualCandidacyDocumentFileType type) {
-        for (IndividualCandidacyDocumentFile document : documentsList) {
-            if (document.getCandidacyFileType().equals(type)) {
-                return document;
-            }
-        }
-        return null;
+        return documentsList.stream().filter(document -> document.getCandidacyFileType() == type).findFirst().orElse(null);
     }
 
     @SuppressWarnings("unused")
@@ -80,10 +75,10 @@ public class ErasmusCandidacyProcessReport extends ErasmusCandidacyProcessReport
         Boolean cv;
         Boolean transcript;
         Boolean englishLevel;
-        spreadsheet.setHeaders(new String[] { "N.º Processo", "IST ID", "Nome", "Genero", "Data Nascimento", "Nacionalidade",
-                "Universidade", "País da Universidade", "Programa", "Email", "Curso", "Data de chegada", "Data de partida",
-                "Estado", "Documentação Entregue Completa", "Foto", "Fotocópia do Passaporte ou do Cartão de Identificação",
-                "Acordo", "CV", "Registo Académico", "Nível Inglês" });
+        spreadsheet.setHeaders("N.º Processo", "IST ID", "Nome", "Genero", "Data Nascimento", "Nacionalidade", "Universidade",
+                "País da Universidade", "Programa", "Email", "Curso", "Data de chegada", "Data de partida", "Estado",
+                "Documentação Entregue Completa", "Foto", "Fotocópia do Passaporte ou do Cartão de Identificação", "Acordo", "CV",
+                "Registo Académico", "Nível Inglês");
 
         for (IndividualCandidacyProcess individualCandidacyProcess : getMobilityApplicationProcess().getChildProcessesSet()) {
             photo = false;

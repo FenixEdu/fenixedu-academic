@@ -41,12 +41,7 @@ public class PersonPaymentCodeGenerator extends PaymentCodeGenerator {
 
     @Override
     public boolean canGenerateNewCode(final PaymentCodeType paymentCodeType, final Person person) {
-        for (PaymentCode code : person.getPaymentCodesBy(paymentCodeType)) {
-            if (isCodeMadeByThisFactory(code)) {
-                return false;
-            }
-        }
-        return true;
+        return person.getPaymentCodesBy(paymentCodeType).stream().noneMatch(this::isCodeMadeByThisFactory);
     }
 
     @Override
@@ -54,7 +49,7 @@ public class PersonPaymentCodeGenerator extends PaymentCodeGenerator {
         String baseCode =
                 getPersonCodeDigits(person)
                         + StringUtils.leftPad(Integer.toString(paymentCodeType.getTypeDigit()), TYPE_CODE_LENGTH, CODE_FILLER);
-        baseCode = baseCode + Verhoeff.generateVerhoeff(baseCode);
+        baseCode += Verhoeff.generateVerhoeff(baseCode);
         if (baseCode.length() != CODE_LENGTH) {
             throw new RuntimeException("Unexpected code length for generated code");
         }

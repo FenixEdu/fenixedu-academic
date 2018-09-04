@@ -29,21 +29,17 @@ import org.joda.time.DateTime;
 import pt.ist.fenixframework.Atomic;
 
 public abstract class QueueJob extends QueueJob_Base {
-    public static enum Priority {
-        HIGH, NORMAL;
+    public enum Priority {
+        HIGH, NORMAL, LOW
     }
 
-    static final public Comparator<QueueJob> COMPARATORY_BY_REQUEST_DATE = new Comparator<QueueJob>() {
-        @Override
-        public int compare(QueueJob o1, QueueJob o2) {
-            return o2.getRequestDate().compareTo(o1.getRequestDate());
-        }
-    };
+    static final public Comparator<QueueJob> COMPARATORY_BY_REQUEST_DATE =
+            (o1, o2) -> o2.getRequestDate().compareTo(o1.getRequestDate());
 
     public QueueJob() {
         super();
-        this.setRequestDate(new DateTime());
-        setFailedCounter(new Integer(0));
+        setRequestDate(new DateTime());
+        setFailedCounter(0);
         setRootDomainObject(Bennu.getInstance());
         setRootDomainObjectQueueUndone(Bennu.getInstance());
         setDone(Boolean.FALSE);

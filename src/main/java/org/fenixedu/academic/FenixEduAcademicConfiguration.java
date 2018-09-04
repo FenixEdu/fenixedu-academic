@@ -136,6 +136,9 @@ public class FenixEduAcademicConfiguration {
 
         @ConfigurationProperty(key="use.global.interest.rate.table.for.event.penalties", defaultValue = "false")
         public boolean useGlobalInterestRateTableForEventPenalties();
+
+        @ConfigurationProperty(key="active.student.personal.data.authorization.choices", defaultValue = "NO_END")
+        public String activeStudentPersonalDataAuthorizationChoices();
     }
 
     public static ConfigurationProperties getConfiguration() {

@@ -20,21 +20,21 @@ package org.fenixedu.academic.service.services.residenceManagement;
 
 import java.util.Collection;
 
+import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 import org.fenixedu.academic.domain.accounting.ResidenceEvent;
 import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 
+import org.fenixedu.academic.domain.accounting.paymentCodes.EventPaymentCode;
+import org.fenixedu.academic.domain.accounting.paymentCodes.EventPaymentCodeEntry;
+import org.fenixedu.academic.domain.accounting.paymentCodes.PaymentCodePool;
+import org.joda.time.LocalDate;
 import pt.ist.fenixframework.Atomic;
 
 public class CreateResidencePaymentCodes {
 
     @Atomic
     public static void run(Collection<ResidenceEvent> events) {
-        for (ResidenceEvent event : events) {
-            AccountingEventPaymentCode
-                    .create(PaymentCodeType.RESIDENCE_FEE, event.getPaymentStartDate().toYearMonthDay(), event
-                            .getPaymentLimitDate().toYearMonthDay(), event, event.getRoomValue(), event.getRoomValue(), event
-                            .getPerson());
-        }
+        events.forEach(event -> EventPaymentCodeEntry.getOrCreate(event, event.getRoomValue(), new LocalDate()));
     }
 }

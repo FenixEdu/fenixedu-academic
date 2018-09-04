@@ -30,7 +30,6 @@ import org.fenixedu.academic.domain.accounting.AccountType;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventState;
 import org.fenixedu.academic.domain.accounting.EventType;
-import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -152,13 +151,7 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
     }
 
     public boolean hasGratuityExemption() {
-        for (final Exemption exemption : getExemptionsSet()) {
-            if (exemption instanceof GratuityExemption) {
-                return true;
-            }
-        }
-
-        return false;
+        return getExemptionsSet().stream().anyMatch(exemption -> exemption instanceof GratuityExemption);
     }
 
     public boolean hasExternalScholarshipGratuityExemption() {
@@ -166,13 +159,7 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
     }
 
     public boolean hasExemptionsOfType(Class cl) {
-        for (Exemption exemption : getExemptionsSet()) {
-            if (cl.isAssignableFrom(exemption.getClass())) {
-                return true;
-            }
-        }
-
-        return false;
+        return getExemptionsSet().stream().anyMatch(exemption -> cl.isAssignableFrom(exemption.getClass()));
     }
 
     public ExternalScholarshipGratuityExemption getExternalScholarshipGratuityExemption() {
@@ -181,13 +168,9 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
     }
 
     public GratuityExemption getGratuityExemption() {
-        for (final Exemption exemption : getExemptionsSet()) {
-            if (exemption instanceof GratuityExemption) {
-                return (GratuityExemption) exemption;
-            }
-        }
-
-        return null;
+        return (GratuityExemption) getExemptionsSet().stream()
+                .filter(exemption -> exemption instanceof GratuityExemption)
+                .findFirst().orElse(null);
     }
 
     private Money calculateTotalAmountToPayWithoutDiscount(final DateTime when) {
