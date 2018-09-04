@@ -19,6 +19,8 @@
 package org.fenixedu.academic.domain.curricularRules.executors;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class RuleResultMessage {
 
@@ -57,6 +59,10 @@ public class RuleResultMessage {
 
     public boolean isToTranslate() {
         return toTranslate;
+    }
+    
+    public String getMessageTranslated() {
+        return isToTranslate() ? BundleUtil.getString(Bundle.APPLICATION, getMessage(), getArgs()) : getMessage();
     }
 
     @Override
