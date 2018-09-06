@@ -613,5 +613,9 @@ public class Shift extends Shift_Base {
         }
         return false;
     }
+    
+    public Integer getVacancies() {
+        return getLotacao() - getStudentsSet().size();
+    }
 
 }
