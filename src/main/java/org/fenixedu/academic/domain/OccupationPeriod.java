@@ -24,12 +24,12 @@ package org.fenixedu.academic.domain;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.date.IntervalTools;
@@ -282,23 +282,15 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     }
 
     private static OccupationPeriod createNewPeriodWithExclusions(final YearMonthDay beginDate, final YearMonthDay endDate,
-            final OccupationPeriod result) {
-        final SortedSet<YearMonthDay> dates = new TreeSet<YearMonthDay>();
+            final OccupationPeriod existingPeriod) {
 
-        dates.add(beginDate);
-        dates.add(endDate);
+        final Interval newInterval = IntervalTools.getInterval(beginDate, endDate);
 
-        OccupationPeriod pop = result;
-        for (OccupationPeriod nop = result.getNextPeriod(); nop != null; pop = nop, nop = nop.getNextPeriod()) {
-            if (pop.getEndYearMonthDay().isAfter(beginDate) && pop.getEndYearMonthDay().isBefore(endDate)) {
-                dates.add(pop.getEndYearMonthDay());
-            }
-            if (nop.getStartYearMonthDay().isAfter(beginDate) && nop.getStartYearMonthDay().isBefore(endDate)) {
-                dates.add(nop.getStartYearMonthDay());
-            }
-        }
+        final List<Interval> result =
+                existingPeriod.getIntervals().stream().map(existingInterval -> existingInterval.overlap(newInterval))
+                        .filter(i -> i != null).sorted(Comparator.comparing(Interval::getStart)).collect(Collectors.toList());
 
-        return new OccupationPeriod(dates.toArray(new YearMonthDay[0]));
+        return new OccupationPeriod(result.iterator());
     }
 
     public boolean nestedOccupationPeriodsIntersectDates(YearMonthDay start, YearMonthDay end) {
