@@ -141,6 +141,8 @@ public class Registration extends Registration_Base {
 
     private static final Logger logger = LoggerFactory.getLogger(Registration.class);
 
+    public static final String REGISTRATION_PROCESS_COMPLETE = "academic.registration.process.complete";
+
     @Deprecated
     static private final java.util.function.Predicate<DegreeType> DEGREE_TYPES_TO_ENROL_BY_STUDENT = DegreeType.oneOf(
             DegreeType::isBolonhaDegree, DegreeType::isIntegratedMasterDegree, DegreeType::isBolonhaMasterDegree,
