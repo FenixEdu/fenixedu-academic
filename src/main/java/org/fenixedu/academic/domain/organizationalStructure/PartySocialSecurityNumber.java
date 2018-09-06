@@ -18,8 +18,11 @@
  */
 package org.fenixedu.academic.domain.organizationalStructure;
 
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
+
+import eu.europa.ec.taxud.tin.algorithm.TINValid;
 
 public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
 
@@ -70,6 +73,21 @@ public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
             }
         }
         return null;
+    }
+
+    public static boolean isValid(String socialSecurityNumber) {
+        socialSecurityNumber = StringUtils.trimToNull(socialSecurityNumber);
+        if (socialSecurityNumber != null && !StringUtils.isBlank(socialSecurityNumber)) {
+            final String tinCountryCode = socialSecurityNumber.length() > 2
+                    && Character.isAlphabetic(socialSecurityNumber.charAt(0))
+                    && Character.isAlphabetic(socialSecurityNumber.charAt(1)) ?
+                    socialSecurityNumber.substring(0, 2) : null;
+            if ("PT999999990".equals(socialSecurityNumber) || tinCountryCode == null || TINValid
+                    .checkTIN(tinCountryCode, socialSecurityNumber.substring(2)) != 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
