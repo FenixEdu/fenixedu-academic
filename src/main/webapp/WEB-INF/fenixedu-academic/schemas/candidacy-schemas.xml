@@ -491,14 +491,7 @@
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
     </slot>
     <slot name="socialSecurityNumber">
-    	<property name="size" value="11"/>
-		<property name="maxLength" value="11"/>
-		 <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\d{9}|PT\d{9})?"/>
-            <property name="message" value="error.socialSecurityNumber.invalidFormat"/>
-            <property name="key" value="true"/>
-            <property name="bundle" value="CANDIDATE_RESOURCES" />
-        </validator>
+		 <validator class="org.fenixedu.academic.ui.renderers.validators.SocialSecurityNumberValidator"/>
     </slot>
     <slot name="professionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ActiveProfessionTypeProvider" />
