@@ -28,7 +28,7 @@ import org.fenixedu.academic.util.StudentPersonalDataAuthorizationChoice;
 public class InquiryAboutYieldingPersonalDataForm extends Form {
 
     private StudentPersonalDataAuthorizationChoice personalDataAuthorizationChoice;
-    private boolean personalDataAuthorizationForStudentsAssociation = true;
+    private Boolean interestedInSpecialNeedsInformation = null;
 
     public InquiryAboutYieldingPersonalDataForm() {
         super();
@@ -47,18 +47,14 @@ public class InquiryAboutYieldingPersonalDataForm extends Form {
         this.personalDataAuthorizationChoice = personalDataAuthorizationChoice;
     }
 
-    public void setPersonalDataAuthorizationForStudentsAssociation(boolean personalDataAuthorizationForStudentsAssociation) {
-        this.personalDataAuthorizationForStudentsAssociation = personalDataAuthorizationForStudentsAssociation;
+    public void setInterestedInSpecialNeedsInformation(Boolean interestedInSpecialNeedsInformation) {
+        this.interestedInSpecialNeedsInformation = interestedInSpecialNeedsInformation;
     }
 
-    public boolean isPersonalDataAuthorizationForStudentsAssociation() {
-        return personalDataAuthorizationForStudentsAssociation;
+    public Boolean getInterestedInSpecialNeedsInformation() {
+        return interestedInSpecialNeedsInformation;
     }
 
-    public StudentPersonalDataAuthorizationChoice getPersonalDataAuthorizationForStudentsAssociation() {
-        return StudentPersonalDataAuthorizationChoice
-                .getPersonalDataAuthorizationForStudentsAssociationType(isPersonalDataAuthorizationForStudentsAssociation());
-    }
 
     @Override
     public List<LabelFormatter> validate() {

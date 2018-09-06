@@ -766,14 +766,14 @@
     <slot name="homepageAvailable" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
 
-<schema name="InquiryAboutYieldingPersonalDataForm" type="org.fenixedu.academic.domain.candidacy.workflow.form.InquiryAboutYieldingPersonalDataForm" bundle="CANDIDATE_RESOURCES">	
-	<slot name="personalDataAuthorizationForStudentsAssociation" layout="radio" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+<schema name="InquiryAboutYieldingPersonalDataForm" type="org.fenixedu.academic.domain.candidacy.workflow.form.InquiryAboutYieldingPersonalDataForm" bundle="CANDIDATE_RESOURCES">
+	<slot name="personalDataAuthorizationChoice" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.student.PersonalDataAuthorizationProvider" />
+	</slot>
+	<slot name="interestedInSpecialNeedsInformation" layout="radio" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
 		<property name="trueLabel" value="label.true" />
 		<property name="falseLabel" value="label.false" />
 		<property name="bundle" value="APPLICATION_RESOURCES" />
-	</slot>
-	<slot name="personalDataAuthorizationChoice" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
-		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.student.PersonalDataAuthorizationProvider" />
 	</slot>
 </schema>
 
