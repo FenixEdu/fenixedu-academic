@@ -2085,12 +2085,14 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
             ProfessionalSituationConditionType spouseProfessionalCondition;
             
             Boolean firstTimeCandidacy;
+            Boolean interestedInSpecialNeedsInformation;
         }
 
             class candidacy.DFACandidacy extends candidacy.StudentCandidacy {
             }
 
             class candidacy.DegreeCandidacy extends candidacy.StudentCandidacy {
+
             }
 
             class candidacy.IMDCandidacy extends candidacy.StudentCandidacy {
