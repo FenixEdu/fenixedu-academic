@@ -127,7 +127,6 @@ public class PersonalInformationForm extends Form {
         final List<LabelFormatter> result = new ArrayList<LabelFormatter>();
 
         checkGrantOwnerType(result);
-        validateSocialSecurityNumber(result);
         validateIdDocument(result);
         return result;
     }
@@ -149,15 +148,6 @@ public class PersonalInformationForm extends Form {
                     result.add(new LabelFormatter().appendLabel(de.getMessage(), Bundle.APPLICATION));
                 }
             }
-        }
-    }
-
-    private void validateSocialSecurityNumber(List<LabelFormatter> result) {
-        final Party party = PartySocialSecurityNumber.readPartyBySocialSecurityNumber(socialSecurityNumber);
-        final User user = User.findByUsername(username);
-        if (party != null && party != user.getPerson()) {
-            result.add(new LabelFormatter().appendLabel(
-                    "error.candidacy.workflow.PersonalInformationForm.socialSecurityNumber.already.exists", Bundle.CANDIDATE));
         }
     }
 
