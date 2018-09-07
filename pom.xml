@@ -24,7 +24,7 @@
         <version.com.googlecode.libphonenumber.libphonenumber>8.2.0</version.com.googlecode.libphonenumber.libphonenumber>
         <version.com.lowagie.itext>2.0.8</version.com.lowagie.itext>
         <version.com.sun.mail.javax.mail>1.5.6</version.com.sun.mail.javax.mail>
-        <version.com.twilio.sdk.twilio-java-sdk>3.3.9</version.com.twilio.sdk.twilio-java-sdk>
+        <version.com.twilio.sdk.twilio-java-sdk>7.24.2</version.com.twilio.sdk.twilio-java-sdk>
         <version.commons-beanutils.commons-beanutils>1.9.3</version.commons-beanutils.commons-beanutils>
         <version.commons-collections.commons-collections>3.2.2</version.commons-collections.commons-collections>
         <version.commons-httpclient.commons-httpclient>3.1</version.commons-httpclient.commons-httpclient>
@@ -233,7 +233,7 @@
         </dependency>
         <dependency>
             <groupId>com.twilio.sdk</groupId>
-            <artifactId>twilio-java-sdk</artifactId>
+            <artifactId>twilio</artifactId>
             <version>${version.com.twilio.sdk.twilio-java-sdk}</version>
         </dependency>
         <dependency>

@@ -18,9 +18,21 @@
  */
 package org.fenixedu.academic.ui.struts.action.externalServices;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
+import com.twilio.Twilio;
+import com.twilio.exception.AuthenticationException;
+import com.twilio.exception.TwilioException;
+import com.twilio.http.HttpMethod;
+import com.twilio.http.Request;
+import com.twilio.http.TwilioRestClient;
+import com.twilio.rest.api.v2010.account.Call;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.rest.api.v2010.account.MessageCreator;
+import com.twilio.type.PhoneNumber;
 
 import org.apache.commons.httpclient.Credentials;
 import org.apache.commons.httpclient.HttpClient;
@@ -37,24 +49,23 @@ import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import com.twilio.sdk.TwilioRestClient;
-import com.twilio.sdk.TwilioRestException;
-import com.twilio.sdk.resource.factory.CallFactory;
-import com.twilio.sdk.resource.instance.Account;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.stream.Stream;
 
 public class PhoneValidationUtils {
     private static final Logger logger = LoggerFactory.getLogger(PhoneValidationUtils.class);
 
-    private String TWILIO_FROM_NUMBER;
     private TwilioRestClient TWILIO_CLIENT;
     private String CIIST_SMS_GATEWAY_URL;
     private HttpClient CIIST_CLIENT;
 
     private static PhoneValidationUtils instance;
+    private static final String TWILIO_SID = FenixEduAcademicConfiguration.getConfiguration().getTwilioSid();
+    private static final String TWILIO_STOKEN = FenixEduAcademicConfiguration.getConfiguration().getTwilioStoken();
+    private static final String TWILIO_DEFAULT_MESSAGING_SERVICE_SID = FenixEduAcademicConfiguration.getConfiguration().getTwilioDefaultMessagingServiceSid();
+    private static final String TWILIO_FROM_NUMBER = FenixEduAcademicConfiguration.getConfiguration().getTwilioFromNumber();
 
     public static PhoneValidationUtils getInstance() {
         if (instance == null) {
@@ -85,23 +96,28 @@ public class PhoneValidationUtils {
     }
 
     private void initTwilio() {
-        final String TWILIO_SID = FenixEduAcademicConfiguration.getConfiguration().getTwilioSid();
-        final String TWILIO_STOKEN = FenixEduAcademicConfiguration.getConfiguration().getTwilioStoken();
-        final String URL = "/" + TwilioRestClient.DEFAULT_VERSION + "/Accounts/" + TWILIO_SID + ".json";
-        TWILIO_FROM_NUMBER = FenixEduAcademicConfiguration.getConfiguration().getTwilioFromNumber();
-        if (!StringUtils.isEmpty(TWILIO_SID) && !StringUtils.isEmpty(TWILIO_STOKEN) && !StringUtils.isEmpty(TWILIO_FROM_NUMBER)) {
-            TWILIO_CLIENT = new TwilioRestClient(TWILIO_SID, TWILIO_STOKEN);
+        try {
+            Twilio.init(TWILIO_SID, TWILIO_STOKEN);
+            TWILIO_CLIENT = Twilio.getRestClient();
+        }
+        catch (AuthenticationException e) {
+            logger.error("Failed authenticate on Twilio initialization: " + e.getMessage(), e);
+            return;
+        }
+
+        if (Stream.of(TWILIO_SID, TWILIO_STOKEN, TWILIO_FROM_NUMBER).noneMatch(StringUtils::isEmpty)) {
+            final String TWILIO_ACCOUNT_URL = String.format("/2010-04-01/Accounts/%s.json", TWILIO_SID);
+
             SystemResource.registerHealthcheck(new Healthcheck() {
                 private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-                @Override
-                public String getName() {
+                @Override public String getName() {
                     return "Twilio";
                 }
 
-                @Override
-                protected Result check() throws Exception {
-                    JsonElement json = new JsonParser().parse(TWILIO_CLIENT.get(URL).getResponseText());
+                @Override protected Result check() throws Exception {
+                    JsonElement json = new JsonParser()
+                            .parse(TWILIO_CLIENT.request(new Request(HttpMethod.GET, TWILIO_ACCOUNT_URL)).getContent());
                     return Result.healthy(gson.toJson(json));
                 }
             });
@@ -122,24 +138,58 @@ public class PhoneValidationUtils {
 
     public boolean makeCall(String phoneNumber, String code, String lang) {
         if (canRun()) {
-            final Account account = TWILIO_CLIENT.getAccount(); // Make a call
-            CallFactory callFactory = account.getCallFactory();
-            Map<String, String> callParams = new HashMap<String, String>();
-            callParams.put("To", phoneNumber);
-            callParams.put("From", TWILIO_FROM_NUMBER);
-            callParams.put("Url", CoreConfiguration.getConfiguration().applicationUrl()
-                    + "/external/partyContactValidation.do?method=validatePhone&code=" + code + "&lang=" + lang);
             try {
-                callFactory.create(callParams);
+                Call.creator(new PhoneNumber(phoneNumber), new PhoneNumber(TWILIO_FROM_NUMBER),
+                        new URI(CoreConfiguration.getConfiguration().applicationUrl()
+                                + "/external/partyContactValidation.do?method=validatePhone&code=" + code + "&lang=" + lang))
+                        .create(TWILIO_CLIENT);
                 return true;
-            } catch (TwilioRestException e) {
+            }
+            catch (URISyntaxException | TwilioException e) {
                 logger.error("Error makeCall: " + e.getMessage(), e);
                 return false;
             }
-        } else {
+        }
+        else {
             logger.info("Call to >" + phoneNumber + "<: Bem-vindo ao sistema Fénix. Introduza o código " + code + " . Obrigado!");
             return true;
         }
+    }
+
+    /**
+     *
+     * Send an SMS using the Twilio API via a specific Messaging Service
+     *
+     * @param toNumber The phone number of the recipient
+     * @param from The phone number or custom name of the sender
+     * @param messagingServiceSid The Messaging Service SID
+     * @param message The body of the message
+     *
+     * @return the SID of the created message or null if no message was sent
+     *
+     */
+    public String sendTwilioSMS(String toNumber, String fromName, String messagingServiceSid, String message) {
+        if (canRun()) {
+            return Message.creator(new PhoneNumber(toNumber), new PhoneNumber(fromName), message)
+                    .setMessagingServiceSid(messagingServiceSid)
+                    .create(TWILIO_CLIENT).getSid();
+        }
+        return null;
+    }
+
+    /**
+     *
+     * Send an SMS using the TWilio API
+     *
+     * @param toNumber The phone number of the recipient
+     * @param from The phone number or custom name of the sender
+     * @param message The body of the message
+     *
+     * @return the SID of the created message or null if no message was sent
+     *
+     */
+    public String sendTwilioSMS(String toNumber, String from, String message) {
+        return sendTwilioSMS(toNumber, from, TWILIO_DEFAULT_MESSAGING_SERVICE_SID, message);
     }
 
     public boolean sendSMS(String number, String token) {
