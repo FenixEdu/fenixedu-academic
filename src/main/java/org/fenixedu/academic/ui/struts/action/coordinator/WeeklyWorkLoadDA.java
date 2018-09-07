@@ -43,6 +43,7 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.util.PeriodState;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -136,7 +137,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
     @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException {
-        final Collection<ExecutionSemester> executionSemesters = rootDomainObject.getExecutionPeriodsSet();
+        final Collection<ExecutionSemester> executionSemesters = Bennu.getInstance().getExecutionPeriodsSet();
         final Set<ExecutionSemester> sortedExecutionPeriods = new TreeSet<ExecutionSemester>(executionSemesters);
         request.setAttribute("executionPeriods", sortedExecutionPeriods);
 
@@ -155,7 +156,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         }
         request.setAttribute("executionDegrees", executionDegrees);
 
-        final Set<CurricularYear> curricularYears = new TreeSet<CurricularYear>(rootDomainObject.getCurricularYearsSet());
+        final Set<CurricularYear> curricularYears = new TreeSet<CurricularYear>(Bennu.getInstance().getCurricularYearsSet());
         request.setAttribute("curricularYears", curricularYears);
 
         final Set<ExecutionCourse> executionCourses =

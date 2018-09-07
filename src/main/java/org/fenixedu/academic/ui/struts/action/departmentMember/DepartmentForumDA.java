@@ -35,6 +35,7 @@ import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.departmentMember.DepartmentMemberApp.DepartmentMemberDepartmentApp;
 import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.academic.ui.struts.action.messaging.ForunsManagement;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -62,7 +63,7 @@ public class DepartmentForumDA extends ForunsManagement {
             throws FenixActionException, FenixServiceException {
         List<DepartmentForum> foruns = new ArrayList<DepartmentForum>();
         Person loggedPerson = getLoggedPerson(request);
-        for (Department department : rootDomainObject.getDepartmentsSet()) {
+        for (Department department : Bennu.getInstance().getDepartmentsSet()) {
             if (belongsPersonWithDepartment(loggedPerson, department)) {
                 foruns.add(department.getDepartmentForum());
             }

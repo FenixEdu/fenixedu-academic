@@ -65,6 +65,7 @@ import org.fenixedu.academic.ui.struts.action.commons.ects.EctsTableLevel;
 import org.fenixedu.academic.ui.struts.action.commons.ects.EctsTableType;
 import org.fenixedu.academic.ui.struts.action.gep.GepApplication.GepPortalApp;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -312,7 +313,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
     private Set<IEctsConversionTable> processEnrolmentByCompetenceCourseStatus(EctsTableFilter filter) {
         ExecutionYear year = (ExecutionYear) ExecutionYear.getExecutionInterval(filter.getExecutionInterval());
         Set<IEctsConversionTable> tables = new HashSet<IEctsConversionTable>();
-        for (CompetenceCourse competenceCourse : rootDomainObject.getCompetenceCoursesSet()) {
+        for (CompetenceCourse competenceCourse : Bennu.getInstance().getCompetenceCoursesSet()) {
             if ((competenceCourse.getCurricularStage() == CurricularStage.PUBLISHED || competenceCourse.getCurricularStage() == CurricularStage.APPROVED)
                     && competenceCourse.hasActiveScopesInExecutionYear(year)) {
                 EctsCompetenceCourseConversionTable table =
@@ -392,7 +393,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
     private Set<IEctsConversionTable> processEnrolmentByDegreeStatus(EctsTableFilter filter) {
         ExecutionYear year = (ExecutionYear) ExecutionYear.getExecutionInterval(filter.getExecutionInterval());
         Set<IEctsConversionTable> tables = new HashSet<IEctsConversionTable>();
-        for (Degree degree : rootDomainObject.getDegreesSet()) {
+        for (Degree degree : Bennu.getInstance().getDegreesSet()) {
             if (degree.getDegreeCurricularPlansExecutionYears().contains(year)
                     && (degree.getDegreeType().isBolonhaDegree() || degree.getDegreeType().isBolonhaMasterDegree()
                             || degree.getDegreeType().isIntegratedMasterDegree() || degree.getDegreeType()
@@ -561,7 +562,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
     private Set<IEctsConversionTable> processGraduationByDegreeStatus(EctsTableFilter filter) {
         ExecutionYear year = (ExecutionYear) ExecutionYear.getExecutionInterval(filter.getExecutionInterval());
         Set<IEctsConversionTable> tables = new HashSet<IEctsConversionTable>();
-        for (Degree degree : rootDomainObject.getDegreesSet()) {
+        for (Degree degree : Bennu.getInstance().getDegreesSet()) {
             if (degree.getDegreeCurricularPlansExecutionYears().contains(year)
                     && (degree.getDegreeType().isBolonhaDegree() || degree.getDegreeType().isBolonhaMasterDegree()
                             || degree.getDegreeType().isIntegratedMasterDegree() || degree.getDegreeType()

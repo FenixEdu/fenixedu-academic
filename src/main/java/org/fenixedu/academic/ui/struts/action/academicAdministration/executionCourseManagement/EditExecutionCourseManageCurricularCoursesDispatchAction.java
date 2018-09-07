@@ -55,6 +55,7 @@ import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
 import org.fenixedu.academic.ui.struts.action.utils.RequestUtils;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -203,7 +204,7 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
             final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
             final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
             final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
-            for (final DegreeModule degreeModule : rootDomainObject.getDegreeModulesSet()) {
+            for (final DegreeModule degreeModule : Bennu.getInstance().getDegreeModulesSet()) {
                 if (degreeModule instanceof CurricularCourse) {
                     final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
                     if (!executionCourse.getAssociatedCurricularCoursesSet().contains(curricularCourse)

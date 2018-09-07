@@ -18,6 +18,14 @@
  */
 package org.fenixedu.academic.ui.struts.action.candidate.degree;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -44,15 +52,10 @@ import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/degreeCandidacyManagement", module = "candidate", functionality = ViewCandidaciesDispatchAction.class)
 @Forwards({ @Forward(name = "showWelcome", path = "/candidate/degree/showWelcome.jsp"),
@@ -61,6 +64,19 @@ import java.util.TreeSet;
         @Forward(name = "showData", path = "/candidate/degree/showData.jsp"),
         @Forward(name = "showOperationFinished", path = "/candidate/degree/showOperationFinished.jsp") })
 public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction {
+
+    public interface FinalStepRedirector {
+        public ActionForward finalStep(HttpServletRequest request, HttpServletResponse response, StudentCandidacy candidacy);
+    }
+
+    public static class DefaultFinalStepRedirector implements FinalStepRedirector {
+
+        @Override
+        public ActionForward finalStep(HttpServletRequest request, HttpServletResponse response, StudentCandidacy candidacy) {
+            return new ActionForward(null, buildSummaryPdfGeneratorURL(request, getCandidacy(request)), true, "/student");        }
+    }
+
+    public static FinalStepRedirector finalStepRedirector = new DefaultFinalStepRedirector();
 
     private static final Logger logger = LoggerFactory.getLogger(DegreeCandidacyManagementDispatchAction.class);
 
@@ -119,18 +135,19 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
         } else {
             final StudentCandidacy candidacy = getCandidacy(request);
             if (candidacy.isConcluded()) {
-                request.setAttribute("candidacyID", candidacy.getExternalId());
-
-                addActionMessage(request, "warning.candidacy.process.is.already.concluded");
-
-                return showCandidacyDetails(mapping, actionForm, request, response);
+                return redirectToConclusionStep(request, response, candidacy);
             }
 
             executeOperation(mapping, actionForm, request, response, operation);
             LogFirstTimeCandidacyTimestamp.logTimestamp(candidacy, FirstTimeCandidacyStage.FINISHED_FILLING_FORMS);
 
-            return new ActionForward(null, buildSummaryPdfGeneratorURL(request, getCandidacy(request)), true, "/student");
+            return redirectToConclusionStep(request, response, candidacy);
         }
+    }
+
+    private ActionForward redirectToConclusionStep(HttpServletRequest request, HttpServletResponse response, StudentCandidacy
+            candidacy) {
+        return finalStepRedirector.finalStep(request, response, candidacy);
     }
 
     private boolean validateCurrentForm(HttpServletRequest request) {
@@ -197,8 +214,10 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
         return request.getParameter("postback") != null && Boolean.valueOf(request.getParameter("postback")).equals(Boolean.TRUE);
     }
 
-    private StudentCandidacy getCandidacy(HttpServletRequest request) {
-        return getDomainObject(request, "candidacyID");
+    private static StudentCandidacy getCandidacy(HttpServletRequest request) {
+        final String parameter = request.getParameter("candidacyID");
+        return (StudentCandidacy) FenixFramework
+                .getDomainObject(parameter != null ? parameter : (String) request.getAttribute("candidacyID"));
     }
 
     private Integer getCurrentFormPosition(HttpServletRequest request) {
@@ -215,7 +234,8 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
         return CandidacyOperationType.valueOf(getFromRequest(request, "operationType").toString());
     }
 
-    private String buildSummaryPdfGeneratorURL(HttpServletRequest request, final StudentCandidacy candidacy) {
+    private static String buildSummaryPdfGeneratorURL(HttpServletRequest request, final StudentCandidacy candidacy) {
+
         String url = "/student/firstTimeCandidacyDocuments.do?method=generateDocuments&candidacyID=" + candidacy.getExternalId();
         String urlWithChecksum =
                 GenericChecksumRewriter.injectChecksumInUrl(request.getContextPath(), url, request.getSession(false));

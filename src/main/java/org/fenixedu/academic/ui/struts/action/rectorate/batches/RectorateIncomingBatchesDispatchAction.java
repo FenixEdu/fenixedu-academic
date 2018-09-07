@@ -37,6 +37,7 @@ import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRe
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.commons.documentRequestExcel.DocumentRequestExcelUtils;
 import org.fenixedu.academic.ui.struts.action.commons.zip.ZipUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -56,7 +57,7 @@ public class RectorateIncomingBatchesDispatchAction extends FenixDispatchAction 
             HttpServletResponse response) {
         Set<RectorateSubmissionBatch> batches = new HashSet<RectorateSubmissionBatch>();
         for (RectorateSubmissionBatch batch : RectorateSubmissionBatch.getRectorateSubmissionBatchesByState(
-                rootDomainObject.getAdministrativeOfficesSet(), RectorateSubmissionState.SENT)) {
+                Bennu.getInstance().getAdministrativeOfficesSet(), RectorateSubmissionState.SENT)) {
             if (!getRelevantDocuments(batch.getDocumentRequestSet()).isEmpty()) {
                 batches.add(batch);
             }

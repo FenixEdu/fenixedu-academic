@@ -48,6 +48,7 @@ import org.fenixedu.academic.ui.struts.action.exceptions.NonExistingActionExcept
 import org.fenixedu.academic.ui.struts.action.publico.spaces.FindSpacesDA;
 import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
 import org.fenixedu.academic.util.PeriodState;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -147,7 +148,7 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
                 i++;
             }
 
-            final Collection<ExecutionSemester> executionSemesters = rootDomainObject.getExecutionPeriodsSet();
+            final Collection<ExecutionSemester> executionSemesters = Bennu.getInstance().getExecutionPeriodsSet();
             final List<LabelValueBean> executionPeriodLabelValueBeans = new ArrayList<LabelValueBean>();
             for (final ExecutionSemester ep : executionSemesters) {
                 if (ep.getState().equals(PeriodState.OPEN) || ep.getState().equals(PeriodState.CURRENT)) {

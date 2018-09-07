@@ -56,6 +56,7 @@ import org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisPresentat
 import org.fenixedu.academic.ui.struts.action.scientificCouncil.ScientificCouncilApplication.ScientificDisserationsApp;
 import org.fenixedu.academic.ui.struts.action.student.thesis.ThesisFileBean;
 import org.fenixedu.academic.util.report.ReportsUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -468,13 +469,13 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
     }
 
     private Iterable<Thesis> iteratableOfThesis(final ExecutionYear executionYear) {
-        return toIterable(rootDomainObject.getThesesSet().stream()
+        return toIterable(Bennu.getInstance().getThesesSet().stream()
                 .filter(t -> t.getEnrolment() != null)
                 .filter(t -> t.getEnrolment().getExecutionYear() == executionYear));
     }
 
     private Iterable<ThesisEvaluationParticipant> iteratableOfThesisParticipation(final ExecutionYear executionYear) {
-        return toIterable(rootDomainObject.getThesesSet().stream()
+        return toIterable(Bennu.getInstance().getThesesSet().stream()
                 .filter(t -> t.getEnrolment() != null)
                 .filter(t -> t.getEnrolment().getExecutionYear() == executionYear)
                 .flatMap(t -> t.getParticipationsSet().stream()));
