@@ -70,6 +70,14 @@
 	</ul>
 </fr:hasMessages>
 
+<logic:equal name="currentFormPosition" value="1">
+	<%@include file="/candidate/degree/firstTimeCandidacyStep1ExtraInfo.jsp"%>
+</logic:equal>
+
+<logic:equal name="currentFormPosition" value="7">
+	<%@include file="/candidate/degree/firstTimeCandidacyStep7ExtraInfo.jsp"%>
+</logic:equal>
+
 <fr:form action="<%="/degreeCandidacyManagement.do?method=processForm&currentFormPosition=" + currentFormPosition%>">
 
 	<bean:define id="isInputForm" name="currentForm" property="input" />
