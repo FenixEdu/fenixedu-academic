@@ -114,6 +114,9 @@ public class FenixEduAcademicConfiguration {
         @ConfigurationProperty(key = "twilio.stoken")
         public String getTwilioStoken();
 
+        @ConfigurationProperty(key = "twilio.default.messaging.service.sid")
+        public String getTwilioDefaultMessagingServiceSid();
+
         @ConfigurationProperty(key = "webServices.internationalRegistration.username")
         public String getWebServicesInternationalRegistrationUsername();
 
