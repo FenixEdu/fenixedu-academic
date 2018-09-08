@@ -45,12 +45,6 @@ public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
         if (socialSecurityNumber == null || socialSecurityNumber.length() == 0) {
             throw new DomainException("error.PartySocialSecurityNumber.invalid.socialSecurityNumber");
         }
-
-        for (final PartySocialSecurityNumber securityNumber : Bennu.getInstance().getPartySocialSecurityNumbersSet()) {
-            if (securityNumber != this && securityNumber.hasSocialSecurityNumber(socialSecurityNumber)) {
-                throw new DomainException("error.PartySocialSecurityNumber.number.already.exists");
-            }
-        }
     }
 
     public boolean hasSocialSecurityNumber(String socialSecurityNumber) {

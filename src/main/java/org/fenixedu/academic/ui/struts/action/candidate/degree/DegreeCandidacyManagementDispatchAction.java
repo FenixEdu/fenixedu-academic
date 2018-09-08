@@ -30,6 +30,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.candidacy.Candidacy;
 import org.fenixedu.academic.domain.candidacy.CandidacyOperationType;
 import org.fenixedu.academic.domain.candidacy.CandidacySummaryFile;
 import org.fenixedu.academic.domain.candidacy.FirstTimeCandidacyStage;
@@ -47,6 +48,7 @@ import org.fenixedu.academic.ui.struts.action.candidate.ViewCandidaciesDispatchA
 import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.signals.Signal;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -64,6 +66,26 @@ import pt.ist.fenixframework.FenixFramework;
         @Forward(name = "showData", path = "/candidate/degree/showData.jsp"),
         @Forward(name = "showOperationFinished", path = "/candidate/degree/showOperationFinished.jsp") })
 public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction {
+
+    public static final String FORM_POSITION_SIGNAL = "DegreeCandidacyManagementDispatchAction.form.position.signal";
+
+    public static class FormPositionEvent {
+        private final int position;
+        private final Candidacy candidacy;
+
+        public FormPositionEvent(int position, Candidacy candidacy) {
+            this.position = position;
+            this.candidacy = candidacy;
+        }
+
+        public int getPosition() {
+            return position;
+        }
+
+        public Candidacy getCandidacy() {
+            return candidacy;
+        }
+    }
 
     public interface FinalStepRedirector {
         public ActionForward finalStep(HttpServletRequest request, HttpServletResponse response, StudentCandidacy candidacy);
@@ -119,7 +141,8 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 
     public ActionForward processForm(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
-        request.setAttribute("candidacy", getCandidacy(request));
+        StudentCandidacy candidacy = getCandidacy(request);
+        request.setAttribute("candidacy", candidacy);
 
         final CandidacyOperation operation =
                 (CandidacyOperation) RenderUtils.getViewState("operation-view-state").getMetaObject().getObject();
@@ -129,11 +152,12 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
             return mapping.findForward("fillData");
         }
 
+        Signal.emit(FORM_POSITION_SIGNAL, new FormPositionEvent(getIntegerFromRequest(request, "currentFormPosition"), candidacy));
+
         if (operation.hasMoreForms()) {
             request.setAttribute("currentForm", operation.moveToNextForm());
             return mapping.findForward("fillData");
         } else {
-            final StudentCandidacy candidacy = getCandidacy(request);
             if (candidacy.isConcluded()) {
                 return redirectToConclusionStep(request, response, candidacy);
             }
