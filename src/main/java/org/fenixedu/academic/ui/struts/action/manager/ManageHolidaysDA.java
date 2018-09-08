@@ -35,6 +35,7 @@ import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.manager.DeleteHoliday;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.manager.ManagerApplications.ManagerPeopleApp;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -110,7 +111,7 @@ public class ManageHolidaysDA extends FenixDispatchAction {
 
     @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-        final Set<Holiday> holidays = rootDomainObject.getHolidaysSet();
+        final Set<Holiday> holidays = Bennu.getInstance().getHolidaysSet();
         request.setAttribute("holidays", holidays);
         return mapping.findForward("showHolidays");
     }

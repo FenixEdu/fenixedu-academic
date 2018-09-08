@@ -49,6 +49,7 @@ import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.dto.GenericPair;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.RAMApplication.RAMFirstYearShiftsApp;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -338,7 +339,7 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
     }
 
     private Shift readShiftByName(String shiftName) {
-        for (final Shift shift : rootDomainObject.getShiftsSet()) {
+        for (final Shift shift : Bennu.getInstance().getShiftsSet()) {
             if (shift.getNome().equals(shiftName)) {
                 return shift;
             }

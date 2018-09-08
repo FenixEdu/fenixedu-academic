@@ -31,6 +31,7 @@ import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.QueueJob;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.manager.ManagerApplications.ManagerSystemManagementApp;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -46,7 +47,7 @@ public class UndoneQueueJobsDA extends FenixDispatchAction {
     public ActionForward prepareUndoneQueueJobList(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
-        Collection<QueueJob> allJobs = rootDomainObject.getQueueJobSet();
+        Collection<QueueJob> allJobs = Bennu.getInstance().getQueueJobSet();
         List<QueueJob> queueJobs = new ArrayList<QueueJob>();
 
         for (QueueJob job : allJobs) {

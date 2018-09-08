@@ -44,7 +44,6 @@ import org.fenixedu.academic.service.services.commons.ExecuteFactoryMethod;
 import org.fenixedu.academic.service.services.commons.FactoryExecutor;
 import org.fenixedu.academic.ui.struts.action.commons.FenixActionForward;
 import org.fenixedu.academic.util.LabelFormatter;
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
@@ -65,7 +64,6 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 
     private static final Logger logger = LoggerFactory.getLogger(FenixDispatchAction.class);
 
-    protected static final Bennu rootDomainObject = Bennu.getInstance();
     protected static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
 
     @Override

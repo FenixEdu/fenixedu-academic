@@ -43,6 +43,7 @@ import org.fenixedu.academic.service.services.student.CreateWeeklyWorkLoad;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.student.StudentApplication.StudentParticipateApp;
 import org.fenixedu.academic.util.PeriodState;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -124,7 +125,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException {
 
-        final Collection<ExecutionSemester> executionSemesters = rootDomainObject.getExecutionPeriodsSet();
+        final Collection<ExecutionSemester> executionSemesters = Bennu.getInstance().getExecutionPeriodsSet();
         final Set<ExecutionSemester> sortedExecutionPeriods = new TreeSet<ExecutionSemester>(executionSemesters);
         request.setAttribute("executionPeriods", sortedExecutionPeriods);
 

@@ -39,6 +39,7 @@ import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdm
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.util.renderer.GanttDiagram;
 import org.fenixedu.academic.util.renderer.GanttDiagramEvent;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -88,7 +89,7 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
     public ActionForward prepareChooseCalendar(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Collection<AcademicCalendarRootEntry> academicCalendars = rootDomainObject.getAcademicCalendarsSet();
+        Collection<AcademicCalendarRootEntry> academicCalendars = Bennu.getInstance().getAcademicCalendarsSet();
         request.setAttribute("academicCalendars", academicCalendars);
 
         return mapping.findForward("prepareChooseCalendar");

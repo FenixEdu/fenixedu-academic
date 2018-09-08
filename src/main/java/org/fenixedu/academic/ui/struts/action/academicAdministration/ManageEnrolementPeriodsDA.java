@@ -118,7 +118,7 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
         public SortedSet<ExecutionSemester> getSemesters() {
             TreeSet<ExecutionSemester> semesters =
                     new TreeSet<ExecutionSemester>(new ReverseComparator(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
-            semesters.addAll(rootDomainObject.getExecutionPeriodsSet());
+            semesters.addAll(Bennu.getInstance().getExecutionPeriodsSet());
             return semesters;
         }
 

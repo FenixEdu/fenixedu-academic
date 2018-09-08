@@ -37,6 +37,7 @@ import org.fenixedu.academic.domain.Photograph;
 import org.fenixedu.academic.dto.photographs.PhotographFilterBean;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.manager.ManagerApplications.ManagerPeopleApp;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -105,7 +106,7 @@ public class PhotographHistoryDA extends FenixDispatchAction {
     public ActionForward historyFilter(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         PhotographFilterBean filter = getRenderedObject("historyFilter");
-        Set<Photograph> photos = rootDomainObject.getPhotographsSet();
+        Set<Photograph> photos = Bennu.getInstance().getPhotographsSet();
         SortedMap<Person, UserHistory> history = new TreeMap<Person, UserHistory>();
 
         for (Photograph photograph : photos) {

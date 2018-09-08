@@ -28,6 +28,7 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.curriculum.ExtraCurricularActivityType;
 import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication.AcademicAdminExtraCurricularApp;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -45,7 +46,7 @@ public class ManageExtraCurricularActivities extends FenixDispatchAction {
     @EntryPoint
     public ActionForward list(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        request.setAttribute("activityTypes", rootDomainObject.getExtraCurricularActivityTypeSet());
+        request.setAttribute("activityTypes", Bennu.getInstance().getExtraCurricularActivityTypeSet());
         return mapping.findForward("list");
     }
 

@@ -63,6 +63,7 @@ import org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisBean;
 import org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisPresentationState;
 import org.fenixedu.academic.ui.struts.action.scientificCouncil.ScientificCouncilApplication.ScientificDisserationsApp;
 import org.fenixedu.academic.ui.struts.action.student.thesis.ThesisFileBean;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -711,7 +712,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
         spreadsheet.setHeader("Afiliação Presidente");
         spreadsheet.setHeader("Nota Dissertação");
 
-        for (final Thesis thesis : rootDomainObject.getThesesSet()) {
+        for (final Thesis thesis : Bennu.getInstance().getThesesSet()) {
             final Enrolment enrolment = thesis.getEnrolment();
             final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
             if (executionSemester.getExecutionYear() == executionYear) {

@@ -67,6 +67,7 @@ import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdm
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.Pair;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -278,7 +279,7 @@ public final class SummariesControlAction extends FenixDispatchAction {
         final ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodOID);
 
         List<DepartmentSummaryElement> allDepartmentsSummariesResume = new ArrayList<DepartmentSummaryElement>();
-        for (Department department : rootDomainObject.getDepartmentsSet()) {
+        for (Department department : Bennu.getInstance().getDepartmentsSet()) {
             DepartmentSummaryElement departmentSummariesElement = getDepartmentSummaryResume(executionSemester, department);
             allDepartmentsSummariesResume.add(departmentSummariesElement);
         }
@@ -501,7 +502,7 @@ public final class SummariesControlAction extends FenixDispatchAction {
     }
 
     protected void readAndSaveAllDepartments(HttpServletRequest request) throws FenixServiceException {
-        Collection<Department> allDepartments = rootDomainObject.getDepartmentsSet();
+        Collection<Department> allDepartments = Bennu.getInstance().getDepartmentsSet();
         List<LabelValueBean> departments = getAllDepartments(allDepartments);
         request.setAttribute("allDepartments", allDepartments);
         request.setAttribute("departments", departments);

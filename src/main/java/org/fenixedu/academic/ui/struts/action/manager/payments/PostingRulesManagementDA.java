@@ -380,7 +380,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 
         final ExecutionYear executionYear = FenixFramework.getDomainObject(form.getExecutionYearId());
 
-        request.setAttribute("executionYears", new ArrayList<ExecutionYear>(rootDomainObject.getExecutionYearsSet()));
+        request.setAttribute("executionYears", new ArrayList<ExecutionYear>(Bennu.getInstance().getExecutionYearsSet()));
         request.setAttribute("paymentPlans", getDegreeCurricularPlan(request).getServiceAgreementTemplate()
                 .getGratuityPaymentPlansFor(executionYear));
         request.setAttribute("degreeCurricularPlan", getDegreeCurricularPlan(request));

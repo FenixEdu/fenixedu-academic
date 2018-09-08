@@ -34,6 +34,7 @@ import org.fenixedu.academic.domain.interfaces.HasDegreeType;
 import org.fenixedu.academic.domain.interfaces.HasExecutionYear;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -111,7 +112,7 @@ public class StudentStatisticsDA extends FenixDispatchAction {
             if (executionDegree == null) {
                 final ExecutionYear executionYear = contextBean.getExecutionYear();
                 final DegreeType degreeType = contextBean.getDegreeType();
-                for (final Degree degree : rootDomainObject.getDegreesSet()) {
+                for (final Degree degree : Bennu.getInstance().getDegreesSet()) {
                     if (degree.getDegreeType() == degreeType) {
                         counter += countDegreeRegistrations(executionYear, degree);
                     }

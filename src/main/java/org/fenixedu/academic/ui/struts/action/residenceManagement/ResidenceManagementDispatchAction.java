@@ -69,7 +69,7 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
     public ActionForward missingPayments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         List<ResidenceEvent> results = new ArrayList<ResidenceEvent>();
-        for (ResidenceMonth month : rootDomainObject.getResidenceMonths0Set()) {
+        for (ResidenceMonth month : Bennu.getInstance().getResidenceMonths0Set()) {
             for (ResidenceEvent residenceEvent : month.getEventsSet()) {
                 if (residenceEvent.isInDebt()) {
                     results.add(residenceEvent);

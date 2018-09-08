@@ -35,6 +35,7 @@ import org.fenixedu.academic.service.services.caseHandling.CreateNewProcess;
 import org.fenixedu.academic.service.services.caseHandling.ExecuteProcessActivity;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
@@ -67,7 +68,7 @@ public abstract class CaseHandlingDispatchAction extends FenixDispatchAction {
 
     protected Collection<Process> getAllowedProcessInstances(final User userView) {
         final Set<Process> result = new TreeSet<Process>();
-        for (final Process process : rootDomainObject.getProcessesSet()) {
+        for (final Process process : Bennu.getInstance().getProcessesSet()) {
             if (process.getClass().equals(getProcessType()) && process.canExecuteActivity(userView)) {
                 result.add(process);
             }

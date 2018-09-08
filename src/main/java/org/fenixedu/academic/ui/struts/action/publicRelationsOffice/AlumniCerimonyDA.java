@@ -34,6 +34,7 @@ import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
@@ -77,7 +78,7 @@ public class AlumniCerimonyDA extends FenixDispatchAction {
     @EntryPoint
     public ActionForward manage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        final Set<CerimonyInquiry> cerimonyInquirySet = rootDomainObject.getCerimonyInquirySet();
+        final Set<CerimonyInquiry> cerimonyInquirySet = Bennu.getInstance().getCerimonyInquirySet();
         request.setAttribute("cerimonyInquirySet", new TreeSet<CerimonyInquiry>(cerimonyInquirySet));
         return mapping.findForward("manageAlumniCerimony");
     }
