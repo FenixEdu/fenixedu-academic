@@ -18,39 +18,21 @@
  */
 package org.fenixedu.academic.domain.accounting.events.gratuity;
 
+import org.fenixedu.academic.domain.accounting.events.EventExemptionJustificationType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
-import org.fenixedu.bennu.core.domain.Bennu;
 
+/**
+ * Use {@link org.fenixedu.academic.domain.accounting.events.EventExemptionJustification}
+ */
+@Deprecated
 public class ExternalScholarshipGratuityExemptionJustification extends ExternalScholarshipGratuityExemptionJustification_Base {
 
-    protected ExternalScholarshipGratuityExemptionJustification() {
-    }
-
-    public ExternalScholarshipGratuityExemptionJustification(final ExternalScholarshipGratuityExemption exemption,
-            final ExternalScholarshipGratuityExemptionJustificationType justificationType, final String reason) {
-        super();
-        super.setRootDomainObject(Bennu.getInstance());
-        init(exemption, justificationType, reason);
-    }
-
-    protected void init(ExternalScholarshipGratuityExemption exemption, ExternalScholarshipGratuityExemptionJustificationType justificationType,
-            String reason) {
-        super.init(exemption, reason);
-        checkParameters(justificationType);
-        super.setExternalScholarshipGratuityExemptionJustificationType(justificationType);
-    }
-
-    private void checkParameters(ExternalScholarshipGratuityExemptionJustificationType justificationType) {
-        if (justificationType == null) {
-            throw new DomainException("error.accounting.events.gratuity.ExternalScholarshipGratuityExemptionJustificationType.justificationType.cannot.be.null");
-        }
-    }
+    private ExternalScholarshipGratuityExemptionJustification() { }
 
     @Override
-    public void setExternalScholarshipGratuityExemptionJustificationType(
-            ExternalScholarshipGratuityExemptionJustificationType justificationType) {
+    public void setJustificationType(EventExemptionJustificationType justificationType) {
         throw new DomainException("error.accounting.events.gratuity.ExternalScholarshipGratuityExemptionJustificationType.cannot.modify.justificationType");
     }
 
@@ -59,7 +41,7 @@ public class ExternalScholarshipGratuityExemptionJustification extends ExternalS
         final LabelFormatter labelFormatter = new LabelFormatter();
 
         labelFormatter
-                .appendLabel(getExternalScholarshipGratuityExemptionJustificationType().getQualifiedName(), Bundle.ENUMERATION)
+                .appendLabel(getJustificationType().getQualifiedName(), Bundle.ENUMERATION)
                 .appendLabel(" - ").appendLabel(getExemption().getEvent().getDescription().toString());
 
         return labelFormatter;

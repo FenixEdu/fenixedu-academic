@@ -18,6 +18,10 @@
  */
 package org.fenixedu.academic.domain.phd.debts;
 
+/**
+ * Use {@link org.fenixedu.academic.domain.accounting.events.EventExemptionJustificationType}
+ */
+@Deprecated
 public enum PhdEventExemptionJustificationType {
 
     DIRECTIVE_COUNCIL_AUTHORIZATION, PHD_GRATUITY_FCT_SCHOLARSHIP_EXEMPTION, THIRD_PARTY_CONTRIBUTION, FINE_EXEMPTION;

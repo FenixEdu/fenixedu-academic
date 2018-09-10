@@ -18,45 +18,20 @@
  */
 package org.fenixedu.academic.domain.accounting.events.gratuity;
 
+import org.fenixedu.academic.domain.accounting.EventState;
+import org.fenixedu.academic.util.Money;
+import org.joda.time.DateTime;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.EventState;
-import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.Money;
-import org.joda.time.DateTime;
-import org.joda.time.YearMonthDay;
-
+/**
+ * Use {@link org.fenixedu.academic.domain.accounting.events.EventExemption}
+ */
+@Deprecated
 public class ValueGratuityExemption extends ValueGratuityExemption_Base {
 
-    public ValueGratuityExemption(final Person responsible, final GratuityEvent gratuityEvent,
-            final GratuityExemptionJustificationType gratuityExemptionType, final String reason, final YearMonthDay dispatchDate,
-            final Money value) {
-        super();
-        init(responsible, gratuityEvent, gratuityExemptionType, reason, dispatchDate, value);
-    }
-
-    public ValueGratuityExemption(final GratuityEvent gratuityEvent,
-            final GratuityExemptionJustificationType gratuityExemptionType, final String reason, final YearMonthDay dispatchDate,
-            final Money value) {
-        this(null, gratuityEvent, gratuityExemptionType, reason, dispatchDate, value);
-    }
-
-    protected void init(Person responsible, GratuityEvent gratuityEvent, GratuityExemptionJustificationType exemptionType,
-            String reason, YearMonthDay dispatchDate, Money value) {
-
-        checkParameters(value);
-        super.setValue(value);
-
-        super.init(responsible, gratuityEvent, exemptionType, reason, dispatchDate);
-    }
-
-    private void checkParameters(Money value) {
-        if (value == null) {
-            throw new DomainException("error.accounting.events.gratuity.ValueGratuityExemption.value.cannot.be.null");
-        }
-    }
+    private ValueGratuityExemption(){ }
 
     @Override
     public void setValue(Money value) {

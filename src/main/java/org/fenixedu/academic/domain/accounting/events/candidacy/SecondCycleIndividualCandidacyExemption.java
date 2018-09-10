@@ -18,48 +18,17 @@
  */
 package org.fenixedu.academic.domain.accounting.events.candidacy;
 
-import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.Event;
-import org.fenixedu.academic.domain.accounting.Exemption;
-import org.fenixedu.academic.domain.accounting.events.ExemptionJustification;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Money;
-import org.joda.time.DateTime;
 
-import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-
+/**
+ * Use {@link org.fenixedu.academic.domain.accounting.events.EventExemption}
+ */
+@Deprecated
 public class SecondCycleIndividualCandidacyExemption extends SecondCycleIndividualCandidacyExemption_Base {
-
-    static {
-        getRelationExemptionEvent().addListener(new RelationAdapter<Exemption, Event>() {
-            @Override
-            public void beforeAdd(Exemption exemption, Event event) {
-                if (exemption != null && event != null) {
-                    if (exemption instanceof SecondCycleIndividualCandidacyExemption) {
-                        final SecondCycleIndividualCandidacyEvent candidacyEvent = ((SecondCycleIndividualCandidacyEvent) event);
-                        if (candidacyEvent.hasSecondCycleIndividualCandidacyExemption()) {
-                            throw new DomainException(
-                                    "error.accounting.events.SecondCycleIndividualCandidacyExemption.event.already.has.exemption");
-                        }
-                    }
-                }
-            }
-        });
-    }
 
     private SecondCycleIndividualCandidacyExemption() {
         super();
-    }
-
-    public SecondCycleIndividualCandidacyExemption(final Person responsible, final SecondCycleIndividualCandidacyEvent event,
-            final CandidacyExemptionJustificationType candidacyExemptionJustificationType) {
-        this();
-        super.init(responsible, event, createJustification(candidacyExemptionJustificationType));
-        event.recalculateState(new DateTime());
-    }
-
-    private ExemptionJustification createJustification(final CandidacyExemptionJustificationType justificationType) {
-        return new SecondCycleIndividualCandidacyExemptionJustification(this, justificationType);
     }
 
     @Override

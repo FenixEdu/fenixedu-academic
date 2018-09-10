@@ -2,7 +2,7 @@ package org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalt
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.Event;
-import org.fenixedu.academic.domain.accounting.events.PenaltyExemptionJustificationType;
+import org.fenixedu.academic.domain.accounting.events.EventExemptionJustificationType;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 
@@ -12,13 +12,13 @@ public abstract class FixedAmountPenaltyExemption extends FixedAmountPenaltyExem
         super();
     }
 
-    public FixedAmountPenaltyExemption(PenaltyExemptionJustificationType justificationType, Event event, Person responsible, String reason, DateTime dispatchDate, Money value) {
+    public FixedAmountPenaltyExemption(EventExemptionJustificationType justificationType, Event event, Person responsible, String reason, DateTime dispatchDate, Money value) {
         init(justificationType, event, responsible, reason, dispatchDate, value);
     }
 
-    public void init(PenaltyExemptionJustificationType justificationType, Event event, Person responsible, String reason, DateTime dispatchDate, Money value) {
-        super.init(justificationType, event, responsible, reason, dispatchDate.toYearMonthDay());
+    public void init(EventExemptionJustificationType justificationType, Event event, Person responsible, String reason, DateTime dispatchDate, Money value) {
         setValue(value);
+        super.init(justificationType, event, responsible, reason, dispatchDate == null ? null : dispatchDate.toYearMonthDay());
     }
 
     @Override

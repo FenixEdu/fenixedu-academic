@@ -21,7 +21,7 @@ package org.fenixedu.academic.dto.accounting.penaltyExemption;
 import java.io.Serializable;
 
 import org.fenixedu.academic.domain.accounting.Event;
-import org.fenixedu.academic.domain.accounting.events.PenaltyExemptionJustificationType;
+import org.fenixedu.academic.domain.accounting.events.EventExemptionJustificationType;
 import org.joda.time.YearMonthDay;
 
 public abstract class CreatePenaltyExemptionBean implements Serializable {
@@ -30,7 +30,7 @@ public abstract class CreatePenaltyExemptionBean implements Serializable {
 
     private String reason;
 
-    private PenaltyExemptionJustificationType justificationType;
+    private EventExemptionJustificationType justificationType;
 
     private YearMonthDay dispatchDate;
 
@@ -55,11 +55,11 @@ public abstract class CreatePenaltyExemptionBean implements Serializable {
         this.event = event;
     }
 
-    public PenaltyExemptionJustificationType getJustificationType() {
+    public EventExemptionJustificationType getJustificationType() {
         return justificationType;
     }
 
-    public void setJustificationType(PenaltyExemptionJustificationType exemptionType) {
+    public void setJustificationType(EventExemptionJustificationType exemptionType) {
         this.justificationType = exemptionType;
     }
 

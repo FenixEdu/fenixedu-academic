@@ -18,6 +18,10 @@
  */
 package org.fenixedu.academic.domain.accounting.events;
 
+/**
+ * Use {@link org.fenixedu.academic.domain.accounting.events.EventExemptionJustificationType}
+ */
+@Deprecated
 public enum AdministrativeOfficeFeeAndInsuranceExemptionJustificationType {
 
     // Directive council authorization dispatch

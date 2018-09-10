@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.accounting.events.gratuity;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -27,6 +28,10 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
+/**
+ * Use {@link org.fenixedu.academic.domain.accounting.events.EventExemptionJustificationType}
+ */
+@Deprecated
 public enum GratuityExemptionJustificationType {
 
     // Staff and Agents from institution
@@ -68,23 +73,23 @@ public enum GratuityExemptionJustificationType {
 
     public static List<GratuityExemptionJustificationType> getTypesFor(final DegreeType degreeType) {
         if (degreeType.isEmpty()) {
-            return Arrays.asList(new GratuityExemptionJustificationType[] { INSTITUTION, SON_OF_DECORATED_MILITARY,
-                    SOCIAL_SHARE_GRANT_OWNER, DIRECTIVE_COUNCIL_AUTHORIZATION });
+            return Arrays.asList(INSTITUTION, SON_OF_DECORATED_MILITARY, SOCIAL_SHARE_GRANT_OWNER,
+                    DIRECTIVE_COUNCIL_AUTHORIZATION);
         }
         if (degreeType.isAdvancedSpecializationDiploma()) {
-            return Arrays.asList(new GratuityExemptionJustificationType[] { INSTITUTION, OTHER_INSTITUTION, PALOP_TEACHER });
+            return Arrays.asList(INSTITUTION, OTHER_INSTITUTION, PALOP_TEACHER);
         }
         if (degreeType.isAdvancedFormationDiploma()) {
-            return Arrays.asList(new GratuityExemptionJustificationType[] { INSTITUTION, INSTITUTION_GRANT_OWNER,
-                    OTHER_INSTITUTION, PALOP_TEACHER, STUDENT_TEACH, DIRECTIVE_COUNCIL_AUTHORIZATION });
+            return Arrays.asList(INSTITUTION, INSTITUTION_GRANT_OWNER, OTHER_INSTITUTION, PALOP_TEACHER, STUDENT_TEACH,
+                    DIRECTIVE_COUNCIL_AUTHORIZATION);
         }
         if (degreeType.isPreBolonhaDegree() || degreeType.isBolonhaMasterDegree() || degreeType.isBolonhaDegree()
                 || degreeType.isIntegratedMasterDegree()) {
-            return Arrays.asList(new GratuityExemptionJustificationType[] { SON_OF_DECORATED_MILITARY, SOCIAL_SHARE_GRANT_OWNER,
-                    DIRECTIVE_COUNCIL_AUTHORIZATION, SEPARATION_CYCLES_AUTHORIZATION });
+            return Arrays.asList(SON_OF_DECORATED_MILITARY, SOCIAL_SHARE_GRANT_OWNER, DIRECTIVE_COUNCIL_AUTHORIZATION,
+                    SEPARATION_CYCLES_AUTHORIZATION);
         }
         if (degreeType.isSpecializationDegree()) {
-            return Arrays.asList(new GratuityExemptionJustificationType[] { DIRECTIVE_COUNCIL_AUTHORIZATION });
+            return Collections.singletonList(DIRECTIVE_COUNCIL_AUTHORIZATION);
         }
         throw new RuntimeException("Unknown degree type");
     }

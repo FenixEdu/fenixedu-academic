@@ -18,39 +18,17 @@
  */
 package org.fenixedu.academic.domain.phd.debts;
 
-import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.events.ExemptionJustification;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Money;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 
-import pt.ist.fenixframework.Atomic;
-
+/**
+ * Use {@link org.fenixedu.academic.domain.accounting.events.EventExemption}
+ */
+@Deprecated
 public class PhdEventExemption extends PhdEventExemption_Base {
 
     protected PhdEventExemption() {
         super();
-    }
-
-    public PhdEventExemption(final Person responsible, final PhdEvent event, final Money value,
-            final PhdEventExemptionJustificationType justificationType, final LocalDate dispatchDate, final String reason) {
-
-        this();
-        super.init(responsible, event, createJustification(justificationType, dispatchDate, reason));
-        String[] args = {};
-
-        if (value == null) {
-            throw new DomainException("error.PhdEventExemption.invalid.amount", args);
-        }
-        setValue(value);
-
-        event.recalculateState(new DateTime());
-    }
-
-    private ExemptionJustification createJustification(PhdEventExemptionJustificationType justificationType,
-            LocalDate dispatchDate, String reason) {
-        return new PhdEventExemptionJustification(this, justificationType, dispatchDate, reason);
     }
 
     @Override
@@ -63,12 +41,6 @@ public class PhdEventExemption extends PhdEventExemption_Base {
         if (getEvent().hasAnyPayments()) {
             throw new DomainException("error.PhdEventExemption.cannot.delete.event.has.payments");
         }
-    }
-
-    @Atomic
-    static public PhdEventExemption create(final Person responsible, final PhdEvent event, final Money value,
-            final PhdEventExemptionJustificationType justificationType, final LocalDate dispatchDate, final String reason) {
-        return new PhdEventExemption(responsible, event, value, justificationType, dispatchDate, reason);
     }
 
     @Override

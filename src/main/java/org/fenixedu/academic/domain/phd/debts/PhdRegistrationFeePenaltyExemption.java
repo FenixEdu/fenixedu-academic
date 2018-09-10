@@ -18,43 +18,15 @@
  */
 package org.fenixedu.academic.domain.phd.debts;
 
-import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.Event;
-import org.fenixedu.academic.domain.accounting.Exemption;
-import org.fenixedu.academic.domain.accounting.events.PenaltyExemptionJustificationType;
-import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.joda.time.YearMonthDay;
-
-import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-
+/**
+ * Use {@link org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.FixedAmountInterestExemption} or
+ *     {@link org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.FixedAmountFineExemption}
+ */
+@Deprecated
 public class PhdRegistrationFeePenaltyExemption extends PhdRegistrationFeePenaltyExemption_Base {
-
-    static {
-        getRelationExemptionEvent().addListener(new RelationAdapter<Exemption, Event>() {
-            @Override
-            public void beforeAdd(Exemption exemption, Event event) {
-                if (exemption != null && event != null) {
-                    if (exemption instanceof PhdRegistrationFeePenaltyExemption) {
-                        final PhdRegistrationFee phdEvent = (PhdRegistrationFee) event;
-                        if (phdEvent.hasPhdRegistrationFeePenaltyExemption()) {
-                            throw new DomainException("error.PhdRegistrationFeePenaltyExemption.event.already.has.exemption");
-                        }
-
-                    }
-                }
-            }
-        });
-    }
 
     private PhdRegistrationFeePenaltyExemption() {
         super();
-    }
-
-    public PhdRegistrationFeePenaltyExemption(final PenaltyExemptionJustificationType penaltyExemptionType,
-            final PhdRegistrationFee event, final Person responsible, final String comments,
-            final YearMonthDay directiveCouncilDispatchDate) {
-        this();
-        super.init(penaltyExemptionType, event, responsible, comments, directiveCouncilDispatchDate);
     }
 
     @Override

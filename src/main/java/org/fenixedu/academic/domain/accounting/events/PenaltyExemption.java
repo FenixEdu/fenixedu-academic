@@ -37,40 +37,34 @@ abstract public class PenaltyExemption extends PenaltyExemption_Base {
         super.setRootDomainObject(Bennu.getInstance());
     }
 
-    protected PenaltyExemption(final PenaltyExemptionJustificationType justificationType, final GratuityEvent gratuityEvent,
+    protected PenaltyExemption(final EventExemptionJustificationType justificationType, final GratuityEvent gratuityEvent,
             final Person responsible, final String comments, final YearMonthDay dispatchDate) {
         this();
         init(justificationType, gratuityEvent, responsible, comments, dispatchDate);
     }
 
-    protected void init(PenaltyExemptionJustificationType justificationType, Event event, Person responsible, String reason,
+    protected void init(EventExemptionJustificationType justificationType, Event event, Person responsible, String reason,
             YearMonthDay dispatchDate) {
         checkParameters(justificationType);
-        super.init(responsible, event, PenaltyExemptionJustificationFactory.create(this, justificationType, reason, dispatchDate));
+        super.init(responsible, event, createJustification(justificationType, dispatchDate == null ? null : dispatchDate.toLocalDate(), reason));
         event.recalculateState(new DateTime());
 
     }
 
-    private void checkParameters(PenaltyExemptionJustificationType penaltyExemptionType) {
+    private void checkParameters(EventExemptionJustificationType penaltyExemptionType) {
         if (penaltyExemptionType == null) {
             throw new DomainException(
                     "error.accounting.events.gratuity.exemption.penalty.PenaltyExemption.penaltyExemptionType.cannot.be.null");
         }
     }
 
-//    @Override
-//    public void setResponsible(Person responsible) {
-//        throw new DomainException(
-//                "error.org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption.cannot.modify.responsible");
-//    }
-
-    public PenaltyExemptionJustificationType getJustificationType() {
-        return getExemptionJustification().getPenaltyExemptionJustificationType();
+    public EventExemptionJustificationType getJustificationType() {
+        return getExemptionJustification().getJustificationType();
     }
 
     @Override
-    public PenaltyExemptionJustification getExemptionJustification() {
-        return (PenaltyExemptionJustification) super.getExemptionJustification();
+    public ExemptionJustification getExemptionJustification() {
+        return super.getExemptionJustification();
     }
 
     @Override

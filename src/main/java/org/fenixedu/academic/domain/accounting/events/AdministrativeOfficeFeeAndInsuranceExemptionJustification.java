@@ -18,43 +18,18 @@
  */
 package org.fenixedu.academic.domain.accounting.events;
 
-import org.fenixedu.academic.domain.accounting.Exemption;
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
 
+/**
+ * Use {@link org.fenixedu.academic.domain.accounting.events.EventExemptionJustification}
+ */
+@Deprecated
 public class AdministrativeOfficeFeeAndInsuranceExemptionJustification extends
         AdministrativeOfficeFeeAndInsuranceExemptionJustification_Base {
 
     protected AdministrativeOfficeFeeAndInsuranceExemptionJustification() {
         super();
-    }
-
-    public AdministrativeOfficeFeeAndInsuranceExemptionJustification(Exemption exemption,
-            AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType, String reason) {
-        this();
-        init(exemption, justificationType, reason);
-    }
-
-    protected void init(Exemption exemption, AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType,
-            String reason) {
-        super.init(exemption, reason);
-        checkParameters(exemption, justificationType);
-        super.setJustificationType(justificationType);
-    }
-
-    private void checkParameters(Exemption exemption,
-            AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType) {
-        if (!exemption.isForAdministrativeOfficeFee()) {
-            throw new DomainException(
-                    "error.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustification.exemption.for.administrative.office.fee");
-        }
-
-        if (justificationType == null) {
-            throw new DomainException(
-                    "error.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustification.justificationType.cannot.be.null");
-        }
-
     }
 
     @Override

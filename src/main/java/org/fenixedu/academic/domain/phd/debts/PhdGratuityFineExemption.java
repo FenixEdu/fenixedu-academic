@@ -18,39 +18,15 @@
  */
 package org.fenixedu.academic.domain.phd.debts;
 
-import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.Event;
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Money;
-import org.fenixedu.bennu.core.domain.Bennu;
-import org.joda.time.DateTime;
 
-import pt.ist.fenixframework.Atomic;
-
+/**
+ * Use {@link org.fenixedu.academic.domain.accounting.events.EventExemption}
+ */
+@Deprecated
 public class PhdGratuityFineExemption extends PhdGratuityFineExemption_Base {
 
-    public PhdGratuityFineExemption() {
-        super();
-    }
-
-    public PhdGratuityFineExemption(Person responsible, Event event, String justification) {
-        PhdEventExemptionJustification exemptionJustification =
-                new PhdEventExemptionJustification(this, PhdEventExemptionJustificationType.FINE_EXEMPTION, event
-                        .getWhenOccured().toLocalDate(), justification);
-        super.init(responsible, event, exemptionJustification);
-
-        setRootDomainObject(Bennu.getInstance());
-        event.recalculateState(new DateTime());
-    }
-
-    @Atomic
-    public static PhdGratuityFineExemption createPhdGratuityFineExemption(Person responsible, PhdGratuityEvent event,
-            String justification) {
-        if (event.hasExemptionsOfType(PhdGratuityFineExemption.class)) {
-            throw new DomainException("error.already.has.fine.exemption");
-        }
-        return new PhdGratuityFineExemption(responsible, event, justification);
-    }
+    private PhdGratuityFineExemption() { }
 
     @Override
     public Money getExemptionAmount(Money money) {

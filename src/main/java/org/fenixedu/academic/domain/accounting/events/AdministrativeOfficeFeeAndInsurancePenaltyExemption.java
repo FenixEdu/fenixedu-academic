@@ -18,45 +18,15 @@
  */
 package org.fenixedu.academic.domain.accounting.events;
 
-import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.Event;
-import org.fenixedu.academic.domain.accounting.Exemption;
-import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.joda.time.YearMonthDay;
-
-import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-
+/**
+ * Use {@link org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.FixedAmountInterestExemption} or
+ *     {@link org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.FixedAmountFineExemption}
+ */
+@Deprecated
 public class AdministrativeOfficeFeeAndInsurancePenaltyExemption extends AdministrativeOfficeFeeAndInsurancePenaltyExemption_Base {
 
-    static {
-        getRelationExemptionEvent().addListener(new RelationAdapter<Exemption, Event>() {
-            @Override
-            public void beforeAdd(Exemption exemption, Event event) {
-                if (exemption != null && event != null) {
-                    if (exemption instanceof AdministrativeOfficeFeeAndInsurancePenaltyExemption) {
-                        final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent =
-                                ((AdministrativeOfficeFeeAndInsuranceEvent) event);
-                        if (administrativeOfficeFeeAndInsuranceEvent.hasAdministrativeOfficeFeeAndInsurancePenaltyExemption()) {
-                            throw new DomainException(
-                                    "error.accounting.events.AdministrativeOfficeFeeAndInsuranceExemption.event.already.has.exemption.for.fee.and.insurance");
-                        }
-
-                    }
-                }
-            }
-        });
-    }
-
-    protected AdministrativeOfficeFeeAndInsurancePenaltyExemption() {
+    private AdministrativeOfficeFeeAndInsurancePenaltyExemption() {
         super();
-    }
-
-    public AdministrativeOfficeFeeAndInsurancePenaltyExemption(final PenaltyExemptionJustificationType penaltyExemptionType,
-            final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent, final Person responsible,
-            final String reason, final YearMonthDay directiveCouncilDispatchDate) {
-        this();
-        super.init(penaltyExemptionType, administrativeOfficeFeeAndInsuranceEvent, responsible, reason,
-                directiveCouncilDispatchDate);
     }
 
 }

@@ -42,7 +42,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    <spring:message code="accounting.payment.details.title" text="Payment report"/>
+                    <spring:message code="accounting.exemption.details.title" text="Exemption report"/>
                 </h1>
             </div>
         </div>
@@ -51,43 +51,29 @@
         <div class="col-md-5">
             <section class="payment-metadata">
                 <dl>
-                    <dt>Pago por:</dt>
-                    <dd><c:out value="${transactionDetail.event.person.presentationName}"/></dd>
+                    <dt>Tipo de Isenção</dt>
+                    <dd><c:out value="${creditEntry.typeDescription.content}"/></dd>
                 </dl>
                 <dl>
-                    <dt>Método Pagamento:</dt>
-                    <dd><c:out value="${transactionDetail.transactionDetail.paymentMode}"/></dd>
+                    <dt>Responsável</dt>
+                    <dd><c:out value="${exemption.responsible.presentationName}"/></dd>
                 </dl>
-                <c:if test="${transactionDetail.transactionDetail.paymentMode == 'ATM'}">
-                    <dl>
-                        <dt>Transacção SIBS:</dt>
-                        <dd><c:out value="${transactionDetail.transactionDetail.sibsTransactionId}"/></dd>
-                    </dl>
-                    <dl>
-                        <dt>Referência:</dt>
-                        <dd><c:out value="${transactionDetail.transactionDetail.sibsCode}"/></dd>
-                    </dl>
-                </c:if>
-                <c:if test="${transactionDetail.transactionDetail.paymentMode == 'CASH'}">
-                    <dl>
-                        <dt>Responsável:</dt>
-                        <dd><c:out value="${transactionDetail.responsibleUser.person.presentationName}"/></dd>
-                    </dl>
-                    <dl>
-                        <dt>Motivo:</dt>
-                        <dd><c:out value="${transactionDetail.transactionDetail.comments}"/></dd>
-                    </dl>
-                </c:if>
                 <dl>
-                    <dt>Data de pagamento:</dt>
+                    <dt>Valor</dt>
+                    <dd><c:out value="${exemptionValue}"/></dd>
+                </dl>
+                <dl>
+                    <dt>Justificação</dt>
+                    <dd><c:out value="${exemption.description}"/></dd>
+                </dl>
+                <dl>
+                    <dt>Motivo:</dt>
+                    <dd><c:out value="${exemption.reason}"/></dd>
+                </dl>
+                <dl>
+                    <dt>Data de isenção:</dt>
                     <dd>
                         <time datetime="${registeredDate.toString('yyyy-MM-dd')}">${registeredDate.toString('dd/MM/yyyy')}</time>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt>Data de processamento:</dt>
-                    <dd>
-                        <time datetime="${processedDate.toString('yyyy-MM-dd HH:mm:ss')}">${processedDate.toString('dd/MM/yyyy HH:mm:ss')}</time>
                     </dd>
                 </dl>
             </section>
@@ -133,7 +119,7 @@
                 <tr>
                     <td colspan="6">Não existem prestações associadas.</td>
                 </tr>
-                </c:if>
+            </c:if>
             <c:if test="${not empty payments}">
                 <c:forEach var="payment" items="${payments}" varStatus="paymentLoop">
                     <c:set var="debtEntryIndex" value="#{paymentLoop.index + 1}"/>

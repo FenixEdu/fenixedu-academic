@@ -28,6 +28,7 @@ import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.Entry;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.PaymentCode;
+import org.fenixedu.academic.domain.accounting.events.EventExemptionJustificationType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Student;
@@ -60,10 +61,10 @@ public class SpecializationDegreeGratuityEvent extends SpecializationDegreeGratu
     }
 
     @Override
-    public boolean canApplyExemption(final GratuityExemptionJustificationType justificationType) {
+    public boolean canApplyExemption(final EventExemptionJustificationType justificationType) {
         if (isCustomEnrolmentModel()) {
-            return justificationType == GratuityExemptionJustificationType.OTHER_INSTITUTION
-                    || justificationType == GratuityExemptionJustificationType.DIRECTIVE_COUNCIL_AUTHORIZATION;
+            return justificationType == EventExemptionJustificationType.OTHER_INSTITUTION
+                    || justificationType == EventExemptionJustificationType.DIRECTIVE_COUNCIL_AUTHORIZATION;
 
         }
 

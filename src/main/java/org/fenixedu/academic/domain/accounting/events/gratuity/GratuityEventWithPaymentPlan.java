@@ -211,14 +211,6 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
         return isOpen() && hasAnyInstallmentInDebtToday();
     }
 
-    public InstallmentPenaltyExemption getInstallmentPenaltyExemptionFor(final Installment installment) {
-        return getExemptionsSet().stream()
-                .filter(exemption -> exemption instanceof InstallmentPenaltyExemption)
-                .map(exemption -> (InstallmentPenaltyExemption) exemption)
-                .filter(installmentPenaltyExemption -> installmentPenaltyExemption.getInstallment() == installment)
-                .findFirst().orElse(null);
-    }
-
     public boolean hasPenaltyExemptionFor(final Installment installment) {
         return getExemptionsSet().stream()
                 .filter(exemption -> exemption instanceof InstallmentPenaltyExemption)

@@ -18,42 +18,19 @@
  */
 package org.fenixedu.academic.domain.accounting.events.penaltyExemptionJustifications;
 
-import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.accounting.events.PenaltyExemption;
-import org.fenixedu.academic.domain.accounting.events.PenaltyExemptionJustificationType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
 import org.joda.time.YearMonthDay;
 
+/**
+ * Use {@link org.fenixedu.academic.domain.accounting.events.EventExemptionJustification}
+ */
+@Deprecated
 public class PenaltyExemptionJustificationByDispatch extends PenaltyExemptionJustificationByDispatch_Base {
 
     protected PenaltyExemptionJustificationByDispatch() {
         super();
-    }
-
-    public PenaltyExemptionJustificationByDispatch(final PenaltyExemption penaltyExemption,
-            final PenaltyExemptionJustificationType justificationType, final String reason, final YearMonthDay dispatchDate) {
-        this();
-        init(penaltyExemption, justificationType, reason, dispatchDate);
-    }
-
-    private void init(PenaltyExemption penaltyExemption, PenaltyExemptionJustificationType justificationType, String reason,
-            YearMonthDay dispatchDate) {
-        super.init(penaltyExemption, justificationType, reason);
-        checkParameters(justificationType, dispatchDate, reason);
-        super.setPenaltyExemptionDispatchDate(dispatchDate);
-    }
-
-    private void checkParameters(final PenaltyExemptionJustificationType justificationType, final YearMonthDay dispatchDate,
-            final String reason) {
-        if (dispatchDate == null || StringUtils.isEmpty(reason)) {
-            throw new DomainExceptionWithLabelFormatter(
-                    "error.accounting.events.penaltyExemptionJustifications.PenaltyExemptionJustificationByDispatch.dispatchDate.and.reason.are.required",
-                    new LabelFormatter(justificationType.getQualifiedName(), Bundle.ENUMERATION));
-        }
-
     }
 
     @Override
@@ -65,7 +42,7 @@ public class PenaltyExemptionJustificationByDispatch extends PenaltyExemptionJus
     @Override
     public LabelFormatter getDescription() {
         final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel(getPenaltyExemptionJustificationType().getQualifiedName(), Bundle.ENUMERATION);
+        labelFormatter.appendLabel(getJustificationType().getQualifiedName(), Bundle.ENUMERATION);
         String penaltyExemptionDate =
                 getPenaltyExemptionDispatchDate() != null ? getPenaltyExemptionDispatchDate().toString("dd/MM/yyyy") : "-";
         labelFormatter.appendLabel(" (").appendLabel("label.in", Bundle.APPLICATION).appendLabel(" ")

@@ -5,15 +5,22 @@ import com.google.common.collect.Multimap;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.Event;
+import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.accounting.PaymentMode;
 import org.fenixedu.academic.domain.accounting.calculator.CreditEntry;
 import org.fenixedu.academic.domain.accounting.calculator.Debt;
 import org.fenixedu.academic.domain.accounting.calculator.DebtEntry;
+import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
 import org.fenixedu.academic.domain.accounting.calculator.Fine;
 import org.fenixedu.academic.domain.accounting.calculator.Interest;
 import org.fenixedu.academic.domain.accounting.calculator.PartialPayment;
 import org.fenixedu.academic.domain.accounting.calculator.Payment;
+import org.fenixedu.academic.domain.accounting.events.EventExemption;
+import org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.FixedAmountFineExemption;
+import org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.FixedAmountInterestExemption;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
+import org.fenixedu.academic.dto.accounting.CreateExemptionBean;
 import org.fenixedu.academic.dto.accounting.DepositAmountBean;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
@@ -134,13 +141,13 @@ public class AccountingManagementService {
         return paymentSummaries;
     }
 
-    public Set<PaymentSummaryWithDebt> createPaymentSummaries(Payment payment) {
+    public Set<PaymentSummaryWithDebt> createPaymentSummaries(CreditEntry creditEntry) {
         final Set<PaymentSummaryWithDebt> paymentSummaryWithDebtSet = new TreeSet<>(
                 Comparator.comparing(a -> a.getDebtEntry().getDate()));
 
         final Multimap<DebtEntry, PartialPayment> debtEntryPartialPaymentMultimap = HashMultimap.create();
 
-        for (PartialPayment partialPayment : payment.getPartialPayments()) {
+        for (PartialPayment partialPayment : creditEntry.getPartialPayments()) {
             DebtEntry debtEntry = partialPayment.getDebtEntry();
             if (debtEntry instanceof Interest) {
                 debtEntryPartialPaymentMultimap.put(((Interest) debtEntry).getTarget(), partialPayment);
@@ -169,8 +176,8 @@ public class AccountingManagementService {
                     amountUsedInDebt = amountUsedInDebt.add(partialPayment.getAmount());
                 }
             }
-            paymentSummaryWithDebtSet.add(new PaymentSummaryWithDebt(debtEntry.getId(), payment.getDescription(), payment
-                    .getCreated(), payment.getDate(), amountUsedInDebt.add(amountUsedInInterest.add(amountUsedInFine)), amountUsedInDebt, amountUsedInInterest, amountUsedInFine,
+            paymentSummaryWithDebtSet.add(new PaymentSummaryWithDebt(debtEntry.getId(), creditEntry.getDescription(), creditEntry
+                    .getCreated(), creditEntry.getDate(), amountUsedInDebt.add(amountUsedInInterest.add(amountUsedInFine)), amountUsedInDebt, amountUsedInInterest, amountUsedInFine,
                     debtEntry));
         }
 
@@ -187,4 +194,23 @@ public class AccountingManagementService {
     public void cancelEvent(final Event event, final Person responsible, final String justification) {
         event.cancel(responsible, justification);
     }
+
+    @Atomic
+    public Exemption exemptEvent(final Event event, final Person responsible, final CreateExemptionBean createExemptionBean) {
+        switch (createExemptionBean.getExemptionType()) {
+            case DEBT:
+                final DebtInterestCalculator calculator = event.getDebtInterestCalculator(new DateTime());
+                if (calculator.hasDueInterestAmount() || calculator.hasDueFineAmount()) {
+                    throw new DomainException("error.EventExemption.event.has.positive.due.interests.or.fines");
+                }
+                return new EventExemption(event, responsible, createExemptionBean.getValue(), createExemptionBean.getJustificationType(), createExemptionBean.getDispatchDate(), createExemptionBean.getReason());
+            case INTEREST:
+                return new FixedAmountInterestExemption(event, responsible, createExemptionBean.getValue(), createExemptionBean.getJustificationType(), createExemptionBean.getDispatchDate(), createExemptionBean.getReason());
+            case FINE:
+                return new FixedAmountFineExemption(event, responsible, createExemptionBean.getValue(), createExemptionBean.getJustificationType(), createExemptionBean.getDispatchDate(), createExemptionBean.getReason());
+        }
+        throw new UnsupportedOperationException("Attempted to create an unknown exemption type");
+
+    }
+
 }

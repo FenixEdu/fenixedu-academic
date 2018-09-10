@@ -30,6 +30,7 @@ import org.fenixedu.academic.domain.accounting.AccountType;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventState;
 import org.fenixedu.academic.domain.accounting.EventType;
+import org.fenixedu.academic.domain.accounting.events.EventExemptionJustificationType;
 import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -185,7 +186,7 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
         return !hasGratuityExemption();
     }
 
-    public boolean canApplyExemption(final GratuityExemptionJustificationType justificationType) {
+    public boolean canApplyExemption(final EventExemptionJustificationType justificationType) {
         return true;
     }
 

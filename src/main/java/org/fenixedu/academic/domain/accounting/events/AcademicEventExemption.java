@@ -18,61 +18,17 @@
  */
 package org.fenixedu.academic.domain.accounting.events;
 
-import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.AcademicEvent;
-import org.fenixedu.academic.domain.accounting.Event;
-import org.fenixedu.academic.domain.accounting.Exemption;
-import org.fenixedu.academic.domain.accounting.events.serviceRequests.AcademicEventExemptionJustification;
-import org.fenixedu.academic.domain.accounting.events.serviceRequests.AcademicEventJustificationType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Money;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-
+/**
+ * Use {@link org.fenixedu.academic.domain.accounting.events.EventExemption}
+ */
+@Deprecated
 public class AcademicEventExemption extends AcademicEventExemption_Base {
-
-    static {
-        getRelationExemptionEvent().addListener(new RelationAdapter<Exemption, Event>() {
-            @Override
-            public void beforeAdd(Exemption exemption, Event event) {
-                if (exemption != null && event != null) {
-                    if (exemption instanceof AcademicEventExemption) {
-                        final AcademicEvent academicEvent = (AcademicEvent) event;
-                        if (academicEvent.hasAcademicEventExemption()) {
-                            throw new DomainException(
-                                    "error.accounting.events.AcademicEventExemption.event.already.has.exemption");
-                        }
-                    }
-                }
-            }
-        });
-    }
 
     private AcademicEventExemption() {
         super();
-    }
-
-    public AcademicEventExemption(final Person responsible, final AcademicEvent event, final Money value,
-            final AcademicEventJustificationType justificationType, final LocalDate dispatchDate, final String reason) {
-
-        this();
-        super.init(responsible, event, createJustification(justificationType, dispatchDate, reason));
-        String[] args = {};
-
-        if (value == null) {
-            throw new DomainException("error.AcademicEventExemption.invalid.amount", args);
-        }
-        setValue(value);
-
-        event.recalculateState(new DateTime());
-    }
-
-    private ExemptionJustification createJustification(AcademicEventJustificationType justificationType,
-            final LocalDate dispatchDate, String reason) {
-        return new AcademicEventExemptionJustification(this, justificationType, dispatchDate, reason);
     }
 
     @Override
@@ -85,16 +41,6 @@ public class AcademicEventExemption extends AcademicEventExemption_Base {
         if (getEvent().hasAnyPayments()) {
             throw new DomainException("error.accounting.events.candidacy.AcademicEventExemption.cannot.delete.event.has.payments");
         }
-    }
-
-    public LocalDate getDispatchDate() {
-        return ((AcademicEventExemptionJustification) getExemptionJustification()).getDispatchDate();
-    }
-
-    @Atomic
-    static public AcademicEventExemption create(final Person responsible, final AcademicEvent event, final Money value,
-            final AcademicEventJustificationType justificationType, final LocalDate dispatchDate, final String reason) {
-        return new AcademicEventExemption(responsible, event, value, justificationType, dispatchDate, reason);
     }
 
     @Override

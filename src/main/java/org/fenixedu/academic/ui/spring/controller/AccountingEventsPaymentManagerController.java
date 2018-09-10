@@ -4,9 +4,13 @@ import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.Discount;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.Exemption;
+import org.fenixedu.academic.domain.accounting.calculator.BigDecimalUtil;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
+import org.fenixedu.academic.domain.accounting.events.EventExemptionJustificationType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.accounting.AnnulAccountingTransactionBean;
+import org.fenixedu.academic.dto.accounting.CreateExemptionBean;
+import org.fenixedu.academic.dto.accounting.CreateExemptionBean.ExemptionType;
 import org.fenixedu.academic.dto.accounting.DepositAmountBean;
 import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.predicate.AccessControl;
@@ -17,6 +21,8 @@ import org.fenixedu.academic.ui.spring.service.AccountingManagementService;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.spring.portal.SpringFunctionality;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +38,13 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
+import static org.fenixedu.academic.domain.accounting.calculator.BigDecimalUtil.isPositive;
 
 /**
  * Created by Sérgio Silva (hello@fenixedu.org).
@@ -42,6 +54,8 @@ import java.io.IOException;
 @SpringFunctionality(app = AcademicAdministrationSpringApplication.class, title = "title.accounting.management")
 @RequestMapping(AccountingEventsPaymentManagerController.REQUEST_MAPPING)
 public class AccountingEventsPaymentManagerController extends AccountingController {
+    private static final Logger logger = LoggerFactory.getLogger(AccountingEventsPaymentManagerController.class);
+
     static final String REQUEST_MAPPING = "/accounting-management";
 
     @Autowired
@@ -78,11 +92,11 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
 
     @RequestMapping("{event}/delete/{transaction}")
     public String delete(@PathVariable DomainObject transaction, @PathVariable Event event, User user, Model model) {
-        accessControlService.checkPaymentManager(event, user);
+        accessControlService.checkAdvancedPaymentManager(event, user);
         if (transaction instanceof AccountingTransaction) {
             model.addAttribute("annulAccountingTransactionBean", new AnnulAccountingTransactionBean((AccountingTransaction) transaction));
             model.addAttribute("event", event);
-            return view("annulTransaction");
+            return view("event-annul-transaction");
         }
         else if (transaction instanceof Exemption){
             try {
@@ -110,7 +124,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
     @RequestMapping(value = "{event}/deleteTransaction", method = RequestMethod.POST)
     public String deleteTransaction(@PathVariable Event event, User user, Model model,
             @ModelAttribute AnnulAccountingTransactionBean annulAccountingTransactionBean){
-        accessControlService.checkPaymentManager(event, user);
+        accessControlService.checkAdvancedPaymentManager(event, user);
         try {
             AnnulAccountingTransaction.run(annulAccountingTransactionBean);
         }
@@ -123,7 +137,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
 
     @RequestMapping(value = "{event}/deposit", method = RequestMethod.GET)
     public String deposit(@PathVariable Event event, User user, Model model){
-        accessControlService.checkPaymentManager(event, user);
+        accessControlService.checkAdvancedPaymentManager(event, user);
 
         model.addAttribute("person", event.getPerson());
         model.addAttribute("event", event);
@@ -134,7 +148,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
 
     @RequestMapping(value = "{event}/depositAmount", method = RequestMethod.POST)
     public String depositAmount(@PathVariable Event event, User user, Model model, @ModelAttribute DepositAmountBean depositAmountBean) {
-        accessControlService.checkPaymentManager(event, user);
+        accessControlService.checkAdvancedPaymentManager(event, user);
 
         try {
             accountingManagementService.depositAmount(event, user, depositAmountBean);
@@ -149,7 +163,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
 
     @RequestMapping(value = "{event}/cancel", method = RequestMethod.GET)
     public String cancel(@PathVariable Event event, User user, Model model) {
-        accessControlService.checkPaymentManager(event, user);
+        accessControlService.checkAdvancedPaymentManager(event, user);
 
         model.addAttribute("person", event.getPerson());
         model.addAttribute("event", event);
@@ -159,7 +173,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
 
     @RequestMapping(value = "{event}/cancelEvent", method = RequestMethod.POST)
     public String cancelEvent(@PathVariable Event event, User user, Model model, @RequestParam String justification) {
-        accessControlService.checkPaymentManager(event, user);
+        accessControlService.checkAdvancedPaymentManager(event, user);
 
         try {
             accountingManagementService.cancelEvent(event, user.getPerson(), justification);
@@ -172,7 +186,47 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
         return redirectToEventDetails(event);
     }
 
+    @RequestMapping(value = "{event}/exempt", method = RequestMethod.GET)
+    public String exempt(@PathVariable Event event, User user, Model model) {
+        accessControlService.checkAdvancedPaymentManager(event, user);
+
+        final DebtInterestCalculator calculator = event.getDebtInterestCalculator(new DateTime());
+
+        if (calculator.getTotalDueAmount().equals(BigDecimal.ZERO)) {
+            return redirectToEventDetails(event);
+        }
+
+        model.addAttribute("event", event);
+        model.addAttribute("person", event.getPerson());
+
+        final Map<ExemptionType, BigDecimal> exemptionTypeAmountMap = new HashMap<>();
+        exemptionTypeAmountMap.put(ExemptionType.INTEREST, calculator.getDueInterestAmount());
+        exemptionTypeAmountMap.put(ExemptionType.FINE, calculator.getDueFineAmount());
+        exemptionTypeAmountMap.put(ExemptionType.DEBT, calculator.getDueAmount());
+
+        model.addAttribute("exemptionTypeAmountMap", exemptionTypeAmountMap);
+        model.addAttribute("createExemptionBean", new CreateExemptionBean());
+        model.addAttribute("eventExemptionJustificationTypes", EventExemptionJustificationType.values());
+
+        return view("event-create-exemption");
+    }
+
+    @RequestMapping(value = "{event}/createExemption", method = RequestMethod.POST)
+    public String createExemption(@PathVariable Event event, User user, Model model, @ModelAttribute CreateExemptionBean createExemptionBean){
+        accessControlService.checkAdvancedPaymentManager(event, user);
+
+        try {
+            accountingManagementService.exemptEvent(event, user.getPerson(), createExemptionBean);
+        }
+        catch (DomainException e) {
+            model.addAttribute("error", e.getLocalizedMessage());
+            return exempt(event, user, model);
+        }
+
+        return redirectToEventDetails(event);
+    }
+
     private String redirectToEventDetails(@PathVariable Event event) {
-        return String.format("redirect:/%s/%s/details", REQUEST_MAPPING, event.getExternalId());
+        return String.format("redirect:%s/%s/details", REQUEST_MAPPING, event.getExternalId());
     }
 }

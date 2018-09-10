@@ -18,57 +18,27 @@
  */
 package org.fenixedu.academic.domain.accounting.events.gratuity;
 
+import org.fenixedu.academic.domain.accounting.events.EventExemptionJustificationType;
+import org.fenixedu.academic.util.Money;
+
 import java.math.BigDecimal;
 
-import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.Event;
-import org.fenixedu.academic.domain.accounting.Exemption;
-import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.Money;
-import org.joda.time.DateTime;
-import org.joda.time.YearMonthDay;
-
-import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-
+/**
+ * Use {@link org.fenixedu.academic.domain.accounting.events.EventExemption}
+ */
+@Deprecated
 public abstract class GratuityExemption extends GratuityExemption_Base {
-
-    static {
-        getRelationExemptionEvent().addListener(new RelationAdapter<Exemption, Event>() {
-
-            @Override
-            public void beforeAdd(Exemption exemption, Event event) {
-                if (event instanceof GratuityEvent) {
-                    if (exemption instanceof GratuityExemption) {
-                        final GratuityEvent gratuityEvent = (GratuityEvent) event;
-                        final GratuityExemption gratuityExemption = (GratuityExemption) exemption;
-                        if (!gratuityEvent.canApplyExemption(gratuityExemption.getJustificationType())) {
-                            throw new DomainException(
-                                    "error.accounting.events.gratuity.GratuityExemption.gratuity.exemption.type.cannot.applied.to.gratuity.event");
-                        }
-                    }
-                }
-            }
-        });
-    }
 
     protected GratuityExemption() {
         super();
-    }
-
-    protected void init(final Person responsible, final GratuityEvent gratuityEvent,
-            final GratuityExemptionJustificationType exemptionType, final String reason, final YearMonthDay dispatchDate) {
-        super.init(responsible, gratuityEvent,
-                GratuityExemptionJustificationFactory.create(this, exemptionType, reason, dispatchDate));
-
-        gratuityEvent.recalculateState(new DateTime());
     }
 
     public GratuityEvent getGratuityEvent() {
         return (GratuityEvent) getEvent();
     }
 
-    public GratuityExemptionJustificationType getJustificationType() {
-        return getExemptionJustification().getGratuityExemptionJustificationType();
+    public EventExemptionJustificationType getJustificationType() {
+        return getExemptionJustification().getJustificationType();
     }
 
     @Override

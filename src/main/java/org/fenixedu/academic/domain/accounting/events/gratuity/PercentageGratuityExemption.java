@@ -18,44 +18,19 @@
  */
 package org.fenixedu.academic.domain.accounting.events.gratuity;
 
-import java.math.BigDecimal;
-
-import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.EventState;
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
-import org.joda.time.YearMonthDay;
 
+import java.math.BigDecimal;
+
+/**
+ * Use {@link org.fenixedu.academic.domain.accounting.events.EventExemption}
+ */
+@Deprecated
 public class PercentageGratuityExemption extends PercentageGratuityExemption_Base {
 
-    public PercentageGratuityExemption(final Person responsible, final GratuityEvent gratuityEvent,
-            final GratuityExemptionJustificationType gratuityExemptionJustificationType, final String reason,
-            final YearMonthDay dispatchDate, final BigDecimal percentage) {
-        super();
-        init(responsible, gratuityExemptionJustificationType, reason, dispatchDate, gratuityEvent, percentage);
-    }
-
-    public PercentageGratuityExemption(final GratuityEvent gratuityEvent,
-            final GratuityExemptionJustificationType gratuityExemptionJustificationType, final String reason,
-            final YearMonthDay dispatchDate, final BigDecimal percentage) {
-        this(null, gratuityEvent, gratuityExemptionJustificationType, reason, dispatchDate, percentage);
-    }
-
-    protected void init(Person responsible, GratuityExemptionJustificationType exemptionType, String reason,
-            YearMonthDay dispatchDate, GratuityEvent gratuityEvent, BigDecimal percentage) {
-
-        checkParameters(percentage);
-        super.setPercentage(percentage);
-
-        super.init(responsible, gratuityEvent, exemptionType, reason, dispatchDate);
-    }
-
-    private void checkParameters(BigDecimal percentage) {
-        if (percentage == null) {
-            throw new DomainException("error.accounting.events.gratuity.PercentageGratuityExemption.percentage.cannot.be.null");
-        }
-    }
+    private PercentageGratuityExemption() { }
 
     @Override
     public void setPercentage(BigDecimal percentage) {
@@ -68,10 +43,6 @@ public class PercentageGratuityExemption extends PercentageGratuityExemption_Bas
     @Override
     public BigDecimal calculateDiscountPercentage(Money amount) {
         return getPercentage();
-    }
-
-    public String getFormattedPercentage() {
-        return getPercentage().multiply(BigDecimal.valueOf(100)).toPlainString();
     }
 
     @Override

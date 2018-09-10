@@ -24,6 +24,10 @@ import java.util.List;
 
 import org.fenixedu.academic.domain.accounting.EventType;
 
+/**
+ * Use {@link org.fenixedu.academic.domain.accounting.events.EventExemptionJustificationType}
+ */
+@Deprecated
 public enum PenaltyExemptionJustificationType {
     SOCIAL_SHARE_GRANT_OWNER,
 
