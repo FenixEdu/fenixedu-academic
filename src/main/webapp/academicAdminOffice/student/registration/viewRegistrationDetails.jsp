@@ -24,6 +24,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/academic" prefix="academic" %>
+<%@ taglib uri="http://fenixedu.org/taglib/intersection" prefix="modular" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@page import="org.fenixedu.academic.domain.ExecutionYear"%>
 <%@page import="org.fenixedu.academic.domain.student.RegistrationDataByExecutionYear"%>
@@ -184,7 +186,10 @@
 					<html:link page="/student/scholarship/report/utlScholarshipReport.do?method=viewResultsOnRegistration" paramId="registrationId" paramName="registration" paramProperty="externalId">
 						<bean:message key="link.utl.scholarship.report.view" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 					</html:link>
-				</span>				
+				</span>
+				<modular:intersect location="registration.process" position="actions">
+					<modular:arg key="registrationId" value="<%= registration.getExternalId() %>"></modular:arg>
+				</modular:intersect>
 			</p>
 			</academic:allowed>
 		</td>
