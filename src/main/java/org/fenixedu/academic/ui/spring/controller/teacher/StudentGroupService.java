@@ -152,7 +152,9 @@ public class StudentGroupService {
 
     @Atomic
     public void deleteGrouping(Grouping grouping) {
-        grouping.delete();
+        if (grouping != null) {
+            grouping.delete();
+        }
     }
 
 }
