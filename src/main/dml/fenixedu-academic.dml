@@ -845,6 +845,9 @@ valueType org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDeta
     class InterestRateLog extends DomainOperationLog {
     }
 
+    class AffinityCycleCourseGroupLog extends DomainOperationLog {
+    }
+
     class CourseLoad  {
         ShiftType type;
         BigDecimal totalQuantity;
@@ -6333,6 +6336,16 @@ relation AffinityCycleCourseGroup {
     }
     degreeStructure.CycleCourseGroup playsRole destinationAffinities {
         multiplicity *;
+    }
+}
+
+relation BennuAffinityCycleCourseGroupLog {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectAffinityCycleCourseGroupLog {
+        multiplicity 1..1;
+    }
+
+    AffinityCycleCourseGroupLog playsRole AffinityCycleCourseGroupLog  {
+        multiplicity 0..*;
     }
 }
 

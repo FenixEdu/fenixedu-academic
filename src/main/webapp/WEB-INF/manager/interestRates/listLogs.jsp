@@ -18,9 +18,9 @@
 
 <table class="table results">
     <thead>
-    <th><spring:message code="label.interestRate.log.datetime" /></th>
-    <th><spring:message code="label.interestRate.log.person" /></th>
-    <th><spring:message code="label.interestRate.log.description" /></th>
+    <th><spring:message code="label.log.datetime" /></th>
+    <th><spring:message code="label.log.person" /></th>
+    <th><spring:message code="label.log.description" /></th>
     </thead>
     <tbody>
     <c:forEach var="interestRateLog" items="${interestRatesLogs}">
