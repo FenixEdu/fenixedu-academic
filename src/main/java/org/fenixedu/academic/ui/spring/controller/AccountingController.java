@@ -78,14 +78,12 @@ public abstract class AccountingController {
 
         model.addAttribute("entrypointUrl", entrypointUrl());
 
-        model.addAttribute("eventUsername", event.getPerson().getUsername());
-        model.addAttribute("debts", debtInterestCalculator.getDebtsOrderedByDueDate());
         model.addAttribute("creditEntries", creditEntries);
+        model.addAttribute("event", event);
         model.addAttribute("eventId", event.getExternalId());
-        model.addAttribute("eventCreationDate", event.getWhenOccured());
-        model.addAttribute("eventDescription", event.getDescription());
         model.addAttribute("currentDate", date.toLocalDate());
 
+        model.addAttribute("debts", debtInterestCalculator.getDebtsOrderedByDueDate());
         model.addAttribute("eventTotalAmountToPay", debtInterestCalculator.getTotalDueAmount());
         model.addAttribute("eventDebtAmountToPay", debtInterestCalculator.getDueAmount());
         model.addAttribute("eventInterestAmountToPay", debtInterestCalculator.getDueInterestAmount());
@@ -114,6 +112,7 @@ public abstract class AccountingController {
                 .thenComparing(AccountingManagementService.PaymentSummary::getId).reversed());
 
         model.addAttribute("eventId", event.getExternalId());
+        model.addAttribute("event", event);
         model.addAttribute("eventDescription", event.getDescription());
         model.addAttribute("debtIndex", debtsOrderedByDueDate.indexOf(debt) + 1);
         model.addAttribute("debt", debt);
