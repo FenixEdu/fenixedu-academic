@@ -4,7 +4,6 @@ import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.Discount;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.Exemption;
-import org.fenixedu.academic.domain.accounting.calculator.BigDecimalUtil;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
 import org.fenixedu.academic.domain.accounting.events.EventExemptionJustificationType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -19,6 +18,7 @@ import org.fenixedu.academic.service.services.accounting.DeleteExemption;
 import org.fenixedu.academic.ui.spring.service.AccountingManagementAccessControlService;
 import org.fenixedu.academic.ui.spring.service.AccountingManagementService;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.spring.portal.SpringFunctionality;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -39,12 +39,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
-
-import static org.fenixedu.academic.domain.accounting.calculator.BigDecimalUtil.isPositive;
+import java.util.Optional;
 
 /**
  * Created by Sérgio Silva (hello@fenixedu.org).
@@ -192,7 +189,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
 
         final DebtInterestCalculator calculator = event.getDebtInterestCalculator(new DateTime());
 
-        if (calculator.getTotalDueAmount().equals(BigDecimal.ZERO)) {
+        if (calculator.getTotalDueAmount().compareTo(BigDecimal.ZERO) == 0) {
             return redirectToEventDetails(event);
         }
 
@@ -200,9 +197,9 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
         model.addAttribute("person", event.getPerson());
 
         final Map<ExemptionType, BigDecimal> exemptionTypeAmountMap = new HashMap<>();
+        exemptionTypeAmountMap.put(ExemptionType.DEBT, calculator.getDueAmount());
         exemptionTypeAmountMap.put(ExemptionType.INTEREST, calculator.getDueInterestAmount());
         exemptionTypeAmountMap.put(ExemptionType.FINE, calculator.getDueFineAmount());
-        exemptionTypeAmountMap.put(ExemptionType.DEBT, calculator.getDueAmount());
 
         model.addAttribute("exemptionTypeAmountMap", exemptionTypeAmountMap);
         model.addAttribute("createExemptionBean", new CreateExemptionBean());

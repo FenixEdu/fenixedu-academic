@@ -3,7 +3,6 @@ package org.fenixedu.academic.ui.spring.controller;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.calculator.Debt;
-import org.fenixedu.academic.domain.accounting.calculator.DebtEntry;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
 import org.fenixedu.academic.domain.accounting.calculator.Fine;
 import org.fenixedu.academic.domain.accounting.calculator.Interest;
@@ -71,10 +70,10 @@ public class AccountingEventForOwnerController extends AccountingController {
             return entrypoint();
         }
 
-        final List<Interest> interests = getOpenInterests(debtInterestCalculator);
-        final List<Fine> fines = getOpenFines(debtInterestCalculator);
-        final List<Debt> debts = getOpenDebts(debtInterestCalculator);
-        final List<EventPaymentCodeEntry> eventPaymentCodeEntries = getSortedEventPaymentCodeEntries(event);
+        final List<Interest> interests = getInterests(debtInterestCalculator);
+        final List<Fine> fines = getFines(debtInterestCalculator);
+        final List<Debt> debts = debtInterestCalculator.getDebtsOrderedByDueDate();
+        final List<EventPaymentCodeEntry> paymentCodeEntries = getSortedEventPaymentCodeEntries(event);
 
         model.addAttribute("eventId", event.getExternalId());
         model.addAttribute("description", event.getDescription());
@@ -84,7 +83,7 @@ public class AccountingEventForOwnerController extends AccountingController {
         model.addAttribute("interests", interests);
         model.addAttribute("fines", fines);
         model.addAttribute("debts", debts);
-        model.addAttribute("paymentCodeEntries", eventPaymentCodeEntries);
+        model.addAttribute("paymentCodeEntries", paymentCodeEntries);
 
         return view("event-payment-options");
     }
@@ -114,7 +113,7 @@ public class AccountingEventForOwnerController extends AccountingController {
         }
         else {
             final EventPaymentCodeEntry paymentCodeEntry = EventPaymentCodeEntry.create(event, new Money(totalAmount));
-            return "redirect:" + REQUEST_MAPPING + "/" + event.getExternalId() + "/paymentRef/" + paymentCodeEntry.getExternalId();
+            return String.format("redirect:%s/%s/paymentRef/%s", REQUEST_MAPPING, event.getExternalId(), paymentCodeEntry.getExternalId());
         }
     }
 
@@ -124,23 +123,15 @@ public class AccountingEventForOwnerController extends AccountingController {
                 .collect(Collectors.toList());
     }
 
-    private List<Debt> getOpenDebts(DebtInterestCalculator debtInterestCalculator) {
-        return debtInterestCalculator.getDebtsOrderedByDueDate().stream()
-                .filter(d -> d.getOpenAmount().compareTo(BigDecimal.ZERO) > 0)
-                .collect(Collectors.toList());
-    }
-
-    private List<Interest> getOpenInterests(DebtInterestCalculator debtInterestCalculator) {
+    private List<Interest> getInterests(DebtInterestCalculator debtInterestCalculator) {
         return debtInterestCalculator.getDebtsOrderedByDueDate().stream()
                 .flatMap(d -> d.getInterests().stream())
-                .filter(DebtEntry::isOpen)
                 .collect(Collectors.toList());
     }
 
-    private List<Fine> getOpenFines(DebtInterestCalculator debtInterestCalculator) {
+    private List<Fine> getFines(DebtInterestCalculator debtInterestCalculator) {
         return debtInterestCalculator.getDebtsOrderedByDueDate().stream()
                 .flatMap(d -> d.getFines().stream())
-                .filter(DebtEntry::isOpen)
                 .collect(Collectors.toList());
     }
 }

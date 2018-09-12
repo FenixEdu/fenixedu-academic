@@ -1,23 +1,14 @@
 package org.fenixedu.academic.ui.spring.controller;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.servlet.ServletContext;
-
 import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.accounting.calculator.CreditEntry;
 import org.fenixedu.academic.domain.accounting.calculator.Debt;
-import org.fenixedu.academic.domain.accounting.calculator.DebtExemption;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
-import org.fenixedu.academic.domain.accounting.calculator.FineExemption;
-import org.fenixedu.academic.domain.accounting.calculator.InterestExemption;
 import org.fenixedu.academic.ui.spring.service.AccountingManagementAccessControlService;
 import org.fenixedu.academic.ui.spring.service.AccountingManagementService;
+import org.fenixedu.academic.ui.spring.service.AccountingManagementService.PaymentSummary;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
@@ -26,10 +17,15 @@ import org.joda.time.LocalDate;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RequestParam;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
+
+import javax.servlet.ServletContext;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Sérgio Silva (hello@fenixedu.org).
@@ -107,11 +103,10 @@ public abstract class AccountingController {
         Debt debt = debtsOrderedByDueDate.stream().filter(d -> d.getDueDate().equals(debtDueDate)).findAny()
                 .orElseThrow(UnsupportedOperationException::new);
 
-        final List<AccountingManagementService.PaymentSummary> paymentSummaries =
-                accountingManagementService.createPaymentSummaries(debt);
-        paymentSummaries.sort(Comparator.comparing(AccountingManagementService.PaymentSummary::getCreated)
-                .thenComparing(AccountingManagementService.PaymentSummary::getDate)
-                .thenComparing(AccountingManagementService.PaymentSummary::getId).reversed());
+        final List<PaymentSummary> paymentSummaries = accountingManagementService.createPaymentSummaries(debt);
+        paymentSummaries.sort(Comparator.comparing(PaymentSummary::getCreated)
+                .thenComparing(PaymentSummary::getDate)
+                .thenComparing(PaymentSummary::getId).reversed());
 
         model.addAttribute("eventId", event.getExternalId());
         model.addAttribute("eventDescription", event.getDescription());
@@ -128,15 +123,16 @@ public abstract class AccountingController {
     public String creditEntryDetails(@PathVariable Event event, @PathVariable String creditEntryId, Model model) {
         accessControlService.checkEventOwnerOrPaymentManager(event, Authenticate.getUser());
 
-        final DebtInterestCalculator debtInterestCalculator = event.getDebtInterestCalculator(new DateTime());
-
-        final CreditEntry creditEntry = debtInterestCalculator.getCreditEntryById(creditEntryId).orElseThrow(UnsupportedOperationException::new);
+        final DebtInterestCalculator calculator = event.getDebtInterestCalculator(new DateTime());
+        final CreditEntry creditEntry = calculator.getCreditEntryById(creditEntryId).orElseThrow(UnsupportedOperationException::new);
+        final List<Debt> debtsOrderedByDueDate = calculator.getDebtsOrderedByDueDate();
 
         model.addAttribute("eventId", event.getExternalId());
         model.addAttribute("creditEntry", creditEntry);
         model.addAttribute("processedDate", creditEntry.getCreated());
         model.addAttribute("registeredDate", creditEntry.getDate());
         model.addAttribute("amount", creditEntry.getAmount());
+        model.addAttribute("debtsOrderedByDueDate", debtsOrderedByDueDate);
         model.addAttribute("payments", accountingManagementService.createPaymentSummaries(creditEntry));
 
         final DomainObject transactionDetail = FenixFramework.getDomainObject(creditEntryId);
@@ -146,7 +142,7 @@ public abstract class AccountingController {
         }
         else if (transactionDetail instanceof Exemption){
             model.addAttribute("exemption", transactionDetail);
-            model.addAttribute("exemptionValue", ((Exemption) transactionDetail).getExemptionAmount(new Money(debtInterestCalculator.getDebtAmount())));
+            model.addAttribute("exemptionValue", ((Exemption) transactionDetail).getExemptionAmount(new Money(calculator.getDebtAmount())));
             return view("event-exemption-details");
         }
         else {
