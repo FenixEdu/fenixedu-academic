@@ -30,28 +30,11 @@
 	</slot>
 </schema>
 
-<schema name="entryDTO.edit-with-installments" type="org.fenixedu.academic.dto.accounting.EntryDTO" bundle="APPLICATION_RESOURCES">
-	<slot name="selected"/>
-	<slot name="description" read-only="true" key="label.org.fenixedu.academic.domain.accounting.Entry.description"/>
-	<slot name="totalAmount" read-only="true" key="label.org.fenixedu.academic.domain.accounting.Entry.amountWithAdjustment" />
-	<slot name="amountToPay" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-    	<property name="size" value="10"/>
-		<property name="maxLength" value="10"/>
-	</slot>
-</schema>
-
 <schema name="entry.view" type="org.fenixedu.academic.domain.accounting.Entry" bundle="APPLICATION_RESOURCES">
 	<slot name="reimbursementAppliable"  />
 	<slot name="description" />
 	<slot name="whenRegistered" />
 	<slot name="originalAmount"  />
-</schema>
-
-<schema name="entry.view-for-other-parties" type="org.fenixedu.academic.domain.accounting.Entry" bundle="APPLICATION_RESOURCES">
-	<slot name="description" />
-	<slot name="whenRegistered" />
-	<slot name="originalAmount"  />
-	<slot name="accountingTransaction.fromAccount.party.socialSecurityNumber" key="label.contributor" />
 </schema>
 
 <schema name="entry.view-for-student" type="org.fenixedu.academic.domain.accounting.Entry" bundle="APPLICATION_RESOURCES">
@@ -109,28 +92,6 @@
 	<slot name="entry.amountWithAdjustment" read-only="true" key="label.org.fenixedu.academic.domain.accounting.Entry.amountWithAdjustment"  />
 </schema>
 
-<schema name="createReceiptBean.edit.with.contributorParty" type="org.fenixedu.academic.dto.accounting.CreateReceiptBean" bundle="APPLICATION_RESOURCES">
-	<slot name="year" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="4"/>
-		<property name="maxLength" value="4"/>
-	</slot>
-	<slot name="usingContributorParty" layout="radio-postback" key="label.has.contributor.number">
-		<property name="bundle" value="APPLICATION_RESOURCES"/>
-		<property name="destination" value="usingContributorPartyPostback"/>
-		<property name="classes" value="nobullet liinline"/>
-	</slot>
-	<slot name="contributorPartySocialSecurityNumber" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="70"/>
-		<property name="format" value="${party.socialSecurityNumber} - ${party.name}"/>
-		<property name="indicatorShown" value="true"/>		
-		<property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchPartySocialSecurityNumber"/>
-		<property name="args" value="slot=socialSecurityNumber"/>
-		<property name="minChars" value="1"/>
-		<property name="maxCount" value="20"/>
-		<property name="rawSlotName" value="contributorNumber" />
-	</slot>
-</schema>
-
 <schema name="createReceiptBean.edit.with.contributorName" type="org.fenixedu.academic.dto.accounting.CreateReceiptBean" bundle="APPLICATION_RESOURCES">
 	<slot name="year" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="4"/>
@@ -149,40 +110,6 @@
         <property name="maxLength" value="255"/>
     </slot>
 </schema>
-
-<schema name="createReceiptBean.create.notRequired" type="org.fenixedu.academic.dto.accounting.CreateReceiptBean" bundle="APPLICATION_RESOURCES">
-	<slot name="contributorPartySocialSecurityNumber" layout="autoComplete" >
-		<property name="size" value="70"/>
-		<property name="format" value="${socialSecurityNumber} - ${party.name}"/>
-		<property name="indicatorShown" value="true"/>		
-		<property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchPartySocialSecurityNumber"/>
-		<property name="args" value="slot=socialSecurityNumber"/>
-		<property name="minChars" value="1"/>
-		<property name="maxCount" value="20"/>
-		<property name="rawSlotName" value="contributorNumber" />
-	</slot>
-</schema>
-
-<schema name="paymentsManagementDTO.edit.with.contributorParty" type="org.fenixedu.academic.dto.accounting.PaymentsManagementDTO" bundle="APPLICATION_RESOURCES">
-	<slot name="differedPayment" />
-	<slot name="paymentDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="usingContributorParty" layout="radio-postback" key="label.has.contributor.number">
-		<property name="bundle" value="APPLICATION_RESOURCES"/>
-		<property name="destination" value="usingContributorPartyPostback"/>
-		<property name="classes" value="nobullet liinline"/>
-	</slot>
-	<slot name="contributorPartySocialSecurityNumber" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="70"/>
-		<property name="format" value="${socialSecurityNumber} - ${party.name}"/>
-		<property name="indicatorShown" value="true"/>		
-		<property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchPartySocialSecurityNumber"/>
-		<property name="args" value="slot=socialSecurityNumber"/>
-		<property name="minChars" value="1"/>
-		<property name="maxCount" value="20"/>
-		<property name="rawSlotName" value="contributorNumber" />
-	</slot>
-</schema>
-
 
 <schema name="paymentsManagementDTO.edit.with.contributorName" type="org.fenixedu.academic.dto.accounting.PaymentsManagementDTO" bundle="APPLICATION_RESOURCES">
 	<slot name="differedPayment" />
@@ -231,186 +158,6 @@
 	<slot name="paymentMode" />
 </schema>
 
-<schema name="CreateGratuityExemptionBean" type="org.fenixedu.academic.dto.accounting.gratuityExemption.CreateGratuityExemptionBean" bundle="APPLICATION_RESOURCES">
-	<slot name="exemptionJustificationType" layout="radio-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.payments.GratuityExemptionJustificationTypeByDegreeTypeProvider" />
-        <property name="saveOptions" value="true"/>
-    </slot>
-    
-    <slot name="percentage" layout="menu-select">
-        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.payments.GratuityExemptionDefaultPercentagesProvider" />
-        <property name="saveOptions" value="true"/>
-    </slot>
-    
-    <slot name="otherPercentage">
-       	<property name="size" value="5"/>
-		<property name="maxLength" value="5"/>
-    </slot>
-    <slot name="amount">
-       	<property name="size" value="8"/>
-		<property name="maxLength" value="8"/>
-    </slot>
-    
-    <slot name="dispatchDate" key="label.org.fenixedu.academic.dto.accounting.gratuityExemption.CreateGratuityExemptionBean.dispatchDate" />    
-    <slot name="reason" key="label.org.fenixedu.academic.dto.accounting.gratuityExemption.CreateGratuityExemptionBean.reason" layout="longText" />
-
-</schema>
-
-<schema name="CreateGratuityExemptionBean.edit-user-defined-percentage-or-amount" type="org.fenixedu.academic.dto.accounting.gratuityExemption.CreateGratuityExemptionBean" bundle="APPLICATION_RESOURCES">
-    <slot name="otherPercentage">
-       	<property name="size" value="5"/>
-		<property name="maxLength" value="5"/>
-    </slot>
-    <slot name="amount">
-       	<property name="size" value="8"/>
-		<property name="maxLength" value="8"/>
-    </slot>
-</schema>
-
-<schema name="CreateInstallmentPenaltyExemptionBean.edit" 
-		type="org.fenixedu.academic.dto.accounting.penaltyExemption.CreateInstallmentPenaltyExemptionBean" 
-		bundle="APPLICATION_RESOURCES" >
-   	<slot name="installments" layout="option-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" 
-   		key="label.org.fenixedu.academic.dto.accounting.penaltyExemption.CreateInstallmentPenaltyExemptionBean.installments">
-        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.payments.InstallmentsForCreateInstallmentPenaltyExemptionBeanProvider" />
-        <property name="saveOptions" value="true"/>
-        <property name="eachLayout" value="values" />
-        <property name="eachSchema" value="Installment.view-description-only" />
-		<property name="style" value="list-style: none; padding: 0; margin: 0;" />
-    </slot>
-   	<slot name="justificationType" layout="radio-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" 
-   		key="label.org.fenixedu.academic.dto.accounting.penaltyExemption.CreatePenaltyExemptionBean.justificationType">
-        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.payments.PenaltyExemptionTypeProviderForCreatePenaltyExemptionBean" />
-        <property name="saveOptions" value="true"/>
-    </slot>
-    <slot name="dispatchDate" key="label.org.fenixedu.academic.dto.accounting.penaltyExemption.CreatePenaltyExemptionBean.dispatchDate" />    
-    <slot name="reason" key="label.org.fenixedu.academic.dto.accounting.penaltyExemption.CreatePenaltyExemptionBean.reason" layout="longText" />
-</schema>
-
-<schema name="CreateImprovementOfApprovedEnrolmentPenaltyExemptionBean.edit" 
-		type="org.fenixedu.academic.dto.accounting.penaltyExemption.CreateImprovementOfApprovedEnrolmentPenaltyExemptionBean" 
-		bundle="APPLICATION_RESOURCES" >
-   	<slot name="justificationType" layout="radio-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" 
-   	key="label.org.fenixedu.academic.dto.accounting.penaltyExemption.CreatePenaltyExemptionBean.justificationType">
-        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.payments.PenaltyExemptionTypeProviderForCreatePenaltyExemptionBean" />
-        <property name="saveOptions" value="true"/>
-    </slot>
-    <slot name="dispatchDate" key="label.org.fenixedu.academic.dto.accounting.penaltyExemption.CreatePenaltyExemptionBean.dispatchDate" />
-    <slot name="reason" key="label.org.fenixedu.academic.dto.accounting.penaltyExemption.CreatePenaltyExemptionBean.reason" layout="longText" />
-</schema>
-
-<schema name="CreatePhdRegistrationFeePenaltyExemptionBean.edit" 
-		type="org.fenixedu.academic.dto.accounting.penaltyExemption.CreatePhdRegistrationFeePenaltyExemptionBean" 
-		bundle="APPLICATION_RESOURCES" >
-   	<slot name="justificationType" layout="radio-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" 
-   	key="label.org.fenixedu.academic.dto.accounting.penaltyExemption.CreatePenaltyExemptionBean.justificationType">
-        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.payments.PenaltyExemptionTypeProviderForCreatePenaltyExemptionBean" />
-        <property name="saveOptions" value="true"/>
-    </slot>
-    <slot name="dispatchDate" key="label.org.fenixedu.academic.dto.accounting.penaltyExemption.CreatePenaltyExemptionBean.dispatchDate" />
-    <slot name="reason" key="label.org.fenixedu.academic.dto.accounting.penaltyExemption.CreatePenaltyExemptionBean.reason" layout="longText" />
-</schema>
-
-<schema name="CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean.edit" 
-		type="org.fenixedu.academic.dto.accounting.penaltyExemption.CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean" 
-		bundle="APPLICATION_RESOURCES">
-   	<slot name="justificationType" layout="radio-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" 
-   	key="label.org.fenixedu.academic.dto.accounting.penaltyExemption.CreatePenaltyExemptionBean.justificationType">
-        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.payments.PenaltyExemptionTypeProviderForCreatePenaltyExemptionBean" />
-        <property name="saveOptions" value="true"/>
-    </slot>
-    <slot name="dispatchDate" key="label.org.fenixedu.academic.dto.accounting.penaltyExemption.CreatePenaltyExemptionBean.dispatchDate" />
-    <slot name="reason" key="label.org.fenixedu.academic.dto.accounting.penaltyExemption.CreatePenaltyExemptionBean.reason" layout="longText" />
-</schema>
-
-<schema name="SecondCycleIndividualCandidacyExemptionBean.edit" 
-		type="org.fenixedu.academic.dto.accounting.SecondCycleIndividualCandidacyExemptionBean"
-		bundle="APPLICATION_RESOURCES">
-	<slot name="justificationType" layout="radio-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.org.fenixedu.academic.dto.accounting.SecondCycleIndividualCandidacyExemptionBean.justificationType">
-		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.payments.SecondCycleIndividualCandidacyExemptionJustificationProvider" />
-        <property name="saveOptions" value="true"/>
-	</slot>
-</schema>
-
-<schema name="AcademicEventExemptionBean.edit" 
-		type="org.fenixedu.academic.dto.accounting.AcademicEventExemptionBean"
-		bundle="APPLICATION_RESOURCES">
-	<slot name="justificationType" layout="radio-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.payments.AcademicEventJustificationTypeProvider" />
-        <property name="saveOptions" value="true"/>
-	</slot>
-	<slot name="dispatchDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="value" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="reason" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="rows" value="4" />
-		<property name="columns" value="40" />
-	</slot>
-</schema>
-
-<schema name="InstallmentPenaltyExemption.view" 
-		type="org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption" 
-		bundle="APPLICATION_RESOURCES">
-	<slot name="installment.description" key="label.org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption.installment" />
-	<slot name="description" key="label.org.fenixedu.academic.domain.accounting.events.PenaltyExemption.description" />
-    <slot name="reason" key="label.org.fenixedu.academic.domain.accounting.events.PenaltyExemption.reason" />
-</schema>
-
-<schema name="ImprovementOfApprovedEnrolmentPenaltyExemption.view" 
-		type="org.fenixedu.academic.domain.accounting.events.ImprovementOfApprovedEnrolmentPenaltyExemption" 
-		bundle="APPLICATION_RESOURCES">
-	<slot name="description" key="label.org.fenixedu.academic.domain.accounting.events.PenaltyExemption.description" />
-    <slot name="reason" key="label.org.fenixedu.academic.domain.accounting.events.PenaltyExemption.reason" />
-</schema>
-
-<schema name="PhdRegistrationFeePenaltyExemption.view" 
-		type="org.fenixedu.academic.domain.phd.debts.PhdRegistrationFeePenaltyExemption" 
-		bundle="APPLICATION_RESOURCES">
-	<slot name="description" key="label.org.fenixedu.academic.domain.accounting.events.PenaltyExemption.description" />
-    <slot name="reason" key="label.org.fenixedu.academic.domain.accounting.events.PenaltyExemption.reason" />
-</schema>
-
-<schema name="AdministrativeOfficeFeeAndInsurancePenaltyExemption.view" 
-		type="org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsurancePenaltyExemption" 
-		bundle="APPLICATION_RESOURCES">
-	<slot name="description" key="label.org.fenixedu.academic.domain.accounting.events.PenaltyExemption.description" />
-    <slot name="reason" key="label.org.fenixedu.academic.domain.accounting.events.PenaltyExemption.reason" />
-</schema>
-
-<schema name="SecondCycleIndividualCandidacyExemption.view"
-		type="org.fenixedu.academic.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyExemption" 
-		bundle="APPLICATION_RESOURCES">
-	<slot name="description" key="label.org.fenixedu.academic.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyExemption.description" />
-</schema>
-
-<schema name="AcademicEventExemption.view"
-		type="org.fenixedu.academic.domain.accounting.events.AcademicEventExemption" 
-		bundle="APPLICATION_RESOURCES">
-	<slot name="description" key="label.org.fenixedu.academic.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyExemption.description" />
-	<slot name="value" />
-	<slot name="dispatchDate" />
-	<slot name="reason" />
-</schema>
-
-<schema name="GratuityExemption.view" type="org.fenixedu.academic.domain.accounting.events.gratuity.GratuityExemption" bundle="APPLICATION_RESOURCES">
-	<slot name="description" key="label.org.fenixedu.academic.domain.accounting.events.gratuity.GratuityExemption.description" />
-	<slot name="reason" key="label.org.fenixedu.academic.domain.accounting.events.gratuity.GratuityExemption.reason" />
-</schema>
-
-<schema name="ExternalScholarshipGratuityExemption.view" type="org.fenixedu.academic.domain.accounting.events.gratuity.ExternalScholarshipGratuityExemption" bundle="APPLICATION_RESOURCES">
-	<slot name="description" key="label.org.fenixedu.academic.domain.accounting.events.gratuity.GratuityExemption.description" />
-	<slot name="partyDescription" key="label.org.fenixedu.academic.domain.accounting.events.gratuity.ExternalScholarshipGratuityExemption.party.description" />
-	<slot name="reason" key="label.org.fenixedu.academic.domain.accounting.events.gratuity.GratuityExemption.reason" />
-	<slot name="value" key="label.org.fenixedu.academic.domain.accounting.events.gratuity.ValueGratuityExemption.value"/>
-</schema>
-
-<schema name="PercentageGratuityExemption.view" type="org.fenixedu.academic.domain.accounting.events.gratuity.PercentageGratuityExemption"  extends="GratuityExemption.view" bundle="APPLICATION_RESOURCES">
-	<slot name="formattedPercentage" key="label.org.fenixedu.academic.domain.accounting.events.gratuity.PercentageGratuityExemption.percentage" />
-</schema>
-
-<schema name="ValueGratuityExemption.view" type="org.fenixedu.academic.domain.accounting.events.gratuity.ValueGratuityExemption"  extends="GratuityExemption.view" bundle="APPLICATION_RESOURCES">
-	<slot name="value" key="label.org.fenixedu.academic.domain.accounting.events.gratuity.ValueGratuityExemption.value"/>
-</schema>
-
 <schema name="PaymentCode.view" type="org.fenixedu.academic.domain.accounting.PaymentCode" bundle="APPLICATION_RESOURCES">
 	<slot name="description" key="label.org.fenixedu.academic.domain.accounting.PaymentCode.type" />
 	<slot name="entityCode" key="label.org.fenixedu.academic.domain.accounting.PaymentCode.entityCode" />
@@ -454,43 +201,10 @@
 	</slot>
 </schema>
 
-<schema name="GratuityEvent.view" type="org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent" bundle="APPLICATION_RESOURCES" extends="AccountingEvent.view">
-	<slot name="degree" layout="format">
-		<property name="format" value="${presentationName}" />
-	</slot>
-	<slot name="executionYear.year" />
-</schema>
-
-<schema name="Installment.view-description-only" type="org.fenixedu.academic.domain.accounting.Installment" bundle="APPLICATION_RESOURCES">
-	<slot name="description" />
-</schema>
-
 <schema name="Installment.view-description-and-amount" type="org.fenixedu.academic.domain.accounting.Installment" bundle="APPLICATION_RESOURCES">
 	<slot name="description" />
 	<slot name="amount" />
 </schema>
-
-<schema name="TransferPaymentsToOtherEventAndCancelBean.edit" type="org.fenixedu.academic.dto.accounting.TransferPaymentsToOtherEventAndCancelBean" bundle="APPLICATION_RESOURCES">
-	<slot name="targetEvent" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.payments.TargetEventsProviderForTransferPaymentsToOtherEventAndCancel" />
-        <property name="eachLayout" value="values-dash" />
-        <property name="eachSchema" value="AccountingEvent.view" />
-    </slot>
-	<slot name="cancelJustification" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="rows" value="4" />
-		<property name="columns" value="40" />
-	</slot>
-</schema>
-
-
-<schema name="AnnulAccountingTransactionBean.edit" type="org.fenixedu.academic.dto.accounting.AnnulAccountingTransactionBean" bundle="APPLICATION_RESOURCES">
-	<slot name="whenRegistered" read-only="true"/>
-	<slot name="paymentMode" read-only="true"/>
-	<slot name="amountWithAdjustment" read-only="true"/>
-	<slot name="reason" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-</schema>
-
-
 
 <schema name="editReceiptBean.edit.contributorParty" type="org.fenixedu.academic.ui.struts.action.administrativeOffice.payments.ReceiptsManagementDA$EditReceiptBean" bundle="APPLICATION_RESOURCES">
 	<slot name="usingContributorParty" layout="radio-postback" key="label.has.contributor.number">
@@ -525,47 +239,6 @@
     </slot>
 </schema>
 
-<schema name="AdministrativeOfficeFeeAndInsuranceExemptionBean.edit" type="org.fenixedu.academic.dto.accounting.AdministrativeOfficeFeeAndInsuranceExemptionBean" bundle="APPLICATION_RESOURCES">   
-	<slot name="applyExemptionOn" layout="radio-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
-		key="label.org.fenixedu.academic.dto.accounting.AdministrativeOfficeFeeAndInsuranceExemptionBean.applyExemptionOn" >
-        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.payments.AdministrativeOfficeFeeAndInsuranceExemptionApplyOnProvider" />
-        <property name="saveOptions" value="true"/>
-	</slot>
-    <slot name="justificationType" layout="radio-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
-    	key="label.org.fenixedu.academic.dto.accounting.AdministrativeOfficeFeeAndInsuranceExemptionBean.justificationType">
-        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.payments.AdministrativeOfficeFeeAndInsuranceExemptionJustificationProvider" />
-        <property name="saveOptions" value="true"/>
-    </slot>
-        
-    <slot name="dispatchDate" key="label.org.fenixedu.academic.dto.accounting.AdministrativeOfficeFeeAndInsuranceExemptionBean.dispatchDate"/>    
-    <slot name="reason" layout="longText" key="label.org.fenixedu.academic.dto.accounting.AdministrativeOfficeFeeAndInsuranceExemptionBean.reason"/>
-</schema>
-
-<schema name="AdministrativeOfficeFeeAndInsuranceExemption.view" type="org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemption" bundle="APPLICATION_RESOURCES">
-	<slot name="kindDescription" key="label.org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemption.kind" />
-	<slot name="description" key="label.org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemption.description" />
-	<slot name="reason" key="label.org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemption.reason" />
-</schema>
-
-<schema name="InsuranceExemptionBean.edit" type="org.fenixedu.academic.dto.accounting.InsuranceExemptionBean" bundle="APPLICATION_RESOURCES">   
-    <slot name="justificationType" layout="radio-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
-    	key="label.org.fenixedu.academic.dto.accounting.InsuranceExemptionBean.justificationType">
-        <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.payments.InsuranceExemptionJustificationProvider" />
-        <property name="saveOptions" value="true"/>
-    </slot>
-        
-    <slot name="dispatchDate" key="label.org.fenixedu.academic.dto.accounting.InsuranceExemptionBean.dispatchDate"/>    
-    
-    <slot name="reason" layout="longText" key="label.org.fenixedu.academic.dto.accounting.InsuranceExemptionBean.reason"/>
-
-</schema>
-
-<schema name="InsuranceExemption.view" type="org.fenixedu.academic.domain.accounting.events.InsuranceExemption" bundle="APPLICATION_RESOURCES">
-	<slot name="kindDescription" key="label.org.fenixedu.academic.domain.accounting.events.InsuranceExemption.kindDescription" />
-	<slot name="description" key="label.org.fenixedu.academic.domain.accounting.events.InsuranceExemption.description" />
-	<slot name="reason" key="label.org.fenixedu.academic.domain.accounting.events.InsuranceExemption.reason" />
-</schema>
-
 <schema name="GratuityReport.view" type="org.fenixedu.academic.domain.accounting.report.GratuityReport" bundle="APPLICATION_RESOURCES">
 	<slot name="totalGratuityAmount"  />
 </schema>
@@ -589,19 +262,4 @@
 	<slot name="startDate"  />
 	<slot name="endDate"  />
 	<slot name="detailed" />
-</schema>
-
-<schema name="ChangePaymentPlan" type="org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan" bundle="APPLICATION_RESOURCES">
-	<slot name="gratuityPaymentPlan" key="label.paymentPlan" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.accounting.paymentPlans.ChangeGratuityEventPaymentPlanProvider" />
-		<property name="format" value="${description}" />
-		<property name="sortBy" value="description" />
-	</slot>
-	<setter signature="changeGratuityPaymentPlan(gratuityPaymentPlan)" />
-</schema>
-
-<schema name="AccountingTransaction.view" type="org.fenixedu.academic.domain.accounting.AccountingTransaction" bundle="APPLICATION_RESOURCES">
-	<slot name="transactionDetail.whenProcessed" key="label.whenProcessed" />
-	<slot name="transactionDetail.whenRegistered" key="label.whenRegistered" />
-	<slot name="transactionDetail.comments" key="label.comments"/>
 </schema>

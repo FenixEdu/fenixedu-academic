@@ -18,23 +18,13 @@
  */
 package org.fenixedu.academic.domain.candidacyProcess.secondCycle;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import org.fenixedu.academic.domain.AcademicProgram;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.accounting.events.candidacy.CandidacyExemptionJustificationType;
 import org.fenixedu.academic.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
-import org.fenixedu.academic.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyExemption;
 import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcess;
 import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
@@ -53,9 +43,17 @@ import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
 import org.fenixedu.academic.dto.person.PersonBean;
 import org.fenixedu.bennu.core.domain.User;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividualCandidacyProcess_Base {
 
-    static private List<Activity> activities = new ArrayList<Activity>();
+    static private List<Activity> activities = new ArrayList<>();
     static {
         activities.add(new CandidacyPayment());
         activities.add(new EditCandidacyPersonalInformation());
@@ -641,7 +639,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
     @Override
     public List<IndividualCandidacyDocumentFileType> getMissingRequiredDocumentFiles() {
-        List<IndividualCandidacyDocumentFileType> missingDocumentFiles = new ArrayList<IndividualCandidacyDocumentFileType>();
+        List<IndividualCandidacyDocumentFileType> missingDocumentFiles = new ArrayList<>();
 
         if (getActiveFileForType(IndividualCandidacyDocumentFileType.PHOTO) == null) {
             missingDocumentFiles.add(IndividualCandidacyDocumentFileType.PHOTO);
@@ -814,9 +812,6 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
             SecondCycleIndividualCandidacyEvent event =
                     (SecondCycleIndividualCandidacyEvent) newProcess.getCandidacy().getEvent();
-
-            new SecondCycleIndividualCandidacyExemption(userView.getPerson(), event,
-                    CandidacyExemptionJustificationType.TRANSFERED_APPLICATION);
 
             Collection<IndividualCandidacyDocumentFile> documents = process.getCandidacy().getDocumentsSet();
 

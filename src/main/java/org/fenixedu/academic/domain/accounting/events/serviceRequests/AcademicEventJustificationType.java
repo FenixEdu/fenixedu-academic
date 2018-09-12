@@ -18,6 +18,10 @@
  */
 package org.fenixedu.academic.domain.accounting.events.serviceRequests;
 
+/**
+ * Use {@link org.fenixedu.academic.domain.accounting.events.EventExemptionJustificationType}
+ */
+@Deprecated
 public enum AcademicEventJustificationType {
 
     DIRECTIVE_COUNCIL_AUTHORIZATION, INSTITUTION, MILITARY_SCOPE, MOBILITY_SCOPE;

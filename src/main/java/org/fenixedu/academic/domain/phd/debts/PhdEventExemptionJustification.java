@@ -18,35 +18,17 @@
  */
 package org.fenixedu.academic.domain.phd.debts;
 
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
-import org.joda.time.LocalDate;
 
+/**
+ * Use {@link org.fenixedu.academic.domain.accounting.events.EventExemptionJustification}
+ */
+@Deprecated
 public class PhdEventExemptionJustification extends PhdEventExemptionJustification_Base {
 
     private PhdEventExemptionJustification() {
         super();
-    }
-
-    public PhdEventExemptionJustification(PhdEventExemption exemption, PhdEventExemptionJustificationType justificationType,
-            LocalDate dispatchDate, String reason) {
-
-        this();
-        String[] args = {};
-
-        if (justificationType == null) {
-            throw new DomainException("error.PhdEventExemptionJustificationType.invalid.justification.type", args);
-        }
-        String[] args1 = {};
-        if (dispatchDate == null) {
-            throw new DomainException("error.PhdEventExemptionJustificationType.invalid.dispatch.date", args1);
-        }
-
-        init(exemption, reason);
-        setJustificationType(justificationType);
-        setDispatchDate(dispatchDate);
-
     }
 
     @Override

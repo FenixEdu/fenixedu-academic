@@ -1,5 +1,6 @@
 package org.fenixedu.academic.domain.accounting.calculator;
 
+import static org.fenixedu.academic.domain.accounting.calculator.BigDecimalUtil.isPositive;
 import static org.fenixedu.academic.domain.accounting.calculator.BigDecimalUtil.sum;
 
 import java.io.IOException;
@@ -125,6 +126,10 @@ public class DebtInterestCalculator {
         return getPayments().filter(p -> p.getId().equals(id)).findAny();
     }
 
+    public Optional<CreditEntry> getCreditEntryById(String id) {
+        return getCreditEntryStream().filter(creditEntry -> creditEntry.getId().equals(id)).findAny();
+    }
+
     private List<CreditEntry> getCreditEntriesByCreationDate() {
         return getCreditEntryStream().collect(Collectors.toList());
     }
@@ -187,6 +192,18 @@ public class DebtInterestCalculator {
         return sum(getDebtStream(), Debt::getOpenFineAmount);
     }
 
+    public boolean hasDueDebtAmount() {
+        return isPositive(getDueAmount());
+    }
+
+    public boolean hasDueFineAmount() {
+        return isPositive(getDueFineAmount());
+    }
+
+    public boolean hasDueInterestAmount() {
+        return isPositive(getDueInterestAmount());
+    }
+
     public BigDecimal getTotalDueAmount() {
         return sum(Stream.of(getDueAmount(), getDueInterestAmount(), getDueFineAmount()));
     }
@@ -237,7 +254,7 @@ public class DebtInterestCalculator {
     }
 
     private List<Debt> getDebtsOrderedByOpenFine() {
-        return getDebtStream().sorted(Comparator.comparing(Debt::getOpenFineAmount)).collect(Collectors.toList());
+        return getDebtStream().filter(Debt::isOpenFine).sorted(Comparator.comparing(Debt::getOpenFineAmount)).collect(Collectors.toList());
     }
 
     public List<Debt> getDebtsOrderedByDueDate() {

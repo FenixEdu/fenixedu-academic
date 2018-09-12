@@ -61,11 +61,12 @@ enum org.fenixedu.academic.domain.accounting.PaymentCodeType                    
 enum org.fenixedu.academic.domain.accounting.PaymentMode                                                               as PaymentMode;
 enum org.fenixedu.academic.domain.accounting.ReceiptState                                                              as ReceiptState;
 enum org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationType      as AdministrativeOfficeFeeAndInsuranceExemptionJustificationType;
-enum org.fenixedu.academic.domain.accounting.events.InsuranceExemptionJustificationType      						  as InsuranceExemptionJustificationType;
+enum org.fenixedu.academic.domain.accounting.events.InsuranceExemptionJustificationType      						   as InsuranceExemptionJustificationType;
 enum org.fenixedu.academic.domain.accounting.events.PenaltyExemptionJustificationType                                  as PenaltyExemptionJustificationType;
 enum org.fenixedu.academic.domain.accounting.events.candidacy.CandidacyExemptionJustificationType                      as CandidacyExemptionJustificationType;
 enum org.fenixedu.academic.domain.accounting.events.gratuity.GratuityExemptionJustificationType                        as GratuityExemptionJustificationType;
 enum org.fenixedu.academic.domain.accounting.events.gratuity.ExternalScholarshipGratuityExemptionJustificationType     as ExternalScholarshipGratuityExemptionJustificationType;
+enum org.fenixedu.academic.domain.accounting.events.EventExemptionJustificationType                                    as EventExemptionJustificationType;
 enum org.fenixedu.academic.domain.administrativeOffice.AdministrativeOfficeType                                        as AdministrativeOfficeType;
 enum org.fenixedu.academic.domain.branch.BranchType                                                                    as OldBranchType;
 enum org.fenixedu.academic.domain.candidacyProcess.CandidacyProcessState                                               as CandidacyProcessState;
@@ -1543,6 +1544,10 @@ valueType org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDeta
             Money value;
         }
 
+        class accounting.events.EventExemption extends accounting.Exemption {
+            Money value;
+        }
+
     class accounting.Discount  {
         DateTime whenCreated;
         String username;
@@ -1985,10 +1990,10 @@ valueType org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDeta
 
     class accounting.events.ExemptionJustification  {
         String reason;
+        EventExemptionJustificationType justificationType;
     }
 
         class accounting.events.PenaltyExemptionJustification extends accounting.events.ExemptionJustification {
-            PenaltyExemptionJustificationType penaltyExemptionJustificationType;
         }
 
             class accounting.events.penaltyExemptionJustifications.PenaltyExemptionJustificationByDispatch extends accounting.events.PenaltyExemptionJustification {
@@ -1996,7 +2001,6 @@ valueType org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDeta
             }
 
         class accounting.events.gratuity.GratuityExemptionJustification extends accounting.events.ExemptionJustification {
-            GratuityExemptionJustificationType gratuityExemptionJustificationType;
         }
 
             class accounting.events.gratuity.GratuityExemptionJustificationByDispatch extends accounting.events.gratuity.GratuityExemptionJustification {
@@ -2004,25 +2008,25 @@ valueType org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDeta
             }
 
         class accounting.events.candidacy.SecondCycleIndividualCandidacyExemptionJustification extends accounting.events.ExemptionJustification {
-            CandidacyExemptionJustificationType candidacyExemptionJustificationType;
         }
 
         class accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustification extends accounting.events.ExemptionJustification {
-            AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType;
         }
             class accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationByDispatch extends accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustification {
                 YearMonthDay dispatchDate;
             }
             
         class accounting.events.InsuranceExemptionJustification extends accounting.events.ExemptionJustification {
-            InsuranceExemptionJustificationType justificationType;
         }
             class accounting.events.InsuranceExemptionJustificationByDispatch extends accounting.events.InsuranceExemptionJustification {
                 YearMonthDay dispatchDate;
             }
             
         class accounting.events.serviceRequests.AcademicEventExemptionJustification extends accounting.events.ExemptionJustification {
-            AcademicEventJustificationType justificationType;
+            LocalDate dispatchDate;
+        }
+
+        class accounting.events.EventExemptionJustification extends accounting.events.ExemptionJustification {
             LocalDate dispatchDate;
         }
 
@@ -4291,7 +4295,6 @@ class phd.debts.PhdEventExemption extends accounting.Exemption {
 }
 
 class phd.debts.PhdEventExemptionJustification extends accounting.events.ExemptionJustification {
-    PhdEventExemptionJustificationType justificationType;
     LocalDate dispatchDate;
 }
 
@@ -4501,7 +4504,6 @@ class accounting.events.gratuity.ExternalScholarshipGratuityExemption extends ac
 }
 
 class accounting.events.gratuity.ExternalScholarshipGratuityExemptionJustification extends accounting.events.ExemptionJustification {
-    ExternalScholarshipGratuityExemptionJustificationType externalScholarshipGratuityExemptionJustificationType;
 }
 
 class accounting.events.gratuity.ExternalScholarshipGratuityContributionEvent extends accounting.Event {

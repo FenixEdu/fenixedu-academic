@@ -18,40 +18,24 @@
  */
 package org.fenixedu.academic.domain.accounting.events.gratuity;
 
+import org.fenixedu.academic.domain.accounting.events.EventExemptionJustificationType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
 
+/**
+ * Use {@link org.fenixedu.academic.domain.accounting.events.EventExemptionJustification}
+ */
+@Deprecated
 public class GratuityExemptionJustification extends GratuityExemptionJustification_Base {
 
     protected GratuityExemptionJustification() {
         super();
-        super.setRootDomainObject(Bennu.getInstance());
-    }
-
-    public GratuityExemptionJustification(final GratuityExemption gratuityExemption,
-            final GratuityExemptionJustificationType gratuityExemptionJustificationType, final String reason) {
-        this();
-        init(gratuityExemption, gratuityExemptionJustificationType, reason);
-    }
-
-    protected void init(GratuityExemption gratuityExemption,
-            GratuityExemptionJustificationType gratuityExemptionJustificationType, String reason) {
-        super.init(gratuityExemption, reason);
-        checkParameters(gratuityExemptionJustificationType);
-        super.setGratuityExemptionJustificationType(gratuityExemptionJustificationType);
-    }
-
-    private void checkParameters(GratuityExemptionJustificationType gratuityExemptionJustificationType) {
-        if (gratuityExemptionJustificationType == null) {
-            throw new DomainException(
-                    "error.accounting.events.gratuity.GratuityExemptionJustification.gratuityExemptionJustificationType.cannot.be.null");
-        }
     }
 
     @Override
-    public void setGratuityExemptionJustificationType(GratuityExemptionJustificationType gratuityExemptionJustificationType) {
+    public void setJustificationType(EventExemptionJustificationType eventExemptionJustificationType) {
         throw new DomainException(
                 "error.org.fenixedu.academic.domain.accounting.events.gratuity.GratuityExemptionJustification.cannot.modify.gratuityExemptionJustificationType");
     }
@@ -59,14 +43,10 @@ public class GratuityExemptionJustification extends GratuityExemptionJustificati
     @Override
     public LabelFormatter getDescription() {
         final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel(getGratuityExemptionJustificationType().getQualifiedName(), Bundle.ENUMERATION);
+        labelFormatter.appendLabel(getJustificationType().getQualifiedName(), Bundle.ENUMERATION);
 
         return labelFormatter;
 
-    }
-
-    public boolean isSocialShareGrantOwner() {
-        return getGratuityExemptionJustificationType() == GratuityExemptionJustificationType.SOCIAL_SHARE_GRANT_OWNER;
     }
 
 }

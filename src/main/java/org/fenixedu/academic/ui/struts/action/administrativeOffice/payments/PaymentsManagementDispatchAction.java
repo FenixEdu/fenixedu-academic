@@ -170,11 +170,9 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
     }
 
     protected List<SelectableEntryBean> getSelectableEntryBeans(final Set<Entry> entries, final Collection<Entry> entriesToSelect) {
-        final List<SelectableEntryBean> selectableEntryBeans = new ArrayList<SelectableEntryBean>();
-        for (final Entry entry : entries) {
-            selectableEntryBeans.add(new SelectableEntryBean(entriesToSelect.contains(entry) ? true : false, entry));
-        }
-        return selectableEntryBeans;
+        return entries.stream()
+                .map(entry -> new SelectableEntryBean(entriesToSelect.contains(entry), entry))
+                .collect(Collectors.toList());
     }
 
     public ActionForward preparePayment(ActionMapping mapping, ActionForm form, HttpServletRequest request,

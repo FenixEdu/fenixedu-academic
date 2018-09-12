@@ -21,6 +21,7 @@ package org.fenixedu.academic.ui.struts.action.administrativeOffice.payments;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -85,19 +86,12 @@ public class ExternalScholarshipManagementDebtsDA extends FenixDispatchAction {
     public ActionForward viewDebtsForProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         PhdIndividualProgramProcess process = getProcess(request);
-        ArrayList<PhdGratuityExternalScholarshipExemption> list = new ArrayList<PhdGratuityExternalScholarshipExemption>();
-
-        for (Event event : process.getPerson().getEventsSet()) {
-            if (event instanceof PhdGratuityEvent) {
-                for (Exemption exemption : event.getExemptionsSet()) {
-                    if (exemption instanceof PhdGratuityExternalScholarshipExemption) {
-                        PhdGratuityExternalScholarshipExemption phdExemption =
-                                (PhdGratuityExternalScholarshipExemption) exemption;
-                        list.add(phdExemption);
-                    }
-                }
-            }
-        }
+        ArrayList<PhdGratuityExternalScholarshipExemption> list =
+                process.getPerson().getEventsSet().stream().filter(event -> event instanceof PhdGratuityEvent)
+                        .flatMap(event -> event.getExemptionsSet().stream())
+                        .filter(exemption -> exemption instanceof PhdGratuityExternalScholarshipExemption)
+                        .map(exemption -> (PhdGratuityExternalScholarshipExemption) exemption)
+                        .collect(Collectors.toCollection(ArrayList::new));
 
         request.setAttribute("person", process.getPerson());
         request.setAttribute("debts", list);

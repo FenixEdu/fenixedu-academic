@@ -18,6 +18,10 @@
  */
 package org.fenixedu.academic.domain.accounting.events.candidacy;
 
+/**
+ * Use {@link org.fenixedu.academic.domain.accounting.events.EventExemptionJustificationType}
+ */
+@Deprecated
 public enum CandidacyExemptionJustificationType {
     TIME, INSTITUTION, TRANSFERED_APPLICATION;
 

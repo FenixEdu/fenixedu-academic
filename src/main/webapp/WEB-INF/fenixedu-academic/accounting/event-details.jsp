@@ -35,6 +35,10 @@
     <spring:param name="event" value="${eventId}"/>
 </spring:url>
 
+<spring:url var="exemptUrl" value="../{event}/exempt">
+    <spring:param name="event" value="${eventId}"/>
+</spring:url>
+
 <spring:url var="cancelUrl" value="../{event}/cancel">
     <spring:param name="event" value="${eventId}"/>
 </spring:url>
@@ -81,9 +85,11 @@
                 <c:if test="${eventTotalAmountToPay > 0 && isEventOwner}">
                     <a class="btn btn-primary btn-block" href="${payUrl}"><spring:message code="accounting.event.action.pay" text="Pay"/></a>
                 </c:if>
-                <c:if test="${isPaymentManager}">
-                    <a class="btn btn-default btn-block" href="${depositUrl}"><spring:message code="accounting.event.action.deposit" text="Deposit"/></a>
-                    <%--<a class="btn btn-default btn-block" href=""><spring:message code="accounting.event.action.exempt" text="Exept"/></a>--%>
+                <c:if test="${isAdvancedPaymentManager}">
+                    <c:if test="${eventTotalAmountToPay > 0}">
+                        <a class="btn btn-default btn-block" href="${depositUrl}"><spring:message code="accounting.event.action.deposit" text="Deposit"/></a>
+                        <a class="btn btn-default btn-block" href="${exemptUrl}"><spring:message code="accounting.event.action.exempt" text="Exempt"/></a>
+                    </c:if>
                     <a class="btn btn-danger btn-block" href="${cancelUrl}"><spring:message code="accounting.event.action.cancel" text="Cancel"/></a>
                 </c:if>
             </div>
@@ -189,14 +195,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:if test="${empty payments}">
+                <c:if test="${empty creditEntries}">
                     <tr>
-                        <td colspan="6">Não existem pagamentos</td>
+                        <td colspan="6">Não existem pagamentos ou isenções</td>
                     </tr>
                 </c:if>
-                <c:if test="${not empty payments}">
-                <c:forEach var="payment" items="${payments}" varStatus="loop">
-                    <spring:url value="../{event}/{payment}/details" var="paymentUrl">
+                <c:if test="${not empty creditEntries}">
+                <c:forEach var="payment" items="${creditEntries}" varStatus="loop">
+                    <spring:url value="../{event}/creditEntry/{payment}/details" var="paymentUrl">
                         <spring:param name="event" value="${eventId}"/>
                         <spring:param name="payment" value="${payment.id}"/>
                     </spring:url>
@@ -214,7 +220,7 @@
                         <td><c:out value="${usedAmountInInterestsOrFines}"/><span>€</span></td>
                         <td style="text-align: right;">
                             <a href="${paymentUrl}">Ver Detalhes</a>
-                            <c:if test="${isPaymentManager && loop.first}">
+                            <c:if test="${isAdvancedPaymentManager && loop.first}">
                                 <span>, </span><a href="${deleteEntryUrl}" onclick="return confirm('Are you sure?')">Anular</a>
                             </c:if>
                         </td>

@@ -20,4 +20,8 @@ public class BigDecimalUtil {
     public static <$ extends Object> BigDecimal sum(Stream<BigDecimal> stream) {
         return stream.reduce(BigDecimal.ZERO, reducer);
     }
+
+    public static boolean isPositive(BigDecimal bigDecimal){
+        return bigDecimal.compareTo(BigDecimal.ZERO) > 0;
+    }
 }

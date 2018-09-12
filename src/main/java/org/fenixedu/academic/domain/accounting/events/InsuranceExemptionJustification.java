@@ -18,33 +18,17 @@
  */
 package org.fenixedu.academic.domain.accounting.events;
 
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
 
+/**
+ * Use {@link org.fenixedu.academic.domain.accounting.events.EventExemptionJustification}
+ */
+@Deprecated
 public class InsuranceExemptionJustification extends InsuranceExemptionJustification_Base {
 
-    public InsuranceExemptionJustification() {
+    protected InsuranceExemptionJustification() {
         super();
-    }
-
-    public InsuranceExemptionJustification(InsuranceExemption exemption, InsuranceExemptionJustificationType justificationType,
-            String reason) {
-        this();
-        init(exemption, justificationType, reason);
-    }
-
-    protected void init(InsuranceExemption exemption, InsuranceExemptionJustificationType justificationType, String reason) {
-        super.init(exemption, reason);
-        checkParameters(justificationType);
-        super.setJustificationType(justificationType);
-    }
-
-    private void checkParameters(InsuranceExemptionJustificationType justificationType) {
-        if (justificationType == null) {
-            throw new DomainException("error.accounting.events.InsuranceExemptionJustification.justificationType.cannot.be.null");
-        }
-
     }
 
     @Override

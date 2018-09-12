@@ -18,17 +18,19 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accounting.events.EventExemptionJustification;
+import org.fenixedu.academic.domain.accounting.events.EventExemptionJustificationType;
 import org.fenixedu.academic.domain.accounting.events.ExemptionJustification;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+
+import java.util.Collection;
+import java.util.List;
 
 public abstract class Exemption extends Exemption_Base {
 
@@ -57,9 +59,13 @@ public abstract class Exemption extends Exemption_Base {
         
         final List<String> operationsAfter = event.getOperationsAfter(getWhenCreated());
         if (!operationsAfter.isEmpty()) {
-            throw new DomainException("error.accounting.Exemption.cannot.create.operations.after", operationsAfter.stream()
-                    .collect(Collectors.joining(",")));
+            throw new DomainException("error.accounting.Exemption.cannot.create.operations.after",
+                    String.join(",", operationsAfter));
         }
+    }
+
+    protected ExemptionJustification createJustification(EventExemptionJustificationType justificationType, LocalDate dispatchDate, String reason) {
+        return new EventExemptionJustification(this, justificationType, dispatchDate, reason);
     }
 
     @Override

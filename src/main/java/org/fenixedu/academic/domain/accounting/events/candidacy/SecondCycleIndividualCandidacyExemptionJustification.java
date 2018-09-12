@@ -18,10 +18,13 @@
  */
 package org.fenixedu.academic.domain.accounting.events.candidacy;
 
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
 
+/**
+ * Use {@link org.fenixedu.academic.domain.accounting.events.EventExemptionJustification}
+ */
+@Deprecated
 public class SecondCycleIndividualCandidacyExemptionJustification extends
         SecondCycleIndividualCandidacyExemptionJustification_Base {
 
@@ -29,23 +32,9 @@ public class SecondCycleIndividualCandidacyExemptionJustification extends
         super();
     }
 
-    SecondCycleIndividualCandidacyExemptionJustification(final SecondCycleIndividualCandidacyExemption exemption,
-            final CandidacyExemptionJustificationType justificationType) {
-        this();
-        checkParameters(justificationType);
-        super.init(exemption, "");
-        setCandidacyExemptionJustificationType(justificationType);
-    }
-
-    private void checkParameters(final CandidacyExemptionJustificationType justificationType) {
-        if (justificationType == null) {
-            throw new DomainException("error.SecondCycleIndividualCandidacyExemptionJustification.invalid.justificationType");
-        }
-    }
-
     @Override
     public LabelFormatter getDescription() {
-        return new LabelFormatter().appendLabel(getCandidacyExemptionJustificationType().getQualifiedName(), Bundle.ENUMERATION);
+        return new LabelFormatter().appendLabel(getJustificationType().getQualifiedName(), Bundle.ENUMERATION);
     }
 
 }

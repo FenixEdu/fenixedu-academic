@@ -24,6 +24,10 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
+/**
+ * Use {@link org.fenixedu.academic.domain.accounting.events.EventExemptionJustificationType}
+ */
+@Deprecated
 public enum ExternalScholarshipGratuityExemptionJustificationType {
     // Third party entity offers to pay the gratuity
     THIRD_PARTY_CONTRIBUTION;
@@ -46,11 +50,6 @@ public enum ExternalScholarshipGratuityExemptionJustificationType {
 
     public String getLocalizedName() {
         return localizedName(I18N.getLocale());
-    }
-
-    public ExternalScholarshipGratuityExemptionJustification justification(final ExternalScholarshipGratuityExemption exemption,
-            final String reason) {
-        return new ExternalScholarshipGratuityExemptionJustification(exemption, this, reason);
     }
 
 }

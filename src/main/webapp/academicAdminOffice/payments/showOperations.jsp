@@ -70,9 +70,6 @@
 		<li><html:link action="<%="/receipts.do?method=showReceipts&amp;personId=" + personId%>">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.receipts" />
 		</html:link></li>
-		<li><html:link action="<%="/exemptionsManagement.do?method=showEventsToApplyExemption&amp;personId=" + personId%>">
-			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.exemptions" />
-		</html:link></li>
 		<li><html:link action="<%="/payments.do?method=showEventsWithPaymentCodes&amp;personId=" + personId%>">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.paymentCodes" />
 		</html:link></li>

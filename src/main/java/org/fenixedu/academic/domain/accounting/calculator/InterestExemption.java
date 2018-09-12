@@ -31,7 +31,7 @@ public class InterestExemption extends CreditEntry {
 
     @Override
     public boolean isToApplyInterest() {
-        return false;
+        return true;
     }
 
     @Override

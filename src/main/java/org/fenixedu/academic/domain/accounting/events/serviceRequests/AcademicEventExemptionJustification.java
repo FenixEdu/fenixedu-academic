@@ -18,35 +18,17 @@
  */
 package org.fenixedu.academic.domain.accounting.events.serviceRequests;
 
-import org.fenixedu.academic.domain.accounting.events.AcademicEventExemption;
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
-import org.joda.time.LocalDate;
 
+/**
+ * Use {@link org.fenixedu.academic.domain.accounting.events.EventExemptionJustification}
+ */
+@Deprecated
 public class AcademicEventExemptionJustification extends AcademicEventExemptionJustification_Base {
 
     private AcademicEventExemptionJustification() {
         super();
-    }
-
-    public AcademicEventExemptionJustification(final AcademicEventExemption exemption,
-            final AcademicEventJustificationType justificationType, final LocalDate dispatchDate, final String reason) {
-
-        this();
-        String[] args = {};
-
-        if (justificationType == null) {
-            throw new DomainException("error.AcademicEventExemptionJustification.invalid.justificationType", args);
-        }
-        String[] args1 = {};
-        if (dispatchDate == null) {
-            throw new DomainException("error.AcademicEventExemptionJustification.invalid.dispatchDate", args1);
-        }
-
-        super.init(exemption, reason);
-        setJustificationType(justificationType);
-        setDispatchDate(dispatchDate);
     }
 
     @Override

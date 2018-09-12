@@ -31,7 +31,7 @@ public class FineExemption extends CreditEntry {
 
     @Override
     public boolean isToApplyFine() {
-        return false;
+        return true;
     }
 
     @Override

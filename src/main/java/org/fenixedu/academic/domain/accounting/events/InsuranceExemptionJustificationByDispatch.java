@@ -18,41 +18,17 @@
  */
 package org.fenixedu.academic.domain.accounting.events;
 
-import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
-import org.joda.time.YearMonthDay;
 
+/**
+ * Use {@link org.fenixedu.academic.domain.accounting.events.EventExemptionJustification}
+ */
+@Deprecated
 public class InsuranceExemptionJustificationByDispatch extends InsuranceExemptionJustificationByDispatch_Base {
 
-    protected InsuranceExemptionJustificationByDispatch() {
+    private InsuranceExemptionJustificationByDispatch() {
         super();
-    }
-
-    public InsuranceExemptionJustificationByDispatch(final InsuranceExemption exemption,
-            final InsuranceExemptionJustificationType justificationType, final String reason, final YearMonthDay dispatchDate) {
-        this();
-        init(exemption, justificationType, reason, dispatchDate);
-
-    }
-
-    private void init(InsuranceExemption exemption, InsuranceExemptionJustificationType justificationType, String reason,
-            YearMonthDay dispatchDate) {
-        checkParameters(justificationType, reason, dispatchDate);
-
-        super.init(exemption, justificationType, reason);
-
-        super.setDispatchDate(dispatchDate);
-
-    }
-
-    private void checkParameters(InsuranceExemptionJustificationType justificationType, String reason, YearMonthDay dispatchDate) {
-        if (dispatchDate == null || StringUtils.isEmpty(reason)) {
-            throw new DomainExceptionWithLabelFormatter(
-                    "error.accounting.events.InsuranceExemptionJustificationByDispatch.dispatchDate.and.reason.are.required",
-                    new LabelFormatter(justificationType.getQualifiedName(), Bundle.ENUMERATION));
-        }
     }
 
     @Override

@@ -1,7 +1,11 @@
 package org.fenixedu.academic.ui.spring.service;
 
 import java.util.Collections;
+import java.util.Optional;
 import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
+import java.util.function.Consumer;
 
 import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
@@ -27,44 +31,56 @@ public class AccountingManagementAccessControlService {
         }
     }
 
-    public void checkPaymentManager(Event event, User user) {
+    private void checkPermission(Event event, User user, BiPredicate<Event, User> permission) {
         if (user == null) {
             throw new UnsupportedOperationException("Unauthorized");
         }
 
-        if (isPaymentManager(event, user)) {
+        if (permission.test(event, user)){
             return;
         }
 
         throw new UnsupportedOperationException("Unauthorized");
     }
 
-    public boolean isPaymentManager(User user, Set<AdministrativeOffice> adminOffices) {
-        if (user == null) {
-            return false;
-        }
-
-        Group group = AcademicAuthorizationGroup
-                .get(AcademicOperationType.MANAGE_STUDENT_PAYMENTS, Collections.emptySet(), adminOffices,
-                        null).or(AcademicAuthorizationGroup
-                        .get(AcademicOperationType.MANAGE_STUDENT_PAYMENTS_ADV, Collections.emptySet(), adminOffices,
-                                null));
-
-        return group.isMember(user);
+    public void checkPaymentManager(Event event, User user) {
+        checkPermission(event, user, this::isPaymentManager);
     }
 
-    public boolean isPaymentManager(final Event event, final User user) {
-        return isPaymentManager(user, getAdminOffices(event));
-    }
-
-    public boolean isEventOwner(final Event event, final User user) {
-        return event.getPerson().getUser() == user;
+    public void checkAdvancedPaymentManager(Event event, User user) {
+        checkPermission(event, user, this::isAdvancedPaymentManager);
     }
 
     public void checkEventOwner(final Event event, final User user) {
-        if (!isEventOwner(event, user)) {
-            throw new UnsupportedOperationException("Unauthorized");
-        }
+        checkPermission(event, user, this::isEventOwner);
+    }
+
+    public boolean isPaymentManager(final User user) {
+        return hasOperationType(user, Collections.emptySet(), AcademicOperationType.MANAGE_STUDENT_PAYMENTS) || isAdvancedPaymentManager(user);
+    }
+
+    private boolean isAdvancedPaymentManager(User user) {
+        return hasOperationType(user, Collections.emptySet(), AcademicOperationType.MANAGE_STUDENT_PAYMENTS_ADV);
+    }
+
+    public boolean isPaymentManager(final Event event, final User user) {
+        return hasOperationType(user, getAdminOffices(event), AcademicOperationType.MANAGE_STUDENT_PAYMENTS) || isAdvancedPaymentManager(event, user);
+    }
+
+    public boolean isAdvancedPaymentManager(final Event event, final User user) {
+        return hasOperationType(user, getAdminOffices(event), AcademicOperationType.MANAGE_STUDENT_PAYMENTS_ADV);
+    }
+
+    public boolean isEventOwner(final Event event, final User user) {
+        return user != null && event.getPerson().getUser() == user;
+    }
+
+    private boolean hasOperationType(User user, Set<AdministrativeOffice> adminOffices, AcademicOperationType operationType) {
+        return Optional.ofNullable(user).map(getAcademicAuthorizationGroup(adminOffices, operationType)::isMember).orElse(false);
+    }
+
+    private AcademicAuthorizationGroup getAcademicAuthorizationGroup(Set<AdministrativeOffice> adminOffices, AcademicOperationType operationType) {
+        return AcademicAuthorizationGroup.get(operationType, Collections.emptySet(), adminOffices, null);
     }
 
     private Set<AdministrativeOffice> getAdminOffices(Event event) {
