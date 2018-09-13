@@ -91,9 +91,13 @@
                     <c:if test="${eventTotalAmountToPay > 0 && isEventOwner}">
                         <a class="btn btn-primary btn-block" href="${payUrl}"><spring:message code="accounting.event.action.pay" text="Pay"/></a>
                     </c:if>
-                    <c:if test="${isAdvancedPaymentManager}">
+                    <c:if test="${isPaymentManager}">
                         <c:if test="${eventTotalAmountToPay > 0}">
                             <a class="btn btn-default btn-block" href="${depositUrl}"><spring:message code="accounting.event.action.deposit" text="Deposit"/></a>
+                        </c:if>
+                    </c:if>
+                    <c:if test="${isAdvancedPaymentManager}">
+                        <c:if test="${eventTotalAmountToPay > 0}">
                             <a class="btn btn-default btn-block" href="${exemptUrl}"><spring:message code="accounting.event.action.exempt" text="Exempt"/></a>
                         </c:if>
                         <a class="btn btn-danger btn-block" href="${cancelUrl}"><spring:message code="accounting.event.action.cancel" text="Cancel"/></a>
