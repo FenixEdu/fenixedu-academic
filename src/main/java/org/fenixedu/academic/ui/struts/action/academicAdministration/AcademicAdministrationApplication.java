@@ -73,11 +73,6 @@ public class AcademicAdministrationApplication extends ForwardAction {
     public static class AcademicAdminServicesApp {
     }
 
-    @StrutsApplication(bundle = BUNDLE, path = "documents", titleKey = "label.documents", hint = HINT,
-            accessGroup = "academic(MANAGE_DOCUMENTS)")
-    public static class AcademicAdminDocumentsApp {
-    }
-
     @StrutsApplication(
             bundle = BUNDLE,
             path = "candidacies",
