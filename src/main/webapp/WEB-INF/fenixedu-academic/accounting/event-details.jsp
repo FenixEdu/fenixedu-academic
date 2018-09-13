@@ -44,7 +44,7 @@
 </spring:url>
 
 <spring:url var="backUrl" value="${entrypointUrl}">
-    <spring:param name="user" value="${eventUsername}"/>
+    <spring:param name="user" value="${event.person.username}"/>
 </spring:url>
 
 <div class="container-fluid">
@@ -52,7 +52,12 @@
         <div class="row">
             <div class="col-md-10">
                 <p><a href="${backUrl}" class="btn btn-default"><spring:message code="label.back" text="Back"/></a></p>
-                <h1><c:out value="${eventDescription}"/></h1>
+                <h1>
+                    <c:out value="${event.description}"/>
+                    <c:if test="${event.currentEventState == 'CANCELLED'}">
+                        <span class="text-danger"> (Cancelada)</span>
+                    </c:if>
+                </h1>
             </div>
 
         </div>
@@ -61,7 +66,7 @@
                 <div class="overall-description">
                     <dl>
                         <dt><spring:message code="accounting.event.details.creation.date" text="Creation Date"/></dt>
-                        <dd><time datetime="${eventCreationDate.toString("yyyy-MM-dd")}">${eventCreationDate.toString("dd/MM/yyyy")}</time></dd>
+                        <dd><time datetime="${event.whenOccured.toString("yyyy-MM-dd")}">${event.whenOccured.toString("dd/MM/yyyy")}</time></dd>
                     </dl>
                     <dl>
                         <dt><spring:message code="accounting.event.details.amount.pay" text="To pay"/></dt>
@@ -82,15 +87,17 @@
                 </div>
             </div>
             <div class="col-md-2 col-md-push-2">
-                <c:if test="${eventTotalAmountToPay > 0 && isEventOwner}">
-                    <a class="btn btn-primary btn-block" href="${payUrl}"><spring:message code="accounting.event.action.pay" text="Pay"/></a>
-                </c:if>
-                <c:if test="${isAdvancedPaymentManager}">
-                    <c:if test="${eventTotalAmountToPay > 0}">
-                        <a class="btn btn-default btn-block" href="${depositUrl}"><spring:message code="accounting.event.action.deposit" text="Deposit"/></a>
-                        <a class="btn btn-default btn-block" href="${exemptUrl}"><spring:message code="accounting.event.action.exempt" text="Exempt"/></a>
+                <c:if test="${event.currentEventState != 'CANCELLED'}">
+                    <c:if test="${eventTotalAmountToPay > 0 && isEventOwner}">
+                        <a class="btn btn-primary btn-block" href="${payUrl}"><spring:message code="accounting.event.action.pay" text="Pay"/></a>
                     </c:if>
-                    <a class="btn btn-danger btn-block" href="${cancelUrl}"><spring:message code="accounting.event.action.cancel" text="Cancel"/></a>
+                    <c:if test="${isAdvancedPaymentManager}">
+                        <c:if test="${eventTotalAmountToPay > 0}">
+                            <a class="btn btn-default btn-block" href="${depositUrl}"><spring:message code="accounting.event.action.deposit" text="Deposit"/></a>
+                            <a class="btn btn-default btn-block" href="${exemptUrl}"><spring:message code="accounting.event.action.exempt" text="Exempt"/></a>
+                        </c:if>
+                        <a class="btn btn-danger btn-block" href="${cancelUrl}"><spring:message code="accounting.event.action.cancel" text="Cancel"/></a>
+                    </c:if>
                 </c:if>
             </div>
         </div>

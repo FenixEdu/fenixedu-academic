@@ -41,10 +41,15 @@
         <div class="row">
             <div class="col-md-10">
                 <p><a href="${backUrl}" class="btn btn-default"><spring:message code="label.back" text="Back"/></a></p>
-                <h3><c:out value="${eventDescription}"/></h3>
+                <h3>
+                    <c:out value="${eventDescription}"/>
+                    <c:if test="${event.currentEventState == 'CANCELLED'}">
+                        <span class="text-danger"> (Cancelada)</span>
+                    </c:if>
+                </h3>
                 <h1><spring:message code="accounting.event.details.debt.name" arguments="${debtIndex}"/> </h1>
             </div>
-            <c:if test="${totalAmount > 0 && isEventOwner}">
+            <c:if test="${totalAmount > 0 && isEventOwner && event.currentEventState != 'CANCELLED'}">
                 <div class="col-md-2">
                     <a class="btn btn-primary btn-block" href="${payUrl}"><spring:message code="accounting.event.action.pay" text="Pay"/></a>
                 </div>
