@@ -364,11 +364,19 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
         return getIndividualCandidacy() != null && getIndividualCandidacy().getEvent() != null;
     }
 
+    private static boolean belongsTo(Unit unit) {
+        return Bennu.getInstance().getInstitutionUnit().getParentUnits().stream().anyMatch(parent -> parent.hasSubUnit(unit));
+    }
+
     @Override
     public void setInstitution(Unit newInstitution) {
         Unit institution = super.getInstitution();
-        if (hasEvent() && !Objects.nullSafeEquals(institution, newInstitution)) {
-            throw new DomainException("Can't change this since an event is already created");
+        if (hasEvent()) {
+            boolean previous = belongsTo(institution);
+            boolean next = belongsTo(newInstitution);
+            if (previous ^ next) {
+                throw new DomainException("Can't change this since an event is already created");
+            }
         }
         super.setInstitution(newInstitution);
     }
