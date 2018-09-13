@@ -96,7 +96,7 @@ ${portal.toolkit()}
             <div class="form-group">
                 <label class="control-label col-sm-1"><spring:message code="label.org.fenixedu.academic.dto.accounting.DepositAmountBean.amount"/></label>
                 <div class="col-sm-4">
-                    <input name="amount" type="number" step="0.01" min="0.01"  required><span> €</span>
+                    <input name="amount" type="text" min="0.01" pattern="[0-9]+([\.][0-9]{0,2})?" placeholder="ex: xxxx.yy" required><span> €</span>
                 </div>
             </div>
             <div class="form-group">

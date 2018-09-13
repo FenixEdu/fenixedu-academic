@@ -92,14 +92,14 @@
                 </dl>
             </section>
         </div>
-        <div class="col-md-5 col-md-offset-2">
+        <div class="col-md-2 col-md-offset-2">
             <section class="payment-totals">
                 <dl class="total">
                     <dt><spring:message code="accounting.payment.details.paid.value" text="Paid Amount"/></dt>
                     <dd><c:out value="${amount}"/><span>€</span></dd>
                 </dl>
                 <c:forEach var="payment" items="${payments}" varStatus="paymentLoop">
-                    <c:set var="debtEntryIndex" value="#{paymentLoop.index + 1}"/>
+                    <c:set var="debtEntryIndex" value="#{debtsOrderedByDueDate.indexOf(payment.debtEntry) + 1}"/>
                     <c:set var="totalPaidAmount" value="#{payment.amountUsedInDebt + payment.amountUsedInInterest + payment.amountUsedInFine}"/>
                     <dl>
                         <dt><spring:message code="accounting.event.details.debt.name" arguments="${debtEntryIndex}"/></dt>
@@ -136,7 +136,7 @@
                 </c:if>
             <c:if test="${not empty payments}">
                 <c:forEach var="payment" items="${payments}" varStatus="paymentLoop">
-                    <c:set var="debtEntryIndex" value="#{paymentLoop.index + 1}"/>
+                    <c:set var="debtEntryIndex" value="#{debtsOrderedByDueDate.indexOf(payment.debtEntry) + 1}"/>
                     <c:set var="amountUsedInInterestOrFine" value="#{payment.amountUsedInInterest + payment.amountUsedInFine}"/>
                     <c:set var="totalPaidAmount" value="#{payment.amountUsedInDebt + payment.amountUsedInInterest + payment.amountUsedInFine}"/>
                     <tr>
@@ -148,7 +148,7 @@
                         <td><c:out value="${payment.amountUsedInDebt.toPlainString()}"/><span>€</span></td>
                         <td><c:out value="${amountUsedInInterestOrFine}"/><span>€</span></td>
 
-                        <spring:url value="../../{event}/debt/{debtDueDate}/details" var="debtUrl">
+                        <spring:url value="../../../{event}/debt/{debtDueDate}/details" var="debtUrl">
                             <spring:param name="event" value="${event.externalId}"/>
                             <spring:param name="debtDueDate" value="${payment.debtEntry.date.toString('dd-MM-yyyy')}"/>
                         </spring:url>

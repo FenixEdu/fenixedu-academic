@@ -14,7 +14,6 @@ import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator
 import org.fenixedu.academic.domain.accounting.calculator.Fine;
 import org.fenixedu.academic.domain.accounting.calculator.Interest;
 import org.fenixedu.academic.domain.accounting.calculator.PartialPayment;
-import org.fenixedu.academic.domain.accounting.calculator.Payment;
 import org.fenixedu.academic.domain.accounting.events.EventExemption;
 import org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.FixedAmountFineExemption;
 import org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.FixedAmountInterestExemption;
@@ -23,6 +22,7 @@ import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
 import org.fenixedu.academic.dto.accounting.CreateExemptionBean;
 import org.fenixedu.academic.dto.accounting.DepositAmountBean;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Service;
@@ -46,6 +46,7 @@ public class AccountingManagementService {
     public static class PaymentSummary {
         final String id;
         final String description;
+        final LocalizedString typeDescription;
         final DateTime created;
         final LocalDate date;
         final BigDecimal amount;
@@ -53,9 +54,11 @@ public class AccountingManagementService {
         final BigDecimal amountUsedInInterest;
         final BigDecimal amountUsedInFine;
 
-        public PaymentSummary(String id, String description, DateTime created, LocalDate date, BigDecimal amount, BigDecimal amountUsedInDebt, BigDecimal amountUsedInInterest,  BigDecimal amountUsedInFine) {
+        public PaymentSummary(String id, String description, LocalizedString typeDescription, DateTime created, LocalDate date, BigDecimal amount, BigDecimal amountUsedInDebt, BigDecimal amountUsedInInterest,
+                BigDecimal amountUsedInFine) {
             this.id = id;
             this.description = description;
+            this.typeDescription = typeDescription;
             this.created = created;
             this.date = date;
             this.amount = amount;
@@ -79,6 +82,8 @@ public class AccountingManagementService {
         public String getDescription() {
             return description;
         }
+
+        public LocalizedString getTypeDescription() { return typeDescription; }
 
         public BigDecimal getAmountUsedInDebt() {
             return amountUsedInDebt;
@@ -106,8 +111,8 @@ public class AccountingManagementService {
     public static class PaymentSummaryWithDebt extends PaymentSummary {
         private final DebtEntry debtEntry;
 
-        public PaymentSummaryWithDebt(String id, String description, DateTime created, LocalDate date, BigDecimal amount, BigDecimal amountUsedInDebt, BigDecimal amountUsedInInterest, BigDecimal amountUsedInFine, DebtEntry debtEntry) {
-            super(id, description, created, date , amount, amountUsedInDebt, amountUsedInInterest, amountUsedInFine);
+        public PaymentSummaryWithDebt(String id, String description, LocalizedString typeDescription, DateTime created, LocalDate date, BigDecimal amount, BigDecimal amountUsedInDebt, BigDecimal amountUsedInInterest, BigDecimal amountUsedInFine, DebtEntry debtEntry) {
+            super(id, description, typeDescription, created, date , amount, amountUsedInDebt, amountUsedInInterest, amountUsedInFine);
             this.debtEntry = debtEntry;
         }
 
@@ -132,7 +137,8 @@ public class AccountingManagementService {
             final BigDecimal amountUsedInFine = creditEntryPartialPaymentMultimap.get(creditEntry).stream().filter(c -> c
                     .getDebtEntry() instanceof Fine).map(PartialPayment::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
 
-            PaymentSummary paymentSummary = new PaymentSummary(creditEntry.getId(), creditEntry.getDescription(), creditEntry
+            PaymentSummary paymentSummary = new PaymentSummary(creditEntry.getId(), creditEntry.getDescription(), creditEntry.getTypeDescription(),
+                    creditEntry
                     .getCreated(), creditEntry.getDate(), creditEntry.getAmount(), amountUsedInDebts, amountUsedInInterest, amountUsedInFine);
 
             paymentSummaries.add(paymentSummary);
@@ -176,7 +182,7 @@ public class AccountingManagementService {
                     amountUsedInDebt = amountUsedInDebt.add(partialPayment.getAmount());
                 }
             }
-            paymentSummaryWithDebtSet.add(new PaymentSummaryWithDebt(debtEntry.getId(), creditEntry.getDescription(), creditEntry
+            paymentSummaryWithDebtSet.add(new PaymentSummaryWithDebt(debtEntry.getId(), creditEntry.getDescription(), creditEntry.getTypeDescription(), creditEntry
                     .getCreated(), creditEntry.getDate(), amountUsedInDebt.add(amountUsedInInterest.add(amountUsedInFine)), amountUsedInDebt, amountUsedInInterest, amountUsedInFine,
                     debtEntry));
         }

@@ -93,7 +93,7 @@ ${portal.toolkit()}
             <div class="form-group">
                 <label class="control-label col-sm-1"><spring:message code="label.org.fenixedu.academic.dto.accounting.CreateExemptionBean.amount" /></label>
                 <div class="col-sm-4">
-                    <input name="value" type="text" min="0.01" pattern="[0-9]+([\.,][0-9]{0,2})?" placeholder="ex: xxxx,yy" required><span> €</span>
+                    <input name="value" type="text" min="0.01" pattern="[0-9]+([\.][0-9]{0,2})?" placeholder="ex: xxxx.yy" required><span> €</span>
                 </div>
             </div>
             <div class="form-group">
@@ -102,7 +102,7 @@ ${portal.toolkit()}
                     <select class="form-control" name="justificationType" required>
                         <option value=""><spring:message code="label.org.fenixedu.academic.dto.accounting.CreateExemptionBean.justificationType.placeholder"/></option>
                         <c:forEach items="${eventExemptionJustificationTypes}" var="eventExemptionJustificationType">
-                            <option class="justificationtype" value="${eventExemptionJustificationType}">${fr:message('resources.EnumerationResources', eventExemptionJustificationType.qualifiedName)}</option>
+                            <option class="justificationTypeOption" value="${eventExemptionJustificationType}">${fr:message('resources.EnumerationResources', eventExemptionJustificationType.qualifiedName)}</option>
                         </c:forEach>
                     </select>
                 </div>
@@ -110,7 +110,7 @@ ${portal.toolkit()}
             <div class="form-group">
                 <label class="control-label col-sm-1"><spring:message code="label.org.fenixedu.academic.dto.accounting.CreateExemptionBean.dispatchDate"/></label>
                 <div class="col-sm-4">
-                    <input hidden name="dispatchDate" bennu-datetime requires-past>
+                    <input name="dispatchDate" bennu-datetime requires-past>
                 </div>
             </div>
             <div class="form-group">
@@ -131,7 +131,7 @@ ${portal.toolkit()}
     </div>
 </div>
 <script>
-    var options = $('select[name="justificationType"] option.justificationtype');
+    var options = $('select[name="justificationType"] option.justificationTypeOption');
     var arr = options.map(function(_, o) {
         return {
             t: $(o).text(),

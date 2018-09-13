@@ -165,35 +165,41 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="interest" items="${interests}" varStatus="interestLoop">
-                            <c:set var="interestIndex" value="#{interestLoop.index + 1}"/>
-                            <c:set var="amount" value="${interest.openAmount}"/>
-                            <tr>
-                                <td><input class="interest" data-amount="${amount}" checked disabled type="checkbox"></td>
-                                <td><time datetime="${interest.date.toString('yyyy-MM-dd')}">${interest.date.toString('dd/MM/yyyy')}</time></td>
-                                <td><spring:message code="accounting.event.pay.interest.description" arguments="${interestIndex}"/></td>
-                                <td><c:out value="${amount}"/><span>€</span></td>
-                            </tr>
+                        <c:forEach var="interest" items="${interests}" varStatus="interestLoop" >
+                            <c:if test="${interest.isOpen()}">
+                                <c:set var="interestIndex" value="#{interestLoop.index + 1}"/>
+                                <c:set var="amount" value="${interest.openAmount}"/>
+                                <tr>
+                                    <td><input class="interest" data-amount="${amount}" checked disabled type="checkbox"></td>
+                                    <td><time datetime="${interest.date.toString('yyyy-MM-dd')}">${interest.date.toString('dd/MM/yyyy')}</time></td>
+                                    <td><spring:message code="accounting.event.pay.interest.description" arguments="${interestIndex}"/></td>
+                                    <td><c:out value="${amount}"/><span>€</span></td>
+                                </tr>
+                            </c:if>
                         </c:forEach>
                         <c:forEach var="fine" items="${fines}" varStatus="fineLoop">
-                            <c:set var="fineIndex" value="#{fineLoop.index + 1}"/>
-                            <c:set var="amount" value="${fine.openAmount}"/>
-                            <tr>
-                                <td><input class="fine" data-amount="${amount}" checked disabled type="checkbox"></td>
-                                <td><time datetime="${fine.date.toString('yyyy-MM-dd')}">${fine.date.toString('dd/MM/yyyy')}</time></td>
-                                <td><spring:message code="accounting.event.pay.fine.description" arguments="${fineIndex}"/></td>
-                                <td><c:out value="${amount}"/><span>€</span></td>
-                            </tr>
+                            <c:if test="${fine.isOpen()}">
+                                <c:set var="fineIndex" value="#{fineLoop.index + 1}"/>
+                                <c:set var="amount" value="${fine.openAmount}"/>
+                                <tr>
+                                    <td><input class="fine" data-amount="${amount}" checked disabled type="checkbox"></td>
+                                    <td><time datetime="${fine.date.toString('yyyy-MM-dd')}">${fine.date.toString('dd/MM/yyyy')}</time></td>
+                                    <td><spring:message code="accounting.event.pay.fine.description" arguments="${fineIndex}"/></td>
+                                    <td><c:out value="${amount}"/><span>€</span></td>
+                                </tr>
+                            </c:if>
                         </c:forEach>
                         <c:forEach var="debt" items="${debts}" varStatus="debtsLoop">
-                            <c:set var="debtIndex" value="#{debtsLoop.index + 1}"/>
-                            <c:set var="debtAmount" value="${debt.openAmount.toPlainString()}"/>
-                            <tr>
-                                <td><input class="debt" data-amount="${debtAmount}" type="checkbox"></td>
-                                <td><time datetime="${debt.dueDate.toString('yyyy-MM-dd')}">${debt.dueDate.toString('dd/MM/yyyy')}</time></td>
-                                <td><spring:message code="accounting.event.details.debt.name" arguments="${debtIndex}"/></td>
-                                <td><c:out value="${debtAmount}"/><span>€</span></td>
-                            </tr>
+                            <c:if test="${debt.isOpen()}">
+                                <c:set var="debtIndex" value="#{debtsLoop.index + 1}"/>
+                                <c:set var="debtAmount" value="${debt.openAmount.toPlainString()}"/>
+                                <tr>
+                                    <td><input class="debt" data-amount="${debtAmount}" type="checkbox"></td>
+                                    <td><time datetime="${debt.dueDate.toString('yyyy-MM-dd')}">${debt.dueDate.toString('dd/MM/yyyy')}</time></td>
+                                    <td><spring:message code="accounting.event.details.debt.name" arguments="${debtIndex}"/></td>
+                                    <td><c:out value="${debtAmount}"/><span>€</span></td>
+                                </tr>
+                            </c:if>
                         </c:forEach>
                         </tbody>
                     </table>
