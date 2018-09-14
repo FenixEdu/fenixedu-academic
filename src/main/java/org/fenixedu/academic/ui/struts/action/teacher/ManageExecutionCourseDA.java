@@ -316,7 +316,7 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
         LessonPlanning lessonPlanning = FenixFramework.getDomainObject(request.getParameter("lessonPlanningID"));
         if (lessonPlanning != null) {
             try {
-                DeleteLessonPlanning.runDeleteLessonPlanning(lessonPlanning.getExecutionCourse().getExternalId(), lessonPlanning,
+                DeleteLessonPlanning.runDeleteLessonPlanning(null, lessonPlanning,
                         null, null);
             } catch (DomainException e) {
                 addActionMessage(request, e.getKey(), e.getArgs());

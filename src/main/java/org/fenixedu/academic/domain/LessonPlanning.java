@@ -38,10 +38,13 @@ public class LessonPlanning extends LessonPlanning_Base {
 
     };
 
+    protected LessonPlanning() {
+        setRootDomainObject(Bennu.getInstance());
+    }
+
     public LessonPlanning(LocalizedString title, LocalizedString planning, ShiftType lessonType,
             ExecutionCourse executionCourse) {
-        super();
-        setRootDomainObject(Bennu.getInstance());
+        this();
         setLastOrder(executionCourse, lessonType);
         setTitle(title);
         setPlanning(planning);
@@ -59,10 +62,12 @@ public class LessonPlanning extends LessonPlanning_Base {
     }
 
     public void deleteWithoutReOrder() {
-        CurricularManagementLog.createLog(getExecutionCourse(), Bundle.MESSAGING,
-                "log.executionCourse.curricular.planning.removed", getTitle().getContent(),
-                getLessonType().getFullNameTipoAula(), getExecutionCourse().getNome(), getExecutionCourse()
-                        .getDegreePresentationString());
+        if (getExecutionCourse() != null) {
+            CurricularManagementLog.createLog(getExecutionCourse(), Bundle.MESSAGING,
+                    "log.executionCourse.curricular.planning.removed", getTitle().getContent(),
+                    getLessonType().getFullNameTipoAula(), getExecutionCourse().getNome(),
+                    getExecutionCourse().getDegreePresentationString());
+        }
         super.setExecutionCourse(null);
         setRootDomainObject(null);
         deleteDomainObject();
@@ -70,8 +75,7 @@ public class LessonPlanning extends LessonPlanning_Base {
 
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
-        return getLessonType() != null && getPlanning() != null && !getPlanning().isEmpty() && getTitle() != null
-                && !getTitle().isEmpty() && getOrderOfPlanning() != null;
+        return getLessonType() != null && getTitle() != null && !getTitle().isEmpty() && getOrderOfPlanning() != null;
     }
 
     @Override
@@ -80,22 +84,6 @@ public class LessonPlanning extends LessonPlanning_Base {
             throw new DomainException("error.LessonPlanning.no.lessonType");
         }
         super.setLessonType(lessonType);
-    }
-
-    @Override
-    public void setExecutionCourse(ExecutionCourse executionCourse) {
-        if (executionCourse == null) {
-            throw new DomainException("error.LessonPlanning.no.executionCourse");
-        }
-        super.setExecutionCourse(executionCourse);
-    }
-
-    @Override
-    public void setPlanning(LocalizedString planning) {
-        if (planning == null || planning.getLocales().isEmpty()) {
-            throw new DomainException("error.LessonPlanning.no.planning");
-        }
-        super.setPlanning(planning);
     }
 
     @Override
@@ -115,21 +103,25 @@ public class LessonPlanning extends LessonPlanning_Base {
     }
 
     public void moveTo(Integer order) {
-        List<LessonPlanning> lessonPlannings = getExecutionCourse().getLessonPlanningsOrderedByOrder(getLessonType());
-        if (!lessonPlannings.isEmpty() && order != getOrderOfPlanning() && order <= lessonPlannings.size() && order >= 1) {
-            LessonPlanning posPlanning = lessonPlannings.get(order - 1);
-            Integer posOrder = posPlanning.getOrderOfPlanning();
-            posPlanning.setOrderOfPlanning(getOrderOfPlanning());
-            setOrderOfPlanning(posOrder);
+        if (getExecutionCourse() != null) {
+            List<LessonPlanning> lessonPlannings = getExecutionCourse().getLessonPlanningsOrderedByOrder(getLessonType());
+            if (!lessonPlannings.isEmpty() && order != getOrderOfPlanning() && order <= lessonPlannings.size() && order >= 1) {
+                LessonPlanning posPlanning = lessonPlannings.get(order - 1);
+                Integer posOrder = posPlanning.getOrderOfPlanning();
+                posPlanning.setOrderOfPlanning(getOrderOfPlanning());
+                setOrderOfPlanning(posOrder);
+            }
         }
     }
 
     private void reOrderLessonPlannings() {
-        List<LessonPlanning> lessonPlannings = getExecutionCourse().getLessonPlanningsOrderedByOrder(getLessonType());
-        if (!lessonPlannings.isEmpty() && !lessonPlannings.get(lessonPlannings.size() - 1).equals(this)) {
-            for (int i = getOrderOfPlanning(); i < lessonPlannings.size(); i++) {
-                LessonPlanning planning = lessonPlannings.get(i);
-                planning.setOrderOfPlanning(planning.getOrderOfPlanning() - 1);
+        if (getExecutionCourse() != null) {
+            List<LessonPlanning> lessonPlannings = getExecutionCourse().getLessonPlanningsOrderedByOrder(getLessonType());
+            if (!lessonPlannings.isEmpty() && !lessonPlannings.get(lessonPlannings.size() - 1).equals(this)) {
+                for (int i = getOrderOfPlanning(); i < lessonPlannings.size(); i++) {
+                    LessonPlanning planning = lessonPlannings.get(i);
+                    planning.setOrderOfPlanning(planning.getOrderOfPlanning() - 1);
+                }
             }
         }
     }
