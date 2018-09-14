@@ -164,9 +164,13 @@ public abstract class Event extends Event_Base {
         return transactionDetail instanceof SibsTransactionDetailDTO;
     }
 
-    protected Set<Entry> internalProcess(User responsibleUser, PaymentCode paymentCode, Money amountToPay, SibsTransactionDetailDTO transactionDetail) {
+    protected Set<Entry> internalProcess(User responsibleUser, Collection<EntryDTO> entryDTOs, AccountingTransactionDetailDTO transactionDetail) {
+        return getPostingRule().process(responsibleUser, entryDTOs, this, getFromAccount(), getToAccount(), transactionDetail);
+    }
 
-        throw new UnsupportedOperationException("error.org.fenixedu.academic.domain.accounting.Event.operation.not.supported");
+    protected Set<Entry> internalProcess(User responsibleUser, PaymentCode paymentCode, Money amountToPay, SibsTransactionDetailDTO transactionDetail) {
+        return internalProcess(responsibleUser,
+                Collections.singletonList(new EntryDTO(getEntryType(), this, amountToPay)), transactionDetail);
     }
 
     protected void closeEvent() {
@@ -676,10 +680,6 @@ public abstract class Event extends Event_Base {
         closeNonProcessedCodes();
     }
 
-    protected Set<Entry> internalProcess(User responsibleUser, Collection<EntryDTO> entryDTOs, AccountingTransactionDetailDTO transactionDetail) {
-        return getPostingRule().process(responsibleUser, entryDTOs, this, getFromAccount(), getToAccount(), transactionDetail);
-    }
-
     public boolean hasInstallments() {
         return false;
     }
@@ -1024,12 +1024,8 @@ public abstract class Event extends Event_Base {
         return false;
     }
 
-    public Set<EntryType> getPossibleEntryTypesForDeposit() {
-        return Collections.emptySet();
-    }
-
-    public boolean isDepositSupported() {
-        return !isCancelled() && !getPossibleEntryTypesForDeposit().isEmpty();
+    public EntryType getEntryType() {
+        return EntryType.GENERIC_EVENT;
     }
 
     public void addDiscount(final Person responsible, final Money amount) {

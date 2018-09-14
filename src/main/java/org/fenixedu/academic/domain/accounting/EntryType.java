@@ -122,7 +122,11 @@ public enum EntryType {
 
     EXTERNAL_CONTRIBUTION_PAYMENT,
 
-    DUPLICATE_REQUEST_FEE;
+    DUPLICATE_REQUEST_FEE,
+
+    GENERIC_EVENT,
+
+    PAST_CERTIFICATE_REQUEST;
 
     public String getName() {
         return name();

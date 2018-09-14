@@ -41,8 +41,7 @@ public class StandaloneIndividualCandidacyEvent extends StandaloneIndividualCand
         return AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
     }
 
-    @Override
-    protected EntryType getEntryType() {
+    @Override public EntryType getEntryType() {
         return EntryType.STANDALONE_INDIVIDUAL_CANDIDACY_FEE;
     }
 

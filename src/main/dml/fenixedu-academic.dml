@@ -1984,6 +1984,7 @@ valueType org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDeta
         Money phdProgramCandidacyEventAmount;
         Money rectorateAmount;
         Money specialSeasonEnrolmentEventAmount;
+        Money otherEventsAmount;
         DateTime whenProcessed;
         YearMonthDay whenProcessedBySibs;
     }

@@ -59,8 +59,7 @@ public class SecondCycleIndividualCandidacyEvent extends SecondCycleIndividualCa
         return null;
     }
 
-    @Override
-    protected EntryType getEntryType() {
+    @Override public EntryType getEntryType() {
         return EntryType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY_FEE;
     }
 

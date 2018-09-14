@@ -151,11 +151,11 @@ public class SibsIncommingPaymentFileDetailLine implements Serializable {
         if (o == null || getClass() != o.getClass())
             return false;
         SibsIncommingPaymentFileDetailLine that = (SibsIncommingPaymentFileDetailLine) o;
-        return Objects.equals(header, that.header) && Objects.equals(rawLine, that.rawLine);
+        return Objects.equals(header.getRawHeader(), that.header.getRawHeader()) && Objects.equals(rawLine, that.rawLine);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(whenOccuredTransaction, amount, sibsTransactionId, code, header, rawLine);
+        return Objects.hash(header.getRawHeader(), rawLine);
     }
 }

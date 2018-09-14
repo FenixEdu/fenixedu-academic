@@ -80,11 +80,8 @@ ${portal.toolkit()}
             <div class="form-group">
                 <label class="control-label col-sm-1"><spring:message code="label.org.fenixedu.academic.dto.accounting.DepositAmountBean.entryType"/></label>
                 <div class="col-sm-4">
-                    <select class="form-control" name="entryType" required>
-                        <c:forEach items="${event.possibleEntryTypesForDeposit}" var="entryType">
-                            <option value="${entryType}">${fr:message('resources.EnumerationResources', entryType.name)}</option>
-                        </c:forEach>
-                    </select>
+                    <input hidden name="entryType" value="${event.entryType}"/>
+                    <p>${fr:message('resources.EnumerationResources', event.entryType.name)}<p>
                 </div>
             </div>
             <div class="form-group">

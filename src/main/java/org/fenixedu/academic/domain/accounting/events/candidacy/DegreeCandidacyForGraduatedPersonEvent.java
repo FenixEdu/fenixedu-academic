@@ -53,8 +53,7 @@ public class DegreeCandidacyForGraduatedPersonEvent extends DegreeCandidacyForGr
         return getIndividualCandidacy().getSelectedDegree();
     }
 
-    @Override
-    protected EntryType getEntryType() {
+    @Override public EntryType getEntryType() {
         return EntryType.DEGREE_CANDIDACY_FOR_GRADUATED_PERSON_FEE;
     }
 

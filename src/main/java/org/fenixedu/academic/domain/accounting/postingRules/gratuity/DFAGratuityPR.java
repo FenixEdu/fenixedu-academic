@@ -27,8 +27,6 @@ import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
-import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 
@@ -76,62 +74,6 @@ abstract public class DFAGratuityPR extends DFAGratuityPR_Base implements IGratu
     public void setDfaPartialAcceptedPercentage(BigDecimal dfaPartialAcceptedPercentage) {
         throw new DomainException(
                 "error.accounting.postingRules.gratuity.DFAGratuityPR.cannot.modify.dfaPartialAcceptedPercentage");
-    }
-
-    @Override
-    protected void checkIfCanAddAmount(Money amountToAdd, Event event, DateTime when) {
-        if (((GratuityEvent) event).isCustomEnrolmentModel()) {
-            checkIfCanAddAmountForCustomEnrolmentModel(event, when, amountToAdd);
-        } else {
-            checkIfCanAddAmountForCompleteEnrolmentModel(amountToAdd, event, when);
-        }
-    }
-
-    private void checkIfCanAddAmountForCustomEnrolmentModel(Event event, DateTime when, Money amountToAdd) {
-        if (event.calculateAmountToPay(when).greaterThan(amountToAdd)) {
-            throw new DomainExceptionWithLabelFormatter(
-                    "error.accounting.postingRules.gratuity.DFAGratuityPR.amount.being.payed.must.be.equal.to.amout.in.debt",
-                    event.getDescriptionForEntryType(getEntryType()));
-        }
-    }
-
-    private void checkIfCanAddAmountForCompleteEnrolmentModel(final Money amountToAdd, final Event event, final DateTime when) {
-
-        if (hasAlreadyPayedAnyAmount(event, when)) {
-            final Money totalFinalAmount = event.getPayedAmount().add(amountToAdd);
-            if (!(totalFinalAmount.greaterOrEqualThan(calculateTotalAmountToPay(event, when)) || totalFinalAmount
-                    .equals(getPartialPaymentAmount(event, when)))) {
-                throw new DomainExceptionWithLabelFormatter(
-                        "error.accounting.postingRules.gratuity.DFAGratuityPR.amount.being.payed.must.be.equal.to.amout.in.debt",
-                        event.getDescriptionForEntryType(getEntryType()));
-            }
-        } else {
-            if (!isPayingTotalAmount(event, when, amountToAdd) && !isPayingPartialAmount(event, when, amountToAdd)) {
-                final LabelFormatter percentageLabelFormatter = new LabelFormatter();
-                percentageLabelFormatter.appendLabel(getDfaPartialAcceptedPercentage().multiply(BigDecimal.valueOf(100))
-                        .toString());
-
-                throw new DomainExceptionWithLabelFormatter(
-                        "error.accounting.postingRules.gratuity.DFAGratuityPR.invalid.partial.payment.value",
-                        event.getDescriptionForEntryType(getEntryType()), percentageLabelFormatter);
-            }
-        }
-    }
-
-    private boolean isPayingTotalAmount(final Event event, final DateTime when, Money amountToAdd) {
-        return amountToAdd.greaterOrEqualThan(event.calculateAmountToPay(when));
-    }
-
-    private boolean isPayingPartialAmount(final Event event, final DateTime when, final Money amountToAdd) {
-        return amountToAdd.equals(getPartialPaymentAmount(event, when));
-    }
-
-    private boolean hasAlreadyPayedAnyAmount(final Event event, final DateTime when) {
-        return !calculateTotalAmountToPay(event, when).equals(event.calculateAmountToPay(when));
-    }
-
-    private Money getPartialPaymentAmount(final Event event, final DateTime when) {
-        return calculateTotalAmountToPay(event, when).multiply(getDfaPartialAcceptedPercentage());
     }
 
     @Override

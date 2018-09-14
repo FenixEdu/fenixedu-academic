@@ -99,8 +99,6 @@ public abstract class IndividualCandidacyEvent extends IndividualCandidacyEvent_
                 transactionDetail);
     }
 
-    protected abstract EntryType getEntryType();
-
     @Override
     public boolean isIndividualCandidacyEvent() {
         return true;

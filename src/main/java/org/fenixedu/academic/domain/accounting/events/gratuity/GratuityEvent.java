@@ -265,4 +265,8 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
         return false;
     }
 
+    @Override public EntryType getEntryType() {
+        return EntryType.GRATUITY_FEE;
+    }
+
 }

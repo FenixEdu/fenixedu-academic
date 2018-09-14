@@ -20,7 +20,6 @@ package org.fenixedu.academic.domain.accounting.events;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -322,12 +321,8 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
         return result;
     }
 
-    @Override public Set<EntryType> getPossibleEntryTypesForDeposit() {
-        final Set<EntryType> result = new HashSet<>();
-        result.add(EntryType.ADMINISTRATIVE_OFFICE_FEE);
-        result.add(EntryType.INSURANCE_FEE);
-
-        return result;
+    @Override public EntryType getEntryType() {
+        return EntryType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE;
     }
 
     @Override public boolean isOpen() {

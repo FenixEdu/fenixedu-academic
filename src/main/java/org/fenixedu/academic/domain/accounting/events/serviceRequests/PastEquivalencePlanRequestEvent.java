@@ -18,9 +18,6 @@
  */
 package org.fenixedu.academic.domain.accounting.events.serviceRequests;
 
-import java.util.Collections;
-import java.util.Set;
-
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
@@ -41,9 +38,8 @@ public class PastEquivalencePlanRequestEvent extends PastEquivalencePlanRequestE
         super.init(administrativeOffice, EventType.PAST_EQUIVALENCE_PLAN_REQUEST, person, request);
     }
 
-    @Override
-    public Set<EntryType> getPossibleEntryTypesForDeposit() {
-        return Collections.singleton(EntryType.EQUIVALENCE_PLAN_REQUEST_FEE);
+    @Override public EntryType getEntryType() {
+        return EntryType.EQUIVALENCE_PLAN_REQUEST_FEE;
     }
 
     @Override

@@ -26,7 +26,6 @@ import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.accounting.events.dfa.DfaRegistrationEvent;
 import org.fenixedu.academic.domain.accounting.postingRules.FixedAmountWithPenaltyPR;
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -58,15 +57,6 @@ public class DfaRegistrationPR extends DfaRegistrationPR_Base {
         deactivate();
 
         return new DfaRegistrationPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), fixedAmount, penaltyAmount);
-    }
-
-    @Override
-    protected void checkIfCanAddAmount(Money amountToPay, Event event, DateTime when) {
-        final DfaRegistrationEvent dfaRegistrationEvent = (DfaRegistrationEvent) event;
-        if (!dfaRegistrationEvent.hasRegistrationPeriodInDegreeCurricularPlan()) {
-            throw new DomainException(
-                    "error.accounting.postingRules.dfa.DfaRegistrationPR.cannot.process.without.registration.period.defined");
-        }
     }
 
 }

@@ -18,11 +18,7 @@
  */
 package org.fenixedu.academic.domain.accounting.events.serviceRequests;
 
-import java.util.Collections;
-import java.util.Set;
-
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DiplomaRequest;
@@ -37,16 +33,6 @@ public class BolonhaDegreeDiplomaRequestEvent extends BolonhaDegreeDiplomaReques
             final Person person, final DiplomaRequest diplomaRequest) {
         this();
         super.init(administrativeOffice, eventType, person, diplomaRequest);
-    }
-
-    @Override
-    public boolean isDepositSupported() {
-        return true;
-    }
-
-    @Override
-    public Set<EntryType> getPossibleEntryTypesForDeposit() {
-        return Collections.singleton(EntryType.DIPLOMA_REQUEST_FEE);
     }
 
 }

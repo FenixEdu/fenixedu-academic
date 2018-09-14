@@ -19,7 +19,6 @@
 package org.fenixedu.academic.domain.accounting.events.insurance;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -129,12 +128,8 @@ public class InsuranceEvent extends InsuranceEvent_Base implements IInsuranceEve
         return calculateNextEndDate(new YearMonthDay());
     }
 
-    @Override
-    public Set<EntryType> getPossibleEntryTypesForDeposit() {
-        final Set<EntryType> result = new HashSet<>();
-        result.add(EntryType.INSURANCE_FEE);
-
-        return result;
+    @Override public EntryType getEntryType() {
+        return EntryType.INSURANCE_FEE;
     }
 
     @Override

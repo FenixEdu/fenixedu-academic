@@ -19,9 +19,7 @@
 package org.fenixedu.academic.domain.accounting.events.candidacy;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Person;
@@ -75,11 +73,6 @@ public class DegreeTransferIndividualCandidacyEvent extends DegreeTransferIndivi
     }
 
     @Override
-    public Set<EntryType> getPossibleEntryTypesForDeposit() {
-        return Collections.singleton(EntryType.DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY_FEE);
-    }
-
-    @Override
     public DegreeTransferIndividualCandidacy getIndividualCandidacy() {
         return (DegreeTransferIndividualCandidacy) super.getIndividualCandidacy();
     }
@@ -88,8 +81,7 @@ public class DegreeTransferIndividualCandidacyEvent extends DegreeTransferIndivi
         return getIndividualCandidacy().getSelectedDegree();
     }
 
-    @Override
-    protected EntryType getEntryType() {
+    @Override public EntryType getEntryType() {
         return EntryType.DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY_FEE;
     }
 
