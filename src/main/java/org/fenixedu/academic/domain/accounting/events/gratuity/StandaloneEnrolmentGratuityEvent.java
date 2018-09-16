@@ -65,14 +65,8 @@ public class StandaloneEnrolmentGratuityEvent extends StandaloneEnrolmentGratuit
         return labelFormatter;
     }
 
-    @Override
-    public boolean isDepositSupported() {
-        return true;
-    }
-
-    @Override
-    public Set<EntryType> getPossibleEntryTypesForDeposit() {
-        return Collections.singleton(EntryType.STANDALONE_ENROLMENT_GRATUITY_FEE);
+    @Override public EntryType getEntryType() {
+        return EntryType.STANDALONE_ENROLMENT_GRATUITY_FEE;
     }
 
     @Override

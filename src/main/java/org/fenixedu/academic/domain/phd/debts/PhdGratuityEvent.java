@@ -20,7 +20,6 @@ package org.fenixedu.academic.domain.phd.debts;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
@@ -158,9 +157,8 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
         return calculateAmountToPay(new DateTime()).lessOrEqualThan(Money.ZERO);
     }
 
-    @Override
-    public Set<EntryType> getPossibleEntryTypesForDeposit() {
-        return Collections.singleton(EntryType.GRATUITY_FEE);
+    @Override public EntryType getEntryType() {
+        return EntryType.GRATUITY_FEE;
     }
 
     @Override

@@ -18,9 +18,6 @@
  */
 package org.fenixedu.academic.domain.accounting.events.serviceRequests;
 
-import java.util.Collections;
-import java.util.Set;
-
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
@@ -56,11 +53,6 @@ public class PastDegreeDiplomaRequestEvent extends PastDegreeDiplomaRequestEvent
         labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent());
         labelFormatter.appendLabel(")");
         return labelFormatter;
-    }
-
-    @Override
-    public Set<EntryType> getPossibleEntryTypesForDeposit() {
-        return Collections.singleton(EntryType.DIPLOMA_REQUEST_FEE);
     }
 
     @Override

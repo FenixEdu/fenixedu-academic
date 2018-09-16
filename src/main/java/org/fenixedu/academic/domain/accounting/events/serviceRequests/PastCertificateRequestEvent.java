@@ -18,9 +18,6 @@
  */
 package org.fenixedu.academic.domain.accounting.events.serviceRequests;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
@@ -41,16 +38,8 @@ public class PastCertificateRequestEvent extends PastCertificateRequestEvent_Bas
         super.init(administrativeOffice, eventType, person, certificateRequest);
     }
 
-    @Override
-    public Set<EntryType> getPossibleEntryTypesForDeposit() {
-        final Set<EntryType> result = new HashSet<EntryType>();
-
-        result.add(EntryType.APPROVEMENT_CERTIFICATE_REQUEST_FEE);
-        result.add(EntryType.DEGREE_FINALIZATION_CERTIFICATE_REQUEST_FEE);
-        result.add(EntryType.ENROLMENT_CERTIFICATE_REQUEST_FEE);
-        result.add(EntryType.SCHOOL_REGISTRATION_CERTIFICATE_REQUEST_FEE);
-
-        return result;
+    @Override public EntryType getEntryType() {
+        return EntryType.PAST_CERTIFICATE_REQUEST;
     }
 
     @Override

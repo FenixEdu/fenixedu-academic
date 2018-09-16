@@ -129,7 +129,7 @@ public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
                 transactionDetail);
     }
 
-    protected EntryType getEntryType() {
+    @Override public EntryType getEntryType() {
         return EntryType.CANDIDACY_ENROLMENT_FEE;
     }
 

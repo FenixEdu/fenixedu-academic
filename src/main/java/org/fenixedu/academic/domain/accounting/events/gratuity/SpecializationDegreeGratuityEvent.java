@@ -96,9 +96,4 @@ public class SpecializationDegreeGratuityEvent extends SpecializationDegreeGratu
 
     }
 
-    @Override
-    public Set<EntryType> getPossibleEntryTypesForDeposit() {
-        return Collections.singleton(EntryType.GRATUITY_FEE);
-    }
-
 }

@@ -23,6 +23,7 @@ import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.accounting.ResidenceEvent;
 import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
+import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeEvent;
 import org.fenixedu.academic.domain.accounting.events.SpecialSeasonEnrolmentEvent;
 import org.fenixedu.academic.domain.accounting.events.candidacy.DegreeCandidacyForGraduatedPersonEvent;
 import org.fenixedu.academic.domain.accounting.events.candidacy.DegreeChangeIndividualCandidacyEvent;
@@ -74,6 +75,8 @@ public class SibsPaymentFileProcessReportDTO {
     private Money afterGraduationInsuranceTotalAmount;
 
     private Money phdGratuityTotalAmout;
+
+    private Money otherEventsTotalAmount;
 
     private Money transactionsTotalAmount;
 
@@ -128,6 +131,7 @@ public class SibsPaymentFileProcessReportDTO {
         this.phdProgramCandidacyEventAmount = Money.ZERO;
         this.rectorateAmount = Money.ZERO;
         this.specialSeasonEnrolmentEventAmount = Money.ZERO;
+        this.otherEventsTotalAmount = Money.ZERO;
     }
 
     public SibsPaymentFileProcessReportDTO(final SibsIncommingPaymentFile sibsIncomingPaymentFile) {
@@ -142,6 +146,7 @@ public class SibsPaymentFileProcessReportDTO {
     private void addAdministrativeOfficeTaxAmount(final Money amount) {
         this.administrativeOfficeTaxTotalAmount = this.administrativeOfficeTaxTotalAmount.add(amount);
     }
+
 
     public Money getAdministrativeOfficeTaxTotalAmount() {
         return administrativeOfficeTaxTotalAmount;
@@ -287,6 +292,14 @@ public class SibsPaymentFileProcessReportDTO {
         this.transactionsTotalAmount = transactionsTotalAmount;
     }
 
+    public Money getOtherEventsTotalAmount() {
+        return otherEventsTotalAmount;
+    }
+
+    private void addOtherEventAmount(final Money amount){
+        this.otherEventsTotalAmount = this.otherEventsTotalAmount.add(amount);
+    }
+
     public YearMonthDay getWhenProcessedBySibs() {
         return whenProcessedBySibs;
     }
@@ -364,32 +377,48 @@ public class SibsPaymentFileProcessReportDTO {
         final Event event = ((EventPaymentCode) paymentCode).getEvent().orElseThrow(() -> new IllegalArgumentException("No event associated with EventPaymentCode"));
         if (event instanceof GratuityEventWithPaymentPlan) {
             addAmountForGratuityEvent(detailLine, (GratuityEventWithPaymentPlan) event);
-        } else if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent) {
+        }
+        else if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent) {
             addAmountForAdministrativeOfficeAndInsuranceEvent(detailLine, (AdministrativeOfficeFeeAndInsuranceEvent) event);
-        } else if (event instanceof DfaGratuityEvent) {
+        }
+        else if (event instanceof DfaGratuityEvent) {
             addDfaGratuityAmount(detailLine.getAmount());
-        } else if (event instanceof InsuranceEvent) {
+        }
+        else if (event instanceof InsuranceEvent) {
             addAfterGraduationInsuranceAmount(detailLine.getAmount());
-        } else if (event instanceof ResidenceEvent) {
+        }
+        else if (event instanceof ResidenceEvent) {
             addResidenceAmount(detailLine.getAmount());
-        } else if (event instanceof SecondCycleIndividualCandidacyEvent) {
+        }
+        else if (event instanceof SecondCycleIndividualCandidacyEvent) {
             addSecondCycleIndividualCandidacyAmount(detailLine.getAmount());
-        } else if (event instanceof DegreeChangeIndividualCandidacyEvent) {
+        }
+        else if (event instanceof DegreeChangeIndividualCandidacyEvent) {
             addDegreeChangeIndividualCandidacyAmount(detailLine.getAmount());
-        } else if (event instanceof DegreeCandidacyForGraduatedPersonEvent) {
+        }
+        else if (event instanceof DegreeCandidacyForGraduatedPersonEvent) {
             addDegreeCandidacyForGraduatedPersonAmount(detailLine.getAmount());
-        } else if (event instanceof DegreeTransferIndividualCandidacyEvent) {
+        }
+        else if (event instanceof DegreeTransferIndividualCandidacyEvent) {
             addDegreeTransferIndividualCandidacyAmount(detailLine.getAmount());
-        } else if (event instanceof StandaloneEnrolmentGratuityEvent) {
+        }
+        else if (event instanceof StandaloneEnrolmentGratuityEvent) {
             addStandaloneEnrolmentGratuityEventAmount(detailLine.getAmount());
-        } else if (event instanceof Over23IndividualCandidacyEvent) {
+        }
+        else if (event instanceof Over23IndividualCandidacyEvent) {
             addOver23IndividualCandidacyEventAmount(detailLine.getAmount());
-        } else if (event instanceof PhdProgramCandidacyEvent) {
+        }
+        else if (event instanceof PhdProgramCandidacyEvent) {
             addPhdProgramCandidacyEventAmount(detailLine.getAmount());
-        } else if (event instanceof SpecialSeasonEnrolmentEvent) {
+        }
+        else if (event instanceof SpecialSeasonEnrolmentEvent) {
             addSpecialSeasonEnrolmentEventAmount(detailLine.getAmount());
-        } else {
-            throw new IllegalArgumentException("Unknown accounting event " + event.getClass().getName());
+        }
+        else if (event instanceof AdministrativeOfficeFeeEvent) {
+            addAdministrativeOfficeTaxAmount(detailLine.getAmount());
+        }
+        else {
+            addOtherEventAmount(detailLine.getAmount());
         }
     }
 

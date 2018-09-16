@@ -26,7 +26,6 @@ import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.accounting.events.specializationDegree.SpecializationDegreeRegistrationEvent;
 import org.fenixedu.academic.domain.accounting.postingRules.FixedAmountWithPenaltyPR;
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -53,27 +52,11 @@ public class SpecializationDegreeRegistrationPR extends SpecializationDegreeRegi
         return Optional.empty();
     }
 
-    private boolean hasPenaltyForRegistration(final SpecializationDegreeRegistrationEvent specializationDegreeRegistrationEvent) {
-        return specializationDegreeRegistrationEvent.hasRegistrationPeriodInDegreeCurricularPlan()
-                && !specializationDegreeRegistrationEvent.getRegistrationPeriodInDegreeCurricularPlan().containsDate(
-                        specializationDegreeRegistrationEvent.getRegistrationDate());
-    }
-
     public FixedAmountWithPenaltyPR edit(final Money fixedAmount, final Money penaltyAmount) {
         deactivate();
 
         return new SpecializationDegreeRegistrationPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(),
                 fixedAmount, penaltyAmount);
-    }
-
-    @Override
-    protected void checkIfCanAddAmount(Money amountToPay, Event event, DateTime when) {
-        final SpecializationDegreeRegistrationEvent specializationDegreeRegistrationEvent =
-                (SpecializationDegreeRegistrationEvent) event;
-        if (!specializationDegreeRegistrationEvent.hasRegistrationPeriodInDegreeCurricularPlan()) {
-            throw new DomainException(
-                    "error.accounting.postingRules.specializationDegree.SpecializationDegreeRegistrationPR.cannot.process.without.registration.period.defined");
-        }
     }
 
 }

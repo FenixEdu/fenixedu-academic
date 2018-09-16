@@ -20,11 +20,9 @@ package org.fenixedu.academic.domain.accounting.events;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
@@ -57,11 +55,6 @@ public class PastAdministrativeOfficeFeeAndInsuranceEvent extends PastAdministra
             throw new DomainException(
                     "error.org.fenixedu.academic.domain.accounting.events.PastAdministrativeOfficeFeeAndInsuranceEvent.pastAdministrativeOfficeFeeAndInsuranceAmount.cannot.be.null.and.must.be.greather.than.zero");
         }
-    }
-
-    @Override
-    public Set<EntryType> getPossibleEntryTypesForDeposit() {
-        return Collections.singleton(EntryType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE);
     }
 
     @Override

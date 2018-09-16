@@ -26,7 +26,6 @@ import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.accounting.events.dfa.DFACandidacyEvent;
 import org.fenixedu.academic.domain.accounting.postingRules.FixedAmountWithPenaltyPR;
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -59,15 +58,6 @@ public class DFACandidacyPR extends DFACandidacyPR_Base {
         deactivate();
 
         return new DFACandidacyPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), fixedAmount, penaltyAmount);
-    }
-
-    @Override
-    protected void checkIfCanAddAmount(Money amountToPay, Event event, DateTime when) {
-        final DFACandidacyEvent dfaCandidacyEvent = (DFACandidacyEvent) event;
-        if (!dfaCandidacyEvent.hasCandidacyPeriodInDegreeCurricularPlan()) {
-            throw new DomainException(
-                "error.accounting.postingRules.dfa.DFACandidacyPR.cannot.process.without.candidacy.period.defined");
-        }
     }
 
 }

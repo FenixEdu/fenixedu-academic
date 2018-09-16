@@ -292,11 +292,6 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     }
 
     @Override
-    public Set<EntryType> getPossibleEntryTypesForDeposit() {
-        return Collections.singleton(EntryType.GRATUITY_FEE);
-    }
-
-    @Override
     public boolean isPaymentPlanChangeAllowed() {
         return true;
     }

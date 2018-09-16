@@ -43,8 +43,7 @@ public class Over23IndividualCandidacyEvent extends Over23IndividualCandidacyEve
         return AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
     }
 
-    @Override
-    protected EntryType getEntryType() {
+    @Override public EntryType getEntryType() {
         return EntryType.OVER23_INDIVIDUAL_CANDIDACY_FEE;
     }
 

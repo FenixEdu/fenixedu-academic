@@ -97,11 +97,6 @@ public class DfaGratuityEvent extends DfaGratuityEvent_Base {
     }
 
     @Override
-    public Set<EntryType> getPossibleEntryTypesForDeposit() {
-        return Collections.singleton(EntryType.GRATUITY_FEE);
-    }
-
-    @Override
     public boolean isDfaGratuityEvent() {
         return true;
     }

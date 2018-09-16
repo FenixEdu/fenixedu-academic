@@ -18,9 +18,6 @@
  */
 package org.fenixedu.academic.domain.accounting.events.gratuity;
 
-import java.util.Collections;
-import java.util.Set;
-
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
@@ -62,11 +59,6 @@ public class PastDegreeGratuityEvent extends PastDegreeGratuityEvent_Base {
                     "error.org.fenixedu.academic.domain.accounting.events.gratuity.PastDegreeGratuityEvent.pastDegreeGratuityAmount.cannot.be.null.and.must.be.greather.than.zero");
         }
 
-    }
-
-    @Override
-    public Set<EntryType> getPossibleEntryTypesForDeposit() {
-        return Collections.singleton(EntryType.GRATUITY_FEE);
     }
 
 }

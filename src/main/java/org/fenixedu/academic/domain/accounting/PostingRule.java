@@ -25,16 +25,12 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
-import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.accounting.accountingTransactions.detail.SibsTransactionDetail;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
 import org.fenixedu.academic.domain.accounting.paymentCodes.EventPaymentCodeEntry;
-import org.fenixedu.academic.domain.accounting.paymentCodes.EventPaymentCodeEntry_Base;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
 import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.dto.accounting.EntryWithInstallmentDTO;
@@ -48,16 +44,17 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public abstract class PostingRule extends PostingRule_Base {
 
-    public static Comparator<PostingRule> COMPARATOR_BY_EVENT_TYPE = new Comparator<PostingRule>() {
-        @Override
-        public int compare(PostingRule leftPostingRule, PostingRule rightPostingRule) {
-            int comparationResult = leftPostingRule.getEventType().compareTo(rightPostingRule.getEventType());
-            return (comparationResult == 0) ? leftPostingRule.getExternalId().compareTo(rightPostingRule.getExternalId()) : comparationResult;
-        }
+    private static final Logger logger = LoggerFactory.getLogger(PostingRule.class);
+
+    public static Comparator<PostingRule> COMPARATOR_BY_EVENT_TYPE = (leftPostingRule, rightPostingRule) -> {
+        int comparationResult = leftPostingRule.getEventType().compareTo(rightPostingRule.getEventType());
+        return (comparationResult == 0) ? leftPostingRule.getExternalId().compareTo(rightPostingRule.getExternalId()) : comparationResult;
     };
 
     public static Comparator<PostingRule> COMPARATOR_BY_START_DATE = new Comparator<PostingRule>() {
@@ -271,10 +268,17 @@ public abstract class PostingRule extends PostingRule_Base {
 
     protected AccountingTransactionDetail makeAccountingTransactionDetail(Event event, AccountingTransactionDetailDTO transactionDetailDTO) {
         if (transactionDetailDTO instanceof SibsTransactionDetailDTO) {
+
             final SibsTransactionDetailDTO sibsTransactionDetailDTO = (SibsTransactionDetailDTO) transactionDetailDTO;
 
-            DateTime whenRegistered = getWhenRegisteredForEvent(event, sibsTransactionDetailDTO)
-                    ;
+            DateTime whenRegistered = getWhenRegisteredForEvent(event, sibsTransactionDetailDTO);
+
+            logger.info("Making sibs transaction of amount {} for event {} with code {} on date {} but real/promise date is {}",
+                    sibsTransactionDetailDTO.getSibsDetailLine().getAmount(),
+                    event.getExternalId(),
+                    sibsTransactionDetailDTO.getSibsCode(),
+                    sibsTransactionDetailDTO.getWhenRegistered().toString("dd MMMM yyyy HH:mm:ss"),
+                    whenRegistered.toString("dd MMMM yyyy HH:mm:ss"));
 
             return new SibsTransactionDetail(sibsTransactionDetailDTO.getSibsDetailLine(), whenRegistered,
                     sibsTransactionDetailDTO.getSibsTransactionId(), sibsTransactionDetailDTO.getSibsCode(),
@@ -360,7 +364,7 @@ public abstract class PostingRule extends PostingRule_Base {
     }
 
     protected void checkEntryTypeForDeposit(final Event event, final EntryType entryType) {
-        if (!event.getPossibleEntryTypesForDeposit().contains(entryType)) {
+        if (event.getEntryType() != entryType) {
             throw new DomainException("error.accounting.PostingRule.entry.type.not.supported.for.deposit");
         }
     }
@@ -457,18 +461,7 @@ public abstract class PostingRule extends PostingRule_Base {
                 totalEntriesAmount = totalEntriesAmount.add(entryDTO.getAmountToPay());
             }
 
-            checkIfCanAddAmount(totalEntriesAmount, event, transactionDetail.getWhenRegistered());
-
             return result;
-    }
-
-    protected void checkIfCanAddAmount(Money amountToPay, Event event, DateTime when) {
-        if (event.calculateAmountToPay(when).greaterThan(amountToPay)) {
-            throw new DomainExceptionWithLabelFormatter(
-                "error.accounting.postingRules.gratuity.PastDegreeGratuityPR.amount.being.payed.must.be.equal.to.amout.in.debt",
-                event.getDescriptionForEntryType(getEntryType()));
-        }
-
     }
 
     static public Collection<PostingRule> findPostingRules(final EventType eventType) {

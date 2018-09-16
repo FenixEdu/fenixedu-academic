@@ -105,4 +105,8 @@ abstract public class DiplomaRequestEvent extends DiplomaRequestEvent_Base {
                 getAcademicServiceRequest().getRequestDate());
     }
 
+    @Override public EntryType getEntryType() {
+        return EntryType.DIPLOMA_REQUEST_FEE;
+    }
+
 }
