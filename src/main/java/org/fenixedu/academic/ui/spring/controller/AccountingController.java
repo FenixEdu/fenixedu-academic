@@ -87,6 +87,7 @@ public abstract class AccountingController {
         model.addAttribute("eventOriginalAmountToPay", event.getOriginalAmountToPay());
 
         model.addAttribute("isEventOwner", accessControlService.isEventOwner(event, Authenticate.getUser()));
+        model.addAttribute("isPaymentManager", accessControlService.isPaymentManager(event, Authenticate.getUser()));
         model.addAttribute("isAdvancedPaymentManager", accessControlService.isAdvancedPaymentManager(event, Authenticate.getUser()));
 
         return view("event-details");

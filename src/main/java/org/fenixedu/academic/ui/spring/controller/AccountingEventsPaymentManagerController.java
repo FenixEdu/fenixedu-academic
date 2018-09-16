@@ -134,7 +134,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
 
     @RequestMapping(value = "{event}/deposit", method = RequestMethod.GET)
     public String deposit(@PathVariable Event event, User user, Model model){
-        accessControlService.checkAdvancedPaymentManager(event, user);
+        accessControlService.checkPaymentManager(event, user);
 
         model.addAttribute("person", event.getPerson());
         model.addAttribute("event", event);
@@ -145,7 +145,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
 
     @RequestMapping(value = "{event}/depositAmount", method = RequestMethod.POST)
     public String depositAmount(@PathVariable Event event, User user, Model model, @ModelAttribute DepositAmountBean depositAmountBean) {
-        accessControlService.checkAdvancedPaymentManager(event, user);
+        accessControlService.checkPaymentManager(event, user);
 
         try {
             accountingManagementService.depositAmount(event, user, depositAmountBean);
