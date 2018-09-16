@@ -30,9 +30,10 @@ public class EnrolmentEvaluationEvent extends EnrolmentEvaluationEvent_Base {
     }
 
     public EnrolmentEvaluationEvent(AdministrativeOffice administrativeOffice, Person person, EventType eventType, PostingRule
-            postingRule) {
+            postingRule, EnrolmentEvaluation enrolmentEvaluation) {
         init(administrativeOffice, eventType, person);
         setPostingRule(postingRule);
+        setEnrolmentEvaluation(enrolmentEvaluation);
     }
 
     private static Optional<EventType> getEventType(EnrolmentEvaluation enrolmentEvaluation) {
@@ -55,8 +56,7 @@ public class EnrolmentEvaluationEvent extends EnrolmentEvaluationEvent_Base {
                         enrolmentEvaluation.getEvaluationSeason().getName().getContent()));
 
         final PostingRule eventTypePR =
-                enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getDegreeCurricularPlan()
-                        .getServiceAgreementTemplate().findPostingRuleByEventType(eventType);
+                administrativeOffice.getServiceAgreementTemplate().findPostingRuleByEventType(eventType);
 
         if (eventTypePR == null) {
             throw new DomainException("No posting rule found");
@@ -68,7 +68,8 @@ public class EnrolmentEvaluationEvent extends EnrolmentEvaluationEvent_Base {
 
         return Optional.ofNullable(enrolmentEvaluation.getEnrolmentEvaluationEvent()).orElseGet(() -> {
             try {
-                return FenixFramework.atomic(() -> new EnrolmentEvaluationEvent(administrativeOffice, student, eventType, eventTypePR));
+                return FenixFramework.atomic(() -> new EnrolmentEvaluationEvent(administrativeOffice, student, eventType,
+                        eventTypePR, enrolmentEvaluation));
             } catch (DomainException e) {
                 throw e;
             } catch (Exception e) {
