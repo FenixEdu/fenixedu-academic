@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.accounting.postingRules.gratuity;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.HashMap;
@@ -158,7 +159,7 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
                         gratuityEvent.getStartDate(), gratuityEvent.getEndDate());
 
         final Money degreeGratuityAmount = gratuityPR.getDefaultGratuityAmount(gratuityEvent.getExecutionYear());
-        final BigDecimal creditsProporcion = enroledEcts.divide(getEctsForYear());
+        final BigDecimal creditsProporcion = enroledEcts.divide(getEctsForYear(), 10, RoundingMode.HALF_EVEN);
 
         if (hasAnyActiveDegreeRegistration(gratuityEvent)) {
             return degreeGratuityAmount.multiply(creditsProporcion);
