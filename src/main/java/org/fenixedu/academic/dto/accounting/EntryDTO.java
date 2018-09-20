@@ -19,17 +19,19 @@
 package org.fenixedu.academic.dto.accounting;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
+import org.joda.time.LocalDate;
 
 public class EntryDTO implements Serializable {
 
-    private boolean selected;
+    protected boolean isForPenalty;
 
-    private boolean isForPenalty;
+    private boolean selected;
 
     private EntryType entryType;
 
@@ -44,6 +46,11 @@ public class EntryDTO implements Serializable {
     private LabelFormatter description;
 
     private Money debtAmount;
+
+    private LocalDate dueDate;
+
+    public EntryDTO(){
+    }
 
     public EntryDTO(EntryType entryType, Event event, Money totalAmount, Money payedAmount, Money amountToPay,
             LabelFormatter description, Money debtAmount) {
@@ -133,6 +140,14 @@ public class EntryDTO implements Serializable {
         return isForPenalty;
     }
 
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -165,6 +180,10 @@ public class EntryDTO implements Serializable {
         if (getDescription() != null ? !getDescription().toString().equals(entryDTO.getDescription().toString()) : entryDTO.getDescription() != null) {
             return false;
         }
+        if (getDueDate() != null ? !getDueDate().equals(entryDTO.getDueDate()) : entryDTO.getDueDate() != null) {
+            return false;
+        }
+
         return getDebtAmount() != null ? getDebtAmount().equals(entryDTO.getDebtAmount()) : entryDTO.getDebtAmount() == null;
     }
 
@@ -178,6 +197,8 @@ public class EntryDTO implements Serializable {
         result = 31 * result + (getAmountToPay() != null ? getAmountToPay().hashCode() : 0);
         result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
         result = 31 * result + (getDebtAmount() != null ? getDebtAmount().hashCode() : 0);
+        result = 31 * result + (getDueDate() != null ? getDueDate().hashCode() : 0);
         return result;
     }
+
 }

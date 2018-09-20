@@ -39,8 +39,6 @@ public class SimpleSearchPersonWithStudentBean implements Serializable {
 
     private IDDocumentType idDocumentType;
 
-    private Integer studentNumber;
-
     private String paymentCode;
 
     public SimpleSearchPersonWithStudentBean() {
@@ -71,14 +69,6 @@ public class SimpleSearchPersonWithStudentBean implements Serializable {
         this.name = name;
     }
 
-    public Integer getStudentNumber() {
-        return studentNumber;
-    }
-
-    public void setStudentNumber(Integer studentNumber) {
-        this.studentNumber = studentNumber;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -96,12 +86,14 @@ public class SimpleSearchPersonWithStudentBean implements Serializable {
     }
 
     public Collection<Person> search() {
-
-        if (studentNumber != null) {
+        try {
+            Integer studentNumber = Integer.parseInt(username);
             Student student = Student.readStudentByNumber(studentNumber);
             if (student != null) {
                 return Stream.of(student.getPerson()).collect(Collectors.toSet());
             }
+        } catch (NumberFormatException nfe) {
+            //ignore, username is not a number: continue
         }
 
         Stream<Person> stream =
