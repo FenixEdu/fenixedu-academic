@@ -254,7 +254,7 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
                 for (final UnitName unitName : unitNames) {
                     final String normalizedUnitName = unitName.getName();
                     if (containsAllExactWords(normalizedUnitName, nameParts)) {
-                        if (!existsTheSameCode(unitName, unitNameLimitedOrderedSet)) {
+                        if (unitName.getUnit().getCode() != null) {
                             unitNameLimitedOrderedSet.add(unitName);
                         }
                     }
