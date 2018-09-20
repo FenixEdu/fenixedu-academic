@@ -22,10 +22,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.accounting.accountingTransactions.detail.SibsTransactionDetail;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
@@ -52,36 +52,9 @@ public abstract class PostingRule extends PostingRule_Base {
 
     private static final Logger logger = LoggerFactory.getLogger(PostingRule.class);
 
-    public static Comparator<PostingRule> COMPARATOR_BY_EVENT_TYPE = (leftPostingRule, rightPostingRule) -> {
-        int comparationResult = leftPostingRule.getEventType().compareTo(rightPostingRule.getEventType());
-        return (comparationResult == 0) ? leftPostingRule.getExternalId().compareTo(rightPostingRule.getExternalId()) : comparationResult;
-    };
+    public static Comparator<PostingRule> COMPARATOR_BY_EVENT_TYPE = Comparator.comparing(PostingRule::getEventType).thenComparing(PostingRule::getExternalId);
 
-    public static Comparator<PostingRule> COMPARATOR_BY_START_DATE = new Comparator<PostingRule>() {
-        @Override
-        public int compare(PostingRule leftPostingRule, PostingRule rightPostingRule) {
-            int comparationResult = leftPostingRule.getStartDate().compareTo(rightPostingRule.getStartDate());
-            return (comparationResult == 0) ? leftPostingRule.getExternalId().compareTo(rightPostingRule.getExternalId()) : comparationResult;
-        }
-    };
-
-    public static Comparator<PostingRule> COMPARATOR_BY_END_DATE = new Comparator<PostingRule>() {
-        @Override
-        public int compare(PostingRule left, PostingRule right) {
-            int comparationResult;
-            if (!left.hasEndDate() && !right.hasEndDate()) {
-                comparationResult = 0;
-            } else if (!left.hasEndDate()) {
-                comparationResult = 1;
-            } else if (!right.hasEndDate()) {
-                return comparationResult = -1;
-            } else {
-                comparationResult = left.getEndDate().compareTo(right.getEndDate());
-            }
-
-            return comparationResult == 0 ? left.getExternalId().compareTo(right.getExternalId()) : comparationResult;
-        }
-    };
+    public static Comparator<PostingRule> COMPARATOR_BY_START_DATE =  Comparator.comparing(PostingRule::getStartDate).thenComparing(PostingRule::getExternalId);
 
     static {
         getRelationServiceAgreementTemplatePostingRule().addListener(
@@ -157,13 +130,7 @@ public abstract class PostingRule extends PostingRule_Base {
     }
 
     protected Set<Entry> getResultingEntries(Set<AccountingTransaction> resultingTransactions) {
-        final Set<Entry> result = new HashSet<Entry>();
-
-        for (final AccountingTransaction transaction : resultingTransactions) {
-            result.add(transaction.getToAccountEntry());
-        }
-
-        return result;
+        return resultingTransactions.stream().map(AccountingTransaction::getToAccountEntry).collect(Collectors.toSet());
     }
 
     public final List<EntryDTO> calculateEntries(Event event) {
@@ -291,12 +258,14 @@ public abstract class PostingRule extends PostingRule_Base {
 
     /**
      * Returns effective date of payment for event.
+     * If the entry has a null amount, then it is a reusable payment code and returns the registered date of the payment
      * If the payment is registered after the due date of the entry, returns the registered date of the payment
      * Otherwise, returns the creation date of the entry (for freezing purposes of penalty calculations)
      */
     private DateTime getWhenRegisteredForEvent(Event event, SibsTransactionDetailDTO sibsTransactionDetailDTO) {
         return event.getEventPaymentCodeEntrySet().stream()
                 .filter(entry -> entry.getPaymentCode().getCode().equals(sibsTransactionDetailDTO.getSibsCode()))
+                .filter(entry -> entry.getAmount() != null)
                 .filter(entry -> !sibsTransactionDetailDTO.getWhenRegistered().toLocalDate().isAfter(entry.getDueDate()))
                 .findAny()
                 .map(EventPaymentCodeEntry::getCreated)
@@ -369,25 +338,15 @@ public abstract class PostingRule extends PostingRule_Base {
         }
     }
 
-    public boolean isMostRecent() {
-        return Collections.max(getServiceAgreementTemplate().getAllPostingRulesFor(getEventType()),
-                PostingRule.COMPARATOR_BY_END_DATE).equals(this);
-
-    }
-
     public String getFormulaDescription() {
         return BundleUtil.getString(Bundle.APPLICATION, this.getClass().getSimpleName() + ".formulaDescription");
     }
 
     protected boolean has(final EventType eventType) {
-        return getEventType().equals(eventType);
+        return getEventType() == eventType;
     }
 
     protected abstract Money doCalculationForAmountToPay(Event event, DateTime when);
-
-    public PaymentCodeType calculatePaymentCodeTypeFromEvent(Event event, DateTime when, boolean applyDiscount) {
-        throw new DomainException("error.accounting.PostingRule.cannot.calculate.payment.code.type");
-    }
 
     public List<EntryDTO> calculateEntries(Event event, DateTime when) {
         final List<EntryDTO> result = new ArrayList<>();
@@ -453,25 +412,10 @@ public abstract class PostingRule extends PostingRule_Base {
 
     protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
             Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
-          final Set<AccountingTransaction> result = new HashSet<>();
-            Money totalEntriesAmount = Money.ZERO;
 
-            for(EntryDTO entryDTO : entryDTOs) {
-                result.add(makeAccountingTransaction(user, event, fromAccount, toAccount, getEntryType(), entryDTO.getAmountToPay(), transactionDetail));
-                totalEntriesAmount = totalEntriesAmount.add(entryDTO.getAmountToPay());
-            }
-
-            return result;
-    }
-
-    static public Collection<PostingRule> findPostingRules(final EventType eventType) {
-        final Collection<PostingRule> result = new HashSet<PostingRule>();
-        for (final PostingRule postingRule : Bennu.getInstance().getPostingRulesSet()) {
-            if (postingRule.has(eventType)) {
-                result.add(postingRule);
-            }
-        }
-        return result;
+        return entryDTOs.stream()
+                .map(entryDTO -> makeAccountingTransaction(user, event, fromAccount, toAccount, getEntryType(), entryDTO.getAmountToPay(), transactionDetail))
+                .collect(Collectors.toSet());
     }
 
     protected abstract EntryType getEntryType();

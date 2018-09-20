@@ -23,7 +23,6 @@ import java.util.List;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
-import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.accounting.events.candidacy.DegreeCandidacyForGraduatedPersonEvent;
 import org.fenixedu.academic.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPerson;
@@ -84,24 +83,6 @@ public class DegreeCandidacyForGraduatedPersonPR extends DegreeCandidacyForGradu
                 return getAmountForInstitutionStudent();
             } else {
                 return getAmountForExternalStudent();
-            }
-        }
-    }
-
-    @Override
-    public PaymentCodeType calculatePaymentCodeTypeFromEvent(Event event, DateTime when, boolean applyDiscount) {
-        DegreeCandidacyForGraduatedPerson individualCandidacy =
-                ((DegreeCandidacyForGraduatedPersonEvent) event).getIndividualCandidacy();
-        final PrecedentDegreeInformation information = individualCandidacy.getRefactoredPrecedentDegreeInformation();
-
-        if (individualCandidacy.getUtlStudent() != null) {
-            return individualCandidacy.getUtlStudent() ? PaymentCodeType.INTERNAL_DEGREE_CANDIDACY_FOR_GRADUATED_PERSON_INDIVIDUAL_PROCESS : PaymentCodeType.EXTERNAL_DEGREE_CANDIDACY_FOR_GRADUATED_PERSON_INDIVIDUAL_PROCESS;
-        } else {
-            if (information.isCandidacyInternal() || hasAnyValidRegistration((DegreeCandidacyForGraduatedPersonEvent) event)
-                    || belongsToInstitutionGroup(information.getInstitution())) {
-                return PaymentCodeType.INTERNAL_DEGREE_CANDIDACY_FOR_GRADUATED_PERSON_INDIVIDUAL_PROCESS;
-            } else {
-                return PaymentCodeType.EXTERNAL_DEGREE_CANDIDACY_FOR_GRADUATED_PERSON_INDIVIDUAL_PROCESS;
             }
         }
     }

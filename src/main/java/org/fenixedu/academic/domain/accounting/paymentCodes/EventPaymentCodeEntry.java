@@ -36,5 +36,9 @@ public class EventPaymentCodeEntry extends EventPaymentCodeEntry_Base {
         return event.getAvailablePaymentCodeEntry().orElseGet(() -> create(event, amount));
     }
 
+    public static EventPaymentCodeEntry getOrCreateReusable(Event event) {
+        return event.getReusablePaymentCodeEntry().orElseGet(() -> create(event, null));
+    }
+
 }
 

@@ -3,6 +3,7 @@ package org.fenixedu.academic.ui.spring.controller;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.calculator.Debt;
+import org.fenixedu.academic.domain.accounting.calculator.DebtEntry;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
 import org.fenixedu.academic.domain.accounting.calculator.Fine;
 import org.fenixedu.academic.domain.accounting.calculator.Interest;
@@ -63,36 +64,48 @@ public class AccountingEventForOwnerController extends AccountingController {
     @RequestMapping(value = "{event}/pay", method = RequestMethod.GET)
     public String doPayment(@PathVariable Event event, Model model) {
         accessControlService.checkEventOwner(event, Authenticate.getUser());
+
         final DebtInterestCalculator debtInterestCalculator = event.getDebtInterestCalculator(new DateTime());
+
         if (debtInterestCalculator.getTotalDueAmount().compareTo(BigDecimal.ZERO) < 1) {
             logger.warn("Hacky user {} tried to access payment interface for event {}",
                     Optional.ofNullable(Authenticate.getUser()).map(User::getUsername).orElse("---"), event.getExternalId());
             return entrypoint();
         }
 
-        final List<Interest> interests = getInterests(debtInterestCalculator);
-        final List<Fine> fines = getFines(debtInterestCalculator);
-        final List<Debt> debts = debtInterestCalculator.getDebtsOrderedByDueDate();
-        final List<EventPaymentCodeEntry> paymentCodeEntries = getSortedEventPaymentCodeEntries(event);
+        if (debtInterestCalculator.hasDueInterestAmount()) {
+            // has open interests
+            final List<Interest> interests = getInterests(debtInterestCalculator);
+            final List<Fine> fines = getFines(debtInterestCalculator);
+            final List<Debt> debts = debtInterestCalculator.getDebtsOrderedByDueDate();
+            final List<EventPaymentCodeEntry> paymentCodeEntries = getSortedEventPaymentCodeEntries(event);
 
-        model.addAttribute("eventId", event.getExternalId());
-        model.addAttribute("description", event.getDescription());
-        model.addAttribute("amount", debtInterestCalculator.getDebtAmount());
-        model.addAttribute("creationDate", event.getWhenOccured());
-        model.addAttribute("totalDueAmount", debtInterestCalculator.getTotalDueAmount());
-        model.addAttribute("interests", interests);
-        model.addAttribute("fines", fines);
-        model.addAttribute("debts", debts);
-        model.addAttribute("paymentCodeEntries", paymentCodeEntries);
+            model.addAttribute("eventId", event.getExternalId());
+            model.addAttribute("description", event.getDescription());
+            model.addAttribute("amount", debtInterestCalculator.getDebtAmount());
+            model.addAttribute("creationDate", event.getWhenOccured());
+            model.addAttribute("totalDueAmount", debtInterestCalculator.getTotalDueAmount());
+            model.addAttribute("interests", interests);
+            model.addAttribute("fines", fines);
+            model.addAttribute("debts", debts);
+            model.addAttribute("paymentCodeEntries", paymentCodeEntries);
 
-        return view("event-payment-options");
+            return view("event-payment-options");
+        }
+        else {
+            // no interests
+            final EventPaymentCodeEntry paymentCodeEntry = EventPaymentCodeEntry.getOrCreateReusable(event);
+            return String.format("redirect:%s/%s/paymentRef/%s", REQUEST_MAPPING, event.getExternalId(), paymentCodeEntry.getExternalId());
+        }
+
     }
 
-    @RequestMapping(value = "{event}/paymentRef/{paymentCodeEntry}")
+    @RequestMapping(value = "{event}/paymentRef/{paymentCodeEntry}", method = RequestMethod.GET)
     public String showPaymentReference(@PathVariable Event event, @PathVariable EventPaymentCodeEntry paymentCodeEntry, Model model) {
         accessControlService.checkEventOwner(event, Authenticate.getUser());
 
         model.addAttribute("paymentCodeEntry", paymentCodeEntry);
+        model.addAttribute("maxDaysBetweenPromiseAndPayment", FenixEduAcademicConfiguration.getConfiguration().getMaxDaysBetweenPromiseAndPayment());
         return view("payment-reference");
     }
 

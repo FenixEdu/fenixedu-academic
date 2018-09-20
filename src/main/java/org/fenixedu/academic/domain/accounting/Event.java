@@ -684,6 +684,12 @@ public abstract class Event extends Event_Base {
         return false;
     }
 
+    public Optional<EventPaymentCodeEntry> getReusablePaymentCodeEntry() {
+        return getEventPaymentCodeEntrySet().stream()
+                .filter(e -> e.getAmount() == null)
+                .findAny();
+    }
+
     public Optional<EventPaymentCodeEntry> getAvailablePaymentCodeEntry() {
         return getEventPaymentCodeEntrySet().stream()
                 .filter(e -> e.getPaymentCode().isNew())

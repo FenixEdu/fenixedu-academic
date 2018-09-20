@@ -23,6 +23,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://fenixedu.org/taglib/intersection" prefix="modular" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 
 <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/accounting.css"/>
@@ -62,7 +63,7 @@
 
         </div>
         <div class="row">
-            <div class="col-md-4 col-sm-12">
+            <div class="col-md-4">
                 <div class="overall-description">
                     <dl>
                         <dt><spring:message code="accounting.event.details.creation.date" text="Creation Date"/></dt>
@@ -86,7 +87,12 @@
                     </dl>
                 </div>
             </div>
-            <div class="col-md-2 col-md-push-2">
+            <div class="col-md-4">
+                <modular:intersect location="event.details.extra.info" position="info">
+                    <modular:arg key="event" value="${event}"/>
+                </modular:intersect>
+            </div>
+            <div class="col-md-2 col-md-push-1">
                 <c:if test="${event.currentEventState != 'CANCELLED'}">
                     <c:if test="${eventTotalAmountToPay > 0 && isEventOwner}">
                         <a class="btn btn-primary btn-block" href="${payUrl}"><spring:message code="accounting.event.action.pay" text="Pay"/></a>
@@ -106,7 +112,6 @@
             </div>
         </div>
         <div class="row">
-    </header>
     <div class="row">
         <div class="col-md-12">
             <header>
