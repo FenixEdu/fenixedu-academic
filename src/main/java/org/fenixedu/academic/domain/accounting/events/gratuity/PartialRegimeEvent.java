@@ -160,7 +160,7 @@ public class PartialRegimeEvent extends PartialRegimeEvent_Base {
     }
 
     @Override
-    public Map getDueDateAmountMap(PostingRule postingRule, DateTime when) {
+    public Map<LocalDate, Money> getDueDateAmountMap(PostingRule postingRule, DateTime when) {
         Money amount = postingRule.calculateTotalAmountToPay(this, when);
         LocalDate dueDate =
                 getWhenOccured().toLocalDate().plusDays(getEventPostingRule().getNumberOfDaysToStartApplyingInterest());
