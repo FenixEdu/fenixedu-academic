@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.accounting;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.Person;
@@ -33,6 +34,7 @@ import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 public class ResidenceEvent extends ResidenceEvent_Base {
 
@@ -139,4 +141,9 @@ public class ResidenceEvent extends ResidenceEvent_Base {
         return getManagementUnit();
     }
 
+    @Override
+    public Map<LocalDate, Money> getDueDateAmountMap(PostingRule postingRule, DateTime when) {
+            return Collections.singletonMap(getPaymentLimitDate().toLocalDate(), postingRule.doCalculationForAmountToPay(this,
+                    when));
+    }
 }
