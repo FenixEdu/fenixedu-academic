@@ -76,11 +76,6 @@ public class CustomGratuityPaymentPlan extends CustomGratuityPaymentPlan_Base {
     }
 
     @Override
-    public boolean isGratuityPaymentPlan() {
-        return true;
-    }
-
-    @Override
     public boolean isCustomGratuityPaymentPlan() {
         return true;
     }

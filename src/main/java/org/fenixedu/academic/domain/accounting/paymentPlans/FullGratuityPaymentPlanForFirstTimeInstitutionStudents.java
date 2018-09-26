@@ -49,4 +49,5 @@ public class FullGratuityPaymentPlanForFirstTimeInstitutionStudents extends
     final public boolean isForFirstTimeInstitutionStudents() {
         return true;
     }
+
 }

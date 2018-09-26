@@ -20,8 +20,6 @@ package org.fenixedu.academic.domain.accounting.paymentPlans;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accounting.paymentPlanRules.HasEnrolmentsForExecutionSemesterPaymentPlanRule;
@@ -51,19 +49,6 @@ public class FullGratuityPaymentPlanForAliens extends FullGratuityPaymentPlanFor
     protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules() {
         return Arrays.asList(PaymentPlanRuleFactory.create(IsAlienRule.class),
                 PaymentPlanRuleFactory.create(HasEnrolmentsForExecutionSemesterPaymentPlanRule.class));
-    }
-
-    @Override
-    protected Set<Class<? extends GratuityPaymentPlan>> getPaymentPlansWhichHasPrecedence() {
-        Set<Class<? extends GratuityPaymentPlan>> plans = new HashSet<Class<? extends GratuityPaymentPlan>>();
-        plans.add(FullGratuityPaymentPlan.class);
-        plans.add(FullGratuityPaymentPlanForFirstTimeInstitutionStudents.class);
-        plans.add(FullGratuityPaymentPlanForPartialRegime.class);
-        plans.add(GratuityForStudentsInSecondCurricularYear.class);
-        plans.add(GratuityForStudentsInSecondCurricularYearForPartialRegime.class);
-        plans.add(GratuityPaymentPlanForPartialRegimeEnroledOnlyInSecondSemester.class);
-        plans.add(GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester.class);
-        return plans;
     }
 
 }

@@ -20,7 +20,6 @@ package org.fenixedu.academic.domain.accounting.paymentPlans;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accounting.Event;
@@ -52,21 +51,8 @@ public class GratuityPaymentPlan extends GratuityPaymentPlan_Base {
     }
 
     @Override
-    public boolean isGratuityPaymentPlan() {
-        return true;
-    }
-
-    @Override
     protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules() {
         return Collections.emptyList();
-    }
-
-    protected Set<Class<? extends GratuityPaymentPlan>> getPaymentPlansWhichHasPrecedence() {
-        return Collections.EMPTY_SET;
-    }
-
-    public boolean hasPrecedenceOver(Class<? extends GratuityPaymentPlan> plan) {
-        return getPaymentPlansWhichHasPrecedence().contains(plan);
     }
 
 }

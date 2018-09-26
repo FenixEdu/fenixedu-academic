@@ -28,11 +28,6 @@ public class StudentIsInSecondCurricularYearPaymentPlanRule implements PaymentPl
     }
 
     @Override
-    public boolean isEvaluatedInNotSpecificPaymentRules() {
-        return false;
-    }
-
-    @Override
     public boolean isAppliableFor(StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
         return (studentCurricularPlan.getRoot().getCurriculum(executionYear).getCurricularYear() == 2);
     }

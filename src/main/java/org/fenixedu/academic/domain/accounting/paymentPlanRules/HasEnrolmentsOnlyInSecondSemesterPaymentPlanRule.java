@@ -27,11 +27,6 @@ public class HasEnrolmentsOnlyInSecondSemesterPaymentPlanRule implements Payment
     }
 
     @Override
-    public boolean isEvaluatedInNotSpecificPaymentRules() {
-        return true;
-    }
-
-    @Override
     public boolean isAppliableFor(StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
         return !studentCurricularPlan.hasAnyEnrolmentForExecutionPeriod(executionYear.getFirstExecutionPeriod())
                 && studentCurricularPlan.hasAnyEnrolmentForExecutionPeriod(executionYear.getFirstExecutionPeriod()
