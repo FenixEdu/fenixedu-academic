@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.organizationalStructure;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.TINValidator;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 
@@ -76,8 +77,8 @@ public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
                     && Character.isAlphabetic(socialSecurityNumber.charAt(0))
                     && Character.isAlphabetic(socialSecurityNumber.charAt(1)) ?
                     socialSecurityNumber.substring(0, 2) : null;
-            if ("PT999999990".equals(socialSecurityNumber) || tinCountryCode == null || TINValid
-                    .checkTIN(tinCountryCode, socialSecurityNumber.substring(2)) != 0) {
+            if ("PT999999990".equals(socialSecurityNumber) || tinCountryCode == null
+                    || !TINValidator.isValid(tinCountryCode, socialSecurityNumber.substring(2))) {
                 return false;
             }
         }
