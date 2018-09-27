@@ -19,9 +19,7 @@
 package org.fenixedu.academic.domain.accounting.postingRules.candidacy;
 
 import org.fenixedu.academic.domain.accounting.EntryType;
-import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
-import org.fenixedu.academic.domain.accounting.PaymentCodeType;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
@@ -43,11 +41,6 @@ public class Over23IndividualCandidacyPR extends Over23IndividualCandidacyPR_Bas
     public Over23IndividualCandidacyPR edit(final Money fixedAmount) {
         deactivate();
         return new Over23IndividualCandidacyPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), fixedAmount);
-    }
-
-    @Override
-    public PaymentCodeType calculatePaymentCodeTypeFromEvent(Event event, DateTime when, boolean applyDiscount) {
-        return PaymentCodeType.OVER_23_INDIVIDUAL_CANDIDACY_PROCESS;
     }
 
 }

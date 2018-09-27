@@ -23,10 +23,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://fenixedu.org/taglib/intersection" prefix="modular" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 
 <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/accounting.css"/>
-<spring:url var="backUrl" value="../pay">
+<spring:url var="backUrl" value="../details">
 </spring:url>
 
 <div class="container-fluid">
@@ -40,27 +41,62 @@
                             <h1>${description}</h1>
                         </div>
                     </div>
-                    <h1>Referência de pagamento gerada</h1>
+                    <h1>
+                        <spring:message code="label.payment.reference" text="Payment Reference"/>
+                    </h1>
                 </div>
             </div>
         </header>
+
+        <div class="row">
+            <div class="col-sm-6 alert alert-warning">
+                <h4><b>
+                    <spring:message code="payment.reference.information" text="Payment Reference Information"/>
+
+                </b></h4>
+                <c:choose>
+                    <c:when test="${empty paymentCodeEntry.amount}">
+                    <p style="white-space: pre-line;">
+                        <spring:message code="payment.reference.reusable.information" text="Reusable Payment Reference Information"/>
+                    </c:when>
+                    <c:otherwise>
+                    <p style="white-space: pre-line;">
+                        <spring:message code="payment.reference.for.interests.information" text="Payment Reference for Interests Information" arguments="${maxDaysBetweenPromiseAndPayment}"/>
+                    </p>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-sm-3">
                 <section class="reference-card">
                     <dl>
-                        <dt>Referencia:</dt>
-                        <dd><c:out value="${paymentCodeEntry.paymentCode.code}"/></dd>
+                        <dt>
+                            <spring:message code="payment.reference.card.reference" text="Reference"/>
+                        </dt>
+                        <dd><c:out value="${paymentCodeEntry.paymentCode.formattedCode}"/></dd>
                     </dl>
                     <dl>
-                        <dt>Entidade:</dt>
+                        <dt>
+                            <spring:message code="payment.reference.card.entity" text="Entity"/>
+                        </dt>
                         <dd><c:out value="${paymentCodeEntry.paymentCode.entityCode}"/></dd>
                     </dl>
-                    <dl>
-                        <dt>Valor:</dt>
-                        <dd><c:out value="${paymentCodeEntry.amount}"/><span>€</span></dd>
-                    </dl>
+                    <c:if test="${not empty paymentCodeEntry.amount}">
+                        <dl>
+                            <dt>
+                                <spring:message code="payment.reference.card.amount" text="Amount"/>
+                            </dt>
+                            <dd><c:out value="${paymentCodeEntry.amount}"/><span>€</span></dd>
+                        </dl>
+                    </c:if>
                 </section>
             </div>
         </div>
+
+        <modular:intersect location="event.payment.reference.extra.info" position="info">
+            <modular:arg key="event" value="${paymentCodeEntry.event}"/>
+        </modular:intersect>
     </main>
 </div>

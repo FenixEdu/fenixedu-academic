@@ -15,6 +15,7 @@ import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,7 +66,7 @@ public abstract class AccountingController {
     }
 
     @RequestMapping("{event}/details")
-    public String details(@PathVariable Event event, @RequestParam(value = "date", defaultValue = "#{new org.joda.time.DateTime()}") DateTime date,  Model model) {
+    public String details(@PathVariable Event event, @RequestParam(value = "date", defaultValue = "#{new org.joda.time.DateTime()}") DateTime date, @ModelAttribute("error") String error, Model model) {
         accessControlService.checkEventOwnerOrPaymentManager(event, Authenticate.getUser());
 
         final DebtInterestCalculator debtInterestCalculator = event.getDebtInterestCalculator(date);
