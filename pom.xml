@@ -54,6 +54,7 @@
         <version.taglibs.strings>1.1.0</version.taglibs.strings>
         <version.com.fasterxml.jackson.core.jackson-databind>2.8.5</version.com.fasterxml.jackson.core.jackson-databind>
         <version.org.fenixedu.postCodeTools>1.0.0</version.org.fenixedu.postCodeTools>
+        <version.org.fenixedu.tinTools>1.0.0</version.org.fenixedu.tinTools>
     </properties>
 
     <issueManagement>
@@ -314,9 +315,9 @@
             <version>${version.com.fasterxml.jackson.core.jackson-databind}</version>
         </dependency>
         <dependency>
-            <groupId>eu.europa.ec.taxud</groupId>
-            <artifactId>tin-algorithm</artifactId>
-            <version>5.2.2_PUBLIC</version>
+            <groupId>org.fenixedu</groupId>
+            <artifactId>tinTools</artifactId>
+            <version>${version.org.fenixedu.tinTools}</version>
         </dependency>
         <dependency>
             <groupId>org.fenixedu</groupId>
