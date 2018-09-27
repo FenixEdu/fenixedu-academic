@@ -29,11 +29,6 @@ public class IsAlienRule implements PaymentPlanRule {
     }
 
     @Override
-    public boolean isEvaluatedInNotSpecificPaymentRules() {
-        return false;
-    }
-
-    @Override
     public boolean isAppliableFor(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
         final Registration registration = studentCurricularPlan.getRegistration();
         final RegistrationProtocol protocol = registration == null ? null : registration.getRegistrationProtocol();

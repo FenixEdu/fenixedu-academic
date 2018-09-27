@@ -30,11 +30,6 @@ public class FirstTimeInstitutionStudentsPaymentPlanRule implements PaymentPlanR
     }
 
     @Override
-    public boolean isEvaluatedInNotSpecificPaymentRules() {
-        return true;
-    }
-
-    @Override
     public boolean isAppliableFor(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
 
         if (studentCurricularPlan.getRegistration().getStartExecutionYear() != executionYear) {

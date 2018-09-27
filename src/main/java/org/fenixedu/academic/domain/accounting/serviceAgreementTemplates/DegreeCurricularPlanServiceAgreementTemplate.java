@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.accounting.serviceAgreementTemplates;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
@@ -27,9 +28,7 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accounting.PaymentPlan;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplatePaymentPlan;
-import org.fenixedu.academic.domain.accounting.paymentPlans.FullGratuityPaymentPlan;
 import org.fenixedu.academic.domain.accounting.paymentPlans.GratuityPaymentPlan;
-import org.fenixedu.academic.domain.accounting.paymentPlans.GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 
@@ -74,62 +73,18 @@ public class DegreeCurricularPlanServiceAgreementTemplate extends DegreeCurricul
 
     public GratuityPaymentPlan getGratuityPaymentPlanFor(final StudentCurricularPlan studentCurricularPlan,
             final ExecutionYear executionYear) {
-        GratuityPaymentPlan result = null;
-        for (final PaymentPlan paymentPlan : getPaymentPlansSet()) {
-            if (paymentPlan instanceof GratuityPaymentPlan
-                    && ((GratuityPaymentPlan) paymentPlan).isAppliableFor(studentCurricularPlan, executionYear)) {
-                GratuityPaymentPlan gratuityPaymentPlan = (GratuityPaymentPlan) paymentPlan;
 
-                if (result == null) {
-                    result = (GratuityPaymentPlan) paymentPlan;
-                } else {
-                    if (gratuityPaymentPlan.hasPrecedenceOver(result.getClass())) {
-                        result = gratuityPaymentPlan;
-                    } else if (!result.hasPrecedenceOver(gratuityPaymentPlan.getClass())) {
-                        // Incompatible payment plans
-                        throw new DomainException(
-                                "error.org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate.more.than.one.gratuity.payment.plan.is.appliable");
-                    }
-                }
-            }
-        }
-
-        return result == null ? getDefaultPaymentPlan(executionYear) : result;
-    }
-
-    public List<GratuityPaymentPlan> getGratuityPaymentPlans() {
-        final List<GratuityPaymentPlan> result = new ArrayList<GratuityPaymentPlan>();
-        for (final PaymentPlan paymentPlan : getPaymentPlansSet()) {
-            if (paymentPlan instanceof GratuityPaymentPlan) {
-                result.add((GratuityPaymentPlan) paymentPlan);
-            }
-        }
-
-        return result;
+        return getPaymentPlansSet().stream()
+                .filter(GratuityPaymentPlan.class::isInstance)
+                .map(GratuityPaymentPlan.class::cast)
+                .filter(p -> p.isApplicableFor(studentCurricularPlan,executionYear))
+                .min(Comparator.comparingInt(p1 -> PaymentPlan.getPrecedenceOrder().indexOf(p1.getClass())))
+                .orElseGet(() -> getDefaultPaymentPlan(executionYear));
     }
 
     @Override
     public GratuityPaymentPlan getDefaultPaymentPlan(ExecutionYear executionYear) {
         return (GratuityPaymentPlan) super.getDefaultPaymentPlan(executionYear);
-    }
-
-    public boolean hasFullGratuityPaymentPlanFor(final ExecutionYear executionYear) {
-        for (final PaymentPlan paymentPlan : getPaymentPlansSet()) {
-            if (paymentPlan instanceof FullGratuityPaymentPlan && paymentPlan.getExecutionYear() == executionYear) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean hasGratuityPaymentPlanForStudentsEnroledOnlyInSecondSemesterBy(final ExecutionYear executionYear) {
-        for (final PaymentPlan paymentPlan : getPaymentPlansSet()) {
-            if (paymentPlan instanceof GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester
-                    && paymentPlan.getExecutionYear() == executionYear) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public static DegreeCurricularPlanServiceAgreementTemplate readByDegreeCurricularPlan(

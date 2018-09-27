@@ -31,12 +31,6 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
  */
 abstract public interface PaymentPlanRule {
 
-    /**
-     * Indicates if rule can be evaluated when testing not specific payment
-     * rules for payment plan. @see #PaymentPlanRule.isAppliableFor
-     */
-    abstract public boolean isEvaluatedInNotSpecificPaymentRules();
-
     abstract public boolean isAppliableFor(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear);
 
 }

@@ -20,8 +20,6 @@ package org.fenixedu.academic.domain.accounting.paymentPlans;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accounting.paymentPlanRules.HasEnrolmentsForExecutionSemesterPaymentPlanRule;
@@ -54,14 +52,6 @@ public class GratuityForStudentsInSecondCurricularYear extends GratuityForStuden
         PaymentPlanRuleFactory.create(HasEnrolmentsForExecutionSemesterPaymentPlanRule.class)
 
         );
-    }
-
-    @Override
-    protected Set<Class<? extends GratuityPaymentPlan>> getPaymentPlansWhichHasPrecedence() {
-        Set<Class<? extends GratuityPaymentPlan>> plans = new HashSet<Class<? extends GratuityPaymentPlan>>();
-        plans.add(FullGratuityPaymentPlan.class);
-
-        return plans;
     }
 
 }

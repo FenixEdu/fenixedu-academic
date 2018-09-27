@@ -24,13 +24,22 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
 import org.fenixedu.academic.domain.accounting.paymentPlanRules.PaymentPlanRule;
-import org.fenixedu.academic.domain.accounting.paymentPlanRules.PaymentPlanRuleManager;
+import org.fenixedu.academic.domain.accounting.paymentPlans.FullGratuityPaymentPlan;
+import org.fenixedu.academic.domain.accounting.paymentPlans.FullGratuityPaymentPlanForAliens;
+import org.fenixedu.academic.domain.accounting.paymentPlans.FullGratuityPaymentPlanForFirstTimeInstitutionStudents;
+import org.fenixedu.academic.domain.accounting.paymentPlans.FullGratuityPaymentPlanForPartialRegime;
+import org.fenixedu.academic.domain.accounting.paymentPlans.GratuityForStudentsInSecondCurricularYear;
+import org.fenixedu.academic.domain.accounting.paymentPlans.GratuityForStudentsInSecondCurricularYearForPartialRegime;
+import org.fenixedu.academic.domain.accounting.paymentPlans.GratuityPaymentPlan;
+import org.fenixedu.academic.domain.accounting.paymentPlans.GratuityPaymentPlanForPartialRegimeEnroledOnlyInSecondSemester;
+import org.fenixedu.academic.domain.accounting.paymentPlans.GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.Money;
@@ -81,15 +90,11 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
         return result;
     }
 
-    public Installment getLastInstallment() {
+    private Installment getLastInstallment() {
         return (getInstallmentsSet().size() == 0) ? null : Collections.max(getInstallmentsSet(), Installment.COMPARATOR_BY_ORDER);
     }
 
-    public Installment getFirstInstallment() {
-        return (getInstallmentsSet().size() == 0) ? null : Collections.min(getInstallmentsSet(), Installment.COMPARATOR_BY_ORDER);
-    }
-
-    public int getLastInstallmentOrder() {
+    int getLastInstallmentOrder() {
         final Installment installment = getLastInstallment();
         return installment == null ? 0 : installment.getOrder();
     }
@@ -148,15 +153,6 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
         return calculateRemainingAmountFor(installment, event, when, discountPercentage).isPositive();
     }
 
-    public Installment getInstallmentByOrder(int order) {
-        for (final Installment installment : getInstallmentsSet()) {
-            if (installment.getInstallmentOrder() == order) {
-                return installment;
-            }
-        }
-
-        return null;
-    }
 
     public boolean isToApplyPenalty(final Event event, final Installment installment) {
         return true;
@@ -164,10 +160,6 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
 
     protected void removeParameters() {
         super.setExecutionYear(null);
-    }
-
-    public boolean isGratuityPaymentPlan() {
-        return false;
     }
 
     public boolean isCustomGratuityPaymentPlan() {
@@ -178,40 +170,19 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
         return getExecutionYear() != null && getExecutionYear().equals(executionYear);
     }
 
-    final public boolean isAppliableFor(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
+    final public boolean isApplicableFor(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
 
         if (!hasExecutionYear(executionYear)) {
             return false;
         }
 
-        final Collection<PaymentPlanRule> specificRules = getSpecificPaymentPlanRules();
+        final Collection<PaymentPlanRule> specificPaymentPlanRules = getSpecificPaymentPlanRules();
 
-        if (specificRules.isEmpty()) {
+        if (specificPaymentPlanRules.isEmpty()) {
             return false;
         }
 
-        for (final PaymentPlanRule rule : specificRules) {
-            if (!rule.isAppliableFor(studentCurricularPlan, executionYear)) {
-                return false;
-            }
-        }
-
-        for (final PaymentPlanRule rule : getNotSpecificPaymentRules()) {
-            if (rule.isEvaluatedInNotSpecificPaymentRules() && rule.isAppliableFor(studentCurricularPlan, executionYear)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    protected Collection<PaymentPlanRule> getNotSpecificPaymentRules() {
-        /*
-         * All payment rules could be connected do
-         * DegreeCurricularPlanServiceAgreementTemplate, but for now are just
-         * value types
-         */
-        return CollectionUtils.subtract(PaymentPlanRuleManager.getAllPaymentPlanRules(), getSpecificPaymentPlanRules());
+        return specificPaymentPlanRules.stream().allMatch(r -> r.isAppliableFor(studentCurricularPlan, executionYear));
     }
 
     abstract protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules();
@@ -249,8 +220,17 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
         return false;
     }
 
-    public boolean hasSingleInstallment() {
-        return getInstallmentsSet().size() == 1;
+    public static List<Class<? extends PaymentPlan>> getPrecedenceOrder() {
+        return Stream.of(FullGratuityPaymentPlanForAliens.class,
+                FullGratuityPaymentPlanForFirstTimeInstitutionStudents.class,
+                GratuityPaymentPlanForPartialRegimeEnroledOnlyInSecondSemester.class,
+                FullGratuityPaymentPlanForPartialRegime.class,
+                GratuityForStudentsInSecondCurricularYearForPartialRegime.class,
+                GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester.class,
+                GratuityForStudentsInSecondCurricularYear.class,
+                FullGratuityPaymentPlan.class,
+                GratuityPaymentPlan.class)
+                .collect(Collectors.toList());
     }
 
 }
