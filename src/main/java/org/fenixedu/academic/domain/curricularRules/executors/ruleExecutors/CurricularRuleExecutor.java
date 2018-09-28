@@ -274,8 +274,7 @@ abstract public class CurricularRuleExecutor {
 
     protected RuleResult executeEnrolmentWithNoRules(final ICurricularRule curricularRule,
             final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
-        final RuleResult ruleResult =
-                executeEnrolmentWithRulesAndTemporaryEnrolment(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
+        final RuleResult ruleResult = executeEnrolmentWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
         if (ruleResult.isFalse() || (ruleResult.isTrue() && isTemporaryOrImpossible(sourceDegreeModuleToEvaluate, ruleResult))) {
             return RuleResult.createWarning(sourceDegreeModuleToEvaluate.getDegreeModule(), ruleResult.getMessages());
         } else {
