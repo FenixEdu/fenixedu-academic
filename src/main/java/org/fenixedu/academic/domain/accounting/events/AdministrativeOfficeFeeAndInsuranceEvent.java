@@ -35,7 +35,7 @@ import org.fenixedu.academic.domain.accounting.EventState;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.accounting.PaymentCode;
-import org.fenixedu.academic.domain.accounting.PaymentMode;
+import org.fenixedu.academic.domain.accounting.PaymentMethod;
 import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.accounting.events.administrativeOfficeFee.IAdministrativeOfficeFeeEvent;
 import org.fenixedu.academic.domain.accounting.events.insurance.IInsuranceEvent;
@@ -227,9 +227,9 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
         return new EntryDTO(EntryType.INSURANCE_FEE, this, insuranceAmountToDiscount);
     }
 
-    public void changePaymentCodeState(DateTime whenRegistered, PaymentMode paymentMode) {
+    public void changePaymentCodeState(DateTime whenRegistered, PaymentMethod paymentMethod) {
         if (canCloseEvent(whenRegistered) && hasNonProcessedPaymentCode()) {
-            getNonProcessedPaymentCode().setState(getPaymentCodeStateFor(paymentMode));
+            getNonProcessedPaymentCode().setState(getPaymentCodeStateFor(paymentMethod));
         }
     }
 

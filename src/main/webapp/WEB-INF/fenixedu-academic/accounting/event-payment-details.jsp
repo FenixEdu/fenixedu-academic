@@ -18,6 +18,7 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+<%@page import="org.fenixedu.academic.domain.accounting.PaymentMethod"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -56,9 +57,13 @@
                 </dl>
                 <dl>
                     <dt>Método Pagamento:</dt>
-                    <dd><c:out value="${transactionDetail.transactionDetail.paymentMode}"/></dd>
+                    <dd><c:out value="${transactionDetail.transactionDetail.paymentMethod.localizedName}"/></dd>
                 </dl>
-                <c:if test="${transactionDetail.transactionDetail.paymentMode == 'ATM'}">
+                <dl>
+                    <dt>Referência Pagamento:</dt>
+                    <dd><c:out value="${transactionDetail.transactionDetail.paymentReference}"/></dd>
+                </dl>
+                <c:if test="${transactionDetail.transactionDetail.paymentMethod.sibs}">
                     <dl>
                         <dt>Transacção SIBS:</dt>
                         <dd><c:out value="${transactionDetail.transactionDetail.sibsTransactionId}"/></dd>
@@ -68,7 +73,7 @@
                         <dd><c:out value="${transactionDetail.transactionDetail.sibsCode}"/></dd>
                     </dl>
                 </c:if>
-                <c:if test="${transactionDetail.transactionDetail.paymentMode == 'CASH'}">
+                <c:if test="${transactionDetail.transactionDetail.paymentMethod.cash}">
                     <dl>
                         <dt>Responsável:</dt>
                         <dd><c:out value="${transactionDetail.responsibleUser.person.presentationName}"/></dd>

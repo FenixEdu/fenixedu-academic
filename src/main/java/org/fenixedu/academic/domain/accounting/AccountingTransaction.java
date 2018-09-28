@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
-import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Person;
@@ -205,26 +204,31 @@ public class AccountingTransaction extends AccountingTransaction_Base {
         throw new DomainException("error.accounting.accountingTransaction.transaction.data.is.corrupted");
     }
 
-    public AccountingTransaction reimburse(User responsibleUser, PaymentMode paymentMode, Money amountToReimburse) {
-        return reimburse(responsibleUser, paymentMode, amountToReimburse, null);
+    public AccountingTransaction reimburse(User responsibleUser, PaymentMethod paymentMethod,String
+            paymentReference,  Money amountToReimburse) {
+        return reimburse(responsibleUser, paymentMethod,paymentReference, amountToReimburse, null);
     }
 
-    public AccountingTransaction reimburse(User responsibleUser, PaymentMode paymentMode, Money amountToReimburse, String comments) {
-        return reimburse(responsibleUser, paymentMode, amountToReimburse, comments, true);
+    public AccountingTransaction reimburse(User responsibleUser, PaymentMethod paymentMethod, String
+            paymentReference, Money amountToReimburse, String comments) {
+        return reimburse(responsibleUser, paymentMethod, paymentReference, amountToReimburse, comments, true);
     }
 
-    public AccountingTransaction reimburse(User responsibleUser, PaymentMode paymentMode, Money amountToReimburse,
+    public AccountingTransaction reimburse(User responsibleUser, PaymentMethod paymentMethod, String
+            paymentReference, Money amountToReimburse,
             DateTime reimburseDate, String comments) {
-        return reimburse(responsibleUser, paymentMode, amountToReimburse, comments, true, reimburseDate);
+        return reimburse(responsibleUser, paymentMethod, paymentReference, amountToReimburse, comments, true, reimburseDate);
     }
 
-    public AccountingTransaction reimburseWithoutRules(User responsibleUser, PaymentMode paymentMode, Money amountToReimburse) {
-        return reimburseWithoutRules(responsibleUser, paymentMode, amountToReimburse, null);
+    public AccountingTransaction reimburseWithoutRules(User responsibleUser, PaymentMethod paymentMethod, String
+            paymentReference, Money amountToReimburse) {
+        return reimburseWithoutRules(responsibleUser, paymentMethod, paymentReference, amountToReimburse, null);
     }
 
-    public AccountingTransaction reimburseWithoutRules(User responsibleUser, PaymentMode paymentMode, Money amountToReimburse,
+    public AccountingTransaction reimburseWithoutRules(User responsibleUser, PaymentMethod paymentMethod, String
+            paymentReference, Money amountToReimburse,
             String comments) {
-        return reimburse(responsibleUser, paymentMode, amountToReimburse, comments, false);
+        return reimburse(responsibleUser, paymentMethod, paymentReference, amountToReimburse, comments, false);
     }
 
     public void annul(final User responsibleUser, final String reason) {
@@ -240,8 +244,8 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 
         Signal.emit(SIGNAL_ANNUL, new DomainObjectEvent<AccountingTransaction>(this));
 
-        reimburseWithoutRules(responsibleUser, getTransactionDetail().getPaymentMode(), getAmountWithAdjustment(), reason);
-
+        reimburseWithoutRules(responsibleUser, getTransactionDetail().getPaymentMethod(), getTransactionDetail()
+                .getPaymentReference(), getAmountWithAdjustment(), reason);
     }
 
     private void checkRulesToAnnul() {
@@ -259,13 +263,16 @@ public class AccountingTransaction extends AccountingTransaction_Base {
         });
     }
 
-    private AccountingTransaction reimburse(User responsibleUser, PaymentMode paymentMode, Money amountToReimburse,
+    private AccountingTransaction reimburse(User responsibleUser, PaymentMethod paymentMethod, String paymentReference, Money
+            amountToReimburse,
             String comments, boolean checkRules) {
-        return reimburse(responsibleUser, paymentMode, amountToReimburse, comments, checkRules, new DateTime());
+        return reimburse(responsibleUser, paymentMethod, paymentReference, amountToReimburse, comments, checkRules, new DateTime
+                ());
 
     }
 
-    private AccountingTransaction reimburse(User responsibleUser, PaymentMode paymentMode, Money amountToReimburse,
+    private AccountingTransaction reimburse(User responsibleUser, PaymentMethod paymentMethod, String paymentReference, Money
+            amountToReimburse,
             String comments, boolean checkRules, DateTime reimburseDate) {
 
         if (checkRules && !canApplyReimbursement(amountToReimburse)) {
@@ -281,7 +288,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
         final AccountingTransaction transaction =
                 new AccountingTransaction(responsibleUser, new Entry(EntryType.ADJUSTMENT, amountToReimburse.negate(),
                         getToAccount()), new Entry(EntryType.ADJUSTMENT, amountToReimburse, getFromAccount()),
-                        new AccountingTransactionDetail(reimburseDate, paymentMode, comments), this);
+                        new AccountingTransactionDetail(reimburseDate, paymentMethod, paymentReference, comments), this);
 
         getEvent().recalculateState(new DateTime());
 
@@ -376,8 +383,8 @@ public class AccountingTransaction extends AccountingTransaction_Base {
         return false;
     }
 
-    public PaymentMode getPaymentMode() {
-        return getTransactionDetail().getPaymentMode();
+    public PaymentMethod getPaymentMethod() {
+        return getTransactionDetail().getPaymentMethod();
     }
 
     public Money getOriginalAmount() {

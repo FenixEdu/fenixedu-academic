@@ -72,7 +72,7 @@
 </schema>
 
 <schema  name="show.residenceEvent.with.dates" type="org.fenixedu.academic.domain.accounting.ResidenceEvent" bundle="RESIDENCE_MANAGEMENT_RESOURCES" extends="show.residenceEvent">
-	<slot name="paymentMode" layout="null-as-label">
+	<slot name="paymentMethod" layout="null-as-label">
 		<property name="subLayout" value="default"/>
 		<property name="label" value="-"/>
 	</slot>

@@ -18,10 +18,12 @@
  */
 package org.fenixedu.academic.domain.accounting.accountingTransactions.detail;
 
-import org.fenixedu.academic.domain.accounting.PaymentMode;
+import org.fenixedu.academic.domain.accounting.PaymentMethod;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDetailLine;
 import org.joda.time.DateTime;
+
+import com.google.common.base.Strings;
 
 public class SibsTransactionDetail extends SibsTransactionDetail_Base {
 
@@ -37,7 +39,7 @@ public class SibsTransactionDetail extends SibsTransactionDetail_Base {
 
     protected void init(DateTime whenRegistered, String sibsTransactionId, String sibsCode, String comments) {
 
-        super.init(whenRegistered, PaymentMode.ATM, comments);
+        super.init(whenRegistered, PaymentMethod.getSibsPaymentMethod(), sibsCode, comments);
 
         checkParameters(sibsTransactionId, sibsCode);
 
@@ -72,5 +74,13 @@ public class SibsTransactionDetail extends SibsTransactionDetail_Base {
 
     @Override public void setSibsLine(SibsIncommingPaymentFileDetailLine sibsLine) {
         throw new DomainException("error.accounting.accountingTransactions.detail.SibsTransactionDetail.cannot.modify.sibsLine");
+    }
+
+    @Override
+    public String getPaymentReference() {
+        if (Strings.isNullOrEmpty(super.getPaymentReference())) {
+            return getSibsCode();
+        }
+        return super.getPaymentReference();
     }
 }

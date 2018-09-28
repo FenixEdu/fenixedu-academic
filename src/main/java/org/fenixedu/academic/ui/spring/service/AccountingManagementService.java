@@ -1,12 +1,18 @@
 package org.fenixedu.academic.ui.spring.service;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Stream;
+
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.Exemption;
-import org.fenixedu.academic.domain.accounting.PaymentMode;
 import org.fenixedu.academic.domain.accounting.calculator.CreditEntry;
 import org.fenixedu.academic.domain.accounting.calculator.Debt;
 import org.fenixedu.academic.domain.accounting.calculator.DebtEntry;
@@ -26,16 +32,10 @@ import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Service;
-import pt.ist.fenixframework.Atomic;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.stream.Stream;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * Created by Sérgio Silva (hello@fenixedu.org).
@@ -193,7 +193,8 @@ public class AccountingManagementService {
     @Atomic
     public AccountingTransaction depositAmount(final Event event, final User depositor, final DepositAmountBean depositAmountBean) {
         return event.depositAmount(depositor, depositAmountBean.getAmount(), depositAmountBean.getEntryType(),
-                new AccountingTransactionDetailDTO(depositAmountBean.getWhenRegistered(), PaymentMode.CASH, depositAmountBean.getReason()));
+                new AccountingTransactionDetailDTO(depositAmountBean.getWhenRegistered(), depositAmountBean.getPaymentMethod(),
+                        depositAmountBean.getPaymentReference(), depositAmountBean.getReason()));
     }
 
     @Atomic

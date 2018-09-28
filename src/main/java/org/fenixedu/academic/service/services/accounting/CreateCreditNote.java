@@ -22,7 +22,7 @@ import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.CreditNote;
-import org.fenixedu.academic.domain.accounting.PaymentMode;
+import org.fenixedu.academic.domain.accounting.PaymentMethod;
 import org.fenixedu.academic.dto.accounting.CreateCreditNoteBean;
 import org.fenixedu.academic.predicate.AcademicPredicates;
 
@@ -33,7 +33,7 @@ public class CreateCreditNote {
     @Atomic
     public static CreditNote run(final Person responsible, final CreateCreditNoteBean createCreditNoteBean) {
         check(AcademicPredicates.MANAGE_STUDENT_PAYMENTS);
-        return createCreditNoteBean.getReceipt().createCreditNote(responsible, PaymentMode.CASH,
+        return createCreditNoteBean.getReceipt().createCreditNote(responsible, PaymentMethod.getCashPaymentMethod(),
                 createCreditNoteBean.getSelectedEntries());
     }
 

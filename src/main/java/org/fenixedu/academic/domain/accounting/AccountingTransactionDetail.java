@@ -30,43 +30,36 @@ public class AccountingTransactionDetail extends AccountingTransactionDetail_Bas
         super.setWhenProcessed(new DateTime());
     }
 
-    public AccountingTransactionDetail(final DateTime whenRegistered, final PaymentMode paymentMode) {
-        this(whenRegistered, paymentMode, null);
-    }
-
-    public AccountingTransactionDetail(final DateTime whenRegistered, final PaymentMode paymentMode, final String comments) {
+    public AccountingTransactionDetail(final DateTime whenRegistered, final PaymentMethod paymentMethod, String paymentReference, String comments) {
         this();
-        init(whenRegistered, paymentMode, comments);
+        init(whenRegistered, paymentMethod, paymentReference, comments);
     }
 
-    private void checkParameters(DateTime whenRegistered, PaymentMode paymentMode) {
+    private void checkParameters(DateTime whenRegistered, PaymentMethod paymentMethod) {
 
         if (whenRegistered == null) {
             throw new DomainException("error.accounting.AccountingTransactionDetail.whenRegistered.cannot.be.null");
         }
 
-        if (paymentMode == null) {
-            throw new DomainException("error.accounting.AccountingTransactionDetail.paymentMode.cannot.be.null");
+        if (paymentMethod == null) {
+            throw new DomainException("error.accounting.AccountingTransactionDetail.paymentMethod.cannot.be.null");
         }
     }
 
-    protected void init(DateTime whenRegistered, PaymentMode paymentMode, final String comments) {
+    protected void init(DateTime whenRegistered, PaymentMethod paymentMethod, final String paymentReference, final String
+            comments) {
 
-        checkParameters(whenRegistered, paymentMode);
+        checkParameters(whenRegistered, paymentMethod);
 
         super.setWhenRegistered(whenRegistered);
-        super.setPaymentMode(paymentMode);
+        super.setPaymentMethod(paymentMethod);
+        super.setPaymentReference(paymentReference);
         super.setComments(comments);
     }
 
     @Override
     public void setWhenRegistered(DateTime whenRegistered) {
         throw new DomainException("error.accounting.AccountingTransactionDetail.cannot.modify.whenRegistered");
-    }
-
-    @Override
-    public void setPaymentMode(PaymentMode paymentMode) {
-        throw new DomainException("error.accounting.AccountingTransactionDetail.cannot.modify.paymentMode");
     }
 
     @Override

@@ -277,7 +277,7 @@ public class Receipt extends Receipt_Base {
         return true;
     }
 
-    public CreditNote createCreditNote(final Person responsible, final PaymentMode paymentMode,
+    public CreditNote createCreditNote(final Person responsible, final PaymentMethod paymentMethod,
             final List<CreditNoteEntryDTO> creditNoteEntryDTOs) {
 
         return CreditNote.create(this, responsible, creditNoteEntryDTOs);

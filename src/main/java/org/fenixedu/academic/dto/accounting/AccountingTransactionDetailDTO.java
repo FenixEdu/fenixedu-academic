@@ -20,25 +20,23 @@ package org.fenixedu.academic.dto.accounting;
 
 import java.io.Serializable;
 
-import org.fenixedu.academic.domain.accounting.PaymentMode;
+import org.fenixedu.academic.domain.accounting.PaymentMethod;
 import org.joda.time.DateTime;
 
 public class AccountingTransactionDetailDTO implements Serializable {
 
     private DateTime whenRegistered;
 
-    private PaymentMode paymentMode;
+    private PaymentMethod paymentMethod;
+
+    private String paymentReference;
 
     private String comments;
 
-    public AccountingTransactionDetailDTO(DateTime whenRegistered, PaymentMode paymentMode) {
-        this(whenRegistered, paymentMode, null);
-
-    }
-
-    public AccountingTransactionDetailDTO(DateTime whenRegistered, PaymentMode paymentMode, String comments) {
+    public AccountingTransactionDetailDTO(DateTime whenRegistered, PaymentMethod paymentMethod, String paymentReference, String comments) {
         this.comments = comments;
-        this.paymentMode = paymentMode;
+        this.paymentMethod = paymentMethod;
+        this.paymentReference = paymentReference;
         this.whenRegistered = whenRegistered;
     }
 
@@ -50,12 +48,20 @@ public class AccountingTransactionDetailDTO implements Serializable {
         this.comments = comments;
     }
 
-    public PaymentMode getPaymentMode() {
-        return paymentMode;
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
     }
 
-    public void setPaymentMode(PaymentMode paymentMode) {
-        this.paymentMode = paymentMode;
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public String getPaymentReference() {
+        return paymentReference;
+    }
+
+    public void setPaymentReference(String paymentReference) {
+        this.paymentReference = paymentReference;
     }
 
     public DateTime getWhenRegistered() {

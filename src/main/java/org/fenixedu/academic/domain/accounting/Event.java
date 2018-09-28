@@ -731,8 +731,8 @@ public abstract class Event extends Event_Base {
 
     }
 
-    public PaymentCodeState getPaymentCodeStateFor(final PaymentMode paymentMode) {
-        return (paymentMode == PaymentMode.ATM) ? PaymentCodeState.PROCESSED : PaymentCodeState.CANCELLED;
+    public PaymentCodeState getPaymentCodeStateFor(final PaymentMethod paymentMethod) {
+        return (paymentMethod == PaymentMethod.getSibsPaymentMethod()) ? PaymentCodeState.PROCESSED : PaymentCodeState.CANCELLED;
     }
 
     public LabelFormatter getDescription() {
@@ -954,56 +954,6 @@ public abstract class Event extends Event_Base {
         return (transaction != null) ? transaction.getWhenRegistered() : null;
     }
 
-    public boolean isLetterSent() {
-        return getWhenSentLetter() != null;
-    }
-
-    public void markLetterSent() {
-        setWhenSentLetter(new LocalDate());
-    }
-
-    public void transferPaymentsAndCancel(Person responsible, Event targetEvent, String justification) {
-
-        checkConditionsToTransferPaymentsAndCancel(targetEvent);
-
-        for (final Entry entryToTransfer : getPositiveEntries()) {
-
-            final AccountingTransactionDetailDTO transactionDetail = createAccountingTransactionDetailForTransfer(entryToTransfer.getAccountingTransaction());
-
-            targetEvent.depositAmount(responsible.getUser(), entryToTransfer.getAmountWithAdjustment(), transactionDetail);
-
-            entryToTransfer.getAccountingTransaction().reimburseWithoutRules(responsible.getUser(), PaymentMode.CASH, entryToTransfer.getAmountWithAdjustment());
-        }
-
-        cancel(responsible, justification);
-
-    }
-
-    protected void checkConditionsToTransferPaymentsAndCancel(Event targetEvent) {
-        if (getEventType() != targetEvent.getEventType()) {
-            throw new DomainException("error.accounting.Event.events.must.be.compatible");
-        }
-
-        if (isCancelled()) {
-            throw new DomainException("error.accounting.Event.cannot.transfer.payments.from.cancelled.events");
-        }
-
-        if (this == targetEvent) {
-            throw new DomainException("error.org.fenixedu.academic.domain.accounting.Event.target.event.must.be.different.from.source");
-        }
-    }
-
-    private AccountingTransactionDetailDTO createAccountingTransactionDetailForTransfer(final AccountingTransaction transaction) {
-        final String comments = transaction.getEvent().getClass().getName() + ":" + transaction.getEvent().getExternalId() + "," + transaction.getClass().getName() + ":" + transaction.getExternalId();
-
-        return new AccountingTransactionDetailDTO(transaction.getTransactionDetail().getWhenRegistered(), PaymentMode.CASH, comments);
-
-    }
-
-    public boolean isNotCancelled() {
-        return !isCancelled();
-    }
-
     public boolean isAnnual() {
         return false;
     }
@@ -1030,10 +980,6 @@ public abstract class Event extends Event_Base {
             result = result.add(discount.getAmount());
         }
         return result;
-    }
-
-    public boolean isPaymentPlanChangeAllowed() {
-        return false;
     }
 
     public boolean isGratuity() {

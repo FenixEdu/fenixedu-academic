@@ -18,7 +18,7 @@
  */
 package org.fenixedu.academic.dto.accounting;
 
-import org.fenixedu.academic.domain.accounting.PaymentMode;
+import org.fenixedu.academic.domain.accounting.PaymentMethod;
 import org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDetailLine;
 import org.joda.time.DateTime;
 
@@ -35,11 +35,10 @@ public class SibsTransactionDetailDTO extends AccountingTransactionDetailDTO {
     }
 
     public SibsTransactionDetailDTO(SibsIncommingPaymentFileDetailLine sibsDetailLine, DateTime whenRegistered, String sibsTransactionId, String sibsCode, String comments) {
-        super(whenRegistered, PaymentMode.ATM, comments);
+        super(whenRegistered, PaymentMethod.getSibsPaymentMethod(), sibsCode, comments);
         this.sibsDetailLine = sibsDetailLine;
         this.sibsTransactionId = sibsTransactionId;
         this.sibsCode = sibsCode;
-
     }
 
     public String getSibsTransactionId() {
@@ -71,4 +70,5 @@ public class SibsTransactionDetailDTO extends AccountingTransactionDetailDTO {
     public void setSibsDetailLine(SibsIncommingPaymentFileDetailLine sibsDetailLine) {
         this.sibsDetailLine = sibsDetailLine;
     }
+
 }

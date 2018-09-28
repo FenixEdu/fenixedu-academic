@@ -87,7 +87,19 @@ ${portal.toolkit()}
             <div class="form-group">
                 <label class="control-label col-sm-1"><spring:message code="label.org.fenixedu.academic.dto.accounting.DepositAmountBean.whenRegistered"/></label>
                 <div class="col-sm-4">
-                    <input hidden name="whenRegistered" value="${depositAmountBean.whenRegistered}" bennu-datetime requires-past required>
+                    <input name="whenRegistered" value="${depositAmountBean.whenRegistered}" bennu-datetime requires-past required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-1"><spring:message code="label.org.fenixedu.academic.dto.accounting.DepositAmountBean.paymentMethod"/></label>
+                <div class="col-sm-4">
+                    <form:select path="paymentMethod" items="${paymentMethods}" itemLabel="localizedName" itemValue="externalId" class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-1"><spring:message code="label.org.fenixedu.academic.dto.accounting.DepositAmountBean.paymentReference"/></label>
+                <div class="col-sm-4">
+                    <input name="paymentReference" type="text"/>
                 </div>
             </div>
             <div class="form-group">

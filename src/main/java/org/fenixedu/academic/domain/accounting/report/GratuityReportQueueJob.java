@@ -154,7 +154,7 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
         row.setCell(transaction.getWhenRegistered());
         row.setCell(transaction.getOriginalAmount().toPlainString());
         row.setCell(transaction.getAmountWithAdjustment().toPlainString());
-        row.setCell(transaction.getPaymentModeName());
+        row.setCell(transaction.getPaymentMethodName());
 
         for (TransactionEntryDetail adjustment : transaction.getBoundAdjustingTransactions()) {
             row.setCell(adjustment.getWhenRegistered());
@@ -315,8 +315,8 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
             return transaction.getWhenRegistered();
         }
 
-        public String getPaymentModeName() {
-            return transaction.getPaymentMode().getLocalizedName();
+        public String getPaymentMethodName() {
+            return transaction.getPaymentMethod().getLocalizedName();
         }
 
         public Money getOriginalAmount() {

@@ -66,7 +66,7 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
                 .collect(Collectors.toSet());
 
         ((AdministrativeOfficeFeeAndInsuranceEvent) event)
-                .changePaymentCodeState(transactionDetail.getWhenRegistered(), transactionDetail.getPaymentMode());
+                .changePaymentCodeState(transactionDetail.getWhenRegistered(), transactionDetail.getPaymentMethod());
 
         return createdAccountingTransactionSet;
     }

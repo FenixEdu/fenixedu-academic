@@ -271,11 +271,6 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     }
 
     @Override
-    public boolean isPaymentPlanChangeAllowed() {
-        return true;
-    }
-
-    @Override
     public Map<LocalDate, Money> getDueDateAmountMap(PostingRule postingRule, DateTime when) {
         return getGratuityPaymentPlan().getInstallmentsSet().stream().filter( i -> i.calculateBaseAmount(this).greaterThan(Money.ZERO))
                    .collect(Collectors.toMap(i -> i.getEndDate(this), i -> i.calculateBaseAmount(this)));

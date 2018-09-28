@@ -216,8 +216,8 @@ public class Entry extends Entry_Base {
         }
     }
 
-    public PaymentMode getPaymentMode() {
-        return getAccountingTransaction().getTransactionDetail().getPaymentMode();
+    public PaymentMethod getPaymentMethod() {
+        return getAccountingTransaction().getTransactionDetail().getPaymentMethod();
     }
 
 }
