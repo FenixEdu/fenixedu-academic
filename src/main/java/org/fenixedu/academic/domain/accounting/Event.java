@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -444,13 +445,11 @@ public abstract class Event extends Event_Base {
 
         if (getEventState() == EventState.OPEN) {
             if (canCloseEvent(whenRegistered)) {
-                closeNonProcessedCodes();
                 closeEvent();
             }
         } else {
             if (!canCloseEvent(hasEventCloseDate() ? getEventCloseDate() : whenRegistered)) {
                 changeState(EventState.OPEN, new DateTime());
-                reopenCancelledCodes();
             }
         }
 
@@ -459,18 +458,6 @@ public abstract class Event extends Event_Base {
             super.setEventStateDate(previousStateDate);
         }
 
-    }
-
-    protected void reopenCancelledCodes() {
-        for (final AccountingEventPaymentCode paymentCode : getCancelledPaymentCodes()) {
-            paymentCode.setState(PaymentCodeState.NEW);
-        }
-    }
-
-    protected void closeNonProcessedCodes() {
-        for (final AccountingEventPaymentCode paymentCode : getNonProcessedPaymentCodes()) {
-            paymentCode.setState(PaymentCodeState.CANCELLED);
-        }
     }
 
     /**
@@ -651,7 +638,6 @@ public abstract class Event extends Event_Base {
         changeState(EventState.CANCELLED, new DateTime());
         super.setResponsibleForCancel(responsible);
         super.setCancelJustification(cancelJustification);
-        closeNonProcessedCodes();
     }
 
     public void cancel(final Person responsible, final String cancelJustification) {
@@ -677,7 +663,6 @@ public abstract class Event extends Event_Base {
 
         changeState(EventState.CANCELLED, new DateTime());
         super.setCancelJustification(cancelJustification);
-        closeNonProcessedCodes();
     }
 
     public boolean hasInstallments() {
@@ -701,7 +686,7 @@ public abstract class Event extends Event_Base {
         return EventPaymentCodeEntry.getOrCreate(this, amount);
     }
 
-    public List<AccountingEventPaymentCode> getNonProcessedPaymentCodes() {
+    public List<PaymentCode> getNonProcessedPaymentCodes() {
         return super.getPaymentCodesSet().stream().filter(PaymentCode::isNew).collect(Collectors.toList());
     }
 
@@ -709,18 +694,19 @@ public abstract class Event extends Event_Base {
         return super.getPaymentCodesSet().stream().anyMatch(PaymentCode::isNew);
     }
 
-    public List<AccountingEventPaymentCode> getCancelledPaymentCodes() {
-
-        return super.getPaymentCodesSet().stream().filter(PaymentCode::isCancelled).collect(Collectors.toList());
-    }
-
-    public Set<AccountingEventPaymentCode> getAllPaymentCodes() {
-        return Collections.unmodifiableSet(super.getPaymentCodesSet());
-    }
-
     @Override
     public void addPaymentCodes(AccountingEventPaymentCode paymentCode) {
         throw new DomainException("error.org.fenixedu.academic.domain.accounting.Event.cannot.add.paymentCode");
+    }
+
+    public Set<PaymentCode> getAllPaymentCodes() {
+        if (super.getPaymentCodesSet().isEmpty()) {
+            return getEventPaymentCodeEntrySet().stream()
+                    .sorted(Comparator.comparing(EventPaymentCodeEntry::getCreated))
+                    .map(EventPaymentCodeEntry::getPaymentCode)
+                    .collect(Collectors.toCollection(LinkedHashSet::new));
+        }
+        return Collections.unmodifiableSet(super.getPaymentCodesSet());
     }
 
     @Override

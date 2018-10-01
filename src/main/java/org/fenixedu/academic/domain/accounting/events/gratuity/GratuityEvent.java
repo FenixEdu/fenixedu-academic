@@ -246,12 +246,10 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
     @Override
     protected void internalRecalculateState(DateTime whenRegistered) {
         if (canCloseEvent(whenRegistered)) {
-            closeNonProcessedCodes();
             closeEvent();
         } else {
             if (getCurrentEventState() != EventState.OPEN) {
                 changeState(EventState.OPEN, new DateTime());
-                reopenCancelledCodes();
             }
         }
     }

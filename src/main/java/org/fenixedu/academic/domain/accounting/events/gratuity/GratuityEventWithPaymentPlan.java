@@ -146,27 +146,6 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
         }
     }
 
-    public void changeGratuityTotalPaymentCodeState(final PaymentCodeState paymentCodeState) {
-        for (final AccountingEventPaymentCode accountingEventPaymentCode : getNonProcessedPaymentCodes()) {
-            if (!(accountingEventPaymentCode instanceof InstallmentPaymentCode)) {
-                accountingEventPaymentCode.setState(paymentCodeState);
-            }
-        }
-    }
-
-    public void changeInstallmentPaymentCodeState(final Installment installment, final PaymentCodeState paymentCodeState) {
-        for (final AccountingEventPaymentCode paymentCode : getNonProcessedPaymentCodes()) {
-            if (paymentCode instanceof InstallmentPaymentCode
-                    && ((InstallmentPaymentCode) paymentCode).getInstallment() == installment) {
-                paymentCode.setState(paymentCodeState);
-            }
-        }
-
-        // If at least one installment is payed, we assume that the payment
-        // will be based on installments
-        changeGratuityTotalPaymentCodeState(PaymentCodeState.CANCELLED);
-    }
-
     public DegreeCurricularPlanServiceAgreement getDegreeCurricularPlanServiceAgreement() {
         return (DegreeCurricularPlanServiceAgreement) getPerson().getServiceAgreementFor(getServiceAgreementTemplate());
 

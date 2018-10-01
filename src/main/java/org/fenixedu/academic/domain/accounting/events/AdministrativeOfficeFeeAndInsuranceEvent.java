@@ -184,7 +184,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
     }
 
     private AccountingEventPaymentCode getNonProcessedPaymentCode() {
-        return (getNonProcessedPaymentCodes().isEmpty() ? null : getNonProcessedPaymentCodes().iterator().next());
+        return (getNonProcessedPaymentCodes().isEmpty() ? null : (AccountingEventPaymentCode) getNonProcessedPaymentCodes().iterator().next());
     }
 
     @Override

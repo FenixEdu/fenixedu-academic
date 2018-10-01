@@ -19,7 +19,6 @@
 package org.fenixedu.academic.domain.phd.candidacy;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,9 +30,9 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.PhotoState;
 import org.fenixedu.academic.domain.Photograph;
 import org.fenixedu.academic.domain.accounting.EventType;
+import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.accounting.events.insurance.InsuranceEvent;
-import org.fenixedu.academic.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
 import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.caseHandling.Activity;
 import org.fenixedu.academic.domain.caseHandling.StartActivity;
@@ -208,12 +207,12 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
         return getCandidacyHashCode() != null;
     }
 
-    public IndividualCandidacyPaymentCode getAssociatedPaymentCode() {
+    public PaymentCode getAssociatedPaymentCode() {
         return getEvent() == null ? null : getEvent().getAssociatedPaymentCode();
     }
 
     public boolean hasPaymentCodeToPay() {
-        final IndividualCandidacyPaymentCode paymentCode = getAssociatedPaymentCode();
+        final PaymentCode paymentCode = getAssociatedPaymentCode();
         return paymentCode != null && paymentCode.getMinAmount().isPositive()
                 && paymentCode.getMaxAmount().isPositive();
     }

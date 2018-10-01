@@ -113,8 +113,6 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base im
     private AccountingTransaction internalProcessTotal(User user, Account fromAccount, Account toAccount, EntryDTO entryDTO,
             GratuityEventWithPaymentPlan event, AccountingTransactionDetailDTO transactionDetail) {
 
-        event.changeGratuityTotalPaymentCodeState(event.getPaymentCodeStateFor(transactionDetail.getPaymentMode()));
-
         if (!transactionDetail.isSibsTransactionDetail()) {
             checkIfCanAddAmount(entryDTO, transactionDetail.getWhenRegistered(), event);
         }
@@ -132,9 +130,6 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base im
         if (!transactionDetail.isSibsTransactionDetail()) {
             checkIfCanAddAmountForInstallment(entryWithInstallmentDTO, transactionDetail.getWhenRegistered(), event);
         }
-
-        event.changeInstallmentPaymentCodeState(entryWithInstallmentDTO.getInstallment(),
-                event.getPaymentCodeStateFor(transactionDetail.getPaymentMode()));
 
         return makeAccountingTransactionForInstallment(user, event, fromAccount, toAccount, getEntryType(),
                 entryDTO.getAmountToPay(), (entryWithInstallmentDTO).getInstallment(), transactionDetail);

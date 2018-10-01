@@ -18,13 +18,15 @@
  */
 package org.fenixedu.academic.domain.phd.candidacy;
 
+import java.util.Collections;
+import java.util.Set;
+
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.Entry;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.PaymentCode;
-import org.fenixedu.academic.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
@@ -36,9 +38,6 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
-
-import java.util.Collections;
-import java.util.Set;
 
 public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
 
@@ -109,12 +108,12 @@ public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
         super.disconnect();
     }
 
-    public IndividualCandidacyPaymentCode getAssociatedPaymentCode() {
+    public PaymentCode getAssociatedPaymentCode() {
         if (super.getAllPaymentCodes().isEmpty()) {
             return null;
         }
 
-        return (IndividualCandidacyPaymentCode) super.getAllPaymentCodes().iterator().next();
+        return super.getAllPaymentCodes().iterator().next();
     }
 
     @Override
