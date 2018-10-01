@@ -21,15 +21,15 @@ package org.fenixedu.academic.domain.candidacyProcess;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
-
 import java.util.stream.Collectors;
+
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
+import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.period.CandidacyPeriod;
 import org.fenixedu.academic.domain.person.IDDocumentType;
@@ -374,9 +374,9 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
         this.getCandidacy().bindPerson(choosePersonBean);
     }
 
-    public IndividualCandidacyPaymentCode getAssociatedPaymentCode() {
+    public PaymentCode getAssociatedPaymentCode() {
         if (getCandidacy().getEvent() != null) {
-            return (IndividualCandidacyPaymentCode) (getCandidacy().getEvent().getAllPaymentCodes().isEmpty() ? null : getCandidacy()
+            return (getCandidacy().getEvent().getAllPaymentCodes().isEmpty() ? null : getCandidacy()
                     .getEvent().getAllPaymentCodes().iterator().next());
         }
 

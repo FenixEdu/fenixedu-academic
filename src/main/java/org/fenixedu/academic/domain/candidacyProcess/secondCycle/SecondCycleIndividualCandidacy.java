@@ -31,10 +31,8 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.PaymentCodeState;
 import org.fenixedu.academic.domain.accounting.events.candidacy.IndividualCandidacyEvent;
 import org.fenixedu.academic.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
-import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcess;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcessBean;
@@ -193,13 +191,6 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
         IndividualCandidacyEvent individualCandidacyEvent = getEvent();
         if (individualCandidacyEvent != null && individualCandidacyEvent.getAmountToPay().isPositive() && getEvent().isClosed()) {
             individualCandidacyEvent.open();
-
-            Collection<AccountingEventPaymentCode> paymentCodes = individualCandidacyEvent.getAllPaymentCodes();
-
-            for (AccountingEventPaymentCode accountingEventPaymentCode : paymentCodes) {
-                accountingEventPaymentCode.setState(PaymentCodeState.NEW);
-            }
-
         }
 
         if (getSelectedDegreesSet().isEmpty()) {
@@ -248,13 +239,6 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
         IndividualCandidacyEvent individualCandidacyEvent = getEvent();
         if (individualCandidacyEvent != null && individualCandidacyEvent.getAmountToPay().isPositive() && getEvent().isClosed()) {
             individualCandidacyEvent.open();
-
-            Collection<AccountingEventPaymentCode> paymentCodes = individualCandidacyEvent.getAllPaymentCodes();
-
-            for (AccountingEventPaymentCode accountingEventPaymentCode : paymentCodes) {
-                accountingEventPaymentCode.setState(PaymentCodeState.NEW);
-            }
-
         }
 
         if (getSelectedDegreesSet().isEmpty()) {

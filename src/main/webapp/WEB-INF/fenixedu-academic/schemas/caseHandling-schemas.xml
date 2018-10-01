@@ -1649,7 +1649,7 @@
 
 	<slot name="personBean.countryOfResidence" key="label.countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-		<property name="format" value="${localizedName}"/>
+		<property name="format" value="${localizedName.content}"/>
 		<property name="sortBy" value="localizedName=asc" />
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 	</slot>	
@@ -1775,7 +1775,7 @@
 
 <schema name="PublicCandidacyProcessBean.institution.country.manage" type="org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
 	<slot name="precedentDegreeInformation.country" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
-		<property name="format" value="${localizedName}"/>
+		<property name="format" value="${localizedName.content}"/>
 		<property name="sortBy" value="localizedName=asc" />
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 	</slot>

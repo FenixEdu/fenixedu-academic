@@ -333,7 +333,7 @@ max-width: 231px;
 		</tr>
 		<tr>
 			<td><strong><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/>:</strong></td>
-			<td><fr:view name="process" property="associatedPaymentCode.accountingEvent.originalAmountToPay"/> &euro;</td>
+			<td><fr:view name="process" property="candidacy.event.originalAmountToPay"/> &euro;</td>
 		</tr>
 	</table>
 	</logic:notEmpty>
