@@ -75,6 +75,10 @@ public class MergeExecutionCourses {
 
     public static class DuplicateShiftNameException extends FenixServiceException {
         private static final long serialVersionUID = 3761968254943244338L;
+
+        public DuplicateShiftNameException() {
+            super("error.duplicate.shift.names");
+        }
     }
 
     public static class MergeNotPossibleException extends FenixServiceException {
