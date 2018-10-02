@@ -257,7 +257,7 @@ public abstract class PostingRule extends PostingRule_Base {
         }
     }
 
-    /**vu
+    /**
      * Returns effective date of payment for event.
      * If the entry has a null amount, then it is a reusable payment code and returns the registered date of the payment
      * If the payment is registered after the due date of the entry, returns the registered date of the payment
