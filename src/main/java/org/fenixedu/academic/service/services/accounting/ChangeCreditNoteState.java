@@ -23,7 +23,7 @@ import static org.fenixedu.academic.predicate.AccessControl.check;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.CreditNote;
 import org.fenixedu.academic.domain.accounting.CreditNoteState;
-import org.fenixedu.academic.domain.accounting.PaymentMode;
+import org.fenixedu.academic.domain.accounting.PaymentMethod;
 import org.fenixedu.academic.predicate.AcademicPredicates;
 
 import pt.ist.fenixframework.Atomic;
@@ -33,7 +33,7 @@ public class ChangeCreditNoteState {
     @Atomic
     public static void run(final Person responsible, final CreditNote creditNote, final CreditNoteState state) {
         check(AcademicPredicates.MANAGE_STUDENT_PAYMENTS);
-        creditNote.changeState(responsible, PaymentMode.CASH, state);
+        creditNote.changeState(responsible, PaymentMethod.getCashPaymentMethod(), "", state);
     }
 
 }

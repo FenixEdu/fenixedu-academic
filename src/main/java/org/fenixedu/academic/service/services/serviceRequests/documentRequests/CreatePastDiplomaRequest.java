@@ -18,7 +18,7 @@
  */
 package org.fenixedu.academic.service.services.serviceRequests.documentRequests;
 
-import org.fenixedu.academic.domain.accounting.PaymentMode;
+import org.fenixedu.academic.domain.accounting.PaymentMethod;
 import org.fenixedu.academic.domain.accounting.events.serviceRequests.PastDegreeDiplomaRequestEvent;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequestSituationType;
@@ -99,7 +99,8 @@ public class CreatePastDiplomaRequest {
     }
 
     private static AccountingTransactionDetailDTO createTransactionDetailDTO(DocumentRequestCreateBean bean) {
-        return new AccountingTransactionDetailDTO(bean.getPastPaymentDate().toDateTimeAtStartOfDay(), PaymentMode.CASH);
+        return new AccountingTransactionDetailDTO(bean.getPastPaymentDate().toDateTimeAtStartOfDay(),
+                PaymentMethod.getCashPaymentMethod(), "", null);
     }
 
     private static void process(PastDiplomaRequest request, LocalDate requestDate) {

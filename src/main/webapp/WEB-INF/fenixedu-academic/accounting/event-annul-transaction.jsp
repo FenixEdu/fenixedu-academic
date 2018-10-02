@@ -53,9 +53,15 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="control-label col-sm-2"><spring:message code="label.org.fenixedu.academic.dto.accounting.AnnulAccountingTransactionBean.paymentMode"/></label>
+		<label class="control-label col-sm-2"><spring:message code="label.org.fenixedu.academic.dto.accounting.AnnulAccountingTransactionBean.paymentMethod"/></label>
 		<div class="col-sm-8">
-			<c:out value="${annulAccountingTransactionBean.paymentMode}"/>
+			<c:out value="${annulAccountingTransactionBean.paymentMethod.localizedName}"/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-sm-2"><spring:message code="label.org.fenixedu.academic.dto.accounting.AnnulAccountingTransactionBean.paymentReference" text="Referência de Pagamento"/></label>
+		<div class="col-sm-8">
+			<c:out value="${annulAccountingTransactionBean.paymentReference}"/>
 		</div>
 	</div>
 	<div class="form-group">

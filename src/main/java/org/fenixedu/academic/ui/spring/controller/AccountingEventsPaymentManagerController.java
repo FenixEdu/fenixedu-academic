@@ -1,5 +1,14 @@
 package org.fenixedu.academic.ui.spring.controller;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.Discount;
 import org.fenixedu.academic.domain.accounting.Event;
@@ -17,8 +26,8 @@ import org.fenixedu.academic.service.services.accounting.AnnulAccountingTransact
 import org.fenixedu.academic.service.services.accounting.DeleteExemption;
 import org.fenixedu.academic.ui.spring.service.AccountingManagementAccessControlService;
 import org.fenixedu.academic.ui.spring.service.AccountingManagementService;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.spring.portal.SpringFunctionality;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -31,17 +40,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixframework.DomainObject;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
 
 /**
  * Created by Sérgio Silva (hello@fenixedu.org).
@@ -136,6 +137,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
     public String deposit(@PathVariable Event event, User user, Model model){
         accessControlService.checkPaymentManager(event, user);
 
+        model.addAttribute("paymentMethods", Bennu.getInstance().getPaymentMethodSet());
         model.addAttribute("person", event.getPerson());
         model.addAttribute("event", event);
         model.addAttribute("depositAmountBean", new DepositAmountBean());

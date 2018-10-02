@@ -30,9 +30,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.accounting.EntryType;
-import org.fenixedu.academic.domain.accounting.Event;
-import org.fenixedu.academic.domain.accounting.Exemption;
-import org.fenixedu.academic.domain.accounting.PaymentMode;
+import org.fenixedu.academic.domain.accounting.PaymentMethod;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.debts.ExternalScholarshipPhdGratuityContribuitionEvent;
 import org.fenixedu.academic.domain.phd.debts.PhdGratuityEvent;
@@ -126,7 +124,8 @@ public class ExternalScholarshipManagementDebtsDA extends FenixDispatchAction {
         AmountBean bean = getRenderedObject("bean");
         List<EntryDTO> list = new ArrayList<EntryDTO>();
         list.add(new EntryDTO(EntryType.EXTERNAL_SCOLARSHIP_PAYMENT, event, bean.getValue()));
-        event.process(Authenticate.getUser(), list, new AccountingTransactionDetailDTO(bean.getPaymentDate(), PaymentMode.CASH));
+        event.process(Authenticate.getUser(), list, new AccountingTransactionDetailDTO(bean.getPaymentDate(),
+                PaymentMethod.getCashPaymentMethod(), "" , null));
 
         PhdGratuityEvent gratuityEvent = (PhdGratuityEvent) exemption.getEvent();
         PhdIndividualProgramProcess process = gratuityEvent.getPhdIndividualProgramProcess();

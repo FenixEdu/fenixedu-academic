@@ -58,7 +58,6 @@ enum org.fenixedu.academic.domain.accounting.EventState                         
 enum org.fenixedu.academic.domain.accounting.EventType                                                                 as EventType;
 enum org.fenixedu.academic.domain.accounting.PaymentCodeState                                                          as PaymentCodeState;
 enum org.fenixedu.academic.domain.accounting.PaymentCodeType                                                           as PaymentCodeType;
-enum org.fenixedu.academic.domain.accounting.PaymentMode                                                               as PaymentMode;
 enum org.fenixedu.academic.domain.accounting.ReceiptState                                                              as ReceiptState;
 enum org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationType      as AdministrativeOfficeFeeAndInsuranceExemptionJustificationType;
 enum org.fenixedu.academic.domain.accounting.events.InsuranceExemptionJustificationType      						   as InsuranceExemptionJustificationType;
@@ -1252,7 +1251,7 @@ valueType org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDeta
 
     class accounting.AccountingTransactionDetail  {
         String comments;
-        PaymentMode paymentMode;
+        String paymentReference;
         DateTime whenProcessed;
         DateTime whenRegistered;
     }
@@ -1579,6 +1578,12 @@ valueType org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDeta
             class accounting.installments.InstallmentForFirstTimeStudents extends accounting.installments.InstallmentWithMonthlyPenalty {
             	Integer numberOfDaysToStartApplyingPenalty;
             }
+
+
+    class accounting.PaymentMethod {
+        String code;
+        LocalizedString description;
+    }
 
     class accounting.PaymentCode  {
         String code;
@@ -6249,6 +6254,33 @@ relation AccountingEventDiscount {
 relation AccountingTransactionAccountingTransactionDetail {
     accounting.AccountingTransaction playsRole transaction;
     accounting.AccountingTransactionDetail playsRole transactionDetail;
+}
+
+relation AccountingTransactionDetailPaymentMethod {
+    accounting.AccountingTransactionDetail playsRole transactionDetail {
+        multiplicity 0..*;
+    }
+    accounting.PaymentMethod playsRole paymentMethod {
+        multiplicity 0..1; //TODO: Change to 1..1 when migration is done
+    }
+}
+
+relation PaymentMethodDefaultSibs {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole sibsBennu {
+        multiplicity 0..1;
+    }
+    accounting.PaymentMethod playsRole sibsPaymentMethod {
+        multiplicity 1..1;
+    }
+}
+
+relation PaymentMethodDefaultCash {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole cashBennu {
+        multiplicity 0..1;
+    }
+    accounting.PaymentMethod playsRole cashPaymentMethod {
+        multiplicity 1..1;
+    }
 }
 
 relation AccountingTransactionEvent {
@@ -12318,5 +12350,14 @@ relation PaymentCodePoolCodes {
     }
     accounting.paymentCodes.EventPaymentCode playsRole paymentCode {
         multiplicity 0..*;
+    }
+}
+
+relation BennuPaymentMethods {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole bennu {
+        multiplicity 1..1;
+    }
+    accounting.PaymentMethod playsRole paymentMethod {
+            multiplicity 0..*;
     }
 }

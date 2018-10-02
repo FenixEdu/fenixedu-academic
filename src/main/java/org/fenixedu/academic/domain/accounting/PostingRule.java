@@ -252,7 +252,8 @@ public abstract class PostingRule extends PostingRule_Base {
                     sibsTransactionDetailDTO.getComments());
         } else {
             return new AccountingTransactionDetail(transactionDetailDTO.getWhenRegistered(),
-                    transactionDetailDTO.getPaymentMode(), transactionDetailDTO.getComments());
+                    transactionDetailDTO.getPaymentMethod(), transactionDetailDTO.getPaymentReference(), transactionDetailDTO
+                    .getComments());
         }
     }
 

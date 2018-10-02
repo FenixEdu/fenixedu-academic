@@ -928,7 +928,7 @@
 			</var>        			
 		</field>
 		<field property="totalPayment" depends="validwhen" page="2">
-	        <arg0 key="label.masterDegree.gratuity.paymentMode" />
+	        <arg0 key="label.masterDegree.gratuity.paymentMethod" />
 			<var>
 				<var-name>test</var-name>
 				<var-value>((*this* != null) or (partialPayment != null))</var-value>

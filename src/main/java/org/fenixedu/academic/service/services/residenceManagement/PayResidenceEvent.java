@@ -18,7 +18,7 @@
  */
 package org.fenixedu.academic.service.services.residenceManagement;
 
-import org.fenixedu.academic.domain.accounting.PaymentMode;
+import org.fenixedu.academic.domain.accounting.PaymentMethod;
 import org.fenixedu.academic.domain.accounting.ResidenceEvent;
 import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
 import org.fenixedu.bennu.core.domain.User;
@@ -31,6 +31,6 @@ public class PayResidenceEvent {
     @Atomic
     public static void run(User user, ResidenceEvent event, YearMonthDay date) {
         event.process(user, event.calculateEntries(), new AccountingTransactionDetailDTO(date.toDateTimeAtMidnight(),
-                PaymentMode.CASH));
+                PaymentMethod.getCashPaymentMethod(),"", null));
     }
 }

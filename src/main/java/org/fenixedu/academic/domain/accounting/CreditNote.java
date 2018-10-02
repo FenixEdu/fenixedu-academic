@@ -162,11 +162,11 @@ public class CreditNote extends CreditNote_Base {
         super.setResponsible(responsible);
     }
 
-    public void confirm(final Person responsible, final PaymentMode paymentMode) {
+    public void confirm(final Person responsible, final PaymentMethod paymentMethod, String paymentReference) {
         internalChangeState(responsible, CreditNoteState.PAYED);
 
         for (final CreditNoteEntry creditNoteEntry : getCreditNoteEntriesSet()) {
-            creditNoteEntry.createAdjustmentAccountingEntry(responsible.getUser(), paymentMode);
+            creditNoteEntry.createAdjustmentAccountingEntry(responsible.getUser(), paymentMethod, paymentReference);
         }
 
     }
@@ -175,7 +175,8 @@ public class CreditNote extends CreditNote_Base {
         internalChangeState(responsible, CreditNoteState.ANNULLED);
     }
 
-    public void changeState(final Person responsible, final PaymentMode paymentMode, final CreditNoteState state) {
+    public void changeState(final Person responsible, final PaymentMethod paymentMethod, String paymentReference, final
+    CreditNoteState state) {
 
         if (getState() == state) {
             return;
@@ -184,7 +185,7 @@ public class CreditNote extends CreditNote_Base {
         if (state == CreditNoteState.ANNULLED) {
             annul(responsible);
         } else if (state == CreditNoteState.PAYED) {
-            confirm(responsible, paymentMode);
+            confirm(responsible, paymentMethod, paymentReference);
         } else {
             throw new DomainException("error.org.fenixedu.academic.domain.accounting.CreditNote.cannot.change.to.given.state");
         }

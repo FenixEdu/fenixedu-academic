@@ -763,7 +763,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
                         externalEntry != null ? valueOrNull(externalEntry.getAccount().getParty().getSocialSecurityNumber()) : "-";
                 bean.originalAmount = valueOrNull(transaction.getOriginalAmount().toPlainString());
                 bean.amountWithAdjustment = valueOrNull(transaction.getAmountWithAdjustment().toPlainString());
-                bean.paymentMode = valueOrNull(transaction.getPaymentMode().getLocalizedName());
+                bean.paymentMode = valueOrNull(transaction.getPaymentMethod().getLocalizedName());
                 bean.whenAdjustmentRegistered = valueOrNull(adjustment.getWhenRegistered());
                 bean.whenAdjustmentProcessed = valueOrNull(adjustment.getWhenProcessed());
                 bean.amountWithAdjustment = valueOrNull(adjustment.getAmountWithAdjustment().toPlainString());
@@ -791,7 +791,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
                         externalEntry != null ? valueOrNull(externalEntry.getAccount().getParty().getSocialSecurityNumber()) : "-";
                 bean.originalAmount = valueOrNull(transaction.getOriginalAmount().toPlainString());
                 bean.amountWithAdjustment = valueOrNull(transaction.getAmountWithAdjustment().toPlainString());
-                bean.paymentMode = valueOrNull(transaction.getPaymentMode().getLocalizedName());
+                bean.paymentMode = valueOrNull(transaction.getPaymentMethod().getLocalizedName());
                 bean.whenAdjustmentRegistered = "-";
                 bean.amountWithAdjustment = "-";
                 bean.whenAdjustmentProcessed = "-";

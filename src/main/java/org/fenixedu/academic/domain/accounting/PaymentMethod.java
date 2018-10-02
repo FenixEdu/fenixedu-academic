@@ -20,23 +20,27 @@ package org.fenixedu.academic.domain.accounting;
 
 import java.util.Locale;
 
-import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
 
-public enum PaymentMode {
-    CASH, ATM, CREDIT_SPENDING;
+public class PaymentMethod extends PaymentMethod_Base {
+    public PaymentMethod(String code, LocalizedString description) {
+        setBennu(Bennu.getInstance());
+        setCode(code);
+        setDescription(description);
+    }
+
+    public static PaymentMethod getSibsPaymentMethod() {
+        return Bennu.getInstance().getSibsPaymentMethod();
+    }
+
+    public static PaymentMethod getCashPaymentMethod() {
+        return Bennu.getInstance().getCashPaymentMethod();
+    }
 
     public String getName() {
-        return name();
-    }
-
-    public String getQualifiedName() {
-        return PaymentMode.class.getSimpleName() + "." + name();
-    }
-
-    public String getFullyQualifiedName() {
-        return PaymentMode.class.getName() + "." + name();
+        return getCode();
     }
 
     public String getLocalizedName() {
@@ -44,7 +48,22 @@ public enum PaymentMode {
     }
 
     public String getLocalizedName(final Locale locale) {
-        return BundleUtil.getString(Bundle.ENUMERATION, getQualifiedName());
+        return getDescription().getContent(locale);
     }
 
+
+    public void delete() {
+        setBennu(null);
+        setCashBennu(null);
+        setSibsBennu(null);
+        super.deleteDomainObject();
+    }
+
+    public boolean isSibs() {
+        return this == getSibsPaymentMethod();
+    }
+
+    public boolean isCash() {
+        return this == getCashPaymentMethod();
+    }
 }

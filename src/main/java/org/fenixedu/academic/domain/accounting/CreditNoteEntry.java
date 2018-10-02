@@ -102,9 +102,10 @@ public class CreditNoteEntry extends CreditNoteEntry_Base {
         throw new DomainException("error.accounting.CreditNoteEntry.cannot.modify.amount");
     }
 
-    void createAdjustmentAccountingEntry(final User responsibleUser, final PaymentMode paymentMode) {
+    void createAdjustmentAccountingEntry(final User responsibleUser, final PaymentMethod paymentMethod, String paymentReference) {
         final AccountingTransaction transaction =
-                getAccountingEntry().getAccountingTransaction().reimburse(responsibleUser, paymentMode, getAmount());
+                getAccountingEntry().getAccountingTransaction().reimburse(responsibleUser, paymentMethod, paymentReference, 
+                        getAmount());
 
         super.setAdjustmentAccountingEntry(transaction.getToAccountEntry());
 

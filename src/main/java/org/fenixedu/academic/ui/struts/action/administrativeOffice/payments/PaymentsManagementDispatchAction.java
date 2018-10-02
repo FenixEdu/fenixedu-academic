@@ -23,7 +23,6 @@ package org.fenixedu.academic.ui.struts.action.administrativeOffice.payments;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -41,7 +40,7 @@ import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.Exemption;
-import org.fenixedu.academic.domain.accounting.PaymentMode;
+import org.fenixedu.academic.domain.accounting.PaymentMethod;
 import org.fenixedu.academic.domain.accounting.Receipt;
 import org.fenixedu.academic.domain.accounting.events.gratuity.ExternalScholarshipGratuityContributionEvent;
 import org.fenixedu.academic.domain.accounting.events.gratuity.ExternalScholarshipGratuityExemption;
@@ -154,7 +153,8 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
         AmountBean bean = getRenderedObject("bean");
         List<EntryDTO> list = new ArrayList<EntryDTO>();
         list.add(new EntryDTO(EntryType.EXTERNAL_SCOLARSHIP_PAYMENT, event, bean.getValue()));
-        event.process(Authenticate.getUser(), list, new AccountingTransactionDetailDTO(bean.getPaymentDate(), PaymentMode.CASH));
+        event.process(Authenticate.getUser(), list, new AccountingTransactionDetailDTO(bean.getPaymentDate(),
+                PaymentMethod.getCashPaymentMethod(), "", null));
 
         request.setAttribute("personId", getOriginalDebtor(event).getExternalId());
         return showExternalEvents(mapping, form, request, response);
@@ -250,7 +250,7 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
         try {
             final Receipt receipt =
                     CreatePaymentsForEvents.run(getUserView(request).getPerson().getUser(),
-                            paymentsManagementDTO.getSelectedEntries(), PaymentMode.CASH,
+                            paymentsManagementDTO.getSelectedEntries(), PaymentMethod.getCashPaymentMethod(),"",
                             paymentsManagementDTO.isDifferedPayment(), paymentsManagementDTO.getPaymentDate(),
                             paymentsManagementDTO.getPerson(), paymentsManagementDTO.getContributorName(),
                             paymentsManagementDTO.getContributorNumber(), paymentsManagementDTO.getContributorAddress());

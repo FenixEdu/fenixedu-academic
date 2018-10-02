@@ -22,7 +22,7 @@ import java.io.Serializable;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.AccountingTransaction;
-import org.fenixedu.academic.domain.accounting.PaymentMode;
+import org.fenixedu.academic.domain.accounting.PaymentMethod;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 
@@ -68,8 +68,12 @@ public class AnnulAccountingTransactionBean implements Serializable {
         return getTransaction().getTransactionDetail().getWhenProcessed();
     }
 
-    public PaymentMode getPaymentMode() {
-        return getTransaction().getTransactionDetail().getPaymentMode();
+    public PaymentMethod getPaymentMethod() {
+        return getTransaction().getTransactionDetail().getPaymentMethod();
+    }
+
+    public String getPaymentReference() {
+        return getTransaction().getTransactionDetail().getPaymentReference();
     }
 
     public Money getAmountWithAdjustment() {

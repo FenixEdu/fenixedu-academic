@@ -24,12 +24,10 @@ import java.util.List;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.EntryType;
-import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOfficeType;
 import org.fenixedu.academic.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacy;
-import org.fenixedu.academic.domain.exceptions.DomainException;
 
 public class DegreeChangeIndividualCandidacyEvent extends DegreeChangeIndividualCandidacyEvent_Base {
 
@@ -53,23 +51,6 @@ public class DegreeChangeIndividualCandidacyEvent extends DegreeChangeIndividual
     @Override
     protected AdministrativeOffice readAdministrativeOffice() {
         return AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
-    }
-
-    @Override
-    protected void checkConditionsToTransferPaymentsAndCancel(Event targetEvent) {
-
-        if (!COMPATIBLE_TYPES.contains(targetEvent.getEventType())) {
-            throw new DomainException("error.accounting.Event.events.must.be.compatible");
-        }
-
-        if (isCancelled()) {
-            throw new DomainException("error.accounting.Event.cannot.transfer.payments.from.cancelled.events");
-        }
-
-        if (this == targetEvent) {
-            throw new DomainException(
-                    "error.org.fenixedu.academic.domain.accounting.Event.target.event.must.be.different.from.source");
-        }
     }
 
     @Override public EntryType getEntryType() {

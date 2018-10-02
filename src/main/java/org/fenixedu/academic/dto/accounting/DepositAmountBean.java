@@ -21,6 +21,7 @@ package org.fenixedu.academic.dto.accounting;
 import java.io.Serializable;
 
 import org.fenixedu.academic.domain.accounting.EntryType;
+import org.fenixedu.academic.domain.accounting.PaymentMethod;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -35,6 +36,10 @@ public class DepositAmountBean implements Serializable {
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private DateTime whenRegistered;
+
+    private PaymentMethod paymentMethod;
+
+    private String paymentReference;
 
     private String reason;
 
@@ -74,4 +79,19 @@ public class DepositAmountBean implements Serializable {
         this.entryType = entryType;
     }
 
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public String getPaymentReference() {
+        return paymentReference;
+    }
+
+    public void setPaymentReference(String paymentReference) {
+        this.paymentReference = paymentReference;
+    }
 }
