@@ -45,7 +45,7 @@
 </spring:url>
 
 <spring:url var="backUrl" value="${entrypointUrl}">
-    <spring:param name="user" value="${event.person.username}"/>
+    <spring:param name="person" value="${event.person.externalId}"/>
 </spring:url>
 
 <div class="container-fluid">

@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
@@ -64,13 +65,7 @@ public class Receipt extends Receipt_Base {
 
     }
 
-    public static Comparator<Receipt> COMPARATOR_BY_NUMBER = new Comparator<Receipt>() {
-        @Override
-        public int compare(Receipt leftReceipt, Receipt rightReceipt) {
-            int comparationResult = leftReceipt.getReceiptNumber().compareTo(rightReceipt.getReceiptNumber());
-            return (comparationResult == 0) ? leftReceipt.getExternalId().compareTo(rightReceipt.getExternalId()) : comparationResult;
-        }
-    };
+    public static Comparator<Receipt> COMPARATOR_BY_NUMBER = Comparator.comparing(Receipt::getReceiptNumber).thenComparing(Receipt::getExternalId);
 
     protected Receipt() {
         super();
@@ -229,35 +224,20 @@ public class Receipt extends Receipt_Base {
 
     private Integer generateReceiptNumber(int year) {
         final List<Receipt> receipts = getReceiptsFor(year);
-        return receipts.isEmpty() ? 1 : Collections.max(receipts, Receipt.COMPARATOR_BY_NUMBER).getReceiptNumber() + 1;
+        return receipts.isEmpty() ? 1 : Collections.max(receipts, COMPARATOR_BY_NUMBER).getReceiptNumber() + 1;
     }
 
     public static List<Receipt> getReceiptsFor(int year) {
-        final List<Receipt> result = new ArrayList<Receipt>();
-        for (final Receipt receipt : Bennu.getInstance().getReceiptsSet()) {
-            if (receipt.getYear().intValue() == year) {
-                result.add(receipt);
-            }
-        }
 
-        return result;
+        return Bennu.getInstance().getReceiptsSet().stream()
+                .filter(receipt -> receipt.getYear() == year)
+                .collect(Collectors.toList());
     }
 
     public void registerReceiptPrint(Person person) {
         if (getState().isToRegisterPrint()) {
             new ReceiptPrintVersion(this, person);
         }
-    }
-
-    public ReceiptPrintVersion getMostRecentReceiptPrintVersion() {
-
-        ReceiptPrintVersion result = null;
-        for (final ReceiptPrintVersion receiptVersion : getReceiptsVersionsSet()) {
-            if (result == null || receiptVersion.getWhenCreated().isAfter(result.getWhenCreated())) {
-                result = receiptVersion;
-            }
-        }
-        return result;
     }
 
     public Money getTotalAmount() {
@@ -269,12 +249,7 @@ public class Receipt extends Receipt_Base {
     }
 
     public boolean isFromAdministrativeOffice(AdministrativeOffice administrativeOffice) {
-        for (final Entry entry : getEntriesSet()) {
-            if (!entry.getAccountingTransaction().getEvent().isPayableOnAdministrativeOffice(administrativeOffice)) {
-                return false;
-            }
-        }
-        return true;
+        return getEntriesSet().stream().allMatch(entry -> entry.getAccountingTransaction().getEvent().isPayableOnAdministrativeOffice(administrativeOffice));
     }
 
     public CreditNote createCreditNote(final Person responsible, final PaymentMethod paymentMethod,
@@ -298,13 +273,7 @@ public class Receipt extends Receipt_Base {
     private boolean hasAnyActiveCreditNotes() {
         Collection<CreditNote> creditNotes = getCreditNotesSet();
 
-        for (CreditNote creditNote : creditNotes) {
-            if (!creditNote.isAnnulled()) {
-                return true;
-            }
-        }
-
-        return false;
+        return creditNotes.stream().anyMatch(creditNote -> !creditNote.isAnnulled());
     }
 
     public boolean isActive() {
@@ -316,15 +285,7 @@ public class Receipt extends Receipt_Base {
     }
 
     public Set<Entry> getReimbursableEntries() {
-        final Set<Entry> result = new HashSet<Entry>();
-
-        for (final Entry entry : getEntriesSet()) {
-            if (entry.isReimbursementAppliable()) {
-                result.add(entry);
-            }
-        }
-
-        return result;
+        return getEntriesSet().stream().filter(Entry::isReimbursementAppliable).collect(Collectors.toSet());
     }
 
     public void deleteReceiptPrintVersions() {
@@ -374,15 +335,7 @@ public class Receipt extends Receipt_Base {
     }
 
     public List<CreditNote> getEmittedCreditNotes() {
-        final List<CreditNote> result = new ArrayList<CreditNote>();
-        for (final CreditNote creditNote : super.getCreditNotesSet()) {
-            if (creditNote.isEmitted()) {
-                result.add(creditNote);
-            }
-        }
-
-        return result;
-
+        return super.getCreditNotesSet().stream().filter(CreditNote::isEmitted).collect(Collectors.toList());
     }
 
     public void edit(final Person responsible, final String contributorName, final String contributorNumber,
@@ -397,33 +350,8 @@ public class Receipt extends Receipt_Base {
         setContributorAddress(contributorAddress);
     }
 
-    public void changeStateAndEntries(final ReceiptState state, final Set<Entry> newEntries) {
-        super.setState(state);
-
-        super.getEntriesSet().clear();
-
-        for (final Entry entry : newEntries) {
-            entry.setActiveReceipt(this);
-        }
-
-    }
-
     public boolean isSecondPrintVersion() {
         return getReceiptsVersionsSet().size() >= 1;
-    }
-
-    static public Receipt readByYearAndNumber(final Integer year, final Integer number, final String series) {
-        for (final Receipt receipt : Receipt.getReceiptsFor(year)) {
-            if (receipt.getReceiptNumber().equals(number)) {
-                if (series == null && receipt.getNumberSeries() == null) {
-                    return receipt;
-                } else if (series != null && receipt.getNumberSeries() != null && series.equals(receipt.getNumberSeries())) {
-                    return receipt;
-                }
-            }
-        }
-
-        return null;
     }
 
 }

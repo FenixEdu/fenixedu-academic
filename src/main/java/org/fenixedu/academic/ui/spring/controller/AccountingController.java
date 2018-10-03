@@ -1,5 +1,13 @@
 package org.fenixedu.academic.ui.spring.controller;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.servlet.ServletContext;
+
+import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.Exemption;
@@ -11,22 +19,16 @@ import org.fenixedu.academic.ui.spring.service.AccountingManagementService;
 import org.fenixedu.academic.ui.spring.service.AccountingManagementService.PaymentSummary;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
-
-import javax.servlet.ServletContext;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by Sérgio Silva (hello@fenixedu.org).
@@ -37,28 +39,31 @@ public abstract class AccountingController {
     protected final AccountingManagementService accountingManagementService;
     protected final AccountingManagementAccessControlService accessControlService;
     protected final ServletContext servletContext;
+    protected final MessageSource messageSource;
 
-    public AccountingController(AccountingManagementService accountingManagementService,
-            AccountingManagementAccessControlService accountingManagementAccessControlService, ServletContext servletContext) {
+    public AccountingController(AccountingManagementService accountingManagementService, AccountingManagementAccessControlService accountingManagementAccessControlService, ServletContext servletContext, MessageSource messageSource) {
         this.accountingManagementService = accountingManagementService;
         this.accessControlService = accountingManagementAccessControlService;
         this.servletContext = servletContext;
+        this.messageSource = messageSource;
     }
 
     public abstract String entrypointUrl();
 
-    @RequestMapping("{user}")
-    public String events(@PathVariable User user, Model model, User loggedUser) {
+    @RequestMapping("{person}")
+    public String events(@PathVariable Person person, Model model, User loggedUser) {
+        final User user = person.getUser();
+        
         if (loggedUser == user || accessControlService.isPaymentManager(loggedUser)) {
-            model.addAttribute("name", user.getPerson().getPresentationName());
-            model.addAttribute("idDocumentType", user.getPerson().getIdDocumentType().getLocalizedName());
-            model.addAttribute("idDocument", user.getPerson().getDocumentIdNumber());
+            model.addAttribute("person", person);
 
-            model.addAttribute("openEvents", user.getPerson().getEventsSet().stream().filter(Event::isOpen).sorted(Comparator
+            model.addAttribute("openEvents", person.getEventsSet().stream().filter(Event::isOpen).sorted(Comparator
                     .comparing(Event::getWhenOccured).reversed()).collect(Collectors.toList()));
 
-            model.addAttribute("otherEvents", user.getPerson().getEventsSet().stream().filter(e -> !e.isOpen()).sorted(Comparator
+            model.addAttribute("otherEvents", person.getEventsSet().stream().filter(e -> !e.isOpen()).sorted(Comparator
                     .comparing(Event::getWhenOccured).reversed()).collect(Collectors.toList()));
+
+            model.addAttribute("isPaymentManager", accessControlService.isPaymentManager(loggedUser));
 
             return view("events");
         }
@@ -66,8 +71,8 @@ public abstract class AccountingController {
     }
 
     @RequestMapping("{event}/details")
-    public String details(@PathVariable Event event, @RequestParam(value = "date", defaultValue = "#{new org.joda.time.DateTime()}") DateTime date, @ModelAttribute("error") String error, Model model) {
-        accessControlService.checkEventOwnerOrPaymentManager(event, Authenticate.getUser());
+    public String details(@PathVariable Event event, @RequestParam(value = "date", defaultValue = "#{new org.joda.time.DateTime()}") DateTime date,  Model model, User loggedUser) {
+        accessControlService.checkEventOwnerOrPaymentManager(event, loggedUser);
 
         final DebtInterestCalculator debtInterestCalculator = event.getDebtInterestCalculator(date);
         final List<CreditEntry> creditEntries = debtInterestCalculator.getCreditEntries();
@@ -87,16 +92,16 @@ public abstract class AccountingController {
         model.addAttribute("eventFineAmountToPay", debtInterestCalculator.getDueFineAmount());
         model.addAttribute("eventOriginalAmountToPay", event.getOriginalAmountToPay());
 
-        model.addAttribute("isEventOwner", accessControlService.isEventOwner(event, Authenticate.getUser()));
-        model.addAttribute("isPaymentManager", accessControlService.isPaymentManager(event, Authenticate.getUser()));
-        model.addAttribute("isAdvancedPaymentManager", accessControlService.isAdvancedPaymentManager(event, Authenticate.getUser()));
+        model.addAttribute("isEventOwner", accessControlService.isEventOwner(event, loggedUser));
+        model.addAttribute("isPaymentManager", accessControlService.isPaymentManager(event, loggedUser));
+        model.addAttribute("isAdvancedPaymentManager", accessControlService.isAdvancedPaymentManager(event, loggedUser));
 
         return view("event-details");
     }
 
     @RequestMapping("{event}/debt/{debtDueDate}/details")
-    public String debtDetails(@PathVariable Event event, @PathVariable LocalDate debtDueDate, Model model) {
-        accessControlService.checkEventOwnerOrPaymentManager(event, Authenticate.getUser());
+    public String debtDetails(@PathVariable Event event, @PathVariable LocalDate debtDueDate, Model model, User loggedUser) {
+        accessControlService.checkEventOwnerOrPaymentManager(event, loggedUser);
 
         final DebtInterestCalculator debtInterestCalculator = event.getDebtInterestCalculator(new DateTime());
         List<Debt> debtsOrderedByDueDate = debtInterestCalculator.getDebtsOrderedByDueDate();
@@ -115,14 +120,14 @@ public abstract class AccountingController {
         model.addAttribute("debt", debt);
         model.addAttribute("payments", paymentSummaries);
 
-        model.addAttribute("isEventOwner", accessControlService.isEventOwner(event, Authenticate.getUser()));
+        model.addAttribute("isEventOwner", accessControlService.isEventOwner(event, loggedUser));
 
         return view("event-debt-details");
     }
 
     @RequestMapping("{event}/creditEntry/{creditEntryId}/details")
-    public String creditEntryDetails(@PathVariable Event event, @PathVariable String creditEntryId, Model model) {
-        accessControlService.checkEventOwnerOrPaymentManager(event, Authenticate.getUser());
+    public String creditEntryDetails(@PathVariable Event event, @PathVariable String creditEntryId, Model model, User loggedUser) {
+        accessControlService.checkEventOwnerOrPaymentManager(event, loggedUser);
 
         final DebtInterestCalculator calculator = event.getDebtInterestCalculator(new DateTime());
         final CreditEntry creditEntry = calculator.getCreditEntryById(creditEntryId).orElseThrow(UnsupportedOperationException::new);
