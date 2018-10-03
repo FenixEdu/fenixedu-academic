@@ -46,7 +46,7 @@ public class ThesisSearchBean implements Serializable {
     public ThesisSearchBean() {
         ExecutionYear last = null;
         for (Thesis thesis : Bennu.getInstance().getThesesSet()) {
-            if (last == null || thesis.getEnrolment().getExecutionYear().isAfter(last)) {
+            if (last == null || (thesis.getEnrolment() != null && thesis.getEnrolment().getExecutionYear().isAfter(last))) {
                 last = thesis.getEnrolment().getExecutionYear();
             }
         }
