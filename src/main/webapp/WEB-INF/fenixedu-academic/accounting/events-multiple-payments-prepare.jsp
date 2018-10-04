@@ -150,7 +150,7 @@
                                     <td>
                                         <c:choose>
                                             <c:when test="${entryDTO.isForPenalty()}">
-                                                <input type="checkbox" class="penalty" value="${entryDTO.toString()}" name="entries" data-amount="${amount}" >
+                                                <input type="checkbox" class="penalty" value="${entryDTO.toString()}" name="entries" data-amount="${amount}" disabled>
                                             </c:when>
                                             <c:otherwise>
                                                 <input type="checkbox" class="debt" value="${entryDTO.toString()}" name="entries" data-amount="${amount}">
