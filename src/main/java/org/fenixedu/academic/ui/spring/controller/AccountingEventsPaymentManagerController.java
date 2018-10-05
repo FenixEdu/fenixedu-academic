@@ -234,16 +234,17 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
         accessControlService.isPaymentManager(loggedUser);
 
         PaymentsManagementDTO paymentsManagementDTO = new PaymentsManagementDTO(person);
-        person.getEventsSet().stream().map(Event::calculateEntries).forEach(paymentsManagementDTO::addEntryDTOs);
-
-        // Show penalties first then order by due date
-        paymentsManagementDTO.getEntryDTOs().sort(Comparator.comparing(EntryDTO::isForPenalty).reversed().thenComparing(EntryDTO::getDueDate));
+        person.getEventsSet().stream().filter(e -> !e.isCancelled()).map(Event::calculateEntries).forEach
+                (paymentsManagementDTO::addEntryDTOs);
 
         if (paymentsManagementDTO.getTotalAmountToPay().lessOrEqualThan(Money.ZERO)) {
             logger.warn("Hacky user {} tried to access multiple payments interface for user {}",
                     Optional.ofNullable(loggedUser).map(User::getUsername).orElse("---"), person.getUsername());
             return "redirect:" + REQUEST_MAPPING + "/" + person.getExternalId();
         }
+        // Show penalties first then order by due date
+        paymentsManagementDTO.getEntryDTOs().sort(Comparator.comparing(EntryDTO::isForPenalty).reversed().thenComparing(EntryDTO::getDueDate));
+
         final String uuid = UUID.randomUUID().toString();
 
         httpSession.setAttribute(MULTIPLE_PAYMENTS_ATTRIBUTE + uuid, paymentsManagementDTO);
