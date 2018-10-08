@@ -62,6 +62,8 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixframework.Atomic;
+
 public abstract class Event extends Event_Base {
 
     public static final Comparator<Event> COMPARATOR_BY_DATE = (e1, e2) -> {
@@ -1074,6 +1076,23 @@ public abstract class Event extends Event_Base {
     private String getOperationLabel(AccountingTransaction e) {
         return BundleUtil.getString(Bundle.ACADEMIC, "label.accounting.operation.after.transaction", e
                 .getWhenProcessed().toString());
+    }
+
+    public void check() {
+        final Money originalValueCheck = getOriginalValueCheck();
+        if (originalValueCheck == null) {
+            initOriginalValueCheck();
+        } else {
+            final Money originalAmountToPay = getOriginalAmountToPay();
+            if (!originalValueCheck.equals(originalAmountToPay)) {
+                throw new DomainException("error.event.original.amount.to.pay.changed", originalValueCheck.toPlainString(), originalAmountToPay.toPlainString());
+            }
+        }
+    }
+
+    @Atomic
+    private void initOriginalValueCheck() {
+        setOriginalValueCheck(getOriginalAmountToPay());
     }
 
 }
