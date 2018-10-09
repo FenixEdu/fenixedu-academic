@@ -56,7 +56,9 @@ public abstract class AnnualEvent extends AnnualEvent_Base {
 
     @Override
     protected void initEventStartDate() {
-        setEventStartDate(getExecutionYear().getBeginLocalDate());
+        if (getExecutionYear() != null) {
+            setEventStartDate(getExecutionYear().getBeginLocalDate());
+        }
     }
 
     private void checkParameters(ExecutionYear executionYear) {

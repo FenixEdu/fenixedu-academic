@@ -141,7 +141,9 @@ public class PartialRegimeEvent extends PartialRegimeEvent_Base {
     }
 
     private static DomainException cantCreateEvent(Exception e) {
-        throw new DomainException("Can't create PartialRegimeEvent", e == null ? "" : e.getLocalizedMessage());
+        final DomainException domainException = new DomainException("Can't create PartialRegimeEvent", e == null ? "" : e.getLocalizedMessage());
+        domainException.initCause(e);
+        throw domainException;
     }
 
     @Override
