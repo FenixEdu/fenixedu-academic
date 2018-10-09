@@ -95,7 +95,8 @@ public class PhysicalAddress extends PhysicalAddress_Base {
             }
             final String areaCode = data.getAreaCode();
             if (areaCode == null || !PostalCodeValidator.isValidAreaCode(country.getCode(), areaCode)) {
-                throw new DomainException("label.address.invalid.postCode.for.country", country.getCode(), areaCode);
+                throw new DomainException("label.address.invalid.postCode.for.country", areaCode, country.getCode(),
+                        PostalCodeValidator.examplePostCodeFor(country.getCode()));
             }
             setAddress(data.getAddress());
             setAreaCode(areaCode);
