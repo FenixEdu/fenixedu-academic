@@ -106,7 +106,7 @@
                     </dl>
                     <dl>
                         <dt>Valor Total</dt>
-                        <dd><c:out value="${paymentsManagementDTO.totalAmountToPay}"/></dd>
+                        <dd><c:out value="${paymentsManagementDTO.selectedTotalAmountToPay}"/></dd>
                     </dl>
                     <dl>
                         <dt>Método de Pagamento</dt>
