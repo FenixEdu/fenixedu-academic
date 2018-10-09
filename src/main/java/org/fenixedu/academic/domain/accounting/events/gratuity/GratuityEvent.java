@@ -62,7 +62,9 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 
     @Override
     protected void initEventStartDate() {
-        setEventStartDate(getStudentCurricularPlan().getRegistration().getStartDate().toLocalDate());
+        if (getStudentCurricularPlan() != null) {
+            setEventStartDate(getStudentCurricularPlan().getRegistration().getStartDate().toLocalDate());
+        }
     }
 
     private void checkParameters(AdministrativeOffice administrativeOffice, StudentCurricularPlan studentCurricularPlan) {
