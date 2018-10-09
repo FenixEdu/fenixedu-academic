@@ -191,6 +191,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
                 }
             } catch (DomainException e) {
                 addActionMessage("contacts", request, e.getMessage(), e.getArgs());
+                return backToShowInformation(mapping, actionForm, request, response);
             }
             return forwardToInputValidationCode(mapping, actionForm, request, response, newPartyContact);
         }
