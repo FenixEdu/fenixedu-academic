@@ -1291,7 +1291,7 @@ valueType org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDeta
         DateTime whenOccured;
         String createdBy;
         LocalDate whenSentLetter;
-        LocalDate startDate;
+        LocalDate eventStartDate;
     }
 
         class accounting.AcademicEvent extends accounting.Event {

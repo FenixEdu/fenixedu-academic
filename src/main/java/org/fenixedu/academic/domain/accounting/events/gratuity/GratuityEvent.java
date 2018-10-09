@@ -49,9 +49,7 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 
     protected void init(AdministrativeOffice administrativeOffice, Person person, StudentCurricularPlan studentCurricularPlan,
             ExecutionYear executionYear) {
-
         init(administrativeOffice, EventType.GRATUITY, person, studentCurricularPlan, executionYear);
-
     }
 
     protected void init(AdministrativeOffice administrativeOffice, EventType eventType, Person person,
@@ -59,7 +57,12 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
         super.init(administrativeOffice, eventType, person, executionYear);
         checkParameters(administrativeOffice, studentCurricularPlan);
         super.setStudentCurricularPlan(studentCurricularPlan);
+        initEventStartDate();
+    }
 
+    @Override
+    protected void initEventStartDate() {
+        setEventStartDate(getStudentCurricularPlan().getRegistration().getStartDate().toLocalDate());
     }
 
     private void checkParameters(AdministrativeOffice administrativeOffice, StudentCurricularPlan studentCurricularPlan) {

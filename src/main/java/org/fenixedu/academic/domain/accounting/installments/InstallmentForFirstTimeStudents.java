@@ -126,7 +126,7 @@ public class InstallmentForFirstTimeStudents extends InstallmentForFirstTimeStud
     @Override
     public LocalDate getEndDate(final Event event) {
         final GratuityEvent gratuityEvent = (GratuityEvent) event;
-        final LocalDate startDate = gratuityEvent.getStartDate();
+        final LocalDate startDate = gratuityEvent.getEventStartDate();
         return startDate.plusDays(getNumberOfDaysToStartApplyingPenalty());
     }
 
