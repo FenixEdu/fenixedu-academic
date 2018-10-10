@@ -23,6 +23,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -100,7 +101,7 @@ public abstract class AccountingController {
     }
 
     @RequestMapping("{event}/debt/{debtDueDate}/details")
-    public String debtDetails(@PathVariable Event event, @PathVariable LocalDate debtDueDate, Model model, User loggedUser) {
+    public String debtDetails(@PathVariable Event event, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate debtDueDate, Model model, User loggedUser) {
         accessControlService.checkEventOwnerOrPaymentManager(event, loggedUser);
 
         final DebtInterestCalculator debtInterestCalculator = event.getDebtInterestCalculator(new DateTime());

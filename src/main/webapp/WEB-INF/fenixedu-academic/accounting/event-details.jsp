@@ -66,6 +66,10 @@
             <div class="col-md-4">
                 <div class="overall-description">
                     <dl>
+                        <dt><spring:message code="label.name" text="Name"/></dt>
+                        <dd><c:out value="${event.person.presentationName}"/></dd>
+                    </dl>
+                    <dl>
                         <dt><spring:message code="accounting.event.details.creation.date" text="Creation Date"/></dt>
                         <dd><time datetime="${event.whenOccured.toString("yyyy-MM-dd")}">${event.whenOccured.toString("dd/MM/yyyy")}</time></dd>
                     </dl>
@@ -133,7 +137,7 @@
                             <c:when test="${!debt.open}">
                                 <c:set var="cardClass" value="fully-paid"/>
                             </c:when>
-                            <c:when test="${debt.isAfterDueDate(currentDate) && !(debt.isToExemptInterest() || debt.isToExemptFine())}">
+                            <c:when test="${debt.totalOpenPenaltyAmount > 0 && debt.isAfterDueDate(currentDate) && !(debt.isToExemptInterest() || debt.isToExemptFine())}">
                                 <c:set var="cardClass" value="passed-limit"/>
                             </c:when>
                             <c:otherwise>
@@ -152,7 +156,7 @@
                                     <c:when test="${!debt.open}">
                                         <spring:message code="accounting.event.details.debt.paid" text="Paid"/>
                                     </c:when>
-                                    <c:when test="${debt.isAfterDueDate(currentDate) && !(debt.isToExemptInterest() || debt.isToExemptFine())}">
+                                    <c:when test="${debt.totalOpenPenaltyAmount > 0 && debt.isAfterDueDate(currentDate) && !(debt.isToExemptInterest() || debt.isToExemptFine())}">
                                         <spring:message code="accounting.event.details.debt.due.with.interest" text="Due with interest"/>
                                     </c:when>
                                     <c:otherwise>
@@ -186,7 +190,7 @@
                                 <dd><c:out value="${debt.date.toString('dd/MM/yyyy')}"/></dd>
                             </dl>
                             <footer>
-                                <a class="btn btn-default btn-block" href="debt/${debt.date.toString('dd-MM-yyyy')}/details">Ver Detalhes</a>
+                                <a class="btn btn-default btn-block" href="debt/${debt.date.toString('yyyy-MM-dd')}/details">Ver Detalhes</a>
                             </footer>
                         </article>
                     </c:forEach>

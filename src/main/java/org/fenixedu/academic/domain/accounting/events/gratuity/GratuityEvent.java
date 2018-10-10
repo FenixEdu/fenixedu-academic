@@ -97,25 +97,17 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-        final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION).appendLabel(" (")
-                .appendLabel(getDegree().getDegreeType().getName().getContent()).appendLabel(" - ")
-                .appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ")
+        return new LabelFormatter()
+                .appendLabel(entryType.name(), Bundle.ENUMERATION).appendLabel(" (")
+                .appendLabel(getDegree().getSigla()).appendLabel(" - ")
                 .appendLabel(getExecutionYear().getYear()).appendLabel(")");
-
-        return labelFormatter;
     }
 
     @Override
     public LabelFormatter getDescription() {
-        final LabelFormatter labelFormatter = super.getDescription();
-
-        labelFormatter.appendLabel(" ");
-//        labelFormatter.appendLabel(getDegree().getDegreeType().getName().getContent()).appendLabel(" - ");
-//        labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ");
-        labelFormatter.appendLabel(getDegree().getSigla()).appendLabel(" - ");
-        labelFormatter.appendLabel(getExecutionYear().getYear());
-        return labelFormatter;
+        return super.getDescription().appendLabel(" ")
+                .appendLabel(getDegree().getSigla()).appendLabel(" - ")
+                .appendLabel(getExecutionYear().getYear());
     }
 
     @Override

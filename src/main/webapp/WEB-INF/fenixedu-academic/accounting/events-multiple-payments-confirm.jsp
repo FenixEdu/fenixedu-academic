@@ -92,6 +92,10 @@
                             <dt><spring:message code="label.document.id" text="ID Document"/></dt>
                             <dd><c:out value="${person.documentIdNumber}"/></dd>
                         </dl>
+                        <dl>
+                            <dt><spring:message code="label.document.vatNumber" text="VAT Number"/></dt>
+                            <dd><c:out value="${person.socialSecurityNumber}"/></dd>
+                        </dl>
                     </div>
                 </div>
             </div>
@@ -134,14 +138,21 @@
                                 <th>Valor a pagar</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <c:forEach items="${paymentsManagementDTO.selectedEntries}" var="entryDTO" varStatus="status">
+                            <c:forEach items="${eventEntryDTOMap}" var="eventKey">
+                                <tbody>
                                 <tr>
-                                    <td><c:out value="${entryDTO.description}"/></td>
-                                    <td><c:out value="${entryDTO.amountToPay}"/><span>€</span></td>
+                                    <th colspan="3">
+                                        <c:out value="${eventKey.key.description}"/>
+                                    </th>
                                 </tr>
+                                <c:forEach items="${eventKey.value}" var="entryDTO" varStatus="status">
+                                    <tr>
+                                        <td><c:out value="${entryDTO.description}"/></td>
+                                        <td><c:out value="${entryDTO.amountToPay}"/><span>€</span></td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
                             </c:forEach>
-                            </tbody>
                         </table>
                     </section>
                 </div>

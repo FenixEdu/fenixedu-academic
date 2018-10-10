@@ -116,4 +116,5 @@ public class PaymentsManagementDTO implements Serializable {
     public void setPaymentReference(String paymentReference) {
         this.paymentReference = paymentReference;
     }
+
 }

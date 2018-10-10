@@ -6,7 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -51,6 +53,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import pt.ist.fenixframework.DomainObject;
+
 /**
  * Created by Sérgio Silva (hello@fenixedu.org).
  */
@@ -233,17 +236,21 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
     public String prepareMultiplePayments(@PathVariable Person person, HttpSession httpSession, Model model, User loggedUser){
         accessControlService.isPaymentManager(loggedUser);
 
+        // Show penalties first then order by due date
+        List<EntryDTO> entryDTOS = person.getEventsSet().stream()
+                .filter(e -> !e.isCancelled())
+                .flatMap(event -> event.calculateEntries().stream())
+                .sorted(Comparator.comparing(EntryDTO::isForPenalty).reversed().thenComparing(EntryDTO::getDueDate))
+                .collect(Collectors.toList());
+
         PaymentsManagementDTO paymentsManagementDTO = new PaymentsManagementDTO(person);
-        person.getEventsSet().stream().filter(e -> !e.isCancelled()).map(Event::calculateEntries).forEach
-                (paymentsManagementDTO::addEntryDTOs);
+        paymentsManagementDTO.addEntryDTOs(entryDTOS);
 
         if (paymentsManagementDTO.getTotalAmountToPay().lessOrEqualThan(Money.ZERO)) {
             logger.warn("Hacky user {} tried to access multiple payments interface for user {}",
                     Optional.ofNullable(loggedUser).map(User::getUsername).orElse("---"), person.getUsername());
             return "redirect:" + REQUEST_MAPPING + "/" + person.getExternalId();
         }
-        // Show penalties first then order by due date
-        paymentsManagementDTO.getEntryDTOs().sort(Comparator.comparing(EntryDTO::isForPenalty).reversed().thenComparing(EntryDTO::getDueDate));
 
         final String uuid = UUID.randomUUID().toString();
 
@@ -251,9 +258,16 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
         model.addAttribute("multiplePayments", uuid);
         model.addAttribute("paymentMethods", PaymentMethod.all());
         model.addAttribute("paymentsManagementDTO", paymentsManagementDTO);
+        model.addAttribute("eventEntryDTOMap", buildEventEntryDTOMap(entryDTOS));
         model.addAttribute("person", person);
 
         return view("events-multiple-payments-prepare");
+    }
+
+
+    private TreeMap<Event, List<EntryDTO>> buildEventEntryDTOMap(List<EntryDTO> entryDTOS) {
+        return entryDTOS.stream().collect(Collectors.groupingBy(EntryDTO::getEvent,
+                        () -> new TreeMap<>(Comparator.comparing(Event::getWhenOccured).thenComparing(Event::getExternalId)), Collectors.toList()));
     }
 
     @RequestMapping(value = "{person}/multiplePayments/confirm", method = RequestMethod.POST)
@@ -271,9 +285,9 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
         paymentsManagementDTO.select(entries);
         paymentsManagementDTO.setPaymentDate(new DateTime());
 
-//        entryDTOS.setPaymentDate(DateTime.now());
         model.addAttribute("multiplePayments", identifier);
         model.addAttribute("paymentsManagementDTO", paymentsManagementDTO);
+        model.addAttribute("eventEntryDTOMap", buildEventEntryDTOMap(paymentsManagementDTO.getSelectedEntries()));
         model.addAttribute("person", person);
 
         return view("events-multiple-payments-confirm");
@@ -305,6 +319,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
 
         accessControlService.isPaymentManager(loggedUser);
         model.addAttribute("paymentsManagementDTO", paymentsManagementDTO);
+        model.addAttribute("eventEntryDTOMap", buildEventEntryDTOMap(paymentsManagementDTO.getSelectedEntries()));
         model.addAttribute("person", person);
         model.addAttribute("success", true);
         return view("events-multiple-payments-confirm");
