@@ -56,7 +56,7 @@
                 <h1>
                     <c:out value="${event.description}"/>
                     <c:if test="${event.currentEventState == 'CANCELLED'}">
-                        <span class="text-danger"> (Cancelada)</span>
+                        <span class="text-danger"> (<spring:message code="accounting.event.canceled" text="Cancelled"/>)</span>
                     </c:if>
                 </h1>
             </div>
@@ -71,25 +71,26 @@
                     </dl>
                     <dl>
                         <dt><spring:message code="accounting.event.details.amount.pay" text="To pay"/></dt>
-                        <dd><c:out value="${eventTotalAmountToPay}"/><span>€</span></dd>
+                        <dd><c:out value="${eventTotalAmountToPay}"/> <span><spring:message code="label.currency.euro" text="Eur"/></span></dd>
                     </dl>
                     <dl>
                         <dt><spring:message code="accounting.event.details.debt.amount.pay" text="Debt"/></dt>
-                        <dd><c:out value="${eventDebtAmountToPay}"/><span>€</span></dd>
+                        <dd><c:out value="${eventDebtAmountToPay}"/> <span><spring:message code="label.currency.euro" text="Eur"/></span></dd>
                     </dl>
                     <dl>
                         <dt><spring:message code="accounting.event.details.interestOrFines.amount.pay" text="Interest"/></dt>
-                        <dd><c:out value="${eventInterestAmountToPay + eventFineAmountToPay}"/><span>€</span></dd>
+                        <dd><c:out value="${eventInterestAmountToPay + eventFineAmountToPay}"/> <span><spring:message code="label.currency.euro" text="Eur"/></span></dd>
                     </dl>
                     <dl>
                         <dt><spring:message code="accounting.event.details.original.debt.amount" text="Original amount"/></dt>
-                        <dd><c:out value="${eventOriginalAmountToPay}"/><span>€</span></dd>
+                        <dd><c:out value="${eventOriginalAmountToPay}"/> <span><spring:message code="label.currency.euro" text="Eur"/></span></dd>
                     </dl>
                 </div>
             </div>
             <div class="col-md-4">
-                <modular:intersect location="event.details.extra.info" position="info">
+                <modular:intersect location="event.details.extra.info" position="info"> 
                     <modular:arg key="event" value="${event}"/>
+                    <modular:arg key="isPaymentManager" value="${isPaymentManager}"/>
                 </modular:intersect>
             </div>
             <div class="col-md-2 col-md-push-1">
@@ -109,13 +110,17 @@
                         <a class="btn btn-danger btn-block" href="${cancelUrl}"><spring:message code="accounting.event.action.cancel" text="Cancel"/></a>
                     </c:if>
                 </c:if>
+                <modular:intersect location="event.details.extra.info" position="operations"> 
+                    <modular:arg key="event" value="${event}"/>
+                    <modular:arg key="isPaymentManager" value="${isPaymentManager}"/>
+                </modular:intersect>
             </div>
         </div>
         <div class="row">
     <div class="row">
         <div class="col-md-12">
             <header>
-                <h2>Prestações</h2>
+                <h2><spring:message code="accounting.event.installments" text="Installments"/></h2>
             </header>
         </div>
     </div>
@@ -157,16 +162,16 @@
                             </div>
                             <dl class="total">
                                 <dt><spring:message code="accounting.event.details.debt.to.pay" text="To Pay"/></dt>
-                                <dd><c:out value="${debt.totalOpenAmount.toPlainString()}"/><span>€</span></dd>
+                                <dd><c:out value="${debt.totalOpenAmount.toPlainString()}"/><span><spring:message code="label.currency.euro" text="Eur"/></span></dd>
                             </dl>
                             <dl class="details">
                                 <dt><spring:message code="accounting.event.details.debt.fine" text="Debt"/>:</dt>
-                                <dd><c:out value="${debt.openAmount.toPlainString()}"/><span>€</span></dd>
+                                <dd><c:out value="${debt.openAmount.toPlainString()}"/><span><spring:message code="label.currency.euro" text="Eur"/></span></dd>
                             </dl>
                             <dl class="details">
                                 <dt><spring:message code="accounting.event.details.debt.interestOrFines" text="Interest/Fines"/>:</dt>
                                 <dd>
-                                    <c:out value="${debt.openInterestAmount.toPlainString() + debt.openFineAmount}"/><span>€</span>
+                                    <c:out value="${debt.openInterestAmount.toPlainString() + debt.openFineAmount}"/><span><spring:message code="label.currency.euro" text="Eur"/></span>
                                     <c:if test="${debt.isToExemptInterest() || debt.isToExemptFine()}">
                                         <spring:message code="accounting.event.details.debt.hasExemption" text="(Exemption)"/>
                                     </c:if>
@@ -174,7 +179,7 @@
                             </dl>
                             <dl class="details">
                                 <dt><spring:message code="accounting.event.details.debt" text="Installment"/>:</dt>
-                                <dd><c:out value="${debt.originalAmount.toPlainString()}"/><span>€</span></dd>
+                                <dd><c:out value="${debt.originalAmount.toPlainString()}"/><span><spring:message code="label.currency.euro" text="Eur"/></span></dd>
                             </dl>
                             <dl class="details limit-date">
                                 <dt><spring:message code="accounting.event.details.debt.due.date" text="Due Date"/>:</dt>
@@ -231,13 +236,13 @@
                         <td><time datetime="${payment.created.toString("yyyy-MM-dd HH:mm:ss")}">${payment.created.toString("dd/MM/yyyy HH:mm:ss")}</time></td>
                         <td><time datetime="${payment.date.toString("yyyy-MM-dd")}">${payment.date.toString("dd/MM/yyyy")}</time></td>
                         <td><c:out value="${payment.typeDescription.content}"/></td>
-                        <td><c:out value="${payment.amount}"/><span>€</span></td>
-                        <td><c:out value="${payment.usedAmountInDebts}"/><span>€</span></td>
-                        <td><c:out value="${usedAmountInInterestsOrFines}"/><span>€</span></td>
+                        <td><c:out value="${payment.amount}"/><span><spring:message code="label.currency.euro" text="Eur"/></span></td>
+                        <td><c:out value="${payment.usedAmountInDebts}"/><span><spring:message code="label.currency.euro" text="Eur"/></span></td>
+                        <td><c:out value="${usedAmountInInterestsOrFines}"/><span><spring:message code="label.currency.euro" text="Eur"/></span></td>
                         <td style="text-align: right;">
-                            <a href="${paymentUrl}">Ver Detalhes</a>
+                            <a href="${paymentUrl}"><spring:message code="label.details" text="Details"/></a>
                             <c:if test="${isAdvancedPaymentManager && loop.first}">
-                                <span>, </span><a href="${deleteEntryUrl}" onclick="return confirm('Are you sure?')">Anular</a>
+                                <span>, </span><a href="${deleteEntryUrl}" onclick="return confirm('Are you sure?')"><spring:message code="label.cancel" text="Cancel"/></a>
                             </c:if>
                         </td>
                     </tr>
