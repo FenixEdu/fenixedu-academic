@@ -49,7 +49,7 @@
                         </dl>
                         <dl>
                             <dt><spring:message code="label.document.id" text="ID Document"/></dt>
-                            <dd><c:out value="${person.documentIdNumber}"/> 3123233</dd>
+                            <dd><c:out value="${person.documentIdNumber}"/></dd>
                         </dl>
                     </div>
                 </div>
