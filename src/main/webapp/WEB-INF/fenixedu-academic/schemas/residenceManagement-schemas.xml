@@ -73,13 +73,18 @@
 
 <schema  name="show.residenceEvent.with.dates" type="org.fenixedu.academic.domain.accounting.ResidenceEvent" bundle="RESIDENCE_MANAGEMENT_RESOURCES" extends="show.residenceEvent">
 	<slot name="paymentMethod" layout="null-as-label">
-		<property name="subLayout" value="default"/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="show.paymentMethod.localizedName"/>
 		<property name="label" value="-"/>
 	</slot>
 	<slot name="paymentDate" layout="null-as-label">
 		<property name="subLayout" value="no-time"/>
 		<property name="label" value="-"/>
 	</slot>
+</schema>
+
+<schema name="show.paymentMethod.localizedName" type="org.fenixedu.academic.domain.accounting.PaymentMethod" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
+	<slot name="localizedName"/>
 </schema>
 
 <schema  name="show.residenceEvent.with.open.date" type="org.fenixedu.academic.domain.accounting.ResidenceEvent" bundle="RESIDENCE_MANAGEMENT_RESOURCES" extends="show.residenceEvent">
