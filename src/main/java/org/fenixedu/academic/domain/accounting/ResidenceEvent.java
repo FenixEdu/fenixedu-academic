@@ -110,7 +110,7 @@ public class ResidenceEvent extends ResidenceEvent_Base {
                 .getTransactionDetail().getWhenRegistered();
     }
 
-    public PaymentMethod getPaymentMode() {
+    public PaymentMethod getPaymentMethod() {
         return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().iterator().next()
                 .getTransactionDetail().getPaymentMethod();
     }
