@@ -23,6 +23,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="http://fenixedu.org/taglib/intersection" prefix="modular" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 
 <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/accounting.css"/>
@@ -54,6 +55,18 @@
                 </div>
             </div>
         </header>
+        <section>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>
+                        <modular:intersect location="events.global.operations" position="operations"> 
+                            <modular:arg key="person" value="${person}"/>
+                            <modular:arg key="isPaymentManager" value="${isPaymentManager}"/>
+                        </modular:intersect>
+                    </h2>
+                </div>
+            </div>
+        </section>
         <section>
             <div class="row">
                 <div class="col-md-12">
