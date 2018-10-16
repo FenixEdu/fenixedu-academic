@@ -32,7 +32,7 @@
 
 <br />
 
-<fr:view name="postingRules" schema="FixedAmountPR.view">
+<fr:view name="postingRules" schema="InsurancePR.view">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
 		<fr:property name="linkFormat(edit)"

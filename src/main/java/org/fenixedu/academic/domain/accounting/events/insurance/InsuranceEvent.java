@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.accounting.events.insurance;
 
 import java.util.Collections;
+import java.util.Optional;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -31,6 +32,8 @@ import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.accounting.PaymentCode;
+import org.fenixedu.academic.domain.accounting.PostingRule;
+import org.fenixedu.academic.domain.accounting.postingRules.InsurancePR;
 import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
@@ -42,6 +45,7 @@ import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
@@ -74,6 +78,14 @@ public class InsuranceEvent extends InsuranceEvent_Base implements IInsuranceEve
     public InsuranceEvent(Person person, ExecutionYear executionYear) {
         this();
         init(EventType.INSURANCE, person, executionYear);
+        setupDueDate();
+    }
+
+    private void setupDueDate() {
+        final PostingRule postingRule = getPostingRule();
+        if (postingRule instanceof InsurancePR) {
+            setDueDate(getWhenOccured().plusDays(((InsurancePR) postingRule).getNumberOfDaysToCalculateDueDate()));
+        }
     }
 
     @Override
@@ -150,5 +162,10 @@ public class InsuranceEvent extends InsuranceEvent_Base implements IInsuranceEve
     @Override
     public boolean isInsuranceEvent() {
         return true;
+    }
+
+    @Override
+    public DateTime getDueDateByPaymentCodes() {
+        return Optional.ofNullable(getDueDate()).orElseGet(super::getDueDateByPaymentCodes);
     }
 }

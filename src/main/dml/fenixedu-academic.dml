@@ -1348,6 +1348,7 @@ valueType org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDeta
                 }
 
             class accounting.events.insurance.InsuranceEvent extends accounting.events.AnnualEvent {
+                DateTime dueDate;
             }
 
         class accounting.events.EnrolmentEvent extends accounting.AcademicEvent {
@@ -1690,6 +1691,7 @@ valueType org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDeta
     }
 
         class accounting.postingRules.AdministrativeOfficeFeeAndInsurancePR extends accounting.PostingRule {
+
         }
 
         class accounting.postingRules.GenericSingleEntryTypePR extends accounting.PostingRule {
@@ -1805,6 +1807,7 @@ valueType org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDeta
 				}
 
 				class accounting.postingRules.InsurancePR extends accounting.postingRules.FixedAmountPR {
+				    Integer numberOfDaysToCalculateDueDate;
 				}
 				
 				class accounting.postingRules.PartialRegistrationRegimeRequestPR extends accounting.postingRules.FixedAmountPR {
