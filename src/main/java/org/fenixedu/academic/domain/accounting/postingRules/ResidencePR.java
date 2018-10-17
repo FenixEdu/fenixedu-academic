@@ -18,9 +18,11 @@
  */
 package org.fenixedu.academic.domain.accounting.postingRules;
 
-import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
@@ -43,15 +45,19 @@ public class ResidencePR extends ResidencePR_Base {
 
     @Override
     public Map<LocalDate, Money> getDueDatePenaltyAmountMap(Event event, DateTime when) {
+
         ResidenceEvent residenceEvent = (ResidenceEvent) event;
         if (residenceEvent.getPaymentLimitDate().isAfter(when)) {
             return Collections.emptyMap();
         }
 
-        final BigDecimal daysBetween = BigDecimal.valueOf(Days.daysBetween(residenceEvent.getPaymentLimitDate().toLocalDate(),
-                when.toLocalDate()).getDays());
-        final Money amount = getPenaltyPerDay().multiply(daysBetween);
-        return Collections.singletonMap(residenceEvent.getPaymentLimitDate().toLocalDate(), amount);
+        final Money penaltyPerDay = getPenaltyPerDay();
+        final LocalDate startDate = residenceEvent.getPaymentLimitDate().toLocalDate();
+        final LocalDate endDate = when.toLocalDate();
+
+        return Stream.iterate(startDate, d -> d.plusDays(1))
+                .limit(Days.daysBetween(startDate, endDate).getDays())
+                .collect(Collectors.toMap(Function.identity(), x -> penaltyPerDay));
     }
 
     @Override
