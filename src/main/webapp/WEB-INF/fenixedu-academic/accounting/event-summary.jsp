@@ -26,7 +26,7 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 
 <spring:url var="backUrl" value="${entrypointUrl}">
-    <spring:param name="user" value="${eventUsername}"/>
+    <spring:param name="person" value="${event.person.externalId}"/>
 </spring:url>
 
 ${portal.toolkit()}

@@ -148,7 +148,7 @@
                 <h2><spring:message code="accounting.event.payment.options.debts.and.interests" text="Debts and Interests"/></h2>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-8 col-sm-12">
                 <section class="list-debts">

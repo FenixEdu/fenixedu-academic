@@ -1,20 +1,18 @@
 package org.fenixedu.academic.ui.spring.service;
 
-import java.util.Collections;
-import java.util.Optional;
-import java.util.Set;
-import java.util.function.BiFunction;
-import java.util.function.BiPredicate;
-import java.util.function.Consumer;
-
 import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.accounting.AcademicEvent;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.domain.exceptions.AuthorizationException;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.Optional;
+import java.util.Set;
+import java.util.function.BiPredicate;
 
 /**
  * Created by Sérgio Silva (hello@fenixedu.org).
@@ -26,21 +24,26 @@ public class AccountingManagementAccessControlService {
     public void checkEventOwnerOrPaymentManager(Event event, User user) {
         try {
             checkEventOwner(event, user);
-        } catch (UnsupportedOperationException e) {
+        }
+        catch (AuthorizationException e) {
             checkPaymentManager(event, user);
         }
     }
 
     private void checkPermission(Event event, User user, BiPredicate<Event, User> permission) {
         if (user == null) {
-            throw new UnsupportedOperationException("Unauthorized");
+            throw getUnauthorizedException();
         }
 
         if (permission.test(event, user)){
             return;
         }
 
-        throw new UnsupportedOperationException("Unauthorized");
+        throw getUnauthorizedException();
+    }
+
+    private AuthorizationException getUnauthorizedException() {
+        return AuthorizationException.unauthorized();
     }
 
     public void checkPaymentManager(Event event, User user) {

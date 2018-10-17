@@ -561,17 +561,6 @@
 		<slot name="documentIdNumber" key="label.documentNumber"/>
 	</schema>
 	
-	<schema name="SimpleSearchPersonWithStudentBean.edit" type="org.fenixedu.academic.dto.person.SimpleSearchPersonWithStudentBean" bundle="APPLICATION_RESOURCES">
-		<slot name="studentNumber"/>
-		<slot name="documentIdNumber"/>
-		<slot name="idDocumentType">
-			<property name="excludedValues" value="CITIZEN_CARD" />
-		</slot>
-		<slot name="name"/>
-		<slot name="username"/>
-		<slot name="paymentCode" />
-	</schema>
-		
     <schema name="group.description" type="java.lang.Object">
         <slot name="class" layout="label"/>
     </schema>

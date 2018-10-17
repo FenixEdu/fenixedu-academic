@@ -24,19 +24,15 @@ package org.fenixedu.academic.dto.accounting;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.organizationalStructure.Party;
-import org.fenixedu.academic.domain.organizationalStructure.PartySocialSecurityNumber;
+import org.fenixedu.academic.domain.accounting.PaymentMethod;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 
 public class PaymentsManagementDTO implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 3591155631181117718L;
 
     private Person person;
@@ -45,23 +41,16 @@ public class PaymentsManagementDTO implements Serializable {
 
     private DateTime paymentDate;
 
-    private boolean differedPayment;
+    private PaymentMethod paymentMethod;
 
-    private Party contributorParty;
+    private String paymentReference;
 
-    private String contributorNumber;
-
-    private String contributorAddress;
-
-    private String contributorName;
-
-    private boolean usingContributorParty;
+    public PaymentsManagementDTO(){
+    }
 
     public PaymentsManagementDTO(Person person) {
         setPerson(person);
-        setContributorParty(person);
-        setEntryDTOs(new ArrayList<EntryDTO>());
-        setUsingContributorParty(true);
+        setEntryDTOs(new ArrayList<>());
     }
 
     public Person getPerson() {
@@ -96,87 +85,35 @@ public class PaymentsManagementDTO implements Serializable {
         this.paymentDate = paymentDate;
     }
 
-    public boolean isDifferedPayment() {
-        return differedPayment;
-    }
-
-    public void setDifferedPayment(boolean differedPayment) {
-        this.differedPayment = differedPayment;
-    }
-
     public List<EntryDTO> getSelectedEntries() {
-        final List<EntryDTO> result = new ArrayList<EntryDTO>();
-        for (final EntryDTO each : getEntryDTOs()) {
-            if (each.isSelected()) {
-                result.add(each);
-            }
-        }
-        return result;
+        return getEntryDTOs().stream().filter(EntryDTO::isSelected).collect(Collectors.toList());
+    }
+
+    public Money getSelectedTotalAmountToPay() {
+        return getSelectedEntries().stream().map(EntryDTO::getAmountToPay).reduce(Money.ZERO, Money::add);
     }
 
     public Money getTotalAmountToPay() {
-        Money result = Money.ZERO;
-        for (final EntryDTO entryDTO : getSelectedEntries()) {
-            result = result.add(entryDTO.getAmountToPay());
-        }
-        return result;
+        return getEntryDTOs().stream().map(EntryDTO::getAmountToPay).reduce(Money.ZERO, Money::add);
     }
 
-    public Party getContributorParty() {
-        return (this.contributorParty != null) ? this.contributorParty : StringUtils.isEmpty(this.contributorNumber) ? null : Party
-                .readByContributorNumber(this.contributorNumber);
+    public void select(List<String> entries) {
+        getEntryDTOs().forEach(entryDTO -> entryDTO.setSelected(entries.contains(entryDTO.toString())));
     }
 
-    public void setContributorParty(Party contributorParty) {
-        this.contributorParty = contributorParty;
-        if (contributorParty != null) {
-            this.contributorName = contributorParty.getName();
-            this.contributorNumber = contributorParty.getSocialSecurityNumber();
-            this.contributorAddress =
-                    contributorParty.getAddress()
-                            + (!StringUtils.isEmpty(contributorParty.getAreaCode()) ? contributorParty.getAreaCode() + " "
-                                    + contributorParty.getAreaOfAreaCode() : null);
-        }
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
     }
 
-    public PartySocialSecurityNumber getContributorPartySocialSecurityNumber() {
-        return (this.contributorParty != null) ? this.contributorParty.getPartySocialSecurityNumber() : null;
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 
-    public void setContributorPartySocialSecurityNumber(PartySocialSecurityNumber partySocialSecurityNumber) {
-        this.contributorParty = (partySocialSecurityNumber != null) ? partySocialSecurityNumber.getParty() : null;
+    public String getPaymentReference() {
+        return paymentReference;
     }
 
-    public String getContributorName() {
-        return contributorName;
+    public void setPaymentReference(String paymentReference) {
+        this.paymentReference = paymentReference;
     }
-
-    public void setContributorName(String contributorName) {
-        this.contributorName = contributorName;
-    }
-
-    public String getContributorNumber() {
-        return contributorNumber;
-    }
-
-    public void setContributorNumber(String contributorNumber) {
-        this.contributorNumber = contributorNumber;
-    }
-
-    public String getContributorAddress() {
-        return contributorAddress;
-    }
-
-    public void setContributorAddress(String contributorAddress) {
-        this.contributorAddress = contributorAddress;
-    }
-
-    public boolean isUsingContributorParty() {
-        return usingContributorParty;
-    }
-
-    public void setUsingContributorParty(boolean usingContributorParty) {
-        this.usingContributorParty = usingContributorParty;
-    }
-
 }

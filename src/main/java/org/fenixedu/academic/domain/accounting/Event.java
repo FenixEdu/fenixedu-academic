@@ -62,6 +62,8 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixframework.Atomic;
+
 public abstract class Event extends Event_Base {
 
     public static final Comparator<Event> COMPARATOR_BY_DATE = (e1, e2) -> {
@@ -71,12 +73,11 @@ public abstract class Event extends Event_Base {
 
     protected Event() {
         super();
-
         super.setRootDomainObject(Bennu.getInstance());
         super.setWhenOccured(new DateTime());
         super.setCreatedBy(AccessControl.getPerson() != null ? AccessControl.getPerson().getUsername() : null);
-
         changeState(EventState.OPEN, new DateTime());
+        initEventStartDate();
     }
 
     protected void init(EventType eventType, Person person) {
@@ -89,6 +90,10 @@ public abstract class Event extends Event_Base {
         checkParameters(eventType, party);
         super.setEventType(eventType);
         super.setParty(party);
+    }
+
+    protected void initEventStartDate() {
+        setEventStartDate(new LocalDate());
     }
 
     private void checkParameters(EventType eventType, Party person) throws DomainException {
@@ -1074,6 +1079,23 @@ public abstract class Event extends Event_Base {
     private String getOperationLabel(AccountingTransaction e) {
         return BundleUtil.getString(Bundle.ACADEMIC, "label.accounting.operation.after.transaction", e
                 .getWhenProcessed().toString());
+    }
+
+    public void check() {
+        final Money originalValueCheck = getOriginalValueCheck();
+        if (originalValueCheck == null) {
+            initOriginalValueCheck();
+        } else {
+            final Money originalAmountToPay = getOriginalAmountToPay();
+            if (!originalValueCheck.equals(originalAmountToPay)) {
+                throw new DomainException("error.event.original.amount.to.pay.changed", originalValueCheck.toPlainString(), originalAmountToPay.toPlainString());
+            }
+        }
+    }
+
+    @Atomic
+    private void initOriginalValueCheck() {
+        setOriginalValueCheck(getOriginalAmountToPay());
     }
 
 }

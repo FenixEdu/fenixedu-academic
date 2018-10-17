@@ -56,20 +56,6 @@
 		</fr:layout>
 	</fr:view>
 	
-
-	<fr:edit id="paymentsManagementDTO-edit" name="paymentsManagementDTO" visible="false" />
-	
-		<fr:edit 	id="paymentsManagementDTO.edit.with.contributorName"
-					name="paymentsManagementDTO"
-					schema="paymentsManagementDTO.edit.with.contributorName">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thlight thright" />
-				<fr:property name="columnClasses" value=",,tdclear" />
-				<fr:destination name="invalid" path="/payments.do?method=preparePaymentInvalid" />
-			</fr:layout>
-		</fr:edit>
-	
-	
 	<fr:view name="paymentsManagementDTO" property="selectedEntries" schema="entryDTO.view">
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 mtop05 mbottom0" />

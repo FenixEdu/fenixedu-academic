@@ -1,9 +1,16 @@
 package org.fenixedu.academic.ui.spring.controller;
 
+import java.math.BigDecimal;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.servlet.ServletContext;
+
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.calculator.Debt;
-import org.fenixedu.academic.domain.accounting.calculator.DebtEntry;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
 import org.fenixedu.academic.domain.accounting.calculator.Fine;
 import org.fenixedu.academic.domain.accounting.calculator.Interest;
@@ -14,25 +21,18 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.spring.portal.SpringFunctionality;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.servlet.ServletContext;
-import java.math.BigDecimal;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Created by Sérgio Silva (hello@fenixedu.org).
@@ -47,30 +47,31 @@ public class AccountingEventForOwnerController extends AccountingController {
     static final String REQUEST_MAPPING = "/owner-accounting-events";
 
     @Autowired
-    public AccountingEventForOwnerController(AccountingManagementService accountingManagementService, AccountingManagementAccessControlService accountingManagementAccessControlService, ServletContext servletContext) {
-        super(accountingManagementService, accountingManagementAccessControlService, servletContext);
+    public AccountingEventForOwnerController(AccountingManagementService accountingManagementService,
+            AccountingManagementAccessControlService accountingManagementAccessControlService, ServletContext servletContext,
+            MessageSource messageSource) {
+        super(accountingManagementService, accountingManagementAccessControlService, servletContext, messageSource);
     }
 
     @Override
     public String entrypointUrl() {
-        return REQUEST_MAPPING + "/{user}";
+        return REQUEST_MAPPING + "/{person}";
     }
 
     @RequestMapping
-    public String entrypoint() {
-        return "redirect:" + REQUEST_MAPPING + "/" + Authenticate.getUser().getUsername();
+    public String entrypoint(User loggedUser) {
+        return "redirect:" + REQUEST_MAPPING + "/" + loggedUser.getPerson().getExternalId();
     }
 
     @RequestMapping(value = "{event}/pay", method = RequestMethod.GET)
-    public String doPayment(@PathVariable Event event, Model model) {
-        accessControlService.checkEventOwner(event, Authenticate.getUser());
-
+    public String doPayment(@PathVariable Event event, Model model, User loggedUser) {
+        accessControlService.checkEventOwner(event, loggedUser);
         final DebtInterestCalculator debtInterestCalculator = event.getDebtInterestCalculator(new DateTime());
 
         if (debtInterestCalculator.getTotalDueAmount().compareTo(BigDecimal.ZERO) < 1) {
             logger.warn("Hacky user {} tried to access payment interface for event {}",
-                    Optional.ofNullable(Authenticate.getUser()).map(User::getUsername).orElse("---"), event.getExternalId());
-            return entrypoint();
+                    Optional.ofNullable(loggedUser).map(User::getUsername).orElse("---"), event.getExternalId());
+            return entrypoint(loggedUser);
         }
 
         if (debtInterestCalculator.hasDueInterestAmount()) {
@@ -100,9 +101,9 @@ public class AccountingEventForOwnerController extends AccountingController {
 
     }
 
-    @RequestMapping(value = "{event}/paymentRef/{paymentCodeEntry}", method = RequestMethod.GET)
-    public String showPaymentReference(@PathVariable Event event, @PathVariable EventPaymentCodeEntry paymentCodeEntry, Model model) {
-        accessControlService.checkEventOwner(event, Authenticate.getUser());
+    @RequestMapping(value = "{event}/paymentRef/{paymentCodeEntry}")
+    public String showPaymentReference(@PathVariable Event event, @PathVariable EventPaymentCodeEntry paymentCodeEntry, Model model, User loggedUser) {
+        accessControlService.checkEventOwner(event, loggedUser);
 
         model.addAttribute("paymentCodeEntry", paymentCodeEntry);
         model.addAttribute("maxDaysBetweenPromiseAndPayment", FenixEduAcademicConfiguration.getConfiguration().getMaxDaysBetweenPromiseAndPayment());
@@ -110,19 +111,19 @@ public class AccountingEventForOwnerController extends AccountingController {
     }
 
     @RequestMapping(value = "{event}/pay", method = RequestMethod.POST)
-    public String generatePaymentCodeEntry(@PathVariable Event event, @RequestParam BigDecimal totalAmount, Model model) {
-        accessControlService.checkEventOwner(event, Authenticate.getUser());
+    public String generatePaymentCodeEntry(@PathVariable Event event, @RequestParam BigDecimal totalAmount, Model model, User loggedUser) {
+        accessControlService.checkEventOwner(event, loggedUser);
 
         final long currentNewCodes = event.getEventPaymentCodeEntrySet().stream().filter(entry -> entry.getPaymentCode().isNew()).count();
         final Integer maxNewPaymentCodesPerEvent = FenixEduAcademicConfiguration.getConfiguration().getMaxNewPaymentCodesPerEvent();
 
         if (currentNewCodes == maxNewPaymentCodesPerEvent) {
             model.addAttribute("error", BundleUtil.getString(Bundle.ACADEMIC, "block.entry.creation.max.new.payment.codes", maxNewPaymentCodesPerEvent.toString()));
-            return doPayment(event, model);
+            return doPayment(event, model, loggedUser);
         }
         else if (totalAmount.compareTo(BigDecimal.ZERO) <= 0) {
             model.addAttribute("error", BundleUtil.getString(Bundle.ACADEMIC, "block.entry.creation.not.positive.total.amount"));
-            return doPayment(event, model);
+            return doPayment(event, model, loggedUser);
         }
         else {
             final EventPaymentCodeEntry paymentCodeEntry = EventPaymentCodeEntry.create(event, new Money(totalAmount));
@@ -130,7 +131,7 @@ public class AccountingEventForOwnerController extends AccountingController {
         }
     }
 
-    private List<EventPaymentCodeEntry> getSortedEventPaymentCodeEntries(@PathVariable Event event) {
+    private List<EventPaymentCodeEntry> getSortedEventPaymentCodeEntries(Event event) {
         return event.getEventPaymentCodeEntrySet().stream()
                 .sorted(Comparator.comparing(EventPaymentCodeEntry::getCreated).reversed())
                 .collect(Collectors.toList());

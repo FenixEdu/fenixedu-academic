@@ -51,7 +51,14 @@ public abstract class AnnualEvent extends AnnualEvent_Base {
         super.init(administrativeOffice, eventType, person);
         checkParameters(executionYear);
         super.setExecutionYear(executionYear);
+        initEventStartDate();
+    }
 
+    @Override
+    protected void initEventStartDate() {
+        if (getExecutionYear() != null) {
+            setEventStartDate(getExecutionYear().getBeginLocalDate());
+        }
     }
 
     private void checkParameters(ExecutionYear executionYear) {

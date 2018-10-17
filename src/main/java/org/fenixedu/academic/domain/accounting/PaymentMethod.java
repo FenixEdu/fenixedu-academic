@@ -18,7 +18,10 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.I18N;
@@ -37,6 +40,11 @@ public class PaymentMethod extends PaymentMethod_Base {
 
     public static PaymentMethod getCashPaymentMethod() {
         return Bennu.getInstance().getCashPaymentMethod();
+    }
+
+    public static List<PaymentMethod> all() {
+        return Bennu.getInstance().getPaymentMethodSet().stream().sorted(Comparator.comparing
+                (PaymentMethod::getCode)).collect(Collectors.toList());
     }
 
     public String getName() {

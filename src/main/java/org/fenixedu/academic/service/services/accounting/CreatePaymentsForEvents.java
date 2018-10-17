@@ -21,14 +21,10 @@ package org.fenixedu.academic.service.services.accounting;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.Entry;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.PaymentMethod;
-import org.fenixedu.academic.domain.accounting.Receipt;
 import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.bennu.core.domain.User;
@@ -39,43 +35,22 @@ import pt.ist.fenixframework.Atomic;
 public class CreatePaymentsForEvents {
 
     @Atomic
-    public static Receipt run(final User responsibleUser, final Collection<EntryDTO> entryDTOs, final PaymentMethod
-            paymentMethod,String paymentReference,
-            final boolean differedPayment, final DateTime whenRegistered, final Person person, final String contributorName,
-            final String contributorNumber, final String contributorAddress) {
+    public static void run(final User responsibleUser, final Collection<EntryDTO> entryDTOs, final PaymentMethod paymentMethod,
+            final String paymentReference, final DateTime whenRegistered) {
 
-        final DateTime dateToSet = differedPayment ? whenRegistered : new DateTime();
-
-        final List<Entry> createdEntries = createEntries(responsibleUser, entryDTOs, paymentMethod, paymentReference, dateToSet);
-
-        return Receipt.create(responsibleUser.getPerson(), person, contributorName, contributorNumber, contributorAddress,
-                dateToSet.getYear(), createdEntries);
-
-    }
-
-    private static List<Entry> createEntries(final User responsibleUser, final Collection<EntryDTO> entryDTOs,
-            final PaymentMethod paymentMethod, final String paymentReference, final DateTime whenRegistered) {
         final Map<Event, Collection<EntryDTO>> entryDTOsByEvent = splitEntryDTOsByEvent(entryDTOs);
-        final List<Entry> resultingEntries = new ArrayList<Entry>();
 
-        for (final Map.Entry<Event, Collection<EntryDTO>> entry : entryDTOsByEvent.entrySet()) {
-            resultingEntries.addAll(entry.getKey().process(responsibleUser, entry.getValue(),
-                    new AccountingTransactionDetailDTO(whenRegistered, paymentMethod, paymentReference, null)));
-
-        }
-
-        return resultingEntries;
+        entryDTOsByEvent.forEach((event, entries) -> {
+            event.process(responsibleUser, entries, new AccountingTransactionDetailDTO(whenRegistered, paymentMethod,
+                    paymentReference, null));
+        });
     }
 
     private static Map<Event, Collection<EntryDTO>> splitEntryDTOsByEvent(Collection<EntryDTO> entryDTOs) {
-        final Map<Event, Collection<EntryDTO>> result = new HashMap<Event, Collection<EntryDTO>>();
+        final Map<Event, Collection<EntryDTO>> result = new HashMap<>();
 
         for (final EntryDTO entryDTO : entryDTOs) {
-            Collection<EntryDTO> entryDTOsByEvent = result.get(entryDTO.getEvent());
-            if (entryDTOsByEvent == null) {
-                result.put(entryDTO.getEvent(), entryDTOsByEvent = new ArrayList<EntryDTO>());
-            }
-            entryDTOsByEvent.add(entryDTO);
+            result.computeIfAbsent(entryDTO.getEvent(), k -> new ArrayList<>()).add(entryDTO);
         }
 
         return result;
