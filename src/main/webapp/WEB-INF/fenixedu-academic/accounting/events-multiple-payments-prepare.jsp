@@ -44,28 +44,63 @@
             return parseFloat($(this).data('amount'));
         }).toArray();
 
-        return amounts.reduce(function(a, b) {
-            return a + b;
-        }, 0);
+        return amounts.reduce((a, b) => a + b, 0);
     }
 
-    function disableAllPenaltyInputs() {
-        $('input.penalty').prop('checked', true);
+    function disableAllPenaltyInputs(penaltySelector) {
+        $(penaltySelector).prop('checked', true);
+        $(penaltySelector).prop('readonly', true);
+    }
+
+    function enableOnlyFirstDebtInputs(debtSelector) {
+        // Reset debt entries selections
+        $(debtSelector).prop('checked', false);
+        $(debtSelector).prop('disabled', true);
+
+        document.querySelectorAll("tbody").forEach(function(tbody) {
+            const firstDebtInput = $(tbody).find(debtSelector).toArray()[0];
+            $(firstDebtInput).prop("disabled", false);
+        });
+    }
+
+    function unckeckDebtInput(parentRow, selector) {
+        $(parentRow).find(selector).prop('checked', false);
+        $(parentRow).find(selector).prop('disabled', true);
+    }
+
+    function refreshSelectAllState(parentBody, debtSelector) {
+        let numEntriesSelected = parentBody.find(debtSelector + ":checked").length;
+        parentBody.find("input.selectAllEntries").prop("checked", numEntriesSelected > 0);
     }
 
     $(document).ready(function() {
-        disableAllPenaltyInputs();
+        const debtSelector = "input.debt";
+        const penaltySelector = "input.penalty";
 
-        $('input.debt').click(function(e) {
-            recalculateAmount();
-        });
-
-        $('#selectAllDebts').click(function () {
-            $('input.debt').prop('checked', this.checked);
-            recalculateAmount();
-        });
-
+        disableAllPenaltyInputs(penaltySelector);
+        enableOnlyFirstDebtInputs(debtSelector);
         recalculateAmount();
+
+        // Prevent clicks on selected penalty entries
+        $(penaltySelector).click(event => event.preventDefault());
+
+        // Recalculate total amount and refresh available entries for selection
+        $(debtSelector).bind("change", function(){
+            if($(this).is(":checked")) {
+                $(this).parents("tr").next().find(debtSelector).prop("disabled", false);
+            }
+            else {
+                $(this).parents("tr").nextAll().toArray().forEach(row => unckeckDebtInput(row, debtSelector))
+            }
+
+            refreshSelectAllState($(this).parents("tbody"), debtSelector);
+            recalculateAmount();
+        });
+
+        $("input.selectAllEntries").bind("change", function(){
+            $(this).parents("tbody").find(debtSelector).prop("checked", $(this).is(":checked")).change();
+        });
+
     });
 
 </script>
@@ -97,6 +132,10 @@
                         <dl>
                             <dt><spring:message code="label.document.id" text="ID Document"/></dt>
                             <dd><c:out value="${person.documentIdNumber}"/></dd>
+                        </dl>
+                        <dl>
+                            <dt><spring:message code="label.document.vatNumber" text="VAT Number"/></dt>
+                            <dd><c:out value="${person.socialSecurityNumber}"/></dd>
                         </dl>
                     </div>
                 </div>
@@ -135,32 +174,40 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>
-                                    <label for="selectAllDebts" class="sr-only">Seleccionar todas as dividas</label>
-                                    <input type="checkbox" id="selectAllDebts">
-                                </th>
+                                <th></th>
                                 <th>Descrição</th>
                                 <th>Valor a pagar</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <c:forEach items="${paymentsManagementDTO.entryDTOs}" var="entryDTO" varStatus="status">
-                                <tr>
-                                    <c:set var="amount" value="${entryDTO.amountToPay}"/>
-                                    <td>
-                                        <c:choose>
-                                            <c:when test="${entryDTO.isForPenalty()}">
-                                                <input type="checkbox" class="penalty" value="${entryDTO.toString()}" name="entries" data-amount="${amount}" disabled>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <input type="checkbox" class="debt" value="${entryDTO.toString()}" name="entries" data-amount="${amount}">
-                                            </c:otherwise>
-                                    </c:choose>
-                                    <td><c:out value="${entryDTO.description}"/></td>
-                                    <td><c:out value="${entryDTO.amountToPay}"/><span>€</span></td>
-                                </tr>
+                            <c:forEach items="${eventEntryDTOMap}" var="eventKey">
+                                <tbody>
+                                    <tr>
+                                        <th colspan="3">
+                                            <spring:url var="eventUrl" value="/accounting-management/{event}/details">
+                                                <spring:param name="event" value="${eventKey.key.externalId}"/>
+                                            </spring:url>
+                                            <a href="${eventUrl}"><c:out value="${eventKey.key.description}"/></a>
+                                            <input type="checkbox" style="margin-left: 5px" class="selectAllEntries">
+                                        </th>
+                                    </tr>
+                                    <c:forEach items="${eventKey.value}" var="entryDTO" varStatus="status">
+                                        <tr>
+                                            <c:set var="amount" value="${entryDTO.amountToPay}"/>
+                                            <td>
+                                                <c:choose>
+                                                <c:when test="${entryDTO.isForPenalty()}">
+                                                    <input type="checkbox" class="penalty" value="${entryDTO.toString()}" name="entries" data-amount="${amount}">
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <input type="checkbox" class="debt" value="${entryDTO.toString()}" name="entries" data-amount="${amount}">
+                                                </c:otherwise>
+                                                </c:choose>
+                                            <td><c:out value="${entryDTO.description}"/></td>
+                                            <td><c:out value="${entryDTO.amountToPay}"/><span>€</span></td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
                             </c:forEach>
-                            </tbody>
                         </table>
                         <p><small>O pagamento das prestações é sequencial.</small></p>
                     </section>

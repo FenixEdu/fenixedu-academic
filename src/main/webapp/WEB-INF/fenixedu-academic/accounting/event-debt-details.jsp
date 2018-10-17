@@ -27,14 +27,14 @@
 
 <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/accounting.css"/>
 
-<spring:url var="payUrl" value="{event}/pay">
+<spring:url var="payUrl" value="../../../{event}/pay">
     <spring:param name="event" value="${eventId}"/>
 </spring:url>
 <spring:url var="backUrl" value="../../../{event}/details">
     <spring:param name="event" value="${eventId}"/>
 </spring:url>
 
-<c:set var="totalAmount" value="#{debt.openAmount + debt.openInterestAmount}"/>
+<c:set var="totalAmount" value="#{debt.totalOpenAmount}"/>
 
 <div class="container-fluid">
     <header>
@@ -59,6 +59,10 @@
     <div class="row">
         <div class="col-md-4 col-sm-12">
             <div class="overall-description">
+                <dl>
+                    <dt><spring:message code="label.name" text="Name"/></dt>
+                    <dd><c:out value="${event.person.presentationName}"/></dd>
+                </dl>
                 <dl>
                     <dt><spring:message code="accounting.event.details.amount.pay" text="To pay"/></dt>
                     <dd><c:out value="${totalAmount}"/><span>€</span></dd>

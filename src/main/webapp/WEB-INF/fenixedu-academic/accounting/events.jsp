@@ -51,6 +51,10 @@
                             <dt><spring:message code="label.document.id" text="ID Document"/></dt>
                             <dd><c:out value="${person.documentIdNumber}"/></dd>
                         </dl>
+                        <dl>
+                            <dt><spring:message code="label.document.vatNumber" text="VAT Number"/></dt>
+                            <dd><c:out value="${person.socialSecurityNumber}"/></dd>
+                        </dl>
                     </div>
                 </div>
             </div>

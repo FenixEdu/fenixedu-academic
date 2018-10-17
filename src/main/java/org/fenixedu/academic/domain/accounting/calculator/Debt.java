@@ -70,6 +70,10 @@ public class Debt extends DebtEntry {
         return getOpenAmount().add(getOpenInterestAmount()).add(getOpenFineAmount());
     }
 
+    public BigDecimal getTotalOpenPenaltyAmount() {
+        return getOpenInterestAmount().add(getOpenFineAmount());
+    }
+
     public boolean isOpenFine() {
         return fines.stream().anyMatch(Fine::isOpen);
     }
