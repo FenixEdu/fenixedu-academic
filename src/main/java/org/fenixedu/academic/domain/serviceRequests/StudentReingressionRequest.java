@@ -158,11 +158,14 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
             academicServiceRequestBean.setSituationDate(getActiveSituation().getSituationDate().toYearMonthDay());
 
         } else if (academicServiceRequestBean.isToConclude() && hasExecutionDegree()) {
+            DateTime state_datetime = getExecutionYear()
+                    .containsDate(academicServiceRequestBean.getFinalSituationDate()) ? academicServiceRequestBean
+                            .getFinalSituationDate() : new DateTime(getExecutionYear().getBeginDate());
             final RegistrationState state =
                     RegistrationState.createRegistrationState(getRegistration(), academicServiceRequestBean.getResponsible(),
-                            academicServiceRequestBean.getFinalSituationDate(), RegistrationStateType.REGISTERED);
+                            state_datetime, RegistrationStateType.REGISTERED);
 
-            if (getRegistration().getActiveState() != state) {
+            if (getRegistration().getActiveState() != state && !getRegistration().getRegistrationStatesSet().contains(state)) {
                 throw new DomainException("StudentReingressionRequest.reingression.must.be.active.state.after.request.conclusion");
             }
         }
