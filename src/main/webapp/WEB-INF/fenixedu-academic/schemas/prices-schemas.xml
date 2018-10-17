@@ -72,6 +72,12 @@
 	<slot name="fixedAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR.fixedAmount"  />
 </schema>
 
+<schema name="InsurancePR.view"
+		type="org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR"
+		bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+<slot name="numberOfDaysToCalculateDueDate" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR.numberOfDaysToCalculateDueDate"  />
+</schema>
+
 <schema name="DeclarationRequestPR.view"
 	type="org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.DeclarationRequestPR"
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view">
@@ -417,7 +423,8 @@
 	type="org.fenixedu.academic.domain.accounting.postingRules.InsurancePR"
 	bundle="APPLICATION_RESOURCES">
 	<slot name="fixedAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR.fixedAmount" />
-	<setter signature="edit(fixedAmount)"/>
+	<slot name="numberOfDaysToCalculateDueDate" key="label.org.fenixedu.academic.domain.accounting.postingRules.InsurancePR.numberOfDaysToCalculateDueDate" />
+	<setter signature="edit(fixedAmount, numberOfDaysToCalculateDueDate)"/>
 </schema>
 
 <schema name="FixedAmountWithPenaltyPR.edit"

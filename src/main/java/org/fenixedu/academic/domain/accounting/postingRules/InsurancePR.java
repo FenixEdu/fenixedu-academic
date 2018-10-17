@@ -32,9 +32,11 @@ public class InsurancePR extends InsurancePR_Base implements IAdministrativeOffi
         super();
     }
 
-    public InsurancePR(DateTime startDate, DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate, Money fixedAmount) {
+    public InsurancePR(DateTime startDate, DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate, Money
+            fixedAmount, int numberOfDaysToCalculateDueDate) {
         this();
         init(EntryType.INSURANCE_FEE, EventType.INSURANCE, startDate, endDate, serviceAgreementTemplate, fixedAmount);
+        setNumberOfDaysToCalculateDueDate(numberOfDaysToCalculateDueDate);
     }
 
     @Override
@@ -42,10 +44,9 @@ public class InsurancePR extends InsurancePR_Base implements IAdministrativeOffi
         return getFixedAmount();
     }
 
-    @Override
-    public FixedAmountPR edit(final Money fixedAmount) {
+    public FixedAmountPR edit(final Money fixedAmount, Integer numberOfDaysToCalculateDueDate) {
         deactivate();
-        return new InsurancePR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), fixedAmount);
+        return new InsurancePR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), fixedAmount, numberOfDaysToCalculateDueDate);
     }
 
     @Override
