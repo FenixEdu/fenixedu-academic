@@ -171,5 +171,44 @@
                 </div>
             </div>
         </section>
+        <c:if test="${isPaymentManager && not empty invalidEvents}">
+            <section class="alert alert-danger">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2><spring:message code="label.invalid.debts" text="Invalid Debts"/></h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="list-debts">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th style="width: 100px;"><spring:message code="accounting.event.details.creation.date" text="Creation Date"/></th>
+                                    <th><spring:message code="label.description" text="Description"/></th>
+                                    <th><spring:message code="label.error" text="Error"/></th>
+                                    <th><spring:message code="label.additionalInfo" text="Additional Information"/></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach var="eventEntry" items="${invalidEvents}">
+                                    <tr>
+                                        <td style="width: 100px;">
+                                            <time datetime="${eventEntry.key.whenOccured.toString('yyyy-MM-dd')}">${eventEntry.key.whenOccured.toString('dd/MM/yyyy')}</time>
+                                        </td>
+                                        <td>
+                                            <c:out value="${eventEntry.key.description}"/>
+                                        </td>
+                                        <td><c:out value="${eventEntry.value}"/></td>
+                                        <td><c:out value="${eventEntry.key.externalId}"/></td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </section>
+                    </div>
+                </div>
+            </section>
+        </c:if>
     </main>
 </div>
