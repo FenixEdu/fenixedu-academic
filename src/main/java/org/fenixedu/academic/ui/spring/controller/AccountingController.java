@@ -2,7 +2,9 @@ package org.fenixedu.academic.ui.spring.controller;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletContext;
@@ -14,6 +16,7 @@ import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.accounting.calculator.CreditEntry;
 import org.fenixedu.academic.domain.accounting.calculator.Debt;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.ui.spring.service.AccountingManagementAccessControlService;
 import org.fenixedu.academic.ui.spring.service.AccountingManagementService;
 import org.fenixedu.academic.ui.spring.service.AccountingManagementService.PaymentSummary;
@@ -36,7 +39,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public abstract class AccountingController {
 
-
+    public static final Comparator<Event> MOST_RECENT_EVENTS_FIRST = Comparator.comparing(Event::getWhenOccured).reversed();
     protected final AccountingManagementService accountingManagementService;
     protected final AccountingManagementAccessControlService accessControlService;
     protected final ServletContext servletContext;
@@ -58,12 +61,13 @@ public abstract class AccountingController {
         if (loggedUser == user || accessControlService.isPaymentManager(loggedUser)) {
             model.addAttribute("person", person);
 
-            model.addAttribute("openEvents", person.getEventsSet().stream().filter(Event::isOpen).sorted(Comparator
-                    .comparing(Event::getWhenOccured).reversed()).collect(Collectors.toList()));
+            Set<Event> events = person.getEventsSet();
+            HashMap<Event, String> invalidEventsMap = getInvalidEventsMap(events);
+            Set<Event> validEvents = events.stream().filter(event -> !invalidEventsMap.keySet().contains(event)).collect(Collectors.toSet());
 
-            model.addAttribute("otherEvents", person.getEventsSet().stream().filter(e -> !e.isOpen()).sorted(Comparator
-                    .comparing(Event::getWhenOccured).reversed()).collect(Collectors.toList()));
-
+            model.addAttribute("openEvents", validEvents.stream().filter(Event::isOpen).sorted(MOST_RECENT_EVENTS_FIRST).collect(Collectors.toList()));
+            model.addAttribute("otherEvents", validEvents.stream().filter(e -> !e.isOpen()).sorted(MOST_RECENT_EVENTS_FIRST).collect(Collectors.toList()));
+            model.addAttribute("invalidEvents", invalidEventsMap);
             model.addAttribute("isPaymentManager", accessControlService.isPaymentManager(loggedUser));
 
             return view("events");
@@ -156,6 +160,19 @@ public abstract class AccountingController {
             throw new UnsupportedOperationException("Unknown transaction type: not a payment or exemption");
         }
 
+    }
+
+    private HashMap<Event, String> getInvalidEventsMap(Set<Event> events) {
+        HashMap<Event, String> invalidEventsMap = new HashMap<>();
+        events.forEach(event -> {
+            try {
+                event.getDebtInterestCalculator(new DateTime());
+            }
+            catch (DomainException e){
+                invalidEventsMap.put(event, e.getLocalizedMessage());
+            }
+        });
+        return invalidEventsMap;
     }
 
     protected String view(String view) {
