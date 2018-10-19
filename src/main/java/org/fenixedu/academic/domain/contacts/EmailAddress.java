@@ -153,9 +153,6 @@ public class EmailAddress extends EmailAddress_Base {
 
     @Override
     protected void checkRulesToDelete() {
-        if (isInstitutionalType()) {
-            throw new DomainException("error.domain.contacts.EmailAddress.cannot.delete.institution.emailAddress", getValue());
-        }
         if (getParty().getPartyContacts(getClass()).size() == 1) {
             throw new DomainException("error.domain.contacts.EmailAddress.cannot.remove.last.emailAddress");
         }
