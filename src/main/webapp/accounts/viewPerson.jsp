@@ -27,6 +27,10 @@
 
 <logic:present name="person">
 	<bean:define id="person" name="person" type="org.fenixedu.academic.domain.Person"/>
+	<bean:define id="confirmationMessage" type="java.lang.String">
+		return confirm('<bean:message key="label.confirm" bundle="APPLICATION_RESOURCES" />')
+	</bean:define>
+
 
 	<h2><bean:message key="label.person.title.personalConsult" bundle="APPLICATION_RESOURCES"/></h2>
 	<bean:define id="personID" name="person" property="externalId" />
@@ -146,7 +150,7 @@
 						<bean:message key="label.edit" bundle="APPLICATION_RESOURCES"/>
 					</html:link>,
 				</logic:equal>
-				<html:link action="<%="/accounts/partyContacts.do?method=deletePartyContact&personID=" + personID%>" paramId="contactId" paramName="contact" paramProperty="externalId">
+				<html:link onclick="<%= confirmationMessage %>" action="<%="/accounts/partyContacts.do?method=deletePartyContact&personID=" + personID%>" paramId="contactId" paramName="contact" paramProperty="externalId">
 					<bean:message key="label.clear" bundle="APPLICATION_RESOURCES"/>
 				</html:link>
 				<logic:equal name="contact" property="valid" value="false" >
@@ -214,7 +218,7 @@
 						</html:link>, <html:link
 							action="<%="/accounts/partyContacts.do?method=prepareEditPartyContact&personID=" + personID + "&contactId="+contactId %>">
 							<bean:message key="label.edit" bundle="APPLICATION_RESOURCES"/>
-						</html:link>, <html:link
+						</html:link>, <html:link onclick="<%= confirmationMessage %>"
 							action="<%="/accounts/partyContacts.do?method=deletePartyContact&personID=" + personID + "&contactId="+contactId %>">
 							<bean:message key="label.clear" bundle="APPLICATION_RESOURCES"/>
 						</html:link></td>
@@ -277,7 +281,7 @@
 						</html:link>, <html:link
 							action="<%="/accounts/partyContacts.do?method=prepareEditPartyContact&personID=" + personID + "&contactId="+contactId %>">
 							<bean:message key="label.edit" bundle="APPLICATION_RESOURCES"/>
-						</html:link>, <html:link
+						</html:link>, <html:link onclick="<%= confirmationMessage %>"
 							action="<%="/accounts/partyContacts.do?method=deletePartyContact&personID=" + personID + "&contactId="+contactId %>">
 							<bean:message key="label.clear" bundle="APPLICATION_RESOURCES"/>
 						</html:link></td>
@@ -339,13 +343,12 @@
 						</html:link>, <html:link
 							action="<%="/accounts/partyContacts.do?method=prepareEditPartyContact&personID=" + personID + "&contactId="+contactId %>">
 							<bean:message key="label.edit" bundle="APPLICATION_RESOURCES"/>
-						</html:link> <logic:notEqual name="contact" property="type.name"
-							value="INSTITUTIONAL">,
-					<html:link
+						</html:link>,
+						<html:link onclick="<%= confirmationMessage %>"
 								action="<%="/accounts/partyContacts.do?method=deletePartyContact&personID=" + personID + "&contactId="+contactId %>">
 								<bean:message key="label.clear" bundle="APPLICATION_RESOURCES"/>
 							</html:link>
-						</logic:notEqual></td>
+						</td>
 					</tr>
 				</logic:iterate>
 			</logic:notEmpty>
@@ -403,7 +406,7 @@
 						</html:link>, <html:link
 							action="<%="/accounts/partyContacts.do?method=prepareEditPartyContact&personID=" + personID + "&contactId="+contactId %>">
 							<bean:message key="label.edit" bundle="APPLICATION_RESOURCES"/>
-						</html:link> <html:link
+						</html:link> <html:link onclick="<%= confirmationMessage %>"
 							action="<%="/accounts/partyContacts.do?method=deletePartyContact&personID=" + personID + "&contactId="+contactId %>">
 							<bean:message key="label.clear" bundle="APPLICATION_RESOURCES"/>
 						</html:link></td>
