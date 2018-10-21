@@ -54,13 +54,13 @@
 		<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
 		<fr:property name="sortBy" value="eventType=asc,startDate=desc" />		
 		
-		<fr:property name="linkFormat(delete)"
-			value="<%="/postingRules.do?method=deleteGraduationDegreeCurricularPlanPostingRule&amp;postingRuleId=${externalId}&amp;degreeCurricularPlanId=" + degreeCurricularPlanId%>" />
-		<fr:property name="key(delete)" value="label.delete" />
-		<fr:property name="bundle(delete)" value="APPLICATION_RESOURCES" />
-		<fr:property name="visibleIf(delete)" value="mostRecent" />
-		<fr:property name="confirmationKey(delete)" value="label.payments.postingRules.confirmDeletePostingRule" />
-		<fr:property name="confirmationBundle(delete)" value="MANAGER_RESOURCES"></fr:property>
+		<%--<fr:property name="linkFormat(delete)"--%>
+			<%--value="<%="/postingRules.do?method=deleteGraduationDegreeCurricularPlanPostingRule&amp;postingRuleId=${externalId}&amp;degreeCurricularPlanId=" + degreeCurricularPlanId%>" />--%>
+		<%--<fr:property name="key(delete)" value="label.delete" />--%>
+		<%--<fr:property name="bundle(delete)" value="APPLICATION_RESOURCES" />--%>
+		<%--<fr:property name="visibleIf(delete)" value="mostRecent" />--%>
+		<%--<fr:property name="confirmationKey(delete)" value="label.payments.postingRules.confirmDeletePostingRule" />--%>
+		<%--<fr:property name="confirmationBundle(delete)" value="MANAGER_RESOURCES"></fr:property>--%>
 	</fr:layout>
 </fr:view>
 
