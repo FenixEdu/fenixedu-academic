@@ -1098,4 +1098,10 @@ public abstract class Event extends Event_Base {
         setOriginalValueCheck(getOriginalAmountToPay());
     }
 
+    public boolean isOpenAndAfterDueDate(DateTime when) {
+        DebtInterestCalculator debtInterestCalculator = getDebtInterestCalculator(when);
+        return debtInterestCalculator.getDebtsOrderedByDueDate().stream().anyMatch(d -> d.isOpen() && when.toLocalDate()
+                .isAfter(d.getDueDate()));
+    }
+
 }
