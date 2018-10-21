@@ -42,61 +42,56 @@
                         </div>
                     </div>
                     <h1>
-                        <spring:message code="label.payment.reference" text="Payment Reference"/>
+                        <spring:message code="label.payment.methods" text="Payment Methods"/>
                     </h1>
                 </div>
             </div>
         </header>
 
         <div class="row">
-            <div class="col-sm-6 alert alert-warning">
-                <h4><b>
-                    <spring:message code="payment.reference.information" text="Payment Reference Information"/>
-
-                </b></h4>
-                <c:choose>
-                    <c:when test="${empty paymentCodeEntry.amount}">
-                    <p style="white-space: pre-line;">
-                        <spring:message code="payment.reference.reusable.information" text="Reusable Payment Reference Information"/>
-                    </c:when>
-                    <c:otherwise>
-                    <p style="white-space: pre-line;">
-                        <spring:message code="payment.reference.for.interests.information" text="Payment Reference for Interests Information" arguments="${maxDaysBetweenPromiseAndPayment}"/>
-                    </p>
-                    </c:otherwise>
-                </c:choose>
-            </div>
+            <modular:intersect location="event.payment.reference.extra.info" position="info">
+                <modular:arg key="event" value="${paymentCodeEntry.event}"/>
+            </modular:intersect>
         </div>
 
         <div class="row">
-            <div class="col-sm-3">
-                <section class="reference-card">
-                    <dl>
-                        <dt>
-                            <spring:message code="payment.reference.card.reference" text="Reference"/>
-                        </dt>
-                        <dd><c:out value="${paymentCodeEntry.paymentCode.formattedCode}"/></dd>
-                    </dl>
-                    <dl>
-                        <dt>
-                            <spring:message code="payment.reference.card.entity" text="Entity"/>
-                        </dt>
-                        <dd><c:out value="${paymentCodeEntry.paymentCode.entityCode}"/></dd>
-                    </dl>
-                    <c:if test="${not empty paymentCodeEntry.amount}">
-                        <dl>
-                            <dt>
-                                <spring:message code="payment.reference.card.amount" text="Amount"/>
-                            </dt>
-                            <dd><c:out value="${paymentCodeEntry.amount}"/><span>€</span></dd>
-                        </dl>
-                    </c:if>
-                </section>
-            </div>
-        </div>
+            <div class="col-md-6">
+                <div class="overall-description">
+                    <h4><b><spring:message code="label.payment.method.sibs" text="Payment Via SIBS"/></b></h4>
 
-        <modular:intersect location="event.payment.reference.extra.info" position="info">
-            <modular:arg key="event" value="${paymentCodeEntry.event}"/>
-        </modular:intersect>
+                    <div class="alert alert-warning">
+                        <c:choose>
+                            <c:when test="${empty paymentCodeEntry.amount}">
+                                <p style="white-space: pre-line;"><spring:message code="payment.reference.reusable.information" text="Reusable Payment Reference Information"/></p>
+                            </c:when>
+                            <c:otherwise>
+                                <p style="white-space: pre-line;"><spring:message code="payment.reference.for.interests.information" text="Payment Reference for Interests Information" arguments="${maxDaysBetweenPromiseAndPayment}"/></p>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+
+                    <div>
+                        <dl>
+                            <dt><spring:message code="payment.reference.card.entity" text="Entity"/></dt>
+                            <dd><c:out value="${paymentCodeEntry.paymentCode.entityCode}"/></dd>
+                        </dl>
+                        <dl>
+                            <dt><spring:message code="payment.reference.card.reference" text="Reference"/></dt>
+                            <dd><c:out value="${paymentCodeEntry.paymentCode.formattedCode}"/></dd>
+                        </dl>
+                        <c:if test="${not empty paymentCodeEntry.amount}">
+                            <dl>
+                                <dt><spring:message code="payment.reference.card.amount" text="Amount"/></dt>
+                                <dd><c:out value="${paymentCodeEntry.amount}"/><span><spring:message code="label.euro" text="EUR"/></span></dd>
+                            </dl>
+                        </c:if>
+                    </div>
+                </div>
+            </div>
+
+            <modular:intersect location="event.payment.reference.extra.info" position="paymentMethods">
+                <modular:arg key="event" value="${paymentCodeEntry.event}"/>
+            </modular:intersect>
+        </diV>
     </main>
 </div>
