@@ -27,12 +27,13 @@ import java.util.stream.Stream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.contacts.EmailAddress;
 import org.fenixedu.academic.domain.util.email.Message;
-import org.fenixedu.academic.domain.util.email.Recipient;
 import org.fenixedu.academic.domain.util.email.SystemSender;
 import org.fenixedu.academic.dto.person.PersonBean;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
@@ -235,9 +236,14 @@ public class ManageAccountsDA extends FenixDispatchAction {
         try {
             FenixFramework.atomic(() -> {
                 User user = person.getUser();
+                String to = getSendingEmailAddress(person);
+
+                if (StringUtils.isNotBlank(to)) {
+                    sendLastEmail(to);
+                }
+
                 person.delete();
                 if (user != null) {
-                    sendLastEmail(user);
                     user.delete();
                 }
             });
@@ -249,8 +255,17 @@ public class ManageAccountsDA extends FenixDispatchAction {
         }
     }
 
-    private void sendLastEmail(final User user) {
-        final Recipient recipient = new Recipient(user.groupOf());
+    private String getSendingEmailAddress(Person person) {
+        EmailAddress emailAddress = person.getEmailAddressForSendingEmails();
+        String to = "";
+        if (emailAddress != null) {
+            to = emailAddress.getValue();
+        }
+
+        return to;
+    }
+
+    private void sendLastEmail(final String to) {
         SystemSender systemSender = Bennu.getInstance().getSystemSender();
         LocalizedString institutionName = Bennu.getInstance().getInstitutionUnit().getNameI18n();
         String supportEmail = PortalConfiguration.getInstance().getSupportEmailAddress();
@@ -269,7 +284,7 @@ public class ManageAccountsDA extends FenixDispatchAction {
                 institutionName.getContent(new Locale("en")) + " of the Universidade de Lisboa", supportEmail));
         String body = sb.toString();
 
-        new Message(systemSender, recipient, subject, body);
+        new Message(systemSender, to, subject, body);
     }
 
 }
