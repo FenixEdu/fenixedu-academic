@@ -28,15 +28,12 @@ import org.fenixedu.academic.domain.accounting.Account;
 import org.fenixedu.academic.domain.accounting.AccountType;
 import org.fenixedu.academic.domain.accounting.Entry;
 import org.fenixedu.academic.domain.accounting.EntryType;
-import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.accounting.postingRules.InsurancePR;
 import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate;
-import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.dto.accounting.SibsTransactionDetailDTO;
@@ -48,28 +45,7 @@ import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-
 public class InsuranceEvent extends InsuranceEvent_Base implements IInsuranceEvent {
-
-    static {
-        getRelationPersonAccountingEvent().addListener(new RelationAdapter<Party, Event>() {
-            @Override
-            public void beforeAdd(Party party, Event event) {
-                if (event instanceof InsuranceEvent) {
-                    Person person = (Person) party;
-                    final InsuranceEvent insuranceEvent = ((InsuranceEvent) event);
-                    if (person != null
-                            && (person.hasAdministrativeOfficeFeeInsuranceEventFor(insuranceEvent.getExecutionYear()) || person
-                                    .hasInsuranceEventFor(insuranceEvent.getExecutionYear()))) {
-                        throw new DomainException(
-                                "error.accounting.events.insurance.InsuranceEvent.person.already.has.insurance.event.for.execution.year");
-
-                    }
-                }
-            }
-        });
-    }
 
     private InsuranceEvent() {
         super();
@@ -85,19 +61,6 @@ public class InsuranceEvent extends InsuranceEvent_Base implements IInsuranceEve
         final PostingRule postingRule = getPostingRule();
         if (postingRule instanceof InsurancePR) {
             setDueDate(getWhenOccured().plusDays(((InsurancePR) postingRule).getNumberOfDaysToCalculateDueDate()));
-        }
-    }
-
-    @Override
-    protected void init(final EventType eventType, final Person person, final ExecutionYear executionYear) {
-        checkRulesToCreate(person, executionYear);
-        super.init(eventType, person, executionYear);
-    }
-
-    private void checkRulesToCreate(final Person person, final ExecutionYear executionYear) {
-        if (person.hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(executionYear)) {
-            throw new DomainException(
-                    "error.accounting.events.insurance.InsuranceEvent.person.already.has.insurance.event.for.execution.year");
         }
     }
 
