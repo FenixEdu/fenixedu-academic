@@ -117,19 +117,6 @@ public class AccountingEventsManager {
                         .createSuccess();
 
         if (result.isSuccess()) {
-
-            if (studentCurricularPlan.getRegistration().hasGratuityEvent(executionYear, DfaGratuityEvent.class)) {
-                result.addMessage(Bundle.APPLICATION,
-                        "error.accounting.events.AccountingEventsManager.student.already.has.gratuity.event.for.execution.year",
-                        studentCurricularPlan.getRegistration().getStudent().getNumber().toString(), studentCurricularPlan
-                                .getRegistration().getDegree().getPresentationName(), executionYear.getYear());
-
-                result.setSuccess(false);
-
-                return result;
-
-            }
-
             new DfaGratuityEvent(getAdministrativeOffice(studentCurricularPlan), studentCurricularPlan.getPerson(),
                     studentCurricularPlan, executionYear);
         }
@@ -171,19 +158,6 @@ public class AccountingEventsManager {
                         .createSuccess();
 
         if (result.isSuccess()) {
-
-            if (studentCurricularPlan.getRegistration().hasGratuityEvent(executionYear, GratuityEventWithPaymentPlan.class)) {
-                result.addMessage(Bundle.APPLICATION,
-                        "error.accounting.events.AccountingEventsManager.student.already.has.gratuity.event.for.execution.year",
-                        studentCurricularPlan.getRegistration().getStudent().getNumber().toString(), studentCurricularPlan
-                                .getRegistration().getDegree().getPresentationName(), executionYear.getYear());
-
-                result.setSuccess(false);
-
-                return result;
-
-            }
-
             new GratuityEventWithPaymentPlan(getAdministrativeOffice(studentCurricularPlan), studentCurricularPlan.getPerson(),
                     studentCurricularPlan, executionYear);
         }
@@ -231,17 +205,6 @@ public class AccountingEventsManager {
 
             final Student student = studentCurricularPlan.getRegistration().getStudent();
 
-            if (student.getPerson().hasAdministrativeOfficeFeeInsuranceEventFor(executionYear)) {
-                result.addMessage(
-                        Bundle.APPLICATION,
-                        "error.accounting.events.AccountingEventsManager.student.already.has.administrativeoffice.fee.and.insurance.event.for.year",
-                        student.getNumber().toString(), executionYear.getYear());
-
-                result.setSuccess(false);
-
-                return result;
-
-            }
               new AdministrativeOfficeFeeEvent(getAdministrativeOffice(studentCurricularPlan), studentCurricularPlan.getPerson
                       (), executionYear);
               new InsuranceEvent(studentCurricularPlan.getPerson(), executionYear);
@@ -312,20 +275,6 @@ public class AccountingEventsManager {
                         .createSuccess();
 
         if (result.isSuccess()) {
-
-            final Student student = studentCurricularPlan.getRegistration().getStudent();
-
-            if (student.getPerson().hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(executionYear)) {
-                result.addMessage(Bundle.APPLICATION,
-                        "error.accounting.events.AccountingEventsManager.student.already.has.insurance.event.for.year", student
-                                .getNumber().toString(), executionYear.getYear());
-
-                result.setSuccess(false);
-
-                return result;
-
-            }
-
             new InsuranceEvent(studentCurricularPlan.getPerson(), executionYear);
         }
 
@@ -357,25 +306,11 @@ public class AccountingEventsManager {
 
     @Atomic
     public InvocationResult createInsuranceEvent(final Person person, final ExecutionYear executionYear) {
-
         final InvocationResult result = InvocationResult.createSuccess();
-
         if (result.isSuccess()) {
-
-            if (person.hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(executionYear)) {
-                result.addMessage(Bundle.APPLICATION,
-                        "error.accounting.events.AccountingEventsManager.student.already.has.insurance.event.for.year", person
-                                .getStudent().getNumber().toString(), executionYear.getYear());
-
-                result.setSuccess(false);
-
-                return result;
-
-            }
-
             new InsuranceEvent(person, executionYear);
         }
-
         return result;
     }
+
 }
