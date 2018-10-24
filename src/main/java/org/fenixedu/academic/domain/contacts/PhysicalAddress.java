@@ -56,6 +56,23 @@ public class PhysicalAddress extends PhysicalAddress_Base {
         }
     };
 
+    public static Comparator<PhysicalAddress> COMPARATOR_BY_RELEVANCE = (a1, a2) -> {
+        final boolean d1 = a1.getDefaultContact();
+        final boolean d2 = a2.getDefaultContact();
+        final boolean ac1 = a1.getActive();
+        final boolean ac2 = a2.getActive();
+            // some addresses don't have an associated country and that is relevant for the postal codes
+        final Country c1 = a1.getCountryOfResidence();
+        final Country c2 = a2.getCountryOfResidence();
+        return (c1 != null && c2 == null) ? -1 : 
+            ((c2 != null && c1 == null) ? 1 :
+                ((ac1 && !ac2) ? -1 :
+                    (ac2 && !ac1) ? 1 : 
+                        ((d1 && !d2) ? -1 :
+                            (d2 && !d1) ? 1 :
+                                a1.getExternalId().compareTo(a2.getExternalId()))));
+    };
+
     static public PhysicalAddress createPhysicalAddress(final Party party, final PhysicalAddressData data, PartyContactType type,
             Boolean isDefault) {
         return new PhysicalAddress(party, type, isDefault, data);

@@ -1867,4 +1867,13 @@ public class Person extends Person_Base {
     private String createFromName() {
         return String.format("%s (%s)", Unit.getInstitutionAcronym(), getName());
     }
+
+    public PhysicalAddress getFiscalAddress() {
+        return getPartyContactsSet().stream()
+                .filter(pc -> pc instanceof PhysicalAddress)
+                .map(pc -> (PhysicalAddress) pc)
+                .sorted(PhysicalAddress.COMPARATOR_BY_RELEVANCE)
+                .findFirst().orElse(null);
+    }
+
 }
