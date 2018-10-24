@@ -22,12 +22,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.academic.domain.AcademicProgram;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
+import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import org.fenixedu.academic.util.FileUtils;
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -195,6 +200,20 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
 
     public boolean isAbleToSendEmailToAcceptStudent() {
         return getProcess().isStudentAccepted() && isMostRecent() && getCandidacyFileActive();
+    }
+
+    @Override
+    public boolean isAccessible(User user) {
+        if (user == null || user.getPerson() == null) {
+            return false;
+        }
+
+        return AcademicAccessRule.getProgramsAccessibleToFunction(
+                AcademicOperationType.MANAGE_CANDIDACY_PROCESSES, user)
+                .filter(program -> getProcess().getCandidacy().getAllDegrees().contains(program))
+                .findAny()
+                .map(Boolean -> true)
+                .orElse(super.isAccessible(user));
     }
 
 }
