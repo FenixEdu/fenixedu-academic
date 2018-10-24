@@ -92,6 +92,7 @@ public abstract class AccountingController {
 
         model.addAttribute("debts", debtInterestCalculator.getDebtsOrderedByDueDate());
         model.addAttribute("eventTotalAmountToPay", debtInterestCalculator.getTotalDueAmount());
+        model.addAttribute("eventTotalUnusedAmount", debtInterestCalculator.getTotalUnusedAmount());
         model.addAttribute("eventDebtAmountToPay", debtInterestCalculator.getDueAmount());
         model.addAttribute("eventInterestAmountToPay", debtInterestCalculator.getDueInterestAmount());
         model.addAttribute("eventFineAmountToPay", debtInterestCalculator.getDueFineAmount());

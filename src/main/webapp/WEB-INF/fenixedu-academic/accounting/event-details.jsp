@@ -89,6 +89,10 @@
                         <dt><spring:message code="accounting.event.details.original.debt.amount" text="Original amount"/></dt>
                         <dd><c:out value="${eventOriginalAmountToPay}"/> <span><spring:message code="label.currency.euro" text="Eur"/></span></dd>
                     </dl>
+                    <dl>
+                        <dt><spring:message code="accounting.event.details.amount.unused" text="Unused Amount"/></dt>
+                        <dd><c:out value="${eventTotalUnusedAmount}"/> <span><spring:message code="label.currency.euro" text="Eur"/></span></dd>
+                    </dl>
                 </div>
             </div>
             <div class="col-md-4">
@@ -190,7 +194,9 @@
                                 <dd><c:out value="${debt.date.toString('dd/MM/yyyy')}"/></dd>
                             </dl>
                             <footer>
-                                <a class="btn btn-default btn-block" href="debt/${debt.date.toString('yyyy-MM-dd')}/details">Ver Detalhes</a>
+                                <a class="btn btn-default btn-block" href="debt/${debt.date.toString('yyyy-MM-dd')}/details">
+                                    <spring:message code="accounting.event.details.link" text="View Details"/>
+                                </a>
                             </footer>
                         </article>
                     </c:forEach>

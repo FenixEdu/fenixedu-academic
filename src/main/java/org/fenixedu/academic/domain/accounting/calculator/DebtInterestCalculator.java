@@ -224,6 +224,10 @@ public class DebtInterestCalculator {
         return sum(Stream.of(getPaidDebtAmount(), getPaidInterestAmount(), getPaidFineAmount()));
     }
 
+    public BigDecimal getTotalUnusedAmount() {
+        return getCreditEntryStream().map(CreditEntry::getUnusedAmount).reduce(BigDecimal.ZERO,BigDecimal::add);
+    }
+
     public BigDecimal getDebtExemptionAmount() {
         return sum(getDebtStream(),Debt::getDebtExemptionAmount);
     }
