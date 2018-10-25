@@ -6275,7 +6275,7 @@ relation PaymentMethodDefaultSibs {
         multiplicity 0..1;
     }
     accounting.PaymentMethod playsRole sibsPaymentMethod {
-        multiplicity 1..1;
+        multiplicity 0..1;
     }
 }
 
@@ -6284,7 +6284,7 @@ relation PaymentMethodDefaultCash {
         multiplicity 0..1;
     }
     accounting.PaymentMethod playsRole cashPaymentMethod {
-        multiplicity 1..1;
+        multiplicity 0..1;
     }
 }
 
