@@ -41,6 +41,7 @@ import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.accounting.PaymentCodeMapping;
 import org.fenixedu.academic.domain.accounting.PaymentCodeState;
 import org.fenixedu.academic.domain.accounting.SibsPaymentFileProcessReport;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.accounting.sibsPaymentFileProcessReport.SibsPaymentFileProcessReportDTO;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
@@ -195,7 +196,11 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
 
     private static String getMessage(Exception ex) {
         String message = (ex.getMessage() == null) ? ex.getClass().getSimpleName() : ex.getMessage();
-        return BundleUtil.getString(Bundle.MANAGER, message);
+        String[] args = null;
+        if (ex instanceof DomainException){
+            args = ((DomainException) ex).getArgs();
+        }
+        return BundleUtil.getString(Bundle.MANAGER, message, args);
     }
 
     private void recursiveZipProcess(File unzipDir, HttpServletRequest request) {

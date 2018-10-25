@@ -438,7 +438,7 @@ public abstract class Event extends Event_Base {
 
     public final void recalculateState(final DateTime whenRegistered) {
         if (isCancelled()) {
-            throw new DomainException("error.org.fenixedu.academic.domain.accounting.Event.cannot.recalculate.state.on.cancelled.events");
+            throw new DomainException("error.org.fenixedu.academic.domain.accounting.Event.cannot.recalculate.state.on.cancelled.events", getExternalId(), getPerson().getExternalId());
         }
 
         internalRecalculateState(whenRegistered.plusSeconds(1));
