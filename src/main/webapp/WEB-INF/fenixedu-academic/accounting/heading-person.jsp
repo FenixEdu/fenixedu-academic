@@ -1,5 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 
 <style>
@@ -57,9 +58,16 @@
             <dl>
                 <dt><spring:message code="label.name" text="Name"/></dt>
                 <dd>
-                    <a href="<%= request.getContextPath() %>/accounting-management/${person.externalId}">
-                        <c:out value="${person.name}"/>
-                    </a>
+                    <c:if test="${fn:containsIgnoreCase(requestScope['javax.servlet.forward.request_uri'], 'owner-accounting-events')}">
+                        <a href="<%= request.getContextPath() %>/owner-accounting-events/${person.externalId}">
+                            <c:out value="${person.name}"/>
+                        </a>
+                    </c:if>
+                    <c:if test="${not fn:containsIgnoreCase(requestScope['javax.servlet.forward.request_uri'], 'owner-accounting-events')}">
+                        <a href="<%= request.getContextPath() %>/accounting-management/${person.externalId}">
+                            <c:out value="${person.name}"/>
+                        </a>
+                    </c:if>
                     <c:if test="${not empty person.user}">
                         <span class="docType">
                             <c:out value="${person.user.username}"/>

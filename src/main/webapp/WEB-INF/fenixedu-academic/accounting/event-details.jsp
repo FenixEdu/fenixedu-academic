@@ -52,7 +52,6 @@
     <header>
         <div class="row">
             <div class="col-md-10">
-                <p><a href="${backUrl}" class="btn btn-default"><spring:message code="label.back" text="Back"/></a></p>
                 <h1>
                     <c:out value="${event.description}"/>
                     <c:if test="${event.currentEventState == 'CANCELLED'}">
@@ -60,15 +59,13 @@
                     </c:if>
                 </h1>
             </div>
-
         </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="overall-description">
-                    <dl>
-                        <dt><spring:message code="label.name" text="Name"/></dt>
-                        <dd><c:out value="${event.person.presentationName}"/></dd>
-                    </dl>
+    </header>
+    <c:set var="person" scope="request" value="${event.person}"/>
+    <jsp:include page="heading-person.jsp"/>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="overall-description">
                     <dl>
                         <dt><spring:message code="accounting.event.details.creation.date" text="Creation Date"/></dt>
                         <dd><time datetime="${event.whenOccured.toString("yyyy-MM-dd")}">${event.whenOccured.toString("dd/MM/yyyy")}</time></dd>
@@ -93,15 +90,16 @@
                         <dt><spring:message code="accounting.event.details.amount.unused" text="Unused Amount"/></dt>
                         <dd><c:out value="${eventTotalUnusedAmount}"/> <span><spring:message code="label.currency.euro" text="Eur"/></span></dd>
                     </dl>
-                </div>
             </div>
-            <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
                 <modular:intersect location="event.details.extra.info" position="info"> 
                     <modular:arg key="event" value="${event}"/>
                     <modular:arg key="isPaymentManager" value="${isPaymentManager}"/>
                 </modular:intersect>
-            </div>
-            <div class="col-md-2 col-md-push-1">
+        </div>
+        <div class="col-md-2 col-md-push-1">
+            <br/>
                 <c:if test="${event.currentEventState != 'CANCELLED'}">
                     <c:if test="${eventTotalAmountToPay > 0 && isEventOwner}">
                         <a class="btn btn-primary btn-block" href="${payUrl}"><spring:message code="accounting.event.action.pay" text="Pay"/></a>
@@ -122,9 +120,8 @@
                     <modular:arg key="event" value="${event}"/>
                     <modular:arg key="isPaymentManager" value="${isPaymentManager}"/>
                 </modular:intersect>
-            </div>
         </div>
-        <div class="row">
+    </div>
     <div class="row">
         <div class="col-md-12">
             <header>

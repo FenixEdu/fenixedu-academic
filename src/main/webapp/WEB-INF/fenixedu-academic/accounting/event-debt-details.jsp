@@ -38,31 +38,29 @@
 
 <div class="container-fluid">
     <header>
+        <h1>
+            <jsp:include page="heading-event.jsp"/>
+            <c:if test="${event.currentEventState == 'CANCELLED'}">
+                <span class="text-danger"> (Cancelada)</span>
+            </c:if>
+        </h1>
+    </header>
+    <c:set var="person" scope="request" value="${event.person}"/>
+    <jsp:include page="heading-person.jsp"/>
         <div class="row">
             <div class="col-md-10">
-                <p><a href="${backUrl}" class="btn btn-default"><spring:message code="label.back" text="Back"/></a></p>
-                <h3>
-                    <c:out value="${eventDescription}"/>
-                    <c:if test="${event.currentEventState == 'CANCELLED'}">
-                        <span class="text-danger"> (Cancelada)</span>
-                    </c:if>
-                </h3>
-                <h1><spring:message code="accounting.event.details.debt.name" arguments="${debtIndex}"/> </h1>
+                <h2><spring:message code="accounting.event.details.debt.name" arguments="${debtIndex}"/> </h2>
             </div>
             <c:if test="${totalAmount > 0 && isEventOwner && event.currentEventState != 'CANCELLED'}">
                 <div class="col-md-2">
+                    <br/>
                     <a class="btn btn-primary btn-block" href="${payUrl}"><spring:message code="accounting.event.action.pay" text="Pay"/></a>
                 </div>
             </c:if>
         </div>
-    </header>
     <div class="row">
         <div class="col-md-4 col-sm-12">
             <div class="overall-description">
-                <dl>
-                    <dt><spring:message code="label.name" text="Name"/></dt>
-                    <dd><c:out value="${event.person.presentationName}"/></dd>
-                </dl>
                 <dl>
                     <dt><spring:message code="accounting.event.details.amount.pay" text="To pay"/></dt>
                     <dd><c:out value="${totalAmount}"/><span>€</span></dd>
