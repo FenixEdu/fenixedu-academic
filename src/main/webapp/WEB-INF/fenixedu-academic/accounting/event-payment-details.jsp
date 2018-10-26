@@ -35,26 +35,27 @@
 
 <div class="container-fluid">
     <header>
-        <div class="row">
-            <div class="col-md-10">
-                <p><a href="${backUrl}" class="btn btn-default"><spring:message code="label.back" text="Back"/></a></p>
-            </div>
-        </div>
+        <h1>
+            <a href="<%= request.getContextPath() %>/accounting-management/${event.externalId}/details">
+                ${event.description}
+                    <c:if test="${event.currentEventState == 'CANCELLED'}">
+                        <span class="text-danger"> (Cancelada)</span>
+                    </c:if>
+            </a>
+        </h1>
+    </header>
+    <c:set var="person" scope="request" value="${event.person}"/>
+    <jsp:include page="heading-person.jsp"/>
         <div class="row">
             <div class="col-md-12">
-                <h1>
+                <h2>
                     <spring:message code="accounting.payment.details.title" text="Payment report"/>
-                </h1>
+                </h2>
             </div>
         </div>
-    </header>
     <div class="row">
         <div class="col-md-5">
             <section class="payment-metadata">
-                <dl>
-                    <dt>Pago por:</dt>
-                    <dd><c:out value="${transactionDetail.event.person.presentationName}"/></dd>
-                </dl>
                 <dl>
                     <dt>Método Pagamento:</dt>
                     <dd><c:out value="${transactionDetail.transactionDetail.paymentMethod.localizedName}"/></dd>
