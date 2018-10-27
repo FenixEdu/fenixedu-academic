@@ -18,10 +18,13 @@
  */
 package org.fenixedu.academic.domain;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.LocalizedString;
 
 import com.google.common.base.Strings;
@@ -72,4 +75,19 @@ public class TeacherCategory extends TeacherCategory_Base implements Comparable<
         }
         super.setCode(code);
     }
+
+    public void delete() {
+        DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
+        setRoot(null);
+        super.deleteDomainObject();
+    }
+
+    @Override
+    protected void checkForDeletionBlockers(Collection<String> blockers) {
+        super.checkForDeletionBlockers(blockers);
+        if (!getAuthorizationSet().isEmpty()) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.teacher.category.cant.delete"));
+        }
+    }
+
 }

@@ -170,6 +170,27 @@ public class AuthorizationController {
         return "redirect:/teacher/authorizations/categories";
     }
 
+    /**
+     * 
+     * Action to delete a teacher category
+     * 
+     * @param model
+     * @param category
+     * @return
+     */
+    @RequestMapping(method = GET, value = "categories/delete/{category}")
+    public String delete(Model model, @PathVariable TeacherCategory category) {
+
+        try {
+            service.deleteCategory(category);
+        } catch (Exception e) {
+            model.addAttribute("error", e.getLocalizedMessage());
+        }
+
+        model.addAttribute("categories", service.getCategories());
+        return view("categories/show");
+    }
+
     /***
      * Downloads a CSV file with the authorization information filtered by {@link SearchBean}
      * 

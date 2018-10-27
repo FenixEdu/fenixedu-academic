@@ -23,6 +23,7 @@
 
 <spring:url var="createUrl" value="/teacher/authorizations/categories/create"></spring:url>
 <spring:url var="editUrl" value="/teacher/authorizations/categories"></spring:url>
+<spring:url var="deleteUrl" value="/teacher/authorizations/categories/delete"></spring:url>
 
 <spring:url var="showActiveAuthorizationsUrl" value="/teacher/authorizations"></spring:url>
 <spring:url var="showRevokedUrl" value="/teacher/authorizations/revoked"></spring:url>
@@ -55,6 +56,7 @@ ${portal.toolkit()}
 			<th><spring:message code="teacher.categories.name" /></th>
 			<th><spring:message code="teacher.categories.weight" /></th>
 			<th></th>
+			<th></th>
 		</thead>
 		<tbody>
 			<c:forEach var="category" items="${categories}">
@@ -63,8 +65,51 @@ ${portal.toolkit()}
 					<td><c:out value="${category.name.content}"/></td>
 					<td><c:out value="${category.weight}"/></td>
 					<td><a class="btn btn-default" href="${editUrl}/${category.externalId}"><spring:message code="label.edit"/></a></td>
+					<td>
+						<c:if test="${empty category.authorizationSet}">
+							<a class="btn btn-default" onClick="javascript:showDeleteConfirmModal('${category.externalId}')">
+								<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+								&nbsp;<spring:message code='label.delete' />
+							</a>
+						</c:if>
+					</td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
 </section>
+
+<script>
+
+function showDeleteConfirmModal(externalId) {
+		url = '${deleteUrl}/' + externalId;
+	   $("#deleteLink").attr("href", url);
+	   $('#deleteModal').modal('toggle');
+}
+	 
+$(document).ready(function() {
+	
+});
+
+</script>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalTitle"><spring:message code='label.delete' /></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<spring:message code='label.delete.confirm' />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"><spring:message code='label.cancel' /></button>
+        <a id="deleteLink" class="btn btn-primary" href=""><spring:message code='label.delete' /></a>
+      </div>
+    </div>
+  </div>
+</div>
