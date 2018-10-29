@@ -1085,6 +1085,9 @@ valueType org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDeta
     	CurricularYearList curricularYears;
     }
 
+    class PaymentMethodLog extends DomainOperationLog {
+    }
+
     class PaymentPhase  {
         String description;
         YearMonthDay endDateYearMonthDay;
@@ -12364,5 +12367,15 @@ relation BennuPaymentMethods {
     }
     accounting.PaymentMethod playsRole paymentMethod {
             multiplicity 0..*;
+    }
+}
+
+relation BennuPaymentMethodLogs {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectPaymentMethodLog {
+        multiplicity 1..1;
+    }
+
+    PaymentMethodLog playsRole paymentMethodLog  {
+        multiplicity 0..*;
     }
 }
