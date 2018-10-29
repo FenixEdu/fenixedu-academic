@@ -117,11 +117,10 @@ public class AccountingEventForOwnerController extends AccountingController {
         final long currentNewCodes = event.getEventPaymentCodeEntrySet().stream().filter(entry -> entry.getPaymentCode().isNew()).count();
         final Integer maxNewPaymentCodesPerEvent = FenixEduAcademicConfiguration.getConfiguration().getMaxNewPaymentCodesPerEvent();
 
-        if (currentNewCodes == maxNewPaymentCodesPerEvent) {
+        if (currentNewCodes >= maxNewPaymentCodesPerEvent) {
             model.addAttribute("error", BundleUtil.getString(Bundle.ACADEMIC, "block.entry.creation.max.new.payment.codes", maxNewPaymentCodesPerEvent.toString()));
             return doPayment(event, model, loggedUser);
-        }
-        else if (totalAmount.compareTo(BigDecimal.ZERO) <= 0) {
+        } else if (totalAmount.compareTo(BigDecimal.ZERO) <= 0) {
             model.addAttribute("error", BundleUtil.getString(Bundle.ACADEMIC, "block.entry.creation.not.positive.total.amount"));
             return doPayment(event, model, loggedUser);
         }

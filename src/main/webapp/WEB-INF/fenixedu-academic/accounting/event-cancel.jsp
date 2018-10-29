@@ -39,9 +39,7 @@ ${portal.toolkit()}
 <div class="container-fluid">
     <header>
         <h1>
-            <a href="<%= request.getContextPath() %>/accounting-management/${event.externalId}/details">
-                ${event.description}
-            </a>
+            <jsp:include page="heading-event.jsp"/>
         </h1>
     </header>
         <div class="row">

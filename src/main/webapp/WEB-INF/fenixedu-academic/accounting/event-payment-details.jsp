@@ -36,12 +36,10 @@
 <div class="container-fluid">
     <header>
         <h1>
-            <a href="<%= request.getContextPath() %>/accounting-management/${event.externalId}/details">
-                ${event.description}
-                    <c:if test="${event.currentEventState == 'CANCELLED'}">
-                        <span class="text-danger"> (Cancelada)</span>
-                    </c:if>
-            </a>
+            <jsp:include page="heading-event.jsp"/>
+            <c:if test="${event.currentEventState == 'CANCELLED'}">
+                <span class="text-danger"> (Cancelada)</span>
+            </c:if>
         </h1>
     </header>
     <c:set var="person" scope="request" value="${event.person}"/>
@@ -156,7 +154,7 @@
 
                         <spring:url value="../../../{event}/debt/{debtDueDate}/details" var="debtUrl">
                             <spring:param name="event" value="${event.externalId}"/>
-                            <spring:param name="debtDueDate" value="${payment.debtEntry.date.toString('dd-MM-yyyy')}"/>
+                            <spring:param name="debtDueDate" value="${payment.debtEntry.date.toString('yyyy-MM-dd')}"/>
                         </spring:url>
 
                         <td style="text-align: right;"><a href="${debtUrl}"><spring:message code="accounting.event.details.link"/></a></td>

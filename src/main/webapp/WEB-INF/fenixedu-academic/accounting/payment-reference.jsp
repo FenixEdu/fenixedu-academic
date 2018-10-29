@@ -35,23 +35,33 @@
         <header>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <p><a href="${backUrl}" class="btn btn-default"><spring:message code="label.back" text="Back"/></a></p>
-                            <h1>${description}</h1>
-                        </div>
-                    </div>
                     <h1>
-                        <spring:message code="label.payment.methods" text="Payment Methods"/>
+                        <jsp:include page="heading-event.jsp"/>
                     </h1>
                 </div>
             </div>
         </header>
 
         <div class="row">
-            <modular:intersect location="event.payment.reference.extra.info" position="info">
-                <modular:arg key="event" value="${paymentCodeEntry.event}"/>
-            </modular:intersect>
+            <div class="col-md-12">
+                <c:set var="person" scope="request" value="${event.person}"/>
+                <jsp:include page="heading-person.jsp"/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <br/>
+                <modular:intersect location="event.payment.reference.extra.info" position="info">
+                    <modular:arg key="event" value="${paymentCodeEntry.event}"/>
+                </modular:intersect>
+            </div>
+        </div>
+
+        <div class="row">
+            <h2>
+                <spring:message code="label.payment.methods" text="Payment Methods"/>
+            </h2>
         </div>
 
         <div class="row">
