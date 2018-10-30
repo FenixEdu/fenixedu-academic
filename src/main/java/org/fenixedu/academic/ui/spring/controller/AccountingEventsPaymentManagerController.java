@@ -57,7 +57,6 @@ import pt.ist.fenixframework.DomainObject;
 /**
  * Created by Sérgio Silva (hello@fenixedu.org).
  */
-//@SpringApplication(path = "accounting", hint = "Accounting", group = "#managers", title = "title.manage.countries")
 @Controller
 @SpringFunctionality(app = AcademicAdministrationSpringApplication.class, title = "title.accounting.management")
 @RequestMapping(AccountingEventsPaymentManagerController.REQUEST_MAPPING)
