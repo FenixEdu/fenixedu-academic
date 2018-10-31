@@ -68,39 +68,24 @@
     <main>
         <header>
             <div class="row">
-                <c:if test="${success}">
-                    <p class="bg-success"><spring:message code="label.payments.registered.with.success"/></p>
-                </c:if>
-            </div>
-            <div class="row">
                 <div class="col-md-12">
                     <h1>Pagamento de Dívidas</h1>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-8 col-sm-12">
-                    <div class="overall-description">
-                        <dl>
-                            <dt><spring:message code="label.name" text="Name"/></dt>
-                            <dd><c:out value="${person.presentationName}"/></dd>
-                        </dl>
-                        <dl>
-                            <dt><spring:message code="label.document.id.type" text="ID Document Type"/></dt>
-                            <dd><c:out value="${person.idDocumentType.localizedName}"/></dd>
-                        </dl>
-                        <dl>
-                            <dt><spring:message code="label.document.id" text="ID Document"/></dt>
-                            <dd><c:out value="${person.documentIdNumber}"/></dd>
-                        </dl>
-                        <dl>
-                            <dt><spring:message code="label.document.vatNumber" text="VAT Number"/></dt>
-                            <dd><c:out value="${person.socialSecurityNumber}"/></dd>
-                        </dl>
-                    </div>
-                </div>
-            </div>
         </header>
-
+        <div class="row">
+            <div class="col-md-12">
+                <jsp:include page="heading-person.jsp"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <c:if test="${success}">
+                    <br/>
+                    <p class="bg-success"><spring:message code="label.payments.registered.with.success"/></p>
+                </c:if>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-8">
                 <div class="overall-description">
@@ -142,7 +127,10 @@
                                 <tbody>
                                 <tr>
                                     <th colspan="3">
-                                        <c:out value="${eventKey.key.description}"/>
+                                        <spring:url var="eventUrl" value="/accounting-management/{event}/details">
+                                            <spring:param name="event" value="${eventKey.key.externalId}"/>
+                                        </spring:url>
+                                        <a href="${eventUrl}"><c:out value="${eventKey.key.description}"/></a>
                                     </th>
                                 </tr>
                                 <c:forEach items="${eventKey.value}" var="entryDTO" varStatus="status">

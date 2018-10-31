@@ -84,10 +84,16 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
         return "redirect:" + REQUEST_MAPPING + "/" + loggedUser.getPerson().getExternalId();
     }
 
+    @Override
+    public String getEventDetailsUrl(final Event event) {
+        return REQUEST_MAPPING + "/" + event.getExternalId() + "/details";
+    }
+
     @RequestMapping("{event}/summary")
     public String summary(@PathVariable Event event, User user, Model model) {
         accessControlService.checkPaymentManager(event, user);
         final DebtInterestCalculator debtInterestCalculator = event.getDebtInterestCalculator(new DateTime());
+        model.addAttribute("eventDetailsUrl", getEventDetailsUrl(event));
         model.addAttribute("event", event);
         model.addAttribute("entrypointUrl", entrypointUrl());
         model.addAttribute("creditEntries", debtInterestCalculator.getCreditEntries());
@@ -143,7 +149,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
     @RequestMapping(value = "{event}/deposit", method = RequestMethod.GET)
     public String deposit(@PathVariable Event event, User user, Model model){
         accessControlService.checkPaymentManager(event, user);
-
+        model.addAttribute("eventDetailsUrl", getEventDetailsUrl(event));
         model.addAttribute("paymentMethods", PaymentMethod.all());
         model.addAttribute("person", event.getPerson());
         model.addAttribute("event", event);
@@ -170,7 +176,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
     @RequestMapping(value = "{event}/cancel", method = RequestMethod.GET)
     public String cancel(@PathVariable Event event, User user, Model model) {
         accessControlService.checkAdvancedPaymentManager(event, user);
-
+        model.addAttribute("eventDetailsUrl", getEventDetailsUrl(event));
         model.addAttribute("person", event.getPerson());
         model.addAttribute("event", event);
 
@@ -202,6 +208,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
             return redirectToEventDetails(event);
         }
 
+        model.addAttribute("eventDetailsUrl", getEventDetailsUrl(event));
         model.addAttribute("event", event);
         model.addAttribute("person", event.getPerson());
 

@@ -54,6 +54,8 @@ public abstract class AccountingController {
 
     public abstract String entrypointUrl();
 
+    public abstract String getEventDetailsUrl(Event event);
+
     @RequestMapping("{person}")
     public String events(@PathVariable Person person, Model model, User loggedUser) {
         final User user = person.getUser();
@@ -87,6 +89,7 @@ public abstract class AccountingController {
 
         model.addAttribute("creditEntries", creditEntries);
         model.addAttribute("event", event);
+        model.addAttribute("eventDetailsUrl", getEventDetailsUrl(event));
         model.addAttribute("eventId", event.getExternalId());
         model.addAttribute("currentDate", date.toLocalDate());
 
@@ -121,6 +124,7 @@ public abstract class AccountingController {
 
         model.addAttribute("eventId", event.getExternalId());
         model.addAttribute("event", event);
+        model.addAttribute("eventDetailsUrl", getEventDetailsUrl(event));
         model.addAttribute("eventDescription", event.getDescription());
         model.addAttribute("debtIndex", debtsOrderedByDueDate.indexOf(debt) + 1);
         model.addAttribute("debt", debt);
@@ -138,7 +142,8 @@ public abstract class AccountingController {
         final DebtInterestCalculator calculator = event.getDebtInterestCalculator(new DateTime());
         final CreditEntry creditEntry = calculator.getCreditEntryById(creditEntryId).orElseThrow(UnsupportedOperationException::new);
         final List<Debt> debtsOrderedByDueDate = calculator.getDebtsOrderedByDueDate();
-
+        
+        model.addAttribute("eventDetailsUrl", getEventDetailsUrl(event));
         model.addAttribute("eventId", event.getExternalId());
         model.addAttribute("creditEntry", creditEntry);
         model.addAttribute("processedDate", creditEntry.getCreated());

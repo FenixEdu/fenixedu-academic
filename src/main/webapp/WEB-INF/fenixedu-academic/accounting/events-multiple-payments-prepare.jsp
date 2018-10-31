@@ -114,33 +114,15 @@
         <header>
             <div class="row">
                 <div class="col-md-12">
-                    <p><a href="${backUrl}" class="btn btn-default"><spring:message code="label.back" text="Back"/></a></p>
                     <h1>Pagamento de Dívidas</h1>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-5 col-sm-12">
-                    <div class="overall-description">
-                        <dl>
-                            <dt><spring:message code="label.name" text="Name"/></dt>
-                            <dd><c:out value="${person.presentationName}"/></dd>
-                        </dl>
-                        <dl>
-                            <dt><spring:message code="label.document.id.type" text="ID Document Type"/></dt>
-                            <dd><c:out value="${person.idDocumentType.localizedName}"/></dd>
-                        </dl>
-                        <dl>
-                            <dt><spring:message code="label.document.id" text="ID Document"/></dt>
-                            <dd><c:out value="${person.documentIdNumber}"/></dd>
-                        </dl>
-                        <dl>
-                            <dt><spring:message code="label.document.vatNumber" text="VAT Number"/></dt>
-                            <dd><c:out value="${person.socialSecurityNumber}"/></dd>
-                        </dl>
-                    </div>
-                </div>
-            </div>
         </header>
+        <div class="row">
+            <div class="col-md-12">
+                <jsp:include page="heading-person.jsp"/>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-md-12">

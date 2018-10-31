@@ -38,30 +38,10 @@ ${portal.toolkit()}
 
 <div class="container-fluid">
     <header>
-        <div class="row">
-            <div class="col-md-10">
-                <p><a href="${detailsUrl}" class="btn btn-default"><spring:message code="label.back" text="Back"/></a></p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-5 col-sm-12">
-                <h3><c:out value="${event.description}"/></h3>
-                <div class="overall-description">
-                    <dl>
-                        <dt><spring:message code="label.name" text="Name"/></dt>
-                        <dd><c:out value="${person.presentationName}"/></dd>
-                    </dl>
-                    <dl>
-                        <dt><spring:message code="label.document.id.type" text="ID Document Type"/></dt>
-                        <dd><c:out value="${person.idDocumentType.localizedName}"/></dd>
-                    </dl>
-                    <dl>
-                        <dt><spring:message code="label.document.id" text="ID Document"/></dt>
-                        <dd><c:out value="${person.documentIdNumber}"/></dd>
-                    </dl>
-                </div>
-            </div>
-        </div>
+        <h1>
+            <jsp:include page="heading-event.jsp"/>
+        </h1>
+    </header>
         <div class="row">
             <c:if test="${not empty error}">
                 <section>
@@ -71,7 +51,8 @@ ${portal.toolkit()}
                 </section>
             </c:if>
         </div>
-    </header>
+    <c:set var="person" scope="request" value="${event.person}"/>
+    <jsp:include page="heading-person.jsp"/>
 
     <div class="row">
         <h3>Criar Isenção</h3>

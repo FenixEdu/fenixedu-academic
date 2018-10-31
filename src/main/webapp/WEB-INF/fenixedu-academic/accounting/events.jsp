@@ -36,29 +36,8 @@
                     <h1><spring:message code="events.title" text="Debts and Payments"/></h1>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-5 col-sm-12">
-                    <div class="overall-description">
-                        <dl>
-                            <dt><spring:message code="label.name" text="Name"/></dt>
-                            <dd><c:out value="${person.presentationName}"/></dd>
-                        </dl>
-                        <dl>
-                            <dt><spring:message code="label.document.id.type" text="ID Document Type"/></dt>
-                            <dd><c:out value="${person.idDocumentType.localizedName}"/></dd>
-                        </dl>
-                        <dl>
-                            <dt><spring:message code="label.document.id" text="ID Document"/></dt>
-                            <dd><c:out value="${person.documentIdNumber}"/></dd>
-                        </dl>
-                        <dl>
-                            <dt><spring:message code="label.document.vatNumber" text="VAT Number"/></dt>
-                            <dd><c:out value="${person.socialSecurityNumber}"/></dd>
-                        </dl>
-                    </div>
-                </div>
-            </div>
         </header>
+        <jsp:include page="heading-person.jsp"/>
         <section>
             <div class="row">
                 <div class="col-md-12">

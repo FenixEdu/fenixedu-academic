@@ -35,26 +35,25 @@
 
 <div class="container-fluid">
     <header>
-        <div class="row">
-            <div class="col-md-10">
-                <p><a href="${backUrl}" class="btn btn-default"><spring:message code="label.back" text="Back"/></a></p>
-            </div>
-        </div>
+        <h1>
+            <jsp:include page="heading-event.jsp"/>
+            <c:if test="${event.currentEventState == 'CANCELLED'}">
+                <span class="text-danger"> (Cancelada)</span>
+            </c:if>
+        </h1>
+    </header>
+    <c:set var="person" scope="request" value="${event.person}"/>
+    <jsp:include page="heading-person.jsp"/>
         <div class="row">
             <div class="col-md-12">
-                <h1>
+                <h2>
                     <spring:message code="accounting.payment.details.title" text="Payment report"/>
-                </h1>
+                </h2>
             </div>
         </div>
-    </header>
     <div class="row">
         <div class="col-md-5">
             <section class="payment-metadata">
-                <dl>
-                    <dt>Pago por:</dt>
-                    <dd><c:out value="${transactionDetail.event.person.presentationName}"/></dd>
-                </dl>
                 <dl>
                     <dt>Método Pagamento:</dt>
                     <dd><c:out value="${transactionDetail.transactionDetail.paymentMethod.localizedName}"/></dd>
@@ -155,7 +154,7 @@
 
                         <spring:url value="../../../{event}/debt/{debtDueDate}/details" var="debtUrl">
                             <spring:param name="event" value="${event.externalId}"/>
-                            <spring:param name="debtDueDate" value="${payment.debtEntry.date.toString('dd-MM-yyyy')}"/>
+                            <spring:param name="debtDueDate" value="${payment.debtEntry.date.toString('yyyy-MM-dd')}"/>
                         </spring:url>
 
                         <td style="text-align: right;"><a href="${debtUrl}"><spring:message code="accounting.event.details.link"/></a></td>

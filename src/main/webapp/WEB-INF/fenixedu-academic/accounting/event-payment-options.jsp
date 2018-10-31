@@ -98,20 +98,25 @@
         <header>
             <div class="row">
                 <div class="col-md-12">
-                    <p><a href="${backUrl}" class="btn btn-default"><spring:message code="label.back" text="Back"/></a></p>
-                    <h1>${description}</h1>
+                    <h1>
+                        <jsp:include page="heading-event.jsp"/>
+                    </h1>
                 </div>
             </div>
-            <c:if test="${not empty error}">
+        </header>
+        <c:set var="person" scope="request" value="${event.person}"/>
+        <jsp:include page="heading-person.jsp"/>
+        <c:if test="${not empty error}">
             <div class="row">
+                <br/>
                 <div class="col-md-8 col-sm-12">
                     <div class="alert alert-danger">
                         <span><c:out value="${error}"/></span>
                     </div>
                 </div>
             </div>
-            </c:if>
-            <c:if test="${not empty paymentCodeEntries}">
+        </c:if>
+        <c:if test="${not empty paymentCodeEntries}">
             <div class="row">
                 <div class="col-xs-12 col-md-4">
                     <section class="reference-card">
@@ -140,8 +145,7 @@
                     </section>
                 </div>
             </div>
-            </c:if>
-        </header>
+        </c:if>
 
         <div class="row">
             <div class="col-md-12">
