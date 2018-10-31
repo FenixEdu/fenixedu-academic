@@ -133,16 +133,6 @@ public class AccountingEventsManager {
                         .createSuccess();
 
         if (result.isSuccess()) {
-            if (studentCurricularPlan.getRegistration().hasGratuityEvent(executionYear, SpecializationDegreeGratuityEvent.class)) {
-                result.addMessage(Bundle.APPLICATION,
-                        studentCurricularPlan.getRegistration().getStudent().getNumber().toString(), studentCurricularPlan
-                                .getRegistration().getDegree().getPresentationName(), executionYear.getYear());
-
-                result.setSuccess(false);
-
-                return result;
-            }
-
             new SpecializationDegreeGratuityEvent(getAdministrativeOffice(studentCurricularPlan),
                     studentCurricularPlan.getPerson(), studentCurricularPlan, executionYear);
         }
