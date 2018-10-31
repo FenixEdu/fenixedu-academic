@@ -21,6 +21,7 @@ package org.fenixedu.academic.util;
 public class Bundle {
 
     public static final String ACADEMIC = "resources.AcademicAdminOffice";
+    public static final String ACCOUNTING = "resources.AccountingResources";
     public static final String ALUMNI = "resources.AlumniResources";
     public static final String APPLICATION = "resources.ApplicationResources";
     public static final String BENNU = "resources.BennuResources";
