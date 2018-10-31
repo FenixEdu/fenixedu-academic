@@ -148,10 +148,12 @@ public class StudentGroup extends FenixGroup {
             parts.add(cycle.getDescription());
         }
         if (curricularYear != null) {
-            parts.add(curricularYear.getYear().toString());
+            parts.add(String.format("%s %s",BundleUtil.getString(Bundle.APPLICATION, "label.curricularYear"), curricularYear
+                    .getYear().toString()));
         }
         if (executionYear != null) {
-            parts.add(executionYear.getName());
+            parts.add(String.format("%s %s", BundleUtil.getString(Bundle.APPLICATION, "label.executionYear"), executionYear
+                    .getName()));
         }
         if (campus != null) {
             parts.add(campus.getName());
