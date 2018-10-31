@@ -3,13 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 
-<c:if test="${fn:containsIgnoreCase(requestScope['javax.servlet.forward.request_uri'], 'owner-accounting-events')}">
-    <a href="<%= request.getContextPath() %>/owner-accounting-events/${event.externalId}/details">
-        ${event.description}
-    </a>
-</c:if>
-<c:if test="${not fn:containsIgnoreCase(requestScope['javax.servlet.forward.request_uri'], 'owner-accounting-events')}">
-    <a href="<%= request.getContextPath() %>/accounting-management/${event.externalId}/details">
-        ${event.description}
-    </a>
-</c:if>
+<spring:url var="eventDetailsAbsoluteUrl" value="${eventDetailsUrl}"/>
+<a href="${eventDetailsAbsoluteUrl}">
+    <c:out value="${event.description}"/>
+</a>

@@ -44,7 +44,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping(AccountingEventForOwnerController.REQUEST_MAPPING)
 public class AccountingEventForOwnerController extends AccountingController {
     private static final Logger logger = LoggerFactory.getLogger(AccountingEventForOwnerController.class);
-    static final String REQUEST_MAPPING = "/owner-accounting-events";
+    public static final String REQUEST_MAPPING = "/owner-accounting-events";
 
     @Autowired
     public AccountingEventForOwnerController(AccountingManagementService accountingManagementService,
@@ -56,6 +56,11 @@ public class AccountingEventForOwnerController extends AccountingController {
     @Override
     public String entrypointUrl() {
         return REQUEST_MAPPING + "/{person}";
+    }
+
+    @Override
+    public String getEventDetailsUrl(final Event event) {
+        return REQUEST_MAPPING + "/" + event.getExternalId() + "/details";
     }
 
     @RequestMapping
