@@ -218,7 +218,7 @@ public class HumanName {
         if (name == null) {
             return null;
         }
-        return Strings.emptyToNull(CharMatcher.WHITESPACE.trimAndCollapseFrom(name, ' '));
+        return Strings.emptyToNull(CharMatcher.whitespace().trimAndCollapseFrom(name, ' '));
     }
 
     public static String nameCapitalization(String name) {
@@ -259,26 +259,15 @@ public class HumanName {
         if (delimiters == null) {
             return Character.isWhitespace(buffer[i]);
         }
-        for (final String delimiter : delimiters) {
-            if (i - delimiter.length() + 1 < 0) {
-                continue;
-            }
-            if (delimiter.equals(String.valueOf(buffer, i - delimiter.length() + 1, delimiter.length()))) {
-                return true;
-            }
-        }
-        return false;
+        return Arrays.stream(delimiters)
+                .filter(delimiter -> i - delimiter.length() + 1 >= 0)
+                .anyMatch(delimiter -> delimiter.equals(String.valueOf(buffer, i - delimiter.length() + 1, delimiter.length())));
     }
 
     private static boolean isException(char[] buffer, int i, Multimap<Integer, String> exceptionBySize) {
-        for (Integer size : exceptionBySize.keySet()) {
-            if (i + size > buffer.length) {
-                continue;
-            }
-            if (exceptionBySize.get(size).contains(String.valueOf(buffer, i, size))) {
-                return true;
-            }
-        }
-        return false;
+        return exceptionBySize.keySet()
+                .stream()
+                .filter(size -> i + size <= buffer.length)
+                .anyMatch(size -> exceptionBySize.get(size).contains(String.valueOf(buffer, i, size)));
     }
 }
