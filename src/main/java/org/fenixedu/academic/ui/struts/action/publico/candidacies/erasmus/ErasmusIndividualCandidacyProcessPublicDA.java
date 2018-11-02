@@ -484,7 +484,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
             return mapping.findForward("inform-submited-candidacy");
         } catch (DomainException e) {
-            addActionMessage("error", request, e.getMessage(), e.getArgs());
+            addActionMessage("error", request, "key.return.argument", new String[] { e.getLocalizedMessage()});
             logger.error(e.getMessage(), e);
             getIndividualCandidacyProcessBean().getPersonBean().setPerson(null);
             request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
