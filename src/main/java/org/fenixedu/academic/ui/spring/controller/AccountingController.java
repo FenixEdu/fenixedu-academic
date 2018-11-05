@@ -101,6 +101,8 @@ public abstract class AccountingController {
         model.addAttribute("eventFineAmountToPay", debtInterestCalculator.getDueFineAmount());
         model.addAttribute("eventOriginalAmountToPay", event.getOriginalAmountToPay());
 
+        model.addAttribute("payedDebtAmount", debtInterestCalculator.getPaidDebtAmount());
+
         model.addAttribute("isEventOwner", accessControlService.isEventOwner(event, loggedUser));
         model.addAttribute("isPaymentManager", accessControlService.isPaymentManager(event, loggedUser));
         model.addAttribute("isAdvancedPaymentManager", accessControlService.isAdvancedPaymentManager(event, loggedUser));

@@ -36,6 +36,10 @@
     <spring:param name="event" value="${eventId}"/>
 </spring:url>
 
+<spring:url var="refundUrl" value="../{event}/refund">
+    <spring:param name="event" value="${eventId}"/>
+</spring:url>
+
 <spring:url var="exemptUrl" value="../{event}/exempt">
     <spring:param name="event" value="${eventId}"/>
 </spring:url>
@@ -110,6 +114,9 @@
                         </c:if>
                     </c:if>
                     <c:if test="${isAdvancedPaymentManager}">
+                        <c:if test="${payedDebtAmount > 0}">
+                            <a class="btn btn-default btn-block" href="${refundUrl}"><spring:message code="accounting.event.action.refund" text="Refund"/></a>
+                        </c:if>
                         <c:if test="${eventTotalAmountToPay > 0}">
                             <a class="btn btn-default btn-block" href="${exemptUrl}"><spring:message code="accounting.event.action.exempt" text="Exempt"/></a>
                         </c:if>

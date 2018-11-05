@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
 import java.util.UUID;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletContext;
@@ -236,6 +237,47 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
         }
 
         return redirectToEventDetails(event);
+    }
+
+    @RequestMapping(value = "{event}/refund", method = RequestMethod.GET)
+    public String refund(final @PathVariable Event event, final User user, final Model model) {
+        accessControlService.checkAdvancedPaymentManager(event, user);
+
+        final DebtInterestCalculator calculator = event.getDebtInterestCalculator(new DateTime());
+        final BigDecimal payedDebtAmount = calculator.getPaidDebtAmount();
+        final BigDecimal totalUnusedAmount = calculator.getTotalUnusedAmount();
+
+        if (payedDebtAmount.compareTo(BigDecimal.ZERO) == 0 && totalUnusedAmount.compareTo(BigDecimal.ZERO) == 0) {
+            return redirectToEventDetails(event);
+        }
+
+        model.addAttribute("event", event);
+        model.addAttribute("person", event.getPerson());
+        model.addAttribute("totalUnusedAmount", totalUnusedAmount);
+        model.addAttribute("payedDebtAmount", payedDebtAmount);
+
+        return view("event-refund");
+    }
+
+    @RequestMapping(value = "{event}/refundEvent", method = RequestMethod.POST)
+    public String refundEvent(final @PathVariable Event event, final User user, final Model model){
+        return doRefund(event, user, model, () -> AccountingManagementService.refundEvent(event, user.getPerson()));
+    }
+
+    @RequestMapping(value = "{event}/refundExcessPayment", method = RequestMethod.POST)
+    public String refundExcessPayment(final @PathVariable Event event, final User user, final Model model){
+        return doRefund(event, user, model, () -> AccountingManagementService.refundExcessPayment(event, user.getPerson())); 
+    }
+
+    private String doRefund(final @PathVariable Event event, final User user, final Model model, Supplier<Void> supplier) {
+        accessControlService.checkAdvancedPaymentManager(event, user);
+        try {
+            supplier.get();
+        } catch (final DomainException e) {
+            model.addAttribute("error", e.getLocalizedMessage());
+            return refund(event, user, model);
+        }
+        return redirectToEventDetails(event);        
     }
 
     @RequestMapping(value = "{person}/multiplePayments/select", method = RequestMethod.GET)

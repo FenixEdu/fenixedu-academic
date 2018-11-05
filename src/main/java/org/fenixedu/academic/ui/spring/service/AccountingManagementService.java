@@ -35,6 +35,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -218,6 +219,18 @@ public class AccountingManagementService {
         }
         throw new UnsupportedOperationException("Attempted to create an unknown exemption type");
 
+    }
+
+    @Atomic
+    public static Void refundEvent(final Event event, final Person person) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Atomic
+    public static Void refundExcessPayment(final Event event, final Person person) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }
