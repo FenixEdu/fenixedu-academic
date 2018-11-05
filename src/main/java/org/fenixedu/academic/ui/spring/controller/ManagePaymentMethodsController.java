@@ -30,7 +30,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author Tiago Pinho (a@fenixedu.org)
@@ -107,9 +110,9 @@ public class ManagePaymentMethodsController {
 
     @RequestMapping(value = "manageDefaults", method = RequestMethod.POST)
     public String manageDefaults(Model model, @RequestParam PaymentMethod defaultCashPaymentMethod,
-            @RequestParam PaymentMethod defaultSibsPaymentMethod) {
+            @RequestParam PaymentMethod defaultSibsPaymentMethod, @RequestParam PaymentMethod defaultRefundPaymentMethod) {
         try {
-            paymentMethodService.setDefaultPaymentMethods(defaultCashPaymentMethod, defaultSibsPaymentMethod);
+            paymentMethodService.setDefaultPaymentMethods(defaultCashPaymentMethod, defaultSibsPaymentMethod, defaultRefundPaymentMethod);
             return redirectHome();
         } catch (DomainException de) {
             return manageDefaults(model);

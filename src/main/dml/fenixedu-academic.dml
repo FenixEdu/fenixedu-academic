@@ -1289,6 +1289,12 @@ valueType org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDeta
         Money originalAmount;
     }
 
+    class accounting.Refund {
+            DateTime whenOccured;
+            Money amount;
+            boolean excessOnly;
+    }
+
     class accounting.Event  {
         String cancelJustification;
         EventState eventState;
@@ -6292,6 +6298,24 @@ relation PaymentMethodDefaultCash {
     }
     accounting.PaymentMethod playsRole cashPaymentMethod {
         multiplicity 0..1;
+    }
+}
+
+relation RefundCreator {
+    accounting.Refund playsRole refund {
+        multiplicity 0..*;
+    }
+    .org.fenixedu.bennu.core.domain.User playsRole creator {
+        multiplicity 1..1;
+    }
+}
+
+relation EventRefund {
+    accounting.Event playsRole event {
+        multiplicity 1..1;
+    }
+    accounting.Refund playsRole refund {
+        multiplicity *;
     }
 }
 
@@ -12391,5 +12415,23 @@ relation BennuPaymentMethodLogs {
 
     PaymentMethodLog playsRole paymentMethodLog  {
         multiplicity 0..*;
+    }
+}
+
+relation BennuPaymentMethodForRefundDeposit {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole bennuFromRefundDeposit {
+        multiplicity 0..1;
+    }
+    accounting.PaymentMethod playsRole paymentMethodForRefundDeposit {
+        multiplicity 0..1;
+    }
+}
+
+relation RefundAccountingTransaction {
+    accounting.Refund playsRole refund {
+        multiplicity 0..1;
+    }
+    accounting.AccountingTransaction playsRole accountingTransaction {
+        multiplicity 0..1;
     }
 }

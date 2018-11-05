@@ -19,6 +19,8 @@
 
 package org.fenixedu.academic.domain.accounting;
 
+import static org.fenixedu.academic.domain.PaymentMethodLog.createLog;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -31,9 +33,8 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
-import pt.ist.fenixframework.Atomic;
 
-import static org.fenixedu.academic.domain.PaymentMethodLog.createLog;
+import pt.ist.fenixframework.Atomic;
 
 public class PaymentMethod extends PaymentMethod_Base {
 
@@ -55,18 +56,23 @@ public class PaymentMethod extends PaymentMethod_Base {
         return Bennu.getInstance().getCashPaymentMethod();
     }
 
+    public static PaymentMethod getRefundPaymentMethod() { return Bennu.getInstance().getPaymentMethodForRefundDeposit(); }
+
     public static List<PaymentMethod> all() {
         return Bennu.getInstance().getPaymentMethodSet().stream().sorted(Comparator.comparing(PaymentMethod::getCode))
                 .collect(Collectors.toList());
     }
 
     @Atomic
-    public static void setDefaultPaymentMethods(PaymentMethod defaultCashPaymentMethod, PaymentMethod defaultSibsPaymentMethod) {
-        if (getCashPaymentMethod() != defaultCashPaymentMethod || getSibsPaymentMethod() != defaultSibsPaymentMethod) {
+    public static void setDefaultPaymentMethods(PaymentMethod defaultCashPaymentMethod, PaymentMethod defaultSibsPaymentMethod,
+     PaymentMethod defaultRefundPaymentMethod) {
+        if (getCashPaymentMethod() != defaultCashPaymentMethod || getSibsPaymentMethod() != defaultSibsPaymentMethod ||
+                getRefundPaymentMethod() != defaultRefundPaymentMethod) {
             defaultCashPaymentMethod.setCashBennu(Bennu.getInstance());
             defaultSibsPaymentMethod.setSibsBennu(Bennu.getInstance());
+            defaultRefundPaymentMethod.setBennuFromRefundDeposit(Bennu.getInstance());
             createLog(Bundle.MESSAGING, "log.paymentMethod.defaultsChanged", getCashPaymentMethod().getName(),
-                    getSibsPaymentMethod().getName());
+                    getSibsPaymentMethod().getName(), getRefundPaymentMethod().getName());
         }
     }
 
@@ -140,4 +146,5 @@ public class PaymentMethod extends PaymentMethod_Base {
         return this == getCashPaymentMethod();
     }
 
+    public boolean isRefund() { return this == getRefundPaymentMethod(); }
 }

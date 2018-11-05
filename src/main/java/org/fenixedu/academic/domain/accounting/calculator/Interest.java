@@ -2,7 +2,6 @@ package org.fenixedu.academic.domain.accounting.calculator;
 
 import java.math.BigDecimal;
 
-import org.fenixedu.academic.domain.accounting.InterestRate.InterestRateBean;
 import org.fenixedu.academic.domain.accounting.calculator.Interest.View.Detailed;
 import org.fenixedu.academic.domain.accounting.calculator.Interest.View.Simple;
 import org.joda.time.LocalDate;

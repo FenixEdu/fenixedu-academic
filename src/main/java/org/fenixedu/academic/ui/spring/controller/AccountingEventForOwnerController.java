@@ -112,6 +112,7 @@ public class AccountingEventForOwnerController extends AccountingController {
 
         model.addAttribute("paymentCodeEntry", paymentCodeEntry);
         model.addAttribute("maxDaysBetweenPromiseAndPayment", FenixEduAcademicConfiguration.getConfiguration().getMaxDaysBetweenPromiseAndPayment());
+        model.addAttribute("availableAdvancements", Event.availableAdvancements(loggedUser.getPerson()));
         return view("payment-reference");
     }
 
@@ -151,5 +152,16 @@ public class AccountingEventForOwnerController extends AccountingController {
         return debtInterestCalculator.getDebtsOrderedByDueDate().stream()
                 .flatMap(d -> d.getFines().stream())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    protected String depositAdvancementInput(final Event event, final User user, final Model model) {
+        final EventPaymentCodeEntry paymentCodeEntry = event.getEventPaymentCodeEntrySet().stream().max(EventPaymentCodeEntry.COMPARATOR_BY_CREATED).orElse(null);
+        return showPaymentReference(event, paymentCodeEntry, model, user);
+    }
+
+    @Override
+    protected String redirectToEventDetails(Event event) {
+        return "redirect:" + getEventDetailsUrl(event);
     }
 }

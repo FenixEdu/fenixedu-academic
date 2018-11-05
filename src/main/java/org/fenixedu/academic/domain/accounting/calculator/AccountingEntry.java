@@ -68,6 +68,6 @@ public abstract class AccountingEntry {
     }
 
     public LocalizedString getTypeDescription() {
-        return BundleUtil.getLocalizedString(Bundle.APPLICATION, "label.accounting.entry." + getClass().getSimpleName());
+        return BundleUtil.getLocalizedString(Bundle.ACCOUNTING, "label.accounting.entry." + getClass().getSimpleName());
     }
 }

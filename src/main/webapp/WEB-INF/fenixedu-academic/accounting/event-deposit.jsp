@@ -56,16 +56,13 @@ ${portal.toolkit()}
     <jsp:include page="heading-person.jsp"/>
 
     <div class="row">
-        <h3>Depositar Valor</h3>
+        <spring:url value="../{event}/depositAdvancement" var="depositAdvancementUrl" scope="request"/>
+        <jsp:include page="event-depositAdvancment.jsp"/>
+
+        <h3><spring:message code="label.event.deposit" text="Register Deposit"/></h3>
         <form:form modelAttribute="depositAmountBean" role="form" class="form-horizontal" action="${depositUrl}" method="post">
             ${csrf.field()}
-            <div class="form-group">
-                <label class="control-label col-sm-1"><spring:message code="label.org.fenixedu.academic.dto.accounting.DepositAmountBean.entryType"/></label>
-                <div class="col-sm-4">
-                    <input hidden name="entryType" value="${event.entryType}"/>
-                    <p>${fr:message('resources.EnumerationResources', event.entryType.name)}<p>
-                </div>
-            </div>
+            <input hidden name="entryType" value="${event.entryType}"/>
             <div class="form-group">
                 <label class="control-label col-sm-1"><spring:message code="label.org.fenixedu.academic.dto.accounting.DepositAmountBean.whenRegistered"/></label>
                 <div class="col-sm-4">

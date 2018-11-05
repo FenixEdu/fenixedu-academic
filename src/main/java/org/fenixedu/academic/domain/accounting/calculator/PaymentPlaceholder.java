@@ -10,7 +10,7 @@ import org.joda.time.DateTime;
 public class PaymentPlaceholder extends Payment {
 
     public PaymentPlaceholder(DateTime when) {
-        super("zeroPayment", when, when.toLocalDate(), "placeholder payment for calculations", BigDecimal.ZERO);
+        super("zeroPayment", when, when.toLocalDate(), "placeholder payment for calculations", BigDecimal.ZERO, "");
     }
     
 }

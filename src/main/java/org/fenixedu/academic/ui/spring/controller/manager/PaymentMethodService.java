@@ -19,15 +19,16 @@
 
 package org.fenixedu.academic.ui.spring.controller.manager;
 
-import jvstm.Atomic;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.fenixedu.academic.domain.PaymentMethodLog;
 import org.fenixedu.academic.domain.accounting.PaymentMethod;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import jvstm.Atomic;
 
 /**
  * @author Tiago Pinho (a@fenixedu.org)
@@ -61,8 +62,9 @@ public class PaymentMethodService {
     }
 
     @Atomic
-    public void setDefaultPaymentMethods(PaymentMethod defaultCashPaymentMethod, PaymentMethod defaultSibsPaymentMethod) {
-        PaymentMethod.setDefaultPaymentMethods(defaultCashPaymentMethod, defaultSibsPaymentMethod);
+    public void setDefaultPaymentMethods(PaymentMethod defaultCashPaymentMethod, PaymentMethod defaultSibsPaymentMethod,
+            PaymentMethod defaultRefundPaymentMethod) {
+        PaymentMethod.setDefaultPaymentMethods(defaultCashPaymentMethod, defaultSibsPaymentMethod, defaultRefundPaymentMethod);
     }
 
 }

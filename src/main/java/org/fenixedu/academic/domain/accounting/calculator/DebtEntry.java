@@ -63,8 +63,7 @@ public abstract class DebtEntry extends AccountingEntry implements Cloneable {
     }
 
     public BigDecimal getOpenAmount() {
-        BigDecimal diff = getOriginalAmount().subtract(getPaidAmount()).setScale(2, RoundingMode.HALF_EVEN);
-        return diff.compareTo(BigDecimal.ZERO) > 0 ? diff : BigDecimal.ZERO;
+        return getOriginalAmount().subtract(getPaidAmount()).setScale(2, RoundingMode.HALF_EVEN);
     }
 
     public BigDecimal getPaidAmount() {
@@ -108,8 +107,10 @@ public abstract class DebtEntry extends AccountingEntry implements Cloneable {
         if (isToDeposit(creditEntry)) {
             BigDecimal openAmount = getOpenAmount();
             BigDecimal unusedAmount = creditEntry.getUnusedAmount();
-            if (openAmount.compareTo(BigDecimal.ZERO) > 0 && unusedAmount.compareTo(BigDecimal.ZERO) > 0) {
-                addPartialPayment(creditEntry, unusedAmount.compareTo(openAmount) >= 0 ? openAmount : unusedAmount);
+            BigDecimal amountToDeposit = unusedAmount.compareTo(openAmount) >= 0 ? openAmount : unusedAmount;
+            if (amountToDeposit.compareTo(BigDecimal.ZERO) != 0) {
+                // yes, it is possible to deposit negative values (refunds)
+                addPartialPayment(creditEntry, amountToDeposit);
             }
         }
     }
