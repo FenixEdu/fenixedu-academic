@@ -23,7 +23,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -31,18 +30,21 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.commons.i18n.LocalizedString;
+import org.joda.time.DateTime;
 import pt.ist.fenixframework.Atomic;
 
 import static org.fenixedu.academic.domain.PaymentMethodLog.createLog;
 
 public class PaymentMethod extends PaymentMethod_Base {
 
-    public PaymentMethod(String code, LocalizedString description) {
+    public PaymentMethod(String code, LocalizedString description, String paymentReferenceFormat) {
         super();
         setBennu(Bennu.getInstance());
         setCode(code);
         setDescription(description);
-        createLog(Bundle.MESSAGING, "log.paymentMethod.created", code, getFormattedDescriptionForLog(description));
+        setPaymentReferenceFormat(paymentReferenceFormat);
+        createLog(Bundle.MESSAGING, "log.paymentMethod.created", code, getFormattedDescriptionForLog(description),
+                paymentReferenceFormat);
     }
 
     public static PaymentMethod getSibsPaymentMethod() {
@@ -69,20 +71,23 @@ public class PaymentMethod extends PaymentMethod_Base {
     }
 
     @Atomic
-    public static PaymentMethod create(String code, LocalizedString description) {
+    public static PaymentMethod create(String code, LocalizedString description, String paymentReferenceFormat) {
         return Bennu.getInstance().getPaymentMethodSet().stream().filter(i -> i.getName().equals(code)).findAny()
-                .orElseGet(() -> new PaymentMethod(code, description));
+                .orElseGet(() -> new PaymentMethod(code, description, paymentReferenceFormat));
     }
 
     @Atomic
-    public void edit(String code, LocalizedString description) {
+    public void edit(String code, LocalizedString description, String paymentReferenceFormat) {
         if (Bennu.getInstance().getPaymentMethodSet().stream().filter(i -> !i.equals(this))
                 .noneMatch(i -> i.getCode().equals(code))) {
-            if (!this.getCode().equals(code) || !this.getDescription().equals(description)) {
+            if (!this.getCode().equals(code) || !this.getDescription().equals(description) || !this.getPaymentReferenceFormat()
+                    .equals(paymentReferenceFormat)) {
                 createLog(Bundle.MESSAGING, "log.paymentMethod.edited", getCode(), code,
-                        getFormattedDescriptionForLog(getDescription()), getFormattedDescriptionForLog(description));
+                        getFormattedDescriptionForLog(getDescription()), getFormattedDescriptionForLog(description),
+                        getPaymentReferenceFormat(), paymentReferenceFormat);
                 setCode(code);
                 setDescription(description);
+                setPaymentReferenceFormat(paymentReferenceFormat);
             }
         } else {
             throw new DomainException(Optional.of(Bundle.ACCOUNTING), "error.payment.method.already.exists", code);
@@ -91,7 +96,8 @@ public class PaymentMethod extends PaymentMethod_Base {
 
     @Atomic
     public void delete() {
-        createLog(Bundle.MESSAGING, "log.paymentMethod.deleted", getCode(), getFormattedDescriptionForLog(getDescription()));
+        createLog(Bundle.MESSAGING, "log.paymentMethod.deleted", getCode(), getFormattedDescriptionForLog(getDescription()),
+                getPaymentReferenceFormat());
         setBennu(null);
         setCashBennu(null);
         setSibsBennu(null);
@@ -110,19 +116,20 @@ public class PaymentMethod extends PaymentMethod_Base {
         return getDescription().getContent(locale);
     }
 
-    public String getFormattedDescriptionForLog(LocalizedString description) {
-        Set<Locale> localeSet = description.getLocales();
-        StringBuilder localizedNamesForLog = new StringBuilder();
+    private static String getFormattedDescriptionForLog(LocalizedString description) {
+        return description.getLocales().stream()
+                .map(locale -> String.format("%s: \"%s\"", locale.toLanguageTag(), description.getContent(locale)))
+                .collect(Collectors.joining(", "));
+    }
 
-        for (Locale locale : localeSet) {
-            localizedNamesForLog.append(locale.getLanguage()).append(": ");
-            localizedNamesForLog.append(description.getContent(locale));
+    public String getPaymentReference(DateTime date) {
+        String paymentReference = getPaymentReferenceFormat();
 
-            if (!locale.equals(localeSet.toArray()[localeSet.size() - 1]))
-                localizedNamesForLog.append(", ");
-        }
+        paymentReference = paymentReference.replaceAll("%YYYY", date.toString("yyyy"));
+        paymentReference = paymentReference.replaceAll("%MM", date.toString("MM"));
+        paymentReference = paymentReference.replaceAll("%DD", date.toString("dd"));
 
-        return localizedNamesForLog.toString();
+        return paymentReference;
     }
 
     public boolean isSibs() {

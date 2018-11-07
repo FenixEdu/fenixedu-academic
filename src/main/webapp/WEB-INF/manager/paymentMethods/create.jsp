@@ -59,6 +59,16 @@ ${portal.toolkit()}
             </div>
         </div>
         <div class="form-group">
+            <label for="paymentReferenceFormat" class="col-sm-1 control-label"><spring:message code="label.paymentMethods.paymentReferenceFormat" /></label>
+            <div class="col-sm-1">
+                <input id="paymentReferenceFormat" name="paymentReferenceFormat" type="text" value='<c:out value="${paymentMethod.paymentReferenceFormat}"/>' placeholder="CC %YYYY%MM%DD" />
+            </div>
+            <br /><br />
+            <div class="col-sm-10">
+                <span><strong><spring:message code="label.info.paymentMethods.paymentReferenceFormat" /></strong></span>
+            </div>
+        </div>
+        <div class="form-group">
             <div class="col-sm-offset-1">
                 <a class="btn btn-default" href="${backUrl}"><spring:message code="label.cancel"/></a>
                 <button type="submit" id="submitButton" class="btn btn-primary"><spring:message code="label.save"/></button>

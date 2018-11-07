@@ -24,8 +24,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page trimDirectiveWhitespaces="true" %>
+<%@ include file="update-payment-reference.jsp" %>
 
 <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/accounting.css"/>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/bennu-toolkit/js/libs/moment.js"></script>
 
 <script type="text/javascript">
 
@@ -80,6 +83,7 @@
         disableAllPenaltyInputs(penaltySelector);
         enableOnlyFirstDebtInputs(debtSelector);
         recalculateAmount();
+        updatePaymentReference(moment().format("YYYY-MM-DDTHH:mm:ss.SSSZ"));
 
         // Prevent clicks on selected penalty entries
         $(penaltySelector).click(event => event.preventDefault());
@@ -99,6 +103,10 @@
 
         $("input.selectAllEntries").bind("change", function(){
             $(this).parents("tbody").find(debtSelector).prop("checked", $(this).is(":checked")).change();
+        });
+
+        $("#paymentMethod").change(function () {
+            updatePaymentReference(moment().format("YYYY-MM-DDTHH:mm:ss.SSSZ"));
         });
 
     });
@@ -147,7 +155,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-1"><spring:message code="label.org.fenixedu.academic.dto.accounting.DepositAmountBean.paymentReference" text="Payment Reference"/></label>
                     <div class="col-sm-4">
-                        <input name="paymentReference" type="text" required/>
+                        <input id="paymentReference" name="paymentReference" type="text" required/>
                     </div>
                 </div>
             <div class="row">

@@ -1,6 +1,6 @@
 <%--
 
-    Copyright © 2017 Instituto Superior Técnico
+    Copyright © 2018 Instituto Superior Técnico
 
     This file is part of FenixEdu Academic.
 
@@ -24,6 +24,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page trimDirectiveWhitespaces="true" %>
+<%@ include file="update-payment-reference.jsp" %>
 
 <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/accounting.css"/>
 
@@ -68,7 +69,7 @@ ${portal.toolkit()}
             <div class="form-group">
                 <label class="control-label col-sm-1"><spring:message code="label.org.fenixedu.academic.dto.accounting.DepositAmountBean.whenRegistered"/></label>
                 <div class="col-sm-4">
-                    <input name="whenRegistered" value="${depositAmountBean.whenRegistered}" bennu-datetime requires-past required>
+                    <input id="whenRegistered" name="whenRegistered" value="${depositAmountBean.whenRegistered}" bennu-datetime requires-past required>
                 </div>
             </div>
             <div class="form-group">
@@ -80,7 +81,7 @@ ${portal.toolkit()}
             <div class="form-group">
                 <label class="control-label col-sm-1"><spring:message code="label.org.fenixedu.academic.dto.accounting.DepositAmountBean.paymentReference"/></label>
                 <div class="col-sm-4">
-                    <input name="paymentReference" type="text"/>
+                    <input id="paymentReference" name="paymentReference" type="text" />
                 </div>
             </div>
             <div class="form-group">
@@ -106,3 +107,15 @@ ${portal.toolkit()}
         </form:form>
     </div>
 </div>
+
+<script type="text/javascript">
+
+    $(function () {
+        updatePaymentReference($("input[name='whenRegistered']").val());
+    });
+
+    $("#whenRegistered, #paymentMethod").change(function () {
+        updatePaymentReference($("input[name='whenRegistered']").val());
+    });
+
+</script>

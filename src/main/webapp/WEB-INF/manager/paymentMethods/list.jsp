@@ -45,6 +45,7 @@
     <thead>
         <th><spring:message code="label.paymentMethods.code" /></th>
         <th><spring:message code="label.paymentMethods.description" /></th>
+        <th><spring:message code="label.paymentMethods.paymentReferenceFormat" /></th>
     </thead>
     <tbody>
         ${csrf.field()}
@@ -55,6 +56,9 @@
                 </td>
                 <td>
                     <c:out value="${paymentMethod.localizedName}"/>
+                </td>
+                <td>
+                    <c:out value="${paymentMethod.paymentReferenceFormat}"/>
                 </td>
                 <td>
                     <a href="${baseUrl}${paymentMethod.externalId}" class="btn btn-default"><spring:message code="label.edit"/></a>
