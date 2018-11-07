@@ -50,7 +50,16 @@
 
 <h1><bean:write name="application.name" bundle="CANDIDATE_RESOURCES"/></h1>
 
-<p><span class="error0"><bean:message key="error.mobility.submission.text" bundle="CANDIDATE_RESOURCES"/></span> </p>
+<p>
+<span class="error0">
+	<bean:message key="error.mobility.submission.text" bundle="CANDIDATE_RESOURCES"/>
+	<ul>
+		<html:messages id="msg" message="true">
+			<li class="error0"><bean:write name="msg"/></li>
+		</html:messages>
+	</ul>
+</span>
+</p>
 
 <div class="mtop15" id="contacts">
 	<bean:message key="erasmus.contacts.text" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="CANDIDATE_RESOURCES" />

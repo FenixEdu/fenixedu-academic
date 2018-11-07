@@ -110,10 +110,10 @@ public class PhysicalAddress extends PhysicalAddress_Base {
             if (country == null) {
                 throw new DomainException("label.address.invalid.no.country");
             }
-            final String areaCode = data.getAreaCode();
+            final String areaCode = data.getAreaCode().trim();
             if (areaCode == null || !PostalCodeValidator.isValidAreaCode(country.getCode(), areaCode)) {
-                throw new DomainException("label.address.invalid.postCode.for.country", areaCode, country.getCode(),
-                        PostalCodeValidator.examplePostCodeFor(country.getCode()));
+                throw new DomainException("label.address.invalid.postCode.for.country", data.getAreaCode(), country.getCode(),
+                        PostalCodeValidator.formatFor(country.getCode()), PostalCodeValidator.examplePostCodeFor(country.getCode()));
             }
             setAddress(data.getAddress());
             setAreaCode(areaCode);
