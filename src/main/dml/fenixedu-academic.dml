@@ -1589,6 +1589,7 @@ valueType org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDeta
     class accounting.PaymentMethod {
         String code;
         LocalizedString description;
+        String paymentReferenceFormat;
     }
 
     class accounting.PaymentCode  {
