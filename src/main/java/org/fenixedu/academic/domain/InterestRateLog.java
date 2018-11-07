@@ -4,10 +4,6 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class InterestRateLog extends InterestRateLog_Base {
-    
-    public InterestRateLog() {
-        super();
-    }
 
     public InterestRateLog(String description) {
         super();
