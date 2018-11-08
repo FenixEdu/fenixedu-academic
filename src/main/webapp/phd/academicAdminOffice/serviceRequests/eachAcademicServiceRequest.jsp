@@ -41,8 +41,8 @@
                         <fr:property name="key(cancel)" value="cancel"/>
                         <fr:property name="visibleIf(cancel)" value="loggedPersonCanCancel"/>
                         <fr:property name="visibleIfNot(cancel)" value="piggyBackedOnRegistry"/>
-						
-						<fr:link name="payments" label="payments,APPLICATION_RESOURCES" link="<%="/payments.do?method=showOperations" + "&personId=${process.person.externalId}" %>" condition="!isPayed" />
+
+						<fr:link name="payments" label="payments,APPLICATION_RESOURCES" link="/../accounting-management/${process.person.externalId}" condition="!isPayed" />
 						<fr:property name="visibleIf(payments)" value="paymentsAccessible" />
 						
                         <fr:property name="linkFormat(processing)" value="/phdAcademicServiceRequestManagement.do?method=prepareProcess&amp;phdAcademicServiceRequestId=${externalId}"/>

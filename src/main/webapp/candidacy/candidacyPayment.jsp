@@ -36,9 +36,9 @@
 <academic:allowed operation="MANAGE_STUDENT_PAYMENTS">
 <logic:equal name="process" property="isCandidacyInternal" value="true">
 	<bean:define id="personId" name="process" property="candidacy.personalDetails.person.externalId" />
-	<html:link action='<%= "payments.do?method=showOperations&amp;personId=" + personId.toString() %>' target="_blank">
+    <a href="<%= request.getContextPath() + "/accounting-management/" + personId %>" target="_blank">
 		<bean:message key="label.payments.management" bundle="APPLICATION_RESOURCES"/>	
-	</html:link>
+	</a>
 </logic:equal>
 </academic:allowed>
 
