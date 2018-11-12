@@ -42,7 +42,7 @@ public class PastDegreeDiplomaRequestEvent extends PastDegreeDiplomaRequestEvent
     }
 
     @Override
-    public LabelFormatter getDescription() {
+    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
         labelFormatter.appendLabel(getEventType().getQualifiedName(), Bundle.ENUMERATION);
         labelFormatter.appendLabel(" (");

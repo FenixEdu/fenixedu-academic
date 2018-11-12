@@ -42,7 +42,6 @@ public class DegreeFinalizationCertificateRequestEvent extends DegreeFinalizatio
         return (DegreeFinalizationCertificateRequest) super.getAcademicServiceRequest();
     }
 
-    @Override
     protected void fillDescription(final LabelFormatter labelFormatter) {
         labelFormatter.appendLabel(" (");
         addCycleDescriptionIfRequired(labelFormatter);

@@ -18,6 +18,10 @@
  */
 package org.fenixedu.academic.domain.accounting.events.candidacy;
 
+import java.util.Collections;
+import java.util.Set;
+
+import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.Account;
 import org.fenixedu.academic.domain.accounting.Entry;
@@ -35,9 +39,6 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
-
-import java.util.Collections;
-import java.util.Set;
 
 public abstract class IndividualCandidacyEvent extends IndividualCandidacyEvent_Base {
 
@@ -65,7 +66,17 @@ public abstract class IndividualCandidacyEvent extends IndividualCandidacyEvent_
 
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-        return new LabelFormatter().appendLabel(entryType.name(), Bundle.ENUMERATION);
+
+        LabelFormatter labelFormatter = new LabelFormatter().appendLabel(entryType.name(), Bundle
+                .ENUMERATION);
+
+        labelFormatter.appendLabel(" - ");
+        for (Degree s : getIndividualCandidacy().getAllDegrees()) {
+            labelFormatter.appendLabel(s.getSigla()).appendLabel(" ");
+        }
+        labelFormatter.appendLabel(" - ").appendLabel(getIndividualCandidacy().getCandidacyDate().toString());
+
+        return labelFormatter;
     }
 
     @Override

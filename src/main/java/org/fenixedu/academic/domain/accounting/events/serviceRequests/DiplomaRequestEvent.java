@@ -62,14 +62,7 @@ abstract public class DiplomaRequestEvent extends DiplomaRequestEvent_Base {
     }
 
     @Override
-    public LabelFormatter getDescription() {
-        final LabelFormatter result = super.getDescription();
-        fillDescription(result);
-        return result;
-    }
-
-    @Override
-    final public LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
+    public LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
         labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION);
         fillDescription(labelFormatter);

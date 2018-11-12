@@ -91,16 +91,10 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
 
     @Override
     public LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
-        final ExecutionYear executionYear = getPhdIndividualProgramProcess().getExecutionYear();
-        return new LabelFormatter().appendLabel(entryType.name(), Bundle.ENUMERATION).appendLabel(" - ")
-                .appendLabel("" + getYear()).appendLabel(" (").appendLabel(getPhdProgram().getName(executionYear).getContent())
-                .appendLabel(")");
-    }
+        LabelFormatter labelFormatter = new LabelFormatter();
 
-    @Override
-    public LabelFormatter getDescription() {
         final ExecutionYear executionYear = getPhdIndividualProgramProcess().getExecutionYear();
-        return new LabelFormatter().appendLabel(getEventType().getQualifiedName(), Bundle.ENUMERATION).appendLabel(" - ")
+        return labelFormatter.appendLabel(getEventType().getQualifiedName(), Bundle.ENUMERATION).appendLabel(" - ")
                 .appendLabel("" + getYear()).appendLabel(" (").appendLabel(getPhdProgram().getName(executionYear).getContent())
                 .appendLabel(")");
     }

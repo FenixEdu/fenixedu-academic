@@ -69,7 +69,8 @@ public class SpecializationDegreeRegistrationEvent extends SpecializationDegreeR
 
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-        final LabelFormatter labelFormatter = new LabelFormatter();
+        LabelFormatter labelFormatter = super.getDescriptionForEntryType(entryType).appendLabel(entryType.name(), Bundle
+                .ENUMERATION);
         labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION).appendLabel(" (")
                 .appendLabel(getDegree().getDegreeType().getName().getContent()).appendLabel(" - ")
                 .appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ")
@@ -140,16 +141,6 @@ public class SpecializationDegreeRegistrationEvent extends SpecializationDegreeR
 
     public DateTime getCandidacyDate() {
         return getCandidacy().getCandidacyDate();
-    }
-
-    @Override
-    public LabelFormatter getDescription() {
-        final LabelFormatter labelFormatter = super.getDescription();
-        labelFormatter.appendLabel(" ");
-        labelFormatter.appendLabel(getDegree().getDegreeType().getName().getContent()).appendLabel(" - ");
-        labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ");
-        labelFormatter.appendLabel(getExecutionYear().getYear());
-        return labelFormatter;
     }
 
     @Override

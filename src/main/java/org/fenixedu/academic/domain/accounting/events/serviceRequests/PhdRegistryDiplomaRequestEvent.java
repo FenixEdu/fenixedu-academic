@@ -56,25 +56,14 @@ public class PhdRegistryDiplomaRequestEvent extends PhdRegistryDiplomaRequestEve
     }
 
     @Override
-    public LabelFormatter getDescription() {
-        final LabelFormatter result = super.getDescription();
-        fillDescription(result);
-        return result;
-    }
-
-    @Override
     final public LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
         labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION);
-        fillDescription(labelFormatter);
-
-        return labelFormatter;
-    }
-
-    private void fillDescription(final LabelFormatter labelFormatter) {
         labelFormatter.appendLabel(" (");
         final PhdRegistryDiplomaRequest request = (PhdRegistryDiplomaRequest) getAcademicServiceRequest();
         labelFormatter.appendLabel(request.getPhdIndividualProgramProcess().getPhdProgram().getName(getExecutionYear()).getContent());
         labelFormatter.appendLabel(")");
+        return labelFormatter;
     }
+
 }

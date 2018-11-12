@@ -59,7 +59,7 @@ public class SpecialSeasonEnrolmentEvent extends SpecialSeasonEnrolmentEvent_Bas
                 Collections.singletonList(new EntryDTO(EntryType.SPECIAL_SEASON_ENROLMENT_FEE, this, amountToPay)),
                 transactionDetail);
     }
-
+                                                          
     @Override
     protected void addAll(Collection<EnrolmentEvaluation> enrolmentEvaluations) {
         getSpecialSeasonEnrolmentEvaluationsSet().addAll(enrolmentEvaluations);

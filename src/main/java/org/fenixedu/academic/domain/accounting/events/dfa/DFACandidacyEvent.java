@@ -82,7 +82,7 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
 
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-        final LabelFormatter labelFormatter = new LabelFormatter();
+        final LabelFormatter labelFormatter = super.getDescriptionForEntryType(entryType);
         labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION).appendLabel(" (")
                 .appendLabel(getDegree().getDegreeType().getName().getContent()).appendLabel(" - ")
                 .appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ")
@@ -129,16 +129,6 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
 
     public DateTime getCandidacyDate() {
         return getCandidacy().getCandidacyDate();
-    }
-
-    @Override
-    public LabelFormatter getDescription() {
-        final LabelFormatter labelFormatter = super.getDescription();
-        labelFormatter.appendLabel(" ");
-        labelFormatter.appendLabel(getDegree().getDegreeType().getName().getContent()).appendLabel(" - ");
-        labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ");
-        labelFormatter.appendLabel(getExecutionYear().getYear());
-        return labelFormatter;
     }
 
     @Override

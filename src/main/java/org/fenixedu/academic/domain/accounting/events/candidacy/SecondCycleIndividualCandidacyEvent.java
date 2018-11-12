@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.domain.accounting.events.candidacy;
 
-import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
@@ -26,7 +25,6 @@ import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOfficeType;
 import org.fenixedu.academic.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacy;
-import org.fenixedu.academic.util.LabelFormatter;
 
 public class SecondCycleIndividualCandidacyEvent extends SecondCycleIndividualCandidacyEvent_Base {
 
@@ -63,15 +61,4 @@ public class SecondCycleIndividualCandidacyEvent extends SecondCycleIndividualCa
         return EntryType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY_FEE;
     }
 
-    @Override
-    public LabelFormatter getDescription() {
-        final LabelFormatter labelFormatter = super.getDescription();
-        labelFormatter.appendLabel(" - ");
-        for (Degree s : getIndividualCandidacy().getAllDegrees()) {
-            labelFormatter.appendLabel(s.getSigla()).appendLabel(" ");
-        }
-        labelFormatter.appendLabel(" - ").appendLabel(getIndividualCandidacy().getCandidacyDate().toString());
-
-        return labelFormatter;
-    }
 }

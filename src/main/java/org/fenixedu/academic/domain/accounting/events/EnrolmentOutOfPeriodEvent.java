@@ -30,7 +30,6 @@ import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
@@ -108,30 +107,16 @@ public class EnrolmentOutOfPeriodEvent extends EnrolmentOutOfPeriodEvent_Base {
 
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-        final LabelFormatter labelFormatter = new LabelFormatter().appendLabel(entryType.name(), Bundle.ENUMERATION);
-        addCommonDescription(labelFormatter);
-
-        return labelFormatter;
-    }
-
-    @Override
-    public LabelFormatter getDescription() {
-        final LabelFormatter labelFormatter = super.getDescription();
-        addCommonDescription(labelFormatter);
-
-        return labelFormatter;
-    }
-
-    private void addCommonDescription(final LabelFormatter labelFormatter) {
+        final LabelFormatter labelFormatter = super.getDescriptionForEntryType(entryType);
         labelFormatter.appendLabel(" (");
         labelFormatter.appendLabel(getDegree().getDegreeType().getName().getContent());
         labelFormatter.appendLabel(" - ");
-        labelFormatter.appendLabel(getDegree().getNameFor(getExecutionPeriod().getExecutionYear()).getContent());
+        labelFormatter.appendLabel(getDegree().getSigla());
         labelFormatter.appendLabel(" - ");
-        labelFormatter.appendLabel(getExecutionPeriod().getSemester().toString());
-        labelFormatter.appendLabel("label.semester", Bundle.APPLICATION);
-        labelFormatter.appendLabel("  " + getExecutionPeriod().getYear());
+        labelFormatter.appendLabel(getExecutionPeriod().getQualifiedName());
         labelFormatter.appendLabel(")");
+
+        return labelFormatter;
     }
 
     private Degree getDegree() {

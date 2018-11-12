@@ -30,9 +30,12 @@ import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
 
+/***
+ * Use {@link EnrolmentEvaluationEvent} instead
+ */
+@Deprecated
 public abstract class EnrolmentEvent extends EnrolmentEvent_Base {
 
     protected EnrolmentEvent() {
@@ -57,19 +60,6 @@ public abstract class EnrolmentEvent extends EnrolmentEvent_Base {
         }
     }
 
-    @Override
-    public LabelFormatter getDescription() {
-        final LabelFormatter labelFormatter = super.getDescription();
-
-        getDetailedDescription(labelFormatter);
-
-        return labelFormatter;
-    }
-
-    private void getDetailedDescription(final LabelFormatter labelFormatter) {
-        labelFormatter.appendLabel(" (").appendLabel(getEnrolmentsDescription()).appendLabel(")");
-    }
-
     private String getEnrolmentsDescription() {
         final StringBuilder result = new StringBuilder();
         for (final EnrolmentEvaluation enrolmentEvaluation : getAllEnrolmentEvaluationsSet()) {
@@ -85,11 +75,8 @@ public abstract class EnrolmentEvent extends EnrolmentEvent_Base {
 
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-        final LabelFormatter labelFormatter = new LabelFormatter();
-
-        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION);
-        getDetailedDescription(labelFormatter);
-
+        final LabelFormatter labelFormatter = super.getDescriptionForEntryType(entryType);
+        labelFormatter.appendLabel(" (").appendLabel(getEnrolmentsDescription()).appendLabel(")");
         return labelFormatter;
     }
 

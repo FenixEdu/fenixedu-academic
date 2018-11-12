@@ -151,16 +151,6 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
     }
 
     @Override
-    public LabelFormatter getDescription() {
-        final LabelFormatter labelFormatter = super.getDescription();
-        labelFormatter.appendLabel(" ");
-        labelFormatter.appendLabel(getDegree().getDegreeType().getName().getContent()).appendLabel(" - ");
-        labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ");
-        labelFormatter.appendLabel(getExecutionYear().getYear());
-        return labelFormatter;
-    }
-
-    @Override
     public boolean isDfaRegistrationEvent() {
         return true;
     }
