@@ -42,7 +42,7 @@ public class PastDegreeDiplomaRequestEvent extends PastDegreeDiplomaRequestEvent
     }
 
     @Override
-    public LabelFormatter getDescription() {
+    protected LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
         labelFormatter.appendLabel(getEventType().getQualifiedName(), Bundle.ENUMERATION);
         labelFormatter.appendLabel(" (");
@@ -52,6 +52,7 @@ public class PastDegreeDiplomaRequestEvent extends PastDegreeDiplomaRequestEvent
         labelFormatter.appendLabel(" ");
         labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent());
         labelFormatter.appendLabel(")");
+        labelFormatter.appendLabel(" - ").appendLabel(getAcademicServiceRequest().getServiceRequestNumberYear());
         return labelFormatter;
     }
 

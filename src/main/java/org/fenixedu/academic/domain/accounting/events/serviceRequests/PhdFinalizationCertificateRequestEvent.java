@@ -64,17 +64,20 @@ public class PhdFinalizationCertificateRequestEvent extends PhdFinalizationCerti
     }
 
     @Override
-    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-        final LabelFormatter result = super.getDescription();
-        fillDescription(result);
-        return result;
-
-    }
-
-    private void fillDescription(final LabelFormatter labelFormatter) {
-        labelFormatter.appendLabel(" (");
+    protected LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        final LabelFormatter result = super.getDescriptionForEntryType(entryType);
+        result.appendLabel(" (");
         final PhdAcademicServiceRequest request = (PhdAcademicServiceRequest) getAcademicServiceRequest();
-        labelFormatter.appendLabel(request.getPhdIndividualProgramProcess().getPhdProgram().getName(getExecutionYear()).getContent());
-        labelFormatter.appendLabel(")");
+        result.appendLabel(request.getPhdIndividualProgramProcess().getPhdProgram().getName(getExecutionYear()).getContent());
+        result.appendLabel(")");
+
+        if (getExecutionYear() != null) {
+            result.appendLabel(" - ").appendLabel(getExecutionYear().getYear());
+        }
+
+        result.appendLabel(" - ").appendLabel(request.getServiceRequestNumberYear());
+
+        return result;
     }
+
 }

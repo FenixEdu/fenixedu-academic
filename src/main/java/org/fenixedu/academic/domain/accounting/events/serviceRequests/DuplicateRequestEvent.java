@@ -40,9 +40,13 @@ public class DuplicateRequestEvent extends DuplicateRequestEvent_Base {
     }
 
     @Override
-    final public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+    final protected LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
+
         labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION);
+        labelFormatter.appendLabel(" (").appendLabel(getDegree().getSigla());
+        labelFormatter.appendLabel(") - ").appendLabel(getExecutionYear().getYear());
+        labelFormatter.appendLabel(" - ").appendLabel(getAcademicServiceRequest().getServiceRequestNumberYear());
 
         return labelFormatter;
     }

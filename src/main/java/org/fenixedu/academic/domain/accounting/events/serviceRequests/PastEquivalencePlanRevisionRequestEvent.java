@@ -47,35 +47,25 @@ public class PastEquivalencePlanRevisionRequestEvent extends PastEquivalencePlan
     }
 
     @Override
-    public LabelFormatter getDescription() {
-        final LabelFormatter result = super.getDescription();
-        fillDescription(result);
-        return result;
-    }
-
-    @Override
-    final public LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
+    final protected LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
-
         labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION);
 
-        fillDescription(labelFormatter);
-
-        if (getAcademicServiceRequest().getExecutionYear() != null) {
-            labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
-        }
-
-        return labelFormatter;
-    }
-
-    private void fillDescription(final LabelFormatter labelFormatter) {
         labelFormatter.appendLabel(" (");
         labelFormatter.appendLabel(getDegree().getDegreeType().getName().getContent());
         labelFormatter.appendLabel(" ");
         labelFormatter.appendLabel("label.in", Bundle.APPLICATION);
         labelFormatter.appendLabel(" ");
-        labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent());
+        labelFormatter.appendLabel(getDegree().getSigla());
         labelFormatter.appendLabel(")");
+
+        if (getAcademicServiceRequest().getExecutionYear() != null) {
+            labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
+        }
+
+        labelFormatter.appendLabel(" - ").appendLabel(getAcademicServiceRequest().getServiceRequestNumberYear());
+
+        return labelFormatter;
     }
 
 }

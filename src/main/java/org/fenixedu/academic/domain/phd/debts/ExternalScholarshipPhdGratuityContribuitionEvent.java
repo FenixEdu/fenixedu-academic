@@ -70,7 +70,7 @@ public class ExternalScholarshipPhdGratuityContribuitionEvent extends ExternalSc
     }
 
     @Override
-    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+    protected LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final ExecutionYear executionYear = ((PhdGratuityEvent) getPhdGratuityExternalScholarshipExemption().getEvent()).getPhdIndividualProgramProcess().getExecutionYear();
         return new LabelFormatter()
                 .appendLabel(entryType.name(), Bundle.ENUMERATION)

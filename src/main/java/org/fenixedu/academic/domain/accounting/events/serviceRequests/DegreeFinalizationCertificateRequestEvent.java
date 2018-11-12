@@ -42,25 +42,4 @@ public class DegreeFinalizationCertificateRequestEvent extends DegreeFinalizatio
         return (DegreeFinalizationCertificateRequest) super.getAcademicServiceRequest();
     }
 
-    @Override
-    protected void fillDescription(final LabelFormatter labelFormatter) {
-        labelFormatter.appendLabel(" (");
-        addCycleDescriptionIfRequired(labelFormatter);
-        labelFormatter.appendLabel(getDegree().getDegreeType().getName().getContent());
-        labelFormatter.appendLabel(" ");
-        labelFormatter.appendLabel("label.in", Bundle.APPLICATION);
-        labelFormatter.appendLabel(" ");
-        labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent());
-        labelFormatter.appendLabel(")");
-        labelFormatter.appendLabel(" - ").appendLabel(getAcademicServiceRequest().getServiceRequestNumberYear());
-    }
-
-    private void addCycleDescriptionIfRequired(LabelFormatter labelFormatter) {
-        final DegreeFinalizationCertificateRequest request = getAcademicServiceRequest();
-        if (request.getProgramConclusion() != null) {
-            labelFormatter.appendLabel(request.getProgramConclusion().getName().getContent()).appendLabel(" ")
-                    .appendLabel("label.of", Bundle.APPLICATION).appendLabel(" ");
-        }
-    }
-
 }

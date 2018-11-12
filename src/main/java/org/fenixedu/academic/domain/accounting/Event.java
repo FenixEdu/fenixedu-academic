@@ -561,9 +561,9 @@ public abstract class Event extends Event_Base {
 
         getNonAdjustingTransactions().forEach(t -> {
             if (paymentsPredicate.apply(t, when)) {
-                builder.payment(t.getExternalId(), t.getWhenProcessed(), t.getWhenRegistered().toLocalDate(), t
-                        .getDescriptionForEntryType(getPostingRule().getEntryType()).toString(),
-                        t.getAmountWithAdjustment().getAmount(), Optional.ofNullable(t.getRefund()).map(AbstractDomainObject::getExternalId).orElse(null));
+                builder.payment(t.getExternalId(), t.getWhenProcessed(), t.getWhenRegistered().toLocalDate(), t.getEvent()
+                        .getDescription().toString(), t.getAmountWithAdjustment().getAmount(),
+                        Optional.ofNullable(t.getRefund()).map(AbstractDomainObject::getExternalId).orElse(null));
             }
         });
 
@@ -778,10 +778,8 @@ public abstract class Event extends Event_Base {
         return (paymentMethod == PaymentMethod.getSibsPaymentMethod()) ? PaymentCodeState.PROCESSED : PaymentCodeState.CANCELLED;
     }
 
-    public LabelFormatter getDescription() {
-        final LabelFormatter result = new LabelFormatter();
-        result.appendLabel(getEventType().getQualifiedName(), Bundle.ENUMERATION);
-        return result;
+    public final LabelFormatter getDescription() {
+        return getDescriptionForEntryType(getEntryType());
     }
 
     protected YearMonthDay calculateNextEndDate(final YearMonthDay yearMonthDay) {
@@ -902,7 +900,11 @@ public abstract class Event extends Event_Base {
 
     public abstract Account getToAccount();
 
-    public abstract LabelFormatter getDescriptionForEntryType(EntryType entryType);
+    protected LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        final LabelFormatter result = new LabelFormatter();
+        result.appendLabel(getEventType().getQualifiedName(), Bundle.ENUMERATION);
+        return result;
+    }
 
     abstract public PostingRule getPostingRule();
 
@@ -1010,7 +1012,7 @@ public abstract class Event extends Event_Base {
     }
 
     public EntryType getEntryType() {
-        return EntryType.GENERIC_EVENT;
+        return getPostingRule().getEntryType();
     }
 
     public void addDiscount(final Person responsible, final Money amount) {

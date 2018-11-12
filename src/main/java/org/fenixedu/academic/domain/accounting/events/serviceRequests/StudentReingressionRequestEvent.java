@@ -49,11 +49,11 @@ public class StudentReingressionRequestEvent extends StudentReingressionRequestE
     }
 
     @Override
-    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+    protected LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
 
         labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION);
-        labelFormatter.appendLabel(" (");
+        labelFormatter.appendLabel("(");
         labelFormatter.appendLabel("label.in", Bundle.APPLICATION);
         labelFormatter.appendLabel(" ");
         labelFormatter.appendLabel(getRegistration().getLastDegreeCurricularPlan().getName());
@@ -61,6 +61,7 @@ public class StudentReingressionRequestEvent extends StudentReingressionRequestE
         if (getAcademicServiceRequest().getExecutionYear() != null) {
             labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
         }
+        labelFormatter.appendLabel(" - ").appendLabel(getAcademicServiceRequest().getServiceRequestNumberYear());
 
         return labelFormatter;
     }

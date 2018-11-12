@@ -53,22 +53,8 @@ public class RegistryDiplomaRequestEvent extends RegistryDiplomaRequestEvent_Bas
     }
 
     @Override
-    public LabelFormatter getDescription() {
-        final LabelFormatter result = super.getDescription();
-        fillDescription(result);
-        return result;
-    }
-
-    @Override
-    final public LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
-        final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION);
-        fillDescription(labelFormatter);
-
-        return labelFormatter;
-    }
-
-    private void fillDescription(final LabelFormatter labelFormatter) {
+    protected LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
+        LabelFormatter labelFormatter = super.getDescriptionForEntryType(entryType);
         labelFormatter.appendLabel(" (");
         final RegistryDiplomaRequest request = (RegistryDiplomaRequest) getAcademicServiceRequest();
         if (request.getProgramConclusion() != null) {
@@ -76,11 +62,18 @@ public class RegistryDiplomaRequestEvent extends RegistryDiplomaRequestEvent_Bas
                     .appendLabel("label.of", Bundle.APPLICATION).appendLabel(" ");
         }
 
-        labelFormatter.appendLabel(getDegree().getDegreeType().getName().getContent());
-        labelFormatter.appendLabel(" ");
-        labelFormatter.appendLabel("label.in", Bundle.APPLICATION);
-        labelFormatter.appendLabel(" ");
-        labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent());
+        labelFormatter = labelFormatter.appendLabel(getDegree().getDegreeType().getName().getContent()).appendLabel(" ")
+                .appendLabel("label.in", Bundle.APPLICATION).appendLabel(" ").appendLabel(getDegree().getSigla());
+
+        if (getExecutionYear() != null) {
+            labelFormatter.appendLabel(" - ").appendLabel(getExecutionYear().getQualifiedName());
+        }
+
         labelFormatter.appendLabel(")");
+
+        labelFormatter.appendLabel(" - ").appendLabel(request.getServiceRequestNumberYear());
+
+        return labelFormatter;
     }
+
 }
