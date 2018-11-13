@@ -84,15 +84,16 @@ public class Externalization {
         final int temp = source.indexOf(NEW_LINE, indexOfSep6 + ELEMENT_SEPARATOR.length());
         final int indexOfSep7 = temp < 0 ? source.length() : temp;
 
-        refs.add(new BibliographicReference(
-                source.substring(0, indexOfSep1),
+        final String referenceType = source.substring(indexOfSep5 + ELEMENT_SEPARATOR.length(), indexOfSep6).replace("|", ""); //deserialization fix
+        
+        refs.add(new BibliographicReference(source.substring(0, indexOfSep1),
                 source.substring(indexOfSep1 + ELEMENT_SEPARATOR.length(), indexOfSep2),
                 source.substring(indexOfSep2 + ELEMENT_SEPARATOR.length(), indexOfSep3),
                 source.substring(indexOfSep3 + ELEMENT_SEPARATOR.length(), indexOfSep4),
                 source.substring(indexOfSep4 + ELEMENT_SEPARATOR.length(), indexOfSep5),
-                source.substring(indexOfSep5 + ELEMENT_SEPARATOR.length(), indexOfSep6).equals("null") ? BibliographicReferenceType.MAIN : BibliographicReferenceType
-                        .valueOf(source.substring(indexOfSep5 + ELEMENT_SEPARATOR.length(), indexOfSep6)), Integer.valueOf(source
-                        .substring(indexOfSep6 + ELEMENT_SEPARATOR.length(), indexOfSep7))));
+                referenceType.equals("null") ? BibliographicReferenceType.MAIN : BibliographicReferenceType
+                        .valueOf(referenceType),
+                Integer.valueOf(source.substring(indexOfSep6 + ELEMENT_SEPARATOR.length(), indexOfSep7))));
 
         if (indexOfSep7 + NEW_LINE.length() < source.length()) {
             fillBibliographicReferences(refs, source.substring(indexOfSep7 + NEW_LINE.length()));
