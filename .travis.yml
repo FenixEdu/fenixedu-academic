@@ -1,12 +1,12 @@
 language: java
 jdk:
 - oraclejdk8
-notifications:
-  hipchat:
-    rooms:
-      secure: I/Dw+Kc3nAYMpSmyTk+nh6BpRZIrH8qaG2LxMSP06/9UPQHhEtwzbYvkqaNnjX/+2IgUhIeun8A0Uv6gHZh1yGbiWn2Fq6UqCXjbrfbLbZvB8jYwZyqwzUwtUOD5z6CUsWRncSwLbHsagrCZhJ03Etrjvlf/BDR9YS8t3POaSmw=
 sudo: false
 
+cache:
+  directories:
+  - $HOME/.m2
+  
 # TODO: Remove the Strict Quote Escaping Flag once ACDM-472 is resolved
 script: mvn test -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING=false jspc:compile -B
 
