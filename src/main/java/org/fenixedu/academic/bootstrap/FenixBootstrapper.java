@@ -20,6 +20,7 @@ package org.fenixedu.academic.bootstrap;
 
 import static java.util.Collections.singletonList;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
@@ -48,6 +49,8 @@ import org.fenixedu.academic.domain.organizationalStructure.PlanetUnit;
 import org.fenixedu.academic.domain.organizationalStructure.SchoolUnit;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
+import org.fenixedu.academic.domain.person.IDDocumentType;
+import org.fenixedu.academic.domain.person.IdDocumentTypeObject;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.serviceRequests.InstitutionRegistryCodeGenerator;
 import org.fenixedu.academic.domain.space.SpaceUtils;
@@ -102,6 +105,7 @@ public class FenixBootstrapper {
         createCurricularYearsAndSemesters();
         createDistrictAndDistrictSubdivision();
         createOrganizationalStructure();
+        createIdDocumentTypeObjects();
 
         EvaluationSeason normalSeason = createEvaluationSeason("EN", "RS", "NORMAL", true, false, false, false);
         EvaluationConfiguration.getInstance().setDefaultEvaluationSeason(normalSeason);
@@ -375,6 +379,16 @@ public class FenixBootstrapper {
             CountryUnit.createNewCountryUnit(new LocalizedString(Locale.getDefault(), country.getName()), null, null,
                     country.getCode(), new YearMonthDay(), null, planetUnit, null, null, false, null);
         }
+    }
+
+    private static void createIdDocumentTypeObjects() {
+        final IDDocumentType[] values = IDDocumentType.values();
+
+        for (final Object idDocumentType : Arrays.asList(values)) {
+            final IdDocumentTypeObject idDocumentTypeObject = new IdDocumentTypeObject();
+            idDocumentTypeObject.setValue((IDDocumentType) idDocumentType);
+        }
+
     }
 
     @Section(name = "bootstrapper.schoolSetup.name", description = "bootstrapper.schoolSetup.description",
