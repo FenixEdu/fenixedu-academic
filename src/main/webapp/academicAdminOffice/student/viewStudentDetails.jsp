@@ -18,6 +18,8 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+<%@page import="org.joda.time.DateTime"%>
+<%@page import="org.fenixedu.academic.domain.student.Registration"%>
 <%@page import="org.fenixedu.academic.domain.student.Student"%>
 <%@page import="org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory"%>
 <%@page import="org.fenixedu.academic.domain.treasury.ITreasuryBridgeAPI"%>
@@ -30,139 +32,155 @@
 <html:xhtml/>
 
 <div style="float: right;">
-	<bean:define id="personID" name="student" property="person.username"/>
-	<html:img align="middle" src="<%= request.getContextPath() + "/user/photo/" + personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
+    <bean:define id="personID" name="student" property="person.username"/>
+    <html:img align="middle" src="<%= request.getContextPath() + "/user/photo/" + personID.toString() + "?timestamp=" + new DateTime().toDate().getTime()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
 
 <h2><bean:message key="label.studentPage" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<p>
-		<span class="error"><!-- Error messages go here --><bean:write name="message" /></span>
-	</p>
+    <p>
+        <span class="error"><!-- Error messages go here --><bean:write name="message" /></span>
+    </p>
 </html:messages>
 
 
 <h3 class="mtop15 mbottom025"><bean:message key="label.studentDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <table class="mtop025">
-	<tr>
-		<td>
-			<fr:view name="student" schema="student.show.personAndStudentInformation">
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle2 thright thlight mtop0 mbottom0"/>
-		      		<fr:property name="rowClasses" value="tdhl1,,,,"/>
-				</fr:layout>
-			</fr:view>
-		</td>
-	</tr>
+    <tr>
+        <td>
+            <fr:view name="student" schema="student.show.personAndStudentInformation">
+                <fr:layout name="tabular">
+                    <fr:property name="classes" value="tstyle2 thright thlight mtop0 mbottom0"/>
+                    <fr:property name="rowClasses" value="tdhl1,,,,"/>
+                </fr:layout>
+            </fr:view>
+        </td>
+    </tr>
 </table>
 
 
 <p class="mvert05">
-	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-	<html:link page="/student.do?method=viewPersonalData" paramId="studentID" paramName="student" paramProperty="externalId">
-		<bean:message key="link.student.viewPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-	</html:link>
+    <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+    <html:link page="/student.do?method=viewPersonalData" paramId="studentID" paramName="student" paramProperty="externalId">
+        <bean:message key="link.student.viewPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+    </html:link>
 
-	<academic:allowed operation="EDIT_STUDENT_PERSONAL_DATA">
-		<span class="pleft05">
-			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-			<html:link page="/student.do?method=prepareEditPersonalData" paramId="studentID" paramName="student" paramProperty="externalId">
-				<bean:message key="link.student.editPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-			</html:link>
-		</span>
-		<span class="pleft05">
-			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-			<html:link page="/student.do?method=viewStudentLog" paramId="studentID" paramName="student" paramProperty="externalId">
-				<bean:message key="link.executionCourse.log" bundle="APPLICATION_RESOURCES"/>
-			</html:link>
-		</span>
-	</academic:allowed>
-
-	<academic:allowed operation="CREATE_REGISTRATION">
+    <academic:allowed operation="EDIT_STUDENT_PERSONAL_DATA">
         <span class="pleft05">
             <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-            <html:link page="/../academic/move-registrations" paramId="target" paramName="student" paramProperty="person.user.username">
-                <bean:message key="link.student.moveRegistrations" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+            <html:link page="/student.do?method=prepareEditPersonalData" paramId="studentID" paramName="student" paramProperty="externalId">
+                <bean:message key="link.student.editPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
             </html:link>
         </span>
-	</academic:allowed>
+        <span class="pleft05">
+            <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+            <html:link page="/student.do?method=viewStudentLog" paramId="studentID" paramName="student" paramProperty="externalId">
+                <bean:message key="link.executionCourse.log" bundle="APPLICATION_RESOURCES"/>
+            </html:link>
+        </span>
+    </academic:allowed>
 </p>
-
-<!-- Student Warnings -->
-<logic:notEmpty name="warnings">
-	<div class="panel panel-danger mtop15 mbottom0">
-		<div class="panel-heading">
-			<h3 class="panel-title"><bean:message key="label.warnings" bundle="ACADEMIC_OFFICE_RESOURCES"></bean:message></h3>
-		</div>
-		<div class="panel-body">
-			<ul class="mbottom0">
-				<logic:iterate name="warnings" id="warning">
-					<li><bean:write name="warning"></bean:write></li>
-				</logic:iterate>
-			</ul>
-		</div>
-	</div>
-</logic:notEmpty>
 
 <academic:allowed operation="MANAGE_REGISTRATIONS">
 <h3 class="mtop15 mbottom025"><bean:message key="label.studentRegistrations" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-<fr:view name="student" property="registrations" schema="student.registrationDetail.short" >
-	<fr:layout name="tabular">
-		<fr:property name="sortBy" value="startDate=desc"/>
+<fr:view name="student" property="registrations">
+    <fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="<%= Registration.class.getName() %>">
+        <fr:slot name="registrationYear" key="label.registrationYear">
+            <fr:property name="format" value="${qualifiedName}" />
+        </fr:slot>
+        <fr:slot name="startDate" layout="null-as-label" key="label.startDate" >
+            <fr:property name="label" value="-"/>   
+        </fr:slot>
+        
+        <fr:slot name="number" layout="null-as-label" key="label.number">
+            <property name="label" value="-"/>
+        </fr:slot>  
+        <fr:slot name="this" key="label.degree" layout="format">
+            <fr:property name="format" value="${degreeNameWithDescription} (${degree.code})" />
+        </fr:slot>
+        
+        <fr:slot name="activeStateType" key="label.currentState" />
+        <fr:slot name="registrationProtocol.description.content" key="label.registrationAgreement" />
+        
+        <fr:slot name="numberEnroledCurricularCoursesInCurrentYear" key="label.numberEnroledCurricularCoursesInCurrentYear" />
+        <fr:slot name="lastEnrolmentExecutionYear" layout="format" key="label.Registration.lastEnrolmentExecutionYear" >
+            <fr:property name="format" value="${qualifiedName}" />
+        </fr:slot>
+    </fr:schema>
+    <fr:layout name="tabular">
+        <fr:property name="sortBy" value="registrationYear=desc,startDate=desc"/>
 
-		<fr:property name="classes" value="tstyle1 thlight mtop025 boldlink1"/>
-		<fr:property name="columnClasses" value="acenter,acenter,tdhl1,,acenter,nowrap"/>
+        <fr:property name="classes" value="tstyle1 thlight mtop025 boldlink1"/>
+        <fr:property name="columnClasses" value="acenter,acenter nowrap,acenter,tdhl1,,acenter,acenter,acenter,nowrap"/>
 
-		<fr:property name="linkFormat(view)" value="/student.do?method=visualizeRegistration&registrationID=${externalId}" />
-		<fr:property name="key(view)" value="link.student.visualizeRegistration"/>
-		<fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES"/>
-		<fr:property name="visibleIf(view)" value="allowedToManageRegistration"/>
-		<fr:property name="contextRelative(view)" value="true"/>
-	</fr:layout>
+        <fr:property name="linkFormat(view)" value="/student.do?method=visualizeRegistration&registrationID=${externalId}" />
+        <fr:property name="key(view)" value="link.student.visualizeRegistration"/>
+        <fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES"/>
+        <fr:property name="visibleIf(view)" value="allowedToManageRegistration"/>
+        <fr:property name="contextRelative(view)" value="true"/>
+    </fr:layout>
 </fr:view>
 </academic:allowed>
 
 <academic:notAllowed operation="MANAGE_REGISTRATIONS">
-	<academic:allowed operation="VIEW_FULL_STUDENT_CURRICULUM">
-		<h3 class="mtop15 mbottom025">
-			<bean:message key="label.studentRegistrations" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-		</h3>
-		<fr:view name="student" property="registrations" schema="student.registrationDetail.short" >
-			<fr:layout name="tabular">
-		<fr:property name="sortBy" value="startDate=desc"/>
+    <academic:allowed operation="VIEW_FULL_STUDENT_CURRICULUM">
+        <h3 class="mtop15 mbottom025">
+            <bean:message key="label.studentRegistrations" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+        </h3>
+        <fr:view name="student" property="registrations" schema="student.registrationDetail.short" >
+            <fr:layout name="tabular">
+        <fr:property name="sortBy" value="startDate=desc"/>
 
-		<fr:property name="classes" value="tstyle1 thlight mtop025 boldlink1"/>
-		<fr:property name="columnClasses" value="acenter,acenter,tdhl1,,acenter,nowrap"/>
+        <fr:property name="classes" value="tstyle1 thlight mtop025 boldlink1"/>
+        <fr:property name="columnClasses" value="acenter,acenter,tdhl1,,acenter,nowrap"/>
 
-		<fr:property name="linkFormat(view)" value="/student.do?method=visualizeRegistration&registrationID=${externalId}" />
-		<fr:property name="key(view)" value="link.student.visualizeRegistration"/>
-		<fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES"/>
-		<fr:property name="visibleIf(view)" value="allowedToManageRegistration"/>
-		<fr:property name="contextRelative(view)" value="true"/>
-		</fr:layout>
-		</fr:view>	
-	</academic:allowed>
+        <fr:property name="linkFormat(view)" value="/student.do?method=visualizeRegistration&registrationID=${externalId}" />
+        <fr:property name="key(view)" value="link.student.visualizeRegistration"/>
+        <fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES"/>
+        <fr:property name="visibleIf(view)" value="allowedToManageRegistration"/>
+        <fr:property name="contextRelative(view)" value="true"/>
+        </fr:layout>
+        </fr:view>  
+    </academic:allowed>
 </academic:notAllowed>
 
+<%-- qubExtension --%>
 <!-- Student Status -->
-<academic:allowed operation="MANAGE_STATUTES">
 <h3 class="mbottom025"><bean:message key="label.statutes" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-<p class="mvert05">
-	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-	<html:link action="/studentStatutes.do?method=prepare" paramName="student" paramProperty="externalId" paramId="studentId">
-		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.studentStatutes.manage" />
-	</html:link>
-</p>
 
-<fr:view name="student" property="currentStatutes" schema="student.statutes.current" >
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thlight mtop025 mbottom0"/>
-		<fr:property name="columnClasses" value=",tdhl1"/>
-	</fr:layout>
-</fr:view>
+<academic:allowed operation="MANAGE_STATUTES">
+<p class="mvert05">
+    <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+    <html:link action="/studentStatutes.do?method=prepare" paramName="student" paramProperty="externalId" paramId="studentId">
+        <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.studentStatutes.manage" />
+    </html:link>
+</p>
 </academic:allowed>
+
+<%-- qubExtension --%>
+<fr:view name="student" property="currentStatutes">
+    <fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.dto.student.StudentStatuteBean">
+        <fr:slot name="statuteType" key="label.code" >
+            <fr:property name="format" value="${code}" /> 
+        </fr:slot>
+        <fr:slot name="description" key="label.statuteType" />
+        <fr:slot name="beginPeriodFormatted" key="label.beginExecutionPeriod" />
+        <fr:slot name="studentStatute.beginDate" key="label.beginDate" />
+        <fr:slot name="endPeriodFormatted" key="label.endExecutionPeriod" />
+        <fr:slot name="studentStatute.endDate" key="label.endDate" />
+        <fr:slot name="studentStatute.registration" key="label.registration" >
+            <fr:property name="format" value="${degree.presentationNameI18N.content}" /> 
+        </fr:slot>
+    </fr:schema>
+
+    <fr:layout name="tabular">
+        <fr:property name="classes" value="tstyle4 thlight mtop025 mbottom0"/>
+        <fr:property name="columnClasses" value=",tdhl1"/>
+        <fr:property name="sortBy" value="studentStatute.beginExecutionPeriod.qualifiedName=desc,studentStatute.endExecutionPeriod.qualifiedName=desc" />
+    </fr:layout>
+</fr:view>
 
 <!-- Extra Curricular Activities -->
 <academic:allowed operation="MANAGE_EXTRA_CURRICULAR_ACTIVITIES">
@@ -182,27 +200,11 @@
 <% if(TreasuryBridgeAPIFactory.implementation().isPersonAccountTreasuryManagementAvailable(student.getPerson())) { %>
 <h3 class="mbottom025"><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <p class="mtop05 mbottom15">
-	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-	<html:link href="<%= request.getContextPath() + TreasuryBridgeAPIFactory.implementation().getPersonAccountTreasuryManagementURL(student.getPerson()) %>" >
-		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.management" />
-	</html:link>
+    <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+    <html:link href="<%= request.getContextPath() + TreasuryBridgeAPIFactory.implementation().getPersonAccountTreasuryManagementURL(student.getPerson()) %>" >
+        <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.management" />
+    </html:link>
 </p>
 <% } %>
 </academic:allowed>
 
-<!-- RAIDES -->
-<academic:allowed operation="MANAGE_REGISTRATIONS">
-<h3 class="mbottom025"><bean:message key="label.editCandidacies" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-<p class="mtop05 mbottom15">
-	<fr:form action="/editCandidacyInformation.do?method=prepareEdit">
-		<fr:edit id="choosePhdOrRegistration" name="choosePhdOrRegistration" type="org.fenixedu.academic.ui.struts.action.administrativeOffice.student.EditCandidacyInformationDA$ChooseRegistrationOrPhd">
-			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.ui.struts.action.administrativeOffice.student.EditCandidacyInformationDA$ChooseRegistrationOrPhd">
-				<fr:slot name="phdRegistrationWrapper" key="label.raides.choosePhdOrRegistration" layout="menu-select-postback">
-					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.academicAdminOffice.ActiveAndRecentRegistrationsAndPhds" />
-					<fr:property name="format" value="${displayName}" />
-				</fr:slot>
-			</fr:schema>
-		</fr:edit>
-	</fr:form>
-</p>
-</academic:allowed>
