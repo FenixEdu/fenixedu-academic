@@ -7,8 +7,9 @@ public class EnrolmentBlocker {
 
     public static EnrolmentBlocker enrolmentBlocker = new EnrolmentBlocker();
 
-    public boolean isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt(final StudentCurricularPlan scp, final ExecutionYear executionYear) {
-        return scp.getRegistration().getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt(executionYear);
+    public boolean isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt(final StudentCurricularPlan scp,
+            final ExecutionYear executionYear) {
+        return false;
     }
 
 }
