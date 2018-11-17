@@ -8,7 +8,7 @@ cache:
   - $HOME/.m2
   
 # TODO: Remove the Strict Quote Escaping Flag once ACDM-472 is resolved
-script: mvn test -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING=false jspc:compile -B
+script: mvn clean test -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING=false jspc:compile -B
 
 env:
   global:
