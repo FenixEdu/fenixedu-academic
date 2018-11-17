@@ -109,7 +109,7 @@
 	<br/>
 	<fr:form action="/studentEnrolments.do?method=backViewRegistration">
 		<fr:edit id="studentEnrolment-back" name="studentEnrolmentBean" visible="false" />
-		<html:cancel><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>
+		<html:submit><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
 	</fr:form>
 	<p class="mtop2 mbottom0"><strong><bean:message key="label.student.enrolments.executionPeriod" bundle="ACADEMIC_OFFICE_RESOURCES"/>: </strong></p>
 	<logic:notEmpty name="studentEnrolments">
