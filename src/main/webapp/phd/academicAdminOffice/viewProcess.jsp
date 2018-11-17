@@ -177,9 +177,10 @@
 				<bean:define id="program" name="process" property="phdProgram" type="org.fenixedu.academic.domain.phd.PhdProgram" />
 				<academic:allowed operation="MANAGE_STUDENT_PAYMENTS" program="<%= program %>">
 					<li>
-						<html:link action="/payments.do?method=showOperations" target="_blank" paramId="personId" paramName="process" paramProperty="person.externalId">
+					   <bean:define id="personId" name="process" property="person.externalId"/>
+						<a href="<%= request.getContextPath() %>/accounting-management/<%= personId %>" target="_blank">
 							<bean:message bundle="PHD_RESOURCES" key="label.phd.payments"/>
-						</html:link>
+						</a>
 					</li>
 				</academic:allowed>
 			</logic:present>

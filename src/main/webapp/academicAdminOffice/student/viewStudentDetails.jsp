@@ -177,9 +177,10 @@
 <h3 class="mbottom025"><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <p class="mtop05 mbottom15">
 	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-	<html:link action="/payments.do?method=showOperations" paramName="student" paramProperty="person.externalId" paramId="personId">
+	<bean:define id="personId" name="student" property="person.externalId"/>
+	<a href="<%= request.getContextPath() + "/accounting-management/" + personId %>">
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.management" />
-	</html:link>
+	</a>
 </p>
 </academic:allowed>
 
