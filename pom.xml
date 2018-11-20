@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.fenixedu</groupId>
         <artifactId>fenix-framework-project</artifactId>
-        <version>2.4.0</version>
+        <version>2.5.0</version>
         <relativePath />
     </parent>
 
@@ -38,17 +38,17 @@
         <version.joda.time.joda.time>2.10.1</version.joda.time.joda.time>
         <version.net.sourceforge.htmlcleaner.htmlcleaner>2.22</version.net.sourceforge.htmlcleaner.htmlcleaner>
         <version.org.apache.poi.poi>3.17</version.org.apache.poi.poi>
-        <version.org.fenixedu.bennu-renderers>5.4.0</version.org.fenixedu.bennu-renderers>
+        <version.org.fenixedu.bennu-renderers>6.0.0</version.org.fenixedu.bennu-renderers>
         <version.org.fenixedu.bennu-modular-rendering>1.1.0</version.org.fenixedu.bennu-modular-rendering>
-        <version.org.fenixedu.bennu>5.4.0</version.org.fenixedu.bennu>
-        <version.org.fenixedu.fenixedu-commons>2.1.0</version.org.fenixedu.fenixedu-commons>
-        <version.org.fenixedu.fenixedu-spaces>2.2.1</version.org.fenixedu.fenixedu-spaces>
-        <version.org.fenixedu.messaging>3.7.1</version.org.fenixedu.messaging>
+        <version.org.fenixedu.bennu>6.0.0</version.org.fenixedu.bennu>
+        <version.org.fenixedu.fenixedu-commons>3.0.0</version.org.fenixedu.fenixedu-commons>
+        <version.org.fenixedu.fenixedu-spaces>3.0.0</version.org.fenixedu.fenixedu-spaces>
+        <version.org.fenixedu.messaging>4.0.0</version.org.fenixedu.messaging>
         <version.org.imgscalr.imgscalr-lib>4.2</version.org.imgscalr.imgscalr-lib>
         <version.org.jsoup.jsoup>1.11.3</version.org.jsoup.jsoup>
         <version.org.mnode.ical4j.ical4j>1.0.5.2</version.org.mnode.ical4j.ical4j>
         <version.org.xhtmlrenderer.core-renderer>R8</version.org.xhtmlrenderer.core-renderer>
-        <version.pt.ist.standards>1.0.4</version.pt.ist.standards>
+        <version.pt.ist.standards>2.0.0</version.pt.ist.standards>
         <version.pt.ist.tidy>1.0</version.pt.ist.tidy>
         <version.taglibs.datetime>1.0.1</version.taglibs.datetime>
         <version.taglibs.strings>1.1.0</version.taglibs.strings>

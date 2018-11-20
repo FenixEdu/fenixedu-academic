@@ -38,13 +38,13 @@
       <!-- ========== Controller Configuration ================================ -->
       <controller processorClass="org.fenixedu.bennu.struts.SimpleRenderersRequestProcessor"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
-      <message-resources null="false" key="RESEARCHER_RESOURCES" parameter="resources.ResearcherResources"></message-resources>
-      <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
-      <message-resources null="false" key="SPACE_RESOURCES" parameter="resources.SpaceResources"></message-resources>
-      <message-resources null="false" key="GROUP_NAME_RESOURCES" parameter="resources.GroupNameResources"></message-resources>
-      <message-resources null="false" key="SCIENTIFIC_COUNCIL_RESOURCES" parameter="resources.ScientificCouncilResources"></message-resources>
-      <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
-      <message-resources null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="RESEARCHER_RESOURCES" parameter="resources.ResearcherResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="SPACE_RESOURCES" parameter="resources.SpaceResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="GROUP_NAME_RESOURCES" parameter="resources.GroupNameResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="SCIENTIFIC_COUNCIL_RESOURCES" parameter="resources.ScientificCouncilResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
       <!-- ========== Plug Ins Configuration ================================= -->
       <plug-in className="org.fenixedu.bennu.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
 </struts-config>

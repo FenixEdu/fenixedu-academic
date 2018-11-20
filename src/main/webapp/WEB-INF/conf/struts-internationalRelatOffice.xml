@@ -47,15 +47,15 @@
       <!-- ========== Controller Configuration ================================ -->
       <controller processorClass="org.fenixedu.bennu.struts.SimpleRenderersRequestProcessor"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
-      <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
-      <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
-      <message-resources null="false" key="PORTAL_RESOURCES" parameter="resources.PortalResources"></message-resources>
-      <message-resources null="false" key="INTERNATIONAL_RELATIONS_OFFICE" parameter="resources.InternRelationOfficeResources"></message-resources>
-      <message-resources null="false" key="ACADEMIC_OFFICE_RESOURCES" parameter="resources.AcademicAdminOffice"></message-resources>
-      <message-resources null="false" key="DOMAIN_RESOURCES" parameter="resources.DomainResources"></message-resources>
-      <message-resources null="false" key="COMMON_RESOURCES" parameter="resources.CommonResources"></message-resources>
-      <message-resources null="false" key="GEP_RESOURCES" parameter="resources.GEPResources"></message-resources>
-      <message-resources null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="PORTAL_RESOURCES" parameter="resources.PortalResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="INTERNATIONAL_RELATIONS_OFFICE" parameter="resources.InternRelationOfficeResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="ACADEMIC_OFFICE_RESOURCES" parameter="resources.AcademicAdminOffice"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="DOMAIN_RESOURCES" parameter="resources.DomainResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="COMMON_RESOURCES" parameter="resources.CommonResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="GEP_RESOURCES" parameter="resources.GEPResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
       <!-- ========== Plug Ins Configuration ================================= -->
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
             <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml" property="pathnames"></set-property>
