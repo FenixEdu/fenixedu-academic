@@ -76,32 +76,32 @@
       <!-- ========== Controller Configuration ================================ -->
       <controller processorClass="org.fenixedu.bennu.struts.SimpleRenderersRequestProcessor"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
-      <message-resources null="false" key="ENUMERATION_RESOURCES" parameter="resources.EnumerationResources"></message-resources>
-      <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
-      <message-resources null="false" key="IMAGE_RESOURCES" parameter="resources.ImageResources"></message-resources>
-      <message-resources null="false" key="HTMLALT_RESOURCES" parameter="resources.HtmlaltResources"></message-resources>
-      <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
-      <message-resources null="false" key="PORTAL_RESOURCES" parameter="resources.PortalResources"></message-resources>
-      <message-resources null="false" key="STUDENT_RESOURCES" parameter="resources.StudentResources"></message-resources>
-      <message-resources null="false" key="GEP_RESOURCES" parameter="resources.GEPResources"></message-resources>
-      <message-resources null="false" key="DEGREE_ADM_OFFICE" parameter="resources.DegreeAdministrativeOfficeResources"></message-resources>
-      <message-resources null="false" key="CURRICULUM_HISTORIC_RESOURCES" parameter="resources.CurriculumHistoricResources"></message-resources>
-      <message-resources null="false" key="PUBLIC_DEGREE_INFORMATION" parameter="resources.PublicDegreeInformation"></message-resources>
-      <message-resources null="false" key="MANAGER_RESOURCES" parameter="resources.ManagerResources"></message-resources>
-      <message-resources null="false" key="DOMAIN_EXCEPTION_RESOURCES" parameter="resources.DomainExceptionResources"></message-resources>
-      <message-resources null="false" key="RENDERER_RESOURCES" parameter="resources.AcademicRendererResources"></message-resources>
-      <message-resources null="false" key="ADMIN_OFFICE_RESOURCES" parameter="resources.AdminOffice"></message-resources>
-      <message-resources null="false" key="ACADEMIC_OFFICE_RESOURCES" parameter="resources.AcademicAdminOffice"></message-resources>
-      <message-resources null="false" key="CANDIDATE_RESOURCES" parameter="resources.CandidateResources"></message-resources>
-      <message-resources null="false" key="VIGILANCY_RESOURCES" parameter="resources.VigilancyResources"></message-resources>
-      <message-resources null="false" key="TESTS_RESOURCES" parameter="resources.TestsResources"></message-resources>
-      <message-resources null="false" key="SCIENTIFIC_COUNCIL_RESOURCES" parameter="resources.ScientificCouncilResources"></message-resources>
-      <message-resources null="false" key="ALUMNI_RESOURCES" parameter="resources.AlumniResources"></message-resources>
-      <message-resources null="false" key="PEDAGOGICAL_COUNCIL" parameter="resources.PedagogicalCouncilResources"></message-resources>
-      <message-resources null="false" key="COMMON_RESOURCES" parameter="resources.CommonResources"></message-resources>
-      <message-resources null="false" key="DOMAIN_RESOURCES" parameter="resources.DomainResources"></message-resources>
-      <message-resources null="false" key="GROUP_NAME_RESOURCES" parameter="resources.GroupNameResources"></message-resources>
-      <message-resources null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="ENUMERATION_RESOURCES" parameter="resources.EnumerationResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="IMAGE_RESOURCES" parameter="resources.ImageResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="HTMLALT_RESOURCES" parameter="resources.HtmlaltResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="PORTAL_RESOURCES" parameter="resources.PortalResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="STUDENT_RESOURCES" parameter="resources.StudentResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="GEP_RESOURCES" parameter="resources.GEPResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="DEGREE_ADM_OFFICE" parameter="resources.DegreeAdministrativeOfficeResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="CURRICULUM_HISTORIC_RESOURCES" parameter="resources.CurriculumHistoricResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="PUBLIC_DEGREE_INFORMATION" parameter="resources.PublicDegreeInformation"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="MANAGER_RESOURCES" parameter="resources.ManagerResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="DOMAIN_EXCEPTION_RESOURCES" parameter="resources.DomainExceptionResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="RENDERER_RESOURCES" parameter="resources.AcademicRendererResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="ADMIN_OFFICE_RESOURCES" parameter="resources.AdminOffice"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="ACADEMIC_OFFICE_RESOURCES" parameter="resources.AcademicAdminOffice"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="CANDIDATE_RESOURCES" parameter="resources.CandidateResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="VIGILANCY_RESOURCES" parameter="resources.VigilancyResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="TESTS_RESOURCES" parameter="resources.TestsResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="SCIENTIFIC_COUNCIL_RESOURCES" parameter="resources.ScientificCouncilResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="ALUMNI_RESOURCES" parameter="resources.AlumniResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="PEDAGOGICAL_COUNCIL" parameter="resources.PedagogicalCouncilResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="COMMON_RESOURCES" parameter="resources.CommonResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="DOMAIN_RESOURCES" parameter="resources.DomainResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="GROUP_NAME_RESOURCES" parameter="resources.GroupNameResources"></message-resources>
+      <message-resources factory="org.fenixedu.bennu.struts.extension.UTF8PropertyMessageResourcesFactory"  null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
       <!-- ========== Plug Ins Configuration ================================= -->
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
             <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-gep.xml" property="pathnames"></set-property>
