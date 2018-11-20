@@ -71,6 +71,12 @@
 	<p><span><bean:message bundle="APPLICATION_RESOURCES" key="label.warning.coursesAndGroupsSimultaneousEnrolment"/></span></p>
 </div>
 
+<div class="infoop2 mtop05 mbottom15">
+	<p><strong><bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.courses.selected" />:</strong></p>
+	<ul class="mbottom15 selected-modules">
+	</ul>
+</div>
+
 	<logic:messagesPresent message="true" property="success">
 		<p>
 		<span class="success0" style="padding: 0.25em;">
@@ -186,8 +192,45 @@ function submitForm(btn) {
 	$(btn).addClass('disabled');
 	$(btn).html('${portal.message('resources.ApplicationResources', 'label.saving')}');
 }
+
+function getSelectedModules() {
+    return $.makeArray($('.module-enrol-checkbox:checked, .enrolment-checkbox:checked').map(function(i, obj) {
+
+        return '<li>' + $(obj).data('fullpath') + '</li>';
+    })).join("") || '${portal.message('resources.StudentResources', 'label.enrollment.courses.selected.empty')}';
+}
+
 (function () {
 	$('table').removeClass('table');
+
+    $('.pre-selected').each(function(i, obj) {
+        // Get all row's cells
+		var cells = $(obj).parent().siblings().andSelf();
+
+		var courseNameCell = $(cells[0]);
+
+		if ($(obj).is(":checked")) {
+            cells.addClass('se_temporary');
+            courseNameCell.append('<strong> - ${portal.message('resources.StudentResources', 'label.enrollment.courses.preEnrolled')}</strong>');
+		} else {
+            courseNameCell.append('<span style="color: #888"> - ${portal.message('resources.StudentResources', 'label.enrollment.courses.preEnrolled')}</span>');
+		}
+    });
+
+    $('.pre-selected:checked').one( "click", function(el) {
+        var cells = $(this).parent().siblings().andSelf();
+
+        $(cells[0]).children('strong').remove();
+        $(cells[0]).append('<span style="color: #888"> - ${portal.message('resources.StudentResources', 'label.enrollment.courses.preEnrolled')}</span>');
+        cells.removeClass('se_temporary');
+    });
+
+    $('.selected-modules').html(getSelectedModules());
+
+    $('.module-enrol-checkbox, .enrolment-checkbox').on('click', function(){
+        $('.selected-modules').html(getSelectedModules());
+    });
+
 })();
 
 function checkState(){
@@ -199,4 +242,6 @@ function checkState(){
 	}
 	return true;
 }
+
+
 </script>

@@ -235,4 +235,9 @@ public class EnroledCurriculumModuleWrapper implements Serializable, IDegreeModu
         }
         return false;
     }
+
+    @Override
+    public String getFullPath() {
+        return getDegreeModule().getOneFullName();
+    }
 }

@@ -93,4 +93,6 @@ public interface IDegreeModuleToEvaluate {
 
     public boolean isAnnualCurricularCourse(final ExecutionYear executionYear);
 
+    public String getFullPath();
+
 }

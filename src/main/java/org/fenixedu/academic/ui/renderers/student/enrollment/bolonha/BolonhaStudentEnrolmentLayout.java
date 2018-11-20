@@ -376,8 +376,12 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
                 checkBoxCell.setClasses(getRenderer().getCurricularCourseToEnrolCheckBoxClasses());
 
                 HtmlCheckBox checkBox = new HtmlCheckBox(false);
+                checkBox.addClass("module-enrol-checkbox");
+                checkBox.setAttribute("data-fullpath", degreeModuleToEvaluate.getFullPath());
+
                 if (degreeModulesToSelect.contains(degreeModuleToEvaluate)) {
                     checkBox.setChecked(true);
+                    checkBox.addClass("pre-selected");
                 }
                 checkBox.setName("degreeModuleToEnrolCheckBox" + degreeModuleToEvaluate.getKey());
                 checkBox.setUserValue(degreeModuleToEvaluate.getKey());
@@ -513,6 +517,8 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         MetaObject enrolmentMetaObject = MetaObjectFactory.createObject(enrolment, new Schema(Enrolment.class));
 
         HtmlCheckBox checkBox = new HtmlCheckBox(true);
+        checkBox.setClasses("enrolment-checkbox");
+        checkBox.setAttribute("data-fullpath", enrolment.getDegreeModule().getOneFullName());
         checkBox.setName("enrolmentCheckBox" + enrolment.getExternalId());
         checkBox.setUserValue(enrolmentMetaObject.getKey().toString());
         enrollmentsController.addCheckBox(checkBox);
