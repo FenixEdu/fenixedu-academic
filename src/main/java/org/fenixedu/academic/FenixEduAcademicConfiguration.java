@@ -148,6 +148,9 @@ public class FenixEduAcademicConfiguration {
 
         @ConfigurationProperty(key = "max.days.between.promise.and.payment", defaultValue = "2")
         public Integer getMaxDaysBetweenPromiseAndPayment();
+
+        @ConfigurationProperty(key = "mobility.default.erasmus.program", defaultValue = "ERASMUS")
+        public String mobilityDefaultErasmusProgram();
     }
 
     public static ConfigurationProperties getConfiguration() {

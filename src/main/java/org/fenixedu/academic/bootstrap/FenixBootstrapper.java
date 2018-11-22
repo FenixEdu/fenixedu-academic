@@ -171,7 +171,7 @@ public class FenixBootstrapper {
                 LocalizedString.fromJson(new JsonParser().parse("{\"pt-PT\":\"Normal\",\"en-GB\":\"Normal\"}"));
 
         RegistrationProtocol registrationProtocol =
-                new RegistrationProtocol("NORMAL", description, true, true, true, false, false, false, false, false, false, true,
+                new RegistrationProtocol("NORMAL", description, true, true, true, false, false, false, false, false, true,
                         false);
     }
 
