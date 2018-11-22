@@ -99,25 +99,25 @@
 			
 			<h:outputText value="<ul class='mvert0'>" escape="false"/>
 			<h:outputText value="<li>#{scouncilBundle['theoreticalLesson']}: " escape="false"/>
-			<h:outputText value="#{competenceCourseLoad.theoreticalHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>
+			<h:outputText value="#{competenceCourseLoad.theoreticalHours} h/#{scouncilBundle['lowerCase.semester']}</li>" escape="false"/>
 	
 			<h:outputText rendered="#{competenceCourseLoad.problemsHours != 0.0}" value="<li>#{scouncilBundle['problemsLesson']}: " escape="false"/>
-			<h:outputText rendered="#{competenceCourseLoad.problemsHours != 0.0}" value="#{competenceCourseLoad.problemsHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>
+			<h:outputText rendered="#{competenceCourseLoad.problemsHours != 0.0}" value="#{competenceCourseLoad.problemsHours} h/#{scouncilBundle['lowerCase.semester']}</li>" escape="false"/>
 	
 			<h:outputText value="<li>#{scouncilBundle['laboratorialLesson']}: " escape="false"/>
-			<h:outputText value="#{competenceCourseLoad.laboratorialHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>
+			<h:outputText value="#{competenceCourseLoad.laboratorialHours} h/#{scouncilBundle['lowerCase.semester']}</li>" escape="false"/>
 	
 			<h:outputText value="<li>#{scouncilBundle['seminary']}: " escape="false"/>
-			<h:outputText value="#{competenceCourseLoad.seminaryHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>
+			<h:outputText value="#{competenceCourseLoad.seminaryHours} h/#{scouncilBundle['lowerCase.semester']}</li>" escape="false"/>
 	
 			<h:outputText value="<li>#{scouncilBundle['fieldWork']}: " escape="false"/>
-			<h:outputText value="#{competenceCourseLoad.fieldWorkHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>
+			<h:outputText value="#{competenceCourseLoad.fieldWorkHours} h/#{scouncilBundle['lowerCase.semester']}</li>" escape="false"/>
 	
 			<h:outputText value="<li>#{scouncilBundle['trainingPeriod']}: " escape="false"/>
-			<h:outputText value="#{competenceCourseLoad.trainingPeriodHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>
+			<h:outputText value="#{competenceCourseLoad.trainingPeriodHours} h/#{scouncilBundle['lowerCase.semester']}</li>" escape="false"/>
 	
 			<h:outputText value="<li>#{scouncilBundle['tutorialOrientation']}: " escape="false"/>
-			<h:outputText value="#{competenceCourseLoad.tutorialOrientationHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>
+			<h:outputText value="#{competenceCourseLoad.tutorialOrientationHours} h/#{scouncilBundle['lowerCase.semester']}</li>" escape="false"/>
 	
 			<h:outputText value="<li>#{scouncilBundle['autonomousWork']}: " escape="false"/>
 			<h:outputText value="#{competenceCourseLoad.autonomousWorkHours} h/#{scouncilBundle['lowerCase.semester']}</li>" escape="false"/>

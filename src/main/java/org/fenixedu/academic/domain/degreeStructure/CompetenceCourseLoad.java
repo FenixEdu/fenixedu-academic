@@ -89,7 +89,7 @@ public class CompetenceCourseLoad extends CompetenceCourseLoad_Base implements C
     }
 
     public Double getContactLoad() {
-        return NUMBER_OF_WEEKS * getTotalLessonHours();
+        return getTotalLessonHours();
     }
 
     public Double getTotalLoad() {
