@@ -22,6 +22,7 @@ import java.io.Serializable;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.organizationalStructure.ResidenceManagementUnit;
+import org.fenixedu.academic.domain.residence.ResidenceMonth;
 import org.fenixedu.academic.domain.residence.ResidenceYear;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.util.Money;
@@ -35,6 +36,7 @@ public class ResidenceEventBean implements Serializable {
     private Money roomValue;
     private String statusMessage;
     private String room;
+    private ResidenceMonth residenceMonth;
 
     public String getRoom() {
         return room;
@@ -44,12 +46,13 @@ public class ResidenceEventBean implements Serializable {
         this.room = room;
     }
 
-    public ResidenceEventBean(String userName, String fiscalNumber, String name, Double roomValue, String room) {
+    public ResidenceEventBean(ResidenceMonth residenceMonth, String userName, String fiscalNumber, String name, Double roomValue, String room) {
         this.userName = userName;
         this.fiscalNumber = fiscalNumber;
         this.name = name;
         this.roomValue = new Money(roomValue);
         this.room = room;
+        this.residenceMonth = residenceMonth;
         setStudent(null);
     }
 
@@ -110,16 +113,26 @@ public class ResidenceEventBean implements Serializable {
         }
         setStudent(student);
 
+        /*
+        // Validate room values of excel vs current room values in database
+
         ResidenceYear year = ResidenceYear.getCurrentYear();
         ResidenceManagementUnit unit = year.getUnit();
-/*	if (!roomValue.equals(unit.getCurrentSingleRoomValue()) && !roomValue.equals(unit.getCurrentDoubleRoomValue())) {
-	    statusMessage = "label.error.invalid.payment.amount";
-	    return false;
-	}*/
+
+        if (!roomValue.equals(unit.getCurrentSingleRoomValue()) && !roomValue.equals(unit.getCurrentDoubleRoomValue())) {
+	        statusMessage = "label.error.invalid.payment.amount";
+	        return false;
+	    }
+	    */
 
         String socialSecurityNumber = student.getPerson().getSocialSecurityNumber();
-        if (socialSecurityNumber != null && !socialSecurityNumber.equalsIgnoreCase(fiscalNumber.trim())) {
+        if (socialSecurityNumber == null || !socialSecurityNumber.equalsIgnoreCase(fiscalNumber.trim())) {
             statusMessage = "label.error.invalid.fiscalNumber";
+            return false;
+        }
+
+        if (residenceMonth.isEventPresent(student.getPerson())) {
+            statusMessage = "label.error.invalid.eventPresent";
             return false;
         }
 
@@ -130,4 +143,11 @@ public class ResidenceEventBean implements Serializable {
         this.statusMessage = statusMessage;
     }
 
+    public ResidenceMonth getResidenceMonth() {
+        return residenceMonth;
+    }
+
+    public void setResidenceMonth(final ResidenceMonth residenceMonth) {
+        this.residenceMonth = residenceMonth;
+    }
 }

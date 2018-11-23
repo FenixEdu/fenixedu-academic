@@ -34,6 +34,10 @@ public class ResidentListsHolderBean implements Serializable {
         return unsuccessfulEvents;
     }
 
+    public ResidentListsHolderBean(){
+
+    }
+
     public ResidentListsHolderBean(List<ResidenceEventBean> sucessful, List<ResidenceEventBean> unsucessful) {
         this.successfulEvents = sucessful;
         this.unsuccessfulEvents = unsucessful;

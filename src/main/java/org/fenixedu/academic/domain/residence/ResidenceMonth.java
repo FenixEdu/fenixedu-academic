@@ -18,8 +18,8 @@
  */
 package org.fenixedu.academic.domain.residence;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.ResidenceEvent;
@@ -47,12 +47,7 @@ public class ResidenceMonth extends ResidenceMonth_Base {
     }
 
     public boolean isEventPresent(Person person) {
-        for (ResidenceEvent event : getEventsSet()) {
-            if (event.getPerson() == person && (event.isOpen() || event.isPayed())) {
-                return true;
-            }
-        }
-        return false;
+        return getEventsSet().stream().anyMatch(event -> event.getPerson() == person && (event.isOpen() || event.isPayed()));
     }
 
     public DateTime getPaymentStartDate() {
@@ -69,29 +64,19 @@ public class ResidenceMonth extends ResidenceMonth_Base {
     }
 
     public boolean isAbleToEditPaymentLimitDate() {
-        return getEventsSet().size() == 0;
+        return getEventsSet().isEmpty();
     }
 
     public Set<ResidenceEvent> getEventsWithPaymentCodes() {
-        Set<ResidenceEvent> eventsWithCodes = new HashSet<ResidenceEvent>();
 
-        for (ResidenceEvent event : getEventsSet()) {
-            if (event.getAllPaymentCodes().size() > 0 && !event.isCancelled()) {
-                eventsWithCodes.add(event);
-            }
-        }
-        return eventsWithCodes;
+        return getEventsSet().stream().filter(event -> !event.getAllPaymentCodes().isEmpty() && !event.isCancelled())
+                .collect(Collectors.toSet());
     }
 
     public Set<ResidenceEvent> getEventsWithoutPaymentCodes() {
-        Set<ResidenceEvent> eventsWithoutCodes = new HashSet<ResidenceEvent>();
 
-        for (ResidenceEvent event : getEventsSet()) {
-            if (event.getAllPaymentCodes().size() == 0 && !event.isCancelled()) {
-                eventsWithoutCodes.add(event);
-            }
-        }
-        return eventsWithoutCodes;
+        return getEventsSet().stream().filter(event -> event.getAllPaymentCodes().isEmpty() && !event.isCancelled())
+                .collect(Collectors.toSet());
     }
 
     public boolean isFor(int year) {
