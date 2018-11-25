@@ -144,11 +144,12 @@ public class ProfessorshipService {
 
                 addCell(message("teacher.professorships.csv.column.1.username"), user.getUsername());
                 addCell(message("teacher.professorships.csv.column.2.name"), user.getProfile().getDisplayName());
-                addCell(message("teacher.professorships.csv.column.3.courseCode"), GepReportFile.getExecutionCourseCode(course));
-                addCell(message("teacher.professorships.csv.column.4.courseName"), course.getNome());
-                addCell(message("teacher.professorships.csv.column.5.semester"), GepReportFile.getExecutionSemesterCode(course
+                addCell(message("teacher.professorships.csv.column.3.courseAcronym"), GepReportFile.getExecutionCourseCode(course));
+                addCell(message("teacher.professorships.csv.column.4.courseCode"), course.getCode());
+                addCell(message("teacher.professorships.csv.column.5.courseName"), course.getNome());
+                addCell(message("teacher.professorships.csv.column.6.semester"), GepReportFile.getExecutionSemesterCode(course
                         .getExecutionPeriod()));
-                addCell(message("teacher.authorizations.csv.column.6.responsible"), item.isResponsibleFor() ? "Y" : "N");
+                addCell(message("teacher.professorships.csv.column.7.responsible"), item.isResponsibleFor() ? "Y" : "N");
             }
         });
 
