@@ -646,6 +646,11 @@ public abstract class Event extends Event_Base {
     }
 
     public void cancel(final Person responsible, final String cancelJustification) {
+
+        if (isCancelled()) {
+            return;
+        }
+        
         if (!isOpen()) {
             throw new DomainException("error.accounting.Event.only.open.events.can.be.cancelled");
         }
