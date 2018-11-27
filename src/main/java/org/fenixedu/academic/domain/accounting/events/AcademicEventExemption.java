@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.domain.accounting.events;
 
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Money;
 
 /**
@@ -29,18 +28,6 @@ public class AcademicEventExemption extends AcademicEventExemption_Base {
 
     private AcademicEventExemption() {
         super();
-    }
-
-    @Override
-    public void delete() {
-        checkRulesToDelete();
-        super.delete();
-    }
-
-    private void checkRulesToDelete() {
-        if (getEvent().hasAnyPayments()) {
-            throw new DomainException("error.accounting.events.candidacy.AcademicEventExemption.cannot.delete.event.has.payments");
-        }
     }
 
     @Override
