@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.domain.phd.debts;
 
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Money;
 
 /**
@@ -29,18 +28,6 @@ public class PhdEventExemption extends PhdEventExemption_Base {
 
     protected PhdEventExemption() {
         super();
-    }
-
-    @Override
-    public void delete() {
-        checkRulesToDelete();
-        super.delete();
-    }
-
-    private void checkRulesToDelete() {
-        if (getEvent().hasAnyPayments()) {
-            throw new DomainException("error.PhdEventExemption.cannot.delete.event.has.payments");
-        }
     }
 
     @Override

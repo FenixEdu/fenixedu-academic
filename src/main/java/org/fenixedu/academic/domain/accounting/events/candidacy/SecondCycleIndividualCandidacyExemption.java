@@ -43,11 +43,6 @@ public class SecondCycleIndividualCandidacyExemption extends SecondCycleIndividu
     }
 
     private void checkRulesToDelete() {
-        if (getEvent().hasAnyPayments()) {
-            throw new DomainException(
-                    "error.accounting.events.candidacy.SecondCycleIndividualCandidacyExemption.cannot.delete.event.has.payments");
-        }
-
         if (getEvent().getIndividualCandidacy().isAccepted()) {
             throw new DomainException(
                     "error.accounting.events.candidacy.SecondCycleIndividualCandidacyExemption.cannot.delete.candidacy.is.accepted");
