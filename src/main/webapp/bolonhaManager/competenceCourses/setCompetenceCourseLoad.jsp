@@ -109,49 +109,49 @@
 					<h:outputText value="#{bolonhaBundle['theoreticalLesson']}: "/>
 					<h:panelGroup>
 						<h:inputText alt="#{htmlAltBundle['inputText.theoreticalHours']}" maxlength="5" size="5" value="#{courseLoad.theoreticalHours}"/>
-						<h:outputText value=" h/#{bolonhaBundle['lowerCase.week']}"/>
+						<h:outputText value=" h/#{bolonhaBundle['lowerCase.semester']}"/>
 					</h:panelGroup>
 					
 					<h:outputText value="#{bolonhaBundle['problemsLesson']}: "/>
 					<h:panelGroup>
 						<h:inputText alt="#{htmlAltBundle['inputText.problemsHours']}" maxlength="5" size="5" value="#{courseLoad.problemsHours}"/>
-						<h:outputText value=" h/#{bolonhaBundle['lowerCase.week']}"/>
+						<h:outputText value=" h/#{bolonhaBundle['lowerCase.semester']}"/>
 					</h:panelGroup>	
 					
 					<h:outputText value="#{bolonhaBundle['laboratorialLesson']}: "/>
 					<h:panelGroup>
 						<h:inputText alt="#{htmlAltBundle['inputText.laboratorialHours']}" maxlength="5" size="5" value="#{courseLoad.laboratorialHours}"/>
-						<h:outputText value=" h/#{bolonhaBundle['lowerCase.week']}"/>
+						<h:outputText value=" h/#{bolonhaBundle['lowerCase.semester']}"/>
 					</h:panelGroup>
 					
 					<h:outputText value="#{bolonhaBundle['seminary']}: "/>
 					<h:panelGroup>
 						<h:inputText alt="#{htmlAltBundle['inputText.seminaryHours']}" maxlength="5" size="5" value="#{courseLoad.seminaryHours}"/>
-						<h:outputText value=" h/#{bolonhaBundle['lowerCase.week']}"/>
+						<h:outputText value=" h/#{bolonhaBundle['lowerCase.semester']}"/>
 					</h:panelGroup>		
 					
 					<h:outputText value="#{bolonhaBundle['fieldWork']}: "/>
 					<h:panelGroup>
 						<h:inputText alt="#{htmlAltBundle['inputText.fieldWorkHours']}" maxlength="5" size="5" value="#{courseLoad.fieldWorkHours}"/>
-						<h:outputText value=" h/#{bolonhaBundle['lowerCase.week']}"/>
+						<h:outputText value=" h/#{bolonhaBundle['lowerCase.semester']}"/>
 					</h:panelGroup>		
 					
 					<h:outputText value="#{bolonhaBundle['trainingPeriod']}: "/>
 					<h:panelGroup>
 						<h:inputText alt="#{htmlAltBundle['inputText.trainingPeriodHours']}" maxlength="5" size="5" value="#{courseLoad.trainingPeriodHours}"/>
-						<h:outputText value=" h/#{bolonhaBundle['lowerCase.week']}"/>
+						<h:outputText value=" h/#{bolonhaBundle['lowerCase.semester']}"/>
 					</h:panelGroup>
 					
 					<h:outputText value="#{bolonhaBundle['tutorialOrientation']}: "/>
 					<h:panelGroup>
 						<h:inputText alt="#{htmlAltBundle['inputText.tutorialOrientationHours']}" maxlength="5" size="5" value="#{courseLoad.tutorialOrientationHours}"/>
-						<h:outputText value=" h/#{bolonhaBundle['lowerCase.week']}"/>
+						<h:outputText value=" h/#{bolonhaBundle['lowerCase.semester']}"/>
 					</h:panelGroup>
 					
 					<h:outputText value="#{bolonhaBundle['other']}: "/>
 					<h:panelGroup>
 						<h:inputText alt="#{htmlAltBundle['inputText.otherHours']}" maxlength="5" size="5" value="#{courseLoad.otherHours}"/>
-						<h:outputText value=" h/#{bolonhaBundle['lowerCase.week']}"/>
+						<h:outputText value=" h/#{bolonhaBundle['lowerCase.semester']}"/>
 					</h:panelGroup>					
 					
 					<h:outputText value="#{bolonhaBundle['autonomousWork']}: " style="font-weight: bold"/>

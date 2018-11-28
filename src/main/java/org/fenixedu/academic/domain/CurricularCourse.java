@@ -2047,8 +2047,7 @@ public class CurricularCourse extends CurricularCourse_Base {
             default:
                 break;
             }
-            return hours != null ? BigDecimal.valueOf(hours)
-                    .multiply(BigDecimal.valueOf(CompetenceCourseLoad.NUMBER_OF_WEEKS)) : null;
+            return hours != null ? BigDecimal.valueOf(hours) : null;
         }
         return null;
     }
