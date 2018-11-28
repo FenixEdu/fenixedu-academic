@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.studentCurriculum;
 import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -44,7 +45,7 @@ import org.fenixedu.academic.domain.student.registrationStates.RegistrationState
 import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -55,7 +56,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
         @Override
         public int compare(ExternalEnrolment o1, ExternalEnrolment o2) {
             int result = o1.getName().compareTo(o2.getName());
-            return (result != 0) ? result : o1.getExternalId().compareTo(o2.getExternalId());
+            return result != 0 ? result : o1.getExternalId().compareTo(o2.getExternalId());
         }
     };
 
@@ -144,7 +145,13 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 
     @Override
     public LocalizedString getName() {
-        return new LocalizedString(I18N.getLocale(), getExternalCurricularCourse().getName());
+        //External enrolments only have one name
+        LocalizedString result = new LocalizedString();
+        String name = getExternalCurricularCourse().getName();
+        for (Locale locale : CoreConfiguration.supportedLocales()) {
+            result = result.with(locale, name);
+        }
+        return result;
     }
 
     @Override
@@ -202,7 +209,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     @Override
     public Integer getFinalGrade() {
         final String grade = getGradeValue();
-        return (StringUtils.isEmpty(grade) || !StringUtils.isNumeric(grade)) ? null : Integer.valueOf(grade);
+        return StringUtils.isEmpty(grade) || !StringUtils.isNumeric(grade) ? null : Integer.valueOf(grade);
     }
 
     @Override
@@ -241,11 +248,13 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     private Grade calculateNormalizedEctsGrade(final StudentCurricularPlan scp, final DateTime processingDate) {
         final Grade grade = getGrade();
         final EctsConversionTable table = getEctsConversionTable();
-        final EctsConversionTable tableForCalculation = table == null ? calculateEctsConversionTable(scp, processingDate, grade) : table;
+        final EctsConversionTable tableForCalculation =
+                table == null ? calculateEctsConversionTable(scp, processingDate, grade) : table;
         return tableForCalculation.convert(grade);
     }
 
-    private EctsConversionTable calculateEctsConversionTable(final StudentCurricularPlan scp, final DateTime processingDate, final Grade grade) {
+    private EctsConversionTable calculateEctsConversionTable(final StudentCurricularPlan scp, final DateTime processingDate,
+            final Grade grade) {
         Set<Dismissal> dismissals = new HashSet<Dismissal>();
         for (EnrolmentWrapper wrapper : getEnrolmentWrappersSet()) {
             if (wrapper.getCredits().getStudentCurricularPlan().equals(scp)) {
@@ -301,7 +310,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 
     /**
      * There is no thesis associated to an external enrolment.
-     * 
+     *
      * @return <code>null</code>
      */
     @Override
@@ -335,7 +344,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     @Deprecated
     public java.util.Date getCreationDate() {
         org.joda.time.DateTime dt = getCreationDateDateTime();
-        return (dt == null) ? null : new java.util.Date(dt.getMillis());
+        return dt == null ? null : new java.util.Date(dt.getMillis());
     }
 
     @Deprecated
