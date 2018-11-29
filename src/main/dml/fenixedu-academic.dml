@@ -2582,6 +2582,7 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
 			Boolean disableSendEmails;
 			boolean photoAvailable;
 			DateTime dataProcessingTermsReadDate;
+			String iban;
         }
 
 		class PersonIdentificationDocumentExtraInfo  {
