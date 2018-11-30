@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 
+import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
@@ -117,11 +118,11 @@ public class PartialRegimeInstallment extends PartialRegimeInstallment_Base {
     }
 
     private BigDecimal getEnroledEcts(GratuityEvent gratuityEvent) {
-    	return getExecutionSemestersSet().stream()
-        		.flatMap(es -> gratuityEvent.getStudentCurricularPlan().getCycleCurriculumGroups().stream()
-        						.flatMap(ccg -> ccg.getEnrolmentsBy(es).stream()))
-        		.map(e -> e.getEctsCreditsForCurriculum())
-        		.reduce(BigDecimal.ZERO, BigDecimal::add);
+        return gratuityEvent.getStudentCurricularPlan()
+                .getEnrolmentStream()
+                .filter(e -> getExecutionSemestersSet().contains(e.getExecutionPeriod()))
+                .map(Enrolment::getEctsCreditsForCurriculum)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     @Override
