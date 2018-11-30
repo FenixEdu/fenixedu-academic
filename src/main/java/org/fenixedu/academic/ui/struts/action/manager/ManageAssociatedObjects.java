@@ -545,33 +545,6 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         }
     }
 
-    public ActionForward prepareAssociatePersonUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        AssociatedObjectsBean associatedObjectsBean = new AssociatedObjectsBean();
-        associatedObjectsBean.setUnits(Unit.readAllUnits());
-        request.setAttribute("bean", associatedObjectsBean);
-        return mapping.findForward("associatePersonUnit");
-    }
-
-//
-//    public ActionForward associatePersonUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-//            HttpServletResponse response) throws Exception {
-//        AssociatedObjectsBean bean = getRenderedObject("office");
-//
-//        createAssociationToUnit(bean);
-//
-//        return list(mapping, form, request, response);
-//    }
-//
-//    @Atomic(mode = TxMode.WRITE)
-//    private void createAssociationToUnit(AssociatedObjectsBean bean) {
-//        Person person = Person.readPersonByUsername(bean.getUsername());
-//        EmployeeContract ec =
-//                new EmployeeContract(person, bean.getStart(), null, bean.getUnit(), bean.getAccTypeEnum(), bean.isTeacher());
-//
-//        person.getEmployee().getCurrentDepartmentWorkingPlace();
-//    }
-
     public ActionForward prepareCreateScientificArea(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         AssociatedObjectsBean associatedObjectsBean = new AssociatedObjectsBean();
