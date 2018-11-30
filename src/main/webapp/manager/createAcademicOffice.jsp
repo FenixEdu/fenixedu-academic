@@ -30,14 +30,23 @@
 
 <html:xhtml/>
 
-<h2>Create Academic Office</h2>
+<h2>Create Administrative Office</h2>
+
+<logic:notEmpty name="error">
+    <p>
+        <span class="error"><!-- Error messages go here -->
+            <bean:write name="error"/>
+        </span>
+    <p>
+</logic:notEmpty>
+
 <fr:edit id="office" name="bean" action="/manageAssociatedObjects.do?method=createAcademicOffice">
     <fr:schema bundle="MANAGER_RESOURCES"
                type="org.fenixedu.academic.ui.struts.action.manager.ManageAssociatedObjects$AssociatedObjectsBean">
         <fr:slot name="type" key="documents.type" required="true">
         </fr:slot>
 
-        <fr:slot name="nameLS" key="label.fullName" required="true">
+        <fr:slot name="nameLS" key="label.fullName">
         </fr:slot>
 
         <fr:slot name="building" layout="menu-select" key="label.building" bundle="resources.ApplicationResources" required="true">
@@ -53,4 +62,5 @@
                      value="tstyle5 thleft thlight thmiddle mtop05"/>
         <fr:property name="columnClasses" value=",,tdclear tderror1"/>
     </fr:layout>
+    <fr:destination name="cancel" path="/manageAssociatedObjects.do?method=list"/>
 </fr:edit>
