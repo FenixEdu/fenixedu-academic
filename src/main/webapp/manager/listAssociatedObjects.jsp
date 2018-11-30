@@ -42,7 +42,6 @@
 </ul>
 <html:link page="/manageAssociatedObjects.do?method=prepareCreateDegreeType">Create</html:link><br/>
 
-
 <h3>Departments</h3>
 <html:link page="/manageAssociatedObjects.do?method=prepareCreateDepartment">Create</html:link><br/>
 <logic:present name="departments">
@@ -58,7 +57,6 @@
     There are no departments
 </logic:notPresent>
 
-
 <h3>Administrative Offices</h3>
 <html:link page="/manageAssociatedObjects.do?method=prepareAcademicOffice">Create</html:link><br/>
 <logic:present name="offices">
@@ -71,8 +69,6 @@
 <logic:notPresent name="offices">
     There are no administrative offices
 </logic:notPresent>
-<h3>Associate Person to Unit</h3>
-<html:link page="/manageAssociatedObjects.do?method=prepareAssociatePersonUnit">Create</html:link><br/>
 
 <h3>Create empty degree</h3>
 <logic:notEmpty name="emptyDegree">
@@ -84,6 +80,7 @@
     There is no empty degree.</br>
     <html:link page="/manageAssociatedObjects.do?method=prepareEmptyDegree">Create</html:link><br/>
 </logic:empty>
+
 <h3>Create Scientific Area</h3>
 <html:link page="/manageAssociatedObjects.do?method=prepareCreateScientificArea">Create Scientific Area</html:link><br/>
 <logic:present name="departments">
