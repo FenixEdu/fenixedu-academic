@@ -203,8 +203,8 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
             return mapping.findForward("prepareCreateCalendarEntry");
         }
 
-        return generateGanttDiagram(mapping, request, CalendarEntryBean.createCalendarEntryBeanToCreateEntry(
-                entry.getRootEntry(), entry, bean.getBeginDateToDisplay(), bean.getEndDateToDisplay()));
+        return generateGanttDiagram(mapping, request, CalendarEntryBean.createCalendarEntryBeanToCreateEntry(entry.getRootEntry(),
+                entry.getParentEntry() == null ? entry : entry.getParentEntry(), bean.getBeginDateToDisplay(), bean.getEndDateToDisplay()));
     }
 
     public ActionForward prepareEditEntry(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
