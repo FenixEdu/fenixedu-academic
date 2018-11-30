@@ -51,9 +51,11 @@ import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UnitClassification;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.manager.ManagerApplications.ManagerSystemManagementApp;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -524,6 +526,12 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
     public ActionForward createEmptyDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         AssociatedObjectsBean bean = getRenderedObject("admOffice");
+
+        if(bean.getOffice() == null) {
+            request.setAttribute("error",
+                    BundleUtil.getString(Bundle.MANAGER, "error.emptyDegree.empty.office"));
+            return prepareEmptyDegree(mapping, form, request, response);
+        }
 
         createEmptyDegree(bean);
         return list(mapping, form, request, response);

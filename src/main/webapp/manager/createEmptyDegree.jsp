@@ -30,6 +30,15 @@
 <html:xhtml/>
 
 <h2>Create Empty Degree</h2>
+
+<logic:notEmpty name="error">
+    <p>
+        <span class="error"><!-- Error messages go here -->
+            <bean:write name="error"/>
+        </span>
+    <p>
+</logic:notEmpty>
+
 <fr:edit id="admOffice" name="bean" action="/manageAssociatedObjects.do?method=createEmptyDegree">
     <fr:schema bundle="MANAGER_RESOURCES"
                type="org.fenixedu.academic.ui.struts.action.manager.ManageAssociatedObjects$AssociatedObjectsBean">
@@ -43,4 +52,5 @@
                      value="tstyle5 thleft thlight thmiddle mtop05"/>
         <fr:property name="columnClasses" value=",,tdclear tderror1"/>
     </fr:layout>
+    <fr:destination name="cancel" path="/manageAssociatedObjects.do?method=list"/>
 </fr:edit>
