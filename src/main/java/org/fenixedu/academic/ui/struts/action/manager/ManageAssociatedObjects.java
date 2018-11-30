@@ -538,6 +538,12 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         AssociatedObjectsBean bean = getRenderedObject("admOffice");
 
+        if(bean.getOffice() == null) {
+            request.setAttribute("error",
+                    BundleUtil.getString(Bundle.MANAGER, "error.emptyDegree.empty.office"));
+            return prepareEmptyDegree(mapping, form, request, response);
+        }
+
         createEmptyDegree(bean);
         return list(mapping, form, request, response);
     }
