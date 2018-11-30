@@ -51,9 +51,11 @@ import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UnitClassification;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.manager.ManagerApplications.ManagerSystemManagementApp;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -489,6 +491,17 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
     public ActionForward createAcademicOffice(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         AssociatedObjectsBean bean = getRenderedObject("office");
+
+        if (bean.getNameLS().isEmpty()) {
+            request.setAttribute("error",
+                    BundleUtil.getString(Bundle.MANAGER, "error.administrativeOffice.empty.name"));
+            return prepareAcademicOffice(mapping, form, request, response);
+        } else if (User.findByUsername(bean.getUsername().trim()) == null) {
+            request.setAttribute("error",
+                    BundleUtil.getString(Bundle.MANAGER, "error.administrativeOffice.invalid.coordinator.username"));
+            return prepareAcademicOffice(mapping, form, request, response);
+        }
+
         createAcademicOffice(bean);
         return list(mapping, form, request, response);
     }
@@ -502,7 +515,7 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         office.setCampus(bean.getBuilding());
 
         office.setName(bean.getNameLS());
-        office.setCoordinator(User.findByUsername(bean.getUsername()));
+        office.setCoordinator(User.findByUsername(bean.getUsername().trim()));
         office.setRootDomainObject(Bennu.getInstance());
         Unit servicesParent =
                 Bennu.getInstance().getInstitutionUnit().getSubUnits().stream().filter(x -> x.getName().equals("Services"))
