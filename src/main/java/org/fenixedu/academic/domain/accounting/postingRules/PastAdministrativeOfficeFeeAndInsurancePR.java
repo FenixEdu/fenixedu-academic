@@ -41,7 +41,7 @@ public class PastAdministrativeOfficeFeeAndInsurancePR extends PastAdministrativ
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
+    protected Money doCalculationForAmountToPay(Event event) {
         final PastAdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent =
                 (PastAdministrativeOfficeFeeAndInsuranceEvent) event;
         return administrativeOfficeFeeAndInsuranceEvent.getPastAdministrativeOfficeFeeAndInsuranceAmount();

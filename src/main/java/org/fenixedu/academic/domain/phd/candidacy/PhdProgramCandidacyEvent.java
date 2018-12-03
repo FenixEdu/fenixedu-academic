@@ -67,6 +67,7 @@ public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
             throw new DomainException("error.phd.candidacy.PhdProgramCandidacyEvent.candidacyProcess.cannot.be.null", args);
         }
         super.setCandidacyProcess(candidacyProcess);
+        persistDueDateAmountMap();
     }
 
     @Override

@@ -166,10 +166,11 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
         }
     }
 
-    public Map<LocalDate, Money> getDueDateAmountMap(PostingRule postingRule, DateTime when) {
+    @Override
+    public Map<LocalDate, Money> calculateDueDateAmountMap() {
         final Map<LocalDate, Money> dueDateAmountMap = new HashMap<>();
         final LocalDate possibleDueDate = getPossibleDueDate();
-        final IAdministrativeOfficeFeeAndInsurancePR officeFeeAndInsurancePR = (IAdministrativeOfficeFeeAndInsurancePR) postingRule;
+        final IAdministrativeOfficeFeeAndInsurancePR officeFeeAndInsurancePR = (IAdministrativeOfficeFeeAndInsurancePR) getPostingRule();
         final DateTime startDate = this.getStartDate();
         final DateTime endDate = this.getEndDate();
 

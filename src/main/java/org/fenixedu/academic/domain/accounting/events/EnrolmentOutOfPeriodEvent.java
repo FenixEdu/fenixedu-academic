@@ -79,6 +79,7 @@ public class EnrolmentOutOfPeriodEvent extends EnrolmentOutOfPeriodEvent_Base {
         super.setExecutionPeriod(executionSemester);
         super.setStudentCurricularPlan(studentCurricularPlan);
         super.setNumberOfDelayDays(numberOfDelayDays);
+        persistDueDateAmountMap();
     }
 
     private void checkParameters(AdministrativeOffice administrativeOffice, StudentCurricularPlan studentCurricularPlan,

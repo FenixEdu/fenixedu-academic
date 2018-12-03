@@ -63,7 +63,7 @@ public class EquivalencePlanRequestPR extends EquivalencePlanRequestPR_Base {
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(final Event event, final DateTime when) {
+    protected Money doCalculationForAmountToPay(final Event event) {
         final EquivalencePlanRequestEvent planRequest = (EquivalencePlanRequestEvent) event;
 
         Money amountToPay = getAmountPerUnit();

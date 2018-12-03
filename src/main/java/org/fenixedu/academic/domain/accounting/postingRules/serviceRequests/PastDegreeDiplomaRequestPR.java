@@ -39,7 +39,7 @@ public class PastDegreeDiplomaRequestPR extends PastDegreeDiplomaRequestPR_Base 
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(final Event event, final DateTime when) {
+    protected Money doCalculationForAmountToPay(final Event event) {
         return ((PastDegreeDiplomaRequestEvent) event).getPastAmount();
     }
 

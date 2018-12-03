@@ -25,7 +25,6 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.signals.DomainObjectEvent;
 import org.fenixedu.bennu.core.signals.Signal;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.FenixFramework;
@@ -68,6 +67,7 @@ public class PartialRegimeEvent extends PartialRegimeEvent_Base {
         final AdministrativeOffice administrativeOffice = registration.getDegree().getAdministrativeOffice();
         init(administrativeOffice, person, studentCurricularPlan, executionYear);
         setEventPostingRule(postingRule);
+        persistDueDateAmountMap();
     }
 
     public static Optional<PartialRegimeEvent> create(Registration registration, ExecutionYear executionYear) {
@@ -162,8 +162,8 @@ public class PartialRegimeEvent extends PartialRegimeEvent_Base {
     }
 
     @Override
-    public Map<LocalDate, Money> getDueDateAmountMap(PostingRule postingRule, DateTime when) {
-        Money amount = postingRule.calculateTotalAmountToPay(this, when);
+    public Map<LocalDate, Money> calculateDueDateAmountMap() {
+        Money amount = getPostingRule().calculateTotalAmountToPay(this);
         LocalDate dueDate =
                 getWhenOccured().toLocalDate().plusDays(getEventPostingRule().getNumberOfDaysToStartApplyingInterest());
         return Collections.singletonMap(dueDate, amount);

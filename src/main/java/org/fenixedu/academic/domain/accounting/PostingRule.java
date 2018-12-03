@@ -277,8 +277,8 @@ public abstract class PostingRule extends PostingRule_Base {
         return true;
     }
 
-    public final Money calculateTotalAmountToPay(Event event, DateTime when) {
-        return doCalculationForAmountToPay(event, when);
+    public final Money calculateTotalAmountToPay(Event event) {
+        return doCalculationForAmountToPay(event);
     }
 
     public void addOtherPartyAmount(User responsibleUser, Event event, Account fromAcount, Account toAccount, Money amount,
@@ -294,7 +294,7 @@ public abstract class PostingRule extends PostingRule_Base {
     }
 
     protected void checkRulesToAddOtherPartyAmount(Event event, Money amount) {
-        if (amount.greaterThan(calculateTotalAmountToPay(event, event.getWhenOccured()))) {
+        if (amount.greaterThan(calculateTotalAmountToPay(event))) {
             throw new DomainException(
                     "error.accounting.PostingRule.cannot.add.other.party.amount.that.exceeds.event.amount.to.pay");
         }
@@ -347,12 +347,12 @@ public abstract class PostingRule extends PostingRule_Base {
         return getEventType() == eventType;
     }
 
-    protected abstract Money doCalculationForAmountToPay(Event event, DateTime when);
+    protected abstract Money doCalculationForAmountToPay(Event event);
 
     public List<EntryDTO> calculateEntries(Event event, DateTime when) {
         final List<EntryDTO> result = new ArrayList<>();
 
-        final DebtInterestCalculator debtInterestCalculator = event.getDebtInterestCalculator(this, when);
+        final DebtInterestCalculator debtInterestCalculator = event.getDebtInterestCalculator(when);
 
         final EntryType entryType = getEntryType();
 

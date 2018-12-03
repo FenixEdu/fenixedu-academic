@@ -22,7 +22,6 @@ import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.signals.DomainObjectEvent;
 import org.fenixedu.bennu.core.signals.Signal;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.FenixFramework;
@@ -55,6 +54,7 @@ public class EnrolmentGratuityEvent extends EnrolmentGratuityEvent_Base {
         init(administrativeOffice, postingRule.getEventType(), person, studentCurricularPlan, executionYear);
         setEventPostingRule(postingRule);
         setupEnrolment(enrolment);
+        persistDueDateAmountMap();
     }
 
     private void setupEnrolment(Enrolment enrolment) {
@@ -144,8 +144,8 @@ public class EnrolmentGratuityEvent extends EnrolmentGratuityEvent_Base {
     }
 
     @Override
-    public Map<LocalDate, Money> getDueDateAmountMap(PostingRule postingRule, DateTime when) {
-        Money enrolmentAmount = postingRule.calculateTotalAmountToPay(this, when);
+    public Map<LocalDate, Money> calculateDueDateAmountMap() {
+        Money enrolmentAmount = getEventPostingRule().calculateTotalAmountToPay(this);
         LocalDate dueDate =
                 getWhenOccured().toLocalDate().plusDays(getEventPostingRule().getNumberOfDaysToStartApplyingInterest());
         return Collections.singletonMap(dueDate, enrolmentAmount);

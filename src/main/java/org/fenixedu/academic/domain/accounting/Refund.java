@@ -4,6 +4,7 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 
@@ -24,10 +25,21 @@ public class Refund extends Refund_Base {
     }
 
     @Atomic(mode = Atomic.TxMode.WRITE)
-    public void delete() {
+    protected void delete(boolean annulAccountingTransaction) {
+        final AccountingTransaction accountingTransaction = getAccountingTransaction();
+
+        if (accountingTransaction != null && annulAccountingTransaction) {
+            setAccountingTransaction(null);
+            accountingTransaction.annul(Authenticate.getUser(), String.format("Refund %s was deleted", getExternalId()));
+        }
+
         setEvent(null);
         setCreator(null);
         super.deleteDomainObject();
+    }
+
+    public void delete() {
+        delete(true);
     }
 
     public LocalizedString getDescription() {

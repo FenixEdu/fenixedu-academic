@@ -433,7 +433,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     public static Money calculateOriginalDebtValue(final Event event) {
         final DateTime when = event.getWhenOccured().plusSeconds(1);
         final PostingRule rule = event.getPostingRule();
-        return rule.calculateTotalAmountToPay(event, when);
+        return rule.calculateTotalAmountToPay(event);
     }
 
     private static Money exemptions(final Event event, final Money originalDebt) {
@@ -450,8 +450,8 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
             final AdministrativeOfficeFeeExemption o = (AdministrativeOfficeFeeExemption) e;
             final DateTime when = event.getWhenOccured().plusSeconds(1);
             final PostingRule postingRule = event.getPostingRule();
-            final Money originalAmount = postingRule.calculateTotalAmountToPay(event, when);
-            final Money amountToPay = postingRule.calculateTotalAmountToPay(event, when);
+            final Money originalAmount = postingRule.calculateTotalAmountToPay(event);
+            final Money amountToPay = postingRule.calculateTotalAmountToPay(event);
             return originalAmount.subtract(amountToPay);
         } else if (e instanceof InsuranceExemption) {
             final InsuranceExemption o = (InsuranceExemption) e;

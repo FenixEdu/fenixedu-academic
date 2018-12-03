@@ -410,6 +410,14 @@ valueType org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDeta
     internalizeWith importFromString();
 }
 
+valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmountMap {
+    externalizeWith {
+        JsonElement toJson();
+    }
+
+    internalizeWith fromJson();
+}
+
 /*
 *
 * Class definitions
@@ -1303,7 +1311,7 @@ valueType org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDeta
         DateTime whenOccured;
         String createdBy;
         LocalDate whenSentLetter;
-        Money originalValueCheck;
+        protected DueDateAmountMap dueDateAmountMap;
         LocalDate eventStartDate;
     }
 

@@ -39,7 +39,7 @@ public class PastCourseGroupChangeRequestPR extends PastCourseGroupChangeRequest
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(final Event event, final DateTime when) {
+    protected Money doCalculationForAmountToPay(final Event event) {
         return ((PastCourseGroupChangeRequestEvent) event).getPastAmount();
     }
 

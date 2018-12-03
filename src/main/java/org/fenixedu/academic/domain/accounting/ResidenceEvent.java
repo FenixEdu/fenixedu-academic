@@ -54,6 +54,7 @@ public class ResidenceEvent extends ResidenceEvent_Base {
         setResidenceMonth(month);
         setRoomValue(roomValue);
         setRoom(room);
+        persistDueDateAmountMap();
     }
 
     @Override
@@ -142,8 +143,7 @@ public class ResidenceEvent extends ResidenceEvent_Base {
     }
 
     @Override
-    public Map<LocalDate, Money> getDueDateAmountMap(PostingRule postingRule, DateTime when) {
-            return Collections.singletonMap(getPaymentLimitDate().toLocalDate(), postingRule.doCalculationForAmountToPay(this,
-                    when));
+    public Map<LocalDate, Money> calculateDueDateAmountMap() {
+            return Collections.singletonMap(getPaymentLimitDate().toLocalDate(), getPostingRule().doCalculationForAmountToPay(this));
     }
 }

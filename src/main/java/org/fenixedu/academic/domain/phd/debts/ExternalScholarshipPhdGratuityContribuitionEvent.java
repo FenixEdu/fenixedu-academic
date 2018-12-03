@@ -25,6 +25,7 @@ import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.util.Bundle;
@@ -33,11 +34,13 @@ import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
+@Deprecated
 public class ExternalScholarshipPhdGratuityContribuitionEvent extends ExternalScholarshipPhdGratuityContribuitionEvent_Base {
     public ExternalScholarshipPhdGratuityContribuitionEvent(Party party) {
         super();
         init(EventType.EXTERNAL_SCOLARSHIP, party);
         setRootDomainObject(Bennu.getInstance());
+        throw new DomainException("Can't be created anymore");
     }
 
     @Override

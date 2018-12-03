@@ -78,7 +78,7 @@ public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrol
     /***
      * will not be used for {@link EnrolmentEvaluationEvent}
      */
-    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
+    protected Money doCalculationForAmountToPay(Event event) {
         return getFixedAmount().multiply(((ImprovementOfApprovedEnrolmentEvent) event).getImprovementEnrolmentEvaluationsSet().size());
     }
 

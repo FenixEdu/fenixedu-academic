@@ -77,6 +77,6 @@ public class GratuityEventInstallmentWrapper implements InstallmentWrapper {
 
     @Override
     public String getRemainingAmount(final DateTime when) {
-        return event.getDueDateAmountMap(when).getOrDefault(this.installment.getEndDate(event), Money.ZERO).toPlainString();
+        return event.getDueDateAmountMap().getOrDefault(this.installment.getEndDate(event), Money.ZERO).toPlainString();
     }
 }

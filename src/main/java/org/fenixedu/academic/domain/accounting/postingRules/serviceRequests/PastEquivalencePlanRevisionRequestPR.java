@@ -39,7 +39,7 @@ public class PastEquivalencePlanRevisionRequestPR extends PastEquivalencePlanRev
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(final Event event, final DateTime when) {
+    protected Money doCalculationForAmountToPay(final Event event) {
         return ((PastEquivalencePlanRevisionRequestEvent) event).getPastAmount();
     }
 

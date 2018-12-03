@@ -43,7 +43,7 @@ public class ExternalScholarshipPhdGratuityContribuitionPR extends ExternalSchol
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
+    protected Money doCalculationForAmountToPay(Event event) {
         return ((ExternalScholarshipPhdGratuityContribuitionEvent) event).getPhdGratuityExternalScholarshipExemption().getValue();
     }
 

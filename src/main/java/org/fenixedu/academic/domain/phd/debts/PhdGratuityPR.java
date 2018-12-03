@@ -92,7 +92,7 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
+    protected Money doCalculationForAmountToPay(Event event) {
         return getGratuityByProcess(((PhdGratuityEvent) event).getPhdIndividualProgramProcess());
     }
 

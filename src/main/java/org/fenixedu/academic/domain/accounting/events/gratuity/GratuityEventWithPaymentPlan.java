@@ -18,6 +18,13 @@
  */
 package org.fenixedu.academic.domain.accounting.events.gratuity;
 
+import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
@@ -26,11 +33,8 @@ import org.fenixedu.academic.domain.accounting.Entry;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Installment;
 import org.fenixedu.academic.domain.accounting.PaymentCode;
-import org.fenixedu.academic.domain.accounting.PaymentCodeState;
 import org.fenixedu.academic.domain.accounting.PaymentPlan;
-import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption;
-import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import org.fenixedu.academic.domain.accounting.paymentCodes.InstallmentPaymentCode;
 import org.fenixedu.academic.domain.accounting.paymentPlans.CustomGratuityPaymentPlan;
 import org.fenixedu.academic.domain.accounting.paymentPlans.GratuityPaymentPlan;
@@ -47,13 +51,6 @@ import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
-
-import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_Base {
 
@@ -72,8 +69,8 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     protected void init(AdministrativeOffice administrativeOffice, Person person, StudentCurricularPlan studentCurricularPlan,
             ExecutionYear executionYear) {
         super.init(administrativeOffice, person, studentCurricularPlan, executionYear);
-
         configuratePaymentPlan();
+        persistDueDateAmountMap();
     }
 
     @Override
@@ -271,7 +268,7 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     }
 
     @Override
-    public Map<LocalDate, Money> getDueDateAmountMap(PostingRule postingRule, DateTime when) {
+    public Map<LocalDate, Money> calculateDueDateAmountMap() {
         return getGratuityPaymentPlan().getInstallmentsSet().stream().filter( i -> i.calculateBaseAmount(this).greaterThan(Money.ZERO))
                    .collect(Collectors.toMap(i -> i.getEndDate(this), i -> i.calculateBaseAmount(this)));
     }

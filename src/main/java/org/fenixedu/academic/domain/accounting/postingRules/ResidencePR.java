@@ -61,7 +61,7 @@ public class ResidencePR extends ResidencePR_Base {
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
+    protected Money doCalculationForAmountToPay(Event event) {
         return ((ResidenceEvent) event).getRoomValue();
     }
 

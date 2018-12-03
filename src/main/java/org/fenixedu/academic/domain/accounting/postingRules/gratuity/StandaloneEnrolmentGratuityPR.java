@@ -129,7 +129,7 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
 
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
+    protected Money doCalculationForAmountToPay(Event event) {
         final GratuityEvent gratuityEvent = (GratuityEvent) event;
 
         Money result = Money.ZERO;

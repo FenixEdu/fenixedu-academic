@@ -62,6 +62,7 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
         checkParameters(registration, executionYear);
         super.setRegistration(registration);
         super.setExecutionYear(executionYear);
+        persistDueDateAmountMap();
     }
 
     private void checkParameters(Registration registration, ExecutionYear executionYear) {
