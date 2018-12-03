@@ -18,6 +18,9 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
+import java.util.Collection;
+import java.util.List;
+
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.events.EventExemptionJustification;
 import org.fenixedu.academic.domain.accounting.events.EventExemptionJustificationType;
@@ -28,9 +31,6 @@ import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
-
-import java.util.Collection;
-import java.util.List;
 
 public abstract class Exemption extends Exemption_Base {
 
@@ -66,26 +66,6 @@ public abstract class Exemption extends Exemption_Base {
 
     protected ExemptionJustification createJustification(EventExemptionJustificationType justificationType, LocalDate dispatchDate, String reason) {
         return new EventExemptionJustification(this, justificationType, dispatchDate, reason);
-    }
-
-    @Override
-    public void setEvent(Event event) {
-        throw new DomainException("error.domain.accounting.Exemption.cannot.modify.event");
-    }
-
-    @Override
-    public void setResponsible(Person responsible) {
-        throw new DomainException("error.accounting.Exemption.cannot.modify.responsible");
-    }
-
-    @Override
-    public void setWhenCreated(DateTime whenCreated) {
-        throw new DomainException("error.accounting.Exemption.cannot.modify.whenCreated");
-    }
-
-    @Override
-    public void setExemptionJustification(ExemptionJustification exemptionJustification) {
-        throw new DomainException("error.accounting.Exemption.cannot.modify.exemptionJustification");
     }
 
     public void delete() {
