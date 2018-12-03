@@ -29,7 +29,7 @@
 
 <html:xhtml/>
 
-<h2>Degree Type</h2>
+<h2><bean:message key="title.manage.associated.objects.degreeTypes" bundle="MANAGER_RESOURCES"/></h2>
 <fr:edit id="bean" name="bean" action="/manageAssociatedObjects.do?method=createDegreeType">
     <fr:schema bundle="ACADEMIC_ADMIN_OFFICE"
                type="org.fenixedu.academic.ui.struts.action.manager.ManageAssociatedObjects$DegreeTypeBean">

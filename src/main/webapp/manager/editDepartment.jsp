@@ -28,7 +28,7 @@
 
 <html:xhtml/>
 
-<h2>Edit Department</h2>
+<h2><bean:message key="title.manage.associated.objects.departments.edit" bundle="MANAGER_RESOURCES" /></h2>
 <fr:edit id="office" name="bean" action="/manageAssociatedObjects.do?method=editDepartment">
     <fr:schema bundle="MANAGER_RESOURCES"
                type="org.fenixedu.academic.ui.struts.action.manager.ManageAssociatedObjects$AssociatedObjectsBean">

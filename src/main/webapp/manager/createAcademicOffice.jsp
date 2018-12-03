@@ -30,7 +30,7 @@
 
 <html:xhtml/>
 
-<h2>Create Administrative Office</h2>
+<h2><bean:message key="title.manage.associated.objects.administrativeOffices.create" bundle="MANAGER_RESOURCES" /></h2>
 
 <logic:notEmpty name="error">
     <p>
