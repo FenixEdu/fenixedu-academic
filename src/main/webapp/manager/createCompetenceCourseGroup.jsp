@@ -29,7 +29,7 @@
 
 <html:xhtml/>
 
-<h2>Create Competence Course Group</h2>
+<h2><bean:message key="title.manage.associated.objects.create.competenceCourseGroup" bundle="MANAGER_RESOURCES" /></h2>
 
 <logic:messagesPresent message="true">
     <p>
