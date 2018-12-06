@@ -126,6 +126,7 @@
                 <modular:intersect location="event.details.extra.info" position="operations"> 
                     <modular:arg key="event" value="${event}"/>
                     <modular:arg key="isPaymentManager" value="${isPaymentManager}"/>
+                    <modular:arg key="isEventOwner" value="${isEventOwner}"/>
                 </modular:intersect>
         </div>
     </div>
