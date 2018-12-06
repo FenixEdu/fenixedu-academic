@@ -64,6 +64,18 @@
             </h2>
         </div>
 
+        <c:if test="${not empty availableAdvancements}">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="overall-description">
+                        <spring:url value="../depositAdvancement" var="depositAdvancementUrl" scope="request"/>
+                        <jsp:include page="event-depositAdvancment.jsp"/>
+                    </div>
+                </div>
+            </div>
+        </c:if>
+
+
         <div class="row">
             <div class="col-md-6">
                 <div class="overall-description">

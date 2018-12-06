@@ -1,17 +1,25 @@
 package org.fenixedu.academic.domain.accounting.paymentCodes;
 
+import java.util.Comparator;
+
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
+
 import pt.ist.fenixframework.Atomic;
 
 /***
  * This is used to register the promise of a payment by an event owner
  */
 public class EventPaymentCodeEntry extends EventPaymentCodeEntry_Base {
-    
+
+    public static final Comparator<EventPaymentCodeEntry> COMPARATOR_BY_CREATED = (e1, e2) -> {
+        final int c = e1.getCreated().compareTo(e2.getCreated());
+        return c == 0 ? e1.getExternalId().compareTo(e2.getExternalId()) : c;
+    };
+
     protected EventPaymentCodeEntry() {
         super();
         setCreated(new DateTime());

@@ -49,48 +49,36 @@
     <jsp:include page="heading-person.jsp"/>
         <div class="row">
             <div class="col-md-10">
-                <h2><c:out value="${debt.description}"/></h2>
+                <h2><c:out value="${excessRefund.description}"/></h2>
             </div>
-            <c:if test="${totalAmount > 0 && isEventOwner && event.currentEventState != 'CANCELLED'}">
-                <div class="col-md-2">
-                    <br/>
-                    <a class="btn btn-primary btn-block" href="${payUrl}"><spring:message code="accounting.event.action.pay" text="Pay"/></a>
-                </div>
-            </c:if>
         </div>
     <div class="row">
         <div class="col-md-4 col-sm-12">
             <div class="overall-description">
                 <dl>
-                    <dt><spring:message code="accounting.event.details.amount.pay" text="To pay"/></dt>
-                    <dd><c:out value="${totalAmount}"/><span>€</span></dd>
+                    <dt><spring:message code="accounting.event.details.excessRefund.amount" text="Original amount"/></dt>
+                    <dd><c:out value="${excessRefund.amount}"/><span>€</span></dd>
                 </dl>
                 <dl>
-                    <dt><spring:message code="accounting.event.details.debt.amount.pay" text="Debt"/></dt>
-                    <dd><c:out value="${debt.openAmount}"/><span>€</span></dd>
+                    <dt><spring:message code="accounting.event.details.creation.date" text="Creation Date"/></dt>
+                    <dd><time datetime="${excessRefund.created.toString("yyyy-MM-dd")}">${excessRefund.created.toString("dd/MM/yyyy")}</time></dd>
                 </dl>
                 <dl>
-                    <dt><spring:message code="accounting.event.details.interestOrFines.amount.pay" text="Interest"/></dt>
-                    <dd>
-                        <c:out value="${debt.openInterestAmount.toPlainString() + debt.openFineAmount}"/><span>€</span>
-                        <c:if test="${debt.isToExemptInterest() || debt.isToExemptFine()}">
-                            <spring:message code="accounting.event.details.debt.hasExemption" text="(Exemption)"/>
-                        </c:if>
-                    </dd>
+                    <dt><spring:message code="accounting.event.details.excessRefund.date" text="Advance Date"/></dt>
+                    <dd><time datetime="${excessRefund.date.toString("yyyy-MM-dd")}">${excessRefund.date.toString("dd/MM/yyyy")}</time></dd>
                 </dl>
-                <dl>
-                    <dt><spring:message code="accounting.event.details.original.debt.amount" text="Original amount"/></dt>
-                    <dd><c:out value="${debt.amount}"/><span>€</span></dd>
-                </dl>
-                <dl>
-                    <dt><spring:message code="accounting.event.details.due.date" text="Due Date"/></dt>
-                    <dd><time datetime="${debt.dueDate.toString("yyyy-MM-dd")}">${debt.dueDate.toString("dd/MM/yyyy")}</time></dd>
-                </dl>
-                <dl>
-                    <dt><spring:message code="accounting.event.details.debt.paid" text="Paid"/></dt>
-                    <c:set var="paidAmount" value="#{debt.paidAmount + debt.paidInterestAmount + debt.paidFineAmount}"/>
-                    <dd><c:out value="${paidAmount}"/><span>€</span></dd>
-                </dl>
+                <c:if test="${not empty targetPaymentId}">
+                    <dl>
+                        <dt><spring:message code="accounting.event.details.excessRefund.payment" text="Advance Date"/></dt>
+                        <dd>
+                            <spring:url value="../../../{event}/transaction/{targetPaymentId}/details" var="targetPaymentIdUrl">
+                                <spring:param name="event" value="${targetPaymentId.event.externalId}"/>
+                                <spring:param name="targetPaymentId" value="${targetPaymentId.externalId}"/>
+                            </spring:url>
+                            <a href="${targetPaymentIdUrl}"><c:out value="${targetPaymentId.event.description}"/></a>
+                        </dd>
+                    </dl>
+                </c:if>
             </div>
         </div>
     </div>
@@ -108,11 +96,12 @@
                     <thead>
                     <tr>
                         <th>Data de processamento</th>
-                        <th>Data efectiva</th>
+                        <th>Data de adiantamento</th>
                         <th>Tipo</th>
                         <th>Pago</th>
                         <th>Divida</th>
                         <th>Juros/Multas</th>
+                        <th>Adiantamento</th>
                         <th><span class="sr-only">Acções</span></th>
                     </tr>
                     </thead>
@@ -126,12 +115,13 @@
                     <c:forEach var="accountingEntrySummary" items="${payments}">
                         <c:set var="amountUsedInInterestOrFine" value="#{accountingEntrySummary.amountUsedInInterest + accountingEntrySummary.amountUsedInFine}"/>
                         <tr>
-                            <td><time datetime="${accountingEntrySummary.created.toString('yyyy-MM-dd HH:mm:ss')}"><c:out value="${accountingEntrySummary.created.toString('dd/MM/yyyy HH:mm:ss')}"/> </time></td>
+                            <td><time datetime="${accountingEntrySummary.created.toString('yyyy-MM-dd HH:mm:ss')}"><c:out value="${accountingEntrySummary.created.toString('dd/MM/yyyy HH:mm:ss')}"/></time></td>
                             <td><time datetime="${accountingEntrySummary.date.toString('yyyy-MM-dd')}"><c:out value="${accountingEntrySummary.date.toString('dd/MM/yyyy')}"/> </time></td>
                             <td><c:out value="${accountingEntrySummary.typeDescription.content}"/></td>
                             <td><c:out value="${accountingEntrySummary.amount.toPlainString()}"/><span>€</span></td>
                             <td><c:out value="${accountingEntrySummary.amountUsedInDebt.toPlainString()}"/><span>€</span></td>
                             <td><c:out value="${amountUsedInInterestOrFine}"/><span>€</span></td>
+                            <td><c:out value="${accountingEntrySummary.amountUsedInAdvance}"/><span>€</span></td>
                             <spring:url value="../../../{event}/transaction/{id}/details" var="paymentUrl" scope="request">
                                 <spring:param name="event" value="${eventId}"/>
                                 <spring:param name="id" value="${accountingEntrySummary.id}"/>

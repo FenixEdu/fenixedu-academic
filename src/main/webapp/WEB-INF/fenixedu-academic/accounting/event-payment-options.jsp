@@ -193,14 +193,13 @@
                                 </tr>
                             </c:if>
                         </c:forEach>
-                        <c:forEach var="debt" items="${debts}" varStatus="debtsLoop">
+                        <c:forEach var="debt" items="${debts}">
                             <c:if test="${debt.isOpen()}">
-                                <c:set var="debtIndex" value="#{debtsLoop.index + 1}"/>
                                 <c:set var="debtAmount" value="${debt.openAmount.toPlainString()}"/>
                                 <tr>
                                     <td><input class="debt" data-amount="${debtAmount}" type="checkbox"></td>
                                     <td><time datetime="${debt.dueDate.toString('yyyy-MM-dd')}">${debt.dueDate.toString('dd/MM/yyyy')}</time></td>
-                                    <td><spring:message code="accounting.event.details.debt.name" arguments="${debtIndex}"/></td>
+                                    <td><c:out value="${debt.description}"/></td>
                                     <td><c:out value="${debtAmount}"/><span>€</span></td>
                                 </tr>
                             </c:if>

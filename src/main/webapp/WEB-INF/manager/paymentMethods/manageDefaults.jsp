@@ -52,7 +52,7 @@
 
 <section>
     <c:choose>
-        <c:when test="${fn:length(paymentMethods) >= 2}">
+        <c:when test="${fn:length(paymentMethods) >= 3}">
             <form:form role="form" method="POST" class="form-horizontal" action="${actionUrl}">
                 ${csrf.field()}
                 <div class="form-group">
@@ -66,11 +66,20 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="defaultSibsPaymentMethod" class="col-sm-1 control-label"><spring:message code="label.paymentMethods.defaultSibs" /></label>
-                    <div class="col-sm-1">
+                    <label for="defaultSibsPaymentMethod" class="col-sm-1 control-label"><spring:message code="label.paymentMethods.defaultSibs" /></label>                    <div class="col-sm-1">
                         <select name="defaultSibsPaymentMethod" id="defaultSibsPaymentMethod">
                             <c:forEach var="paymentMethod" items="${paymentMethods}">
                                 <option value="${paymentMethod.externalId}" <c:if test="${paymentMethod.sibs}">selected="selected"</c:if> >${paymentMethod.code} - ${paymentMethod.localizedName}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="defaultRefundPaymentMethod" class="col-sm-1 control-label"><spring:message code="label.paymentMethods.defaultRefund" /></label>
+                    <div class="col-sm-1">
+                        <select name="defaultRefundPaymentMethod" id="defaultRefundPaymentMethod">
+                            <c:forEach var="paymentMethod" items="${paymentMethods}">
+                                <option value="${paymentMethod.externalId}" <c:if test="${paymentMethod.refund}">selected="selected"</c:if> >${paymentMethod.code} - ${paymentMethod.localizedName}</option>
                             </c:forEach>
                         </select>
                     </div>
