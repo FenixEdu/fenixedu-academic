@@ -84,6 +84,10 @@
             recalculateAmount();
         });
 
+        $('#submitForm').click(function () {
+            $('#submitForm').attr('disabled', true);
+        })
+
         recalculateAmount();
     });
 
