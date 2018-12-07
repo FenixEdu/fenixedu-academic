@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<<c:if test="${not empty availableAdvancements} }">
+<c:if test="${not empty availableAdvancements}">
 <h3><spring:message code="label.events.available.advancements" text="Available Advancements"/></h3>
 
 <div class="alert alert-warning">
@@ -25,19 +25,21 @@
                     <time datetime="${availableAdvancement.key.whenOccured.toString('yyyy-MM-dd')}">${availableAdvancement.key.whenOccured.toString('dd/MM/yyyy')}</time>
                 </td>
                 <td>
-                    <spring:url var="eventDetailsUrl" value="../{event}/details">
+                    <spring:url var="eventDetailsUrl" value="{pageContext}/{eventContextPrefix}/{event}/details">
                         <spring:param name="event" value="${availableAdvancement.key.externalId}"/>
+                        <spring:param name="pageContext" value="${pageContext.request.contextPath}"/>
+                        <spring:param name="eventContextPrefix" value="${eventContextPrefix}"/>
                     </spring:url>
 
                     <a href="${eventDetailsUrl}"><c:out value="${availableAdvancement.key.description}"/></a>
                 </td>
                 <td><c:out value="${availableAdvancement.value}"/></td>
                 <td>
-                    <spring:url var="depositAdvancementUrl" value="../{event}/depositAdvancement">
+                    <spring:url var="depositAdvancementUrl" value="{pageContext}/{eventContextPrefix}/{event}/depositAdvancement">
                         <spring:param name="event" value="${event.externalId}"/>
-
+                        <spring:param name="pageContext" value="${pageContext.request.contextPath}"/>
+                        <spring:param name="eventContextPrefix" value="${eventContextPrefix}"/>
                     </spring:url>
-
                     <form:form role="form" class="form-horizontal" action="${depositAdvancementUrl}" method="post">
                         ${csrf.field()}
                         <input hidden name="eventToRefund" value="${availableAdvancement.key.externalId}"/>
