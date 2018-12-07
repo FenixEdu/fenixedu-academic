@@ -56,7 +56,7 @@ ${portal.toolkit()}
     <jsp:include page="heading-person.jsp"/>
 
     <div class="row">
-        <spring:url value="../{event}/depositAdvancement" var="depositAdvancementUrl" scope="request"/>
+        <spring:url value="accounting-management" var="eventContextPrefix" scope="request"/>
         <jsp:include page="event-depositAdvancment.jsp"/>
 
         <h3><spring:message code="label.event.deposit" text="Register Deposit"/></h3>
