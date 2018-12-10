@@ -38,7 +38,7 @@
 
     function recalculateAmount() {
         setTotalAmount(amount + getAmount("input.debt:checked"));
-        $("#submitForm").prop('disabled', ($('#totalAmountInput').val() <= 0));
+        $("#paySubmit").prop('disabled', ($('#totalAmountInput').val() <= 0));
     }
 
     function getAmount(clazz) {
@@ -84,8 +84,9 @@
             recalculateAmount();
         });
 
-        $('#submitForm').click(function () {
-            $('#submitForm').attr('disabled', true);
+        $('#paySubmit').click(function () {
+            $('#paySubmit').attr('disabled', true);
+            $("#generatePaymentEntryForm").submit();
         });
 
         recalculateAmount();
@@ -218,7 +219,7 @@
                     <spring:url var="generatePaymentEntry" value="../{event}/pay">
                         <spring:param name="event" value="${eventId}"/>
                     </spring:url>
-                    <form:form class="form-horizontal" method="POST" action="${generatePaymentEntry}">
+                    <form:form id="generatePaymentEntryForm" class="form-horizontal" method="POST" action="${generatePaymentEntry}">
                         ${csrf.field()}
                         <dl class="sum">
                             <dt><spring:message code="accounting.event.details.total" text="Total"/></dt>
@@ -226,7 +227,7 @@
                             <input id="totalAmountInput" name="totalAmount" hidden/>
                         </dl>
                         <div class="actions">
-                            <button id="submitForm" class="btn btn-block btn-primary" type="submit">Obter dados de pagamento</button>
+                            <button id="paySubmit" class="btn btn-block btn-primary" type="submit">Obter dados de pagamento</button>
                         </div>
                     </form:form>
                 </section>
