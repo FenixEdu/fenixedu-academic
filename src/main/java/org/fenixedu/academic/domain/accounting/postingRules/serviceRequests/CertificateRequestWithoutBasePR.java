@@ -40,7 +40,7 @@ public class CertificateRequestWithoutBasePR extends CertificateRequestWithoutBa
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
+    protected Money doCalculationForAmountToPay(Event event) {
         final CertificateRequestEvent certificateRequestEvent = (CertificateRequestEvent) event;
         final Money amountForUnits = getAmountForUnits(event);
         return isUrgent(certificateRequestEvent) ? amountForUnits.multiply(2) : amountForUnits;

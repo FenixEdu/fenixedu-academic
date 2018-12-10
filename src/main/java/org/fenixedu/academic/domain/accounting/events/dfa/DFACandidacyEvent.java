@@ -53,6 +53,7 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
         init(administrativeOffice, EventType.CANDIDACY_ENROLMENT, person);
         checkParameters(candidacy);
         super.setCandidacy(candidacy);
+        persistDueDateAmountMap();
     }
 
     private void checkParameters(Candidacy candidacy) {

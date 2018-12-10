@@ -54,6 +54,7 @@ public class SpecializationDegreeRegistrationEvent extends SpecializationDegreeR
         super.init(administrativeOffice, EventType.SPECIALIZATION_DEGREE_REGISTRATION, person);
         checkParameters(registration);
         super.setRegistration(registration);
+        persistDueDateAmountMap();
     }
 
     private void checkParameters(Registration registration) {

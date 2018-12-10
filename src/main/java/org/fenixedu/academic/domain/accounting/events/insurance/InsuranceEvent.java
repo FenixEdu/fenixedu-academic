@@ -62,6 +62,7 @@ public class InsuranceEvent extends InsuranceEvent_Base implements IInsuranceEve
         if (postingRule instanceof InsurancePR) {
             setDueDate(getWhenOccured().plusDays(((InsurancePR) postingRule).getNumberOfDaysToCalculateDueDate()));
         }
+        persistDueDateAmountMap();
     }
 
     @Override

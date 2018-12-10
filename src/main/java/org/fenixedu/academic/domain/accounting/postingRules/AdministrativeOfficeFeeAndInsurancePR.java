@@ -18,6 +18,11 @@
  */
 package org.fenixedu.academic.domain.accounting.postingRules;
 
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.fenixedu.academic.domain.accounting.Account;
 import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.EntryType;
@@ -36,11 +41,6 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeFeeAndInsurancePR_Base
         implements IAdministrativeOfficeFeeAndInsurancePR {
 
@@ -54,7 +54,7 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
         super.init(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE, startDate, endDate, serviceAgreementTemplate);
     }
 
-    @Override protected Money doCalculationForAmountToPay(Event event, DateTime when) {
+    @Override protected Money doCalculationForAmountToPay(Event event) {
         throw new UnsupportedOperationException("use getAdministrativeOfficeFeeAmount and getInsuranceAmount");
     }
 

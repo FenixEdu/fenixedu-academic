@@ -86,6 +86,6 @@ abstract public class PenaltyExemption extends PenaltyExemption_Base {
     }
 
     public Set<LocalDate> getDueDates(DateTime when) {
-        return getEvent().getDueDateAmountMap(when).keySet();
+        return getEvent().getDueDateAmountMap().keySet();
     }
 }

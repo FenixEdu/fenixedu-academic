@@ -172,7 +172,7 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
     }
 
     private Money calculateTotalAmountToPayWithoutDiscount(final DateTime when) {
-        return getPostingRule().calculateTotalAmountToPay(this, when);
+        return getPostingRule().calculateTotalAmountToPay(this);
     }
 
     public boolean isGratuityExemptionAvailable() {

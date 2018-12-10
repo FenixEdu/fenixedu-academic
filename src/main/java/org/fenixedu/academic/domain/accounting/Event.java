@@ -499,12 +499,22 @@ public abstract class Event extends Event_Base {
      * Should return entries representing the due date and the corresponding amount
      *
      */
-    public final Map<LocalDate, Money> getDueDateAmountMap(DateTime when) {
-        return getDueDateAmountMap(getPostingRule(), when);
+    @Override
+    public final DueDateAmountMap getDueDateAmountMap() {
+        if (super.getDueDateAmountMap() == null) {
+            return new DueDateAmountMap(calculateDueDateAmountMap());
+        }
+        return super.getDueDateAmountMap();
     }
 
-    public Map<LocalDate, Money> getDueDateAmountMap(PostingRule postingRule, DateTime when) {
-        return Collections.singletonMap(getDueDateByPaymentCodes().toLocalDate(), postingRule.doCalculationForAmountToPay(this, when));
+    protected void persistDueDateAmountMap() {
+        if (super.getDueDateAmountMap() == null) {
+            setDueDateAmountMap(new DueDateAmountMap(calculateDueDateAmountMap()));
+        }
+    }
+
+    protected Map<LocalDate, Money> calculateDueDateAmountMap() {
+        return Collections.singletonMap(getDueDateByPaymentCodes().toLocalDate(), getPostingRule().doCalculationForAmountToPay(this));
     }
 
     private Money calculateTotalAmountToPay(DateTime whenRegistered) {
@@ -512,17 +522,13 @@ public abstract class Event extends Event_Base {
         return new Money(debtInterestCalculator.getTotalDueAmount());
     }
 
-    public DebtInterestCalculator getDebtInterestCalculator(DateTime when) {
-        return getDebtInterestCalculator(getPostingRule(), when);
-    }
-
     public static BiFunction<AccountingTransaction, DateTime, Boolean> paymentsPredicate = (t, when) -> !t.getWhenProcessed().isAfter(when);
 
-    protected DebtInterestCalculator getDebtInterestCalculator(PostingRule postingRule, DateTime when) {
+    public DebtInterestCalculator getDebtInterestCalculator(DateTime when) {
         final Builder builder = new Builder(when, InterestRate::getInterestBean);
-        final Map<LocalDate, Money> dueDateAmountMap = getDueDateAmountMap(postingRule, when);
+        final Map<LocalDate, Money> dueDateAmountMap = getDueDateAmountMap();
         final Money baseAmount = dueDateAmountMap.values().stream().reduce(Money.ZERO, Money::add);
-        final Map<LocalDate, Money> dueDatePenaltyAmountMap = postingRule.getDueDatePenaltyAmountMap(this, when);
+        final Map<LocalDate, Money> dueDatePenaltyAmountMap = getPostingRule().getDueDatePenaltyAmountMap(this, when);
         final Set<LocalDate> debtInterestExemptions = getDebtInterestExemptions(when);
         final Set<LocalDate> debtFineExemptions = getDebtFineExemptions(when);
 
@@ -556,7 +562,7 @@ public abstract class Event extends Event_Base {
         getNonAdjustingTransactions().forEach(t -> {
             if (paymentsPredicate.apply(t, when)) {
                 builder.payment(t.getExternalId(), t.getWhenProcessed(), t.getWhenRegistered().toLocalDate(), t
-                        .getDescriptionForEntryType(postingRule.getEntryType()).toString(),
+                        .getDescriptionForEntryType(getPostingRule().getEntryType()).toString(),
                         t.getAmountWithAdjustment().getAmount(), Optional.ofNullable(t.getRefund()).map(AbstractDomainObject::getExternalId).orElse(null));
             }
         });
@@ -1111,23 +1117,6 @@ public abstract class Event extends Event_Base {
     private String getOperationLabel(AccountingTransaction e) {
         return BundleUtil.getString(Bundle.ACADEMIC, "label.accounting.operation.after.transaction", e
                 .getWhenProcessed().toString());
-    }
-
-    public void check() {
-        final Money originalValueCheck = getOriginalValueCheck();
-        if (originalValueCheck == null) {
-            initOriginalValueCheck();
-        } else {
-            final Money originalAmountToPay = getOriginalAmountToPay();
-            if (!originalValueCheck.equals(originalAmountToPay)) {
-                throw new DomainException("error.event.original.amount.to.pay.changed", originalValueCheck.toPlainString(), originalAmountToPay.toPlainString());
-            }
-        }
-    }
-
-    @Atomic
-    private void initOriginalValueCheck() {
-        setOriginalValueCheck(getOriginalAmountToPay());
     }
 
     public boolean isOpenAndAfterDueDate(DateTime when) {

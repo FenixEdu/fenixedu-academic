@@ -18,6 +18,9 @@
  */
 package org.fenixedu.academic.domain.accounting.events.candidacy;
 
+import java.util.Collections;
+import java.util.Set;
+
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.Account;
 import org.fenixedu.academic.domain.accounting.Entry;
@@ -36,9 +39,6 @@ import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
 
-import java.util.Collections;
-import java.util.Set;
-
 public abstract class IndividualCandidacyEvent extends IndividualCandidacyEvent_Base {
 
     protected IndividualCandidacyEvent() {
@@ -50,6 +50,7 @@ public abstract class IndividualCandidacyEvent extends IndividualCandidacyEvent_
         checkParameters(candidacy, administrativeOffice);
         super.init(administrativeOffice, eventType, person);
         setIndividualCandidacy(candidacy);
+        persistDueDateAmountMap();
     }
 
     protected void checkParameters(final IndividualCandidacy candidacy, final AdministrativeOffice administrativeOffice) {

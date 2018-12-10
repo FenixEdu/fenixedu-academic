@@ -75,7 +75,7 @@ public abstract class SpecializationDegreeGratuityPR extends SpecializationDegre
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
+    protected Money doCalculationForAmountToPay(Event event) {
         final Money result;
         if (((GratuityEvent) event).isCustomEnrolmentModel()) {
             result = calculateSpecializationDegreeGratuityTotalAmountToPay(event);

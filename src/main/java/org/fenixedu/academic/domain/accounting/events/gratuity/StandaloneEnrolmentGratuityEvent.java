@@ -49,6 +49,7 @@ public class StandaloneEnrolmentGratuityEvent extends StandaloneEnrolmentGratuit
         this();
 
         init(administrativeOffice, EventType.STANDALONE_ENROLMENT_GRATUITY, person, studentCurricularPlan, executionYear);
+        persistDueDateAmountMap();
     }
 
     @Override

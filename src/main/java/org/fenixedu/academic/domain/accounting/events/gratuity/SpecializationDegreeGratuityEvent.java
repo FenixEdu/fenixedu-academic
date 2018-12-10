@@ -51,6 +51,7 @@ public class SpecializationDegreeGratuityEvent extends SpecializationDegreeGratu
         checkRulesToCreate(studentCurricularPlan);
 
         init(administrativeOffice, person, studentCurricularPlan, executionYear);
+        persistDueDateAmountMap();
     }
 
     private void checkRulesToCreate(StudentCurricularPlan studentCurricularPlan) {
