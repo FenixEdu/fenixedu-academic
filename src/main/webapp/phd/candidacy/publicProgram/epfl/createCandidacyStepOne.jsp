@@ -123,22 +123,12 @@
 					<fr:slot name="phone">
 				    	<fr:property name="size" value="20"/>
 						<fr:property name="maxLength" value="15"/>
-						<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-				            <fr:property name="regexp" value="(\+?\d{4,15})?"/>
-				            <fr:property name="message" value="error.phone.invalidFormat"/>
-				            <fr:property name="key" value="true"/>
-				            <fr:property name="bundle" value="PHD_RESOURCES" />
-				        </fr:validator>
+						<fr:validator name="org.fenixedu.academic.ui.renderers.validators.PhoneValidator" />
 				    </fr:slot>
 					<fr:slot name="mobile">
 				    	<fr:property name="size" value="20"/>
 						<fr:property name="maxLength" value="15"/>
-						<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-				            <fr:property name="regexp" value="(\+?\d{4,15})?"/>
-				            <fr:property name="message" value="error.phone.invalidFormat"/>
-				            <fr:property name="key" value="true"/>
-				            <fr:property name="bundle" value="PHD_RESOURCES" />
-				        </fr:validator>
+						<fr:validator name="org.fenixedu.academic.ui.renderers.validators.PhoneValidator" />
 				    </fr:slot>    
 					<fr:slot name="email" readOnly="true"/>
 				</fr:schema>
