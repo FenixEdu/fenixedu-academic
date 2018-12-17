@@ -334,6 +334,10 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         saveErrors(request, messages);
     }
 
+    protected void addErrorMessage(HttpServletRequest request, Exception e) {
+        addActionMessageLiteral("error", request, e.getLocalizedMessage());
+    }
+
     @SuppressWarnings("unchecked")
     protected <T extends DomainObject> T getDomainObject(final HttpServletRequest request, final String name) {
         final String parameter = request.getParameter(name);
