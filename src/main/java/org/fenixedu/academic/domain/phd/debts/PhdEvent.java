@@ -51,10 +51,19 @@ abstract public class PhdEvent extends PhdEvent_Base {
     }
 
     @Override
-    public LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
+    protected LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
         final ExecutionYear executionYear = getPhdIndividualProgramProcess().getExecutionYear();
-        return new LabelFormatter().appendLabel(entryType.name(), Bundle.ENUMERATION).appendLabel(" (")
-                .appendLabel(getPhdProgram().getName(executionYear).getContent()).appendLabel(")");
+        LabelFormatter labelFormatter = new LabelFormatter();
+
+        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION);
+        labelFormatter.appendLabel(" (").appendLabel(getPhdProgram().getName(executionYear).getContent());
+        labelFormatter.appendLabel(")");
+
+        if(executionYear != null) {
+            labelFormatter.appendLabel(" - ").appendLabel(executionYear.getYear());
+        }
+
+        return labelFormatter;
     }
 
     abstract protected PhdProgram getPhdProgram();

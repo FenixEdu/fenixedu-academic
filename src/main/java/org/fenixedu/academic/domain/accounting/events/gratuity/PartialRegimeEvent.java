@@ -170,7 +170,7 @@ public class PartialRegimeEvent extends PartialRegimeEvent_Base {
     }
 
     @Override
-    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+    protected LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter result = new LabelFormatter();
         result.appendLabel(getEventType().getQualifiedName(), Bundle.ENUMERATION);
         if (getEventPostingRule().isForAliens()) {

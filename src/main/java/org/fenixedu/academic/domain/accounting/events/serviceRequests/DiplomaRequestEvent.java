@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.domain.accounting.events.serviceRequests;
 
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
@@ -62,14 +63,7 @@ abstract public class DiplomaRequestEvent extends DiplomaRequestEvent_Base {
     }
 
     @Override
-    public LabelFormatter getDescription() {
-        final LabelFormatter result = super.getDescription();
-        fillDescription(result);
-        return result;
-    }
-
-    @Override
-    final public LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
+    protected LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
         labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION);
         fillDescription(labelFormatter);
@@ -78,10 +72,11 @@ abstract public class DiplomaRequestEvent extends DiplomaRequestEvent_Base {
     }
 
     private void fillDescription(final LabelFormatter labelFormatter) {
+        final RegistrationAcademicServiceRequest request = getAcademicServiceRequest();
+        final ExecutionYear executionYear = getExecutionYear();
+
         labelFormatter.appendLabel(" (");
 
-        final RegistrationAcademicServiceRequest request = getAcademicServiceRequest();
-        
         if (request instanceof DiplomaRequest) {
             if (((DiplomaRequest)request).getRequestedCycle() != null) {
                 labelFormatter.appendLabel(((DiplomaRequest)request).getRequestedCycle().getQualifiedName(), Bundle.ENUMERATION).appendLabel(" ")
@@ -95,8 +90,15 @@ abstract public class DiplomaRequestEvent extends DiplomaRequestEvent_Base {
         labelFormatter.appendLabel(" ");
         labelFormatter.appendLabel("label.in", Bundle.APPLICATION);
         labelFormatter.appendLabel(" ");
-        labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent());
+        labelFormatter.appendLabel(getDegree().getNameFor(executionYear).getContent());
         labelFormatter.appendLabel(")");
+
+        if(executionYear != null) {
+            labelFormatter.appendLabel(" - ").appendLabel(executionYear.getYear());
+        }
+
+        labelFormatter.appendLabel(" - ").appendLabel(request.getServiceRequestNumberYear());
+
     }
 
     @Override

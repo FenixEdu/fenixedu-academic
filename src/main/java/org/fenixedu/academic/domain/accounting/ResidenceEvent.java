@@ -58,19 +58,13 @@ public class ResidenceEvent extends ResidenceEvent_Base {
     }
 
     @Override
-    public LabelFormatter getDescription() {
-        return getDescriptionForEntryType(EntryType.RESIDENCE_FEE);
-    }
-
-    @Override
-    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-        final LabelFormatter labelFormatter = new LabelFormatter();
-
-        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION);
-        labelFormatter.appendLabel(" - ");
+    protected LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        LabelFormatter labelFormatter = super.getDescriptionForEntryType(entryType);
+        labelFormatter.appendLabel(" (");
         labelFormatter.appendLabel(getResidenceMonth().getMonth().getName(), Bundle.ENUMERATION);
-        labelFormatter.appendLabel("-");
+        labelFormatter.appendLabel("/");
         labelFormatter.appendLabel(getResidenceMonth().getYear().getYear().toString());
+        labelFormatter.appendLabel(")");
         return labelFormatter;
     }
 

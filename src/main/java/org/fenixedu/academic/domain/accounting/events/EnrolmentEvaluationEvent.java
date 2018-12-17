@@ -107,7 +107,7 @@ public class EnrolmentEvaluationEvent extends EnrolmentEvaluationEvent_Base {
     }
 
     @Override
-    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+    protected LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter result = new LabelFormatter();
         result.appendLabel(getEventType().getQualifiedName(), Bundle.ENUMERATION);
         Enrolment enrolment = getEnrolmentEvaluation().getEnrolment();

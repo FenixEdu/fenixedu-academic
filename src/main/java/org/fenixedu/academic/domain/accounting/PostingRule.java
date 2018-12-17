@@ -363,7 +363,7 @@ public abstract class PostingRule extends PostingRule_Base {
             final Money amountToPay = new Money(d.getOpenAmount());
 
 
-            LabelFormatter entryDescription = event.getDescriptionForEntryType(entryType);
+            LabelFormatter entryDescription = event.getDescription();
             entryDescription.appendLabel(String.format(" [ %s ]", d.getDueDate().toString("dd-MM-yyyy")));
 
             if (amountToPay.isPositive()) {
@@ -391,7 +391,7 @@ public abstract class PostingRule extends PostingRule_Base {
             if (openInterestAmount.isPositive()) {
                 EntryDTO e = new EntryDTO(entryType, event, openInterestAmount);
                 e.setSelected(true);
-                entryDescription = event.getDescriptionForEntryType(entryType);
+                entryDescription = event.getDescription();
                 entryDescription.appendLabel(String.format(" [ %s ]  / Juros", d.getDueDate().toString("dd-MM-yyyy")));
                 e.setDescription(entryDescription);
                 e.setForPenalty(true);
@@ -402,7 +402,7 @@ public abstract class PostingRule extends PostingRule_Base {
             if (openFineAmount.isPositive()) {
                 EntryDTO e = new EntryDTO(entryType, event, openFineAmount);
                 e.setSelected(true);
-                entryDescription = event.getDescriptionForEntryType(entryType);
+                entryDescription = event.getDescription();
                 entryDescription.appendLabel(String.format(" [ %s ]  / Multa", d.getDueDate().toString("dd-MM-yyyy")));
                 e.setDescription(entryDescription);
                 e.setForPenalty(true);

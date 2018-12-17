@@ -32,8 +32,6 @@ import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.dto.accounting.SibsTransactionDetailDTO;
-import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
 
@@ -57,26 +55,8 @@ public class StandaloneEnrolmentGratuityEvent extends StandaloneEnrolmentGratuit
         return getAdministrativeOffice().getUnit().getInternalAccount();
     }
 
-    @Override
-    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-        final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION).appendLabel(" - ")
-                .appendLabel(getExecutionYear().getYear());
-
-        return labelFormatter;
-    }
-
     @Override public EntryType getEntryType() {
         return EntryType.STANDALONE_ENROLMENT_GRATUITY_FEE;
-    }
-
-    @Override
-    public LabelFormatter getDescription() {
-        final LabelFormatter result = new LabelFormatter();
-        result.appendLabel(getEventType().getQualifiedName(), Bundle.ENUMERATION).appendLabel(" - ")
-                .appendLabel(getExecutionYear().getYear());
-
-        return result;
     }
 
     /**

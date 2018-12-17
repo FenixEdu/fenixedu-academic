@@ -55,14 +55,7 @@ public class PhdDiplomaRequestEvent extends PhdDiplomaRequestEvent_Base {
     }
 
     @Override
-    public LabelFormatter getDescription() {
-        final LabelFormatter result = super.getDescription();
-        fillDescription(result);
-        return result;
-    }
-
-    @Override
-    final public LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
+    final protected LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
         labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION);
         fillDescription(labelFormatter);
@@ -75,6 +68,7 @@ public class PhdDiplomaRequestEvent extends PhdDiplomaRequestEvent_Base {
         final PhdDiplomaRequest request = (PhdDiplomaRequest) getAcademicServiceRequest();
         labelFormatter.appendLabel(request.getPhdIndividualProgramProcess().getPhdProgram().getName(getExecutionYear()).getContent());
         labelFormatter.appendLabel(")");
+        labelFormatter.appendLabel(" - ").appendLabel(request.getServiceRequestNumberYear());
     }
 
 }

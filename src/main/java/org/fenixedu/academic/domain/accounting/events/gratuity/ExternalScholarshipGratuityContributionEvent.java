@@ -68,7 +68,7 @@ public class ExternalScholarshipGratuityContributionEvent extends ExternalSchola
     }
 
     @Override
-    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+    protected LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         return new LabelFormatter()
                 .appendLabel(entryType.name(), Bundle.ENUMERATION)
                 .appendLabel(" (")

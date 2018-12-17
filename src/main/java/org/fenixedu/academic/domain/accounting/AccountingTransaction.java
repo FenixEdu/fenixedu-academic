@@ -172,10 +172,6 @@ public class AccountingTransaction extends AccountingTransaction_Base {
                 "error.org.fenixedu.academic.domain.accounting.AccountingTransaction.cannot.remove.accountingTransaction");
     }
 
-    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-        return getEvent().getDescriptionForEntryType(entryType);
-    }
-
     public Account getFromAccount() {
         return getEntry(false).getAccount();
 

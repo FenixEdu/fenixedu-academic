@@ -39,7 +39,7 @@ public class DeclarationRequestEvent extends DeclarationRequestEvent_Base {
     }
 
     @Override
-    final public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+    final protected LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
 
         labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION);
@@ -53,6 +53,7 @@ public class DeclarationRequestEvent extends DeclarationRequestEvent_Base {
         if (getAcademicServiceRequest().getExecutionYear() != null) {
             labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
         }
+        labelFormatter.appendLabel(" - ").appendLabel(getAcademicServiceRequest().getServiceRequestNumberYear());
 
         return labelFormatter;
     }

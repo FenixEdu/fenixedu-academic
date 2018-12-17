@@ -76,7 +76,7 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
     }
 
     @Override
-    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+    protected LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
         labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION).appendLabel(" (")
                 .appendLabel(getDegree().getDegreeType().getName().getContent()).appendLabel(" - ")
@@ -149,16 +149,6 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
 
     public ExecutionYear getObsoleteExecutionYear() {
         return getExecutionDegree().getExecutionYear();
-    }
-
-    @Override
-    public LabelFormatter getDescription() {
-        final LabelFormatter labelFormatter = super.getDescription();
-        labelFormatter.appendLabel(" ");
-        labelFormatter.appendLabel(getDegree().getDegreeType().getName().getContent()).appendLabel(" - ");
-        labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ");
-        labelFormatter.appendLabel(getExecutionYear().getYear());
-        return labelFormatter;
     }
 
     @Override

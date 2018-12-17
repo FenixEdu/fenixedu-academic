@@ -37,6 +37,7 @@ import org.fenixedu.academic.domain.accounting.accountingTransactions.Installmen
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
 import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.dto.accounting.EntryWithInstallmentDTO;
@@ -124,6 +125,26 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base im
 
         return makeAccountingTransactionForInstallment(user, event, fromAccount, toAccount, getEntryType(),
                 entryDTO.getAmountToPay(), (entryWithInstallmentDTO).getInstallment(), transactionDetail);
+
+    }
+
+    private void checkIfCanAddAmount(EntryDTO entryDTO, DateTime whenRegistered, Event event) {
+        if (entryDTO.getAmountToPay().compareTo(event.calculateAmountToPay(whenRegistered)) < 0) {
+            throw new DomainExceptionWithLabelFormatter(
+                    "error.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR.amount.to.pay.must.match.value",
+                    event.getDescription());
+        }
+    }
+
+    private void checkIfCanAddAmountForInstallment(EntryWithInstallmentDTO entryDTO, DateTime whenRegistered, Event event) {
+        final Money installmentAmount =
+                getPaymentPlan(event).calculateRemainingAmountFor(entryDTO.getInstallment(), event, whenRegistered,
+                        getDiscountPercentage(event));
+        if (entryDTO.getAmountToPay().compareTo(installmentAmount) < 0) {
+            throw new DomainExceptionWithLabelFormatter(
+                    "error.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR.amount.to.pay.must.match.value",
+                    event.getDescription());
+        }
 
     }
 
