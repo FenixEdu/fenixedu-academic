@@ -212,13 +212,7 @@
     	<property name="size" value="15"/>
 		<property name="maxLength" value="15"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\+?\d{4,15})?"/>
-            <property name="message" value="error.phone.invalidFormat"/>
-            <property name="key" value="true"/>
-            <property name="bundle" value="CANDIDATE_RESOURCES"/>
-            <property name="isKey" value="true"/>
-        </validator>
+		<validator class="org.fenixedu.academic.ui.renderers.validators.PhoneValidator"/>
     </slot>
 	<slot name="email" key="label.email">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
@@ -2565,13 +2559,7 @@
     	<property name="size" value="15"/>
 		<property name="maxLength" value="15"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\+?\d{4,15})?"/>
-            <property name="message" value="error.phone.invalidFormat"/>
-            <property name="key" value="true"/>
-            <property name="bundle" value="CANDIDATE_RESOURCES"/>
-            <property name="isKey" value="true"/>
-        </validator>		
+		<validator class="org.fenixedu.academic.ui.renderers.validators.PhoneValidator"/>
     </slot>
 	<slot name="email" key="label.email">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
