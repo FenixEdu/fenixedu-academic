@@ -113,8 +113,8 @@
                             <a class="btn btn-default btn-block" href="${depositUrl}"><spring:message code="accounting.event.action.deposit" text="Deposit"/></a>
                         </c:if>
                     </c:if>
-                    <c:if test="${isAdvancedPaymentManager && event.refundable}">
-                        <c:if test="${payedDebtAmount > 0}">
+                    <c:if test="${isAdvancedPaymentManager}">
+                        <c:if test="${event.refundable && payedDebtAmount > 0}">
                             <a class="btn btn-default btn-block" href="${refundUrl}"><spring:message code="accounting.event.action.refund" text="Refund"/></a>
                         </c:if>
                         <c:if test="${eventTotalAmountToPay > 0}">
