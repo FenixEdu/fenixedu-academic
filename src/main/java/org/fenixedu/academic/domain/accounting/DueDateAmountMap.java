@@ -142,4 +142,14 @@ public class DueDateAmountMap implements Map<LocalDate, Money>, Serializable {
     private static <T> T throwImmutable() {
         throw new UnsupportedOperationException("This instance is immutable");
     }
+
+    @Override
+    public boolean equals(final Object obj) {
+        return obj instanceof DueDateAmountMap && innerMap.equals(obj);
+    }
+    
+    @Override
+    public int hashCode() {
+        return innerMap.hashCode();
+    }
 }
