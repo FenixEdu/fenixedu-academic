@@ -145,10 +145,7 @@ public class DueDateAmountMap implements Map<LocalDate, Money>, Serializable {
 
     @Override
     public boolean equals(final Object obj) {
-        if (!(obj instanceof DueDateAmountMap)) {
-            return false;
-        }
-        return innerMap.equals(obj);
+        return obj instanceof DueDateAmountMap && innerMap.equals(obj);
     }
     
     @Override
