@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.domain.organizationalStructure;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -151,30 +152,16 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
     }
 
     private static boolean containsAll(final String normalizedUnitName, final String[] nameParts) {
-        for (final String namePart : nameParts) {
-            if (normalizedUnitName.indexOf(namePart) == -1) {
-                return false;
-            }
-        }
-        return true;
+        return Arrays.stream(nameParts).allMatch(normalizedUnitName::contains);
     }
 
     public static void find(final UnitNameLimitedOrderedSet unitNameLimitedOrderedSet, final String name, final int size) {
         final String[] nameParts = UnitNamePart.getNameParts(name);
         if (nameParts.length > 0) {
-            final UnitNamePart unitNamePart = UnitNamePart.find(nameParts[0]);
-            if (unitNamePart != null && nameParts.length == 1) {
-                unitNameLimitedOrderedSet.addAll(unitNamePart.getUnitNameSet());
-            } else {
-                final Set<UnitName> unitNames =
-                        unitNamePart == null ? Bennu.getInstance().getUnitNameSet() : unitNamePart.getUnitNameSet();
-                for (final UnitName unitName : unitNames) {
-                    final String normalizedUnitName = unitName.getName();
-                    if (containsAll(normalizedUnitName, nameParts)) {
-                        unitNameLimitedOrderedSet.add(unitName);
-                    }
-                }
-            }
+            Bennu.getInstance().getUnitNameSet()
+                    .stream()
+                    .filter(unitName -> containsAll(unitName.getName(), nameParts))
+                    .forEach(unitNameLimitedOrderedSet::add);
         }
     }
 
@@ -223,44 +210,13 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 
     private static boolean containsAllExactWords(final String normalizedUnitName, final String[] nameParts) {
         final String[] unitNameParts = UnitNamePart.getNameParts(normalizedUnitName);
-        for (final String namePart : nameParts) {
-            if (namePart.length() > 3) {
-                if (!existsCompleteNamePart(unitNameParts, namePart)) {
-                    return false;
-                }
-            }
-        }
-        return true;
+        return Arrays.stream(nameParts)
+                .filter(namePart -> namePart.length() > 3)
+                .allMatch(namePart -> existsCompleteNamePart(unitNameParts, namePart));
     }
 
     private static boolean existsCompleteNamePart(final String[] unitNameParts, final String namePart) {
-        for (String unitPart : unitNameParts) {
-            if (unitPart.equalsIgnoreCase(namePart)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static void findExactWords(final UnitNameLimitedOrderedSet unitNameLimitedOrderedSet, final String name) {
-        final String[] nameParts = UnitNamePart.getNameParts(name);
-        if (nameParts.length > 0) {
-            final UnitNamePart unitNamePart = UnitNamePart.find(nameParts[0]);
-            if (unitNamePart != null && nameParts.length == 1) {
-                unitNameLimitedOrderedSet.addAll(unitNamePart.getUnitNameSet());
-            } else {
-                final Set<UnitName> unitNames =
-                        unitNamePart == null ? Bennu.getInstance().getUnitNameSet() : unitNamePart.getUnitNameSet();
-                for (final UnitName unitName : unitNames) {
-                    final String normalizedUnitName = unitName.getName();
-                    if (containsAllExactWords(normalizedUnitName, nameParts)) {
-                        if (unitName.getUnit().getCode() != null) {
-                            unitNameLimitedOrderedSet.add(unitName);
-                        }
-                    }
-                }
-            }
-        }
+        return Arrays.stream(unitNameParts).anyMatch(unitPart -> unitPart.equalsIgnoreCase(namePart));
     }
 
     private static boolean existsTheSameCode(UnitName unitName, UnitNameLimitedOrderedSet unitNameLimitedOrderedSet) {
@@ -304,7 +260,7 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
     public static Collection<UnitName> findExternalAcademicUnit(final String name, final int size) {
         final ExternalAcademicUnitNameLimitedOrderedSet academicUnitNameLimitedOrderedSet =
                 new ExternalAcademicUnitNameLimitedOrderedSet(size);
-        findExactWords(academicUnitNameLimitedOrderedSet, name);
+        find(academicUnitNameLimitedOrderedSet, name, size);
         return academicUnitNameLimitedOrderedSet;
     }
 
