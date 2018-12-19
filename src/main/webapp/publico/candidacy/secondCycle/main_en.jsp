@@ -48,7 +48,7 @@
     	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="#emol">Application fees</a></li>
     	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="#faq">FAQ</a></li>
     	<li><a href="<%= fullPath + "?method=preparePreCreationOfCandidacy" %>"><b>Submit Application</b></a></li>
-    	<li><a href="<%= fullPath + "?method=prepareApplicationAccessRecovery" %>"><b>Recover Access</b></a></li>
+    	<li><a href="<%= fullPath + "?method=prepareRecoverAccessLink" %>"><b>Recover Access</b></a></li>
    </ul>
 </div>
 
