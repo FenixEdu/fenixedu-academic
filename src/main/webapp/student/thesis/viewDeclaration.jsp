@@ -23,6 +23,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
+<%@ page import="org.fenixedu.commons.i18n.I18N" %>
+
 <html:xhtml/>
 
 <h2><bean:message key="title.student.thesis.declaration"/></h2>
@@ -43,14 +45,16 @@
 <div style="background: #f5f5f5; color: #444; border: 1px solid #ddd; padding: 0.75em 1em;">
 
 <p style="line-height: 1.9em;">
-    <strong><%= name %></strong>, aluno do <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName()%> nº <strong><%= number %></strong>, autor da
+    <strong><%= name %></strong>, aluno do <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName().getContent(
+        I18N.getLocale())%> nº <strong><%= number %></strong>, autor da
     dissertação para obtenção do <strong>Grau de Mestre em <%= degree %></strong> com o
-    título <strong><%= title %></strong>, autorizo o <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName()%> a inserir,
+    título <strong><%= title %></strong>, autorizo o <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName().getContent(
+            I18N.getLocale())%> a inserir,
     em formato pdf, a versão final desta dissertação e o seu resumo alargado na sua
     <strong>
-		<!--<fr:view name="thesis" property="visibility"/>-->
+		<%--<fr:view name="thesis" property="visibility"/>--%>
 		<logic:equal name="thesis" property="visibility" value="INTRANET">Intranet</logic:equal>
-		<logic:notEqual name="thesis" property="visibility" value="INTRANET">�rea P�blica</logic:notEqual></strong>,
+		<logic:notEqual name="thesis" property="visibility" value="INTRANET">Área Pública</logic:notEqual></strong>,
     possibilitando assim o seu conhecimento a todos os que
     possam aceder àquele meio, com a ressalva de que estes não possam, sem a minha
     expressa autorização, reproduzir, por qualquer meio, o texto daquela minha
@@ -59,7 +63,7 @@
 </p>
 
 <p style="line-height: 1.9em;">
-    Mais autorizo, com carácter de não exclusividade, o <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName()%> a
+    Mais autorizo, com carácter de não exclusividade, o <%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName().getContent(I18N.getLocale())%> a
     reproduzir, no todo ou em parte, aquela minha dissertação para assim responder a
     pedidos que lhe sejam formulados, por parte de instituições de ensino ou de
     investigação bem como por parte de Centros de Documentação ou de Bibliotecas, e
