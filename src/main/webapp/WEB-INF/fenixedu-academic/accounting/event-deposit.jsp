@@ -62,6 +62,16 @@ ${portal.toolkit()}
 --%>
 
         <h3><spring:message code="label.event.deposit" text="Register Deposit"/></h3>
+        <c:if test="${not event.totalAmountToPay.positive or event.cancelled}">
+            <div class="alert alert-danger" role="alert">
+                <c:if test="${not event.totalAmountToPay.positive}">
+                    <spring:message code="warning.event.overflow.deposit" text="There is no debt amount."/>
+                </c:if>
+                <c:if test="${event.cancelled}">
+                    <spring:message code="warning.event.cancelled.overflow.deposit" text="The event is cancelled."/>
+                </c:if>
+            </div>
+        </c:if>
         <form:form modelAttribute="depositAmountBean" role="form" class="form-horizontal" action="${depositUrl}" method="post">
             ${csrf.field()}
             <input hidden name="entryType" value="${event.entryType}"/>

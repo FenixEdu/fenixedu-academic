@@ -104,14 +104,12 @@
         </div>
         <div class="col-md-2 col-md-push-1">
             <br/>
+                <c:if test="${isPaymentManager}">
+                        <a class="btn btn-default btn-block" href="${depositUrl}"><spring:message code="accounting.event.action.deposit" text="Deposit"/></a>
+                </c:if>
                 <c:if test="${event.currentEventState != 'CANCELLED'}">
                     <c:if test="${eventTotalAmountToPay > 0 && isEventOwner}">
                         <a class="btn btn-primary btn-block" href="${payUrl}"><spring:message code="accounting.event.action.pay" text="Pay"/></a>
-                    </c:if>
-                    <c:if test="${isPaymentManager}">
-                        <c:if test="${eventTotalAmountToPay > 0}">
-                            <a class="btn btn-default btn-block" href="${depositUrl}"><spring:message code="accounting.event.action.deposit" text="Deposit"/></a>
-                        </c:if>
                     </c:if>
                     <c:if test="${isAdvancedPaymentManager}">
                         <c:if test="${event.refundable && payedDebtAmount > 0}">
