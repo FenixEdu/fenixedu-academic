@@ -69,6 +69,7 @@ public class AccountingReportService {
             row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.payment.method"), atd.getPaymentMethod().getLocalizedName());
             row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.payment.reference"), atd.getPaymentReference());
             row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.value"), atd.getTransaction().getAmountWithAdjustment().toPlainString());
+            row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.creator"), String.format("%s (%s)", atd.getTransaction().getResponsibleUser().getName(), atd.getTransaction().getResponsibleUser().getUsername()));
         });
     }
     
