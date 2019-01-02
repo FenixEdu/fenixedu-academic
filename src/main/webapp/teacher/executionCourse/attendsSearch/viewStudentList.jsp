@@ -187,7 +187,8 @@
 						<th rowspan="{{rowspan}}"><span class="pull-right"><span class="glyphicon glyphicon-chevron-down" ng-click="setTableOrdering('person.username')"></span><span class="glyphicon glyphicon-chevron-up" ng-click="setTableOrdering('person.username',true)"></span></span>${fr:message('resources.ApplicationResources', 'label.username')}</th>
 						<th rowspan="{{rowspan}}"><span class="pull-right"><span class="glyphicon glyphicon-chevron-down" ng-click="setTableOrdering('number')"></span><span class="glyphicon glyphicon-chevron-up" ng-click="setTableOrdering('number',true)"></span></span>${fr:message('resources.ApplicationResources', 'label.number')}</th>
 						<th rowspan="{{rowspan}}"><span class="pull-right"><span class="glyphicon glyphicon-chevron-down" ng-click="setTableOrdering('person.firstAndLastNames')"></span><span class="glyphicon glyphicon-chevron-up" ng-click="setTableOrdering('person.firstAndLastNames',true)"></span></span>${fr:message('resources.ApplicationResources', 'label.name')}</th>
-						<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.email')}</th>
+						<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.institutional.email')}</th>
+						<th rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.default.email')}</th>
 						<th ng-if="showPhotos" rowspan="{{rowspan}}">${fr:message('resources.ApplicationResources', 'label.photo')}</th>
 						<th ng-if="groupings" colspan="{{groupings.length}}">${fr:message('resources.ApplicationResources', 'label.projectGroup')}</th>
 						<th ng-if="shiftTypes" colspan="{{shiftTypes.length}}">${fr:message('resources.ApplicationResources', 'label.attends.shifts')}</th>
@@ -207,6 +208,7 @@
 						<td>{{ attendee.person.username }}</td>
 						<td>{{ attendee.number }}</td>
 						<td><span data-toggle="tooltip" data-placement="top" title="{{ attendee.person.name}}">{{ attendee.person.firstAndLastNames }}</span></td>
+						<td><a href="mailto:{{attendee.person.institutionalEmail}}">{{ attendee.person.institutionalEmail }}</a></td>
 						<td><a href="mailto:{{attendee.person.email}}">{{ attendee.person.email }}</a></td>
 						<td ng-if="showPhotos"><img err-src="${pageContext.request.contextPath}"  ng-src="${pageContext.request.contextPath}/user/photo/{{attendee.person.username}}"></td>
 						<td ng-repeat="grouping in groupings">

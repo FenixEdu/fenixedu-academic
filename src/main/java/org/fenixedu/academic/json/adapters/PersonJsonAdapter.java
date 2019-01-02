@@ -36,6 +36,7 @@ public class PersonJsonAdapter implements JsonViewer<Person> {
         object.addProperty("name", person.getName());
         object.addProperty("firstAndLastNames", person.getFirstAndLastName());
         object.addProperty("email", person.getDefaultEmailAddressValue());
+        object.addProperty("institutionalEmail", person.getInstitutionalEmailAddressValue());
         return object;
     }
 }
