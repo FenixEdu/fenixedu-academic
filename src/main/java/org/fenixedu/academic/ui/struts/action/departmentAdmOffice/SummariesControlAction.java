@@ -238,11 +238,12 @@ public final class SummariesControlAction extends FenixDispatchAction {
                 summariesGiven = summariesGiven.setScale(1, RoundingMode.HALF_UP);
                 notTaughtSummaries = notTaughtSummaries.setScale(1, RoundingMode.HALF_UP);
 
-                summariesGivenPercentage = summariesGiven.divide(lessonsGiven, 3, BigDecimal.ROUND_CEILING)
-                        .multiply(BigDecimal.valueOf(100));
-
-                notTaughtSummariesPercentage = notTaughtSummaries.divide(lessonsGiven, 3, BigDecimal.ROUND_CEILING)
-                        .multiply(BigDecimal.valueOf(100));
+                if (lessonsGiven.signum() == 1) {
+                    summariesGivenPercentage = summariesGiven.divide(lessonsGiven, 3, BigDecimal.ROUND_CEILING)
+                            .multiply(BigDecimal.valueOf(100));
+                    notTaughtSummariesPercentage = notTaughtSummaries.divide(lessonsGiven, 3, BigDecimal.ROUND_CEILING)
+                            .multiply(BigDecimal.valueOf(100));
+                }
 
                 Teacher teacher = professorship.getTeacher();
                 String categoryName = null;
@@ -304,12 +305,12 @@ public final class SummariesControlAction extends FenixDispatchAction {
                 for (Shift shift : executionCourse.getAssociatedShifts()) {
                     getInstanceLessonsTotalsByShift(shift, instanceLessonsTotal, oneWeekBeforeToday);
                 }
-                BigDecimal result = BigDecimal.valueOf(0);
+                BigDecimal result = EMPTY;
                 BigDecimal numberOfLessonInstances = BigDecimal.valueOf(instanceLessonsTotal[0]);
-                BigDecimal numberOfLessonInstancesWithSummary = BigDecimal.valueOf(0);
-                BigDecimal percentageOfLessonsWithNotTaughtSummary = BigDecimal.valueOf(0);
-                BigDecimal numberOfLessonInstancesWithNotTaughtSummary = BigDecimal.valueOf(0);
-                if (instanceLessonsTotal[0] == 0) {
+                BigDecimal numberOfLessonInstancesWithSummary = EMPTY;
+                BigDecimal percentageOfLessonsWithNotTaughtSummary = EMPTY;
+                BigDecimal numberOfLessonInstancesWithNotTaughtSummary = EMPTY;
+                if (numberOfLessonInstances.signum() == 0) {
                     continue;
                 }
                 if (instanceLessonsTotal[1] != 0) {
