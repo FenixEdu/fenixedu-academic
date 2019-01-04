@@ -49,7 +49,7 @@
     	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="#emol">Emolumentos de candidatura</a></li>
     	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="#faq">FAQs</a></li>
     	<li><a href="<%= fullPath + "?method=preparePreCreationOfCandidacy" %>"><b>Submeter Candidatura</b></a></li>
-    	<li><a href="<%= fullPath + "?method=prepareApplicationAccessRecovery" %>"><b>Recuperar Accesso</b></a></li>
+    	<li><a href="<%= fullPath + "?method=prepareRecoverAccessLink" %>"><b>Recuperar Accesso</b></a></li>
    </ul>
 </div>
 
