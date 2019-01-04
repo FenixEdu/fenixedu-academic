@@ -29,6 +29,15 @@
 
 <script type="text/javascript">
 
+    window.onbeforeunload = function() {
+        // this message is not shown anymore when using the most recent browsers.
+        return "Are you sure you want to leave ?";
+    };
+
+    function reset() {
+        window.onbeforeunload = undefined;
+    }
+    
     function setTotalAmount(amount) {
         $('#totalAmount').text(Math.round(amount*100)/100);
         $('#totalAmount').val(Math.round(amount*100)/100);
@@ -69,7 +78,7 @@
         <header>
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Pagamento de Dívidas</h1>
+                    <h1><spring:message code="label.payments.confirm" text="Payment confirmation"/></h1>
                 </div>
             </div>
         </header>
@@ -91,11 +100,7 @@
                 <div class="overall-description">
                     <dl>
                         <dt>Data de pagamento</dt>
-                        <dd><c:out value="${paymentsManagementDTO.paymentDate}"/></dd>
-                    </dl>
-                    <dl>
-                        <dt>Valor Total</dt>
-                        <dd><c:out value="${paymentsManagementDTO.selectedTotalAmountToPay}"/></dd>
+                        <dd><c:out value="${paymentsManagementDTO.paymentDate.toString('dd/MM/yyyy HH:mm:ss')}"/></dd>
                     </dl>
                     <dl>
                         <dt>Método de Pagamento</dt>
@@ -105,8 +110,13 @@
                         <dt>Referência de Pagamento</dt>
                         <dd><c:out value="${paymentsManagementDTO.paymentReference}"/></dd>
                     </dl>
+                    <dl style="font-size: 24px;">
+                        <dt>Valor Total</dt>
+                        <dd><strong><c:out value="${paymentsManagementDTO.selectedTotalAmountToPay} €"/></strong></dd>
+                    </dl>
                 </div>
             </div>
+            <div class="col-md-4"></div>
         </div>
         <c:if test="${not empty multiplePayments}">
         <form role="form" class="form-horizontal" action="register" method="post">
@@ -151,7 +161,7 @@
 
             <c:if test="${not empty multiplePayments}">
                 <button class="btn btn-primary" type="submit">Confirmar pagamento</button>
-                <a href="${backUrl}" class="btn btn-default">Cancelar</a>
+                <a href="${backUrl}" onclick="reset()" class="btn btn-default">Cancelar</a>
             </c:if>
 
             <c:if test="${empty multiplePayments}">
