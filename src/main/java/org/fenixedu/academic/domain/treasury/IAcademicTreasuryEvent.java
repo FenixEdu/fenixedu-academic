@@ -73,4 +73,11 @@ public interface IAcademicTreasuryEvent {
 
     public void annulDebts(final String reason);
 
+    /* --------------------
+     * CUSTOMER INFORMATION
+     * --------------------
+     */
+
+    public String getPersonName();
+    
 }
