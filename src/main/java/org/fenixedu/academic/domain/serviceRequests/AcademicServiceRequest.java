@@ -495,7 +495,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     @Override
-    final public Set<AcademicServiceRequestSituation> getAcademicServiceRequestSituationsSet() {
+    public Set<AcademicServiceRequestSituation> getAcademicServiceRequestSituationsSet() {
         return Collections.unmodifiableSet(super.getAcademicServiceRequestSituationsSet());
     }
 
@@ -504,7 +504,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
         throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.remove.academicServiceRequestSituation");
     }
 
-    final public AcademicServiceRequestSituation getActiveSituation() {
+    public AcademicServiceRequestSituation getActiveSituation() {
         return !getAcademicServiceRequestSituationsSet().isEmpty() ? Collections.min(getAcademicServiceRequestSituationsSet(),
                 AcademicServiceRequestSituation.COMPARATOR_BY_MOST_RECENT_SITUATION_DATE_AND_ID) : null;
     }
