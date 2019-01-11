@@ -18,7 +18,6 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="org.fenixedu.academic.domain.accounting.PaymentMethod"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -66,17 +65,13 @@
                     <dt>Referência Pagamento:</dt>
                     <dd><c:out value="${transactionDetail.transactionDetail.paymentReference}"/></dd>
                 </dl>
-                <c:if test="${transactionDetail.transactionDetail.paymentMethod.sibs}">
+                <c:if test="${transactionDetail.transactionDetail.getClass().getSimpleName() == 'SibsTransactionDetail'}">
                     <dl>
                         <dt>Transacção SIBS:</dt>
                         <dd><c:out value="${transactionDetail.transactionDetail.sibsTransactionId}"/></dd>
                     </dl>
-                    <dl>
-                        <dt>Referência:</dt>
-                        <dd><c:out value="${transactionDetail.transactionDetail.sibsCode}"/></dd>
-                    </dl>
                 </c:if>
-                <c:if test="${transactionDetail.transactionDetail.paymentMethod.cash}">
+                <c:if test="${transactionDetail.transactionDetail.getClass().getSimpleName() == 'AccountingTransactionDetail'}">
                     <dl>
                         <dt>Motivo:</dt>
                         <dd><c:out value="${transactionDetail.transactionDetail.comments}"/></dd>
