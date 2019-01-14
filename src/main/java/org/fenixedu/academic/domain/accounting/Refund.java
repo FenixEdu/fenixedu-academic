@@ -22,6 +22,8 @@ public class Refund extends Refund_Base {
         setAmount(amount);
         setCreator(creator);
         setExcessOnly(excessOnly);
+        setState(RefundState.PENDING);
+        setStateDate(when.toLocalDate());
     }
 
     @Atomic(mode = Atomic.TxMode.WRITE)
