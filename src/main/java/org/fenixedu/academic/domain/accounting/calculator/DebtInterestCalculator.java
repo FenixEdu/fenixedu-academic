@@ -174,10 +174,13 @@ public class DebtInterestCalculator {
     }
 
     public List<AccountingEntry> getAccountingEntries() {
-        return Stream.concat(debts.stream(),
-                getCreditEntryStream()).sorted(Comparator.comparing(AccountingEntry::getCreated)
-                                                         .thenComparing(AccountingEntry::getDate))
-                .collect(Collectors.toList());
+        final List<AccountingEntry> accountingEntries = new ArrayList<>();
+        accountingEntries.addAll(debts);
+        accountingEntries.addAll(creditEntries);
+        accountingEntries.addAll(excessRefunds);
+        accountingEntries.sort(Comparator.comparing(AccountingEntry::getCreated).thenComparing(AccountingEntry::getDate)
+                .thenComparing(AccountingEntry::getId));
+        return accountingEntries;
     }
 
     public Optional<InterestRateBean> getInterestBean() {
