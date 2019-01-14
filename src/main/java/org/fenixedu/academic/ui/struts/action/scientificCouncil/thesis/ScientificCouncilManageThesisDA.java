@@ -714,37 +714,39 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
         for (final Thesis thesis : Bennu.getInstance().getThesesSet()) {
             final Enrolment enrolment = thesis.getEnrolment();
-            final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
-            if (executionSemester.getExecutionYear() == executionYear) {
-                final ThesisPresentationState thesisPresentationState =
-                        ThesisPresentationState.getThesisPresentationState(thesis);
-
-                final Degree degree = enrolment.getStudentCurricularPlan().getDegree();
-                final DegreeType degreeType = degree.getDegreeType();
-
-                final Row row = spreadsheet.addRow();
-                row.setCell(thesis.getStudent().getNumber().toString());
-                row.setCell(thesis.getStudent().getPerson().getName());
-                row.setCell(degreeType.getName().getContent());
-                row.setCell(degree.getPresentationName(executionYear));
-                row.setCell(degree.getSigla());
-                row.setCell(thesis.getTitle().getContent());
-                row.setCell(thesisPresentationState.getName());
-
-                if (thesis.getDiscussed() != null) {
-                    row.setCell(thesis.getDiscussed().toDate().toString());
-                } else {
-                    row.setCell("");
+            if(enrolment!=null) {
+                final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
+                if (executionSemester.getExecutionYear() == executionYear) {
+                    final ThesisPresentationState thesisPresentationState =
+                            ThesisPresentationState.getThesisPresentationState(thesis);
+    
+                    final Degree degree = enrolment.getStudentCurricularPlan().getDegree();
+                    final DegreeType degreeType = degree.getDegreeType();
+    
+                    final Row row = spreadsheet.addRow();
+                    row.setCell(thesis.getStudent().getNumber().toString());
+                    row.setCell(thesis.getStudent().getPerson().getName());
+                    row.setCell(degreeType.getName().getContent());
+                    row.setCell(degree.getPresentationName(executionYear));
+                    row.setCell(degree.getSigla());
+                    row.setCell(thesis.getTitle().getContent());
+                    row.setCell(thesisPresentationState.getName());
+    
+                    if (thesis.getDiscussed() != null) {
+                        row.setCell(thesis.getDiscussed().toDate().toString());
+                    } else {
+                        row.setCell("");
+                    }
+    
+                    row.setCell(thesis.getThesisAbstractPt());
+                    row.setCell(thesis.getThesisAbstractEn());
+    
+                    addTeacherRows(thesis, row, ThesisParticipationType.ORIENTATOR);
+                    addTeacherRows(thesis, row, ThesisParticipationType.COORIENTATOR);
+                    addTeacherRows(thesis, row, ThesisParticipationType.PRESIDENT);
+    
+                    row.setCell(thesis.getMark());
                 }
-
-                row.setCell(thesis.getThesisAbstractPt());
-                row.setCell(thesis.getThesisAbstractEn());
-
-                addTeacherRows(thesis, row, ThesisParticipationType.ORIENTATOR);
-                addTeacherRows(thesis, row, ThesisParticipationType.COORIENTATOR);
-                addTeacherRows(thesis, row, ThesisParticipationType.PRESIDENT);
-
-                row.setCell(thesis.getMark());
             }
         }
         spreadsheet.exportToXLSSheet(writer);
