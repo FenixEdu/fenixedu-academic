@@ -32,7 +32,6 @@ enum org.fenixedu.academic.domain.FrequencyType                                 
 enum org.fenixedu.academic.domain.GradeScale                                                                           as GradeScale;
 enum org.fenixedu.academic.domain.GraduationType                                                                       as GraduationType;
 enum org.fenixedu.academic.domain.GrantOwnerType                                                                       as GrantOwnerType;
-enum org.fenixedu.academic.domain.GuideState                                                                           as GuideState;
 enum org.fenixedu.academic.domain.JobApplicationType                                                                   as JobApplicationType;
 enum org.fenixedu.academic.domain.MarkSheetState                                                                       as MarkSheetState;
 enum org.fenixedu.academic.domain.OccupationPeriodType                                                                 as OccupationPeriodType;
@@ -83,12 +82,6 @@ enum org.fenixedu.academic.domain.degreeStructure.CurricularStage               
 enum org.fenixedu.academic.domain.degreeStructure.CycleType                                                            as CycleType;
 enum org.fenixedu.academic.domain.degreeStructure.RegimeType                                                           as degreeStructure.RegimeType;
 enum org.fenixedu.academic.domain.documents.GeneratedDocumentType                                                      as GeneratedDocumentType;
-enum org.fenixedu.academic.domain.gratuity.ExemptionGratuityType                                                       as ExemptionGratuityType;
-enum org.fenixedu.academic.domain.gratuity.ReimbursementGuideState                                                     as ReimbursementGuideState;
-enum org.fenixedu.academic.domain.gratuity.SibsPaymentStatus                                                           as SibsPaymentStatus;
-enum org.fenixedu.academic.domain.gratuity.SibsPaymentType                                                             as SibsPaymentType;
-enum org.fenixedu.academic.domain.masterDegree.GuideRequester                                                          as GuideRequester;
-enum org.fenixedu.academic.domain.masterDegree.MasterDegreeClassification                                              as MasterDegreeClassification;
 enum org.fenixedu.academic.domain.organizationalStructure.AcademicalInstitutionType                                    as AcademicalInstitutionType;
 enum org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum                                       as AccountabilityTypeEnum;
 enum org.fenixedu.academic.domain.organizationalStructure.PartyTypeEnum                                                as PartyTypeEnum;
@@ -109,8 +102,6 @@ enum org.fenixedu.academic.domain.studentCurricularPlan.StudentCurricularPlanSta
 enum org.fenixedu.academic.domain.thesis.ThesisParticipationType                                                       as ThesisParticipationType;
 enum org.fenixedu.academic.domain.thesis.ThesisState                                                                   as ThesisState;
 enum org.fenixedu.academic.domain.thesis.ThesisVisibilityType                                                          as ThesisVisibilityType;
-enum org.fenixedu.academic.domain.transactions.PaymentType                                                             as PaymentType;
-enum org.fenixedu.academic.domain.transactions.TransactionType                                                         as TransactionType;
 enum org.fenixedu.academic.domain.util.LogicOperator                                                                   as LogicOperator;
 enum org.fenixedu.academic.util.ContentType                                                                            as ContentType;
 enum org.fenixedu.academic.util.Month                                                                                  as Month;
@@ -951,32 +942,6 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
             String title;
         }
         
-    class GratuitySituation  {
-        String exemptionDescription;
-        Integer exemptionPercentage;
-        ExemptionGratuityType exemptionType;
-        Double exemptionValue;
-        Boolean hasPenaltyExemption;
-        YearMonthDay penaltyExemptionDate;
-        String penaltyExemptionJustification;
-        Double remainingValue;
-        Double totalValue;
-        DateTime whenDateTime;
-    }
-
-    class GratuityValues  {
-        Double anualValue;
-        Double courseValue;
-        Double creditValue;
-        YearMonthDay endPaymentYearMonthDay;
-        Double finalProofValue;
-        Boolean penaltyApplicable;
-        Boolean proofRequestPayment;
-        Double scholarShipValue;
-        YearMonthDay startPaymentYearMonthDay;
-        DateTime whenDateTime;
-    }
-
     class Grouping  {
         DateTime enrolmentBeginDayDateDateTime;
         DateTime enrolmentEndDayDateDateTime;
@@ -990,33 +955,6 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
         ShiftType shiftType;
         Boolean automaticEnrolment;
         Boolean differentiatedCapacity;
-    }
-
-    class Guide  {
-        YearMonthDay creationDateYearMonthDay;
-        GuideRequester guideRequester;
-        Integer number;
-        YearMonthDay paymentDateYearMonthDay;
-        PaymentType paymentType;
-        String remarks;
-        BigDecimal totalBigDecimal;
-        Integer version;
-        Integer year;
-    }
-
-    class GuideEntry  {
-        String description;
-        DocumentType documentType;
-        GraduationType graduationType;
-        BigDecimal priceBigDecimal;
-        Integer quantity;
-    }
-
-    class GuideSituation  {
-        YearMonthDay dateYearMonthDay;
-        String remarks;
-        GuideState situation;
-        State state;
     }
 
     class Holiday  {
@@ -1105,10 +1043,6 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
         YearMonthDay endDateYearMonthDay;
         YearMonthDay startDateYearMonthDay;
         Double value;
-    }
-
-    class PersonAccount  {
-        Double balance;
     }
 
     class Price  {
@@ -1587,12 +1521,6 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
             class accounting.paymentCodes.IndividualCandidacyPaymentCode extends accounting.paymentCodes.AccountingEventPaymentCode {
             }
 
-        class accounting.paymentCodes.GratuitySituationPaymentCode extends accounting.PaymentCode {
-        }
-
-        class accounting.paymentCodes.MasterDegreeInsurancePaymentCode extends accounting.PaymentCode {
-        }
-        
         class accounting.paymentCodes.rectorate.RectoratePaymentCode extends accounting.PaymentCode {
         }
 
@@ -1907,39 +1835,6 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
 
         class accounting.serviceAgreements.DegreeCurricularPlanServiceAgreement extends accounting.ServiceAgreement {
         }
-
-
-    class accounting.SibsPaymentFileProcessReport  {
-        Money administrativeOfficeTaxTotalAmount;
-        Money afterGraduationInsuranceTotalAmount;
-        Money bolonhaDegreeGratuityTotalAmount;
-        Money bolonhaMasterDegreeGratuityTotalAmount;
-        Money degreeGratuityTotalAmount;
-        Money dfaGratuityTotalAmount;
-        Integer fileVersion;
-        String filename;
-        Money graduationInsuranceTotalAmount;
-        Money integratedBolonhaMasterDegreeGratuityTotalAmount;
-        Money integratedMasterDegreeGratuityTotalAmount;
-        Money masterDegreeGratuityTotalAmount;
-        Money phdGratuityTotalAmount;
-        Money specializationGratuityTotalAmount;
-        Money totalCost;
-        Money transactionsTotalAmount;
-        Money residencePayment;
-        Money degreeChangeIndividualCandidacyAmount;
-        Money degreeTransferIndividualCandidacyAmount;
-        Money secondCycleIndividualCandidacyAmount;
-        Money degreeCandidacyForGraduatedPersonAmount;
-        Money standaloneEnrolmentGratuityEventAmount;
-        Money over23IndividualCandidacyEventAmount;
-        Money institutionAffiliationEventAmount;
-        Money phdProgramCandidacyEventAmount;
-        Money rectorateAmount;
-        Money specialSeasonEnrolmentEventAmount;
-        DateTime whenProcessed;
-        YearMonthDay whenProcessedBySibs;
-    }
 
     class accounting.events.ExemptionJustification  {
         String reason;
@@ -2444,19 +2339,6 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
 		LocalizedString graduateTitleSuffix;
 	}
 	
-    class gratuity.masterDegree.SibsPaymentFile  {
-        String filename;
-    }
-
-    class gratuity.masterDegree.SibsPaymentFileEntry  {
-        Double payedValue;
-        SibsPaymentStatus paymentStatus;
-        SibsPaymentType paymentType;
-        Integer studentNumber;
-        DateTime transactionDateDateTime;
-        Integer year;
-    }
-
     class EducationArea  {
         String code;
         String description;
@@ -2680,24 +2562,6 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
 
     class person.IdDocumentTypeObject  {
         IDDocumentType value;
-    }
-
-    class reimbursementGuide.ReimbursementGuide  {
-        YearMonthDay creationYearMonthDay;
-        Integer number;
-    }
-
-    class reimbursementGuide.ReimbursementGuideEntry  {
-        String justification;
-        BigDecimal valueBigDecimal;
-    }
-
-    class reimbursementGuide.ReimbursementGuideSituation  {
-        YearMonthDay modificationYearMonthDay;
-        YearMonthDay officialYearMonthDay;
-        ReimbursementGuideState reimbursementGuideState;
-        String remarks;
-        State state;
     }
 
         class space.SpaceOccupation extends .org.fenixedu.spaces.domain.occupation.Occupation {
@@ -3388,30 +3252,6 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
             class time.calendarStructure.GradeSubmissionInSpecialSeasonCE extends time.calendarStructure.GradeSubmissionCE {            
             }
         
-    class transactions.Transaction  {
-        PaymentType paymentType;
-        String remarks;
-        DateTime transactionDateDateTime;
-        TransactionType transactionType;
-        BigDecimal valueBigDecimal;
-        Boolean wasInternalBalance;
-    }
-
-        class transactions.PaymentTransaction extends transactions.Transaction {
-        }
-
-            class transactions.GratuityTransaction extends transactions.PaymentTransaction {
-            }
-
-            class transactions.InsuranceTransaction extends transactions.PaymentTransaction {
-            }
-
-            class transactions.SmsTransaction extends transactions.PaymentTransaction {
-            }
-
-        class transactions.ReimbursementTransaction extends transactions.Transaction {
-        }
-
     class util.Email  {
         EmailAddressList bccAddresses;
         EmailAddressList ccAddresses;
@@ -7381,13 +7221,6 @@ relation ExecutionYearAcademicServiceRequest {
     }
 }
 
-relation ExecutionYearMasterDegreeInsurancePaymentCode {
-    ExecutionYear playsRole executionYear;
-    accounting.paymentCodes.MasterDegreeInsurancePaymentCode playsRole masterDegreeInsurancePaymentCodes {
-        multiplicity *;
-    }
-}
-
 relation ExecutionYearPaymentPlan {
     ExecutionYear playsRole executionYear;
     accounting.PaymentPlan playsRole paymentPlans {
@@ -7586,39 +7419,6 @@ relation GratuityPaymentPlanGratuityEventWithPaymentPlan {
     accounting.PaymentPlan playsRole gratuityPaymentPlan;
 }
 
-relation GratuitySituationGratuityValues {
-    GratuitySituation playsRole gratuitySituations {
-        multiplicity *;
-    }
-    GratuityValues playsRole gratuityValues;
-}
-
-relation GratuitySituationPenaltyExemptionUser {
-    GratuitySituation playsRole penaltyExemptionGratuitySituations {
-        multiplicity *;
-    }
-    .org.fenixedu.bennu.core.domain.User playsRole penaltyExemptionUser;
-}
-
-relation GratuitySituationStudentCurricularPlan {
-    GratuitySituation playsRole gratuitySituations {
-        multiplicity *;
-    }
-    StudentCurricularPlan playsRole studentCurricularPlan;
-}
-
-relation GratuityTransactionGratuitySituation {
-    transactions.GratuityTransaction playsRole transactionList {
-        multiplicity *;
-    }
-    GratuitySituation playsRole gratuitySituation;
-}
-
-relation GratuityValuesExecutionDegree {
-    GratuityValues playsRole gratuityValues;
-    ExecutionDegree playsRole executionDegree;
-}
-
 relation GroupingAttends {
     Attends playsRole attends {
         multiplicity *;
@@ -7626,34 +7426,6 @@ relation GroupingAttends {
     Grouping playsRole groupings {
         multiplicity *;
     }
-}
-
-relation GuideEntryGuide {
-    GuideEntry playsRole guideEntries {
-        multiplicity *;
-    }
-    Guide playsRole guide;
-}
-
-relation GuideExecutionDegree {
-    Guide playsRole guides {
-        multiplicity *;
-    }
-    ExecutionDegree playsRole executionDegree;
-}
-
-relation GuidePerson {
-    Guide playsRole guides {
-        multiplicity *;
-    }
-    Person playsRole person;
-}
-
-relation GuideSituationGuide {
-    GuideSituation playsRole guideSituations {
-        multiplicity *;
-    }
-    Guide playsRole guide;
 }
 
 relation HolidayLocality {
@@ -7703,20 +7475,6 @@ relation InstallmentPenaltyExemptionInstallment {
     accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption playsRole installmentPenaltyExemptions {
         multiplicity *;
     }
-}
-
-relation InsuranceTransactionExecutionYear {
-    transactions.InsuranceTransaction playsRole insuranceTransactions {
-        multiplicity *;
-    }
-    ExecutionYear playsRole executionYear;
-}
-
-relation InsuranceTransactionStudent {
-    transactions.InsuranceTransaction playsRole insuranceTransactions {
-        multiplicity *;
-    }
-    student.Registration playsRole student;
 }
 
 relation InsuranceValueExecutionYear {
@@ -7940,11 +7698,6 @@ relation PaymentCodeAccountingEvent {
     }
 }
 
-relation PaymentCodeGratuitySituation {
-    GratuitySituation playsRole gratuitySituation;
-    accounting.paymentCodes.GratuitySituationPaymentCode playsRole paymentCode;
-}
-
 relation RootDomainObjectPaymentCodeMapping {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.PaymentCodeMapping playsRole paymentCodeMappings {
@@ -7971,18 +7724,6 @@ relation PaymentCodeMappingNewPaymentCode {
     accounting.PaymentCodeMapping playsRole newPaymentCodeMappings {
         multiplicity *;
     }
-}
-
-relation PaymentPhaseGratuityValues {
-    PaymentPhase playsRole paymentPhaseList {
-        multiplicity *;
-    }
-    GratuityValues playsRole gratuityValues;
-}
-
-relation PaymentTransactionGuideEntry {
-    transactions.PaymentTransaction playsRole paymentTransaction;
-    GuideEntry playsRole guideEntry;
 }
 
 relation PeriodNextPeriod {
@@ -8051,11 +7792,6 @@ relation AcademicAccessRuleOffices {
     protected administrativeOffice.AdministrativeOffice playsRole office {
         multiplicity *;
     }
-}
-
-relation PersonAccountPerson {
-    PersonAccount playsRole associatedPersonAccount;
-    Person playsRole person;
 }
 
 relation PersonAccountingEvent {
@@ -8464,39 +8200,6 @@ relation RegistrationProtocolRootDomainObject {
 		multiplicity *;
 	}
 	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-}
-
-relation ReimbursementGuideEntryGuideEntry {
-    reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntries {
-        multiplicity *;
-    }
-    GuideEntry playsRole guideEntry;
-}
-
-relation ReimbursementGuideEntryReimbursementGuide {
-    reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntries {
-        multiplicity *;
-    }
-    reimbursementGuide.ReimbursementGuide playsRole reimbursementGuide;
-}
-
-relation ReimbursementGuideGuide {
-    reimbursementGuide.ReimbursementGuide playsRole reimbursementGuides {
-        multiplicity *;
-    }
-    Guide playsRole guide;
-}
-
-relation ReimbursementGuideSituationReimbursementGuide {
-    reimbursementGuide.ReimbursementGuideSituation playsRole reimbursementGuideSituations {
-        multiplicity *;
-    }
-    reimbursementGuide.ReimbursementGuide playsRole reimbursementGuide;
-}
-
-relation ReimbursementTransactionReimbursementGuideEntry {
-    transactions.ReimbursementTransaction playsRole reimbursementTransaction;
-    reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntry;
 }
 
 relation RoomSummary {
@@ -9011,44 +8714,9 @@ relation RootDomainObjectForumSubscription {
     }
 }
 
-relation RootDomainObjectGratuitySituation {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    GratuitySituation playsRole gratuitySituations {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectGratuityValues {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    GratuityValues playsRole gratuityValuess {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectGrouping {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Grouping playsRole groupings {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectGuide {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    Guide playsRole guides {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectGuideEntry {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    GuideEntry playsRole guideEntrys {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectGuideSituation {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    GuideSituation playsRole guideSituations {
         multiplicity *;
     }
 }
@@ -9247,13 +8915,6 @@ relation RootDomainObjectPaymentPlan {
     }
 }
 
-relation RootDomainObjectPersonAccount {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    PersonAccount playsRole personAccounts {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectPostingRule {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.PostingRule playsRole postingRules {
@@ -9345,27 +9006,6 @@ relation RootDomainObjectRegistrationStateLog {
     }
 }
 
-relation RootDomainObjectReimbursementGuide {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    reimbursementGuide.ReimbursementGuide playsRole reimbursementGuides {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectReimbursementGuideEntry {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntrys {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectReimbursementGuideSituation {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    reimbursementGuide.ReimbursementGuideSituation playsRole reimbursementGuideSituations {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectResidenceCandidacies {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.ResidenceCandidacies playsRole residenceCandidaciess {
@@ -9450,28 +9090,6 @@ relation RootDomainObjectShiftProfessorship {
     }
 }
 
-relation RootDomainObjectSibsPaymentFile {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    gratuity.masterDegree.SibsPaymentFile playsRole sibsPaymentFiles {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectSibsPaymentFileEntry {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    gratuity.masterDegree.SibsPaymentFileEntry playsRole sibsPaymentFileEntrys {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectSibsPaymentFileProcessReport {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    accounting.SibsPaymentFileProcessReport playsRole sibsPaymentFileProcessReports {
-        multiplicity *;
-    }
-}
-
-
 relation RootDomainObjectStudent {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.Student playsRole students {
@@ -9554,13 +9172,6 @@ relation RootDomainObjectTeacher {
 relation RootDomainObjectThesis {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     thesis.Thesis playsRole theses {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectTransaction {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    transactions.Transaction playsRole transactions {
         multiplicity *;
     }
 }
@@ -9745,13 +9356,6 @@ relation ShiftSummary {
         multiplicity *;
     }
     Shift playsRole shift;
-}
-
-relation SibsPaymentFileEntrySibsPaymentFile {
-    gratuity.masterDegree.SibsPaymentFileEntry playsRole sibsPaymentFileEntries {
-        multiplicity *;
-    }
-    gratuity.masterDegree.SibsPaymentFile playsRole sibsPaymentFile;
 }
 
 relation StudentCandidacyExecutionDegree {
@@ -10005,20 +9609,6 @@ relation ThesisHasParticipations {
     thesis.ThesisEvaluationParticipant playsRole participations {
         multiplicity *;
     }
-}
-
-relation TransactionPerson {
-    transactions.Transaction playsRole responsabilityTransactions {
-        multiplicity *;
-    }
-    Person playsRole responsiblePerson;
-}
-
-relation TransactionPersonAccount {
-    transactions.Transaction playsRole transactions {
-        multiplicity *;
-    }
-    PersonAccount playsRole personAccount;
 }
 
 relation InstitutionUnitDegreeDesignation {

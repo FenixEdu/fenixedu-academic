@@ -66,7 +66,6 @@ import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.gratuity.GratuitySituationType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.domain.student.Student;
@@ -331,10 +330,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     private void checkRulesToDelete() {
         if (!getGratuityEventsSet().isEmpty()) {
             throw new DomainException("error.StudentCurricularPlan.cannot.delete.because.already.has.gratuity.events");
-        }
-
-        if (!getGratuitySituationsSet().isEmpty()) {
-            throw new DomainException("error.StudentCurricularPlan.cannot.delete.because.already.has.gratuity.situations");
         }
     }
 
@@ -1525,31 +1520,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         }
     }
 
-    final public GratuitySituation getGratuitySituationByGratuityValues(final GratuityValues gratuityValues) {
-        for (final GratuitySituation gratuitySituation : getGratuitySituationsSet()) {
-            if (gratuitySituation.getGratuityValues().equals(gratuityValues)) {
-                return gratuitySituation;
-            }
-        }
-
-        return null;
-    }
-
-    final public GratuitySituation getGratuitySituationByGratuityValuesAndGratuitySituationType(
-            final GratuitySituationType gratuitySituationType, final GratuityValues gratuityValues) {
-
-        GratuitySituation gratuitySituation = this.getGratuitySituationByGratuityValues(gratuityValues);
-        if (gratuitySituation != null && (gratuitySituationType == null
-                || ((gratuitySituationType.equals(GratuitySituationType.CREDITOR) && gratuitySituation.getRemainingValue() < 0.0)
-                        || (gratuitySituationType.equals(GratuitySituationType.DEBTOR)
-                                && gratuitySituation.getRemainingValue() > 0.0)
-                        || (gratuitySituationType.equals(GratuitySituationType.REGULARIZED)
-                                && gratuitySituation.getRemainingValue() == 0.0)))) {
-            return gratuitySituation;
-        }
-        return null;
-    }
-
     final public <T extends GratuityEvent> T getGratuityEvent(final ExecutionYear executionYear,
             final Class<? extends GratuityEvent> type) {
         for (final GratuityEvent gratuityEvent : getGratuityEventsSet()) {
@@ -1669,6 +1639,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     /**
      * Has special season in given semester if is enroled in special season in
      * previous semester
+     * 
      * @param executionSemester
      * 
      */
@@ -1911,6 +1882,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     /**
      * Note that this method must not use the ExtraCurriculumGroup due to the
      * pre-Bolonha SCPs
+     * 
      * @return extra curricular enrolments
      */
     final public Collection<Enrolment> getExtraCurricularEnrolments() {
@@ -1992,6 +1964,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     /**
      * Note that this method must not use the ExtraCurriculumGroup due to the
      * pre-Bolonha SCPs
+     * 
      * @return get propaedeutic enrolments
      */
     final public Collection<Enrolment> getPropaedeuticEnrolments() {
@@ -2433,9 +2406,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         if (!getNotNeedToEnrollCurricularCoursesSet().isEmpty()) {
             return false;
         }
-        if (!getGratuitySituationsSet().isEmpty()) {
-            return false;
-        }
         if (!getCreditsSet().isEmpty()) {
             return false;
         }
@@ -2567,16 +2537,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
         return false;
 
-    }
-
-    public boolean hasAnyGratuitySituationFor(final ExecutionYear executionYear) {
-        for (final GratuitySituation gratuitySituation : getGratuitySituationsSet()) {
-            if (gratuitySituation.getGratuityValues().getExecutionDegree().getExecutionYear() == executionYear) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     @Atomic
@@ -2711,9 +2671,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public Stream<Enrolment> getEnrolmentStream() {
-        return getRoot().getCurriculumLineStream()
-            .filter(cl -> cl.isEnrolment())
-            .map(cl -> (Enrolment) cl);
+        return getRoot().getCurriculumLineStream().filter(cl -> cl.isEnrolment()).map(cl -> (Enrolment) cl);
     }
 
     public boolean isInCandidateEnrolmentProcess(ExecutionYear executionYear) {

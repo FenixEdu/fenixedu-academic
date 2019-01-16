@@ -623,12 +623,6 @@
 	</slot>
 </schema>
 
-<schema name="SIBSPaymentFileUpload" type="org.fenixedu.academic.ui.struts.action.manager.payments.SIBSPaymentsDA$UploadBean" bundle="MANAGER_RESOURCES">
-	<slot name="inputStream" key="label.file" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="fileNameSlot" value="filename"/>
-	</slot>
-</schema>
-
 <schema name="extraCurricularActivityType.view"
 	type="org.fenixedu.academic.domain.student.curriculum.ExtraCurricularActivityType">
 	<slot name="name" />

@@ -159,8 +159,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     @Override
     protected void checkForDeletionBlockers(Collection<String> blockers) {
         super.checkForDeletionBlockers(blockers);
-        if (!(getSchoolClassesSet().isEmpty() && getGuidesSet().isEmpty() && getStudentCandidaciesSet().isEmpty() && getShiftDistributionEntriesSet()
-                .isEmpty())) {
+        if (!(getSchoolClassesSet().isEmpty() && getStudentCandidaciesSet().isEmpty()
+                && getShiftDistributionEntriesSet().isEmpty())) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "execution.degree.cannot.be.deleted"));
         }
     }
@@ -178,10 +178,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
             ;
         }
 
-        if (getGratuityValues() != null) {
-            getGratuityValues().delete();
-        }
-        
         getPublishedExamMapsSet().clear();
 
         setExecutionYear(null);
