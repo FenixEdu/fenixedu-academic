@@ -11,7 +11,7 @@
 
 	<groupId>com.qubit.solution.fenixedu</groupId>
     <artifactId>fenixedu-academic-core</artifactId>
-    <version>8.6.3</version>
+    <version>9.0.0</version>
     <packaging>jar</packaging>
 
     <name>FenixEdu Academic</name>
