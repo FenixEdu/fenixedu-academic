@@ -215,17 +215,12 @@ public abstract class PaymentCode extends PaymentCode_Base {
     }
 
 
-    public boolean matches (SibsIncommingPaymentFileDetailLine sibsDetailLine) {
-        final Person person = getPerson();
-        if (person == null) {
-            return false;
-        }
-
-        return person.getEventsSet()
+    public boolean matches(SibsIncommingPaymentFileDetailLine sibsDetailLine) {
+        return Bennu.getInstance().getAccountingTransactionDetailsSet()
                 .stream()
-                .flatMap(event -> event.getAccountingTransactionsSet().stream().map(AccountingTransaction::getTransactionDetail))
                 .filter(SibsTransactionDetail.class::isInstance)
                 .map(SibsTransactionDetail.class::cast)
+                .filter(sibsTransactionDetail -> sibsTransactionDetail.getSibsLine() != null)
                 .anyMatch(sibsTransactionDetail -> sibsDetailLine.equals(sibsTransactionDetail.getSibsLine()));
     }
 
