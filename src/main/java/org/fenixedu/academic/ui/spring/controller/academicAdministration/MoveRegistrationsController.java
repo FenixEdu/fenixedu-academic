@@ -68,14 +68,9 @@ public class MoveRegistrationsController extends StrutsFunctionalityController {
     @Atomic(mode = TxMode.WRITE)
     private void merge(Person source, Person target) {
         // Accounting
-        if (source.getAssociatedPersonAccount() != null) {
-            source.getAssociatedPersonAccount().getTransactionsSet()
-                    .forEach(t -> t.setPersonAccount(target.getAssociatedPersonAccount()));
-        }
         source.getInternalAccount().getEntriesSet().forEach(entry -> entry.setAccount(target.getInternalAccount()));
         source.getExternalAccount().getEntriesSet().forEach(entry -> entry.setAccount(target.getExternalAccount()));
         source.getEventsSet().forEach(e -> moveEvent(e, target));
-        source.getGuidesSet().forEach(g -> g.setPerson(target));
         source.getReceiptsSet().forEach(r -> r.setPerson(target));
         if (target.getPartySocialSecurityNumber() == null) {
             if (source.getPartySocialSecurityNumber() != null) {

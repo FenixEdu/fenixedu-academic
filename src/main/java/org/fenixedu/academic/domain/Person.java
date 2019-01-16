@@ -549,9 +549,6 @@ public class Person extends Person_Base {
         if (getPersonalPhotoEvenIfRejected() != null) {
             getPersonalPhotoEvenIfRejected().delete();
         }
-        if (getAssociatedPersonAccount() != null) {
-            getAssociatedPersonAccount().delete();
-        }
 
         if (getStudent() != null) {
             getStudent().delete();
@@ -586,8 +583,7 @@ public class Person extends Person_Base {
         super.checkForDeletionBlockers(blockers);
         if (!(getChildsSet().isEmpty() && getParentsSet().isEmpty() && getExportGroupingReceiversSet().isEmpty()
                 && getAssociatedQualificationsSet().isEmpty() && getAssociatedAlteredCurriculumsSet().isEmpty()
-                && getEnrolmentEvaluationsSet().isEmpty() && getExportGroupingSendersSet().isEmpty()
-                && getResponsabilityTransactionsSet().isEmpty() && getGuidesSet().isEmpty() && getTeacher() == null
+                && getEnrolmentEvaluationsSet().isEmpty() && getExportGroupingSendersSet().isEmpty() && getTeacher() == null
                 && getInternalParticipantsSet().isEmpty() && getCreatedQualificationsSet().isEmpty()
                 && getCreateJobsSet().isEmpty())) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.person.cannot.be.deleted"));

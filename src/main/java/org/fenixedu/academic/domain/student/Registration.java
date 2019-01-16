@@ -58,9 +58,6 @@ import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
-import org.fenixedu.academic.domain.GratuitySituation;
-import org.fenixedu.academic.domain.GratuityValues;
-import org.fenixedu.academic.domain.GuideEntry;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Project;
@@ -88,10 +85,8 @@ import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.gratuity.ReimbursementGuideState;
 import org.fenixedu.academic.domain.log.CurriculumLineLog;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
-import org.fenixedu.academic.domain.reimbursementGuide.ReimbursementGuideEntry;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequestSituationType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DiplomaRequest;
@@ -114,7 +109,6 @@ import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
 import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.domain.studentCurriculum.StandaloneCurriculumGroup;
 import org.fenixedu.academic.domain.thesis.Thesis;
-import org.fenixedu.academic.domain.transactions.InsuranceTransaction;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.predicate.RegistrationPredicates;
 import org.fenixedu.academic.util.Bundle;
@@ -582,7 +576,7 @@ public class Registration extends Registration_Base {
         }
 
         if (getDegreeType().isBolonhaType()) {
-            
+
             final StudentCurricularPlan studentCurricularPlan =
                     getStudentCurricularPlansSet().size() == 1 ? getLastStudentCurricularPlan() : getStudentCurricularPlan(
                             executionYear);
@@ -600,7 +594,7 @@ public class Registration extends Registration_Base {
             }
 
             return cycleCurriculumGroup.getCurriculum(when, executionYear);
-            
+
         } else {
             final List<StudentCurricularPlan> sortedSCPs = getSortedStudentCurricularPlans();
             final ListIterator<StudentCurricularPlan> sortedSCPsIterator = sortedSCPs.listIterator(sortedSCPs.size());
@@ -1076,8 +1070,7 @@ public class Registration extends Registration_Base {
     }
 
     final public SortedSet<ExecutionSemester> getSortedEnrolmentsExecutionPeriods() {
-        final SortedSet<ExecutionSemester> result =
-                new TreeSet<>(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
+        final SortedSet<ExecutionSemester> result = new TreeSet<>(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
         result.addAll(getEnrolmentsExecutionPeriods());
 
         return result;
@@ -1267,53 +1260,6 @@ public class Registration extends Registration_Base {
         return students;
     }
 
-    final public GratuitySituation readGratuitySituationByExecutionDegree(final ExecutionDegree executionDegree) {
-        GratuityValues gratuityValues = executionDegree.getGratuityValues();
-        for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlansSet()) {
-            GratuitySituation gratuitySituation = studentCurricularPlan.getGratuitySituationByGratuityValues(gratuityValues);
-            if (gratuitySituation != null) {
-                return gratuitySituation;
-            }
-        }
-        return null;
-    }
-
-    final public List<InsuranceTransaction> readAllInsuranceTransactionByExecutionYear(final ExecutionYear executionYear) {
-        List<InsuranceTransaction> insuranceTransactions = new ArrayList<>();
-        for (InsuranceTransaction insuranceTransaction : this.getInsuranceTransactionsSet()) {
-            if (insuranceTransaction.getExecutionYear().equals(executionYear)) {
-                insuranceTransactions.add(insuranceTransaction);
-            }
-        }
-        return insuranceTransactions;
-    }
-
-    final public List<InsuranceTransaction> readAllNonReimbursedInsuranceTransactionsByExecutionYear(
-            final ExecutionYear executionYear) {
-        List<InsuranceTransaction> nonReimbursedInsuranceTransactions = new ArrayList<>();
-        for (InsuranceTransaction insuranceTransaction : this.getInsuranceTransactionsSet()) {
-            if (insuranceTransaction.getExecutionYear().equals(executionYear)) {
-                GuideEntry guideEntry = insuranceTransaction.getGuideEntry();
-                if (guideEntry == null || guideEntry.getReimbursementGuideEntriesSet().isEmpty()) {
-                    nonReimbursedInsuranceTransactions.add(insuranceTransaction);
-                } else {
-                    boolean isReimbursed = false;
-                    for (ReimbursementGuideEntry reimbursementGuideEntry : guideEntry.getReimbursementGuideEntriesSet()) {
-                        if (reimbursementGuideEntry.getReimbursementGuide().getActiveReimbursementGuideSituation()
-                                .getReimbursementGuideState().equals(ReimbursementGuideState.PAYED)) {
-                            isReimbursed = true;
-                            break;
-                        }
-                    }
-                    if (!isReimbursed) {
-                        nonReimbursedInsuranceTransactions.add(insuranceTransaction);
-                    }
-                }
-            }
-        }
-        return nonReimbursedInsuranceTransactions;
-    }
-
     final public Enrolment findEnrolmentByEnrolmentID(final String enrolmentID) {
         for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
             final Enrolment enrolment = studentCurricularPlan.findEnrolmentByEnrolmentID(enrolmentID);
@@ -1465,8 +1411,8 @@ public class Registration extends Registration_Base {
 
     final public Set<SchoolClass> getSchoolClassesToEnrolBy(final ExecutionCourse executionCourse) {
         StudentCurricularPlan scp = getActiveStudentCurricularPlan();
-        Set<SchoolClass> schoolClasses = scp != null ? executionCourse
-                .getSchoolClassesBy(scp.getDegreeCurricularPlan()) : new HashSet<SchoolClass>();
+        Set<SchoolClass> schoolClasses =
+                scp != null ? executionCourse.getSchoolClassesBy(scp.getDegreeCurricularPlan()) : new HashSet<SchoolClass>();
         return schoolClasses.isEmpty() ? executionCourse.getSchoolClasses() : schoolClasses;
     }
 
@@ -2244,7 +2190,8 @@ public class Registration extends Registration_Base {
 
     final public String getGraduateTitle(final ProgramConclusion programConclusion, final Locale locale) {
         if (programConclusion.isConclusionProcessed(this)) {
-           return programConclusion.groupFor(this).map(cg -> cg.getDegreeModule().getGraduateTitle(cg.getConclusionYear(), locale)).orElse(null);
+            return programConclusion.groupFor(this)
+                    .map(cg -> cg.getDegreeModule().getGraduateTitle(cg.getConclusionYear(), locale)).orElse(null);
         }
         throw new DomainException("Registration.hasnt.concluded.requested.cycle");
     }
@@ -3323,8 +3270,8 @@ public class Registration extends Registration_Base {
     }
 
     public PrecedentDegreeInformation getLatestPrecedentDegreeInformation() {
-        TreeSet<PrecedentDegreeInformation> degreeInformations = new TreeSet<>(
-                Collections.reverseOrder(PrecedentDegreeInformation.COMPARATOR_BY_EXECUTION_YEAR));
+        TreeSet<PrecedentDegreeInformation> degreeInformations =
+                new TreeSet<>(Collections.reverseOrder(PrecedentDegreeInformation.COMPARATOR_BY_EXECUTION_YEAR));
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
         for (PrecedentDegreeInformation pdi : getPrecedentDegreesInformationsSet()) {
             if (!pdi.getExecutionYear().isAfter(currentExecutionYear)) {
