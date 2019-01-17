@@ -19,17 +19,12 @@
 package org.fenixedu.academic.domain.serviceRequests.documentRequests;
 
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.academic.domain.treasury.IAcademicTreasuryEvent;
-import org.fenixedu.academic.domain.treasury.ITreasuryBridgeAPI;
 import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
-import org.fenixedu.bennu.core.signals.DomainObjectEvent;
-import org.fenixedu.bennu.core.signals.Signal;
 
 abstract public class CertificateRequest extends CertificateRequest_Base {
 
@@ -43,8 +38,8 @@ abstract public class CertificateRequest extends CertificateRequest_Base {
 
         super.checkParameters(bean);
         super.setDocumentPurposeTypeInstance(bean.getChosenDocumentPurposeType());
-        super.setDocumentPurposeType(getDocumentPurposeTypeInstance() != null ? getDocumentPurposeTypeInstance()
-                .getDocumentPurposeType() : null);
+        super.setDocumentPurposeType(
+                getDocumentPurposeTypeInstance() != null ? getDocumentPurposeTypeInstance().getDocumentPurposeType() : null);
         super.setOtherDocumentPurposeTypeDescription(bean.getOtherPurpose());
     }
 

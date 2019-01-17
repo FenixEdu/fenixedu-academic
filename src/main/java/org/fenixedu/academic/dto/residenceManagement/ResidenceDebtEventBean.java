@@ -21,7 +21,6 @@ package org.fenixedu.academic.dto.residenceManagement;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.fenixedu.academic.domain.accounting.ResidenceEvent;
 import org.fenixedu.academic.domain.residence.ResidenceMonth;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.YearMonthDay;
@@ -32,7 +31,6 @@ public class ResidenceDebtEventBean extends ResidenceEventBean {
     private String paidDate;
 
     private YearMonthDay paidDateObject;
-    private ResidenceEvent eventObject;
     private ResidenceMonth month;
 
     public ResidenceDebtEventBean(String userName, String fiscalNumber, String name, Double roomValue, String room,
@@ -88,34 +86,6 @@ public class ResidenceDebtEventBean extends ResidenceEventBean {
             return false;
         }
 
-        for (ResidenceEvent residenceEvent : getMonth().getEventsSet()) {
-            if (residenceEvent.getPerson() != getStudent().getPerson()) {
-                continue;
-            }
-
-            if (!residenceEvent.isOpen()) {
-                setStatusMessage("label.error.already.paid");
-                return false;
-            }
-
-            if (getPaidDateObject().isAfter(new YearMonthDay())) {
-                setStatusMessage("label.error.invalid.date");
-                return false;
-            }
-
-            if (!residenceEvent.getAmountToPay().equals(getRoomValuePaid())) {
-                setStatusMessage("label.error.invalid.payment.amount");
-                return false;
-            }
-
-            setEventObject(residenceEvent);
-            setPaidDateObject(new YearMonthDay(year, month, day));
-            break;
-        }
-        if (getEventObject() == null) {
-            setStatusMessage("label.error.invalid.payment.amount");
-            return false;
-        }
         return true;
     }
 
@@ -125,14 +95,6 @@ public class ResidenceDebtEventBean extends ResidenceEventBean {
 
     public void setPaidDateObject(YearMonthDay paidDateObject) {
         this.paidDateObject = paidDateObject;
-    }
-
-    public ResidenceEvent getEventObject() {
-        return eventObject;
-    }
-
-    public void setEventObject(ResidenceEvent eventObject) {
-        this.eventObject = eventObject;
     }
 
     public ResidenceMonth getMonth() {

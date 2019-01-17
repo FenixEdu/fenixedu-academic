@@ -40,7 +40,6 @@ import org.fenixedu.academic.domain.phd.PhdParticipant;
 import org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean;
 import org.fenixedu.academic.domain.phd.PhdProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdProgramProcessDocument;
-import org.fenixedu.academic.domain.phd.debts.PhdThesisRequestFee;
 import org.fenixedu.academic.domain.phd.migration.activities.SkipThesisJuryActivities;
 import org.fenixedu.academic.domain.phd.thesis.activities.AddJuryElement;
 import org.fenixedu.academic.domain.phd.thesis.activities.AddPresidentJuryElement;
@@ -79,13 +78,11 @@ import org.fenixedu.academic.domain.phd.thesis.activities.UploadDocuments;
 import org.fenixedu.academic.domain.phd.thesis.activities.ValidateJury;
 import org.fenixedu.academic.domain.phd.thesis.meeting.PhdMeetingSchedulingProcessStateType;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
-
-import pt.ist.fenixframework.Atomic;
 
 public class PhdThesisProcess extends PhdThesisProcess_Base {
 
@@ -110,19 +107,15 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
             result.setWhenThesisDiscussionRequired(whenThesisDiscussionRequired);
             result.setWhenJuryRequired(bean.getWhenThesisDiscussionRequired());
 
-            String presidentTitlePt =
-                    MessageFormat.format(BundleUtil.getString(Bundle.PHD, new Locale("pt", "PT"),
-                            "message.phd.thesis.president.title.default"), Unit.getInstitutionAcronym());
-            String presidentTitleEn =
-                    MessageFormat.format(BundleUtil.getString(Bundle.PHD, new Locale("en", "EN"),
-                            "message.phd.thesis.president.title.default"), Unit.getInstitutionAcronym());
+            String presidentTitlePt = MessageFormat.format(
+                    BundleUtil.getString(Bundle.PHD, new Locale("pt", "PT"), "message.phd.thesis.president.title.default"),
+                    Unit.getInstitutionAcronym());
+            String presidentTitleEn = MessageFormat.format(
+                    BundleUtil.getString(Bundle.PHD, new Locale("en", "EN"), "message.phd.thesis.president.title.default"),
+                    Unit.getInstitutionAcronym());
 
-            result.setPresidentTitle(new LocalizedString(org.fenixedu.academic.util.LocaleUtils.PT, presidentTitlePt).with(
-                    org.fenixedu.academic.util.LocaleUtils.EN, presidentTitleEn));
-
-            if (!result.getIndividualProgramProcess().isMigratedProcess()) {
-                new PhdThesisRequestFee(bean.getProcess());
-            }
+            result.setPresidentTitle(new LocalizedString(org.fenixedu.academic.util.LocaleUtils.PT, presidentTitlePt)
+                    .with(org.fenixedu.academic.util.LocaleUtils.EN, presidentTitleEn));
 
             result.createState(PhdThesisProcessStateType.NEW, userView.getPerson(), bean.getRemarks());
             return result;
@@ -405,8 +398,8 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
             if (each.isRequired()) {
                 if (!each.hasAnyInformation()) {
-                    throw new DomainException("error.PhdThesisProcess.document.is.required.and.no.information.given", each
-                            .getType().getLocalizedName());
+                    throw new DomainException("error.PhdThesisProcess.document.is.required.and.no.information.given",
+                            each.getType().getLocalizedName());
                 }
             }
 
@@ -568,11 +561,6 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
         }
 
         return super.getPhdJuryElementsRatificationEntity();
-    }
-
-    @Atomic
-    public void createRequestFee() {
-        new PhdThesisRequestFee(getIndividualProgramProcess());
     }
 
     @Override

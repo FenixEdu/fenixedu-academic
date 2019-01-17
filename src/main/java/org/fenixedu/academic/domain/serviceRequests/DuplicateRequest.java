@@ -19,12 +19,9 @@
 package org.fenixedu.academic.domain.serviceRequests;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.accounting.EventType;
-import org.fenixedu.academic.domain.accounting.events.serviceRequests.DuplicateRequestEvent;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import org.fenixedu.academic.dto.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
-import org.fenixedu.academic.util.Money;
 
 public class DuplicateRequest extends DuplicateRequest_Base {
 
@@ -70,12 +67,6 @@ public class DuplicateRequest extends DuplicateRequest_Base {
     @Override
     public boolean isManagedWithRectorateSubmissionBatch() {
         return false;
-    }
-
-    @Override
-    public EventType getEventType() {
-        return EventType.DUPLICATE_REQUEST;
-
     }
 
     @Override

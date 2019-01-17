@@ -109,26 +109,9 @@ public abstract class PhdDocumentRequest extends PhdDocumentRequest_Base impleme
     }
 
     protected void assertPayedEvents() {
-        if (getPhdIndividualProgramProcess().hasInsuranceDebtsCurrently()) {
-            throw new PhdDomainOperationException("DocumentRequest.registration.has.not.payed.insurance.fees");
-        }
-
-        if (getPhdIndividualProgramProcess().hasAdministrativeOfficeFeeAndInsuranceDebtsCurrently(getAdministrativeOffice())) {
-            throw new PhdDomainOperationException("DocumentRequest.registration.has.not.payed.administrative.office.fees");
-        }
     }
 
     protected void assertPayedEvents(final ExecutionYear executionYear) {
-        if (executionYear != null) {
-            if (getPhdIndividualProgramProcess().hasInsuranceDebts(executionYear)) {
-                throw new PhdDomainOperationException("DocumentRequest.registration.has.not.payed.insurance.fees");
-            }
-
-            if (getPhdIndividualProgramProcess().hasAdministrativeOfficeFeeAndInsuranceDebts(getAdministrativeOffice(),
-                    executionYear)) {
-                throw new PhdDomainOperationException("DocumentRequest.registration.has.not.payed.administrative.office.fees");
-            }
-        }
     }
 
     @Override

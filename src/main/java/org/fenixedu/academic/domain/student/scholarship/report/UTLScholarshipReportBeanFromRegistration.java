@@ -35,7 +35,6 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Qualification;
 import org.fenixedu.academic.domain.QualificationType;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
-import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.student.Registration;
@@ -72,8 +71,8 @@ public class UTLScholarshipReportBeanFromRegistration implements Serializable, I
 
     @Override
     public String getInstitutionName() {
-        return MessageFormat.format(BundleUtil.getString(Bundle.ACADEMIC, "label.utl.scholarship.report.institution.name"), Unit
-                .getInstitutionName().getContent());
+        return MessageFormat.format(BundleUtil.getString(Bundle.ACADEMIC, "label.utl.scholarship.report.institution.name"),
+                Unit.getInstitutionName().getContent());
     }
 
     @Override
@@ -142,9 +141,8 @@ public class UTLScholarshipReportBeanFromRegistration implements Serializable, I
 
     @Override
     public String getHasMadeDegreeChangeInThisExecutionYear() {
-        boolean hasMade =
-                registration.getStartExecutionYear() == readCurrentExecutionYear()
-                        && registration.getIngressionType().isInternalDegreeChange();
+        boolean hasMade = registration.getStartExecutionYear() == readCurrentExecutionYear()
+                && registration.getIngressionType().isInternalDegreeChange();
 
         return hasMade ? BundleUtil.getString(Bundle.ACADEMIC, "label.yes") : BundleUtil.getString(Bundle.ACADEMIC, "label.no");
     }
@@ -240,12 +238,11 @@ public class UTLScholarshipReportBeanFromRegistration implements Serializable, I
         for (final Registration registration : readStudent().getRegistrationsSet()) {
 
             if (registration.isBolonha() && registration.hasAnyCurriculumLines(oneYearAgo)) {
-                result =
-                        result.add(
-                                calculateApprovedECTS(registration.getLastStudentCurricularPlan().getApprovedCurriculumLines(
-                                        oneYearAgo.getFirstExecutionPeriod()))).add(
-                                calculateApprovedECTS(registration.getLastStudentCurricularPlan().getApprovedCurriculumLines(
-                                        oneYearAgo.getLastExecutionPeriod())));
+                result = result
+                        .add(calculateApprovedECTS(registration.getLastStudentCurricularPlan()
+                                .getApprovedCurriculumLines(oneYearAgo.getFirstExecutionPeriod())))
+                        .add(calculateApprovedECTS(registration.getLastStudentCurricularPlan()
+                                .getApprovedCurriculumLines(oneYearAgo.getLastExecutionPeriod())));
             }
         }
 
@@ -304,16 +301,7 @@ public class UTLScholarshipReportBeanFromRegistration implements Serializable, I
 
     @Override
     public Money getGratuityAmount() {
-        if (!registration.hasToPayGratuityOrInsurance()) {
-            return Money.ZERO;
-        }
-
-        StudentCurricularPlan lastStudentCurricularPlan = registration.getLastStudentCurricularPlan();
-
-        GratuityEventWithPaymentPlan event =
-                lastStudentCurricularPlan.getGratuityEvent(readCurrentExecutionYear(), GratuityEventWithPaymentPlan.class);
-
-        return event != null ? event.getOriginalAmountToPay() : Money.ZERO;
+        return Money.ZERO;
     }
 
     @Override
@@ -328,8 +316,8 @@ public class UTLScholarshipReportBeanFromRegistration implements Serializable, I
 
     @Override
     public String getIsCETQualificationOwner() {
-        return STUDENTS_WITH_CET.contains(registration.getNumber()) ? BundleUtil.getString(Bundle.ACADEMIC, "label.yes") : BundleUtil
-                .getString(Bundle.ACADEMIC, "label.no");
+        return STUDENTS_WITH_CET.contains(registration.getNumber()) ? BundleUtil.getString(Bundle.ACADEMIC,
+                "label.yes") : BundleUtil.getString(Bundle.ACADEMIC, "label.no");
     }
 
     @Override
@@ -509,157 +497,79 @@ public class UTLScholarshipReportBeanFromRegistration implements Serializable, I
     }
 
     protected void setHeaders(Spreadsheet spreadsheet) {
-        spreadsheet
-                .setHeader(
-                        0,
-                        BundleUtil
-                                .getString(Bundle.ACADEMIC,
-                                        "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.institutionCode"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.institutionName"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.applicationNumber"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.studentNumber"));
+        spreadsheet.setHeader(0, BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.institutionCode"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.institutionName"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.applicationNumber"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.studentNumber"));
 
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.studentName"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.idDocumentType"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.idDocumentNumber"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.degreeCode"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.degreeName"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.degreeTypeName"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.numberOfDegreeChanges"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(
-                                Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.hasMadeDegreeChangeInThisExecutionYear"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(
-                                Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.currentExecutionYearBeginDate"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.regimen"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.studentName"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.idDocumentType"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.idDocumentNumber"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.degreeCode"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.degreeName"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.degreeTypeName"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.numberOfDegreeChanges"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.hasMadeDegreeChangeInThisExecutionYear"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.currentExecutionYearBeginDate"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.regimen"));
         spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
                 "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.code"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.firstExecutionYearInIST"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(
-                                Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.numberOfStudyExecutionYearsInCurrentRegistration"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(
-                                Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.numberOfCurricularYearsOnCurrentDegreeCurricularPlan"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.lastYearCurricularYear"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.lastYearEnrolledECTS"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.lastYearApprovedECTS"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.wasApprovedOnMostECTS"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(
-                                Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.currentYearCurricularYear"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.currentYearEnrolledECTS"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.degreeConcluded"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.finalResult"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.gratuityAmount"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(
-                                Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.numberOfMonthsInExecutionYear"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.firstMonthToPay"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.isCETQualificationOwner"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(
-                                Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.isDegreeQualificationOwner"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(
-                                Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.isMasterDegreeQualificationOwner"));
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.isPhdQualificationOwner"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.firstExecutionYearInIST"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.numberOfStudyExecutionYearsInCurrentRegistration"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.numberOfCurricularYearsOnCurrentDegreeCurricularPlan"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.lastYearCurricularYear"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.lastYearEnrolledECTS"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.lastYearApprovedECTS"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.wasApprovedOnMostECTS"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.currentYearCurricularYear"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.currentYearEnrolledECTS"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.degreeConcluded"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.finalResult"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.gratuityAmount"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.numberOfMonthsInExecutionYear"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.firstMonthToPay"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.isCETQualificationOwner"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.isDegreeQualificationOwner"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.isMasterDegreeQualificationOwner"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.isPhdQualificationOwner"));
 
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.isOwnerOfQualification"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.isOwnerOfQualification"));
 
-        spreadsheet
-                .setHeader(BundleUtil
-                        .getString(Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.observations"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration.observations"));
     }
 
 }

@@ -18,11 +18,6 @@
  */
 package org.fenixedu.academic.domain.residence;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.ResidenceEvent;
 import org.fenixedu.academic.domain.organizationalStructure.ResidenceManagementUnit;
 import org.fenixedu.academic.util.Month;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -46,15 +41,6 @@ public class ResidenceMonth extends ResidenceMonth_Base {
         return getYear().getUnit();
     }
 
-    public boolean isEventPresent(Person person) {
-        for (ResidenceEvent event : getEventsSet()) {
-            if (event.getPerson() == person && (event.isOpen() || event.isPayed())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public DateTime getPaymentStartDate() {
         LocalDate date = new LocalDate(getYear().getYear(), getMonth().getNumberOfMonth(), 1);
         return date.toDateTimeAtStartOfDay();
@@ -62,36 +48,9 @@ public class ResidenceMonth extends ResidenceMonth_Base {
 
     public DateTime getPaymentLimitDateTime() {
         ResidenceYear residenceYear = getYear();
-        LocalDate date =
-                new LocalDate(residenceYear.getYear(), getMonth().getNumberOfMonth(), getManagementUnit()
-                        .getCurrentPaymentLimitDay());
+        LocalDate date = new LocalDate(residenceYear.getYear(), getMonth().getNumberOfMonth(),
+                getManagementUnit().getCurrentPaymentLimitDay());
         return date.toDateTimeAtStartOfDay();
-    }
-
-    public boolean isAbleToEditPaymentLimitDate() {
-        return getEventsSet().size() == 0;
-    }
-
-    public Set<ResidenceEvent> getEventsWithPaymentCodes() {
-        Set<ResidenceEvent> eventsWithCodes = new HashSet<ResidenceEvent>();
-
-        for (ResidenceEvent event : getEventsSet()) {
-            if (event.getAllPaymentCodes().size() > 0 && !event.isCancelled()) {
-                eventsWithCodes.add(event);
-            }
-        }
-        return eventsWithCodes;
-    }
-
-    public Set<ResidenceEvent> getEventsWithoutPaymentCodes() {
-        Set<ResidenceEvent> eventsWithoutCodes = new HashSet<ResidenceEvent>();
-
-        for (ResidenceEvent event : getEventsSet()) {
-            if (event.getAllPaymentCodes().size() == 0 && !event.isCancelled()) {
-                eventsWithoutCodes.add(event);
-            }
-        }
-        return eventsWithoutCodes;
     }
 
     public boolean isFor(int year) {

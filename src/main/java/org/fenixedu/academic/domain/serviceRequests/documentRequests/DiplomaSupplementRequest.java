@@ -24,7 +24,6 @@ import java.util.function.Supplier;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeOfficialPublication;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.EctsGraduationGradeConversionTable;
 import org.fenixedu.academic.domain.degreeStructure.EctsTableIndex;
@@ -114,11 +113,6 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
     @Override
     public boolean isAvailableForTransitedRegistrations() {
         return false;
-    }
-
-    @Override
-    public EventType getEventType() {
-        return null;
     }
 
     @Override

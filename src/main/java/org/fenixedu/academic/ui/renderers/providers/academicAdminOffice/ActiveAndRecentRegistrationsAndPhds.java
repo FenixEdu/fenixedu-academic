@@ -51,9 +51,6 @@ public class ActiveAndRecentRegistrationsAndPhds implements DataProvider {
         for (final PhdIndividualProgramProcess phdProcess : student.getPerson().getPhdIndividualProgramProcessesSet()) {
             if (!phdProcess.isAllowedToManageProcess(Authenticate.getUser())) {
                 continue;
-            }
-            if ((phdProcess.isProcessActive() && student.hasValidInsuranceEvent())) {
-                phdRegistrationWrapperResult.add(new PhdRegistrationWrapper(phdProcess));
             } else if (phdProcess.isConcluded()) {
                 ExecutionYear conclusionYear = phdProcess.getConclusionYear();
                 if (matchesRecentExecutionYear(currentExecutionYear, conclusionYear)) {

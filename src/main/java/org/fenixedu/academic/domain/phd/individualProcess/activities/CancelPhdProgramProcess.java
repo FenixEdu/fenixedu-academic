@@ -52,8 +52,6 @@ public class CancelPhdProgramProcess extends PhdIndividualProgramProcessActivity
         PhdProgramProcessState.createWithGivenStateDate(process, PhdIndividualProgramProcessState.CANCELLED,
                 userView.getPerson(), "", stateDate);
 
-        process.cancelDebts(userView.getPerson());
-
         if (process.getRegistration() != null && process.getRegistration().isActive()) {
             RegistrationState.createRegistrationState(process.getRegistration(), userView.getPerson(), stateDate,
                     RegistrationStateType.CANCELED);

@@ -23,12 +23,8 @@ import static org.fenixedu.academic.predicate.AccessControl.check;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Locale;
-import java.util.Optional;
-import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.accounting.EventType;
-import org.fenixedu.academic.domain.accounting.events.serviceRequests.DegreeFinalizationCertificateRequestEvent;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -51,13 +47,12 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.YearMonthDay;
 
+import com.google.common.base.Joiner;
+
 import pt.ist.fenixframework.Atomic;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.ImmutableSet;
-
-public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCertificateRequest_Base implements
-        IProgramConclusionRequest {
+public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCertificateRequest_Base
+        implements IProgramConclusionRequest {
 
     protected DegreeFinalizationCertificateRequest() {
         super();
@@ -128,33 +123,32 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
             if (pastDiplomaRequest == null) {
                 checkForRegistryRequest(registration, programConclusion);
             }
-        } 
+        }
     }
 
     static public void checkForRegistryRequest(final Registration registration, final ProgramConclusion programConclusion) {
         final RegistryDiplomaRequest registryRequest = registration.getRegistryDiplomaRequest(programConclusion);
         if (registryRequest == null) {
             throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutRegistryRequest");
-        } 
+        }
     }
 
     @Override
     final protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
         if (academicServiceRequestBean.isToProcess()) {
             checkSpecificConditions(getProgramConclusion());
-            
+
             if (!getProgramConclusion().getGraduationTitle().isEmpty()) {
                 checkForDiplomaRequest(getRegistration(), getProgramConclusion());
-            }            
+            }
 
             if (!getProgramConclusion().isConclusionProcessed(getRegistration())) {
                 throw new DomainException("DegreeFinalizationCertificateRequest.registration.not.submited.to.conclusion.process");
             }
 
             final RegistryDiplomaRequest registryRequest = getRegistration().getRegistryDiplomaRequest(getProgramConclusion());
-            if (registryRequest != null
-                    && registryRequest.getAcademicServiceRequestSituationType().compareTo(
-                            AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY) < 0) {
+            if (registryRequest != null && registryRequest.getAcademicServiceRequestSituationType()
+                    .compareTo(AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY) < 0) {
                 throw new DomainException(
                         "DegreeFinalizationCertificateRequest.registration.registryRequestIsNotSentToExternalEntity");
             }
@@ -234,15 +228,6 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     public CycleType getRequestedCycle() {
         return getProgramConclusion().groupFor(getRegistration()).filter(CurriculumGroup::isCycleCurriculumGroup)
                 .map(ccg -> ((CycleCurriculumGroup) ccg).getCycleType()).orElse(null);
-    }
-
-    public static Set<EventType> getPossibleEventTypes() {
-        return ImmutableSet.of(EventType.DEGREE_FINALIZATION_CERTIFICATE_REQUEST);
-    }
-
-    @Override
-    final public EventType getEventType() {
-        return EventType.DEGREE_FINALIZATION_CERTIFICATE_REQUEST;
     }
 
     @Override
@@ -333,9 +318,8 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
         final StringBuilder res = new StringBuilder();
 
         if (!getProgramConclusion().getGraduationTitle().isEmpty()) {
-            res.append(", ").append(
-                    BundleUtil.getString(Bundle.ACADEMIC, getLanguage(),
-                            "documents.DegreeFinalizationCertificate.graduateTitleInfo"));
+            res.append(", ").append(BundleUtil.getString(Bundle.ACADEMIC, getLanguage(),
+                    "documents.DegreeFinalizationCertificate.graduateTitleInfo"));
             res.append(" ").append(getRegistration().getGraduateTitle(getProgramConclusion(), getLanguage()));
         }
 

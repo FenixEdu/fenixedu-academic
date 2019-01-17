@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.Enrolment;
-import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
 
@@ -69,11 +68,6 @@ public class ExternalCourseLoadRequest extends ExternalCourseLoadRequest_Base {
     @Override
     public DocumentRequestType getDocumentRequestType() {
         return DocumentRequestType.EXTERNAL_COURSE_LOAD;
-    }
-
-    @Override
-    public EventType getEventType() {
-        return EventType.EXTERNAL_COURSE_LOAD_REQUEST;
     }
 
     @Override

@@ -32,7 +32,6 @@ import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.Teacher;
-import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.person.IDDocumentType;
 import org.fenixedu.academic.domain.person.RoleType;
@@ -290,14 +289,6 @@ public class SearchPerson implements Serializable {
                     }
                 }
             }
-        } else if (!StringUtils.isEmpty(searchParameters.getPaymentCode())) {
-            persons = new ArrayList<Person>();
-
-            PaymentCode paymentCode = PaymentCode.readByCode(searchParameters.getPaymentCode());
-
-            if (paymentCode != null && paymentCode.getPerson() != null) {
-                persons.add(paymentCode.getPerson());
-            }
         } else {
             persons = new ArrayList<Person>(0);
         }
@@ -325,8 +316,7 @@ public class SearchPerson implements Serializable {
                     && verifyNameEquality(searchParameters.getNameWords(), person)
                     && verifyAnyEmailAddress(searchParameters.getEmail(), person)
                     && verifyDegreeType(searchParameters.getDegree(), searchParameters.getDegreeType(), person)
-                    && verifyStudentNumber(searchParameters.getStudentNumber(), person)
-                    && verifyPaymentCodes(searchParameters.getPaymentCode(), person);
+                    && verifyStudentNumber(searchParameters.getStudentNumber(), person);
         }
 
         protected boolean verifyAnyEmailAddress(final String email, final Person person) {
@@ -338,13 +328,13 @@ public class SearchPerson implements Serializable {
         }
 
         protected boolean verifyStudentNumber(Integer studentNumber, Person person) {
-            return (studentNumber == null || (person.getStudent() != null && person.getStudent().getNumber()
-                    .equals(studentNumber)));
+            return (studentNumber == null
+                    || (person.getStudent() != null && person.getStudent().getNumber().equals(studentNumber)));
         }
 
         protected boolean verifyActiveState(Boolean activePersons, Person person) {
-            return (activePersons == null || (person.getUser() != null && person.getUser().isLoginExpired() == !activePersons
-                    .booleanValue()));
+            return (activePersons == null
+                    || (person.getUser() != null && person.getUser().isLoginExpired() == !activePersons.booleanValue()));
         }
 
         protected boolean verifyUsernameEquality(String usernameToSearch, Person person) {
@@ -380,10 +370,6 @@ public class SearchPerson implements Serializable {
 
         protected static boolean verifyNameEquality(String[] nameWords, Person person) {
             return person.verifyNameEquality(nameWords);
-        }
-
-        protected static boolean verifyPaymentCodes(String paymentCode, final Person person) {
-            return StringUtils.isEmpty(paymentCode) || person.getPaymentCodeBy(paymentCode) != null;
         }
 
         public SearchParameters getSearchParameters() {

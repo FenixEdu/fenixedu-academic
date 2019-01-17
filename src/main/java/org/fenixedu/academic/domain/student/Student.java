@@ -45,14 +45,10 @@ import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
-import org.fenixedu.academic.domain.accounting.Event;
-import org.fenixedu.academic.domain.accounting.events.AccountingEventsManager;
-import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.candidacy.PersonalInformationBean;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.exceptions.DomainExceptionWithInvocationResult;
 import org.fenixedu.academic.domain.log.CurriculumLineLog;
 import org.fenixedu.academic.domain.messaging.Forum;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
@@ -64,7 +60,6 @@ import org.fenixedu.academic.domain.student.registrationStates.RegistrationState
 import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.dto.student.StudentStatuteBean;
 import org.fenixedu.academic.predicate.StudentPredicates;
-import org.fenixedu.academic.util.InvocationResult;
 import org.fenixedu.academic.util.StudentPersonalDataAuthorizationChoice;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.spaces.domain.Space;
@@ -809,46 +804,6 @@ public class Student extends Student_Base {
         return result;
     }
 
-    private boolean isAnyTuitionInDebt(final ExecutionYear executionYear) {
-        for (final Registration registration : super.getRegistrationsSet()) {
-            if (registration.hasAnyNotPayedGratuityEventsForPreviousYears(executionYear)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public boolean isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt() {
-        return isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt(ExecutionYear.readCurrentExecutionYear());
-    }
-
-    /**
-     * Check if there is any debt until given execution year (exclusive)
-     *
-     * @param executionYear
-     */
-    public boolean isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt(final ExecutionYear executionYear) {
-        return isAnyTuitionInDebt(executionYear) || isAnyAdministrativeOfficeFeeAndInsuranceInDebtUntil(executionYear);
-    }
-
-    /**
-     * Check if there is any debt until given execution year (exclusive)
-     *
-     * @param executionYear
-     */
-    private boolean isAnyAdministrativeOfficeFeeAndInsuranceInDebtUntil(final ExecutionYear executionYear) {
-        for (final Event event : getPerson().getEventsSet()) {
-            if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent
-                    && ((AdministrativeOfficeFeeAndInsuranceEvent) event).getExecutionYear().isBefore(executionYear)
-                    && event.isOpen()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public List<Registration> getRegistrationsFor(final DegreeCurricularPlan degreeCurricularPlan) {
         final List<Registration> result = new ArrayList<>();
         for (final Registration registration : super.getRegistrationsSet()) {
@@ -953,42 +908,6 @@ public class Student extends Student_Base {
             }
         }
         return res;
-    }
-
-    public void createGratuityEvent(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
-        final AccountingEventsManager manager = new AccountingEventsManager();
-        final InvocationResult result = manager.createGratuityEvent(studentCurricularPlan, executionYear);
-
-        if (!result.isSuccess()) {
-            throw new DomainExceptionWithInvocationResult(result);
-        }
-    }
-
-    public void createAdministrativeOfficeFeeEvent(final StudentCurricularPlan studentCurricularPlan,
-            final ExecutionYear executionYear) {
-        final AccountingEventsManager manager = new AccountingEventsManager();
-        final InvocationResult result =
-                manager.createAdministrativeOfficeFeeAndInsuranceEvent(studentCurricularPlan, executionYear);
-
-        if (!result.isSuccess()) {
-            throw new DomainExceptionWithInvocationResult(result);
-        }
-
-    }
-
-    public void createEnrolmentOutOfPeriodEvent(final StudentCurricularPlan studentCurricularPlan,
-            final ExecutionSemester executionSemester, final Integer numberOfDelayDays) {
-        new AccountingEventsManager().createEnrolmentOutOfPeriodEvent(studentCurricularPlan, executionSemester,
-                numberOfDelayDays);
-    }
-
-    public void createInsuranceEvent(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
-        final AccountingEventsManager manager = new AccountingEventsManager();
-        final InvocationResult result = manager.createInsuranceEvent(studentCurricularPlan, executionYear);
-
-        if (!result.isSuccess()) {
-            throw new DomainExceptionWithInvocationResult(result);
-        }
     }
 
     public Collection<CurriculumLineLog> getCurriculumLineLogs(final ExecutionSemester executionSemester) {
@@ -1105,13 +1024,7 @@ public class Student extends Student_Base {
     }
 
     public boolean isValidAndActivePhdProcess(final PhdIndividualProgramProcess phdProcess) {
-        return FenixEduAcademicConfiguration.getConfiguration().getRaidesRequestInfo() && phdProcess.isProcessActive()
-                && hasValidInsuranceEvent();
-    }
-
-    public boolean hasValidInsuranceEvent() {
-        return getPerson().getInsuranceEventFor(ExecutionYear.readCurrentExecutionYear()) != null
-                && !getPerson().getInsuranceEventFor(ExecutionYear.readCurrentExecutionYear()).isCancelled();
+        return FenixEduAcademicConfiguration.getConfiguration().getRaidesRequestInfo() && phdProcess.isProcessActive();
     }
 
     public List<PersonalInformationBean> getPersonalInformationsWithMissingInformation() {

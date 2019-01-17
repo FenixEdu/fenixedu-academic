@@ -33,13 +33,10 @@ import java.util.stream.Stream;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.Account;
-import org.fenixedu.academic.domain.accounting.AccountType;
 import org.fenixedu.academic.domain.contacts.EmailAddress;
 import org.fenixedu.academic.domain.contacts.MobilePhone;
 import org.fenixedu.academic.domain.contacts.PartyContact;
@@ -49,9 +46,9 @@ import org.fenixedu.academic.domain.contacts.PhysicalAddress;
 import org.fenixedu.academic.domain.contacts.PhysicalAddressData;
 import org.fenixedu.academic.domain.contacts.WebAddress;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.StringNormalizer;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 
 public abstract class Party extends Party_Base implements Comparable<Party> {
@@ -107,8 +104,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     public Party() {
         super();
         setRootDomainObject(Bennu.getInstance());
-        createAccount(AccountType.INTERNAL);
-        createAccount(AccountType.EXTERNAL);
     }
 
     @Deprecated
@@ -131,17 +126,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         super.setNationality(country);
     }
 
-    public Account createAccount(AccountType accountType) {
-        checkAccountsFor(accountType);
-        return new Account(accountType, this);
-    }
-
-    private void checkAccountsFor(AccountType accountType) {
-        if (getAccountBy(accountType) != null) {
-            throw new DomainException("error.party.accounts.accountType.already.exist");
-        }
-    }
-
     @SuppressWarnings("unchecked")
     public static <T extends Party> Set<T> getPartysSet(Class<T> input) {
         Set<T> partySet = new HashSet<T>();
@@ -153,23 +137,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         }
 
         return partySet;
-    }
-
-    public Account getAccountBy(AccountType accountType) {
-        for (final Account account : getAccountsSet()) {
-            if (account.getAccountType() == accountType) {
-                return account;
-            }
-        }
-        return null;
-    }
-
-    public Account getInternalAccount() {
-        return getAccountBy(AccountType.INTERNAL);
-    }
-
-    public Account getExternalAccount() {
-        return getAccountBy(AccountType.EXTERNAL);
     }
 
     public PartyTypeEnum getType() {
@@ -430,9 +397,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     protected void delete() {
         DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
 
-        for (; !getAccountsSet().isEmpty(); getAccountsSet().iterator().next().delete()) {
-            ;
-        }
         for (; !getPartyContactsSet().isEmpty(); getPartyContactsSet().iterator().next().deleteWithoutCheckRules()) {
             ;
         }
@@ -451,15 +415,15 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     public static Party readByContributorNumber(String contributorNumber) {
         return PartySocialSecurityNumber.readPartyBySocialSecurityNumber(contributorNumber);
     }
-    
+
     public Country getFiscalCountry() {
         return getPartySocialSecurityNumber() != null ? getPartySocialSecurityNumber().getFiscalCountry() : null;
     }
-    
+
     public void setFiscalCountry(final Country value) {
         throw new RuntimeException("use editSocialSecurityNumber");
     }
-    
+
     public String getSocialSecurityNumber() {
         return getPartySocialSecurityNumber() != null ? getPartySocialSecurityNumber().getSocialSecurityNumber() : null;
     }
@@ -572,7 +536,8 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return false;
     }
 
-    public List<? extends PartyContact> getAllPartyContacts(final Class<? extends PartyContact> clazz, final PartyContactType type) {
+    public List<? extends PartyContact> getAllPartyContacts(final Class<? extends PartyContact> clazz,
+            final PartyContactType type) {
         final List<PartyContact> result = new ArrayList<PartyContact>();
         for (final PartyContact contact : getPartyContactsSet()) {
             if (clazz.isAssignableFrom(contact.getClass()) && (type == null || contact.getType() == type)) {
@@ -589,7 +554,8 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public <T extends PartyContact> Stream<T> getPartyContactStream(final Class<T> clazz, final PartyContactType type) {
         final Stream<PartyContact> stream = getPartyContactsSet().stream();
-        return (Stream) stream.filter(c -> clazz.isAssignableFrom(c.getClass()) && (type == null || c.getType() == type) && c.isActiveAndValid());
+        return (Stream) stream.filter(
+                c -> clazz.isAssignableFrom(c.getClass()) && (type == null || c.getType() == type) && c.isActiveAndValid());
     }
 
     public List<? extends PartyContact> getPartyContacts(final Class<? extends PartyContact> clazz, final PartyContactType type) {
@@ -884,7 +850,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     /**
-     * @deprecated  {@link getDefaultMobilePhoneNumber}
+     * @deprecated {@link getDefaultMobilePhoneNumber}
      */
     @Deprecated
     public String getMobile() {
@@ -892,7 +858,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     /**
-     * @deprecated  {@link setDefaultMobilePhoneNumber}
+     * @deprecated {@link setDefaultMobilePhoneNumber}
      */
     @Deprecated
     public void setMobile(String mobile) {
@@ -907,7 +873,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     /**
-     * @deprecated  Use {@link getEmailAddressStream} instead
+     * @deprecated Use {@link getEmailAddressStream} instead
      */
     @Deprecated
     public List<EmailAddress> getEmailAddresses() {
@@ -989,7 +955,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     /**
-     * @deprecated  {@link #getDefaultEmailAddressValue()}
+     * @deprecated {@link #getDefaultEmailAddressValue()}
      */
     @Deprecated
     public String getEmail() {

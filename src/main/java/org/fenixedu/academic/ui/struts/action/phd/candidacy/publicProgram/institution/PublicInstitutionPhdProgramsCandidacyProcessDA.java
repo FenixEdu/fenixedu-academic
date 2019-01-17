@@ -404,7 +404,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
     private boolean validateProcessDocuments(final HttpServletRequest request, final PhdIndividualProgramProcess process) {
         boolean result = true;
 
-        boolean hasPaymentFees = process.getCandidacyProcess().hasPaymentCodeToPay();
+        boolean hasPaymentFees = false;
         request.setAttribute("hasPaymentFees", hasPaymentFees);
         int totalDocuments = 5; //with payment fees
         if (!hasPaymentFees) {
@@ -675,7 +675,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 
         request.setAttribute("candidacyBean", bean);
         request.setAttribute("candidacyProcessDocuments", process.getLatestDocumentVersions());
-        request.setAttribute("hasPaymentFees", process.hasPaymentCodeToPay());
+        request.setAttribute("hasPaymentFees", false);
 
         final PhdProgramDocumentUploadBean uploadBean = new PhdProgramDocumentUploadBean();
         uploadBean.setIndividualProgramProcess(process.getIndividualProgramProcess());

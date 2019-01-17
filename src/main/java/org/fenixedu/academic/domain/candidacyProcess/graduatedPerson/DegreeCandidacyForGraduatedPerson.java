@@ -28,7 +28,6 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.events.candidacy.DegreeCandidacyForGraduatedPersonEvent;
 import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcess;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcessBean;
@@ -62,13 +61,6 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
         getIndividualCandidacySeriesGradeSet().add(newSCICSeriesGrade);
         setSelectedDegree(bean.getSelectedDegree());
 
-        /*
-         * 06/04/2009 - The candidacy may not be associated with a person. In
-         * this case we will not create an Event
-         */
-        if (bean.getInternalPersonCandidacy()) {
-            createDebt(person);
-        }
     }
 
     @Override
@@ -112,11 +104,6 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
         if (precedentDegreeInformation == null) {
             throw new DomainException("error.DegreeCandidacyForGraduatedPerson.invalid.precedentDegreeInformation");
         }
-    }
-
-    @Override
-    protected void createDebt(final Person person) {
-        new DegreeCandidacyForGraduatedPersonEvent(this, person);
     }
 
     @Override
@@ -191,8 +178,8 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 
         Formatter formatter = new Formatter(result);
 
-        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.CANDIDATE, "label.process.id"), getCandidacyProcess()
-                .getProcessCode());
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.CANDIDATE, "label.process.id"),
+                getCandidacyProcess().getProcessCode());
         PrecedentDegreeInformation precedentDegreeInformation = getCandidacyProcess().getPrecedentDegreeInformation();
         formatter.format("%s: %s\n",
                 BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.previous.degree"),
@@ -208,8 +195,7 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
                 getAffinity() != null ? getAffinity() : BigDecimal.ZERO);
         formatter.format("%s: %d\n", BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.degreeNature"),
                 getDegreeNature() != null ? getDegreeNature() : 0);
-        formatter.format("%s: %f\n",
-                BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.candidacyGrade"),
+        formatter.format("%s: %f\n", BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.candidacyGrade"),
                 getCandidacyGrade() != null ? getCandidacyGrade() : BigDecimal.ZERO);
         formatter.close();
     }

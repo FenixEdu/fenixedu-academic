@@ -35,9 +35,6 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Locality;
 import org.fenixedu.academic.domain.OptionalEnrolment;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.PostingRule;
-import org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
-import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
@@ -45,7 +42,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdDocumentRequest;
-import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequestSituationType;
 import org.fenixedu.academic.domain.serviceRequests.RegistrationAcademicServiceRequest;
 import org.fenixedu.academic.domain.serviceRequests.Under23TransportsDeclarationRequest;
@@ -66,7 +62,6 @@ import org.fenixedu.academic.report.FenixReport;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.FenixStringTools;
 import org.fenixedu.academic.util.HtmlToTextConverterUtil;
-import org.fenixedu.academic.util.Money;
 import org.fenixedu.academic.util.StringFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -83,8 +78,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
     static final protected int SUFFIX_LENGTH = 12;
 
-    static final protected String[] identifiers = { "i) ", "ii) ", "iii) ", "iv) ", "v) ", "vi) ", "vii) ", "viii) ", "ix) ",
-            "x) " };
+    static final protected String[] identifiers =
+            { "i) ", "ii) ", "iii) ", "iv) ", "v) ", "vi) ", "vii) ", "viii) ", "ix) ", "x) " };
 
     static final protected String LINE_BREAK = "\n";
 
@@ -145,21 +140,21 @@ public class AdministrativeOfficeDocument extends FenixReport {
             case COURSE_LOAD:
                 return Collections.<T> singletonList((T) new CourseLoadRequestDocument((CourseLoadRequest) documentRequest));
             case EXTERNAL_COURSE_LOAD:
-                return Collections.<T> singletonList((T) new ExternalCourseLoadRequestDocument(
-                        (ExternalCourseLoadRequest) documentRequest));
+                return Collections.<T> singletonList(
+                        (T) new ExternalCourseLoadRequestDocument((ExternalCourseLoadRequest) documentRequest));
             case PROGRAM_CERTIFICATE:
-                return Collections.<T> singletonList((T) new ProgramCertificateRequestDocument(
-                        (ProgramCertificateRequest) documentRequest));
+                return Collections.<T> singletonList(
+                        (T) new ProgramCertificateRequestDocument((ProgramCertificateRequest) documentRequest));
             case EXTERNAL_PROGRAM_CERTIFICATE:
-                return Collections.<T> singletonList((T) new ExternalProgramCertificateRequestDocument(
-                        (ExternalProgramCertificateRequest) documentRequest));
+                return Collections.<T> singletonList(
+                        (T) new ExternalProgramCertificateRequestDocument((ExternalProgramCertificateRequest) documentRequest));
             case EXTRA_CURRICULAR_CERTIFICATE:
                 return Collections.<T> singletonList((T) new ExtraCurricularCertificateRequestDocument(documentRequest));
             case STANDALONE_ENROLMENT_CERTIFICATE:
                 return Collections.<T> singletonList((T) new StandaloneEnrolmentCertificateRequestDocument(documentRequest));
             case UNDER_23_TRANSPORTS_REQUEST:
-                return Collections.<T> singletonList((T) new Under23TransportsDeclarationDocument(
-                        (Under23TransportsDeclarationRequest) documentRequest));
+                return Collections.<T> singletonList(
+                        (T) new Under23TransportsDeclarationDocument((Under23TransportsDeclarationRequest) documentRequest));
             default:
                 return Collections.<T> singletonList((T) new AdministrativeOfficeDocument(documentRequest));
             }
@@ -236,10 +231,6 @@ public class AdministrativeOfficeDocument extends FenixReport {
         addParameter("documentRequest", getDocumentRequest());
         addParameter("registration", getRegistration());
 
-        if (showPriceFields() && !((AcademicServiceRequest) getDocumentRequest()).isFree()) {
-            addPriceFields();
-        }
-
         addIntroParameters();
         setDocumentTitle();
         setPersonFields();
@@ -262,44 +253,9 @@ public class AdministrativeOfficeDocument extends FenixReport {
     protected void newFillReport() {
     }
 
-    protected boolean showPriceFields() {
-        return getDocumentRequest().isCertificate() && getDocumentRequest().getEventType() != null;
-    }
-
-    protected void addPriceFields() {
-        final CertificateRequest certificateRequest = (CertificateRequest) getDocumentRequest();
-        final CertificateRequestPR certificateRequestPR = (CertificateRequestPR) getPostingRule();
-
-        final Money amountPerPage = certificateRequestPR != null ? certificateRequestPR.getAmountPerPage() : Money.ZERO;
-        final Money baseAmountPlusAmountForUnits =
-                certificateRequestPR != null ? certificateRequestPR.getBaseAmount().add(
-                        certificateRequestPR.getAmountPerUnit().multiply(
-                                BigDecimal.valueOf(certificateRequest.getNumberOfUnits()))) : Money.ZERO;
-        final Money urgencyAmount =
-                certificateRequest.getUrgentRequest() && certificateRequestPR != null ? certificateRequestPR.getBaseAmount() : Money.ZERO;
-        addParameter("printed",
-                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.certificate.printingPriceLabel"));
-        addParameter("printPriceLabel",
-                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.certificate.issuingPriceLabel"));
-        addParameter("urgency",
-                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.certificate.fastDeliveryPriceLabel"));
-        addParameter("total",
-                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.certificate.totalsPriceLabel"));
-        addParameter("amountPerPage", amountPerPage);
-        addParameter("baseAmountPlusAmountForUnits", baseAmountPlusAmountForUnits);
-        addParameter("urgencyAmount", urgencyAmount);
-        addParameter("printPriceFields", printPriceParameters(certificateRequest));
-    }
-
-    final protected PostingRule getPostingRule() {
-        final AdministrativeOfficeServiceAgreementTemplate serviceAgreementTemplate =
-                getDocumentRequest().getAdministrativeOffice().getServiceAgreementTemplate();
-        return serviceAgreementTemplate.findPostingRuleByEventType(getDocumentRequest().getEventType());
-    }
-
     final protected boolean printPriceParameters(final CertificateRequest certificateRequest) {
         return certificateRequest.getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.PROCESSING
-                && !certificateRequest.isFree() || certificateRequest.getEvent() != null;
+                && !certificateRequest.isFree();
     }
 
     protected void addIntroParameters() {
@@ -365,9 +321,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
         final String parishOfBirth =
                 prettyPrint ? StringFormatter.prettyPrint(person.getParishOfBirth()) : person.getParishOfBirth();
-        final String districtSubdivision =
-                prettyPrint ? StringFormatter.prettyPrint(person.getDistrictSubdivisionOfBirth()) : person
-                        .getDistrictSubdivisionOfBirth();
+        final String districtSubdivision = prettyPrint ? StringFormatter
+                .prettyPrint(person.getDistrictSubdivisionOfBirth()) : person.getDistrictSubdivisionOfBirth();
 
         result.append(parishOfBirth);
         if (!parishOfBirth.equals(districtSubdivision)) {
@@ -437,9 +392,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
         if (mls == null) {
             return EMPTY_STR;
         }
-        final String content =
-                mls.getContent(language) != null && !StringUtils.isEmpty(mls.getContent(language)) ? mls.getContent(language) : mls
-                        .getContent();
+        final String content = mls.getContent(language) != null && !StringUtils.isEmpty(mls.getContent(language)) ? mls
+                .getContent(language) : mls.getContent();
         return content;
         // return convert(content);
     }
@@ -499,12 +453,12 @@ public class AdministrativeOfficeDocument extends FenixReport {
             final StringBuilder unit = new StringBuilder();
 
             unit.append(academicUnitId.getValue());
-            unit.append(SINGLE_SPACE).append(
-                    BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "documents.external.curricular.courses.one"));
+            unit.append(SINGLE_SPACE)
+                    .append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "documents.external.curricular.courses.one"));
             unit.append(SINGLE_SPACE).append(getMLSTextContent(academicUnitId.getKey().getPartyName()).toUpperCase());
             if (mobilityProgram != null) {
-                unit.append(SINGLE_SPACE).append(
-                        BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "documents.external.curricular.courses.two"));
+                unit.append(SINGLE_SPACE)
+                        .append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "documents.external.curricular.courses.two"));
                 unit.append(SINGLE_SPACE).append(mobilityProgram.getDescription(getLocale()).toUpperCase());
             }
 
@@ -522,8 +476,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
             getCreditsInfo(result, entry);
         }
         result.append(entry.getGradeValue());
-        result.append(StringUtils.rightPad("(" + BundleUtil.getString(Bundle.ENUMERATION, getLocale(), entry.getGradeValue())
-                + ")", SUFFIX_LENGTH, ' '));
+        result.append(StringUtils.rightPad(
+                "(" + BundleUtil.getString(Bundle.ENUMERATION, getLocale(), entry.getGradeValue()) + ")", SUFFIX_LENGTH, ' '));
 
         result.append(SINGLE_SPACE);
         final String in = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.in");
@@ -557,7 +511,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
         addParameter("documentNumber", MessageFormat.format(stringTemplate, documentRequest.getServiceRequestNumberYear()));
         addParameter("checked",
                 BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.irs.declaration.checked"));
-        addParameter("page", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.footer.page"));
+        addParameter("page",
+                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.footer.page"));
         addParameter("pageOf",
                 BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.footer.pageOf"));
     }

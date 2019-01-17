@@ -71,10 +71,6 @@ import org.fenixedu.academic.domain.WrittenEvaluationEnrolment;
 import org.fenixedu.academic.domain.WrittenTest;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
-import org.fenixedu.academic.domain.accounting.events.EnrolmentOutOfPeriodEvent;
-import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
-import org.fenixedu.academic.domain.accounting.events.insurance.InsuranceEvent;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOfficeType;
 import org.fenixedu.academic.domain.candidacy.IngressionType;
@@ -325,8 +321,6 @@ public class Registration extends Registration_Base {
     @Deprecated
     public void delete() {
 
-        checkRulesToDelete();
-
         for (; !getRegistrationStatesSet().isEmpty(); getRegistrationStatesSet().iterator().next().delete()) {
             ;
         }
@@ -385,12 +379,6 @@ public class Registration extends Registration_Base {
         getShiftsSet().clear();
 
         super.deleteDomainObject();
-    }
-
-    private void checkRulesToDelete() {
-        if (getDfaRegistrationEventsSet().size() > 0) {
-            throw new DomainException("error.student.Registration.cannot.delete.because.is.associated.to.dfa.registration.event");
-        }
     }
 
     public StudentCurricularPlan getActiveStudentCurricularPlan() {
@@ -2506,78 +2494,6 @@ public class Registration extends Registration_Base {
         return getLastDegreeCurricularPlan().getDegree();
     }
 
-    private boolean hasAnyNotPayedGratuityEvents() {
-        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-            if (studentCurricularPlan.hasAnyNotPayedGratuityEvents()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private boolean hasAnyNotPayedInsuranceEvents() {
-        for (final InsuranceEvent event : getPerson().getNotCancelledInsuranceEvents()) {
-            if (event.isInDebt()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private boolean hasAnyNotPayedAdministrativeOfficeFeeAndInsuranceEvents(final AdministrativeOffice office) {
-        for (final AdministrativeOfficeFeeAndInsuranceEvent event : getPerson()
-                .getNotCancelledAdministrativeOfficeFeeAndInsuranceEvents(office)) {
-            if (event.isInDebt()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private boolean hasAnyNotPayedGratuityEventUntil(final ExecutionYear executionYear) {
-        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-            if (studentCurricularPlan.hasAnyNotPayedGratuityEventsUntil(executionYear)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean hasAnyNotPayedInsuranceEventUntil(final ExecutionYear executionYear) {
-        for (final InsuranceEvent event : getPerson().getNotCancelledInsuranceEventsUntil(executionYear)) {
-            if (event.isInDebt()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private boolean hasAnyNotPayedAdministrativeOfficeFeeAndInsuranceEventUntil(final AdministrativeOffice office,
-            final ExecutionYear executionYear) {
-        for (final AdministrativeOfficeFeeAndInsuranceEvent event : getPerson()
-                .getNotCancelledAdministrativeOfficeFeeAndInsuranceEventsUntil(office, executionYear)) {
-            if (event.isInDebt()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public boolean hasAnyNotPayedGratuityEventsForPreviousYears(final ExecutionYear limitExecutionYear) {
-        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-            if (studentCurricularPlan.hasAnyNotPayedGratuityEventsForPreviousYears(limitExecutionYear)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     final public boolean hasToPayGratuityOrInsurance() {
         return getInterruptedStudies() ? false : getRegistrationProtocol().isToPayGratuity();
     }
@@ -2812,39 +2728,6 @@ public class Registration extends Registration_Base {
         super.setStudentCandidacy(null);
     }
 
-    final public Boolean getPayedTuition() {
-        return !hasAnyNotPayedGratuityEventsForPreviousYears(ExecutionYear.readCurrentExecutionYear());
-    }
-
-    final public boolean getHasGratuityDebtsCurrently() {
-        return hasGratuityDebtsCurrently();
-    }
-
-    final public boolean hasGratuityDebtsCurrently() {
-        return hasAnyNotPayedGratuityEvents();
-    }
-
-    final public boolean hasInsuranceDebtsCurrently() {
-        return hasAnyNotPayedInsuranceEvents();
-    }
-
-    final public boolean hasAdministrativeOfficeFeeAndInsuranceDebtsCurrently(final AdministrativeOffice administrativeOffice) {
-        return hasAnyNotPayedAdministrativeOfficeFeeAndInsuranceEvents(administrativeOffice);
-    }
-
-    final public boolean hasGratuityDebts(final ExecutionYear executionYear) {
-        return hasAnyNotPayedGratuityEventUntil(executionYear);
-    }
-
-    final public boolean hasInsuranceDebts(final ExecutionYear executionYear) {
-        return hasAnyNotPayedInsuranceEventUntil(executionYear);
-    }
-
-    final public boolean hasAdministrativeOfficeFeeAndInsuranceDebts(final AdministrativeOffice office,
-            final ExecutionYear executionYear) {
-        return hasAnyNotPayedAdministrativeOfficeFeeAndInsuranceEventUntil(office, executionYear);
-    }
-
     final public Attends readAttendByExecutionCourse(final ExecutionCourse executionCourse) {
         return getStudent().readAttendByExecutionCourse(executionCourse);
     }
@@ -2869,15 +2752,6 @@ public class Registration extends Registration_Base {
             new ExternalRegistrationData(this);
         }
 
-    }
-
-    final public boolean hasGratuityEvent(final ExecutionYear executionYear, final Class<? extends GratuityEvent> type) {
-        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-            if (studentCurricularPlan.hasGratuityEvent(executionYear, type)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     final public boolean hasDissertationThesis() {
@@ -3124,18 +2998,6 @@ public class Registration extends Registration_Base {
             }
         }
         return res;
-    }
-
-    public boolean containsEnrolmentOutOfPeriodEventFor(final ExecutionSemester executionSemester) {
-        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-            for (final EnrolmentOutOfPeriodEvent event : studentCurricularPlan.getEnrolmentOutOfPeriodEventsSet()) {
-                if (event.getExecutionPeriod() == executionSemester) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
     }
 
     public boolean hasStartedBetween(final ExecutionYear firstExecutionYear, final ExecutionYear finalExecutionYear) {

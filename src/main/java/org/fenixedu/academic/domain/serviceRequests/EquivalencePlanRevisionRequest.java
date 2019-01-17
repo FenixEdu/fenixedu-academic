@@ -19,7 +19,6 @@
 package org.fenixedu.academic.domain.serviceRequests;
 
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
@@ -64,11 +63,6 @@ public class EquivalencePlanRevisionRequest extends EquivalencePlanRevisionReque
     @Override
     public AcademicServiceRequestType getAcademicServiceRequestType() {
         return AcademicServiceRequestType.REVISION_EQUIVALENCE_PLAN;
-    }
-
-    @Override
-    public EventType getEventType() {
-        return null;
     }
 
     @Override

@@ -1591,32 +1591,6 @@
 	<slot name="rawGrade.value" key="label.rawGrade"/>
 </schema>
 
-<schema name="AccountingEventCreateBean.editExecutionYear" type="org.fenixedu.academic.dto.accounting.events.AccountingEventCreateBean" bundle="APPLICATION_RESOURCES">
-	<slot name="executionYear" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass"
-			value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
-		<property name="format" value="${year}" />
-	</slot>			
-</schema>
-
-<schema name="EnrolmentOutOfPeriodEventCreateBean.edit" type="org.fenixedu.academic.dto.accounting.events.EnrolmentOutOfPeriodEventCreateBean" bundle="APPLICATION_RESOURCES">
-	<slot name="executionYear" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass"
-			value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
-		<property name="format" value="${year}" />
-		<property name="destination" value="executionYearPostBack"/>
-	</slot>
-	<slot name="executionPeriod" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass"
-			value="org.fenixedu.academic.ui.renderers.providers.accounting.events.ExecutionPeriodsForAccountingEventCreationProvider" />
-		<property name="format" value="${name}" />
-	</slot>
-	<slot name="numberOfDelayDays" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="4" />
-		<property name="maxLength" value="4" />
-	</slot>
-</schema>
-
 <schema name="AddAttendsBean" type="org.fenixedu.academic.dto.AddAttendsBean" bundle="APPLICATION_RESOURCES">
 	<slot name="executionPeriod" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionPeriodsReverseOrderProvider" />

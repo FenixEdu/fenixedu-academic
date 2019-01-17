@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.domain.serviceRequests.documentRequests;
 
-import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
 
@@ -54,11 +53,6 @@ public class SchoolRegistrationCertificateRequest extends SchoolRegistrationCert
     @Override
     final public String getDocumentTemplateKey() {
         return getClass().getName();
-    }
-
-    @Override
-    final public EventType getEventType() {
-        return EventType.SCHOOL_REGISTRATION_CERTIFICATE_REQUEST;
     }
 
     @Override

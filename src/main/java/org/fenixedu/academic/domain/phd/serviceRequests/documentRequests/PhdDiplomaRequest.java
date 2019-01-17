@@ -21,8 +21,6 @@ package org.fenixedu.academic.domain.phd.serviceRequests.documentRequests;
 import java.util.List;
 import java.util.Locale;
 
-import org.fenixedu.academic.domain.accounting.EventType;
-import org.fenixedu.academic.domain.accounting.events.serviceRequests.PhdDiplomaRequestEvent;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.documents.DocumentRequestGeneratedDocument;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -139,11 +137,6 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
     }
 
     @Override
-    public EventType getEventType() {
-        return EventType.BOLONHA_PHD_DIPLOMA_REQUEST;
-    }
-
-    @Override
     public boolean hasPersonalInfo() {
         return true;
     }
@@ -239,9 +232,9 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
 
     @Override
     public String getReceivedActionLink() {
-        return String
-                .format("/phdAcademicServiceRequestManagement.do?method=prepareReceiveOnRectorate&amp;phdAcademicServiceRequestId=%s&amp;batchOid=%s",
-                        getExternalId(), getRectorateSubmissionBatch().getExternalId());
+        return String.format(
+                "/phdAcademicServiceRequestManagement.do?method=prepareReceiveOnRectorate&amp;phdAcademicServiceRequestId=%s&amp;batchOid=%s",
+                getExternalId(), getRectorateSubmissionBatch().getExternalId());
     }
 
     @Override

@@ -25,11 +25,9 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.ApprovementCertificateRequest;
-import org.fenixedu.academic.domain.serviceRequests.documentRequests.CertificateRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.curriculum.Curriculum;
@@ -38,7 +36,6 @@ import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import org.fenixedu.academic.util.FenixStringTools;
-import org.fenixedu.academic.util.Money;
 
 public class ApprovementCertificate extends AdministrativeOfficeDocument {
 
@@ -92,8 +89,8 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
         entries.clear();
         entries.addAll(request.getPropaedeuticEntriesToReport());
         if (!entries.isEmpty()) {
-            reportRemainingEntries(res, entries, ids, registration.getLastStudentCurricularPlan()
-                    .getPropaedeuticCurriculumGroup());
+            reportRemainingEntries(res, entries, ids,
+                    registration.getLastStudentCurricularPlan().getPropaedeuticCurriculumGroup());
         }
 
         if (getDocumentRequest().isToShowCredits()) {
@@ -173,26 +170,8 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 
     final private void reportEntry(final StringBuilder result, final ICurriculumEntry entry,
             final Map<Unit, String> academicUnitIdentifiers, final ExecutionYear executionYear) {
-        result.append(
-                FenixStringTools.multipleLineRightPadWithSuffix(getCurriculumEntryName(academicUnitIdentifiers, entry),
-                        LINE_LENGTH, END_CHAR, getCreditsAndGradeInfo(entry, executionYear))).append(LINE_BREAK);
-    }
-
-    @Override
-    protected void addPriceFields() {
-        final CertificateRequest certificateRequest = getDocumentRequest();
-        final CertificateRequestPR certificateRequestPR = (CertificateRequestPR) getPostingRule();
-
-        final Money amountPerPage = certificateRequestPR.getAmountPerPage();
-        final Money baseAmountPlusAmountForUnits =
-                certificateRequestPR.getBaseAmount().add(
-                        certificateRequestPR.getAmountForUnits(certificateRequest.getNumberOfUnits()));
-        final Money urgencyAmount = certificateRequest.getUrgentRequest() ? certificateRequestPR.getBaseAmount() : Money.ZERO;
-
-        addParameter("amountPerPage", amountPerPage);
-        addParameter("baseAmountPlusAmountForUnits", baseAmountPlusAmountForUnits);
-        addParameter("urgencyAmount", urgencyAmount);
-        addParameter("printPriceFields", printPriceParameters(certificateRequest));
+        result.append(FenixStringTools.multipleLineRightPadWithSuffix(getCurriculumEntryName(academicUnitIdentifiers, entry),
+                LINE_LENGTH, END_CHAR, getCreditsAndGradeInfo(entry, executionYear))).append(LINE_BREAK);
     }
 
 }

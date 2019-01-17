@@ -56,7 +56,6 @@ public class ReportStudentsUTLCandidatesForFirstYear extends ReportStudentsUTLCa
                         studentLine.getCountNumberOfEnrolmentsYearsSinceRegistrationStart();
                 Integer numberOfDegreeCurricularYears = studentLine.getNumberOfDegreeCurricularYears();
                 Double numberOfEnrolledECTS = studentLine.getNumberOfEnrolledECTS();
-                Money gratuityAmount = studentLine.getGratuityAmount();
                 Integer numberOfMonthsExecutionYear = studentLine.getNumberOfMonthsExecutionYear();
                 String firstMonthOfPayment = studentLine.getFirstMonthOfPayment();
                 Boolean ownerOfCETQualification = studentLine.getOwnerOfCETQualification();
@@ -81,8 +80,6 @@ public class ReportStudentsUTLCandidatesForFirstYear extends ReportStudentsUTLCa
                 addCellValue(row, onNullEmptyString(degreeTypeName), 9);
                 addCellValue(row, "", 10);
                 addCellValue(row, onNullEmptyString(firstEnrolmentOnCurrentExecutionYear), 11);
-                addCellValue(row,
-                        onNullEmptyString(gratuityAmount != null ? gratuityAmount.toPlainString().replace('.', ',') : ""), 12);
                 addCellValue(row, onNullEmptyString(numberOfMonthsExecutionYear), 13);
                 addCellValue(row, onNullEmptyString(firstMonthOfPayment), 14);
                 addCellValue(row, onNullEmptyString(ownerOfCETQualification), 15);

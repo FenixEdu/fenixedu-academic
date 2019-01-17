@@ -82,11 +82,6 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
     }
 
     @Override
-    protected void createDebt(final Person person) {
-
-    }
-
-    @Override
     protected void checkParameters(final Person person, final IndividualCandidacyProcess process,
             final IndividualCandidacyProcessBean bean) {
         MobilityIndividualApplicationProcess erasmusIndividualCandidacyProcess = (MobilityIndividualApplicationProcess) process;
@@ -183,8 +178,9 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
 
     boolean hasProcessWithAcceptNotificationAtDate(final DateTime dateTime) {
         return getMostRecentApprovedLearningAgreement() == null
-                || (getMostRecentApprovedLearningAgreement().getMostRecentSentEmailAcceptedStudentAction() != null && getMostRecentApprovedLearningAgreement()
-                        .getMostRecentSentEmailAcceptedStudentAction().getWhenOccured().isBefore(dateTime));
+                || (getMostRecentApprovedLearningAgreement().getMostRecentSentEmailAcceptedStudentAction() != null
+                        && getMostRecentApprovedLearningAgreement().getMostRecentSentEmailAcceptedStudentAction().getWhenOccured()
+                                .isBefore(dateTime));
     }
 
     public List<ApprovedLearningAgreementDocumentFile> getActiveApprovedLearningAgreements() {
@@ -237,13 +233,12 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
     protected Registration createRegistration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
             final CycleType cycleType, final IngressionType ingressionType) {
 
-        final Registration registration =
-                new Registration(person, degreeCurricularPlan, getMobilityProgram().getRegistrationProtocol(), cycleType,
-                        ((ExecutionYear) getCandidacyExecutionInterval()));
+        final Registration registration = new Registration(person, degreeCurricularPlan,
+                getMobilityProgram().getRegistrationProtocol(), cycleType, ((ExecutionYear) getCandidacyExecutionInterval()));
 
         // Standalone group will be necessary for minor subjects
-        NoCourseGroupCurriculumGroup.create(NoCourseGroupCurriculumGroupType.STANDALONE, registration
-                .getActiveStudentCurricularPlan().getRoot());
+        NoCourseGroupCurriculumGroup.create(NoCourseGroupCurriculumGroupType.STANDALONE,
+                registration.getActiveStudentCurricularPlan().getRoot());
 
         registration.editStartDates(getStartDate(), registration.getHomologationDate(), registration.getStudiesStartDate());
         setRegistration(registration);

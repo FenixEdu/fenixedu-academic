@@ -30,7 +30,6 @@ import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.accounting.events.AccountingEventsManager;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfEctsInStandaloneCurriculumGroup;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
@@ -125,8 +124,8 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
 
     private void addEnroledFromStudentCurricularPlan() {
         for (final ExecutionSemester semester : enrolmentContext.getExecutionSemestersToEvaluate()) {
-            for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : getStudentCurricularPlan().getDegreeModulesToEvaluate(
-                    semester)) {
+            for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : getStudentCurricularPlan()
+                    .getDegreeModulesToEvaluate(semester)) {
                 enrolmentContext.addDegreeModuleToEvaluate(degreeModuleToEvaluate);
             }
         }
@@ -167,8 +166,8 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
         }
 
         if (isEmptyDegree()) {
-            return actualResult.and(new MaximumNumberOfEctsInStandaloneCurriculumGroup(getStandaloneCurriculumGroup()).evaluate(
-                    getEnroledCurriculumGroup(), enrolmentContext));
+            return actualResult.and(new MaximumNumberOfEctsInStandaloneCurriculumGroup(getStandaloneCurriculumGroup())
+                    .evaluate(getEnroledCurriculumGroup(), enrolmentContext));
         } else {
             return actualResult;
         }
@@ -196,18 +195,13 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
                     final CurricularCourse curricularCourse = (CurricularCourse) degreeModuleToEvaluate.getDegreeModule();
 
                     checkIDegreeModuleToEvaluate(curricularCourse);
-                    final Enrolment enrolment =
-                            new Enrolment(getStudentCurricularPlan(), degreeModuleToEvaluate.getCurriculumGroup(),
-                                    curricularCourse, getExecutionSemester(), EnrollmentCondition.VALIDATED,
-                                    getResponsiblePerson().getUsername());
+                    final Enrolment enrolment = new Enrolment(getStudentCurricularPlan(),
+                            degreeModuleToEvaluate.getCurriculumGroup(), curricularCourse, getExecutionSemester(),
+                            EnrollmentCondition.VALIDATED, getResponsiblePerson().getUsername());
 
                     enrolmentsToNotify.add(enrolment);
                 }
             }
-        }
-
-        if (getStudentCurricularPlan().getRegistration().getRegistrationProtocol().isToPayGratuity()) {
-            new AccountingEventsManager().createStandaloneEnrolmentGratuityEvent(getStudentCurricularPlan(), getExecutionYear());
         }
 
         for (final Enrolment enrolment : enrolmentsToNotify) {
@@ -223,7 +217,7 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
         for (final CurriculumModule curriculumModule : enrolmentContext.getToRemove()) {
             if (curriculumModule.isLeaf()) {
                 TreasuryBridgeAPIFactory.implementation().standaloneUnenrolment((Enrolment) curriculumModule);
-                
+
                 //Signal.emit(ITreasuryBridgeAPI.STANDALONE_UNENROLMENT, new DomainObjectEvent<Enrolment>((Enrolment) curriculumModule));
                 curriculumModule.delete();
             }

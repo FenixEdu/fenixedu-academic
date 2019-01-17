@@ -28,8 +28,6 @@ import org.fenixedu.academic.domain.EntryPhase;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.PaymentCode;
-import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.candidacy.PHDProgramCandidacy;
 import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
@@ -224,14 +222,6 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
     public boolean cancelCandidacy() {
         if (!isConcluded()) {
             new CancelledCandidacySituation(this, this.getPerson());
-
-            for (PaymentCode paymentCode : getAvailablePaymentCodesSet()) {
-                AccountingEventPaymentCode accountingEventPaymentCode = (AccountingEventPaymentCode) paymentCode;
-                if (accountingEventPaymentCode.isNew() && accountingEventPaymentCode.getAccountingEvent() == null) {
-                    accountingEventPaymentCode.cancel();
-                }
-            }
-
             return true;
         }
         return false;

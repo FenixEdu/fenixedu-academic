@@ -30,7 +30,6 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.events.candidacy.Over23IndividualCandidacyEvent;
 import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacyProcess.Formation;
 import org.fenixedu.academic.domain.candidacyProcess.FormationBean;
@@ -66,18 +65,6 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 
         createFormationEntries(bean.getFormationConcludedBeanList(), bean.getFormationNonConcludedBeanList());
 
-        /*
-         * 06/04/2009 - The candidacy may not be associated with a person. In this case we will not create an Event
-         */
-
-        /*
-         * 08/05/2009 - Now all candidacies are external (even made in academic administrative office)
-         * 
-         * TODO Anil : Are other candidacies created as an external
-         */
-        if (bean.getInternalPersonCandidacy()) {
-            createDebt(person);
-        }
     }
 
     @Override
@@ -142,11 +129,6 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
         while (!getOver23IndividualCandidacyDegreeEntriesSet().isEmpty()) {
             getOver23IndividualCandidacyDegreeEntriesSet().iterator().next().delete();
         }
-    }
-
-    @Override
-    protected void createDebt(final Person person) {
-        new Over23IndividualCandidacyEvent(this, person);
     }
 
     void saveChoosedDegrees(final List<Degree> degrees) {

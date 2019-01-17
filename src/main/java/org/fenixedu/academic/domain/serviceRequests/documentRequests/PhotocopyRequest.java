@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.serviceRequests.documentRequests;
 
-import org.fenixedu.academic.domain.accounting.EventType;
-import org.fenixedu.academic.domain.accounting.events.serviceRequests.PhotocopyRequestEvent;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
@@ -34,11 +32,6 @@ public class PhotocopyRequest extends PhotocopyRequest_Base {
     public PhotocopyRequest(final RegistrationAcademicServiceRequestCreateBean bean) {
         this();
         super.init(bean);
-    }
-
-    @Override
-    public EventType getEventType() {
-        return EventType.PHOTOCOPY_REQUEST;
     }
 
     @Override

@@ -23,7 +23,6 @@ import java.util.HashSet;
 
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.IEnrolment;
-import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.MobilityProgram;
 import org.fenixedu.academic.domain.student.Registration;
@@ -138,16 +137,11 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     }
 
     @Override
-    final public EventType getEventType() {
-        return getRegistration().getRegistrationProtocol().isExempted() ? null : EventType.APPROVEMENT_CERTIFICATE_REQUEST;
-    }
-
-    @Override
     final public Integer getNumberOfUnits() {
-        if(!hasConcluded()) {
+        if (!hasConcluded()) {
             return calculateNumberOfUnits();
         }
-        
+
         return super.getNumberOfUnits() > 0 ? super.getNumberOfUnits() : calculateNumberOfUnits();
     }
 
@@ -173,7 +167,8 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
     @Override
     public boolean isToPrint() {
-        return !hasConcluded() || (super.getNumberOfUnits() != null && super.getNumberOfUnits().intValue() == calculateNumberOfUnits());
+        return !hasConcluded()
+                || (super.getNumberOfUnits() != null && super.getNumberOfUnits().intValue() == calculateNumberOfUnits());
     }
 
     final private Collection<ICurriculumEntry> getEntriesToReport(final boolean useConcluded) {
@@ -182,7 +177,8 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
         final Registration registration = getRegistration();
         ICurriculum curriculum;
         if (registration.isBolonha()) {
-            for (final CycleCurriculumGroup cycle : registration.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops()) {
+            for (final CycleCurriculumGroup cycle : registration.getLastStudentCurricularPlan()
+                    .getInternalCycleCurriculumGrops()) {
                 if (cycle.hasAnyApprovedCurriculumLines() && (useConcluded || !cycle.isConclusionProcessed())) {
                     curriculum = cycle.getCurriculum(getFilteringDate());
                     filterEntries(result, this, curriculum);
@@ -200,13 +196,13 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
         return hasConcluded() ? getRequestConclusionDate() : new DateTime();
     }
 
-    static final public void filterEntries(final Collection<ICurriculumEntry> result,
-            final ApprovementCertificateRequest request, final ICurriculum curriculum) {
+    static final public void filterEntries(final Collection<ICurriculumEntry> result, final ApprovementCertificateRequest request,
+            final ICurriculum curriculum) {
         for (final ICurriculumEntry entry : curriculum.getCurriculumEntries()) {
             if (entry instanceof Dismissal) {
                 final Dismissal dismissal = (Dismissal) entry;
-                if (dismissal.getCredits().isEquivalence() || dismissal.isCreditsDismissal()
-                        && !dismissal.getCredits().isSubstitution()) {
+                if (dismissal.getCredits().isEquivalence()
+                        || dismissal.isCreditsDismissal() && !dismissal.getCredits().isSubstitution()) {
                     continue;
                 }
             } else if (entry instanceof ExternalEnrolment && request.getIgnoreExternalEntries()) {
@@ -242,7 +238,8 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
         return result;
     }
 
-    private void reportApprovedCurriculumLines(final Collection<ICurriculumEntry> result, final Collection<CurriculumLine> lines) {
+    private void reportApprovedCurriculumLines(final Collection<ICurriculumEntry> result,
+            final Collection<CurriculumLine> lines) {
         for (final CurriculumLine line : lines) {
             if (line.isApproved()) {
                 if (line.isEnrolment()) {

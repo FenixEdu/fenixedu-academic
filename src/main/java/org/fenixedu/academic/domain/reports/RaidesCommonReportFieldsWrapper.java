@@ -145,8 +145,8 @@ public class RaidesCommonReportFieldsWrapper {
 
     public static Row reportRaidesFields(final Spreadsheet sheet, final Registration registration,
             StudentCurricularPlan studentCurricularPlan, List<Registration> registrationPath, ExecutionYear executionYear,
-            final CycleType cycleType, final boolean concluded,
-            final YearMonthDay conclusionDate, BigDecimal average, boolean graduation) {
+            final CycleType cycleType, final boolean concluded, final YearMonthDay conclusionDate, BigDecimal average,
+            boolean graduation) {
 
         final Row row = sheet.addRow();
         final Person graduate = registration.getPerson();
@@ -198,7 +198,8 @@ public class RaidesCommonReportFieldsWrapper {
         row.setCell(graduate.getGender().toString());
 
         // Data de Nascimento
-        row.setCell(graduate.getDateOfBirthYearMonthDay() != null ? graduate.getDateOfBirthYearMonthDay().toString("dd-MM-yyyy") : "n/a");
+        row.setCell(graduate.getDateOfBirthYearMonthDay() != null ? graduate.getDateOfBirthYearMonthDay()
+                .toString("dd-MM-yyyy") : "n/a");
 
         // País de Nascimento
         row.setCell(graduate.getCountryOfBirth() != null ? graduate.getCountryOfBirth().getName() : "n/a");
@@ -254,7 +255,8 @@ public class RaidesCommonReportFieldsWrapper {
         row.setCell(numberOfEnrolmentYears);
 
         // Último ano em que esteve inscrito
-        row.setCell(registration.getLastEnrolmentExecutionYear() != null ? registration.getLastEnrolmentExecutionYear().getName() : "");
+        row.setCell(registration.getLastEnrolmentExecutionYear() != null ? registration.getLastEnrolmentExecutionYear()
+                .getName() : "");
 
         // Regime de frequência curso: Tempo integral/Tempo Parcial
         row.setCell(registration.getRegimeType(executionYear) != null ? registration.getRegimeType(executionYear).getName() : "");
@@ -310,8 +312,8 @@ public class RaidesCommonReportFieldsWrapper {
         row.setCell(placingOption);
 
         // Estado Civil
-        row.setCell(personalInformationBean.getMaritalStatus() != null ? personalInformationBean.getMaritalStatus().toString() : registration
-                .getPerson().getMaritalStatus().toString());
+        row.setCell(personalInformationBean.getMaritalStatus() != null ? personalInformationBean.getMaritalStatus()
+                .toString() : registration.getPerson().getMaritalStatus().toString());
 
         // País de Residência Permanente
         if (personalInformationBean.getCountryOfResidence() != null) {
@@ -471,9 +473,8 @@ public class RaidesCommonReportFieldsWrapper {
         row.setCell(personalInformationBean.getSchoolLevel() != null ? personalInformationBean.getSchoolLevel().getName() : "");
 
         // Codigo do grau habl anterior
-        DegreeDesignation designation =
-                DegreeDesignation.readByNameAndSchoolLevel(personalInformationBean.getDegreeDesignation(),
-                        personalInformationBean.getPrecedentSchoolLevel());
+        DegreeDesignation designation = DegreeDesignation.readByNameAndSchoolLevel(personalInformationBean.getDegreeDesignation(),
+                personalInformationBean.getPrecedentSchoolLevel());
         row.setCell(designation != null ? designation.getDegreeClassification().getCode() : "");
 
         // Outro grau da habl anterior compl
@@ -509,9 +510,8 @@ public class RaidesCommonReportFieldsWrapper {
                             continue;
                         }
                     }
-                    mobilityAgreement =
-                            outboundCandidacySubmission.getSelectedCandidacy().getOutboundMobilityCandidacyContest()
-                                    .getMobilityAgreement();
+                    mobilityAgreement = outboundCandidacySubmission.getSelectedCandidacy().getOutboundMobilityCandidacyContest()
+                            .getMobilityAgreement();
                     chosenCandidacyInterval = candidacyInterval;
                 }
             }
@@ -607,8 +607,8 @@ public class RaidesCommonReportFieldsWrapper {
         RegistrationState previousYearState = null;
         RegistrationState currentYearState = null;
         for (RegistrationState state : states) {
-            if (!state.getStateDate().isAfter(
-                    executionYear.getPreviousExecutionYear().getEndDateYearMonthDay().toDateTimeAtMidnight())) {
+            if (!state.getStateDate()
+                    .isAfter(executionYear.getPreviousExecutionYear().getEndDateYearMonthDay().toDateTimeAtMidnight())) {
                 previousYearState = state;
             }
             if (!state.getStateDate().isAfter(executionYear.getEndDateYearMonthDay().toDateTimeAtMidnight())) {
@@ -630,15 +630,15 @@ public class RaidesCommonReportFieldsWrapper {
         // anterior ao que se referem os dados
         final CycleCurriculumGroup firstCycleCurriculumGroup =
                 getStudentCurricularPlan(registration, CycleType.FIRST_CYCLE).getCycle(CycleType.FIRST_CYCLE);
-        row.setCell(firstCycleCurriculumGroup != null ? printBigDecimal(firstCycleCurriculumGroup.getCurriculum(executionYear)
-                .getSumEctsCredits()) : "");
+        row.setCell(firstCycleCurriculumGroup != null ? printBigDecimal(
+                firstCycleCurriculumGroup.getCurriculum(executionYear).getSumEctsCredits()) : "");
 
         // Nº ECTS do 2º Ciclo concluídos até ao fim do ano lectivo
         // anterior ao que se referem os dados
         final CycleCurriculumGroup secondCycleCurriculumGroup =
                 getStudentCurricularPlan(registration, CycleType.SECOND_CYCLE).getCycle(CycleType.SECOND_CYCLE);
-        row.setCell(secondCycleCurriculumGroup != null && !secondCycleCurriculumGroup.isExternal() ? printBigDecimal(secondCycleCurriculumGroup
-                .getCurriculum(executionYear).getSumEctsCredits()) : "");
+        row.setCell(secondCycleCurriculumGroup != null && !secondCycleCurriculumGroup.isExternal() ? printBigDecimal(
+                secondCycleCurriculumGroup.getCurriculum(executionYear).getSumEctsCredits()) : "");
 
         // Nº ECTS do 2º Ciclo Extra primeiro ciclo concluídos até ao fim do ano
         // lectivo anterior ao que se referem os dados
@@ -693,9 +693,6 @@ public class RaidesCommonReportFieldsWrapper {
 
         // Nº ECTS equivalência/substituição/dispensa
         row.setCell(printDouble(totalCreditsDismissed));
-
-        // Tem situação de propinas no lectivo dos dados
-        row.setCell(String.valueOf(studentCurricularPlan.hasAnyGratuityEventFor(executionYear)));
 
         return row;
     }

@@ -34,16 +34,14 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.accounting.events.EnrolmentOutOfPeriodEvent;
-import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.candidacy.CandidacySituationType;
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
@@ -299,8 +297,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public void delete() throws DomainException {
 
-        checkRulesToDelete();
-
         for (; !getEnrolmentsSet().isEmpty(); getEnrolmentsSet().iterator().next().delete()) {
             ;
         }
@@ -325,12 +321,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         setRootDomainObject(null);
 
         deleteDomainObject();
-    }
-
-    private void checkRulesToDelete() {
-        if (!getGratuityEventsSet().isEmpty()) {
-            throw new DomainException("error.StudentCurricularPlan.cannot.delete.because.already.has.gratuity.events");
-        }
     }
 
     final public String print() {
@@ -1520,68 +1510,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         }
     }
 
-    final public <T extends GratuityEvent> T getGratuityEvent(final ExecutionYear executionYear,
-            final Class<? extends GratuityEvent> type) {
-        for (final GratuityEvent gratuityEvent : getGratuityEventsSet()) {
-            if (!gratuityEvent.isCancelled() && gratuityEvent.getExecutionYear() == executionYear
-                    && gratuityEvent.getClass().equals(type)) {
-                return (T) gratuityEvent;
-            }
-        }
-
-        return null;
-    }
-
-    final public boolean hasGratuityEvent(final ExecutionYear executionYear, final Class<? extends GratuityEvent> type) {
-        return getGratuityEvent(executionYear, type) != null;
-    }
-
-    final public Set<GratuityEvent> getNotPayedGratuityEvents() {
-        final Set<GratuityEvent> result = new HashSet<GratuityEvent>();
-
-        for (final GratuityEvent gratuityEvent : getGratuityEventsSet()) {
-            if (gratuityEvent.isInDebt()) {
-                result.add(gratuityEvent);
-            }
-        }
-
-        return result;
-    }
-
-    final public boolean hasAnyNotPayedGratuityEvents() {
-        for (final GratuityEvent gratuityEvent : getGratuityEventsSet()) {
-            if (gratuityEvent.isInDebt()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    final public boolean hasAnyNotPayedGratuityEventsUntil(final ExecutionYear executionYear) {
-        for (final GratuityEvent gratuityEvent : getGratuityEventsSet()) {
-            if (gratuityEvent.getExecutionYear().isBeforeOrEquals(executionYear) && gratuityEvent.isInDebt()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /*
-     * Check payed gratuity events until given execution year (exclusive)
-     */
-    final public boolean hasAnyNotPayedGratuityEventsForPreviousYears(final ExecutionYear limitExecutionYear) {
-
-        for (final GratuityEvent gratuityEvent : getGratuityEventsSet()) {
-            if (gratuityEvent.getExecutionYear().isBefore(limitExecutionYear) && gratuityEvent.isInDebt()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public int numberCompletedCoursesForSpecifiedDegrees(final Set<Degree> degrees) {
         int numberCompletedCourses = 0;
         for (final StudentCurricularPlan studentCurricularPlan : getRegistration().getStudentCurricularPlansSet()) {
@@ -2400,9 +2328,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         if (getEquivalencePlan() != null) {
             return false;
         }
-        if (!getGratuityEventsSet().isEmpty()) {
-            return false;
-        }
         if (!getNotNeedToEnrollCurricularCoursesSet().isEmpty()) {
             return false;
         }
@@ -2436,19 +2361,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public CurriculumLine getApprovedCurriculumLine(final CurricularCourse curricularCourse) {
         return getRoot().getApprovedCurriculumLine(curricularCourse);
-    }
-
-    @Override
-    public Set<EnrolmentOutOfPeriodEvent> getEnrolmentOutOfPeriodEventsSet() {
-        final Set<EnrolmentOutOfPeriodEvent> result = new HashSet<EnrolmentOutOfPeriodEvent>();
-
-        for (final EnrolmentOutOfPeriodEvent each : super.getEnrolmentOutOfPeriodEventsSet()) {
-            if (!each.isCancelled()) {
-                result.add(each);
-            }
-        }
-
-        return result;
     }
 
     public OptionalEnrolment convertEnrolmentToOptionalEnrolment(final Enrolment enrolment, final CurriculumGroup curriculumGroup,
@@ -2526,17 +2438,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public boolean isEmptyDegree() {
         return getDegreeCurricularPlan().isEmpty();
-    }
-
-    public boolean hasAnyGratuityEventFor(final ExecutionYear executionYear) {
-        for (final GratuityEvent gratuityEvent : getGratuityEventsSet()) {
-            if (gratuityEvent.isFor(executionYear)) {
-                return true;
-            }
-        }
-
-        return false;
-
     }
 
     @Atomic

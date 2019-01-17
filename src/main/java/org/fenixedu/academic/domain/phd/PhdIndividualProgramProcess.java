@@ -43,8 +43,6 @@ import org.fenixedu.academic.domain.Qualification;
 import org.fenixedu.academic.domain.QualificationBean;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
-import org.fenixedu.academic.domain.accounting.events.insurance.InsuranceEvent;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.candidacy.PersonalInformationBean;
 import org.fenixedu.academic.domain.caseHandling.Activity;
@@ -63,7 +61,6 @@ import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcessBean
 import org.fenixedu.academic.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import org.fenixedu.academic.domain.phd.candidacy.PhdThesisSubjectOrderBean;
 import org.fenixedu.academic.domain.phd.conclusion.PhdConclusionProcess;
-import org.fenixedu.academic.domain.phd.debts.PhdGratuityEvent;
 import org.fenixedu.academic.domain.phd.guidance.PhdGuidanceDocument;
 import org.fenixedu.academic.domain.phd.individualProcess.activities.AbandonIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.individualProcess.activities.AcceptEnrolments;
@@ -788,16 +785,6 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         return result;
     }
 
-    public void cancelDebts(final Person person) {
-        if (getCandidacyProcess() != null && !getCandidacyProcess().hasAnyPayments()) {
-            getCandidacyProcess().cancelDebt(person);
-        }
-
-        if (getRegistrationFee() != null && !getRegistrationFee().hasAnyPayments() && getRegistrationFee().isOpen()) {
-            getRegistrationFee().cancel(person);
-        }
-    }
-
     public boolean hasSchoolPartConcluded() {
         boolean concluded =
                 getRegistration() != null && (getRegistration().isSchoolPartConcluded() || getRegistration().isConcluded());
@@ -1195,66 +1182,6 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         throw new DomainException("phd.PhdIndividualProgramProcess.cannot.modify.destiny");
     }
 
-    final public boolean hasInsuranceDebts(final ExecutionYear executionYear) {
-        return hasAnyNotPayedInsuranceEventUntil(executionYear);
-    }
-
-    final public boolean hasAdministrativeOfficeFeeAndInsuranceDebts(final AdministrativeOffice office,
-            final ExecutionYear executionYear) {
-        return hasAnyNotPayedAdministrativeOfficeFeeAndInsuranceEventUntil(office, executionYear);
-    }
-
-    private boolean hasAnyNotPayedInsuranceEventUntil(final ExecutionYear executionYear) {
-        for (final InsuranceEvent event : getPerson().getNotCancelledInsuranceEventsUntil(executionYear)) {
-            if (event.isInDebt()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private boolean hasAnyNotPayedAdministrativeOfficeFeeAndInsuranceEventUntil(final AdministrativeOffice office,
-            final ExecutionYear executionYear) {
-        for (final AdministrativeOfficeFeeAndInsuranceEvent event : getPerson()
-                .getNotCancelledAdministrativeOfficeFeeAndInsuranceEventsUntil(office, executionYear)) {
-            if (event.isInDebt()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private boolean hasAnyNotPayedInsuranceEvents() {
-        for (final InsuranceEvent event : getPerson().getNotCancelledInsuranceEvents()) {
-            if (event.isInDebt()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private boolean hasAnyNotPayedAdministrativeOfficeFeeAndInsuranceEvents(final AdministrativeOffice office) {
-        for (final AdministrativeOfficeFeeAndInsuranceEvent event : getPerson()
-                .getNotCancelledAdministrativeOfficeFeeAndInsuranceEvents(office)) {
-            if (event.isInDebt()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    final public boolean hasInsuranceDebtsCurrently() {
-        return hasAnyNotPayedInsuranceEvents();
-    }
-
-    final public boolean hasAdministrativeOfficeFeeAndInsuranceDebtsCurrently(final AdministrativeOffice administrativeOffice) {
-        return hasAnyNotPayedAdministrativeOfficeFeeAndInsuranceEvents(administrativeOffice);
-    }
-
     public boolean hasDiplomaRequest() {
         for (PhdAcademicServiceRequest academicServiceRequest : getPhdAcademicServiceRequestsSet()) {
             if (academicServiceRequest.isDiploma() && !academicServiceRequest.isCancelled()
@@ -1408,15 +1335,6 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
             }
         }
         return highestOrder;
-    }
-
-    public boolean hasPhdGratuityEventForYear(int year) {
-        for (PhdGratuityEvent event : getPhdGratuityEventsSet()) {
-            if (event.getYear() == year && !event.isCancelled()) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public AdministrativeOffice getAdministrativeOffice() {

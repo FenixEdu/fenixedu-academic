@@ -127,18 +127,14 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
             throw new DomainException("error.IndividualCandidacy.invalid.process");
         }
         if (candidacyDate == null || !process.hasOpenCandidacyPeriod(candidacyDate.toDateTimeAtCurrentTime())) {
-            throw new DomainException("error.IndividualCandidacy.invalid.candidacyDate", process.getCandidacyStart().toString(
-                    "dd/MM/yyyy"), process.getCandidacyEnd().toString("dd/MM/yyyy"));
+            throw new DomainException("error.IndividualCandidacy.invalid.candidacyDate",
+                    process.getCandidacyStart().toString("dd/MM/yyyy"), process.getCandidacyEnd().toString("dd/MM/yyyy"));
         }
     }
 
     @Override
     public void setWhenCreated(DateTime whenCreated) {
         throw new DomainException("error.IndividualCandidacy.cannot.modify.when.created");
-    }
-
-    public boolean hasAnyPayment() {
-        return getEvent() != null && getEvent().hasAnyPayments();
     }
 
     public void editPersonalCandidacyInformation(final PersonBean personBean) {
@@ -153,9 +149,6 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
         checkRulesToCancel();
         setState(IndividualCandidacyState.CANCELLED);
         setResponsible(person.getUsername());
-        if (getEvent() != null) {
-            getEvent().cancel("IndividualCandidacy.canceled");
-        }
     }
 
     public void reject(final Person person) {
@@ -169,9 +162,6 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     }
 
     protected void checkRulesToCancel() {
-        if (getEvent() != null && hasAnyPayment()) {
-            throw new DomainException("error.IndividualCandidacy.cannot.cancel.candidacy.with.payments");
-        }
     }
 
     public Person getResponsiblePerson() {
@@ -196,10 +186,6 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
     public boolean isRejected() {
         return getState() == IndividualCandidacyState.REJECTED;
-    }
-
-    public boolean isDebtPayed() {
-        return getEvent() == null || (getEvent() != null && getEvent().isClosed());
     }
 
     public boolean isFor(final ExecutionInterval executionInterval) {
@@ -358,8 +344,6 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
         return this.getPersonalDetails() instanceof IndividualCandidacyInternalPersonDetails;
     }
 
-    protected abstract void createDebt(final Person person);
-
     public void bindPerson(ChoosePersonBean bean) {
         if (this.isCandidacyInternal()) {
             throw new DomainException("error.bind.candidacy.internal");
@@ -374,7 +358,6 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
             this.setPersonalDetails(new IndividualCandidacyInternalPersonDetails(this, selectedPerson));
         }
 
-        createDebt(this.getPersonalDetails().getPerson());
     }
 
     protected void createFormationEntries(List<FormationBean> formationConcludedBeanList,
@@ -465,8 +448,8 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
         formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.IndividualCandidacy.candidacy"),
                 getCandidacyExecutionInterval().getName());
-        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.IndividualCandidacy.state"), getState()
-                .getLocalizedName());
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.IndividualCandidacy.state"),
+                getState().getLocalizedName());
         formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.IndividualCandidacy.whenCreated"),
                 getWhenCreated().toString("yyy-MM-dd"));
         formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.IndividualCandidacy.candidacyDate"),

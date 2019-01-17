@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.domain.phd.serviceRequests;
 
-import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdProgramProcessState;
@@ -67,11 +66,6 @@ public class PhdStudentReingressionRequest extends PhdStudentReingressionRequest
     }
 
     @Override
-    public EventType getEventType() {
-        return null;
-    }
-
-    @Override
     public boolean hasPersonalInfo() {
         return false;
     }
@@ -113,12 +107,10 @@ public class PhdStudentReingressionRequest extends PhdStudentReingressionRequest
         if (academicServiceRequestBean.isToConclude()) {
             PhdIndividualProgramProcess process = getPhdIndividualProgramProcess();
             PhdProgramProcessState lastActiveState = process.getLastActiveState();
-            String remarks =
-                    String.format(
-                            BundleUtil
-                                    .getString(Bundle.PHD,
-                                            "message.org.fenixedu.academic.domain.phd.serviceRequests.PhdStudentReingressionRequest.conclusion.remark"),
-                            getServiceRequestNumberYear());
+            String remarks = String.format(
+                    BundleUtil.getString(Bundle.PHD,
+                            "message.org.fenixedu.academic.domain.phd.serviceRequests.PhdStudentReingressionRequest.conclusion.remark"),
+                    getServiceRequestNumberYear());
 
             process.createState(lastActiveState.getType(), AccessControl.getPerson(), remarks);
 

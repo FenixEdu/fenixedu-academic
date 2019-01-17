@@ -23,11 +23,9 @@ import java.util.HashSet;
 
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.IEnrolment;
-import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
@@ -76,8 +74,8 @@ public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCe
     @Override
     public boolean isFreeProcessed() {
         return getDocumentRequestType() == DocumentRequestType.APPROVEMENT_MOBILITY_CERTIFICATE
-                && (getRegistration().getRegistrationProtocol().isMobilityAgreement() || getRegistration()
-                        .getRegistrationProtocol().isExempted());
+                && (getRegistration().getRegistrationProtocol().isMobilityAgreement()
+                        || getRegistration().getRegistrationProtocol().isExempted());
     }
 
     @Override
@@ -143,12 +141,6 @@ public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCe
     }
 
     @Override
-    final public EventType getEventType() {
-        final RegistrationProtocol protocol = getRegistration().getRegistrationProtocol();
-        return protocol.isExempted() || protocol.isMobilityAgreement() ? null : EventType.APPROVEMENT_CERTIFICATE_REQUEST;
-    }
-
-    @Override
     final public Integer getNumberOfUnits() {
         if (!hasConcluded()) {
             return calculateNumberOfUnits();
@@ -169,8 +161,8 @@ public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCe
 
     @Override
     public boolean isToPrint() {
-        return !hasConcluded() || super.getNumberOfUnits() != null
-                && super.getNumberOfUnits().intValue() == calculateNumberOfUnits();
+        return !hasConcluded()
+                || super.getNumberOfUnits() != null && super.getNumberOfUnits().intValue() == calculateNumberOfUnits();
     }
 
     @Override
@@ -215,8 +207,8 @@ public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCe
         for (final ICurriculumEntry entry : curriculum.getCurriculumEntries()) {
             if (entry instanceof Dismissal) {
                 final Dismissal dismissal = (Dismissal) entry;
-                if (dismissal.getCredits().isEquivalence() || dismissal.isCreditsDismissal()
-                        && !dismissal.getCredits().isSubstitution()) {
+                if (dismissal.getCredits().isEquivalence()
+                        || dismissal.isCreditsDismissal() && !dismissal.getCredits().isSubstitution()) {
                     continue;
                 }
             }
@@ -274,7 +266,8 @@ public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCe
         return result;
     }
 
-    private void reportApprovedCurriculumLines(final Collection<ICurriculumEntry> result, final Collection<CurriculumLine> lines) {
+    private void reportApprovedCurriculumLines(final Collection<ICurriculumEntry> result,
+            final Collection<CurriculumLine> lines) {
         for (final CurriculumLine line : lines) {
             if (line.isApproved()) {
                 if (line.isEnrolment()) {
@@ -287,7 +280,8 @@ public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCe
     }
 
     private void reportExternalGroups(final Collection<ICurriculumEntry> result) {
-        for (final ExternalCurriculumGroup group : getRegistration().getLastStudentCurricularPlan().getExternalCurriculumGroups()) {
+        for (final ExternalCurriculumGroup group : getRegistration().getLastStudentCurricularPlan()
+                .getExternalCurriculumGroups()) {
             filterEntries(result, this, group.getCurriculumInAdvance(getFilteringDate()));
         }
     }

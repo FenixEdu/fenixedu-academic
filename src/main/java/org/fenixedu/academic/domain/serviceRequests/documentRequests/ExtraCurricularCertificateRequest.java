@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.domain.serviceRequests.documentRequests;
 
-import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
@@ -56,11 +55,6 @@ public class ExtraCurricularCertificateRequest extends ExtraCurricularCertificat
     @Override
     public String getDocumentTemplateKey() {
         return getClass().getName();
-    }
-
-    @Override
-    public EventType getEventType() {
-        return getRegistration().getRegistrationProtocol().isExempted() ? null : EventType.EXTRA_CURRICULAR_APPROVEMENT_CERTIFICATE_REQUEST;
     }
 
     @Override

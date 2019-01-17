@@ -85,9 +85,8 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
         String institutionName = getInstitutionName().toUpperCase();
 
         String template = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.courseLoad.personalData.first");
-        String firstPart =
-                MessageFormat.format(template, coordinatorName, coordinatorGender, adminOfficeUnitName, institutionName,
-                        universityName, labelStudent);
+        String firstPart = MessageFormat.format(template, coordinatorName, coordinatorGender, adminOfficeUnitName,
+                institutionName, universityName, labelStudent);
         addParameter("firstPart", firstPart);
         addParameter("secondPart", student.getName());
         addParameter("thirdPart", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.with.number"));
@@ -120,9 +119,8 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
         if (requestedCycle == null) {
             final Registration registration = getDocumentRequest().getRegistration();
             final DegreeType degreeType = registration.getDegreeType();
-            final CycleType cycleType =
-                    degreeType.hasExactlyOneCycleType() ? degreeType.getCycleType() : registration
-                            .getCycleType(getExecutionYear());
+            final CycleType cycleType = degreeType.hasExactlyOneCycleType() ? degreeType.getCycleType() : registration
+                    .getCycleType(getExecutionYear());
             return registration.getDegreeDescription(getExecutionYear(), cycleType, getLocale());
         }
         return getDocumentRequest().getRegistration().getDegreeDescription(getExecutionYear(), requestedCycle, getLocale());
@@ -171,11 +169,6 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 
     static final protected String DD = "dd";
     static final protected String MMMM_YYYY = "MMMM yyyy";
-
-    @Override
-    protected boolean showPriceFields() {
-        return false;
-    }
 
     @Override
     protected void setPersonFields() {

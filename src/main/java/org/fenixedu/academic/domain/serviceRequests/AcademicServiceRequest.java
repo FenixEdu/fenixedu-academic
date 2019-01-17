@@ -34,8 +34,6 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.accounting.EventType;
-import org.fenixedu.academic.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.documents.GeneratedDocument;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -62,9 +60,9 @@ import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixframework.Atomic;
-
 import com.google.common.base.Strings;
+
+import pt.ist.fenixframework.Atomic;
 
 abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base implements IAcademicServiceRequest {
 
@@ -146,15 +144,15 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
         checkRules();
     }
-    
+
     protected void checkRules() {
         // Ensure that are no service requests with same number and year
-        if(getRootDomainObject().getAcademicServiceRequestsSet().stream().filter(e -> e.getServiceRequestNumberYear().equals(getServiceRequestNumberYear())).count() > 1) {
+        if (getRootDomainObject().getAcademicServiceRequestsSet().stream()
+                .filter(e -> e.getServiceRequestNumberYear().equals(getServiceRequestNumberYear())).count() > 1) {
             throw new DomainException("error.serviceRequests.AcademicServiceRequest.duplicate.serviceRequestNumberYear");
         }
     }
 
-    
     private int getServiceRequestYear() {
         return getAcademicServiceRequestYear().getYear();
     }
@@ -229,7 +227,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     abstract public boolean isPayedUponCreation();
 
     public boolean isPaymentsAccessible() {
-    	final AcademicProgram program = getAcademicProgram();
+        final AcademicProgram program = getAcademicProgram();
         return AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_STUDENT_PAYMENTS, Authenticate.getUser())
                 .collect(Collectors.toSet()).contains(getAcademicProgram())
@@ -247,13 +245,14 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     public boolean isRegistrationAccessible() {
-    	final AcademicProgram program = getAcademicProgram();
+        final AcademicProgram program = getAcademicProgram();
         return AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_REGISTRATIONS, Authenticate.getUser())
                 .anyMatch(p -> p == program);
     }
 
-    protected String getDescription(final AcademicServiceRequestType academicServiceRequestType, final String specificServiceType) {
+    protected String getDescription(final AcademicServiceRequestType academicServiceRequestType,
+            final String specificServiceType) {
         final StringBuilder result = new StringBuilder();
 
         if (getServiceRequestType() != null && !getServiceRequestType().isLegacy()) {
@@ -476,10 +475,10 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     @Override
     final public void setServiceRequestNumber(Integer serviceRequestNumber) {
         super.setServiceRequestNumber(serviceRequestNumber);
-        
+
         checkRules();
     }
-    
+
     final public String getServiceRequestNumberYear() {
         return getServiceRequestNumber() + SERVICE_REQUEST_NUMBER_YEAR_SEPARATOR + getServiceRequestYear();
     }
@@ -487,11 +486,6 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     @Override
     final public void addAcademicServiceRequestSituations(AcademicServiceRequestSituation academicServiceRequestSituation) {
         throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.add.academicServiceRequestSituation");
-    }
-
-    @Override
-    final public void setEvent(AcademicServiceRequestEvent event) {
-        throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.modify.event");
     }
 
     @Override
@@ -599,7 +593,8 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
         return finishedSuccessfully() && isToPrint();
     }
 
-    private List<AcademicServiceRequestSituationType> getAcceptedSituationTypes(AcademicServiceRequestSituationType situationType) {
+    private List<AcademicServiceRequestSituationType> getAcceptedSituationTypes(
+            AcademicServiceRequestSituationType situationType) {
 
         switch (situationType) {
 
@@ -639,8 +634,8 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     protected List<AcademicServiceRequestSituationType> getSentToExternalEntitySituationAcceptedSituationsTypes() {
-        return Collections.unmodifiableList(Collections
-                .singletonList(AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY));
+        return Collections
+                .unmodifiableList(Collections.singletonList(AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY));
     }
 
     protected List<AcademicServiceRequestSituationType> getReceivedFromExternalEntitySituationAcceptedSituationsTypes() {
@@ -649,8 +644,8 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     protected List<AcademicServiceRequestSituationType> getConcludedSituationAcceptedSituationsTypes() {
-        return Collections.unmodifiableList(Arrays.asList(AcademicServiceRequestSituationType.CANCELLED,
-                AcademicServiceRequestSituationType.DELIVERED));
+        return Collections.unmodifiableList(
+                Arrays.asList(AcademicServiceRequestSituationType.CANCELLED, AcademicServiceRequestSituationType.DELIVERED));
     }
 
     /** This method is overwritten in the subclasses */
@@ -825,8 +820,6 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     @Override
     abstract public Person getPerson();
-
-    abstract public EventType getEventType();
 
     abstract public AcademicServiceRequestType getAcademicServiceRequestType();
 
