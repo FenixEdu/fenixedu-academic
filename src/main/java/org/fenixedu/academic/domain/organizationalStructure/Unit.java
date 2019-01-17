@@ -188,9 +188,6 @@ public class Unit extends Unit_Base {
                 && getChildsSet().isEmpty()) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.unit.cannot.be.deleted"));
         }
-        if (!(getUnitServiceAgreementTemplate() == null && getOwnedReceiptsSet().isEmpty())) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.unit.cannot.be.deleted"));
-        }
 
         if (!(getAssociatedNonAffiliatedTeachersSet().isEmpty() && getExternalCurricularCoursesSet().isEmpty()
                 && getPrecedentDegreeInformationsSet().isEmpty() && getCandidacyPrecedentDegreeInformationsSet().isEmpty()

@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.domain.serviceRequests.documentRequests;
 
-import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
 import org.joda.time.YearMonthDay;
@@ -64,11 +63,6 @@ public class IRSDeclarationRequest extends IRSDeclarationRequest_Base {
     @Override
     final public void setYear(Integer year) {
         throw new DomainException("error.serviceRequests.documentRequests.IRSDeclarationRequest.cannot.modify.year");
-    }
-
-    @Override
-    final public EventType getEventType() {
-        return null;
     }
 
     @Override

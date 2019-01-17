@@ -51,8 +51,6 @@ public class FlunkedPhdProgramProcess extends PhdIndividualProgramProcessActivit
         PhdProgramProcessState.createWithGivenStateDate(process, PhdIndividualProgramProcessState.FLUNKED, userView.getPerson(),
                 "", stateDate);
 
-        process.cancelDebts(userView.getPerson());
-
         if (process.getRegistration() != null && process.getRegistration().isActive()) {
             RegistrationState.createRegistrationState(process.getRegistration(), userView.getPerson(), stateDate,
                     RegistrationStateType.CANCELED);

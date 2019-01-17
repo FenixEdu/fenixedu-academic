@@ -23,8 +23,8 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import java.util.stream.Collectors;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.RandomStringUtils;
@@ -33,7 +33,6 @@ import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.period.CandidacyPeriod;
 import org.fenixedu.academic.domain.person.IDDocumentType;
@@ -190,7 +189,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     }
 
     protected boolean hasAnyPaymentForCandidacy() {
-        return getCandidacy().hasAnyPayment();
+        return false;
     }
 
     protected void cancelCandidacy(final Person person) {
@@ -210,11 +209,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     }
 
     public boolean isCandidacyValid() {
-        return !isCandidacyCancelled() && (isEventCanceledOrNoEvent() || isCandidacyDebtPayed());
-    }
-
-    private boolean isEventCanceledOrNoEvent() {
-        return getCandidacy().getEvent() == null || getCandidacy().getEvent().isCancelled();
+        return !isCandidacyCancelled();
     }
 
     public boolean isCandidacyInStandBy() {
@@ -238,7 +233,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     }
 
     public boolean isCandidacyDebtPayed() {
-        return getCandidacy().isDebtPayed();
+        return true;
     }
 
     public IndividualCandidacyPersonalDetails getPersonalDetails() {
@@ -406,15 +401,6 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 
     public void bindPerson(ChoosePersonBean choosePersonBean) {
         this.getCandidacy().bindPerson(choosePersonBean);
-    }
-
-    public IndividualCandidacyPaymentCode getAssociatedPaymentCode() {
-        if (getCandidacy().getEvent() != null) {
-            return (IndividualCandidacyPaymentCode) (getCandidacy().getEvent().getAllPaymentCodes().isEmpty() ? null : getCandidacy()
-                    .getEvent().getAllPaymentCodes().iterator().next());
-        }
-
-        return null;
     }
 
     public Boolean getIsCandidateWithRoles() {

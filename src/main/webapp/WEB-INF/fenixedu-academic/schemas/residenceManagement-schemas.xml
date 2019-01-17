@@ -60,35 +60,6 @@
 	</slot>
 </schema>
 
-<schema  name="show.residenceEvent" type="org.fenixedu.academic.domain.accounting.ResidenceEvent" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
-	<slot name="person.student.number" key="label.studentNumber"/>
-	<slot name="person.socialSecurityNumber" key="label.fiscalNumber"/>
-	<slot name="person.name" layout="link" key="label.name">
-		<property name="useParent" value="true"/>
-		<property name="destination" value="personLink"/>
-	</slot>
-	<slot name="roomValue" key="label.roomValue"/>
-	<slot name="room" key="label.room"/>
-</schema>
-
-<schema  name="show.residenceEvent.with.dates" type="org.fenixedu.academic.domain.accounting.ResidenceEvent" bundle="RESIDENCE_MANAGEMENT_RESOURCES" extends="show.residenceEvent">
-	<slot name="paymentMode" layout="null-as-label">
-		<property name="subLayout" value="default"/>
-		<property name="label" value="-"/>
-	</slot>
-	<slot name="paymentDate" layout="null-as-label">
-		<property name="subLayout" value="no-time"/>
-		<property name="label" value="-"/>
-	</slot>
-</schema>
-
-<schema  name="show.residenceEvent.with.open.date" type="org.fenixedu.academic.domain.accounting.ResidenceEvent" bundle="RESIDENCE_MANAGEMENT_RESOURCES" extends="show.residenceEvent">
-	<slot name="eventStateDate" layout="null-as-label" key="label.openingDate">
-		<property name="subLayout" value="default"/>
-		<property name="label" value="-"/>
-	</slot>
-</schema>
-
 <schema name="show.residenceEventBean" type="org.fenixedu.academic.dto.residenceManagement.ResidenceEventBean" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
 	<slot name="userName" key="label.studentNumber"/>
 	<slot name="name" key="label.name"/>
@@ -138,20 +109,6 @@
 		<property name="subLayout" value="default"/>
 		<property name="label" value="-"/>		
 	</slot>
-</schema>
-
-<schema  name="show.person.residenceEvents" type="org.fenixedu.academic.domain.accounting.ResidenceEvent" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
-	<slot name="residenceMonth.year.year" key="label.residenceYear"/>
-	<slot name="residenceMonth.month" key="label.residenceMonth"/>
-	<slot name="roomValue" key="label.roomValue"/>
-	<slot name="paymentLimitDate" key="label.paymentLimitDate" layout="null-as-label">
-		<property name="subLayout" value="no-time"/>
-		<property name="label" value="-"/>
-	</slot>	
-	<slot name="lastPaymentDate" key="label.paymentDate" layout="null-as-label">
-		<property name="subLayout" value="no-time"/>
-		<property name="label" value="-"/>
-	</slot>	
 </schema>
 
 <schema  name="configuration.roomValues" type="org.fenixedu.academic.domain.residence.ResidencePriceTable" bundle="RESIDENCE_MANAGEMENT_RESOURCES">

@@ -20,7 +20,6 @@ package org.fenixedu.academic.domain.serviceRequests;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
@@ -92,11 +91,6 @@ public class CourseGroupChangeRequest extends CourseGroupChangeRequest_Base {
     @Override
     public AcademicServiceRequestType getAcademicServiceRequestType() {
         return AcademicServiceRequestType.COURSE_GROUP_CHANGE_REQUEST;
-    }
-
-    @Override
-    public EventType getEventType() {
-        return null;
     }
 
     @Override

@@ -51,8 +51,6 @@ public class NotAdmittedPhdProgramProcess extends PhdIndividualProgramProcessAct
         PhdProgramProcessState.createWithGivenStateDate(process, PhdIndividualProgramProcessState.NOT_ADMITTED,
                 userView.getPerson(), "", stateDate);
 
-        process.cancelDebts(userView.getPerson());
-
         if (process.getRegistration() != null && process.getRegistration().isActive()) {
             RegistrationState.createRegistrationState(process.getRegistration(), userView.getPerson(), stateDate,
                     RegistrationStateType.CANCELED);

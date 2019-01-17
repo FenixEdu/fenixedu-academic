@@ -21,7 +21,6 @@ package org.fenixedu.academic.report.academicAdministrativeOffice;
 import java.text.MessageFormat;
 
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IRSDeclarationRequest;
@@ -59,10 +58,8 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 
         String stringTemplate1 =
                 BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.irs.declaration.firstParagraph");
-        addParameter(
-                "firstParagraph",
-                MessageFormat.format(stringTemplate1, institutionName.toUpperCase(getLocale()),
-                        universityName.toUpperCase(getLocale())));
+        addParameter("firstParagraph", MessageFormat.format(stringTemplate1, institutionName.toUpperCase(getLocale()),
+                universityName.toUpperCase(getLocale())));
 
         String stringTemplate2 =
                 BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.irs.declaration.secondParagraph");
@@ -107,41 +104,10 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
     }
 
     final private void setAmounts(final Person person, final Integer civilYear) {
-        Money gratuityPayedAmount = person.getMaxDeductableAmountForLegalTaxes(EventType.GRATUITY, civilYear);
-        Money othersPayedAmount = calculateOthersPayedAmount(person, civilYear);
-
-        final StringBuilder eventTypes = new StringBuilder();
-        final StringBuilder payedAmounts = new StringBuilder();
-        if (!gratuityPayedAmount.isZero()) {
-            eventTypes.append("- ")
-                    .append(BundleUtil.getString(Bundle.ENUMERATION, getLocale(), EventType.GRATUITY.getQualifiedName()))
-                    .append(LINE_BREAK);
-            payedAmounts.append("*").append(gratuityPayedAmount.toPlainString()).append("Eur").append(LINE_BREAK);
-        }
-
-        if (!othersPayedAmount.isZero()) {
-            eventTypes.append(
-                    BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.irs.declaration.eighthParagraph"))
-                    .append(LINE_BREAK);
-            payedAmounts.append("*").append(othersPayedAmount.toPlainString()).append("Eur").append(LINE_BREAK);
-        }
-        addParameter("eventTypes", eventTypes.toString());
-        addParameter("payedAmounts", payedAmounts.toString());
-
-        Money totalPayedAmount = othersPayedAmount.add(gratuityPayedAmount);
-        addParameter("totalPayedAmount", "*" + totalPayedAmount.toString() + "Eur");
-        addParameter("total", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.irs.declaration.total"));
-
     }
 
     private Money calculateOthersPayedAmount(final Person person, final Integer civilYear) {
         Money result = Money.ZERO;
-
-        for (final EventType eventType : EventType.values()) {
-            if (eventType != EventType.GRATUITY) {
-                result = result.add(person.getMaxDeductableAmountForLegalTaxes(eventType, civilYear));
-            }
-        }
 
         return result;
     }

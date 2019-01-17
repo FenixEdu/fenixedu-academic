@@ -23,8 +23,6 @@ import java.util.Locale;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.accounting.EventType;
-import org.fenixedu.academic.domain.accounting.events.serviceRequests.PhdRegistryDiplomaRequestEvent;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.documents.DocumentRequestGeneratedDocument;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -45,8 +43,8 @@ import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base implements IRegistryDiplomaRequest,
-        IRectorateSubmissionBatchDocumentEntry {
+public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base
+        implements IRegistryDiplomaRequest, IRectorateSubmissionBatchDocumentEntry {
 
     private static final Logger logger = LoggerFactory.getLogger(PhdRegistryDiplomaRequest.class);
 
@@ -111,11 +109,6 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
     @Override
     public boolean isManagedWithRectorateSubmissionBatch() {
         return true;
-    }
-
-    @Override
-    public EventType getEventType() {
-        return EventType.BOLONHA_PHD_REGISTRY_DIPLOMA_REQUEST;
     }
 
     @Override
@@ -273,9 +266,9 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
 
     @Override
     public String getReceivedActionLink() {
-        return String
-                .format("/phdAcademicServiceRequestManagement.do?method=prepareReceiveOnRectorate&amp;phdAcademicServiceRequestId=%s&amp;batchOid=%s",
-                        getExternalId(), getRectorateSubmissionBatch().getExternalId());
+        return String.format(
+                "/phdAcademicServiceRequestManagement.do?method=prepareReceiveOnRectorate&amp;phdAcademicServiceRequestId=%s&amp;batchOid=%s",
+                getExternalId(), getRectorateSubmissionBatch().getExternalId());
     }
 
     @Override

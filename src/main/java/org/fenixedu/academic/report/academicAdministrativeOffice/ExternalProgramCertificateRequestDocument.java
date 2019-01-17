@@ -32,7 +32,8 @@ public class ExternalProgramCertificateRequestDocument extends AdministrativeOff
 
     private static final long serialVersionUID = 10L;
 
-    protected ExternalProgramCertificateRequestDocument(final ExternalProgramCertificateRequest externalProgramCertificateRequest) {
+    protected ExternalProgramCertificateRequestDocument(
+            final ExternalProgramCertificateRequest externalProgramCertificateRequest) {
         super(externalProgramCertificateRequest);
     }
 
@@ -74,11 +75,6 @@ public class ExternalProgramCertificateRequestDocument extends AdministrativeOff
             }
         }
         return registration.getStudent().getNumber().toString();
-    }
-
-    @Override
-    protected boolean showPriceFields() {
-        return false;
     }
 
     @Override

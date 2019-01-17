@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.domain.serviceRequests.documentRequests;
 
-import org.fenixedu.academic.domain.accounting.events.serviceRequests.DeclarationRequestEvent;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.treasury.IAcademicTreasuryEvent;
 import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
@@ -38,8 +37,8 @@ abstract public class DeclarationRequest extends DeclarationRequest_Base {
 
         super.checkParameters(bean);
         super.setDocumentPurposeTypeInstance(bean.getChosenDocumentPurposeType());
-        super.setDocumentPurposeType(getDocumentPurposeTypeInstance() != null ? getDocumentPurposeTypeInstance()
-                .getDocumentPurposeType() : null);
+        super.setDocumentPurposeType(
+                getDocumentPurposeTypeInstance() != null ? getDocumentPurposeTypeInstance().getDocumentPurposeType() : null);
         super.setOtherDocumentPurposeTypeDescription(bean.getOtherPurpose());
     }
 

@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.serviceRequests;
 
-import org.fenixedu.academic.domain.accounting.EventType;
-import org.fenixedu.academic.domain.accounting.events.serviceRequests.EquivalencePlanRequestEvent;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
@@ -64,11 +62,6 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
     @Override
     public AcademicServiceRequestType getAcademicServiceRequestType() {
         return AcademicServiceRequestType.EQUIVALENCE_PLAN;
-    }
-
-    @Override
-    public EventType getEventType() {
-        return EventType.EQUIVALENCE_PLAN_REQUEST;
     }
 
     @Override

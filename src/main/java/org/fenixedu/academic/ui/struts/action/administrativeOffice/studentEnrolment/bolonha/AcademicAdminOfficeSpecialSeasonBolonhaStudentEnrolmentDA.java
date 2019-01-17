@@ -31,21 +31,13 @@ import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.EnrolmentEvaluation;
 import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
-import org.fenixedu.academic.domain.accounting.Event;
-import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
-import org.fenixedu.academic.domain.accounting.events.AnnualEvent;
-import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
-import org.fenixedu.academic.domain.accounting.events.insurance.InsuranceEvent;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleValidationType;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.EnrollmentDomainException;
-import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.dto.student.enrollment.bolonha.ChooseEvaluationSeasonBean;
 import org.fenixedu.academic.dto.student.enrollment.bolonha.SpecialSeasonBolonhaStudentEnrolmentBean;
 import org.fenixedu.academic.dto.student.enrollment.bolonha.SpecialSeasonChooseEvaluationSeasonBean;
@@ -140,9 +132,6 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
                 getEnroledSpecialSeasonEctsCredits(studentCurricularPlan, executionSemester));
         request.setAttribute("label.ects.extra", BundleUtil.getString(Bundle.ACADEMIC, "label.ects.special.season"));
 
-        addDebtsWarningMessagesForExecutionInterval(studentCurricularPlan.getRegistration().getStudent(),
-                executionSemester.getExecutionYear(), request);
-
         return mapping.findForward("showDegreeModulesToEnrol");
     }
 
@@ -174,51 +163,6 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
 
     private static boolean isEnrolmentByYear(final StudentCurricularPlan plan) {
         return plan.getDegreeCurricularPlan().getCurricularRuleValidationType() == CurricularRuleValidationType.YEAR;
-    }
-
-    private void addDebtsWarningMessagesForExecutionInterval(final Student student, final ExecutionYear executionYear,
-            final HttpServletRequest request) {
-
-        if (hasAnyAdministrativeOfficeFeeAndInsuranceInDebt(student, executionYear)) {
-            addActionMessage("warning", request, "registration.has.not.payed.insurance.fees");
-        }
-
-        if (hasAnyGratuityDebt(student, executionYear)) {
-            addActionMessage("warning", request, "registration.has.not.payed.gratuities");
-        }
-    }
-
-    static protected boolean hasAnyAdministrativeOfficeFeeAndInsuranceInDebt(final Student student,
-            final ExecutionYear executionYear) {
-        for (final Event event : student.getPerson().getEventsSet()) {
-
-            if (event instanceof AnnualEvent) {
-                final AnnualEvent annualEvent = (AnnualEvent) event;
-                if (annualEvent.getExecutionYear().isAfter(executionYear)) {
-                    continue;
-                }
-            }
-
-            if ((event instanceof AdministrativeOfficeFeeAndInsuranceEvent || event instanceof InsuranceEvent)
-                    && event.isOpen()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    static protected boolean hasAnyGratuityDebt(final Student student, final ExecutionYear executionYear) {
-        for (final Registration registration : student.getRegistrationsSet()) {
-            for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
-                for (final GratuityEvent gratuityEvent : studentCurricularPlan.getGratuityEventsSet()) {
-                    if (gratuityEvent.getExecutionYear().isBeforeOrEquals(executionYear) && gratuityEvent.isInDebt()) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
     }
 
     @Override

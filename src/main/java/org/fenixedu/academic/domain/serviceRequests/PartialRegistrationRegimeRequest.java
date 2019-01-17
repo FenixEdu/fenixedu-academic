@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.serviceRequests;
 
-import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import org.fenixedu.academic.domain.student.RegistrationRegime;
 import org.fenixedu.academic.domain.student.RegistrationRegimeType;
@@ -80,18 +78,6 @@ public class PartialRegistrationRegimeRequest extends PartialRegistrationRegimeR
     @Override
     public AcademicServiceRequestType getAcademicServiceRequestType() {
         return AcademicServiceRequestType.PARTIAL_REGIME_REQUEST;
-    }
-
-    @Override
-    public EventType getEventType() {
-        /*
-         * For 2010/2011 partial registration is not charged
-         */
-        if (getExecutionYear().isAfterOrEquals(ExecutionYear.readExecutionYearByName("2010/2011"))) {
-            return null;
-        }
-
-        return EventType.PARTIAL_REGISTRATION_REGIME_REQUEST;
     }
 
     @Override

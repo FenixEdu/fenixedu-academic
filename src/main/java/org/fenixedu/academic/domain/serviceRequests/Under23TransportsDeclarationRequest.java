@@ -19,7 +19,6 @@
 package org.fenixedu.academic.domain.serviceRequests;
 
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
@@ -63,11 +62,6 @@ public class Under23TransportsDeclarationRequest extends Under23TransportsDeclar
     @Override
     public boolean isAvailableForTransitedRegistrations() {
         return false;
-    }
-
-    @Override
-    public EventType getEventType() {
-        return null;
     }
 
     @Override

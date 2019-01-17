@@ -26,15 +26,12 @@ import java.util.Locale;
 
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.EventType;
-import org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdParticipant;
 import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import org.fenixedu.academic.domain.phd.notification.PhdNotification;
 import org.fenixedu.academic.report.FenixReport;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -95,9 +92,6 @@ public class PhdNotificationDocument extends FenixReport {
 
         addParameter("ratificationDate", whenRatified != null ? whenRatified.toString(getDateFormat()) : "");
 
-        addParameter("insuranceFee", getInsuranceFee(individualProgramProcess));
-        addParameter("registrationFee", getRegistrationFee(individualProgramProcess, whenRatified));
-
         addParameter("date", new LocalDate().toString(getDateFormat()));
         addParameter("notificationNumber", getNotification().getNotificationNumber());
 
@@ -106,13 +100,16 @@ public class PhdNotificationDocument extends FenixReport {
     }
 
     private void addGuidingsParameter(final PhdIndividualProgramProcess individualProgramProcess) {
-        if (!individualProgramProcess.getGuidingsSet().isEmpty() && !individualProgramProcess.getAssistantGuidingsSet().isEmpty()) {
-            addParameter("guidingsInformation", MessageFormat.format(getMessageFromResource(getClass().getName()
-                    + ".full.guidings.template"), buildGuidingsInformation(individualProgramProcess.getGuidingsSet()),
-                    buildGuidingsInformation(individualProgramProcess.getAssistantGuidingsSet())));
+        if (!individualProgramProcess.getGuidingsSet().isEmpty()
+                && !individualProgramProcess.getAssistantGuidingsSet().isEmpty()) {
+            addParameter("guidingsInformation",
+                    MessageFormat.format(getMessageFromResource(getClass().getName() + ".full.guidings.template"),
+                            buildGuidingsInformation(individualProgramProcess.getGuidingsSet()),
+                            buildGuidingsInformation(individualProgramProcess.getAssistantGuidingsSet())));
         } else if (!individualProgramProcess.getGuidingsSet().isEmpty()) {
-            addParameter("guidingsInformation", MessageFormat.format(getMessageFromResource(getClass().getName()
-                    + ".guidings.only.template"), buildGuidingsInformation(individualProgramProcess.getGuidingsSet())));
+            addParameter("guidingsInformation",
+                    MessageFormat.format(getMessageFromResource(getClass().getName() + ".guidings.only.template"),
+                            buildGuidingsInformation(individualProgramProcess.getGuidingsSet())));
         } else {
             addParameter("guidingsInformation", "");
         }
@@ -151,23 +148,6 @@ public class PhdNotificationDocument extends FenixReport {
 
     private String getDateFormat() {
         return getLanguage() == org.fenixedu.academic.util.LocaleUtils.PT ? DATE_FORMAT_PT : DATE_FORMAT_EN;
-    }
-
-    private String getRegistrationFee(final PhdIndividualProgramProcess individualProgramProcess, final LocalDate whenRatified) {
-        return whenRatified != null ? ((FixedAmountPR) individualProgramProcess.getPhdProgram().getServiceAgreementTemplate()
-                .findPostingRuleByEventTypeAndDate(EventType.PHD_REGISTRATION_FEE, whenRatified.toDateTimeAtMidnight()))
-                .getFixedAmount().toPlainString() : "";
-    }
-
-    private String getInsuranceFee(final PhdIndividualProgramProcess individualProgramProcess) {
-        return ((FixedAmountPR) Bennu
-                .getInstance()
-                .getInstitutionUnit()
-                .getUnitServiceAgreementTemplate()
-                .findPostingRuleBy(EventType.INSURANCE,
-                        individualProgramProcess.getExecutionYear().getBeginDateYearMonthDay().toDateTimeAtMidnight(),
-                        individualProgramProcess.getExecutionYear().getEndDateYearMonthDay().toDateTimeAtMidnight()))
-                .getFixedAmount().toPlainString();
     }
 
     @Override

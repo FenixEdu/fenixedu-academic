@@ -92,9 +92,8 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
         String institutionName = getInstitutionName().toUpperCase();
 
         String template = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.program.certificate.personalData.first");
-        String firstPart =
-                MessageFormat.format(template, coordinatorName, coordinatorGender, adminOfficeUnitName, institutionName,
-                        universityName, labelStudent);
+        String firstPart = MessageFormat.format(template, coordinatorName, coordinatorGender, adminOfficeUnitName,
+                institutionName, universityName, labelStudent);
         addParameter("firstPart", firstPart);
         addParameter("secondPart", student.getName());
         addParameter("thirdPart", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.with.number"));
@@ -112,9 +111,8 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
         if (requestedCycle == null) {
             final Registration registration = getDocumentRequest().getRegistration();
             final DegreeType degreeType = registration.getDegreeType();
-            final CycleType cycleType =
-                    degreeType.hasExactlyOneCycleType() ? degreeType.getCycleType() : registration
-                            .getCycleType(getExecutionYear());
+            final CycleType cycleType = degreeType.hasExactlyOneCycleType() ? degreeType.getCycleType() : registration
+                    .getCycleType(getExecutionYear());
             return registration.getDegreeDescription(getExecutionYear(), cycleType, getLocale());
         }
         return getDocumentRequest().getRegistration().getDegreeDescription(getExecutionYear(), requestedCycle, getLocale());
@@ -140,11 +138,6 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
             return MessageFormat.format(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.program.certificate.programs"),
                     numberOfPrograms());
         }
-    }
-
-    @Override
-    protected boolean showPriceFields() {
-        return false;
     }
 
     private void createProgramsList(Locale language) {
@@ -216,9 +209,8 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
         }
 
         private String buildCurricularCourseName(final CurricularCourse curricularCourse) {
-            return getMLSTextContent(curricularCourse.getNameI18N())
-                    + (StringUtils.isEmpty(curricularCourse.getAcronym()) ? EMPTY_STR : " (" + curricularCourse.getAcronym()
-                            + ")");
+            return getMLSTextContent(curricularCourse.getNameI18N()) + (StringUtils
+                    .isEmpty(curricularCourse.getAcronym()) ? EMPTY_STR : " (" + curricularCourse.getAcronym() + ")");
         }
 
         public String getDegree() {
@@ -256,12 +248,10 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
                     HtmlToTextConverterUtil.convertToText(getMLSTextContent(curricularCourse.getProgramI18N(executionSemester)));
             this.weigth = curricularCourse.getWeight(executionSemester).toString();
             this.prerequisites = getMLSTextContent(curricularCourse.getPrerequisitesI18N());
-            this.objectives =
-                    HtmlToTextConverterUtil
-                            .convertToText(getMLSTextContent(curricularCourse.getObjectivesI18N(executionSemester)));
-            this.evaluationMethod =
-                    HtmlToTextConverterUtil.convertToText(getMLSTextContent(curricularCourse
-                            .getEvaluationMethodI18N(executionSemester)));
+            this.objectives = HtmlToTextConverterUtil
+                    .convertToText(getMLSTextContent(curricularCourse.getObjectivesI18N(executionSemester)));
+            this.evaluationMethod = HtmlToTextConverterUtil
+                    .convertToText(getMLSTextContent(curricularCourse.getEvaluationMethodI18N(executionSemester)));
 
             this.bibliographics = buildBibliographicInformation(curricularCourse, executionSemester);
         }
@@ -273,8 +263,8 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
             if (curricularCourse.getCompetenceCourse() != null) {
                 for (final BibliographicReferences.BibliographicReference reference : curricularCourse.getCompetenceCourse()
                         .getAllBibliographicReferences(executionSemester)) {
-                    result.add(new BibliographicInformation(reference.getAuthors(), reference.getTitle(), reference
-                            .getReference(), reference.getYear()));
+                    result.add(new BibliographicInformation(reference.getAuthors(), reference.getTitle(),
+                            reference.getReference(), reference.getYear()));
                 }
             }
 

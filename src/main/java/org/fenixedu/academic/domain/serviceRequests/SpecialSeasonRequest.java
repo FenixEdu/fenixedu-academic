@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.domain.serviceRequests;
 
-import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import org.fenixedu.academic.domain.student.StatuteType;
 import org.fenixedu.academic.domain.student.Student;
@@ -97,11 +96,6 @@ public class SpecialSeasonRequest extends SpecialSeasonRequest_Base {
     @Override
     public AcademicServiceRequestType getAcademicServiceRequestType() {
         return AcademicServiceRequestType.SPECIAL_SEASON_REQUEST;
-    }
-
-    @Override
-    public EventType getEventType() {
-        return null;
     }
 
     @Override

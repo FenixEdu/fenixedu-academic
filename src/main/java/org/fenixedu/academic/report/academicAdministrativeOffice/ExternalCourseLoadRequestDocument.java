@@ -77,11 +77,6 @@ public class ExternalCourseLoadRequestDocument extends AdministrativeOfficeDocum
     }
 
     @Override
-    protected boolean showPriceFields() {
-        return false;
-    }
-
-    @Override
     protected void setPersonFields() {
         addParameter("name", getDocumentRequest().getPerson().getName());
     }

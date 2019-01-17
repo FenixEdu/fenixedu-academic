@@ -19,9 +19,6 @@
 package org.fenixedu.academic.ui.struts.action.candidate.degree;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -29,17 +26,10 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.academic.domain.accounting.PaymentCode;
-import org.fenixedu.academic.domain.accounting.PaymentCodeType;
-import org.fenixedu.academic.domain.accounting.installments.InstallmentForFirstTimeStudents;
-import org.fenixedu.academic.domain.accounting.paymentCodes.InstallmentPaymentCode;
 import org.fenixedu.academic.domain.candidacy.CandidacyOperationType;
 import org.fenixedu.academic.domain.candidacy.CandidacySummaryFile;
 import org.fenixedu.academic.domain.candidacy.FirstTimeCandidacyStage;
@@ -47,7 +37,6 @@ import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.domain.candidacy.workflow.CandidacyOperation;
 import org.fenixedu.academic.domain.candidacy.workflow.form.ResidenceInformationForm;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
-import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.util.workflow.Form;
 import org.fenixedu.academic.domain.util.workflow.Operation;
 import org.fenixedu.academic.service.services.candidacy.ExecuteStateOperation;
@@ -61,7 +50,6 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
-import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,7 +66,8 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 
     private static final Logger logger = LoggerFactory.getLogger(DegreeCandidacyManagementDispatchAction.class);
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
         return mapping.findForward("showWelcome");
     }
 
@@ -99,9 +88,8 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
     public ActionForward doOperation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
-        final CandidacyOperation operation =
-                (CandidacyOperation) getCandidacy(request).getActiveCandidacySituation().getOperationByTypeAndPerson(
-                        getOperationType(request), getLoggedPerson(request));
+        final CandidacyOperation operation = (CandidacyOperation) getCandidacy(request).getActiveCandidacySituation()
+                .getOperationByTypeAndPerson(getOperationType(request), getLoggedPerson(request));
         request.setAttribute("operation", operation);
         request.setAttribute("candidacy", getCandidacy(request));
 
@@ -164,8 +152,8 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
     }
 
     private ActionForward executeOperation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response, CandidacyOperation candidacyOperation) throws FenixServiceException,
-            FenixActionException {
+            HttpServletResponse response, CandidacyOperation candidacyOperation)
+            throws FenixServiceException, FenixActionException {
 
         final User userView = getUserView(request);
 
@@ -174,8 +162,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
         }
 
         if (candidacyOperation != null && candidacyOperation.getType() == CandidacyOperationType.FILL_PERSONAL_DATA) {
-            request.setAttribute(
-                    "aditionalInformation",
+            request.setAttribute("aditionalInformation",
                     getResources(request).getMessage("label.candidacy.username.changed.message",
                             userView.getPerson().getUsername(), Unit.getInstitutionAcronym()));
         }
@@ -186,69 +173,6 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 
         return showCandidacyDetails(mapping, form, request, response);
 
-    }
-
-    private Object totalGratuityPaymentCode(Collection<PaymentCode> availablePaymentCodes) {
-        for (PaymentCode paymentCode : availablePaymentCodes) {
-            if (PaymentCodeType.GRATUITY_FIRST_INSTALLMENT.equals(paymentCode.getType())
-                    && !(paymentCode instanceof InstallmentPaymentCode)) {
-                return paymentCode;
-            }
-        }
-
-        return null;
-    }
-
-    private Object installmmentPaymentCodes(Collection<PaymentCode> availablePaymentCodes) {
-        List<PaymentCode> installmentPaymentCodes = new ArrayList<PaymentCode>();
-
-        CollectionUtils.select(availablePaymentCodes, new Predicate() {
-
-            @Override
-            public boolean evaluate(Object arg0) {
-                PaymentCode paymentCode = (PaymentCode) arg0;
-
-                if (paymentCode instanceof InstallmentPaymentCode) {
-                    return true;
-                }
-
-                return false;
-            }
-        }, installmentPaymentCodes);
-
-        Collections.sort(installmentPaymentCodes, new BeanComparator("code"));
-
-        return installmentPaymentCodes;
-    }
-
-    private Object administrativeOfficeFeeAndInsurancePaymentCode(Collection<PaymentCode> availablePaymentCodes) {
-        for (PaymentCode paymentCode : availablePaymentCodes) {
-            if (PaymentCodeType.ADMINISTRATIVE_OFFICE_FEE_AND_INSURANCE.equals(paymentCode.getType())) {
-                return paymentCode;
-            }
-        }
-
-        return null;
-    }
-
-    private YearMonthDay calculateFirstInstallmentEndDate(final Registration registration,
-            Collection<PaymentCode> availablePaymentCodes) {
-        for (PaymentCode paymentCode : availablePaymentCodes) {
-            if (!paymentCode.isInstallmentPaymentCode()) {
-                continue;
-            }
-
-            InstallmentPaymentCode installmentPaymentCode = (InstallmentPaymentCode) paymentCode;
-            if (!installmentPaymentCode.getInstallment().isForFirstTimeStudents()) {
-                continue;
-            }
-
-            InstallmentForFirstTimeStudents firstInstallment =
-                    (InstallmentForFirstTimeStudents) installmentPaymentCode.getInstallment();
-            return registration.getStartDate().plusDays(firstInstallment.getNumberOfDaysToStartApplyingPenalty());
-        }
-
-        return null;
     }
 
     public ActionForward showCurrentForm(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

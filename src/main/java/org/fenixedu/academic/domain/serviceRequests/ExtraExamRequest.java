@@ -21,7 +21,6 @@ package org.fenixedu.academic.domain.serviceRequests;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import org.fenixedu.academic.domain.student.Registration;
@@ -62,8 +61,8 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
         }
 
         if (registrationAlreadyHasRequest(registration, enrolment, executionYear)) {
-            throw new DomainException("error.ExtraExamRequest.registration.already.has.same.request", enrolment.getName()
-                    .getContent(), executionYear.getYear());
+            throw new DomainException("error.ExtraExamRequest.registration.already.has.same.request",
+                    enrolment.getName().getContent(), executionYear.getYear());
         }
     }
 
@@ -109,11 +108,6 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
     @Override
     public AcademicServiceRequestType getAcademicServiceRequestType() {
         return AcademicServiceRequestType.EXTRA_EXAM_REQUEST;
-    }
-
-    @Override
-    public EventType getEventType() {
-        return null;
     }
 
     @Override

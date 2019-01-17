@@ -25,8 +25,6 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.ReingressionPeriod;
-import org.fenixedu.academic.domain.accounting.EventType;
-import org.fenixedu.academic.domain.accounting.events.serviceRequests.StudentReingressionRequestEvent;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import org.fenixedu.academic.domain.student.Registration;
@@ -40,11 +38,11 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 
     static final public List<RegistrationStateType> ALLOWED_TYPES = Arrays.asList(
 
-    RegistrationStateType.FLUNKED,
+            RegistrationStateType.FLUNKED,
 
-    RegistrationStateType.INTERRUPTED,
+            RegistrationStateType.INTERRUPTED,
 
-    RegistrationStateType.EXTERNAL_ABANDON);
+            RegistrationStateType.EXTERNAL_ABANDON);
 
     protected StudentReingressionRequest() {
         super();
@@ -86,9 +84,6 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
             throw new DomainException("error.StudentReingressionRequest.already.has.request.to.same.executionYear");
         }
 
-        if (registration.getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt(executionYear)) {
-            throw new DomainException("error.StudentReingressionRequest.student.has.debts");
-        }
     }
 
     private boolean alreadyHasRequest(final Registration registration, final ExecutionYear executionYear) {
@@ -128,11 +123,6 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
     }
 
     @Override
-    public EventType getEventType() {
-        return EventType.STUDENT_REINGRESSION_REQUEST;
-    }
-
-    @Override
     protected void createAcademicServiceRequestSituations(AcademicServiceRequestBean academicServiceRequestBean) {
         super.createAcademicServiceRequestSituations(academicServiceRequestBean);
 
@@ -154,7 +144,8 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
                             academicServiceRequestBean.getFinalSituationDate(), RegistrationStateType.REGISTERED);
 
             if (getRegistration().getActiveState() != state) {
-                throw new DomainException("StudentReingressionRequest.reingression.must.be.active.state.after.request.conclusion");
+                throw new DomainException(
+                        "StudentReingressionRequest.reingression.must.be.active.state.after.request.conclusion");
             }
         }
     }

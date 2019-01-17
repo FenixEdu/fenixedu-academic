@@ -2160,11 +2160,6 @@
    	<slot name="selectedDegree.presentationName"/>
 </schema>
 
-<schema name="PublicIndividualCandidacyProcess.sibs.payment.details.view" type="org.fenixedu.academic.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode" bundle="CANDIDATE_RESOURCES" >
-	<slot name="code" key="label.sibs.reference"/>
-</schema>
-
-
 <schema name="ChooseDegreeBean.selectDegree" type="org.fenixedu.academic.ui.struts.action.candidacy.CandidacyProcessDA$ChooseDegreeBean" bundle="APPLICATION_RESOURCES">
    	<slot name="degree" layout="menu-select-postback" key="label.degree.name" >
         <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.candidacy.DegreeChangeIndividualCandidacyDegreesProvider" />

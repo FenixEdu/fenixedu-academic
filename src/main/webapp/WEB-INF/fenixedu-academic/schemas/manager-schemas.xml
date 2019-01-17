@@ -551,33 +551,6 @@
 	<slot name="teacherId" />
 </schema>
 
-<schema name="PaymentCodeMappingBean.search" type="org.fenixedu.academic.domain.accounting.PaymentCodeMapping$PaymentCodeMappingBean" bundle="MANAGER_RESOURCES">
-	<slot name="executionInterval" key="label.executionInterval" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.NotClosedExecutionYearsProvider" />
-		<property name="format" value="${qualifiedName}" />
-	</slot>
-</schema>
-
-<schema name="PaymentCodeMappingBean.create" type="org.fenixedu.academic.domain.accounting.PaymentCodeMapping$PaymentCodeMappingBean" bundle="MANAGER_RESOURCES">
-	<slot name="executionInterval.qualifiedName" key="label.executionInterval" read-only="true" />
-	<slot name="oldCode" key="label.paymentCodeMapping.oldCode" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="40"/>
-		<property name="format" value="${code} (${state})"/>
-		<property name="indicatorShown" value="true"/>
-		<property name="provider" value="org.fenixedu.academic.service.services.accounting.SearchPaymentCodesByExecutionYear"/>
-		<property name="args" value="executionYearOid=${executionInterval.OID}"/>
-		<property name="minChars" value="4"/>
-	</slot>
-	<slot name="newCode" key="label.paymentCodeMapping.newCode" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="40"/>
-		<property name="format" value="${code} (${state})"/>
-		<property name="indicatorShown" value="true"/>
-		<property name="provider" value="org.fenixedu.academic.service.services.accounting.SearchPaymentCodesByExecutionYear"/>
-		<property name="args" value="executionYearOid=${executionInterval.OID}"/>
-		<property name="minChars" value="4"/>
-	</slot>
-</schema>
-
 <schema name="PhdGratuityPR.view" bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.domain.phd.debts.PhdGratuityPR">
 	<slot name="startDate" key="label.phd.gratuity.startDate" />
 	<slot name="endDate"   key="label.phd.gratuity.endDate" />
@@ -609,18 +582,6 @@
 	<slot name="endDate"   key="label.phd.gratuity.endDate" />
 	<slot name="gratuity" key="label.phd.gratuity.value" required="true" />
 	<slot name="fineRate" key="label.phd.gratuity.fine" required="true" />
-</schema>
-
-<schema name="PaymentCodeMapping.view" type="org.fenixedu.academic.domain.accounting.PaymentCodeMapping" bundle="MANAGER_RESOURCES">
-	<slot name="executionInterval" key="label.executionInterval" layout="format" >
-		<property name="format" value="${qualifiedName}" />
-	</slot>
-	<slot name="oldPaymentCode" key="label.paymentCodeMapping.oldCode">
-		<property name="format" value="${formattedCode} (${maxAmount} - ${endDate})" />
-	</slot>
-	<slot name="newPaymentCode" key="label.paymentCodeMapping.newCode">
-		<property name="format" value="${formattedCode} (${maxAmount} - ${endDate})" />
-	</slot>
 </schema>
 
 <schema name="extraCurricularActivityType.view"

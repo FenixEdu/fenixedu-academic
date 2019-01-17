@@ -32,9 +32,6 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.accounting.events.candidacy.CandidacyExemptionJustificationType;
-import org.fenixedu.academic.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
-import org.fenixedu.academic.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyExemption;
 import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcess;
 import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
@@ -800,9 +797,9 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
             SecondCycleIndividualCandidacyProcessBean newBean = new SecondCycleIndividualCandidacyProcessBean(process);
             newBean.setCandidacyProcess(destinationCandidacyProcess);
-            newBean.setPublicCandidacyHashCode(DegreeOfficePublicCandidacyHashCode.getUnusedOrCreateNewHashCode(
-                    SecondCycleIndividualCandidacyProcess.class, destinationCandidacyProcess, process.getCandidacyHashCode()
-                            .getEmail()));
+            newBean.setPublicCandidacyHashCode(
+                    DegreeOfficePublicCandidacyHashCode.getUnusedOrCreateNewHashCode(SecondCycleIndividualCandidacyProcess.class,
+                            destinationCandidacyProcess, process.getCandidacyHashCode().getEmail()));
             newBean.setPersonBean(new PersonBean(process.getPersonalDetails()));
             newBean.setCandidacyDate(destinationCandidacyProcess.getCandidacyPeriod().getStart().toLocalDate());
             newBean.initializeDocumentUploadBeans();
@@ -811,12 +808,6 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
                     createNewProcess(userView, SecondCycleIndividualCandidacyProcess.class, newBean);
 
             newProcess.setOriginalIndividualCandidacyProcess(process);
-
-            SecondCycleIndividualCandidacyEvent event =
-                    (SecondCycleIndividualCandidacyEvent) newProcess.getCandidacy().getEvent();
-
-            new SecondCycleIndividualCandidacyExemption(userView.getPerson(), event,
-                    CandidacyExemptionJustificationType.TRANSFERED_APPLICATION);
 
             Collection<IndividualCandidacyDocumentFile> documents = process.getCandidacy().getDocumentsSet();
 

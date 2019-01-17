@@ -30,10 +30,6 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.PhotoState;
 import org.fenixedu.academic.domain.Photograph;
-import org.fenixedu.academic.domain.accounting.EventType;
-import org.fenixedu.academic.domain.accounting.PostingRule;
-import org.fenixedu.academic.domain.accounting.events.insurance.InsuranceEvent;
-import org.fenixedu.academic.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
 import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.caseHandling.Activity;
 import org.fenixedu.academic.domain.caseHandling.StartActivity;
@@ -46,7 +42,6 @@ import org.fenixedu.academic.domain.phd.PhdProgram;
 import org.fenixedu.academic.domain.phd.PhdProgramCandidacyProcessState;
 import org.fenixedu.academic.domain.phd.PhdProgramFocusArea;
 import org.fenixedu.academic.domain.phd.PhdProgramProcessDocument;
-import org.fenixedu.academic.domain.phd.PhdProgramServiceAgreementTemplate;
 import org.fenixedu.academic.domain.phd.alert.PhdFinalProofRequestAlert;
 import org.fenixedu.academic.domain.phd.alert.PhdPublicPresentationSeminarAlert;
 import org.fenixedu.academic.domain.phd.alert.PhdRegistrationFormalizationAlert;
@@ -69,7 +64,6 @@ import org.fenixedu.academic.domain.phd.candidacy.activities.RequestRatifyCandid
 import org.fenixedu.academic.domain.phd.candidacy.activities.UploadCandidacyReview;
 import org.fenixedu.academic.domain.phd.candidacy.activities.UploadDocuments;
 import org.fenixedu.academic.domain.phd.candidacy.activities.ValidatedByCandidate;
-import org.fenixedu.academic.domain.phd.debts.PhdRegistrationFee;
 import org.fenixedu.academic.domain.student.PersonalIngressionData;
 import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
 import org.fenixedu.academic.domain.student.Registration;
@@ -164,14 +158,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
             getCandidacy().setExecutionDegree(bean.getExecutionDegree());
         }
 
-        if (!isMigratedProcess) {
-            if (!bean.hasCollaborationType() || bean.getCollaborationType().generateCandidacyDebt()) {
-                if (hasPaymentFees(EventType.CANDIDACY_ENROLMENT)) {
-                    new PhdProgramCandidacyEvent(person, this);
-                }
-            }
-        }
-
         if (isPublicCandidacy()) {
             if (bean.getPhdCandidacyPeriod() == null) {
                 throw new DomainException("error.phd.candidacy.PhdProgramCandidacyProcess.public.candidacy.period.is.missing");
@@ -180,23 +166,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
             setPublicPhdCandidacyPeriod(bean.getPhdCandidacyPeriod());
         }
 
-    }
-
-    private boolean hasPaymentFees(final EventType candidacyEnrolmentEventType) {
-        final PhdProgramServiceAgreementTemplate serviceAgreementTemplate = getPhdProgram().getServiceAgreementTemplate();
-        for (final PostingRule postingRule : serviceAgreementTemplate.getAllPostingRulesFor(candidacyEnrolmentEventType)) {
-            if (postingRule.isActive()) {
-                if (postingRule instanceof PhdProgramCandidacyPR) {
-                    final PhdProgramCandidacyPR phdProgramCandidacyPR = (PhdProgramCandidacyPR) postingRule;
-                    if (phdProgramCandidacyPR.getFixedAmount().isPositive()) {
-                        return true;
-                    }
-                } else {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     public static boolean hasOnlineApplicationForPeriod(final Person person, PhdCandidacyPeriod phdCandidacyPeriod) {
@@ -213,16 +182,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     public boolean isPublicCandidacy() {
         return getCandidacyHashCode() != null;
-    }
-
-    public IndividualCandidacyPaymentCode getAssociatedPaymentCode() {
-        return getEvent() == null ? null : getEvent().getAssociatedPaymentCode();
-    }
-
-    public boolean hasPaymentCodeToPay() {
-        final IndividualCandidacyPaymentCode paymentCode = getAssociatedPaymentCode();
-        return paymentCode != null && paymentCode.getMinAmount().isPositive()
-                && paymentCode.getMaxAmount().isPositive();
     }
 
     private void checkCandidacyDate(ExecutionYear executionYear, LocalDate candidacyDate) {
@@ -267,16 +226,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     private ExecutionYear getExecutionYear() {
         return getIndividualProgramProcess().getExecutionYear();
-    }
-
-    public boolean hasAnyPayments() {
-        return getEvent() != null && getEvent().hasAnyPayments();
-    }
-
-    public void cancelDebt(final Person responsible) {
-        if (getEvent() != null && getEvent().isOpen()) {
-            getEvent().cancel(responsible);
-        }
     }
 
     public String getProcessNumber() {
@@ -363,7 +312,8 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     }
 
-    public PhdProgramCandidacyProcess registrationFormalization(final RegistrationFormalizationBean bean, final Person responsible) {
+    public PhdProgramCandidacyProcess registrationFormalization(final RegistrationFormalizationBean bean,
+            final Person responsible) {
 
         if (!hasStudyPlan()) {
             throw new DomainException(
@@ -380,7 +330,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
         if (!getIndividualProgramProcess().getPhdConfigurationIndividualProgramProcess().isMigratedProcess()) {
             final DegreeCurricularPlan dcp = getPhdProgramLastActiveDegreeCurricularPlan();
             assertStudyPlanInformation(bean, dcp);
-            assertDebts(bean);
             assertRegistrationFormalizationAlerts();
         }
 
@@ -413,10 +362,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
         assertStudyPlanInformation(bean, bean.getRegistration().getLastDegreeCurricularPlan());
         assertRegistrationFormalizationAlerts();
-
-        if (!getIndividualProgramProcess().getPhdConfigurationIndividualProgramProcess().isMigratedProcess()) {
-            assertDebts(bean);
-        }
 
         return this;
     }
@@ -495,20 +440,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
         }
 
         return registration;
-    }
-
-    private void assertDebts(final RegistrationFormalizationBean bean) {
-        assertPhdRegistrationFee();
-        assertInsuranceEvent(ExecutionYear.readByDateTime(bean.getWhenStartedStudies()));
-    }
-
-    private void assertPhdRegistrationFee() {
-        if (getIndividualProgramProcess().getRegistrationFee() == null) {
-            new PhdRegistrationFee(getIndividualProgramProcess());
-        }
-    }
-
-    private void assertInsuranceEvent(final ExecutionYear executionYear) {
     }
 
     private void assertRegistrationFormalizationAlerts() {

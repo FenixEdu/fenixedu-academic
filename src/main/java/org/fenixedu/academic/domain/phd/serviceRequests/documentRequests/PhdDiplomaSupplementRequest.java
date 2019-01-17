@@ -22,7 +22,6 @@ import java.util.Locale;
 
 import org.fenixedu.academic.domain.DegreeOfficialPublication;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.EctsGraduationGradeConversionTable;
 import org.fenixedu.academic.domain.degreeStructure.EctsTableIndex;
@@ -47,8 +46,8 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Base implements IDiplomaSupplementRequest,
-        IRectorateSubmissionBatchDocumentEntry {
+public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Base
+        implements IDiplomaSupplementRequest, IRectorateSubmissionBatchDocumentEntry {
 
     protected PhdDiplomaSupplementRequest() {
         super();
@@ -112,11 +111,6 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
     @Override
     public boolean isManagedWithRectorateSubmissionBatch() {
         return true;
-    }
-
-    @Override
-    public EventType getEventType() {
-        return null;
     }
 
     @Override
@@ -210,9 +204,8 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
         if (!getPhdIndividualProgramProcess().getStudyPlan().isExempted()) {
             Registration registration = getPhdIndividualProgramProcess().getRegistration();
             //TODO: phd-refactor this should be change to terminal program conclusion
-            conclusionDate =
-                    registration.getLastStudentCurricularPlan().getCycle(CycleType.THIRD_CYCLE).getConclusionDate()
-                            .toDateMidnight().toDateTime();
+            conclusionDate = registration.getLastStudentCurricularPlan().getCycle(CycleType.THIRD_CYCLE).getConclusionDate()
+                    .toDateMidnight().toDateTime();
         } else {
             conclusionDate = lastConclusionProcess.getConclusionDate().toDateMidnight().toDateTime();
         }
@@ -293,9 +286,8 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
         if (!getPhdIndividualProgramProcess().getStudyPlan().isExempted()) {
             Registration registration = getPhdIndividualProgramProcess().getRegistration();
             //TODO: phd-refactor this should be change to terminal program conclusion
-            conclusionDate =
-                    registration.getLastStudentCurricularPlan().getCycle(CycleType.THIRD_CYCLE).getConclusionDate()
-                            .toDateMidnight().toLocalDate();
+            conclusionDate = registration.getLastStudentCurricularPlan().getCycle(CycleType.THIRD_CYCLE).getConclusionDate()
+                    .toDateMidnight().toLocalDate();
         } else {
             PhdConclusionProcess conclusionProcess = getPhdIndividualProgramProcess().getLastConclusionProcess();
             conclusionDate = conclusionProcess.getConclusionDate();
@@ -349,9 +341,9 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
 
     @Override
     public String getReceivedActionLink() {
-        return String
-                .format("/phdAcademicServiceRequestManagement.do?method=prepareReceiveOnRectorate&amp;phdAcademicServiceRequestId=%s&amp;batchOid=%s",
-                        getExternalId(), getRectorateSubmissionBatch().getExternalId());
+        return String.format(
+                "/phdAcademicServiceRequestManagement.do?method=prepareReceiveOnRectorate&amp;phdAcademicServiceRequestId=%s&amp;batchOid=%s",
+                getExternalId(), getRectorateSubmissionBatch().getExternalId());
     }
 
     @Override

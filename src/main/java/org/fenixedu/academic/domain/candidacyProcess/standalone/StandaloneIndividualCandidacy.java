@@ -31,7 +31,6 @@ import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
-import org.fenixedu.academic.domain.accounting.events.candidacy.StandaloneIndividualCandidacyEvent;
 import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcess;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcess;
@@ -60,22 +59,14 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
         Person person = init(bean, process);
         addSelectedCurricularCourses(bean.getCurricularCourses(), bean.getCandidacyExecutionInterval());
 
-        /*
-         * 06/04/2009 - The candidacy may not be associated with a person. In
-         * this case we will not create an Event
-         */
-        if (bean.getInternalPersonCandidacy()) {
-            createDebt(person);
-        }
-
     }
 
     @Override
     protected void checkParameters(final Person person, final IndividualCandidacyProcess process,
             final IndividualCandidacyProcessBean bean) {
         if (hasValidStandaloneIndividualCandidacy(bean, process.getCandidacyExecutionInterval())) {
-            throw new DomainException("error.StandaloneIndividualCandidacy.person.already.has.candidacy", process
-                    .getCandidacyExecutionInterval().getName());
+            throw new DomainException("error.StandaloneIndividualCandidacy.person.already.has.candidacy",
+                    process.getCandidacyExecutionInterval().getName());
         }
 
         LocalDate candidacyDate = bean.getCandidacyDate();
@@ -90,9 +81,8 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
     private <T extends CandidacyProcess> boolean hasValidIndividualCandidacy(final Class<T> clazz,
             final ExecutionInterval executionInterval, final IndividualCandidacyProcessBean bean) {
         T candidacyProcess = CandidacyProcess.getCandidacyProcessByExecutionInterval(clazz, executionInterval);
-        IndividualCandidacyProcess individualCandidacyProcess =
-                candidacyProcess.getChildProcessByDocumentId(bean.getPersonBean().getIdDocumentType(), bean.getPersonBean()
-                        .getDocumentIdNumber());
+        IndividualCandidacyProcess individualCandidacyProcess = candidacyProcess.getChildProcessByDocumentId(
+                bean.getPersonBean().getIdDocumentType(), bean.getPersonBean().getDocumentIdNumber());
         return individualCandidacyProcess != null && !individualCandidacyProcess.isCandidacyCancelled();
     }
 
@@ -117,11 +107,6 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
             throw new DomainException("error.StandaloneIndividualCandidacy.ects.credits.above.maximum",
                     String.valueOf(MaximumNumberOfEctsInStandaloneCurriculumGroup.MAXIMUM_DEFAULT_VALUE));
         }
-    }
-
-    @Override
-    protected void createDebt(final Person person) {
-        new StandaloneIndividualCandidacyEvent(this, person);
     }
 
     public void editCandidacyInformation(final LocalDate candidacyDate, final List<CurricularCourse> curricularCourses) {
@@ -203,8 +188,8 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
         for (final CurricularCourse curricularCourse : getCurricularCoursesSet()) {
             if (!studentCurricularPlan.isEnroledInExecutionPeriod(curricularCourse, getCandidacyExecutionInterval())) {
 
-                studentCurricularPlan.createNoCourseGroupCurriculumGroupEnrolment(createStudentStandaloneEnrolmentBean(
-                        studentCurricularPlan, curricularCourse));
+                studentCurricularPlan.createNoCourseGroupCurriculumGroupEnrolment(
+                        createStudentStandaloneEnrolmentBean(studentCurricularPlan, curricularCourse));
 
             }
         }

@@ -30,9 +30,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.accounting.AccountingTransaction;
-import org.fenixedu.academic.domain.accounting.events.AnnualEvent;
-import org.fenixedu.academic.domain.accounting.events.gratuity.DfaGratuityEvent;
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.domain.candidacy.degree.ShiftDistribution;
 import org.fenixedu.academic.domain.degree.DegreeType;
@@ -147,8 +144,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
         if (object == null) {
             return 1;
         }
-        return getAcademicInterval().getStartDateTimeWithoutChronology().compareTo(
-                object.getAcademicInterval().getStartDateTimeWithoutChronology());
+        return getAcademicInterval().getStartDateTimeWithoutChronology()
+                .compareTo(object.getAcademicInterval().getStartDateTimeWithoutChronology());
     }
 
     public boolean isAfter(final ExecutionYear executionYear) {
@@ -348,21 +345,6 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
             result.add(executionDegree.getDegreeCurricularPlan());
         }
         return result;
-    }
-
-    private Set<AccountingTransaction> getPaymentsFor(final Class<? extends AnnualEvent> eventClass) {
-        final Set<AccountingTransaction> result = new HashSet<AccountingTransaction>();
-        for (final AnnualEvent each : getAnnualEventsSet()) {
-            if (eventClass.equals(each.getClass()) && !each.isCancelled()) {
-                result.addAll(each.getNonAdjustingTransactions());
-            }
-        }
-
-        return result;
-    }
-
-    public Set<AccountingTransaction> getDFAGratuityPayments() {
-        return getPaymentsFor(DfaGratuityEvent.class);
     }
 
     public List<StudentCandidacy> getStudentCandidacies() {

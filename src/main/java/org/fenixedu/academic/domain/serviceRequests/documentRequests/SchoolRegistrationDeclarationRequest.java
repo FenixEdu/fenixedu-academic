@@ -21,7 +21,6 @@ package org.fenixedu.academic.domain.serviceRequests.documentRequests;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
 
@@ -66,11 +65,6 @@ public class SchoolRegistrationDeclarationRequest extends SchoolRegistrationDecl
     }
 
     @Override
-    final public EventType getEventType() {
-        return EventType.SCHOOL_REGISTRATION_DECLARATION_REQUEST;
-    }
-
-    @Override
     public boolean hasPersonalInfo() {
         return true;
     }
@@ -79,15 +73,14 @@ public class SchoolRegistrationDeclarationRequest extends SchoolRegistrationDecl
     protected boolean hasFreeDeclarationRequests() {
         final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
-        final Set<DocumentRequest> schoolRegistrationDeclarations =
-                getRegistration().getSucessfullyFinishedDocumentRequestsBy(currentExecutionYear,
-                        DocumentRequestType.SCHOOL_REGISTRATION_DECLARATION, false);
+        final Set<DocumentRequest> schoolRegistrationDeclarations = getRegistration().getSucessfullyFinishedDocumentRequestsBy(
+                currentExecutionYear, DocumentRequestType.SCHOOL_REGISTRATION_DECLARATION, false);
 
-        final Set<DocumentRequest> enrolmentDeclarations =
-                getRegistration().getSucessfullyFinishedDocumentRequestsBy(currentExecutionYear,
-                        DocumentRequestType.ENROLMENT_DECLARATION, false);
+        final Set<DocumentRequest> enrolmentDeclarations = getRegistration()
+                .getSucessfullyFinishedDocumentRequestsBy(currentExecutionYear, DocumentRequestType.ENROLMENT_DECLARATION, false);
 
-        return ((schoolRegistrationDeclarations.size() + enrolmentDeclarations.size()) < MAX_FREE_DECLARATIONS_PER_EXECUTION_YEAR);
+        return ((schoolRegistrationDeclarations.size()
+                + enrolmentDeclarations.size()) < MAX_FREE_DECLARATIONS_PER_EXECUTION_YEAR);
     }
 
 }

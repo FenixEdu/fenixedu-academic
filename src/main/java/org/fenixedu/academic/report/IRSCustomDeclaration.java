@@ -22,10 +22,6 @@ import java.io.Serializable;
 import java.text.MessageFormat;
 
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.Event;
-import org.fenixedu.academic.domain.accounting.ResidenceEvent;
-import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
-import org.fenixedu.academic.domain.accounting.events.gratuity.StandaloneEnrolmentGratuityEvent;
 import org.fenixedu.academic.domain.person.IDDocumentType;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
@@ -199,15 +195,6 @@ public class IRSCustomDeclaration extends FenixReport {
             return getGratuityAmount().add(getOtherAmount()).add(getResidenceAmount());
         }
 
-        public void addAmount(final Event event, final int civilYear) {
-            if (event instanceof GratuityEventWithPaymentPlan || event instanceof StandaloneEnrolmentGratuityEvent) {
-                addGratuityAmount(event.getMaxDeductableAmountForLegalTaxes(civilYear));
-            } else if (event instanceof ResidenceEvent) {
-                addResidenceAmount(event.getMaxDeductableAmountForLegalTaxes(civilYear));
-            } else {
-                addOtherAmount(event.getMaxDeductableAmountForLegalTaxes(civilYear));
-            }
-        }
     }
 
     static private final long serialVersionUID = 1L;
@@ -231,8 +218,8 @@ public class IRSCustomDeclaration extends FenixReport {
         addParameter("personAddress", this.declaration.getPersonAddress());
         addParameter("personAddressArea", this.declaration.getPersonAddressArea());
         addParameter("personAddressPostalCode", this.declaration.getPersonAddressPostalCode());
-        addParameter("studentNumber", this.declaration.getStudentNumber() != null ? this.declaration.getStudentNumber()
-                .toString() : null);
+        addParameter("studentNumber",
+                this.declaration.getStudentNumber() != null ? this.declaration.getStudentNumber().toString() : null);
         addParameter("idDocumentType", this.declaration.getIdDocumentType().getLocalizedName());
         addParameter("documentIdNumber", this.declaration.getDocumentIdNumber());
 
@@ -253,8 +240,8 @@ public class IRSCustomDeclaration extends FenixReport {
 
     @Override
     public String getReportFileName() {
-        return MessageFormat.format("IRS-{0}-{1}-{2}", String.valueOf(this.declaration.getCivilYear()), this.declaration
-                .getDocumentIdNumber().trim().replace('/', '-').replace('\\', '-'),
+        return MessageFormat.format("IRS-{0}-{1}-{2}", String.valueOf(this.declaration.getCivilYear()),
+                this.declaration.getDocumentIdNumber().trim().replace('/', '-').replace('\\', '-'),
                 new DateTime().toString(YYYYMMMDD, getLocale()));
 
     }

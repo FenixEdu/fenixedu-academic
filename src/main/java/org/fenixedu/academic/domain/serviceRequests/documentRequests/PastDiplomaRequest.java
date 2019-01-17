@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.domain.serviceRequests.documentRequests;
 
-import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
@@ -74,11 +73,6 @@ public class PastDiplomaRequest extends PastDiplomaRequest_Base {
     @Override
     public boolean isManagedWithRectorateSubmissionBatch() {
         return false;
-    }
-
-    @Override
-    public EventType getEventType() {
-        return EventType.PAST_DEGREE_DIPLOMA_REQUEST;
     }
 
     @Override

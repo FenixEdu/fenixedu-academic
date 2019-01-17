@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import org.fenixedu.academic.domain.accounting.PaymentCode;
-import org.fenixedu.academic.domain.accounting.PaymentCodeMapping;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.period.CandidacyPeriod;
 import org.fenixedu.academic.domain.period.DegreeCandidacyForGraduatedPersonCandidacyPeriod;
@@ -125,7 +123,8 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
 
     public DegreeCandidacyForGraduatedPersonCandidacyPeriod getDegreeCandidacyForGraduatedPersonCandidacyPeriod() {
         final List<DegreeCandidacyForGraduatedPersonCandidacyPeriod> candidacyPeriods =
-                (List<DegreeCandidacyForGraduatedPersonCandidacyPeriod>) getCandidacyPeriods(DegreeCandidacyForGraduatedPersonCandidacyPeriod.class);
+                (List<DegreeCandidacyForGraduatedPersonCandidacyPeriod>) getCandidacyPeriods(
+                        DegreeCandidacyForGraduatedPersonCandidacyPeriod.class);
         return candidacyPeriods.isEmpty() ? null : candidacyPeriods.iterator().next();
     }
 
@@ -161,22 +160,14 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
         return hasCandidacyPeriods(StandaloneCandidacyPeriod.class);
     }
 
-    public PaymentCode findNewCodeInPaymentCodeMapping(final PaymentCode oldCode) {
-        for (final PaymentCodeMapping mapping : getPaymentCodeMappingsSet()) {
-            if (mapping.hasOldPaymentCode(oldCode)) {
-                return mapping.getNewPaymentCode();
-            }
-        }
-        return null;
-    }
-
     abstract public String getQualifiedName();
 
     abstract public boolean isCurrent();
 
     // static information
 
-    static public List<ExecutionInterval> readExecutionIntervalsWithCandidacyPeriod(final Class<? extends CandidacyPeriod> clazz) {
+    static public List<ExecutionInterval> readExecutionIntervalsWithCandidacyPeriod(
+            final Class<? extends CandidacyPeriod> clazz) {
         final List<ExecutionInterval> result = new ArrayList<ExecutionInterval>();
         for (final ExecutionInterval executionInterval : Bennu.getInstance().getExecutionIntervalsSet()) {
             if (executionInterval.hasCandidacyPeriods(clazz)) {
@@ -228,12 +219,13 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
      * Asserts that the objects being manipulated belong to the same type.
      * E.g: Avoids comparison of ExecutionYears with ExecutionSemesters
      */
-    public static <T extends ExecutionInterval> T assertExecutionIntervalType(final Class<T> clazz, final ExecutionInterval input) {
+    public static <T extends ExecutionInterval> T assertExecutionIntervalType(final Class<T> clazz,
+            final ExecutionInterval input) {
         T result = null;
         if (input != null) {
             if (!clazz.isAssignableFrom(input.getClass())) {
-                throw new DomainException("error.ExecutionInterval.unexpected", clazz.getSimpleName(), input.getClass()
-                        .getSimpleName());
+                throw new DomainException("error.ExecutionInterval.unexpected", clazz.getSimpleName(),
+                        input.getClass().getSimpleName());
             }
             result = (T) input;
         }

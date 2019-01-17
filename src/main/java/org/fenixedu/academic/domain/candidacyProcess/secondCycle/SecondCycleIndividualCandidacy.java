@@ -31,10 +31,6 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.PaymentCodeState;
-import org.fenixedu.academic.domain.accounting.events.candidacy.IndividualCandidacyEvent;
-import org.fenixedu.academic.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
-import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcess;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcessBean;
@@ -74,14 +70,6 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
         createFormationEntries(bean.getFormationConcludedBeanList(), bean.getFormationNonConcludedBeanList());
 
         editFormerIstStudentNumber(bean);
-
-        /*
-         * 06/04/2009 - The candidacy may not be associated with a person. In
-         * this case we will not create an Event
-         */
-        if (bean.getInternalPersonCandidacy()) {
-            createDebt(person);
-        }
 
         if (getSelectedDegreesSet().isEmpty()) {
             throw new DomainException("This shouldnt happen");
@@ -127,11 +115,6 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
         if (precedentDegreeInformation == null) {
             throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.precedentDegreeInformation");
         }
-    }
-
-    @Override
-    protected void createDebt(final Person person) {
-        new SecondCycleIndividualCandidacyEvent(this, person);
     }
 
     @Override
@@ -190,18 +173,6 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
             }
         }
 
-        IndividualCandidacyEvent individualCandidacyEvent = getEvent();
-        if (individualCandidacyEvent != null && individualCandidacyEvent.getAmountToPay().isPositive() && getEvent().isClosed()) {
-            individualCandidacyEvent.open();
-
-            Collection<AccountingEventPaymentCode> paymentCodes = individualCandidacyEvent.getAllPaymentCodes();
-
-            for (AccountingEventPaymentCode accountingEventPaymentCode : paymentCodes) {
-                accountingEventPaymentCode.setState(PaymentCodeState.NEW);
-            }
-
-        }
-
         if (getSelectedDegreesSet().isEmpty()) {
             throw new DomainException("this shouldnt happen");
         }
@@ -243,18 +214,6 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
                 newSCICSeriesGrade.setDegree(degree);
                 getIndividualCandidacySeriesGradeSet().add(newSCICSeriesGrade);
             }
-        }
-
-        IndividualCandidacyEvent individualCandidacyEvent = getEvent();
-        if (individualCandidacyEvent != null && individualCandidacyEvent.getAmountToPay().isPositive() && getEvent().isClosed()) {
-            individualCandidacyEvent.open();
-
-            Collection<AccountingEventPaymentCode> paymentCodes = individualCandidacyEvent.getAllPaymentCodes();
-
-            for (AccountingEventPaymentCode accountingEventPaymentCode : paymentCodes) {
-                accountingEventPaymentCode.setState(PaymentCodeState.NEW);
-            }
-
         }
 
         if (getSelectedDegreesSet().isEmpty()) {
@@ -359,8 +318,8 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 
         Formatter formatter = new Formatter(result);
 
-        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.CANDIDATE, "label.process.id"), getCandidacyProcess()
-                .getProcessCode());
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.CANDIDATE, "label.process.id"),
+                getCandidacyProcess().getProcessCode());
         PrecedentDegreeInformation precedentDegreeInformation = getCandidacyProcess().getPrecedentDegreeInformation();
         formatter.format("%s: %s\n",
                 BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.previous.degree"),
@@ -375,8 +334,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
         formatter.format("%s: %s\n",
                 BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.professionalStatus"),
                 StringUtils.isEmpty(getProfessionalStatus()) ? StringUtils.EMPTY : getProfessionalStatus());
-        formatter.format("%s: %s\n",
-                BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.otherEducation"),
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.otherEducation"),
                 StringUtils.isEmpty(getOtherEducation()) ? StringUtils.EMPTY : getOtherEducation());
         formatter.format("%s: %d\n",
                 BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.professionalExperience"),
@@ -385,12 +343,10 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
                 getAffinity() != null ? getAffinity() : BigDecimal.ZERO);
         formatter.format("%s: %d\n", BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.degreeNature"),
                 getDegreeNature() != null ? getDegreeNature() : 0);
-        formatter.format("%s: %f\n",
-                BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.candidacyGrade"),
+        formatter.format("%s: %f\n", BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.candidacyGrade"),
                 getCandidacyGrade() != null ? getCandidacyGrade() : BigDecimal.ZERO);
-        formatter
-                .format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.interviewGrade"),
-                        getInterviewGrade());
+        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.interviewGrade"),
+                getInterviewGrade());
         formatter.format("%s: %f\n",
                 BundleUtil.getString(Bundle.ACADEMIC, "label.SecondCycleIndividualCandidacy.seriesCandidacyGrade"),
                 getSeriesCandidacyGrade() != null ? getSeriesCandidacyGrade() : BigDecimal.ZERO);
@@ -426,12 +382,6 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
     @Override
     public boolean isSecondCycle() {
         return true;
-    }
-
-    public boolean isEventClosedButWithDebt() {
-        IndividualCandidacyEvent event = getEvent();
-
-        return !event.getNonAdjustingTransactions().isEmpty() && event.getAmountToPay().isPositive();
     }
 
     public SecondCycleIndividualCandidacySeriesGrade getSecondCycleIndividualCandidacySeriesGradeForDegree(Degree degree) {

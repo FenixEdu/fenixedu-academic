@@ -18,18 +18,12 @@
  */
 package org.fenixedu.academic.domain.organizationalStructure;
 
-import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.residence.ResidenceMonth;
 import org.fenixedu.academic.util.Money;
 
 public class ResidenceManagementUnit extends ResidenceManagementUnit_Base {
 
     public ResidenceManagementUnit() {
         super();
-    }
-
-    public boolean isPaymentEventAvailable(Person person, ResidenceMonth month) {
-        return month.isEventPresent(person);
     }
 
     public Integer getCurrentPaymentLimitDay() {

@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.serviceRequests.documentRequests;
 
-import org.fenixedu.academic.domain.accounting.EntryType;
-import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
 import org.fenixedu.academic.dto.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
 
@@ -47,15 +45,6 @@ public class GenericDeclarationRequest extends GenericDeclarationRequest_Base {
     @Override
     public String getDocumentTemplateKey() {
         return getClass().getName();
-    }
-
-    @Override
-    public EventType getEventType() {
-        return EventType.GENERIC_DECLARATION_REQUEST;
-    }
-
-    public EntryType getEntryType() {
-        return EntryType.GENERIC_DECLARATION_REQUEST_FEE;
     }
 
     @Override

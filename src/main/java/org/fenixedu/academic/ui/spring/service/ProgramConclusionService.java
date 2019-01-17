@@ -23,12 +23,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.fenixedu.academic.domain.accounting.EventType;
-import org.fenixedu.academic.domain.accounting.EventTypes;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
-import org.fenixedu.academic.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest;
-import org.fenixedu.academic.domain.serviceRequests.documentRequests.DiplomaRequest;
-import org.fenixedu.academic.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.LocalizedString;
@@ -48,13 +43,11 @@ import pt.ist.fenixframework.Atomic;
 @Service
 public class ProgramConclusionService {
 
-    private final Set<EventType> eventTypes;
+    @Deprecated
+    private final Set<Object> eventTypes;
 
     public ProgramConclusionService() {
-        eventTypes = new TreeSet<EventType>();
-        eventTypes.addAll(DegreeFinalizationCertificateRequest.getPossibleEventTypes());
-        eventTypes.addAll(DiplomaRequest.getPossibleEventTypes());
-        eventTypes.addAll(RegistryDiplomaRequest.getPossibleEventTypes());
+        eventTypes = new TreeSet<>();
     }
 
     public List<ProgramConclusion> getProgramConclusions() {
@@ -63,18 +56,18 @@ public class ProgramConclusionService {
 
     @Atomic
     public ProgramConclusion createProgramConclusion(LocalizedString name, LocalizedString description,
-            LocalizedString graduationTitle, LocalizedString graduationLevel, boolean isAverageEditable,
-            boolean isAlumniProvider, boolean isSkipValidation, RegistrationStateType targetState, EventTypes eventTypes) {
+            LocalizedString graduationTitle, LocalizedString graduationLevel, boolean isAverageEditable, boolean isAlumniProvider,
+            boolean isSkipValidation, RegistrationStateType targetState) {
         return new ProgramConclusion(name, description, graduationTitle, graduationLevel, isAverageEditable, isAlumniProvider,
-                isSkipValidation, targetState, eventTypes);
+                isSkipValidation, targetState);
     }
 
     @Atomic
     public void editProgramConclusion(ProgramConclusion programConclusion, LocalizedString name, LocalizedString description,
-            LocalizedString graduationTitle, LocalizedString graduationLevel, boolean isAverageEditable,
-            boolean isAlumniProvider, boolean isSkipValidation, RegistrationStateType targetState, EventTypes eventTypes) {
+            LocalizedString graduationTitle, LocalizedString graduationLevel, boolean isAverageEditable, boolean isAlumniProvider,
+            boolean isSkipValidation, RegistrationStateType targetState) {
         programConclusion.edit(name, description, graduationTitle, graduationLevel, isAverageEditable, isAlumniProvider,
-                isSkipValidation, targetState, eventTypes);
+                isSkipValidation, targetState);
     }
 
     @Atomic
@@ -82,7 +75,8 @@ public class ProgramConclusionService {
         programConclusion.delete();
     }
 
-    public Set<EventType> getEventTypes() {
+    @Deprecated
+    public Set<Object> getEventTypes() {
         return eventTypes;
     }
 }

@@ -27,10 +27,8 @@
 	<!ENTITY markSheet SYSTEM "/fenixedu-academic/schemas/markSheet-schemas.xml">
 	<!ENTITY messaging SYSTEM "/fenixedu-academic/schemas/messaging-schemas.xml">
 	<!ENTITY party SYSTEM "/fenixedu-academic/schemas/party-schemas.xml">
-	<!ENTITY payments SYSTEM "/fenixedu-academic/schemas/payments-schemas.xml">
 	<!ENTITY candidacy SYSTEM "/fenixedu-academic/schemas/candidacy-schemas.xml">
 	<!ENTITY execution SYSTEM "/fenixedu-academic/schemas/execution-schemas.xml">
-	<!ENTITY prices SYSTEM "/fenixedu-academic/schemas/prices-schemas.xml">
 	<!ENTITY serviceRequests SYSTEM "/fenixedu-academic/schemas/serviceRequests-schemas.xml">
     <!ENTITY executionCourse SYSTEM "/fenixedu-academic/schemas/executionCourse-schemas.xml"> 
 	<!ENTITY academicAdminOffice SYSTEM "/fenixedu-academic/schemas/academicAdminOffice-schemas.xml">	
@@ -602,10 +600,8 @@
 	&messaging;
 	&space;
 	&party;
-	&payments;
 	&candidacy;
 	&execution;
-	&prices;
 	&serviceRequests;
     &executionCourse;
 	&academicAdminOffice;

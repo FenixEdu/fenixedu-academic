@@ -41,9 +41,6 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Qualification;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
-import org.fenixedu.academic.domain.accounting.AccountingTransaction;
-import org.fenixedu.academic.domain.accounting.Installment;
-import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
@@ -55,7 +52,6 @@ import org.fenixedu.academic.domain.student.registrationStates.RegistrationState
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -69,8 +65,8 @@ public class StudentLine implements java.io.Serializable {
     private static final Logger logger = LoggerFactory.getLogger(StudentLine.class);
 
     protected static final List<Integer> STUDENTS_WITH_CET = Arrays.asList(new Integer[] { 70855, 70696, 70757, 70786, 55647,
-            59218, 70749, 70856, 70678, 70681, 70712, 70737, 70837, 70793, 10425, 38565, 70783, 70664, 70859, 70766, 70844,
-            48936, 50315, 70788, 70794, 70795, 70804, 70809, 70716, 70719, 70763, 70776, 70841, 70923 });
+            59218, 70749, 70856, 70678, 70681, 70712, 70737, 70837, 70793, 10425, 38565, 70783, 70664, 70859, 70766, 70844, 48936,
+            50315, 70788, 70794, 70795, 70804, 70809, 70716, 70719, 70763, 70776, 70841, 70923 });
 
     public ExecutionYear forExecutionYear;
 
@@ -335,50 +331,6 @@ public class StudentLine implements java.io.Serializable {
         }
 
         return getFirstEnrolmentOnCurrentExecutionYear();
-    }
-
-    public Money getGratuityAmount() {
-        if (getRegistration() == null) {
-            return Money.ZERO;
-        }
-
-        if (!getRegistration().hasToPayGratuityOrInsurance()) {
-            return Money.ZERO;
-        }
-
-        GratuityEventWithPaymentPlan event =
-                getStudentCurricularPlan().getGratuityEvent(getForExecutionYear(), GratuityEventWithPaymentPlan.class);
-
-        if (event == null) {
-            return Money.ZERO;
-        }
-
-        return event.getOriginalAmountToPay();
-    }
-
-    public LocalDate getFirstInstallmentPaymentLocalDate() {
-        if (!getRegistration().hasToPayGratuityOrInsurance()) {
-            return null;
-        }
-
-        GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan =
-                getStudentCurricularPlan().getGratuityEvent(getForExecutionYear(), GratuityEventWithPaymentPlan.class);
-
-        Installment firstInstallment = gratuityEventWithPaymentPlan.getInstallments().iterator().next();
-
-        /*
-         * iterate the non adjusting accounting transactions until its paid
-         */
-        Money paidForFirstInstallment = Money.ZERO;
-        for (AccountingTransaction accountingTransaction : gratuityEventWithPaymentPlan.getNonAdjustingTransactions()) {
-            paidForFirstInstallment = paidForFirstInstallment.add(accountingTransaction.getAmountWithAdjustment());
-
-            if (paidForFirstInstallment.greaterOrEqualThan(firstInstallment.getAmount())) {
-                return accountingTransaction.getWhenRegistered().toLocalDate();
-            }
-        }
-
-        return firstInstallment.getEndDate().toLocalDate();
     }
 
     public String getRegime() {
@@ -681,12 +633,11 @@ public class StudentLine implements java.io.Serializable {
         for (final Registration registration : student.getRegistrationsSet()) {
 
             if (registration.isBolonha() && registration.hasAnyEnrolmentsIn(oneYearAgo)) {
-                result =
-                        result.add(
-                                calculateApprovedECTS(registration.getLastStudentCurricularPlan()
-                                        .getAprovedEnrolmentsInExecutionPeriod(oneYearAgo.getFirstExecutionPeriod()))).add(
-                                calculateApprovedECTS(registration.getLastStudentCurricularPlan()
-                                        .getAprovedEnrolmentsInExecutionPeriod(oneYearAgo.getLastExecutionPeriod())));
+                result = result
+                        .add(calculateApprovedECTS(registration.getLastStudentCurricularPlan()
+                                .getAprovedEnrolmentsInExecutionPeriod(oneYearAgo.getFirstExecutionPeriod())))
+                        .add(calculateApprovedECTS(registration.getLastStudentCurricularPlan()
+                                .getAprovedEnrolmentsInExecutionPeriod(oneYearAgo.getLastExecutionPeriod())));
             }
         }
 
@@ -866,8 +817,8 @@ public class StudentLine implements java.io.Serializable {
     }
 
     protected void appendStudentNumberIsDifferent(StringBuilder observationsBuilder) {
-        observationsBuilder.append(String.format("Os numeros de aluno diferem '%s' / '%s'. ", studentNumber, getStudent()
-                .getNumber()));
+        observationsBuilder
+                .append(String.format("Os numeros de aluno diferem '%s' / '%s'. ", studentNumber, getStudent().getNumber()));
 
     }
 
@@ -876,8 +827,8 @@ public class StudentLine implements java.io.Serializable {
     }
 
     protected void appendDegreeIsNotEqual(StringBuilder observationsBuilder) {
-        observationsBuilder.append(String.format("Os cursos diferem '%s' / '%s'. ", degreeName, getRegistration().getDegree()
-                .getNameI18N().getContent()));
+        observationsBuilder.append(String.format("Os cursos diferem '%s' / '%s'. ", degreeName,
+                getRegistration().getDegree().getNameI18N().getContent()));
     }
 
     protected void appendNameIsNotEqual(StringBuilder observationsBuilder) {
@@ -898,8 +849,8 @@ public class StudentLine implements java.io.Serializable {
     }
 
     protected void appendPersonNotFound(StringBuilder observationsBuilder) {
-        observationsBuilder.append(String
-                .format("O aluno não foi encontrado com o numero de aluno nem com o nº de identificação. "));
+        observationsBuilder
+                .append(String.format("O aluno não foi encontrado com o numero de aluno nem com o nº de identificação. "));
     }
 
     public String getInstitutionCode() {
@@ -1023,7 +974,6 @@ public class StudentLine implements java.io.Serializable {
             getNumberOfApprovedEctsOneYearAgo();
             getCurricularYearInCurrentYear();
             getNumberOfEnrolledECTS();
-            getGratuityAmount();
             getNumberOfMonthsExecutionYear();
             getFirstMonthOfPayment();
             getOwnerOfCETQualification();
@@ -1079,25 +1029,20 @@ public class StudentLine implements java.io.Serializable {
     }
 
     private String getDefaultInstitutionName() {
-        return MessageFormat
-                .format(BundleUtil
-                        .getString(
-                                Bundle.ACADEMIC,
-                                "label.org.fenixedu.academic.ui.struts.action.administrativeOffice.scholarship.utl.report.ReportStudentsUTLCandidates.defaultInstitutionName"),
-                        Unit.getInstitutionName().getContent());
+        return MessageFormat.format(
+                BundleUtil.getString(Bundle.ACADEMIC,
+                        "label.org.fenixedu.academic.ui.struts.action.administrativeOffice.scholarship.utl.report.ReportStudentsUTLCandidates.defaultInstitutionName"),
+                Unit.getInstitutionName().getContent());
     }
 
     private String getDefaultInstitutionCode() {
-        return BundleUtil
-                .getString(
-                        Bundle.ACADEMIC,
-                        "label.org.fenixedu.academic.ui.struts.action.administrativeOffice.scholarship.utl.report.ReportStudentsUTLCandidates.defaultInstitutionCode");
+        return BundleUtil.getString(Bundle.ACADEMIC,
+                "label.org.fenixedu.academic.ui.struts.action.administrativeOffice.scholarship.utl.report.ReportStudentsUTLCandidates.defaultInstitutionCode");
     }
 
     private Registration getActiveRegistration(Student student) {
-        return student.getActiveRegistrationStream()
-            .filter(r -> r.getDegree().getDegreeType().isEmpty())
-            .findAny().orElse(student.getLastRegistration());
+        return student.getActiveRegistrationStream().filter(r -> r.getDegree().getDegreeType().isEmpty()).findAny()
+                .orElse(student.getLastRegistration());
     }
 
 }

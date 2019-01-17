@@ -19,7 +19,6 @@
 package org.fenixedu.academic.domain.serviceRequests;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
@@ -64,11 +63,6 @@ public class FreeSolicitationAcademicRequest extends FreeSolicitationAcademicReq
     @Override
     public AcademicServiceRequestType getAcademicServiceRequestType() {
         return AcademicServiceRequestType.FREE_SOLICITATION_ACADEMIC_REQUEST;
-    }
-
-    @Override
-    public EventType getEventType() {
-        return null;
     }
 
     @Override

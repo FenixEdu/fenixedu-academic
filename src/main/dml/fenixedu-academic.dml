@@ -50,21 +50,6 @@ enum org.fenixedu.academic.domain.ShiftType                                     
 enum org.fenixedu.academic.domain.UnitBoardPermittedGroupType                                                          as UnitBoardPermittedGroupType;
 enum org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType				  			  as AcademicOperationType;
 enum org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType.Scope                     as AcademicOperationTypeScope;
-enum org.fenixedu.academic.domain.accounting.AccountType                                                               as AccountType;
-enum org.fenixedu.academic.domain.accounting.CreditNoteState                                                           as CreditNoteState;
-enum org.fenixedu.academic.domain.accounting.EntryType                                                                 as EntryType;
-enum org.fenixedu.academic.domain.accounting.EventState                                                                as EventState;
-enum org.fenixedu.academic.domain.accounting.EventType                                                                 as EventType;
-enum org.fenixedu.academic.domain.accounting.PaymentCodeState                                                          as PaymentCodeState;
-enum org.fenixedu.academic.domain.accounting.PaymentCodeType                                                           as PaymentCodeType;
-enum org.fenixedu.academic.domain.accounting.PaymentMode                                                               as PaymentMode;
-enum org.fenixedu.academic.domain.accounting.ReceiptState                                                              as ReceiptState;
-enum org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationType      as AdministrativeOfficeFeeAndInsuranceExemptionJustificationType;
-enum org.fenixedu.academic.domain.accounting.events.InsuranceExemptionJustificationType      						  as InsuranceExemptionJustificationType;
-enum org.fenixedu.academic.domain.accounting.events.PenaltyExemptionJustificationType                                  as PenaltyExemptionJustificationType;
-enum org.fenixedu.academic.domain.accounting.events.candidacy.CandidacyExemptionJustificationType                      as CandidacyExemptionJustificationType;
-enum org.fenixedu.academic.domain.accounting.events.gratuity.GratuityExemptionJustificationType                        as GratuityExemptionJustificationType;
-enum org.fenixedu.academic.domain.accounting.events.gratuity.ExternalScholarshipGratuityExemptionJustificationType     as ExternalScholarshipGratuityExemptionJustificationType;
 enum org.fenixedu.academic.domain.administrativeOffice.AdministrativeOfficeType                                        as AdministrativeOfficeType;
 enum org.fenixedu.academic.domain.branch.BranchType                                                                    as OldBranchType;
 enum org.fenixedu.academic.domain.candidacyProcess.CandidacyProcessState                                               as CandidacyProcessState;
@@ -124,8 +109,6 @@ enum org.fenixedu.academic.domain.phd.thesis.PhdThesisFinalGrade														  
 enum org.fenixedu.academic.domain.phd.thesis.meeting.PhdMeetingSchedulingProcessStateType							  as PhdMeetingSchedulingProcessStateType;
 enum org.fenixedu.academic.domain.phd.migration.PhdMigrationProcessStateType											  as PhdMigrationProcessStateType;
 enum org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFileType                                 as IndividualCandidacyDocumentFileType;
-enum org.fenixedu.academic.domain.accounting.events.DegreeFinalizationCertificateRequestJustificationType              as DegreeFinalizationCertificateRequestJustificationType;
-enum org.fenixedu.academic.domain.accounting.events.serviceRequests.AcademicEventJustificationType                     as AcademicEventJustificationType;
 enum org.fenixedu.academic.domain.EntryPhase                                                                           as EntryPhase;
 enum org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationContext                                                as EnrolmentEvaluationContext;
 enum org.fenixedu.academic.domain.phd.debts.PhdEventExemptionJustificationType                                         as PhdEventExemptionJustificationType;
@@ -134,7 +117,6 @@ enum org.fenixedu.academic.domain.candidacyProcess.erasmus.ErasmusAlertEntityTyp
 enum org.fenixedu.academic.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType								  as ErasmusApplyForSemesterType;
 enum org.fenixedu.academic.domain.candidacyProcess.erasmus.ExecutedActionType										  as ExecutedActionType;
 enum org.fenixedu.academic.domain.OperationType																		  as OperationType;
-enum org.fenixedu.academic.domain.accounting.report.GratuityReportQueueJobType                                         as GratuityReportQueueJobType;
 enum org.fenixedu.academic.domain.phd.candidacy.PhdCandidacyPeriodType												  as PhdCandidacyPeriodType;
 enum org.fenixedu.academic.domain.phd.thesis.PhdJuryElementsRatificationEntity										  as PhdJuryElementsRatificationEntity;
 enum org.fenixedu.academic.domain.candidacyProcess.erasmus.NationalIdCardAvoidanceQuestion							  as NationalIdCardAvoidanceQuestion;
@@ -390,12 +372,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
     }
 }
 
-valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
-
-    externalizeWith {
-        JsonElement toJson();
-    }
-}
 
 /*
 *
@@ -917,10 +893,6 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
     
     class documents.GeneratedDocumentWithoutSource extends documents.GeneratedDocument;
     
-    class documents.CreditNoteGeneratedDocument extends documents.GeneratedDocument;
-
-    class documents.ReceiptGeneratedDocument extends documents.GeneratedDocument;
-    
     class documents.DocumentRequestGeneratedDocument extends documents.GeneratedDocument;
 
             class documents.AnnualIRSDeclarationDocument extends documents.GeneratedDocument {
@@ -959,11 +931,6 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
 
     class Holiday  {
         Partial date;
-    }
-
-    class InsuranceValue  {
-        BigDecimal annualValueBigDecimal;
-        YearMonthDay endDateYearMonthDay;
     }
 
     class Lesson  {
@@ -1036,13 +1003,6 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
     	OccupationPeriodType periodType;
     	Integer semester;
     	CurricularYearList curricularYears;
-    }
-
-    class PaymentPhase  {
-        String description;
-        YearMonthDay endDateYearMonthDay;
-        YearMonthDay startDateYearMonthDay;
-        Double value;
     }
 
     class Price  {
@@ -1191,693 +1151,6 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
 
     class WrittenEvaluationEnrolment  {
     }
-
-    class accounting.Account  {
-        AccountType accountType;
-        DateTime creationDate;
-    }
-
-    class accounting.AccountingTransaction  {
-    }
-
-    class accounting.AccountingTransactionDetail  {
-        String comments;
-        PaymentMode paymentMode;
-        DateTime whenProcessed;
-        DateTime whenRegistered;
-    }
-
-        class accounting.accountingTransactions.detail.SibsTransactionDetail extends accounting.AccountingTransactionDetail {
-            String sibsCode;
-            String sibsTransactionId;
-        }
-
-        class accounting.accountingTransactions.InstallmentAccountingTransaction extends accounting.AccountingTransaction {
-        }
-
-
-    class accounting.CreditNote  {
-        Integer number;
-        CreditNoteState state;
-        DateTime whenCreated;
-        DateTime whenUpdated;
-        Integer year;
-    }
-
-    class accounting.CreditNoteEntry  {
-        Money amount;
-    }
-
-    class accounting.Entry  {
-        EntryType entryType;
-        Money originalAmount;
-    }
-
-    class accounting.Event  {
-        String cancelJustification;
-        EventState eventState;
-        DateTime eventStateDate;
-        EventType eventType;
-        DateTime whenOccured;
-        String createdBy;
-        LocalDate whenSentLetter;
-    }
-
-        class accounting.AcademicEvent extends accounting.Event {
-        
-        }
-    
-        class accounting.ResidenceEvent extends accounting.Event {
-            Money roomValue;
-            String room;
-        }
-
-        class accounting.events.AnnualEvent extends accounting.AcademicEvent {
-        }
-
-            class accounting.events.AdministrativeOfficeFeeAndInsuranceEvent extends accounting.events.AnnualEvent {
-                YearMonthDay paymentEndDate;
-            }
-            
-                class accounting.events.PastAdministrativeOfficeFeeAndInsuranceEvent extends accounting.events.AdministrativeOfficeFeeAndInsuranceEvent {
-                    Money pastAdministrativeOfficeFeeAndInsuranceAmount;
-                }
-            
-            class accounting.events.gratuity.GratuityEvent extends accounting.events.AnnualEvent {
-            }
-
-                class accounting.events.gratuity.DfaGratuityEvent extends accounting.events.gratuity.GratuityEvent {
-                }
-
-                class accounting.events.gratuity.StandaloneEnrolmentGratuityEvent extends accounting.events.gratuity.GratuityEvent {
-                }
-
-                class accounting.events.gratuity.GratuityEventWithPaymentPlan extends accounting.events.gratuity.GratuityEvent {
-                }
-
-                class accounting.events.gratuity.PastDegreeGratuityEvent extends accounting.events.gratuity.GratuityEvent {
-                    Money pastDegreeGratuityAmount;
-                }
-
-                class accounting.events.gratuity.SpecializationDegreeGratuityEvent extends accounting.events.gratuity.GratuityEvent {
-                }
-
-            class accounting.events.insurance.InsuranceEvent extends accounting.events.AnnualEvent {
-            }
-
-        class accounting.events.EnrolmentEvent extends accounting.AcademicEvent {
-        }
-
-	        class accounting.events.ImprovementOfApprovedEnrolmentEvent extends accounting.events.EnrolmentEvent {
-    	    }
-
-        	class accounting.events.SpecialSeasonEnrolmentEvent extends accounting.events.EnrolmentEvent {
-        	}
-
-        class accounting.events.dfa.DFACandidacyEvent extends accounting.AcademicEvent {
-        }
-        
-        class accounting.events.dfa.DfaRegistrationEvent extends accounting.AcademicEvent {
-        }
-        
-        class accounting.events.specializationDegree.SpecializationDegreeRegistrationEvent extends accounting.AcademicEvent {
-        }
-
-        class accounting.events.serviceRequests.AcademicServiceRequestEvent extends accounting.AcademicEvent {
-        }
-        
-            class accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent extends accounting.events.serviceRequests.AcademicServiceRequestEvent {
-            }
-
-                class accounting.events.serviceRequests.CertificateRequestEvent extends accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
-                }
-                
-                class accounting.events.serviceRequests.DuplicateRequestEvent extends accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
-                }
-    
-                    class accounting.events.serviceRequests.PastCertificateRequestEvent extends accounting.events.serviceRequests.CertificateRequestEvent {
-                        Money pastAmount;
-                    }
-                    
-                    class accounting.events.serviceRequests.DegreeFinalizationCertificateRequestEvent extends accounting.events.serviceRequests.CertificateRequestEvent {
-                    }
-
-                class accounting.events.serviceRequests.DeclarationRequestEvent extends accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
-                }
-
-                class accounting.events.serviceRequests.RegistryDiplomaRequestEvent extends accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
-                }
-    
-                class accounting.events.serviceRequests.DiplomaRequestEvent extends accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
-                }
-    
-                    class accounting.events.serviceRequests.PastDegreeDiplomaRequestEvent extends accounting.events.serviceRequests.DiplomaRequestEvent {
-                        Money pastAmount;
-                    }
-
-                    class accounting.events.serviceRequests.BolonhaDegreeDiplomaRequestEvent extends accounting.events.serviceRequests.DiplomaRequestEvent {
-                    }
-    
-                    class accounting.events.serviceRequests.BolonhaMasterDegreeDiplomaRequestEvent extends accounting.events.serviceRequests.DiplomaRequestEvent {
-                    }
-    
-                    class accounting.events.serviceRequests.BolonhaAdvancedFormationDiplomaRequestEvent extends accounting.events.serviceRequests.DiplomaRequestEvent {
-                    }
-                    
-                    class accounting.events.serviceRequests.BolonhaAdvancedSpecializationDiplomaRequestEvent extends accounting.events.serviceRequests.DiplomaRequestEvent {
-                    }
-    
-                class accounting.events.serviceRequests.StudentReingressionRequestEvent extends accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
-                }
-
-                    class accounting.events.serviceRequests.PastStudentReingressionRequestEvent extends accounting.events.serviceRequests.StudentReingressionRequestEvent {
-                        Money pastAmount;
-                    }
-                
-                class accounting.events.serviceRequests.EquivalencePlanRequestEvent extends accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
-                }
-
-                    class accounting.events.serviceRequests.PastEquivalencePlanRequestEvent extends accounting.events.serviceRequests.EquivalencePlanRequestEvent {
-                        Money pastAmount;
-                    }
-
-                class accounting.events.serviceRequests.PastEquivalencePlanRevisionRequestEvent extends accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
-                    Money pastAmount;
-                }
-                
-                class accounting.events.serviceRequests.PhotocopyRequestEvent extends accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
-                }
-
-                    class accounting.events.serviceRequests.PastPhotocopyRequestEvent extends accounting.events.serviceRequests.PhotocopyRequestEvent {
-                        Money pastAmount;
-                    }
-
-                class accounting.events.serviceRequests.PastCourseGroupChangeRequestEvent extends accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
-                    Money pastAmount;
-                }
-
-                class accounting.events.serviceRequests.PastExtraExamRequestEvent extends accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
-                    Money pastAmount;
-                }
-
-                class accounting.events.serviceRequests.PastFreeSolicitationAcademicRequestEvent extends accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
-                    Money pastAmount;
-                }
-
-                class accounting.events.serviceRequests.PartialRegistrationRegimeRequestEvent extends accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
-                }
-		
-			class accounting.events.serviceRequests.PhdAcademicServiceRequestEvent extends accounting.events.serviceRequests.AcademicServiceRequestEvent {
-			}
-			
-				class accounting.events.serviceRequests.PhdRegistryDiplomaRequestEvent extends accounting.events.serviceRequests.PhdAcademicServiceRequestEvent {
-				}
-				
-				class accounting.events.serviceRequests.PhdDiplomaRequestEvent extends accounting.events.serviceRequests.PhdAcademicServiceRequestEvent {
-				}
-
-				class accounting.events.serviceRequests.PhdFinalizationCertificateRequestEvent extends accounting.events.serviceRequests.PhdAcademicServiceRequestEvent {
-				}
-				
-        class accounting.events.EnrolmentOutOfPeriodEvent extends accounting.AcademicEvent {
-            Integer numberOfDelayDays;
-        }
-        
-        class accounting.events.candidacy.IndividualCandidacyEvent extends accounting.AcademicEvent {
-        }
-        
-            class accounting.events.candidacy.Over23IndividualCandidacyEvent extends accounting.events.candidacy.IndividualCandidacyEvent {
-            }
-            
-            class accounting.events.candidacy.SecondCycleIndividualCandidacyEvent extends accounting.events.candidacy.IndividualCandidacyEvent {
-            }
-            
-            class accounting.events.candidacy.DegreeCandidacyForGraduatedPersonEvent extends accounting.events.candidacy.IndividualCandidacyEvent {
-            }
-
-            class accounting.events.candidacy.DegreeChangeIndividualCandidacyEvent extends accounting.events.candidacy.IndividualCandidacyEvent {
-            }
-            
-            class accounting.events.candidacy.DegreeTransferIndividualCandidacyEvent extends accounting.events.candidacy.IndividualCandidacyEvent {
-            }
-
-            class accounting.events.candidacy.StandaloneIndividualCandidacyEvent extends accounting.events.candidacy.IndividualCandidacyEvent {
-            }
-
-    class accounting.Exemption  {
-        DateTime whenCreated;
-    }
-
-        class accounting.events.PenaltyExemption extends accounting.Exemption {
-        }
-
-            class accounting.events.AdministrativeOfficeFeeAndInsurancePenaltyExemption extends accounting.events.PenaltyExemption {
-            }
-
-            class accounting.events.ImprovementOfApprovedEnrolmentPenaltyExemption extends accounting.events.PenaltyExemption {
-            }
-
-            class accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption extends accounting.events.PenaltyExemption {
-            }
-            
-        class accounting.events.gratuity.GratuityExemption extends accounting.Exemption {
-        }
-
-            class accounting.events.gratuity.PercentageGratuityExemption extends accounting.events.gratuity.GratuityExemption {
-                BigDecimal percentage;
-            }
-
-            class accounting.events.gratuity.ValueGratuityExemption extends accounting.events.gratuity.GratuityExemption {
-                Money value;
-            }
-
-        class accounting.events.candidacy.SecondCycleIndividualCandidacyExemption extends accounting.Exemption {
-        }
-
-        class accounting.events.AdministrativeOfficeFeeAndInsuranceExemption extends accounting.Exemption {
-        }
-
-        class accounting.events.AdministrativeOfficeFeeExemption extends accounting.Exemption {
-        }
-        
-        class accounting.events.InsuranceExemption extends accounting.Exemption {
-        }
-        
-        class accounting.events.AcademicEventExemption extends accounting.Exemption {
-            Money value;
-        }
-
-    class accounting.Discount  {
-        DateTime whenCreated;
-        String username;
-        Money amount;
-        }
-
-    class accounting.Installment  {
-        Money amount;
-        YearMonthDay endDate;
-        Integer installmentOrder;
-        YearMonthDay startDate;
-        DateTime whenCreated;
-    }
-
-        class accounting.installments.InstallmentWithPenalty extends accounting.Installment {
-            BigDecimal penaltyPercentage;
-        }
-
-            class accounting.installments.InstallmentWithMonthlyPenalty extends accounting.installments.InstallmentWithPenalty {
-                Integer maxMonthsToApplyPenalty;
-                YearMonthDay whenStartToApplyPenalty;
-            }
-
-            class accounting.installments.PartialRegimeInstallment extends accounting.installments.InstallmentWithMonthlyPenalty {
-                Boolean penaltyAppliable;
-                BigDecimal ectsForAmount;
-            }
-            
-            class accounting.installments.InstallmentForFirstTimeStudents extends accounting.installments.InstallmentWithMonthlyPenalty {
-            	Integer numberOfDaysToStartApplyingPenalty;
-            }
-
-    class accounting.PaymentCode  {
-        String code;
-        YearMonthDay endDate;
-        String entityCode;
-        Money maxAmount;
-        Money minAmount;
-        YearMonthDay startDate;
-        PaymentCodeState state;
-        PaymentCodeType type;
-        DateTime whenCreated;
-        DateTime whenUpdated;
-    }
-
-        class accounting.paymentCodes.AccountingEventPaymentCode extends accounting.PaymentCode {
-        }
-
-            class accounting.paymentCodes.InstallmentPaymentCode extends accounting.paymentCodes.AccountingEventPaymentCode {
-            }
-            
-            class accounting.paymentCodes.IndividualCandidacyPaymentCode extends accounting.paymentCodes.AccountingEventPaymentCode {
-            }
-
-        class accounting.paymentCodes.rectorate.RectoratePaymentCode extends accounting.PaymentCode {
-        }
-
-    class accounting.PaymentCodeMapping  {
-    }
-
-    class accounting.PaymentPlan  {
-        Boolean defaultPlan;
-        DateTime whenCreated;
-    }
-    
-        class accounting.ServiceAgreementTemplatePaymentPlan extends accounting.PaymentPlan {
-        }
-            
-            class accounting.paymentPlans.GratuityPaymentPlan extends accounting.ServiceAgreementTemplatePaymentPlan {
-            }
-
-                class accounting.paymentPlans.FullGratuityPaymentPlan extends accounting.paymentPlans.GratuityPaymentPlan {
-                }
-
-	                class accounting.paymentPlans.FullGratuityPaymentPlanForAliens extends accounting.paymentPlans.FullGratuityPaymentPlan {
-    	            }
-
-                class accounting.paymentPlans.GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester extends accounting.paymentPlans.GratuityPaymentPlan {
-                }
-                
-                class accounting.paymentPlans.FullGratuityPaymentPlanForPartialRegime extends accounting.paymentPlans.GratuityPaymentPlan {
-                }
-                
-                    class accounting.paymentPlans.GratuityPaymentPlanForPartialRegimeEnroledOnlyInSecondSemester extends accounting.paymentPlans.FullGratuityPaymentPlanForPartialRegime {
-                    }
-                
-                class accounting.paymentPlans.FullGratuityPaymentPlanForFirstTimeInstitutionStudents extends accounting.paymentPlans.GratuityPaymentPlan {
-                }
-
-                class accounting.paymentPlans.GratuityForStudentsInSecondCurricularYear extends accounting.paymentPlans.GratuityPaymentPlan {
-                }
-                
-                class accounting.paymentPlans.GratuityForStudentsInSecondCurricularYearForPartialRegime extends accounting.paymentPlans.GratuityPaymentPlan {
-                }
-
-        class accounting.ServiceAgreementPaymentPlan extends accounting.PaymentPlan {
-        }
-        
-            class accounting.paymentPlans.CustomGratuityPaymentPlan extends accounting.ServiceAgreementPaymentPlan {
-            }
-
-    class accounting.PostingRule  {
-        DateTime creationDate;
-        DateTime endDate;
-        EventType eventType;
-        DateTime startDate;
-    }
-
-        class accounting.postingRules.AdministrativeOfficeFeeAndInsurancePR extends accounting.PostingRule {
-        }
-
-        class accounting.postingRules.GenericSingleEntryTypePR extends accounting.PostingRule {
-            EntryType entryType;
-        }
-        
-        	class accounting.postingRules.DuplicateRequestPR extends accounting.postingRules.GenericSingleEntryTypePR {
-        	}
-
-            class accounting.postingRules.EnrolmentOutOfPeriodPR extends accounting.postingRules.GenericSingleEntryTypePR{
-                Money baseAmount;
-                Money amountPerDay;
-                Money maxAmount;
-            }
-
-            class accounting.postingRules.BaseAmountPlusAmountPerPagePR extends accounting.postingRules.GenericSingleEntryTypePR{
-                Money baseAmount;
-                Money amountPerPage;
-            }
-
-                class accounting.postingRules.serviceRequests.PhotocopyRequestPR extends accounting.postingRules.BaseAmountPlusAmountPerPagePR {
-                }
-
-                class accounting.postingRules.serviceRequests.CourseLoadRequestPR extends accounting.postingRules.BaseAmountPlusAmountPerPagePR {
-                    Money amountFirstPage;
-                }
-                
-                    class accounting.postingRules.serviceRequests.ExternalCourseLoadRequestPR extends accounting.postingRules.serviceRequests.CourseLoadRequestPR {
-                    }
-                
-                class accounting.postingRules.serviceRequests.ProgramCertificateRequestPR extends accounting.postingRules.BaseAmountPlusAmountPerPagePR {
-                    Money amountFirstPage;
-                }
-                
-                    class accounting.postingRules.serviceRequests.ExternalProgramCertificateRequestPR extends accounting.postingRules.serviceRequests.ProgramCertificateRequestPR {
-                    }
-                
-                class accounting.postingRules.serviceRequests.ExamDateCertificateRequestPR extends accounting.postingRules.BaseAmountPlusAmountPerPagePR {
-                }
-
-            class accounting.postingRules.BaseAmountPlusAmountPerUnitPR extends accounting.postingRules.GenericSingleEntryTypePR {
-                Money amountPerUnit;
-                Money baseAmount;
-                Money maximumAmount;
-            }
-
-                class accounting.postingRules.serviceRequests.CertificateRequestPR extends accounting.postingRules.BaseAmountPlusAmountPerUnitPR {
-                    Money amountPerPage;
-                }
-                	class accounting.postingRules.serviceRequests.CertificateRequestWithoutBasePR extends accounting.postingRules.serviceRequests.CertificateRequestPR {
-                	}
-
-                    class accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR extends accounting.postingRules.serviceRequests.CertificateRequestPR {
-                    }
-
-						class accounting.postingRules.serviceRequests.EnrolmentCertificateRequestWithCeilingInTotalAmountForUnitsPR extends accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR {
-	                    }
-					                    
-                    class accounting.postingRules.serviceRequests.StandaloneEnrolmentCertificateRequestPR extends accounting.postingRules.serviceRequests.CertificateRequestPR {
-                    }
-                    
-                    class accounting.postingRules.serviceRequests.ExtraCurricularEnrolmentCertificateRequestPR extends accounting.postingRules.serviceRequests.CertificateRequestPR {
-                    }
-                    
-                    class accounting.postingRules.serviceRequests.DegreeFinalizationCertificateRequestPR extends accounting.postingRules.serviceRequests.CertificateRequestPR {
-                    }
-
-						class accounting.postingRules.serviceRequests.DegreeFinalizationCertificateRequestWithCeilingInTotalAmountForUnitsPR extends accounting.postingRules.serviceRequests.DegreeFinalizationCertificateRequestPR {
-						}
-					
-					class accounting.postingRules.serviceRequests.ApprovementCertificateRequestPR extends accounting.postingRules.serviceRequests.CertificateRequestPR {
-					}
-						
-            class accounting.postingRules.FixedAmountPR extends accounting.postingRules.GenericSingleEntryTypePR {
-                Money fixedAmount;
-            }
-
-                class accounting.postingRules.FixedAmountWithPenaltyPR extends accounting.postingRules.FixedAmountPR {
-                    Money fixedAmountPenalty;
-                }
-
-                    class accounting.postingRules.FixedAmountWithPenaltyFromDatePR extends accounting.postingRules.FixedAmountWithPenaltyPR {
-                        YearMonthDay whenToApplyFixedAmountPenalty;
-                    }
-
-                        class accounting.postingRules.AdministrativeOfficeFeePR extends accounting.postingRules.FixedAmountWithPenaltyFromDatePR {
-                        }
-
-                    class accounting.postingRules.dfa.DFACandidacyPR extends accounting.postingRules.FixedAmountWithPenaltyPR {
-                    }
-
-                    class accounting.postingRules.dfa.DfaRegistrationPR extends accounting.postingRules.FixedAmountWithPenaltyPR {
-                    }
-                    
-                    class accounting.postingRules.specializationDegree.SpecializationDegreeRegistrationPR extends accounting.postingRules.FixedAmountWithPenaltyPR {
-                    }
-                    
-                class accounting.postingRules.serviceRequests.DeclarationRequestPR extends accounting.postingRules.FixedAmountPR {
-                }
-
-                class accounting.postingRules.serviceRequests.DiplomaRequestPR extends accounting.postingRules.FixedAmountPR {
-                }
-
-                class accounting.postingRules.candidacy.SecondCycleIndividualCandidacyPR extends accounting.postingRules.FixedAmountPR {
-                }
-                	class accounting.postingRules.candidacy.SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR extends accounting.postingRules.candidacy.SecondCycleIndividualCandidacyPR {
-                	}
-
-				class accounting.postingRules.candidacy.Over23IndividualCandidacyPR extends accounting.postingRules.FixedAmountPR {
-				}
-				
-				class accounting.postingRules.candidacy.StandaloneIndividualCandidacyPR extends accounting.postingRules.FixedAmountPR {
-				}
-
-				class accounting.postingRules.InsurancePR extends accounting.postingRules.FixedAmountPR {
-				}
-				
-				class accounting.postingRules.PartialRegistrationRegimeRequestPR extends accounting.postingRules.FixedAmountPR {
-				}
-				
-				class accounting.postingRules.serviceRequests.phd.PhdFinalizationCertificateRequestPR extends accounting.postingRules.FixedAmountPR {
-				}
-
-            class accounting.postingRules.ImprovementOfApprovedEnrolmentPR extends accounting.postingRules.GenericSingleEntryTypePR {
-                Money fixedAmount;
-                Money fixedAmountPenalty;
-            }
-
-            class accounting.postingRules.SpecialSeasonEnrolmentPR extends accounting.postingRules.GenericSingleEntryTypePR {
-                Money fixedAmount;
-            }
-
-            class accounting.postingRules.gratuity.DFAGratuityPR extends accounting.postingRules.GenericSingleEntryTypePR {
-                BigDecimal dfaPartialAcceptedPercentage;
-                Money dfaTotalAmount;
-            }
-
-                class accounting.postingRules.gratuity.DFAGratuityByAmountPerEctsPR extends accounting.postingRules.gratuity.DFAGratuityPR {
-                    Money dfaAmountPerEctsCredit;
-                }
-    
-                class accounting.postingRules.gratuity.DFAGratuityByNumberOfEnrolmentsPR extends accounting.postingRules.gratuity.DFAGratuityPR {
-                }
-                
-                class accounting.postingRules.gratuity.DFAGratuityByEnrolmentsPR extends accounting.postingRules.gratuity.DFAGratuityPR {
-                	Money dfaAmountPerEnrolment;
-                }
-            
-            class accounting.postingRules.gratuity.SpecializationDegreeGratuityPR extends accounting.postingRules.GenericSingleEntryTypePR {
-            	BigDecimal specializationDegreePartialAcceptedPercentage;
-            	Money specializationDegreeTotalAmount;
-            }
-
-                class accounting.postingRules.gratuity.SpecializationDegreeGratuityByAmountPerEctsPR extends accounting.postingRules.gratuity.SpecializationDegreeGratuityPR {
-                    Money specializationDegreeAmountPerEctsCredit;
-                }
-    
-            class accounting.postingRules.gratuity.GratuityWithPaymentPlanPR extends accounting.postingRules.GenericSingleEntryTypePR {
-            }
-
-            class accounting.postingRules.gratuity.PastDegreeGratuityPR extends accounting.postingRules.GenericSingleEntryTypePR {
-            }
-            
-            class accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR extends accounting.postingRules.GenericSingleEntryTypePR {
-                BigDecimal ectsForYear;
-                BigDecimal gratuityFactor;
-                BigDecimal ectsFactor;
-            }
-            
-            class accounting.postingRules.serviceRequests.EquivalencePlanRequestPR extends accounting.postingRules.GenericSingleEntryTypePR {
-                Money amountPerUnit;
-                Money maximumAmount;
-            }
-            
-            class accounting.postingRules.PastAdministrativeOfficeFeeAndInsurancePR extends accounting.postingRules.GenericSingleEntryTypePR {
-            }
-            
-            class accounting.postingRules.serviceRequests.PastCertificateRequestPR extends accounting.postingRules.GenericSingleEntryTypePR {
-            }
-
-            class accounting.postingRules.serviceRequests.PastDegreeDiplomaRequestPR extends accounting.postingRules.GenericSingleEntryTypePR {
-            }
-
-            class accounting.postingRules.serviceRequests.PastPhotocopyRequestPR extends accounting.postingRules.GenericSingleEntryTypePR {
-            }
-
-            class accounting.postingRules.serviceRequests.PastStudentReingressionRequestPR extends accounting.postingRules.GenericSingleEntryTypePR {
-            }
-
-            class accounting.postingRules.serviceRequests.PastEquivalencePlanRequestPR extends accounting.postingRules.GenericSingleEntryTypePR {
-            }
-
-            class accounting.postingRules.serviceRequests.PastEquivalencePlanRevisionRequestPR extends accounting.postingRules.GenericSingleEntryTypePR {
-            }
-
-            class accounting.postingRules.serviceRequests.PastCourseGroupChangeRequestPR extends accounting.postingRules.GenericSingleEntryTypePR {
-            }
-
-            class accounting.postingRules.serviceRequests.PastExtraExamRequestPR extends accounting.postingRules.GenericSingleEntryTypePR {
-            }
-
-            class accounting.postingRules.serviceRequests.PastFreeSolicitationAcademicRequestPR extends accounting.postingRules.GenericSingleEntryTypePR {
-            }
-
-            class accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR extends accounting.postingRules.GenericSingleEntryTypePR {
-                Money amountForInstitutionStudent;
-                Money amountForExternalStudent;
-            }
-
-            class accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR extends accounting.postingRules.GenericSingleEntryTypePR {
-                Money amountForInstitutionStudent;
-                Money amountForExternalStudent;
-            }
-            
-            class accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR extends accounting.postingRules.GenericSingleEntryTypePR {
-                Money amountForInstitutionStudent;
-                Money amountForExternalStudent;
-            }
-
-            class accounting.postingRules.ResidencePR extends accounting.postingRules.GenericSingleEntryTypePR {
-                Money penaltyPerDay;
-            }
-            
-    class accounting.Receipt  {
-        Integer number;
-        String numberSeries;
-        ReceiptState state;
-        YearMonthDay receiptDate;
-        DateTime whenCreated;
-        DateTime whenUpdated;
-        Integer year;
-        String contributorName;
-        String contributorNumber;
-        String contributorAddress;
-    }
-
-    class accounting.ReceiptPrintVersion  {
-        DateTime whenCreated;
-    }
-
-    class accounting.ServiceAgreement  {
-        DateTime creationDate;
-    }
-
-    class accounting.ServiceAgreementTemplate  {
-        DateTime creationDate;
-    }
-
-        class accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate extends accounting.ServiceAgreementTemplate {
-        }
-
-        class accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate extends accounting.ServiceAgreementTemplate {
-        }
-
-        class accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate extends accounting.ServiceAgreementTemplate {
-        }
-
-        class accounting.serviceAgreements.DegreeCurricularPlanServiceAgreement extends accounting.ServiceAgreement {
-        }
-
-    class accounting.events.ExemptionJustification  {
-        String reason;
-    }
-
-        class accounting.events.PenaltyExemptionJustification extends accounting.events.ExemptionJustification {
-            PenaltyExemptionJustificationType penaltyExemptionJustificationType;
-        }
-
-            class accounting.events.penaltyExemptionJustifications.PenaltyExemptionJustificationByDispatch extends accounting.events.PenaltyExemptionJustification {
-                YearMonthDay penaltyExemptionDispatchDate;
-            }
-
-        class accounting.events.gratuity.GratuityExemptionJustification extends accounting.events.ExemptionJustification {
-            GratuityExemptionJustificationType gratuityExemptionJustificationType;
-        }
-
-            class accounting.events.gratuity.GratuityExemptionJustificationByDispatch extends accounting.events.gratuity.GratuityExemptionJustification {
-                YearMonthDay gratuityExemptionDispatchDate;
-            }
-
-        class accounting.events.candidacy.SecondCycleIndividualCandidacyExemptionJustification extends accounting.events.ExemptionJustification {
-            CandidacyExemptionJustificationType candidacyExemptionJustificationType;
-        }
-
-        class accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustification extends accounting.events.ExemptionJustification {
-            AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType;
-        }
-            class accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationByDispatch extends accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustification {
-                YearMonthDay dispatchDate;
-            }
-            
-        class accounting.events.InsuranceExemptionJustification extends accounting.events.ExemptionJustification {
-            InsuranceExemptionJustificationType justificationType;
-        }
-            class accounting.events.InsuranceExemptionJustificationByDispatch extends accounting.events.InsuranceExemptionJustification {
-                YearMonthDay dispatchDate;
-            }
-            
-        class accounting.events.serviceRequests.AcademicEventExemptionJustification extends accounting.events.ExemptionJustification {
-            AcademicEventJustificationType justificationType;
-            LocalDate dispatchDate;
-        }
 
     class administrativeOffice.AdministrativeOffice  {
         LocalizedString name;
@@ -2332,7 +1605,6 @@ valueType org.fenixedu.academic.domain.accounting.EventTypes as EventTypes {
         protected boolean alumniProvider;
         protected boolean skipValidation;
         public RegistrationStateType targetState;
-        public EventTypes eventTypes;
     }
 	
 	class degreeStructure.CycleCourseGroupInformation  {
@@ -4022,9 +3294,6 @@ class phd.thesis.ThesisJuryElement  {
     Integer elementOrder;
 }
 
-class phd.PhdProgramServiceAgreementTemplate extends accounting.ServiceAgreementTemplate {
-}
-
 class phd.candidacy.PHDProgramCandidacy extends candidacy.StudentCandidacy {
 }
 
@@ -4151,39 +3420,6 @@ class phd.notification.PhdNotification  {
     PhdNotificationState state;
 }
 
-class phd.debts.PhdEvent extends accounting.AcademicEvent {
-}
-
-class phd.candidacy.PhdProgramCandidacyEvent extends phd.debts.PhdEvent {
-}
-
-class phd.candidacy.PhdProgramCandidacyPR extends accounting.postingRules.FixedAmountPR {
-}
-
-class phd.debts.PhdRegistrationFee extends phd.debts.PhdEvent {
-}
-
-class phd.debts.PhdRegistrationFeePR extends accounting.postingRules.FixedAmountWithPenaltyPR {
-}
-
-class phd.debts.PhdThesisRequestFee extends phd.debts.PhdEvent {
-}
-
-class phd.debts.PhdThesisRequestFeePR extends accounting.postingRules.FixedAmountPR {
-}
-
-class phd.debts.PhdEventExemption extends accounting.Exemption {
-    Money value;
-}
-
-class phd.debts.PhdEventExemptionJustification extends accounting.events.ExemptionJustification {
-    PhdEventExemptionJustificationType justificationType;
-    LocalDate dispatchDate;
-}
-
-class phd.debts.PhdRegistrationFeePenaltyExemption extends accounting.events.PenaltyExemption {
-}
-
 class phd.PhdConfigurationIndividualProgramProcess  {
 	Boolean migratedProcess;
 	Boolean generateAlert;
@@ -4306,30 +3542,6 @@ class alumni.AlumniReportFile extends QueueJobWithFile {
 	boolean onlyRegisteredAlumni;
 }
 
-
-class accounting.report.GratuityReportQueueJob extends QueueJobWithFile {
-	GratuityReportQueueJobType type;
-	DateTime beginDate;
-	DateTime endDate;
-}
-
-class accounting.report.events.EventReportQueueJob extends QueueJobWithFile {
-	Boolean exportGratuityEvents;
-	Boolean exportAcademicServiceRequestEvents;
-	Boolean exportAdministrativeOfficeFeeAndInsuranceEvents;
-	Boolean exportIndividualCandidacyEvents;
-	Boolean exportPhdEvents;
-	Boolean exportResidenceEvents;
-	Boolean exportOthers;
-	Boolean forDegreeAdministrativeOffice;
-	Boolean forMasterDegreeAdministrativeOffice;
-	LocalDate beginDate;
-	LocalDate endDate;
-	DateTime dateToConsiderInformation;
-}
-	class accounting.report.events.EventReportQueueJobFile extends .org.fenixedu.bennu.io.domain.GenericFile {
-	}
-
 class ProfessorshipPermissions  {
 	boolean personalization;
 	boolean siteArchive;
@@ -4363,16 +3575,6 @@ class UserPrivateKey {
     DateTime privateKeyValidity;
 }
 
-class phd.debts.PhdGratuityEvent extends phd.debts.PhdEvent {
-	Integer year (REQUIRED);
-	DateTime phdGratuityDate;
-}
-
-class phd.debts.PhdGratuityPR extends accounting.PostingRule {
-    Money gratuity;
-    Double fineRate;
-}
-
 class phd.debts.PhdGratuityPaymentPeriod  {
 	Partial start;
 	
@@ -4380,54 +3582,6 @@ class phd.debts.PhdGratuityPaymentPeriod  {
 	
 	Partial lastPayment;
 }
-
-
-class accounting.events.gratuity.ExternalScholarshipGratuityExemption extends accounting.Exemption {
-    Money value;
-}
-
-class accounting.events.gratuity.ExternalScholarshipGratuityExemptionJustification extends accounting.events.ExemptionJustification {
-    ExternalScholarshipGratuityExemptionJustificationType externalScholarshipGratuityExemptionJustificationType;
-}
-
-class accounting.events.gratuity.ExternalScholarshipGratuityContributionEvent extends accounting.Event {
-}
-
-relation  ExternalScholarshipGratuityExemptionExternalScholarshipGratuityContributionEvent {
-    accounting.events.gratuity.ExternalScholarshipGratuityExemption playsRole ExternalScholarshipGratuityExemption;
-    accounting.events.gratuity.ExternalScholarshipGratuityContributionEvent playsRole externalScholarshipGratuityContributionEvent;
-}
-
-relation ExternalScholarshipGratuityExemptionParty {
-    accounting.events.gratuity.ExternalScholarshipGratuityExemption playsRole ExternalScholarshipGratuityExemption{
-        multiplicity *;
-    }
-    organizationalStructure.Party playsRole party;
-}
-
-class accounting.events.gratuity.GratuityContributionFile extends .org.fenixedu.bennu.io.domain.GenericFile  {
-}
-
-relation ExternalScholarshipGratuityExemptionGratuityContributionFile {
-    accounting.events.gratuity.ExternalScholarshipGratuityExemption playsRole exemption;
-    accounting.events.gratuity.GratuityContributionFile playsRole document;
-}
-
-class phd.debts.ExternalScholarshipPhdGratuityContribuitionEvent extends accounting.Event {}
-
-class accounting.events.gratuity.ExternalScholarshipGratuityContributionPR extends accounting.PostingRule {}
-
-class phd.debts.ExternalScholarshipPhdGratuityContribuitionPR extends accounting.PostingRule {}
-
-class phd.debts.PhdGratuityExternalScholarshipExemption extends phd.debts.PhdEventExemption{}
-
-relation ExternalScholarshipPhdGratuityExemptionGratuityContributionFile {
-    phd.debts.PhdGratuityExternalScholarshipExemption playsRole phdExemption;
-    accounting.events.gratuity.GratuityContributionFile playsRole document;
-}
-
-class phd.debts.PhdGratuityFineExemption extends phd.debts.PhdEventExemption{
-} 
 
 class phd.debts.PhdGratuityPriceQuirk  {
 	int year;
@@ -5129,21 +4283,6 @@ relation PhdCandidacyFeedbackRequestProcessPhdProgramCandidacyProcess {
     phd.candidacy.PhdProgramCandidacyProcess playsRole candidacyProcess;
 }
 
-relation PhdProgramCandidacyProcessPhdProgramCandidacyEvent {
-    phd.candidacy.PhdProgramCandidacyProcess playsRole candidacyProcess;
-    phd.candidacy.PhdProgramCandidacyEvent playsRole event;
-}
-
-relation PhdIndividualProgramProcessPhdRegistrationFee {
-    phd.PhdIndividualProgramProcess playsRole process;
-    phd.debts.PhdRegistrationFee playsRole registrationFee;
-}
-
-relation PhdIndividualProgramProcessPhdThesisRequestFee {
-    phd.PhdIndividualProgramProcess playsRole process;
-    phd.debts.PhdThesisRequestFee playsRole thesisRequestFee;
-}
-
 relation PhdProgramCandidacyProcessPhdProgramCandidacy {
     phd.candidacy.PhdProgramCandidacyProcess playsRole candidacyProcess;
     phd.candidacy.PHDProgramCandidacy playsRole candidacy;
@@ -5155,11 +4294,6 @@ relation PhdIndividualProgramProcessExecutionYear {
     }
     
     ExecutionYear playsRole executionYear;
-}
-
-relation PhdProgramServiceAgreementTemplatePhdProgram {
-    phd.PhdProgramServiceAgreementTemplate playsRole serviceAgreementTemplate;
-    phd.PhdProgram playsRole phdProgram;
 }
 
 relation PhdProgramProcessDocumentPhdProgramProcess {
@@ -5797,11 +4931,6 @@ relation AcademicServiceRequestAdministrativeOffice {
     }
 }
 
-relation AcademicServiceRequestEventAcademicServiceRequest {
-    serviceRequests.AcademicServiceRequest playsRole academicServiceRequest;
-    accounting.events.serviceRequests.AcademicServiceRequestEvent playsRole event;
-}
-
 relation RegistryDiplomaSupplement {
     serviceRequests.documentRequests.RegistryDiplomaRequest playsRole registryDiplomaRequest;
     serviceRequests.documentRequests.DiplomaSupplementRequest playsRole diplomaSupplement;
@@ -6047,34 +5176,6 @@ relation ProgramCertificateRequestEnrolment {
     }
 }
 
-relation AccountEntry {
-    accounting.Account playsRole account;
-    accounting.Entry playsRole entries {
-        multiplicity *;
-    }
-}
-
-relation AccountTransactionAdjustedTransaction {
-    accounting.AccountingTransaction playsRole adjustedTransaction;
-    accounting.AccountingTransaction playsRole adjustmentTransactions {
-        multiplicity *;
-    }
-}
-
-relation AccountTransactionEntry {
-    accounting.AccountingTransaction playsRole accountingTransaction;
-    accounting.Entry playsRole entries {
-        multiplicity *;
-    }
-}
-
-relation AccountTransactionUser {
-    .org.fenixedu.bennu.core.domain.User playsRole responsibleUser;
-    accounting.AccountingTransaction playsRole accountingTransactions {
-        multiplicity *;
-    }
-}
-
 relation AccountabilityAccountabilityType {
     organizationalStructure.AccountabilityType playsRole accountabilityType;
     organizationalStructure.Accountability playsRole accountabilities {
@@ -6092,60 +5193,6 @@ relation AccountabilityChildParty {
 relation AccountabilityParentParty {
     organizationalStructure.Party playsRole childParty;
     organizationalStructure.Accountability playsRole parents {
-        multiplicity *;
-    }
-}
-
-relation AccountingEntryCreditNoteEntry {
-    accounting.Entry playsRole accountingEntry;
-    accounting.CreditNoteEntry playsRole creditNoteEntries {
-        multiplicity *;
-    }
-}
-
-relation AccountingEventResponsibleForCancel {
-    accounting.Event playsRole responsibleForCancelEvent {
-        multiplicity *;
-    }
-    Person playsRole responsibleForCancel;
-}
-
-relation AccountingEventDiscount {
-    accounting.Event playsRole event;
-    accounting.Discount playsRole discounts {
-        multiplicity *;
-    }
-}
-
-relation AccountingTransactionAccountingTransactionDetail {
-    accounting.AccountingTransaction playsRole transaction;
-    accounting.AccountingTransactionDetail playsRole transactionDetail;
-}
-
-relation AccountingTransactionEvent {
-    accounting.Event playsRole event;
-    accounting.AccountingTransaction playsRole accountingTransactions {
-        multiplicity *;
-    }
-}
-
-relation AdjustmentAccountingEntryCreditNoteEntry {
-    accounting.Entry playsRole adjustmentAccountingEntry;
-    accounting.CreditNoteEntry playsRole adjustmentCreditNoteEntry;
-}
-
-relation AdministrativeOfficeAdministrativeOfficeServiceAgreementTemplate {
-    administrativeOffice.AdministrativeOffice playsRole administrativeOffice {
-    	multiplicity *;
-    }
-    accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate playsRole serviceAgreementTemplate {
-    	multiplicity 1..1;
-    }
-}
-
-relation AdministrativeOfficeEvent {
-    administrativeOffice.AdministrativeOffice playsRole administrativeOffice;
-    accounting.AcademicEvent playsRole events {
         multiplicity *;
     }
 }
@@ -6176,13 +5223,6 @@ relation ExternalCourseLoadRequestUnit {
 relation ExternalProgramCertificateRequestUnit {
     organizationalStructure.Unit playsRole institution;
     serviceRequests.documentRequests.ExternalProgramCertificateRequest playsRole externalProgramCertificateRequests {
-        multiplicity *;
-    }
-}
-
-relation AnnualEventExecutionYear {
-    ExecutionYear playsRole executionYear;
-    accounting.events.AnnualEvent playsRole annualEvents {
         multiplicity *;
     }
 }
@@ -6255,20 +5295,6 @@ relation DocumentOperator {
 relation DocumentAddressees {
     organizationalStructure.Party playsRole addressee;
     documents.GeneratedDocument playsRole addressedDocument {
-        multiplicity *;
-    }
-}
-
-relation CreditNoteDocuments {
-    accounting.CreditNote playsRole source;
-    documents.CreditNoteGeneratedDocument playsRole document {
-        multiplicity *;
-    }
-}
-
-relation ReceiptDocuments {
-    accounting.Receipt playsRole source;
-    documents.ReceiptGeneratedDocument playsRole document {
         multiplicity *;
     }
 }
@@ -6499,13 +5525,6 @@ relation CourseGroupCurricularRule {
     degreeStructure.CourseGroup playsRole contextCourseGroup;
 }
 
-relation CreditNoteCreditNoteEntry {
-    accounting.CreditNote playsRole creditNote;
-    accounting.CreditNoteEntry playsRole creditNoteEntries {
-        multiplicity *;
-    }
-}
-
 relation CreditsDismissalEquivalence {
     studentCurriculum.Credits playsRole credits;
     studentCurriculum.Dismissal playsRole dismissals {
@@ -6691,11 +5710,6 @@ relation CurriculumGroupConclusionProcess {
     protected student.curriculum.ConclusionProcess playsRole conclusionProcess;
 }
 
-relation DFACandidacyEventCandidacy {
-    candidacy.DFACandidacy playsRole candidacy;
-    accounting.events.dfa.DFACandidacyEvent playsRole dfaCandidacyEvent;
-}
-
 relation DegreeCurricularPlanBranch {
     DegreeCurricularPlan playsRole degreeCurricularPlan;
     Branch playsRole areas {
@@ -6741,11 +5755,6 @@ relation DegreeCurricularPlanEquivalencePlanSourceDegreeCurricularPlan {
     DegreeCurricularPlanEquivalencePlan playsRole targetEquivalencePlans {
         multiplicity *;
     }
-}
-
-relation DegreeCurricularPlanServiceAgreementTemplateDegreeCurricularPlan {
-    DegreeCurricularPlan playsRole degreeCurricularPlan;
-    accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate playsRole serviceAgreementTemplate;
 }
 
 relation DegreeDegreeCurricularPlan {
@@ -6819,37 +5828,10 @@ relation DepartmentUnit {
     organizationalStructure.DepartmentUnit playsRole departmentUnit;
 }
 
-relation DfaRegistrationEventRegistration {
-    student.Registration playsRole registration;
-    
-    accounting.events.dfa.DfaRegistrationEvent playsRole dfaRegistrationEvents {
-    	multiplicity *;
-    }
-}
-
-relation DfaRegistrationEventExecutionYear {
-	ExecutionYear playsRole executionYear;
-	accounting.events.dfa.DfaRegistrationEvent playsRole dfaRegistrationEvents {
-		multiplicity *;
-	}
-}
-
-relation SpecializationDegreeRegistrationEventRegistration {
-	student.Registration playsRole registration;
-	accounting.events.specializationDegree.SpecializationDegreeRegistrationEvent playsRole specializationDegreeRegistrationEvent;
-}
-
 relation DissertationEnrolmentConclusionProcess {
     protected Enrolment playsRole dissertationEnrolment;
     student.curriculum.ConclusionProcessVersion playsRole conclusionProcessVersions {
         multiplicity *; 
-    }
-}
-
-relation CreditNoteResponsible {
-    Person playsRole responsible;
-    accounting.CreditNote playsRole creditNotes {
-        multiplicity *;
     }
 }
 
@@ -6928,20 +5910,6 @@ relation EnrolmentEvaluationExecutionPeriod {
     ExecutionSemester playsRole executionPeriod;
 }
 
-relation EnrolmentEvaluationImprovementOfApprovedEnrolmentEvent {
-    EnrolmentEvaluation playsRole improvementEnrolmentEvaluations {
-        multiplicity *;
-    }
-    accounting.events.ImprovementOfApprovedEnrolmentEvent playsRole improvementOfApprovedEnrolmentEvent;
-}
-
-relation EnrolmentEvaluationSpecialSeasonEnrolmentEvent {
-    EnrolmentEvaluation playsRole specialSeasonEnrolmentEvaluations {
-        multiplicity *;
-    }
-    accounting.events.SpecialSeasonEnrolmentEvent playsRole specialSeasonEnrolmentEvent;
-}
-
 relation EnrolmentEvaluationResponsiblePerson {
     EnrolmentEvaluation playsRole enrolmentEvaluations {
         multiplicity *;
@@ -6977,22 +5945,6 @@ relation EnrolmentWrapperCredits {
         multiplicity *;
     }
     studentCurriculum.Credits playsRole credits;
-}
-
-relation EnrolmentOutOfPeriodEventStudentCurricularPlan {
-    accounting.events.EnrolmentOutOfPeriodEvent playsRole enrolmentOutOfPeriodEvents {
-        multiplicity *;
-    }
-    
-    StudentCurricularPlan playsRole studentCurricularPlan;
-}
-
-relation EnrolmentOutOfPeriodEventExecutionPeriod {
-    accounting.events.EnrolmentOutOfPeriodEvent playsRole enrolmentOutOfPeriodEvents {
-        multiplicity *;
-    }
-    
-    ExecutionSemester playsRole executionPeriod;
 }
 
 relation InternalEnrolmentWrapperEnrolment {
@@ -7221,35 +6173,9 @@ relation ExecutionYearAcademicServiceRequest {
     }
 }
 
-relation ExecutionYearPaymentPlan {
-    ExecutionYear playsRole executionYear;
-    accounting.PaymentPlan playsRole paymentPlans {
-        multiplicity *;
-    }
-}
-
 relation ExecutionYearShiftDistribution {
     ExecutionYear playsRole executionYear;
     candidacy.degree.ShiftDistribution playsRole shiftDistribution;
-}
-
-relation ExemptionResponsible {
-    Person playsRole responsible;
-    accounting.Exemption playsRole createdExemptions {
-        multiplicity *;
-    }
-}
-
-relation ExemptionEvent {
-    accounting.Event playsRole event;
-    accounting.Exemption playsRole exemptions {
-        multiplicity *;
-    }
-}
-
-relation ExemptionExemptionJustification {
-    accounting.events.ExemptionJustification playsRole exemptionJustification;
-    accounting.Exemption playsRole exemption;
 }
 
 relation ExternalCurricularCourseExternalEnrolment {
@@ -7405,20 +6331,6 @@ relation GoalExecutionCourse {
     ExecutionCourse playsRole executionCourse;
 }
 
-relation GratuityEventStudentCurricularPlan {
-    StudentCurricularPlan playsRole studentCurricularPlan;
-    accounting.events.gratuity.GratuityEvent playsRole gratuityEvents {
-        multiplicity *;
-    }
-}
-
-relation GratuityPaymentPlanGratuityEventWithPaymentPlan {
-    accounting.events.gratuity.GratuityEventWithPaymentPlan playsRole gratuityEventsWithPaymentPlan {
-        multiplicity *;
-    }
-    accounting.PaymentPlan playsRole gratuityPaymentPlan;
-}
-
 relation GroupingAttends {
     Attends playsRole attends {
         multiplicity *;
@@ -7447,39 +6359,6 @@ relation IdDocumentTypeObjectIdDocument {
     person.IdDocument playsRole idDocuments {
         multiplicity *;
     }
-}
-
-relation InstallmentAccountingTransactionInstallment {
-    accounting.Installment playsRole installment;
-    accounting.accountingTransactions.InstallmentAccountingTransaction playsRole accountingTransactions {
-        multiplicity *;
-    }
-}
-
-relation InstallmentPaymentCode {
-    accounting.Installment playsRole installment;
-    accounting.paymentCodes.InstallmentPaymentCode playsRole paymentCodes {
-        multiplicity *;
-    }
-}
-
-relation InstallmentPaymentPlan {
-    accounting.PaymentPlan playsRole paymentPlan;
-    accounting.Installment playsRole installments {
-        multiplicity *;
-    }
-}
-
-relation InstallmentPenaltyExemptionInstallment {
-    accounting.Installment playsRole installment;
-    accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption playsRole installmentPenaltyExemptions {
-        multiplicity *;
-    }
-}
-
-relation InsuranceValueExecutionYear {
-    InsuranceValue playsRole insuranceValue;
-    ExecutionYear playsRole executionYear;
 }
 
 relation LessonLessonSpaceOccupation {
@@ -7634,13 +6513,6 @@ relation RootDomainObjectPartySocialSecurityNumber {
     }
 }
 
-relation PartyAccount {
-    organizationalStructure.Party playsRole party;
-    accounting.Account playsRole accounts {
-        multiplicity *;
-    }
-}
-
 relation PartyCountry {
     organizationalStructure.Party playsRole associatedParties {
         multiplicity *;
@@ -7687,41 +6559,6 @@ relation PartyTypeChildConnectionRule {
 relation PartyTypeParentConnectionRule {
     organizationalStructure.PartyType playsRole allowedParentPartyType;
     organizationalStructure.ConnectionRule playsRole allowedChildConnectionRules {
-        multiplicity *;
-    }
-}
-
-relation PaymentCodeAccountingEvent {
-    accounting.Event playsRole accountingEvent;
-    accounting.paymentCodes.AccountingEventPaymentCode playsRole paymentCodes {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectPaymentCodeMapping {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    accounting.PaymentCodeMapping playsRole paymentCodeMappings {
-        multiplicity *;
-    }
-}
-
-relation PaymentCodeMappingExecutionInterval {
-    ExecutionInterval playsRole executionInterval;
-    accounting.PaymentCodeMapping playsRole paymentCodeMappings {
-        multiplicity *;
-    }
-}
-
-relation PaymentCodeMappingOldPaymentCode {
-    accounting.PaymentCode playsRole oldPaymentCode;
-    accounting.PaymentCodeMapping playsRole oldPaymentCodeMappings {
-        multiplicity *;
-}
-}
-
-relation PaymentCodeMappingNewPaymentCode {
-    accounting.PaymentCode playsRole newPaymentCode;
-    accounting.PaymentCodeMapping playsRole newPaymentCodeMappings {
         multiplicity *;
     }
 }
@@ -7790,13 +6627,6 @@ relation AcademicAccessRuleOffices {
         multiplicity *;
     }
     protected administrativeOffice.AdministrativeOffice playsRole office {
-        multiplicity *;
-    }
-}
-
-relation PersonAccountingEvent {
-    organizationalStructure.Party playsRole party;
-    accounting.Event playsRole events {
         multiplicity *;
     }
 }
@@ -8010,57 +6840,6 @@ relation QualificationModifiedByPerson {
     Person playsRole modifiedBy;
 }
 
-relation ReceiptCreditNote {
-    accounting.Receipt playsRole receipt;
-    accounting.CreditNote playsRole creditNotes {
-        multiplicity *;
-    }
-}
-
-relation ReceiptResponsible {
-    Person playsRole responsible;
-    accounting.Receipt playsRole receiptsCreated {
-        multiplicity *;
-    }
-}
-
-relation ReceiptEntry {
-    accounting.Receipt playsRole receipts {
-        multiplicity *;
-    }
-    accounting.Entry playsRole entries {
-        multiplicity *;
-    }
-}
-
-relation ReceiptOwnerUnit {
-    organizationalStructure.Unit playsRole ownerUnit;
-    accounting.Receipt playsRole ownedReceipts {
-        multiplicity *;
-    }
-}
-
-relation ReceiptPerson {
-    Person playsRole person;
-    accounting.Receipt playsRole receipts {
-        multiplicity *;
-    }
-}
-
-relation ReceiptPrintVersionPerson {
-    Person playsRole person;
-    accounting.ReceiptPrintVersion playsRole receiptsVersions {
-        multiplicity *;
-    }
-}
-
-relation ReceiptPrintVersionReceipt {
-    accounting.Receipt playsRole receipt;
-    accounting.ReceiptPrintVersion playsRole receiptsVersions {
-        multiplicity *;
-    }
-}
-
 relation RectificationEnrolmentEvaluationRectifiedEnrolmentEvaluation {
     EnrolmentEvaluation playsRole rectification;
     EnrolmentEvaluation playsRole rectified;
@@ -8249,20 +7028,6 @@ relation RootDomainObjectAcademicServiceRequestSituation {
     }
 }
 
-relation RootDomainObjectAccount {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    accounting.Account playsRole accounts {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectAccountTransaction {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    accounting.AccountingTransaction playsRole accountingTransactions {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectAccountability {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     organizationalStructure.Accountability playsRole accountabilitys {
@@ -8273,27 +7038,6 @@ relation RootDomainObjectAccountability {
 relation RootDomainObjectAccountabilityType {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     organizationalStructure.AccountabilityType playsRole accountabilityTypes {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectAccountingEvent {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    accounting.Event playsRole accountingEvents {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectAccountingDiscount {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    accounting.Discount playsRole discounts {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectAccountingTransactionDetail {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    accounting.AccountingTransactionDetail playsRole accountingTransactionDetails {
         multiplicity *;
     }
 }
@@ -8392,20 +7136,6 @@ relation RootDomainObjectCostCenter {
 relation RootDomainObjectCountry {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Country playsRole countrys {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectCreditNote {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    accounting.CreditNote playsRole creditNotes {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectCreditNoteEntry {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    accounting.CreditNoteEntry playsRole creditNoteEntries {
         multiplicity *;
     }
 }
@@ -8569,13 +7299,6 @@ relation RootDomainObjectEnrolmentWrapper {
     }
 }
 
-relation RootDomainObjectEntry {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    accounting.Entry playsRole entries {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectEquivalencePlan {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     EquivalencePlan playsRole equivalencePlans {
@@ -8635,20 +7358,6 @@ relation RootDomainObjectExecutionYear {
 relation RootDomainObjectExecutionInterval {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     ExecutionInterval playsRole executionIntervals {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectExemption {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    accounting.Exemption playsRole exemptions {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectExemptionJustification {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    accounting.events.ExemptionJustification playsRole exemptionJustifications {
         multiplicity *;
     }
 }
@@ -8742,23 +7451,9 @@ relation RootDomainObjectIdDocumentTypeObject {
     }
 }
 
-relation RootDomainObjectInstallment {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    accounting.Installment playsRole installments {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectInstitutionUnit {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectForInstitutionUnit;
     organizationalStructure.Unit playsRole institutionUnit;
-}
-
-relation RootDomainObjectInsuranceValue {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    InsuranceValue playsRole insuranceValues {
-        multiplicity *;
-    }
 }
 
 relation RootDomainObjectLesson {
@@ -8894,34 +7589,6 @@ relation RootDomainObjectPartyType {
     }
 }
 
-relation RootDomainObjectPaymentCode {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    accounting.PaymentCode playsRole paymentCodes {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectPaymentPhase {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    PaymentPhase playsRole paymentPhases {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectPaymentPlan {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    accounting.PaymentPlan playsRole paymentPlans {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectPostingRule {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    accounting.PostingRule playsRole postingRules {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectPrecedentDegreeInformation {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.PrecedentDegreeInformation playsRole precedentDegreeInformation {
@@ -8960,20 +7627,6 @@ relation RootDomainObjectProjectSubmissionLog {
 relation RootDomainObjectQualification {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Qualification playsRole qualifications {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectReceipt {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    accounting.Receipt playsRole receipts {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectReceiptPrintVersion {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    accounting.ReceiptPrintVersion playsRole receiptVersions {
         multiplicity *;
     }
 }
@@ -9030,20 +7683,6 @@ relation RootDomainObjectSecretaryEnrolmentStudent {
 relation RootDomainObjectSenior {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.Senior playsRole seniors {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectServiceAgreement {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    accounting.ServiceAgreement playsRole serviceAgreements {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectServiceAgreementTemplate {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    accounting.ServiceAgreementTemplate playsRole serviceAgreementTemplates {
         multiplicity *;
     }
 }
@@ -9249,41 +7888,6 @@ relation SendProposal {
 relation SeniorStudent {
    student.Senior playsRole senior;
    student.Registration playsRole student;
-}
-
-relation ServiceAgreementPerson {
-    Person playsRole person;
-    accounting.ServiceAgreement playsRole serviceAgreements {
-        multiplicity *;
-    }
-}
-
-relation ServiceAgreementServiceAgreementTemplate {
-    accounting.ServiceAgreementTemplate playsRole serviceAgreementTemplate;
-    accounting.ServiceAgreement playsRole serviceAgreements {
-        multiplicity *;
-    }
-}
-
-relation ServiceAgreementTemplateServiceAgreementTemplatePaymentPlan {
-    accounting.ServiceAgreementTemplate playsRole serviceAgreementTemplate;
-    accounting.ServiceAgreementTemplatePaymentPlan playsRole paymentPlans {
-        multiplicity *;
-    }
-}
-
-relation ServiceAgreementServiceAgreementPaymentPlan {
-    accounting.ServiceAgreement playsRole serviceAgreement;
-    accounting.ServiceAgreementPaymentPlan playsRole paymentPlans {
-        multiplicity *;
-    }
-}
-
-relation ServiceAgreementTemplatePostingRule {
-    accounting.ServiceAgreementTemplate playsRole serviceAgreementTemplate;
-    accounting.PostingRule playsRole postingRules {
-        multiplicity *;
-    }
 }
 
 relation ShiftDistributionEntryShift {
@@ -9501,13 +8105,6 @@ relation StudentGroupBelongsToGrouping {
     Grouping playsRole grouping;
 }
 
-relation StudentPaymentCode {
-    Person playsRole person;
-    accounting.PaymentCode playsRole paymentCodes {
-        multiplicity *;
-    }
-}
-
 relation StudentPerson {
     student.Student playsRole student;
     Person playsRole person;
@@ -9648,11 +8245,6 @@ relation UnitNonAffiliatedTeacher {
     NonAffiliatedTeacher playsRole associatedNonAffiliatedTeachers {
         multiplicity *;
     }
-}
-
-relation UnitServiceAgreementTemplate {
-    organizationalStructure.Unit playsRole unit;
-    accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate playsRole unitServiceAgreementTemplate;
 }
 
 relation UnitUnitName {
@@ -9924,11 +8516,6 @@ relation IndividualCandidacySchoolTimeDistrictSubdivisionOfResidence {
     }
 }
 
-relation CandidacyEventIndividualCandidacy {
-    accounting.events.candidacy.IndividualCandidacyEvent playsRole event;
-    candidacyProcess.IndividualCandidacy playsRole individualCandidacy;
-}
-
 relation CandidacyProcessIndividualCandidacyProcess {
     candidacyProcess.CandidacyProcess playsRole candidacyProcess;
     candidacyProcess.IndividualCandidacyProcess playsRole childProcesses {
@@ -10101,13 +8688,6 @@ relation DegreeContextDegreeCurricularPlan {
 relation ResidenceYearResidenceMonth {
     residence.ResidenceYear playsRole year;
     residence.ResidenceMonth playsRole months {
-        multiplicity *;
-    }
-}
-
-relation ResidenceMonthResidenceEvent {
-    residence.ResidenceMonth playsRole residenceMonth;
-    accounting.ResidenceEvent playsRole events {
         multiplicity *;
     }
 }
@@ -10450,15 +9030,6 @@ relation RootDomainObjectPendingUtilEmailMessage {
     }
 }
 
-relation PartialRegimeInstallmentExecutionSemester {
-    accounting.installments.PartialRegimeInstallment playsRole partialRegimeInstallments {
-        multiplicity *;
-    }
-    
-    ExecutionSemester playsRole executionSemesters {
-        multiplicity *;
-    }
-}
 relation RootDomainObjectUnitCostCenterCode {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     organizationalStructure.UnitCostCenterCode playsRole unitCostCenterCodes {
@@ -11021,13 +9592,6 @@ relation AlumniReportFileExecutionYear {
 	}
 }
 
-relation GratuityReportQueueJobExecutionYear {
-	ExecutionYear playsRole executionYear;
-	accounting.report.GratuityReportQueueJob playsRole gratuityReportQueueJobs {
-		multiplicity *;
-	}
-}
-
 relation MobilityApplicationProcessErasmusCandidacyProcessExecutedAction {
 	candidacyProcess.mobility.MobilityApplicationProcess playsRole mobilityApplicationProcess;
 	
@@ -11049,13 +9613,6 @@ relation ErasmusCandidacyExecutedActionMobilityIndividualProcess {
 relation ReceptionEmailExecutedActionMobilityEmailTemplate {
 	candidacyProcess.erasmus.ReceptionEmailExecutedAction playsRole receptionEmailExcutedAction;
 	candidacyProcess.mobility.MobilityEmailTemplate playsRole mobilityEmailTemplate;
-}
-
-relation StudentCandidacyAvailablePaymentCodes {
-	candidacy.StudentCandidacy playsRole studentCandidacy;
-	accounting.PaymentCode playsRole availablePaymentCodes {
-		multiplicity *;
-	}
 }
 
 relation StudentCandidacyCandidacySummaryFile {
@@ -11152,13 +9709,6 @@ relation RootDomainObjectExternalUser {
     ExternalUser playsRole externalUser {
         multiplicity *;
     }
-}
-
-relation PartialRegistrationRegimeRequestExecutionYear {
-	ExecutionYear playsRole executionYear;
-	accounting.postingRules.PartialRegistrationRegimeRequestPR playsRole partialRegistrationRegimeRequestPostingRules {
-		multiplicity *;
-	}
 }
 
 relation ProfessorshipUser {
@@ -11283,44 +9833,11 @@ relation PhdGratuityPaymentPeriodRootDomainObject {
     }
 }
 
-relation PhdGratuityPaymentPeriodPhdGratuityPR {
-	phd.debts.PhdGratuityPR playsRole postingRule;
-    phd.debts.PhdGratuityPaymentPeriod playsRole phdGratuityPaymentPeriods {
-        multiplicity *;
-    }
-}
-
-relation PhdIndividualProgramProcessPhdIndiPhdGratuityEvent {
-    phd.PhdIndividualProgramProcess playsRole phdIndividualProgramProcess;
-    phd.debts.PhdGratuityEvent playsRole phdGratuityEvents {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectPhdGratuityPriceQuirk {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     phd.debts.PhdGratuityPriceQuirk playsRole phdGratuityPriceQuirks {
         multiplicity *;
     }
-}
-
-relation PhdGratuityPaymentPeriodPhdGratuityPriceQuirk {
-	phd.debts.PhdGratuityPR playsRole postingRule;
-    phd.debts.PhdGratuityPriceQuirk playsRole phdGratuityPriceQuirks {
-        multiplicity *;
-    }
-}
-
-relation  PhdGratuityExternalScholarshipExemptionExternalScholarshipPhdGratuityContribuitionEvent {
-	phd.debts.PhdGratuityExternalScholarshipExemption playsRole phdGratuityExternalScholarshipExemption;
-	phd.debts.ExternalScholarshipPhdGratuityContribuitionEvent playsRole externalScholarshipPhdGratuityContribuitionEvent;
-}
-
-relation  PhdGratuityExternalScholarshipExemptionParty {
-    phd.debts.PhdGratuityExternalScholarshipExemption playsRole phdGratuityExternalScholarshipExemption{
-		multiplicity *;
- 	}
-	organizationalStructure.Party playsRole party;
 }
 
 relation ExternalScholarshipProviderRootDomainObject {
@@ -11434,20 +9951,6 @@ relation StudentPrecedentDegreeInformation {
 
 /* End of RAIDES Domain */
 
-relation EventReportQueueJobExecutionYear {
-	ExecutionYear playsRole forExecutionYear;	
-	accounting.report.events.EventReportQueueJob playsRole eventReportQueueJob {
-		multiplicity *;
-	}
-}
-
-relation AdministrativeOfficeEventReportQueueJob {
-	administrativeOffice.AdministrativeOffice playsRole forAdministrativeOffice;	
-	accounting.report.events.EventReportQueueJob playsRole eventReportQueueJob {
-		multiplicity *;
-	}
-}
-
 /* Mid-Refactor */
 relation RootDomainObjectErasmusVacancy {
 	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
@@ -11484,35 +9987,6 @@ relation MobilityStudentDataErasmusVacancy {
 	candidacyProcess.erasmus.ErasmusVacancy playsRole selectedVacancy;
 	candidacyProcess.mobility.MobilityStudentData playsRole candidacies {
 		multiplicity *;
-	}
-}
-
-
-relation EventReportQueueJobEventDebtsFile {
-	accounting.report.events.EventReportQueueJob playsRole eventReportQueueJobForDebts;
-	accounting.report.events.EventReportQueueJobFile playsRole debts {
-		multiplicity 0..1;
-	}
-}
-
-relation EventReportQueueJobEventExemptionsFile {
-	accounting.report.events.EventReportQueueJob playsRole eventReportQueueJobForExemptions;
-	accounting.report.events.EventReportQueueJobFile playsRole exemptions {
-		multiplicity 0..1;
-	}
-}
-
-relation EventReportQueueJobEventTransactionsFile {
-	accounting.report.events.EventReportQueueJob playsRole eventReportQueueJobForTransactions;
-	accounting.report.events.EventReportQueueJobFile playsRole transactions {
-		multiplicity 0..1;
-	}
-}
-
-relation EventReportQueueJobEventErrorsFile {
-	accounting.report.events.EventReportQueueJob playsRole eventReportQueueJobForErrors;
-	accounting.report.events.EventReportQueueJobFile playsRole errorsFile {
-		multiplicity 0..1;
 	}
 }
 

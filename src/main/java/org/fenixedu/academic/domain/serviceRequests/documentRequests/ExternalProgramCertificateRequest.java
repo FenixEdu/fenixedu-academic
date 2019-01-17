@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.Enrolment;
-import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
 
@@ -69,11 +68,6 @@ public class ExternalProgramCertificateRequest extends ExternalProgramCertificat
     @Override
     public DocumentRequestType getDocumentRequestType() {
         return DocumentRequestType.EXTERNAL_PROGRAM_CERTIFICATE;
-    }
-
-    @Override
-    public EventType getEventType() {
-        return EventType.EXTERNAL_PROGRAM_CERTIFICATE_REQUEST;
     }
 
     @Override

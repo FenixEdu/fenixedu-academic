@@ -19,7 +19,6 @@
 package org.fenixedu.academic.domain.serviceRequests.documentRequests;
 
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.documents.GeneratedDocument;
 import org.fenixedu.academic.domain.serviceRequests.IAcademicServiceRequest;
@@ -40,8 +39,6 @@ public interface IDocumentRequest extends IAcademicServiceRequest {
     public boolean isCertificate();
 
     public AdministrativeOffice getAdministrativeOffice();
-
-    public EventType getEventType();
 
     public DateTime getRequestDate();
 

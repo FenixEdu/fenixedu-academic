@@ -1,11 +1,10 @@
 package org.fenixedu.academic.domain.serviceRequests;
 
-import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import org.fenixedu.academic.dto.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
 
 public class CustomServiceRequestRequest extends CustomServiceRequestRequest_Base implements IAcademicServiceRequest {
-    
+
     protected CustomServiceRequestRequest() {
         super();
     }
@@ -13,12 +12,12 @@ public class CustomServiceRequestRequest extends CustomServiceRequestRequest_Bas
     protected CustomServiceRequestRequest(final RegistrationAcademicServiceRequestCreateBean bean) {
         this();
         super.init(bean);
-        
+
         setNumberOfUnits(bean.getNumberOfUnits());
         setServiceRequestType(bean.getChosenServiceRequestType());
         setRequestedCycle(bean.getRequestedCycle());
     }
-    
+
     @Override
     public boolean isAvailableForTransitedRegistrations() {
         return false;
@@ -45,11 +44,6 @@ public class CustomServiceRequestRequest extends CustomServiceRequestRequest_Bas
     }
 
     @Override
-    public EventType getEventType() {
-        return null;
-    }
-
-    @Override
     public AcademicServiceRequestType getAcademicServiceRequestType() {
         return null;
     }
@@ -58,10 +52,9 @@ public class CustomServiceRequestRequest extends CustomServiceRequestRequest_Bas
     public boolean hasPersonalInfo() {
         return false;
     }
-    
-    
+
     public static CustomServiceRequestRequest create(final RegistrationAcademicServiceRequestCreateBean bean) {
         return new CustomServiceRequestRequest(bean);
     }
-    
+
 }

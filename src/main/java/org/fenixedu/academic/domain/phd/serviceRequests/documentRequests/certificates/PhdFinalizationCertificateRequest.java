@@ -20,8 +20,6 @@ package org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.certif
 
 import java.util.List;
 
-import org.fenixedu.academic.domain.accounting.EventType;
-import org.fenixedu.academic.domain.accounting.events.serviceRequests.PhdFinalizationCertificateRequestEvent;
 import org.fenixedu.academic.domain.documents.DocumentRequestGeneratedDocument;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.exceptions.PhdDomainOperationException;
@@ -66,7 +64,7 @@ public class PhdFinalizationCertificateRequest extends PhdFinalizationCertificat
     @Override
     protected void init(PhdDocumentRequestCreateBean bean) {
         super.init(bean);
-        
+
         if (!bean.getPhdIndividualProgramProcess().isBolonha()) {
             return;
         }
@@ -162,11 +160,6 @@ public class PhdFinalizationCertificateRequest extends PhdFinalizationCertificat
     @Override
     public boolean isManagedWithRectorateSubmissionBatch() {
         return false;
-    }
-
-    @Override
-    public EventType getEventType() {
-        return EventType.PHD_FINALIZATION_CERTIFICATE_REQUEST;
     }
 
     @Override

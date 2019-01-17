@@ -25,13 +25,7 @@ import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.Event;
-import org.fenixedu.academic.domain.accounting.EventType;
-import org.fenixedu.academic.domain.accounting.events.dfa.DFACandidacyEvent;
-import org.fenixedu.academic.domain.accounting.serviceAgreements.DegreeCurricularPlanServiceAgreement;
-import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.util.workflow.Operation;
-import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.YearMonthDay;
@@ -103,9 +97,6 @@ public class DFACandidacy extends DFACandidacy_Base {
         addCandidacyDocuments(new CandidacyDocument("habilitation.certificate"));
         addCandidacyDocuments(new CandidacyDocument("second.habilitation.certificate"));
         addCandidacyDocuments(new CandidacyDocument("interest.letter"));
-
-        final AdministrativeOffice administrativeOffice = executionDegree.getDegree().getAdministrativeOffice();
-        new DegreeCurricularPlanServiceAgreement(person, executionDegree.getDegreeCurricularPlan().getServiceAgreementTemplate());
     }
 
     public DFACandidacy(Person person, ExecutionDegree executionDegree, YearMonthDay startDate) {
@@ -164,8 +155,8 @@ public class DFACandidacy extends DFACandidacy_Base {
         return (person.getGender() != null && person.getExpirationDateOfDocumentIdYearMonthDay() != null
                 && person.getProfession() != null && person.getMaritalStatus() != null
                 && person.getDateOfBirthYearMonthDay() != null && person.getCountry() != null && person.getNameOfFather() != null
-                && person.getNameOfMother() != null && person.hasDefaultPhysicalAddress() && person
-                    .getInstitutionalOrDefaultEmailAddressValue() != null);
+                && person.getNameOfMother() != null && person.hasDefaultPhysicalAddress()
+                && person.getInstitutionalOrDefaultEmailAddressValue() != null);
     }
 
 }

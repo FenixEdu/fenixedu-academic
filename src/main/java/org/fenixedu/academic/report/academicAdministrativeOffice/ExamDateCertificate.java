@@ -195,11 +195,6 @@ public class ExamDateCertificate extends AdministrativeOfficeDocument {
     }
 
     @Override
-    protected boolean showPriceFields() {
-        return false;
-    }
-
-    @Override
     protected String getDegreeDescription() {
         final Registration registration = getDocumentRequest().getRegistration();
         final DegreeType degreeType = registration.getDegreeType();

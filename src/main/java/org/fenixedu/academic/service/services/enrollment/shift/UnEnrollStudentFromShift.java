@@ -39,9 +39,6 @@ public class UnEnrollStudentFromShift {
         if (registration == null) {
             throw new StudentNotFoundServiceException();
         }
-        if (registration.getPayedTuition() == null || registration.getPayedTuition().equals(Boolean.FALSE)) {
-            throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
-        }
 
         final Shift shift = FenixFramework.getDomainObject(shiftId);
         if (shift == null) {
