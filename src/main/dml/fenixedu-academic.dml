@@ -59,6 +59,7 @@ enum org.fenixedu.academic.domain.accounting.EventType                          
 enum org.fenixedu.academic.domain.accounting.PaymentCodeState                                                          as PaymentCodeState;
 enum org.fenixedu.academic.domain.accounting.PaymentCodeType                                                           as PaymentCodeType;
 enum org.fenixedu.academic.domain.accounting.ReceiptState                                                              as ReceiptState;
+enum org.fenixedu.academic.domain.accounting.RefundState                                                               as RefundState;
 enum org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationType      as AdministrativeOfficeFeeAndInsuranceExemptionJustificationType;
 enum org.fenixedu.academic.domain.accounting.events.InsuranceExemptionJustificationType      						   as InsuranceExemptionJustificationType;
 enum org.fenixedu.academic.domain.accounting.events.PenaltyExemptionJustificationType                                  as PenaltyExemptionJustificationType;
@@ -1301,6 +1302,8 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
             DateTime whenOccured;
             Money amount;
             boolean excessOnly;
+            RefundState state (REQUIRED);
+            LocalDate stateDate (REQUIRED);
     }
 
     class accounting.Event  {
