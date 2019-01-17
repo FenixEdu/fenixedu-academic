@@ -64,6 +64,18 @@
                     <dd><time datetime="${excessRefund.created.toString("yyyy-MM-dd")}">${excessRefund.created.toString("dd/MM/yyyy")}</time></dd>
                 </dl>
                 <dl>
+                    <dt><spring:message code="accounting.event.details.state" text="Estado"/></dt>
+                    <dd>
+                        <time datetime="${refundDomainObject.state.qualifiedName}">${refundDomainObject.state.qualifiedName}</time>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt><spring:message code="accounting.event.details.state.date" text="Data do Estado"/></dt>
+                    <dd>
+                        <time datetime="${refundDomainObject.stateDate.toString('yyyy-MM-dd')}">${refundDomainObject.stateDate.toString('dd/MM/yyyy')}</time>
+                    </dd>
+                </dl>
+                <dl>
                     <dt><spring:message code="accounting.event.details.excessRefund.date" text="Advance Date"/></dt>
                     <dd><time datetime="${excessRefund.date.toString("yyyy-MM-dd")}">${excessRefund.date.toString("dd/MM/yyyy")}</time></dd>
                 </dl>

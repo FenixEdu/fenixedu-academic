@@ -59,13 +59,13 @@
                     <time datetime="${refund.whenOccured.toString('yyyy-MM-dd HH:mm:ss')}">${refund.whenOccured.toString('dd/MM/yyyy HH:mm:ss')}</time>
                 </dl>
                 <dl>
-                    <dt>Estado:</dt>
+                    <dt><spring:message code="accounting.event.details.state" text="Estado"/></dt>
                     <dd>
                         <time datetime="${refund.state.qualifiedName}">${refund.state.qualifiedName}</time>
                     </dd>
                 </dl>
                 <dl>
-                    <dt>Data do estado:</dt>
+                    <dt><spring:message code="accounting.event.details.state.date" text="Data do Estado"/></dt>
                     <dd>
                         <time datetime="${refund.stateDate.toString('yyyy-MM-dd')}">${refund.stateDate.toString('dd/MM/yyyy')}</time>
                     </dd>

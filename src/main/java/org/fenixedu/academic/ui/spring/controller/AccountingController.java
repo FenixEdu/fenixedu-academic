@@ -161,6 +161,7 @@ public abstract class AccountingController {
                 model.addAttribute("targetPaymentId", accountingTransaction);
             }
             model.addAttribute("excessRefund", excessRefund);
+            model.addAttribute("refundDomainObject", FenixFramework.getDomainObject(excessRefund.getId()));
             return view("event-excessRefund-details");
         }
 
