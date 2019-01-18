@@ -23,13 +23,11 @@ import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
-import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
 import org.fenixedu.academic.ui.struts.action.administrativeOffice.student.EditCandidacyInformationDA.ChooseRegistrationOrPhd;
 import org.fenixedu.academic.ui.struts.action.administrativeOffice.student.EditCandidacyInformationDA.PhdRegistrationWrapper;
-import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -48,39 +46,25 @@ public class ActiveAndRecentRegistrationsAndPhds implements DataProvider {
         Set<PhdRegistrationWrapper> phdRegistrationWrapperResult = new HashSet<PhdRegistrationWrapper>();
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
-        for (final PhdIndividualProgramProcess phdProcess : student.getPerson().getPhdIndividualProgramProcessesSet()) {
-            if (!phdProcess.isAllowedToManageProcess(Authenticate.getUser())) {
-                continue;
-            } else if (phdProcess.isConcluded()) {
-                ExecutionYear conclusionYear = phdProcess.getConclusionYear();
-                if (matchesRecentExecutionYear(currentExecutionYear, conclusionYear)) {
-                    phdRegistrationWrapperResult.add(new PhdRegistrationWrapper(phdProcess));
-                }
-            }
-        }
-        student.getActiveRegistrationStream()
-            .filter(r -> !r.getDegreeType().isEmpty() && r.isAllowedToManageRegistration())
-            .forEach(r -> phdRegistrationWrapperResult.add(new PhdRegistrationWrapper(r)));
+        student.getActiveRegistrationStream().filter(r -> !r.getDegreeType().isEmpty() && r.isAllowedToManageRegistration())
+                .forEach(r -> phdRegistrationWrapperResult.add(new PhdRegistrationWrapper(r)));
 
         for (Registration concludedRegistration : student.getConcludedRegistrations()) {
             if (!concludedRegistration.getDegreeType().isEmpty() && concludedRegistration.isBolonha()
                     && concludedRegistration.isAllowedToManageRegistration()) {
 
-                ProgramConclusion
-                        .conclusionsFor(concludedRegistration)
-                        .filter(ProgramConclusion::isTerminal)
-                        .forEach(
-                                programConclusion -> {
-                                    RegistrationConclusionBean conclusionBean =
-                                            new RegistrationConclusionBean(concludedRegistration, programConclusion);
-                                    if(conclusionBean.isConcluded()) {
-                                        ExecutionYear conclusionYear = conclusionBean.getConclusionYear();
+                ProgramConclusion.conclusionsFor(concludedRegistration).filter(ProgramConclusion::isTerminal)
+                        .forEach(programConclusion -> {
+                            RegistrationConclusionBean conclusionBean =
+                                    new RegistrationConclusionBean(concludedRegistration, programConclusion);
+                            if (conclusionBean.isConcluded()) {
+                                ExecutionYear conclusionYear = conclusionBean.getConclusionYear();
 
-                                        if (matchesRecentExecutionYear(currentExecutionYear, conclusionYear)) {
-                                            phdRegistrationWrapperResult.add(new PhdRegistrationWrapper(concludedRegistration));
-                                        }
-                                    }
-                                });
+                                if (matchesRecentExecutionYear(currentExecutionYear, conclusionYear)) {
+                                    phdRegistrationWrapperResult.add(new PhdRegistrationWrapper(concludedRegistration));
+                                }
+                            }
+                        });
             }
         }
         return phdRegistrationWrapperResult;

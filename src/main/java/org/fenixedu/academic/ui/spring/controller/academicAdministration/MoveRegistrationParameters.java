@@ -70,16 +70,12 @@ public class MoveRegistrationParameters {
     private void findSimilarAccounts() {
         String[] parts = target.getProfile().getFullName().split(" ");
         String query = parts.length > 1 ? parts[0] + " " + parts[parts.length - 1] : target.getProfile().getFullName();
-        similars =
-                UserProfile.searchByName(query, Integer.MAX_VALUE).map(UserProfile::getUser).filter(Objects::nonNull)
-                        .filter(u -> !u.equals(target)).filter(u -> barelyCompatibleStudent(u, target))
-                        .collect(Collectors.toSet());
+        similars = UserProfile.searchByName(query, Integer.MAX_VALUE).map(UserProfile::getUser).filter(Objects::nonNull)
+                .filter(u -> !u.equals(target)).filter(u -> barelyCompatibleStudent(u, target)).collect(Collectors.toSet());
     }
 
     private static boolean barelyCompatibleStudent(User user, User target) {
-        return user.getPerson().getStudent() != null
-                && (!user.getPerson().getStudent().getRegistrationsSet().isEmpty() || !user.getPerson()
-                        .getPhdIndividualProgramProcessesSet().isEmpty())
+        return user.getPerson().getStudent() != null && !user.getPerson().getStudent().getRegistrationsSet().isEmpty()
                 && user.getPerson().getDateOfBirthYearMonthDay() != null
                 && user.getPerson().getDateOfBirthYearMonthDay().equals(target.getPerson().getDateOfBirthYearMonthDay());
     }

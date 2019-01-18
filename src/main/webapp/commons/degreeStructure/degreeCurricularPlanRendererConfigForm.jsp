@@ -23,7 +23,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<%@page import="org.fenixedu.academic.domain.phd.PhdProgram"%>
 <%@page import="org.fenixedu.academic.ui.renderers.degreeStructure.DegreeCurricularPlanRendererConfig"%>
 
 <%-- postback is invoking action form value --%>

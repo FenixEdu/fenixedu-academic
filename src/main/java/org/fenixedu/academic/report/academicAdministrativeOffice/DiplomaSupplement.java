@@ -43,8 +43,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.AcademicalInstitutionType;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
-import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
-import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdDiplomaSupplementRequest;
 import org.fenixedu.academic.domain.serviceRequests.IDiplomaSupplementRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DiplomaSupplementRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
@@ -132,8 +130,8 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
             access.append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.five.one.three"));
         } else {
             String degreeDesignation = getDegreeDesignation(getLocale());
-            access.append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.five.one.one")).append(
-                    SINGLE_SPACE);
+            access.append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.five.one.one"))
+                    .append(SINGLE_SPACE);
             access.append(degreeDesignation).append(SINGLE_SPACE);
             access.append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.five.one.two"));
         }
@@ -158,30 +156,20 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
         EctsGraduationGradeConversionTable table = getDocumentRequest().getGraduationConversionTable();
 
-        if (getDocumentRequest().isRequestForPhd()) {
-            addParameter("thesisFinalGrade",
-                    ((PhdDiplomaSupplementRequest) getDocumentRequest()).getThesisFinalGrade(getLocale()));
-        }
-
         addParameter("ectsGradeConversionTable", table.getEctsTable());
         addParameter("ectsGradePercentagesTable", table.getPercentages());
     }
 
     protected void fillGroup3() {
-        addParameter(
-                "qualificationLevel",
-                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.qualification."
-                        + getDocumentRequest().getRequestedCycle()));
+        addParameter("qualificationLevel", BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                "diploma.supplement.qualification." + getDocumentRequest().getRequestedCycle()));
         addParameter("years", getDocumentRequest().getNumberOfCurricularYears());
         addParameter("semesters", getDocumentRequest().getNumberOfCurricularSemesters());
-        addParameter(
-                "weeksOfStudyPerYear",
-                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.weeksOfStudyPerYear."
-                        + getDocumentRequest().getRequestedCycle()));
+        addParameter("weeksOfStudyPerYear", BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                "diploma.supplement.weeksOfStudyPerYear." + getDocumentRequest().getRequestedCycle()));
         double ectsCreditsValue = getDocumentRequest().getEctsCredits();
-        String ectsCredits =
-                (long) ectsCreditsValue == ectsCreditsValue ? "" + Long.toString((long) ectsCreditsValue) : Double
-                        .toString(ectsCreditsValue);
+        String ectsCredits = (long) ectsCreditsValue == ectsCreditsValue ? "" + Long.toString((long) ectsCreditsValue) : Double
+                .toString(ectsCreditsValue);
         addParameter("ectsCredits", ectsCredits);
     }
 
@@ -196,8 +184,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
         addParameter("graduateTitle", degreeDesignation + "\n" + graduateTitleNative);
         addParameter("universityName", institutionsUniversityUnit.getName());
-        addParameter(
-                "universityStatus",
+        addParameter("universityStatus",
                 BundleUtil.getString(Bundle.ENUMERATION, locale, AcademicalInstitutionType.class.getSimpleName() + "."
                         + institutionsUniversityUnit.getInstitutionType().getName()));
         addParameter("institutionName", Bennu.getInstance().getInstitutionUnit().getName());
@@ -210,8 +197,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
         if (CycleType.FIRST_CYCLE.equals(getDocumentRequest().getRequestedCycle())) {
             addParameter("languages", BundleUtil.getString(Bundle.ENUMERATION, getLocale(), "pt"));
         } else {
-            addParameter(
-                    "languages",
+            addParameter("languages",
                     BundleUtil.getString(Bundle.ENUMERATION, getLocale(), "pt") + SINGLE_SPACE
                             + BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.and").toLowerCase() + SINGLE_SPACE
                             + BundleUtil.getString(Bundle.ENUMERATION, getLocale(), "en"));
@@ -236,8 +222,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
         addParameter("birthDay", person.getDateOfBirthYearMonthDay().toString(DD_SLASH_MM_SLASH_YYYY, getLocale()));
         addParameter("nationality",
                 StringFormatter.prettyPrint(person.getCountry().getCountryNationality().getContent(getLocale())));
-        addParameter(
-                "documentIdType",
+        addParameter("documentIdType",
                 applyMessageArguments(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.one.five.one"),
                         BundleUtil.getString(Bundle.ENUMERATION, getLocale(), person.getIdDocumentType().getName())));
         addParameter("documentIdNumber", person.getDocumentIdNumber());
@@ -260,18 +245,9 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
             result.add(BundleUtil.getString(Bundle.ACADEMIC, locale, "label.in"));
         }
 
-        //TODO: phd-refactor registration should always be present in phd
-
-        if (request.isRequestForPhd()) {
-            PhdIndividualProgramProcess phdIndividualProgramProcess = ((PhdDiplomaSupplementRequest) request)
-                    .getPhdIndividualProgramProcess();
-            result.add(phdIndividualProgramProcess.getPhdProgram().getName(phdIndividualProgramProcess.getExecutionYear())
-                    .getContent(locale));
-        } else {
-            result.add(request.getProgramConclusion().groupFor(request.getRegistration()).map(CurriculumGroup::getDegreeModule)
-                    .map(dm -> dm.getDegreeNameWithTitleSuffix(request.getConclusionYear(), locale))
-                    .orElse(request.getRegistration().getDegree().getNameI18N(request.getConclusionYear()).getContent(locale)));
-        }
+        result.add(request.getProgramConclusion().groupFor(request.getRegistration()).map(CurriculumGroup::getDegreeModule)
+                .map(dm -> dm.getDegreeNameWithTitleSuffix(request.getConclusionYear(), locale))
+                .orElse(request.getRegistration().getDegree().getNameI18N(request.getConclusionYear()).getContent(locale)));
 
         return Joiner.on(" ").join(result);
     }
@@ -281,9 +257,8 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
                 CycleType.FIRST_CYCLE.equals(getDocumentRequest().getRequestedCycle()) ? BundleUtil.getString(Bundle.ACADEMIC,
                         getLocale(), "label.the.female") : BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.the.male");
         double ectsCreditsValue = getDocumentRequest().getEctsCredits();
-        String ectsCredits =
-                (long) ectsCreditsValue == ectsCreditsValue ? "" + Long.toString((long) ectsCreditsValue) : Double
-                        .toString(ectsCreditsValue);
+        String ectsCredits = (long) ectsCreditsValue == ectsCreditsValue ? "" + Long.toString((long) ectsCreditsValue) : Double
+                .toString(ectsCreditsValue);
         DegreeOfficialPublication dr = getDocumentRequest().getDegreeOfficialPublication();
 
         if (dr == null) {
@@ -295,25 +270,26 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
         String programmeRequirements;
 
         if (getDocumentRequest().isRequestForPhd()) {
-            programmeRequirements =
-                    applyMessageArguments(BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+            programmeRequirements = applyMessageArguments(
+                    BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
                             "diploma.supplement.four.two.programmerequirements.template.noareas.with.official.publication"),
-                            labelThe, graduateDegree, ectsCredits, officialPublication);
+                    labelThe, graduateDegree, ectsCredits, officialPublication);
         } else if (getDocumentRequest().getRequestedCycle().equals(CycleType.FIRST_CYCLE)
                 || dr.getSpecializationAreaSet().size() == 0) {
-            programmeRequirements =
-                    applyMessageArguments(BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
-                            "diploma.supplement.four.two.programmerequirements.template.noareas"), labelThe, graduateDegree,
-                            ectsCredits);
+            programmeRequirements = applyMessageArguments(
+                    BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                            "diploma.supplement.four.two.programmerequirements.template.noareas"),
+                    labelThe, graduateDegree, ectsCredits);
         } else {
             List<String> areas = new ArrayList<String>();
             for (DegreeSpecializationArea area : dr.getSpecializationAreaSet()) {
                 areas.add(area.getName().getContent(getLanguage()));
             }
-            programmeRequirements =
-                    applyMessageArguments(BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
-                            "diploma.supplement.four.two.programmerequirements.template.withareas"), labelThe, graduateDegree,
-                            ectsCredits, Integer.toString(areas.size()), StringUtils.join(areas, "; "), officialPublication);
+            programmeRequirements = applyMessageArguments(
+                    BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                            "diploma.supplement.four.two.programmerequirements.template.withareas"),
+                    labelThe, graduateDegree, ectsCredits, Integer.toString(areas.size()), StringUtils.join(areas, "; "),
+                    officialPublication);
         }
         programmeRequirements = programmeRequirements.substring(0, 1).toUpperCase() + programmeRequirements.substring(1);
         addParameter("programmeRequirements", programmeRequirements);
@@ -330,17 +306,15 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
             String degreeSigla = request.getRegistration().getDegree().getSigla();
 
             if (degreeSigla.equals("MA")) {
-                professionalStatus =
-                        BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
-                                "diploma.supplement.professionalstatus.credited.arquitect.withintership");
+                professionalStatus = BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                        "diploma.supplement.professionalstatus.credited.arquitect.withintership");
             } else if (degreeSigla.equals("MMA") || degreeSigla.equals("MQ") || degreeSigla.equals("MUOT")
                     || degreeSigla.equals("MPOT") || degreeSigla.equals("MFarm")) {
                 professionalStatus =
                         BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.professionalstatus.notapplicable");
             } else {
-                professionalStatus =
-                        BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
-                                "diploma.supplement.professionalstatus.credited.engineer");
+                professionalStatus = BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                        "diploma.supplement.professionalstatus.credited.engineer");
             }
         }
         addParameter("professionalStatus", professionalStatus);
@@ -368,22 +342,19 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
                 List<String> activityTimings = new ArrayList<String>();
                 for (ExtraCurricularActivity activity : entry.getValue()) {
                     activityTimings.add(BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
-                            "diploma.supplement.six.one.extracurricularactivity.time.heading")
-                            + SINGLE_SPACE
-                            + activity.getStart().toString("MM-yyyy")
-                            + SINGLE_SPACE
+                            "diploma.supplement.six.one.extracurricularactivity.time.heading") + SINGLE_SPACE
+                            + activity.getStart().toString("MM-yyyy") + SINGLE_SPACE
                             + BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
                                     "diploma.supplement.six.one.extracurricularactivity.time.separator")
-                            + SINGLE_SPACE
-                            + activity.getEnd().toString("MM-yyyy"));
+                            + SINGLE_SPACE + activity.getEnd().toString("MM-yyyy"));
                 }
                 activityText.append(StringUtils.join(activityTimings, ", "));
                 activities.add(activityText.toString());
             }
             addParameter("extraCurricularActivities", StringUtils.join(activities, '\n') + ".");
         } else {
-            addParameter("extraCurricularActivities",
-                    BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.six.one.extracurricularactivity.none"));
+            addParameter("extraCurricularActivities", BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                    "diploma.supplement.six.one.extracurricularactivity.none"));
         }
     }
 
@@ -458,21 +429,19 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
             if (entry instanceof IEnrolment) {
                 IEnrolment enrolment = (IEnrolment) entry;
                 this.type = BundleUtil.getString(Bundle.ENUMERATION, getLocale(), enrolment.getEnrolmentTypeName());
-                this.duration =
-                        BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
-                                enrolment.isAnual() ? "diploma.supplement.annual" : "diploma.supplement.semestral");
+                this.duration = BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                        enrolment.isAnual() ? "diploma.supplement.annual" : "diploma.supplement.semestral");
 
                 this.ectsScale =
                         enrolment
                                 .getEctsGrade(getDocumentRequest().getRegistration()
-                                        .getStudentCurricularPlan(getDocumentRequest().getRequestedCycle()),
-                                processingDate).getValue();
+                                        .getStudentCurricularPlan(getDocumentRequest().getRequestedCycle()), processingDate)
+                                .getValue();
             } else if (entry instanceof Dismissal && ((Dismissal) entry).getCredits().isEquivalence()) {
                 Dismissal dismissal = (Dismissal) entry;
                 this.type = BundleUtil.getString(Bundle.ENUMERATION, getLocale(), dismissal.getEnrolmentTypeName());
-                this.duration =
-                        BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
-                                dismissal.isAnual() ? "diploma.supplement.annual" : "diploma.supplement.semestral");
+                this.duration = BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
+                        dismissal.isAnual() ? "diploma.supplement.annual" : "diploma.supplement.semestral");
                 this.ectsScale = dismissal.getEctsGrade(processingDate).getValue();
             } else {
                 throw new Error("The roof is on fire");
@@ -524,9 +493,8 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
         }
 
         private String obtainAcademicUnitIdentifier(final Map<Unit, String> academicUnitIdentifiers) {
-            final Unit unit =
-                    entry instanceof ExternalEnrolment ? ((ExternalEnrolment) entry).getAcademicUnit() : Bennu.getInstance()
-                            .getInstitutionUnit();
+            final Unit unit = entry instanceof ExternalEnrolment ? ((ExternalEnrolment) entry).getAcademicUnit() : Bennu
+                    .getInstance().getInstitutionUnit();
             return getAcademicUnitIdentifier(academicUnitIdentifiers, unit);
         }
 

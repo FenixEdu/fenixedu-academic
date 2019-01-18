@@ -26,9 +26,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.AcademicProgram;
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
-import org.fenixedu.academic.domain.phd.PhdProgram;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
@@ -38,17 +36,18 @@ import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 import org.fenixedu.commons.StringNormalizer;
 
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.FenixFramework;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
+
 @StrutsFunctionality(app = AcademicAdministrationApplication.class, path = "degree-jurisdiction",
         titleKey = "label.degreeJurisdiction.title", accessGroup = "academic(MANAGE_AUTHORIZATIONS)")
 @Mapping(path = "/degreeJurisdiction", module = "academicAdministration")
-@Forwards({ @Forward(name = "manageJurisdictions", path = "/academicAdministration/degreeJurisdictions/manageJurisdictions.jsp") })
+@Forwards({
+        @Forward(name = "manageJurisdictions", path = "/academicAdministration/degreeJurisdictions/manageJurisdictions.jsp") })
 public class DegreeJurisdictionManagementDispacthAction extends FenixDispatchAction {
 
     @EntryPoint
@@ -62,15 +61,6 @@ public class DegreeJurisdictionManagementDispacthAction extends FenixDispatchAct
             json.addProperty("name", degree.getPresentationName());
             json.addProperty("acronym", degree.getSigla());
             json.addProperty("office", degree.getAdministrativeOffice().getExternalId());
-            programs.add(json);
-        }
-
-        for (PhdProgram program : Bennu.getInstance().getPhdProgramsSet()) {
-            JsonObject json = new JsonObject();
-            json.addProperty("id", program.getExternalId());
-            json.addProperty("name", program.getPresentationName(ExecutionYear.readCurrentExecutionYear()));
-            json.addProperty("acronym", program.getAcronym());
-            json.addProperty("office", program.getAdministrativeOffice().getExternalId());
             programs.add(json);
         }
 
@@ -118,11 +108,6 @@ public class DegreeJurisdictionManagementDispacthAction extends FenixDispatchAct
         AdministrativeOffice office = FenixFramework.getDomainObject(officeOid);
 
         program.setAdministrativeOffice(office);
-        if (program instanceof Degree) {
-            Degree degree = (Degree) program;
-            if (degree.getPhdProgram() != null) {
-                degree.getPhdProgram().setAdministrativeOffice(office);
-            }
-        }
+
     }
 }

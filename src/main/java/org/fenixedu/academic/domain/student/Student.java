@@ -35,7 +35,6 @@ import java.util.stream.Stream;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
@@ -52,8 +51,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.log.CurriculumLineLog;
 import org.fenixedu.academic.domain.messaging.Forum;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
-import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
-import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessState;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
@@ -1006,25 +1003,7 @@ public class Student extends Student_Base {
             return true;
         }
 
-        for (final PhdIndividualProgramProcess phdProcess : getPerson().getPhdIndividualProgramProcessesSet()) {
-            if (isValidAndActivePhdProcess(phdProcess) && phdProcess.hasMissingPersonalInformation(currentExecutionYear)) {
-                return true;
-            }
-        }
         return false;
-    }
-
-    public boolean hasActivePhdProgramProcess() {
-        for (final PhdIndividualProgramProcess phdProcess : getPerson().getPhdIndividualProgramProcessesSet()) {
-            if (isValidAndActivePhdProcess(phdProcess)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isValidAndActivePhdProcess(final PhdIndividualProgramProcess phdProcess) {
-        return FenixEduAcademicConfiguration.getConfiguration().getRaidesRequestInfo() && phdProcess.isProcessActive();
     }
 
     public List<PersonalInformationBean> getPersonalInformationsWithMissingInformation() {
@@ -1034,12 +1013,6 @@ public class Student extends Student_Base {
         for (final Registration registration : getRegistrationsSet()) {
             if (registration.isValidForRAIDES() && registration.hasMissingPersonalInformation(currentExecutionYear)) {
                 result.add(registration.getPersonalInformationBean(currentExecutionYear));
-            }
-        }
-
-        for (final PhdIndividualProgramProcess phdProcess : getPerson().getPhdIndividualProgramProcessesSet()) {
-            if (isValidAndActivePhdProcess(phdProcess) && phdProcess.hasMissingPersonalInformation(currentExecutionYear)) {
-                result.add(phdProcess.getPersonalInformationBean(currentExecutionYear));
             }
         }
 
@@ -1084,13 +1057,6 @@ public class Student extends Student_Base {
             return true;
         }
 
-        for (final PhdIndividualProgramProcess process : getPerson().getPhdIndividualProgramProcessesSet()) {
-            final PhdIndividualProgramProcessState state = process.getActiveState();
-            if (state.isActive() && state != PhdIndividualProgramProcessState.CONCLUDED
-                    || state == PhdIndividualProgramProcessState.SUSPENDED || state == PhdIndividualProgramProcessState.FLUNKED) {
-                return true;
-            }
-        }
         return false;
     }
 

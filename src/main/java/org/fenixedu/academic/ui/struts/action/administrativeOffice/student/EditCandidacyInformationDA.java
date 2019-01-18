@@ -19,7 +19,6 @@
 package org.fenixedu.academic.ui.struts.action.administrativeOffice.student;
 
 import java.io.Serializable;
-import java.util.Locale;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,16 +30,12 @@ import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.candidacy.PersonalInformationBean;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
-import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
-import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.DomainObject;
@@ -73,10 +68,8 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
         if (chooseRegistrationOrPhd.getPhdRegistrationWrapper().isRegistration()) {
             return chooseRegistrationOrPhd.getPhdRegistrationWrapper().getRegistration()
                     .getPersonalInformationBean(currentExecutionYear);
-        } else {
-            return chooseRegistrationOrPhd.getPhdRegistrationWrapper().getPhdIndividualProgramProcess()
-                    .getPersonalInformationBean(currentExecutionYear);
         }
+        return null;
     }
 
     public ActionForward prepareEditInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -124,8 +117,8 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
 
         if (personalInformationBean.getSchoolLevel() != null
                 && personalInformationBean.getSchoolLevel().isHighSchoolOrEquivalent()) {
-            personalInformationBean.setCountryWhereFinishedHighSchoolLevel(personalInformationBean
-                    .getCountryWhereFinishedPreviousCompleteDegree());
+            personalInformationBean.setCountryWhereFinishedHighSchoolLevel(
+                    personalInformationBean.getCountryWhereFinishedPreviousCompleteDegree());
         }
 
         final Set<String> messages = personalInformationBean.validateForAcademicService();
@@ -157,24 +150,8 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
             setPhdOrRegistration(registration);
         }
 
-        public PhdRegistrationWrapper(PhdIndividualProgramProcess phdIndividualProgramProcess) {
-            setPhdOrRegistration(phdIndividualProgramProcess);
-        }
-
         public String getDisplayName() {
-            if (isRegistration()) {
-                return getRegistration().getDegreeCurricularPlanName();
-            } else {
-                Locale locale = I18N.getLocale();
-                StringBuilder stringBuilder = new StringBuilder(BundleUtil.getString(Bundle.PHD, "label.phd")).append(" ");
-                final ExecutionYear executionYear = getPhdIndividualProgramProcess().getExecutionYear();
-                stringBuilder.append(getPhdIndividualProgramProcess().getPhdProgram().getName(executionYear).getContent(locale));
-                return stringBuilder.toString();
-            }
-        }
-
-        public PhdIndividualProgramProcess getPhdIndividualProgramProcess() {
-            return (PhdIndividualProgramProcess) getPhdOrRegistration();
+            return getRegistration().getDegreeCurricularPlanName();
         }
 
         public Registration getRegistration() {
@@ -195,12 +172,7 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
 
         @Override
         public int hashCode() {
-            if (!isRegistration()) {
-                return getPhdIndividualProgramProcess().getRegistration() != null ? getPhdIndividualProgramProcess()
-                        .getRegistration().hashCode() : getPhdIndividualProgramProcess().hashCode();
-            } else {
-                return getRegistration().hashCode();
-            }
+            return getRegistration().hashCode();
         }
 
         @Override

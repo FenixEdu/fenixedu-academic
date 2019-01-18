@@ -41,7 +41,6 @@ import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
-import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdDocumentRequest;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequestSituationType;
 import org.fenixedu.academic.domain.serviceRequests.RegistrationAcademicServiceRequest;
 import org.fenixedu.academic.domain.serviceRequests.Under23TransportsDeclarationRequest;
@@ -100,8 +99,6 @@ public class AdministrativeOfficeDocument extends FenixReport {
                 return Collections.<T> singletonList((T) new ApprovementMobilityCertificate(documentRequest));
             case DEGREE_FINALIZATION_CERTIFICATE:
                 return Collections.<T> singletonList((T) new DegreeFinalizationCertificate(documentRequest));
-            case PHD_FINALIZATION_CERTIFICATE:
-                return Collections.<T> singletonList((T) new PhdFinalizationCertificate(documentRequest));
             case SCHOOL_REGISTRATION_DECLARATION:
                 return Collections.<T> singletonList((T) new RegistrationDeclaration(documentRequest));
             case SCHOOL_REGISTRATION_CERTIFICATE:
@@ -111,21 +108,9 @@ public class AdministrativeOfficeDocument extends FenixReport {
             case IRS_DECLARATION:
                 return Collections.<T> singletonList((T) new IRSDeclaration(documentRequest));
             case DIPLOMA_REQUEST:
-                if (documentRequest.isRequestForRegistration()) {
-                    return Collections.<T> singletonList((T) new Diploma(documentRequest));
-                }
-
-                if (documentRequest.isRequestForPhd()) {
-                    return Collections.<T> singletonList((T) new PhdDiploma(documentRequest));
-                }
+                return Collections.<T> singletonList((T) new Diploma(documentRequest));
             case REGISTRY_DIPLOMA_REQUEST:
-                if (documentRequest.isRequestForRegistration()) {
-                    return Collections.<T> singletonList((T) new RegistryDiploma(documentRequest));
-                }
-
-                if (documentRequest.isRequestForPhd()) {
-                    return Collections.<T> singletonList((T) new PhdRegistryDiploma(documentRequest));
-                }
+                return Collections.<T> singletonList((T) new RegistryDiploma(documentRequest));
             case DIPLOMA_SUPPLEMENT_REQUEST:
                 List<T> result = new ArrayList<T>();
                 Set<Locale> definedLocales = new HashSet<Locale>(CoreConfiguration.supportedLocales());
@@ -216,10 +201,6 @@ public class AdministrativeOfficeDocument extends FenixReport {
     protected Registration getRegistration() {
         if (getDocumentRequest().isRequestForRegistration()) {
             return ((RegistrationAcademicServiceRequest) getDocumentRequest()).getRegistration();
-        }
-
-        if (getDocumentRequest().isRequestForPhd()) {
-            return ((PhdDocumentRequest) getDocumentRequest()).getPhdIndividualProgramProcess().getRegistration();
         }
 
         throw new DomainException("error.AdministrativeOfficeDocument.registration.not.found");

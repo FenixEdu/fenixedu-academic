@@ -551,39 +551,6 @@
 	<slot name="teacherId" />
 </schema>
 
-<schema name="PhdGratuityPR.view" bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.domain.phd.debts.PhdGratuityPR">
-	<slot name="startDate" key="label.phd.gratuity.startDate" />
-	<slot name="endDate"   key="label.phd.gratuity.endDate" />
-	<slot name="gratuity" key="label.phd.gratuity.value" />
-	<slot name="fineRate" key="label.phd.gratuity.fine" />
-	<slot name="phdGratuityPaymentPeriods" key="label.periods"  layout="tabular-list">
-		<property name="subSchema" value="PhdGratuityPaymentPeriod.view" />
-		<property name="subLayout" value="tabular" />
-	</slot>
-	<slot name="phdGratuityPriceQuirks" key="label.periods"  layout="tabular-list">
-		<property name="subSchema" value="PhdGratuityPriceQuirk.view" />
-		<property name="subLayout" value="tabular" />
-	</slot>
-</schema>
-
-<schema name="PhdGratuityPaymentPeriod.view" bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.domain.phd.debts.PhdGratuityPaymentPeriod">
-	<slot name="start" key="label.period.start" />
-	<slot name="end"   key="label.period.end" />
-	<slot name="lastPayment" key="label.period.last.day" />
-</schema>
-
-<schema name="PhdGratuityPriceQuirk.view" bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.domain.phd.debts.PhdGratuityPriceQuirk">
-	<slot name="year" 	  key="label.manager.curricularCourseScope.curricularYear" />
-	<slot name="gratuity" key="label.phd.gratuity.value" />
-</schema>
-
-<schema name="PhdGratuityPR.edit" bundle="MANAGER_RESOURCES" type="org.fenixedu.academic.ui.struts.action.manager.payments.PhdPostingRulesManagementDA$CreateGratuityPhdBean">
-	<slot name="startDate" key="label.phd.gratuity.startDate" required="true" />
-	<slot name="endDate"   key="label.phd.gratuity.endDate" />
-	<slot name="gratuity" key="label.phd.gratuity.value" required="true" />
-	<slot name="fineRate" key="label.phd.gratuity.fine" required="true" />
-</schema>
-
 <schema name="extraCurricularActivityType.view"
 	type="org.fenixedu.academic.domain.student.curriculum.ExtraCurricularActivityType">
 	<slot name="name" />

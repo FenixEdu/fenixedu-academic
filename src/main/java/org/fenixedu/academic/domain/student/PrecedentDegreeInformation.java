@@ -20,8 +20,6 @@ package org.fenixedu.academic.domain.student;
 
 import java.util.Comparator;
 
-import jvstm.cps.ConsistencyPredicate;
-
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.SchoolLevelType;
@@ -30,10 +28,11 @@ import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UnitUtils;
-import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.dto.candidacy.PrecedentDegreeInformationBean;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
+
+import jvstm.cps.ConsistencyPredicate;
 
 /**
  * <pre>
@@ -200,16 +199,15 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
                 precedentInstitution =
                         UnitUtils.readExternalInstitutionUnitByName(precedentDegreeInformationBean.getPrecedentInstitutionName());
                 if (precedentInstitution == null) {
-                    precedentInstitution =
-                            Unit.createNewNoOfficialExternalInstitution(precedentDegreeInformationBean
-                                    .getPrecedentInstitutionName());
+                    precedentInstitution = Unit
+                            .createNewNoOfficialExternalInstitution(precedentDegreeInformationBean.getPrecedentInstitutionName());
                 }
             }
             setPrecedentInstitution(precedentInstitution);
             setPrecedentDegreeDesignation(precedentDegreeInformationBean.getPrecedentDegreeDesignation());
             setPrecedentSchoolLevel(precedentDegreeInformationBean.getPrecedentSchoolLevel());
-            setNumberOfEnrolmentsInPreviousDegrees(precedentDegreeInformationBean
-                    .getNumberOfPreviousYearEnrolmentsInPrecedentDegree());
+            setNumberOfEnrolmentsInPreviousDegrees(
+                    precedentDegreeInformationBean.getNumberOfPreviousYearEnrolmentsInPrecedentDegree());
             setMobilityProgramDuration(precedentDegreeInformationBean.getMobilityProgramDuration());
         }
     }
@@ -256,7 +254,6 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 
         setStudent(null);
         setRegistration(null);
-        setPhdIndividualProgramProcess(null);
 
         setStudentCandidacy(null);
         setIndividualCandidacy(null);
@@ -277,11 +274,6 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
                 && registrationHasRepeatedPDI(getRegistration(), personalIngressionData.getExecutionYear())) {
             throw new DomainException("A Registration cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
         }
-
-        if (getPhdIndividualProgramProcess() != null
-                && phdProcessHasRepeatedPDI(getPhdIndividualProgramProcess(), personalIngressionData.getExecutionYear())) {
-            throw new DomainException("A Phd Process cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
-        }
     }
 
     @Override
@@ -290,16 +282,6 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 
         if (registration != null && getPersonalIngressionData() != null
                 && registrationHasRepeatedPDI(registration, getPersonalIngressionData().getExecutionYear())) {
-            throw new DomainException("A Registration cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
-        }
-    }
-
-    @Override
-    public void setPhdIndividualProgramProcess(PhdIndividualProgramProcess phdIndividualProgramProcess) {
-        super.setPhdIndividualProgramProcess(phdIndividualProgramProcess);
-
-        if (phdIndividualProgramProcess != null && getPersonalIngressionData() != null
-                && phdProcessHasRepeatedPDI(phdIndividualProgramProcess, getPersonalIngressionData().getExecutionYear())) {
             throw new DomainException("A Registration cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
         }
     }
@@ -318,37 +300,17 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
         return false;
     }
 
-    private static boolean phdProcessHasRepeatedPDI(PhdIndividualProgramProcess phdProcess, ExecutionYear executionYear) {
-        PrecedentDegreeInformation existingPdi = null;
-        for (PrecedentDegreeInformation pdi : phdProcess.getPrecedentDegreeInformationsSet()) {
-            if (pdi.getExecutionYear().equals(executionYear)) {
-                if (existingPdi == null) {
-                    existingPdi = pdi;
-                } else {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     @ConsistencyPredicate
     public boolean checkHasAllRegistrationOrPhdInformation() {
-        return (hasAllRegistrationInformation() && !hasAllPhdInformation())
-                || (!hasAllRegistrationInformation() && hasAllPhdInformation())
-                || (hasNoPersonalInformation() && hasAtLeastOneCandidacy());
+        return hasAllRegistrationInformation() || (hasNoPersonalInformation() && hasAtLeastOneCandidacy());
     }
 
     private boolean hasAllRegistrationInformation() {
         return getPersonalIngressionData() != null && getRegistration() != null;
     }
 
-    private boolean hasAllPhdInformation() {
-        return getPersonalIngressionData() != null && getPhdIndividualProgramProcess() != null;
-    }
-
     private boolean hasNoPersonalInformation() {
-        return getPersonalIngressionData() == null && getRegistration() == null && getPhdIndividualProgramProcess() == null;
+        return getPersonalIngressionData() == null && getRegistration() == null;
     }
 
     private boolean hasAtLeastOneCandidacy() {
