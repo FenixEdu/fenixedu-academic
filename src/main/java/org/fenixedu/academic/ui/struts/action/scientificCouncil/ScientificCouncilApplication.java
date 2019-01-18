@@ -38,11 +38,6 @@ public class ScientificCouncilApplication extends ForwardAction {
     public static class ScientificBolonhaProcessApp {
     }
 
-    @StrutsApplication(bundle = BUNDLE, path = "dissertations", titleKey = "scientificCouncil.thesis.process",
-            accessGroup = ACCESS_GROUP, hint = HINT)
-    public static class ScientificDisserationsApp {
-    }
-
     @StrutsApplication(bundle = "CandidateResources", path = "applications", titleKey = "title.applications",
             accessGroup = ACCESS_GROUP, hint = HINT)
     public static class ScientificApplicationsApp {

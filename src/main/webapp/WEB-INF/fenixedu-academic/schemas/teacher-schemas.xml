@@ -18,14 +18,6 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<schema name="teacher.thesis.table" type="org.fenixedu.academic.ui.struts.action.teacher.ThesisDocumentConfirmationDA$ThesisPresentationWrapper" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-    <slot name="thesis.student.number" key="label.student.number.short"/>
-    <slot name="thesis.student.person.name" key="student"/>
-    <slot name="thesis.finalTitle" key="label.scientificCouncil.title">
-        <property name="length" value="60"/>
-    </slot>
-    <slot name="thesisPresentationState" key="label.thesis.state"/>
-</schema>
 
 <schema name="executionCourseLog.logTypes" type="org.fenixedu.academic.domain.ExecutionCourseLog$ExecutionCourseLogTypes">
 	<slot name="qualifiedName"/>
@@ -36,21 +28,21 @@
 </schema>
 
 <schema name="professorship.view.properties" type="org.fenixedu.academic.domain.ProfessorshipPermissions" bundle="APPLICATION_RESOURCES">
-		<slot name="personalization" key="link.personalizationOptions"/>
-		<slot name="siteArchive"  key="link.executionCourse.archive.generate"/>
-		<slot name="sections" key="label.announcements.sections"/>
-		<slot name="summaries" key="link.summaries"/>
-		<slot name="students" key="link.students"/>
-		<slot name="planning" key="link.lessonPlannings"/>
-		<slot name="evaluationSpecific" key="link.adHocEvaluations"/>
-		<slot name="evaluationProject" key="link.projects.evaluation"/>
-		<slot name="evaluationTests" key="link.writtenTests.evaluation"/>
-		<slot name="evaluationExams" key="link.exams.evaluation"/>
-		<slot name="evaluationFinal" key="link.finalEvaluation"/>
-		<slot name="worksheets" key="link.testsManagement"/>
-		<slot name="groups" key="link.groupsManagement"/>
-		<slot name="shift" key="label.shifts"/>
-		<slot name="evaluationMethod" key="link.evaluationMethod"/>
-		<slot name="bibliografy" key="link.bibliography"/>
-		<setter signature="logEditProfessorship()"/>
-	</schema>
+	<slot name="personalization" key="link.personalizationOptions"/>
+	<slot name="siteArchive"  key="link.executionCourse.archive.generate"/>
+	<slot name="sections" key="label.announcements.sections"/>
+	<slot name="summaries" key="link.summaries"/>
+	<slot name="students" key="link.students"/>
+	<slot name="planning" key="link.lessonPlannings"/>
+	<slot name="evaluationSpecific" key="link.adHocEvaluations"/>
+	<slot name="evaluationProject" key="link.projects.evaluation"/>
+	<slot name="evaluationTests" key="link.writtenTests.evaluation"/>
+	<slot name="evaluationExams" key="link.exams.evaluation"/>
+	<slot name="evaluationFinal" key="link.finalEvaluation"/>
+	<slot name="worksheets" key="link.testsManagement"/>
+	<slot name="groups" key="link.groupsManagement"/>
+	<slot name="shift" key="label.shifts"/>
+	<slot name="evaluationMethod" key="link.evaluationMethod"/>
+	<slot name="bibliografy" key="link.bibliography"/>
+	<setter signature="logEditProfessorship()"/>
+</schema>

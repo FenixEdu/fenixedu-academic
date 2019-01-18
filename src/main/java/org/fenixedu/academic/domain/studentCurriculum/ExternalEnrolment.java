@@ -42,7 +42,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
-import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
@@ -306,16 +305,6 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     @Override
     final public BigDecimal getWeigthForCurriculum() {
         return BigDecimal.valueOf(getWeigth());
-    }
-
-    /**
-     * There is no thesis associated to an external enrolment.
-     *
-     * @return <code>null</code>
-     */
-    @Override
-    public Thesis getThesis() {
-        return null;
     }
 
     public boolean isResultOfMobility() {

@@ -30,7 +30,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.EnrolmentNotPayedException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
-import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.domain.treasury.IImprovementTreasuryEvent;
 import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.academic.util.Bundle;
@@ -120,7 +119,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
 
         generateCheckSum();
     }
-
 
     protected EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationState enrolmentEvaluationState, EvaluationSeason season,
             Person responsibleFor, Grade grade, Date availableDate, Date examDate, DateTime when) {
@@ -254,7 +252,8 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
     public void confirmSubmission(EnrolmentEvaluationState enrolmentEvaluationState, Person person, String observation) {
 
         if (!isTemporary()) {
-            throw new DomainException("EnrolmentEvaluation.cannot.submit.not.temporary", getEnrolment().getStudent().getPerson().getUsername());
+            throw new DomainException("EnrolmentEvaluation.cannot.submit.not.temporary",
+                    getEnrolment().getStudent().getPerson().getUsername());
         }
 
         if (!hasGrade()) {
@@ -300,8 +299,8 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
     protected void checkForDeletionBlockers(Collection<String> blockers) {
         super.checkForDeletionBlockers(blockers);
         if (!isTemporary() || getMarkSheet() != null) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION,
-                    "error.enrolmentEvaluation.isTemporary.or.hasConfirmedMarksheet"));
+            blockers.add(
+                    BundleUtil.getString(Bundle.APPLICATION, "error.enrolmentEvaluation.isTemporary.or.hasConfirmedMarksheet"));
         }
     }
 
@@ -395,18 +394,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         }
 
         super.setGrade(grade);
-
-        final Enrolment enrolment = getEnrolment();
-        if (enrolment != null && enrolment.getCurricularCourse().isDissertation()) {
-            final Thesis thesis = enrolment.getThesis();
-            if (thesis != null) {
-                if (grade.isEmpty()) {
-                    thesis.removeMark();
-                } else {
-                    thesis.setMark(Integer.valueOf(grade.getValue()));
-                }
-            }
-        }
 
         // TODO remove this once we're sure migration to Grade went OK
         super.setGradeValue(grade.getValue());

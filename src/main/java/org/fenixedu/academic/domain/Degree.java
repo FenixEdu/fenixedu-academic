@@ -48,10 +48,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
-import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
-import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
-import org.fenixedu.academic.domain.thesis.Thesis;
-import org.fenixedu.academic.domain.thesis.ThesisState;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.predicate.AcademicPredicates;
@@ -1240,38 +1236,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return getDegreeType().isThirdCycle();
     }
 
-    public boolean isAnyPublishedThesisAvailable() {
-        for (DegreeCurricularPlan dcp : getDegreeCurricularPlansSet()) {
-            for (CurricularCourse curricularCourse : dcp.getDissertationCurricularCourses(null)) {
-                List<IEnrolment> enrolments = new ArrayList<>();
-
-                for (CurriculumModule module : curricularCourse.getCurriculumModulesSet()) {
-                    if (module.isEnrolment()) {
-                        enrolments.add((IEnrolment) module);
-                    } else if (module.isDismissal()) {
-                        Dismissal dismissal = (Dismissal) module;
-
-                        enrolments.addAll(dismissal.getSourceIEnrolments());
-                    }
-                }
-
-                for (IEnrolment enrolment : enrolments) {
-                    Thesis thesis = enrolment.getThesis();
-
-                    if (thesis != null && thesis.getState().equals(ThesisState.EVALUATED)) {
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
-
-    public boolean isAnyThesisAvailable() {
-        return !getThesisSet().isEmpty();
-    }
-
     /*
      * STUDENTS FROM DEGREE
      */
@@ -1339,20 +1303,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             }
         }
         return result;
-    }
-
-    /**
-     * @return <code>true</code> if any of the thesis associated with this
-     *         degree is not final
-     */
-    public boolean hasPendingThesis() {
-        for (Thesis thesis : getThesisSet()) {
-            if (!thesis.isFinalThesis()) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     @Override

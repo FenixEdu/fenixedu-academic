@@ -158,23 +158,6 @@
                 </ul>
               </li>
             </c:if>
-          <c:if test="${isScientificCommissionMember}">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><bean:message key="label.coordinator.thesis"/> <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li>
-                  <a href="${base}/manageThesis.do?method=searchStudent&degreeCurricularPlanID=${dcp}">
-                    <bean:message key="link.coordinator.thesis.viewStudent"/>
-                  </a>
-                </li>
-                <li>
-                  <a href="${base}/manageThesis.do?method=listThesis&degreeCurricularPlanID=${dcp}">
-                    <bean:message key="link.coordinator.thesis.list"/>
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </c:if>
           --%>
         </ul>
          <%--

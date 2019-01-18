@@ -317,16 +317,6 @@ public class EmptyDegree extends EmptyDegree_Base {
     }
 
     @Override
-    public boolean isAnyPublishedThesisAvailable() {
-        return false;
-    }
-
-    @Override
-    public boolean isAnyThesisAvailable() {
-        return false;
-    }
-
-    @Override
     public Set<CurricularCourse> getAllCurricularCourses(ExecutionYear executionYear) {
         return Collections.emptySet();
     }
