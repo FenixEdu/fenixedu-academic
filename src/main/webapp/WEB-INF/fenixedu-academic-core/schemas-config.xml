@@ -45,7 +45,6 @@
     <!ENTITY bolonhaManagerSchemas SYSTEM "/fenixedu-academic/schemas/bolonhaManager-schemas.xml">
     <!ENTITY pedagogicalCouncilSchemas SYSTEM "/fenixedu-academic/schemas/pedagogicalCouncil-schemas.xml">
 	<!ENTITY caseHandlingSchemas SYSTEM "/fenixedu-academic/schemas/caseHandling-schemas.xml">
-	<!ENTITY residenceManagement SYSTEM "/fenixedu-academic/schemas/residenceManagement-schemas.xml">
     <!ENTITY alumni SYSTEM "/fenixedu-academic/schemas/alumni-schemas.xml">
     <!ENTITY externalSupervision SYSTEM "/fenixedu-academic/schemas/externalSupervision-schemas.xml">
 ]>
@@ -616,7 +615,6 @@
     &bolonhaManagerSchemas;
     &pedagogicalCouncilSchemas;
     &caseHandlingSchemas;
-    &residenceManagement;
     &alumni;
     &gep;
     &grp;

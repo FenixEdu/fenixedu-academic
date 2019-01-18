@@ -1716,9 +1716,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
             String identificationCardLabel;
         }
 
-            class organizationalStructure.ResidenceManagementUnit extends organizationalStructure.Unit {
-            }
-            
             class organizationalStructure.AdministrativeOfficeUnit extends organizationalStructure.Unit {
             }
 
@@ -2887,20 +2884,6 @@ class candidacyProcess.over23.Over23IndividualCandidacyDegreeEntry  {
     Integer degreeOrder;
 }
 
-class residence.ResidenceYear  {
-    Integer year;
-}
-
-class residence.ResidencePriceTable  {
-    Integer paymentLimitDay;
-    Money singleRoomValue;
-    Money doubleRoomValue;
-}
-
-class residence.ResidenceMonth  {
-    Month month;
-}
-
 class QueueJob  {
                Boolean done;
                Integer failedCounter;
@@ -3004,9 +2987,6 @@ class candidacyProcess.mobility.MobilityCoordinator  {
 class CoordinatorLog  {
 	DateTime date;
 	OperationType operation;
-}
-
-class residence.StudentsPerformanceReport extends QueueJobWithFile {
 }
 
 class alumni.AlumniReportFile extends QueueJobWithFile {
@@ -7351,33 +7331,6 @@ relation DegreeContextDegreeCurricularPlan {
     }
 }
 
-relation ResidenceYearResidenceMonth {
-    residence.ResidenceYear playsRole year;
-    residence.ResidenceMonth playsRole months {
-        multiplicity *;
-    }
-}
-
-relation ResidenceYearRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    residence.ResidenceYear playsRole residenceYears {
-        multiplicity *;
-    }
-}
-
-relation ResidenceMonthRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    residence.ResidenceMonth playsRole residenceMonths0 {
-        multiplicity *;
-    }
-}
-
-relation ResidenceManagementUnitResidenceEvent {
-    organizationalStructure.ResidenceManagementUnit playsRole unit;
-    residence.ResidenceYear playsRole residenceYears {
-        multiplicity *;
-    }
-}
 
 relation AlumniStudent {
     Alumni playsRole alumni;
@@ -7522,20 +7475,6 @@ relation FormationCountryUnit {
     organizationalStructure.CountryUnit playsRole countryUnit;
 }
 
-relation ResidencePriceTableRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    residence.ResidencePriceTable playsRole residencePriceTables {
-        multiplicity *;
-    }
-}
-
-relation ResidencePriceTableResidenceManagementUnit {
-  organizationalStructure.ResidenceManagementUnit playsRole units {
-    multiplicity *;
-  }
-  residence.ResidencePriceTable playsRole residencePriceTable;
-}
-
 relation StudentCandidacyCountryOfResidence {   
     candidacy.StudentCandidacy playsRole associatedResidentPersonsCandidacies {
         multiplicity *;
@@ -7567,11 +7506,6 @@ relation StudentCandidacySchoolTimeDistrictSubdivisionOfResidence {
     DistrictSubdivision playsRole schoolTimeDistrictSubDivisionOfResidence;
 }
 
-
-relation RootDomainObjectResidenceManagementUnitHack {
-    organizationalStructure.ResidenceManagementUnit playsRole residenceManagementUnit;
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectForResidenceUnit;
-}
 
 relation RootDomainObjectUtilEmailMessage {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
@@ -8230,23 +8164,6 @@ relation CoordinatorLogWhoPerson {
 relation CoordinatorLogPerson {
 	Person playsRole person;
 	CoordinatorLog playsRole coordinatorLog {
-		multiplicity *;
-	}
-}
-
-relation StudentsPerformanceReportExecutionSemester {
-	ExecutionSemester playsRole executionSemester;
-	residence.StudentsPerformanceReport playsRole studentsPerformanceReports {
-		multiplicity *;
-	}
-}
-
-relation ResidenceManagementStudentsPerformanceReportStudent {
-	residence.StudentsPerformanceReport playsRole reports {
-		multiplicity *;
-	}
-	
-	student.Student playsRole students {
 		multiplicity *;
 	}
 }
