@@ -144,7 +144,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
                 throw new DomainException("DiplomaRequest.registration.not.submited.to.conclusion.process");
             }
 
-            if (hasDissertationTitle() && !getRegistration().hasDissertationThesis()) {
+            if (hasDissertationTitle()) {
                 throw new DomainException("DiplomaRequest.registration.doesnt.have.dissertation.thesis");
             }
 
@@ -304,11 +304,6 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
     @Override
     public String getFinalAverageQualified() {
         return getRegistration().getDegree().getGradeScale().getQualifiedName(getFinalAverage().toString());
-    }
-
-    @Override
-    public String getDissertationThesisTitle() {
-        return getRegistration().getDissertationThesisTitle();
     }
 
     public ExecutionYear getConclusionYear() {

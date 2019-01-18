@@ -67,8 +67,6 @@ public class Diploma extends AdministrativeOfficeDocument {
             addParameter("finalAverageDescription", StringUtils.capitalize(BundleUtil.getString(Bundle.ENUMERATION, getLocale(),
                     diplomaRequest.getFinalAverage().toString())));
             addParameter("finalAverageQualified", diplomaRequest.getFinalAverageQualified());
-        } else if (diplomaRequest.hasDissertationTitle()) {
-            addParameter("dissertationTitle", diplomaRequest.getDissertationThesisTitle());
         }
 
         String finalAverage = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.finalAverage");

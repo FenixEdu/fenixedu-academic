@@ -84,9 +84,6 @@ enum org.fenixedu.academic.domain.student.MobilityProgram                       
 enum org.fenixedu.academic.domain.student.RegistrationRegimeType                                                       as RegistrationRegimeType;
 enum org.fenixedu.academic.domain.studentCurricularPlan.Specialization                                                 as Specialization;
 enum org.fenixedu.academic.domain.studentCurricularPlan.StudentCurricularPlanState                                     as StudentCurricularPlanState;
-enum org.fenixedu.academic.domain.thesis.ThesisParticipationType                                                       as ThesisParticipationType;
-enum org.fenixedu.academic.domain.thesis.ThesisState                                                                   as ThesisState;
-enum org.fenixedu.academic.domain.thesis.ThesisVisibilityType                                                          as ThesisVisibilityType;
 enum org.fenixedu.academic.domain.util.LogicOperator                                                                   as LogicOperator;
 enum org.fenixedu.academic.util.ContentType                                                                            as ContentType;
 enum org.fenixedu.academic.util.Month                                                                                  as Month;
@@ -800,8 +797,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         LocalizedString anotation;
         Boolean temporaryExamMap;                           
         AcademicInterval executionInterval;
-        YearMonthDay beginThesisCreationPeriod;
-        YearMonthDay endThesisCreationPeriod;
     }
 
     class ExecutionInterval  {
@@ -874,12 +869,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         class candidacy.CandidacySummaryFile extends .org.fenixedu.bennu.io.domain.GenericFile {
         }
 
-        class thesis.ThesisFile extends .org.fenixedu.bennu.io.domain.GenericFile {
-            Locale language;
-            String subTitle;
-            String title;
-        }
-        
     class Grouping  {
         DateTime enrolmentBeginDayDateDateTime;
         DateTime enrolmentEndDayDateDateTime;
@@ -2357,73 +2346,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         Grade normalizedEctsGrade;
     }
 
-    class thesis.Thesis  {
-        DateTime approval;
-        String comment;
-        DateTime confirmation;
-        DateTime creation;
-        Boolean declarationAccepted;
-        DateTime declarationAcceptedTime;
-        DateTime proposedDiscussed;
-        String proposedPlace;
-        DateTime discussed;
-        DateTime documentsAvailableAfter;
-        DateTime evaluation;
-        LocalizedString keywords;
-        Integer mark;
-        String rejectionComment;
-        ThesisState state;
-        DateTime submission;
-        LocalizedString thesisAbstract;
-        LocalizedString title;
-        ThesisVisibilityType visibility;
-        DateTime confirmmedDocuments;
-    }
-
-    class thesis.ThesisLibraryOperation  {
-       DateTime operation;
-    }
-
-    relation ThesisLibraryLastOperation {
-        thesis.Thesis playsRole thesis;
-        thesis.ThesisLibraryOperation playsRole lastLibraryOperation;
-    }
-
-    relation ThesisLibraryPreviousOperation {
-        thesis.ThesisLibraryOperation playsRole previous;
-        thesis.ThesisLibraryOperation playsRole next;
-    }
-
-    relation ThesisLibraryOperationPerformer {
-        Person playsRole performer;
-        thesis.ThesisLibraryOperation playsRole thesisLibraryOperation {
-            multiplicity *;
-        }
-    }
-
-    class thesis.ThesisLibraryPendingOperation extends thesis.ThesisLibraryOperation {
-       String pendingComment;
-    }
-
-    class thesis.ThesisLibraryArchiveOperation extends thesis.ThesisLibraryOperation {
-        String libraryReference;
-    }
-
-    class thesis.ThesisLibraryCancelOperation extends thesis.ThesisLibraryOperation {
-    }
-
-    class thesis.ThesisEvaluationParticipant  {
-        String affiliation;
-        String category;
-        ThesisParticipationType type (REQUIRED);
-        Integer percentageDistribution (REQUIRED);
-    }
-    
-    class thesis.ThesisEvaluationExternalParticipant {
-        String name;
-        String email;
-    }
-
     class time.calendarStructure.AcademicCalendarEntry  {
         LocalizedString title;
         LocalizedString description;        
@@ -3008,7 +2930,6 @@ class reports.RegistrationReportFile extends reports.GepReportFile {}
 class reports.FlunkedReportFile extends reports.GepReportFile {}
 class reports.CourseLoadReportFile extends reports.GepReportFile {}
 class reports.DissertationsProposalsReportFile extends reports.GepReportFile {}
-class reports.DissertationsWithExternalAffiliationsReportFile extends reports.GepReportFile {}
 class reports.GraduationReportFile extends reports.GepReportFile {}
 class reports.RaidesGraduationReportFile extends reports.GepReportFile {}
 class reports.RaidesDfaReportFile extends reports.GepReportFile {}
@@ -3256,8 +3177,6 @@ class accessControl.PersistentUnitGroup extends .org.fenixedu.bennu.core.domain.
     public AccountabilityTypeEnum relationType;
     public Boolean includeSubUnits (REQUIRED);
 }
-
-class accessControl.PersistentThesisReadersGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
 class accessControl.PersistentAlumniGroup extends accessControl.FenixPredicateGroup;
 
@@ -5464,24 +5383,6 @@ relation PersonTeacher {
     Person playsRole person;
 }
 
-relation PersonThesisEvaluationParticipant {
-    protected Person playsRole person {
-        multiplicity 0..1;
-    }
-    thesis.ThesisEvaluationParticipant playsRole thesisEvaluationParticipants {
-        multiplicity *;
-    }
-}
-
-relation ThesisEvaluationParticipantExternalPerson {
-    protected thesis.ThesisEvaluationExternalParticipant playsRole externalPerson {
-        multiplicity 0..1;
-    }
-    thesis.ThesisEvaluationParticipant playsRole thesisEvaluationParticipants {
-        multiplicity *;
-    }
-}
-
 relation PhysicalAddressCountryOfResidence {
     contacts.PhysicalAddress playsRole associatedPhysicalAddresses {
         multiplicity *;
@@ -6622,13 +6523,6 @@ relation RootDomainObjectTeacher {
     }
 }
 
-relation RootDomainObjectThesis {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    thesis.Thesis playsRole theses {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectUnitName {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     organizationalStructure.UnitName playsRole unitName {
@@ -6978,48 +6872,6 @@ relation TeacherSummary {
         multiplicity *;
     }
     Teacher playsRole teacher;
-}
-
-relation ThesisDegree {
-    Degree playsRole degree;
-    thesis.Thesis playsRole thesis {
-        multiplicity *;
-    }
-}
-
-relation ThesisEnrolment {
-    Enrolment playsRole enrolment;
-    thesis.Thesis playsRole theses {
-        // This should be 0..2, but due to a bug
-        // in the Framework's Code Generator, the
-        // multiplicity check must manually placed
-        multiplicity *;
-    }
-}
-
-relation ThesisEvaluationParticipantRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    thesis.ThesisEvaluationParticipant playsRole thesisParticipations {
-        multiplicity *;
-    }
-}
-
-relation ThesisHasDissertationFile {
-    thesis.ThesisFile playsRole dissertation;
-    thesis.Thesis playsRole dissertationThesis;
-}
-
-relation ThesisHasExtendedAbstractFile {
-    thesis.ThesisFile playsRole extendedAbstract;
-    thesis.Thesis playsRole abstractThesis;
-}
-
-relation ThesisHasParticipations {
-	//make required in the next major
-    thesis.Thesis playsRole thesis;
-    thesis.ThesisEvaluationParticipant playsRole participations {
-        multiplicity *;
-    }
 }
 
 relation InstitutionUnitDegreeDesignation {
@@ -9119,15 +8971,6 @@ relation PersistentCerimonyInquiryGroupCerimonyInquiry {
         multiplicity 0..1;
     }
     public alumni.CerimonyInquiry playsRole cerimonyInquiry {
-        multiplicity 1..1;
-    }
-}
-
-relation PersistentThesisReadersGroupThesis {
-    public accessControl.PersistentThesisReadersGroup playsRole readers {
-        multiplicity 0..1;
-    }
-    public thesis.Thesis playsRole thesis {
         multiplicity 1..1;
     }
 }

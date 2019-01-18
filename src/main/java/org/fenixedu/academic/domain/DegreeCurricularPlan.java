@@ -59,7 +59,6 @@ import org.fenixedu.academic.domain.degreeStructure.RootCourseGroup;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.space.SpaceUtils;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
@@ -1542,21 +1541,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
 
         return result;
-    }
-
-    public Set<Thesis> getThesis(final ExecutionYear executionYear) {
-        final Set<Thesis> thesis = new HashSet<>();
-        for (CurricularCourse curricularCourse : getDissertationCurricularCourses(executionYear)) {
-            for (Enrolment enrolment : curricularCourse.getEnrolmentsByExecutionYear(executionYear)) {
-                StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
-
-                if (studentCurricularPlan.getDegreeCurricularPlan() != this) {
-                    continue;
-                }
-                thesis.addAll(enrolment.getThesesSet());
-            }
-        }
-        return thesis;
     }
 
     public Set<Enrolment> getDissertationEnrolments(final ExecutionYear executionYear) {

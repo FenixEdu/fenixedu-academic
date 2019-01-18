@@ -1483,12 +1483,6 @@
 	<slot name="calculatedEctsCredits" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.ectsCredits"/>
 	<slot name="calculatedRawGrade.value" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.average"/>
 	<slot name="calculatedFinalGrade.value" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.finalAverage"/>
-	<slot name="dissertationThesisTitle" layout="null-as-label">
-        <property name="label" value="-"/>	
-	</slot>
-	<slot name="dissertationThesisDiscussedDate" layout="null-as-label">
-        <property name="label" value="-"/>	
-	</slot>
 	<slot name="calculatedConclusionDate" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.conclusionDate"/>
 	<slot name="calculatedConclusionYear.name" key="conclusionYear"/>
 </schema>
@@ -1504,12 +1498,6 @@
     <slot name="descriptiveGradeExtendedValue" layout="null-as-label" key="label.descriptiveGrade">
         <property name="label" value="-"/>  
     </slot>
-	<slot name="dissertationThesisTitle" layout="null-as-label">
-        <property name="label" value="-"/>	
-	</slot>
-	<slot name="dissertationThesisDiscussedDate" layout="null-as-label">
-        <property name="label" value="-"/>	
-	</slot>
 	<slot name="conclusionDate"/>
 	<slot name="conclusionYear.name" key="conclusionYear"/>
 	<slot name="concluded"/>
@@ -1535,12 +1523,6 @@
 	<slot name="calculatedEctsCredits" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.ectsCredits"/>
 	<slot name="calculatedRawGrade.value" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.average"/>
 	<slot name="calculatedFinalGrade.value" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.finalAverage"/>
-	<slot name="dissertationThesisTitle" layout="null-as-label">
-        <property name="label" value="-"/>	
-	</slot>
-	<slot name="dissertationThesisDiscussedDate" layout="null-as-label">
-        <property name="label" value="-"/>	
-	</slot>
 	<slot name="calculatedConclusionDate" key="label.org.fenixedu.academic.dto.student.RegistrationConclusionBean.conclusionDate"/>
 	<slot name="calculatedConclusionYear.name" key="conclusionYear"/>	
 </schema>
@@ -1554,12 +1536,6 @@
     <slot name="descriptiveGradeExtendedValue" layout="null-as-label" key="label.descriptiveGrade">
         <property name="label" value="-"/>  
     </slot>
-	<slot name="dissertationThesisTitle" layout="null-as-label">
-        <property name="label" value="-"/>	
-	</slot>
-	<slot name="dissertationThesisDiscussedDate" layout="null-as-label">
-        <property name="label" value="-"/>	
-	</slot>
 	<slot name="conclusionDate" />
 	<slot name="conclusionYear.name" key="conclusionYear"/>
 	<slot name="concluded" />

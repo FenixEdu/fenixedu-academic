@@ -125,11 +125,6 @@ public class ExternalSupervisorViewStudentDA extends FenixDispatchAction {
 
         List<ExecutionPeriodStatisticsBean> studentStatistics = getStudentStatistics(registrations);
 
-        if (ShowThesisStatus.hasDissertations(personStudent.getStudent())) {
-            hasDissertations = true;
-            request.setAttribute("hasDissertations", hasDissertations);
-        }
-
         request.setAttribute("studentStatistics", studentStatistics);
         request.setAttribute("sessionBean", bean);
         return mapping.findForward("showStats");
@@ -159,14 +154,14 @@ public class ExternalSupervisorViewStudentDA extends FenixDispatchAction {
                     if (enrolmentsByExecutionPeriod.containsKey(executionSemester)) {
                         ExecutionPeriodStatisticsBean executionPeriodStatisticsBean =
                                 enrolmentsByExecutionPeriod.get(executionSemester);
-                        executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(studentCurricularPlan
-                                .getEnrolmentsByExecutionPeriod(executionSemester));
+                        executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(
+                                studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionSemester));
                         enrolmentsByExecutionPeriod.put(executionSemester, executionPeriodStatisticsBean);
                     } else {
                         ExecutionPeriodStatisticsBean executionPeriodStatisticsBean =
                                 new ExecutionPeriodStatisticsBean(executionSemester);
-                        executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(studentCurricularPlan
-                                .getEnrolmentsByExecutionPeriod(executionSemester));
+                        executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(
+                                studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionSemester));
                         enrolmentsByExecutionPeriod.put(executionSemester, executionPeriodStatisticsBean);
                     }
                 }

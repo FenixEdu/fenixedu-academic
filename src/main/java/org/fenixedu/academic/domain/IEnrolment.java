@@ -23,7 +23,6 @@ import java.util.Comparator;
 import org.fenixedu.academic.domain.degreeStructure.EctsConversionTable;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
-import org.fenixedu.academic.domain.thesis.Thesis;
 import org.joda.time.DateTime;
 
 public interface IEnrolment extends ICurriculumEntry {
@@ -81,16 +80,6 @@ public interface IEnrolment extends ICurriculumEntry {
     boolean isExternalEnrolment();
 
     boolean isEnrolment();
-
-    /**
-     * Obtains the last valid thesis for this enrolment. The returned thesis may
-     * not be evaluated. You can used {@link Thesis#isFinalThesis()} and {@link Thesis#isFinalAndApprovedThesis()} to distinguish
-     * between a thesis
-     * currently in evaluation and a final thesis.
-     * 
-     * @return the last valid thesis for this enrolment
-     */
-    Thesis getThesis();
 
     void delete();
 

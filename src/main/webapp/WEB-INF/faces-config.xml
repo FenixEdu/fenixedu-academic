@@ -68,16 +68,6 @@
 	</managed-bean>
 	
 	<managed-bean>
-		<managed-bean-name>listStudentThesis</managed-bean-name>
-		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.coordinator.ListStudentThesis</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-		<managed-property>
-			<property-name>degreeCurricularPlanID</property-name>
-			<value>#{param.degreeCurricularPlanID}</value>
-		</managed-property>
-	</managed-bean>
-
-	<managed-bean>
 		<managed-bean-name>listFirstTimeEnrolmentMasterDegreeStudents</managed-bean-name>
 		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.gep.ListFirstTimeEnrolmentMasterDegreeStudents</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
