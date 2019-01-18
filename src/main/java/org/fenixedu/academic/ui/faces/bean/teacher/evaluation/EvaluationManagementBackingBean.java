@@ -26,7 +26,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -34,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
@@ -53,6 +53,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.util.MessageResources;
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeModuleScope;
 import org.fenixedu.academic.domain.Evaluation;
 import org.fenixedu.academic.domain.EvaluationConfiguration;
@@ -103,7 +104,7 @@ import pt.ist.fenixframework.FenixFramework;
 
 public class EvaluationManagementBackingBean extends FenixBackingBean {
 
-    private static final String ENROLMENT_TYPE_FILTER_ALL = "all";
+    private static final String FILTER_ALL = "all";
 
     private static final String ENROLMENT_TYPE_FILTER_NOT_ENROLLED = "not.enrolled";
 
@@ -195,6 +196,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     protected String enrolmentTypeFilter;
 
+    protected String degreeFilter;
+
     public EvaluationManagementBackingBean() {
         /*
          * HACK: it's necessary set the executionCourseID for struts menu
@@ -202,6 +205,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         getAndHoldStringParameter("executionCourseID");
 
         initializeEnrolmentFilter();
+        initializeDegreeFilter();
     }
 
     public String getExecutionCourseID() {
@@ -1025,25 +1029,35 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public List<Attends> getExecutionCourseAttends() {
-        final List<Attends> result = new ArrayList<>();
-        String filter = getEnrolmentTypeFilter();
+        List<Attends> result;
 
-        for (final Attends attends : getExecutionCourse().getAttendsSet()) {
-            if (attends.getEnrolment() == null || !attends.getEnrolment().isImpossible()) {
-                if (filter.equals(ENROLMENT_TYPE_FILTER_ALL)) {
-                    result.add(attends);
-                } else if (filter.equals(ENROLMENT_TYPE_FILTER_NOT_ENROLLED)) {
-                    if (attends.getEnrolment() == null) {
-                        result.add(attends);
-                    }
-                } else if (attends.getEnrolment() != null) {
-                    EvaluationSeason season = FenixFramework.getDomainObject(filter);
-                    if (attends.getEnrolment().getEvaluationSeason().equals(season)) {
-                        result.add(attends);
-                    }
-                }
-            }
+        Set<Attends> attendsSet = getExecutionCourse().getAttendsSet().stream()
+                .filter(a -> a.getEnrolment() == null || !a.getEnrolment().isImpossible())
+                .collect(Collectors.toSet());
+
+        String enrolmentTypeFilter = getEnrolmentTypeFilter();
+        String degreeFilter = getDegreeFilter();
+
+        if (enrolmentTypeFilter.equals(FILTER_ALL)) {
+            result = new ArrayList<>(attendsSet);
+        } else if (enrolmentTypeFilter.equals(ENROLMENT_TYPE_FILTER_NOT_ENROLLED)) {
+            result = attendsSet.stream()
+                    .filter(a -> a.getEnrolment() == null)
+                    .collect(Collectors.toList());
+        } else {
+            EvaluationSeason season = FenixFramework.getDomainObject(enrolmentTypeFilter);
+            result = attendsSet.stream()
+                    .filter(a -> a.getEnrolment() != null && a.getEnrolment().getEvaluationSeason().equals(season))
+                    .collect(Collectors.toList());
         }
+
+        if (!degreeFilter.equals(FILTER_ALL)) {
+            Degree degree = FenixFramework.getDomainObject(degreeFilter);
+            result = result.stream()
+                    .filter(a -> a.getRegistration().getDegree().equals(degree))
+                    .collect(Collectors.toList());
+        }
+
         result.sort(Attends.COMPARATOR_BY_STUDENT_NUMBER);
         return result;
     }
@@ -1398,7 +1412,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public List<SelectItem> getEnrolmentTypeFilterOptions() {
         List<SelectItem> options = new ArrayList<>();
 
-        options.add(new SelectItem(ENROLMENT_TYPE_FILTER_ALL, BundleUtil.getString(Bundle.ENUMERATION, "filter.all")));
+        options.add(new SelectItem(FILTER_ALL, BundleUtil.getString(Bundle.ENUMERATION, "filter.all")));
         for (EvaluationSeason season : EvaluationConfiguration.getInstance().getEvaluationSeasonSet()) {
             options.add(new SelectItem(season.getExternalId(), season.getName().getContent()));
         }
@@ -1414,6 +1428,27 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     public void setEnrolmentTypeFilter(String filter) {
         enrolmentTypeFilter = filter;
+    }
+
+    public List<SelectItem> getDegreeFilterOptions() {
+        List<SelectItem> options = getExecutionCourse().getDegreesSortedByDegreeName().stream()
+                .map(d -> new SelectItem(d.getExternalId(), d.getPresentationName()))
+                .collect(Collectors.toList());
+        options.add(0, new SelectItem(FILTER_ALL, BundleUtil.getString(Bundle.ENUMERATION, "filter.all")));
+
+        return options;
+    }
+
+    public boolean hasDegreeFilter() {
+        return getExecutionCourse().getDegreesSortedByDegreeName().size() > 1;
+    }
+
+    public String getDegreeFilter() {
+        return degreeFilter;
+    }
+
+    public void setDegreeFilter(String filter) {
+        degreeFilter = filter;
     }
 
     public String filterByEnrolmentType() {
@@ -1445,7 +1480,20 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             String clientId = filterComponent.getClientId(FacesContext.getCurrentInstance());
             enrolmentTypeFilter = (String) map.get(clientId);
         } else {
-            enrolmentTypeFilter = ENROLMENT_TYPE_FILTER_ALL;
+            enrolmentTypeFilter = FILTER_ALL;
+        }
+    }
+
+    private void initializeDegreeFilter() {
+        Map map = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+
+        UIComponent filterComponent = findComponent(FacesContext.getCurrentInstance().getViewRoot(), "degreeFilter");
+
+        if (filterComponent != null) {
+            String clientId = filterComponent.getClientId(FacesContext.getCurrentInstance());
+            degreeFilter = (String) map.get(clientId);
+        } else {
+            degreeFilter = FILTER_ALL;
         }
     }
 
