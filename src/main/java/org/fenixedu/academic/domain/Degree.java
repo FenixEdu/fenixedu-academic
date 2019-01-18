@@ -301,7 +301,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
         setUnit(null);
         setDegreeType(null);
-        setPhdProgram(null);
         setRootDomainObject(null);
         super.disconnect();
     }

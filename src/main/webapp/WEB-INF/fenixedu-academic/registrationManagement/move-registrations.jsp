@@ -112,33 +112,7 @@ ${portal.toolkit()}
                 </c:forEach>
             </tbody>
         </table>
-        <h4><spring:message code="label.student.registrationManagement.phds" /></h4>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th><spring:message code="label.student.registrationManagement.phd.year" /></th>
-                    <th><spring:message code="label.student.registrationManagement.phd.processNumber" /></th>
-                    <th><spring:message code="label.student.registrationManagement.phd.phdProgram" /></th>
-                    <th><spring:message code="label.student.registrationManagement.phd.state" /></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach var="phd" items="${bean.target.person.phdIndividualProgramProcessesSet}">
-                    <tr>
-                        <td><c:out value="${phd.executionYear.name}"/></td>
-                        <td><c:out value="${phd.processNumber}"/></td>
-                        <td><c:out value="${phd.phdProgram.name}"/></td>
-                        <td><c:out value="${phd.activeState.localizedName}"/></td>
-                        <td>
-                            <a href="${fr:checksumLink(pageContext.request, '/academicAdministration/phdIndividualProgramProcess.do?method=viewProcess&processId='.concat(phd.externalId))}">
-                                <spring:message code="link.student.registrationManagement.viewCurriculum" />
-                            </a>
-                        </td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
+
     </div>
 </div>
 <c:if test="${not empty bean.similars}">
@@ -222,38 +196,6 @@ ${portal.toolkit()}
             </c:if>
             <c:if test="${empty similar.person.student.registrationsSet}">
                 <spring:message code="label.student.registrationManagement.noRegistrations" />
-            </c:if>
-            <h4><spring:message code="label.student.registrationManagement.phds" /></h4>
-            <c:if test="${not empty similar.person.phdIndividualProgramProcessesSet}">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th><spring:message code="label.student.registrationManagement.phd.year" /></th>
-                            <th><spring:message code="label.student.registrationManagement.phd.processNumber" /></th>
-                            <th><spring:message code="label.student.registrationManagement.phd.phdProgram" /></th>
-                            <th><spring:message code="label.student.registrationManagement.phd.state" /></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach var="phd" items="${similar.person.phdIndividualProgramProcessesSet}">
-                            <tr>
-                                <td><c:out value="${phd.executionYear.name}"/></td>
-                                <td><c:out value="${phd.processNumber}"/></td>
-                                <td><c:out value="${phd.phdProgram.name}"/></td>
-                                <td><c:out value="${phd.activeState.localizedName}"/></td>
-                                <td>
-                                    <a href="${fr:checksumLink(pageContext.request, '/academicAdministration/phdIndividualProgramProcess.do?method=viewProcess&processId='.concat(phd.externalId))}">
-                                        <spring:message code="link.student.registrationManagement.viewCurriculum" />
-                                    </a>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-            </c:if>
-            <c:if test="${empty similar.person.phdIndividualProgramProcessesSet}">
-                <spring:message code="label.student.registrationManagement.noPhds" />
             </c:if>
         </div>
     </div>
@@ -352,38 +294,7 @@ ${portal.toolkit()}
             <c:if test="${empty bean.searched.person.student.registrationsSet}">
                 <spring:message code="label.student.registrationManagement.noRegistrations" />
             </c:if>
-            <h4><spring:message code="label.student.registrationManagement.phds" /></h4>
-            <c:if test="${not empty bean.searched.person.phdIndividualProgramProcessesSet}">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th><spring:message code="label.student.registrationManagement.phd.year" /></th>
-                            <th><spring:message code="label.student.registrationManagement.phd.processNumber" /></th>
-                            <th><spring:message code="label.student.registrationManagement.phd.phdProgram" /></th>
-                            <th><spring:message code="label.student.registrationManagement.phd.state" /></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach var="phd" items="${bean.searched.person.phdIndividualProgramProcessesSet}">
-                            <tr>
-                                <td><c:out value="${phd.executionYear.name}"/></td>
-                                <td><c:out value="${phd.processNumber}"/></td>
-                                <td><c:out value="${phd.phdProgram.name}"/></td>
-                                <td><c:out value="${phd.activeState.localizedName}"/></td>
-                                <td>
-                                    <a href="${fr:checksumLink(pageContext.request, '/academicAdministration/phdIndividualProgramProcess.do?method=viewProcess&processId='.concat(phd.externalId))}">
-                                        <spring:message code="link.student.registrationManagement.viewCurriculum" />
-                                    </a>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-            </c:if>
-            <c:if test="${empty bean.searched.person.phdIndividualProgramProcessesSet}">
-                <spring:message code="label.student.registrationManagement.noPhds" />
-            </c:if>
+
         </div>
     </div>
 </c:if>

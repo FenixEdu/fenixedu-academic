@@ -27,7 +27,6 @@
 <%@ page import="org.fenixedu.academic.domain.candidacyProcess.InstitutionPrecedentDegreeInformation" %>
 <%@ page import="org.fenixedu.academic.domain.candidacyProcess.ExternalPrecedentDegreeInformation" %>
 <%@ page import="org.fenixedu.academic.domain.student.PrecedentDegreeInformation" %>
-<%@ page import="org.fenixedu.academic.domain.phd.candidacy.PHDProgramCandidacy" %>
 
 
 <html:xhtml/>
@@ -128,58 +127,6 @@
 <p><strong><bean:message key="label.personal.ingression.data.viewer.phdIndividualProgramProcesses" bundle="GEP_RESOURCES" /></strong></p>
 
 <bean:define id="person" name="student" property="person" />
-
-<bean:define id="phdIndividualProgramProcessList" name="person" property="phdIndividualProgramProcesses" />
-
-<logic:empty name="phdIndividualProgramProcessList">
-	</p><em><bean:message key="message.personal.ingression.data.viewer.student.lack.phdIndividualProgramProcesses" bundle="GEP_RESOURCES" /></em></p>
-</logic:empty>
-
-<logic:notEmpty name="phdIndividualProgramProcessList">
-	
-	<logic:iterate id="phdIndividualProgramProcess" name="phdIndividualProgramProcessList">
-		
-		<fr:view name="phdIndividualProgramProcess">
-			<fr:schema type="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess" bundle="GEP_RESOURCES">
-				<fr:slot name="phdProgram.name" layout="null-as-label" key="label.personal.ingression.data.viewer.phd.program.name"/>
-				<fr:slot name="executionYear.name" layout="null-as-label" key="label.personal.ingression.data.viewer.phd.start.execution.year" />
-			</fr:schema>
-			
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle1" />
-			</fr:layout>			
-		</fr:view>
-		
-		<div style="margin-left: 100px">
-			<p><strong><bean:message key="label.personal.ingression.data.viewer.precedent.degree.info" bundle="GEP_RESOURCES" /> (1-*)</strong></p>
-			
-			<bean:define id="precedentDegreeInformationList" name="phdIndividualProgramProcess" property="precedentDegreeInformations" />
-			
-			<logic:empty name="precedentDegreeInformationList">
-				<p><em><bean:message key="message.personal.ingression.data.viewer.student.lack.precedent.degree.information" bundle="GEP_RESOURCES" /></em></p>
-			</logic:empty>
-			
-			<logic:notEmpty name="precedentDegreeInformationList">
-
-				<logic:iterate id="precedentDegreeInformation" name="precedentDegreeInformationList" type="PrecedentDegreeInformation">
-				
-					<bean:define id="precedentDegreeInformationId" name="precedentDegreeInformation" property="externalId" type="String" />
-									
-					<jsp:include page="/gep/student/candidacy/personal/ingression/data/viewPrecedentDegreeInformation.jsp">
-						<jsp:param name="precedentDegreeInformationId" value="<%= precedentDegreeInformationId %>" />
-					</jsp:include>
-					
-					
-				</logic:iterate>
-				
-			</logic:notEmpty>
-		</div>
-		
-	</logic:iterate>
-</logic:notEmpty>
-
-
-<hr />
 
 
 <p><strong><bean:message key="label.personal.ingression.data.viewer.raides.data.personal.ingression" bundle="GEP_RESOURCES" /></strong></p>
@@ -489,15 +436,6 @@
 					<fr:slot name="registration.degree.presentationName" layout="null-as-label" key="label.personal.ingression.data.viewer.registration.degree" />
 					<fr:slot name="registration.startExecutionYear.name" layout="null-as-label" key="label.personal.ingression.data.viewer.registration.startExecutionYear" />
 				</logic:notEmpty>
-				
-				<% if(candidacy instanceof PHDProgramCandidacy) { %>
-				
-				<logic:notEmpty name="candidacy" property="candidacyProcess">
-					<fr:slot name="candidacyProcess.individualProgramProcess.phdProgram.name" key="label.personal.ingression.data.viewer.phd.program.name" />
-					<fr:slot name="candidacyProcess.individualProgramProcess.executionYear.name" key="label.personal.ingression.data.viewer.phd.start.execution.year" />
-				</logic:notEmpty>
-				
-				<% } %>
 				
 			</fr:schema>
 			

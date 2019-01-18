@@ -37,14 +37,13 @@ import org.fenixedu.academic.domain.accessControl.academicAdministration.Academi
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.degree.DegreeType;
-import org.fenixedu.academic.domain.phd.PhdProgram;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 
-import pt.ist.fenixframework.FenixFramework;
-
 import com.google.common.base.Splitter;
+
+import pt.ist.fenixframework.FenixFramework;
 
 public class AuthorizationsManagementBean implements Serializable {
     private static final long serialVersionUID = 604369029723208403L;
@@ -60,9 +59,8 @@ public class AuthorizationsManagementBean implements Serializable {
     public AuthorizationsManagementBean(AcademicOperationType operation) {
         this.operation = operation;
         if (operation != null) {
-            groups =
-                    AcademicAccessRule.accessRules().filter(r -> r.getOperation().equals(operation))
-                            .map(AuthorizationGroupBean::new).collect(Collectors.toList());
+            groups = AcademicAccessRule.accessRules().filter(r -> r.getOperation().equals(operation))
+                    .map(AuthorizationGroupBean::new).collect(Collectors.toList());
         }
     }
 
@@ -86,16 +84,6 @@ public class AuthorizationsManagementBean implements Serializable {
         Collections.sort(degrees);
 
         return degrees;
-    }
-
-    public List<PhdProgram> getPhdPrograms() {
-
-        List<PhdProgram> programs = new ArrayList<PhdProgram>(Bennu.getInstance().getPhdProgramsSet());
-
-        Collections.sort(programs, PhdProgram.COMPARATOR_BY_NAME);
-
-        return programs;
-
     }
 
     public List<AuthorizationGroupBean> getGroups() {

@@ -27,7 +27,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
@@ -46,12 +45,10 @@ import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.EnrollmentDomainException;
 import org.fenixedu.academic.domain.person.RoleType;
-import org.fenixedu.academic.domain.phd.enrolments.PhdStudentCurricularPlanEnrolmentManager;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions.EnrolmentPreConditionResult;
 import org.fenixedu.bennu.core.groups.Group;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -241,9 +238,8 @@ abstract public class StudentCurricularPlanEnrolment {
             throw new DomainException("error.StudentCurricularPlan.invalid.curricular.rule.level");
         }
 
-        final EnrolmentPreConditionResult result =
-                StudentCurricularPlanEnrolmentPreConditions.checkEnrolmentPeriods(getStudentCurricularPlan(),
-                        getExecutionSemester());
+        final EnrolmentPreConditionResult result = StudentCurricularPlanEnrolmentPreConditions
+                .checkEnrolmentPeriods(getStudentCurricularPlan(), getExecutionSemester());
 
         if (!result.isValid()) {
             throw new DomainException(result.message(), result.args());
@@ -254,7 +250,8 @@ abstract public class StudentCurricularPlanEnrolment {
         throw new DomainException("error.invalid.user");
     }
 
-    private RuleResult evaluateDegreeModules(final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesEnrolMap) {
+    private RuleResult evaluateDegreeModules(
+            final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesEnrolMap) {
 
         RuleResult finalResult = RuleResult.createInitialTrue();
         final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> rulesToEvaluate = getRulesToEvaluate();
@@ -354,7 +351,7 @@ abstract public class StudentCurricularPlanEnrolment {
 
     // Old AcademicAdminOffice role check
     protected boolean isResponsiblePersonAllowedToEnrolStudents() {
-    	final Degree degree = getStudentCurricularPlan().getDegree();
+        final Degree degree = getStudentCurricularPlan().getDegree();
         return AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, getResponsiblePerson().getUser())
                 .anyMatch(p -> p == degree);
@@ -401,12 +398,7 @@ abstract public class StudentCurricularPlanEnrolment {
         public StudentCurricularPlanEnrolment createManager(final EnrolmentContext enrolmentContext) {
 
             if (enrolmentContext.isNormal()) {
-
-                if (enrolmentContext.isPhdDegree()) {
-                    return new PhdStudentCurricularPlanEnrolmentManager(enrolmentContext);
-                } else {
-                    return new StudentCurricularPlanEnrolmentManager(enrolmentContext);
-                }
+                return new StudentCurricularPlanEnrolmentManager(enrolmentContext);
 
             } else if (enrolmentContext.isImprovement()) {
                 return new StudentCurricularPlanImprovementOfApprovedEnrolmentManager(enrolmentContext);

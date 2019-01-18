@@ -3042,13 +3042,6 @@ public class Registration extends Registration_Base {
     }
 
     public boolean hasMissingPersonalInformation(final ExecutionYear executionYear) {
-        // If this registration is linked to a Phd Process,
-        // the personal information should be linked to the
-        // PhdIndividualProgramProcess only.
-        if (getPhdIndividualProgramProcess() != null) {
-            return false;
-        }
-
         if (getPrecedentDegreeInformation(executionYear) != null && getPersonalInformationBean(executionYear).isValid()) {
             return false;
         }
@@ -3057,13 +3050,6 @@ public class Registration extends Registration_Base {
     }
 
     public boolean hasMissingPersonalInformationForAcademicService(final ExecutionYear executionYear) {
-        // If this registration is linked to a Phd Process,
-        // the personal information should be linked to the
-        // PhdIndividualProgramProcess only.
-        if (getPhdIndividualProgramProcess() != null) {
-            return false;
-        }
-
         if (getPrecedentDegreeInformation(executionYear) != null
                 && !getPersonalInformationBean(executionYear).isEditableByAcademicService()) {
             return false;

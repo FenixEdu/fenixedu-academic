@@ -48,7 +48,6 @@
 	<!ENTITY caseHandlingSchemas SYSTEM "/fenixedu-academic/schemas/caseHandling-schemas.xml">
 	<!ENTITY residenceManagement SYSTEM "/fenixedu-academic/schemas/residenceManagement-schemas.xml">
     <!ENTITY alumni SYSTEM "/fenixedu-academic/schemas/alumni-schemas.xml">
-    <!ENTITY phdProgram SYSTEM "/fenixedu-academic/schemas/phd-program-schemas.xml">
     <!ENTITY externalSupervision SYSTEM "/fenixedu-academic/schemas/externalSupervision-schemas.xml">
 ]>
 
@@ -623,6 +622,5 @@
     &alumni;
     &gep;
     &grp;
-    &phdProgram;
     &externalSupervision;
 </schemas>

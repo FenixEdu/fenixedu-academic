@@ -48,12 +48,12 @@ public class FenixEduAcademicConfiguration {
         @ConfigurationProperty(key = "domain.academic.enrolments.AllowStudentToCreateRegistrationForAffinityCycle",
                 defaultValue = "true")
         public Boolean getEnrolmentsAllowStudentToCreateRegistrationForAffinityCycle();
-        
-        @ConfigurationProperty(key = "domain.academic.enrolments.SpecialSeasonEvaluationsInduceEnrolmentVariables", defaultValue = "true")
+
+        @ConfigurationProperty(key = "domain.academic.enrolments.SpecialSeasonEvaluationsInduceEnrolmentVariables",
+                defaultValue = "true")
         public Boolean getEnrolmentsInSpecialSeasonEvaluationsInduceEnrolmentVariables();
 
-        @ConfigurationProperty(
-                key = "default.social.security.number",
+        @ConfigurationProperty(key = "default.social.security.number",
                 description = "Identifies the default social security number to be used in the country (e.g. for Portugal it is 999999990)")
         public String getDefaultSocialSecurityNumber();
 
@@ -61,8 +61,7 @@ public class FenixEduAcademicConfiguration {
                 defaultValue = "http://localhost:8080/fenix/publico/genericApplications.do?method=confirmEmail&confirmationCode=")
         public String getGenericApplicationEmailConfirmationLink();
 
-        @ConfigurationProperty(
-                key = "generic.application.email.recommendation.link",
+        @ConfigurationProperty(key = "generic.application.email.recommendation.link",
                 defaultValue = "http://localhost:8080/fenix/publico/genericApplications.do?method=uploadRecommendation&confirmationCode=")
         public String getGenericApplicationEmailRecommendationLink();
 
@@ -74,9 +73,6 @@ public class FenixEduAcademicConfiguration {
 
         @ConfigurationProperty(key = "mail.smtp.name", description = "The name of the SMTP server used to send Emails")
         public String getMailSmtpName();
-
-        @ConfigurationProperty(key = "phd.public.candidacy.submission.link")
-        public String getPhdPublicCandidacySubmissionLink();
 
         @ConfigurationProperty(key = "physicalAddress.requiresValidation")
         public Boolean getPhysicalAddressRequiresValidation();
@@ -93,8 +89,7 @@ public class FenixEduAcademicConfiguration {
         @ConfigurationProperty(key = "semester.for.from.enrolments", defaultValue = "1")
         public String getSemesterForFromEnrolments();
 
-        @ConfigurationProperty(
-                key = "semester.for.from.mark.sheet.managment",
+        @ConfigurationProperty(key = "semester.for.from.mark.sheet.managment",
                 description = "indicates if pending request should be stored in database to recover current session after new login",
                 defaultValue = "2")
         public String getSemesterForFromMarkSheetManagment();
@@ -142,7 +137,7 @@ public class FenixEduAcademicConfiguration {
                 defaultValue = "2005/2006")
         public String getYearForFromMarkSheetManagment();
 
-        @ConfigurationProperty(key="maximum.number.of.credits.for.enrolment", defaultValue = "40.5")
+        @ConfigurationProperty(key = "maximum.number.of.credits.for.enrolment", defaultValue = "40.5")
         public double getMaximumNumberOfCreditsForEnrolment();
     }
 

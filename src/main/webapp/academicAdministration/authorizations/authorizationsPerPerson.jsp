@@ -231,27 +231,6 @@
 				</div>
 				</logic:iterate>
 
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">
-							<a data-toggle="collapse" data-parent="#cursos_acc" data-target="#collapseTwo" href="#">
-								<bean:message key="title.phd.programs" bundle="PHD_RESOURCES"/>
-							</a>
-						</h3>
-					</div>
-					<div id="collapseTwo" class="panel-collapse collapse">
-						<div class="panel-body">
-							<logic:iterate id="program" name="authorizationsBean" property="phdPrograms" 
-										   type="org.fenixedu.academic.domain.phd.PhdProgram">
-								<div class="draggable_course degree">
-									<div id="oid" style="display:none"><bean:write name="program" property="oid"/></div>
-									<div id="presentationName" style="display:none"><bean:write name="program" property="presentationName"/></div>
-									<div id="name"><bean:write name="program" property="name"/></div>
-								</div>
-							</logic:iterate>
-						</div>
-					</div>
-				</div>
 			</div>
 		</div><!--sidebar-->
 		</div>

@@ -21,8 +21,6 @@ package org.fenixedu.academic.task;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
-import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
-import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessState;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -97,14 +95,7 @@ public class CreateAdministrativeOfficeFeeEvent extends CronTask {
                     createAdministrativeOfficeFeeEvent(studentCurricularPlan, executionYear);
                 }
             }
-            if (student.getPerson() != null) {
-                for (final PhdIndividualProgramProcess process : student.getPerson().getPhdIndividualProgramProcessesSet()) {
-                    if (process.getActiveState() == PhdIndividualProgramProcessState.WORK_DEVELOPMENT) {
-                        createInsuranceEvent(student.getPerson(), executionYear);
-                        break;
-                    }
-                }
-            }
+
         }
 
         taskLog("Created %s AdministrativeOfficeFee events\n", AdministrativeOfficeFee_TOTAL_CREATED);

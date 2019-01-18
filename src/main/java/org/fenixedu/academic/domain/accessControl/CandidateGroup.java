@@ -24,7 +24,6 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.candidacy.Candidacy;
 import org.fenixedu.academic.domain.candidacy.CandidacySituationType;
 import org.fenixedu.academic.domain.candidacy.DFACandidacy;
-import org.fenixedu.academic.domain.phd.candidacy.PHDProgramCandidacy;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -72,9 +71,8 @@ public class CandidateGroup extends GroupStrategy {
         if (situation == null || !situation.isActive() || situation.equals(CandidacySituationType.REGISTERED)) {
             return false;
         }
-        // ... and also DFA/PHD Candidacies in the admitted state (as this seems to be one of the last possible outcomes).
-        return !((candidacy instanceof DFACandidacy || candidacy instanceof PHDProgramCandidacy) && situation
-                .equals(CandidacySituationType.ADMITTED));
+        // ... and also DFA Candidacies in the admitted state (as this seems to be one of the last possible outcomes).
+        return !(candidacy instanceof DFACandidacy && situation.equals(CandidacySituationType.ADMITTED));
     }
 
     @Override
