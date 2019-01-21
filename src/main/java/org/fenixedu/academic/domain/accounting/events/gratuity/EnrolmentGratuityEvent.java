@@ -35,7 +35,7 @@ public class EnrolmentGratuityEvent extends EnrolmentGratuityEvent_Base {
         FenixFramework.getDomainModel().registerDeletionBlockerListener(Enrolment.class, (enrolment, blockers) -> {
             enrolment.getGratuityEvent().ifPresent(event -> {
                 if (!event.canBeCanceled()) {
-                    throw new DomainException("Can't delete enrolment since it has an event that can't be canceled.");
+                    blockers.add("Can't delete enrolment since it has an event that can't be canceled.");
                 }
             });
         });
