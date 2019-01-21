@@ -38,4 +38,9 @@ public class FineExemption extends CreditEntry {
     public boolean isForFine() {
         return true;
     }
+
+    @Override
+    public BigDecimal getAmountInAdvance() {
+        return BigDecimal.ZERO;
+    }
 }
