@@ -37,12 +37,7 @@
 	<logic:iterate id="degreeCurricularPlan" name="degrees">
 		<tr>
 		   <td>
-				<logic:notEmpty name="degreeCurricularPlan" property="degree.phdProgram">
-					<bean:write name="degreeCurricularPlan" property="degree.phdProgram.presentationName"/>
-				</logic:notEmpty>
-				<logic:empty name="degreeCurricularPlan" property="degree.phdProgram">
-					<bean:write name="degreeCurricularPlan" property="degree.presentationName"/>
-				</logic:empty>
+				<bean:write name="degreeCurricularPlan" property="degree.presentationName"/>
 		   </td>
 		   <td class="acenter">
 				<a href="${pageContext.request.contextPath}/coordinator/coordinatorIndex.do?degreeCurricularPlanID=${degreeCurricularPlan.externalId}"><c:out value="${degreeCurricularPlan.name}" /></a>
