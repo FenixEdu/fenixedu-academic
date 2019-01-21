@@ -55,7 +55,7 @@ ${portal.toolkit()}
     <jsp:include page="heading-person.jsp"/>
 
     <div class="row">
-        <h3>Criar Isenção</h3>
+        <h3><spring:message code="accounting.event.create.exemption.title" text="Create Exemption"/></h3>
         <form:form modelAttribute="createExemptionBean" role="form" class="form-horizontal" action="${exemptUrl}" method="post">
             ${csrf.field()}
             <div class="form-group">

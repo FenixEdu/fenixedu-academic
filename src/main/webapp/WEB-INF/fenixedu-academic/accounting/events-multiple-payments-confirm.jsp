@@ -99,19 +99,19 @@
             <div class="col-md-8">
                 <div class="overall-description">
                     <dl>
-                        <dt>Data de pagamento</dt>
+                        <dt><spring:message code="accounting.event.details.transactions.paymentDate" text="Payment Date"/></dt>
                         <dd><c:out value="${paymentsManagementDTO.paymentDate.toString('dd/MM/yyyy HH:mm:ss')}"/></dd>
                     </dl>
                     <dl>
-                        <dt>Método de Pagamento</dt>
+                        <dt><spring:message code="accounting.event.details.transactionDetail.paymentMethod" text="Payment Method"/></dt>
                         <dd><c:out value="${paymentsManagementDTO.paymentMethod.localizedName}"/></dd>
                     </dl>
                     <dl>
-                        <dt>Referência de Pagamento</dt>
+                        <dt><spring:message code="accounting.event.details.transactionDetail.paymentReference" text="Payment Reference"/></dt>
                         <dd><c:out value="${paymentsManagementDTO.paymentReference}"/></dd>
                     </dl>
                     <dl style="font-size: 24px;">
-                        <dt>Valor Total</dt>
+                        <dt><spring:message code="accounting.event.totalAmount" text="Total Amount"/></dt>
                         <dd><strong><c:out value="${paymentsManagementDTO.selectedTotalAmountToPay} €"/></strong></dd>
                     </dl>
                 </div>
@@ -129,8 +129,8 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>Descrição</th>
-                                <th>Valor a pagar</th>
+                                <th><spring:message code="accounting.event.details.description" text="Description"/></th>
+                                <th><spring:message code="accounting.event.details.debt.amount.to.pay" text="Amount to pay"/></th>
                             </tr>
                             </thead>
                             <c:forEach items="${eventEntryDTOMap}" var="eventKey">
@@ -160,8 +160,8 @@
             </spring:url>
 
             <c:if test="${not empty multiplePayments}">
-                <button class="btn btn-primary" type="submit">Confirmar pagamento</button>
-                <a href="${backUrl}" onclick="reset()" class="btn btn-default">Cancelar</a>
+                <button class="btn btn-primary" type="submit"><spring:message code="accounting.event.confirm.payment" text="Confirm Payment"/></button>
+                <a href="${backUrl}" onclick="reset()" class="btn btn-default"><spring:message code="accounting.event.action.cancel" text="Cancel"/></a>
             </c:if>
 
             <c:if test="${empty multiplePayments}">

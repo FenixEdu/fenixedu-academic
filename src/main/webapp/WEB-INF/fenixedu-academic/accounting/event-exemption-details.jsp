@@ -51,27 +51,27 @@
         <div class="col-md-5">
             <section class="payment-metadata">
                 <dl>
-                    <dt>Tipo de Isenção</dt>
+                    <dt><spring:message code="accounting.event.details.transactionDetail.exemptionType" text="Exemption Type"/></dt>
                     <dd><c:out value="${creditEntry.typeDescription.content}"/></dd>
                 </dl>
                 <dl>
-                    <dt>Responsável</dt>
+                    <dt><spring:message code="accounting.event.details.transactionDetail.responsible" text="Responsible"/></dt>
                     <dd><c:out value="${exemption.responsible.presentationName}"/></dd>
                 </dl>
                 <dl>
-                    <dt>Valor</dt>
+                    <dt><spring:message code="accounting.event.details.value" text="Value"/></dt>
                     <dd><c:out value="${exemptionValue}"/><span> €</span></dd>
                 </dl>
                 <dl>
-                    <dt>Justificação</dt>
+                    <dt><spring:message code="accounting.event.details.transactionDetail.exemptionJustification" text="Justification"/></dt>
                     <dd><c:out value="${exemption.description}"/></dd>
                 </dl>
                 <dl>
-                    <dt>Motivo:</dt>
+                    <dt><spring:message code="accounting.event.details.transactionDetail.reason" text="Reason"/>:</dt>
                     <dd><c:out value="${exemption.reason}"/></dd>
                 </dl>
                 <dl>
-                    <dt>Data de isenção:</dt>
+                    <dt><spring:message code="accounting.event.details.transactionDetail.exemptionDate" text="Exemption Date"/>:</dt>
                     <dd>
                         <time datetime="${registeredDate.toString('yyyy-MM-dd')}">${registeredDate.toString('dd/MM/yyyy')}</time>
                     </dd>
@@ -97,7 +97,7 @@
     <div class="row">
         <div class="col-md-12">
             <header>
-                <h2>Prestações</h2>
+                <h2><spring:message code="accounting.event.details.installments.and.refunds" text="Installments and Refunds"/></h2>
             </header>
         </div>
     </div>
@@ -105,18 +105,19 @@
         <table class="table">
             <thead>
             <tr>
-                <th>Prestação</th>
-                <th>Data limite</th>
-                <th>Total Pago</th>
-                <th>Dívida</th>
-                <th>Juros/Multas</th>
-                <th><span class="sr-only">Acções</span></th>
+                <th><spring:message code="accounting.event.details.description" text="Description"/></th>
+                <th><spring:message code="accounting.event.details.date" text="Date"/></th>
+                <th><spring:message code="accounting.event.details.total" text="Total"/></th>
+                <th><spring:message code="accounting.event.details.transactions.debt" text="Debt"/></th>
+                <th><spring:message code="accounting.event.details.transactions.interestOrFine" text="Interest/Fine"/></th>
+                <th><spring:message code="accounting.event.details.transactions.advance" text="Advance"/></th>
+                <th><span class="sr-only"><spring:message code="accounting.event.details.transactions.actions" text="Actions"/></span></th>
             </tr>
             </thead>
             <tbody>
             <c:if test="${empty payments}">
                 <tr>
-                    <td colspan="6">Não existem prestações associadas.</td>
+                    <td colspan="6"><spring:message code="accounting.event.details.noInstallments" text="There are no installments."/></td>
                 </tr>
             </c:if>
             <c:if test="${not empty payments}">

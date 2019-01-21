@@ -122,7 +122,7 @@
         <header>
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Pagamento de Dívidas</h1>
+                    <h1><spring:message code="accounting.event.debts.payment.title" text="Debts Payment"/></h1>
                 </div>
             </div>
         </header>
@@ -165,8 +165,8 @@
                             <thead>
                             <tr>
                                 <th></th>
-                                <th>Descrição</th>
-                                <th>Valor a pagar</th>
+                                <th><spring:message code="accounting.event.details.description" text="Description"/></th>
+                                <th><spring:message code="accounting.event.details.debt.amount.to.pay" text="Amount to pay"/></th>
                             </tr>
                             </thead>
                             <c:forEach items="${eventEntryDTOMap}" var="eventKey">
@@ -199,7 +199,7 @@
                                 </tbody>
                             </c:forEach>
                         </table>
-                        <p><small>O pagamento das prestações é sequencial.</small></p>
+                        <p><small><spring:message code="accounting.event.debts.payment.explanation" text="The payment of installments is sequential."/></small></p>
                     </section>
                 </div>
                 <div class="col-md-3">
@@ -209,7 +209,9 @@
                             <dd><span id="totalAmount"></span><span>€</span></dd>
                         </dl>
                         <div class="actions">
-                            <button id="submitForm" class="btn btn-block btn-primary" type="submit">Realizar Pagamento</button>
+                            <button id="submitForm" class="btn btn-block btn-primary" type="submit">
+                                <spring:message code="accounting.event.debts.payment.submit" text="Submit Payment"/>
+                            </button>
                         </div>
                     </section>
                 </div>

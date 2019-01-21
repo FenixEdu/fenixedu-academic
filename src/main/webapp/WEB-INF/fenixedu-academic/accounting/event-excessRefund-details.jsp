@@ -97,7 +97,7 @@
     <div class="row">
         <div class="col-md-12">
             <header>
-                <h2>Pagamentos</h2>
+                <h2><spring:message code="label.payments" text="Payments"/></h2>
             </header>
         </div>
     </div>
@@ -107,20 +107,20 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Data de processamento</th>
-                        <th>Data de adiantamento</th>
-                        <th>Tipo</th>
-                        <th>Pago</th>
-                        <th>Divida</th>
-                        <th>Juros/Multas</th>
-                        <th>Adiantamento</th>
-                        <th><span class="sr-only">Acções</span></th>
+                        <th><spring:message code="accounting.event.details.transactions.processingDate" text="Processing Date"/></th>
+                        <th><spring:message code="accounting.event.details.transactions.effectiveDate" text="Effective Date"/></th>
+                        <th><spring:message code="accounting.event.details.transactions.type" text="Type"/></th>
+                        <th><spring:message code="accounting.event.details.transactions.total" text="Total"/></th>
+                        <th><spring:message code="accounting.event.details.transactions.debt" text="Debt"/></th>
+                        <th><spring:message code="accounting.event.details.transactions.interestOrFine" text="Interest/Fine"/></th>
+                        <th><spring:message code="accounting.event.details.transactions.advance" text="Advance"/></th>
+                        <th><span class="sr-only"><spring:message code="accounting.event.details.transactions.actions" text="Actions"/></span></th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:if test="${empty payments}">
                         <tr>
-                            <td colspan="5">Não existem pagamentos</td>
+                            <td colspan="5"><spring:message code="accounting.event.details.noPayments" text="There are no payments"/></td>
                         </tr>
                     </c:if>
                     <c:if test="${not empty payments}">

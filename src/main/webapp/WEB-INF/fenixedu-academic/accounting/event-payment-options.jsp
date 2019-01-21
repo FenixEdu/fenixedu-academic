@@ -126,25 +126,25 @@
                 <div class="col-xs-12 col-md-4">
                     <section class="reference-card">
                         <c:set var="mostRecentEntry" value="${paymentCodeEntries[0]}"/>
-                        <h2>Última referência gerada</h2>
+                        <h2><spring:message code="accounting.event.payment.last.reference.generated" text="Last Reference Generated"/></h2>
                         <dl>
-                            <dt>Entidade</dt>
+                            <dt><spring:message code="accounting.event.payment.entity" text="Entity"/></dt>
                             <dd><c:out value="${mostRecentEntry.paymentCode.entityCode}"/></dd>
                         </dl>
                         <dl>
-                            <dt>Referencia</dt>
+                            <dt><spring:message code="accounting.event.payment.reference" text="Reference"/></dt>
                             <dd><c:out value="${mostRecentEntry.paymentCode.formattedCode}"/></dd>
                         </dl>
                         <dl>
-                            <dt>Valor</dt>
+                            <dt><spring:message code="accounting.event.details.value" text="Value"/></dt>
                             <dd><c:out value="${mostRecentEntry.amount}"/><span>€</span></dd>
                         </dl>
                         <dl>
-                            <dt>Estado</dt>
+                            <dt><spring:message code="accounting.event.details.state" text="State"/></dt>
                             <dd>${fr:message('resources.EnumerationResources',mostRecentEntry.paymentCode.state.qualifiedName)}</dd>
                         </dl>
                         <dl>
-                            <dt>Data de Criação</dt>
+                            <dt><spring:message code="accounting.event.details.creation.date" text="Creation Date"/></dt>
                             <dd><time datetime="${mostRecentEntry.created.toString("yyyy-MM-dd HH:mm:ss")}">${mostRecentEntry.created.toString("dd/MM/yyyy HH:mm:ss")}</time></dd>
                         </dl>
                     </section>
@@ -165,12 +165,12 @@
                         <thead>
                         <tr>
                             <th>
-                                <label for="selectAllDebts" class="sr-only">Seleccionar todas as dividas</label>
+                                <label for="selectAllDebts" class="sr-only"><spring:message code="accounting.event.payment.selectAllDebts" text="Select all debts"/></label>
                                 <input type="checkbox" id="selectAllDebts">
                             </th>
                             <th><spring:message code="accounting.event.details.due.date"/></th>
-                            <th>Título</th>
-                            <th>Valor</th>
+                            <th><spring:message code="accounting.event.details.description" text="Description"/></th>
+                            <th><spring:message code="accounting.event.details.value" text="Value"/></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -211,7 +211,7 @@
                         </c:forEach>
                         </tbody>
                     </table>
-                    <p><small>O pagamento das prestações é sequencial.</small></p>
+                    <p><small><spring:message code="accounting.event.debts.payment.explanation" text="The payment of installments is sequential."/></small></p>
                 </section>
             </div>
             <div class="col-md-4">
@@ -237,7 +237,7 @@
         <div class="row">
             <div class="col-md-12">
                 <header>
-                    <h2>Dados de Pagamento Gerados</h2>
+                    <h2><spring:message code="accounting.event.payment.generated.payment.data" text="Generated Payment Data"/></h2>
                 </header>
             </div>
         </div>
@@ -246,17 +246,17 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Data de Criação</th>
-                        <th>Entidade</th>
-                        <th>Referência</th>
-                        <th>Valor</th>
-                        <th>Estado</th>
+                        <th><spring:message code="accounting.event.details.creation.date" text="Creation Date"/></th>
+                        <th><spring:message code="accounting.event.payment.entity" text="Entity"/></th>
+                        <th><spring:message code="accounting.event.payment.reference" text="Reference"/></th>
+                        <th><spring:message code="accounting.event.details.value" text="Value"/></th>
+                        <th><spring:message code="accounting.event.details.state" text="State"/></th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:if test="${empty paymentCodeEntries}">
                         <tr>
-                            <td colspan="6">Não existem dados de pagamento gerados</td>
+                            <td colspan="6"><spring:message code="accounting.event.payment.no.generated.payment.data" text="There are no generated payment data"/></td>
                         </tr>
                     </c:if>
                     <c:if test="${not empty paymentCodeEntries}">

@@ -41,7 +41,7 @@
         <h1>
             <jsp:include page="heading-event.jsp"/>
             <c:if test="${event.currentEventState == 'CANCELLED'}">
-                <span class="text-danger"> (Cancelada)</span>
+                <span class="text-danger"> <spring:message code="accounting.event.details.currentEventState.cancelled" text="(Cancelled)"/></span>
             </c:if>
         </h1>
     </header>
@@ -97,7 +97,7 @@
     <div class="row">
         <div class="col-md-12">
             <header>
-                <h2>Pagamentos</h2>
+                <h2><spring:message code="label.payments" text="Payments"/></h2>
             </header>
         </div>
     </div>
@@ -107,19 +107,19 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Data de processamento</th>
-                        <th>Data efectiva</th>
-                        <th>Tipo</th>
-                        <th>Pago</th>
-                        <th>Divida</th>
-                        <th>Juros/Multas</th>
-                        <th><span class="sr-only">Acções</span></th>
+                        <th><spring:message code="accounting.event.details.transactions.processingDate" text="Processing Date"/></th>
+                        <th><spring:message code="accounting.event.details.transactions.effectiveDate" text="Effective Date"/></th>
+                        <th><spring:message code="accounting.event.details.transactions.type" text="Type"/></th>
+                        <th><spring:message code="accounting.event.details.debt.paid" text="Paid"/></th>
+                        <th><spring:message code="accounting.event.details.transactions.debt" text="Debt"/></th>
+                        <th><spring:message code="accounting.event.details.transactions.interestOrFine" text="Interest/Fine"/></th>
+                        <th><span class="sr-only"><spring:message code="accounting.event.details.transactions.actions" text="Actions"/></span></th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:if test="${empty payments}">
                         <tr>
-                            <td colspan="5">Não existem pagamentos</td>
+                            <td colspan="5"><spring:message code="accounting.event.details.noPayments" text="There are no payments"/></td>
                         </tr>
                     </c:if>
                     <c:if test="${not empty payments}">
