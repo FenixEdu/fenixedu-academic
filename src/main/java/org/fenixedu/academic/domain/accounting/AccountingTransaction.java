@@ -172,10 +172,6 @@ public class AccountingTransaction extends AccountingTransaction_Base {
                 "error.org.fenixedu.academic.domain.accounting.AccountingTransaction.cannot.remove.accountingTransaction");
     }
 
-    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-        return getEvent().getDescriptionForEntryType(entryType);
-    }
-
     public Account getFromAccount() {
         return getEntry(false).getAccount();
 
@@ -225,7 +221,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
         return reimburseWithoutRules(responsibleUser, paymentMethod, paymentReference, amountToReimburse, null);
     }
 
-    public AccountingTransaction reimburseWithoutRules(User responsibleUser, PaymentMethod paymentMethod, String
+    private AccountingTransaction reimburseWithoutRules(User responsibleUser, PaymentMethod paymentMethod, String
             paymentReference, Money amountToReimburse,
             String comments) {
         return reimburse(responsibleUser, paymentMethod, paymentReference, amountToReimburse, comments, false);
@@ -246,6 +242,12 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 
         reimburseWithoutRules(responsibleUser, getTransactionDetail().getPaymentMethod(), getTransactionDetail()
                 .getPaymentReference(), getAmountWithAdjustment(), reason);
+
+        final Refund refund = getRefund();
+        if (refund != null) {
+            setRefund(null);
+            refund.delete(false);
+        }
     }
 
     private void checkRulesToAnnul() {

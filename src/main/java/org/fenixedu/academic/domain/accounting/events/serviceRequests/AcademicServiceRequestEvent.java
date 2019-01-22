@@ -39,6 +39,7 @@ abstract public class AcademicServiceRequestEvent extends AcademicServiceRequest
         super.init(administrativeOffice, eventType, person);
         checkParameters(academicServiceRequest);
         super.setAcademicServiceRequest(academicServiceRequest);
+        persistDueDateAmountMap();
     }
 
     final protected void checkParameters(final AcademicServiceRequest academicServiceRequest) {

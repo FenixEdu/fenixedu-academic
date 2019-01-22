@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
 import java.util.UUID;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletContext;
@@ -19,6 +20,7 @@ import org.fenixedu.academic.domain.accounting.Discount;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.accounting.PaymentMethod;
+import org.fenixedu.academic.domain.accounting.Refund;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
 import org.fenixedu.academic.domain.accounting.events.EventExemptionJustificationType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -132,6 +134,12 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
             } catch (DomainException e) {
                 model.addAttribute("error", e.getLocalizedMessage());
             }
+        } else if (transaction instanceof Refund) {
+            try {
+                ((Refund) transaction).delete();
+            } catch (DomainException e) {
+                model.addAttribute("error", e.getLocalizedMessage());
+            }
         }
         else {
             throw new UnsupportedOperationException(String.format("Can't delete unknown transaction %s%n", transaction.getClass
@@ -156,12 +164,13 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
     @RequestMapping(value = "{event}/deposit", method = RequestMethod.GET)
     public String deposit(@PathVariable Event event, User user, Model model){
         accessControlService.checkPaymentManager(event, user);
+        final Person person = event.getPerson();
         model.addAttribute("eventDetailsUrl", getEventDetailsUrl(event));
         model.addAttribute("paymentMethods", PaymentMethod.all());
-        model.addAttribute("person", event.getPerson());
+        model.addAttribute("person", person);
         model.addAttribute("event", event);
         model.addAttribute("depositAmountBean", new DepositAmountBean());
-
+        model.addAttribute("availableAdvancements", Event.availableAdvancements(person));
         return view("event-deposit");
     }
 
@@ -244,6 +253,50 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
         }
 
         return redirectToEventDetails(event);
+    }
+
+    @RequestMapping(value = "{event}/refund", method = RequestMethod.GET)
+    public String refund(final @PathVariable Event event, final User user, final Model model) {
+        accessControlService.checkAdvancedPaymentManager(event, user);
+
+        final DebtInterestCalculator calculator = event.getDebtInterestCalculator(new DateTime());
+        final BigDecimal payedDebtAmount = calculator.getPaidDebtAmount();
+        final BigDecimal paidUnusedAmount = calculator.getPaidUnusedAmount();
+
+        if (payedDebtAmount.compareTo(BigDecimal.ZERO) == 0 && paidUnusedAmount.compareTo(BigDecimal.ZERO) == 0) {
+            return redirectToEventDetails(event);
+        }
+
+        model.addAttribute("eventExemptionJustificationTypes", EventExemptionJustificationType.values());
+        model.addAttribute("event", event);
+        model.addAttribute("person", event.getPerson());
+        model.addAttribute("paidUnusedAmount", paidUnusedAmount);
+        model.addAttribute("payedDebtAmount", payedDebtAmount);
+        model.addAttribute("eventDetailsUrl", getEventDetailsUrl(event));
+
+        return view("event-refund");
+    }
+
+    @RequestMapping(value = "{event}/refundEvent", method = RequestMethod.POST)
+    public String refundEvent(final @PathVariable Event event, final User user, final Model model, @RequestParam
+            EventExemptionJustificationType justificationType, @RequestParam String reason) {
+        return doRefund(event, user, model, () -> accountingManagementService.refundEvent(event, user, justificationType, reason));
+    }
+
+    @RequestMapping(value = "{event}/refundExcessPayment", method = RequestMethod.POST)
+    public String refundExcessPayment(final @PathVariable Event event, final User user, final Model model){
+        return doRefund(event, user, model, () -> accountingManagementService.refundExcessPayment(event, user, null));
+    }
+
+    private String doRefund(final @PathVariable Event event, final User user, final Model model, Supplier<Refund> supplier) {
+        accessControlService.checkAdvancedPaymentManager(event, user);
+        try {
+            supplier.get();
+        } catch (final DomainException e) {
+            model.addAttribute("error", e.getLocalizedMessage());
+            return refund(event, user, model);
+        }
+        return redirectToEventDetails(event);        
     }
 
     @RequestMapping(value = "{person}/multiplePayments/select", method = RequestMethod.GET)
@@ -339,8 +392,14 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
         return view("events-multiple-payments-confirm");
     }
 
-
-    private String redirectToEventDetails(@PathVariable Event event) {
+    @Override
+    protected String redirectToEventDetails(@PathVariable Event event) {
         return String.format("redirect:%s/%s/details", REQUEST_MAPPING, event.getExternalId());
     }
+
+    @Override
+    protected String depositAdvancementInput(Event event, User user, Model model) {
+        return deposit(event, user, model);
+    }
+
 }

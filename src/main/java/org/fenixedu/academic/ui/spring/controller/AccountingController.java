@@ -1,9 +1,9 @@
 package org.fenixedu.academic.ui.spring.controller;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -13,24 +13,28 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.Exemption;
+import org.fenixedu.academic.domain.accounting.Refund;
+import org.fenixedu.academic.domain.accounting.calculator.AccountingEntry;
+import org.fenixedu.academic.domain.accounting.calculator.ExcessRefund;
 import org.fenixedu.academic.domain.accounting.calculator.CreditEntry;
 import org.fenixedu.academic.domain.accounting.calculator.Debt;
+import org.fenixedu.academic.domain.accounting.calculator.DebtEntry;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.ui.spring.service.AccountingManagementAccessControlService;
 import org.fenixedu.academic.ui.spring.service.AccountingManagementService;
-import org.fenixedu.academic.ui.spring.service.AccountingManagementService.PaymentSummary;
+import org.fenixedu.academic.ui.spring.service.AccountingManagementService.AccountingEntrySummary;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.google.common.base.Strings;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -82,12 +86,10 @@ public abstract class AccountingController {
         accessControlService.checkEventOwnerOrPaymentManager(event, loggedUser);
 
         final DebtInterestCalculator debtInterestCalculator = event.getDebtInterestCalculator(date);
-        final List<CreditEntry> creditEntries = debtInterestCalculator.getCreditEntries();
-        Collections.reverse(creditEntries);
 
         model.addAttribute("entrypointUrl", entrypointUrl());
 
-        model.addAttribute("creditEntries", creditEntries);
+        model.addAttribute("transactions", accountingManagementService.getAccountingEntries(debtInterestCalculator));
         model.addAttribute("event", event);
         model.addAttribute("eventDetailsUrl", getEventDetailsUrl(event));
         model.addAttribute("eventId", event.getExternalId());
@@ -95,11 +97,13 @@ public abstract class AccountingController {
 
         model.addAttribute("debts", debtInterestCalculator.getDebtsOrderedByDueDate());
         model.addAttribute("eventTotalAmountToPay", debtInterestCalculator.getTotalDueAmount());
-        model.addAttribute("eventTotalUnusedAmount", debtInterestCalculator.getTotalUnusedAmount());
+        model.addAttribute("eventPaidUnusedAmount", debtInterestCalculator.getPaidUnusedAmount());
         model.addAttribute("eventDebtAmountToPay", debtInterestCalculator.getDueAmount());
         model.addAttribute("eventInterestAmountToPay", debtInterestCalculator.getDueInterestAmount());
         model.addAttribute("eventFineAmountToPay", debtInterestCalculator.getDueFineAmount());
         model.addAttribute("eventOriginalAmountToPay", event.getOriginalAmountToPay());
+
+        model.addAttribute("payedDebtAmount", debtInterestCalculator.getPaidDebtAmount());
 
         model.addAttribute("isEventOwner", accessControlService.isEventOwner(event, loggedUser));
         model.addAttribute("isPaymentManager", accessControlService.isPaymentManager(event, loggedUser));
@@ -108,58 +112,87 @@ public abstract class AccountingController {
         return view("event-details");
     }
 
-    @RequestMapping("{event}/debt/{debtDueDate}/details")
-    public String debtDetails(@PathVariable Event event, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate debtDueDate, Model model, User loggedUser) {
+    @RequestMapping("{event}/transaction/{id}/details")
+    public String transactionDetails(@PathVariable Event event, @PathVariable String id, @RequestParam(value = "date",
+            defaultValue = "#{new org.joda.time.DateTime()}") DateTime date, Model model, User loggedUser) {
+
+        DebtInterestCalculator debtInterestCalculator = event.getDebtInterestCalculator(date);
+
+        AccountingEntry accountingEntry = debtInterestCalculator.getAccountingEntry(id).orElseThrow
+                (UnsupportedOperationException::new);
+
+        if (accountingEntry instanceof DebtEntry) {
+            return debtEntryDetails(event, (DebtEntry) accountingEntry, model, loggedUser);
+        }
+
+        if (accountingEntry instanceof CreditEntry) {
+            return creditEntryDetails(event, debtInterestCalculator, (CreditEntry) accountingEntry, model, loggedUser);
+        }
+
+        throw new UnsupportedOperationException("Can't find resolver for transaction with id " + id);
+    }
+
+    private String debtEntryDetails(Event event, DebtEntry debtEntry, Model model, User loggedUser) {
         accessControlService.checkEventOwnerOrPaymentManager(event, loggedUser);
 
-        final DebtInterestCalculator debtInterestCalculator = event.getDebtInterestCalculator(new DateTime());
-        List<Debt> debtsOrderedByDueDate = debtInterestCalculator.getDebtsOrderedByDueDate();
-        Debt debt = debtsOrderedByDueDate.stream().filter(d -> d.getDueDate().equals(debtDueDate)).findAny()
-                .orElseThrow(UnsupportedOperationException::new);
-
-        final List<PaymentSummary> paymentSummaries = accountingManagementService.createPaymentSummaries(debt);
-        paymentSummaries.sort(Comparator.comparing(PaymentSummary::getCreated)
-                .thenComparing(PaymentSummary::getDate)
-                .thenComparing(PaymentSummary::getId).reversed());
+        final List<AccountingManagementService.AccountingEntrySummary> paymentSummaries = accountingManagementService.createAccountingEntrySummaries(debtEntry);
+        
+        paymentSummaries.sort(Comparator.comparing(AccountingManagementService.AccountingEntrySummary::getCreated)
+                .thenComparing(AccountingEntrySummary::getDate)
+                .thenComparing(AccountingEntrySummary::getId).reversed());
 
         model.addAttribute("eventId", event.getExternalId());
         model.addAttribute("event", event);
         model.addAttribute("eventDetailsUrl", getEventDetailsUrl(event));
         model.addAttribute("eventDescription", event.getDescription());
-        model.addAttribute("debtIndex", debtsOrderedByDueDate.indexOf(debt) + 1);
-        model.addAttribute("debt", debt);
         model.addAttribute("payments", paymentSummaries);
-
         model.addAttribute("isEventOwner", accessControlService.isEventOwner(event, loggedUser));
 
-        return view("event-debt-details");
+        if (debtEntry instanceof Debt) {
+            model.addAttribute("debt", debtEntry);
+            return view("event-debt-details");
+        }
+
+        if (debtEntry instanceof ExcessRefund) {
+            final ExcessRefund excessRefund = (ExcessRefund) debtEntry;
+            final String paymentId = excessRefund.getTargetPaymentId();
+            if (!Strings.isNullOrEmpty(paymentId)) {
+                AccountingTransaction accountingTransaction = FenixFramework.getDomainObject(paymentId);
+                model.addAttribute("targetPaymentId", accountingTransaction);
+            }
+            model.addAttribute("excessRefund", excessRefund);
+            model.addAttribute("refundDomainObject", FenixFramework.getDomainObject(excessRefund.getId()));
+            return view("event-excessRefund-details");
+        }
+
+        throw new UnsupportedOperationException("Unknown debt entry type " + debtEntry.getClass().getName());
     }
 
-    @RequestMapping("{event}/creditEntry/{creditEntryId}/details")
-    public String creditEntryDetails(@PathVariable Event event, @PathVariable String creditEntryId, Model model, User loggedUser) {
+    private String creditEntryDetails(Event event, DebtInterestCalculator calculator, CreditEntry creditEntry, Model model, User
+            loggedUser) {
         accessControlService.checkEventOwnerOrPaymentManager(event, loggedUser);
 
-        final DebtInterestCalculator calculator = event.getDebtInterestCalculator(new DateTime());
-        final CreditEntry creditEntry = calculator.getCreditEntryById(creditEntryId).orElseThrow(UnsupportedOperationException::new);
-        final List<Debt> debtsOrderedByDueDate = calculator.getDebtsOrderedByDueDate();
-        
         model.addAttribute("eventDetailsUrl", getEventDetailsUrl(event));
         model.addAttribute("eventId", event.getExternalId());
         model.addAttribute("creditEntry", creditEntry);
         model.addAttribute("processedDate", creditEntry.getCreated());
         model.addAttribute("registeredDate", creditEntry.getDate());
         model.addAttribute("amount", creditEntry.getAmount());
-        model.addAttribute("debtsOrderedByDueDate", debtsOrderedByDueDate);
-        model.addAttribute("payments", accountingManagementService.createPaymentSummaries(creditEntry));
+        model.addAttribute("payments", accountingManagementService.createAccountingEntrySummaries(creditEntry));
 
-        final DomainObject transactionDetail = FenixFramework.getDomainObject(creditEntryId);
-        if (transactionDetail instanceof AccountingTransaction) {
-            model.addAttribute("transactionDetail", transactionDetail);
+        final DomainObject domainCredit = FenixFramework.getDomainObject(creditEntry.getId());
+        if (domainCredit instanceof Refund) {
+            model.addAttribute("refund", domainCredit);
+            return view("event-refund-details");
+        } else if (domainCredit instanceof AccountingTransaction) {
+            model.addAttribute("sourceRefund",
+                    Optional.ofNullable(((AccountingTransaction) domainCredit).getRefund()).orElse(null));
+            model.addAttribute("transactionDetail", domainCredit);
             return view("event-payment-details");
         }
-        else if (transactionDetail instanceof Exemption){
-            model.addAttribute("exemption", transactionDetail);
-            model.addAttribute("exemptionValue", ((Exemption) transactionDetail).getExemptionAmount(new Money(calculator.getDebtAmount())));
+        else if (domainCredit instanceof Exemption){
+            model.addAttribute("exemption", domainCredit);
+            model.addAttribute("exemptionValue", ((Exemption) domainCredit).getExemptionAmount(new Money(calculator.getDebtAmount())));
             return view("event-exemption-details");
         }
         else {
@@ -167,6 +200,27 @@ public abstract class AccountingController {
         }
 
     }
+
+    @RequestMapping(value = "{event}/depositAdvancement", method = RequestMethod.POST)
+    public String depositAdvancement(final @PathVariable Event event, final User user, final Model model,
+            @RequestParam final Event eventToRefund) {
+        accessControlService.checkEventOwnerOrPaymentManager(eventToRefund, user);
+
+        try {
+            accountingManagementService.depositAdvancement(event, eventToRefund, user);
+        }
+        catch (DomainException e) {
+            e.printStackTrace();
+            model.addAttribute("error", e.getLocalizedMessage());
+            return depositAdvancementInput(event, user, model);
+        }
+
+        return redirectToEventDetails(event);
+    }
+
+    protected abstract String depositAdvancementInput(Event event, User user, Model model);
+
+    protected abstract String redirectToEventDetails(@PathVariable Event event);
 
     private HashMap<Event, String> getInvalidEventsMap(Set<Event> events) {
         HashMap<Event, String> invalidEventsMap = new HashMap<>();
@@ -184,4 +238,5 @@ public abstract class AccountingController {
     protected String view(String view) {
         return "fenixedu-academic/accounting/" + view;
     }
+
 }

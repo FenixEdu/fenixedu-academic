@@ -40,6 +40,7 @@ public class PhdThesisRequestFee extends PhdThesisRequestFee_Base {
         super.init(administrativeOffice, EventType.PHD_THESIS_REQUEST_FEE, person);
         checkProcess(process);
         super.setProcess(process);
+        persistDueDateAmountMap();
     }
 
     private void checkProcess(PhdIndividualProgramProcess process) {

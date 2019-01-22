@@ -122,14 +122,14 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
             if (enrolment.getStudentCurricularPlan() != null && enrolment.getStudentCurricularPlan().getGratuityEventsSet()
                     .stream()
                     .anyMatch(e -> e instanceof StandaloneEnrolmentGratuityEvent && e.getExecutionYear().equals(enrolment.getExecutionYear()))) {
-                throw new DomainException("Can't delete enrolment since exists standalone gratuity event");
+                collection.add("Can't delete enrolment since exists standalone gratuity event");
             }
         }));
     }
 
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
+    protected Money doCalculationForAmountToPay(Event event) {
         final GratuityEvent gratuityEvent = (GratuityEvent) event;
 
         Money result = Money.ZERO;

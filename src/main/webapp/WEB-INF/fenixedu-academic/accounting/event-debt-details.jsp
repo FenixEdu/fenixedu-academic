@@ -49,7 +49,7 @@
     <jsp:include page="heading-person.jsp"/>
         <div class="row">
             <div class="col-md-10">
-                <h2><spring:message code="accounting.event.details.debt.name" arguments="${debtIndex}"/> </h2>
+                <h2><c:out value="${debt.description}"/></h2>
             </div>
             <c:if test="${totalAmount > 0 && isEventOwner && event.currentEventState != 'CANCELLED'}">
                 <div class="col-md-2">
@@ -108,7 +108,7 @@
                     <thead>
                     <tr>
                         <th>Data de processamento</th>
-                        <th>Data de pagamento</th>
+                        <th>Data efectiva</th>
                         <th>Tipo</th>
                         <th>Pago</th>
                         <th>Divida</th>
@@ -123,20 +123,20 @@
                         </tr>
                     </c:if>
                     <c:if test="${not empty payments}">
-                    <c:forEach var="paymentSummary" items="${payments}">
-                        <c:set var="amountUsedInInterestOrFine" value="#{paymentSummary.amountUsedInInterest + paymentSummary.amountUsedInFine}"/>
+                    <c:forEach var="accountingEntrySummary" items="${payments}">
+                        <c:set var="amountUsedInInterestOrFine" value="#{accountingEntrySummary.amountUsedInInterest + accountingEntrySummary.amountUsedInFine}"/>
                         <tr>
-                            <td><time datetime="${paymentSummary.created.toString('yyyy-MM-dd HH:mm:ss')}"><c:out value="${paymentSummary.created.toString('dd/MM/yyyy HH:mm:ss')}"/> </time></td>
-                            <td><time datetime="${paymentSummary.date.toString('yyyy-MM-dd')}"><c:out value="${paymentSummary.date.toString('dd/MM/yyyy')}"/> </time></td>
-                            <td><c:out value="${paymentSummary.typeDescription.content}"/></td>
-                            <td><c:out value="${paymentSummary.amount.toPlainString()}"/><span>€</span></td>
-                            <td><c:out value="${paymentSummary.amountUsedInDebt.toPlainString()}"/><span>€</span></td>
+                            <td><time datetime="${accountingEntrySummary.created.toString('yyyy-MM-dd HH:mm:ss')}"><c:out value="${accountingEntrySummary.created.toString('dd/MM/yyyy HH:mm:ss')}"/> </time></td>
+                            <td><time datetime="${accountingEntrySummary.date.toString('yyyy-MM-dd')}"><c:out value="${accountingEntrySummary.date.toString('dd/MM/yyyy')}"/> </time></td>
+                            <td><c:out value="${accountingEntrySummary.typeDescription.content}"/></td>
+                            <td><c:out value="${accountingEntrySummary.amount.toPlainString()}"/><span>€</span></td>
+                            <td><c:out value="${accountingEntrySummary.amountUsedInDebt.toPlainString()}"/><span>€</span></td>
                             <td><c:out value="${amountUsedInInterestOrFine}"/><span>€</span></td>
-                            <spring:url value="../../../{event}/creditEntry/{payment}/details" var="paymentUrl" scope="request">
+                            <spring:url value="../../../{event}/transaction/{id}/details" var="paymentUrl" scope="request">
                                 <spring:param name="event" value="${eventId}"/>
-                                <spring:param name="payment" value="${paymentSummary.id}"/>
+                                <spring:param name="id" value="${accountingEntrySummary.id}"/>
                             </spring:url>
-                            <td><a href="${paymentUrl}"><spring:message code="accounting.event.details.payment.link"/></a></td>
+                            <td><a href="${paymentUrl}"><spring:message code="label.details"/></a></td>
                         </tr>
                     </c:forEach>
                     </c:if>

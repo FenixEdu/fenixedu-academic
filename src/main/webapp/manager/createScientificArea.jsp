@@ -29,7 +29,7 @@
 
 <html:xhtml/>
 
-<h2>Create Scientific Area</h2>
+<h2><bean:message key="title.manage.associated.objects.create.scientificArea" bundle="MANAGER_RESOURCES" /></h2>
 
 <logic:messagesPresent message="true">
     <p>

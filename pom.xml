@@ -5,12 +5,12 @@
     <parent>
         <groupId>org.fenixedu</groupId>
         <artifactId>fenix-framework-project</artifactId>
-        <version>2.5.0</version>
+        <version>2.5.2</version>
         <relativePath />
     </parent>
 
     <artifactId>fenixedu-academic</artifactId>
-    <version>19.1.0-SNAPSHOT</version>
+    <version>20.3.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>FenixEdu Academic</name>
@@ -38,7 +38,7 @@
         <version.joda.time.joda.time>2.10.1</version.joda.time.joda.time>
         <version.net.sourceforge.htmlcleaner.htmlcleaner>2.22</version.net.sourceforge.htmlcleaner.htmlcleaner>
         <version.org.apache.poi.poi>3.17</version.org.apache.poi.poi>
-        <version.org.fenixedu.bennu-renderers>6.0.0</version.org.fenixedu.bennu-renderers>
+        <version.org.fenixedu.bennu-renderers>6.0.1</version.org.fenixedu.bennu-renderers>
         <version.org.fenixedu.bennu-modular-rendering>1.1.0</version.org.fenixedu.bennu-modular-rendering>
         <version.org.fenixedu.bennu>6.0.0</version.org.fenixedu.bennu>
         <version.org.fenixedu.fenixedu-commons>3.0.0</version.org.fenixedu.fenixedu-commons>
@@ -52,9 +52,9 @@
         <version.pt.ist.tidy>1.0</version.pt.ist.tidy>
         <version.taglibs.datetime>1.0.1</version.taglibs.datetime>
         <version.taglibs.strings>1.1.0</version.taglibs.strings>
-        <version.com.fasterxml.jackson.core.jackson-databind>2.9.7</version.com.fasterxml.jackson.core.jackson-databind>
+        <version.com.fasterxml.jackson.core.jackson-databind>2.9.8</version.com.fasterxml.jackson.core.jackson-databind>
         <version.org.fenixedu.postCodeTools>1.2.2</version.org.fenixedu.postCodeTools>
-        <version.org.fenixedu.tinTools>1.0.0</version.org.fenixedu.tinTools>
+        <version.org.fenixedu.tinTools>1.1.0</version.org.fenixedu.tinTools>
     </properties>
 
     <issueManagement>

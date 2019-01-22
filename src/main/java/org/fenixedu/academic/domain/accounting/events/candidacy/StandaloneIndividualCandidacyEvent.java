@@ -34,6 +34,7 @@ public class StandaloneIndividualCandidacyEvent extends StandaloneIndividualCand
     public StandaloneIndividualCandidacyEvent(final StandaloneIndividualCandidacy candidacy, final Person person) {
         this();
         super.init(candidacy, EventType.STANDALONE_INDIVIDUAL_CANDIDACY, person);
+        calculatePaymentCodeEntry();
     }
 
     @Override

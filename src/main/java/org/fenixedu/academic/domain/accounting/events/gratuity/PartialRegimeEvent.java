@@ -9,7 +9,6 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accounting.EntryType;
-import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.accounting.paymentPlanRules.IsAlienRule;
@@ -21,11 +20,8 @@ import org.fenixedu.academic.domain.student.RegistrationRegime;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.signals.DomainObjectEvent;
 import org.fenixedu.bennu.core.signals.Signal;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.FenixFramework;
@@ -39,25 +35,6 @@ public class PartialRegimeEvent extends PartialRegimeEvent_Base {
             create(wrapper.getInstance());
         });
 
-        // block registration regime deletion if an event exists
-        FenixFramework.getDomainModel().registerDeletionBlockerListener(RegistrationRegime.class, ((registrationRegime,
-                collection) -> {
-            final Registration registration = registrationRegime.getRegistration();
-            ExecutionYear executionYear = registrationRegime.getExecutionYear();
-            StudentCurricularPlan studentCurricularPlan = registration.getStudentCurricularPlan(executionYear);
-            if (studentCurricularPlan != null) {
-                studentCurricularPlan.getGratuityEvent(executionYear, PartialRegimeEvent.class).filter(e -> !e
-                        .canBeCanceled()).findAny().ifPresent(event -> {
-                            throw new DomainException("Event can't be canceled.");
-                });
-
-                studentCurricularPlan.getGratuityEvent(executionYear, EnrolmentGratuityEvent.class).filter(e -> e.getEventType
-                        () == EventType.PARTIAL_REGIME_ENROLMENT_GRATUITY && !e.canBeCanceled()).findAny().ifPresent(event -> {
-                    throw new DomainException("Event can't be canceled.");
-                });
-            }
-        }));
-
     }
 
     protected PartialRegimeEvent() {
@@ -68,6 +45,7 @@ public class PartialRegimeEvent extends PartialRegimeEvent_Base {
         final AdministrativeOffice administrativeOffice = registration.getDegree().getAdministrativeOffice();
         init(administrativeOffice, person, studentCurricularPlan, executionYear);
         setEventPostingRule(postingRule);
+        persistDueDateAmountMap();
     }
 
     public static Optional<PartialRegimeEvent> create(Registration registration, ExecutionYear executionYear) {
@@ -86,13 +64,6 @@ public class PartialRegimeEvent extends PartialRegimeEvent_Base {
             final StudentCurricularPlan studentCurricularPlan = registration.getStudentCurricularPlan(executionYear);
             if (studentCurricularPlan != null) {
                 studentCurricularPlan.getEnrolmentsByExecutionYear(executionYear).forEach(EnrolmentGratuityEvent::create);
-                //TODO : fenixdebts: check if current gratuity event (exists and can't be canceled)
-                studentCurricularPlan.getGratuityEvent(executionYear, GratuityEventWithPaymentPlan.class).filter(Event::canBeCanceled)
-                        .forEach(event -> {
-                                    User user = Authenticate.getUser();
-                                    event.cancel(user == null ? null : user.getPerson(), "Student is now in partial regime");
-                                }
-                        );
                 return Optional.of(studentCurricularPlan.getGratuityEvent(executionYear, PartialRegimeEvent.class)
                         .map(PartialRegimeEvent.class::cast).findAny().orElseGet(() -> {
                             try {
@@ -162,15 +133,15 @@ public class PartialRegimeEvent extends PartialRegimeEvent_Base {
     }
 
     @Override
-    public Map<LocalDate, Money> getDueDateAmountMap(PostingRule postingRule, DateTime when) {
-        Money amount = postingRule.calculateTotalAmountToPay(this, when);
+    public Map<LocalDate, Money> calculateDueDateAmountMap() {
+        Money amount = getPostingRule().calculateTotalAmountToPay(this);
         LocalDate dueDate =
                 getWhenOccured().toLocalDate().plusDays(getEventPostingRule().getNumberOfDaysToStartApplyingInterest());
         return Collections.singletonMap(dueDate, amount);
     }
 
     @Override
-    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+    protected LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter result = new LabelFormatter();
         result.appendLabel(getEventType().getQualifiedName(), Bundle.ENUMERATION);
         if (getEventPostingRule().isForAliens()) {

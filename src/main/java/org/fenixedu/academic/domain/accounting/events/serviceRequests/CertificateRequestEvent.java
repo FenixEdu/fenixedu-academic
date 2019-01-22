@@ -39,28 +39,8 @@ public class CertificateRequestEvent extends CertificateRequestEvent_Base {
     }
 
     @Override
-    public LabelFormatter getDescription() {
-        final LabelFormatter result = super.getDescription();
-        fillDescription(result);
-        return result;
-    }
-
-    @Override
-    final public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-        final LabelFormatter labelFormatter = new LabelFormatter();
-
-        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION);
-
-        fillDescription(labelFormatter);
-
-        if (getAcademicServiceRequest().getExecutionYear() != null) {
-            labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
-        }
-
-        return labelFormatter;
-    }
-
-    protected void fillDescription(final LabelFormatter labelFormatter) {
+    final protected LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        final LabelFormatter labelFormatter = super.getDescriptionForEntryType(entryType);
         labelFormatter.appendLabel(" (");
         labelFormatter.appendLabel(getDegree().getDegreeType().getName().getContent());
         labelFormatter.appendLabel(" ");
@@ -68,6 +48,14 @@ public class CertificateRequestEvent extends CertificateRequestEvent_Base {
         labelFormatter.appendLabel(" ");
         labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent());
         labelFormatter.appendLabel(")");
+
+        if (getAcademicServiceRequest().getExecutionYear() != null) {
+            labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
+        }
+
+        labelFormatter.appendLabel(" - ").appendLabel(getAcademicServiceRequest().getServiceRequestNumberYear());
+
+        return labelFormatter;
     }
 
     final public Integer getNumberOfUnits() {

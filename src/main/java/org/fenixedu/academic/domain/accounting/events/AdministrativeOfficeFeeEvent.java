@@ -19,7 +19,6 @@ import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
@@ -52,7 +51,7 @@ public class AdministrativeOfficeFeeEvent extends AdministrativeOfficeFeeEvent_B
             ExecutionYear executionYear) {
         this();
         init(administrativeOffice, EventType.ADMINISTRATIVE_OFFICE_FEE, person, executionYear);
-    }
+    }                                                        
 
     @Override protected Account getFromAccount() {
         return getPerson().getExternalAccount();
@@ -62,7 +61,7 @@ public class AdministrativeOfficeFeeEvent extends AdministrativeOfficeFeeEvent_B
         return getAdministrativeOffice().getUnit().getInternalAccount();
     }
 
-    @Override public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+    @Override protected LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
         labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION).appendLabel(" - ")
                 .appendLabel(getExecutionYear().getYear());
@@ -71,13 +70,14 @@ public class AdministrativeOfficeFeeEvent extends AdministrativeOfficeFeeEvent_B
     }
 
     @Override
-    public Map<LocalDate, Money> getDueDateAmountMap(PostingRule postingRule, DateTime when) {
+    public Map<LocalDate, Money> calculateDueDateAmountMap() {
+        final PostingRule postingRule = getPostingRule();
         if (postingRule instanceof AdministrativeOfficeFeePR) {
             LocalDate key = ((AdministrativeOfficeFeePR) postingRule).getWhenToApplyFixedAmountPenalty().toLocalDate();
             Money fixedAmount = ((AdministrativeOfficeFeePR) postingRule).getFixedAmount();
             return Collections.singletonMap(key, fixedAmount);
         }
-        return super.getDueDateAmountMap(postingRule, when);
+        return super.calculateDueDateAmountMap();
     }
 
     @Override protected AdministrativeOfficeServiceAgreementTemplate getServiceAgreementTemplate() {

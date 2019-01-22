@@ -16,8 +16,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.fenixedu.academic.domain.accounting.InterestRate;
-import org.fenixedu.academic.domain.accounting.InterestRate.InterestRateBean;
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
 import org.joda.time.DateTime;
@@ -30,7 +28,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
  */
 public class DebtInterestCalculator {
 
+    private final InterestRateProvider interestRateProvider;
     private List<Debt> debts = new ArrayList<>();
+    private List<ExcessRefund> excessRefunds = new ArrayList<>();
     private List<CreditEntry> creditEntries = new ArrayList<>();
     private Map<LocalDate, BigDecimal> dueDateAmountFineMap = new HashMap<>();
     private Set<LocalDate> appliedFines = new HashSet<>();
@@ -38,11 +38,15 @@ public class DebtInterestCalculator {
     private CalculatorSerializer jsonSerializer;
     private boolean isToApplyInterest;
 
-    private DebtInterestCalculator(DateTime when, List<Debt> debts, List<Payment> payments, List<DebtExemption> exemptions, List<InterestExemption> interestExemptions,
-            List<FineExemption> fineExemptions, Map<LocalDate, BigDecimal> dueDateAmountFineMap, boolean isToApplyInterest) {
-
+    private DebtInterestCalculator(DateTime when, InterestRateProvider interestRateProvider, List<ExcessRefund> excessRefunds, List<Debt>
+            debts,
+            List<Refund> refunds, List<Payment> payments, List<DebtExemption> exemptions,
+            List<InterestExemption> interestExemptions, List<FineExemption> fineExemptions, Map<LocalDate, BigDecimal> dueDateAmountFineMap, boolean isToApplyInterest) {
+        this.interestRateProvider = interestRateProvider;
         this.jsonSerializer = new CalculatorSerializer();
+        this.excessRefunds.addAll(excessRefunds);
         this.debts.addAll(debts);
+        this.creditEntries.addAll(refunds);
         this.creditEntries.addAll(payments);
         this.creditEntries.addAll(exemptions);
         this.creditEntries.addAll(interestExemptions);
@@ -50,7 +54,6 @@ public class DebtInterestCalculator {
         this.isToApplyInterest = isToApplyInterest;
         this.dueDateAmountFineMap.putAll(dueDateAmountFineMap);
         this.creditEntries.add(new PaymentPlaceholder(when));
-
         calculate();
     }
 
@@ -61,8 +64,11 @@ public class DebtInterestCalculator {
     }
 
     public static class Builder {
+        private final InterestRateProvider interestRateProvider;
         private List<Debt> debts = new ArrayList<>();
+        private List<Refund> refunds = new ArrayList<>();
         private List<Payment> payments = new ArrayList<>();
+        private List<ExcessRefund> excessRefunds = new ArrayList<>();
         private List<DebtExemption> debtExemptions = new ArrayList<>();
         private List<InterestExemption> interestExemptions = new ArrayList<>();
         private List<FineExemption> fineExemptions = new ArrayList<>();
@@ -70,8 +76,9 @@ public class DebtInterestCalculator {
         private DateTime when;
         private boolean toApplyInterest = true;
 
-        public Builder(DateTime when) {
+        public Builder(DateTime when, InterestRateProvider interestRateProvider) {
             this.when = when;
+            this.interestRateProvider = interestRateProvider;
         }
 
         public Builder debt(String id, DateTime created, LocalDate dueDate, String description, BigDecimal amount) {
@@ -83,8 +90,20 @@ public class DebtInterestCalculator {
             return this;
         }
 
-        public Builder payment(String id, DateTime created, LocalDate paymentDate, String description, BigDecimal amount) {
-            payments.add(new Payment(id, created, paymentDate, description, amount));
+        public Builder refund(String id, DateTime created, LocalDate refundDate, String description, BigDecimal amount) {
+            refunds.add(new Refund(id, created, refundDate, description, amount));
+            return this;
+        }
+
+        public Builder excessRefund(String id, DateTime created, LocalDate refundDate, String description, BigDecimal amount,
+                String targetPaymentId) {
+            excessRefunds.add(new ExcessRefund(id, created, refundDate, description, amount, targetPaymentId));
+            return this;
+        }
+
+        public Builder payment(String id, DateTime created, LocalDate paymentDate, String description, BigDecimal amount,
+                String sourceRefundId) {
+            payments.add(new Payment(id, created, paymentDate, description, amount, sourceRefundId));
             return this;
         }
 
@@ -114,12 +133,23 @@ public class DebtInterestCalculator {
         }
 
         public DebtInterestCalculator build() {
-            return new DebtInterestCalculator(when, debts, payments, debtExemptions, interestExemptions, fineExemptions, fineMap, toApplyInterest);
+            return new DebtInterestCalculator(when, interestRateProvider, excessRefunds, debts, refunds, payments,
+                    debtExemptions, interestExemptions, fineExemptions, fineMap, toApplyInterest);
         }
+    }
+
+
+    public Optional<? extends AccountingEntry> getAccountingEntry(String id) {
+        return Stream.concat(Stream.concat(debts.stream(), creditEntries.stream()), excessRefunds.stream()).filter(entry -> entry
+                .getId().equals(id)).findAny();
     }
 
     public Stream<Payment> getPayments() {
         return getCreditEntryStream().filter(c -> c.getClass().equals(Payment.class)).map(Payment.class::cast);
+    }
+
+    public Stream<Refund> getRefunds() {
+        return getCreditEntryStream().filter(Refund.class::isInstance).map(Refund.class::cast);
     }
 
     public Optional<Payment> getPaymentById(String id) {
@@ -144,10 +174,13 @@ public class DebtInterestCalculator {
     }
 
     public List<AccountingEntry> getAccountingEntries() {
-        return Stream.concat(debts.stream(),
-                getCreditEntryStream()).sorted(Comparator.comparing(AccountingEntry::getCreated)
-                                                         .thenComparing(AccountingEntry::getDate))
-                .collect(Collectors.toList());
+        final List<AccountingEntry> accountingEntries = new ArrayList<>();
+        accountingEntries.addAll(debts);
+        accountingEntries.addAll(creditEntries);
+        accountingEntries.addAll(excessRefunds);
+        accountingEntries.sort(Comparator.comparing(AccountingEntry::getCreated).thenComparing(AccountingEntry::getDate)
+                .thenComparing(AccountingEntry::getId));
+        return accountingEntries;
     }
 
     public Optional<InterestRateBean> getInterestBean() {
@@ -220,12 +253,20 @@ public class DebtInterestCalculator {
         return sum(getFineStream(), Fine::getPaymentsAmount);
     }
 
+    public List<ExcessRefund> getExcessRefunds() {
+        return getExcessRefundsOrderedByCreated();
+    }
+
     public BigDecimal getTotalPaidAmount() {
         return sum(Stream.of(getPaidDebtAmount(), getPaidInterestAmount(), getPaidFineAmount()));
     }
 
     public BigDecimal getTotalUnusedAmount() {
         return getCreditEntryStream().map(CreditEntry::getUnusedAmount).reduce(BigDecimal.ZERO,BigDecimal::add);
+    }
+
+    public BigDecimal getPaidUnusedAmount() {
+        return getPayments().map(CreditEntry::getUnusedAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public BigDecimal getDebtExemptionAmount() {
@@ -265,8 +306,12 @@ public class DebtInterestCalculator {
         return getDebtStream().sorted(Comparator.comparing(Debt::getDueDate)).collect(Collectors.toList());
     }
 
-    private Optional<InterestRateBean> calculateInterest(LocalDate start, LocalDate end, BigDecimal baseAmount) {
-        return InterestRate.getInterestBean(start, end, baseAmount);
+    public Stream<ExcessRefund> getExcessRefundStream() {
+        return excessRefunds.stream();
+    }
+
+    public List<ExcessRefund> getExcessRefundsOrderedByCreated() {
+        return getExcessRefundStream().sorted(Comparator.comparing(DebtEntry::getCreated)).collect(Collectors.toList());
     }
 
     private static String toString(Map<LocalDate, BigDecimal> map) {
@@ -295,7 +340,9 @@ public class DebtInterestCalculator {
                 if (creditEntry.isToApplyInterest()) {
                     for (final Debt debt : getDebtsOrderedByDueDate()) {
                         if (debt.isOpen() && !debt.isToExemptInterest()) {
-                            Optional<InterestRateBean> interestRateBean = calculateInterest(debt.getDueDateForInterest(), creditEntry.getDate(), debt.getOpenAmount());
+                            Optional<InterestRateBean> interestRateBean = this.interestRateProvider
+                                    .getInterestRateBean(debt.getDueDateForInterest(), creditEntry.getDate(),
+                                            debt.getOpenAmount());
                             interestRateBean.map(bean -> new Interest(creditEntry.getDate(), bean.getInterest(), debt,
                                     creditEntry, bean)).ifPresent(debt::addInterest);
                         }
@@ -326,10 +373,23 @@ public class DebtInterestCalculator {
                 }
             }
 
-            for (Debt debt : getDebtsOrderedByDueDate()) {
-                debt.deposit(creditEntry);
-            }
+            if (creditEntry instanceof Refund) {
+                Refund refund = ((Refund)creditEntry);
+                getPayments().filter(p -> p.getCreated().isBefore(refund.getCreated())).forEach(payment -> {
+                    payment.getPartialPayments().stream().filter(p -> p.getDebtEntry() instanceof Debt).forEach(entry -> {
+                        BigDecimal adjustment = entry.getAmount().negate();
+                        entry.getDebtEntry().addPartialPayment(refund, adjustment);
+                    });
+                });
+            } else {
+                for (Debt debt : getDebtsOrderedByDueDate()) {
+                    debt.deposit(creditEntry);
+                }
 
+                for (ExcessRefund excessRefund : getExcessRefundsOrderedByCreated()) {
+                    excessRefund.deposit(creditEntry);
+                }
+            }
         }
     }
 

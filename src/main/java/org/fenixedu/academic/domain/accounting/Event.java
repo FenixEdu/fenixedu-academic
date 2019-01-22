@@ -18,10 +18,12 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +32,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.BiFunction;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -38,7 +41,11 @@ import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator.Builder;
+import org.fenixedu.academic.domain.accounting.events.EventExemption;
+import org.fenixedu.academic.domain.accounting.events.EventExemptionJustificationType;
 import org.fenixedu.academic.domain.accounting.events.PenaltyExemption;
+import org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.FixedAmountFineExemption;
+import org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.FixedAmountInterestExemption;
 import org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.FixedAmountPenaltyExemption;
 import org.fenixedu.academic.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption;
 import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
@@ -63,6 +70,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.core.AbstractDomainObject;
 
 public abstract class Event extends Event_Base {
 
@@ -70,6 +78,8 @@ public abstract class Event extends Event_Base {
         final int i = e1.getWhenOccured().compareTo(e2.getWhenOccured());
         return i == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(e1, e2) : i;
     };
+
+    public static Predicate<Event> canBeRefunded = (event) -> true;
 
     protected Event() {
         super();
@@ -489,12 +499,22 @@ public abstract class Event extends Event_Base {
      * Should return entries representing the due date and the corresponding amount
      *
      */
-    public final Map<LocalDate, Money> getDueDateAmountMap(DateTime when) {
-        return getDueDateAmountMap(getPostingRule(), when);
+    @Override
+    public final DueDateAmountMap getDueDateAmountMap() {
+        if (super.getDueDateAmountMap() == null) {
+            return new DueDateAmountMap(calculateDueDateAmountMap());
+        }
+        return super.getDueDateAmountMap();
     }
 
-    public Map<LocalDate, Money> getDueDateAmountMap(PostingRule postingRule, DateTime when) {
-        return Collections.singletonMap(getDueDateByPaymentCodes().toLocalDate(), postingRule.doCalculationForAmountToPay(this, when));
+    protected void persistDueDateAmountMap() {
+        if (super.getDueDateAmountMap() == null) {
+            setDueDateAmountMap(new DueDateAmountMap(calculateDueDateAmountMap()));
+        }
+    }
+
+    protected Map<LocalDate, Money> calculateDueDateAmountMap() {
+        return Collections.singletonMap(getDueDateByPaymentCodes().toLocalDate(), getPostingRule().doCalculationForAmountToPay(this));
     }
 
     private Money calculateTotalAmountToPay(DateTime whenRegistered) {
@@ -502,35 +522,48 @@ public abstract class Event extends Event_Base {
         return new Money(debtInterestCalculator.getTotalDueAmount());
     }
 
-    public DebtInterestCalculator getDebtInterestCalculator(DateTime when) {
-        return getDebtInterestCalculator(getPostingRule(), when);
-    }
-
     public static BiFunction<AccountingTransaction, DateTime, Boolean> paymentsPredicate = (t, when) -> !t.getWhenProcessed().isAfter(when);
 
-    protected DebtInterestCalculator getDebtInterestCalculator(PostingRule postingRule, DateTime when) {
-        final Builder builder = new Builder(when);
-        final Map<LocalDate, Money> dueDateAmountMap = getDueDateAmountMap(postingRule, when);
+    public DebtInterestCalculator getDebtInterestCalculator(DateTime when) {
+        final Builder builder = new Builder(when, InterestRate::getInterestBean);
+        final Map<LocalDate, Money> dueDateAmountMap = getDueDateAmountMap();
         final Money baseAmount = dueDateAmountMap.values().stream().reduce(Money.ZERO, Money::add);
-        final Map<LocalDate, Money> dueDatePenaltyAmountMap = postingRule.getDueDatePenaltyAmountMap(this, when);
+        final Map<LocalDate, Money> dueDatePenaltyAmountMap = getPostingRule().getDueDatePenaltyAmountMap(this, when);
         final Set<LocalDate> debtInterestExemptions = getDebtInterestExemptions(when);
         final Set<LocalDate> debtFineExemptions = getDebtFineExemptions(when);
-        
 
-        dueDateAmountMap.forEach((date, amount) -> {
-            builder.debt(getExternalId(), getWhenOccured(), date, getDescriptionForEntryType(postingRule.getEntryType()).toString(),
-                    amount.getAmount(), debtInterestExemptions.contains(date), debtFineExemptions.contains(date));
-        });
+        final List<LocalDate> dueDates = dueDateAmountMap.keySet().stream().sorted().collect(Collectors.toList());
+
+        for (int i = 0; i < dueDates.size(); i++) {
+            final LocalDate date = dueDates.get(i);
+            final Money amount = dueDateAmountMap.get(date);
+            final String debtFormat = BundleUtil.getString(Bundle.ACCOUNTING, "label.accounting.debt.description", Integer
+                    .toString(i + 1));
+            builder.debt(date.toString("dd-MM-yyyy"), getWhenOccured(), date, debtFormat, amount.getAmount(),
+                    debtInterestExemptions.contains(date),
+                    debtFineExemptions.contains(date));
+        }
 
         dueDatePenaltyAmountMap.forEach((date, amount) -> {
             builder.fine(date, amount.getAmount());
         });
 
+        getRefundSet().forEach(refund -> {
+            if (refund.getExcessOnly()) {
+                builder.excessRefund(refund.getExternalId(), refund.getWhenOccured(), refund.getWhenOccured().toLocalDate(),
+                        refund.getDescription().getContent(), refund.getAmount().getAmount(),
+                        Optional.ofNullable(refund.getAccountingTransaction()).map(AbstractDomainObject::getExternalId).orElse(null));
+            } else {
+                builder.refund(refund.getExternalId(), refund.getWhenOccured(), refund.getWhenOccured().toLocalDate(),
+                        refund.getDescription().getContent(), refund.getAmount().getAmount());
+            }
+        });
+
         getNonAdjustingTransactions().forEach(t -> {
             if (paymentsPredicate.apply(t, when)) {
-                builder.payment(t.getExternalId(), t.getWhenProcessed(), t.getWhenRegistered().toLocalDate(), t
-                        .getDescriptionForEntryType(postingRule.getEntryType()).toString(),
-                        t.getAmountWithAdjustment().getAmount());
+                builder.payment(t.getExternalId(), t.getWhenProcessed(), t.getWhenRegistered().toLocalDate(), t.getEvent()
+                        .getDescription().toString(), t.getAmountWithAdjustment().getAmount(),
+                        Optional.ofNullable(t.getRefund()).map(AbstractDomainObject::getExternalId).orElse(null));
             }
         });
 
@@ -745,10 +778,8 @@ public abstract class Event extends Event_Base {
         return (paymentMethod == PaymentMethod.getSibsPaymentMethod()) ? PaymentCodeState.PROCESSED : PaymentCodeState.CANCELLED;
     }
 
-    public LabelFormatter getDescription() {
-        final LabelFormatter result = new LabelFormatter();
-        result.appendLabel(getEventType().getQualifiedName(), Bundle.ENUMERATION);
-        return result;
+    public final LabelFormatter getDescription() {
+        return getDescriptionForEntryType(getEntryType());
     }
 
     protected YearMonthDay calculateNextEndDate(final YearMonthDay yearMonthDay) {
@@ -869,7 +900,11 @@ public abstract class Event extends Event_Base {
 
     public abstract Account getToAccount();
 
-    public abstract LabelFormatter getDescriptionForEntryType(EntryType entryType);
+    protected LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        final LabelFormatter result = new LabelFormatter();
+        result.appendLabel(getEventType().getQualifiedName(), Bundle.ENUMERATION);
+        return result;
+    }
 
     abstract public PostingRule getPostingRule();
 
@@ -977,7 +1012,7 @@ public abstract class Event extends Event_Base {
     }
 
     public EntryType getEntryType() {
-        return EntryType.GENERIC_EVENT;
+        return getPostingRule().getEntryType();
     }
 
     public void addDiscount(final Person responsible, final Money amount) {
@@ -1086,27 +1121,101 @@ public abstract class Event extends Event_Base {
                 .getWhenProcessed().toString());
     }
 
-    public void check() {
-        final Money originalValueCheck = getOriginalValueCheck();
-        if (originalValueCheck == null) {
-            initOriginalValueCheck();
-        } else {
-            final Money originalAmountToPay = getOriginalAmountToPay();
-            if (!originalValueCheck.equals(originalAmountToPay)) {
-                throw new DomainException("error.event.original.amount.to.pay.changed", originalValueCheck.toPlainString(), originalAmountToPay.toPlainString());
-            }
-        }
-    }
-
-    @Atomic
-    private void initOriginalValueCheck() {
-        setOriginalValueCheck(getOriginalAmountToPay());
-    }
-
     public boolean isOpenAndAfterDueDate(DateTime when) {
         DebtInterestCalculator debtInterestCalculator = getDebtInterestCalculator(when);
         return debtInterestCalculator.getDebtsOrderedByDueDate().stream().anyMatch(d -> d.isOpen() && when.toLocalDate()
                 .isAfter(d.getDueDate()));
     }
 
+    @Atomic(mode = Atomic.TxMode.WRITE)
+    public Refund refund(User creator, EventExemptionJustificationType justificationType, String reason) {
+        if (!isRefundable()) {
+            throw new DomainException("error.event.cannot.be.refunded");
+        }
+
+        final DateTime now = new DateTime().minusSeconds(2);
+        
+        DebtInterestCalculator debtInterestCalculator = getDebtInterestCalculator(now);
+        debtInterestCalculator.getRefunds().findAny().ifPresent(refund -> {
+            throw new DomainException(Optional.of(Bundle.ACCOUNTING), "error.accounting.refund.not.possible", refund.getCreated
+                    ().toString("dd-MM-yyyy HH:mm:ss"));
+        });
+        final BigDecimal paidDebtAmount = debtInterestCalculator.getPaidDebtAmount();
+        final Refund refund = new Refund(this, new Money(paidDebtAmount), creator, false, now);
+        
+        debtInterestCalculator = getDebtInterestCalculator(now);
+
+        final BigDecimal dueAmount = debtInterestCalculator.getDueAmount();
+        final BigDecimal dueFineAmount = debtInterestCalculator.getDueFineAmount();
+        final BigDecimal dueInterestAmount = debtInterestCalculator.getDueInterestAmount();
+        boolean createdInterestOrFineExemptions = false;
+
+        if (dueInterestAmount.signum() == 1) {
+            FixedAmountInterestExemption fixedAmountInterestExemption =
+                    new FixedAmountInterestExemption(this, creator.getPerson(), new Money(dueInterestAmount), justificationType,
+                            now, reason);
+            fixedAmountInterestExemption.setWhenCreated(now.plusSeconds(1));
+            createdInterestOrFineExemptions = true;
+        }
+        if (dueFineAmount.signum() == 1) {
+            FixedAmountFineExemption fixedAmountFineExemption =
+                    new FixedAmountFineExemption(this, creator.getPerson(), new Money(dueFineAmount), justificationType, now,
+                            reason);
+            fixedAmountFineExemption.setWhenCreated(now.plusSeconds(1));
+            createdInterestOrFineExemptions = true;
+        }
+        
+        if (dueAmount.signum() == 1) {
+            EventExemption eventExemption =
+                    new EventExemption(this, creator.getPerson(), new Money(dueAmount), justificationType, now, reason);
+            eventExemption.setWhenCreated(now.plusSeconds(createdInterestOrFineExemptions ? 2 : 1));
+        }
+
+        return refund;
+    }
+
+    public static Map<Event, BigDecimal> availableAdvancements(final Person person) {
+        final DateTime now = new DateTime();
+        final Map<Event, BigDecimal> result = new HashMap<>();
+        for (final Event event : person.getEventsSet()) {
+            if (event.isRefundable()) {
+                final DebtInterestCalculator calculator = event.getDebtInterestCalculator(now);
+                final BigDecimal unusedAmount = calculator.getPaidUnusedAmount();
+                if (unusedAmount.signum() > 0) {
+                    result.put(event, unusedAmount);
+                }
+            }
+        }
+        return result;
+    }
+
+    public Refund refundExcess(User creator) {
+        return refundExcess(creator, null);
+    }
+
+    @Atomic(mode = Atomic.TxMode.WRITE)
+    public Refund refundExcess(User creator, Money amount) {
+        if (!isRefundable()) {
+            throw new DomainException("error.event.cannot.be.refunded");
+        }
+
+        final DateTime now = new DateTime();
+        final DebtInterestCalculator debtInterestCalculator = getDebtInterestCalculator(now);
+        final Money paidUnusedAmount = new Money(debtInterestCalculator.getPaidUnusedAmount());
+
+        if (amount == null) {
+            amount = paidUnusedAmount;
+        }
+
+        if (paidUnusedAmount.isPositive() && amount.lessOrEqualThan(paidUnusedAmount)) {
+            return new Refund(this, amount, creator, true, now);
+        }
+
+        throw new DomainException(Optional.of(Bundle.ACCOUNTING), "error.no.refundable.excess.amount", this.getExternalId(), this
+                .getDescription().toString());
+    }
+
+    public boolean isRefundable() {
+        return Event.canBeRefunded.test(this);
+    }
 }

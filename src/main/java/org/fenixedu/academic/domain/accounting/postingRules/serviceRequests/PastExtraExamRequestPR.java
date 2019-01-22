@@ -39,7 +39,7 @@ public class PastExtraExamRequestPR extends PastExtraExamRequestPR_Base {
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(final Event event, final DateTime when) {
+    protected Money doCalculationForAmountToPay(final Event event) {
         return ((PastExtraExamRequestEvent) event).getPastAmount();
     }
 

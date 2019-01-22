@@ -3,7 +3,6 @@ package org.fenixedu.academic.domain.accounting.calculator;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-import org.fenixedu.academic.domain.accounting.InterestRate.InterestRateBean;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 

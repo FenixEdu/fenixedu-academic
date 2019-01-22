@@ -36,7 +36,6 @@ import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
@@ -96,18 +95,13 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
     }
 
     @Override
-    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-        return new LabelFormatter()
-                .appendLabel(entryType.name(), Bundle.ENUMERATION).appendLabel(" (")
-                .appendLabel(getDegree().getSigla()).appendLabel(" - ")
+    protected LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        final LabelFormatter labelFormatter = super.getDescriptionForEntryType(entryType);
+        return labelFormatter
+                .appendLabel(" (")
+                .appendLabel(getDegree().getSigla())
+                .appendLabel(" ")
                 .appendLabel(getExecutionYear().getYear()).appendLabel(")");
-    }
-
-    @Override
-    public LabelFormatter getDescription() {
-        return super.getDescription().appendLabel(" ")
-                .appendLabel(getDegree().getSigla()).appendLabel(" - ")
-                .appendLabel(getExecutionYear().getYear());
     }
 
     @Override
@@ -172,7 +166,7 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
     }
 
     private Money calculateTotalAmountToPayWithoutDiscount(final DateTime when) {
-        return getPostingRule().calculateTotalAmountToPay(this, when);
+        return getPostingRule().calculateTotalAmountToPay(this);
     }
 
     public boolean isGratuityExemptionAvailable() {

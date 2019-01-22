@@ -18,7 +18,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.FenixFramework;
@@ -34,6 +33,7 @@ public class EnrolmentEvaluationEvent extends EnrolmentEvaluationEvent_Base {
         init(administrativeOffice, eventType, person);
         setPostingRule(postingRule);
         setEnrolmentEvaluation(enrolmentEvaluation);
+        persistDueDateAmountMap();
     }
 
     private static Optional<EventType> getEventType(EnrolmentEvaluation enrolmentEvaluation) {
@@ -102,12 +102,12 @@ public class EnrolmentEvaluationEvent extends EnrolmentEvaluationEvent_Base {
     }
 
     @Override
-    public Map<LocalDate, Money> getDueDateAmountMap(PostingRule postingRule, DateTime when) {
+    public Map<LocalDate, Money> calculateDueDateAmountMap() {
         return Collections.singletonMap(getDueDateByPaymentCodes().toLocalDate(), ((IEnrolmentEvaluationPR)getEnrolmentEvaluationPostingRule()).getFixedAmount());
     }
 
     @Override
-    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+    protected LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter result = new LabelFormatter();
         result.appendLabel(getEventType().getQualifiedName(), Bundle.ENUMERATION);
         Enrolment enrolment = getEnrolmentEvaluation().getEnrolment();

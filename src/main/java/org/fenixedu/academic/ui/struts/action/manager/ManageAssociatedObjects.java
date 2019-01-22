@@ -51,9 +51,11 @@ import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UnitClassification;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.manager.ManagerApplications.ManagerSystemManagementApp;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -489,6 +491,17 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
     public ActionForward createAcademicOffice(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         AssociatedObjectsBean bean = getRenderedObject("office");
+
+        if (bean.getNameLS().isEmpty()) {
+            request.setAttribute("error",
+                    BundleUtil.getString(Bundle.MANAGER, "error.administrativeOffice.empty.name"));
+            return prepareAcademicOffice(mapping, form, request, response);
+        } else if (User.findByUsername(bean.getUsername().trim()) == null) {
+            request.setAttribute("error",
+                    BundleUtil.getString(Bundle.MANAGER, "error.administrativeOffice.invalid.coordinator.username"));
+            return prepareAcademicOffice(mapping, form, request, response);
+        }
+
         createAcademicOffice(bean);
         return list(mapping, form, request, response);
     }
@@ -502,7 +515,7 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         office.setCampus(bean.getBuilding());
 
         office.setName(bean.getNameLS());
-        office.setCoordinator(User.findByUsername(bean.getUsername()));
+        office.setCoordinator(User.findByUsername(bean.getUsername().trim()));
         office.setRootDomainObject(Bennu.getInstance());
         Unit servicesParent =
                 Bennu.getInstance().getInstitutionUnit().getSubUnits().stream().filter(x -> x.getName().equals("Services"))
@@ -525,6 +538,12 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         AssociatedObjectsBean bean = getRenderedObject("admOffice");
 
+        if(bean.getOffice() == null) {
+            request.setAttribute("error",
+                    BundleUtil.getString(Bundle.MANAGER, "error.emptyDegree.empty.office"));
+            return prepareEmptyDegree(mapping, form, request, response);
+        }
+
         createEmptyDegree(bean);
         return list(mapping, form, request, response);
     }
@@ -544,33 +563,6 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
             EmptyDegreeCurricularPlan.init();
         }
     }
-
-    public ActionForward prepareAssociatePersonUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        AssociatedObjectsBean associatedObjectsBean = new AssociatedObjectsBean();
-        associatedObjectsBean.setUnits(Unit.readAllUnits());
-        request.setAttribute("bean", associatedObjectsBean);
-        return mapping.findForward("associatePersonUnit");
-    }
-
-//
-//    public ActionForward associatePersonUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-//            HttpServletResponse response) throws Exception {
-//        AssociatedObjectsBean bean = getRenderedObject("office");
-//
-//        createAssociationToUnit(bean);
-//
-//        return list(mapping, form, request, response);
-//    }
-//
-//    @Atomic(mode = TxMode.WRITE)
-//    private void createAssociationToUnit(AssociatedObjectsBean bean) {
-//        Person person = Person.readPersonByUsername(bean.getUsername());
-//        EmployeeContract ec =
-//                new EmployeeContract(person, bean.getStart(), null, bean.getUnit(), bean.getAccTypeEnum(), bean.isTeacher());
-//
-//        person.getEmployee().getCurrentDepartmentWorkingPlace();
-//    }
 
     public ActionForward prepareCreateScientificArea(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {

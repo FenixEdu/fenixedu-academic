@@ -18,6 +18,12 @@
  */
 package org.fenixedu.academic.domain.accounting.events.candidacy;
 
+import java.util.Collections;
+import java.util.Set;
+
+import java.util.stream.Collectors;
+import com.google.common.base.Strings;
+import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.Account;
 import org.fenixedu.academic.domain.accounting.Entry;
@@ -36,9 +42,6 @@ import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
 
-import java.util.Collections;
-import java.util.Set;
-
 public abstract class IndividualCandidacyEvent extends IndividualCandidacyEvent_Base {
 
     protected IndividualCandidacyEvent() {
@@ -50,6 +53,7 @@ public abstract class IndividualCandidacyEvent extends IndividualCandidacyEvent_
         checkParameters(candidacy, administrativeOffice);
         super.init(administrativeOffice, eventType, person);
         setIndividualCandidacy(candidacy);
+        persistDueDateAmountMap();
     }
 
     protected void checkParameters(final IndividualCandidacy candidacy, final AdministrativeOffice administrativeOffice) {
@@ -64,8 +68,20 @@ public abstract class IndividualCandidacyEvent extends IndividualCandidacyEvent_
     abstract protected AdministrativeOffice readAdministrativeOffice();
 
     @Override
-    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-        return new LabelFormatter().appendLabel(entryType.name(), Bundle.ENUMERATION);
+    protected LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+
+        LabelFormatter labelFormatter = new LabelFormatter().appendLabel(entryType.name(), Bundle
+                .ENUMERATION);
+
+        final String degreeLabel = getIndividualCandidacy().getAllDegrees().stream().map(Degree::getSigla).collect(Collectors.joining(" "));
+
+        if (!Strings.isNullOrEmpty(degreeLabel)) {
+            labelFormatter.appendLabel(" - ").appendLabel(degreeLabel);
+        }
+
+        labelFormatter.appendLabel(" - ").appendLabel(getIndividualCandidacy().getCandidacyDate().toString());
+
+        return labelFormatter;
     }
 
     @Override

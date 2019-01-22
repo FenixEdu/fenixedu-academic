@@ -50,7 +50,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.dto.accounting.SibsTransactionDetailDTO;
-import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
@@ -97,11 +96,9 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
         throw new DomainException("Can't be created anymore");
     }
 
-    @Override public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-        final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION).appendLabel(" - ")
-                .appendLabel(getExecutionYear().getYear());
-
+    @Override protected LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        final LabelFormatter labelFormatter = super.getDescriptionForEntryType(entryType);
+        labelFormatter.appendLabel(" - ").appendLabel(getExecutionYear().getYear());
         return labelFormatter;
     }
 
@@ -166,10 +163,11 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
         }
     }
 
-    public Map<LocalDate, Money> getDueDateAmountMap(PostingRule postingRule, DateTime when) {
+    @Override
+    public Map<LocalDate, Money> calculateDueDateAmountMap() {
         final Map<LocalDate, Money> dueDateAmountMap = new HashMap<>();
         final LocalDate possibleDueDate = getPossibleDueDate();
-        final IAdministrativeOfficeFeeAndInsurancePR officeFeeAndInsurancePR = (IAdministrativeOfficeFeeAndInsurancePR) postingRule;
+        final IAdministrativeOfficeFeeAndInsurancePR officeFeeAndInsurancePR = (IAdministrativeOfficeFeeAndInsurancePR) getPostingRule();
         final DateTime startDate = this.getStartDate();
         final DateTime endDate = this.getEndDate();
 
@@ -235,12 +233,6 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 
     private boolean hasNonProcessedPaymentCode() {
         return (getNonProcessedPaymentCode() != null);
-    }
-
-    @Override public LabelFormatter getDescription() {
-        final LabelFormatter labelFormatter = super.getDescription();
-        labelFormatter.appendLabel(" ").appendLabel(getExecutionYear().getYear());
-        return labelFormatter;
     }
 
     public boolean hasAdministrativeOfficeFeeAndInsurancePenaltyExemption() {

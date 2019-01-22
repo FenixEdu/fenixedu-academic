@@ -31,7 +31,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.PublicCandidacyHashCode;
 import org.fenixedu.academic.domain.QualificationBean;
@@ -92,7 +91,7 @@ import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-
+import pt.ist.fenixframework.FenixFramework;
 
 @DeclareMessageTemplate(id = "phd.submission.email.for.candidacy.message.template",
         description = "phd.submission.email.for.candidacy.message.description",
@@ -359,20 +358,31 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
             addErrorMessage(request, "error.PhdProgramPublicCandidacyHashCode.already.has.candidacy");
             return fillPersonalDataInvalid(mapping, form, request, response);
         }
-        PhdIndividualProgramProcess process =
-                (PhdIndividualProgramProcess) CreateNewProcess.run(PublicPhdIndividualProgramProcess.class, bean);
-        sendApplicationSuccessfullySubmitedEmail(bean.getCandidacyHashCode(), request);
 
-        request.setAttribute("phdIndividualProgramProcess", process);
-        request.setAttribute("candidacyHashCode", bean.getCandidacyHashCode());
+        try {
 
-        PhdProgramPublicCandidacyHashCode candidacyProcessHashCode = process.getCandidacyProcessHashCode();
-        String processLink =
-                InstitutionPhdCandidacyProcessProperties.getPublicCandidacyAccessLink(candidacyProcessHashCode, I18N.getLocale());
+            final String processLink = FenixFramework.atomic(() -> {
+                PhdIndividualProgramProcess process =
+                        (PhdIndividualProgramProcess) CreateNewProcess.run(PublicPhdIndividualProgramProcess.class, bean);
+                sendApplicationSuccessfullySubmitedEmail(bean.getCandidacyHashCode(), request);
 
-        request.setAttribute("processLink", processLink);
+                request.setAttribute("phdIndividualProgramProcess", process);
+                request.setAttribute("candidacyHashCode", bean.getCandidacyHashCode());
 
-        return mapping.findForward("applicationCreationReport");
+                PhdProgramPublicCandidacyHashCode candidacyProcessHashCode = process.getCandidacyProcessHashCode();
+                return InstitutionPhdCandidacyProcessProperties
+                        .getPublicCandidacyAccessLink(candidacyProcessHashCode, I18N.getLocale());
+            });
+
+            request.setAttribute("processLink", processLink);
+            return mapping.findForward("applicationCreationReport");
+        } catch (Exception e) {
+            if (e instanceof DomainException) {
+                addErrorMessage(request, e);
+                return fillPersonalDataInvalid(mapping, form, request, response);
+            }
+            throw new Error(e);
+        }
     }
 
     private void sendApplicationSuccessfullySubmitedEmail(final PhdProgramPublicCandidacyHashCode hashCode,

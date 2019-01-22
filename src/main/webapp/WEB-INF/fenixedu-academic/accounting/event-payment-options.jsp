@@ -38,7 +38,7 @@
 
     function recalculateAmount() {
         setTotalAmount(amount + getAmount("input.debt:checked"));
-        $("#submitForm").prop('disabled', ($('#totalAmountInput').val() <= 0));
+        $("#paySubmit").prop('disabled', ($('#totalAmountInput').val() <= 0));
     }
 
     function getAmount(clazz) {
@@ -82,6 +82,11 @@
         $('#selectAllDebts').click(function () {
             $('input.debt').prop('checked', this.checked);
             recalculateAmount();
+        });
+
+        $('#paySubmit').click(function () {
+            $('#paySubmit').attr('disabled', true);
+            $("#generatePaymentEntryForm").submit();
         });
 
         recalculateAmount();
@@ -193,14 +198,13 @@
                                 </tr>
                             </c:if>
                         </c:forEach>
-                        <c:forEach var="debt" items="${debts}" varStatus="debtsLoop">
+                        <c:forEach var="debt" items="${debts}">
                             <c:if test="${debt.isOpen()}">
-                                <c:set var="debtIndex" value="#{debtsLoop.index + 1}"/>
                                 <c:set var="debtAmount" value="${debt.openAmount.toPlainString()}"/>
                                 <tr>
                                     <td><input class="debt" data-amount="${debtAmount}" type="checkbox"></td>
                                     <td><time datetime="${debt.dueDate.toString('yyyy-MM-dd')}">${debt.dueDate.toString('dd/MM/yyyy')}</time></td>
-                                    <td><spring:message code="accounting.event.details.debt.name" arguments="${debtIndex}"/></td>
+                                    <td><c:out value="${debt.description}"/></td>
                                     <td><c:out value="${debtAmount}"/><span>€</span></td>
                                 </tr>
                             </c:if>
@@ -215,7 +219,7 @@
                     <spring:url var="generatePaymentEntry" value="../{event}/pay">
                         <spring:param name="event" value="${eventId}"/>
                     </spring:url>
-                    <form:form class="form-horizontal" method="POST" action="${generatePaymentEntry}">
+                    <form:form id="generatePaymentEntryForm" class="form-horizontal" method="POST" action="${generatePaymentEntry}">
                         ${csrf.field()}
                         <dl class="sum">
                             <dt><spring:message code="accounting.event.details.total" text="Total"/></dt>
@@ -223,7 +227,7 @@
                             <input id="totalAmountInput" name="totalAmount" hidden/>
                         </dl>
                         <div class="actions">
-                            <button id="submitForm" class="btn btn-block btn-primary" type="submit">Obter dados de pagamento</button>
+                            <button id="paySubmit" class="btn btn-block btn-primary" type="submit">Obter dados de pagamento</button>
                         </div>
                     </form:form>
                 </section>

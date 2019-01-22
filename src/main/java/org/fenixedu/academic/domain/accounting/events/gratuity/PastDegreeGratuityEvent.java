@@ -21,7 +21,6 @@ package org.fenixedu.academic.domain.accounting.events.gratuity;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
-import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Money;
@@ -46,6 +45,7 @@ public class PastDegreeGratuityEvent extends PastDegreeGratuityEvent_Base {
         super.init(administrativeOffice, person, studentCurricularPlan, executionYear);
         checkParameters(studentCurricularPlan, pastDegreeGratuityAmount);
         super.setPastDegreeGratuityAmount(pastDegreeGratuityAmount);
+        persistDueDateAmountMap();
     }
 
     private void checkParameters(StudentCurricularPlan studentCurricularPlan, Money pastDegreeGratuityAmount) {

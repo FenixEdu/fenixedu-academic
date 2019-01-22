@@ -31,36 +31,34 @@
 
 <html:xhtml/>
 
-<h2>Associated Objects</h2>
+<h2><bean:message key="title.manage.associated.objects" bundle="MANAGER_RESOURCES"/></h2>
 
-<h3>Degree Types</h3>
+<h3><bean:message key="title.manage.associated.objects.degreeTypes" bundle="MANAGER_RESOURCES"/></h3>
 <ul>
     <logic:iterate id="type" name="degreeTypes">
-        <li><c:out value="${type.name.content}"/> - <html:link page="/manageAssociatedObjects.do?method=prepareCreateDegreeType&degreeTypeId=${type.externalId}">Edit</html:link><br/>
+        <li><c:out value="${type.name.content}"/> - <html:link page="/manageAssociatedObjects.do?method=prepareCreateDegreeType&degreeTypeId=${type.externalId}"><bean:message key="label.edit" bundle="APPLICATION_RESOURCES"/></html:link><br/>
 </li>
     </logic:iterate>
 </ul>
-<html:link page="/manageAssociatedObjects.do?method=prepareCreateDegreeType">Create</html:link><br/>
+<html:link page="/manageAssociatedObjects.do?method=prepareCreateDegreeType"><bean:message key="button.create" bundle="MANAGER_RESOURCES"/></html:link><br/>
 
-
-<h3>Departments</h3>
-<html:link page="/manageAssociatedObjects.do?method=prepareCreateDepartment">Create</html:link><br/>
+<h3><bean:message key="title.manage.associated.objects.departments" bundle="MANAGER_RESOURCES"/></h3>
+<html:link page="/manageAssociatedObjects.do?method=prepareCreateDepartment"><bean:message key="button.create" bundle="MANAGER_RESOURCES"/></html:link><br/>
 <logic:present name="departments">
     <ul>
         <logic:iterate id="department" name="departments">
             <li><bean:write name="department" property="name"/> - <html:link
-                    page="<%= "/manageAssociatedObjects.do?method=prepareEditDepartment&oid=" + ((Department) department).getExternalId() %>">Edit</html:link><br/>
+                    page="<%= "/manageAssociatedObjects.do?method=prepareEditDepartment&oid=" + ((Department) department).getExternalId() %>"><bean:message key="label.edit" bundle="APPLICATION_RESOURCES"/></html:link><br/>
             </li>
         </logic:iterate>
     </ul>
 </logic:present>
 <logic:notPresent name="departments">
-    There are no departments
+    <bean:message key="info.manage.associated.objects.no.departments" bundle="MANAGER_RESOURCES"/>
 </logic:notPresent>
 
-
-<h3>Administrative Offices</h3>
-<html:link page="/manageAssociatedObjects.do?method=prepareAcademicOffice">Create</html:link><br/>
+<h3><bean:message key="title.manage.associated.objects.administrativeOffices" bundle="MANAGER_RESOURCES"/></h3>
+<html:link page="/manageAssociatedObjects.do?method=prepareAcademicOffice"><bean:message key="button.create" bundle="MANAGER_RESOURCES"/></html:link><br/>
 <logic:present name="offices">
     <ul>
         <logic:iterate id="office" name="offices" type="org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice">
@@ -69,23 +67,22 @@
     </ul>
 </logic:present>
 <logic:notPresent name="offices">
-    There are no administrative offices
+    <bean:message key="info.manage.associated.objects.no.administrativeOffices" bundle="MANAGER_RESOURCES"/>
 </logic:notPresent>
-<h3>Associate Person to Unit</h3>
-<html:link page="/manageAssociatedObjects.do?method=prepareAssociatePersonUnit">Create</html:link><br/>
 
-<h3>Create empty degree</h3>
+<h3><bean:message key="title.manage.associated.objects.create.emptyDegree" bundle="MANAGER_RESOURCES"/></h3>
 <logic:notEmpty name="emptyDegree">
     <bean:define id="emptyDegree" type="org.fenixedu.academic.domain.EmptyDegree" name="emptyDegree"></bean:define>
-    Empty degree associated with : <%= emptyDegree.getAdministrativeOffice().getName().getContent() %></br>
-    <html:link page="/manageAssociatedObjects.do?method=prepareEmptyDegree">Change</html:link><br/>
+    <bean:message key="info.manage.associated.objects.emptyDegree.associated.with" bundle="MANAGER_RESOURCES" /> <%= emptyDegree.getAdministrativeOffice().getName().getContent() %></br>
+    <html:link page="/manageAssociatedObjects.do?method=prepareEmptyDegree"><bean:message key="button.change" bundle="MANAGER_RESOURCES"/></html:link><br/>
 </logic:notEmpty>
 <logic:empty name="emptyDegree">
-    There is no empty degree.</br>
-    <html:link page="/manageAssociatedObjects.do?method=prepareEmptyDegree">Create</html:link><br/>
+    <bean:message key="info.manage.associated.objects.no.emptyDegree" bundle="MANAGER_RESOURCES"/></br>
+    <html:link page="/manageAssociatedObjects.do?method=prepareEmptyDegree"><bean:message key="button.create" bundle="MANAGER_RESOURCES"/></html:link><br/>
 </logic:empty>
-<h3>Create Scientific Area</h3>
-<html:link page="/manageAssociatedObjects.do?method=prepareCreateScientificArea">Create Scientific Area</html:link><br/>
+
+<h3><bean:message key="title.manage.associated.objects.create.scientificArea" bundle="MANAGER_RESOURCES"/></h3>
+<html:link page="/manageAssociatedObjects.do?method=prepareCreateScientificArea"><bean:message key="button.create" bundle="MANAGER_RESOURCES"/></html:link><br/>
 <logic:present name="departments">
     <ul>
         <logic:iterate id="department" name="departments">
@@ -97,7 +94,7 @@
                     <logic:iterate id="unit" name="depunit" property="scientificAreaUnits">
                         <li><bean:write name="unit" property="name"></bean:write> - <html:link
                                 page="<%= "/manageAssociatedObjects.do?method=prepareCreateCompetenceCourseGroup&oid=" + ((DomainObject) unit)
-                .getExternalId()%>">Create Competence Course Group</html:link></li>
+                .getExternalId()%>"><bean:message key="title.manage.associated.objects.create.competenceCourseGroup" bundle="MANAGER_RESOURCES"/></html:link></li>
 
                         <logic:present name="unit" property="competenceCourseGroupUnits">
                             <ul>
@@ -115,7 +112,7 @@
     </ul>
 </logic:present>
 <logic:notPresent name="departments">
-    There are no departments
+    <bean:message key="info.manage.associated.objects.no.departments" bundle="MANAGER_RESOURCES"/>
 </logic:notPresent>
 
 

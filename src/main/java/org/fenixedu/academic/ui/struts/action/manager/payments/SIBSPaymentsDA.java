@@ -41,6 +41,7 @@ import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.accounting.PaymentCodeMapping;
 import org.fenixedu.academic.domain.accounting.PaymentCodeState;
 import org.fenixedu.academic.domain.accounting.SibsPaymentFileProcessReport;
+import org.fenixedu.academic.domain.accounting.paymentCodes.EventPaymentCode;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.accounting.sibsPaymentFileProcessReport.SibsPaymentFileProcessReportDTO;
 import org.fenixedu.academic.predicate.AccessControl;
@@ -284,19 +285,21 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
             throw new Exception();
         }
 
-        final PaymentCode codeToProcess =
-                getPaymentCodeToProcess(paymentCode, ExecutionYear.readByDateTime(detailLine.getWhenOccuredTransaction()), result);
-
-        if (codeToProcess.getState() == PaymentCodeState.INVALID) {
-            result.addMessage("warning.manager.SIBS.invalidCode", codeToProcess.getCode());
+        if (!(paymentCode instanceof EventPaymentCode)) {
+            result.addMessage("warning.manager.SIBS.outdated.code", paymentCode.getCode(), paymentCode.getExternalId());
+            return;
+        }
+        
+        if (paymentCode.getState() == PaymentCodeState.INVALID) {
+            result.addMessage("warning.manager.SIBS.invalidCode", paymentCode.getCode());
         }
 
-        if (codeToProcess.isProcessed() && codeToProcess.matches(detailLine)) {
-            result.addMessage("warning.manager.SIBS.codeAlreadyProcessed", codeToProcess.getCode());
+        if (paymentCode.isProcessed() && paymentCode.matches(detailLine)) {
+            result.addMessage("warning.manager.SIBS.codeAlreadyProcessed", paymentCode.getCode());
             return;
         }
 
-        codeToProcess.process(person, detailLine);
+        paymentCode.process(person, detailLine);
 
     }
 
@@ -311,6 +314,8 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
         result.addMessage("label.manager.SIBS.reportCreated");
     }
 
+    // Remove in next major
+    @Deprecated
     private PaymentCode getPaymentCodeToProcess(final PaymentCode paymentCode, ExecutionYear executionYear, ProcessResult result) {
 
         final PaymentCodeMapping mapping = paymentCode.getOldPaymentCodeMapping(executionYear);

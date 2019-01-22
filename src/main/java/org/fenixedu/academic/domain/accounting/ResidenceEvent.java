@@ -54,22 +54,17 @@ public class ResidenceEvent extends ResidenceEvent_Base {
         setResidenceMonth(month);
         setRoomValue(roomValue);
         setRoom(room);
+        persistDueDateAmountMap();
     }
 
     @Override
-    public LabelFormatter getDescription() {
-        return getDescriptionForEntryType(EntryType.RESIDENCE_FEE);
-    }
-
-    @Override
-    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-        final LabelFormatter labelFormatter = new LabelFormatter();
-
-        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION);
-        labelFormatter.appendLabel(" - ");
+    protected LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        LabelFormatter labelFormatter = super.getDescriptionForEntryType(entryType);
+        labelFormatter.appendLabel(" (");
         labelFormatter.appendLabel(getResidenceMonth().getMonth().getName(), Bundle.ENUMERATION);
-        labelFormatter.appendLabel("-");
+        labelFormatter.appendLabel("/");
         labelFormatter.appendLabel(getResidenceMonth().getYear().getYear().toString());
+        labelFormatter.appendLabel(")");
         return labelFormatter;
     }
 
@@ -142,8 +137,7 @@ public class ResidenceEvent extends ResidenceEvent_Base {
     }
 
     @Override
-    public Map<LocalDate, Money> getDueDateAmountMap(PostingRule postingRule, DateTime when) {
-            return Collections.singletonMap(getPaymentLimitDate().toLocalDate(), postingRule.doCalculationForAmountToPay(this,
-                    when));
+    public Map<LocalDate, Money> calculateDueDateAmountMap() {
+            return Collections.singletonMap(getPaymentLimitDate().toLocalDate(), getPostingRule().doCalculationForAmountToPay(this));
     }
 }

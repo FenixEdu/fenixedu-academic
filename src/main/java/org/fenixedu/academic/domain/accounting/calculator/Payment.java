@@ -10,8 +10,11 @@ import org.joda.time.LocalDate;
  */
 public class Payment extends CreditEntry {
 
-    public Payment(String id, DateTime created, LocalDate date, String description, BigDecimal amount) {
+    private final String refundId;
+
+    public Payment(String id, DateTime created, LocalDate date, String description, BigDecimal amount, String refundId) {
         super(id, created, date, description, amount);
+        this.refundId = refundId;
     }
 
     @Override
@@ -37,5 +40,9 @@ public class Payment extends CreditEntry {
     @Override
     public boolean isForFine() {
         return true;
+    }
+
+    public String getRefundId() {
+        return refundId;
     }
 }

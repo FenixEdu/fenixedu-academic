@@ -26,7 +26,6 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.Exemption;
-import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdProgram;
@@ -76,6 +75,7 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
         setYear(year);
         setPhdIndividualProgramProcess(process);
         setPhdGratuityDate(phdGratuityDate);
+        persistDueDateAmountMap();
     }
 
     @Override
@@ -90,17 +90,11 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
     }
 
     @Override
-    public LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
-        final ExecutionYear executionYear = getPhdIndividualProgramProcess().getExecutionYear();
-        return new LabelFormatter().appendLabel(entryType.name(), Bundle.ENUMERATION).appendLabel(" - ")
-                .appendLabel("" + getYear()).appendLabel(" (").appendLabel(getPhdProgram().getName(executionYear).getContent())
-                .appendLabel(")");
-    }
+    protected LabelFormatter getDescriptionForEntryType(final EntryType entryType) {
+        LabelFormatter labelFormatter = new LabelFormatter();
 
-    @Override
-    public LabelFormatter getDescription() {
         final ExecutionYear executionYear = getPhdIndividualProgramProcess().getExecutionYear();
-        return new LabelFormatter().appendLabel(getEventType().getQualifiedName(), Bundle.ENUMERATION).appendLabel(" - ")
+        return labelFormatter.appendLabel(getEventType().getQualifiedName(), Bundle.ENUMERATION).appendLabel(" - ")
                 .appendLabel("" + getYear()).appendLabel(" (").appendLabel(getPhdProgram().getName(executionYear).getContent())
                 .appendLabel(")");
     }
@@ -162,7 +156,7 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
     }
 
     @Override
-    public Map<LocalDate, Money> getDueDateAmountMap(PostingRule postingRule, DateTime when) {
-        return Collections.singletonMap(getLimitDateToPay().toLocalDate(), postingRule.calculateTotalAmountToPay(this, when));
+    public Map<LocalDate, Money> calculateDueDateAmountMap() {
+        return Collections.singletonMap(getLimitDateToPay().toLocalDate(), getPostingRule().calculateTotalAmountToPay(this));
     }
 }

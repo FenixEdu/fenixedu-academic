@@ -28,7 +28,7 @@
 
 <html:xhtml />
 
-<h2>Create Department</h2>
+<h2><bean:message key="label.manager.departments.create" bundle="APPLICATION_RESOURCES" /></h2>
 
 <logic:messagesPresent message="true">
     <p>

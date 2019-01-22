@@ -37,7 +37,6 @@ import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.UnitSer
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.dto.accounting.SibsTransactionDetailDTO;
-import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -62,20 +61,12 @@ public class InsuranceEvent extends InsuranceEvent_Base implements IInsuranceEve
         if (postingRule instanceof InsurancePR) {
             setDueDate(getWhenOccured().plusDays(((InsurancePR) postingRule).getNumberOfDaysToCalculateDueDate()));
         }
+        persistDueDateAmountMap();
     }
 
     @Override
-    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-        final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION).appendLabel(" - ")
-                .appendLabel(getExecutionYear().getYear());
-
-        return labelFormatter;
-    }
-
-    @Override
-    public LabelFormatter getDescription() {
-        final LabelFormatter labelFormatter = super.getDescription();
+    protected LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        final LabelFormatter labelFormatter = super.getDescriptionForEntryType(entryType);
         labelFormatter.appendLabel(" - ").appendLabel(getExecutionYear().getYear());
         return labelFormatter;
     }

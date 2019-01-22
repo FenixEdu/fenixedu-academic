@@ -144,7 +144,7 @@ public class Entry extends Entry_Base {
     }
 
     public LabelFormatter getDescription() {
-        return getAccountingTransaction().getDescriptionForEntryType(getEntryType());
+        return getAccountingTransaction().getEvent().getDescription();
     }
 
     public Money getAmountWithAdjustment() {

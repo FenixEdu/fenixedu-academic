@@ -59,6 +59,7 @@ enum org.fenixedu.academic.domain.accounting.EventType                          
 enum org.fenixedu.academic.domain.accounting.PaymentCodeState                                                          as PaymentCodeState;
 enum org.fenixedu.academic.domain.accounting.PaymentCodeType                                                           as PaymentCodeType;
 enum org.fenixedu.academic.domain.accounting.ReceiptState                                                              as ReceiptState;
+enum org.fenixedu.academic.domain.accounting.RefundState                                                               as RefundState;
 enum org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationType      as AdministrativeOfficeFeeAndInsuranceExemptionJustificationType;
 enum org.fenixedu.academic.domain.accounting.events.InsuranceExemptionJustificationType      						   as InsuranceExemptionJustificationType;
 enum org.fenixedu.academic.domain.accounting.events.PenaltyExemptionJustificationType                                  as PenaltyExemptionJustificationType;
@@ -408,6 +409,14 @@ valueType org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDeta
     }
 
     internalizeWith importFromString();
+}
+
+valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmountMap {
+    externalizeWith {
+        JsonElement toJson();
+    }
+
+    internalizeWith fromJson();
 }
 
 /*
@@ -1289,6 +1298,14 @@ valueType org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDeta
         Money originalAmount;
     }
 
+    class accounting.Refund {
+            DateTime whenOccured;
+            Money amount;
+            boolean excessOnly;
+            RefundState state (REQUIRED);
+            LocalDate stateDate (REQUIRED);
+    }
+
     class accounting.Event  {
         String cancelJustification;
         EventState eventState;
@@ -1297,7 +1314,7 @@ valueType org.fenixedu.academic.util.sibs.incomming.SibsIncommingPaymentFileDeta
         DateTime whenOccured;
         String createdBy;
         LocalDate whenSentLetter;
-        Money originalValueCheck;
+        protected DueDateAmountMap dueDateAmountMap;
         LocalDate eventStartDate;
     }
 
@@ -6292,6 +6309,24 @@ relation PaymentMethodDefaultCash {
     }
     accounting.PaymentMethod playsRole cashPaymentMethod {
         multiplicity 0..1;
+    }
+}
+
+relation RefundCreator {
+    accounting.Refund playsRole refund {
+        multiplicity 0..*;
+    }
+    .org.fenixedu.bennu.core.domain.User playsRole creator {
+        multiplicity 1..1;
+    }
+}
+
+relation EventRefund {
+    accounting.Event playsRole event {
+        multiplicity 1..1;
+    }
+    accounting.Refund playsRole refund {
+        multiplicity *;
     }
 }
 
@@ -12391,5 +12426,23 @@ relation BennuPaymentMethodLogs {
 
     PaymentMethodLog playsRole paymentMethodLog  {
         multiplicity 0..*;
+    }
+}
+
+relation BennuPaymentMethodForRefundDeposit {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole bennuFromRefundDeposit {
+        multiplicity 0..1;
+    }
+    accounting.PaymentMethod playsRole paymentMethodForRefundDeposit {
+        multiplicity 0..1;
+    }
+}
+
+relation RefundAccountingTransaction {
+    accounting.Refund playsRole refund {
+        multiplicity 0..1;
+    }
+    accounting.AccountingTransaction playsRole accountingTransaction {
+        multiplicity 0..1;
     }
 }

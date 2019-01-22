@@ -18,20 +18,24 @@
  */
 package org.fenixedu.academic.domain.degreeStructure;
 
+import java.util.Optional;
+
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.util.Bundle;
 
 public class NoEctsComparabilityTableFound extends DomainException {
     public NoEctsComparabilityTableFound(CurriculumLine curriculumLine) {
-        super("error.no.ects.course.comparability.found", curriculumLine.getName().getContent());
+        super(Optional.of(Bundle.ACADEMIC), "error.no.ects.course.comparability.found", curriculumLine.getName().getContent());
     }
 
     public NoEctsComparabilityTableFound(AcademicInterval year, CycleType cycle) {
-        super("error.no.ects.graduation.comparability.found", year.getPathName(), cycle.getDescription());
+        super(Optional.of(Bundle.ACADEMIC), "error.no.ects.graduation.comparability.found", year.getPathName(),
+                cycle.getDescription());
     }
 
     public NoEctsComparabilityTableFound(AcademicInterval year) {
-        super("error.no.ects.any.comparability.found", year.getPathName());
+        super(Optional.of(Bundle.ACADEMIC), "error.no.ects.any.comparability.found", year.getPathName());
     }
 }

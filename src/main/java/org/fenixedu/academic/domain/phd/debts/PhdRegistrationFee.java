@@ -43,6 +43,7 @@ public class PhdRegistrationFee extends PhdRegistrationFee_Base {
         super.init(administrativeOffice, EventType.PHD_REGISTRATION_FEE, person);
         checkProcess(process);
         super.setProcess(process);
+        persistDueDateAmountMap();
     }
 
     private void checkProcess(PhdIndividualProgramProcess process) {

@@ -44,11 +44,9 @@ public class StudentThesisIdentificationDocument extends ThesisDocument {
         if (file != null) {
             addParameter("thesisTitle", file.getTitle());
             addParameter("thesisSubtitle", neverNull(file.getSubTitle()));
-            addParameter("thesisLanguage", getLanguage(file));
         } else {
             addParameter("thesisTitle", thesis.getTitle().getContent());
             addParameter("thesisSubtitle", EMPTY_STR);
-            addParameter("thesisLanguage", EMPTY_STR);
         }
 
         String date = null;
@@ -83,16 +81,6 @@ public class StudentThesisIdentificationDocument extends ThesisDocument {
 
         addParameter("abstractPt", neverNull(thesis.getThesisAbstractPt()));
         addParameter("abstractEn", neverNull(thesis.getThesisAbstractEn()));
-    }
-
-    private String getLanguage(ThesisFile file) {
-        Locale language = file.getLanguage();
-
-        if (language == null) {
-            return EMPTY_STR;
-        }
-
-        return BundleUtil.getString(Bundle.ENUMERATION, language.getLanguage());
     }
 
     private List<String> splitKeywords(String keywords) {

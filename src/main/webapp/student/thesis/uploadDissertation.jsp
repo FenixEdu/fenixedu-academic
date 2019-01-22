@@ -43,7 +43,6 @@
     		<fr:slot name="subTitle" key="label.thesis.subtitle">
         		<fr:property name="size" value="60"/>
     		</fr:slot>
-    		<fr:slot name="language.displayName" key="label.thesis.language"/>
     	</fr:schema>
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle5 tdtop thlight thright thmiddle"/>

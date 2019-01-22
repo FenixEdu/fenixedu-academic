@@ -48,16 +48,21 @@ public class PhotocopyRequestEvent extends PhotocopyRequestEvent_Base {
     }
 
     @Override
-    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+    protected LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
 
         labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION);
+
         if (!StringUtils.isEmpty(getAcademicServiceRequest().getPurpose())) {
-            labelFormatter.appendLabel(" (").appendLabel(getAcademicServiceRequest().getPurpose()).appendLabel(")");
+            labelFormatter.appendLabel("(").appendLabel(getAcademicServiceRequest().getPurpose()).appendLabel(")");
         }
+
         if (getAcademicServiceRequest().getExecutionYear() != null) {
-            labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
+            labelFormatter.appendLabel("- " + getExecutionYear().getYear());
         }
+
+        labelFormatter.appendLabel(" - ").appendLabel(getAcademicServiceRequest().getServiceRequestNumberYear());
+
         return labelFormatter;
     }
 }

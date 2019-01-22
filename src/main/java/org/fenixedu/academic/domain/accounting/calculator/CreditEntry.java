@@ -61,11 +61,7 @@ public abstract class CreditEntry extends AccountingEntry implements Cloneable {
     public abstract boolean isToApplyFine();
 
     public void addPartialPayment(PartialPayment partialPayment) {
-        if (partialPayment.getAmount().compareTo(getUnusedAmount()) <= 0) {
             this.partialPayments.add(partialPayment);
-        } else {
-            throw new UnsupportedOperationException("amount greater than unused: " + partialPayment.getAmount() + ", " + getUnusedAmount());
-        }
     }
 
     @JsonView(View.Detailed.class)
@@ -75,7 +71,7 @@ public abstract class CreditEntry extends AccountingEntry implements Cloneable {
 
     @JsonView(View.Detailed.class)
     public BigDecimal getUsedAmount() {
-        return partialPayments.stream().map(PartialPayment::getAmount).map(amount -> amount.setScale(2, RoundingMode.HALF_EVEN)).reduce(BigDecimal.ZERO, BigDecimal::add);
+        return getUsedAmount(null, null);
     }
 
     public BigDecimal getUsedAmount(Class<? extends DebtEntry> debtEntryClass) {
@@ -83,8 +79,11 @@ public abstract class CreditEntry extends AccountingEntry implements Cloneable {
     }
 
     public BigDecimal getUsedAmount(Class<? extends DebtEntry> debtEntryClass, DebtEntry debtEntry) {
-        Stream<PartialPayment> partialPaymentStream =
-                partialPayments.stream().filter(partialPayment -> debtEntryClass.isInstance(partialPayment.getDebtEntry()));
+        Stream<PartialPayment> partialPaymentStream = partialPayments.stream();
+
+        if (debtEntryClass != null) {
+            partialPaymentStream = partialPaymentStream.filter(partialPayment -> debtEntryClass.isInstance(partialPayment.getDebtEntry()));
+        }
 
         if (debtEntry != null) {
             partialPaymentStream = partialPaymentStream.filter(partialPayment -> partialPayment.getDebtEntry() == debtEntry);
@@ -106,6 +105,16 @@ public abstract class CreditEntry extends AccountingEntry implements Cloneable {
     @JsonView(View.Detailed.class)
     public BigDecimal getUsedAmountInFines() {
         return getUsedAmount(Fine.class);
+    }
+
+    @JsonView(View.Detailed.class)
+    public BigDecimal getUsedAmountInExcessRefunds() {
+        return getUsedAmount(ExcessRefund.class);
+    }
+
+    @JsonView(View.Detailed.class)
+    public BigDecimal getAmountInAdvance() {
+        return getUnusedAmount().add(getUsedAmountInExcessRefunds());
     }
 
     public Set<PartialPayment> getPartialPayments() {

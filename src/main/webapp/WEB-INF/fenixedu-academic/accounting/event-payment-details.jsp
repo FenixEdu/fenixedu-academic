@@ -18,7 +18,6 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="org.fenixedu.academic.domain.accounting.PaymentMethod"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -55,6 +54,10 @@
         <div class="col-md-5">
             <section class="payment-metadata">
                 <dl>
+                    <dt>Responsável:</dt>
+                    <dd><c:out value="${transactionDetail.responsibleUser.person.presentationName}"/></dd>
+                </dl>
+                <dl>
                     <dt>Método Pagamento:</dt>
                     <dd><c:out value="${transactionDetail.transactionDetail.paymentMethod.localizedName}"/></dd>
                 </dl>
@@ -62,21 +65,13 @@
                     <dt>Referência Pagamento:</dt>
                     <dd><c:out value="${transactionDetail.transactionDetail.paymentReference}"/></dd>
                 </dl>
-                <c:if test="${transactionDetail.transactionDetail.paymentMethod.sibs}">
+                <c:if test="${transactionDetail.transactionDetail.getClass().getSimpleName() == 'SibsTransactionDetail'}">
                     <dl>
                         <dt>Transacção SIBS:</dt>
                         <dd><c:out value="${transactionDetail.transactionDetail.sibsTransactionId}"/></dd>
                     </dl>
-                    <dl>
-                        <dt>Referência:</dt>
-                        <dd><c:out value="${transactionDetail.transactionDetail.sibsCode}"/></dd>
-                    </dl>
                 </c:if>
-                <c:if test="${transactionDetail.transactionDetail.paymentMethod.cash}">
-                    <dl>
-                        <dt>Responsável:</dt>
-                        <dd><c:out value="${transactionDetail.responsibleUser.person.presentationName}"/></dd>
-                    </dl>
+                <c:if test="${transactionDetail.transactionDetail.getClass().getSimpleName() == 'AccountingTransactionDetail'}">
                     <dl>
                         <dt>Motivo:</dt>
                         <dd><c:out value="${transactionDetail.transactionDetail.comments}"/></dd>
@@ -94,6 +89,19 @@
                         <time datetime="${processedDate.toString('yyyy-MM-dd HH:mm:ss')}">${processedDate.toString('dd/MM/yyyy HH:mm:ss')}</time>
                     </dd>
                 </dl>
+
+                <c:if test="${not empty sourceRefund}">
+                <dl>
+                    <dt>Reembolso de:</dt>
+                    <dd>
+                        <spring:url value="../../../{event}/transaction/{refundId}/details" var="sourceRefundUrl">
+                            <spring:param name="event" value="${sourceRefund.event.externalId}"/>
+                            <spring:param name="refundId" value="${sourceRefund.externalId}"/>
+                        </spring:url>
+                        <a href="${sourceRefundUrl}"><c:out value="${sourceRefund.event.description}"/></a>
+                    </dd>
+                </dl>
+                </c:if>
             </section>
         </div>
         <div class="col-md-2 col-md-offset-2">
@@ -103,10 +111,9 @@
                     <dd><c:out value="${amount}"/><span>€</span></dd>
                 </dl>
                 <c:forEach var="payment" items="${payments}" varStatus="paymentLoop">
-                    <c:set var="debtEntryIndex" value="#{debtsOrderedByDueDate.indexOf(payment.debtEntry) + 1}"/>
-                    <c:set var="totalPaidAmount" value="#{payment.amountUsedInDebt + payment.amountUsedInInterest + payment.amountUsedInFine}"/>
+                    <c:set var="totalPaidAmount" value="#{payment.amountUsedInDebt + payment.amountUsedInInterest + payment.amountUsedInFine + payment.amountUsedInAdvance}"/>
                     <dl>
-                        <dt><spring:message code="accounting.event.details.debt.name" arguments="${debtEntryIndex}"/></dt>
+                        <dt><c:out value="${payment.debtEntry.description}"/></dt>
                         <dd><c:out value="${totalPaidAmount.toPlainString()}"/><span>€</span></dd>
                     </dl>
                 </c:forEach>
@@ -116,7 +123,7 @@
     <div class="row">
         <div class="col-md-12">
             <header>
-                <h2>Prestações</h2>
+                <h2>Prestações e Reembolsos</h2>
             </header>
         </div>
     </div>
@@ -124,11 +131,12 @@
         <table class="table">
             <thead>
             <tr>
-                <th>Prestação</th>
-                <th>Data limite</th>
-                <th>Total Pago</th>
+                <th>Descrição</th>
+                <th>Data</th>
+                <th>Total</th>
                 <th>Dívida</th>
                 <th>Juros/Multas</th>
+                <th>Adiantamento</th>
                 <th><span class="sr-only">Acções</span></th>
             </tr>
             </thead>
@@ -140,24 +148,33 @@
                 </c:if>
             <c:if test="${not empty payments}">
                 <c:forEach var="payment" items="${payments}" varStatus="paymentLoop">
-                    <c:set var="debtEntryIndex" value="#{debtsOrderedByDueDate.indexOf(payment.debtEntry) + 1}"/>
                     <c:set var="amountUsedInInterestOrFine" value="#{payment.amountUsedInInterest + payment.amountUsedInFine}"/>
-                    <c:set var="totalPaidAmount" value="#{payment.amountUsedInDebt + payment.amountUsedInInterest + payment.amountUsedInFine}"/>
+                    <c:set var="totalPaidAmount" value="#{payment.amountUsedInDebt + payment.amountUsedInInterest + payment.amountUsedInFine + payment.amountUsedInAdvance}"/>
+                    <c:set var="totalAdvanceAmount" value="#{payment.amountUsedInDebt + payment.amountUsedInInterest + payment.amountUsedInFine + payment.amountUsedInAdvance}"/>
+
                     <tr>
-                        <td><spring:message code="accounting.event.details.debt.name" arguments="${debtEntryIndex}"/></td>
+                        <td>
+                            <c:out value="${payment.debtEntry.description}"/>
+                        </td>
                         <td>
                             <time datetime="${payment.debtEntry.date.toString('yyyy-MM-dd')}">${payment.debtEntry.date.toString('dd/MM/yyyy')}</time>
                         </td>
                         <td><c:out value="${totalPaidAmount.toPlainString()}"/><span>€</span></td>
                         <td><c:out value="${payment.amountUsedInDebt.toPlainString()}"/><span>€</span></td>
                         <td><c:out value="${amountUsedInInterestOrFine}"/><span>€</span></td>
+                        <td><c:out value="${payment.amountUsedInAdvance.toPlainString()}"/><span>€</span></td>
 
-                        <spring:url value="../../../{event}/debt/{debtDueDate}/details" var="debtUrl">
+
+                        <spring:url value="../../../{event}/transaction/{id}/details" var="debtUrl">
                             <spring:param name="event" value="${event.externalId}"/>
-                            <spring:param name="debtDueDate" value="${payment.debtEntry.date.toString('yyyy-MM-dd')}"/>
+                            <spring:param name="id" value="${payment.debtEntry.id}"/>
                         </spring:url>
 
-                        <td style="text-align: right;"><a href="${debtUrl}"><spring:message code="accounting.event.details.link"/></a></td>
+                        <td style="text-align: right;">
+                            <a href="${debtUrl}">
+                                <spring:message code="label.details"/>
+                            </a>
+                        </td>
                     </tr>
                 </c:forEach>
             </c:if>

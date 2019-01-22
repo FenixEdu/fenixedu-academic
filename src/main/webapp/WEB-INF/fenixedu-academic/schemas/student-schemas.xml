@@ -289,9 +289,6 @@
     <slot name="subTitle" key="label.thesis.subtitle" layout="null-as-label">
         <property name="label" value="-"/>
     </slot>
-    <slot name="language" key="label.thesis.language" layout="null-as-label">
-        <property name="label" value="-"/>
-    </slot>
     <slot name="displayName" layout="link" key="label.thesis.file.name">
         <property name="useParent" value="true"/>
         <property name="linkFormat" value="${downloadUrl}"/>

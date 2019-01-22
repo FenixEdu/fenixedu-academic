@@ -40,7 +40,7 @@ public class DuplicateRequestPR extends DuplicateRequestPR_Base {
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
+    protected Money doCalculationForAmountToPay(Event event) {
         RegistrationAcademicServiceRequest academicServiceRequest = ((DuplicateRequestEvent) event).getAcademicServiceRequest();
         return ((DuplicateRequest) academicServiceRequest).getAmountToPay();
     }

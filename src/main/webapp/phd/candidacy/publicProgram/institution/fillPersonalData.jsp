@@ -112,8 +112,7 @@
 					<fr:property name="maxLength" value="50"/>
 				</fr:slot>
 				<fr:slot name="socialSecurityNumber">
-			    	<fr:property name="size" value="20"/>
-					<fr:property name="maxLength" value="15"/>
+			    	<fr:validator name="org.fenixedu.academic.ui.renderers.validators.SocialSecurityNumberValidator"/>
 			    </fr:slot>
 			    <fr:slot name="dateOfBirth">
 					<fr:property name="size" value="10"/>

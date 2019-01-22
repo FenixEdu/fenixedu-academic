@@ -38,7 +38,7 @@ public class PastDegreeGratuityPR extends PastDegreeGratuityPR_Base {
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
+    protected Money doCalculationForAmountToPay(Event event) {
         return ((PastDegreeGratuityEvent) event).getPastDegreeGratuityAmount();
     }
 

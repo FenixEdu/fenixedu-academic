@@ -29,7 +29,7 @@ public class PartialRegimePR extends PartialRegimePR_Base {
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
+    protected Money doCalculationForAmountToPay(Event event) {
         return getAmount();
     }
 

@@ -40,7 +40,7 @@ public class InsurancePR extends InsurancePR_Base implements IAdministrativeOffi
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when) {
+    protected Money doCalculationForAmountToPay(Event event) {
         return getFixedAmount();
     }
 

@@ -39,7 +39,7 @@ public class PastStudentReingressionRequestPR extends PastStudentReingressionReq
     }
 
     @Override
-    protected Money doCalculationForAmountToPay(final Event event, final DateTime when) {
+    protected Money doCalculationForAmountToPay(final Event event) {
         return ((PastStudentReingressionRequestEvent) event).getPastAmount();
     }
 

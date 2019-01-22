@@ -31,7 +31,6 @@ import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdProgram;
-import org.fenixedu.academic.domain.phd.alert.AlertService;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.dto.accounting.SibsTransactionDetailDTO;
 import org.fenixedu.academic.util.Bundle;
@@ -67,6 +66,7 @@ public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
             throw new DomainException("error.phd.candidacy.PhdProgramCandidacyEvent.candidacyProcess.cannot.be.null", args);
         }
         super.setCandidacyProcess(candidacyProcess);
+        persistDueDateAmountMap();
     }
 
     @Override
@@ -75,23 +75,15 @@ public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
     }
 
     @Override
-    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-        final LabelFormatter labelFormatter = new LabelFormatter();
+    protected LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+        LabelFormatter labelFormatter = new LabelFormatter();
         final ExecutionYear executionYear = getPhdIndividualProgramProcess().getExecutionYear();
         labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION).appendLabel(" (")
         .appendLabel(getPhdProgram().getPresentationName(executionYear)).appendLabel(" - ").appendLabel(getExecutionYear().getYear())
                 .appendLabel(")");
-
         return labelFormatter;
-
     }
 
-    @Override
-    public LabelFormatter getDescription() {
-        final ExecutionYear executionYear = getPhdIndividualProgramProcess().getExecutionYear();
-        return new LabelFormatter().appendLabel(AlertService.getMessageFromResource("label.phd.candidacy")).appendLabel(": ")
-                .appendLabel(getPhdProgram().getPresentationName(executionYear)).appendLabel(" - ").appendLabel(getExecutionYear().getYear());
-    }
 
     private ExecutionYear getExecutionYear() {
         return getCandidacyProcess().getIndividualProgramProcess().getExecutionYear();

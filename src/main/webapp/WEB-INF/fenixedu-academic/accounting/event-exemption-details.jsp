@@ -84,11 +84,10 @@
                     <dt><spring:message code="accounting.payment.details.paid.value" text="Paid Amount"/></dt>
                     <dd><c:out value="${amount}"/><span>€</span></dd>
                 </dl>
-                <c:forEach var="payment" items="${payments}" varStatus="paymentLoop">
-                    <c:set var="debtEntryIndex" value="#{debtsOrderedByDueDate.indexOf(payment.debtEntry) + 1}"/>
-                    <c:set var="totalPaidAmount" value="#{payment.amountUsedInDebt + payment.amountUsedInInterest + payment.amountUsedInFine}"/>
+                <c:forEach var="payment" items="${payments}">
+                    <c:set var="totalPaidAmount" value="#{payment.amountUsedInDebt + payment.amountUsedInInterest + payment.amountUsedInFine + payment.amountUsedInAdvance}"/>
                     <dl>
-                        <dt><spring:message code="accounting.event.details.debt.name" arguments="${debtEntryIndex}"/></dt>
+                        <dt><c:out value="${payment.debtEntry.description}"/></dt>
                         <dd><c:out value="${totalPaidAmount.toPlainString()}"/><span>€</span></dd>
                     </dl>
                 </c:forEach>
@@ -121,12 +120,11 @@
                 </tr>
             </c:if>
             <c:if test="${not empty payments}">
-                <c:forEach var="payment" items="${payments}" varStatus="paymentLoop">
-                    <c:set var="debtEntryIndex" value="#{debtsOrderedByDueDate.indexOf(payment.debtEntry) + 1}"/>
+                <c:forEach var="payment" items="${payments}">
                     <c:set var="amountUsedInInterestOrFine" value="#{payment.amountUsedInInterest + payment.amountUsedInFine}"/>
                     <c:set var="totalPaidAmount" value="#{payment.amountUsedInDebt + payment.amountUsedInInterest + payment.amountUsedInFine}"/>
                     <tr>
-                        <td><spring:message code="accounting.event.details.debt.name" arguments="${debtEntryIndex}"/></td>
+                        <td><c:out value="${payment.debtEntry.description}"/></td>
                         <td>
                             <time datetime="${payment.debtEntry.date.toString('yyyy-MM-dd')}">${payment.debtEntry.date.toString('dd/MM/yyyy')}</time>
                         </td>
@@ -134,12 +132,12 @@
                         <td><c:out value="${payment.amountUsedInDebt.toPlainString()}"/><span>€</span></td>
                         <td><c:out value="${amountUsedInInterestOrFine}"/><span>€</span></td>
 
-                        <spring:url value="../../../{event}/debt/{debtDueDate}/details" var="debtUrl">
+                        <spring:url value="../../../{event}/transaction/{id}/details" var="debtUrl">
                             <spring:param name="event" value="${event.externalId}"/>
-                            <spring:param name="debtDueDate" value="${payment.debtEntry.date.toString('dd-MM-yyyy')}"/>
+                            <spring:param name="id" value="${payment.debtEntry.id}"/>
                         </spring:url>
 
-                        <td style="text-align: right;"><a href="${debtUrl}"><spring:message code="accounting.event.details.link"/></a></td>
+                        <td style="text-align: right;"><a href="${debtUrl}"><spring:message code="label.details"/></a></td>
                     </tr>
                 </c:forEach>
             </c:if>
