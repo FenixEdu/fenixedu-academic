@@ -195,8 +195,11 @@ function submitForm(btn) {
 
 function getSelectedModules() {
     return $.makeArray($('.module-enrol-checkbox:checked, .enrolment-checkbox:checked').map(function(i, obj) {
+        console.log(obj)
+        var preEnrolledNotice = $(obj).hasClass('pre-selected') ?
+			`<small>(${portal.message('resources.StudentResources', 'label.enrollment.courses.preEnrolled')})</small>` : '';
 
-        return '<li>' + $(obj).data('fullpath') + '</li>';
+        return '<li>' + $(obj).data('fullpath') + ' ' + preEnrolledNotice + '</li>';
     })).join("") || '${portal.message('resources.StudentResources', 'label.enrollment.courses.selected.empty')}';
 }
 
@@ -205,16 +208,20 @@ function getSelectedModules() {
 
     $('.pre-selected').each(function(i, obj) {
         // Get all row's cells
-		var cells = $(obj).parent().siblings().andSelf();
-
-		var courseNameCell = $(cells[0]);
+        var cells = $(obj).parent().siblings().andSelf();
+        var courseNameCell = $(cells[0]);
 
 		if ($(obj).is(":checked")) {
-            cells.addClass('se_temporary');
+
             courseNameCell.append('<strong> - ${portal.message('resources.StudentResources', 'label.enrollment.courses.preEnrolled')}</strong>');
 		} else {
             courseNameCell.append('<span style="color: #888"> - ${portal.message('resources.StudentResources', 'label.enrollment.courses.preEnrolled')}</span>');
 		}
+    });
+
+    $('.module-enrol-checkbox:checked').each(function(i, obj) {
+        var cells = $(obj).parent().siblings().andSelf();
+		cells.addClass('se_temporary');
     });
 
     $('.pre-selected:checked').one( "click", function(el) {
@@ -228,6 +235,16 @@ function getSelectedModules() {
     $('.selected-modules').html(getSelectedModules());
 
     $('.module-enrol-checkbox, .enrolment-checkbox').on('click', function(){
+        $('.success0').remove();
+
+        var cells = $(this).parent().siblings().andSelf();
+        if ($(this).is(":checked")) {
+            cells.addClass('se_temporary');
+		} else {
+            cells.removeClass('se_enrolled');
+            cells.removeClass('se_temporary');
+		}
+
         $('.selected-modules').html(getSelectedModules());
     });
 
