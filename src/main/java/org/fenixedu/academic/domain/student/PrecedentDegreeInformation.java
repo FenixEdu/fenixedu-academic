@@ -256,7 +256,6 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
         setRegistration(null);
 
         setStudentCandidacy(null);
-        setIndividualCandidacy(null);
 
         setPrecedentCountry(null);
         setPrecedentInstitution(null);
@@ -314,7 +313,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
     }
 
     private boolean hasAtLeastOneCandidacy() {
-        return getStudentCandidacy() != null || getIndividualCandidacy() != null;
+        return getStudentCandidacy() != null;
     }
 
     public boolean isCandidacyInternal() {

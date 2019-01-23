@@ -19,7 +19,6 @@
 package org.fenixedu.academic.predicate;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -31,8 +30,6 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacy;
-import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.bennu.core.groups.Group;
@@ -146,18 +143,6 @@ public class AcademicPredicates {
                 for (StudentCurricularPlan curricularPlan : curricularPlans) {
                     if (allowedPrograms.contains(curricularPlan.getDegree())) {
                         return true; // 1.
-                    }
-                }
-            }
-
-            for (IndividualCandidacyPersonalDetails candidacyDetails : person.getIndividualCandidaciesSet()) {
-                IndividualCandidacy candidacy = candidacyDetails.getCandidacy();
-                Collection<Degree> candidacyDegrees = candidacy.getAllDegrees();
-                if (candidacyDegrees.isEmpty()) {
-                    return true; // 3.
-                } else {
-                    if (!Collections.disjoint(allowedPrograms, candidacyDegrees)) {
-                        return true; // 2.
                     }
                 }
             }

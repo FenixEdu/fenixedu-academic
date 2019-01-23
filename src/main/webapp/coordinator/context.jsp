@@ -125,40 +125,6 @@
                 --%>
               </ul>
             </li>
-            <%--
-            <c:if test="${degree.degreeType.bolonhaDegree || degree.degreeType.integratedMasterDegree || degree.degreeType.bolonhaMasterDegree }">
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><bean:message key="label.candidacies"/> <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li>
-                    <a href="${base}/caseHandlingSecondCycleCandidacyProcess.do?method=intro&executionDegreeId=${master_degree.externalId}&degreeCurricularPlanID=${dcp}">
-                      <bean:message key="link.coordinator.second.cycle.applications"/>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="${base}/caseHandlingDegreeCandidacyForGraduatedPersonProcess.do?method=intro&executionDegreeId=${master_degree.externalId}&degreeCurricularPlanID=${dcp}">
-                      <bean:message key="link.coordinator.degree.applications.for.graduated"/>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="${base}/caseHandlingDegreeChangeCandidacyProcess.do?method=intro&executionDegreeId=${master_degree.externalId}&degreeCurricularPlanID=${dcp}">
-                      <bean:message key="link.coordinator.degree.change.application"/>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="${base}/caseHandlingDegreeTransferCandidacyProcess.do?method=intro&executionDegreeId=${master_degree.externalId}&degreeCurricularPlanID=${dcp}">
-                      <bean:message key="link.coordinator.degree.transfer.appication"/>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="${base}/caseHandlingStandaloneCandidacyProcess.do?method=intro&executionDegreeId=${master_degree.externalId}&degreeCurricularPlanID=${dcp}">
-                      <bean:message key="label.candidacy.standalone"/>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </c:if>
-          --%>
         </ul>
          <%--
         <ul class="nav navbar-nav navbar-right">

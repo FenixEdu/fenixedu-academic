@@ -365,7 +365,6 @@ public class Registration extends Registration_Base {
             getStudentCandidacy().delete();
         }
 
-        setIndividualCandidacy(null);
         setSourceRegistration(null);
         setRegistrationYear(null);
         setDegree(null);
@@ -3132,11 +3131,6 @@ public class Registration extends Registration_Base {
             result.addAll(plan.getAllCurriculumGroupsWithoutNoCourseGroupCurriculumGroups());
         }
         return result;
-    }
-
-    public Boolean hasIndividualCandidacyFor(final ExecutionYear executionYear) {
-        return getIndividualCandidacy() != null
-                && getIndividualCandidacy().getCandidacyProcess().getCandidacyExecutionInterval().equals(executionYear);
     }
 
     public void updateEnrolmentDate(final ExecutionYear executionYear) {

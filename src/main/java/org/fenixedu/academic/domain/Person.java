@@ -39,19 +39,12 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.candidacy.Candidacy;
 import org.fenixedu.academic.domain.candidacy.DegreeCandidacy;
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
-import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacy;
-import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
-import org.fenixedu.academic.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPerson;
-import org.fenixedu.academic.domain.candidacyProcess.over23.Over23IndividualCandidacy;
-import org.fenixedu.academic.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacy;
-import org.fenixedu.academic.domain.candidacyProcess.standalone.StandaloneIndividualCandidacy;
 import org.fenixedu.academic.domain.contacts.EmailAddress;
 import org.fenixedu.academic.domain.contacts.MobilePhone;
 import org.fenixedu.academic.domain.contacts.PartyContact;
 import org.fenixedu.academic.domain.contacts.PartyContactType;
 import org.fenixedu.academic.domain.contacts.Phone;
 import org.fenixedu.academic.domain.contacts.PhysicalAddress;
-import org.fenixedu.academic.domain.contacts.PhysicalAddressData;
 import org.fenixedu.academic.domain.contacts.WebAddress;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.documents.AnnualIRSDeclarationDocument;
@@ -312,52 +305,6 @@ public class Person extends Person_Base {
         }
     }
 
-    /**
-     * Creates a new Person and its correspondent {@link UserProfile} and optionally a {@link User}, using the data provided in
-     * the personal details.
-     *
-     * @param candidacyPersonalDetails
-     *            The personal details containing information about the person to be created.
-     * @param createUser true if a user is to be created, false otherwise.
-     */
-    public Person(final IndividualCandidacyPersonalDetails candidacyPersonalDetails, final boolean createUser) {
-        this(new UserProfile(candidacyPersonalDetails.getGivenNames(), candidacyPersonalDetails.getFamilyNames(), null,
-                candidacyPersonalDetails.getEmail(), Locale.getDefault()), false);
-        if (createUser) {
-            setUser(new User(getProfile()));
-        }
-
-        this.setCountry(candidacyPersonalDetails.getCountry());
-        this.setDateOfBirthYearMonthDay(candidacyPersonalDetails.getDateOfBirthYearMonthDay());
-        this.setDocumentIdNumber(candidacyPersonalDetails.getDocumentIdNumber());
-        this.setExpirationDateOfDocumentIdYearMonthDay(candidacyPersonalDetails.getExpirationDateOfDocumentIdYearMonthDay());
-        this.setGender(candidacyPersonalDetails.getGender());
-        this.setIdDocumentType(candidacyPersonalDetails.getIdDocumentType());
-        this.editSocialSecurityNumber(candidacyPersonalDetails.getFiscalCountry(),
-                candidacyPersonalDetails.getSocialSecurityNumber());
-
-        final PhysicalAddressData physicalAddressData =
-                new PhysicalAddressData(candidacyPersonalDetails.getAddress(), candidacyPersonalDetails.getAreaCode(), "",
-                        candidacyPersonalDetails.getArea(), "", "", "", candidacyPersonalDetails.getCountryOfResidence());
-        PhysicalAddress.createPhysicalAddress(this, physicalAddressData, PartyContactType.PERSONAL, true);
-        Phone.createPhone(this, candidacyPersonalDetails.getTelephoneContact(), PartyContactType.PERSONAL, true);
-        EmailAddress.createEmailAddress(this, candidacyPersonalDetails.getEmail(), PartyContactType.PERSONAL, true);
-
-        //EmitSignal
-        Signal.emit(Person.PERSON_CREATE_SIGNAL, new DomainObjectEvent<Person>(this));
-    }
-
-    /**
-     * Creates a new Person and its correspondent {@link UserProfile} and {@link User}, using the data provided in the personal
-     * details.
-     *
-     * @param candidacyPersonalDetails
-     *            The personal details containing information about the person to be created.
-     */
-    public Person(final IndividualCandidacyPersonalDetails candidacyPersonalDetails) {
-        this(candidacyPersonalDetails, true);
-    }
-
     public void ensureOpenUserAccount() {
         if (getUser() == null) {
             setUser(new User(getProfile()));
@@ -389,28 +336,6 @@ public class Person extends Person_Base {
         setDefaultPhoneNumber(personBean.getPhone());
         setDefaultEmailAddressValue(personBean.getEmail(), true);
         setDefaultMobilePhoneNumber(personBean.getMobile());
-        return this;
-    }
-
-    public Person edit(final IndividualCandidacyPersonalDetails candidacyExternalDetails) {
-        this.setCountry(candidacyExternalDetails.getCountry());
-
-        this.setDateOfBirthYearMonthDay(candidacyExternalDetails.getDateOfBirthYearMonthDay());
-        this.setIdentification(candidacyExternalDetails.getDocumentIdNumber(), candidacyExternalDetails.getIdDocumentType());
-        this.setExpirationDateOfDocumentIdYearMonthDay(candidacyExternalDetails.getExpirationDateOfDocumentIdYearMonthDay());
-        this.setGender(candidacyExternalDetails.getGender());
-        getProfile().changeName(candidacyExternalDetails.getGivenNames(), candidacyExternalDetails.getFamilyNames(), null);
-        this.editSocialSecurityNumber(candidacyExternalDetails.getFiscalCountry(),
-                candidacyExternalDetails.getSocialSecurityNumber());
-
-        final PhysicalAddressData physicalAddressData = new PhysicalAddressData(candidacyExternalDetails.getAddress(),
-                candidacyExternalDetails.getAreaCode(), getAreaOfAreaCode(), candidacyExternalDetails.getArea(),
-                getParishOfResidence(), getDistrictSubdivisionOfResidence(), getDistrictOfResidence(),
-                candidacyExternalDetails.getCountryOfResidence());
-        setDefaultPhysicalAddressData(physicalAddressData);
-        setDefaultPhoneNumber(candidacyExternalDetails.getTelephoneContact());
-        setDefaultEmailAddressValue(candidacyExternalDetails.getEmail());
-
         return this;
     }
 
@@ -947,33 +872,6 @@ public class Person extends Person_Base {
     @Override
     public String getPartyPresentationName() {
         return getPresentationName();
-    }
-
-    private boolean hasValidIndividualCandidacy(final Class<? extends IndividualCandidacy> clazz,
-            final ExecutionInterval executionInterval) {
-        for (final IndividualCandidacyPersonalDetails candidacyDetails : getIndividualCandidaciesSet()) {
-            final IndividualCandidacy candidacy = candidacyDetails.getCandidacy();
-            if (!candidacy.isCancelled() && candidacy.getClass().equals(clazz) && candidacy.isFor(executionInterval)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean hasValidOver23IndividualCandidacy(final ExecutionInterval executionInterval) {
-        return hasValidIndividualCandidacy(Over23IndividualCandidacy.class, executionInterval);
-    }
-
-    public boolean hasValidSecondCycleIndividualCandidacy(final ExecutionInterval executionInterval) {
-        return hasValidIndividualCandidacy(SecondCycleIndividualCandidacy.class, executionInterval);
-    }
-
-    public boolean hasValidDegreeCandidacyForGraduatedPerson(final ExecutionInterval executionInterval) {
-        return hasValidIndividualCandidacy(DegreeCandidacyForGraduatedPerson.class, executionInterval);
-    }
-
-    public boolean hasValidStandaloneIndividualCandidacy(final ExecutionInterval executionInterval) {
-        return hasValidIndividualCandidacy(StandaloneIndividualCandidacy.class, executionInterval);
     }
 
     public List<Formation> getFormations() {

@@ -31,7 +31,6 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
-import org.fenixedu.academic.domain.candidacy.degree.ShiftDistribution;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
@@ -274,10 +273,6 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 
     public boolean isFor(final String year) {
         return getYear().equals(year);
-    }
-
-    public ShiftDistribution createShiftDistribution() {
-        return new ShiftDistribution(this);
     }
 
     public void delete() {

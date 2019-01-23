@@ -61,9 +61,9 @@ public class Unit extends Unit_Base {
         super();
     }
 
-    protected void init(LocalizedString name, String unitNameCard, Integer costCenterCode, String acronym,
-            YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
-            AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces, Space campus) {
+    protected void init(LocalizedString name, String unitNameCard, Integer costCenterCode, String acronym, YearMonthDay beginDate,
+            YearMonthDay endDate, String webAddress, UnitClassification classification, AdministrativeOffice administrativeOffice,
+            Boolean canBeResponsibleOfSpaces, Space campus) {
 
         setPartyName(name);
         if (acronym != null) {
@@ -105,8 +105,7 @@ public class Unit extends Unit_Base {
         LocalizedString partyName = getPartyName();
 
         partyName =
-                partyName == null ? new LocalizedString(Locale.getDefault(), name) : partyName
-                        .with(Locale.getDefault(), name);
+                partyName == null ? new LocalizedString(Locale.getDefault(), name) : partyName.with(Locale.getDefault(), name);
 
         super.setPartyName(partyName);
 
@@ -190,9 +189,9 @@ public class Unit extends Unit_Base {
         }
 
         if (!(getAssociatedNonAffiliatedTeachersSet().isEmpty() && getExternalCurricularCoursesSet().isEmpty()
-                && getPrecedentDegreeInformationsSet().isEmpty() && getCandidacyPrecedentDegreeInformationsSet().isEmpty()
-                && getExternalRegistrationDatasSet().isEmpty() && getExternalCourseLoadRequestsSet().isEmpty()
-                && getExternalProgramCertificateRequestsSet().isEmpty() && getUnitGroupSet().isEmpty())) {
+                && getPrecedentDegreeInformationsSet().isEmpty() && getExternalRegistrationDatasSet().isEmpty()
+                && getExternalCourseLoadRequestsSet().isEmpty() && getExternalProgramCertificateRequestsSet().isEmpty()
+                && getUnitGroupSet().isEmpty())) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.unit.cannot.be.deleted"));
         }
     }
@@ -950,12 +949,8 @@ public class Unit extends Unit_Base {
     }
 
     static public LocalizedString getInstitutionName() {
-        return Optional
-                .ofNullable(Bennu.getInstance().getInstitutionUnit())
-                .map(Unit::getNameI18n)
-                .orElseGet(
-                        () -> BundleUtil.getLocalizedString(Bundle.GLOBAL,
-                                "error.institutionUnit.notconfigured"));
+        return Optional.ofNullable(Bennu.getInstance().getInstitutionUnit()).map(Unit::getNameI18n)
+                .orElseGet(() -> BundleUtil.getLocalizedString(Bundle.GLOBAL, "error.institutionUnit.notconfigured"));
     }
 
     static public String getInstitutionAcronym() {

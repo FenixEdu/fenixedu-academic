@@ -52,8 +52,6 @@ enum org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicO
 enum org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType.Scope                     as AcademicOperationTypeScope;
 enum org.fenixedu.academic.domain.administrativeOffice.AdministrativeOfficeType                                        as AdministrativeOfficeType;
 enum org.fenixedu.academic.domain.branch.BranchType                                                                    as OldBranchType;
-enum org.fenixedu.academic.domain.candidacyProcess.CandidacyProcessState                                               as CandidacyProcessState;
-enum org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyState                                            as IndividualCandidacyState;
 enum org.fenixedu.academic.domain.contacts.PartyContactType                                                            as PartyContactType;
 enum org.fenixedu.academic.domain.curricularRules.CurricularRuleType                                                   as CurricularRuleType;
 enum org.fenixedu.academic.domain.curricularRules.CurricularRuleValidationType                                         as CurricularRuleValidationType;
@@ -90,20 +88,13 @@ enum org.fenixedu.academic.util.Month                                           
 enum org.fenixedu.academic.util.RegimeType                                                                             as RegimeType;
 enum org.fenixedu.academic.util.StudentPersonalDataAuthorizationChoice                                                 as StudentPersonalDataAuthorizationChoice;
 enum org.fenixedu.academic.util.WeekDay                                                                                as WeekDay;
-enum org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFileType                                 as IndividualCandidacyDocumentFileType;
 enum org.fenixedu.academic.domain.EntryPhase                                                                           as EntryPhase;
 enum org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationContext                                                as EnrolmentEvaluationContext;
 enum org.fenixedu.academic.domain.serviceRequests.RectorateSubmissionState                                             as RectorateSubmissionState;
-enum org.fenixedu.academic.domain.candidacyProcess.erasmus.ErasmusAlertEntityType                                      as ErasmusAlertEntityType;
-enum org.fenixedu.academic.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType								  as ErasmusApplyForSemesterType;
-enum org.fenixedu.academic.domain.candidacyProcess.erasmus.ExecutedActionType										  as ExecutedActionType;
 enum org.fenixedu.academic.domain.OperationType																		  as OperationType;
-enum org.fenixedu.academic.domain.candidacyProcess.erasmus.NationalIdCardAvoidanceQuestion							  as NationalIdCardAvoidanceQuestion;
 enum org.fenixedu.academic.domain.candidacy.FirstTimeCandidacyStage													  as FirstTimeCandidacyStage;
 enum org.fenixedu.academic.domain.contacts.PartyContactValidationState 									              as PartyContactValidationState;
 enum org.fenixedu.academic.domain.SchoolPeriodDuration																  as SchoolPeriodDuration;
-enum org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityEmailTemplateType                                  as MobilityEmailTemplateType;
-enum org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacySeriesGradeState                                 as IndividualCandidacySeriesGradeState;
 enum org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType                                     as RegistrationStateType;
 
 
@@ -302,23 +293,6 @@ valueType org.joda.time.YearMonthDay as YearMonthDay {
     }
 
     internalizeWith org.fenixedu.academic.util.date.SerializationTool.yearMonthDayDeserialize();
-}
-
-valueType org.fenixedu.academic.domain.candidacyProcess.erasmus.TypeOfProgrammeList as erasmus.TypeOfProgrammeList {
-    externalizeWith {
-        String toString();
-    }
-    
-    internalizeWith importFromString();
-}
-
-
-valueType org.fenixedu.academic.domain.candidacyProcess.erasmus.StorkAttributesList as erasmus.StorkAttributesList {
-    externalizeWith {
-        String toString();
-    }
-    
-    internalizeWith importFromString();
 }
 
 valueType org.fenixedu.academic.domain.accessControl.rules.AccessOperation as AccessOperation {
@@ -1014,11 +988,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         Integer formationHours;
     }
     
-    class candidacyProcess.Formation extends Formation {
-        Boolean concluded;
-        String conclusionGrade;
-    }
-    
     class SchoolClass  {
         Integer anoCurricular;
         String nome;
@@ -1224,14 +1193,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
 		protected boolean isReIngression;
 	}
 	
-    class candidacy.degree.ShiftDistribution  {
-    }
-
-    class candidacy.degree.ShiftDistributionEntry  {
-        Integer abstractStudentNumber;
-        Boolean distributed;
-    }
-
     class contacts.ContactRoot {
     }
 
@@ -2463,427 +2424,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         class messaging.DepartmentForum extends messaging.Forum {
         }
 
-class caseHandling.Process  {
-    
-}
-
-class caseHandling.ProcessLog  {
-    String userName;
-    DateTime whenDateTime;
-    String activity;
-}
-
-/* Candidacies */
-
-class period.CandidacyPeriod  {
-    DateTime start;
-    DateTime end;
-}
-    class period.CandidacyProcessCandidacyPeriod extends period.CandidacyPeriod {
-    } 
-
-        class period.Over23CandidacyPeriod extends period.CandidacyProcessCandidacyPeriod {
-        }
-        
-        class period.SecondCycleCandidacyPeriod extends period.CandidacyProcessCandidacyPeriod {
-        }
-        
-        class period.DegreeCandidacyForGraduatedPersonCandidacyPeriod extends period.CandidacyProcessCandidacyPeriod {
-        }
-        
-        class period.DegreeChangeCandidacyPeriod extends period.CandidacyProcessCandidacyPeriod {
-        }
-        
-        class period.DegreeTransferCandidacyPeriod extends period.CandidacyProcessCandidacyPeriod {
-        }
-        
-        class period.StandaloneCandidacyPeriod extends period.CandidacyProcessCandidacyPeriod {
-        }
-        
-        class period.MobilityApplicationPeriod extends period.CandidacyProcessCandidacyPeriod {
-        }
-
-    class period.GenericApplicationPeriod extends period.CandidacyPeriod {
-    	Integer periodNumber;
-    	LocalizedString title;
-    	LocalizedString description;
-    } 
-
-class candidacy.GenericApplication {
-	String applicationNumber;
-	String email;
-	String confirmationCode;
-	Boolean submitted;
-
-	String name;
-    Gender gender;
-    String profession;
-    MaritalStatus maritalStatus;
-    YearMonthDay dateOfBirthYearMonthDay;
-    String fiscalCode;
-    String documentIdNumber;
-    IDDocumentType idDocumentType;
-    YearMonthDay emissionDateOfDocumentIdYearMonthDay;
-    YearMonthDay expirationDateOfDocumentIdYearMonthDay;
-    String emissionLocationOfDocumentId;
-    String telephoneContact;
-    String address;
-    String area;
-    String areaCode;
-    String areaOfAreaCode;
-
-	String candidateObservations;
-}
-
-class candidacy.GenericApplicationRecomentation {
-	String title;
-	String name;
-	String institution;
-	String email;
-	String confirmationCode;
-	DateTime requestTime;
-}
-
-class candidacy.GenericApplicationComment {
-	DateTime created;
-	String comment;
-}
-
-class candidacy.GenericApplicationFile extends .org.fenixedu.bennu.io.domain.GenericFile {
-}
-
-class candidacy.GenericApplicationLetterOfRecomentation extends .org.fenixedu.bennu.io.domain.GenericFile {
-}
-
-class candidacyProcess.CandidacyProcess extends caseHandling.Process {
-    CandidacyProcessState state;
-	LocalizedString submissionConditions;
-	LocalizedString honorAgreement;
-	LocalizedString alternantePaymentMethod;
-	Boolean doNotRequireCV;
-	Boolean doNotRequireFiscalIdDocument;
-	String name;
-}
-
-    class candidacyProcess.over23.Over23CandidacyProcess extends candidacyProcess.CandidacyProcess {
-    }
-    
-    class candidacyProcess.secondCycle.SecondCycleCandidacyProcess extends candidacyProcess.CandidacyProcess {
-    }
-    
-    class candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonProcess extends candidacyProcess.CandidacyProcess {
-    }
-    
-    class candidacyProcess.degreeChange.DegreeChangeCandidacyProcess extends candidacyProcess.CandidacyProcess {
-    }
-    
-    class candidacyProcess.degreeTransfer.DegreeTransferCandidacyProcess extends candidacyProcess.CandidacyProcess {
-    }
-    
-    class candidacyProcess.standalone.StandaloneCandidacyProcess extends candidacyProcess.CandidacyProcess {
-    }
-    
-    class candidacyProcess.mobility.MobilityApplicationProcess extends candidacyProcess.CandidacyProcess {
-    	ErasmusApplyForSemesterType forSemester;
-    	String receptionEmailSubject;
-    	String receptionEmailBody;
-    }
-    
-    class candidacyProcess.mobility.MobilityQuota  {
-    	Integer numberOfOpenings;
-    }
-    
-    class candidacyProcess.erasmus.ErasmusVacancy  {
-    	Integer numberOfVacancies;
-    }
-    
-    class candidacyProcess.mobility.MobilityAgreement  {
-    }
-    
-    class candidacyProcess.mobility.MobilityProgram {
-    }
-    
-    class candidacyProcess.mobility.MobilityEmailTemplate  {
-    	MobilityEmailTemplateType type;
-    	String subject;
-    	String body;
-    }
-    
-    class candidacyProcess.IndividualCandidacyProcess extends caseHandling.Process {
-        String accessHash;
-        String processCode;
-        Boolean processChecked;
-        Boolean paymentChecked;
-    }
-
-    class candidacyProcess.over23.Over23IndividualCandidacyProcess extends candidacyProcess.IndividualCandidacyProcess {
-    }
-    
-    class candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess extends candidacyProcess.IndividualCandidacyProcess {
-    }
-    
-    class candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualProcess extends candidacyProcess.IndividualCandidacyProcess {
-    }
-    
-    class candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcess extends candidacyProcess.IndividualCandidacyProcess {
-    }
-    
-    class candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyProcess extends candidacyProcess.IndividualCandidacyProcess {
-    }
-        
-    class candidacyProcess.standalone.StandaloneIndividualCandidacyProcess extends candidacyProcess.IndividualCandidacyProcess {
-    }
-    
-    class candidacyProcess.mobility.MobilityIndividualApplicationProcess extends candidacyProcess.IndividualCandidacyProcess {
-    	Boolean validatedByGri;
-    	Boolean validatedByMobilityCoordinator (REQUIRED);
-    	erasmus.StorkAttributesList personalFieldsFromStork;
-    }
-        
-class candidacyProcess.IndividualCandidacy  {
-    DateTime whenCreated;
-    LocalDate candidacyDate;
-    IndividualCandidacyState state;
-    String responsible;
-    String notes;
-    
-    Integer numberOfCandidaciesToHigherSchool;
-    Integer numberOfFlunksOnHighSchool;
-    Boolean dislocatedFromPermanentResidence;
-
-    GrantOwnerType grantOwnerType;
-    AcademicalInstitutionType highSchoolType;
-    MaritalStatus maritalStatus;
-    ProfessionType professionType;
-    ProfessionalSituationConditionType professionalCondition;
-
-    SchoolLevelType motherSchoolLevel;
-    ProfessionType motherProfessionType;
-    ProfessionalSituationConditionType motherProfessionalCondition;
-
-    SchoolLevelType fatherSchoolLevel;
-    ProfessionType fatherProfessionType;
-    ProfessionalSituationConditionType fatherProfessionalCondition;
-
-    SchoolLevelType spouseSchoolLevel;
-    ProfessionType spouseProfessionType;
-    ProfessionalSituationConditionType spouseProfessionalCondition;
-    
-    String observations;
-    String formerStudentNumber;
-    Boolean utlStudent;
-}
-
-    class candidacyProcess.IndividualCandidacyDocumentFile extends .org.fenixedu.bennu.io.domain.GenericFile {
-        IndividualCandidacyDocumentFileType candidacyFileType;
-        Boolean candidacyFileActive;
-    } 
-
-class candidacyProcess.IndividualCandidacyPersonalDetails  {
-}
-
-class candidacyProcess.IndividualCandidacyInternalPersonDetails extends candidacyProcess.IndividualCandidacyPersonalDetails {
-}
-
-class candidacyProcess.IndividualCandidacyExternalPersonDetails extends candidacyProcess.IndividualCandidacyPersonalDetails {
-    String givenNames;
-    String familyNames;
-    Gender gender;
-    String profession;
-    MaritalStatus maritalStatus;
-    YearMonthDay dateOfBirthYearMonthDay;
-    String fiscalCode;
-    String documentIdNumber;
-    IDDocumentType idDocumentType;
-    YearMonthDay emissionDateOfDocumentIdYearMonthDay;
-    YearMonthDay expirationDateOfDocumentIdYearMonthDay;
-    String emissionLocationOfDocumentId;
-    String telephoneContact;
-    String email;
-    String address;
-    String area;
-    String areaCode;
-    String areaOfAreaCode;
-    Boolean internalized;
-}
-
-    class candidacyProcess.over23.Over23IndividualCandidacy extends candidacyProcess.IndividualCandidacy {
-        String disabilities;
-        String education;
-        String languages;
-        String languagesRead;
-        String languagesWrite;
-        String languagesSpeak;
-    }
-    
-    class candidacyProcess.secondCycle.SecondCycleIndividualCandidacy extends candidacyProcess.IndividualCandidacy {
-        String professionalStatus;
-        String otherEducation;
-        Integer professionalExperience;
-        BigDecimal affinity;
-        Integer degreeNature;
-        BigDecimal candidacyGrade;
-        String interviewGrade;
-        BigDecimal seriesCandidacyGrade;
-    }
-    // ------------
-    class candidacyProcess.IndividualCandidacySeriesGrade {
-   		BigDecimal affinity;
- 		Integer degreeNature;
- 		IndividualCandidacySeriesGradeState state;
- 		String notes;
-    }
-   	
-   	class candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonSeriesGade extends candidacyProcess.IndividualCandidacySeriesGrade{
-   		BigDecimal candidacyGrade;
-   	}
-   	
-   	class candidacyProcess.degreeChange.DegreeChangeIndividualCandidacySeriesGrade extends candidacyProcess.IndividualCandidacySeriesGrade{
-   		BigDecimal approvedEctsRate;
-		BigDecimal gradeRate;
-		BigDecimal seriesCandidacyGrade;
-   	}
-   	
-   	class candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacySeriesGrade extends candidacyProcess.IndividualCandidacySeriesGrade{
-   		BigDecimal approvedEctsRate;
-		BigDecimal gradeRate;
-		BigDecimal seriesCandidacyGrade;
-   	}
-   	
-   	class candidacyProcess.secondCycle.SecondCycleIndividualCandidacySeriesGrade extends candidacyProcess.IndividualCandidacySeriesGrade{
-		Integer professionalExperience;
-		BigDecimal candidacyGrade;
-		String interviewGrade;
-		BigDecimal seriesCandidacyGrade;
-   	}
-   	
-    // ------------
-    
-    class candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPerson extends candidacyProcess.IndividualCandidacy {
-        BigDecimal affinity;
-        Integer degreeNature;
-        BigDecimal candidacyGrade;
-    }
-    
-    class candidacyProcess.degreeChange.DegreeChangeIndividualCandidacy extends candidacyProcess.IndividualCandidacy {
-        BigDecimal affinity;
-        Integer degreeNature;
-        BigDecimal approvedEctsRate;
-        BigDecimal gradeRate;
-        BigDecimal seriesCandidacyGrade;
-    }
-    
-    class candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacy extends candidacyProcess.IndividualCandidacy {
-        BigDecimal affinity;
-        Integer degreeNature;
-        BigDecimal approvedEctsRate;
-        BigDecimal gradeRate;
-        BigDecimal seriesCandidacyGrade;
-    }
-
-    class candidacyProcess.standalone.StandaloneIndividualCandidacy extends candidacyProcess.IndividualCandidacy {
-    }
-    
-    class candidacyProcess.mobility.MobilityIndividualApplication extends candidacyProcess.IndividualCandidacy {
-    	NationalIdCardAvoidanceQuestion nationalIdCardAvoidanceQuestion;
-    	DateTime nationalIdCardAvoidanceAnswerDate;
-    	String idCardAvoidanceOtherReason;
-    }
-    
-    
-class candidacyProcess.mobility.MobilityStudentData  {
-	String homeInstitutionName;
-	String homeInstitutionAddress;
-	String homeInstitutionCoordinatorName;
-	String homeInstitutionPhone;
-	String homeInstitutionFax;
-	String homeInstitutionEmail;
-	
-	SchoolLevelType currentSchoolLevel;
-	String currentOtherSchoolLevel;
-	Boolean hasDiplomaOrDegree;
-	Integer diplomaConclusionYear;
-	String diplomaName;
-	Boolean experienceCarryingOutProject;
-	
-    SchoolLevelType schoolLevel;
-    String otherSchoolLevel;
-	
-	LocalDate dateOfArrival;
-	LocalDate dateOfDeparture;
-	erasmus.TypeOfProgrammeList typesOfProgramme;
-	String mainSubjectThesis;
-	Boolean hasContactedOtherStaff;
-	String nameOfContact;
-	
-	Boolean ptStudyingLanguage;
-	Boolean ptAbleFollowLecures;
-	Boolean ptAbleToFollowLectureWithExtraPreparation;
-	Boolean enStudyingLanguage;
-	Boolean enAbleFollowLecures;
-	Boolean enAbleToFollowLectureWithExtraPreparation;
-	Boolean intensivePortugueseCourseSeptember;
-	Boolean intensivePortugueseCourseFebruary;
-	
-	ErasmusApplyForSemesterType applyFor;
-}
-    
-class candidacyProcess.erasmus.ErasmusAlert extends Alert {
-	Boolean sendEmail;
-	LocalDate whenToFire;
-	ErasmusAlertEntityType entity;
-}
-
-    class candidacyProcess.erasmus.ApprovedLearningAgreementDocumentFile extends candidacyProcess.IndividualCandidacyDocumentFile {
-    	
-    }
-
-class candidacyProcess.erasmus.ExecutedAction  {
-	ExecutedActionType type;
-	DateTime whenOccured;
-}
-
-	class candidacyProcess.erasmus.ApprovedLearningAgreementExecutedAction extends candidacyProcess.erasmus.ExecutedAction {
-	}
-	
-	class candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessExecutedAction extends candidacyProcess.erasmus.ExecutedAction {
-	}
-	
-	class candidacyProcess.erasmus.ErasmusCandidacyProcessExecutedAction extends candidacyProcess.erasmus.ExecutedAction {
-	}
-	
-		class candidacyProcess.erasmus.ReceptionEmailExecutedAction extends candidacyProcess.erasmus.ErasmusCandidacyProcessExecutedAction {
-			String subject;
-			String body;
-			DateTime beginIntervalOfAcceptedStudents;
-			DateTime endIntervalOfAcceptedStudents;
-		}
-
-class candidacyProcess.CandidacyPrecedentDegreeInformation  {
-    SchoolLevelType schoolLevel;
-    String otherSchoolLevel;
-}
-
-    class candidacyProcess.InstitutionPrecedentDegreeInformation extends candidacyProcess.CandidacyPrecedentDegreeInformation {
-        CycleType cycleType;
-    }
-    
-    class candidacyProcess.ExternalPrecedentDegreeInformation extends candidacyProcess.CandidacyPrecedentDegreeInformation {
-        String degreeDesignation;
-        Integer conclusionYear;
-        LocalDate conclusionDate;
-        String conclusionGrade;
-        Integer numberOfEnroledCurricularCourses;
-        Integer numberOfApprovedCurricularCourses;
-        BigDecimal gradeSum;
-        BigDecimal approvedEcts;
-        BigDecimal enroledEcts;
-    }
-
-class candidacyProcess.over23.Over23IndividualCandidacyDegreeEntry  {
-    Integer degreeOrder;
-}
-
 class QueueJob  {
                Boolean done;
                Integer failedCounter;
@@ -2920,9 +2460,6 @@ class reports.RaidesSpecializationReportFile extends reports.GepReportFile {}
 class reports.SummaryOccupancyReportFile extends reports.GepReportFile {}
 class reports.WrittenEvaluationReportFile extends reports.GepReportFile {}
 
-class candidacyProcess.erasmus.reports.ErasmusCandidacyProcessReport extends QueueJobWithFile {
-}
-
 public class accessControl.rules.AccessRuleSystem;
 
 public class accessControl.rules.AccessRule {
@@ -2939,9 +2476,6 @@ class PublicCandidacyHashCode  {
     String email;
     String value;
 }
-
-    class candidacyProcess.DegreeOfficePublicCandidacyHashCode extends PublicCandidacyHashCode {
-    }
 
 class candidacy.MeasurementTest  {
     EntryPhase entryPhase;
@@ -2979,9 +2513,6 @@ class ImportRegister  {
 
 class ImportRegisterLog  {
 	DateTime instant;
-}
-
-class candidacyProcess.mobility.MobilityCoordinator  {
 }
 
 class CoordinatorLog  {
@@ -3057,36 +2588,6 @@ class student.PersonalIngressionData  {
     ProfessionType spouseProfessionType;
     ProfessionalSituationConditionType spouseProfessionalCondition;
     DateTime lastModifiedDate;
-}
-
-class mobility.outbound.OutboundMobilityCandidacyPeriod extends period.CandidacyPeriod {
-	String optionIntroductoryDestription;
-}
-
-class mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption  {
-	String optionValue;
-	Boolean availableForCandidates;
-}
-
-class mobility.outbound.OutboundMobilityCandidacyContest  {
-    Integer vacancies;
-}
-
-class mobility.outbound.OutboundMobilityCandidacySubmission  {
-	Boolean confirmedPlacement;
-}
-
-class mobility.outbound.OutboundMobilityCandidacySubmissionGrade  {
-	BigDecimal grade;
-	BigDecimal gradeForSerialization;
-}
-
-class mobility.outbound.OutboundMobilityCandidacy  {
-    Integer preferenceOrder;
-    Boolean selected;
-}
-
-class mobility.outbound.OutboundMobilityCandidacyContestGroup  {
 }
 
 class Installation {
@@ -3186,209 +2687,6 @@ relation BennuInstallation {
 	}
 	Installation playsRole installation {
 		multiplicity 0..1;
-	}
-}
-
-relation RootDomainObjectOutboundMobilityCandidacyContestGroup {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
-		multiplicity 1..1;
-	}
-	mobility.outbound.OutboundMobilityCandidacyContestGroup playsRole outboundMobilityCandidacyContestGroup {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectOutboundMobilityCandidacyPeriodConfirmationOption {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
-		multiplicity 1..1;
-	}
-	mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption playsRole outboundMobilityCandidacyPeriodConfirmationOption {
-		multiplicity *;
-	}
-}
-
-relation CandidacyPeriodOptions {
-	mobility.outbound.OutboundMobilityCandidacyPeriod playsRole outboundMobilityCandidacyPeriod {
-		multiplicity 1..1;
-	}
-	mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption playsRole outboundMobilityCandidacyPeriodConfirmationOption {
-		multiplicity *;
-	}
-}
-
-relation SubmissionConfirmationOption {
-	mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption playsRole confirmationOption {
-		multiplicity 0..1;
-	}
-	mobility.outbound.OutboundMobilityCandidacySubmission playsRole submissionsThatSelectedOption {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectOutboundMobilityCandidacyContest {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
-		multiplicity 1..1;
-	}
-	mobility.outbound.OutboundMobilityCandidacyContest playsRole outboundMobilityCandidacyContest {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectOutboundMobilityCandidacySubmission {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
-		multiplicity 1..1;
-	}
-	mobility.outbound.OutboundMobilityCandidacySubmission playsRole outboundMobilityCandidacySubmission {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectOutboundMobilityCandidacy {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
-		multiplicity 1..1;
-	}
-	mobility.outbound.OutboundMobilityCandidacy playsRole outboundMobilityCandidacy {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectOutboundMobilityCandidacySubmissionGrade {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
-		multiplicity 1..1;
-	}
-	mobility.outbound.OutboundMobilityCandidacySubmissionGrade playsRole outboundMobilityCandidacySubmissionGrade {
-		multiplicity *;
-	}
-}
-
-relation OutboundMobilityCandidacyPeriodOutboundMobilityCandidacyContest {
-	mobility.outbound.OutboundMobilityCandidacyPeriod playsRole outboundMobilityCandidacyPeriod {
-		multiplicity 1..1;
-	}
-	mobility.outbound.OutboundMobilityCandidacyContest playsRole outboundMobilityCandidacyContest {
-		multiplicity *;
-	}
-}
-
-relation OutboundMobilityCandidacyPeriodOutboundMobilityCandidacySubmission {
-	mobility.outbound.OutboundMobilityCandidacyPeriod playsRole outboundMobilityCandidacyPeriod {
-		multiplicity 1..1;
-	}
-	mobility.outbound.OutboundMobilityCandidacySubmission playsRole outboundMobilityCandidacySubmission {
-		multiplicity *;
-	}
-}
-
-relation OutboundMobilityCandidacySubmissionOutboundMobilityCandidacySubmissionGrade {
-	mobility.outbound.OutboundMobilityCandidacySubmission playsRole outboundMobilityCandidacySubmission {
-		multiplicity 1..1;
-	}
-	mobility.outbound.OutboundMobilityCandidacySubmissionGrade playsRole outboundMobilityCandidacySubmissionGrade {
-		multiplicity *;
-	}
-}
-
-relation OutboundMobilityCandidacyContestExecutionDegree {
-	ExecutionDegree playsRole executionDegree {
-		multiplicity 1..*;
-	}
-	mobility.outbound.OutboundMobilityCandidacyContest playsRole outboundMobilityCandidacyContest {
-		multiplicity *;
-	}
-}
-
-relation OutboundMobilityCandidacyContestGroupExecutionDegree {
-	ExecutionDegree playsRole executionDegree {
-		multiplicity 1..*;
-	}
-	mobility.outbound.OutboundMobilityCandidacyContestGroup playsRole outboundMobilityCandidacyContestGroup {
-		multiplicity *;
-	}
-}
-
-relation OutboundMobilityCandidacyContestGroupOutboundMobilityCandidacySubmissionGrade {
-	mobility.outbound.OutboundMobilityCandidacyContestGroup playsRole outboundMobilityCandidacyContestGroup {
-		multiplicity 1..1;
-	}
-	mobility.outbound.OutboundMobilityCandidacySubmissionGrade playsRole outboundMobilityCandidacySubmissionGrade {
-		multiplicity *;
-	}
-}
-
-relation OutboundMobilityCandidacyContestGroupOutboundMobilityCandidacyContest {
-	mobility.outbound.OutboundMobilityCandidacyContestGroup playsRole outboundMobilityCandidacyContestGroup {
-		multiplicity 1..1;
-	}
-	mobility.outbound.OutboundMobilityCandidacyContest playsRole outboundMobilityCandidacyContest {
-		multiplicity 1..*;
-	}
-}
-
-relation OutboundMobilityCandidacyContestGroupMobilityCoordinator {
-	Person playsRole mobilityCoordinator {
-		multiplicity *;
-	}
-	mobility.outbound.OutboundMobilityCandidacyContestGroup playsRole outboundMobilityCandidacyContestGroup {
-		multiplicity *;
-	}
-}
-
-relation OutboundMobilityCandidacyContestUnit {
-	candidacyProcess.mobility.MobilityAgreement playsRole mobilityAgreement {
-		multiplicity 1..1;
-	}
-	mobility.outbound.OutboundMobilityCandidacyContest playsRole outboundMobilityCandidacyContest {
-		multiplicity *;
-	}
-}
-
-relation OutboundMobilityCandidacyContestOutboundMobilityCandidacy {
-	mobility.outbound.OutboundMobilityCandidacyContest playsRole outboundMobilityCandidacyContest {
-		multiplicity 1..1;
-	}
-	mobility.outbound.OutboundMobilityCandidacy playsRole outboundMobilityCandidacy {
-		multiplicity *;
-	}
-}
-
-relation OutboundMobilityCandidacySubmissionOutboundMobilityCandidacy {
-	mobility.outbound.OutboundMobilityCandidacySubmission playsRole outboundMobilityCandidacySubmission {
-		multiplicity 1..1;
-	}
-	mobility.outbound.OutboundMobilityCandidacy playsRole outboundMobilityCandidacy {
-		multiplicity *;
-	}
-}
-
-relation SelectedOutboundMobilityCandidacySubmissionOutboundMobilityCandidacy {
-	mobility.outbound.OutboundMobilityCandidacySubmission playsRole submissionFromSelectedCandidacy;
-	mobility.outbound.OutboundMobilityCandidacy playsRole selectedCandidacy;
-}
-
-relation OutboundMobilityCandidacySubmissionRegistration {
-	student.Registration playsRole registration {
-		multiplicity 1..1;
-	}
-	mobility.outbound.OutboundMobilityCandidacySubmission playsRole outboundMobilityCandidacySubmission {
-		multiplicity *;
-	}
-}
-
-relation ContestGroupPeriodCandidacySelectionConclusion {
-	mobility.outbound.OutboundMobilityCandidacyContestGroup playsRole concludedCandidateSelectionGroups {
-		multiplicity *;
-	}
-	mobility.outbound.OutboundMobilityCandidacyPeriod playsRole concludedCandidateSelectionForPeriod {
-		multiplicity *;
-	}
-}
-
-relation ContestGroupPeriodSelectionResultNotification {
-	mobility.outbound.OutboundMobilityCandidacyContestGroup playsRole candidatesNotifiedOfSelectionResultsForGroups {
-		multiplicity *;
-	}
-	mobility.outbound.OutboundMobilityCandidacyPeriod playsRole candidatesNotifiedOfSelectionResultsForPeriod {
-		multiplicity *;
 	}
 }
 
@@ -4830,13 +4128,6 @@ relation ExecutionDegreeScientificCommission {
     }
 }
 
-relation ExecutionDegreeShiftDistributionEntry {
-    ExecutionDegree playsRole executionDegree;
-    candidacy.degree.ShiftDistributionEntry playsRole shiftDistributionEntries {
-        multiplicity *;
-    }
-}
-
 relation ExecutionPeriodContextBegin {
     ExecutionSemester playsRole beginExecutionPeriod;
     degreeStructure.Context playsRole beginExecutionPeriodContexts {
@@ -4884,11 +4175,6 @@ relation ExecutionYearAcademicServiceRequest {
     serviceRequests.AcademicServiceRequest playsRole academicServiceRequests {
         multiplicity *;
     }
-}
-
-relation ExecutionYearShiftDistribution {
-    ExecutionYear playsRole executionYear;
-    candidacy.degree.ShiftDistribution playsRole shiftDistribution;
 }
 
 relation ExternalCurricularCourseExternalEnrolment {
@@ -6396,20 +5682,6 @@ relation RootDomainObjectShiftGroupingProperties {
     }
 }
 
-relation RootDomainObjectShiftDistribution {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    candidacy.degree.ShiftDistribution playsRole shiftDistributions {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectShiftDistributionEntry {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    candidacy.degree.ShiftDistributionEntry playsRole shiftDistributionEntries {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectShiftEnrolment {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     ShiftEnrolment playsRole shiftEnrolments {
@@ -6576,20 +5848,6 @@ relation SendProposal {
 relation SeniorStudent {
    student.Senior playsRole senior;
    student.Registration playsRole student;
-}
-
-relation ShiftDistributionEntryShift {
-    Shift playsRole shift;
-    candidacy.degree.ShiftDistributionEntry playsRole shiftDistributionEntries {
-        multiplicity *;
-    }
-}
-
-relation ShiftDistributionShiftDistributionEntry {
-    candidacy.degree.ShiftDistribution playsRole shiftDistribution;
-    candidacy.degree.ShiftDistributionEntry playsRole shiftDistributionEntries {
-        multiplicity *;
-    }
 }
 
 relation ShiftEnrolmentRegistration {
@@ -7068,255 +6326,6 @@ relation CourseLoadLessonInstance {
     }
 }
 
-relation ProcessRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    caseHandling.Process playsRole processes {
-        multiplicity *;
-    }
-}
-
-relation ProcessLogRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    caseHandling.ProcessLog playsRole processesLogs {
-        multiplicity *;
-    }
-}
-
-relation ProcessProcessLog {
-    caseHandling.Process playsRole process;
-    caseHandling.ProcessLog playsRole processLogs {
-        multiplicity *;
-    }
-}
-
-relation CandidacyPeriodRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    period.CandidacyPeriod playsRole candidacyPeriods {
-        multiplicity *;
-    }
-}
-
-relation CandidacyPeriodExecutionInterval {
-    ExecutionInterval playsRole executionInterval;
-    period.CandidacyPeriod playsRole candidacyPeriods {
-        multiplicity *;
-    }
-}
-
-relation CandidacyPeriodCandidacyProcess {
-    period.CandidacyProcessCandidacyPeriod playsRole candidacyPeriod;
-    candidacyProcess.CandidacyProcess playsRole candidacyProcesses {
-        multiplicity *;
-    }
-}
-
-relation IndividualCandidacyRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    candidacyProcess.IndividualCandidacy playsRole individualCandidacies {
-        multiplicity *;
-    }
-}
-
-relation IndividualCandidacyCandidacyPersonalDetails {
-    candidacyProcess.IndividualCandidacy playsRole candidacy;
-    candidacyProcess.IndividualCandidacyPersonalDetails playsRole personalDetails;
-}
-
-relation IndividualCandidacyPerson {
-    Person playsRole person;
-    candidacyProcess.IndividualCandidacyPersonalDetails playsRole individualCandidacies {
-        multiplicity *;
-    }
-}
-
-relation IndividualCandidacyRegistration {
-    student.Registration playsRole registration;
-    candidacyProcess.IndividualCandidacy playsRole individualCandidacy;
-}
-
-relation IndividualCandidacyGrantOwnerProvider {
-    candidacyProcess.IndividualCandidacy playsRole candidacies {
-        multiplicity *;
-    }
-    organizationalStructure.Unit playsRole grantOwnerProvider;
-}
-
-relation IndividualCandidacyCountryOfResidence {    
-    Country playsRole countryOfResidence;
-    candidacyProcess.IndividualCandidacy playsRole associatedResidentIndividualCandidacies {
-        multiplicity *;
-    }
-}
-
-relation IndividualCandidacyDistrictSubdivisionOfResidence {
-    DistrictSubdivision playsRole districtSubdivisionOfResidence;
-    candidacyProcess.IndividualCandidacy playsRole individualCandidacies {
-        multiplicity *;
-    }
-}
-
-relation IndividualCandidacySchoolTimeDistrictSubdivisionOfResidence {
-    DistrictSubdivision playsRole schoolTimeDistrictSubDivisionOfResidence;
-    candidacyProcess.IndividualCandidacy playsRole schoolTimeIndividualCandidacies {
-        multiplicity *;
-    }
-}
-
-relation CandidacyProcessIndividualCandidacyProcess {
-    candidacyProcess.CandidacyProcess playsRole candidacyProcess;
-    candidacyProcess.IndividualCandidacyProcess playsRole childProcesses {
-        multiplicity *;
-    }
-}
-
-relation IndividualCandidacyProcessIndividualCandidacy {
-    candidacyProcess.IndividualCandidacyProcess playsRole candidacyProcess;
-    candidacyProcess.IndividualCandidacy playsRole candidacy;
-}
-
-
-relation Over23IndividualCandidacyDegreeEntryRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    candidacyProcess.over23.Over23IndividualCandidacyDegreeEntry playsRole over23IndividualCandidacyDegreeEntries {
-        multiplicity *;
-    }
-}
-
-relation DegreeOver23IndividualCandidacyDegreeEntry {
-    Degree playsRole degree;
-    candidacyProcess.over23.Over23IndividualCandidacyDegreeEntry playsRole over23IndividualCandidacyDegreeEntries {
-        multiplicity *;
-    }
-}
-
-relation Over23IndividualCandidacyOver23IndividualCandidacyDegreeEntry {
-    candidacyProcess.over23.Over23IndividualCandidacy playsRole over23IndividualCandidacy;
-    candidacyProcess.over23.Over23IndividualCandidacyDegreeEntry playsRole over23IndividualCandidacyDegreeEntries {
-        multiplicity *;
-    }
-}
-
-relation Over23IndividualCandidacyAcceptedDegree {
-    Degree playsRole acceptedDegree;
-    candidacyProcess.over23.Over23IndividualCandidacy playsRole acceptedOver23IndividualCandidacies {
-        multiplicity *;
-    }
-}
-
-/* This relation is temporary */
-relation SecondCycleIndividualCandidacySelectedDegree {
-    Degree playsRole selectedDegree;
-    candidacyProcess.secondCycle.SecondCycleIndividualCandidacy playsRole selectedSecondCycleIndividualCandidacies {
-        multiplicity *;
-    }
-}
-
-relation SecondCycleIndividualCandidacySelectedDegrees {
-    candidacyProcess.secondCycle.SecondCycleIndividualCandidacy playsRole selectionSecondCycleIndividualCandidacies {
-        multiplicity *;
-    }
-    
-	Degree playsRole selectedDegrees {
-		multiplicity *;
-	}	
-}
-
-relation DegreeCandidacyForGraduatedPersonSelectedDegree {
-    Degree playsRole selectedDegree;
-    candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPerson playsRole selectedDegreeCandidacyForGraduatedPersonCandidacies {
-        multiplicity *;
-    }
-}
-
-relation DegreeChangeIndividualCandidacySelectedDegree {
-    Degree playsRole selectedDegree;
-    candidacyProcess.degreeChange.DegreeChangeIndividualCandidacy playsRole selectedDegreeChangeIndividualCandidacies {
-        multiplicity *;
-    }
-}
-
-relation DegreeTransferIndividualCandidacySelectedDegree {
-    Degree playsRole selectedDegree;
-    candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacy playsRole selectedDegreeTransferIndividualCandidacies {
-        multiplicity *;
-    }
-}
-
-relation StandaloneIndividualCandidacyCurricularCourses {
-    CurricularCourse playsRole curricularCourses {
-        multiplicity *;
-    }
-    candidacyProcess.standalone.StandaloneIndividualCandidacy playsRole standaloneIndividualCandidacies {
-        multiplicity *;
-    }
-}
-
-relation MobilityIndividualApplicationMobilityStudentData {
-	candidacyProcess.mobility.MobilityIndividualApplication playsRole mobilityIndividualApplication;
-	candidacyProcess.mobility.MobilityStudentData playsRole mobilityStudentData;
-}
-
-relation MobilityStudentDataCountryHighSchool {
-    candidacyProcess.mobility.MobilityStudentData playsRole mobilityStudentDataHighSchool {
-        multiplicity *;
-    }
-    Country playsRole mobilityCountryHighSchool;
-}
-
-relation MobilityIndividualApplicationCurricularCourses {
-	CurricularCourse playsRole curricularCourses {
-		multiplicity *;
-	}
-	candidacyProcess.mobility.MobilityIndividualApplication playsRole selectedMobilityIndividualApplication {
-		multiplicity *;
-	}	
-}
-
-relation CandidacyPrecedentDegreeInformationRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    candidacyProcess.CandidacyPrecedentDegreeInformation playsRole candidacyPrecedentDegreeInformations {
-        multiplicity *;
-    }
-}
-
-relation CandidacyPrecedentDegreeInformationCountry {
-    Country playsRole country;
-    candidacyProcess.CandidacyPrecedentDegreeInformation playsRole candidacyPrecedentDegreeInformations {
-        multiplicity *;
-    }
-}
-
-relation InstitutionPrecedentDegreeInformationStudentCurricularPlan {
-    StudentCurricularPlan playsRole studentCurricularPlan;
-    candidacyProcess.InstitutionPrecedentDegreeInformation playsRole candidacyPrecedentDegreeInformations {
-        multiplicity *;
-    }
-}
-
-relation ExternalSourceDegreeInformationStudentCurricularPlan {
-    organizationalStructure.Unit playsRole sourceInstitution;
-    candidacyProcess.ExternalPrecedentDegreeInformation playsRole destinationExternalPrecedentDegreeInformations {
-        multiplicity *;
-    }
-}
-
-relation ExternalPrecedentDegreeInformationStudentCurricularPlan {
-    organizationalStructure.Unit playsRole institution;
-    candidacyProcess.ExternalPrecedentDegreeInformation playsRole candidacyPrecedentDegreeInformations {
-        multiplicity *;
-    }
-}
-
-relation IndividualCandidacyCandidacyPrecedentDegreeInformation {
-    candidacyProcess.IndividualCandidacy playsRole candidacy;
-    candidacyProcess.CandidacyPrecedentDegreeInformation playsRole precedentDegreeInformation;
-}
-
-relation IndividualCandidacyPrecedentDegreeInformation {
-	candidacyProcess.IndividualCandidacy playsRole individualCandidacy;
-	student.PrecedentDegreeInformation playsRole refactoredPrecedentDegreeInformation;
-}
-
 relation DegreeContextRootDomainObject {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     DegreeContext playsRole degreeContexts {
@@ -7690,56 +6699,9 @@ relation QueueJobWithFileResult{
     QueueJobResultFile playsRole file;
 }
 
-relation IndividualCandidacyExternalPersonDetailsCountryOfResidence {
-    candidacyProcess.IndividualCandidacyExternalPersonDetails playsRole externalCandidacyPersonDetailsCountryOfResidence {
-        multiplicity *;
-    }
-    Country playsRole countryOfResidence;
-}
-
-relation IndividualCandidacyExternalPersonDetailsNationality {
-    candidacyProcess.IndividualCandidacyExternalPersonDetails playsRole externalCandidacyPersonDetailsNationality {
-        multiplicity *;
-    }
-    Country playsRole nationality;  
-}
-
-relation IndividualCandidacyIndividualCandidacyDocumentFile {
-    candidacyProcess.IndividualCandidacy playsRole individualCandidacy {
-    	multiplicity *;
-    }
-    candidacyProcess.IndividualCandidacyDocumentFile playsRole documents {
-        multiplicity *;
-    }
-}
-
 relation PublicCandidacyHashCodeRootDomainObject {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     PublicCandidacyHashCode playsRole candidacyHashCodes {
-        multiplicity *;
-    }
-}
-
-relation DegreeOfficePublicCandidacyHashCodeIndividualCandidacyProcess {
-    candidacyProcess.DegreeOfficePublicCandidacyHashCode playsRole candidacyHashCode;
-    candidacyProcess.IndividualCandidacyProcess playsRole individualCandidacyProcess;
-}
-
-relation CandidacyProcessFormationIndividualCandidacy {
-    candidacyProcess.IndividualCandidacy playsRole individualCandidacy;
-    candidacyProcess.Formation playsRole formations {
-        multiplicity *;
-    }
-}
-
-relation IndividualCandidacyProcessOriginalAndCopy {
-	candidacyProcess.IndividualCandidacyProcess playsRole originalIndividualCandidacyProcess;
-	candidacyProcess.IndividualCandidacyProcess playsRole copyIndividualCandidacyProcess;
-}
-
-relation FormationExecutionYear {
-    ExecutionYear playsRole conclusionExecutionYear;
-    candidacyProcess.Formation playsRole candidacyFormations {
         multiplicity *;
     }
 }
@@ -7811,14 +6773,6 @@ relation EnrolmentEvaluationLogRootDomainObject {
 }
 
 
-relation MobilityStudentDataRootDomainObject {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	candidacyProcess.mobility.MobilityStudentData playsRole mobilityStudentData {
-		multiplicity *;
-	}
-}
-
-
 relation CycleCourseGroupInformationRootDomainObject {
 	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	degreeStructure.CycleCourseGroupInformation playsRole cycleCourseGroupInformation {
@@ -7885,109 +6839,6 @@ relation UniversityUnitPrincipal {
     organizationalStructure.UniversityUnit playsRole universityUnitAsPrincipal {
         multiplicity *;
     }
-}
-
-
-relation MobilityIndividualApplicationProcessErasmusAlert {
-	candidacyProcess.mobility.MobilityIndividualApplicationProcess playsRole process;
-	candidacyProcess.erasmus.ErasmusAlert playsRole alert {
-		multiplicity *;
-	}
-}
-
-
-relation ErasmusAlertPerson {
-	Person playsRole whoCreated;
-	candidacyProcess.erasmus.ErasmusAlert playsRole erasmusAlert {
-		multiplicity *;
-	} 
-}
-
-relation RootDomainObjectMobilityQuota {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	candidacyProcess.mobility.MobilityQuota playsRole mobilityQuotas {
-		multiplicity *;
-	}
-}
-
-relation MobilityQuotaMobilityApplicationPeriod {
-	period.MobilityApplicationPeriod playsRole applicationPeriod;
-
-	candidacyProcess.mobility.MobilityQuota playsRole mobilityQuotas {
-		multiplicity *;
-	}
-}
-
-relation MobilityQuotaDegree {
-	Degree playsRole degree; 
-	
-	candidacyProcess.mobility.MobilityQuota playsRole mobilityQuotas {
-		multiplicity *;
-	}
-}
-
-relation MobilityStudentDataMobilityQuota {
-	candidacyProcess.mobility.MobilityQuota playsRole selectedOpening;
-	candidacyProcess.mobility.MobilityStudentData playsRole applications {
-		multiplicity *;
-	}
-}
-
-relation MobilityQuotaMobilityAgreement {
-	candidacyProcess.mobility.MobilityQuota playsRole mobilityQuotas  {
-		multiplicity *;
-	}
-	candidacyProcess.mobility.MobilityAgreement playsRole mobilityAgreement;
-}
-
-relation MobilityAgreementRootDomainObject {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	candidacyProcess.mobility.MobilityAgreement playsRole mobilityAgreements {
-		multiplicity *;
-	}
-}
-
-relation MobilityAgreementUniversityUnit {
-	organizationalStructure.UniversityUnit playsRole universityUnit;
-	
-	candidacyProcess.mobility.MobilityAgreement playsRole mobilityAgreements {
-		multiplicity *;
-	}
-}
-
-relation MobilityProgramMobilityAgreement {
-	candidacyProcess.mobility.MobilityProgram playsRole mobilityProgram;
-	candidacyProcess.mobility.MobilityAgreement playsRole mobilityAgreements {
-		multiplicity *;
-	}
-}
-
-relation MobilityProgramMobilityEmailTemplate {
-	candidacyProcess.mobility.MobilityProgram playsRole mobilityProgram;
-	candidacyProcess.mobility.MobilityEmailTemplate playsRole emailTemplates {
-		multiplicity *;
-	}
-}
-
-relation MobilityApplicationPeriodMobilityEmailTemplate {
-	period.MobilityApplicationPeriod playsRole period;
-	candidacyProcess.mobility.MobilityEmailTemplate playsRole emailTemplates {
-		multiplicity *;
-	}
-}
-
-relation MobilityEmailTemplateRootDomainObject {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject; 
-	candidacyProcess.mobility.MobilityEmailTemplate playsRole mobilityEmailTemplates {
-		multiplicity *;
-	}
-}
-
-relation ProgramRootDomainObject {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	candidacyProcess.mobility.MobilityProgram playsRole programs {
-		multiplicity *;
-	}
 }
 
 relation RootDomainObjectCerimonyInquiry {
@@ -8077,72 +6928,6 @@ relation AccountabilityImportRegister {
 	organizationalStructure.Accountability playsRole accountability;
 }
 
-relation MobilityCoordinatorRootDomainObject {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	candidacyProcess.mobility.MobilityCoordinator playsRole mobilityCoordinators {
-		multiplicity *;
-	}
-}
-
-relation MobilityCoordinatorMobilityApplicationProcess { 
-	candidacyProcess.mobility.MobilityCoordinator playsRole coordinators {
-		multiplicity *;
-	}
-	candidacyProcess.mobility.MobilityApplicationProcess playsRole mobilityApplicationProcess;
-}
-
-relation MobilityCoordinatorDegree {
-	candidacyProcess.mobility.MobilityCoordinator playsRole coordinators {
-		multiplicity *;
-	}
-	
-	Degree playsRole degree;	
-}
-
-relation MobilityCoordinatorTeacher {
-	candidacyProcess.mobility.MobilityCoordinator playsRole mobilityCoordinations {
-		multiplicity *;
-	}	
-	
-	Teacher playsRole teacher;
-}
-
-relation MobilityIndividualApplicationApprovedLearningAgreementDocumentFile {
-	candidacyProcess.mobility.MobilityIndividualApplication playsRole mobilityIndividualApplication;
-	candidacyProcess.erasmus.ApprovedLearningAgreementDocumentFile playsRole approvedLearningAgreements {
-		multiplicity *;
-	}
-}
-
-relation ExecutedActionRootDomainObject {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	candidacyProcess.erasmus.ExecutedAction playsRole executedActions {
-		multiplicity *;
-	}
-}
-
-relation ExecutedActionPerson {
-	Person playsRole whoMade;
-	candidacyProcess.erasmus.ExecutedAction playsRole executedActions {
-		multiplicity *;
-	}
-}
-
-relation ApprovedLearningAgreementDocumentFileExecutedAction {
-	candidacyProcess.erasmus.ApprovedLearningAgreementDocumentFile playsRole approvedLearningAgreement;
-	candidacyProcess.erasmus.ApprovedLearningAgreementExecutedAction playsRole executedActions {
-		multiplicity *;
-	}
-}
-
-relation ErasmusIndividualCandidacyProcessExecutedActionIndividualApplicationProcess {
-	candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessExecutedAction playsRole executedActions {
-		multiplicity *;
-	}
-	candidacyProcess.mobility.MobilityIndividualApplicationProcess playsRole mobilityIndividualApplicationProcess;
-}
-
-
 relation RootDomainObjectCoordinatorLog {
 	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	CoordinatorLog playsRole coordinatorLog {
@@ -8173,29 +6958,6 @@ relation AlumniReportFileExecutionYear {
 	alumni.AlumniReportFile playsRole alumniReportFiles {
 		multiplicity *;
 	}
-}
-
-relation MobilityApplicationProcessErasmusCandidacyProcessExecutedAction {
-	candidacyProcess.mobility.MobilityApplicationProcess playsRole mobilityApplicationProcess;
-	
-	candidacyProcess.erasmus.ErasmusCandidacyProcessExecutedAction playsRole erasmusCandidacyProcessExecutedAction {
-		multiplicity *;
-	}
-}
-
-relation ErasmusCandidacyExecutedActionMobilityIndividualProcess {
-	candidacyProcess.erasmus.ErasmusCandidacyProcessExecutedAction playsRole erasmusCandidacyProcessExecutedAction {
-		multiplicity *;
-	}
-
-	candidacyProcess.mobility.MobilityIndividualApplicationProcess playsRole subjectMobilityIndividualApplicationProcess {
-		multiplicity *;
-	}
-}
-
-relation ReceptionEmailExecutedActionMobilityEmailTemplate {
-	candidacyProcess.erasmus.ReceptionEmailExecutedAction playsRole receptionEmailExcutedAction;
-	candidacyProcess.mobility.MobilityEmailTemplate playsRole mobilityEmailTemplate;
 }
 
 relation StudentCandidacyCandidacySummaryFile {
@@ -8261,14 +7023,6 @@ relation PremissionsProfessorshipRootDomainObject {
 	ProfessorshipPermissions playsRole professorshipPermissions {
 		multiplicity *;
 	}
-}
-
-relation MobilityApplicationProcessErasmusCandidacyProcessReport {
-	candidacyProcess.erasmus.reports.ErasmusCandidacyProcessReport playsRole erasmusCandidacyProcessReports {
-		multiplicity *;
-	}
-	
-	candidacyProcess.mobility.MobilityApplicationProcess playsRole mobilityApplicationProcess;
 }
 
 relation RootDomainObjectExternalUser {
@@ -8503,145 +7257,6 @@ relation StudentPrecedentDegreeInformation {
 }
 
 /* End of RAIDES Domain */
-
-/* Mid-Refactor */
-relation RootDomainObjectErasmusVacancy {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	candidacyProcess.erasmus.ErasmusVacancy playsRole erasmusVacancy {
-		multiplicity *;
-	}
-}
-
-relation ErasmusVacancyUniversityUnit {
-	organizationalStructure.UniversityUnit playsRole universityUnit;
-	
-	candidacyProcess.erasmus.ErasmusVacancy playsRole erasmusVacancy {
-		multiplicity *;
-	}
-}
-
-relation ErasmusVacancyDegree {
-	Degree playsRole degree; 
-	
-	candidacyProcess.erasmus.ErasmusVacancy playsRole erasmusVacancy {
-		multiplicity *;
-	}
-}
-
-relation ErasmusVacancyErasmusCandidacyPeriod {
-	period.MobilityApplicationPeriod playsRole candidacyPeriod;
-
-	candidacyProcess.erasmus.ErasmusVacancy playsRole erasmusVacancy {
-		multiplicity *;
-	}
-}
-
-relation MobilityStudentDataErasmusVacancy {
-	candidacyProcess.erasmus.ErasmusVacancy playsRole selectedVacancy;
-	candidacyProcess.mobility.MobilityStudentData playsRole candidacies {
-		multiplicity *;
-	}
-}
-
-relation CandidacyProcessDegree {
-	candidacyProcess.CandidacyProcess playsRole candidacyProcess {
-		multiplicity *;
-	}
-	Degree playsRole degree {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectIndividualCandidacySeriesGrade {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	candidacyProcess.IndividualCandidacySeriesGrade playsRole individualCandidacySeriesGrade {
-		multiplicity *;
-	}
-}
-
-relation IndividualCandidacyIndividualCandidacySeriesGrade {
-	candidacyProcess.IndividualCandidacy playsRole individualCandidacy;
-	candidacyProcess.IndividualCandidacySeriesGrade playsRole individualCandidacySeriesGrade {
-		multiplicity *;
-	}
-}
-
-relation DegreeIndividualCandidacySeriesGrade {
-	Degree playsRole degree;
-	candidacyProcess.IndividualCandidacySeriesGrade playsRole individualCandidacySeriesGrade{
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectGenericApplication {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject; 
-	candidacy.GenericApplication playsRole genericApplication {
-		multiplicity *;
-	}
-}
-
-relation GenericApplicationPeriodGenericApplication {
-	period.GenericApplicationPeriod playsRole genericApplicationPeriod; 
-	candidacy.GenericApplication playsRole genericApplication {
-		multiplicity *;
-	}
-}
-
-relation GenericApplicationGenericApplicationFile {
-	candidacy.GenericApplication playsRole genericApplication;
-	candidacy.GenericApplicationFile playsRole genericApplicationFile {
-		multiplicity *;
-	}
-}
-
-relation GenericApplicationNationality {
-	candidacy.GenericApplication playsRole genericApplication {
-		multiplicity *;
-	}
-	Country playsRole nationality;
-}
-
-relation RootDomainObjectGenericApplicationRecomentation {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject; 
-	candidacy.GenericApplicationRecomentation playsRole genericApplicationRecomentation {
-		multiplicity *;
-	}
-}
-
-relation GenericApplicationGenericApplicationRecomentation {
-	candidacy.GenericApplication playsRole genericApplication;
-	candidacy.GenericApplicationRecomentation playsRole genericApplicationRecomentation {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectGenericApplicationComment {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject; 
-	candidacy.GenericApplicationComment playsRole genericApplicationComment {
-		multiplicity *;
-	}
-}
-
-relation GenericApplicationGenericApplicationComment {
-	candidacy.GenericApplication playsRole genericApplication;
-	candidacy.GenericApplicationComment playsRole genericApplicationComment {
-		multiplicity *;
-	}
-}
-
-relation GenericApplicationRecomentationGenericApplicationLetterOfRecomentation {
-	candidacy.GenericApplicationRecomentation playsRole recomentation;
-	candidacy.GenericApplicationLetterOfRecomentation playsRole letterOfRecomentation;
-}
-
-relation GenericApplicationPeriodManager {
-	period.GenericApplicationPeriod playsRole managedGenericApplicationPeriod {
-		multiplicity *;
-	}
-	.org.fenixedu.bennu.core.domain.User playsRole manager {
-		multiplicity *;
-	}
-}
 
 relation RootDomainObjectTeacherEvaluationCoordinatorCouncil {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootFromTeacherEvaluationCouncil;
@@ -8944,15 +7559,6 @@ relation SenderMembers {
 	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole membersGroup {
 		multiplicity 1..1;
 	}
-}
-
-relation RegistrationProtocolMobilityProgram {
-	public student.RegistrationProtocol playsRole registrationProtocol {
-		multiplicity 1..1;
-	} 
-	public candidacyProcess.mobility.MobilityProgram playsRole mobilityProgram {
-		multiplicity 0..1;
-	} 
 }
 
 relation StudentRegistrationTransferLogSource {

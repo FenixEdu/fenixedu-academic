@@ -1794,11 +1794,6 @@
 		type="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup">
 	<slot name="description"/>
 </schema>
-
-<schema name="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityProgram.description"
-		type="org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityProgram">
-	<slot name="registrationProtocol.description.content"/>
-</schema>
   
 <schema name="person.photo" type="org.fenixedu.academic.domain.Person">
 	<slot name="personalPhoto" layout="view-as-image">

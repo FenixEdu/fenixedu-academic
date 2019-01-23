@@ -18,19 +18,9 @@
  */
 package org.fenixedu.academic.domain;
 
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.period.CandidacyPeriod;
-import org.fenixedu.academic.domain.period.DegreeCandidacyForGraduatedPersonCandidacyPeriod;
-import org.fenixedu.academic.domain.period.DegreeChangeCandidacyPeriod;
-import org.fenixedu.academic.domain.period.DegreeTransferCandidacyPeriod;
-import org.fenixedu.academic.domain.period.MobilityApplicationPeriod;
-import org.fenixedu.academic.domain.period.Over23CandidacyPeriod;
-import org.fenixedu.academic.domain.period.SecondCycleCandidacyPeriod;
-import org.fenixedu.academic.domain.period.StandaloneCandidacyPeriod;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -75,107 +65,9 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
                 && getBeginDateYearMonthDay().isBefore(getEndDateYearMonthDay());
     }
 
-    public List<? extends CandidacyPeriod> getCandidacyPeriods(final Class<? extends CandidacyPeriod> clazz) {
-        final List<CandidacyPeriod> result = new ArrayList<CandidacyPeriod>();
-        for (final CandidacyPeriod candidacyPeriod : getCandidacyPeriodsSet()) {
-            if (candidacyPeriod.getClass().equals(clazz)) {
-                result.add(candidacyPeriod);
-            }
-        }
-        return result;
-    }
-
-    public boolean hasCandidacyPeriods(final Class<? extends CandidacyPeriod> clazz) {
-        for (final CandidacyPeriod candidacyPeriod : getCandidacyPeriodsSet()) {
-            if (candidacyPeriod.getClass().equals(clazz)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Deprecated
-    public Over23CandidacyPeriod getOver23CandidacyPeriod() {
-        final List<Over23CandidacyPeriod> candidacyPeriods =
-                (List<Over23CandidacyPeriod>) getCandidacyPeriods(Over23CandidacyPeriod.class);
-        return candidacyPeriods.isEmpty() ? null : candidacyPeriods.iterator().next();
-    }
-
-    public List<Over23CandidacyPeriod> getOver23CandidacyPeriods() {
-        return (List<Over23CandidacyPeriod>) getCandidacyPeriods(Over23CandidacyPeriod.class);
-    }
-
-    public boolean hasOver23CandidacyPeriod() {
-        return hasCandidacyPeriods(Over23CandidacyPeriod.class);
-    }
-
-    public List<SecondCycleCandidacyPeriod> getSecondCycleCandidacyPeriods() {
-        return (List<SecondCycleCandidacyPeriod>) getCandidacyPeriods(SecondCycleCandidacyPeriod.class);
-    }
-
-    public List<MobilityApplicationPeriod> getMobilityApplicationPeriods() {
-        return (List<MobilityApplicationPeriod>) getCandidacyPeriods(MobilityApplicationPeriod.class);
-    }
-
-    public boolean hasAnySecondCycleCandidacyPeriod() {
-        return hasCandidacyPeriods(SecondCycleCandidacyPeriod.class);
-    }
-
-    public DegreeCandidacyForGraduatedPersonCandidacyPeriod getDegreeCandidacyForGraduatedPersonCandidacyPeriod() {
-        final List<DegreeCandidacyForGraduatedPersonCandidacyPeriod> candidacyPeriods =
-                (List<DegreeCandidacyForGraduatedPersonCandidacyPeriod>) getCandidacyPeriods(
-                        DegreeCandidacyForGraduatedPersonCandidacyPeriod.class);
-        return candidacyPeriods.isEmpty() ? null : candidacyPeriods.iterator().next();
-    }
-
-    public boolean hasDegreeCandidacyForGraduatedPersonCandidacyPeriod() {
-        return hasCandidacyPeriods(DegreeCandidacyForGraduatedPersonCandidacyPeriod.class);
-    }
-
-    public DegreeChangeCandidacyPeriod getDegreeChangeCandidacyPeriod() {
-        final List<DegreeChangeCandidacyPeriod> candidacyPeriods =
-                (List<DegreeChangeCandidacyPeriod>) getCandidacyPeriods(DegreeChangeCandidacyPeriod.class);
-        return candidacyPeriods.isEmpty() ? null : candidacyPeriods.iterator().next();
-    }
-
-    public boolean hasDegreeChangeCandidacyPeriod() {
-        return hasCandidacyPeriods(DegreeChangeCandidacyPeriod.class);
-    }
-
-    public DegreeTransferCandidacyPeriod getDegreeTransferCandidacyPeriod() {
-        final List<DegreeTransferCandidacyPeriod> candidacyPeriods =
-                (List<DegreeTransferCandidacyPeriod>) getCandidacyPeriods(DegreeTransferCandidacyPeriod.class);
-        return candidacyPeriods.isEmpty() ? null : candidacyPeriods.iterator().next();
-    }
-
-    public boolean hasDegreeTransferCandidacyPeriod() {
-        return hasCandidacyPeriods(DegreeTransferCandidacyPeriod.class);
-    }
-
-    public List<StandaloneCandidacyPeriod> getStandaloneCandidacyPeriods() {
-        return (List<StandaloneCandidacyPeriod>) getCandidacyPeriods(StandaloneCandidacyPeriod.class);
-    }
-
-    public boolean hasAnyStandaloneCandidacyPeriod() {
-        return hasCandidacyPeriods(StandaloneCandidacyPeriod.class);
-    }
-
     abstract public String getQualifiedName();
 
     abstract public boolean isCurrent();
-
-    // static information
-
-    static public List<ExecutionInterval> readExecutionIntervalsWithCandidacyPeriod(
-            final Class<? extends CandidacyPeriod> clazz) {
-        final List<ExecutionInterval> result = new ArrayList<ExecutionInterval>();
-        for (final ExecutionInterval executionInterval : Bennu.getInstance().getExecutionIntervalsSet()) {
-            if (executionInterval.hasCandidacyPeriods(clazz)) {
-                result.add(executionInterval);
-            }
-        }
-        return result;
-    }
 
     public static ExecutionInterval getExecutionInterval(String qualifiedName) {
         for (ExecutionInterval interval : Bennu.getInstance().getExecutionIntervalsSet()) {

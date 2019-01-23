@@ -424,8 +424,4 @@ public class Teacher extends Teacher_Base {
         return getTeacherAuthorization().map(a -> a.isContracted()).orElse(false);
     }
 
-    public boolean isErasmusCoordinator() {
-        return !getMobilityCoordinationsSet().isEmpty();
-    }
-
 }

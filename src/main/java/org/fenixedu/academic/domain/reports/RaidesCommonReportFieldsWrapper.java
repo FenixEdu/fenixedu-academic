@@ -27,17 +27,14 @@ import java.util.TreeSet;
 
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionDegree;
-import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.GrantOwnerType;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacy.PersonalInformationBean;
-import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityAgreement;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
-import org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacySubmission;
 import org.fenixedu.academic.domain.raides.DegreeDesignation;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.StudentStatute;
@@ -493,34 +490,6 @@ public class RaidesCommonReportFieldsWrapper {
 
         // Nota de conclusão da habilitação anterior
         row.setCell(personalInformationBean.getConclusionGrade() != null ? personalInformationBean.getConclusionGrade() : "");
-
-        MobilityAgreement mobilityAgreement = null;
-        ExecutionInterval chosenCandidacyInterval = null;
-        //getting the last mobility program done
-        for (OutboundMobilityCandidacySubmission outboundCandidacySubmission : registration
-                .getOutboundMobilityCandidacySubmissionSet()) {
-            if (outboundCandidacySubmission.getSelectedCandidacy() != null
-                    && outboundCandidacySubmission.getSelectedCandidacy().getSelected()) {
-                ExecutionInterval candidacyInterval =
-                        outboundCandidacySubmission.getOutboundMobilityCandidacyPeriod().getExecutionInterval();
-                //the candidacies are made in the previous year
-                if (candidacyInterval.getAcademicInterval().isBefore(executionYear.getAcademicInterval())) {
-                    if (mobilityAgreement != null) {
-                        if (!candidacyInterval.getAcademicInterval().isAfter(chosenCandidacyInterval.getAcademicInterval())) {
-                            continue;
-                        }
-                    }
-                    mobilityAgreement = outboundCandidacySubmission.getSelectedCandidacy().getOutboundMobilityCandidacyContest()
-                            .getMobilityAgreement();
-                    chosenCandidacyInterval = candidacyInterval;
-                }
-            }
-        }
-        // Programa de mobilidade
-        row.setCell(mobilityAgreement != null ? mobilityAgreement.getMobilityProgram().getName().getContent() : "");
-
-        // País de mobilidade
-        row.setCell(mobilityAgreement != null ? mobilityAgreement.getUniversityUnit().getCountry().getName() : "");
 
         // Duração do programa de mobilidade
         row.setCell(personalInformationBean.getMobilityProgramDuration() != null ? BundleUtil.getString(Bundle.ENUMERATION,

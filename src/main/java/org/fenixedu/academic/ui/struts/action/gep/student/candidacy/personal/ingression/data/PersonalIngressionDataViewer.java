@@ -27,7 +27,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
-import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacy;
 import org.fenixedu.academic.domain.student.PersonalIngressionData;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
@@ -115,9 +114,7 @@ public class PersonalIngressionDataViewer extends FenixDispatchAction {
 
     public ActionForward viewIndividualCandidacy(final ActionMapping mapping, final ActionForm actionForm,
             final HttpServletRequest request, final HttpServletResponse response) {
-        IndividualCandidacy individualCandidacy = getDomainObject(request, "individualCandidacyId");
-
-        request.setAttribute("individualCandidacy", individualCandidacy);
+        request.setAttribute("individualCandidacy", getDomainObject(request, "individualCandidacyId"));
 
         return mapping.findForward("viewIndividualCandidacy");
     }

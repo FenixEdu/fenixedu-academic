@@ -137,7 +137,7 @@ public class Shift extends Shift_Base {
 
         setComment(comment);
     }
-    
+
     public boolean isCustomName() {
         final String cleanSigla = getExecutionCourse().getSigla().replaceAll("\\(", "\\\\(").replaceAll("\\)", "\\\\)");
         return StringUtils.isNotBlank(getNome()) && !getNome().matches(cleanSigla + "[a-zA-Z]+[0-9]+");
@@ -163,9 +163,6 @@ public class Shift extends Shift_Base {
             ;
         }
         for (; !getAssociatedShiftProfessorshipSet().isEmpty(); getAssociatedShiftProfessorshipSet().iterator().next().delete()) {
-            ;
-        }
-        for (; !getShiftDistributionEntriesSet().isEmpty(); getShiftDistributionEntriesSet().iterator().next().delete()) {
             ;
         }
 
@@ -496,9 +493,8 @@ public class Shift extends Shift_Base {
     }
 
     public int getCapacityBasedOnSmallestRoom() {
-        int capacity =
-                getAssociatedLessonsSet().stream().filter(Lesson::hasSala)
-                        .mapToInt(lesson -> lesson.getSala().getAllocatableCapacity()).min().orElse(0);
+        int capacity = getAssociatedLessonsSet().stream().filter(Lesson::hasSala)
+                .mapToInt(lesson -> lesson.getSala().getAllocatableCapacity()).min().orElse(0);
         return capacity + (capacity / 10);
     }
 
@@ -529,8 +525,7 @@ public class Shift extends Shift_Base {
         registration.removeShifts(this);
 
         ExecutionCourseSender sender = ExecutionCourseSender.newInstance(executionCourse);
-        Collection<Recipient> recipients =
-                Collections.singletonList(new Recipient(registration.getPerson().getUser().groupOf()));
+        Collection<Recipient> recipients = Collections.singletonList(new Recipient(registration.getPerson().getUser().groupOf()));
         final String subject = BundleUtil.getString(Bundle.APPLICATION, "label.shift.remove.subject");
         final String body = BundleUtil.getString(Bundle.APPLICATION, "label.shift.remove.body", getNome());
 
@@ -613,7 +608,7 @@ public class Shift extends Shift_Base {
         }
         return false;
     }
-    
+
     public Integer getVacancies() {
         return getLotacao() - getStudentsSet().size();
     }
