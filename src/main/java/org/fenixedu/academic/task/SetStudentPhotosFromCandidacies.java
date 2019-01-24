@@ -18,18 +18,8 @@
  */
 package org.fenixedu.academic.task;
 
-import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.PhotoState;
-import org.fenixedu.academic.domain.PhotoType;
-import org.fenixedu.academic.domain.Photograph;
-import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacy;
-import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFile;
-import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.photograph.Picture;
-import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.util.ContentType;
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.scheduler.CronTask;
 import org.fenixedu.bennu.scheduler.annotation.Task;
 
@@ -43,37 +33,37 @@ public class SetStudentPhotosFromCandidacies extends CronTask {
         int withContentType = 0;
         int unableToProcessImage = 0;
         int fixed = 0;
-        for (final IndividualCandidacy candidacy : Bennu.getInstance().getIndividualCandidaciesSet()) {
-            for (final IndividualCandidacyDocumentFile file : candidacy.getDocumentsSet()) {
-                final IndividualCandidacyDocumentFileType type = file.getCandidacyFileType();
-                if (type == IndividualCandidacyDocumentFileType.PHOTO) {
-                    final Registration registration = candidacy.getRegistration();
-                    if (registration != null) {
-                        final Person person = registration.getPerson();
-                        final Photograph personalPhotoEvenIfPending = person.getPersonalPhotoEvenIfPending();
-                        if (personalPhotoEvenIfPending == null) {
-                            missing++;
-                            final byte[] content = file.getContent();
-                            if (content != null && content.length > 0) {
-                                withContent++;
-                                final ContentType contentType = ContentType.getContentType(file.getContentType());
-                                if (contentType != null) {
-                                    withContentType++;
-                                    if (chew(content)) {
-                                        final Photograph p = new Photograph(PhotoType.INSTITUTIONAL, contentType, content);
-                                        p.setState(PhotoState.APPROVED);
-                                        person.setPersonalPhoto(p);
-                                        fixed++;
-                                    } else {
-                                        unableToProcessImage++;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+//        for (final IndividualCandidacy candidacy : Bennu.getInstance().getIndividualCandidaciesSet()) {
+//            for (final IndividualCandidacyDocumentFile file : candidacy.getDocumentsSet()) {
+//                final IndividualCandidacyDocumentFileType type = file.getCandidacyFileType();
+//                if (type == IndividualCandidacyDocumentFileType.PHOTO) {
+//                    final Registration registration = candidacy.getRegistration();
+//                    if (registration != null) {
+//                        final Person person = registration.getPerson();
+//                        final Photograph personalPhotoEvenIfPending = person.getPersonalPhotoEvenIfPending();
+//                        if (personalPhotoEvenIfPending == null) {
+//                            missing++;
+//                            final byte[] content = file.getContent();
+//                            if (content != null && content.length > 0) {
+//                                withContent++;
+//                                final ContentType contentType = ContentType.getContentType(file.getContentType());
+//                                if (contentType != null) {
+//                                    withContentType++;
+//                                    if (chew(content)) {
+//                                        final Photograph p = new Photograph(PhotoType.INSTITUTIONAL, contentType, content);
+//                                        p.setState(PhotoState.APPROVED);
+//                                        person.setPersonalPhoto(p);
+//                                        fixed++;
+//                                    } else {
+//                                        unableToProcessImage++;
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
         taskLog("Missing: %s photos.%n", Integer.toString(missing));
         taskLog("Possible Content Fix: %s.%n", Integer.toString(withContent));
         taskLog("Valid Content Type Fix: %s.%n", Integer.toString(withContentType));

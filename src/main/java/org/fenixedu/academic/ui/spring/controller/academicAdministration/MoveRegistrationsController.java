@@ -74,7 +74,6 @@ public class MoveRegistrationsController extends StrutsFunctionalityController {
 
         // Curriculum
         source.getCandidaciesSet().forEach(c -> c.setPerson(target));
-        source.getIndividualCandidaciesSet().forEach(c -> c.setPerson(target));
         mergeStudent(source.getStudent(), target.getStudent());
 
         new StudentRegistrationTransferLog(source.getStudent(), target.getStudent());

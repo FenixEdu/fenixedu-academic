@@ -40,15 +40,13 @@ public class SchoolRegistrationDeclarationRequest extends SchoolRegistrationDecl
     }
 
     private ExecutionYear getRequestedExecutionYear(DocumentRequestCreateBean bean) {
-        return bean.getRegistration().hasIndividualCandidacyFor(bean.getExecutionYear().getNextExecutionYear()) ? bean
-                .getExecutionYear().getNextExecutionYear() : bean.getExecutionYear();
+        return bean.getExecutionYear();
     }
 
     protected void checkRulesToCreate(final DocumentRequestCreateBean bean) {
         final ExecutionYear executionYear = bean.getExecutionYear();
 
-        if (!bean.getRegistration().isRegistered(executionYear)
-                && !bean.getRegistration().hasIndividualCandidacyFor(executionYear.getNextExecutionYear())) {
+        if (!bean.getRegistration().isRegistered(executionYear)) {
             throw new DomainException(
                     "SchoolRegistrationDeclarationRequest.registration.not.in.registered.state.in.current.executionYear");
         }

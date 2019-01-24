@@ -27,7 +27,6 @@ import org.fenixedu.academic.domain.DistrictSubdivision;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.ProfessionType;
 import org.fenixedu.academic.domain.ProfessionalSituationConditionType;
-import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
 import org.fenixedu.academic.domain.contacts.EmailAddress;
 import org.fenixedu.academic.domain.contacts.MobilePhone;
 import org.fenixedu.academic.domain.contacts.Phone;
@@ -168,80 +167,8 @@ public class PersonBean implements Serializable {
         setStudentNumber(studentNumber);
     }
 
-    public PersonBean(final IndividualCandidacyPersonalDetails details) {
-        if (details.isInternal()) {
-            initPerson(details.getPerson());
-        } else {
-            initPersonBeanFromPersonalDetails(details);
-        }
-
-        initPersonBeanFromPersonalDetails(details);
-    }
-
     public PersonBean(final Person person) {
         initPerson(person);
-    }
-
-    private void initPersonBeanFromPersonalDetails(final IndividualCandidacyPersonalDetails personalDetails) {
-        setGivenNames(personalDetails.getGivenNames());
-        setFamilyNames(personalDetails.getFamilyNames());
-        setGender(personalDetails.getGender());
-        setMaritalStatus(personalDetails.getMaritalStatus());
-        setNationality(personalDetails.getCountry());
-        setDateOfBirth(personalDetails.getDateOfBirthYearMonthDay());
-        setDocumentIdEmissionDate(personalDetails.getEmissionDateOfDocumentIdYearMonthDay());
-        setDocumentIdEmissionLocation(personalDetails.getEmissionLocationOfDocumentId());
-        setDocumentIdExpirationDate(personalDetails.getExpirationDateOfDocumentIdYearMonthDay());
-        setDocumentIdNumber(personalDetails.getDocumentIdNumber());
-        setIdDocumentType(personalDetails.getIdDocumentType());
-        setFiscalCountry(personalDetails.getFiscalCountry());
-        setSocialSecurityNumber(personalDetails.getSocialSecurityNumber());
-
-        setAddress(personalDetails.getAddress());
-        setArea(personalDetails.getArea());
-        setAreaCode(personalDetails.getAreaCode());
-        setAreaOfAreaCode(personalDetails.getAreaOfAreaCode());
-        setCountryOfResidence(personalDetails.getCountryOfResidence());
-
-        setPhone(personalDetails.getTelephoneContact());
-
-        setEmail(personalDetails.getEmail());
-
-        /*
-         * 07/04/2009 - The following assignments are made when a candidacy is
-         * internal or have a Person associated
-         */
-        if (personalDetails.isInternal()) {
-            Person person = personalDetails.getPerson();
-            setUsername(person.getUsername());
-            setPerson(person);
-
-            /*
-             * FIXME Anil (07/04/2009): Some fields are not in
-             * IndividualCandidacyPersonalDetails. But they should.
-             */
-            setFatherName(person.getNameOfFather());
-            setMotherName(person.getNameOfMother());
-            setProfession(person.getProfession());
-            setCountryOfBirth(person.getCountryOfBirth());
-            setParishOfBirth(person.getParishOfBirth());
-            setDistrictOfBirth(person.getDistrictOfBirth());
-            setDistrictSubdivisionOfBirth(person.getDistrictSubdivisionOfBirth());
-
-            if (person.hasDefaultPhysicalAddress()) {
-                final PhysicalAddress physicalAddress = person.getDefaultPhysicalAddress();
-                setParishOfResidence(physicalAddress.getParishOfResidence());
-                setDistrictSubdivisionOfResidence(physicalAddress.getDistrictSubdivisionOfResidence());
-                setDistrictOfResidence(physicalAddress.getDistrictOfResidence());
-            }
-
-            setMobile(person.hasDefaultMobilePhone() ? person.getDefaultMobilePhone().getNumber() : person
-                    .getPendingMobilePhones().stream().map(MobilePhone::getNumber).findFirst().orElse(null));
-            setWebAddress(person.hasDefaultWebAddress() ? person.getDefaultWebAddress().getUrl() : null);
-            setEmailAvailable(person.getAvailableEmail());
-            setHomepageAvailable(person.getAvailableWebSite());
-            setEidentifier(person.getEidentifier());
-        }
     }
 
     private void initPerson(final Person person) {
