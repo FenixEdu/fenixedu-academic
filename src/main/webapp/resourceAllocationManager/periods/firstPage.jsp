@@ -73,34 +73,6 @@
 
 	<logic:present name="contextBean" property="executionDegree">
 		<h4>
-			<bean:message key="link.periods.enrolment.periods" bundle="SOP_RESOURCES"/>
-		</h4>
-		<blockquote>
-			<logic:notPresent name="contextBean" property="enrolmentPeriodInClasses">
-				<bean:message key="link.periods.enrolment.periods.not.defined" bundle="SOP_RESOURCES"/>
-			</logic:notPresent>
-			<logic:present name="contextBean" property="enrolmentPeriodInClasses">
-				<fr:view name="contextBean" property="enrolmentPeriodInClasses.startDateDateTime"/>
-				-
-				<fr:view name="contextBean" property="enrolmentPeriodInClasses.endDateDateTime"/>
-			</logic:present>
-		</blockquote>
-
-		<h4>
-			<bean:message key="message.periods.enrolment.mobility" bundle="SOP_RESOURCES"/>
-		</h4>
-		<blockquote>
-			<logic:notPresent name="contextBean" property="enrolmentPeriodInClassesMobility">
-				<bean:message key="message.periods.enrolment.mobility.not.defined" bundle="SOP_RESOURCES"/>
-			</logic:notPresent>
-			<logic:present name="contextBean" property="enrolmentPeriodInClassesMobility">
-				<fr:view name="contextBean" property="enrolmentPeriodInClassesMobility.startDateDateTime"/>
-				-
-				<fr:view name="contextBean" property="enrolmentPeriodInClassesMobility.endDateDateTime"/>
-			</logic:present>
-		</blockquote>
-
-		<h4>
 			<bean:message key="link.periods.lesson.periods" bundle="SOP_RESOURCES"/>
 		</h4>
 		<blockquote>

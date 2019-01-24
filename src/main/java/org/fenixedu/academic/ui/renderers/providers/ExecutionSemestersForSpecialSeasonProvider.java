@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.ui.struts.action.student.enrollment.SpecialSeasonStudentEnrollmentBean;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -38,20 +37,6 @@ public class ExecutionSemestersForSpecialSeasonProvider implements DataProvider 
         final ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
         final ExecutionYear previousYear = currentYear.getPreviousExecutionYear();
         final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>();
-
-        SpecialSeasonStudentEnrollmentBean bean = (SpecialSeasonStudentEnrollmentBean) source;
-        if (bean.getScp().getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(currentYear.getLastExecutionPeriod())) {
-            executionSemesters.add(currentYear.getLastExecutionPeriod());
-        }
-        if (bean.getScp().getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(currentYear.getFirstExecutionPeriod())) {
-            executionSemesters.add(currentYear.getFirstExecutionPeriod());
-        }
-        if (bean.getScp().getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(previousYear.getLastExecutionPeriod())) {
-            executionSemesters.add(previousYear.getLastExecutionPeriod());
-        }
-        if (bean.getScp().getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(previousYear.getFirstExecutionPeriod())) {
-            executionSemesters.add(previousYear.getFirstExecutionPeriod());
-        }
 
         Collections.sort(executionSemesters, ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
         Collections.reverse(executionSemesters);

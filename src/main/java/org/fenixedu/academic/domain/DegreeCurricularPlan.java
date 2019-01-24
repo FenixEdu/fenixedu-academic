@@ -29,7 +29,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -70,13 +69,11 @@ import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.predicate.DegreeCurricularPlanPredicates;
 import org.fenixedu.academic.util.MarkType;
-import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
-import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
@@ -365,9 +362,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     private Boolean getCanBeDeleted() {
         return canDeleteRoot() && getStudentCurricularPlansSet().isEmpty() && getCurricularCourseEquivalencesSet().isEmpty()
-                && getEnrolmentPeriodsSet().isEmpty() && getCurricularCoursesSet().isEmpty() && getExecutionDegreesSet().isEmpty()
-                && getAreasSet().isEmpty() && getTeachersWithIncompleteEvaluationWorkGroupSet().isEmpty()
-                && getEquivalencePlan() == null && getTargetEquivalencePlansSet().isEmpty() && getDegreeContextsSet().isEmpty();
+                && getCurricularCoursesSet().isEmpty() && getExecutionDegreesSet().isEmpty() && getAreasSet().isEmpty()
+                && getTeachersWithIncompleteEvaluationWorkGroupSet().isEmpty() && getEquivalencePlan() == null
+                && getTargetEquivalencePlansSet().isEmpty() && getDegreeContextsSet().isEmpty();
     }
 
     private boolean canDeleteRoot() {
@@ -623,282 +620,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             }
         }
         return curricularCourses;
-    }
-
-    public EnrolmentPeriodInCurricularCourses getActualEnrolmentPeriod() {
-        for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriodsSet()) {
-            if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses && enrolmentPeriod.isValid()) {
-                return (EnrolmentPeriodInCurricularCourses) enrolmentPeriod;
-            }
-        }
-        return null;
-    }
-
-    public Optional<EnrolmentPeriod> getActiveCurricularCourseEnrolmentPeriod(final ExecutionSemester executionSemester) {
-        return getEnrolmentPeriodsSet().stream().filter(ep -> ep.getExecutionPeriod() == executionSemester
-                && ep instanceof EnrolmentPeriodInCurricularCourses && ep.isValid()).findAny();
-    }
-
-    public boolean hasActualEnrolmentPeriodInCurricularCourses() {
-        return getActualEnrolmentPeriod() != null;
-    }
-
-    public EnrolmentPeriodInSpecialSeasonEvaluations getNextSpecialSeasonEnrolmentPeriod() {
-        final List<EnrolmentPeriodInSpecialSeasonEvaluations> positivesSet = new ArrayList<>();
-        for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriodsSet()) {
-            if (enrolmentPeriod instanceof EnrolmentPeriodInSpecialSeasonEvaluations && enrolmentPeriod.isUpcomingPeriod()) {
-                positivesSet.add((EnrolmentPeriodInSpecialSeasonEvaluations) enrolmentPeriod);
-            }
-        }
-        return positivesSet.isEmpty() ? null : Collections.min(positivesSet,
-                EnrolmentPeriodInSpecialSeasonEvaluations.COMPARATOR_BY_START);
-    }
-
-    public boolean hasOpenSpecialSeasonEnrolmentPeriod(final ExecutionSemester executionSemester) {
-        for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriodsSet()) {
-            if (enrolmentPeriod instanceof EnrolmentPeriodInSpecialSeasonEvaluations && enrolmentPeriod.isFor(executionSemester)
-                    && enrolmentPeriod.isValid()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    //TODO remove in next major it's no used and there can be more than one active, if don't specify the semester
-    public EnrolmentPeriodInCurricularCoursesSpecialSeason getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() {
-        for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriodsSet()) {
-            if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesSpecialSeason && enrolmentPeriod.isValid()) {
-                return (EnrolmentPeriodInCurricularCoursesSpecialSeason) enrolmentPeriod;
-            }
-        }
-        return null;
-    }
-
-    public Optional<EnrolmentPeriod> getActiveEnrolmentPeriodInCurricularCoursesSpecialSeason(
-            final ExecutionSemester executionSemester) {
-        return getEnrolmentPeriodsSet().stream().filter(ep -> ep.getExecutionPeriod() == executionSemester
-                && ep instanceof EnrolmentPeriodInCurricularCoursesSpecialSeason && ep.isValid()).findAny();
-    }
-
-    public boolean hasOpenEnrolmentPeriodInCurricularCoursesSpecialSeason(final ExecutionSemester executionSemester) {
-        for (final EnrolmentPeriod enrolmentPeriod : getEnrolmentPeriodsSet()) {
-            if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesSpecialSeason) {
-                final EnrolmentPeriodInCurricularCoursesSpecialSeason enrolmentPeriodInCurricularCourses =
-                        (EnrolmentPeriodInCurricularCoursesSpecialSeason) enrolmentPeriod;
-                if (enrolmentPeriodInCurricularCourses.isFor(executionSemester) && enrolmentPeriodInCurricularCourses.isValid()) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    //TODO remove in next major it's no used and there can be more than one active, if don't specify the semester
-    public EnrolmentPeriodInCurricularCoursesFlunkedSeason getActualEnrolmentPeriodInCurricularCoursesFlunkedSeason() {
-        for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriodsSet()) {
-            if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesFlunkedSeason && enrolmentPeriod.isValid()) {
-                return (EnrolmentPeriodInCurricularCoursesFlunkedSeason) enrolmentPeriod;
-            }
-        }
-        return null;
-    }
-
-    public Optional<EnrolmentPeriod> getActiveEnrolmentPeriodInCurricularCoursesFlunkedSeason(
-            final ExecutionSemester executionSemester) {
-        return getEnrolmentPeriodsSet().stream().filter(ep -> ep.getExecutionPeriod() == executionSemester
-                && ep instanceof EnrolmentPeriodInCurricularCoursesFlunkedSeason && ep.isValid()).findAny();
-    }
-
-    public boolean hasOpenEnrolmentPeriodInCurricularCoursesFor(final ExecutionSemester executionSemester) {
-        for (final EnrolmentPeriod enrolmentPeriod : getEnrolmentPeriodsSet()) {
-            if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses) {
-                final EnrolmentPeriodInCurricularCourses enrolmentPeriodInCurricularCourses =
-                        (EnrolmentPeriodInCurricularCourses) enrolmentPeriod;
-                if (enrolmentPeriodInCurricularCourses.isFor(executionSemester) && enrolmentPeriodInCurricularCourses.isValid()) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    public EnrolmentPeriodInCurricularCourses getNextEnrolmentPeriod() {
-        final DateTime now = new DateTime();
-        final List<EnrolmentPeriodInCurricularCourses> result = new ArrayList<>();
-        for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriodsSet()) {
-            if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses
-                    && enrolmentPeriod.getStartDateDateTime().isAfter(now)) {
-                result.add((EnrolmentPeriodInCurricularCourses) enrolmentPeriod);
-            }
-        }
-        if (!result.isEmpty()) {
-            Collections.sort(result, EnrolmentPeriodInCurricularCourses.COMPARATOR_BY_START);
-            return result.iterator().next();
-        }
-        return null;
-    }
-
-    public EnrolmentPeriodInCurricularCoursesSpecialSeason getNextEnrolmentPeriodInCurricularCoursesSpecialSeason() {
-        final DateTime now = new DateTime();
-        final List<EnrolmentPeriodInCurricularCoursesSpecialSeason> result = new ArrayList<>();
-        for (EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriodsSet()) {
-            if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesSpecialSeason
-                    && enrolmentPeriod.getStartDateDateTime().isAfter(now)) {
-                result.add((EnrolmentPeriodInCurricularCoursesSpecialSeason) enrolmentPeriod);
-            }
-        }
-        if (!result.isEmpty()) {
-            Collections.sort(result, EnrolmentPeriodInCurricularCoursesSpecialSeason.COMPARATOR_BY_START);
-            return result.iterator().next();
-        }
-        return null;
-    }
-
-    public EnrolmentPeriodInCurricularCoursesFlunkedSeason getNextEnrolmentPeriodInCurricularCoursesFlunkedSeason() {
-        final DateTime now = new DateTime();
-        final List<EnrolmentPeriodInCurricularCoursesFlunkedSeason> result = new ArrayList<>();
-        for (EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriodsSet()) {
-            if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesFlunkedSeason
-                    && enrolmentPeriod.getStartDateDateTime().isAfter(now)) {
-                result.add((EnrolmentPeriodInCurricularCoursesFlunkedSeason) enrolmentPeriod);
-            }
-        }
-        if (!result.isEmpty()) {
-            Collections.sort(result, EnrolmentPeriodInCurricularCoursesFlunkedSeason.COMPARATOR_BY_START);
-            return result.iterator().next();
-        }
-        return null;
-    }
-
-    public EnrolmentPeriodInClasses getCurrentClassesEnrollmentPeriod() {
-        for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriodsSet()) {
-            if (enrolmentPeriod instanceof EnrolmentPeriodInClasses
-                    && enrolmentPeriod.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
-                return (EnrolmentPeriodInClasses) enrolmentPeriod;
-            }
-        }
-        return null;
-    }
-
-    @Deprecated
-    public Optional<EnrolmentPeriod> getClassesEnrollmentPeriod(final ExecutionSemester executionSemester) {
-        return getEnrolmentPeriodsSet().stream()
-                .filter(ep -> ep instanceof EnrolmentPeriodInClasses && ep.getExecutionPeriod() == executionSemester).findAny();
-    }
-
-    public Optional<EnrolmentPeriod> getClassesEnrollmentPeriodMobility(final ExecutionSemester executionSemester) {
-        return getEnrolmentPeriodsSet().stream()
-                .filter(ep -> ep instanceof EnrolmentPeriodInClassesMobility && ep.getExecutionPeriod() == executionSemester)
-                .findAny();
-    }
-
-    public Optional<EnrolmentPeriod> getValidEnrolmentPeriod(final java.util.function.Predicate<EnrolmentPeriod> predicate,
-            final ExecutionSemester executionSemester) {
-        return getEnrolmentPeriodsSet().stream()
-                .filter(predicate.and(ep -> ep.getExecutionPeriod() == executionSemester && ep.isValid())).findAny();
-    }
-
-    public CandidacyPeriodInDegreeCurricularPlan getCurrentCandidacyPeriodInDCP() {
-        for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriodsSet()) {
-            if (enrolmentPeriod instanceof CandidacyPeriodInDegreeCurricularPlan
-                    && enrolmentPeriod.getExecutionPeriod().getExecutionYear().isCurrent()) {
-                return (CandidacyPeriodInDegreeCurricularPlan) enrolmentPeriod;
-            }
-        }
-        return null;
-    }
-
-    public CandidacyPeriodInDegreeCurricularPlan getCandidacyPeriod(final ExecutionYear executionYear) {
-        final List<EnrolmentPeriod> enrolmentPeriods =
-                getEnrolmentPeriodsBy(executionYear.getFirstExecutionPeriod(), CandidacyPeriodInDegreeCurricularPlan.class);
-        return (CandidacyPeriodInDegreeCurricularPlan) (!enrolmentPeriods.isEmpty() ? enrolmentPeriods.iterator().next() : null);
-
-    }
-
-    public boolean hasCandidacyPeriodFor(final ExecutionYear executionYear) {
-        return hasEnrolmentPeriodFor(executionYear.getFirstExecutionPeriod(), CandidacyPeriodInDegreeCurricularPlan.class);
-    }
-
-    public RegistrationPeriodInDegreeCurricularPlan getRegistrationPeriod(final ExecutionYear executionYear) {
-        final List<EnrolmentPeriod> enrolmentPeriods =
-                getEnrolmentPeriodsBy(executionYear.getFirstExecutionPeriod(), RegistrationPeriodInDegreeCurricularPlan.class);
-        return (RegistrationPeriodInDegreeCurricularPlan) (!enrolmentPeriods.isEmpty() ? enrolmentPeriods.iterator()
-                .next() : null);
-    }
-
-    public boolean hasRegistrationPeriodFor(final ExecutionYear executionYear) {
-        return hasEnrolmentPeriodFor(executionYear.getFirstExecutionPeriod(), RegistrationPeriodInDegreeCurricularPlan.class);
-    }
-
-    private List<EnrolmentPeriod> getEnrolmentPeriodsBy(final ExecutionSemester executionSemester, final Class clazz) {
-        final List<EnrolmentPeriod> result = new ArrayList<>();
-        for (final EnrolmentPeriod enrolmentPeriod : getEnrolmentPeriodsSet()) {
-            if (enrolmentPeriod.getClass().equals(clazz) && enrolmentPeriod.getExecutionPeriod() == executionSemester) {
-                result.add(enrolmentPeriod);
-            }
-        }
-
-        return result;
-    }
-
-    private boolean hasEnrolmentPeriodFor(final ExecutionSemester executionSemester, final Class clazz) {
-        for (final EnrolmentPeriod enrolmentPeriod : getEnrolmentPeriodsSet()) {
-            if (enrolmentPeriod.getClass().equals(clazz) && enrolmentPeriod.getExecutionPeriod() == executionSemester) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public Collection<ExecutionYear> getCandidacyPeriodsExecutionYears() {
-        return getEnrolmentPeriodsExecutionYears(CandidacyPeriodInDegreeCurricularPlan.class);
-    }
-
-    private Set<ExecutionYear> getEnrolmentPeriodsExecutionYears(final Class clazz) {
-        Set<ExecutionYear> result = new HashSet<>();
-        for (final EnrolmentPeriod enrolmentPeriod : getEnrolmentPeriodsSet()) {
-            if (clazz == null || enrolmentPeriod.getClass().equals(clazz)) {
-                result.add(enrolmentPeriod.getExecutionPeriod().getExecutionYear());
-            }
-        }
-        return result;
-    }
-
-    public EnrolmentPeriodInCurricularCoursesSpecialSeason getEnrolmentPeriodInCurricularCoursesSpecialSeasonByExecutionPeriod(
-            final ExecutionSemester executionSemester) {
-        for (EnrolmentPeriod enrolmentPeriod : getEnrolmentPeriodsSet()) {
-            if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesSpecialSeason
-                    && enrolmentPeriod.getExecutionPeriod().equals(executionSemester)) {
-                return (EnrolmentPeriodInCurricularCoursesSpecialSeason) enrolmentPeriod;
-            }
-        }
-        return null;
-    }
-
-    public EnrolmentPeriodInCurricularCourses getEnrolmentPeriodInCurricularCoursesBy(final ExecutionSemester executionSemester) {
-        for (final EnrolmentPeriod each : getEnrolmentPeriodsSet()) {
-            if (each instanceof EnrolmentPeriodInCurricularCourses && each.getExecutionPeriod().equals(executionSemester)) {
-                return (EnrolmentPeriodInCurricularCourses) each;
-            }
-        }
-
-        return null;
-    }
-
-    public ReingressionPeriod getReingressionPeriod(final ExecutionSemester executionSemester) {
-        for (final EnrolmentPeriod period : getEnrolmentPeriodsSet()) {
-            if (period instanceof ReingressionPeriod && period.isFor(executionSemester)) {
-                return (ReingressionPeriod) period;
-            }
-        }
-        return null;
-    }
-
-    public boolean hasEnrolmentPeriodInCurricularCourses(final ExecutionSemester executionSemester) {
-        return getEnrolmentPeriodInCurricularCoursesBy(executionSemester) != null;
     }
 
     // -------------------------------------------------------------

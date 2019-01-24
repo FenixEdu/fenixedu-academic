@@ -24,10 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.academic.domain.EnrolmentPeriod;
-import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCourses;
 import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.log.CurriculumLineLog;
 import org.fenixedu.academic.domain.log.EnrolmentLog;
 import org.fenixedu.academic.domain.student.Student;
@@ -119,21 +116,7 @@ public class CurriculumLineLogsDA extends FenixDispatchAction {
         }
 
         private Interval findEnrolmentPeriod(final ExecutionSemester executionSemester) {
-            DateTime start = null, end = null;
-            for (final EnrolmentPeriod enrolmentPeriod : executionSemester.getEnrolmentPeriodSet()) {
-                if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses) {
-                    final DegreeType degreeType = enrolmentPeriod.getDegreeCurricularPlan().getDegreeType();
-                    if (degreeType.isBolonhaDegree() || degreeType.isIntegratedMasterDegree()) {
-                        if (start == null || start.isAfter(enrolmentPeriod.getStartDateDateTime())) {
-                            start = enrolmentPeriod.getStartDateDateTime();
-                        }
-                        if (end == null || end.isBefore(enrolmentPeriod.getEndDateDateTime())) {
-                            end = enrolmentPeriod.getEndDateDateTime();
-                        }
-                    }
-                }
-            }
-            return start == null || end == null ? null : new Interval(start, end);
+            return null;
         }
 
     }

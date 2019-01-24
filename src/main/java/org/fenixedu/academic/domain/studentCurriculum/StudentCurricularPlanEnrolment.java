@@ -238,12 +238,6 @@ abstract public class StudentCurricularPlanEnrolment {
             throw new DomainException("error.StudentCurricularPlan.invalid.curricular.rule.level");
         }
 
-        final EnrolmentPreConditionResult result = StudentCurricularPlanEnrolmentPreConditions
-                .checkEnrolmentPeriods(getStudentCurricularPlan(), getExecutionSemester());
-
-        if (!result.isValid()) {
-            throw new DomainException(result.message(), result.args());
-        }
     }
 
     protected void assertOtherRolesPreConditions() {
