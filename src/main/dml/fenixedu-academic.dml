@@ -858,10 +858,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         }
 
 
-    class NonAffiliatedTeacher  {
-        String name;
-    }
-
     class OccupationPeriod  {
         Interval periodInterval;
     }
@@ -4372,15 +4368,6 @@ relation MarkSheetTeacher {
     Teacher playsRole responsibleTeacher;
 }
 
-relation NonAffiliatedTeacherExecutionCourse {
-    NonAffiliatedTeacher playsRole nonAffiliatedTeachers {
-        multiplicity *;
-    }
-    ExecutionCourse playsRole executionCourses {
-        multiplicity *;
-    }
-}
-
 relation OldCurricularCourseCurricularCourseEquivalence {
     CurricularCourseEquivalence playsRole oldCurricularCourseEquivalences {
         multiplicity *;
@@ -5379,13 +5366,6 @@ relation RootDomainObjectMark {
     }
 }
 
-relation RootDomainObjectNonAffiliatedTeacher {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    NonAffiliatedTeacher playsRole nonAffiliatedTeachers {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectNotNeedToEnrollInCurricularCourse {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     degree.enrollment.NotNeedToEnrollInCurricularCourse playsRole notNeedToEnrollInCurricularCourses {
@@ -6056,13 +6036,6 @@ relation UnitUnitAcronym {
         multiplicity *;
     }
     organizationalStructure.UnitAcronym playsRole unitAcronym;
-}
-
-relation UnitNonAffiliatedTeacher {
-    organizationalStructure.Unit playsRole institutionUnit;
-    NonAffiliatedTeacher playsRole associatedNonAffiliatedTeachers {
-        multiplicity *;
-    }
 }
 
 relation UnitUnitName {

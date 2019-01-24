@@ -154,7 +154,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                         && executionCourse.getAssociatedCurricularCoursesSet().size() == 0) {
                     ExecutionCourse previous = null;
                     for (final ExecutionCourse otherExecutionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
-                        if (previous == null || otherExecutionCourse.getExecutionPeriod().isAfter(previous.getExecutionPeriod())) {
+                        if (previous == null
+                                || otherExecutionCourse.getExecutionPeriod().isAfter(previous.getExecutionPeriod())) {
                             previous = otherExecutionCourse;
                         }
                     }
@@ -167,7 +168,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         });
     }
 
-    public ExecutionCourse(final String nome, final String sigla, final ExecutionSemester executionSemester, EntryPhase entryPhase) {
+    public ExecutionCourse(final String nome, final String sigla, final ExecutionSemester executionSemester,
+            EntryPhase entryPhase) {
         super();
 
         setRootDomainObject(Bennu.getInstance());
@@ -193,7 +195,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         Signal.emit(ExecutionCourse.CREATED_SIGNAL, new DomainObjectEvent<ExecutionCourse>(this));
     }
 
-    public void editInformation(String nome, String sigla, String comment, Boolean availableGradeSubmission, EntryPhase entryPhase) {
+    public void editInformation(String nome, String sigla, String comment, Boolean availableGradeSubmission,
+            EntryPhase entryPhase) {
         setNome(nome);
         setSigla(sigla);
         setComment(comment);
@@ -202,7 +205,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             setEntryPhase(entryPhase);
         }
         Signal.emit(ExecutionCourse.EDITED_SIGNAL, new DomainObjectEvent<ExecutionCourse>(this));
-    
+
     }
 
     public void editCourseLoad(ShiftType type, BigDecimal unitQuantity, BigDecimal totalQuantity) {
@@ -318,7 +321,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public List<BibliographicReference> copyBibliographicReferencesFrom(final ExecutionCourse executionCourseFrom) {
         final List<BibliographicReference> notCopiedBibliographicReferences = new ArrayList<BibliographicReference>();
 
-        for (final BibliographicReference bibliographicReference : executionCourseFrom.getAssociatedBibliographicReferencesSet()) {
+        for (final BibliographicReference bibliographicReference : executionCourseFrom
+                .getAssociatedBibliographicReferencesSet()) {
             if (canAddBibliographicReference(bibliographicReference)) {
                 this.createBibliographicReference(bibliographicReference.getTitle(), bibliographicReference.getAuthors(),
                         bibliographicReference.getReference(), bibliographicReference.getYear(),
@@ -413,7 +417,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         for (; !getExportGroupingsSet().isEmpty(); getExportGroupingsSet().iterator().next().delete()) {
             ;
         }
-        for (; !getGroupingSenderExecutionCourseSet().isEmpty(); getGroupingSenderExecutionCourseSet().iterator().next().delete()) {
+        for (; !getGroupingSenderExecutionCourseSet().isEmpty(); getGroupingSenderExecutionCourseSet().iterator().next()
+                .delete()) {
             ;
         }
         for (; !getCourseLoadsSet().isEmpty(); getCourseLoadsSet().iterator().next().delete()) {
@@ -438,7 +443,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
         removeFinalEvaluations();
         getAssociatedCurricularCoursesSet().clear();
-        getNonAffiliatedTeachersSet().clear();
         getTeacherGroupSet().clear();
         setExecutionPeriod(null);
         setRootDomainObject(null);
@@ -873,9 +877,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         public double[] getTotalAverage() {
             final double[] valuesAverage = new double[numberOfWeeks];
             for (int i = 0; i < numberOfWeeks; i++) {
-                valuesAverage[i] =
-                        Math.round((0.0 + getContactSum()[i] + getAutonomousStudySum()[i] + getOtherSum()[i])
-                                / getNumberResponses()[i]);
+                valuesAverage[i] = Math.round(
+                        (0.0 + getContactSum()[i] + getAutonomousStudySum()[i] + getOtherSum()[i]) / getNumberResponses()[i]);
             }
             return valuesAverage;
         }
@@ -1032,8 +1035,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
         List<Summary> summaries = new ArrayList<Summary>();
         for (Summary summary : this.getAssociatedSummariesSet()) {
-            if (summary.getProfessorship() == null
-                    && (summary.getTeacher() != null || (summary.getTeacherName() != null && !summary.getTeacherName().equals("")))) {
+            if (summary.getProfessorship() == null && (summary.getTeacher() != null
+                    || (summary.getTeacherName() != null && !summary.getTeacherName().equals("")))) {
                 summaries.add(summary);
             }
         }
@@ -1185,7 +1188,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                 constructSortedSet(getAssociatedShifts(), Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
         int counter = 0;
         for (final Shift shift : shifts) {
-            if(shift.isCustomName()){
+            if (shift.isCustomName()) {
                 continue;
             }
             final String name = constructShiftName(shift, ++counter);
@@ -1327,10 +1330,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     private boolean hasAnyBibliographicReferenceByBibliographicReferenceType(BibliographicReferenceType referenceType) {
         for (final BibliographicReference bibliographicReference : getAssociatedBibliographicReferencesSet()) {
-            if ((referenceType.equals(BibliographicReferenceType.SECONDARY) && bibliographicReference.getOptional()
-                    .booleanValue())
-                    || (referenceType.equals(BibliographicReferenceType.MAIN) && !bibliographicReference.getOptional()
-                            .booleanValue())) {
+            if ((referenceType.equals(BibliographicReferenceType.SECONDARY)
+                    && bibliographicReference.getOptional().booleanValue())
+                    || (referenceType.equals(BibliographicReferenceType.MAIN)
+                            && !bibliographicReference.getOptional().booleanValue())) {
                 return true;
             }
         }
@@ -1436,9 +1439,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public Set<ShiftType> getOldShiftTypesToEnrol() {
-        final List<ShiftType> validShiftTypes =
-                Arrays.asList(new ShiftType[] { ShiftType.TEORICA, ShiftType.PRATICA, ShiftType.LABORATORIAL,
-                        ShiftType.TEORICO_PRATICA });
+        final List<ShiftType> validShiftTypes = Arrays.asList(
+                new ShiftType[] { ShiftType.TEORICA, ShiftType.PRATICA, ShiftType.LABORATORIAL, ShiftType.TEORICO_PRATICA });
 
         final Set<ShiftType> result = new HashSet<ShiftType>(4);
         for (final Shift shift : getAssociatedShifts()) {
@@ -1475,7 +1477,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             CourseLoad courseLoad = getCourseLoadByShiftType(type);
             if ((courseLoad == null && ccTotalHours == null)
                     || (courseLoad == null && ccTotalHours != null && ccTotalHours.compareTo(BigDecimal.ZERO) == 0)
-                    || (courseLoad != null && ccTotalHours != null && courseLoad.getTotalQuantity().compareTo(ccTotalHours) == 0)) {
+                    || (courseLoad != null && ccTotalHours != null
+                            && courseLoad.getTotalQuantity().compareTo(ccTotalHours) == 0)) {
                 return true;
             }
         }
@@ -1557,7 +1560,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public String getName() {
         return getNome();
     }
-    
+
     public String getCode() {
         return getCompetenceCourses().stream().map(cc -> cc.getCode()).distinct().collect(Collectors.joining(", "));
     }
@@ -1618,7 +1621,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public void setBibliographicReferencesOrder(List<BibliographicReference> references) {
-        for(int i = 0; i < references.size(); i++) {
+        for (int i = 0; i < references.size(); i++) {
             references.get(i).setReferenceOrder(i);
         }
     }
@@ -1673,9 +1676,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         final Collection<Curriculum> result = new HashSet<Curriculum>();
 
         for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-            final Curriculum curriculum =
-                    executionYear == null ? curricularCourse.findLatestCurriculum() : curricularCourse
-                            .findLatestCurriculumModifiedBefore(executionYear.getEndDate());
+            final Curriculum curriculum = executionYear == null ? curricularCourse.findLatestCurriculum() : curricularCourse
+                    .findLatestCurriculumModifiedBefore(executionYear.getEndDate());
             if (curriculum != null) {
                 result.add(curriculum);
             }
@@ -1768,10 +1770,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         if (unitCreditValue != null && unitCreditValue.compareTo(BigDecimal.ZERO) != 0 && getEffortRate() == null) {
             throw new DomainException("error.executionCourse.unitCreditValue.noEffortRate");
         }
-        if (getEffortRate() != null
-                && (unitCreditValue != null
-                        && unitCreditValue.compareTo(BigDecimal.valueOf(Math.min(getEffortRate().doubleValue(), 1.0))) < 0 && StringUtils
-                            .isBlank(justification))) {
+        if (getEffortRate() != null && (unitCreditValue != null
+                && unitCreditValue.compareTo(BigDecimal.valueOf(Math.min(getEffortRate().doubleValue(), 1.0))) < 0
+                && StringUtils.isBlank(justification))) {
             throw new DomainException("error.executionCourse.unitCreditValue.lower.effortRate.withoutJustification");
         }
         super.setUnitCreditValueNotes(justification);
@@ -1836,7 +1837,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                     if (minBeginDate == null || minBeginDate.isAfter(periodLessonsFirstSemester.getStartYearMonthDay())) {
                         minBeginDate = periodLessonsFirstSemester.getStartYearMonthDay();
                     }
-                    if (maxEndDate == null || maxEndDate.isBefore(periodLessonsFirstSemester.getEndYearMonthDayWithNextPeriods())) {
+                    if (maxEndDate == null
+                            || maxEndDate.isBefore(periodLessonsFirstSemester.getEndYearMonthDayWithNextPeriods())) {
                         maxEndDate = periodLessonsFirstSemester.getEndYearMonthDayWithNextPeriods();
                     }
                 }
@@ -1943,9 +1945,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         if (getEvaluationMethod() != null) {
             final LocalizedString evaluationElements = getEvaluationMethod().getEvaluationElements();
 
-            return evaluationElements != null && evaluationElements.getContent(org.fenixedu.academic.util.LocaleUtils.PT) != null ? evaluationElements
-                    .getContent(org.fenixedu.academic.util.LocaleUtils.PT) : !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator()
-                    .next().getEvaluationMethod() : "";
+            return evaluationElements != null
+                    && evaluationElements.getContent(org.fenixedu.academic.util.LocaleUtils.PT) != null ? evaluationElements
+                            .getContent(org.fenixedu.academic.util.LocaleUtils.PT) : !getCompetenceCourses()
+                                    .isEmpty() ? getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
         } else {
             return !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
         }
@@ -1955,9 +1958,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         if (getEvaluationMethod() != null) {
             final LocalizedString evaluationElements = getEvaluationMethod().getEvaluationElements();
 
-            return evaluationElements != null && evaluationElements.getContent(org.fenixedu.academic.util.LocaleUtils.EN) != null ? evaluationElements
-                    .getContent(org.fenixedu.academic.util.LocaleUtils.EN) : !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator()
-                    .next().getEvaluationMethod() : "";
+            return evaluationElements != null
+                    && evaluationElements.getContent(org.fenixedu.academic.util.LocaleUtils.EN) != null ? evaluationElements
+                            .getContent(org.fenixedu.academic.util.LocaleUtils.EN) : !getCompetenceCourses()
+                                    .isEmpty() ? getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
         } else {
             return !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
         }
@@ -2004,7 +2008,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public static ExecutionCourse readLastByExecutionIntervalAndSigla(final String sigla, ExecutionInterval executionInterval) {
         return executionInterval instanceof ExecutionSemester ? readBySiglaAndExecutionPeriod(sigla,
-                (ExecutionSemester) executionInterval) : readLastByExecutionYearAndSigla(sigla, (ExecutionYear) executionInterval);
+                (ExecutionSemester) executionInterval) : readLastByExecutionYearAndSigla(sigla,
+                        (ExecutionYear) executionInterval);
     }
 
     @Override
@@ -2248,9 +2253,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
 
         boolean unique = true;
-        final String nameEn =
-                getAssociatedCurricularCoursesSet().isEmpty() ? null : getAssociatedCurricularCoursesSet().iterator().next()
-                        .getNameEn();
+        final String nameEn = getAssociatedCurricularCoursesSet().isEmpty() ? null : getAssociatedCurricularCoursesSet()
+                .iterator().next().getNameEn();
 
         for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
             if (curricularCourse.getNameEn() == null || !curricularCourse.getNameEn().equals(nameEn)) {
@@ -2277,9 +2281,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             if (attend.getEnrolment() != null) {
                 StudentCurricularPlan scp = attend.getRegistration().getStudentCurricularPlan(getExecutionPeriod());
                 if (scp != null) {
-                    ExecutionDegree studentExecutionDegree =
-                            scp.getDegreeCurricularPlan().getExecutionDegreeByYearAndCampus(getExecutionYear(),
-                                    scp.getCampus(getExecutionYear()));
+                    ExecutionDegree studentExecutionDegree = scp.getDegreeCurricularPlan()
+                            .getExecutionDegreeByYearAndCampus(getExecutionYear(), scp.getCampus(getExecutionYear()));
                     if (studentExecutionDegree == executionDegree) {
                         return true;
                     }

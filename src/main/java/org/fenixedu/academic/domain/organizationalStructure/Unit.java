@@ -38,7 +38,6 @@ import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExternalCurricularCourse;
-import org.fenixedu.academic.domain.NonAffiliatedTeacher;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.util.email.UnitBasedSender;
@@ -188,10 +187,9 @@ public class Unit extends Unit_Base {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.unit.cannot.be.deleted"));
         }
 
-        if (!(getAssociatedNonAffiliatedTeachersSet().isEmpty() && getExternalCurricularCoursesSet().isEmpty()
-                && getPrecedentDegreeInformationsSet().isEmpty() && getExternalRegistrationDatasSet().isEmpty()
-                && getExternalCourseLoadRequestsSet().isEmpty() && getExternalProgramCertificateRequestsSet().isEmpty()
-                && getUnitGroupSet().isEmpty())) {
+        if (!(getExternalCurricularCoursesSet().isEmpty() && getPrecedentDegreeInformationsSet().isEmpty()
+                && getExternalRegistrationDatasSet().isEmpty() && getExternalCourseLoadRequestsSet().isEmpty()
+                && getExternalProgramCertificateRequestsSet().isEmpty() && getUnitGroupSet().isEmpty())) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.unit.cannot.be.deleted"));
         }
     }
@@ -640,15 +638,6 @@ public class Unit extends Unit_Base {
         }
 
         return new Accountability(parentUnit, this, accountabilityType);
-    }
-
-    public NonAffiliatedTeacher findNonAffiliatedTeacherByName(final String name) {
-        for (final NonAffiliatedTeacher nonAffiliatedTeacher : getAssociatedNonAffiliatedTeachersSet()) {
-            if (nonAffiliatedTeacher.getName().equalsIgnoreCase(name)) {
-                return nonAffiliatedTeacher;
-            }
-        }
-        return null;
     }
 
     public Unit getChildUnitByAcronym(String acronym) {
