@@ -34,7 +34,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Function;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
@@ -362,7 +361,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     private Boolean getCanBeDeleted() {
         return canDeleteRoot() && getStudentCurricularPlansSet().isEmpty() && getCurricularCourseEquivalencesSet().isEmpty()
-                && getCurricularCoursesSet().isEmpty() && getExecutionDegreesSet().isEmpty() && getAreasSet().isEmpty()
+                && getCurricularCoursesSet().isEmpty() && getExecutionDegreesSet().isEmpty()
                 && getTeachersWithIncompleteEvaluationWorkGroupSet().isEmpty() && getEquivalencePlan() == null
                 && getTargetEquivalencePlansSet().isEmpty() && getDegreeContextsSet().isEmpty();
     }
@@ -722,20 +721,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
     }
 
-    public List<Branch> getCommonAreas() {
-        return (List<Branch>) CollectionUtils.select(getAreasSet(), new Predicate() {
-            @Override
-            public boolean evaluate(final Object obj) {
-                Branch branch = (Branch) obj;
-                if (branch.getBranchType() == null) {
-                    return branch.getName().equals("") && branch.getCode().equals("");
-                }
-                return branch.getBranchType().equals(org.fenixedu.academic.domain.branch.BranchType.COMNBR);
-
-            }
-        });
-    }
-
     public Set<CurricularCourse> getActiveCurricularCourses() {
         final Set<CurricularCourse> result = new HashSet<>();
         for (final CurricularCourse curricularCourse : getCurricularCoursesSet()) {
@@ -839,17 +824,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         this.getRoot().collectChildDegreeModulesIncludingFullPath(clazz, result, path, executionYear);
 
         return result;
-    }
-
-    public Branch getBranchByName(final String branchName) {
-        if (branchName != null) {
-            for (final Branch branch : getAreasSet()) {
-                if (branchName.equals(branch.getName())) {
-                    return branch;
-                }
-            }
-        }
-        return null;
     }
 
     public Boolean getUserCanBuild() {

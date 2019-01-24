@@ -69,7 +69,6 @@ import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
-import org.fenixedu.academic.domain.studentCurricularPlan.Specialization;
 import org.fenixedu.academic.domain.studentCurricularPlan.StudentCurricularPlanState;
 import org.fenixedu.academic.domain.studentCurriculum.BranchCurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.Credits;
@@ -101,9 +100,6 @@ import org.fenixedu.academic.dto.administrativeOffice.studentEnrolment.NoCourseG
 import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.predicate.StudentCurricularPlanPredicates;
-import org.fenixedu.academic.service.services.exceptions.BothAreasAreTheSameServiceException;
-import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
-import org.fenixedu.academic.service.services.exceptions.NotAuthorizedBranchChangeException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.EnrolmentEvaluationState;
 import org.fenixedu.academic.util.predicates.AndPredicate;
@@ -205,22 +201,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         setGivenCredits(Double.valueOf(0));
     }
 
-    static public StudentCurricularPlan createPreBolonhaMasterDegree(Registration registration,
-            DegreeCurricularPlan degreeCurricularPlan, YearMonthDay startDate, Branch branch, Double givenCredits,
-            Specialization specialization) {
-        return new StudentCurricularPlan(registration, degreeCurricularPlan, startDate, branch, givenCredits, specialization);
-    }
-
-    private StudentCurricularPlan(Registration registration, DegreeCurricularPlan degreeCurricularPlan, YearMonthDay startDate,
-            Branch branch, Double givenCredits, Specialization specialization) {
-
-        this(registration, degreeCurricularPlan, startDate);
-
-        setBranch(branch);
-        setGivenCredits(givenCredits);
-        setSpecialization(specialization);
-    }
-
     private StudentCurricularPlan(Registration registration, DegreeCurricularPlan degreeCurricularPlan, YearMonthDay startDate) {
         this();
         init(registration, degreeCurricularPlan, startDate);
@@ -316,7 +296,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         }
 
         setDegreeCurricularPlan(null);
-        setBranch(null);
         setStudent(null);
         setRootDomainObject(null);
 
@@ -998,21 +977,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         // set a value
     }
 
-    public Branch getSecundaryBranch() {
-        // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should
-        // return a value
-        return null;
-    }
-
-    public boolean hasSecundaryBranch() {
-        return (getSecundaryBranch() != null);
-    }
-
-    public void setSecundaryBranch(Branch secundaryBranch) {
-        // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should
-        // set a value
-    }
-
     final public Integer getSecundaryBranchKey() {
         // only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should
         // return a value
@@ -1288,19 +1252,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return false;
     }
 
-    public boolean areNewAreasCompatible(Branch specializationArea, Branch secundaryArea)
-            throws BothAreasAreTheSameServiceException, InvalidArgumentsServiceException {
-
-        return true;
-    }
-
-    public boolean getCanChangeSpecializationArea() {
-        if (getBranch() != null) {
-            return false;
-        }
-        return true;
-    }
-
     final public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester) {
         double result = 0.0;
 
@@ -1483,32 +1434,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     // -------------------------------------------------------------
     // END: Only for enrollment purposes (PROTECTED)
     // -------------------------------------------------------------
-
-    final public void setStudentAreasWithoutRestrictions(Branch specializationArea, Branch secundaryArea) throws DomainException {
-
-        if (specializationArea != null && secundaryArea != null && specializationArea.equals(secundaryArea)) {
-            throw new DomainException("error.student.curricular.plan.areas.conflict");
-        }
-
-        setBranch(specializationArea);
-        setSecundaryBranch(secundaryArea);
-    }
-
-    final public void setStudentAreas(Branch specializationArea, Branch secundaryArea) throws NotAuthorizedBranchChangeException,
-            BothAreasAreTheSameServiceException, InvalidArgumentsServiceException, DomainException {
-
-        if (!getCanChangeSpecializationArea()) {
-            throw new NotAuthorizedBranchChangeException();
-        }
-
-        if (areNewAreasCompatible(specializationArea, secundaryArea)) {
-            setStudentAreasWithoutRestrictions(specializationArea, secundaryArea);
-        }
-
-        else {
-            throw new DomainException("error.student.curricular.plan.areas.conflict");
-        }
-    }
 
     public int numberCompletedCoursesForSpecifiedDegrees(final Set<Degree> degrees) {
         int numberCompletedCourses = 0;

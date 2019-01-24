@@ -67,10 +67,6 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
         return getStudentCurricularPlan().getCurrentState();
     }
 
-    public InfoBranch getInfoBranch() {
-        return InfoBranch.newInfoFromDomain(getStudentCurricularPlan().getBranch());
-    }
-
     public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
         return InfoDegreeCurricularPlan.newInfoFromDomain(getStudentCurricularPlan().getDegreeCurricularPlan());
     }
@@ -86,9 +82,8 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
     public String getStartDateFormatted() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(getStartDate());
-        String result =
-                calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH) + 1) + "/"
-                        + calendar.get(Calendar.YEAR);
+        String result = calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH) + 1) + "/"
+                + calendar.get(Calendar.YEAR);
         return result;
     }
 
@@ -140,10 +135,6 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
         return getStudentCurricularPlan().getObservations();
     }
 
-    public InfoBranch getInfoSecundaryBranch() {
-        return InfoBranch.newInfoFromDomain(getStudentCurricularPlan().getSecundaryBranch());
-    }
-
     public static InfoStudentCurricularPlan newInfoFromDomain(final StudentCurricularPlan studentCurricularPlan) {
         return studentCurricularPlan == null ? null : new InfoStudentCurricularPlan(studentCurricularPlan);
     }
@@ -157,8 +148,8 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
                 new ArrayList<InfoNotNeedToEnrollInCurricularCourse>();
         for (final NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse : getStudentCurricularPlan()
                 .getNotNeedToEnrollCurricularCoursesSet()) {
-            infoNotNeedToEnrollInCurricularCourses.add(InfoNotNeedToEnrollInCurricularCourse
-                    .newInfoFromDomain(notNeedToEnrollInCurricularCourse));
+            infoNotNeedToEnrollInCurricularCourses
+                    .add(InfoNotNeedToEnrollInCurricularCourse.newInfoFromDomain(notNeedToEnrollInCurricularCourse));
         }
         return infoNotNeedToEnrollInCurricularCourses;
     }

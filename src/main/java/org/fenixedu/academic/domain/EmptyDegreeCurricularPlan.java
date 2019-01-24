@@ -215,11 +215,6 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     }
 
     @Override
-    public List<Branch> getCommonAreas() {
-        return Collections.emptyList();
-    }
-
-    @Override
     public Set<CurricularCourse> getActiveCurricularCourses() {
         return Collections.emptySet();
     }

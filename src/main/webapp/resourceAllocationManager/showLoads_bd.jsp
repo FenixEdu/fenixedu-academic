@@ -209,25 +209,6 @@
 							<%--<bean:message key="label.manager.curricularCourseScope.curricularSemester"/> --%>
 						</th>										
 					</tr>		
-					<%-- Scopes --%>
-					<logic:iterate id="scope" name="curricularCourse" property="infoScopes" >
-						<tr>
-							<td>
-								<logic:equal name="scope" property="infoBranch.name" value="" >
-									<bean:message key="label.commonBranch" />
-								</logic:equal>
-								<logic:notEqual name="scope" property="infoBranch.name" value="" >
-									<bean:write name="scope" property="infoBranch.name"/>
-								</logic:notEqual>
-							</td>
-							<td>
-								<bean:write name="scope" property="infoCurricularSemester.infoCurricularYear.year"/>
-							</td>
-							<td>
-								<bean:write name="scope" property="infoCurricularSemester.semester"/>
-							</td>															
-						</tr>
-					</logic:iterate>
 				</table>
 				
 			</logic:iterate>				

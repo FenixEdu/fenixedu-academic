@@ -51,7 +51,6 @@ enum org.fenixedu.academic.domain.UnitBoardPermittedGroupType                   
 enum org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType				  			  as AcademicOperationType;
 enum org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType.Scope                     as AcademicOperationTypeScope;
 enum org.fenixedu.academic.domain.administrativeOffice.AdministrativeOfficeType                                        as AdministrativeOfficeType;
-enum org.fenixedu.academic.domain.branch.BranchType                                                                    as OldBranchType;
 enum org.fenixedu.academic.domain.contacts.PartyContactType                                                            as PartyContactType;
 enum org.fenixedu.academic.domain.curricularRules.CurricularRuleType                                                   as CurricularRuleType;
 enum org.fenixedu.academic.domain.curricularRules.CurricularRuleValidationType                                         as CurricularRuleValidationType;
@@ -353,16 +352,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         Integer referenceOrder;
         String title;
         String year;
-    }
-
-    class Branch  {
-        String acronym;
-        OldBranchType branchType;
-        String code;
-        String name;
-        String nameEn;
-        Integer secondaryCredits;
-        Integer specializationCredits;
     }
 
     class CompetenceCourse  {
@@ -3625,13 +3614,6 @@ relation CurriculumGroupConclusionProcess {
     protected student.curriculum.ConclusionProcess playsRole conclusionProcess;
 }
 
-relation DegreeCurricularPlanBranch {
-    DegreeCurricularPlan playsRole degreeCurricularPlan;
-    Branch playsRole areas {
-        multiplicity *;
-    }
-}
-
 relation DegreeCurricularPlanCurricularCourse {
     CurricularCourse playsRole curricularCourses {
         multiplicity *;
@@ -4925,13 +4907,6 @@ relation RootDomainObjectBibliographicReference {
     }
 }
 
-relation RootDomainObjectBranch {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    Branch playsRole branchs {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectCandidacyDocument {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     candidacy.CandidacyDocument playsRole candidacyDocument {
@@ -5773,13 +5748,6 @@ relation StudentCandidacyExecutionDegree {
     candidacy.StudentCandidacy playsRole studentCandidacies {
         multiplicity *;
     }
-}
-
-relation StudentCurricularPlanBranch {
-    StudentCurricularPlan playsRole studentCurricularPlans {
-        multiplicity *;
-    }
-    Branch playsRole branch;
 }
 
 relation StudentCurricularPlanCredits {
