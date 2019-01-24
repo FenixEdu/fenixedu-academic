@@ -114,12 +114,6 @@ public class CycleEnrolmentBean implements Serializable {
         }
 
         final List<CycleCourseGroup> result = new ArrayList<CycleCourseGroup>();
-        for (final CycleCourseGroup cycleCourseGroup : affinities) {
-            final DegreeCurricularPlan degreeCurricularPlan = cycleCourseGroup.getParentDegreeCurricularPlan();
-            if (degreeCurricularPlan.hasEnrolmentPeriodInCurricularCourses(getExecutionPeriod())) {
-                result.add(cycleCourseGroup);
-            }
-        }
         return result;
     }
 

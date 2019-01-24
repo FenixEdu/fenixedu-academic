@@ -44,7 +44,6 @@ import org.fenixedu.academic.domain.student.SeniorStatute;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.student.StudentStatute;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
-import org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions.EnrolmentPreConditionResult;
 import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.joda.time.LocalDate;
 
@@ -103,12 +102,6 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
             throw new DomainException("error.StudentCurricularPlan.invalid.curricular.rule.level");
         }
 
-        final EnrolmentPreConditionResult result = StudentCurricularPlanEnrolmentPreConditions
-                .checkEnrolmentPeriodsForSpecialSeason(getStudentCurricularPlan(), getExecutionSemester());
-
-        if (!result.isValid()) {
-            throw new DomainException(result.message(), result.args());
-        }
     }
 
     private Collection<Registration> getRegistrationsToEnrolByStudent(final Student student) {

@@ -22,10 +22,7 @@ import static org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPl
 import static org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions.EnrolmentPreConditionResult.createTrue;
 
 import java.util.Collections;
-import java.util.function.Predicate;
 
-import org.fenixedu.academic.domain.EnrolmentPeriod;
-import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCoursesCandidate;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
@@ -44,7 +41,6 @@ public class StudentCurricularPlanEnrolmentPreConditions {
         private boolean valid = false;
         private String message;
         private String[] args;
-        private EnrolmentPeriod period;
 
         private EnrolmentPreConditionResult valid(final boolean value) {
             this.valid = value;
@@ -61,21 +57,12 @@ public class StudentCurricularPlanEnrolmentPreConditions {
             return this;
         }
 
-        private EnrolmentPreConditionResult withPeriod(EnrolmentPeriod period) {
-            this.period = period;
-            return this;
-        }
-
         public String message() {
             return this.message;
         }
 
         public String[] args() {
             return this.args;
-        }
-
-        public EnrolmentPeriod getEnrolmentPeriod() {
-            return period;
         }
 
         static public EnrolmentPreConditionResult createTrue() {
@@ -87,26 +74,7 @@ public class StudentCurricularPlanEnrolmentPreConditions {
         }
     }
 
-    /*
-     * Change? If next period is not defined then we should use last? Or previous of given semester?
-     */
-    static private EnrolmentPreConditionResult outOfPeriodResult(final String periodType, final EnrolmentPeriod nextPeriod) {
-        if (nextPeriod != null) {
-            return createFalse("message.out.curricular.course.enrolment.period." + periodType,
-                    nextPeriod.getStartDateDateTime().toString("dd/MM/yyyy"),
-                    nextPeriod.getEndDateDateTime().toString("dd/MM/yyyy")).withPeriod(nextPeriod);
-        } else {
-            return createFalse("message.out.curricular.course.enrolment.period." + periodType + ".noDates");
-        }
-    }
-
     static public EnrolmentPreConditionResult checkPreConditionsToEnrol(StudentCurricularPlan scp, ExecutionSemester semester) {
-
-        final EnrolmentPreConditionResult result = checkEnrolmentPeriods(scp, semester);
-        if (!result.isValid()) {
-            return result;
-        }
-
         return checkDebts(scp);
     }
 
@@ -120,17 +88,17 @@ public class StudentCurricularPlanEnrolmentPreConditions {
      */
     static EnrolmentPreConditionResult checkDebts(StudentCurricularPlan scp) {
         final Person authenticatedPerson = Authenticate.getUser().getPerson();
-        final boolean hasAcademicalAuthorizationToEnrol =  AcademicAccessRule.isMember(Authenticate.getUser(), AcademicOperationType.STUDENT_ENROLMENTS,
-                Collections.singleton(scp.getDegree()), Collections.singleton(scp.getAdministrativeOffice()));
+        final boolean hasAcademicalAuthorizationToEnrol =
+                AcademicAccessRule.isMember(Authenticate.getUser(), AcademicOperationType.STUDENT_ENROLMENTS,
+                        Collections.singleton(scp.getDegree()), Collections.singleton(scp.getAdministrativeOffice()));
 
-        final boolean isStudentEnrolling =
-                authenticatedPerson.getStudent() != null
-                        && authenticatedPerson.getStudent() == scp.getRegistration().getStudent();
+        final boolean isStudentEnrolling = authenticatedPerson.getStudent() != null
+                && authenticatedPerson.getStudent() == scp.getRegistration().getStudent();
 
-        if(hasAcademicalAuthorizationToEnrol && !isStudentEnrolling) {
+        if (hasAcademicalAuthorizationToEnrol && !isStudentEnrolling) {
             return createTrue();
         }
-        
+
         if (TreasuryBridgeAPIFactory.implementation().isAcademicalActsBlocked(scp.getPerson(), new LocalDate())) {
             return createFalse("error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
         }
@@ -147,49 +115,6 @@ public class StudentCurricularPlanEnrolmentPreConditions {
         final Registration registration = scp.getRegistration();
         return registration.getSourceRegistration() != null
                 && registration.getSourceRegistration().getLastStudentCurricularPlan().hasSpecialSeasonFor(semester);
-    }
-
-    /**
-     * Check student enrolment periods
-     * 
-     * @param scp
-     * @param semester
-     * @return EnrolmentPreConditionResult
-     */
-    static EnrolmentPreConditionResult checkEnrolmentPeriods(StudentCurricularPlan scp, ExecutionSemester semester) {
-
-        if (semester.isFirstOfYear() && hasSpecialSeason(scp, semester)) {
-
-            if (!scp.getDegreeCurricularPlan().getActiveEnrolmentPeriodInCurricularCoursesSpecialSeason(semester).isPresent()) {
-                return outOfPeriodResult("specialSeason", scp.getDegreeCurricularPlan()
-                        .getNextEnrolmentPeriodInCurricularCoursesSpecialSeason());
-            }
-
-        } else if (semester.isFirstOfYear() && hasPrescribed(scp, semester)) {
-
-            if (!scp.getDegreeCurricularPlan().getActiveEnrolmentPeriodInCurricularCoursesFlunkedSeason(semester).isPresent()) {
-                return outOfPeriodResult("flunked", scp.getDegreeCurricularPlan()
-                        .getNextEnrolmentPeriodInCurricularCoursesFlunkedSeason());
-            }
-
-        } else if (scp.isInCandidateEnrolmentProcess(semester.getExecutionYear())) {
-            Predicate<EnrolmentPeriod> predicate = ep -> ep instanceof EnrolmentPeriodInCurricularCoursesCandidate;
-            if (!scp.getDegreeCurricularPlan().getValidEnrolmentPeriod(predicate, semester).isPresent()) {
-                return outOfPeriodResult("normal", scp.getDegreeCurricularPlan().getNextEnrolmentPeriod());
-            }
-        } else if (!scp.getDegreeCurricularPlan().getActiveCurricularCourseEnrolmentPeriod(semester).isPresent()) {
-            return outOfPeriodResult("normal", scp.getDegreeCurricularPlan().getNextEnrolmentPeriod());
-        }
-
-        return createTrue();
-    }
-
-    static EnrolmentPreConditionResult checkEnrolmentPeriodsForSpecialSeason(StudentCurricularPlan scp, ExecutionSemester semester) {
-        if (!scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(semester)) {
-            return outOfPeriodResult("specialSeason", scp.getDegreeCurricularPlan()
-                    .getNextEnrolmentPeriodInCurricularCoursesSpecialSeason());
-        }
-        return createTrue();
     }
 
     /*

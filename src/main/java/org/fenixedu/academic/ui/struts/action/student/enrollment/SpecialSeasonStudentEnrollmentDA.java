@@ -19,7 +19,6 @@
 package org.fenixedu.academic.ui.struts.action.student.enrollment;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +27,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.academic.domain.EnrolmentPeriodInSpecialSeasonEvaluations;
 import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
@@ -60,16 +58,8 @@ public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecial
 
         final List<StudentCurricularPlan> scps = generateSCPList(student);
         if (enrollmentPeriodNotOpen(new ArrayList<StudentCurricularPlan>(scps))) {
-            EnrolmentPeriodInSpecialSeasonEvaluations enrolmentPeriod = getNextEnrollmentPeriod(scps);
-            if (enrolmentPeriod == null) {
-                addActionMessage("warning", request, "message.out.curricular.course.enrolment.period.default");
-                request.setAttribute("disableContinue", true);
-            } else {
-                addActionMessage("warning", request, "message.out.special.season.enrolment.period.upcoming",
-                        enrolmentPeriod.getStartDateDateTime().toString("dd-MM-yyyy"),
-                        enrolmentPeriod.getEndDateDateTime().toString("dd-MM-yyyy"));
-                request.setAttribute("disableContinue", true);
-            }
+            addActionMessage("warning", request, "message.out.curricular.course.enrolment.period.default");
+            request.setAttribute("disableContinue", true);
         } else if (scps.isEmpty()) {
             request.setAttribute("disableContinue", true);
         }
@@ -132,53 +122,7 @@ public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecial
     }
 
     private boolean enrollmentPeriodNotOpen(List<StudentCurricularPlan> scps) {
-        if (scps.isEmpty()) {
-            return true;
-        }
-
-        /*
-         * Iterative equivalent boolean result = true; for(StudentCurricularPlan
-         * scp : scps) { boolean eval =
-         * !(scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(
-         * ExecutionYear.readCurrentExecutionYear().getFirstExecutionPeriod())
-         * || scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(
-         * ExecutionYear.readCurrentExecutionYear().getLastExecutionPeriod()) ||
-         * scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(
-         * ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().
-         * getFirstExecutionPeriod()) ||
-         * scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(
-         * ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().
-         * getLastExecutionPeriod())); result = result && eval; } return result;
-         */
-
-        final StudentCurricularPlan scp = scps.iterator().next();
-        scps.remove(0);
-        // Any SpecialSeason enrollment period opened for this/last year will
-        // count.
-        return !(scp.getDegreeCurricularPlan()
-                .hasOpenSpecialSeasonEnrolmentPeriod(ExecutionYear.readCurrentExecutionYear().getFirstExecutionPeriod())
-                || scp.getDegreeCurricularPlan()
-                        .hasOpenSpecialSeasonEnrolmentPeriod(ExecutionYear.readCurrentExecutionYear().getLastExecutionPeriod())
-                || scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(
-                        ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getFirstExecutionPeriod())
-                || scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(
-                        ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getLastExecutionPeriod()))
-                && enrollmentPeriodNotOpen(scps);
-
-    }
-
-    private EnrolmentPeriodInSpecialSeasonEvaluations getNextEnrollmentPeriod(List<StudentCurricularPlan> scps) {
-        final List<EnrolmentPeriodInSpecialSeasonEvaluations> nextOpenPeriodsForEachSCP =
-                new ArrayList<EnrolmentPeriodInSpecialSeasonEvaluations>();
-        EnrolmentPeriodInSpecialSeasonEvaluations result;
-        for (final StudentCurricularPlan scp : scps) {
-            result = scp.getDegreeCurricularPlan().getNextSpecialSeasonEnrolmentPeriod();
-            if (result != null) {
-                nextOpenPeriodsForEachSCP.add(result);
-            }
-        }
-        return nextOpenPeriodsForEachSCP.isEmpty() ? null : Collections.min(nextOpenPeriodsForEachSCP,
-                EnrolmentPeriodInSpecialSeasonEvaluations.COMPARATOR_BY_START);
+        return true;
     }
 
     @Override

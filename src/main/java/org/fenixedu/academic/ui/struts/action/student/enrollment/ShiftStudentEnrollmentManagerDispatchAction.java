@@ -34,8 +34,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.DegreeCurricularPlanEquivalencePlan;
-import org.fenixedu.academic.domain.EnrolmentPeriod;
-import org.fenixedu.academic.domain.EnrolmentPeriodInClassesCandidate;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -93,7 +91,8 @@ import pt.ist.fenixframework.FenixFramework;
 public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAction {
 
     @EntryPoint
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
         final Student student = getUserView(request).getPerson().getStudent();
 
@@ -164,9 +163,8 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
         ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterID");
         request.setAttribute("executionSemesterID", executionSemester.getExternalId());
         if (readAndSetSelectCoursesParameter(request) == null) {
-            Optional<String> returnURL =
-                    EnrolmentContextHandler.getRegisteredEnrolmentContextHandler().getReturnURLForStudentInClasses(request,
-                            registration);
+            Optional<String> returnURL = EnrolmentContextHandler.getRegisteredEnrolmentContextHandler()
+                    .getReturnURLForStudentInClasses(request, registration);
             if (returnURL.isPresent()) {
                 request.setAttribute("returnURL", returnURL.get());
             }
@@ -208,8 +206,8 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
         request.setAttribute("executionDegrees", ExecutionDegreesFormat.buildLabelValueBeansForExecutionDegree(executionDegrees));
 
         request.setAttribute("attendingExecutionCourses", registration.getAttendingExecutionCoursesFor(executionSemester));
-        request.setAttribute("executionCoursesFromExecutionDegree", selectedExecutionDegree.getDegreeCurricularPlan()
-                .getExecutionCoursesByExecutionPeriod(executionSemester));
+        request.setAttribute("executionCoursesFromExecutionDegree",
+                selectedExecutionDegree.getDegreeCurricularPlan().getExecutionCoursesByExecutionPeriod(executionSemester));
 
         return mapping.findForward("selectCourses");
     }
@@ -223,12 +221,12 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
 
         final List<ShiftToEnrol> shiftsToEnrol;
         try {
-            
-            if(TreasuryBridgeAPIFactory.implementation().isAcademicalActsBlocked(registration.getPerson(), new LocalDate())) {
+
+            if (TreasuryBridgeAPIFactory.implementation().isAcademicalActsBlocked(registration.getPerson(), new LocalDate())) {
                 addActionMessage(request, "error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
                 return mapping.getInputForward();
             }
-            
+
             shiftsToEnrol = ReadShiftsToEnroll.runReadShiftsToEnroll(registration, executionSemester);
         } catch (OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan exception) {
             addActionMessage(request, "error.enrollment.period.closed", exception.getArgs());
@@ -260,14 +258,14 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
         DegreeCurricularPlan lastDegreeCurricularPlan = registration.getLastDegreeCurricularPlan();
         StudentCurricularPlan studentCurricularPlan = registration.getStudentCurricularPlan(lastDegreeCurricularPlan);
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-        List<ExecutionSemester> openedEnrolmentPeriodsSemesters =
-                lastDegreeCurricularPlan.getEnrolmentPeriodsSet().stream()
-                        .filter(ep -> isValidPeriodForUser(ep, studentCurricularPlan, currentExecutionYear))
-                        .map(ep -> ep.getExecutionPeriod()).distinct().sorted(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR)
-                        .collect(Collectors.toList());
-        if (openedEnrolmentPeriodsSemesters.size() > 1) {
-            request.setAttribute("openedEnrolmentPeriodsSemesters", openedEnrolmentPeriodsSemesters);
-        }
+//        List<ExecutionSemester> openedEnrolmentPeriodsSemesters =
+//                lastDegreeCurricularPlan.getEnrolmentPeriodsSet().stream()
+//                        .filter(ep -> isValidPeriodForUser(ep, studentCurricularPlan, currentExecutionYear))
+//                        .map(ep -> ep.getExecutionPeriod()).distinct().sorted(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR)
+//                        .collect(Collectors.toList());
+//        if (openedEnrolmentPeriodsSemesters.size() > 1) {
+//            request.setAttribute("openedEnrolmentPeriodsSemesters", openedEnrolmentPeriodsSemesters);
+//        }
     }
 
     private void sortStudentShifts(List<Shift> studentShifts) {
@@ -363,25 +361,6 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
         }
 
         return start(mapping, form, request, response);
-    }
-
-    private boolean isValidPeriodForUser(EnrolmentPeriod ep, StudentCurricularPlan studentCurricularPlan,
-            ExecutionYear currentExecutionYear) {
-        // Coditions to be valid:
-        // 1 - period has to be valid
-        //     AND
-        //          a - Student is candidate AND period is for candidate
-        //            OR
-        //          b - Period is for curricular courses (implicitly assuming student is not candidate)
-
-        if (ep.isValid()) {
-            if (studentCurricularPlan.isInCandidateEnrolmentProcess(currentExecutionYear)) {
-                return ep instanceof EnrolmentPeriodInClassesCandidate;
-            } else {
-                return ep.isForClasses();
-            }
-        }
-        return false;
     }
 
 }

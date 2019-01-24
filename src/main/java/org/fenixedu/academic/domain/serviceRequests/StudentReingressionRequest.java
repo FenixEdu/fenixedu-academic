@@ -22,9 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.ReingressionPeriod;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import org.fenixedu.academic.domain.student.Registration;
@@ -107,13 +105,6 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 
     private boolean hasOpenEnrolmentPeriod(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionYear executionYear,
             final DateTime requestDate) {
-
-        for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
-            final ReingressionPeriod period = degreeCurricularPlan.getReingressionPeriod(executionSemester);
-            if (period != null && period.containsDate(requestDate)) {
-                return true;
-            }
-        }
         return false;
     }
 

@@ -172,7 +172,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     public String getQualifiedName() {
         final String localizedName = getAcademicInterval().getAcademicCalendarEntry().getTitle().getContent();
         final String semesterName = StringUtils.isNotBlank(localizedName) ? localizedName : getName();
-        
+
         return new StringBuilder().append(semesterName).append(" ").append(this.getExecutionYear().getYear()).toString();
     }
 
@@ -436,17 +436,6 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
             count += executionCourse.getProfessorshipsSet().size();
         }
         return count;
-    }
-
-    public EnrolmentPeriod getEnrolmentPeriod(final Class<? extends EnrolmentPeriod> clazz,
-            final DegreeCurricularPlan degreeCurricularPlan) {
-        for (final EnrolmentPeriod enrolmentPeriod : getEnrolmentPeriodSet()) {
-            if (enrolmentPeriod.getClass().equals(clazz) && enrolmentPeriod.getDegreeCurricularPlan() == degreeCurricularPlan) {
-                return enrolmentPeriod;
-            }
-        }
-
-        return null;
     }
 
     // -------------------------------------------------------------

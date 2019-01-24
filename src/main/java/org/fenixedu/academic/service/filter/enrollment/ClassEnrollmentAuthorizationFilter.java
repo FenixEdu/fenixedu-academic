@@ -22,15 +22,9 @@
  */
 package org.fenixedu.academic.service.filter.enrollment;
 
-import java.util.Optional;
 import java.util.SortedSet;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.function.Predicate;
 
-import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.DegreeCurricularPlanEquivalencePlan;
-import org.fenixedu.academic.domain.EnrolmentPeriod;
-import org.fenixedu.academic.domain.EnrolmentPeriodInClassesCandidate;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
@@ -84,17 +78,6 @@ public class ClassEnrollmentAuthorizationFilter {
             throw new NoActiveStudentCurricularPlanOfCorrectTypeException();
         }
 
-        boolean hasOneOpen = false;
-        FenixServiceException toThrow = null;
-        for (final StudentCurricularPlan studentCurricularPlan : activeStudentCurricularPlans) {
-            final FenixServiceException exception =
-                    verify(studentCurricularPlan, ExecutionSemester.readActualExecutionSemester());
-            hasOneOpen = hasOneOpen || exception == null;
-            toThrow = exception == null ? toThrow : exception;
-        }
-        if (!hasOneOpen) {
-            throw toThrow;
-        }
     }
 
     public void execute(Registration registration, ExecutionSemester executionSemester) throws FenixServiceException {
@@ -120,59 +103,6 @@ public class ClassEnrollmentAuthorizationFilter {
             throw new NoActiveStudentCurricularPlanOfCorrectTypeException();
         }
 
-        boolean hasOneOpen = false;
-        FenixServiceException toThrow = null;
-        for (final StudentCurricularPlan studentCurricularPlan : activeStudentCurricularPlans) {
-            final FenixServiceException exception = verify(studentCurricularPlan, executionSemester);
-            hasOneOpen = hasOneOpen || exception == null;
-            toThrow = exception == null ? toThrow : exception;
-        }
-        if (!hasOneOpen) {
-            throw toThrow;
-        }
-    }
-
-    private FenixServiceException verify(StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
-        final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
-        Predicate<EnrolmentPeriod> predicate = null;
-        if (!studentCurricularPlan.isInCandidateEnrolmentProcess(executionSemester.getExecutionYear())) {
-            predicate = ep -> ep.isForClasses();
-        } else {
-            predicate = ep -> ep instanceof EnrolmentPeriodInClassesCandidate;
-        }
-        FenixServiceException result = verify(predicate, degreeCurricularPlan, executionSemester);
-        if (result == null) {
-            return null;
-        }
-        for (final DegreeCurricularPlanEquivalencePlan equivalencePlan : degreeCurricularPlan.getTargetEquivalencePlansSet()) {
-            final DegreeCurricularPlan otherDegreeCurricularPlan = equivalencePlan.getDegreeCurricularPlan();
-            result = verify(predicate, otherDegreeCurricularPlan, executionSemester);
-            if (result == null) {
-                return null;
-            }
-        }
-        return result;
-    }
-
-    private FenixServiceException verify(Predicate<EnrolmentPeriod> enrolmentTypePredicate,
-            DegreeCurricularPlan degreeCurricularPlan, ExecutionSemester executionSemester) {
-        final Optional<EnrolmentPeriod> enrolmentPeriodInClasses =
-                degreeCurricularPlan.getValidEnrolmentPeriod(enrolmentTypePredicate, executionSemester);
-        if (!enrolmentPeriodInClasses.isPresent() || enrolmentPeriodInClasses.get().getStartDateDateTime() == null
-                || enrolmentPeriodInClasses.get().getEndDateDateTime() == null) {
-            return new CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan();
-        }
-
-        if (!enrolmentPeriodInClasses.get().isValid()) {
-            StringBuilder buffer = new StringBuilder();
-            buffer.append(enrolmentPeriodInClasses.get().getStartDateDateTime().toString("dd/MM/yyyy HH:mm"));
-            buffer.append(" - ");
-            buffer.append(enrolmentPeriodInClasses.get().getEndDateDateTime().toString("dd/MM/yyyy HH:mm"));
-            buffer.append(" (").append(enrolmentPeriodInClasses.get().getExecutionPeriod().getExecutionYear().getName())
-                    .append(")");
-            return new OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan(buffer.toString());
-        }
-        return null;
     }
 
     public static class NoActiveStudentCurricularPlanOfCorrectTypeException extends FenixServiceException {

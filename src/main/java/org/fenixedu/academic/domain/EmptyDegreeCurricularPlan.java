@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.domain;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -39,9 +38,9 @@ import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.degreeStructure.RootCourseGroup;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.MarkType;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
 
@@ -178,77 +177,6 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     @Override
     public List<CurricularCourse> getCurricularCoursesByBasicAttribute(final Boolean basic) {
         return Collections.emptyList();
-    }
-
-    @Override
-    public EnrolmentPeriodInCurricularCourses getActualEnrolmentPeriod() {
-        return null;
-    }
-
-    @Override
-    public EnrolmentPeriodInCurricularCoursesSpecialSeason getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() {
-        return null;
-    }
-
-    @Override
-    public boolean hasOpenEnrolmentPeriodInCurricularCoursesSpecialSeason(final ExecutionSemester executionSemester) {
-        return false;
-    }
-
-    @Override
-    public boolean hasOpenEnrolmentPeriodInCurricularCoursesFor(final ExecutionSemester executionSemester) {
-        return false;
-    }
-
-    @Override
-    public EnrolmentPeriodInCurricularCourses getNextEnrolmentPeriod() {
-        return null;
-    }
-
-    @Override
-    public EnrolmentPeriodInCurricularCoursesSpecialSeason getNextEnrolmentPeriodInCurricularCoursesSpecialSeason() {
-        return null;
-    }
-
-    @Override
-    public CandidacyPeriodInDegreeCurricularPlan getCurrentCandidacyPeriodInDCP() {
-        return null;
-    }
-
-    @Override
-    public CandidacyPeriodInDegreeCurricularPlan getCandidacyPeriod(final ExecutionYear executionYear) {
-        return null;
-    }
-
-    @Override
-    public boolean hasCandidacyPeriodFor(final ExecutionYear executionYear) {
-        return false;
-    }
-
-    @Override
-    public RegistrationPeriodInDegreeCurricularPlan getRegistrationPeriod(final ExecutionYear executionYear) {
-        return null;
-    }
-
-    @Override
-    public boolean hasRegistrationPeriodFor(final ExecutionYear executionYear) {
-        return false;
-    }
-
-    @Override
-    public Collection<ExecutionYear> getCandidacyPeriodsExecutionYears() {
-        return Collections.emptySet();
-    }
-
-    @Override
-    public EnrolmentPeriodInCurricularCoursesSpecialSeason getEnrolmentPeriodInCurricularCoursesSpecialSeasonByExecutionPeriod(
-            ExecutionSemester executionSemester) {
-        return null;
-    }
-
-    @Override
-    public EnrolmentPeriodInCurricularCourses getEnrolmentPeriodInCurricularCoursesBy(final ExecutionSemester executionSemester) {
-        return null;
     }
 
     @Override
