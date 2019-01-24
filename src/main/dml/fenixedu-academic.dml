@@ -343,23 +343,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         UUID requestToken;
     }
 
-	class alumni.CerimonyInquiry  {
-		String description;
-		String text;
-		DateTime begin;
-		DateTime end;
-		Boolean allowComments;
-	}
-
-	class alumni.CerimonyInquiryAnswer  {
-		Integer answerOrder;
-		String text;
-	}
-
-	class alumni.CerimonyInquiryPerson  {
-		String comment;
-	}
-
     class Attends  {
     }
 
@@ -2479,11 +2462,6 @@ class CoordinatorLog  {
 	OperationType operation;
 }
 
-class alumni.AlumniReportFile extends QueueJobWithFile {
-	boolean fullReport;
-	boolean onlyRegisteredAlumni;
-}
-
 class ProfessorshipPermissions  {
 	boolean personalization;
 	boolean siteArchive;
@@ -2600,8 +2578,6 @@ class accessControl.PersistentNotUpdatedAlumniInfoForSpecificDaysGroup extends a
 class accessControl.PersistentStudentGroupGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
 class accessControl.PersistentProjectDepartmentGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
-
-class accessControl.PersistentCerimonyInquiryGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
 class accessControl.PersistentStudentsConcludedInExecutionYearGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
@@ -6779,54 +6755,6 @@ relation UniversityUnitPrincipal {
     }
 }
 
-relation RootDomainObjectCerimonyInquiry {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	alumni.CerimonyInquiry playsRole cerimonyInquiry {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectCerimonyInquiryAnswer {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	alumni.CerimonyInquiryAnswer playsRole cerimonyInquiryAnswer {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectCerimonyInquiryPerson {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	alumni.CerimonyInquiryPerson playsRole cerimonyInquiryPerson {
-		multiplicity *;
-	}
-}
-
-relation CerimonyInquiryCerimonyInquiryAnswer {
-	alumni.CerimonyInquiry playsRole cerimonyInquiry;
-	alumni.CerimonyInquiryAnswer playsRole cerimonyInquiryAnswer {
-		multiplicity *;
-	}
-}
-
-relation CerimonyInquiryCerimonyInquiryPerson {
-	alumni.CerimonyInquiry playsRole cerimonyInquiry;
-	alumni.CerimonyInquiryPerson playsRole cerimonyInquiryPerson {
-		multiplicity *;
-	}
-}
-
-relation PersonCerimonyInquiryPerson {
-	Person playsRole person;
-	alumni.CerimonyInquiryPerson playsRole cerimonyInquiryPerson {
-		multiplicity *;
-	}
-}
-
-relation CerimonyInquiryAnswerCerimonyInquiryPerson {
-	alumni.CerimonyInquiryAnswer playsRole cerimonyInquiryAnswer;
-	alumni.CerimonyInquiryPerson playsRole cerimonyInquiryPerson {
-		multiplicity *;
-	}
-}
 
 relation RootDomainObjectEmailQueue {
 	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectFromEmailQueue;
@@ -6887,13 +6815,6 @@ relation CoordinatorLogWhoPerson {
 relation CoordinatorLogPerson {
 	Person playsRole person;
 	CoordinatorLog playsRole coordinatorLog {
-		multiplicity *;
-	}
-}
-
-relation AlumniReportFileExecutionYear {
-	ExecutionYear playsRole executionYear;
-	alumni.AlumniReportFile playsRole alumniReportFiles {
 		multiplicity *;
 	}
 }
@@ -7433,15 +7354,6 @@ relation AcademicAuthorizationGroupAdministrativeOffices {
     }
     public administrativeOffice.AdministrativeOffice playsRole office {
         multiplicity *;
-    }
-}
-
-relation PersistentCerimonyInquiryGroupCerimonyInquiry {
-    public accessControl.PersistentCerimonyInquiryGroup playsRole group {
-        multiplicity 0..1;
-    }
-    public alumni.CerimonyInquiry playsRole cerimonyInquiry {
-        multiplicity 1..1;
     }
 }
 
