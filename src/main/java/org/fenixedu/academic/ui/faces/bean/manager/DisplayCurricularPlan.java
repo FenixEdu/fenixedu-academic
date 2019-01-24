@@ -19,25 +19,16 @@
 package org.fenixedu.academic.ui.faces.bean.manager;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.faces.model.SelectItem;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
-import org.fenixedu.academic.domain.CurricularCourseScope.DegreeModuleScopeCurricularCourseScope;
-import org.fenixedu.academic.domain.DegreeModuleScope;
 import org.fenixedu.academic.domain.degree.DegreeType;
-import org.fenixedu.academic.dto.CurricularCourseScopesForPrintDTO;
-import org.fenixedu.academic.dto.InfoCurricularCourseScope;
 import org.fenixedu.academic.dto.InfoDegreeCurricularPlan;
 import org.fenixedu.academic.dto.InfoExecutionYear;
 import org.fenixedu.academic.service.services.commons.ReadActiveDegreeCurricularPlansByDegreeType;
 import org.fenixedu.academic.service.services.commons.ReadExecutionYearByID;
 import org.fenixedu.academic.service.services.commons.ReadNotClosedExecutionYears;
-import org.fenixedu.academic.service.services.commons.curriculumHistoric.ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.faces.bean.base.FenixBackingBean;
 
@@ -92,42 +83,8 @@ public class DisplayCurricularPlan extends FenixBackingBean {
         return executionYear.getYear();
     }
 
-    public List getScopes() throws FenixServiceException {
 
-        List<InfoCurricularCourseScope> scopes = new ArrayList<InfoCurricularCourseScope>();
 
-        for (String degreeCurricularPlanID : this.getChoosenDegreeCurricularPlansIDs()) {
-            Collection<DegreeModuleScope> degreeModuleScopes =
-                    ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear.run(degreeCurricularPlanID,
-                            this.choosenExecutionYearID);
-
-            for (final DegreeModuleScope degreeModuleScope : degreeModuleScopes) {
-                if (degreeModuleScope instanceof DegreeModuleScopeCurricularCourseScope) {
-                    scopes.add(InfoCurricularCourseScope
-                            .newInfoFromDomain(((DegreeModuleScopeCurricularCourseScope) degreeModuleScope)
-                                    .getCurricularCourseScope()));
-                }
-            }
-        }
-
-        sortScopes(scopes);
-
-        CurricularCourseScopesForPrintDTO scopesForPrintDTO = new CurricularCourseScopesForPrintDTO();
-        for (InfoCurricularCourseScope scope : scopes) {
-            scopesForPrintDTO.add(scope);
-        }
-
-        return scopesForPrintDTO.getDegreeCurricularPlans();
-    }
-
-    private void sortScopes(List<InfoCurricularCourseScope> scopes) {
-        ComparatorChain comparatorChain = new ComparatorChain();
-        comparatorChain.addComparator(new BeanComparator("infoCurricularSemester.infoCurricularYear.year"));
-        comparatorChain.addComparator(new BeanComparator("infoBranch.name"));
-        comparatorChain.addComparator(new BeanComparator("infoCurricularSemester.semester"));
-        comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name"));
-        Collections.sort(scopes, comparatorChain);
-    }
 
     public String getChoosenExecutionYearID() {
         return choosenExecutionYearID;

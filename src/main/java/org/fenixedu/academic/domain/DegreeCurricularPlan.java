@@ -756,14 +756,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return result;
     }
 
-    public List<CurricularCourseScope> getActiveCurricularCourseScopes() {
-        final List<CurricularCourseScope> result = new ArrayList<>();
-        for (final CurricularCourse course : getCurricularCoursesSet()) {
-            result.addAll(course.getActiveScopes());
-        }
-        return result;
-    }
-
     /**
      * Used to create a CurricularCourse to non box structure
      *
@@ -1049,14 +1041,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             }
         }
         return null;
-    }
-
-    public Set<CurricularCourseScope> findCurricularCourseScopesIntersectingPeriod(final Date beginDate, final Date endDate) {
-        final Set<CurricularCourseScope> curricularCourseScopes = new HashSet<>();
-        for (final CurricularCourse curricularCourse : getCurricularCoursesSet()) {
-            curricularCourseScopes.addAll(curricularCourse.findCurricularCourseScopesIntersectingPeriod(beginDate, endDate));
-        }
-        return curricularCourseScopes;
     }
 
     public ExecutionDegree createExecutionDegree(final ExecutionYear executionYear, final Space campus,

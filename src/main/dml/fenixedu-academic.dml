@@ -397,12 +397,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
     class CurricularCourseEquivalence  {
     }
 
-    class CurricularCourseScope  {
-        String anotation;
-        YearMonthDay beginYearMonthDay;
-        YearMonthDay endYearMonthDay;
-    }
-
     class CurricularSemester  {
         Integer semester;
     }
@@ -3248,13 +3242,6 @@ relation DocumentRequestDocuments {
     }
 }
 
-relation BranchCurricularCourseScope {
-    Branch playsRole branch;
-    CurricularCourseScope playsRole scopes {
-        multiplicity *;
-    }
-}
-
 relation CampusInformationLocality {
     .org.fenixedu.spaces.domain.Space playsRole campusInformation {
         multiplicity *;
@@ -3509,13 +3496,6 @@ relation CurricularCourseCurricularCourseEquivalence {
     CurricularCourse playsRole equivalentCurricularCourse;
 }
 
-relation CurricularCourseCurricularCourseScope {
-    CurricularCourse playsRole curricularCourse;
-    CurricularCourseScope playsRole scopes {
-        multiplicity *;
-    }
-}
-
 relation CurricularCourseCurriculum {
     Curriculum playsRole associatedCurriculums {
         multiplicity *;
@@ -3551,13 +3531,6 @@ relation CurricularCourseNotNeedToEnrollInCurricularCourse {
         multiplicity *;
     }
     CurricularCourse playsRole curricularCourse;
-}
-
-relation CurricularCourseScopeCurricularSemester {
-    CurricularCourseScope playsRole scopes {
-        multiplicity *;
-    }
-    CurricularSemester playsRole curricularSemester;
 }
 
 relation CurricularCourseUniversity {
@@ -5043,13 +5016,6 @@ relation RootDomainObjectCurricularCourseEquivalence {
     }
 }
 
-relation RootDomainObjectCurricularCourseScope {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    CurricularCourseScope playsRole curricularCourseScopes {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectCurricularPeriod {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     curricularPeriod.CurricularPeriod playsRole curricularPeriods {
@@ -6058,15 +6024,6 @@ relation WrittenEvaluationContext {
         multiplicity *;
     }
     degreeStructure.Context playsRole associatedContexts {
-        multiplicity *;
-    }
-}
-
-relation WrittenEvaluationCurricularCourseScope {
-    WrittenEvaluation playsRole associatedWrittenEvaluations {
-        multiplicity *;
-    }
-    CurricularCourseScope playsRole associatedCurricularCourseScope {
         multiplicity *;
     }
 }

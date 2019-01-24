@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import org.fenixedu.academic.domain.CurricularCourseScope;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.WrittenEvaluation;
 import org.fenixedu.academic.domain.space.WrittenEvaluationSpaceOccupation;
@@ -53,17 +52,11 @@ public class InfoWrittenEvaluation extends InfoEvaluation {
 
     protected Calendar enrollmentEndTime;
 
-    protected List<InfoCurricularCourseScope> associatedCurricularCourseScope;
-
     protected List<InfoRoomOccupation> associatedRoomOccupation;
 
     protected List<InfoExecutionCourse> associatedExecutionCourse;
 
     protected Integer enrolledStudents;
-
-    public List<InfoCurricularCourseScope> getAssociatedCurricularCourseScope() {
-        return associatedCurricularCourseScope;
-    }
 
     public List<InfoRoomOccupation> getWrittenEvaluationSpaceOccupations() {
         return associatedRoomOccupation;
@@ -95,10 +88,6 @@ public class InfoWrittenEvaluation extends InfoEvaluation {
 
     public Calendar getEnrollmentEndTime() {
         return enrollmentEndTime;
-    }
-
-    public void setAssociatedCurricularCourseScope(List<InfoCurricularCourseScope> list) {
-        associatedCurricularCourseScope = list;
     }
 
     public void setWrittenEvaluationSpaceOccupations(List<InfoRoomOccupation> list) {
@@ -165,15 +154,11 @@ public class InfoWrittenEvaluation extends InfoEvaluation {
             setWrittenEvaluation(writtenEvaluation);
             associatedExecutionCourse = new ArrayList<InfoExecutionCourse>();
             associatedRoomOccupation = new ArrayList<InfoRoomOccupation>();
-            associatedCurricularCourseScope = new ArrayList<InfoCurricularCourseScope>();
             for (ExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCoursesSet()) {
                 associatedExecutionCourse.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
             }
             for (WrittenEvaluationSpaceOccupation roomOccupation : writtenEvaluation.getWrittenEvaluationSpaceOccupationsSet()) {
                 associatedRoomOccupation.add(InfoRoomOccupation.newInfoFromDomain(roomOccupation));
-            }
-            for (CurricularCourseScope curricularCourseScope : writtenEvaluation.getAssociatedCurricularCourseScopeSet()) {
-                associatedCurricularCourseScope.add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
             }
             setBeginning(writtenEvaluation.getBeginning());
             setDay(writtenEvaluation.getDay());

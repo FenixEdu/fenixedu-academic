@@ -64,7 +64,6 @@ public class Exam extends Exam_Base {
         // It's necessary to remove this associations before check some
         // constrains
         this.getAssociatedExecutionCoursesSet().clear();
-        this.getAssociatedCurricularCourseScopeSet().clear();
         this.getAssociatedContextsSet().clear();
 
         checkScopeAndSeasonConstrains(executionCoursesToAssociate, curricularCourseScopesToAssociate, season);

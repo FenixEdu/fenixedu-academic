@@ -500,34 +500,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return result;
     }
 
-    public List<CurricularCourse> getExecutedCurricularCoursesByExecutionYearAndYear(final ExecutionYear executionYear,
-            final Integer curricularYear) {
-
-        if (isBolonhaDegree()) {
-            return Collections.emptyList();
-        }
-
-        final List<CurricularCourse> result = new ArrayList<>();
-        for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
-            if (degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE)) {
-                for (final CurricularCourse course : degreeCurricularPlan.getCurricularCoursesSet()) {
-                    xpto: for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCoursesSet()) {
-                        if (executionCourse.getExecutionPeriod().getExecutionYear().equals(executionYear)) {
-                            for (final CurricularCourseScope curricularCourseScope : course.getScopesSet()) {
-                                if (curricularCourseScope.getCurricularSemester().getCurricularYear().getYear()
-                                        .equals(curricularYear)) {
-                                    result.add(course);
-                                    break xpto;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return result;
-    }
-
     public List<ExecutionCourse> getExecutionCourses(final String curricularCourseAcronym,
             final ExecutionSemester executionSemester) {
         final List<ExecutionCourse> result = new ArrayList<>();

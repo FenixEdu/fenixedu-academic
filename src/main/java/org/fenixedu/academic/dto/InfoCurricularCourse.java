@@ -27,7 +27,6 @@ package org.fenixedu.academic.dto;
 import java.math.BigDecimal;
 import java.text.Collator;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 import org.fenixedu.academic.domain.CurricularCourse;
@@ -41,7 +40,7 @@ import org.fenixedu.commons.i18n.I18N;
 /**
  * @author tfc130
  */
-public class InfoCurricularCourse extends InfoObject implements Comparable {
+public class InfoCurricularCourse extends InfoObject {
 
     static final public Comparator<InfoCurricularCourse> COMPARATOR_BY_NAME_AND_ID = new Comparator<InfoCurricularCourse>() {
         @Override
@@ -54,8 +53,6 @@ public class InfoCurricularCourse extends InfoObject implements Comparable {
     private final CurricularCourse curricularCourse;
 
     private final boolean showEnVersion = I18N.getLocale().equals(org.fenixedu.academic.util.LocaleUtils.EN);
-
-    private List<InfoCurricularCourseScope> infoScopes;
 
     private List infoAssociatedExecutionCourses;
 
@@ -182,14 +179,6 @@ public class InfoCurricularCourse extends InfoObject implements Comparable {
         return InfoDegreeCurricularPlan.newInfoFromDomain(getCurricularCourse().getDegreeCurricularPlan());
     }
 
-    public List<InfoCurricularCourseScope> getInfoScopes() {
-        return infoScopes;
-    }
-
-    public void setInfoScopes(List<InfoCurricularCourseScope> infoScopes) {
-        this.infoScopes = infoScopes;
-    }
-
     public CurricularCourseType getType() {
         return getCurricularCourse().getType();
     }
@@ -206,51 +195,12 @@ public class InfoCurricularCourse extends InfoObject implements Comparable {
         return getMandatory().booleanValue();
     }
 
-    public InfoCurricularCourseScope getInfoCurricularCourseScope(InfoBranch infoBranch, Integer semester) {
-        InfoCurricularCourseScope infoCurricularCourseScope = null;
-        Iterator iterator = this.getInfoScopes().iterator();
-        while (iterator.hasNext()) {
-            InfoCurricularCourseScope infoCurricularCourseScope2 = (InfoCurricularCourseScope) iterator.next();
-            if (infoCurricularCourseScope2.getInfoBranch().equals(infoBranch)
-                    && infoCurricularCourseScope2.getInfoCurricularSemester().getSemester().equals(semester)) {
-                infoCurricularCourseScope = infoCurricularCourseScope2;
-                break;
-            }
-        }
-        return infoCurricularCourseScope;
-    }
-
     public InfoUniversity getInfoUniversity() {
         return infoUniversity;
     }
 
     public void setInfoUniversity(InfoUniversity university) {
         this.infoUniversity = university;
-    }
-
-    @Override
-    public int compareTo(Object arg0) {
-        int result = 0;
-        if (getMinScope() < ((InfoCurricularCourse) arg0).getMinScope()) {
-            result = -1;
-        } else if (getMinScope() > ((InfoCurricularCourse) arg0).getMinScope()) {
-            return 1;
-        }
-        return result;
-    }
-
-    private int getMinScope() {
-        int minScope = 0;
-        List scopes = getInfoScopes();
-        Iterator iter = scopes.iterator();
-        while (iter.hasNext()) {
-            InfoCurricularCourseScope infoScope = (InfoCurricularCourseScope) iter.next();
-            if (minScope == 0 || minScope > infoScope.getInfoCurricularSemester().getInfoCurricularYear().getYear().intValue()) {
-                minScope = infoScope.getInfoCurricularSemester().getInfoCurricularYear().getYear().intValue();
-            }
-        }
-
-        return minScope;
     }
 
     public List getInfoAssociatedExecutionCourses() {
@@ -311,8 +261,9 @@ public class InfoCurricularCourse extends InfoObject implements Comparable {
     }
 
     public String getName() {
-        return showEnVersion && getCurricularCourse().getNameEn() != null && getCurricularCourse().getNameEn().length() > 0 ? getCurricularCourse()
-                .getNameEn() : getCurricularCourse().getName();
+        return showEnVersion && getCurricularCourse().getNameEn() != null
+                && getCurricularCourse().getNameEn().length() > 0 ? getCurricularCourse()
+                        .getNameEn() : getCurricularCourse().getName();
     }
 
     public String getNameEn() {

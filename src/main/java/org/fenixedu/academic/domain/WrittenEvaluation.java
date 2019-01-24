@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import org.fenixedu.academic.domain.CurricularCourseScope.DegreeModuleScopeCurricularCourseScope;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.Context.DegreeModuleScopeContext;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -228,11 +227,6 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     private boolean hasMatchingCurricularCourseScopeOrContext(WrittenEvaluation writtenEvaluation) {
-        for (final CurricularCourseScope curricularCourseScope : getAssociatedCurricularCourseScopeSet()) {
-            if (writtenEvaluation.getAssociatedCurricularCourseScopeSet().contains(curricularCourseScope)) {
-                return true;
-            }
-        }
         for (final Context context : getAssociatedContextsSet()) {
             if (writtenEvaluation.getAssociatedContextsSet().contains(context)) {
                 return true;
@@ -348,10 +342,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         // Associate ExecutionCourses and Context/Scopes
         getAssociatedExecutionCoursesSet().addAll(executionCoursesToAssociate);
         for (DegreeModuleScope degreeModuleScope : curricularCourseScopesToAssociate) {
-            if (degreeModuleScope instanceof DegreeModuleScopeCurricularCourseScope) {
-                addAssociatedCurricularCourseScope(((DegreeModuleScopeCurricularCourseScope) degreeModuleScope)
-                        .getCurricularCourseScope());
-            } else if (degreeModuleScope instanceof DegreeModuleScopeContext) {
+            if (degreeModuleScope instanceof DegreeModuleScopeContext) {
                 addAssociatedContexts(((DegreeModuleScopeContext) degreeModuleScope).getContext());
             }
         }
@@ -446,7 +437,8 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     protected void edit(Date day, Date beginning, Date end, List<ExecutionCourse> executionCoursesToAssociate,
             List<DegreeModuleScope> curricularCourseScopesToAssociate, List<Space> rooms, GradeScale gradeScale) {
 
-        setAttributesAndAssociateRooms(day, beginning, end, executionCoursesToAssociate, curricularCourseScopesToAssociate, rooms);
+        setAttributesAndAssociateRooms(day, beginning, end, executionCoursesToAssociate, curricularCourseScopesToAssociate,
+                rooms);
 
         if (getGradeScale() != gradeScale) {
             if (gradeScale != null) {
@@ -466,7 +458,6 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
         logRemove();
         deleteAllRoomOccupations();
-        getAssociatedCurricularCourseScopeSet().clear();
         getAssociatedContextsSet().clear();
         super.delete();
     }
@@ -553,7 +544,8 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
         for (final Space room : selectedRooms) {
             Integer examCapacity = room.<Integer> getMetadata("examCapacity").orElse(0);
-            for (int numberOfStudentsInserted = 0; numberOfStudentsInserted < examCapacity && !studentsToDistribute.isEmpty(); numberOfStudentsInserted++) {
+            for (int numberOfStudentsInserted = 0; numberOfStudentsInserted < examCapacity
+                    && !studentsToDistribute.isEmpty(); numberOfStudentsInserted++) {
                 final Registration registration = getRandomStudentFromList(studentsToDistribute);
                 final WrittenEvaluationEnrolment writtenEvaluationEnrolment = this.getWrittenEvaluationEnrolmentFor(registration);
                 if (writtenEvaluationEnrolment == null) {
@@ -628,9 +620,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public WrittenEvaluationEnrolment getWrittenEvaluationEnrolmentFor(final Student student) {
-        return student.getActiveRegistrationStream()
-                .map(r -> getWrittenEvaluationEnrolmentFor(r))
-                .filter(wee -> wee != null)
+        return student.getActiveRegistrationStream().map(r -> getWrittenEvaluationEnrolmentFor(r)).filter(wee -> wee != null)
                 .findAny().orElse(null);
     }
 
@@ -783,8 +773,8 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
             DateTime enrollmentEnd =
                     convertTimes(this.getEnrollmentEndDayDateYearMonthDay(), this.getEnrollmentEndTimeDateHourMinuteSecond());
 
-            result.add(new EvaluationEventBean("Inicio das inscrições para " + description, enrollmentBegin, enrollmentBegin
-                    .plusHours(1), false, null, url + "/login", null, executionCourses));
+            result.add(new EvaluationEventBean("Inicio das inscrições para " + description, enrollmentBegin,
+                    enrollmentBegin.plusHours(1), false, null, url + "/login", null, executionCourses));
 
             result.add(new EvaluationEventBean("Fim das inscrições para " + description, enrollmentEnd.minusHours(1),
                     enrollmentEnd, false, null, url + "/login", null, executionCourses));

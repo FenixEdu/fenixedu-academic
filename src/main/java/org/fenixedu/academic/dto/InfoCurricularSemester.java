@@ -18,10 +18,6 @@
  */
 package org.fenixedu.academic.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.fenixedu.academic.domain.CurricularCourseScope;
 import org.fenixedu.academic.domain.CurricularSemester;
 
 /**
@@ -59,14 +55,6 @@ public class InfoCurricularSemester extends InfoObject {
 
     public Integer getSemester() {
         return getCurricularSemester().getSemester();
-    }
-
-    public List getInfoScopes() {
-        final List<InfoCurricularCourseScope> scopes = new ArrayList<InfoCurricularCourseScope>();
-        for (final CurricularCourseScope scope : getCurricularSemester().getScopesSet()) {
-            scopes.add(InfoCurricularCourseScope.newInfoFromDomain(scope));
-        }
-        return scopes;
     }
 
     public static InfoCurricularSemester newInfoFromDomain(final CurricularSemester curricularSemester) {

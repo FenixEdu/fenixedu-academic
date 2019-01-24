@@ -230,11 +230,6 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     }
 
     @Override
-    public List<CurricularCourseScope> getActiveCurricularCourseScopes() {
-        return Collections.emptyList();
-    }
-
-    @Override
     public CurricularCourse createCurricularCourse(String name, String code, String acronym, Boolean enrolmentAllowed,
             CurricularStage curricularStage) {
         throw new DomainException("EmptyDegreeCurricularPlan.not.available");
@@ -303,11 +298,6 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     @Override
     public void setName(String name) {
         throw new DomainException("EmptyDegreeCurricularPlan.not.available");
-    }
-
-    @Override
-    public Set<CurricularCourseScope> findCurricularCourseScopesIntersectingPeriod(final Date beginDate, final Date endDate) {
-        return Collections.emptySet();
     }
 
     @Override

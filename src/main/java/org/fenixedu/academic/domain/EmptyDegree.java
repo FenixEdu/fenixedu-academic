@@ -30,9 +30,9 @@ import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricular
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 public class EmptyDegree extends EmptyDegree_Base {
 
@@ -41,13 +41,11 @@ public class EmptyDegree extends EmptyDegree_Base {
     private EmptyDegree() {
         super();
         setRootDomainObject(Bennu.getInstance());
-        super.setDegreeType(DegreeType.matching(DegreeType::isEmpty).orElseGet(
-                () -> {
-                    DegreeType type =
-                            new DegreeType(BundleUtil.getLocalizedString("resources.EnumerationResources", "DegreeType.EMPTY"));
-                    type.setEmpty(true);
-                    return type;
-                }));
+        super.setDegreeType(DegreeType.matching(DegreeType::isEmpty).orElseGet(() -> {
+            DegreeType type = new DegreeType(BundleUtil.getLocalizedString("resources.EnumerationResources", "DegreeType.EMPTY"));
+            type.setEmpty(true);
+            return type;
+        }));
         super.setGradeScale(GradeScale.TYPE20);
     }
 
@@ -94,8 +92,8 @@ public class EmptyDegree extends EmptyDegree_Base {
     }
 
     @Override
-    public void edit(String name, String nameEn, String acronym, DegreeType degreeType, Double ectsCredits,
-            GradeScale gradeScale, String prevailingScientificArea, ExecutionYear executionYear) {
+    public void edit(String name, String nameEn, String acronym, DegreeType degreeType, Double ectsCredits, GradeScale gradeScale,
+            String prevailingScientificArea, ExecutionYear executionYear) {
         throw new DomainException("EmptyDegree.not.available");
     }
 
@@ -192,11 +190,6 @@ public class EmptyDegree extends EmptyDegree_Base {
 
     @Override
     public List<CurricularCourse> getExecutedCurricularCoursesByExecutionYear(final ExecutionYear executionYear) {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<CurricularCourse> getExecutedCurricularCoursesByExecutionYearAndYear(final ExecutionYear ey, final Integer cy) {
         return Collections.emptyList();
     }
 

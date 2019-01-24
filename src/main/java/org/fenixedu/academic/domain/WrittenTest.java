@@ -82,7 +82,6 @@ public class WrittenTest extends WrittenTest_Base {
         checkEvaluationDate(testDate, executionCoursesToAssociate);
 
         this.getAssociatedExecutionCoursesSet().clear();
-        this.getAssociatedCurricularCourseScopeSet().clear();
         this.getAssociatedContextsSet().clear();
 
         setAttributesAndAssociateRooms(testDate, testStartTime, testEndTime, executionCoursesToAssociate,

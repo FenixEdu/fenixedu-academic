@@ -37,7 +37,6 @@ import org.fenixedu.academic.dto.InfoExecutionCourseOccupancy;
 import org.fenixedu.academic.dto.InfoShift;
 import org.fenixedu.academic.dto.InfoShiftGroupStatistics;
 import org.fenixedu.academic.dto.resourceAllocationManager.ContextSelectionBean;
-import org.fenixedu.academic.service.services.commons.ReadCurricularCourseScopesByExecutionCourseID;
 import org.fenixedu.academic.service.services.commons.ReadExecutionCourseByOID;
 import org.fenixedu.academic.service.services.resourceAllocationManager.ReadShiftsByExecutionCourseID;
 import org.fenixedu.academic.service.services.resourceAllocationManager.SearchExecutionCourses;
@@ -257,10 +256,8 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
         String executionCourceOId = request.getParameter("executionCourseOID");
         InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseByOID.run(executionCourceOId);
 
-        List scopes = ReadCurricularCourseScopesByExecutionCourseID.run(executionCourceOId);
-
         request.setAttribute("infoExecutionCourse", infoExecutionCourse);
-        request.setAttribute("curricularCourses", scopes);
+        request.setAttribute("curricularCourses", Collections.emptyList());
 
         return mapping.findForward("showLoads");
 

@@ -29,12 +29,10 @@ import java.util.List;
 
 import org.fenixedu.academic.domain.CourseLoad;
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.CurricularCourseScope;
 import org.fenixedu.academic.domain.EntryPhase;
 import org.fenixedu.academic.domain.Evaluation;
 import org.fenixedu.academic.domain.Exam;
 import org.fenixedu.academic.domain.ExecutionCourse;
-import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grouping;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.ShiftType;
@@ -177,8 +175,6 @@ public class InfoExecutionCourse extends InfoObject {
 
             for (final CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCoursesSet()) {
                 final InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
-                infoCurricularCourse.setInfoScopes(getInfoScopes(curricularCourse.getScopesSet()));
-
                 result.add(infoCurricularCourse);
             }
 
@@ -191,30 +187,6 @@ public class InfoExecutionCourse extends InfoObject {
 
     public boolean getCanRemoveCurricularCourses() {
         return getAssociatedInfoCurricularCourses().size() > 1;
-    }
-
-    private List<InfoCurricularCourseScope> getInfoScopes(final Collection<CurricularCourseScope> curricularCourseScopes) {
-        final List<InfoCurricularCourseScope> result = new ArrayList<InfoCurricularCourseScope>();
-
-        for (final CurricularCourseScope curricularCourseScope : curricularCourseScopes) {
-            result.add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
-        }
-
-        return result;
-    }
-
-    public List<InfoCurricularCourse> getAssociatedInfoCurricularCourses(final ExecutionYear executionYear) {
-        List<InfoCurricularCourse> result = new ArrayList<InfoCurricularCourse>();
-
-        for (final CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCoursesSet()) {
-            final InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
-            infoCurricularCourse.setInfoScopes(getInfoScopes(curricularCourse
-                    .findCurricularCourseScopesIntersectingPeriod(executionYear.getBeginDate(), executionYear.getEndDate())));
-
-            result.add(infoCurricularCourse);
-        }
-
-        return result;
     }
 
     public List<InfoExam> getAssociatedInfoExams() {

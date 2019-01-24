@@ -43,8 +43,6 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.util.MessageResources;
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.CurricularCourseScope;
-import org.fenixedu.academic.domain.CurricularCourseScope.DegreeModuleScopeCurricularCourseScope;
 import org.fenixedu.academic.domain.CurricularYear;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.DegreeModuleScope;
@@ -487,11 +485,10 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         List<ExecutionDegree> degrees =
                 ExecutionDegree.filterByAcademicInterval(getAcademicIntervalFromParameter(getAcademicInterval()));
 
-        return degrees
-                .stream()
-                .sorted(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME)
-                .map(executionDegree -> new SelectItem(executionDegree.getExternalId(), executionDegree.getDegree().getPresentationName(
-                        executionDegree.getExecutionYear()))).collect(Collectors.toList());
+        return degrees.stream().sorted(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME)
+                .map(executionDegree -> new SelectItem(executionDegree.getExternalId(),
+                        executionDegree.getDegree().getPresentationName(executionDegree.getExecutionYear())))
+                .collect(Collectors.toList());
     }
 
     private AcademicInterval getAcademicIntervalFromParameter(String academicInterval) {
@@ -621,9 +618,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         if (calendarPeriod == null || executionDegree == null) {
             result[0] = getAcademicIntervalFromParameter(getAcademicInterval()).getStart().toDate();
         } else {
-            int semester =
-                    AcademicInterval.getCardinalityOfAcademicInterval(AcademicInterval
-                            .getAcademicIntervalFromResumedString(getAcademicInterval()));
+            int semester = AcademicInterval.getCardinalityOfAcademicInterval(
+                    AcademicInterval.getAcademicIntervalFromResumedString(getAcademicInterval()));
 
             if (calendarPeriod.intValue() == 0) {
                 final OccupationPeriod examPeriod = executionDegree.getPeriodExamsSpecialSeason();
@@ -632,14 +628,12 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                     result[1] = examPeriod.getStart();
                 }
             } else if (calendarPeriod.intValue() == 1) {
-                final OccupationPeriod occupationPeriod =
-                        semester == 1 ? executionDegree.getPeriodLessonsFirstSemester() : executionDegree
-                                .getPeriodLessonsSecondSemester();
+                final OccupationPeriod occupationPeriod = semester == 1 ? executionDegree
+                        .getPeriodLessonsFirstSemester() : executionDegree.getPeriodLessonsSecondSemester();
                 result[0] = occupationPeriod.getStart();
             } else if (calendarPeriod.intValue() == 2) {
-                final OccupationPeriod occupationPeriod =
-                        semester == 1 ? executionDegree.getPeriodExamsFirstSemester() : executionDegree
-                                .getPeriodExamsSecondSemester();
+                final OccupationPeriod occupationPeriod = semester == 1 ? executionDegree
+                        .getPeriodExamsFirstSemester() : executionDegree.getPeriodExamsSecondSemester();
                 final OccupationPeriod examPeriod = executionDegree.getPeriodExamsSpecialSeason();
                 result[0] = occupationPeriod.getStart();
                 result[1] = examPeriod != null ? examPeriod.getStart() : null;
@@ -659,9 +653,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         if (calendarPeriod == null || executionDegree == null) {
             result[0] = getAcademicIntervalFromParameter(getAcademicInterval()).getEnd().toDate();
         } else {
-            int semester =
-                    AcademicInterval.getCardinalityOfAcademicInterval(AcademicInterval
-                            .getAcademicIntervalFromResumedString(getAcademicInterval()));
+            int semester = AcademicInterval.getCardinalityOfAcademicInterval(
+                    AcademicInterval.getAcademicIntervalFromResumedString(getAcademicInterval()));
 
             if (calendarPeriod.intValue() == 0) {
                 final OccupationPeriod examPeriod = executionDegree.getPeriodExamsSpecialSeason();
@@ -670,14 +663,12 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                     result[1] = examPeriod.getEnd();
                 }
             } else if (calendarPeriod.intValue() == 1) {
-                final OccupationPeriod occupationPeriod =
-                        semester == 1 ? executionDegree.getPeriodLessonsFirstSemester() : executionDegree
-                                .getPeriodLessonsSecondSemester();
+                final OccupationPeriod occupationPeriod = semester == 1 ? executionDegree
+                        .getPeriodLessonsFirstSemester() : executionDegree.getPeriodLessonsSecondSemester();
                 result[0] = occupationPeriod.getLastOccupationPeriodOfNestedPeriods().getEnd();
             } else if (calendarPeriod.intValue() == 2) {
-                final OccupationPeriod occupationPeriod =
-                        semester == 1 ? executionDegree.getPeriodExamsFirstSemester() : executionDegree
-                                .getPeriodExamsSecondSemester();
+                final OccupationPeriod occupationPeriod = semester == 1 ? executionDegree
+                        .getPeriodExamsFirstSemester() : executionDegree.getPeriodExamsSecondSemester();
                 final OccupationPeriod examPeriod = executionDegree.getPeriodExamsSpecialSeason();
                 result[0] = occupationPeriod.getEnd();
                 result[1] = examPeriod != null ? examPeriod.getEnd() : null;
@@ -917,8 +908,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         result.add(new SelectItem("noSelection", this.chooseMessage));
         result.add(new SelectItem(Season.SEASON1_STRING, messages.getMessage(I18N.getLocale(), "property.exam.1stExam")));
         result.add(new SelectItem(Season.SEASON2_STRING, messages.getMessage(I18N.getLocale(), "property.exam.2stExam")));
-        result.add(new SelectItem(Season.SPECIAL_SEASON_STRING, messages.getMessage(I18N.getLocale(),
-                "property.exam.specialSeasonExam")));
+        result.add(new SelectItem(Season.SPECIAL_SEASON_STRING,
+                messages.getMessage(I18N.getLocale(), "property.exam.specialSeasonExam")));
         return result;
     }
 
@@ -989,10 +980,9 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         examEndTime.set(Calendar.SECOND, 0);
         examEndTime.set(Calendar.MILLISECOND, 0);
 
-        List<InfoRoom> availableInfoRoom =
-                SpaceUtils.allocatableSpace(YearMonthDay.fromCalendarFields(examDate), YearMonthDay.fromCalendarFields(examDate),
-                        HourMinuteSecond.fromCalendarFields(examStartTime), HourMinuteSecond.fromCalendarFields(examEndTime),
-                        dayOfWeek, null, null, false);
+        List<InfoRoom> availableInfoRoom = SpaceUtils.allocatableSpace(YearMonthDay.fromCalendarFields(examDate),
+                YearMonthDay.fromCalendarFields(examDate), HourMinuteSecond.fromCalendarFields(examStartTime),
+                HourMinuteSecond.fromCalendarFields(examEndTime), dayOfWeek, null, null, false);
 
         if (this.getEvaluationID() != null) {
             for (Space room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
@@ -1098,8 +1088,9 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
         final Season season = (getSeason() != null) ? new Season(getSeason()) : null;
         try {
-            CreateWrittenEvaluation.runCreateWrittenEvaluation(null, this.getBegin().getTime(), this.getBegin().getTime(), this
-                    .getEnd().getTime(), executionCourseIDs, degreeModuleScopeIDs, roomsIDs, null, season, this.getDescription());
+            CreateWrittenEvaluation.runCreateWrittenEvaluation(null, this.getBegin().getTime(), this.getBegin().getTime(),
+                    this.getEnd().getTime(), executionCourseIDs, degreeModuleScopeIDs, roomsIDs, null, season,
+                    this.getDescription());
 
         } catch (Exception e) {
             String errorMessage = e.getMessage();
@@ -1126,10 +1117,6 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                 return false;
             }
 
-            for (String curricularCourseScopeId : this.getCurricularCourseScopesToAssociate().get(executionCourseID)) {
-                degreeModuleScopeIDs
-                        .add(DegreeModuleScope.getKey(curricularCourseScopeId, CurricularCourseScope.class.getName()));
-            }
             for (String curricularCourseContextId : this.getCurricularCourseContextToAssociate().get(executionCourseID)) {
                 degreeModuleScopeIDs.add(DegreeModuleScope.getKey(curricularCourseContextId, Context.class.getName()));
             }
@@ -1160,9 +1147,9 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
         final Season season = (getSeason() != null) ? new Season(getSeason()) : null;
         try {
-            EditWrittenEvaluation.runEditWrittenEvaluation(null, this.getBegin().getTime(), this.getBegin().getTime(), this
-                    .getEnd().getTime(), executionCourseIDs, degreeModuleScopeIDs, roomsIDs, this.evaluationID, season, this
-                    .getDescription(), null);
+            EditWrittenEvaluation.runEditWrittenEvaluation(null, this.getBegin().getTime(), this.getBegin().getTime(),
+                    this.getEnd().getTime(), executionCourseIDs, degreeModuleScopeIDs, roomsIDs, this.evaluationID, season,
+                    this.getDescription(), null);
 
         } catch (Exception e) {
             String errorMessage = e.getMessage();
@@ -1181,8 +1168,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         if (originPage != null && originPage.length() > 0) {
             final StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(getApplicationContext());
-            stringBuilder
-                    .append("/resourceAllocationManager/searchWrittenEvaluationsByDate.do?method=returnToSearchPage&amp;page=0&date=");
+            stringBuilder.append(
+                    "/resourceAllocationManager/searchWrittenEvaluationsByDate.do?method=returnToSearchPage&amp;page=0&date=");
             stringBuilder.append(DateFormatUtil.format("yyyy/MM/dd", this.getBegin().getTime()));
             if (getSelectedBegin() != null && getSelectedBegin().length() > 0 && getSelectedBegin().equals("true")) {
                 stringBuilder.append("&selectedBegin=");
@@ -1231,9 +1218,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                     for (DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
                         if (degreeModuleScope.isActiveForExecutionPeriod(executionCourse.getExecutionPeriod())) {
                             if (((WrittenEvaluation) this.getEvaluation()).getDegreeModuleScopes().contains(degreeModuleScope)) {
-                                if (degreeModuleScope instanceof DegreeModuleScopeCurricularCourseScope) {
-                                    selectedScopes.add(degreeModuleScope.getExternalId());
-                                } else if (degreeModuleScope instanceof DegreeModuleScopeContext) {
+                                if (degreeModuleScope instanceof DegreeModuleScopeContext) {
                                     selectedContexts.add(degreeModuleScope.getExternalId());
                                 }
                             }
@@ -1242,8 +1227,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                 }
 
                 String[] selected = {};
-                this.getCurricularCourseScopesToAssociate()
-                        .put(executionCourse.getExternalId(), selectedScopes.toArray(selected));
+                this.getCurricularCourseScopesToAssociate().put(executionCourse.getExternalId(),
+                        selectedScopes.toArray(selected));
                 this.getCurricularCourseContextToAssociate().put(executionCourse.getExternalId(),
                         selectedContexts.toArray(selected));
             }
@@ -1297,9 +1282,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                             label.append(" ").append(degreeModuleScope.getBranch());
                         }
 
-                        if (degreeModuleScope instanceof DegreeModuleScopeCurricularCourseScope) {
-                            items.add(new SelectItem(degreeModuleScope.getExternalId(), label.toString()));
-                        } else if (degreeModuleScope instanceof DegreeModuleScopeContext) {
+                        if (degreeModuleScope instanceof DegreeModuleScopeContext) {
                             items2.add(new SelectItem(degreeModuleScope.getExternalId(), label.toString()));
                         }
                     }
@@ -1436,8 +1419,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     public String commentExecutionCourse() throws FenixServiceException {
         try {
 
-            DefineExamComment.run(this.getExecutionCourse().getSigla(), this.getExecutionCourse().getExecutionPeriod()
-                    .getExternalId(), this.getComment());
+            DefineExamComment.run(this.getExecutionCourse().getSigla(),
+                    this.getExecutionCourse().getExecutionPeriod().getExternalId(), this.getComment());
         } catch (FenixServiceException e) {
             this.setErrorMessage(e.getMessage());
             return "";

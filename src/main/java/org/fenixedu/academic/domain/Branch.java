@@ -18,16 +18,9 @@
  */
 package org.fenixedu.academic.domain;
 
-import java.util.Collection;
-import java.util.Iterator;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.fenixedu.academic.domain.branch.BranchType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 /**
  * @author dcs-rjao
@@ -63,37 +56,6 @@ public class Branch extends Branch_Base {
         setCode(code);
     }
 
-    private Boolean canDeleteAllEligibleCurricularCourseScopes(final Branch commonBranch) {
-        Iterator<CurricularCourseScope> branchCurricularCourseScopesIterator = getScopesSet().iterator();
-        while (branchCurricularCourseScopesIterator.hasNext()) {
-            CurricularCourseScope scope = branchCurricularCourseScopesIterator.next();
-            CurricularCourse curricularCourse = scope.getCurricularCourse();
-
-            // if CurricularCourse already has a common Branch
-            if (hasCurricularCourseCommonBranchInAnyCurricularCourseScope(curricularCourse, commonBranch)) {
-                // we want to delete this CurricularCourseScope
-
-                if (!scope.isDeletable()) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    @Override
-    protected void checkForDeletionBlockers(Collection<String> blockers) {
-        super.checkForDeletionBlockers(blockers);
-
-        if (this.representsCommonBranch() && !this.getScopesSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.branch.cant.delete"));
-        }
-
-        if (!canDeleteAllEligibleCurricularCourseScopes(findCommonBranchForSameDegreeCurricularPlan())) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.branch.cant.delete"));
-        }
-    }
-
     public void delete() throws DomainException {
         DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
 
@@ -101,31 +63,9 @@ public class Branch extends Branch_Base {
 
         this.getStudentCurricularPlansSet().clear();
 
-        removeCurricularCourseScopes(commonBranch);
         setDegreeCurricularPlan(null);
         setRootDomainObject(null);
         super.deleteDomainObject();
-    }
-
-    private void removeCurricularCourseScopes(final Branch commonBranch) throws DomainException {
-        Iterator<CurricularCourseScope> branchCurricularCourseScopesIterator = getScopesSet().iterator();
-        while (branchCurricularCourseScopesIterator.hasNext()) {
-            CurricularCourseScope scope = branchCurricularCourseScopesIterator.next();
-            CurricularCourse curricularCourse = scope.getCurricularCourse();
-
-            // if CurricularCourse already has a common Branch
-            if (hasCurricularCourseCommonBranchInAnyCurricularCourseScope(curricularCourse, commonBranch)) {
-                // delete the CurricularCourseScope
-                branchCurricularCourseScopesIterator.remove();
-                scope.setBranch(null);
-                scope.delete();
-
-            } else {
-                // set the Branch in the CurricularCourseScope to commonBranch
-                branchCurricularCourseScopesIterator.remove();
-                scope.setBranch(commonBranch);
-            }
-        }
     }
 
     private Branch findCommonBranchForSameDegreeCurricularPlan() {
@@ -135,17 +75,6 @@ public class Branch extends Branch_Base {
             }
         }
         return null;
-    }
-
-    private Boolean hasCurricularCourseCommonBranchInAnyCurricularCourseScope(CurricularCourse curricularCourse,
-            final Branch commonBranch) {
-        return ((CurricularCourseScope) CollectionUtils.find(curricularCourse.getScopesSet(), new Predicate() {
-            @Override
-            public boolean evaluate(Object o) {
-                CurricularCourseScope ccs = (CurricularCourseScope) o;
-                return ccs.getBranch().equals(commonBranch);
-            }
-        }) != null);
     }
 
     // Static methods

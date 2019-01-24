@@ -48,9 +48,8 @@ public abstract class DegreeModuleScope {
                     if (cs != 0) {
                         return cs;
                     }
-                    final int cn =
-                            Collator.getInstance()
-                                    .compare(o1.getCurricularCourse().getName(), o2.getCurricularCourse().getName());
+                    final int cn = Collator.getInstance().compare(o1.getCurricularCourse().getName(),
+                            o2.getCurricularCourse().getName());
                     if (cn != 0) {
                         return cn;
                     }
@@ -72,9 +71,8 @@ public abstract class DegreeModuleScope {
                     if (cs != 0) {
                         return cs;
                     }
-                    final int cn =
-                            Collator.getInstance()
-                                    .compare(o1.getCurricularCourse().getName(), o2.getCurricularCourse().getName());
+                    final int cn = Collator.getInstance().compare(o1.getCurricularCourse().getName(),
+                            o2.getCurricularCourse().getName());
                     if (cn != 0) {
                         return cn;
                     }
@@ -121,20 +119,15 @@ public abstract class DegreeModuleScope {
     public abstract boolean isActiveForAcademicInterval(AcademicInterval academicInterval);
 
     public static List<DegreeModuleScope> getDegreeModuleScopes(WrittenEvaluation writtenEvaluation) {
-        return getDegreeModuleScopes(writtenEvaluation.getAssociatedCurricularCourseScopeSet(),
-                writtenEvaluation.getAssociatedContextsSet());
+        return getDegreeModuleScopes(writtenEvaluation.getAssociatedContextsSet());
     }
 
     public static List<DegreeModuleScope> getDegreeModuleScopes(CurricularCourse curricularCourse) {
-        return getDegreeModuleScopes(curricularCourse.getScopesSet(), curricularCourse.getParentContextsSet());
+        return getDegreeModuleScopes(curricularCourse.getParentContextsSet());
     }
 
-    private static List<DegreeModuleScope> getDegreeModuleScopes(Collection<CurricularCourseScope> curricularCourseScopes,
-            Collection<Context> contexts) {
+    private static List<DegreeModuleScope> getDegreeModuleScopes(Collection<Context> contexts) {
         List<DegreeModuleScope> degreeModuleScopes = new ArrayList<DegreeModuleScope>();
-        for (CurricularCourseScope curricularCourseScope : curricularCourseScopes) {
-            degreeModuleScopes.add(curricularCourseScope.getDegreeModuleScopeCurricularCourseScope());
-        }
         for (Context context : contexts) {
             degreeModuleScopes.add(context.getDegreeModuleScopeContext());
         }
@@ -182,9 +175,6 @@ public abstract class DegreeModuleScope {
             try {
                 Class clazz = Class.forName(className);
                 DomainObject domainObject = FenixFramework.getDomainObject(externalId);
-                if (domainObject != null && domainObject instanceof CurricularCourseScope) {
-                    return ((CurricularCourseScope) domainObject).getDegreeModuleScopeCurricularCourseScope();
-                }
                 if (domainObject != null && domainObject instanceof Context) {
                     return ((Context) domainObject).getDegreeModuleScopeContext();
                 }
