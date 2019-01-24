@@ -26,10 +26,12 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/academic" prefix="academic" %>
 <html:xhtml/>
 
-<div style="float: right;">
-	<bean:define id="personID" name="student" property="person.username"/>
-	<html:img align="middle" src="<%= request.getContextPath() + "/user/photo/" + personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
-</div>
+<logic:notEmpty name="student" property="person.username">
+	<div style="float: right;">
+		<bean:define id="personID" name="student" property="person.username"/>
+		<html:img align="middle" src="<%= request.getContextPath() + "/user/photo/" + personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
+	</div>
+</logic:notEmpty>
 
 <h2><bean:message key="label.studentPage" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
@@ -77,14 +79,16 @@
 		</span>
 	</academic:allowed>
 
-	<academic:allowed operation="CREATE_REGISTRATION">
-        <span class="pleft05">
-            <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-            <html:link page="/../academic/move-registrations" paramId="target" paramName="student" paramProperty="person.user.username">
-                <bean:message key="link.student.moveRegistrations" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-            </html:link>
-        </span>
-	</academic:allowed>
+	<logic:notEmpty name="student" property="person.user">
+		<academic:allowed operation="CREATE_REGISTRATION">
+	        <span class="pleft05">
+	            <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+	            <html:link page="/../academic/move-registrations" paramId="target" paramName="student" paramProperty="person.user.username">
+	                <bean:message key="link.student.moveRegistrations" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+	            </html:link>
+	        </span>
+		</academic:allowed>
+	</logic:notEmpty>
 </p>
 
 <!-- Student Warnings -->

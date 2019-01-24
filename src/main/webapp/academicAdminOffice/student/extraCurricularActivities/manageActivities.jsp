@@ -45,9 +45,12 @@
                 <fr:property name="rowClasses" value="tdhl1,,,," />
             </fr:layout>
         </fr:view></td>
-        <td><bean:define id="personID" name="student" property="person.username" /> <html:img align="middle"
-            src="<%= request.getContextPath() + "/user/photo/" + personID.toString()%>"
-            altKey="personPhoto" bundle="IMAGE_RESOURCES" /></td>
+        <logic:notEmpty name="student" property="person.username">
+			<td style="vertical-align: top; padding-left: 10px;">
+				<bean:define id="personID" name="student" property="person.username" /> <html:img align="middle" 
+					src="<%= request.getContextPath() + "/user/photo/" + personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
+			</td>
+        </logic:notEmpty>
     </tr>
 </table>
 
