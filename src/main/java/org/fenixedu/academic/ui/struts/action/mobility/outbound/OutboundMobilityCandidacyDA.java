@@ -21,6 +21,7 @@ package org.fenixedu.academic.ui.struts.action.mobility.outbound;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Collections;
+import java.util.SortedSet;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -43,6 +44,7 @@ import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication.AcademicAdminCandidaciesApp;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.domain.groups.NamedGroup;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
@@ -50,15 +52,14 @@ import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
-import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
-
-import org.fenixedu.bennu.core.domain.groups.NamedGroup;
 import org.fenixedu.messaging.core.ui.MessageBean;
 import org.fenixedu.messaging.core.ui.MessagingUtils;
+
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
+import pt.ist.fenixframework.FenixFramework;
 
 @StrutsFunctionality(app = AcademicAdminCandidaciesApp.class, path = "outbound-mobility", titleKey = "label.mobility.outbound",
         accessGroup = "academic(MANAGE_MOBILITY_OUTBOUND)")
@@ -174,6 +175,33 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         }
         RenderUtils.invalidateViewState();
         return prepare(mapping, request, outboundMobilityContextBean);
+    }
+
+    public ActionForward deleteAllContests(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) {
+
+        OutboundMobilityContextBean outboundMobilityContextBean = getRenderedObject();
+
+        SortedSet<OutboundMobilityCandidacyContest> outboundMobilityCandidacyContest =
+                outboundMobilityContextBean.getOutboundMobilityCandidacyContest();
+
+        if (outboundMobilityCandidacyContest == null || outboundMobilityCandidacyContest.isEmpty()) {
+            return prepare(mapping, request, outboundMobilityContextBean);
+        } else {
+            try {
+
+                FenixFramework.atomic(() -> {
+                    outboundMobilityCandidacyContest.forEach(OutboundMobilityCandidacyContest::delete);
+                });
+
+            }catch (DomainException e) {
+                addErrorMessage(request, "errors", e.getKey());
+                return prepare(mapping, request, outboundMobilityContextBean);
+            }
+            
+            RenderUtils.invalidateViewState();
+            return prepare(mapping, request, new OutboundMobilityContextBean(outboundMobilityContextBean));
+        }
     }
 
     public ActionForward viewContest(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,

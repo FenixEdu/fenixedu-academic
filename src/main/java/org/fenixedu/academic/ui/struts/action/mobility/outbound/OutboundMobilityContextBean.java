@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -42,9 +43,9 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixframework.Atomic;
-
 import com.google.common.io.ByteStreams;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class OutboundMobilityContextBean implements Serializable {
 
@@ -86,6 +87,15 @@ public class OutboundMobilityContextBean implements Serializable {
             candidacyPeriods.add(last);
             // mobilityGroups.addAll(last.getOutboundMobilityCandidacyContestGroupSet());
         }
+    }
+
+    public OutboundMobilityContextBean(OutboundMobilityContextBean bean) {
+        this.candidacyPeriods = new TreeSet<>(bean.getCandidacyPeriods());
+        this.executionYear = bean.getExecutionYear();
+        this.mobilityPrograms = bean.getMobilityPrograms().stream().filter(FenixFramework::isDomainObjectValid)
+                .collect(Collectors.toCollection(TreeSet::new));
+        this.mobilityGroups = bean.getMobilityGroups().stream().filter(FenixFramework::isDomainObjectValid)
+                .collect(Collectors.toCollection(TreeSet::new));
     }
 
     public ExecutionYear getExecutionYear() {

@@ -95,6 +95,30 @@
 
 	<bean:define id="outboundMobilityContextBean" name="outboundMobilityContextBean" type="org.fenixedu.academic.ui.struts.action.mobility.outbound.OutboundMobilityContextBean"/>
 
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+			var mobilityProgramsState = false;
+			// disable label text selection
+			$("label[for$=mobilityProgramsAsList]").attr('style', 'user-select: none;');
+
+			// toggle mobility program checkboxes state
+			$("label[for$=mobilityProgramsAsList]").click(function() {
+				mobilityProgramsState = !mobilityProgramsState;
+				$("input[value*=MobilityProgram]").prop('checked', mobilityProgramsState ? 'checked' : '');
+			});
+
+			var mobilityGroupsState = false;
+			// disable label text selection
+			$("label[for$=mobilityGroupsAsList]").attr('style', 'user-select: none;');
+
+			// toggle mobility contest groups checkboxes state
+			$("label[for$=mobilityGroupsAsList]").click(function() {
+				mobilityGroupsState = !mobilityGroupsState;
+				$("input[value*=OutboundMobilityCandidacyContestGroup]").prop('checked', mobilityGroupsState ? 'checked' : '');
+			});
+		});
+	</script>
 	<fr:form id="prepareForm" action="/outboundMobilityCandidacy.do">
 		<html:hidden property="method" value="prepare"/>
 				<fr:edit id="outboundMobilityContextBeanExecutionIntervalSelection" name="outboundMobilityContextBean">
@@ -456,6 +480,18 @@
 	%>
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.contests.none"/>
 	<%  } else { %>
+			<script type="text/javascript">
+				function deleteAllContests() {
+					if (confirm('<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.confirm.delete.all.contests"/>')) {
+						document.getElementById('deleteContestForm').method.value = 'deleteAllContests';
+						document.getElementById('deleteContestForm').submit();
+					}
+				}
+			</script>
+			<a href="#" onclick="deleteAllContests()">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.delete.all.contests"/>
+			</a>
+
 			<fr:form id="deleteContestForm" action="/outboundMobilityCandidacy.do">
 				<html:hidden property="method" value=""/>
 				<html:hidden property="contestOid" value=""/>
