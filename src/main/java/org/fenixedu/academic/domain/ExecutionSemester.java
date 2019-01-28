@@ -23,15 +23,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
-import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
-import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
@@ -306,59 +303,6 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
             }
         }
         return result;
-    }
-
-    public Collection<MarkSheet> getWebMarkSheetsNotPrinted() {
-        final Collection<MarkSheet> markSheets = new HashSet<MarkSheet>();
-        for (final MarkSheet sheet : getMarkSheetsSet()) {
-            if (sheet.getSubmittedByTeacher() && !sheet.getPrinted()) {
-                markSheets.add(sheet);
-            }
-        }
-        return markSheets;
-    }
-
-    public Collection<MarkSheet> getWebMarkSheetsNotPrinted(Person person, DegreeCurricularPlan dcp) {
-        final Collection<MarkSheet> markSheets = new HashSet<MarkSheet>();
-        for (final MarkSheet sheet : getMarkSheetsSet()) {
-            if (sheet.getSubmittedByTeacher() && !sheet.getPrinted()) {
-                if ((dcp == null || sheet.isFor(dcp))
-                        && sheet.getCurricularCourse().hasAnyExecutionDegreeFor(getExecutionYear())) {
-                    ExecutionDegree executionDegree =
-                            sheet.getCurricularCourse().getExecutionDegreeFor(getExecutionYear().getAcademicInterval());
-                    final Degree degree = executionDegree.getDegree();
-                    if (AcademicAccessRule
-                            .getDegreesAccessibleToFunction(AcademicOperationType.MANAGE_MARKSHEETS, person.getUser())
-                            .anyMatch(d -> d == degree)) {
-                        markSheets.add(sheet);
-                    }
-                }
-            }
-        }
-        return markSheets;
-    }
-
-    public Collection<ExecutionCourse> getExecutionCoursesWithDegreeGradesToSubmit(
-            final DegreeCurricularPlan degreeCurricularPlan) {
-        final Collection<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
-        for (final ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
-            if (executionCourse.hasAnyDegreeGradeToSubmit(this, degreeCurricularPlan)) {
-                executionCourses.add(executionCourse);
-            }
-        }
-        return executionCourses;
-    }
-
-    public Collection<MarkSheet> getMarkSheetsToConfirm(final DegreeCurricularPlan degreeCurricularPlan) {
-        final Collection<MarkSheet> markSheets = new ArrayList<MarkSheet>();
-        for (final MarkSheet markSheet : this.getMarkSheetsSet()) {
-            if ((degreeCurricularPlan == null
-                    || markSheet.getCurricularCourse().getDegreeCurricularPlan().equals(degreeCurricularPlan))
-                    && markSheet.isNotConfirmed()) {
-                markSheets.add(markSheet);
-            }
-        }
-        return markSheets;
     }
 
     public List<Attends> getAttendsByDegreeCurricularPlan(final DegreeCurricularPlan degreeCurricularPlan) {

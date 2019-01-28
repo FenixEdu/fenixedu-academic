@@ -298,14 +298,10 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
     @Override
     protected void checkForDeletionBlockers(Collection<String> blockers) {
         super.checkForDeletionBlockers(blockers);
-        if (!isTemporary() || getMarkSheet() != null) {
+        if (!isTemporary()) {
             blockers.add(
                     BundleUtil.getString(Bundle.APPLICATION, "error.enrolmentEvaluation.isTemporary.or.hasConfirmedMarksheet"));
         }
-    }
-
-    public boolean hasConfirmedMarkSheet() {
-        return getMarkSheet() != null && getMarkSheet().isConfirmed();
     }
 
     public boolean isTemporary() {
@@ -334,7 +330,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         setPersonResponsibleForGrade(null);
         setPerson(null);
         setEnrolment(null);
-        setMarkSheet(null);
         setRectification(null);
         setRectified(null);
 
@@ -344,18 +339,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         setRootDomainObject(null);
 
         super.deleteDomainObject();
-    }
-
-    public void removeFromMarkSheet() {
-        if (hasConfirmedMarkSheet()) {
-            throw new DomainException("error.enrolmentEvaluation.cannot.be.removed.from.markSheet");
-        }
-
-        setCheckSum(null);
-        setExamDateYearMonthDay(null);
-        setGradeAvailableDateYearMonthDay(null);
-
-        setMarkSheet(null);
     }
 
     protected void generateCheckSum() {
@@ -414,14 +397,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
 
     public StudentCurricularPlan getStudentCurricularPlan() {
         return getEnrolment().getStudentCurricularPlan();
-    }
-
-    public MarkSheet getRectificationMarkSheet() {
-        if (this.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.RECTIFIED_OBJ) && getRectification() != null) {
-            return getRectification().getMarkSheet();
-        } else {
-            return null;
-        }
     }
 
     public boolean hasGrade() {

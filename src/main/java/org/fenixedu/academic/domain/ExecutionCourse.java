@@ -1142,28 +1142,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return competenceCourseInformations;
     }
 
-    public boolean hasAnyDegreeGradeToSubmit(final ExecutionSemester period, final DegreeCurricularPlan degreeCurricularPlan) {
-        for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-            if (degreeCurricularPlan == null || degreeCurricularPlan.equals(curricularCourse.getDegreeCurricularPlan())) {
-                if (curricularCourse.hasAnyDegreeGradeToSubmit(period)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public boolean hasAnyDegreeMarkSheetToConfirm(ExecutionSemester period, DegreeCurricularPlan degreeCurricularPlan) {
-        for (final CurricularCourse curricularCourse : this.getAssociatedCurricularCoursesSet()) {
-            if (degreeCurricularPlan == null || degreeCurricularPlan.equals(curricularCourse.getDegreeCurricularPlan())) {
-                if (curricularCourse.hasAnyDegreeMarkSheetToConfirm(period)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     public String constructShiftName(final Shift shift, final int n) {
         final String number = n < 10 ? "0" + n : Integer.toString(n);
         StringBuilder typesName = new StringBuilder();
@@ -2041,14 +2019,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
         }
         return false;
-    }
-
-    public Collection<MarkSheet> getAssociatedMarkSheets() {
-        Collection<MarkSheet> markSheets = new HashSet<MarkSheet>();
-        for (CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-            markSheets.addAll(curricularCourse.getMarkSheetsByPeriod(getExecutionPeriod()));
-        }
-        return markSheets;
     }
 
     public Set<Exam> getPublishedExamsFor(final CurricularCourse curricularCourse) {

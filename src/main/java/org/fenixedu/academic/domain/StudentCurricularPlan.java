@@ -39,7 +39,6 @@ import java.util.stream.Stream;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
@@ -97,15 +96,11 @@ import org.fenixedu.academic.domain.studentCurriculum.curriculumLine.CurriculumL
 import org.fenixedu.academic.domain.studentCurriculum.curriculumLine.MoveCurriculumLinesBean;
 import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
 import org.fenixedu.academic.dto.administrativeOffice.studentEnrolment.NoCourseGroupEnrolmentBean;
-import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.predicate.StudentCurricularPlanPredicates;
-import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.EnrolmentEvaluationState;
 import org.fenixedu.academic.util.predicates.AndPredicate;
 import org.fenixedu.academic.util.predicates.ResultCollection;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
@@ -2363,45 +2358,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public boolean isEmptyDegree() {
         return getDegreeCurricularPlan().isEmpty();
-    }
-
-    @Atomic
-    public void setEvaluationsForCurriculumValidation(List<List<MarkSheetEnrolmentEvaluationBean>> enrolmentEvaluationsBeanList) {
-        for (List<MarkSheetEnrolmentEvaluationBean> evaluationsList : enrolmentEvaluationsBeanList) {
-            setIndividualEvaluationsForCurriculumValidation(evaluationsList);
-        }
-    }
-
-    private List<MarkSheetEnrolmentEvaluationBean> setIndividualEvaluationsForCurriculumValidation(
-            List<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationsBeanList) {
-
-        if (enrolmentEvaluationsBeanList.size() > 0) {
-            Enrolment enrolmentForWeightSet = enrolmentEvaluationsBeanList.iterator().next().getEnrolment();
-            enrolmentForWeightSet.setWeigth(enrolmentEvaluationsBeanList.iterator().next().getWeight());
-        }
-
-        for (MarkSheetEnrolmentEvaluationBean enrolmentEvaluationBean : enrolmentEvaluationsBeanList) {
-            Enrolment enrolment = enrolmentEvaluationBean.getEnrolment();
-
-            EnrolmentEvaluation enrolmentEvaluation = enrolmentEvaluationBean.getLatestEnrolmentEvaluation();
-
-            if (StringUtils.isEmpty(enrolmentEvaluationBean.getGradeValue())) {
-                enrolmentEvaluationBean.setEnrolmentEvaluationSet(Boolean.FALSE);
-                continue;
-            }
-
-            enrolmentEvaluation = enrolment.addNewEnrolmentEvaluation(EnrolmentEvaluationState.TEMPORARY_OBJ,
-                    enrolmentEvaluationBean.getEvaluationSeason(), AccessControl.getPerson(),
-                    enrolmentEvaluationBean.getGradeValue(), new java.util.Date(), enrolmentEvaluationBean.getEvaluationDate(),
-                    enrolmentEvaluationBean.getExecutionSemester(), enrolmentEvaluationBean.getBookReference(),
-                    enrolmentEvaluationBean.getPage(), enrolmentEvaluationBean.getGradeScale());
-            enrolmentEvaluation.confirmSubmission(AccessControl.getPerson(),
-                    BundleUtil.getString(Bundle.ACADEMIC, "message.curriculum.validation.observation"));
-
-            enrolmentEvaluationBean.setEnrolmentEvaluationSet(Boolean.TRUE);
-        }
-
-        return enrolmentEvaluationsBeanList;
     }
 
     @Atomic

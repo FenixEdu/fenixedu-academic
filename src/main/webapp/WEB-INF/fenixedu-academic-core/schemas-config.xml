@@ -24,7 +24,6 @@
 -->
 <!DOCTYPE schemas SYSTEM "/fenix-renderers-schemas.dtd" [
 	<!ENTITY researcher SYSTEM "/fenixedu-academic/schemas/researcher-schemas.xml">
-	<!ENTITY markSheet SYSTEM "/fenixedu-academic/schemas/markSheet-schemas.xml">
 	<!ENTITY messaging SYSTEM "/fenixedu-academic/schemas/messaging-schemas.xml">
 	<!ENTITY party SYSTEM "/fenixedu-academic/schemas/party-schemas.xml">
 	<!ENTITY candidacy SYSTEM "/fenixedu-academic/schemas/candidacy-schemas.xml">
@@ -592,7 +591,6 @@
 	</schema>
 	
  	&researcher;
-	&markSheet;
 	&messaging;
 	&space;
 	&party;
