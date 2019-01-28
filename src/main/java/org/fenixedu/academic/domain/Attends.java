@@ -350,7 +350,8 @@ public class Attends extends Attends_Base {
         final DateMidnight lastMonday = endOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
         final DateMidnight endOfResponsePeriod = lastMonday.plusWeeks(2);
 
-        return (secondMonday.isEqualNow() || secondMonday.isBeforeNow()) && endOfResponsePeriod.isAfterNow() ? getPreviousWeek() : null;
+        return (secondMonday.isEqualNow() || secondMonday.isBeforeNow())
+                && endOfResponsePeriod.isAfterNow() ? getPreviousWeek() : null;
     }
 
     public int getCalculatePreviousWeek() {
@@ -510,10 +511,6 @@ public class Attends extends Attends_Base {
                 getRegistration().removeShifts(shift);
             }
         }
-    }
-
-    public boolean hasAnyAssociatedMarkSheetOrFinalGrade() {
-        return getEnrolment().hasAnyAssociatedMarkSheetOrFinalGrade();
     }
 
     public StudentCurricularPlan getStudentCurricularPlanFromAttends() {

@@ -533,10 +533,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
             throw new DomainException("error.enrolment.cant.unenroll");
         }
 
-        if (temporaryImprovement.getMarkSheet() != null && temporaryImprovement.getMarkSheet().isConfirmed()) {
-            throw new DomainException("error.enrolment.impossible.to.delete.evaluation.has.marksheet");
-        }
-
         TreasuryBridgeAPIFactory.implementation().improvementUnrenrolment(temporaryImprovement);
 
         temporaryImprovement.delete();
@@ -812,10 +808,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         final EnrolmentEvaluation temporarySpecialSeason = getTemporaryEvaluation(season, getExecutionPeriod()).orElse(null);
         if (temporarySpecialSeason == null || !temporarySpecialSeason.isTemporary()) {
             throw new DomainException("error.enrolment.cant.unenroll");
-        }
-
-        if (temporarySpecialSeason.getMarkSheet() != null && temporarySpecialSeason.getMarkSheet().isConfirmed()) {
-            throw new DomainException("error.enrolment.impossible.to.delete.evaluation.has.marksheet");
         }
 
         temporarySpecialSeason.delete();
@@ -1163,47 +1155,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return enrolmentEvaluation;
     }
 
-    final public boolean hasAssociatedMarkSheet(final EvaluationSeason season) {
-        for (final EnrolmentEvaluation enrolmentEvaluation : this.getEvaluationsSet()) {
-            if (enrolmentEvaluation.getMarkSheet() != null && enrolmentEvaluation.getEvaluationSeason().equals(season)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    final public boolean hasAssociatedMarkSheetOrFinalGrade() {
-        for (final EnrolmentEvaluation enrolmentEvaluation : getEvaluationsSet()) {
-            if (enrolmentEvaluation.getMarkSheet() != null || enrolmentEvaluation.isFinal()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    final public boolean hasAssociatedMarkSheetOrFinalGrade(final EvaluationSeason season) {
-        for (final EnrolmentEvaluation enrolmentEvaluation : this.getEvaluationsSet()) {
-            if (enrolmentEvaluation.getEvaluationSeason().equals(season)
-                    && (enrolmentEvaluation.getMarkSheet() != null || enrolmentEvaluation.isFinal())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    final public List<EnrolmentEvaluation> getConfirmedEvaluations(final EvaluationSeason season) {
-        List<EnrolmentEvaluation> evaluations = new ArrayList<>();
-        for (EnrolmentEvaluation evaluation : this.getEvaluationsSet()) {
-            if (evaluation.getMarkSheet() != null && evaluation.getMarkSheet().getEvaluationSeason().equals(season)
-                    && evaluation.getMarkSheet().isConfirmed()) {
-
-                evaluations.add(evaluation);
-            }
-        }
-        Collections.sort(evaluations, EnrolmentEvaluation.COMPARATORY_BY_WHEN);
-        return evaluations;
-    }
-
     final public Attends getAttendsByExecutionCourse(final ExecutionCourse executionCourse) {
         for (final Attends attends : this.getAttendsSet()) {
             if (attends.isFor(executionCourse)) {
@@ -1531,15 +1482,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return null;
     }
 
-    public boolean hasAnyAssociatedMarkSheetOrFinalGrade() {
-        for (final EnrolmentEvaluation enrolmentEvaluation : getEvaluationsSet()) {
-            if (enrolmentEvaluation.getMarkSheet() != null || enrolmentEvaluation.isFinal()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     public boolean hasEnrolment(final ExecutionSemester executionSemester) {
         return isValid(executionSemester);
@@ -1563,22 +1505,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     @Override
     public int getNumberOfAllApprovedEnrolments(final ExecutionSemester executionSemester) {
         return isValid(executionSemester) && isApproved() ? 1 : 0;
-    }
-
-    public boolean canBeSubmittedForOldMarkSheet(final EvaluationSeason season) {
-        if (season.isNormal() && getEvaluationsSet().isEmpty()) {
-            return true;
-        }
-
-        for (EnrolmentEvaluation enrolmentEvaluation : getEvaluationsSet()) {
-            if (enrolmentEvaluation.getEvaluationSeason().equals(season) && enrolmentEvaluation.getMarkSheet() == null
-                    && (enrolmentEvaluation.isTemporary()
-                            || enrolmentEvaluation.isNotEvaluated() && enrolmentEvaluation.getExamDateYearMonthDay() == null)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     public boolean isSourceOfAnyCreditsInCurriculum() {

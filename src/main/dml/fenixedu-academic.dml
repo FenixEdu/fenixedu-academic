@@ -33,7 +33,6 @@ enum org.fenixedu.academic.domain.GradeScale                                    
 enum org.fenixedu.academic.domain.GraduationType                                                                       as GraduationType;
 enum org.fenixedu.academic.domain.GrantOwnerType                                                                       as GrantOwnerType;
 enum org.fenixedu.academic.domain.JobApplicationType                                                                   as JobApplicationType;
-enum org.fenixedu.academic.domain.MarkSheetState                                                                       as MarkSheetState;
 enum org.fenixedu.academic.domain.OccupationPeriodType                                                                 as OccupationPeriodType;
 enum org.fenixedu.academic.domain.PhotoState                                                                           as PhotoState;
 enum org.fenixedu.academic.domain.PhotoType                                                                            as PhotoType;
@@ -825,22 +824,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
             YearMonthDay whenSubmitedYearMonthDay;
         }
         
-    class MarkSheet  {
-        String archiveInformation;
-        String checkSum;
-        DateTime confirmationDateDateTime;
-        DateTime creationDateDateTime;
-        DateTime evaluationDateDateTime;
-        MarkSheetState markSheetState;
-        Boolean printed;
-        String reason;
-        Boolean submittedByTeacher;
-    }
-
-        class OldMarkSheet extends MarkSheet {
-        }
-
-
     class OccupationPeriod  {
         Interval periodInterval;
     }
@@ -2564,10 +2547,6 @@ class accessControl.PersistentGroupingGroup extends .org.fenixedu.bennu.core.dom
 
 class accessControl.PersistentTeachersWithIncompleteEvaluationWorkGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
-class accessControl.PersistentTeachersWithGradesToSubmitGroup extends accessControl.PersistentTeachersWithIncompleteEvaluationWorkGroup;
-
-class accessControl.PersistentTeachersWithMarkSheetsToConfirmGroup extends accessControl.PersistentTeachersWithIncompleteEvaluationWorkGroup;
-
 class accessControl.PersistentUnitGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup {
     public AccountabilityTypeEnum relationType;
     public Boolean includeSubUnits (REQUIRED);
@@ -4272,57 +4251,6 @@ relation MarkEvaluation {
     Evaluation playsRole evaluation;
 }
 
-relation MarkSheetConfirmationPerson {
-    MarkSheet playsRole confirmedMarkSheets {
-        multiplicity *;
-    }
-    Person playsRole validator;
-}
-
-relation MarkSheetCreationPerson {
-    MarkSheet playsRole createdMarkSheets {
-        multiplicity *;
-    }
-    Person playsRole creator;
-}
-
-relation MarkSheetCurricularCourse {
-    MarkSheet playsRole markSheets {
-        multiplicity *;
-    }
-    CurricularCourse playsRole curricularCourse;
-}
-
-relation MarkSheetEnrolmentEvaluation {
-    MarkSheet playsRole markSheet;
-    EnrolmentEvaluation playsRole enrolmentEvaluations {
-        multiplicity *;
-    }
-}
-
-relation MarkSheetEvaluationSeason {
-    public MarkSheet playsRole markSheet {
-        multiplicity *;
-    }
-    public EvaluationSeason playsRole evaluationSeason {
-        multiplicity 1..1;
-    }
-}
-
-relation MarkSheetExecutionPeriod {
-    ExecutionSemester playsRole executionPeriod;
-    MarkSheet playsRole markSheets {
-        multiplicity *;
-    }
-}
-
-relation MarkSheetTeacher {
-    MarkSheet playsRole markSheets {
-        multiplicity *;
-    }
-    Teacher playsRole responsibleTeacher;
-}
-
 relation OldCurricularCourseCurricularCourseEquivalence {
     CurricularCourseEquivalence playsRole oldCurricularCourseEquivalences {
         multiplicity *;
@@ -4830,13 +4758,6 @@ relation RoomSummary {
         multiplicity *;
     }
     .org.fenixedu.spaces.domain.Space playsRole room;
-}
-
-relation RootDomainMarkSheet {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    MarkSheet playsRole markSheets {
-        multiplicity *;
-    }
 }
 
 relation RootDomainObjectAcademicCalendarRootEntry {

@@ -27,7 +27,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -56,10 +55,6 @@ import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
 import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
-import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
-import org.fenixedu.academic.predicate.MarkSheetPredicates;
-import org.fenixedu.academic.util.DateFormatUtil;
-import org.fenixedu.academic.util.EnrolmentEvaluationState;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
@@ -1407,223 +1402,6 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
 
-    public Set<Enrolment> getEnrolmentsNotInAnyMarkSheet(EvaluationSeason season, ExecutionSemester executionSemester) {
-
-        final Set<Enrolment> result = new HashSet<Enrolment>();
-        for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-
-            if (curriculumModule.isEnrolment()) {
-                final Enrolment enrolment = (Enrolment) curriculumModule;
-
-                if (enrolment.isValid(executionSemester)
-                        && (season.isSpecialAuthorization() || (season.equals(enrolment.getEvaluationSeason())
-                                && !enrolment.hasAssociatedMarkSheetOrFinalGrade(season)))) {
-                    result.add(enrolment);
-                } else if (season.isImprovement()) {
-                    if (enrolment.hasImprovementFor(executionSemester) && !enrolment.hasAssociatedMarkSheet(season)) {
-                        result.add(enrolment);
-                    }
-                }
-            }
-        }
-
-        if (season.isImprovement()) {
-            addImprovementEnrolmentsFromEquivalentCourses(result, executionSemester, season);
-        }
-
-        return result;
-    }
-
-    private void addImprovementEnrolmentsFromEquivalentCourses(Set<Enrolment> result, ExecutionSemester executionSemester,
-            EvaluationSeason season) {
-
-        final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
-
-        for (final CurricularCourseEquivalence equivalence : getCurricularCourseEquivalencesSet()) {
-            if (equivalence.isFrom(degreeCurricularPlan)) {
-                addImprovementEnrolments(equivalence, result, executionSemester, season);
-            }
-        }
-    }
-
-    private void addImprovementEnrolments(CurricularCourseEquivalence equivalence, Set<Enrolment> result,
-            ExecutionSemester executionSemester, EvaluationSeason season) {
-
-        for (final CurricularCourse curricularCourse : equivalence.getOldCurricularCoursesSet()) {
-            if (curricularCourse.getDegreeCurricularPlan().isBolonhaDegree()) {
-
-                for (final CurriculumModule module : curricularCourse.getCurriculumModulesSet()) {
-                    if (module.isEnrolment()) {
-                        final Enrolment enrolment = (Enrolment) module;
-
-                        if (enrolment.hasImprovementFor(executionSemester) && !enrolment.hasAssociatedMarkSheet(season)) {
-                            result.add(enrolment);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public Set<Enrolment> getEnrolmentsNotInAnyMarkSheetForOldMarkSheets(EvaluationSeason season,
-            ExecutionSemester executionSemester) {
-
-        final Set<Enrolment> result = new HashSet<Enrolment>();
-        for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-
-            if (curriculumModule.isEnrolment()) {
-                final Enrolment enrolment = (Enrolment) curriculumModule;
-
-                if (enrolment.isValid(executionSemester) && season.equals(enrolment.getEvaluationSeason())) {
-                    if (season.isSpecialAuthorization() || enrolment.canBeSubmittedForOldMarkSheet(season)) {
-                        result.add(enrolment);
-                    }
-                } else if (season.isImprovement()) {
-                    if (enrolment.hasImprovementFor(executionSemester) && enrolment.canBeSubmittedForOldMarkSheet(season)) {
-                        result.add(enrolment);
-                    }
-                }
-            }
-        }
-        return result;
-    }
-
-    private boolean hasEnrolmentsNotInAnyMarkSheet(ExecutionSemester executionSemester) {
-        for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-
-            if (curriculumModule.isEnrolment()) {
-                final Enrolment enrolment = (Enrolment) curriculumModule;
-
-                if (enrolment.isValid(executionSemester) && enrolment.getEvaluationSeason().isNormal()) {
-                    if (!enrolment.hasAssociatedMarkSheetOrFinalGrade(EvaluationSeason.readNormalSeason())) {
-                        return true;
-                    }
-                }
-                if (enrolment.hasImprovement() && !enrolment.hasAssociatedMarkSheet(EvaluationSeason.readImprovementSeason())
-                        && enrolment.hasImprovementFor(executionSemester)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public MarkSheet createNormalMarkSheet(ExecutionSemester executionSemester, Teacher responsibleTeacher, Date evaluationDate,
-            EvaluationSeason season, Boolean submittedByTeacher, Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans,
-            Person person) {
-
-        return MarkSheet.createNormal(this, executionSemester, responsibleTeacher, evaluationDate, season, submittedByTeacher,
-                evaluationBeans, person);
-    }
-
-    public MarkSheet createOldNormalMarkSheet(ExecutionSemester executionSemester, Teacher responsibleTeacher,
-            Date evaluationDate, EvaluationSeason season, Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans,
-            Person person) {
-
-        return MarkSheet.createOldNormal(this, executionSemester, responsibleTeacher, evaluationDate, season, evaluationBeans,
-                person);
-    }
-
-    public MarkSheet rectifyEnrolmentEvaluation(MarkSheet markSheet, EnrolmentEvaluation enrolmentEvaluation, Date evaluationDate,
-            Grade grade, String reason, Person person) {
-
-        if (markSheet == null || evaluationDate == null || grade.isEmpty()) {
-            throw new DomainException("error.markSheet.invalid.arguments");
-        }
-
-        if (!markSheet.getEnrolmentEvaluationsSet().contains(enrolmentEvaluation)) {
-            throw new DomainException("error.no.student.in.markSheet");
-        }
-
-        if (markSheet.isNotConfirmed()) {
-            throw new DomainException("error.markSheet.must.be.confirmed");
-        }
-
-        if (enrolmentEvaluation.getRectification() != null) {
-            throw new DomainException("error.markSheet.student.alreadyRectified",
-                    enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getRegistration().getNumber().toString());
-        }
-
-        enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
-        // enrolmentEvaluation.setWhenDateTime(new DateTime());
-
-        MarkSheet rectificationMarkSheet = createRectificationMarkSheet(markSheet.getExecutionPeriod(), evaluationDate,
-                markSheet.getResponsibleTeacher(), markSheet.getEvaluationSeason(), reason,
-                new MarkSheetEnrolmentEvaluationBean(enrolmentEvaluation.getEnrolment(), evaluationDate, grade), person);
-
-        // Rectification MarkSheet MUST have only ONE EnrolmentEvaluation
-        rectificationMarkSheet.getEnrolmentEvaluationsSet().iterator().next().setRectified(enrolmentEvaluation);
-        return rectificationMarkSheet;
-    }
-
-    public MarkSheet rectifyOldEnrolmentEvaluation(EnrolmentEvaluation enrolmentEvaluation, EvaluationSeason season,
-            Date evaluationDate, Grade newGrade, String reason, Person person) {
-
-        if (enrolmentEvaluation == null || evaluationDate == null || newGrade.isEmpty()) {
-            throw new DomainException("error.markSheet.invalid.arguments");
-        }
-
-        if (enrolmentEvaluation.getRectification() != null) {
-            throw new DomainException("error.markSheet.student.alreadyRectified",
-                    enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getRegistration().getNumber().toString());
-        }
-
-        enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
-
-        MarkSheet rectificationMarkSheet = createRectificationOldMarkSheet(enrolmentEvaluation.getExecutionPeriod(),
-                evaluationDate, enrolmentEvaluation.getPersonResponsibleForGrade().getTeacher(), season, reason,
-                new MarkSheetEnrolmentEvaluationBean(enrolmentEvaluation.getEnrolment(), evaluationDate, newGrade), person);
-
-        // Rectification MarkSheet MUST have only ONE EnrolmentEvaluation
-        rectificationMarkSheet.getEnrolmentEvaluationsSet().iterator().next().setRectified(enrolmentEvaluation);
-        return rectificationMarkSheet;
-
-    }
-
-    private MarkSheet createRectificationMarkSheet(ExecutionSemester executionSemester, Date evaluationDate,
-            Teacher responsibleTeacher, EvaluationSeason season, String reason, MarkSheetEnrolmentEvaluationBean evaluationBean,
-            Person person) {
-
-        return MarkSheet.createRectification(this, executionSemester, responsibleTeacher, evaluationDate, season, reason,
-                evaluationBean, person);
-    }
-
-    public MarkSheet createRectificationOldMarkSheet(ExecutionSemester executionSemester, Date evaluationDate,
-            Teacher responsibleTeacher, EvaluationSeason season, String reason, MarkSheetEnrolmentEvaluationBean evaluationBean,
-            Person person) {
-
-        return MarkSheet.createOldRectification(this, executionSemester, responsibleTeacher, evaluationDate, season, reason,
-                evaluationBean, person);
-    }
-
-    public Collection<MarkSheet> searchMarkSheets(ExecutionSemester executionSemester, Teacher teacher, Date evaluationDate,
-            MarkSheetState markSheetState, EvaluationSeason season) {
-
-        final String dateFormat = "dd/MM/yyyy";
-        final Collection<MarkSheet> result = new HashSet<MarkSheet>();
-
-        for (final MarkSheet markSheet : getMarkSheetsSet()) {
-            if (executionSemester != null && markSheet.getExecutionPeriod() != executionSemester) {
-                continue;
-            }
-            if (teacher != null && markSheet.getResponsibleTeacher() != teacher) {
-                continue;
-            }
-            if (evaluationDate != null && DateFormatUtil.compareDates(dateFormat, evaluationDate,
-                    markSheet.getEvaluationDateDateTime().toDate()) != 0) {
-                continue;
-            }
-            if (markSheetState != null && markSheet.getMarkSheetState() != markSheetState) {
-                continue;
-            }
-            if (season != null && !markSheet.getEvaluationSeason().equals(season)) {
-                continue;
-            }
-            result.add(markSheet);
-        }
-        return result;
-    }
-
     public boolean hasScopeInGivenSemesterAndCurricularYearInDCP(CurricularYear curricularYear,
             DegreeCurricularPlan degreeCurricularPlan, final ExecutionSemester executionSemester) {
 
@@ -1649,19 +1427,6 @@ public class CurricularCourse extends CurricularCourse_Base {
     @Deprecated
     public ExecutionDegree getExecutionDegreeFor(ExecutionYear executionYear) {
         return getDegreeCurricularPlan().getExecutionDegreeByYear(executionYear);
-    }
-
-    public boolean hasAnyDegreeGradeToSubmit(ExecutionSemester period) {
-        return hasEnrolmentsNotInAnyMarkSheet(period);
-    }
-
-    public boolean hasAnyDegreeMarkSheetToConfirm(ExecutionSemester period) {
-        for (MarkSheet markSheet : getMarkSheetsSet()) {
-            if (markSheet.getExecutionPeriod().equals(period) && markSheet.isNotConfirmed()) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public List<DegreeModuleScope> getDegreeModuleScopes() {
@@ -1870,20 +1635,6 @@ public class CurricularCourse extends CurricularCourse_Base {
     @Override
     public Set<CurricularCourse> getAllCurricularCourses(ExecutionSemester executionSemester) {
         return getAllCurricularCourses();
-    }
-
-    public boolean getCanCreateMarkSheet() {
-        return !isDissertation() || (isDissertation() && MarkSheetPredicates.checkDissertation(getDegree()));
-    }
-
-    public Collection<MarkSheet> getMarkSheetsByPeriod(ExecutionSemester executionSemester) {
-        Collection<MarkSheet> markSheets = new HashSet<MarkSheet>();
-        for (MarkSheet markSheet : getMarkSheetsSet()) {
-            if (markSheet.getExecutionPeriod() == executionSemester) {
-                markSheets.add(markSheet);
-            }
-        }
-        return markSheets;
     }
 
     @Override
