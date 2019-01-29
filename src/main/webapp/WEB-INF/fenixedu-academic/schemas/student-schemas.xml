@@ -18,26 +18,6 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<schema name="org.fenixedu.academic.domain.student.SearchStudentsWithEnrolmentsByDepartment"
-		type="org.fenixedu.academic.domain.student.SearchStudentsWithEnrolmentsByDepartment"
-		bundle="APPLICATION_RESOURCES">
-	<slot name="executionYear" layout="menu-select" key="label.executionYear">
-		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider"/>
-		<property name="format" value="${year}"/>
-	</slot>
-	<slot name="degrees" layout="option-select" key="label.degrees">
-		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DegreeSelectManySearchStudentsWithEnrolmentsByDepartment"/>
-		<property name="eachLayout" value="values"/>
-		<property name="eachSchema" value="org.fenixedu.academic.domain.Degree.SearchStudentsWithEnrolmentsByDepartment"/>
-		<property name="classes" value="list2"/>
-	</slot>
-</schema>
-
-<schema name="org.fenixedu.academic.domain.Degree.SearchStudentsWithEnrolmentsByDepartment"
-		type="org.fenixedu.academic.domain.Degree">
-	<slot name="tipoCurso"/>
-	<slot name="name"/>
-</schema>
 
 <schema name="org.fenixedu.academic.domain.StudentCurricularPlan.List"
 		type="org.fenixedu.academic.domain.StudentCurricularPlan"
