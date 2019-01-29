@@ -22,7 +22,6 @@ import java.util.Locale;
 
 import org.fenixedu.academic.domain.DegreeOfficialPublication;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.degreeStructure.EctsGraduationGradeConversionTable;
 import org.fenixedu.academic.domain.student.Registration;
 
 public interface IDiplomaSupplementRequest extends IProgramConclusionRequest {
@@ -39,8 +38,6 @@ public interface IDiplomaSupplementRequest extends IProgramConclusionRequest {
     public String getFinalAverageQualified(final Locale locale);
 
     public ExecutionYear getConclusionYear();
-
-    public EctsGraduationGradeConversionTable getGraduationConversionTable();
 
     public Integer getNumberOfCurricularYears();
 

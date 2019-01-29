@@ -23,16 +23,13 @@ import java.util.Locale;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
-import org.fenixedu.academic.domain.degreeStructure.EctsTableIndex;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.log.CreditsDismissalLog;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.EnrolmentAction;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.LocalizedString;
-import org.joda.time.DateTime;
 
 public class CreditsDismissal extends CreditsDismissal_Base {
 
@@ -58,8 +55,8 @@ public class CreditsDismissal extends CreditsDismissal_Base {
             if (dismissal.isCreditsDismissal()) {
                 final CreditsDismissal creditsDismissal = (CreditsDismissal) dismissal;
                 if (isSimilar(credits, noEnrolCurricularCourses, creditsDismissal)) {
-                    throw new DomainException("error.CreditsDismissal.already.exists.similar", curriculumGroup.getName()
-                            .getContent());
+                    throw new DomainException("error.CreditsDismissal.already.exists.similar",
+                            curriculumGroup.getName().getContent());
                 }
             }
         }
@@ -107,8 +104,8 @@ public class CreditsDismissal extends CreditsDismissal_Base {
 
     @Override
     public LocalizedString getName() {
-        return new LocalizedString(org.fenixedu.academic.util.LocaleUtils.PT, BundleUtil.getString(Bundle.ACADEMIC, new Locale("pt", "PT"),
-                "label.group.credits"));
+        return new LocalizedString(org.fenixedu.academic.util.LocaleUtils.PT,
+                BundleUtil.getString(Bundle.ACADEMIC, new Locale("pt", "PT"), "label.group.credits"));
     }
 
     @Override
@@ -154,12 +151,6 @@ public class CreditsDismissal extends CreditsDismissal_Base {
     protected void createCurriculumLineLog(final EnrolmentAction action) {
         new CreditsDismissalLog(action, getRegistration(), getCurriculumGroup(), getCredits(), getExecutionPeriod(),
                 getCurrentUser());
-    }
-
-    @Override
-    public Grade getEctsGrade(DateTime processingDate) {
-        final Grade normalizedEctsGrade = getNormalizedEctsGrade();
-        return normalizedEctsGrade == null ? EctsTableIndex.convertGradeToEcts(getStudentCurricularPlan().getDegree(), this, getGrade(), processingDate) : null;
     }
 
 }

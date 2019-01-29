@@ -20,10 +20,8 @@ package org.fenixedu.academic.domain;
 
 import java.util.Comparator;
 
-import org.fenixedu.academic.domain.degreeStructure.EctsConversionTable;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
-import org.joda.time.DateTime;
 
 public interface IEnrolment extends ICurriculumEntry {
 
@@ -60,10 +58,6 @@ public interface IEnrolment extends ICurriculumEntry {
     String getDescription();
 
     Double getEctsCredits();
-
-    Grade getEctsGrade(StudentCurricularPlan scp, DateTime processingDate);
-
-    EctsConversionTable getEctsConversionTable(StudentCurricularPlan scp, DateTime processingDate);
 
     boolean isAnual();
 
