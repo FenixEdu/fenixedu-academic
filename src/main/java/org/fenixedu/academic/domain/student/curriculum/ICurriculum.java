@@ -53,7 +53,5 @@ public interface ICurriculum {
 
     abstract public StudentCurricularPlan getStudentCurricularPlan();
 
-    abstract public void setAverageType(AverageType averageType);
-
     abstract public boolean hasAnyExternalApprovedEnrolment();
 }

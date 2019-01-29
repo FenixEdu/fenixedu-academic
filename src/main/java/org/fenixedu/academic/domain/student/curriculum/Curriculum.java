@@ -34,7 +34,6 @@ import org.fenixedu.academic.domain.GradeScale;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
@@ -226,27 +225,20 @@ public class Curriculum implements Serializable, ICurriculum {
         private void doCalculus(final Curriculum curriculum) {
             sumPiCi = BigDecimal.ZERO;
             sumPi = BigDecimal.ZERO;
-            countAverage(curriculum.averageEnrolmentRelatedEntries, curriculum.getAverageType());
-            countAverage(curriculum.averageDismissalRelatedEntries, curriculum.getAverageType());
+            countAverage(curriculum.averageEnrolmentRelatedEntries);
+            countAverage(curriculum.averageDismissalRelatedEntries);
             BigDecimal avg = calculateAverage();
             rawGrade = Grade.createGrade(avg.setScale(2, RoundingMode.HALF_UP).toString(), GradeScale.TYPE20);
             finalGrade = Grade.createGrade(avg.setScale(0, RoundingMode.HALF_UP).toString(), GradeScale.TYPE20);
         }
 
-        private void countAverage(final Set<ICurriculumEntry> entries, final AverageType averageType) {
+        private void countAverage(final Set<ICurriculumEntry> entries) {
             for (final ICurriculumEntry entry : entries) {
                 if (entry.getGrade().isNumeric()) {
                     final BigDecimal weigth = entry.getWeigthForCurriculum();
+                    sumPi = sumPi.add(weigth);
+                    sumPiCi = sumPiCi.add(entry.getWeigthForCurriculum().multiply(entry.getGrade().getNumericValue()));
 
-                    if (averageType == AverageType.WEIGHTED) {
-                        sumPi = sumPi.add(weigth);
-                        sumPiCi = sumPiCi.add(entry.getWeigthForCurriculum().multiply(entry.getGrade().getNumericValue()));
-                    } else if (averageType == AverageType.SIMPLE) {
-                        sumPi = sumPi.add(BigDecimal.ONE);
-                        sumPiCi = sumPiCi.add(entry.getGrade().getNumericValue());
-                    } else {
-                        throw new DomainException("Curriculum.average.type.not.supported");
-                    }
                 }
             }
         }
@@ -323,8 +315,6 @@ public class Curriculum implements Serializable, ICurriculum {
     private final Set<ICurriculumEntry> averageDismissalRelatedEntries = new HashSet<>();
 
     private final Set<ICurriculumEntry> curricularYearEntries = new HashSet<>();
-
-    private AverageType averageType = AverageType.WEIGHTED;
 
     private CurricularYearCalculator curricularYearCalculator = CURRICULAR_YEAR_CALCULATOR.get();
 
@@ -547,18 +537,6 @@ public class Curriculum implements Serializable, ICurriculum {
     @Override
     public BigDecimal getRemainingCredits() {
         return curricularYearCalculator.remainingCredits(this);
-    }
-
-    @Deprecated
-    @Override
-    public void setAverageType(final AverageType averageType) {
-        this.averageType = averageType;
-        gradeCalculator = getCurriculumGradeCalculator();
-    }
-
-    @Deprecated
-    public AverageType getAverageType() {
-        return averageType;
     }
 
     @Override
