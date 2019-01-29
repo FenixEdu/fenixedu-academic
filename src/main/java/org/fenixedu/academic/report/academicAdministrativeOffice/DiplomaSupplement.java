@@ -38,7 +38,6 @@ import org.fenixedu.academic.domain.DegreeSpecializationArea;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
-import org.fenixedu.academic.domain.degreeStructure.EctsGraduationGradeConversionTable;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.AcademicalInstitutionType;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
@@ -154,10 +153,6 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
             addParameter("finalAverageQualified", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), finalAverageQualified));
         }
 
-        EctsGraduationGradeConversionTable table = getDocumentRequest().getGraduationConversionTable();
-
-        addParameter("ectsGradeConversionTable", table.getEctsTable());
-        addParameter("ectsGradePercentagesTable", table.getPercentages());
     }
 
     protected void fillGroup3() {
@@ -417,8 +412,6 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
         private final String gradeValue;
 
-        private final String ectsScale;
-
         private final String academicUnitId;
 
         public DiplomaSupplementEntry(final ICurriculumEntry entry, final Map<Unit, String> academicUnitIdentifiers) {
@@ -432,17 +425,11 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
                 this.duration = BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
                         enrolment.isAnual() ? "diploma.supplement.annual" : "diploma.supplement.semestral");
 
-                this.ectsScale =
-                        enrolment
-                                .getEctsGrade(getDocumentRequest().getRegistration()
-                                        .getStudentCurricularPlan(getDocumentRequest().getRequestedCycle()), processingDate)
-                                .getValue();
             } else if (entry instanceof Dismissal && ((Dismissal) entry).getCredits().isEquivalence()) {
                 Dismissal dismissal = (Dismissal) entry;
                 this.type = BundleUtil.getString(Bundle.ENUMERATION, getLocale(), dismissal.getEnrolmentTypeName());
                 this.duration = BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
                         dismissal.isAnual() ? "diploma.supplement.annual" : "diploma.supplement.semestral");
-                this.ectsScale = dismissal.getEctsGrade(processingDate).getValue();
             } else {
                 throw new Error("The roof is on fire");
             }
@@ -482,10 +469,6 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
         public String getGradeValue() {
             return gradeValue;
-        }
-
-        public String getEctsScale() {
-            return ectsScale;
         }
 
         public String getAcademicUnitId() {

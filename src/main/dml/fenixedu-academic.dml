@@ -128,22 +128,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.BibliographicReferences a
     internalizeWith org.fenixedu.academic.domain.degreeStructure.Externalization.internalizeBibliographicReferences();
 }
 
-valueType org.fenixedu.academic.domain.degreeStructure.EctsComparabilityTable as EctsComparabilityTable {
-    externalizeWith {
-        String toString();
-    }
-
-    internalizeWith fromString();
-}
-
-valueType org.fenixedu.academic.domain.degreeStructure.EctsComparabilityPercentages as EctsComparabilityPercentages {
-    externalizeWith {
-        String toString();
-    }
-
-    internalizeWith fromString();
-}
-
 valueType org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval as AcademicInterval {
     externalizeWith {
         String getRepresentationInStringFormat();
@@ -1302,43 +1286,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         Double trainingPeriodHours;
         Double tutorialOrientationHours;
         Double otherHours;
-    }
-
-	class degreeStructure.EctsTableIndex  {
-        AcademicInterval year (REQUIRED);
-        DateTime processingDate;
-	}
-
-    class degreeStructure.EctsConversionTable  {
-        EctsComparabilityTable ectsTable;
-        AcademicInterval year;
-    }
-
-    class degreeStructure.EctsCompetenceCourseConversionTable extends degreeStructure.EctsConversionTable {
-    }
-
-    class degreeStructure.EctsCurricularYearConversionTable extends degreeStructure.EctsConversionTable {
-    }
-    
-    class degreeStructure.EctsInstitutionConversionTable extends degreeStructure.EctsConversionTable {
-    }
-
-    class degreeStructure.EctsDegreeByCurricularYearConversionTable extends degreeStructure.EctsCurricularYearConversionTable {
-    }
-
-    class degreeStructure.EctsInstitutionByCurricularYearConversionTable extends degreeStructure.EctsCurricularYearConversionTable {
-        CycleType cycle;
-    }
-
-    class degreeStructure.EctsGraduationGradeConversionTable extends degreeStructure.EctsConversionTable {
-        EctsComparabilityPercentages percentages;
-        CycleType cycle;
-    }
-
-    class degreeStructure.EctsDegreeGraduationGradeConversionTable extends degreeStructure.EctsGraduationGradeConversionTable {
-    }
-
-    class degreeStructure.EctsCycleGraduationGradeConversionTable extends degreeStructure.EctsGraduationGradeConversionTable {
     }
 
     class degreeStructure.Context  {
@@ -3248,87 +3195,6 @@ relation CompetenceCourseInformationCompetenceCourse {
 relation CompetenceCourseInformationCompetenceCourseLoad {
     degreeStructure.CompetenceCourseInformation playsRole competenceCourseInformation;
     degreeStructure.CompetenceCourseLoad playsRole competenceCourseLoads {
-        multiplicity *;
-    }
-}
-
-relation EctsTableIndexRoot {
-	degreeStructure.EctsTableIndex playsRole ectsTableIndex {
-		multiplicity *;
-	}
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
-		multiplicity 1..1;
-	}
-}
-
-relation EctsConversionTableIndex {
-	degreeStructure.EctsTableIndex playsRole index {
-		multiplicity 1..1;
-	}
-    degreeStructure.EctsConversionTable playsRole table {
-    	multiplicity *;
-    }
-}
-
-relation CompetenceCourseEctsCompetenceCourseConversionTable {
-    CompetenceCourse playsRole competenceCourse {
-        multiplicity 1..1;
-    }
-    degreeStructure.EctsCompetenceCourseConversionTable playsRole ectsConversionTables {
-        multiplicity *;
-    }
-}
-
-relation CurricularYearEctsCurricularYearConversionTable {
-    CurricularYear playsRole curricularYear {
-        multiplicity 1..1;
-    }
-    degreeStructure.EctsCurricularYearConversionTable playsRole ectsConversionTables {
-        multiplicity *;
-    }
-}
-
-relation SchoolEctsInstitutionConversionTable {
-    organizationalStructure.Unit playsRole school {
-        multiplicity 1..1;
-    }
-    degreeStructure.EctsInstitutionConversionTable playsRole ectsInstitutionConversionTables {
-        multiplicity *;
-    }
-}
-
-relation DegreeEctsDegreeByCurricularYearConversionTable {
-    Degree playsRole degree {
-        multiplicity 1..1;
-    }
-    degreeStructure.EctsDegreeByCurricularYearConversionTable playsRole ectsCourseConversionTables {
-        multiplicity *;
-    }
-}
-
-relation SchoolEctsInstitutionByCurricularYearConversionTable {
-    organizationalStructure.Unit playsRole school {
-        multiplicity 1..1;
-    }
-    degreeStructure.EctsInstitutionByCurricularYearConversionTable playsRole ectsCourseConversionTables {
-        multiplicity *;
-    }
-}
-
-relation DegreeEctsDegreeGraduationGradeConversionTable {
-    Degree playsRole degree {
-        multiplicity 1..1;
-    }
-    degreeStructure.EctsDegreeGraduationGradeConversionTable playsRole ectsGraduationGradeConversionTables {
-        multiplicity *;
-    }
-}
-
-relation SchoolEctsCycleGraduationGradeConversionTable {
-    organizationalStructure.Unit playsRole school {
-        multiplicity 1..1;
-    }
-    degreeStructure.EctsCycleGraduationGradeConversionTable playsRole ectsGraduationGradeConversionTables {
         multiplicity *;
     }
 }
@@ -7184,25 +7050,6 @@ relation ServiceRequestTypeAcademicServiceRequest {
 	public serviceRequests.AcademicServiceRequest playsRole academicServiceRequests {
 		multiplicity *;
 	}
-}
-
-
-relation EnrolmentEvaluationEctsConversionTable {
-    EnrolmentEvaluation playsRole enrolmentEvaluation {
-        multiplicity *;
-    }
-    degreeStructure.EctsConversionTable playsRole ectsConversionTable {
-        multiplicity 0..1;
-    }
-}
-
-relation ExternalEnrolmentEctsConversionTable {
-    studentCurriculum.ExternalEnrolment playsRole ExternalEnrolment {
-        multiplicity *;
-    }
-    degreeStructure.EctsConversionTable playsRole ectsConversionTable {
-        multiplicity 0..1;
-    }
 }
 
 /* DocumentPurposeTypeInstance */

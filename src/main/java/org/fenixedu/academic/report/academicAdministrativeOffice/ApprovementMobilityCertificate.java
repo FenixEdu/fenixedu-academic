@@ -33,7 +33,6 @@ import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
-import org.fenixedu.academic.domain.degreeStructure.NoEctsComparabilityTableFound;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.ApprovementMobilityCertificateRequest;
@@ -195,29 +194,7 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
     }
 
     private String getEctsGrade(final ICurriculumEntry entry) {
-
-        DateTime processingDate = computeProcessingDateToLockECTSTableUse();
-
-        if (entry instanceof IEnrolment) {
-            IEnrolment enrolment = (IEnrolment) entry;
-            try {
-                Grade grade = enrolment.getEctsGrade(getDocumentRequest().getRegistration().getLastStudentCurricularPlan(),
-                        processingDate);
-                return grade.getValue();
-            } catch (NoEctsComparabilityTableFound nectfe) {
-                return "--";
-            }
-        } else if (entry instanceof Dismissal && ((Dismissal) entry).getCredits().isEquivalence()) {
-            Dismissal dismissal = ((Dismissal) entry);
-            try {
-                Grade grade = dismissal.getEctsGrade(processingDate);
-                return grade.getValue();
-            } catch (NoEctsComparabilityTableFound nectfe) {
-                return "--";
-            }
-        } else {
-            throw new Error("The roof is yet again on fire!");
-        }
+        return "--";
     }
 
     @Override

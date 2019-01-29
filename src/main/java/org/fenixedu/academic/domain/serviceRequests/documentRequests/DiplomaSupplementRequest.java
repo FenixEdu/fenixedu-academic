@@ -25,8 +25,6 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeOfficialPublication;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
-import org.fenixedu.academic.domain.degreeStructure.EctsGraduationGradeConversionTable;
-import org.fenixedu.academic.domain.degreeStructure.EctsTableIndex;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.IDiplomaSupplementRequest;
 import org.fenixedu.academic.domain.student.curriculum.ConclusionProcess;
@@ -35,7 +33,6 @@ import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
 import org.fenixedu.academic.report.academicAdministrativeOffice.DiplomaSupplement;
-import org.joda.time.DateTime;
 
 import com.google.common.base.Joiner;
 
@@ -206,9 +203,8 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
         ConclusionProcess conclusionProcess =
                 getProgramConclusion().groupFor(getRegistration()).map(cg -> cg.getConclusionProcess()).orElse(null);
 
-        DegreeOfficialPublication dr =
-                getRegistration().getDegree().getOfficialPublication(
-                        conclusionProcess.getConclusionDate().toDateTimeAtStartOfDay());
+        DegreeOfficialPublication dr = getRegistration().getDegree()
+                .getOfficialPublication(conclusionProcess.getConclusionDate().toDateTimeAtStartOfDay());
 
         return dr;
     }
@@ -245,13 +241,6 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
     public CycleType getRequestedCycle() {
         return getProgramConclusion().groupFor(getRegistration()).filter(CurriculumGroup::isCycleCurriculumGroup)
                 .map(cg -> ((CycleCurriculumGroup) cg).getCycleType()).orElse(null);
-    }
-
-    @Override
-    public EctsGraduationGradeConversionTable getGraduationConversionTable() {
-
-        return EctsTableIndex.getGraduationGradeConversionTable(getRegistration().getDegree(), getRequestedCycle(),
-                getConclusionYear().getAcademicInterval(), getProcessingDate() != null ? getProcessingDate() : new DateTime());
     }
 
     @Override

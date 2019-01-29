@@ -20,23 +20,17 @@ package org.fenixedu.academic.domain.studentCurriculum;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.ExternalCurricularCourse;
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.IEnrolment;
-import org.fenixedu.academic.domain.StudentCurricularPlan;
-import org.fenixedu.academic.domain.degreeStructure.EctsConversionTable;
-import org.fenixedu.academic.domain.degreeStructure.EctsTableIndex;
-import org.fenixedu.academic.domain.degreeStructure.NoEctsComparabilityTableFound;
 import org.fenixedu.academic.domain.degreeStructure.RegimeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
@@ -230,59 +224,6 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     @Override
     public String getGradeValue() {
         return getGrade().getValue();
-    }
-
-    @Override
-    public Grade getEctsGrade(StudentCurricularPlan scp, DateTime processingDate) {
-        final Grade normalizedEctsGrade = getNormalizedEctsGrade();
-        return normalizedEctsGrade == null ? calculateNormalizedEctsGrade(scp, processingDate) : normalizedEctsGrade;
-    }
-
-    @Override
-    public EctsConversionTable getEctsConversionTable(StudentCurricularPlan scp, DateTime processingDate) {
-        final EctsConversionTable table = getEctsConversionTable();
-        return table == null ? calculateEctsConversionTable(scp, processingDate, getGrade()) : table;
-    }
-
-    private Grade calculateNormalizedEctsGrade(final StudentCurricularPlan scp, final DateTime processingDate) {
-        final Grade grade = getGrade();
-        final EctsConversionTable table = getEctsConversionTable();
-        final EctsConversionTable tableForCalculation =
-                table == null ? calculateEctsConversionTable(scp, processingDate, grade) : table;
-        return tableForCalculation.convert(grade);
-    }
-
-    private EctsConversionTable calculateEctsConversionTable(final StudentCurricularPlan scp, final DateTime processingDate,
-            final Grade grade) {
-        Set<Dismissal> dismissals = new HashSet<Dismissal>();
-        for (EnrolmentWrapper wrapper : getEnrolmentWrappersSet()) {
-            if (wrapper.getCredits().getStudentCurricularPlan().equals(scp)) {
-                for (Dismissal dismissal : wrapper.getCredits().getDismissalsSet()) {
-                    dismissals.add(dismissal);
-                }
-            }
-        }
-        if (dismissals.isEmpty()) {
-            throw new NoEctsComparabilityTableFound(getExecutionPeriod().getAcademicInterval());
-        }
-        Dismissal dismissal = dismissals.iterator().next();
-        if (dismissals.size() == 1) {
-            if (dismissal instanceof OptionalDismissal || dismissal instanceof CreditsDismissal) {
-                return EctsTableIndex.getEctsConversionTable(scp.getDegree(), dismissal, grade, processingDate);
-            } else {
-                CurricularCourse curricularCourse = dismissal.getCurricularCourse();
-                if (curricularCourse != null) {
-                    return EctsTableIndex.getEctsConversionTable(curricularCourse, dismissal, grade, processingDate);
-                } else {
-                    return EctsTableIndex.getEctsConversionTable(scp.getDegree(), dismissal, grade, processingDate);
-                }
-            }
-        } else {
-            // if more than one exists we can't base the conversion on the
-            // origin, so step up to the degree, on a context based on one
-            // of the sources.
-            return EctsTableIndex.getEctsConversionTable(scp.getDegree(), dismissal, grade, processingDate);
-        }
     }
 
     @Override

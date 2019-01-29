@@ -24,16 +24,13 @@ import java.util.function.Function;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Grade;
-import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.OptionalEnrolment;
-import org.fenixedu.academic.domain.degreeStructure.NoEctsComparabilityTableFound;
 import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
 import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
 import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -328,19 +325,7 @@ public class CurriculumRenderer extends InputRenderer {
             generateGradeCell(enrolmentRow, entry);
 
             if (renderer.isVisibleEctsConvertedGrade()) {
-                String ectsGrade = null;
-                try {
-                    if (entry instanceof IEnrolment) {
-                        IEnrolment enrolment = (IEnrolment) entry;
-                        ectsGrade = enrolment.getEctsGrade(curriculum.getStudentCurricularPlan(), new DateTime()).getValue();
-                    } else if (entry instanceof Dismissal && ((Dismissal) entry).getCredits().isEquivalence()) {
-                        Dismissal dismissal = (Dismissal) entry;
-                        ectsGrade = dismissal.getEctsGrade(new DateTime()).getValue();
-                    }
-                } catch (NoEctsComparabilityTableFound noEctsException) {
-                    logger.warn("There is no ects table for {}", entry.getExternalId());
-                }
-                generateConvertedGradeCell(enrolmentRow, ectsGrade);
+                generateConvertedGradeCell(enrolmentRow, "-");
             }
 
             generateWeightCell(enrolmentRow, entry);
