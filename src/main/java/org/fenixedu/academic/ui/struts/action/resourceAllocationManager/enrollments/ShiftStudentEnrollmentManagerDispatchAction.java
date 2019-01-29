@@ -31,7 +31,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.DegreeCurricularPlanEquivalencePlan;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Shift;
@@ -266,15 +265,6 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
         }
         for (final DegreeCurricularPlan degreeCurricularPlan : studentCurricularPlan.getDegree().getDegreeCurricularPlansSet()) {
             for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
-                if (executionDegree.getExecutionYear() == executionSemester.getExecutionYear()) {
-                    return executionDegree;
-                }
-            }
-        }
-        for (final DegreeCurricularPlanEquivalencePlan equivalencePlan : studentCurricularPlan.getDegreeCurricularPlan()
-                .getTargetEquivalencePlansSet()) {
-            final DegreeCurricularPlan otherDegreeCurricularPlan = equivalencePlan.getDegreeCurricularPlan();
-            for (final ExecutionDegree executionDegree : otherDegreeCurricularPlan.getExecutionDegreesSet()) {
                 if (executionDegree.getExecutionYear() == executionSemester.getExecutionYear()) {
                     return executionDegree;
                 }

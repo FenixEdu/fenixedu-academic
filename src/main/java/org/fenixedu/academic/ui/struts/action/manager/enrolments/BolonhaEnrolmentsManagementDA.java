@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.ui.struts.action.manager.enrolments;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,38 +34,30 @@ import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.dto.InfoExecutionPeriod;
 import org.fenixedu.academic.dto.commons.student.StudentNumberBean;
 import org.fenixedu.academic.dto.student.enrollment.bolonha.BolonhaStudentEnrollmentBean;
-import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
-import org.fenixedu.academic.service.services.registration.TransitToBolonha;
 import org.fenixedu.academic.ui.struts.action.commons.student.enrollment.bolonha.AbstractBolonhaStudentEnrollmentDA;
 import org.fenixedu.academic.ui.struts.action.manager.ManagerApplications.ManagerStudentsApp;
-import org.fenixedu.academic.util.DateFormatUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
-import org.joda.time.DateTime;
-import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 @StrutsFunctionality(app = ManagerStudentsApp.class, path = "manage", titleKey = "label.manage")
 @Mapping(path = "/bolonhaStudentEnrolment", module = "manager", formBean = "bolonhaStudentEnrolmentForm")
-@Forwards({
-        @Forward(name = "viewStudentCurriculum", path = "/manager/bolonha/enrolments/displayStudentCurriculum.jsp"),
+@Forwards({ @Forward(name = "viewStudentCurriculum", path = "/manager/bolonha/enrolments/displayStudentCurriculum.jsp"),
         @Forward(name = "chooseStudentInformation", path = "/manager/bolonha/enrolments/chooseStudentInformation.jsp"),
         @Forward(name = "showExecutionPeriodToEnrol", path = "/manager/bolonha/enrolments/chooseExecutionPeriod.jsp"),
         @Forward(name = "showDegreeModulesToEnrol", path = "/manager/bolonha/enrolments/showDegreeModulesToEnrol.jsp"),
         @Forward(name = "chooseOptionalCurricularCourseToEnrol",
                 path = "/manager/bolonha/enrolments/chooseOptionalCurricularCourseToEnrol.jsp"),
         @Forward(name = "chooseCycleCourseGroupToEnrol", path = "/manager/bolonha/enrolments/chooseCycleCourseGroupToEnrol.jsp"),
-        @Forward(name = "transitToBolonha", path = "/manager/bolonha/enrolments/transitToBolonha.jsp"),
         @Forward(name = "showRegistrationStatesLog", path = "/manager/bolonha/enrolments/showRegistrationStatesLog.jsp") })
 public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollmentDA {
 
@@ -186,7 +177,8 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
     }
 
     @Override
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
         // unnecessary method
         return null;
     }
@@ -195,29 +187,6 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
             HttpServletResponse response) {
         request.setAttribute("studentCurricularPlan", getStudentCurricularPlan(request));
         return mapping.findForward("transitToBolonha");
-    }
-
-    public ActionForward transitToBolonha(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException {
-
-        final DynaActionForm form = (DynaActionForm) actionForm;
-        final DateTime date;
-        try {
-            date = YearMonthDay.fromDateFields(DateFormatUtil.parse("dd/MM/yyyy", form.getString("date"))).toDateTimeAtMidnight();
-        } catch (final ParseException e) {
-            addActionMessage(request, "error.invalid.date.format");
-            return prepareTransit(mapping, actionForm, request, response);
-        }
-
-        final StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(request);
-        try {
-            TransitToBolonha.run(null, studentCurricularPlan.getRegistration().getSourceRegistrationForTransition(), date);
-        } catch (final DomainException e) {
-            addActionMessage(request, e.getKey(), e.getArgs());
-            return prepareTransit(mapping, actionForm, request, response);
-        }
-
-        return showAllStudentCurricularPlans(mapping, actionForm, request, response);
     }
 
     public ActionForward showRegistrationStatesLog(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

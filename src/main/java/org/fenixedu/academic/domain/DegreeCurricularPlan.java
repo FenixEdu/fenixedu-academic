@@ -362,8 +362,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     private Boolean getCanBeDeleted() {
         return canDeleteRoot() && getStudentCurricularPlansSet().isEmpty() && getCurricularCourseEquivalencesSet().isEmpty()
                 && getCurricularCoursesSet().isEmpty() && getExecutionDegreesSet().isEmpty()
-                && getTeachersWithIncompleteEvaluationWorkGroupSet().isEmpty() && getEquivalencePlan() == null
-                && getTargetEquivalencePlansSet().isEmpty() && getDegreeContextsSet().isEmpty();
+                && getTeachersWithIncompleteEvaluationWorkGroupSet().isEmpty() && getDegreeContextsSet().isEmpty();
     }
 
     private boolean canDeleteRoot() {
@@ -1236,10 +1235,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return getDissertationCurricularCourses(ExecutionYear.readCurrentExecutionYear());
     }
 
-    public DegreeCurricularPlanEquivalencePlan createEquivalencePlan(final DegreeCurricularPlan sourceDegreeCurricularPlan) {
-        return new DegreeCurricularPlanEquivalencePlan(this, sourceDegreeCurricularPlan);
-    }
-
     public boolean hasDegreeModule(final DegreeModule degreeModule) {
         return getRoot().hasDegreeModule(degreeModule);
     }
@@ -1400,15 +1395,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return ExecutionSemester.readFirstEnrolmentsExecutionPeriod();
     }
 
-    public boolean hasTargetEquivalencePlanFor(final DegreeCurricularPlan degreeCurricularPlan) {
-        for (final DegreeCurricularPlanEquivalencePlan equivalencePlan : getTargetEquivalencePlansSet()) {
-            if (equivalencePlan.getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public boolean canSubmitImprovementMarkSheets(final ExecutionYear executionYear) {
         if (getExecutionDegreesSet().isEmpty()) {
             return false;
@@ -1565,11 +1551,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
 
         return result;
-    }
-
-    @Deprecated
-    public java.util.Set<org.fenixedu.academic.domain.DegreeCurricularPlanEquivalencePlan> getTargetEquivalencePlans() {
-        return getTargetEquivalencePlansSet();
     }
 
     public int getDurationInYears() {

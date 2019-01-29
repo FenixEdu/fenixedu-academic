@@ -48,7 +48,6 @@ import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.DegreeCurricularPlanEquivalencePlan;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.Evaluation;
@@ -73,7 +72,6 @@ import org.fenixedu.academic.domain.accessControl.academicAdministration.Academi
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOfficeType;
-import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacy.PersonalInformationBean;
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.domain.degree.DegreeType;
@@ -254,19 +252,6 @@ public class Registration extends Registration_Base {
         if (studentCandidacy != null) {
             super.setEntryPhase(studentCandidacy.getEntryPhase());
             super.setIngressionType(studentCandidacy.getIngressionType());
-
-            if (studentCandidacy.getIngressionType() != null && studentCandidacy.getIngressionType().isReIngression()) {
-                final Degree sourceDegree = studentCandidacy.getDegreeCurricularPlan().getEquivalencePlan().getSourceDegree();
-                Registration registration = getStudent().readRegistrationByDegree(sourceDegree);
-                if (registration == null) {
-                    final Collection<Registration> registrations =
-                            getStudent().getRegistrationsMatchingDegreeType(DegreeType::isPreBolonhaDegree);
-                    registrations.remove(this);
-                    registration = registrations.size() == 1 ? registrations.iterator().next() : null;
-                }
-
-                setSourceRegistration(registration);
-            }
         }
     }
 
@@ -960,37 +945,6 @@ public class Registration extends Registration_Base {
         return getEnrolmentsExecutionYearStream().collect(Collectors.toCollection(supplier));
     }
 
-    /**
-     * @deprecated method is never used... delete it
-     */
-    @Deprecated
-    public Set<ExecutionYear> getAllRelatedRegistrationsEnrolmentsExecutionYears(Set<ExecutionYear> result) {
-        if (result == null) {
-            result = new HashSet<>();
-        }
-        result.addAll(getEnrolmentsExecutionYears());
-
-        if (this.isBolonha()) {
-            Registration source =
-                    getSourceRegistration() != null ? getSourceRegistration() : getSourceRegistrationForTransition();
-            if (source != null) {
-                source.getAllRelatedRegistrationsEnrolmentsExecutionYears(result);
-            }
-
-        } else {
-            Collection<Registration> registrations = getStudent().getRegistrationsSet();
-            for (Registration registration : registrations) {
-                if (registration != this && !registration.isBolonha()) {
-                    if (!registration.isConcluded()) {
-                        result.addAll(registration.getEnrolmentsExecutionYears());
-                    }
-                }
-            }
-        }
-
-        return result;
-    }
-
     public Collection<ExecutionYear> getCurriculumLinesExecutionYears() {
         final Collection<ExecutionYear> result = new ArrayList<>();
         for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
@@ -1521,44 +1475,7 @@ public class Registration extends Registration_Base {
         return getIngressionType() != null ? getIngressionType().isInternal2ndCycleAccess() : false;
     }
 
-    @Override
-    public void setIngressionType(final IngressionType ingressionType) {
-        checkIngressionType(ingressionType);
-        super.setIngressionType(ingressionType);
-    }
-
-    private void checkIngressionType(final IngressionType ingressionType) {
-        checkIngression(ingressionType, getPerson(), getFirstStudentCurricularPlan().getDegreeCurricularPlan());
-    }
-
-    public static void checkIngression(final IngressionType ingressionType, final Person person,
-            final DegreeCurricularPlan degreeCurricularPlan) {
-        if (ingressionType.isReIngression()) {
-            if (person == null || person.getStudent() == null) {
-                throw new DomainException("error.registration.preBolonhaSourceDegreeNotFound");
-            }
-            if (degreeCurricularPlan.getEquivalencePlan() != null) {
-                final Student student = person.getStudent();
-                final Degree sourceDegree = degreeCurricularPlan.getEquivalencePlan().getSourceDegreeCurricularPlan().getDegree();
-
-                Registration sourceRegistration = person.getStudent().readRegistrationByDegree(sourceDegree);
-                if (sourceRegistration == null) {
-                    final Collection<Registration> registrations =
-                            student.getRegistrationsMatchingDegreeType(DegreeType::isPreBolonhaDegree);
-                    registrations.removeAll(student.getRegistrationsFor(degreeCurricularPlan));
-                    sourceRegistration = registrations.size() == 1 ? registrations.iterator().next() : null;
-                }
-
-                if (sourceRegistration == null) {
-                    throw new DomainException("error.registration.preBolonhaSourceDegreeNotFound");
-                } else if (!sourceRegistration.getActiveStateType().canReingress()) {
-                    throw new DomainException("error.registration.preBolonhaSourceRegistrationCannotReingress");
-                }
-            }
-        }
-    }
-
-    final public ExecutionYear getIngressionYear() {
+    public ExecutionYear getIngressionYear() {
         return calculateIngressionYear();
     }
 
@@ -1574,7 +1491,7 @@ public class Registration extends Registration_Base {
         return inspectIngressionYear(registration.getSourceRegistration());
     }
 
-    final public String getContigent() {
+    public String getContigent() {
         return getStudentCandidacy() != null ? getStudentCandidacy().getContigent() : null;
     }
 
@@ -2797,77 +2714,6 @@ public class Registration extends Registration_Base {
         final SortedSet<ExternalEnrolment> result = new TreeSet<>(ExternalEnrolment.COMPARATOR_BY_NAME);
         result.addAll(getExternalEnrolmentsSet());
         return result;
-    }
-
-    public Registration getSourceRegistrationForTransition() {
-        if (getLastDegreeCurricularPlan().getEquivalencePlan() == null) {
-            return null;
-        }
-        final DegreeCurricularPlanEquivalencePlan equivalencePlan = getLastDegreeCurricularPlan().getEquivalencePlan();
-        final List<Registration> registrations =
-                getStudent().getRegistrationsFor(equivalencePlan.getSourceDegreeCurricularPlan());
-        return registrations.isEmpty() ? null : registrations.iterator().next();
-    }
-
-    public List<Registration> getTargetTransitionRegistrations() {
-        final List<Registration> result = new ArrayList<>();
-
-        for (final DegreeCurricularPlanEquivalencePlan equivalencePlan : getLastDegreeCurricularPlan()
-                .getTargetEquivalencePlans()) {
-            final Registration transitionRegistration =
-                    getStudent().getTransitionRegistrationFor(equivalencePlan.getDegreeCurricularPlan());
-            if (transitionRegistration != null) {
-                result.add(transitionRegistration);
-            }
-        }
-
-        return result;
-
-    }
-
-    public void transitToBolonha(final Person person, final DateTime when) {
-        if (!isActive()) {
-            throw new DomainException("error.student.Registration.cannot.transit.non.active.registrations");
-        }
-
-        RegistrationState.createRegistrationState(this, person, when, RegistrationStateType.TRANSITED);
-
-        for (final Registration registration : getTargetTransitionRegistrations()) {
-            if (registration.getDegreeType().isBolonhaDegree()) {
-                RegistrationState.createRegistrationState(registration, person, when,
-                        registration.hasConcluded() ? RegistrationStateType.CONCLUDED : RegistrationStateType.REGISTERED);
-            } else {
-                RegistrationState.createRegistrationState(registration, person, when, RegistrationStateType.REGISTERED);
-            }
-
-            registration.setRegistrationProtocol(getRegistrationProtocol());
-            registration.setSourceRegistration(this);
-
-            changeAttends(registration, when);
-        }
-
-        if (!getTargetTransitionRegistrations().isEmpty()) {
-            // change remaining attends to any target transition registration
-            changeAttends(getTargetTransitionRegistrations().iterator().next(), when);
-        }
-    }
-
-    private void changeAttends(final Registration newRegistration, final DateTime when) {
-        final ExecutionSemester executionSemester = ExecutionSemester.readByDateTime(when);
-        if (executionSemester == null) {
-            throw new DomainException("error.Registration.invalid.when.date");
-        }
-
-        for (final Attends attends : getAssociatedAttendsSet()) {
-            if (attends.getExecutionPeriod().isAfterOrEquals(executionSemester)) {
-                for (final CurricularCourse curricularCourse : attends.getExecutionCourse().getAssociatedCurricularCoursesSet()) {
-                    if (curricularCourse.getDegreeCurricularPlan() == newRegistration.getLastDegreeCurricularPlan()) {
-                        attends.setRegistration(newRegistration);
-                        break;
-                    }
-                }
-            }
-        }
     }
 
     public boolean isEnrolmentByStudentAllowed() {

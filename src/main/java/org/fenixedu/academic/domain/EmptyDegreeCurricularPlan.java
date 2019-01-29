@@ -372,11 +372,6 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     }
 
     @Override
-    public DegreeCurricularPlanEquivalencePlan createEquivalencePlan(final DegreeCurricularPlan sourceDegreeCurricularPlan) {
-        throw new DomainException("EmptyDegreeCurricularPlan.not.available");
-    }
-
-    @Override
     public Set<CurricularCourse> getCurricularCoursesByExecutionYearAndCurricularYear(ExecutionYear eY, Integer cY) {
         return Collections.emptySet();
     }
@@ -384,11 +379,6 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     @Override
     public Boolean getApplyPreviousYearsEnrolmentRule() {
         return Boolean.FALSE;
-    }
-
-    @Override
-    public Set<DegreeCurricularPlanEquivalencePlan> getTargetEquivalencePlans() {
-        return Collections.emptySet();
     }
 
     @Override
