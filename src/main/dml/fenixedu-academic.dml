@@ -579,23 +579,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         LocalizedString tempInstructions;
     }
 
-    class EquivalencePlan  {
-    }
-
-    class EquivalencePlanEntry  {
-        Double ectsCredits;
-        LogicOperator newDegreeModulesOperator;
-        LogicOperator sourceDegreeModulesOperator;
-        Boolean transitiveSource;
-    }
-
-        class DegreeCurricularPlanEquivalencePlan extends EquivalencePlan {
-        }
-
-        class StudentCurricularPlanEquivalencePlan extends EquivalencePlan {
-        }
-
-
     class Evaluation  {
         String publishmentMessage;
         GradeScale gradeScale;
@@ -3610,18 +3593,6 @@ relation DegreeCurricularPlanDegreeModule {
     DegreeCurricularPlan playsRole parentDegreeCurricularPlan;
 }
 
-relation DegreeCurricularPlanEquivalencePlanDegreeCurricularPlan {
-    DegreeCurricularPlan playsRole degreeCurricularPlan;
-    DegreeCurricularPlanEquivalencePlan playsRole equivalencePlan;
-}
-
-relation DegreeCurricularPlanEquivalencePlanSourceDegreeCurricularPlan {
-    DegreeCurricularPlan playsRole sourceDegreeCurricularPlan;
-    DegreeCurricularPlanEquivalencePlan playsRole targetEquivalencePlans {
-        multiplicity *;
-    }
-}
-
 relation DegreeDegreeCurricularPlan {
     DegreeCurricularPlan playsRole degreeCurricularPlans {
         multiplicity *;
@@ -3815,38 +3786,6 @@ relation InternalEnrolmentWrapperEnrolment {
 relation ExternalEnrolmentWrapperEnrolment {
     studentCurriculum.ExternalEnrolment playsRole enrolment;
     studentCurriculum.ExternalEnrolmentWrapper playsRole enrolmentWrappers {
-        multiplicity *;
-    }
-}
-
-relation EquivalencePlanEntryNewDegreeModule {
-    degreeStructure.DegreeModule playsRole newDegreeModules {
-        multiplicity *;
-    }
-    EquivalencePlanEntry playsRole newEquivalencePlanEntries {
-        multiplicity *;
-    }
-}
-
-relation EquivalencePlanEntryOldDegreeModule {
-    degreeStructure.DegreeModule playsRole oldDegreeModules {
-        multiplicity *;
-    }
-    EquivalencePlanEntry playsRole oldEquivalencePlanEntries {
-        multiplicity *;
-    }
-}
-
-relation EquivalencePlanEntryPreviousCourseGroup {
-    degreeStructure.CourseGroup playsRole previousCourseGroupForNewDegreeModules;
-    EquivalencePlanEntry playsRole previousEquivalencePlanEntries {
-        multiplicity *;
-    }
-}
-
-relation EquivalencePlanEquivalencePlanEntry {
-    EquivalencePlan playsRole equivalencePlan;
-    EquivalencePlanEntry playsRole entries {
         multiplicity *;
     }
 }
@@ -5039,20 +4978,6 @@ relation RootDomainObjectEnrolmentWrapper {
     }
 }
 
-relation RootDomainObjectEquivalencePlan {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    EquivalencePlan playsRole equivalencePlans {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectEquivalencePlanEntry {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    EquivalencePlanEntry playsRole equivalencePlanEntries {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectEvaluation {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Evaluation playsRole evaluations {
@@ -5686,20 +5611,6 @@ relation StudentCurricularPlanEnrolment {
     Enrolment playsRole enrolments {
         multiplicity *;
     }
-}
-
-relation StudentCurricularPlanEquivalencePlanEntryToRemove {
-    EquivalencePlanEntry playsRole entriesToRemove {
-        multiplicity *;
-    }
-    StudentCurricularPlanEquivalencePlan playsRole equivalencePlans {
-        multiplicity *;
-    }
-}
-
-relation StudentCurricularPlanEquivalencePlanOldStudentCurricularPlan {
-    StudentCurricularPlan playsRole oldStudentCurricularPlan;
-    StudentCurricularPlanEquivalencePlan playsRole equivalencePlan;
 }
 
 

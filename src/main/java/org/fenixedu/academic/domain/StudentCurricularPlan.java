@@ -2001,10 +2001,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         }
     }
 
-    final public StudentCurricularPlanEquivalencePlan createStudentCurricularPlanEquivalencePlan() {
-        return new StudentCurricularPlanEquivalencePlan(this);
-    }
-
     final public boolean hasEnrolmentOrAprovalInCurriculumModule(final DegreeModule degreeModule) {
         final RootCurriculumGroup rootCurriculumGroup = getRoot();
         return rootCurriculumGroup != null && hasEnrolmentOrAprovalInCurriculumModule(rootCurriculumGroup, degreeModule);
@@ -2239,9 +2235,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         if (!getRoot().getAllCurriculumLines().isEmpty()) {
             return false;
         }
-        if (getEquivalencePlan() != null) {
-            return false;
-        }
+
         if (!getNotNeedToEnrollCurricularCoursesSet().isEmpty()) {
             return false;
         }

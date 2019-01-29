@@ -229,10 +229,6 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
             person = choosePersonBean.getPerson();
         }
 
-        if (!checkIngression(request, executionDegreeBean, ingressionInformationBean, person, choosePersonBean)) {
-            return mapping.findForward("chooseNewStudentExecutionDegreeAndIdentification");
-        }
-
         if (person != null) {
             personBean = new PersonBean(person);
 
@@ -245,22 +241,6 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 
         request.setAttribute("personBean", personBean);
         return mapping.findForward("fillNewPersonData");
-    }
-
-    private boolean checkIngression(HttpServletRequest request, ExecutionDegreeBean executionDegreeBean,
-            IngressionInformationBean ingressionInformationBean, Person person, ChoosePersonBean choosePersonBean) {
-
-        try {
-            Registration.checkIngression(ingressionInformationBean.getIngressionType(), person,
-                    executionDegreeBean.getDegreeCurricularPlan());
-        } catch (DomainException e) {
-            RenderUtils.invalidateViewState();
-            request.setAttribute("choosePersonBean", choosePersonBean);
-            addActionMessage(request, e.getKey());
-            return false;
-        }
-
-        return true;
     }
 
     public ActionForward prepareEditInstitutionPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,

@@ -89,9 +89,8 @@ public abstract class GepReportFile extends GepReportFile_Base {
     }
 
     public static String getWrittenEvaluationCode(WrittenEvaluation writtenEvaluation) {
-        StringBuilder code =
-                new StringBuilder().append(writtenEvaluation.getInterval().toString()).append(writtenEvaluation.getFullName())
-                        .append(writtenEvaluation.getEvaluationType().toString());
+        StringBuilder code = new StringBuilder().append(writtenEvaluation.getInterval().toString())
+                .append(writtenEvaluation.getFullName()).append(writtenEvaluation.getEvaluationType().toString());
         writtenEvaluation.getAssociatedExecutionCoursesSet().stream().forEach(ec -> code.append(getExecutionCourseCode(ec)));
         return Hashing.murmur3_128().hashBytes(code.toString().getBytes(StandardCharsets.UTF_8)).toString();
     }
@@ -160,7 +159,8 @@ public abstract class GepReportFile extends GepReportFile_Base {
         return degreeType == null || degree.getDegreeType() == degreeType;
     }
 
-    protected static boolean checkExecutionYear(final ExecutionYear executionYear, final DegreeCurricularPlan degreeCurricularPlan) {
+    protected static boolean checkExecutionYear(final ExecutionYear executionYear,
+            final DegreeCurricularPlan degreeCurricularPlan) {
         return executionYear == null || degreeCurricularPlan.hasExecutionDegreeFor(executionYear);
     }
 
@@ -231,8 +231,6 @@ public abstract class GepReportFile extends GepReportFile_Base {
             if (current.getSourceRegistration() != null
                     && (!(source = current.getSourceRegistration()).isBolonha() || isValidSourceLink(source))) {
                 path.addAll(getFullRegistrationPath(source));
-            } else if ((source = findSourceRegistrationByEquivalencePlan(current)) != null) {
-                path.addAll(getFullRegistrationPath(source));
             }
             Collections.sort(path, Registration.COMPARATOR_BY_START_DATE);
             return path;
@@ -247,22 +245,6 @@ public abstract class GepReportFile extends GepReportFile_Base {
                 || source.getActiveStateType().equals(RegistrationStateType.INTERNAL_ABANDON)
                 || source.getActiveStateType().equals(RegistrationStateType.EXTERNAL_ABANDON)
                 || source.getActiveStateType().equals(RegistrationStateType.INTERRUPTED);
-    }
-
-    private static Registration findSourceRegistrationByEquivalencePlan(Registration targetRegistration) {
-        final DegreeCurricularPlan targetDegreeCurricularPlan = targetRegistration.getLastDegreeCurricularPlan();
-        if (targetDegreeCurricularPlan.getEquivalencePlan() != null) {
-            for (Registration sourceRegistration : targetRegistration.getStudent().getRegistrationsSet()) {
-                final DegreeCurricularPlan sourceDegreeCurricularPlan = sourceRegistration.getLastDegreeCurricularPlan();
-                if (sourceRegistration != targetRegistration
-                        && sourceRegistration.getActiveStateType() == RegistrationStateType.TRANSITED
-                        && targetDegreeCurricularPlan.getEquivalencePlan().getSourceDegreeCurricularPlan()
-                                .equals(sourceDegreeCurricularPlan)) {
-                    return sourceRegistration;
-                }
-            }
-        }
-        return null;
     }
 
 }
