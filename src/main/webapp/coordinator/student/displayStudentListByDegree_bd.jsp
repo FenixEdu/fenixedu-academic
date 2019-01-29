@@ -79,9 +79,6 @@
             <td>
     	        <bean:write name="studentCP" property="infoStudent.infoPerson.nome"/>
     	    </td>    	    
-            <td>
-    	        <bean:message name="studentCP" property="currentState.name" bundle="ENUMERATION_RESOURCES"/>
-    	    </td>
         </logic:iterate>
       	</table>    	
    	<% } %>  

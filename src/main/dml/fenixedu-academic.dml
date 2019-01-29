@@ -78,7 +78,6 @@ enum org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentPurpo
 enum org.fenixedu.academic.domain.student.EnrolmentModel                                                               as EnrolmentModel;
 enum org.fenixedu.academic.domain.student.MobilityProgram                                                              as MobilityProgram;
 enum org.fenixedu.academic.domain.student.RegistrationRegimeType                                                       as RegistrationRegimeType;
-enum org.fenixedu.academic.domain.studentCurricularPlan.StudentCurricularPlanState                                     as StudentCurricularPlanState;
 enum org.fenixedu.academic.domain.util.LogicOperator                                                                   as LogicOperator;
 enum org.fenixedu.academic.util.ContentType                                                                            as ContentType;
 enum org.fenixedu.academic.util.Month                                                                                  as Month;
@@ -926,7 +925,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
     class StudentCurricularPlan  {
         Double classification;
         Integer completedCourses;
-        StudentCurricularPlanState currentState;
         Integer enrolledCourses;
         Double givenCredits;
         String observations;

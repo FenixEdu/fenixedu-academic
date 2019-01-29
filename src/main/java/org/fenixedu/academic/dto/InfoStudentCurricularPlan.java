@@ -37,7 +37,6 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
-import org.fenixedu.academic.domain.studentCurricularPlan.StudentCurricularPlanState;
 
 /**
  * 
@@ -60,10 +59,6 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
     @Override
     public String toString() {
         return getStudentCurricularPlan().toString();
-    }
-
-    public StudentCurricularPlanState getCurrentState() {
-        return getStudentCurricularPlan().getCurrentState();
     }
 
     public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
@@ -119,7 +114,7 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
     @Override
     public int compareTo(Object arg0) {
         InfoStudentCurricularPlan obj0 = (InfoStudentCurricularPlan) arg0;
-        return obj0.getCurrentState().compareTo(this.getCurrentState());
+        return obj0.getExternalId().compareTo(this.getExternalId());
     }
 
     public Date getWhen() {

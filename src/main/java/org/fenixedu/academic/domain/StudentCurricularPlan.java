@@ -68,7 +68,6 @@ import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
-import org.fenixedu.academic.domain.studentCurricularPlan.StudentCurricularPlanState;
 import org.fenixedu.academic.domain.studentCurriculum.BranchCurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.Credits;
 import org.fenixedu.academic.domain.studentCurriculum.CreditsManager;
@@ -190,7 +189,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     private StudentCurricularPlan() {
         super();
-        setCurrentState(StudentCurricularPlanState.ACTIVE);
         setRootDomainObject(Bennu.getInstance());
         setWhenDateTime(new DateTime());
         setGivenCredits(Double.valueOf(0));
@@ -387,10 +385,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     final public boolean isPast() {
         return getDegreeCurricularPlan().isPast();
-    }
-
-    public boolean hasIncompleteState() {
-        return getCurrentState().equals(StudentCurricularPlanState.INCOMPLETE);
     }
 
     public boolean isTransition() {
