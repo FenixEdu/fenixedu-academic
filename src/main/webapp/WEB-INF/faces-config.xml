@@ -68,12 +68,6 @@
 	</managed-bean>
 	
 	<managed-bean>
-		<managed-bean-name>listFirstTimeEnrolmentMasterDegreeStudents</managed-bean-name>
-		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.gep.ListFirstTimeEnrolmentMasterDegreeStudents</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>	
-
-	<managed-bean>
 		<managed-bean-name>updateGratuitySituations</managed-bean-name>
 		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.manager.gratuity.UpdateGratuitySituations</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>

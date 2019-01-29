@@ -96,7 +96,6 @@ import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculum;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
-import org.fenixedu.academic.domain.studentCurricularPlan.Specialization;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
@@ -1070,17 +1069,6 @@ public class Registration extends Registration_Base {
 
     final public int countCompletedCoursesForActiveUndergraduateCurricularPlan() {
         return getActiveStudentCurricularPlan().getAprovedEnrolments().size();
-    }
-
-    public List<StudentCurricularPlan> getStudentCurricularPlansBySpecialization(final Specialization specialization) {
-        List<StudentCurricularPlan> result = new ArrayList<>();
-        for (StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlansSet()) {
-            if (studentCurricularPlan.getSpecialization() != null
-                    && studentCurricularPlan.getSpecialization().equals(specialization)) {
-                result.add(studentCurricularPlan);
-            }
-        }
-        return result;
     }
 
     final public List<StudentCurricularPlan> getStudentCurricularPlansByDegree(final Degree degree) {

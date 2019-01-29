@@ -37,7 +37,6 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
-import org.fenixedu.academic.domain.studentCurricularPlan.Specialization;
 import org.fenixedu.academic.domain.studentCurricularPlan.StudentCurricularPlanState;
 
 /**
@@ -85,10 +84,6 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
         String result = calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH) + 1) + "/"
                 + calendar.get(Calendar.YEAR);
         return result;
-    }
-
-    public Specialization getSpecialization() {
-        return getStudentCurricularPlan().getSpecialization();
     }
 
     public Double getClassification() {

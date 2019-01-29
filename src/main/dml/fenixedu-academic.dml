@@ -78,7 +78,6 @@ enum org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentPurpo
 enum org.fenixedu.academic.domain.student.EnrolmentModel                                                               as EnrolmentModel;
 enum org.fenixedu.academic.domain.student.MobilityProgram                                                              as MobilityProgram;
 enum org.fenixedu.academic.domain.student.RegistrationRegimeType                                                       as RegistrationRegimeType;
-enum org.fenixedu.academic.domain.studentCurricularPlan.Specialization                                                 as Specialization;
 enum org.fenixedu.academic.domain.studentCurricularPlan.StudentCurricularPlanState                                     as StudentCurricularPlanState;
 enum org.fenixedu.academic.domain.util.LogicOperator                                                                   as LogicOperator;
 enum org.fenixedu.academic.util.ContentType                                                                            as ContentType;
@@ -931,7 +930,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         Integer enrolledCourses;
         Double givenCredits;
         String observations;
-        Specialization specialization;
         YearMonthDay startDateYearMonthDay;
         DateTime whenDateTime;
         LocalDate endStageDate;

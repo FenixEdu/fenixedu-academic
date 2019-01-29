@@ -62,9 +62,6 @@
         		<bean:write name="studentCP" property="infoStudent.number" /> - 
             	(<bean:write name="studentCP" property="infoDegreeCurricularPlan.infoDegree.degreeType" />)  
                 <bean:write name="studentCP" property="infoDegreeCurricularPlan.infoDegree.nome" /> - 
-				<logic:present name="studentCP" property="specialization" >
-        			<bean:message name="studentCP" property="specialization.name" bundle="ENUMERATION_RESOURCES"/> - 
-				</logic:present>
     			<bean:write name="studentCP" property="startDate" />
         	</bean:define>
         	<logic:present name="executionDegreeId">

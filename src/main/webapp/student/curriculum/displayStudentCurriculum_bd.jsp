@@ -197,9 +197,6 @@
 					<bean:message key="label.curricularplan" bundle="STUDENT_RESOURCES" />: 
 				</strong> 
 				<bean:write name="studentCurricularPlan" property="presentationName"/>
-				<logic:present name="studentCurricularPlan" property="specialization">
-					- <bean:message name="studentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
-				</logic:present>
 			</p>
 			<logic:present name="studentCurricularPlan" property="branch">
 				<p class="mvert05">
