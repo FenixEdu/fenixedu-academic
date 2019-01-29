@@ -51,19 +51,6 @@ public class StudentStatute extends StudentStatute_Base {
                 endExecutionPeriod.getEndLocalDate(), "", null);
     }
 
-    @Deprecated
-    public StudentStatute(final Student student, final StatuteType statuteType, final ExecutionSemester beginExecutionPeriod,
-            final ExecutionSemester endExecutionPeriod, final LocalDate beginDate, final LocalDate endDate) {
-        this(student, statuteType, beginExecutionPeriod, endExecutionPeriod, beginDate, endDate, "", null);
-    }
-
-    @Deprecated
-    public StudentStatute(final Student student, final StatuteType statuteType, final ExecutionSemester beginExecutionPeriod,
-            final ExecutionSemester endExecutionPeriod, final String comment) {
-        this(student, statuteType, beginExecutionPeriod, endExecutionPeriod, beginExecutionPeriod.getBeginLocalDate(),
-                endExecutionPeriod.getEndLocalDate(), comment, null);
-    }
-
     public StudentStatute(final Student student, final StatuteType statuteType, final ExecutionSemester beginExecutionPeriod,
             final ExecutionSemester endExecutionPeriod, final LocalDate beginDate, final LocalDate endDate, final String comment,
             final Registration registration) {
