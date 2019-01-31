@@ -343,13 +343,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         Boolean responsible;
     }
 
-    class CostCenter  {
-        String code;
-        String departament;
-        String section1;
-        String section2;
-    }
-
     class Country  {
         String code (REQUIRED);
         String threeLetterCode (REQUIRED);
@@ -4543,13 +4536,6 @@ relation RootDomainObjectContext {
 relation RootDomainObjectCoordinator {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Coordinator playsRole coordinators {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectCostCenter {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    CostCenter playsRole costCenters {
         multiplicity *;
     }
 }
