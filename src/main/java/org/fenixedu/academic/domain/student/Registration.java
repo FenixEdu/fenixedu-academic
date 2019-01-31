@@ -222,7 +222,6 @@ public class Registration extends Registration_Base {
 
         this(person, degreeCurricularPlan, protocol, cycleType, executionYear);
         setStudentCandidacyInformation(studentCandidacy);
-        EventGenerator.generateNecessaryEvents(getLastStudentCurricularPlan(), person, executionYear);
     }
 
     private Registration(final Person person, final Integer registrationNumber, final RegistrationProtocol protocol,
