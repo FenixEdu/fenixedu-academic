@@ -50,30 +50,6 @@
 		<br/><br/>
 		
 		<bean:define id="infoDegreeCurricularPlan" name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan"/>
-		<h3><bean:message bundle="DEGREE_ADM_OFFICE" key="title.student.notNeedToEnroll.current"/></h3>
-		<table cellpadding=3>
-			<tr>
-				<th class="listClasses-header"><bean:message bundle="DEGREE_ADM_OFFICE" key="label.student.notNeedToEnroll.curricularPlan"/></th>
-				<th class="listClasses-header"><bean:message bundle="DEGREE_ADM_OFFICE" key="label.curricular.course.name"/></th>
-				<td class="listClasses-header"></td>
-			</tr>
-		
-		<bean:define id="scpID" name="infoStudentCurricularPlan" property="externalId" />
-		<logic:iterate id="infoNotNeedToEnroll" name="infoNotNeedToEnrollCurricularCourses">
-			<tr>
-				<td class="listClasses"><bean:write name="infoNotNeedToEnroll" property="infoCurricularCourse.infoDegreeCurricularPlan.name"/></td>
-				<td class="listClasses">
-					<bean:write name="infoNotNeedToEnroll" property="infoCurricularCourse.name"/> - 
-					<bean:write name="infoNotNeedToEnroll" property="infoCurricularCourse.code"/>
-				</td>
-				<td class="listClasses">
-					<html:link page="<%= "/showNotNeedToEnroll.do?method=deleteNotNeedToEnroll&amp;scpID=" + scpID %>"
-					paramId="notNeedToEnrollID" paramName="infoNotNeedToEnroll" paramProperty="externalId">
-					<bean:message bundle="DEGREE_ADM_OFFICE" key="link.notNeedToEnroll.delete"/></html:link>
-				</td>
-			</tr>
-		</logic:iterate>
-		</table>
 		
 		<logic:present name="insert">
 			<bean:define id="infoStudentCurricularPlanID" name="infoStudentCurricularPlan" property="externalId" type="java.lang.String"/>

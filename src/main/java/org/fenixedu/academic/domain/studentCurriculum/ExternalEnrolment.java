@@ -169,7 +169,6 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
         setExternalCurricularCourse(null);
         setRegistration(null);
         setRootDomainObject(null);
-        getNotNeedToEnrollCurricularCoursesSet().clear();
         super.deleteDomainObject();
     }
 

@@ -36,7 +36,6 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
-import org.fenixedu.academic.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 
 /**
  * 
@@ -131,17 +130,6 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
 
     public Double getGivenCredits() {
         return getStudentCurricularPlan().getGivenCredits();
-    }
-
-    public List<InfoNotNeedToEnrollInCurricularCourse> getInfoNotNeedToEnrollCurricularCourses() {
-        final List<InfoNotNeedToEnrollInCurricularCourse> infoNotNeedToEnrollInCurricularCourses =
-                new ArrayList<InfoNotNeedToEnrollInCurricularCourse>();
-        for (final NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse : getStudentCurricularPlan()
-                .getNotNeedToEnrollCurricularCoursesSet()) {
-            infoNotNeedToEnrollInCurricularCourses
-                    .add(InfoNotNeedToEnrollInCurricularCourse.newInfoFromDomain(notNeedToEnrollInCurricularCourse));
-        }
-        return infoNotNeedToEnrollInCurricularCourses;
     }
 
     @Override

@@ -1208,9 +1208,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
                 }
 
 
-    class degree.enrollment.NotNeedToEnrollInCurricularCourse  {
-    }
-
     class degreeStructure.CompetenceCourseInformation  {
         String acronym;
         Boolean basic;
@@ -3269,13 +3266,6 @@ relation CurricularCourseExecutionCourse {
     }
 }
 
-relation CurricularCourseNotNeedToEnrollInCurricularCourse {
-    degree.enrollment.NotNeedToEnrollInCurricularCourse playsRole notNeedToEnrollInCurricularCourses {
-        multiplicity *;
-    }
-    CurricularCourse playsRole curricularCourse;
-}
-
 relation CurricularCourseUniversity {
     CurricularCourse playsRole associatedCurricularCourses {
         multiplicity *;
@@ -3556,15 +3546,6 @@ relation EnrolmentExecutionPeriod {
     ExecutionSemester playsRole executionPeriod;
 }
 
-relation EnrolmentNotNeedToEnrollInCurricularCourse {
-    Enrolment playsRole enrolments {
-        multiplicity *;
-    }
-    degree.enrollment.NotNeedToEnrollInCurricularCourse playsRole notNeedToEnrollCurricularCourses {
-        multiplicity *;
-    }
-}
-
 relation EnrolmentWrapperCredits {
     studentCurriculum.EnrolmentWrapper playsRole enrolments {
         multiplicity *;
@@ -3778,15 +3759,6 @@ relation ExternalEnrolmentExecutionPeriod {
         multiplicity *;
     }
     ExecutionSemester playsRole executionPeriod;
-}
-
-relation ExternalEnrolmentNotNeedToEnrollInCurricularCourse {
-    studentCurriculum.ExternalEnrolment playsRole externalEnrolments {
-        multiplicity *;
-    }
-    degree.enrollment.NotNeedToEnrollInCurricularCourse playsRole notNeedToEnrollCurricularCourses {
-        multiplicity *;
-    }
 }
 
 relation FirstYearShiftsCapacityLogWithExecutionSemester {
@@ -4921,13 +4893,6 @@ relation RootDomainObjectMark {
     }
 }
 
-relation RootDomainObjectNotNeedToEnrollInCurricularCourse {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    degree.enrollment.NotNeedToEnrollInCurricularCourse playsRole notNeedToEnrollInCurricularCourses {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectOccupationPeriod {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     OccupationPeriod playsRole occupationPeriods {
@@ -5355,14 +5320,6 @@ relation StudentCurricularPlanDegreeCurricularPlan {
 relation StudentCurricularPlanEnrolment {
     StudentCurricularPlan playsRole studentCurricularPlan;
     Enrolment playsRole enrolments {
-        multiplicity *;
-    }
-}
-
-
-relation StudentCurricularPlanNotNeedToEnrollInCurricularCourse {
-    StudentCurricularPlan playsRole studentCurricularPlan;
-    degree.enrollment.NotNeedToEnrollInCurricularCourse playsRole notNeedToEnrollCurricularCourses {
         multiplicity *;
     }
 }

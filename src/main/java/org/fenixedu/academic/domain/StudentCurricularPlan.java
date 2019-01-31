@@ -51,8 +51,6 @@ import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.Curr
 import org.fenixedu.academic.domain.curriculum.EnrollmentCondition;
 import org.fenixedu.academic.domain.curriculum.EnrollmentState;
 import org.fenixedu.academic.domain.degree.DegreeType;
-import org.fenixedu.academic.domain.degree.enrollment.CurricularCourse2Enroll;
-import org.fenixedu.academic.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
@@ -275,14 +273,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         }
 
         getRoot().delete();
-
-        for (Iterator<NotNeedToEnrollInCurricularCourse> iter = getNotNeedToEnrollCurricularCoursesSet().iterator(); iter
-                .hasNext();) {
-            NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = iter.next();
-            iter.remove();
-            notNeedToEnrollInCurricularCourse.setStudentCurricularPlan(null);
-            notNeedToEnrollInCurricularCourse.delete();
-        }
 
         for (; !getCreditsSet().isEmpty(); getCreditsSet().iterator().next().delete()) {
             ;
@@ -1029,7 +1019,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     final protected boolean isApproved(CurricularCourse curricularCourse, List<CurricularCourse> approvedCourses) {
-        return hasEquivalenceIn(curricularCourse, approvedCourses) || hasEquivalenceInNotNeedToEnroll(curricularCourse);
+        return hasEquivalenceIn(curricularCourse, approvedCourses);
     }
 
     final public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
@@ -1111,31 +1101,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             }
         });
 
-        return isThisCurricularCoursesInTheList(curricularCourse, result) || hasEquivalenceInNotNeedToEnroll(curricularCourse);
-    }
-
-    private boolean hasEquivalenceInNotNeedToEnroll(CurricularCourse curricularCourse) {
-
-        if (notNeedToEnroll(curricularCourse)) {
-            return true;
-        }
-
-        for (CurricularCourseEquivalence equiv : curricularCourse.getCurricularCourseEquivalencesSet()) {
-            if (allNotNeedToEnroll(equiv.getOldCurricularCoursesSet())) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private boolean allNotNeedToEnroll(Collection<CurricularCourse> oldCurricularCourses) {
-        for (CurricularCourse course : oldCurricularCourses) {
-            if (!notNeedToEnroll(course)) {
-                return false;
-            }
-        }
-        return true;
+        return isThisCurricularCoursesInTheList(curricularCourse, result);
     }
 
     final protected boolean hasEquivalenceIn(CurricularCourse curricularCourse, List<CurricularCourse> otherCourses) {
@@ -1159,8 +1125,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     private boolean allCurricularCoursesInTheList(Collection<CurricularCourse> oldCurricularCourses,
             List<CurricularCourse> otherCourses) {
         for (CurricularCourse oldCurricularCourse : oldCurricularCourses) {
-            if (!isThisCurricularCoursesInTheList(oldCurricularCourse, otherCourses)
-                    && !hasEquivalenceInNotNeedToEnroll(oldCurricularCourse)) {
+            if (!isThisCurricularCoursesInTheList(oldCurricularCourse, otherCourses)) {
                 return false;
             }
         }
@@ -1345,64 +1310,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return false;
     }
 
-    final public NotNeedToEnrollInCurricularCourse findNotNeddToEnrol(final CurricularCourse curricularCourse) {
-        for (NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse : getNotNeedToEnrollCurricularCoursesSet()) {
-            final CurricularCourse otherCourse = notNeedToEnrollInCurricularCourse.getCurricularCourse();
-            if ((curricularCourse == otherCourse) || haveSameCompetence(curricularCourse, otherCourse)) {
-                return notNeedToEnrollInCurricularCourse;
-            }
-        }
-        return null;
-    }
-
-    final public boolean notNeedToEnroll(final CurricularCourse curricularCourse) {
-        return findNotNeddToEnrol(curricularCourse) != null;
-    }
-
     private boolean haveSameCompetence(CurricularCourse course1, CurricularCourse course2) {
         CompetenceCourse comp1 = course1.getCompetenceCourse();
         CompetenceCourse comp2 = course2.getCompetenceCourse();
         return (comp1 != null) && (comp1 == comp2);
-    }
-
-    private List<CurricularCourse> getStudentNotNeedToEnrollCurricularCourses() {
-        return (List<CurricularCourse>) CollectionUtils.collect(getNotNeedToEnrollCurricularCoursesSet(), new Transformer() {
-            @Override
-            final public Object transform(Object obj) {
-                NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = (NotNeedToEnrollInCurricularCourse) obj;
-                return notNeedToEnrollInCurricularCourse.getCurricularCourse();
-            }
-        });
-    }
-
-    final protected boolean hasCurricularCourseEquivalenceIn(CurricularCourse curricularCourse,
-            List curricularCoursesEnrollments) {
-
-        int size = curricularCoursesEnrollments.size();
-        for (int i = 0; i < size; i++) {
-            CurricularCourse tempCurricularCourse = ((Enrolment) curricularCoursesEnrollments.get(i)).getCurricularCourse();
-            Set curricularCourseEquivalences = getCurricularCoursesInCurricularCourseEquivalences(tempCurricularCourse);
-            if (curricularCourseEquivalences.contains(curricularCourse)) {
-                return true;
-            }
-        }
-
-        List<CurricularCourse> studentNotNeedToEnrollCourses = getStudentNotNeedToEnrollCurricularCourses();
-
-        if (isThisCurricularCoursesInTheList(curricularCourse, studentNotNeedToEnrollCourses)) {
-            return true;
-        }
-
-        size = studentNotNeedToEnrollCourses.size();
-        for (int i = 0; i < size; i++) {
-            CurricularCourse ccNotNeedToDo = studentNotNeedToEnrollCourses.get(i);
-            Set curricularCourseEquivalences = getCurricularCoursesInCurricularCourseEquivalences(ccNotNeedToDo);
-            if (curricularCourseEquivalences.contains(curricularCourse)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     final protected boolean isMathematicalCourse(CurricularCourse curricularCourse) {
@@ -2025,10 +1936,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return result;
     }
 
-    public boolean getHasAnyEquivalences() {
-        return !this.getNotNeedToEnrollCurricularCoursesSet().isEmpty();
-    }
-
     public boolean isLastStudentCurricularPlanFromRegistration() {
         return hasRegistration() && getRegistration().getLastStudentCurricularPlan() == this;
     }
@@ -2228,9 +2135,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             return false;
         }
 
-        if (!getNotNeedToEnrollCurricularCoursesSet().isEmpty()) {
-            return false;
-        }
         if (!getCreditsSet().isEmpty()) {
             return false;
         }
