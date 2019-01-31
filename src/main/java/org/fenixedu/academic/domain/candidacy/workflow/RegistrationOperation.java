@@ -100,11 +100,6 @@ public class RegistrationOperation extends CandidacyOperation {
         getStudentCandidacy().getPrecedentDegreeInformation().getPersonalIngressionData()
                 .setStudent(getStudentCandidacy().getPerson().getStudent());
 
-        if (getStudentCandidacy().getApplyForResidence()) {
-            registration.getStudent()
-                    .setResidenceCandidacyForCurrentExecutionYear(getStudentCandidacy().getNotesAboutResidenceAppliance());
-        }
-
         return registration;
     }
 

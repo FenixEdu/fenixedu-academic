@@ -292,28 +292,6 @@ public class Student extends Student_Base {
         return Integer.valueOf(max + 1);
     }
 
-    public ResidenceCandidacies getResidenceCandidacyForCurrentExecutionYear() {
-        if (getActualExecutionYearStudentData() == null) {
-            return null;
-        }
-        return getActualExecutionYearStudentData().getResidenceCandidacy();
-    }
-
-    public void setResidenceCandidacyForCurrentExecutionYear(final String observations) {
-        createCurrentYearStudentData();
-        getActualExecutionYearStudentData().setResidenceCandidacy(new ResidenceCandidacies(observations));
-    }
-
-    public void setResidenceCandidacy(final ResidenceCandidacies residenceCandidacy) {
-        ExecutionYear executionYear =
-                ExecutionYear.getExecutionYearByDate(residenceCandidacy.getCreationDateDateTime().toYearMonthDay());
-        StudentDataByExecutionYear studentData = getStudentDataByExecutionYear(executionYear);
-        if (studentData == null) {
-            studentData = createStudentDataForExecutionYear(executionYear);
-        }
-        studentData.setResidenceCandidacy(residenceCandidacy);
-    }
-
     public boolean getWorkingStudentForCurrentExecutionYear() {
         if (getActualExecutionYearStudentData() == null) {
             return false;

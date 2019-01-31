@@ -1903,12 +1903,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
     class  student.RegistrationStateLog extends DomainOperationLog {
     }
 
-    class student.ResidenceCandidacies  {
-        Boolean candidate;
-        DateTime creationDateDateTime;
-        String observations;
-    }
-
     class student.Student  {
         Integer number;
     }
@@ -5143,13 +5137,6 @@ relation RootDomainObjectRegistrationStateLog {
     }
 }
 
-relation RootDomainObjectResidenceCandidacies {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    student.ResidenceCandidacies playsRole residenceCandidaciess {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectSchoolClass {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     SchoolClass playsRole schoolClasss {
@@ -5440,11 +5427,6 @@ relation StudentDataByExecutionYearExecutionYear {
         multiplicity *;
     }
     ExecutionYear playsRole executionYear;
-}
-
-relation StudentDataByExecutionYearResidenceCandidacy {
-    student.StudentDataByExecutionYear playsRole studentDataByExecutionYear;
-    student.ResidenceCandidacies playsRole residenceCandidacy;
 }
 
 relation StudentDataByExecutionYearRootDomainObject {
