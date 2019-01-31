@@ -25,12 +25,10 @@ package org.fenixedu.academic.domain;
 enum org.fenixedu.academic.domain.AlumniRequestType                                                                    as AlumniRequestType;
 enum org.fenixedu.academic.domain.CompetenceCourseType                                                                 as CompetenceCourseType;
 enum org.fenixedu.academic.domain.ContractType                                                                         as ContractType;
-enum org.fenixedu.academic.domain.DocumentType                                                                         as DocumentType;
 enum org.fenixedu.academic.domain.ExecutionCourseBoardPermittedGroupType                                               as ExecutionCourseBoardPermittedGroupType;
 enum org.fenixedu.academic.domain.FormationType                                                                        as FormationType;
 enum org.fenixedu.academic.domain.FrequencyType                                                                        as FrequencyType;
 enum org.fenixedu.academic.domain.GradeScale                                                                           as GradeScale;
-enum org.fenixedu.academic.domain.GraduationType                                                                       as GraduationType;
 enum org.fenixedu.academic.domain.GrantOwnerType                                                                       as GrantOwnerType;
 enum org.fenixedu.academic.domain.JobApplicationType                                                                   as JobApplicationType;
 enum org.fenixedu.academic.domain.OccupationPeriodType                                                                 as OccupationPeriodType;
@@ -798,13 +796,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
     	OccupationPeriodType periodType;
     	Integer semester;
     	CurricularYearList curricularYears;
-    }
-
-    class Price  {
-        String description;
-        DocumentType documentType;
-        GraduationType graduationType;
-        Double price;
     }
 
     class Professorship  {
@@ -4973,13 +4964,6 @@ relation RootDomainObjectPartyType {
 relation RootDomainObjectPrecedentDegreeInformation {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.PrecedentDegreeInformation playsRole precedentDegreeInformation {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectPrice {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    Price playsRole prices {
         multiplicity *;
     }
 }
