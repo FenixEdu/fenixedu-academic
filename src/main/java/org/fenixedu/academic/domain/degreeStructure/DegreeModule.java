@@ -630,8 +630,6 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
     abstract public Set<CurricularCourse> getAllCurricularCourses();
 
-    abstract public void doForAllCurricularCourses(final CurricularCourseFunctor curricularCourseFunctor);
-
     abstract public void applyToCurricularCourses(final ExecutionYear executionYear, final Predicate predicate);
 
     public boolean isOptionalCourseGroup() {

@@ -81,22 +81,23 @@ public class CourseGroup extends CourseGroup_Base {
         super.setNameEn(nameEn);
     }
 
-    public CourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
-            final ExecutionSemester begin, final ExecutionSemester end) {
+    public CourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn, final ExecutionSemester begin,
+            final ExecutionSemester end) {
         this(parentCourseGroup, name, nameEn, begin, end, null);
     }
 
-    public CourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
-            final ExecutionSemester begin, final ExecutionSemester end, final ProgramConclusion programConclusion) {
+    public CourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn, final ExecutionSemester begin,
+            final ExecutionSemester end, final ProgramConclusion programConclusion) {
         init(parentCourseGroup, name, nameEn, begin, end, programConclusion);
     }
 
-    protected void init(CourseGroup parentCourseGroup, String name, String nameEn, ExecutionSemester begin, ExecutionSemester end) {
+    protected void init(CourseGroup parentCourseGroup, String name, String nameEn, ExecutionSemester begin,
+            ExecutionSemester end) {
         init(parentCourseGroup, name, nameEn, begin, end, null);
     }
 
-    protected void init(CourseGroup parentCourseGroup, String name, String nameEn, ExecutionSemester begin,
-            ExecutionSemester end, final ProgramConclusion programConclusion) {
+    protected void init(CourseGroup parentCourseGroup, String name, String nameEn, ExecutionSemester begin, ExecutionSemester end,
+            final ProgramConclusion programConclusion) {
         init(name, nameEn);
         if (parentCourseGroup == null) {
             throw new DomainException("error.degreeStructure.CourseGroup.parentCourseGroup.cannot.be.null");
@@ -237,7 +238,8 @@ public class CourseGroup extends CourseGroup_Base {
         return result;
     }
 
-    public List<Context> getOpenChildContexts(final Class<? extends DegreeModule> clazz, final ExecutionSemester executionSemester) {
+    public List<Context> getOpenChildContexts(final Class<? extends DegreeModule> clazz,
+            final ExecutionSemester executionSemester) {
         final List<Context> result = new ArrayList<Context>();
         for (final Context context : getChildContextsSet()) {
             if (hasClass(clazz, context.getChildDegreeModule())
@@ -560,7 +562,7 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public Stream<CourseGroup> getParentCourseGroupStream() {
-    	return getParentContextsSet().stream().map(c -> c.getParentCourseGroup());
+        return getParentContextsSet().stream().map(c -> c.getParentCourseGroup());
     }
 
     @Override
@@ -602,7 +604,7 @@ public class CourseGroup extends CourseGroup_Base {
                 (List<CreditsLimit>) getCurricularRules(CurricularRuleType.CREDITS_LIMIT, executionSemester);
         if (!creditsLimitRules.isEmpty()) {
             for (final CreditsLimit creditsLimit : creditsLimitRules) {
-            	if (getParentCourseGroupStream().anyMatch(g -> g == creditsLimit.getContextCourseGroup())) {
+                if (getParentCourseGroupStream().anyMatch(g -> g == creditsLimit.getContextCourseGroup())) {
                     return creditsLimit.getMinimumCredits();
                 }
             }
@@ -734,9 +736,9 @@ public class CourseGroup extends CourseGroup_Base {
         for (final Context context : getActiveChildContexts()) {
             if (maxContextsByDegreeModule.containsKey(context.getChildDegreeModule())) {
                 final Context existingContext = maxContextsByDegreeModule.get(context.getChildDegreeModule());
-                if (existingContext.getCurricularPeriod().getChildOrder().intValue() != executionSemester.getSemester()
-                        .intValue()
-                        && context.getCurricularPeriod().getChildOrder().intValue() == executionSemester.getSemester().intValue()) {
+                if (existingContext.getCurricularPeriod().getChildOrder().intValue() != executionSemester.getSemester().intValue()
+                        && context.getCurricularPeriod().getChildOrder().intValue() == executionSemester.getSemester()
+                                .intValue()) {
                     maxContextsByDegreeModule.put(context.getChildDegreeModule(), context);
                 }
 
@@ -852,17 +854,6 @@ public class CourseGroup extends CourseGroup_Base {
         return result;
     }
 
-    @Override
-    public void doForAllCurricularCourses(final CurricularCourseFunctor curricularCourseFunctor) {
-        for (final Context context : getChildContextsSet()) {
-            final DegreeModule degreeModule = context.getChildDegreeModule();
-            degreeModule.doForAllCurricularCourses(curricularCourseFunctor);
-            if (!curricularCourseFunctor.keepDoing()) {
-                return;
-            }
-        }
-    }
-
     public boolean hasAnyParentBranchCourseGroup() {
 
         if (isBranchCourseGroup()) {
@@ -890,10 +881,9 @@ public class CourseGroup extends CourseGroup_Base {
     public Context createContext(final ExecutionInterval begin, final ExecutionInterval end, final DegreeModule degreeModule,
             final CurricularPeriod curricularPeriod) {
 
-        final Context context =
-                new Context(this, degreeModule, curricularPeriod, ExecutionInterval.assertExecutionIntervalType(
-                        ExecutionSemester.class, begin), ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class,
-                        end));
+        final Context context = new Context(this, degreeModule, curricularPeriod,
+                ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class, begin),
+                ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class, end));
 
         /**
          * Degree module requires a context first to answer about

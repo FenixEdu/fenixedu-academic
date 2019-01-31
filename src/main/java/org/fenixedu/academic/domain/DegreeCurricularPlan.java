@@ -46,7 +46,6 @@ import org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.BranchType;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
-import org.fenixedu.academic.domain.degreeStructure.CurricularCourseFunctor;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
@@ -645,10 +644,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     @Override
     public Set<CurricularCourse> getCurricularCoursesSet() {
         return this.getCurricularCourses((ExecutionYear) null);
-    }
-
-    public void doForAllCurricularCourses(final CurricularCourseFunctor curricularCourseFunctor) {
-        getRoot().doForAllCurricularCourses(curricularCourseFunctor);
     }
 
     public Set<CurricularCourse> getCurricularCourses(final ExecutionSemester executionSemester) {

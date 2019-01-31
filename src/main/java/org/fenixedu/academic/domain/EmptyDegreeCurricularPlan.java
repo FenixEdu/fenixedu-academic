@@ -30,7 +30,6 @@ import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
 import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
-import org.fenixedu.academic.domain.degreeStructure.CurricularCourseFunctor;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
@@ -192,11 +191,6 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     @Override
     public Set<CurricularCourse> getCurricularCoursesSet() {
         return Collections.emptySet();
-    }
-
-    @Override
-    public void doForAllCurricularCourses(final CurricularCourseFunctor curricularCourseFunctor) {
-        throw new DomainException("EmptyDegreeCurricularPlan.not.available");
     }
 
     @Override

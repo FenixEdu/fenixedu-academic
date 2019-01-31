@@ -42,7 +42,6 @@ import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevel;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
-import org.fenixedu.academic.domain.degreeStructure.CurricularCourseFunctor;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.degreeStructure.RegimeType;
@@ -1635,11 +1634,6 @@ public class CurricularCourse extends CurricularCourse_Base {
     @Override
     public Set<CurricularCourse> getAllCurricularCourses(ExecutionSemester executionSemester) {
         return getAllCurricularCourses();
-    }
-
-    @Override
-    public void doForAllCurricularCourses(final CurricularCourseFunctor curricularCourseFunctor) {
-        curricularCourseFunctor.doWith(this);
     }
 
     public CompetenceCourseLevel getCompetenceCourseLevel() {
