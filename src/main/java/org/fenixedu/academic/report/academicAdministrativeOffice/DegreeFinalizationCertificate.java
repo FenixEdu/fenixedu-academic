@@ -281,7 +281,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
             result.append(generateEndLine());
 
             if (!academicUnitIdentifiers.isEmpty()) {
-                result.append(LINE_BREAK).append(getAcademicUnitInfo(academicUnitIdentifiers, request.getMobilityProgram()));
+                result.append(LINE_BREAK).append(getAcademicUnitInfo(academicUnitIdentifiers));
             }
         }
 

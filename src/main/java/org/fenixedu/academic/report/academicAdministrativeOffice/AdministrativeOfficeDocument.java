@@ -52,7 +52,6 @@ import org.fenixedu.academic.domain.serviceRequests.documentRequests.ExternalCou
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.ExternalProgramCertificateRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.ProgramCertificateRequest;
-import org.fenixedu.academic.domain.student.MobilityProgram;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
@@ -427,7 +426,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
         return result.toString();
     }
 
-    final protected String getAcademicUnitInfo(final Map<Unit, String> unitIDs, final MobilityProgram mobilityProgram) {
+    protected String getAcademicUnitInfo(final Map<Unit, String> unitIDs) {
         final StringBuilder result = new StringBuilder();
 
         for (final Entry<Unit, String> academicUnitId : unitIDs.entrySet()) {
@@ -437,11 +436,6 @@ public class AdministrativeOfficeDocument extends FenixReport {
             unit.append(SINGLE_SPACE)
                     .append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "documents.external.curricular.courses.one"));
             unit.append(SINGLE_SPACE).append(getMLSTextContent(academicUnitId.getKey().getPartyName()).toUpperCase());
-            if (mobilityProgram != null) {
-                unit.append(SINGLE_SPACE)
-                        .append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "documents.external.curricular.courses.two"));
-                unit.append(SINGLE_SPACE).append(mobilityProgram.getDescription(getLocale()).toUpperCase());
-            }
 
             result.append(FenixStringTools.multipleLineRightPad(unit.toString(), LINE_LENGTH, END_CHAR));
             result.append(LINE_BREAK);

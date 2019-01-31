@@ -31,7 +31,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequestSituationType;
 import org.fenixedu.academic.domain.serviceRequests.IProgramConclusionRequest;
 import org.fenixedu.academic.domain.serviceRequests.RegistryCode;
-import org.fenixedu.academic.domain.student.MobilityProgram;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.curriculum.ConclusionProcess;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculum;
@@ -64,7 +63,6 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
         checkParameters(bean);
         super.setAverage(bean.getAverage());
-        super.setMobilityProgram(bean.getMobilityProgram());
         super.setIgnoreExternalEntries(bean.isIgnoreExternalEntries());
         super.setIgnoreCurriculumInAdvance(bean.isIgnoreCurriculumInAdvance());
         super.setTechnicalEngineer(bean.getTechnicalEngineer());
@@ -85,10 +83,6 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
         if (bean.getDetailed() == null) {
             throw new DomainException("DegreeFinalizationCertificateRequest.detailed.cannot.be.null");
-        }
-
-        if (bean.getMobilityProgram() != null && bean.isIgnoreExternalEntries()) {
-            throw new DomainException("ApprovementCertificateRequest.cannot.ignore.external.entries.within.a.mobility.program");
         }
 
         if ((bean.getInternshipAbolished() || bean.getInternshipApproved() || bean.getStudyPlan())
@@ -187,11 +181,6 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     @Override
     final public void setDetailed(final Boolean detailed) {
         throw new DomainException("DegreeFinalizationCertificateRequest.cannot.modify.detailed");
-    }
-
-    @Override
-    public void setMobilityProgram(MobilityProgram mobilityProgram) {
-        throw new DomainException("error.DegreeFinalizationCertificateRequest.cannot.modify");
     }
 
     @Override

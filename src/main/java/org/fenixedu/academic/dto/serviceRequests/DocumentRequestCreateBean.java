@@ -29,7 +29,6 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.Exam;
 import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
@@ -38,7 +37,6 @@ import org.fenixedu.academic.domain.serviceRequests.ServiceRequestType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentPurposeType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentPurposeTypeInstance;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
-import org.fenixedu.academic.domain.student.MobilityProgram;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
@@ -100,8 +98,6 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
     private String givenNames;
 
     private String familyNames;
-
-    private MobilityProgram mobilityProgram;
 
     private boolean ignoreExternalEntries = false;
 
@@ -371,14 +367,6 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
         DocumentRequestType documentRequestType = chosenServiceRequestType.getDocumentRequestType();
         return documentRequestType == DocumentRequestType.APPROVEMENT_CERTIFICATE
                 || documentRequestType == DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE;
-    }
-
-    final public MobilityProgram getMobilityProgram() {
-        return mobilityProgram;
-    }
-
-    final public void setMobilityProgram(final MobilityProgram mobilityProgram) {
-        this.mobilityProgram = mobilityProgram;
     }
 
     public boolean isIgnoreExternalEntries() {

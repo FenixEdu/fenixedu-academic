@@ -80,9 +80,6 @@ public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCe
 
     @Override
     final protected void checkParameters(final DocumentRequestCreateBean bean) {
-        if (bean.getMobilityProgram() != null && bean.isIgnoreExternalEntries()) {
-            throw new DomainException("ApprovementCertificateRequest.cannot.ignore.external.entries.within.a.mobility.program");
-        }
     }
 
     @Override

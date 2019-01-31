@@ -29,8 +29,6 @@ import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.Grade;
-import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
@@ -43,7 +41,6 @@ import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
-import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
 import org.fenixedu.academic.dto.administrativeOffice.documents.ApprovementMobilityCertificateBean;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -153,7 +150,7 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
         return beans;
     }
 
-    final private String getAcademicUnitInfo(final Map<Unit, String> unitIDs) {
+    protected String getAcademicUnitInfo(final Map<Unit, String> unitIDs) {
         final StringBuilder result = new StringBuilder();
         String description = getMobilityProgramDescription();
 

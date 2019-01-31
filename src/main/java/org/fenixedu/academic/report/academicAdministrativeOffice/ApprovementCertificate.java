@@ -100,7 +100,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
         res.append(generateEndLine());
 
         if (!ids.isEmpty()) {
-            res.append(LINE_BREAK).append(getAcademicUnitInfo(ids, request.getMobilityProgram()));
+            res.append(LINE_BREAK).append(getAcademicUnitInfo(ids));
         }
 
         return res.toString();

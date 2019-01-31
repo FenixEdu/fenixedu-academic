@@ -24,7 +24,6 @@ import java.util.HashSet;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.student.MobilityProgram;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
@@ -48,7 +47,6 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
         super.init(bean);
 
         checkParameters(bean);
-        super.setMobilityProgram(bean.getMobilityProgram());
         super.setIgnoreExternalEntries(bean.isIgnoreExternalEntries());
         super.setIgnoreCurriculumInAdvance(bean.isIgnoreCurriculumInAdvance());
 
@@ -76,9 +74,6 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
     @Override
     final protected void checkParameters(final DocumentRequestCreateBean bean) {
-        if (bean.getMobilityProgram() != null && bean.isIgnoreExternalEntries()) {
-            throw new DomainException("ApprovementCertificateRequest.cannot.ignore.external.entries.within.a.mobility.program");
-        }
     }
 
     @Override
@@ -153,11 +148,6 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     @Override
     final public void setNumberOfUnits(final Integer numberOfUnits) {
         throw new DomainException("error.ApprovementCertificateRequest.cannot.modify.numberOfUnits");
-    }
-
-    @Override
-    public void setMobilityProgram(MobilityProgram mobilityProgram) {
-        throw new DomainException("error.ApprovementCertificateRequest.cannot.modify");
     }
 
     @Override
