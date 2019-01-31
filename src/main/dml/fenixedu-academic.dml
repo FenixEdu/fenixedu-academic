@@ -2265,20 +2265,6 @@ class candidacy.MeasurementTestRoom  {
     Integer roomOrder;
 }
 
-class ImportRegister  {
-	String remoteExternalOid;
-}
-
-	class PartyImportRegister extends ImportRegister {
-	}
-
-	class AccountabilityImportRegister extends ImportRegister {
-	}
-
-class ImportRegisterLog  {
-	DateTime instant;
-}
-
 class CoordinatorLog  {
 	DateTime date;
 	OperationType operation;
@@ -6126,37 +6112,6 @@ relation RootDomainObjectEmailQueue {
 	util.Email playsRole emailQueue {
 		multiplicity *;
 	}
-}
-
-relation RootDomainObjectImportRegister {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	ImportRegister playsRole importRegister {
-		multiplicity *;
-	}
-}
-
-relation RootDomainObjectImportRegisterLog {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	ImportRegisterLog playsRole importRegisterLog {
-		multiplicity *;
-	}
-}
-
-relation ImportRegisterImportRegisterLog {
-	ImportRegister playsRole importRegister;
-	ImportRegisterLog playsRole importRegisterLogs {
-		multiplicity *;
-	}
-}
-
-relation PartyImportRegisterParty {
-	PartyImportRegister playsRole partyImportRegister;
-	organizationalStructure.Party playsRole party;
-}
-
-relation AccountabilityImportRegister {
-	AccountabilityImportRegister playsRole accountabilityImportRegister;
-	organizationalStructure.Accountability playsRole accountability;
 }
 
 relation RootDomainObjectCoordinatorLog {
