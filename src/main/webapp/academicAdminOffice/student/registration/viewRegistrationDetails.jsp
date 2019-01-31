@@ -147,14 +147,6 @@
 						</html:link>
 					</span>
 				</logic:equal>
-				<logic:equal name="registration" property="registrationProtocol.enrolmentByStudentAllowed" value="false">
-					<span class="dblock pbottom03">	
-						<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-						<html:link page="/manageExternalRegistrationData.do?method=prepare" paramId="registrationId" paramName="registration" paramProperty="externalId">
-							<bean:message key="link.student.manageExternalRegistrationData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-						</html:link>
-					</span>	
-				</logic:equal>
 				<academic:allowed operation="MANAGE_CONCLUSION" program="<%= registration.getDegree() %>">
 					<logic:equal name="registration" property="qualifiedToRegistrationConclusionProcess" value="true">
 						<span class="dblock pbottom03">	

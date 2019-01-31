@@ -188,8 +188,8 @@ public class Unit extends Unit_Base {
         }
 
         if (!(getExternalCurricularCoursesSet().isEmpty() && getPrecedentDegreeInformationsSet().isEmpty()
-                && getExternalRegistrationDatasSet().isEmpty() && getExternalCourseLoadRequestsSet().isEmpty()
-                && getExternalProgramCertificateRequestsSet().isEmpty() && getUnitGroupSet().isEmpty())) {
+                && getExternalCourseLoadRequestsSet().isEmpty() && getExternalProgramCertificateRequestsSet().isEmpty()
+                && getUnitGroupSet().isEmpty())) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.unit.cannot.be.deleted"));
         }
     }

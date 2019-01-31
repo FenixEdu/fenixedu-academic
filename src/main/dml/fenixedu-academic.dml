@@ -1823,10 +1823,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         LocalizedString name (REQUIRED);
     }
 
-    class student.ExternalRegistrationData  {
-        String coordinatorName;
-    }
-
     class student.PrecedentDegreeInformation  {
         String conclusionGrade;
         Integer conclusionYear;
@@ -3806,18 +3802,6 @@ relation ExternalEnrolmentNotNeedToEnrollInCurricularCourse {
     }
 }
 
-relation ExternalRegistrationDataInstitution {
-    student.ExternalRegistrationData playsRole externalRegistrationDatas {
-        multiplicity *;
-    }
-    organizationalStructure.Unit playsRole institution;
-}
-
-relation ExternalRegistrationDataRegistration {
-    student.ExternalRegistrationData playsRole externalRegistrationData;
-    student.Registration playsRole registration;
-}
-
 relation FirstYearShiftsCapacityLogWithExecutionSemester {
 	ExecutionSemester playsRole executionSemester;
 	log.FirstYearShiftsCapacityToggleLog playsRole firstYearShiftsCapacityToggleLog {
@@ -4864,13 +4848,6 @@ relation RootDomainObjectExternalEnrolment {
 relation RootDomainObjectExternalInstitutionUnit {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectForExternalInstitutionUnit;
     organizationalStructure.Unit playsRole externalInstitutionUnit;
-    }
-
-relation RootDomainObjectExternalRegistrationData {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    student.ExternalRegistrationData playsRole externalRegistrationDatas {
-        multiplicity *;
-    }
 }
 
 relation RootDomainObjectFirstYearShiftsCapacityToggleLog {

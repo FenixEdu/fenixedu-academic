@@ -339,9 +339,6 @@ public class Registration extends Registration_Base {
         if (getRegistrationNumber() != null) {
             getRegistrationNumber().delete();
         }
-        if (getExternalRegistrationData() != null) {
-            getExternalRegistrationData().delete();
-        }
         if (getStudentCandidacy() != null) {
             getStudentCandidacy().delete();
         }
@@ -2647,11 +2644,6 @@ public class Registration extends Registration_Base {
             registrationProtocol = RegistrationProtocol.getDefault();
         }
         super.setRegistrationProtocol(registrationProtocol);
-        if (registrationProtocol != null && registrationProtocol.isEnrolmentByStudentAllowed() && !registrationProtocol.isAlien()
-                && getExternalRegistrationData() == null) {
-            new ExternalRegistrationData(this);
-        }
-
     }
 
     final public Enrolment getDissertationEnrolment() {
