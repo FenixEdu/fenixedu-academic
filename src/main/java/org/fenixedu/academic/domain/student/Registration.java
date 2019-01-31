@@ -2239,25 +2239,6 @@ public class Registration extends Registration_Base {
         return getDegreeType().isAdvancedSpecializationDiploma();
     }
 
-    final public EnrolmentModel getEnrolmentModelForCurrentExecutionYear() {
-        return getEnrolmentModelForExecutionYear(ExecutionYear.readCurrentExecutionYear());
-    }
-
-    final public EnrolmentModel getEnrolmentModelForExecutionYear(final ExecutionYear year) {
-        RegistrationDataByExecutionYear registrationData = getRegistrationDataByExecutionYear(year);
-        return registrationData != null ? registrationData.getEnrolmentModel() : null;
-    }
-
-    final public void setEnrolmentModelForCurrentExecutionYear(final EnrolmentModel model) {
-        setEnrolmentModelForExecutionYear(ExecutionYear.readCurrentExecutionYear(), model);
-    }
-
-    final public void setEnrolmentModelForExecutionYear(final ExecutionYear year, final EnrolmentModel model) {
-        RegistrationDataByExecutionYear registrationData =
-                RegistrationDataByExecutionYear.getOrCreateRegistrationDataByYear(this, year);
-        registrationData.setEnrolmentModel(model);
-    }
-
     private RegistrationDataByExecutionYear getRegistrationDataByExecutionYear(final ExecutionYear year) {
         for (RegistrationDataByExecutionYear registrationData : getRegistrationDataByExecutionYearSet()) {
             if (registrationData.getExecutionYear().equals(year)) {
@@ -2360,22 +2341,6 @@ public class Registration extends Registration_Base {
 
     final public boolean hasStudentCurricularPlanInExecutionPeriod(final ExecutionSemester executionSemester) {
         return getStudentCurricularPlan(executionSemester) != null;
-    }
-
-    final public boolean isCustomEnrolmentModel(final ExecutionYear executionYear) {
-        return getEnrolmentModelForExecutionYear(executionYear) == EnrolmentModel.CUSTOM;
-    }
-
-    final public boolean isCustomEnrolmentModel() {
-        return isCustomEnrolmentModel(ExecutionYear.readCurrentExecutionYear());
-    }
-
-    final public boolean isCompleteEnrolmentModel(final ExecutionYear executionYear) {
-        return getEnrolmentModelForExecutionYear(executionYear) == EnrolmentModel.COMPLETE;
-    }
-
-    final public boolean isCompleteEnrolmentModel() {
-        return isCompleteEnrolmentModel(ExecutionYear.readCurrentExecutionYear());
     }
 
     final public DegreeCurricularPlan getActiveDegreeCurricularPlan() {

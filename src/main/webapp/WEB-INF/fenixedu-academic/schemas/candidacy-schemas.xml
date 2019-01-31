@@ -219,7 +219,6 @@
 	type="org.fenixedu.academic.dto.administrativeOffice.candidacy.RegisterCandidacyBean" bundle="CANDIDATE_RESOURCES">
 	<slot name="candidacy.number" read-only="true" />
 	<slot name="candidacy.description" read-only="true" key="label.description" />
-	<slot name="enrolmentModel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="startDate" >
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.AdvancedDateValidator">
 			<property name="validationPeriod" value="pastOrToday" />

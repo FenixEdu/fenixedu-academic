@@ -24,7 +24,6 @@ package org.fenixedu.academic.dto.administrativeOffice.candidacy;
 import java.io.Serializable;
 
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
-import org.fenixedu.academic.domain.student.EnrolmentModel;
 import org.joda.time.YearMonthDay;
 
 /**
@@ -33,8 +32,6 @@ import org.joda.time.YearMonthDay;
  */
 public class RegisterCandidacyBean implements Serializable {
 
-    private EnrolmentModel enrolmentModel;
-
     private YearMonthDay startDate = new YearMonthDay();
 
     private StudentCandidacy candidacy;
@@ -42,14 +39,6 @@ public class RegisterCandidacyBean implements Serializable {
     public RegisterCandidacyBean(StudentCandidacy candidacy) {
         super();
         this.candidacy = candidacy;
-    }
-
-    public EnrolmentModel getEnrolmentModel() {
-        return enrolmentModel;
-    }
-
-    public void setEnrolmentModel(EnrolmentModel enrolmentModel) {
-        this.enrolmentModel = enrolmentModel;
     }
 
     public YearMonthDay getStartDate() {

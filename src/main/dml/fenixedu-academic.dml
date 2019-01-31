@@ -75,7 +75,6 @@ enum org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServi
 enum org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType                                 as DocumentRequestType;
 enum org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequestSituationType                                  as AcademicServiceRequestSituationType;
 enum org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentPurposeType                                 as DocumentPurposeType;
-enum org.fenixedu.academic.domain.student.EnrolmentModel                                                               as EnrolmentModel;
 enum org.fenixedu.academic.domain.student.RegistrationRegimeType                                                       as RegistrationRegimeType;
 enum org.fenixedu.academic.domain.util.LogicOperator                                                                   as LogicOperator;
 enum org.fenixedu.academic.util.ContentType                                                                            as ContentType;
@@ -1862,7 +1861,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
     class student.RegistrationDataByExecutionYear  {
 		boolean reingression;
 		LocalDate reingressionDate;
-        EnrolmentModel enrolmentModel;
         protected LocalDate enrolmentDate;
     }
 

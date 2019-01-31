@@ -139,14 +139,6 @@
 						<bean:message key="link.student.manageRegistrationStartDates" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 					</html:link>
 				</span>		
-				<logic:equal name="registration" property="degreeType.name" value="BOLONHA_ADVANCED_FORMATION_DIPLOMA">
-					<span class="dblock pbottom03">	
-						<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-						<html:link page="/manageEnrolmentModel.do?method=prepare" paramId="registrationID" paramName="registration" paramProperty="externalId">
-							<bean:message key="link.student.manageEnrolmentModel" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-						</html:link>
-					</span>
-				</logic:equal>
 				<academic:allowed operation="MANAGE_CONCLUSION" program="<%= registration.getDegree() %>">
 					<logic:equal name="registration" property="qualifiedToRegistrationConclusionProcess" value="true">
 						<span class="dblock pbottom03">	
