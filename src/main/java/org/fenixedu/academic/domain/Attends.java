@@ -33,23 +33,15 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.GroupEnrolment;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
-import org.fenixedu.academic.domain.student.WeeklyWorkLoad;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-import org.joda.time.DateMidnight;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeFieldType;
-import org.joda.time.Interval;
-import org.joda.time.PeriodType;
-import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
@@ -163,9 +155,6 @@ public class Attends extends Attends_Base {
 
     public void delete() throws DomainException {
         DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
-        for (; !getWeeklyWorkLoadsSet().isEmpty(); getWeeklyWorkLoadsSet().iterator().next().delete()) {
-            ;
-        }
 
         getProjectSubmissionLogsSet().clear();
         getGroupingsSet().clear();
@@ -275,137 +264,6 @@ public class Attends extends Attends_Base {
             orderedMarks.set(orderedEvaluations.indexOf(evaluation), mark);
         }
         return orderedMarks;
-    }
-
-    public WeeklyWorkLoad createWeeklyWorkLoad(final Integer contact, final Integer autonomousStudy, final Integer other) {
-
-        if (contact.intValue() < 0 || autonomousStudy.intValue() < 0 || other.intValue() < 0) {
-            throw new DomainException("weekly.work.load.creation.invalid.data");
-        }
-
-        if (getEnrolment() == null) {
-            throw new DomainException("weekly.work.load.creation.requires.enrolment");
-        }
-
-        final int currentWeekOffset = calculateCurrentWeekOffset();
-        if (currentWeekOffset < 1
-                || new YearMonthDay(getEndOfExamsPeriod()).plusDays(Lesson.NUMBER_OF_DAYS_IN_WEEK).isBefore(new YearMonthDay())) {
-            throw new DomainException("outside.weekly.work.load.response.period");
-        }
-
-        final int previousWeekOffset = currentWeekOffset - 1;
-
-        final WeeklyWorkLoad lastExistentWeeklyWorkLoad =
-                getWeeklyWorkLoadsSet().isEmpty() ? null : Collections.max(getWeeklyWorkLoadsSet());
-        if (lastExistentWeeklyWorkLoad != null && lastExistentWeeklyWorkLoad.getWeekOffset().intValue() == previousWeekOffset) {
-            throw new DomainException("weekly.work.load.for.previous.week.already.exists");
-        }
-
-        return new WeeklyWorkLoad(this, Integer.valueOf(previousWeekOffset), contact, autonomousStudy, other);
-    }
-
-    public Interval getWeeklyWorkLoadInterval() {
-        final DateTime beginningOfSemester = new DateTime(getBegginingOfLessonPeriod());
-        final DateTime firstMonday = beginningOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
-        final DateTime endOfSemester = new DateTime(getEndOfExamsPeriod());
-        final DateTime nextLastMonday = endOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1).plusWeeks(1);
-        return new Interval(firstMonday, nextLastMonday);
-    }
-
-    public WeeklyWorkLoad getWeeklyWorkLoadOfPreviousWeek() {
-        final int currentWeekOffset = calculateCurrentWeekOffset();
-        if (currentWeekOffset < 1
-                || new YearMonthDay(getEndOfExamsPeriod()).plusDays(Lesson.NUMBER_OF_DAYS_IN_WEEK).isBefore(new YearMonthDay())) {
-            throw new DomainException("outside.weekly.work.load.response.period");
-        }
-        final int previousWeekOffset = currentWeekOffset - 1;
-        for (final WeeklyWorkLoad weeklyWorkLoad : getWeeklyWorkLoadsSet()) {
-            if (weeklyWorkLoad.getWeekOffset().intValue() == previousWeekOffset) {
-                return weeklyWorkLoad;
-            }
-        }
-        return null;
-    }
-
-    public Interval getCurrentWeek() {
-        final DateMidnight beginningOfSemester = new DateMidnight(getBegginingOfLessonPeriod());
-        final DateMidnight firstMonday = beginningOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
-        final int currentWeek = calculateCurrentWeekOffset();
-        final DateMidnight start = firstMonday.plusWeeks(currentWeek);
-        return new Interval(start, start.plusWeeks(1));
-    }
-
-    public Interval getPreviousWeek() {
-        final DateMidnight thisMonday = new DateMidnight().withField(DateTimeFieldType.dayOfWeek(), 1);
-        final DateMidnight previousMonday = thisMonday.minusWeeks(1);
-        return new Interval(previousMonday, thisMonday);
-    }
-
-    public Interval getResponseWeek() {
-        final DateMidnight beginningOfSemester = new DateMidnight(getBegginingOfLessonPeriod());
-        final DateMidnight firstMonday = beginningOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
-        final DateMidnight secondMonday = firstMonday.plusWeeks(1);
-
-        final DateMidnight endOfSemester = new DateMidnight(getEndOfExamsPeriod());
-        final DateMidnight lastMonday = endOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
-        final DateMidnight endOfResponsePeriod = lastMonday.plusWeeks(2);
-
-        return (secondMonday.isEqualNow() || secondMonday.isBeforeNow())
-                && endOfResponsePeriod.isAfterNow() ? getPreviousWeek() : null;
-    }
-
-    public int getCalculatePreviousWeek() {
-        return calculateCurrentWeekOffset();
-    }
-
-    public int calculateCurrentWeekOffset() {
-        final DateMidnight beginningOfLessonPeriod = new DateMidnight(getBegginingOfLessonPeriod());
-        final DateMidnight firstMonday = beginningOfLessonPeriod.withField(DateTimeFieldType.dayOfWeek(), 1);
-        final DateMidnight thisMonday = new DateMidnight().withField(DateTimeFieldType.dayOfWeek(), 1);
-
-        final Interval interval = new Interval(firstMonday, thisMonday);
-
-        return interval.toPeriod(PeriodType.weeks()).getWeeks();
-    }
-
-    public Set<WeeklyWorkLoad> getSortedWeeklyWorkLoads() {
-        return new TreeSet<WeeklyWorkLoad>(getWeeklyWorkLoadsSet());
-    }
-
-    public int getWeeklyWorkLoadContact() {
-        int result = 0;
-        for (final WeeklyWorkLoad weeklyWorkLoad : getWeeklyWorkLoadsSet()) {
-            final int contact = weeklyWorkLoad.getContact() != null ? weeklyWorkLoad.getContact() : 0;
-            result += contact;
-        }
-        return result;
-    }
-
-    public int getWeeklyWorkLoadAutonomousStudy() {
-        int result = 0;
-        for (final WeeklyWorkLoad weeklyWorkLoad : getWeeklyWorkLoadsSet()) {
-            final int contact = weeklyWorkLoad.getAutonomousStudy() != null ? weeklyWorkLoad.getAutonomousStudy() : 0;
-            result += contact;
-        }
-        return result;
-    }
-
-    public int getWeeklyWorkLoadOther() {
-        int result = 0;
-        for (final WeeklyWorkLoad weeklyWorkLoad : getWeeklyWorkLoadsSet()) {
-            final int contact = weeklyWorkLoad.getOther() != null ? weeklyWorkLoad.getOther() : 0;
-            result += contact;
-        }
-        return result;
-    }
-
-    public int getWeeklyWorkLoadTotal() {
-        int result = 0;
-        for (final WeeklyWorkLoad weeklyWorkLoad : getWeeklyWorkLoadsSet()) {
-            final int contact = weeklyWorkLoad.getTotal();
-            result += contact;
-        }
-        return result;
     }
 
     public Date getBegginingOfLessonPeriod() {

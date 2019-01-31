@@ -1970,13 +1970,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
     	class student.SeniorStatute extends student.StudentStatute {
     	}
 
-    class student.WeeklyWorkLoad  {
-        Integer autonomousStudy;
-        Integer contact;
-        Integer other;
-        Integer weekOffset;
-    }
-
     class student.registrationStates.RegistrationState  {
         String remarks;
         DateTime stateDate;
@@ -3097,13 +3090,6 @@ relation AttendsStudent {
         multiplicity *;
     }
     student.Registration playsRole aluno;
-}
-
-relation AttendsWeeklyWorkLoad {
-    Attends playsRole attends;
-    student.WeeklyWorkLoad playsRole weeklyWorkLoads {
-        multiplicity *;
-    }
 }
 
 relation BelongsTo {
@@ -5342,13 +5328,6 @@ relation RootDomainObjectUnitAcronym {
 relation RootDomainObjectUniversity {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     University playsRole universitys {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectWeeklyWorkLoad {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    student.WeeklyWorkLoad playsRole weeklyWorkLoads {
         multiplicity *;
     }
 }
