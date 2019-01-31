@@ -1956,9 +1956,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
 		String comment;
     }
     
-    	class student.SeniorStatute extends student.StudentStatute {
-    	}
-
     class student.registrationStates.RegistrationState  {
         String remarks;
         DateTime stateDate;
@@ -5570,15 +5567,6 @@ relation StudentStatuteStudent {
     }
 }
 
-relation SeniorStatuteRegistration {
-	student.SeniorStatute playsRole seniorStatute {
-		multiplicity *;
-	}
-	student.Registration playsRole registration {
-		multiplicity 0..1;
-	}
-}
-	
 relation PersonProfessorship {
     Professorship playsRole professorships {
         multiplicity *;

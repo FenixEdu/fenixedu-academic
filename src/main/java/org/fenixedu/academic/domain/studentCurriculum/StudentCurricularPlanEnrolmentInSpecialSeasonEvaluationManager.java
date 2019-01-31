@@ -32,7 +32,6 @@ import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.curricularRules.EnrolmentInSpecialSeasonEvaluation;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfECTSInSpecialSeasonEvaluation;
-import org.fenixedu.academic.domain.curricularRules.SeniorStatuteSpecialSeasonEnrolmentScope;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.EnrolmentResultType;
 import org.fenixedu.academic.domain.enrolment.EnroledCurriculumModuleWrapper;
@@ -40,7 +39,6 @@ import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.domain.student.SeniorStatute;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.student.StudentStatute;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
@@ -167,11 +165,6 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
 
                     curricularRules.add(new MaximumNumberOfECTSInSpecialSeasonEvaluation());
 
-                    if (isEnrolingAsSenior(enrolment)) {
-                        curricularRules.add(new SeniorStatuteSpecialSeasonEnrolmentScope(enrolment,
-                                getRegistrationFromSeniorStatute(enrolment)));
-                    }
-
                     result.put(degreeModuleToEvaluate, curricularRules);
                 } else {
                     throw new DomainException(
@@ -227,9 +220,7 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
         List<StudentStatute> validSeniorStatutes = new ArrayList<StudentStatute>();
         List<StudentStatute> validOtherStatutes = new ArrayList<StudentStatute>();
         for (StudentStatute statute : statutesReader) {
-            if (statute instanceof SeniorStatute && statute.isValidInExecutionPeriod(getExecutionSemester())) {
-                validSeniorStatutes.add(statute);
-            } else if (statute.getType().isSpecialSeasonGranted() && statute.isValidInExecutionPeriod(getExecutionSemester())) {
+            if (statute.getType().isSpecialSeasonGranted() && statute.isValidInExecutionPeriod(getExecutionSemester())) {
                 validOtherStatutes.add(statute);
             }
         }
@@ -241,23 +232,6 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
         } else {
             throw new DomainException(
                     "StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager.inconsistent.student.statutes.states");
-        }
-    }
-
-    private Registration getRegistrationFromSeniorStatute(Enrolment enrolment) {
-        List<StudentStatute> statutesReader = new ArrayList<StudentStatute>(enrolment.getStudent().getStudentStatutesSet());
-        List<StudentStatute> statutesWriter = new ArrayList<StudentStatute>();
-        for (StudentStatute statute : statutesReader) {
-            if (statute instanceof SeniorStatute && statute.isValidInExecutionPeriod(getExecutionSemester())) {
-                statutesWriter.add(statute);
-            }
-        }
-        if (statutesWriter.size() == 1) {
-            SeniorStatute senior = (SeniorStatute) statutesWriter.iterator().next();
-            return senior.getRegistration();
-        } else {
-            throw new DomainException(
-                    "StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager.student.has.more.than.one.senior.statute.for.same.period");
         }
     }
 

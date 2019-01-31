@@ -24,7 +24,6 @@ package org.fenixedu.academic.dto.student;
 import java.io.Serializable;
 
 import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.student.SeniorStatute;
 import org.fenixedu.academic.domain.student.StatuteType;
 import org.fenixedu.academic.domain.student.StudentStatute;
 
@@ -82,8 +81,6 @@ public class StudentStatuteBean implements Serializable {
     }
 
     public String getDescription() {
-        return getStatuteType().getName().getContent()
-                + (studentStatute instanceof SeniorStatute ? (" ("
-                        + ((SeniorStatute) studentStatute).getRegistration().getDegree().getPresentationName() + ") ") : "");
+        return getStatuteType().getName().getContent();
     }
 }

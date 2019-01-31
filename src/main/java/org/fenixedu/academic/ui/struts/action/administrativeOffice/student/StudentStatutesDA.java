@@ -25,7 +25,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.student.SeniorStatute;
 import org.fenixedu.academic.domain.student.StatuteType;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.student.StudentStatute;
@@ -57,10 +56,7 @@ public class StudentStatutesDA extends FenixDispatchAction {
 
         @Override
         public Object execute() {
-            if (getStatuteType().isSeniorStatute()) {
-                return new SeniorStatute(getStudent(), getRegistration(), getStatuteType(), getBeginExecutionPeriod(),
-                        getEndExecutionPeriod(), getBeginDate(), getEndDate());
-            } else if (getStatuteType().isAppliedOnRegistration()) {
+            if (getStatuteType().isAppliedOnRegistration()) {
                 return new StudentStatute(getStudent(), getStatuteType(), getBeginExecutionPeriod(), getEndExecutionPeriod(),
                         getBeginDate(), getEndDate(), getComment(), getRegistration());
             } else {
@@ -198,12 +194,7 @@ public class StudentStatutesDA extends FenixDispatchAction {
         request.setAttribute("statuteId", studentStatute.getExternalId());
         request.setAttribute("manageStatuteBean", bean);
 
-        if (studentStatute.getType().isSeniorStatute()) {
-            request.setAttribute("schemaName", "student.editSeniorStatute");
-            bean.setRegistration(((SeniorStatute) studentStatute).getRegistration());
-        } else {
-            request.setAttribute("schemaName", "student.editStatutes");
-        }
+        request.setAttribute("schemaName", "student.editStatutes");
 
         return mapping.findForward("editStatute");
     }
@@ -214,17 +205,9 @@ public class StudentStatutesDA extends FenixDispatchAction {
         StudentStatute studentStatute = getDomainObject(request, "statuteId");
 
         try {
-            atomic(() -> {
-                if (manageStatuteBean.getStatuteType().isSeniorStatute()) {
-                    ((SeniorStatute) studentStatute).edit(manageStatuteBean.getStudent(), manageStatuteBean.getRegistration(),
-                            manageStatuteBean.getBeginExecutionPeriod(), manageStatuteBean.getEndExecutionPeriod(),
-                            manageStatuteBean.getBeginDate(), manageStatuteBean.getEndDate(), manageStatuteBean.getComment());
-                } else {
-                    studentStatute.edit(manageStatuteBean.getStudent(), manageStatuteBean.getBeginExecutionPeriod(),
-                            manageStatuteBean.getEndExecutionPeriod(), manageStatuteBean.getBeginDate(),
-                            manageStatuteBean.getEndDate(), manageStatuteBean.getComment());
-                }
-            });
+            atomic(() -> studentStatute.edit(manageStatuteBean.getStudent(), manageStatuteBean.getBeginExecutionPeriod(),
+                    manageStatuteBean.getEndExecutionPeriod(), manageStatuteBean.getBeginDate(), manageStatuteBean.getEndDate(),
+                    manageStatuteBean.getComment()));
         } catch (DomainException e) {
             request.setAttribute("error", e.getLocalizedMessage());
             return prepareEditStatute(mapping, actionForm, request, response);
