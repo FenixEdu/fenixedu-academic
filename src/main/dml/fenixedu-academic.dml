@@ -1909,18 +1909,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         String observations;
     }
 
-    class student.Senior  {
-        Integer expectedDegreeAverageGrade;
-        DateTime expectedDegreeTerminationDateTime;
-        String extracurricularActivities;
-        String informaticsSkills;
-        String languageSkills;
-        DateTime lastModificationDateDateTime;
-        String professionalExperience;
-        String professionalInterests;
-        String specialtyField;
-    }
-
     class student.Student  {
         Integer number;
     }
@@ -5176,13 +5164,6 @@ relation RootDomainObjectSecretaryEnrolmentStudent {
     }
 }
 
-relation RootDomainObjectSenior {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    student.Senior playsRole seniors {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectShift {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Shift playsRole shifts {
@@ -5351,11 +5332,6 @@ relation SendProposal {
         multiplicity *;
     }
     ExecutionCourse playsRole senderExecutionCourse;
-}
-
-relation SeniorStudent {
-   student.Senior playsRole senior;
-   student.Registration playsRole student;
 }
 
 relation ShiftEnrolmentRegistration {

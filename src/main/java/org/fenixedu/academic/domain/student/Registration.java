@@ -342,9 +342,6 @@ public class Registration extends Registration_Base {
         if (getExternalRegistrationData() != null) {
             getExternalRegistrationData().delete();
         }
-        if (getSenior() != null) {
-            getSenior().delete();
-        }
         if (getStudentCandidacy() != null) {
             getStudentCandidacy().delete();
         }
