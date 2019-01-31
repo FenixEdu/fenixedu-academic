@@ -1129,14 +1129,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return false;
     }
 
-    final public void initEctsCreditsToEnrol(List<CurricularCourse2Enroll> setOfCurricularCoursesToEnroll,
-            ExecutionSemester executionSemester) {
-        for (CurricularCourse2Enroll curricularCourse2Enroll : setOfCurricularCoursesToEnroll) {
-            curricularCourse2Enroll.setEctsCredits(
-                    this.getAccumulatedEctsCredits(executionSemester, curricularCourse2Enroll.getCurricularCourse()));
-        }
-    }
-
     private boolean allNotNeedToEnroll(Collection<CurricularCourse> oldCurricularCourses) {
         for (CurricularCourse course : oldCurricularCourses) {
             if (!notNeedToEnroll(course)) {
