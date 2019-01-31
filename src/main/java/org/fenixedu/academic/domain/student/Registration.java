@@ -1971,14 +1971,6 @@ public class Registration extends Registration_Base {
         return getCurriculum(when, executionYear, (CycleType) null).getCurricularYear();
     }
 
-    final public Person getConclusionProcessResponsible() {
-        return isRegistrationConclusionProcessed() ? getConclusionProcess().getResponsible() : null;
-    }
-
-    final public Person getConclusionProcessLastResponsible() {
-        return isRegistrationConclusionProcessed() ? getConclusionProcess().getLastResponsible() : null;
-    }
-
     public boolean isRegistrationConclusionProcessed() {
         return getLastStudentCurricularPlan().isConclusionProcessed();
     }
@@ -2058,18 +2050,6 @@ public class Registration extends Registration_Base {
         }
 
         return lastStudentCurricularPlan.calculateConclusionDate(cycleType);
-    }
-
-    final public String getConclusionProcessNotes() {
-        return isRegistrationConclusionProcessed() ? getConclusionProcess().getNotes() : null;
-    }
-
-    final public DateTime getConclusionProcessCreationDateTime() {
-        return isRegistrationConclusionProcessed() ? getConclusionProcess().getCreationDateTime() : null;
-    }
-
-    final public DateTime getConclusionProcessLastModificationDateTime() {
-        return isRegistrationConclusionProcessed() ? getConclusionProcess().getLastModificationDateTime() : null;
     }
 
     final public String getGraduateTitle(final ProgramConclusion programConclusion, final Locale locale) {

@@ -1796,9 +1796,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
     class student.curriculum.ConclusionProcess  {
     }
 
-        class student.curriculum.RegistrationConclusionProcess extends student.curriculum.ConclusionProcess {
-        }
-    
         class student.curriculum.ProgramConclusionProcess extends student.curriculum.ConclusionProcess {
         }
     
@@ -4408,11 +4405,6 @@ relation ResponsibleForConclusionProcessVersion {
     student.curriculum.ConclusionProcessVersion playsRole conclusionProcessVersions {
         multiplicity *; 
     }
-}
-
-relation RegistrationRegistrationConclusionProcess {
-    student.Registration playsRole registration;
-    student.curriculum.RegistrationConclusionProcess playsRole conclusionProcess;
 }
 
 relation RegistrationRegistrationNumber {

@@ -89,8 +89,6 @@ public class RegistrationCurriculumBean extends RegistrationSelectExecutionYearB
     public ExecutionYear getConclusionYear() {
         if (hasCurriculumGroup() && getCurriculumGroup().isConclusionProcessed()) {
             return getCurriculumGroup().getConclusionYear();
-        } else if (getRegistration().isRegistrationConclusionProcessed()) {
-            return getRegistration().getConclusionProcess().getConclusionYear();
         } else {
             return null;
         }
