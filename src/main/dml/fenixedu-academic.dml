@@ -2268,14 +2268,6 @@ class candidacy.MeasurementTestRoom  {
     Integer roomOrder;
 }
 
-class administrativeOffice.curriculumValidation.DocumentPrintRequest  {
-	String newConclusionDateValue;
-	String newGraduatedTitleValue;
-	String newDegreeDescriptionValue;
-	DateTime whenRequested;
-}
-
-
 class ImportRegister  {
 	String remoteExternalOid;
 }
@@ -6144,26 +6136,6 @@ relation CycleCourseGroupCycleCourseGroupInformation {
 	}	
 }
 
-relation DocumentPrintRequestRootDmainObject {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	administrativeOffice.curriculumValidation.DocumentPrintRequest playsRole request {
-		multiplicity *;
-	}
-}
-
-relation DocumentPrintRequestPerson {
-	Person playsRole whoRequested;
-	administrativeOffice.curriculumValidation.DocumentPrintRequest playsRole request {
-		multiplicity *;
-	}	
-}
-
-relation DocumentPrintRequestDocumentRequest {
-	serviceRequests.documentRequests.DocumentRequest playsRole documentRequest;
-	administrativeOffice.curriculumValidation.DocumentPrintRequest playsRole request {
-		multiplicity *;
-	}		
-}
 relation RootDomainObjectEnrolmentInstructions {
 	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	EnrolmentInstructions playsRole enrolmentInstructions {
