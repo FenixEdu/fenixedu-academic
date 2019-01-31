@@ -1911,10 +1911,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         Integer number;
     }
 
-    class student.StudentDataByExecutionYear  {
-        Boolean workingStudent;
-    }
-        	
 	class student.StatuteType {
 	    public String code;
 		LocalizedString name (REQUIRED);
@@ -5420,27 +5416,6 @@ relation StudentCurricularPlanStudent {
         multiplicity *;
     }
     student.Registration playsRole student;
-}
-
-relation StudentDataByExecutionYearExecutionYear {
-    student.StudentDataByExecutionYear playsRole studentDataByExecutionYear {
-        multiplicity *;
-    }
-    ExecutionYear playsRole executionYear;
-}
-
-relation StudentDataByExecutionYearRootDomainObject {
-    student.StudentDataByExecutionYear playsRole studentDataByExecutionYear {
-        multiplicity *;
-    }
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-}
-
-relation StudentDataByExecutionYearStudent {
-    student.StudentDataByExecutionYear playsRole studentDataByExecutionYear {
-        multiplicity *;
-    }
-    student.Student playsRole student;
 }
 
 relation StudentEnrolmentLog {

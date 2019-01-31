@@ -59,7 +59,6 @@ import org.fenixedu.academic.dto.student.StudentStatuteBean;
 import org.fenixedu.academic.predicate.StudentPredicates;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.spaces.domain.Space;
-import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -292,57 +291,6 @@ public class Student extends Student_Base {
         return Integer.valueOf(max + 1);
     }
 
-    public boolean getWorkingStudentForCurrentExecutionYear() {
-        if (getActualExecutionYearStudentData() == null) {
-            return false;
-        }
-        return getActualExecutionYearStudentData().getWorkingStudent();
-    }
-
-    public void setWorkingStudentForCurrentExecutionYear() {
-        createCurrentYearStudentData();
-        getActualExecutionYearStudentData().setWorkingStudent(true);
-    }
-
-    private ExecutionYear getCurrentExecutionYearDate() {
-        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-        if (currentExecutionYear.getBeginDateYearMonthDay().isAfter(new LocalDate())) {
-            return currentExecutionYear.getPreviousExecutionYear();
-        }
-        return currentExecutionYear;
-    }
-
-    private void createCurrentYearStudentData() {
-        if (getActualExecutionYearStudentData() == null) {
-            new StudentDataByExecutionYear(this);
-        }
-    }
-
-    private StudentDataByExecutionYear createStudentDataForExecutionYear(final ExecutionYear executionYear) {
-        if (getStudentDataByExecutionYear(executionYear) == null) {
-            return new StudentDataByExecutionYear(this, executionYear);
-        }
-        return getStudentDataByExecutionYear(executionYear);
-    }
-
-    public StudentDataByExecutionYear getActualExecutionYearStudentData() {
-        for (final StudentDataByExecutionYear studentData : getStudentDataByExecutionYearSet()) {
-            if (studentData.getExecutionYear().isCurrent()) {
-                return studentData;
-            }
-        }
-        return null;
-    }
-
-    public StudentDataByExecutionYear getStudentDataByExecutionYear(final ExecutionYear executionYear) {
-        for (StudentDataByExecutionYear studentData : getStudentDataByExecutionYearSet()) {
-            if (studentData.getExecutionYear().equals(executionYear)) {
-                return studentData;
-            }
-        }
-        return null;
-    }
-
     public boolean isWorkingStudent() {
         for (StudentStatute statute : getStudentStatutesSet()) {
             if (statute.getType().isWorkingStudentStatute()) {
@@ -403,9 +351,6 @@ public class Student extends Student_Base {
 
     public void delete() {
         DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
-        for (; !getStudentDataByExecutionYearSet().isEmpty(); getStudentDataByExecutionYearSet().iterator().next().delete()) {
-            ;
-        }
         for (; !getRegistrationsSet().isEmpty(); getRegistrationsSet().iterator().next().delete()) {
             ;
         }
