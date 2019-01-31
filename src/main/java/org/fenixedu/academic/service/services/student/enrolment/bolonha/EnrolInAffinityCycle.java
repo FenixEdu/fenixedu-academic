@@ -24,7 +24,6 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacy.MDCandidacy;
 import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
-import org.fenixedu.academic.domain.student.AffinityCyclesManagement;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.domain.student.Student;
@@ -98,16 +97,14 @@ public class EnrolInAffinityCycle {
 
                 newRegistration.setSourceRegistration(studentCurricularPlan.getRegistration());
                 newRegistration.getActiveState().setResponsiblePerson(null);
-                newRegistration.setIngressionType(IngressionType.findByPredicate(IngressionType::isDirectAccessFrom1stCycle)
-                        .orElse(null));
+                newRegistration.setIngressionType(
+                        IngressionType.findByPredicate(IngressionType::isDirectAccessFrom1stCycle).orElse(null));
 
                 markOldRegistrationWithConcludedState(studentCurricularPlan);
 
                 return newRegistration;
             }
 
-        } else if (secondCycle.isExternal()) {
-            return new AffinityCyclesManagement(studentCurricularPlan).enrol(cycleCourseGroupToEnrol);
         } else {
             return studentCurricularPlan.getRegistration();
         }
