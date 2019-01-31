@@ -23,11 +23,9 @@ package org.fenixedu.academic.dto.student;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
-import org.fenixedu.academic.domain.student.StudentDataShareAuthorization;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 
 /**
@@ -71,12 +69,6 @@ public class RegistrationWithStateForExecutionYearBean implements Serializable {
 
     public Student getStudent() {
         return getRegistration().getStudent();
-    }
-
-    public String getPersonalDataAuthorization() {
-        StudentDataShareAuthorization dataAccess =
-                getStudent().getPersonalDataAuthorizationAt(getExecutionYear().getEndDateYearMonthDay().toDateTimeAtMidnight());
-        return dataAccess != null ? dataAccess.getAuthorizationChoice().getDescription() : StringUtils.EMPTY;
     }
 
 }

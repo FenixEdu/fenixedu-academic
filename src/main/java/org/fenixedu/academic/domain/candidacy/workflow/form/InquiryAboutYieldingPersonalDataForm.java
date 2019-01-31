@@ -23,41 +23,11 @@ import java.util.List;
 
 import org.fenixedu.academic.domain.util.workflow.Form;
 import org.fenixedu.academic.util.LabelFormatter;
-import org.fenixedu.academic.util.StudentPersonalDataAuthorizationChoice;
 
 public class InquiryAboutYieldingPersonalDataForm extends Form {
 
-    private StudentPersonalDataAuthorizationChoice personalDataAuthorizationChoice;
-    private boolean personalDataAuthorizationForStudentsAssociation = true;
-
     public InquiryAboutYieldingPersonalDataForm() {
         super();
-    }
-
-    public InquiryAboutYieldingPersonalDataForm(final StudentPersonalDataAuthorizationChoice personalDataAuthorizationChoice) {
-        this();
-        this.personalDataAuthorizationChoice = personalDataAuthorizationChoice;
-    }
-
-    public StudentPersonalDataAuthorizationChoice getPersonalDataAuthorizationChoice() {
-        return personalDataAuthorizationChoice;
-    }
-
-    public void setPersonalDataAuthorizationChoice(StudentPersonalDataAuthorizationChoice personalDataAuthorizationChoice) {
-        this.personalDataAuthorizationChoice = personalDataAuthorizationChoice;
-    }
-
-    public void setPersonalDataAuthorizationForStudentsAssociation(boolean personalDataAuthorizationForStudentsAssociation) {
-        this.personalDataAuthorizationForStudentsAssociation = personalDataAuthorizationForStudentsAssociation;
-    }
-
-    public boolean isPersonalDataAuthorizationForStudentsAssociation() {
-        return personalDataAuthorizationForStudentsAssociation;
-    }
-
-    public StudentPersonalDataAuthorizationChoice getPersonalDataAuthorizationForStudentsAssociation() {
-        return StudentPersonalDataAuthorizationChoice
-                .getPersonalDataAuthorizationForStudentsAssociationType(isPersonalDataAuthorizationForStudentsAssociation());
     }
 
     @Override

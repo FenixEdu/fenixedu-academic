@@ -82,7 +82,6 @@ enum org.fenixedu.academic.domain.util.LogicOperator                            
 enum org.fenixedu.academic.util.ContentType                                                                            as ContentType;
 enum org.fenixedu.academic.util.Month                                                                                  as Month;
 enum org.fenixedu.academic.util.RegimeType                                                                             as RegimeType;
-enum org.fenixedu.academic.util.StudentPersonalDataAuthorizationChoice                                                 as StudentPersonalDataAuthorizationChoice;
 enum org.fenixedu.academic.util.WeekDay                                                                                as WeekDay;
 enum org.fenixedu.academic.domain.EntryPhase                                                                           as EntryPhase;
 enum org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationContext                                                as EnrolmentEvaluationContext;
@@ -996,8 +995,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
             EntryPhase entryPhase;
             Boolean applyForResidence;
             String notesAboutResidenceAppliance;
-            StudentPersonalDataAuthorizationChoice studentPersonalDataAuthorizationChoice;
-            StudentPersonalDataAuthorizationChoice studentPersonalDataStudentsAssociationAuthorization;
             
             Boolean dislocatedFromPermanentResidence;
             Integer placingOption;
@@ -1935,15 +1932,7 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
     class student.StudentDataByExecutionYear  {
         Boolean workingStudent;
     }
-    
-    class student.StudentDataShareAuthorization  {
-    	StudentPersonalDataAuthorizationChoice authorizationChoice (REQUIRED);
-    	DateTime since (REQUIRED);
-    }
-    	
-    	class student.StudentDataShareStudentsAssociationAuthorization extends student.StudentDataShareAuthorization {
-    	}
-
+        	
 	class student.StatuteType {
 	    public String code;
 		LocalizedString name (REQUIRED);
@@ -5497,15 +5486,6 @@ relation StudentDataByExecutionYearStudent {
         multiplicity *;
     }
     student.Student playsRole student;
-}
-
-relation StudentDataShareAuthorizations {
-    student.StudentDataShareAuthorization playsRole studentDataShareAuthorization {
-        multiplicity *;
-    }
-    student.Student playsRole student {
-    	multiplicity 1..1;
-    }
 }
 
 relation StudentEnrolmentLog {

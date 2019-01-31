@@ -57,10 +57,8 @@ import org.fenixedu.academic.domain.student.registrationStates.RegistrationState
 import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.dto.student.StudentStatuteBean;
 import org.fenixedu.academic.predicate.StudentPredicates;
-import org.fenixedu.academic.util.StudentPersonalDataAuthorizationChoice;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.spaces.domain.Space;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.Atomic;
@@ -328,64 +326,12 @@ public class Student extends Student_Base {
         getActualExecutionYearStudentData().setWorkingStudent(true);
     }
 
-    public StudentPersonalDataAuthorizationChoice getPersonalDataAuthorization() {
-        return getActivePersonalDataAuthorization() == null ? null : getActivePersonalDataAuthorization()
-                .getAuthorizationChoice();
-    }
-
-    public void setPersonalDataAuthorization(final StudentPersonalDataAuthorizationChoice authorization) {
-        new StudentDataShareAuthorization(this, authorization);
-    }
-
-    public void setStudentPersonalDataStudentsAssociationAuthorization(
-            final StudentPersonalDataAuthorizationChoice authorization) {
-        new StudentDataShareStudentsAssociationAuthorization(this, authorization);
-    }
-
-    public StudentDataShareStudentsAssociationAuthorization getStudentPersonalDataStudentsAssociationAuthorization() {
-        for (StudentDataShareAuthorization shareAuthorization : getStudentDataShareAuthorizationSet()) {
-            if (shareAuthorization instanceof StudentDataShareStudentsAssociationAuthorization) {
-                return (StudentDataShareStudentsAssociationAuthorization) shareAuthorization;
-            }
-        }
-        return null;
-    }
-
-    public boolean hasFilledAuthorizationInformationInCurrentExecutionYear() {
-        return getActivePersonalDataAuthorization() != null && getActivePersonalDataAuthorization().getSince()
-                .isAfter(getCurrentExecutionYearDate().getBeginDateYearMonthDay().toDateTimeAtMidnight());
-    }
-
     private ExecutionYear getCurrentExecutionYearDate() {
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
         if (currentExecutionYear.getBeginDateYearMonthDay().isAfter(new LocalDate())) {
             return currentExecutionYear.getPreviousExecutionYear();
         }
         return currentExecutionYear;
-    }
-
-    public StudentDataShareAuthorization getActivePersonalDataAuthorization() {
-        return getPersonalDataAuthorizationAt(new DateTime());
-    }
-
-    public StudentDataShareAuthorization getPersonalDataAuthorizationAt(final DateTime when) {
-        StudentDataShareAuthorization target = null;
-        for (StudentDataShareAuthorization authorization : getStudentDataShareAuthorizationSet()) {
-            if (authorization.isStudentDataShareAuthorization() && authorization.getSince().isBefore(when)) {
-                if (target == null || authorization.getSince().isAfter(target.getSince())) {
-                    target = authorization;
-                }
-            }
-        }
-        return target;
-    }
-
-    public Boolean hasPersonalDataAuthorizationForProfessionalPurposesAt() {
-        StudentDataShareAuthorization authorization = getPersonalDataAuthorizationAt(new DateTime());
-        return authorization != null
-                && (authorization.getAuthorizationChoice().equals(StudentPersonalDataAuthorizationChoice.PROFESSIONAL_ENDS)
-                        || authorization.getAuthorizationChoice().equals(StudentPersonalDataAuthorizationChoice.ALL_ENDS)
-                        || authorization.getAuthorizationChoice().equals(StudentPersonalDataAuthorizationChoice.SEVERAL_ENDS));
     }
 
     private void createCurrentYearStudentData() {

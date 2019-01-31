@@ -36,7 +36,6 @@ import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions;
 import org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions.EnrolmentPreConditionResult;
-import org.fenixedu.academic.domain.treasury.ITreasuryBridgeAPI;
 import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.academic.dto.student.enrollment.bolonha.CycleEnrolmentBean;
 import org.fenixedu.academic.predicate.IllegalDataAccessException;
@@ -55,11 +54,8 @@ import com.google.common.collect.Lists;
 
 @StrutsFunctionality(app = StudentEnrollApp.class, path = "courses", titleKey = "link.student.enrollment")
 @Mapping(module = "student", path = "/studentEnrollmentManagement")
-@Forwards(value = {
-        @Forward(name = "notAuthorized", path = "/student/notAuthorized_bd.jsp"),
+@Forwards(value = { @Forward(name = "notAuthorized", path = "/student/notAuthorized_bd.jsp"),
         @Forward(name = "chooseRegistration", path = "/student/enrollment/chooseRegistration.jsp"),
-        @Forward(name = "choosePersonalDataAuthorizationChoice",
-                path = "/student/enrollment/choosePersonalDataAuthorizationChoice.jsp"),
         @Forward(name = "proceedToEnrolment", path = "/student/bolonhaStudentEnrollment.do?method=showWelcome"),
         @Forward(name = "showAffinityToEnrol", path = "/student/enrollment/bolonha/showAffinityToEnrol.jsp"),
         @Forward(name = "chooseSemester", path = "/student/enrollment/chooseSemester.jsp"),
@@ -68,13 +64,10 @@ import com.google.common.collect.Lists;
 public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 
     @EntryPoint
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
         final Student student = getLoggedStudent(request);
-        if (!student.hasFilledAuthorizationInformationInCurrentExecutionYear()) {
-            request.setAttribute("student", student);
-            return mapping.findForward("choosePersonalDataAuthorizationChoice");
-        }
         ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
         request.setAttribute("executionSemester", executionSemester);
         final List<Registration> registrationsToEnrol = getRegistrationsToEnrolByStudent(request);
@@ -124,7 +117,8 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
         final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
         request.setAttribute("executionSemesterID", executionSemester.getExternalId());
 
-        if (TreasuryBridgeAPIFactory.implementation().isAcademicalActsBlocked(studentCurricularPlan.getPerson(), new LocalDate())) {
+        if (TreasuryBridgeAPIFactory.implementation().isAcademicalActsBlocked(studentCurricularPlan.getPerson(),
+                new LocalDate())) {
             request.setAttribute("debtsMessage",
                     "error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
         }
@@ -197,8 +191,8 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
             return mapping.findForward("enrollmentCannotProceed");
         }
 
-        request.setAttribute("cycleEnrolmentBean", new CycleEnrolmentBean(studentCurricularPlan, executionSemester,
-                CycleType.FIRST_CYCLE, CycleType.SECOND_CYCLE));
+        request.setAttribute("cycleEnrolmentBean",
+                new CycleEnrolmentBean(studentCurricularPlan, executionSemester, CycleType.FIRST_CYCLE, CycleType.SECOND_CYCLE));
 
         return mapping.findForward("selectAffinityToEnrol");
     }
@@ -211,8 +205,8 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
             return mapping.findForward("enrollmentCannotProceed");
         }
 
-        request.setAttribute("cycleEnrolmentBean", new CycleEnrolmentBean(studentCurricularPlan, executionSemester,
-                curriculumGroup.getCycleCourseGroup()));
+        request.setAttribute("cycleEnrolmentBean",
+                new CycleEnrolmentBean(studentCurricularPlan, executionSemester, curriculumGroup.getCycleCourseGroup()));
 
         return mapping.findForward("showAffinityToEnrol");
     }
@@ -295,11 +289,6 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 
     private Registration getRegistrationFrom(final HttpServletRequest request, final String parameterName) {
         return getDomainObject(request, parameterName);
-    }
-
-    public ActionForward choosePersonalDataAuthorizationChoice(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
-        return prepare(mapping, form, request, response);
     }
 
     private List<Registration> getRegistrationsToEnrolByStudent(final HttpServletRequest request) {

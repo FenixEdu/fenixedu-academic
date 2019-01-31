@@ -412,8 +412,6 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
                     fillSpreadSheetBolonhaInfo(spreadsheet, registration, studentCurricularPlan.getCycle(CycleType.THIRD_CYCLE));
                 }
 
-                spreadsheet.addCell(registrationWithStateForExecutionYearBean.getPersonalDataAuthorization());
-
                 addBranchsInformation(spreadsheet, studentCurricularPlan);
 
                 final Collection<Enrolment> enrolmentsSem1 = registration.getEnrolments(executionYear.getExecutionSemesterFor(1));
@@ -638,8 +636,6 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
                 spreadsheet.addHeader(getResourceMessage("label.thirdCycle.hasConclusionProcess"));
                 spreadsheet.addHeader(getResourceMessage("label.thirdCycle.ects"));
             }
-
-            spreadsheet.addHeader(getResourceMessage("label.studentData.personalDataAuthorization"));
 
             spreadsheet.addHeader(getResourceMessage("label.main.branch"));
             spreadsheet.addHeader(getResourceMessage("label.minor.branch"));

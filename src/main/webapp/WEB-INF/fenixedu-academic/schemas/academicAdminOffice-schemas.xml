@@ -1463,13 +1463,6 @@
 	<slot name="name" />
 </schema>
 
-<schema name="StudentDataByExecutionYear" type="org.fenixedu.academic.domain.student.StudentDataByExecutionYear" bundle="APPLICATION_RESOURCES">
-	<slot name="executionYear.year" label="label.executionYear.year" />
-	<slot name="personalDataAuthorization" label="label.personalDataAuthorization" layout="menu-select">
-		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.student.PersonalDataAuthorizationProvider" />
-	</slot>
-</schema>
-
 <schema name="IRegistrationBean.edit-cycleCurriculumGroup" type="org.fenixedu.academic.dto.student.IRegistrationBean" bundle="APPLICATION_RESOURCES">
     <slot name="cycleCurriculumGroup" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.student.RegistrationInternalCycleCurriculumGroupsProvider" />

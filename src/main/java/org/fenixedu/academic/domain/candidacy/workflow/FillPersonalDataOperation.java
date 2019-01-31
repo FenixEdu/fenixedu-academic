@@ -198,7 +198,6 @@ public class FillPersonalDataOperation extends CandidacyOperation {
         fillHouseholdInformation();
         fillResidenceInformation();
         fillContacts();
-        fillPersonalDataAuthorizationChoice();
         fillOriginInformation();
         fillResidenceAppliance();
     }
@@ -248,13 +247,6 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 
         personalData.setHighSchoolType(getOriginInformationForm().getHighSchoolType());
 
-    }
-
-    protected void fillPersonalDataAuthorizationChoice() {
-        getStudentCandidacy().setStudentPersonalDataAuthorizationChoice(
-                getInquiryAboutYieldingPersonalDataForm().getPersonalDataAuthorizationChoice());
-        getStudentCandidacy().setStudentPersonalDataStudentsAssociationAuthorization(
-                getInquiryAboutYieldingPersonalDataForm().getPersonalDataAuthorizationForStudentsAssociation());
     }
 
     protected void fillContacts() {
@@ -312,15 +304,13 @@ public class FillPersonalDataOperation extends CandidacyOperation {
         String districtSubdivisionOfResidence =
                 getResidenceInformationForm().getDistrictSubdivisionOfResidence() != null ? getResidenceInformationForm()
                         .getDistrictSubdivisionOfResidence().getName() : null;
-        String districtOfResidence =
-                (districtSubdivisionOfResidence != null && getResidenceInformationForm().getDistrictSubdivisionOfResidence()
-                        .getDistrict() != null) ? getResidenceInformationForm()
+        String districtOfResidence = (districtSubdivisionOfResidence != null && getResidenceInformationForm()
+                .getDistrictSubdivisionOfResidence().getDistrict() != null) ? getResidenceInformationForm()
                         .getDistrictSubdivisionOfResidence().getDistrict().getName() : null;
-        final PhysicalAddressData physicalAddressData =
-                new PhysicalAddressData(getResidenceInformationForm().getAddress(), getResidenceInformationForm().getAreaCode(),
-                        getResidenceInformationForm().getAreaOfAreaCode(), getResidenceInformationForm().getArea(),
-                        getResidenceInformationForm().getParishOfResidence(), districtSubdivisionOfResidence,
-                        districtOfResidence, getResidenceInformationForm().getCountryOfResidence());
+        final PhysicalAddressData physicalAddressData = new PhysicalAddressData(getResidenceInformationForm().getAddress(),
+                getResidenceInformationForm().getAreaCode(), getResidenceInformationForm().getAreaOfAreaCode(),
+                getResidenceInformationForm().getArea(), getResidenceInformationForm().getParishOfResidence(),
+                districtSubdivisionOfResidence, districtOfResidence, getResidenceInformationForm().getCountryOfResidence());
         person.setDefaultPhysicalAddressData(physicalAddressData, true);
     }
 
@@ -356,8 +346,8 @@ public class FillPersonalDataOperation extends CandidacyOperation {
         person.setIdDocumentType(getPersonalInformationForm().getIdDocumentType());
         person.setMaritalStatus(getPersonalInformationForm().getMaritalStatus());
         if (person.getIdDocumentType() == IDDocumentType.IDENTITY_CARD) {
-        	person.setIdentificationDocumentSeriesNumber(getPersonalInformationForm().getIdentificationDocumentSeriesNumber());
-        	person.setIdentificationDocumentExtraDigit(getPersonalInformationForm().getIdentificationDocumentExtraDigit());        	
+            person.setIdentificationDocumentSeriesNumber(getPersonalInformationForm().getIdentificationDocumentSeriesNumber());
+            person.setIdentificationDocumentExtraDigit(getPersonalInformationForm().getIdentificationDocumentExtraDigit());
         }
     }
 
