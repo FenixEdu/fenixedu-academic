@@ -857,11 +857,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
 	    Integer weight (REQUIRED);
 	}
 
-    class University  {
-        String code;
-        String name;
-    }
-
     class WrittenEvaluationEnrolment  {
     }
 
@@ -3110,13 +3105,6 @@ relation CurricularCourseExecutionCourse {
     }
 }
 
-relation CurricularCourseUniversity {
-    CurricularCourse playsRole associatedCurricularCourses {
-        multiplicity *;
-    }
-    University playsRole university;
-}
-
 relation CurricularPeriodContext {
     degreeStructure.Context playsRole contexts {
         multiplicity *;
@@ -4959,13 +4947,6 @@ relation RootDomainObjectUnitNamePart {
 relation RootDomainObjectUnitAcronym {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     organizationalStructure.UnitAcronym playsRole unitAcronyms {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectUniversity {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    University playsRole universitys {
         multiplicity *;
     }
 }

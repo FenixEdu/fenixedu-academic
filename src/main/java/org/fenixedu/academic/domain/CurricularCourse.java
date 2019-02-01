@@ -258,7 +258,6 @@ public class CurricularCourse extends CurricularCourse_Base {
     public void delete() {
         super.delete();
         getCurriculumLineLogsSet().forEach(CurriculumLineLog::delete);
-        setUniversity(null);
         setDegreeCurricularPlan(null);
         setCompetenceCourse(null);
         setRootDomainObject(null);

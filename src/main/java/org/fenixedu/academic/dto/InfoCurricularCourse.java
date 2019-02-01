@@ -56,8 +56,6 @@ public class InfoCurricularCourse extends InfoObject {
 
     private List infoAssociatedExecutionCourses;
 
-    private InfoUniversity infoUniversity;
-
     private String chosen;
 
     public InfoCurricularCourse(final CurricularCourse curricularCourse) {
@@ -193,14 +191,6 @@ public class InfoCurricularCourse extends InfoObject {
 
     public boolean infoCurricularCourseIsMandatory() {
         return getMandatory().booleanValue();
-    }
-
-    public InfoUniversity getInfoUniversity() {
-        return infoUniversity;
-    }
-
-    public void setInfoUniversity(InfoUniversity university) {
-        this.infoUniversity = university;
     }
 
     public List getInfoAssociatedExecutionCourses() {
