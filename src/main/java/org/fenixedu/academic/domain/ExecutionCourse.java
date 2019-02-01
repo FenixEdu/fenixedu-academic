@@ -47,7 +47,6 @@ import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.executionCourse.SummariesSearchBean;
 import org.fenixedu.academic.domain.messaging.ExecutionCourseForum;
 import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
 import org.fenixedu.academic.domain.student.Registration;
@@ -979,10 +978,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         final SortedSet<Professorship> professorhips = new TreeSet<Professorship>(Professorship.COMPARATOR_BY_PERSON_NAME);
         professorhips.addAll(getProfessorshipsSet());
         return professorhips;
-    }
-
-    public SummariesSearchBean getSummariesSearchBean() {
-        return new SummariesSearchBean(this);
     }
 
     public Set<Lesson> getLessons() {
