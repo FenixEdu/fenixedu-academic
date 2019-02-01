@@ -911,40 +911,6 @@
 	</slot>
 </schema>
 
-
-<schema name="EnrolmentPeriod.edit" type="org.fenixedu.academic.domain.EnrolmentPeriod"  bundle="ADMIN_OFFICE_RESOURCES">
-	<slot name="startDateDateTime" key="label.startDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="endDateDateTime" key="label.endDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-</schema>
-
-<schema name="EnrolmentPeriod.create" type="org.fenixedu.academic.domain.EnrolmentPeriod"  bundle="ADMIN_OFFICE_RESOURCES">
-	<slot name="degreeCurricularPlan" hidden="true" />
-	<slot name="startDateDateTime" key="label.startDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="endDateDateTime" key="label.endDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-</schema>
-
-<schema name="CandidacyPeriodInDegreeCurricularPlan.create" 
-		type="org.fenixedu.academic.domain.CandidacyPeriodInDegreeCurricularPlan"  
-		bundle="ADMIN_OFFICE_RESOURCES" 
-		extends="EnrolmentPeriod.create"
-		constructor="degreeCurricularPlan,executionYear,startDateDateTime,endDateDateTime">
-	<slot name="executionYear" hidden="true" />
-</schema>
-
-<schema name="CandidacyPeriodInDegreeCurricularPlan.edit" type="org.fenixedu.academic.domain.CandidacyPeriodInDegreeCurricularPlan"  bundle="ADMIN_OFFICE_RESOURCES" extends="EnrolmentPeriod.edit">
-</schema>
-
-<schema name="RegistrationPeriodInDegreeCurricularPlan.create" 
-		type="org.fenixedu.academic.domain.RegistrationPeriodInDegreeCurricularPlan"  
-		bundle="ADMIN_OFFICE_RESOURCES" 
-		extends="EnrolmentPeriod.create"
-		constructor="degreeCurricularPlan,executionYear,startDateDateTime,endDateDateTime">
-	<slot name="executionYear" hidden="true" />
-</schema>
-
-<schema name="RegistrationPeriodInDegreeCurricularPlan.edit" type="org.fenixedu.academic.domain.CandidacyPeriodInDegreeCurricularPlan"  bundle="ADMIN_OFFICE_RESOURCES" extends="EnrolmentPeriod.edit">
-</schema>
-
 <schema name="PersonalInformationBean.editPersonalInformation" type="org.fenixedu.academic.domain.candidacy.PersonalInformationBean" 
 		bundle="APPLICATION_RESOURCES">
 
