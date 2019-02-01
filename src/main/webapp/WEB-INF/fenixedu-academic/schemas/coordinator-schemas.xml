@@ -19,20 +19,6 @@
 
 -->
 
-<schema name="coordinator.commissionTeam.manage.contacts" type="org.fenixedu.academic.domain.ScientificCommission">
-    <slot name="person" layout="format" read-only="true" key="label.member">
-        <property name="format" value="${name} (${user.username})"/>
-    </slot>
-    <slot name="contact" key="label.scientificCommission.contact"/>
-    <slot name="person.email" key="email" read-only="true"/>
-    <slot name="hasCoordinator" key="label.coordinator" read-only="true" bundle="APPLICATION_RESOURCES" />
-	<slot name="coordinator" key="label.responsible.coordinator" layout="null-as-label" read-only="true" bundle="APPLICATION_RESOURCES" >
-		<property name="subLayout" value="values"/>
-		<property name="subSchema" value="coordinator.responsible"/>
-	</slot>
-	<setter signature="changeContactStatus(contact)"/>
-</schema>
-
 <schema name="coordinator.responsible" type="org.fenixedu.academic.domain.Coordinator">
     <slot name="responsible"/>
 </schema>

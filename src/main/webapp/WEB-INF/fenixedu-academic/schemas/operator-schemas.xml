@@ -35,68 +35,6 @@
 	<slot name="documentIdNumber" />
 </schema>
 
-<schema name="alumni.identity.request.list" type="org.fenixedu.academic.domain.AlumniIdentityCheckRequest" bundle="MANAGER_RESOURCES">
-	<slot name="creationDateTime" key="label.creationDateTime" validator="pt.ist.fenixWebFramework.renderers.validators.DateValidator" >
-		<property name="size" value="12"/>
-	</slot>
-	<slot name="fullName" key="label.fullName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="link">
-		<property size="40" />
-		<property name="useParent" value="true" />
-		<property name="contextRelative" value="true" />
-		<property name="moduleRelative" value="true" />
-		<property name="linkFormat" value="/alumni.do?method=prepareIdentityValidation&amp;requestId=${externalId}&amp;personId=${alumni.student.person.externalId}"/>
-	</slot>
-	<slot name="documentIdNumber" key="label.documentIdNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
-		<property size="20" />
-	</slot>
-	<slot name="alumni.student.number" key="label.student.number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
-		<property size="10" />
-	</slot>
-	<slot name="contactEmail" key="label.contactEmail" validator="org.fenixedu.academic.ui.renderers.validators.RequiredEmailValidator" >
-		<property size="40" />
-	</slot>
-</schema>
-
-<schema name="alumni.identity.closed.request.list" type="org.fenixedu.academic.domain.AlumniIdentityCheckRequest" bundle="MANAGER_RESOURCES">
-	<slot name="decisionDateTime" key="label.decisionDateTime" >
-		<property name="size" value="12"/>
-	</slot>
-	<slot name="fullName" key="label.fullName" layout="link">
-		<property size="40" />
-		<property name="useParent" value="true" />
-		<property name="contextRelative" value="true" />
-		<property name="moduleRelative" value="true" />
-		<property name="linkFormat" value="/alumni.do?method=showIdentityValidation&amp;requestId=${externalId}&amp;personId=${alumni.student.person.externalId}"/>
-	</slot>
-	<slot name="documentIdNumber" key="label.documentIdNumber" >
-		<property size="20" />
-	</slot>
-	<slot name="alumni.student.number" key="label.student.number" >
-		<property size="10" />
-	</slot>
-	<slot name="contactEmail" key="label.contactEmail" >
-		<property size="40" />
-	</slot>
-	<slot name="approved" key="label.approved" >
-		<property size="40" />
-	</slot>
-</schema>
-
-<schema name="alumni.identity.request.header" type="org.fenixedu.academic.domain.AlumniIdentityCheckRequest" bundle="MANAGER_RESOURCES">
-	<slot name="requestType" key="label.requestType" >
-		<property size="40" />
-	</slot>
-	<slot name="contactEmail" key="label.contactEmail" >
-		<property size="40" />
-	</slot>
-	<slot name="documentIdNumber" key="label.documentIdNumber" >
-		<property size="20" />
-	</slot>
-	<slot name="approved" key="label.approved" layout="null-as-label" >
-		<property size="40" />
-	</slot>
-</schema>
-
 <schema name="alumni.person.body" type="org.fenixedu.academic.domain.Person" >
 	<slot name="fullName" />
 	<slot name="dateOfBirthYearMonthDay" />
