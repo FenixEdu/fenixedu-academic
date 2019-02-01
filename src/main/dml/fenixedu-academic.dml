@@ -2208,12 +2208,6 @@ class ProfessorshipPermissions  {
 	boolean bibliografy;
 }
 
-class ExternalUser  {
-	String username;
-	String passwordHash;
-}	
-	
-	
 class UserPrivateKey {
     bytearray privateKey;
     DateTime privateKeyCreation;
@@ -5953,13 +5947,6 @@ relation PremissionsProfessorshipRootDomainObject {
 	ProfessorshipPermissions playsRole professorshipPermissions {
 		multiplicity *;
 	}
-}
-
-relation RootDomainObjectExternalUser {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    ExternalUser playsRole externalUser {
-        multiplicity *;
-    }
 }
 
 relation ProfessorshipUser {
