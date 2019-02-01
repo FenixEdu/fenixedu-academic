@@ -1328,14 +1328,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         Double salary;
     }
     
-    class Alert  {
-	    DateTime whenCreated;
-	    LocalizedString subject;
-	    LocalizedString body;
-	    Boolean active;
-	    DateTime fireDate;    	
-    }
-    
     class log.CurriculumLineLog  {
         EnrolmentAction action;
         DateTime dateDateTime;
@@ -2538,20 +2530,6 @@ relation MeasurementTestCampus {
 relation RootDomainObjectDefaultCampus {
 	.org.fenixedu.spaces.domain.Space playsRole defaultCampus;
 	.org.fenixedu.bennu.core.domain.Bennu playsRole defaultCampusRootDomainObject;
-}
-
-relation RootDomainObjectPhdAlert {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    Alert playsRole alerts {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectPhdAlertActive {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectForActiveAlerts;
-    Alert playsRole activeAlerts {
-        multiplicity *;
-    }
 }
 
 relation AcademicCalendarEntryAcademicCalendarEntry {
