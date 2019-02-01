@@ -327,9 +327,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         LocalizedString localizedName (REQUIRED);
     }
     
-    class CurricularCourseEquivalence  {
-    }
-
     class CurricularSemester  {
         Integer semester;
     }
@@ -3141,13 +3138,6 @@ relation CurricularCourseCompetenceCourse {
     CompetenceCourse playsRole competenceCourse;
 }
 
-relation CurricularCourseCurricularCourseEquivalence {
-    CurricularCourseEquivalence playsRole curricularCourseEquivalences {
-        multiplicity *;
-    }
-    CurricularCourse playsRole equivalentCurricularCourse;
-}
-
 relation CurricularCourseCurriculum {
     Curriculum playsRole associatedCurriculums {
         multiplicity *;
@@ -3275,13 +3265,6 @@ relation DegreeCurricularPlanCurricularCourse {
         multiplicity *;
     }
     DegreeCurricularPlan playsRole degreeCurricularPlan;
-}
-
-relation DegreeCurricularPlanCurricularCourseEquivalence {
-    DegreeCurricularPlan playsRole degreeCurricularPlan;
-    CurricularCourseEquivalence playsRole curricularCourseEquivalences {
-        multiplicity *;
-    }
 }
 
 relation DegreeCurricularPlanDegreeModule {
@@ -3852,15 +3835,6 @@ relation MarkEvaluation {
         multiplicity *;
     }
     Evaluation playsRole evaluation;
-}
-
-relation OldCurricularCourseCurricularCourseEquivalence {
-    CurricularCourseEquivalence playsRole oldCurricularCourseEquivalences {
-        multiplicity *;
-    }
-    CurricularCourse playsRole oldCurricularCourses {
-        multiplicity *;
-    }
 }
 
 relation OptionalCurricularCourseOptionalEnrolment {
@@ -4492,13 +4466,6 @@ relation RootDomainObjectCountry {
 relation RootDomainObjectCredits {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     studentCurriculum.Credits playsRole credits {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectCurricularCourseEquivalence {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    CurricularCourseEquivalence playsRole curricularCourseEquivalences {
         multiplicity *;
     }
 }

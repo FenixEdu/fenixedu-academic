@@ -1531,27 +1531,6 @@ public class CurricularCourse extends CurricularCourse_Base {
         degreeModules.add(this);
     }
 
-    public List<CurricularCourseEquivalence> getOldCurricularCourseEquivalences(final DegreeCurricularPlan degreeCurricularPlan) {
-        final List<CurricularCourseEquivalence> result = new ArrayList<CurricularCourseEquivalence>();
-        for (final CurricularCourseEquivalence curricularCourseEquivalence : getOldCurricularCourseEquivalencesSet()) {
-            if (curricularCourseEquivalence.isFrom(degreeCurricularPlan)) {
-                result.add(curricularCourseEquivalence);
-            }
-        }
-        return result;
-    }
-
-    public List<CurricularCourseEquivalence> getCurricularCourseEquivalencesFor(
-            final CurricularCourse equivalentCurricularCourse) {
-        final List<CurricularCourseEquivalence> result = new ArrayList<CurricularCourseEquivalence>();
-        for (final CurricularCourseEquivalence curricularCourseEquivalence : getOldCurricularCourseEquivalencesSet()) {
-            if (curricularCourseEquivalence.getEquivalentCurricularCourse() == equivalentCurricularCourse) {
-                result.add(curricularCourseEquivalence);
-            }
-        }
-        return result;
-    }
-
     @Override
     public boolean isCurricularCourse() {
         return true;

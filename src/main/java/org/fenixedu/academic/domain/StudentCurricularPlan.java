@@ -1113,23 +1113,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             return true;
         }
 
-        for (CurricularCourseEquivalence equiv : curricularCourse.getCurricularCourseEquivalencesSet()) {
-            if (allCurricularCoursesInTheList(equiv.getOldCurricularCoursesSet(), otherCourses)) {
-                return true;
-            }
-        }
-
         return false;
-    }
-
-    private boolean allCurricularCoursesInTheList(Collection<CurricularCourse> oldCurricularCourses,
-            List<CurricularCourse> otherCourses) {
-        for (CurricularCourse oldCurricularCourse : oldCurricularCourses) {
-            if (!isThisCurricularCoursesInTheList(oldCurricularCourse, otherCourses)) {
-                return false;
-            }
-        }
-        return true;
     }
 
     final public boolean isCurricularCourseEnrolled(CurricularCourse curricularCourse) {
@@ -1272,32 +1256,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             return getRoot().calculateStudentAcumulatedEnrollments(curricularCourse, executionSemester);
         }
         return null;
-    }
-
-    private Set getCurricularCoursesInCurricularCourseEquivalences(final CurricularCourse curricularCourse) {
-
-        final Set<CurricularCourse> curricularCoursesEquivalent = new HashSet<CurricularCourse>();
-        final List<CurricularCourse> sameCompetenceCurricularCourses;
-
-        if (curricularCourse.getCompetenceCourse() == null) {
-            sameCompetenceCurricularCourses = new ArrayList<CurricularCourse>();
-            sameCompetenceCurricularCourses.add(curricularCourse);
-        } else {
-            sameCompetenceCurricularCourses = new ArrayList<CurricularCourse>();
-            for (final CurricularCourse course : curricularCourse.getCompetenceCourse().getAssociatedCurricularCoursesSet()) {
-                if (!course.isBolonhaDegree()) {
-                    sameCompetenceCurricularCourses.add(course);
-                }
-            }
-        }
-
-        for (CurricularCourse course : sameCompetenceCurricularCourses) {
-            for (CurricularCourseEquivalence curricularCourseEquivalence : course.getOldCurricularCourseEquivalencesSet()) {
-                curricularCoursesEquivalent.add(curricularCourseEquivalence.getEquivalentCurricularCourse());
-            }
-        }
-
-        return curricularCoursesEquivalent;
     }
 
     private boolean isThisCurricularCoursesInTheList(final CurricularCourse curricularCourse,

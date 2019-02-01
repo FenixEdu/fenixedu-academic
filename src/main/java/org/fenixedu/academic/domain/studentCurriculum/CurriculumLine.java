@@ -27,7 +27,6 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.CurricularCourseEquivalence;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionSemester;
@@ -37,9 +36,9 @@ import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.EnrolmentAction;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.academic.util.predicates.ResultCollection;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.YearMonthDay;
 
 abstract public class CurriculumLine extends CurriculumLine_Base {
@@ -213,8 +212,8 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     public LocalizedString getName() {
         ExecutionSemester period = getExecutionPeriod();
         CurricularCourse course = getCurricularCourse();
-        return new LocalizedString().with(org.fenixedu.academic.util.LocaleUtils.PT, course.getName(period)).with(org.fenixedu.academic.util.LocaleUtils.EN,
-                course.getNameEn(period));
+        return new LocalizedString().with(org.fenixedu.academic.util.LocaleUtils.PT, course.getName(period))
+                .with(org.fenixedu.academic.util.LocaleUtils.EN, course.getNameEn(period));
     }
 
     public boolean hasExecutionPeriod() {
@@ -223,28 +222,7 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 
     protected boolean hasCurricularCourse(final CurricularCourse own, final CurricularCourse other,
             final ExecutionSemester executionSemester) {
-        return own.isEquivalent(other) || hasCurricularCourseEquivalence(own, other, executionSemester);
-    }
-
-    private boolean hasCurricularCourseEquivalence(final CurricularCourse sourceCurricularCourse,
-            final CurricularCourse equivalentCurricularCourse, final ExecutionSemester executionSemester) {
-        for (final CurricularCourseEquivalence curricularCourseEquivalence : sourceCurricularCourse
-                .getCurricularCourseEquivalencesFor(equivalentCurricularCourse)) {
-            if (oldCurricularCoursesAreApproved(curricularCourseEquivalence, executionSemester)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean oldCurricularCoursesAreApproved(final CurricularCourseEquivalence curricularCourseEquivalence,
-            final ExecutionSemester executionSemester) {
-        for (final CurricularCourse curricularCourse : curricularCourseEquivalence.getOldCurricularCoursesSet()) {
-            if (!getStudentCurricularPlan().isApproved(curricularCourse, executionSemester)) {
-                return false;
-            }
-        }
-        return true;
+        return own.isEquivalent(other);
     }
 
     @Override
@@ -314,9 +292,9 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 
     abstract public String getModuleTypeName();
 
-	@Override
-	public Stream<CurriculumLine> getCurriculumLineStream() {
-		return Stream.of(this);
-	}
+    @Override
+    public Stream<CurriculumLine> getCurriculumLineStream() {
+        return Stream.of(this);
+    }
 
 }
