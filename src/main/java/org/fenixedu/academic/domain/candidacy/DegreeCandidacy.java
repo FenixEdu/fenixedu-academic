@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.domain.candidacy;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -26,9 +25,6 @@ import java.util.Set;
 import org.fenixedu.academic.domain.EntryPhase;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.candidacy.workflow.FillPersonalDataOperation;
-import org.fenixedu.academic.domain.candidacy.workflow.RegistrationOperation;
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.util.workflow.Operation;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -62,16 +58,16 @@ public class DegreeCandidacy extends DegreeCandidacy_Base {
     @Override
     public Set<Operation> getOperations(CandidacySituation candidacySituation) {
         final Set<Operation> operations = new HashSet<Operation>();
-        switch (candidacySituation.getCandidacySituationType()) {
-        case STAND_BY:
-            operations.add(new FillPersonalDataOperation(Collections.singleton(RoleType.CANDIDATE), this));
-            break;
-        case ADMITTED:
-            operations.add(new RegistrationOperation(Collections.singleton(RoleType.CANDIDATE), this));
-            break;
-        case REGISTERED:
-            break;
-        }
+//        switch (candidacySituation.getCandidacySituationType()) {
+//        case STAND_BY:
+//            operations.add(new FillPersonalDataOperation(Collections.singleton(RoleType.CANDIDATE), this));
+//            break;
+//        case ADMITTED:
+//            operations.add(new RegistrationOperation(Collections.singleton(RoleType.CANDIDATE), this));
+//            break;
+//        case REGISTERED:
+//            break;
+//        }
         return operations;
     }
 

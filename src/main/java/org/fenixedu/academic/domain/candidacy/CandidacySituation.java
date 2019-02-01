@@ -24,7 +24,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.candidacy.workflow.CandidacyOperation;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.util.workflow.IState;
 import org.fenixedu.academic.domain.util.workflow.IStateWithOperations;
@@ -125,18 +124,18 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
     }
 
     public Operation getOperationByTypeAndPerson(CandidacyOperationType type, Person person) {
-        for (final Operation operation : getOperationsForPerson(person)) {
-            if (((CandidacyOperation) operation).getType() == type) {
-                return operation;
-            }
-        }
+//        for (final Operation operation : getOperationsForPerson(person)) {
+//            if (((CandidacyOperation) operation).getType() == type) {
+//                return operation;
+//            }
+//        }
 
         return null;
     }
 
     @Override
     public void onOperationFinished(Operation operation, Person person) {
-        getCandidacy().moveToNextState(((CandidacyOperation) operation).getType(), person);
+//        getCandidacy().moveToNextState(((CandidacyOperation) operation).getType(), person);
     }
 
     @Override
