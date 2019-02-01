@@ -792,10 +792,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         String nome;
     }
 
-    class SecretaryEnrolmentStudent  {
-        String reasonDescription;
-    }
-
     class Shift  {      
         Integer lotacao;
         String nome;
@@ -4839,13 +4835,6 @@ relation RootDomainObjectSchoolClass {
     }
 }
 
-relation RootDomainObjectSecretaryEnrolmentStudent {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    SecretaryEnrolmentStudent playsRole secretaryEnrolmentStudents {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectShift {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Shift playsRole shifts {
@@ -5147,13 +5136,6 @@ relation StudentPerson {
 relation StudentStudentNumber {
     student.Student playsRole student;
     student.StudentNumber playsRole studentNumber;
-}
-
-relation StudentSecretaryEnrolmentStudent {
-    SecretaryEnrolmentStudent playsRole secretaryEnrolmentStudents {
-        multiplicity *;
-    }
-    student.Registration playsRole student;
 }
 
 relation StudentStatuteBeginPeriod {
