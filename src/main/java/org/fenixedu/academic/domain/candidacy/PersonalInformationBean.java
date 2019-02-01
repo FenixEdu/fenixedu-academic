@@ -19,8 +19,6 @@
 package org.fenixedu.academic.domain.candidacy;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.Formatter;
 import java.util.HashSet;
@@ -30,7 +28,6 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.DistrictSubdivision;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.File;
 import org.fenixedu.academic.domain.GrantOwnerType;
 import org.fenixedu.academic.domain.ProfessionType;
 import org.fenixedu.academic.domain.ProfessionalSituationConditionType;
@@ -108,7 +105,6 @@ public class PersonalInformationBean implements Serializable {
     private DegreeDesignation precedentDegreeDesignationObject;
     private Integer numberOfPreviousYearEnrolmentsInPrecedentDegree;
     private SchoolPeriodDuration mobilityProgramDuration;
-    private final Collection<File> documentFiles = new ArrayList<File>();
 
     public PersonalInformationBean(Registration registration) {
         setRegistration(registration);
@@ -662,18 +658,6 @@ public class PersonalInformationBean implements Serializable {
 
     public boolean isValidForAcademicService() {
         return validateForAcademicService().isEmpty();
-    }
-
-    public void addDocumentFile(final File file) {
-        documentFiles.add(file);
-    }
-
-    public Collection<File> getDocumentFiles() {
-        final Collection<File> result = new ArrayList<File>();
-        for (final File file : documentFiles) {
-            result.add(file);
-        }
-        return result;
     }
 
     public void resetInstitutionAndDegree() {

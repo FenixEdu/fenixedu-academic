@@ -640,9 +640,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
     class photograph.PictureOriginal extends photograph.Picture {
     }
 
-    class File extends .org.fenixedu.bennu.io.domain.GenericFile {
-    }
-    
     class log.FirstYearShiftsCapacityToggleLog  {
     	DateTime creationDate;
     }
@@ -6351,15 +6348,6 @@ relation DepartmentCompetenceCourseMembersGroup {
 	}
 	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole membersGroup {
 		multiplicity 1..1;
-	}
-}
-
-relation FilePermittedGroup {
-	protected File playsRole fileAsAccessGroup {
-		multiplicity *;
-	}
-	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole accessGroup {
-		multiplicity 0..1;
 	}
 }
 
