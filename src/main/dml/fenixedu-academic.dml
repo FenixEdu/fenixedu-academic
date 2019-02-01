@@ -1964,9 +1964,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
                 DateTime annulmentDate;
             }
 
-                class EnrolmentInOptionalCurricularCourse extends Enrolment {
-                }
-
                 class ExternalDegreeEnrolment extends Enrolment {
                 }
 
