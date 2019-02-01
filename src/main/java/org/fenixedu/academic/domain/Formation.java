@@ -26,8 +26,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.AcademicalInstitutionType;
 import org.fenixedu.academic.domain.organizationalStructure.AcademicalInstitutionUnit;
 import org.fenixedu.academic.domain.organizationalStructure.CountryUnit;
-import org.fenixedu.academic.dto.alumni.formation.AlumniFormation;
-import org.joda.time.DateTime;
 
 public class Formation extends Formation_Base {
 
@@ -99,30 +97,6 @@ public class Formation extends Formation_Base {
         setCountryUnit(null);
         setCreator(null);
         super.delete();
-    }
-
-    public void edit(AlumniFormation formation, AcademicalInstitutionUnit academicalInstitutionUnit) {
-        checkParameters(formation.getAssociatedFormation().getPerson(), formation.getFormationType(),
-                formation.getFormationDegree(), formation.getEducationArea(), formation.getFormationBeginYear(),
-                formation.getFormationEndYear(), formation.getFormationCredits(), formation.getFormationHours(),
-                formation.getParentInstitution(), formation.getInstitutionType());
-        setFormationType(formation.getFormationType());
-        if (formation.getFormationDegree() != null) {
-            setDegree(formation.getFormationDegree().getName());
-        } else {
-            setDegree(null);
-        }
-        setType(formation.getFormationDegree());
-        setEducationArea(formation.getEducationArea());
-        setBeginYear(formation.getFormationBeginYear());
-        setYear(formation.getFormationEndYear());
-        setEctsCredits(formation.getFormationCredits());
-        setFormationHours(formation.getFormationHours());
-        setInstitutionType(formation.getInstitutionType());
-        setInstitution(academicalInstitutionUnit);
-        setBaseInstitution(formation.getParentInstitution());
-        setCountryUnit(formation.getCountryUnit());
-        setLastModificationDateDateTime(new DateTime());
     }
 
 }

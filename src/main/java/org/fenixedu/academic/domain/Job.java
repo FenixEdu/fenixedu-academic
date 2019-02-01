@@ -22,7 +22,6 @@ import java.util.Comparator;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.dto.alumni.AlumniJobBean;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -69,25 +68,6 @@ public class Job extends Job_Base {
         setContractType(contractType);
         //TODO remove setSalaryType(salaryType);
         setSalary(salary);
-    }
-
-    public void edit(final AlumniJobBean jobBean) {
-        checkParameters(jobBean.getEmployerName(), jobBean.getCity(), jobBean.getCountry(), jobBean.getChildBusinessArea(),
-                jobBean.getParentBusinessArea(), jobBean.getPosition(), jobBean.getBeginDateAsLocalDate(),
-                jobBean.getEndDateAsLocalDate(), jobBean.getApplicationType(), jobBean.getContractType(), jobBean.getSalary());
-        setEmployerName(jobBean.getEmployerName());
-        setCity(jobBean.getCity());
-        setCountry(jobBean.getCountry());
-        setBusinessArea(jobBean.getChildBusinessArea());
-        setParentBusinessArea(jobBean.getParentBusinessArea());
-        setPosition(jobBean.getPosition());
-        setBeginDate(jobBean.getBeginDateAsLocalDate());
-        setEndDate(jobBean.getEndDateAsLocalDate());
-        setJobApplicationType(jobBean.getApplicationType());
-        setContractType(jobBean.getContractType());
-        //TODO remove setSalaryType(jobBean.getSalaryType());
-        setSalary(jobBean.getSalary());
-        setLastModifiedDate(new DateTime());
     }
 
     private void checkParameters(Person person, String employerName, String city, Country country, BusinessArea businessArea,
