@@ -44,13 +44,6 @@ public class StudentStatute extends StudentStatute_Base {
         setCreationDate(new DateTime());
     }
 
-    @Deprecated
-    public StudentStatute(final Student student, final StatuteType statuteType, final ExecutionSemester beginExecutionPeriod,
-            final ExecutionSemester endExecutionPeriod) {
-        this(student, statuteType, beginExecutionPeriod, endExecutionPeriod, beginExecutionPeriod.getBeginLocalDate(),
-                endExecutionPeriod.getEndLocalDate(), "", null);
-    }
-
     public StudentStatute(final Student student, final StatuteType statuteType, final ExecutionSemester beginExecutionPeriod,
             final ExecutionSemester endExecutionPeriod, final LocalDate beginDate, final LocalDate endDate, final String comment,
             final Registration registration) {

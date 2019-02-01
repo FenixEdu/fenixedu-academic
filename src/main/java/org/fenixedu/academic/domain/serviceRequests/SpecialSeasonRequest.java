@@ -69,7 +69,8 @@ public class SpecialSeasonRequest extends SpecialSeasonRequest_Base {
 
             if (getDeferred() != null && getDeferred() == true) {
                 new StudentStatute(student, StatuteType.findSpecialSeasonGrantedByRequestStatuteType().orElse(null),
-                        getBeginExecutionPeriod(), getEndExecutionPeriod());
+                        getBeginExecutionPeriod(), getEndExecutionPeriod(), getBeginExecutionPeriod().getBeginLocalDate(),
+                        getEndExecutionPeriod().getEndLocalDate(), "", null);
             }
         }
 
