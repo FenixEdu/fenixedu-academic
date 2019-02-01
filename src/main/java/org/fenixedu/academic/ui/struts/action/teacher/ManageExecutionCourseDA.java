@@ -34,7 +34,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.Curriculum;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.LessonPlanning;
 import org.fenixedu.academic.domain.Person;
@@ -316,8 +315,7 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
         LessonPlanning lessonPlanning = FenixFramework.getDomainObject(request.getParameter("lessonPlanningID"));
         if (lessonPlanning != null) {
             try {
-                DeleteLessonPlanning.runDeleteLessonPlanning(null, lessonPlanning,
-                        null, null);
+                DeleteLessonPlanning.runDeleteLessonPlanning(null, lessonPlanning, null, null);
             } catch (DomainException e) {
                 addActionMessage(request, e.getKey(), e.getArgs());
             }
@@ -339,17 +337,6 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
             }
         }
         return lessonPlannings(mapping, form, request, response);
-    }
-
-    protected Curriculum findCurriculum(final ExecutionCourse executionCourse, final String curriculumID) {
-        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
-            for (final Curriculum curriculum : curricularCourse.getAssociatedCurriculumsSet()) {
-                if (curriculum.getExternalId().equals(curriculumID)) {
-                    return curriculum;
-                }
-            }
-        }
-        return null;
     }
 
     public ActionForward prepareImportSectionsPostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

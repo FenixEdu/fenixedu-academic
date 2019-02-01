@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -489,40 +488,6 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
     }
 
-    public Curriculum editCurriculum(String program, String programEn, String generalObjectives, String generalObjectivesEn,
-            String operacionalObjectives, String operacionalObjectivesEn, DateTime lastModification) {
-        Curriculum curriculum = findLatestCurriculum();
-        final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-        if (!curriculum.getLastModificationDateDateTime()
-                .isBefore(currentExecutionYear.getBeginDateYearMonthDay().toDateMidnight())
-                && !curriculum.getLastModificationDateDateTime()
-                        .isAfter(currentExecutionYear.getEndDateYearMonthDay().toDateMidnight())) {
-            curriculum.edit(generalObjectives, operacionalObjectives, program, generalObjectivesEn, operacionalObjectivesEn,
-                    programEn);
-        } else {
-            curriculum = insertCurriculum(program, programEn, operacionalObjectives, operacionalObjectivesEn, generalObjectives,
-                    generalObjectivesEn, lastModification);
-        }
-        return curriculum;
-    }
-
-    public Curriculum insertCurriculum(String program, String programEn, String operacionalObjectives,
-            String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn, DateTime lastModification) {
-
-        Curriculum curriculum = new Curriculum();
-
-        curriculum.setCurricularCourse(this);
-        curriculum.setProgram(program);
-        curriculum.setProgramEn(programEn);
-        curriculum.setOperacionalObjectives(operacionalObjectives);
-        curriculum.setOperacionalObjectivesEn(operacionalObjectivesEn);
-        curriculum.setGeneralObjectives(generalObjectives);
-        curriculum.setGeneralObjectivesEn(generalObjectivesEn);
-        curriculum.setLastModificationDateDateTime(lastModification);
-
-        return curriculum;
-    }
-
     @SuppressWarnings("unchecked")
     public List<ExecutionCourse> getExecutionCoursesByExecutionPeriod(final ExecutionSemester executionSemester) {
         return (List<ExecutionCourse>) CollectionUtils.select(getAssociatedExecutionCoursesSet(), new Predicate() {
@@ -543,40 +508,6 @@ public class CurricularCourse extends CurricularCourse_Base {
                 return executionCourse.getExecutionPeriod().getExecutionYear().equals(executionYear);
             }
         });
-    }
-
-    public Curriculum findLatestCurriculum() {
-        Curriculum latestCurriculum = null;
-        for (final Curriculum curriculum : getAssociatedCurriculumsSet()) {
-            if (latestCurriculum == null || latestCurriculum.getLastModificationDateDateTime()
-                    .isBefore(curriculum.getLastModificationDateDateTime())) {
-                latestCurriculum = curriculum;
-            }
-        }
-        return latestCurriculum;
-    }
-
-    public Curriculum findLatestCurriculumModifiedBefore(Date date) {
-        Curriculum latestCurriculum = null;
-
-        for (Curriculum curriculum : getAssociatedCurriculumsSet()) {
-            if (curriculum.getLastModificationDateDateTime().toDate().compareTo(date) == 1) {
-                // modified after date
-                continue;
-            }
-
-            if (latestCurriculum == null) {
-                latestCurriculum = curriculum;
-                continue;
-            }
-
-            DateTime currentLastModificationDate = latestCurriculum.getLastModificationDateDateTime();
-            if (currentLastModificationDate.isBefore(curriculum.getLastModificationDateDateTime())) {
-                latestCurriculum = curriculum;
-            }
-        }
-
-        return latestCurriculum;
     }
 
     final public double getProblemsHours() {
@@ -1144,20 +1075,12 @@ public class CurricularCourse extends CurricularCourse_Base {
         if (getCompetenceCourse() != null) {
             return getCompetenceCourse().getObjectives(period);
         }
-        Curriculum curriculum = findLatestCurriculumModifiedBefore(period.getExecutionYear().getEndDate());
-        if (curriculum != null) {
-            return curriculum.getFullObjectives();
-        }
         return null;
     }
 
     public String getObjectives() {
         if (getCompetenceCourse() != null) {
             return getCompetenceCourse().getObjectives();
-        }
-        Curriculum curriculum = findLatestCurriculum();
-        if (curriculum != null) {
-            return curriculum.getFullObjectives();
         }
         return null;
     }
@@ -1166,20 +1089,12 @@ public class CurricularCourse extends CurricularCourse_Base {
         if (getCompetenceCourse() != null) {
             return getCompetenceCourse().getObjectivesEn(period);
         }
-        Curriculum curriculum = findLatestCurriculumModifiedBefore(period.getExecutionYear().getEndDate());
-        if (curriculum != null) {
-            return curriculum.getFullObjectivesEn();
-        }
         return null;
     }
 
     public String getObjectivesEn() {
         if (getCompetenceCourse() != null) {
             return getCompetenceCourse().getObjectivesEn();
-        }
-        Curriculum curriculum = findLatestCurriculum();
-        if (curriculum != null) {
-            return curriculum.getFullObjectivesEn();
         }
         return null;
     }
@@ -1188,20 +1103,12 @@ public class CurricularCourse extends CurricularCourse_Base {
         if (getCompetenceCourse() != null) {
             return getCompetenceCourse().getObjectivesI18N(period);
         }
-        Curriculum curriculum = findLatestCurriculumModifiedBefore(period.getExecutionYear().getEndDate());
-        if (curriculum != null) {
-            return curriculum.getFullObjectivesI18N();
-        }
         return new LocalizedString();
     }
 
     public String getProgram(ExecutionSemester period) {
         if (getCompetenceCourse() != null) {
             return getCompetenceCourse().getProgram(period);
-        }
-        Curriculum curriculum = findLatestCurriculumModifiedBefore(period.getExecutionYear().getEndDate());
-        if (curriculum != null) {
-            return curriculum.getProgram();
         }
         return null;
     }
@@ -1210,20 +1117,12 @@ public class CurricularCourse extends CurricularCourse_Base {
         if (getCompetenceCourse() != null) {
             return getCompetenceCourse().getProgram();
         }
-        Curriculum curriculum = findLatestCurriculum();
-        if (curriculum != null) {
-            return curriculum.getProgram();
-        }
         return null;
     }
 
     public String getProgramEn(ExecutionSemester period) {
         if (getCompetenceCourse() != null) {
             return getCompetenceCourse().getProgramEn(period);
-        }
-        Curriculum curriculum = findLatestCurriculum();
-        if (curriculum != null) {
-            return curriculum.getProgramEn();
         }
         return null;
     }
@@ -1232,20 +1131,12 @@ public class CurricularCourse extends CurricularCourse_Base {
         if (getCompetenceCourse() != null) {
             return getCompetenceCourse().getProgramEn();
         }
-        Curriculum curriculum = findLatestCurriculum();
-        if (curriculum != null) {
-            return curriculum.getProgramEn();
-        }
         return null;
     }
 
     public LocalizedString getProgramI18N(ExecutionSemester period) {
         if (getCompetenceCourse() != null) {
             return getCompetenceCourse().getProgramI18N(period);
-        }
-        Curriculum curriculum = findLatestCurriculumModifiedBefore(period.getExecutionYear().getEndDate());
-        if (curriculum != null) {
-            return curriculum.getProgramI18N();
         }
         return new LocalizedString();
     }

@@ -485,9 +485,9 @@ public class Person extends Person_Base {
     protected void checkForDeletionBlockers(final Collection<String> blockers) {
         super.checkForDeletionBlockers(blockers);
         if (!(getChildsSet().isEmpty() && getParentsSet().isEmpty() && getExportGroupingReceiversSet().isEmpty()
-                && getAssociatedQualificationsSet().isEmpty() && getAssociatedAlteredCurriculumsSet().isEmpty()
-                && getEnrolmentEvaluationsSet().isEmpty() && getExportGroupingSendersSet().isEmpty() && getTeacher() == null
-                && getCreatedQualificationsSet().isEmpty() && getCreateJobsSet().isEmpty())) {
+                && getAssociatedQualificationsSet().isEmpty() && getEnrolmentEvaluationsSet().isEmpty()
+                && getExportGroupingSendersSet().isEmpty() && getTeacher() == null && getCreatedQualificationsSet().isEmpty()
+                && getCreateJobsSet().isEmpty())) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.person.cannot.be.deleted"));
         }
     }

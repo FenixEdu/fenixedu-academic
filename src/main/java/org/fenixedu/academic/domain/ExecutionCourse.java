@@ -1421,20 +1421,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return false;
     }
 
-    public Collection<Curriculum> getCurriculums(final ExecutionYear executionYear) {
-        final Collection<Curriculum> result = new HashSet<Curriculum>();
-
-        for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-            final Curriculum curriculum = executionYear == null ? curricularCourse.findLatestCurriculum() : curricularCourse
-                    .findLatestCurriculumModifiedBefore(executionYear.getEndDate());
-            if (curriculum != null) {
-                result.add(curriculum);
-            }
-        }
-
-        return result;
-    }
-
     public boolean isInExamPeriod() {
         final YearMonthDay yearMonthDay = new YearMonthDay();
         final ExecutionSemester executionSemester = getExecutionPeriod();

@@ -335,16 +335,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         Integer year;
     }
 
-    class Curriculum  {
-        String generalObjectives;
-        String generalObjectivesEn;
-        DateTime lastModificationDateDateTime;
-        String operacionalObjectives;
-        String operacionalObjectivesEn;
-        String program;
-        String programEn;
-    }
-
 	class AcademicProgram  {
 	}
 
@@ -3138,13 +3128,6 @@ relation CurricularCourseCompetenceCourse {
     CompetenceCourse playsRole competenceCourse;
 }
 
-relation CurricularCourseCurriculum {
-    Curriculum playsRole associatedCurriculums {
-        multiplicity *;
-    }
-    CurricularCourse playsRole curricularCourse;
-}
-
 relation CurricularCourseCurriculumLineLog {
     log.CurriculumLineLog playsRole curriculumLineLogs {
         multiplicity *;
@@ -3246,13 +3229,6 @@ relation CurriculumModuleCurriculumGroup {
     studentCurriculum.CurriculumModule playsRole curriculumModules {
         multiplicity *;
     }
-}
-
-relation CurriculumPerson {
-    Curriculum playsRole associatedAlteredCurriculums {
-        multiplicity *;
-    }
-    Person playsRole personWhoAltered;
 }
 
 relation CurriculumGroupConclusionProcess {
@@ -4494,13 +4470,6 @@ relation RootDomainObjectCurricularSemester {
 relation RootDomainObjectCurricularYear {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     CurricularYear playsRole curricularYears {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectCurriculum {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    Curriculum playsRole curriculums {
         multiplicity *;
     }
 }

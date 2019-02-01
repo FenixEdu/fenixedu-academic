@@ -26,7 +26,6 @@ import java.util.Locale;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.Curriculum;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Person;
@@ -303,16 +302,7 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
 
         public PreBolonhaProgramInformation(Enrolment enrolment) {
             super(enrolment);
-            final Curriculum curriculum = enrolment.getCurricularCourse().findLatestCurriculum();
-            if (curriculum != null) {
-                this.program = HtmlToTextConverterUtil.convertToText(getMLSTextContent(curriculum.getProgramI18N()));
-                this.generalObjectives =
-                        HtmlToTextConverterUtil.convertToText(getMLSTextContent(curriculum.getGeneralObjectivesI18N()));
-                this.operationalObjectives =
-                        HtmlToTextConverterUtil.convertToText(getMLSTextContent(curriculum.getOperacionalObjectivesI18N()));
-            } else {
-                this.program = this.generalObjectives = this.operationalObjectives = EMPTY_STR;
-            }
+            this.program = this.generalObjectives = this.operationalObjectives = EMPTY_STR;
         }
 
         public String getProgram() {
