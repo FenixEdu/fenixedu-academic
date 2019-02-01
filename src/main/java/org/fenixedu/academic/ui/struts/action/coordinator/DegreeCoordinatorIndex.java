@@ -47,9 +47,9 @@ import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
-import pt.ist.fenixframework.FenixFramework;
-
 import com.google.common.base.Strings;
+
+import pt.ist.fenixframework.FenixFramework;
 
 @StrutsFunctionality(app = CoordinatorManagementApp.class, path = "degree", titleKey = "coordinator")
 @Mapping(path = "/coordinatorIndex", module = "coordinator")
@@ -72,8 +72,7 @@ public class DegreeCoordinatorIndex extends FenixAction {
             request.setAttribute(PresentationConstants.MASTER_DEGREE, degreeCurricularPlan.getMostRecentExecutionDegree());
             request.setAttribute("isCoordinator",
                     degreeCurricularPlan.getDegree().isCoordinatorInSomeExecutionYear(AccessControl.getPerson()));
-            request.setAttribute("isScientificCommissionMember", degreeCurricularPlan.getDegree()
-                    .isMemberOfAnyScientificCommission(AccessControl.getPerson()));
+            request.setAttribute("isScientificCommissionMember", false);
         }
     }
 

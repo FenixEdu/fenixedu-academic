@@ -462,9 +462,6 @@ public class Person extends Person_Base {
         for (; !getIdDocumentsSet().isEmpty(); getIdDocumentsSet().iterator().next().delete()) {
             ;
         }
-        for (; !getScientificCommissionsSet().isEmpty(); getScientificCommissionsSet().iterator().next().delete()) {
-            ;
-        }
 
         for (PersonInformationLog log : getPersonInformationLogsSet()) {
             log.delete();

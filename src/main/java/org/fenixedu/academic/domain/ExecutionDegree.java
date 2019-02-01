@@ -49,7 +49,6 @@ import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicYearCE;
-import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -172,10 +171,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         for (; !getCoordinatorsListSet().isEmpty(); getCoordinatorsListSet().iterator().next().delete()) {
             ;
         }
-        for (; !getScientificCommissionMembersSet().isEmpty(); getScientificCommissionMembersSet().iterator().next().delete()) {
-            ;
-        }
-
         getPublishedExamMapsSet().clear();
 
         setExecutionYear(null);
@@ -721,30 +716,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         }
 
         return result;
-    }
-
-    public boolean isPersonInScientificCommission(Person person) {
-        for (ScientificCommission commission : getScientificCommissionMembersSet()) {
-            if (commission.getPerson() == person) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public boolean isScientificCommissionMember() {
-        final Person person = AccessControl.getPerson();
-        return isScientificCommissionMember(person);
-    }
-
-    public boolean isScientificCommissionMember(final Person person) {
-        for (final ScientificCommission scientificCommission : getScientificCommissionMembersSet()) {
-            if (person == scientificCommission.getPerson()) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public static List<ExecutionDegree> filterByAcademicInterval(AcademicInterval academicInterval) {

@@ -31,7 +31,6 @@ import org.fenixedu.academic.domain.Coordinator;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.ScientificCommission;
 import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
@@ -57,21 +56,11 @@ public class CoordinatorDegreeManagement extends FenixAction {
     public static Set<DegreeCurricularPlan> readCoordinatedDegrees() throws FenixServiceException {
         final Person person = AccessControl.getPerson();
 
-        final Set<DegreeCurricularPlan> activeDegreeCurricularPlans =
-                new TreeSet<DegreeCurricularPlan>(
-                        DegreeCurricularPlan.DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE);
+        final Set<DegreeCurricularPlan> activeDegreeCurricularPlans = new TreeSet<DegreeCurricularPlan>(
+                DegreeCurricularPlan.DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE);
         for (final Coordinator coordinator : person.getCoordinatorsSet()) {
             final ExecutionDegree executionDegree = coordinator.getExecutionDegree();
             final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-            if (degreeCurricularPlan.getState() == DegreeCurricularPlanState.ACTIVE) {
-                activeDegreeCurricularPlans.add(degreeCurricularPlan);
-            }
-        }
-
-        for (ScientificCommission commission : person.getScientificCommissionsSet()) {
-            ExecutionDegree executionDegree = commission.getExecutionDegree();
-            DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-
             if (degreeCurricularPlan.getState() == DegreeCurricularPlanState.ACTIVE) {
                 activeDegreeCurricularPlans.add(degreeCurricularPlan);
             }

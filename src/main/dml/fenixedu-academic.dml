@@ -584,8 +584,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
     	
     	class CandidaciesLog extends DegreeLog { }
     	
-    	class ScientificCommissionLog extends DegreeLog {}    
-    
     class  PersonInformationLog extends DomainOperationLog {
     }
         
@@ -792,10 +790,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
     class SchoolClass  {
         Integer anoCurricular;
         String nome;
-    }
-
-    class ScientificCommission  {
-        Boolean contact;
     }
 
     class SecretaryEnrolmentStudent  {
@@ -2268,8 +2262,6 @@ class accessControl.PersistentTeacherResponsibleOfExecutionCourseGroup extends a
 
 class accessControl.PersistentTeacherGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
-class accessControl.PersistentScientificCommissionGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
-
 class accessControl.PersistentCoordinatorGroup extends accessControl.FenixPredicateGroup {
     Boolean responsible;
 }
@@ -3519,13 +3511,6 @@ relation OccupationPeriodReferencePeriod {
 	OccupationPeriodReference playsRole executionDegrees {
 		multiplicity *;
 	}
-}
-
-relation ExecutionDegreeScientificCommission {
-    ExecutionDegree playsRole executionDegree;
-    ScientificCommission playsRole scientificCommissionMembers {
-        multiplicity *;
-    }
 }
 
 relation ExecutionPeriodContextBegin {
@@ -5010,20 +4995,6 @@ relation SchoolClassExecutionDegree {
     ExecutionDegree playsRole executionDegree;
 }
 
-relation ScientificCommissionPerson {
-    Person playsRole person;
-    ScientificCommission playsRole scientificCommissions {
-        multiplicity *;
-    }
-}
-
-relation ScientificCommissionRootDomainObject {
-    ScientificCommission playsRole scientificCommissions {
-        multiplicity *;
-    }
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-}
-
 relation SendProposal {
     ExportGrouping playsRole groupingSenderExecutionCourse {
         multiplicity *;
@@ -6281,15 +6252,6 @@ relation PersistentTeacherGroupExecutionYear {
     }
     public ExecutionYear playsRole executionYear {
         multiplicity 0..1;
-    }
-}
-
-relation PersistentScientificCommissionGroupDegree {
-    public accessControl.PersistentScientificCommissionGroup playsRole scientificCommissionGroup {
-        multiplicity 0..1;
-    }
-    public Degree playsRole degree {
-        multiplicity 1..1;
     }
 }
 

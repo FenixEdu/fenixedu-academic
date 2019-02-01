@@ -1452,22 +1452,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return getDegree().getEctsCredits();
     }
 
-    public boolean isScientificCommissionMember(final ExecutionYear executionYear) {
-        final ExecutionDegree executionDegree = getExecutionDegreeByYear(executionYear);
-        return executionDegree != null && executionDegree.isScientificCommissionMember();
-    }
-
-    public boolean isScientificCommissionMember(final ExecutionYear executionYear, final Person person) {
-        final ExecutionDegree executionDegree = getExecutionDegreeByYear(executionYear);
-        return executionDegree != null && executionDegree.isScientificCommissionMember(person);
-    }
-
-    public void checkUserIsScientificCommissionMember(final ExecutionYear executionYear) {
-        if (!isScientificCommissionMember(executionYear)) {
-            throw new DomainException("degree.scientificCommission.notMember");
-        }
-    }
-
     public static List<DegreeCurricularPlan> readByDegreeTypesAndStateWithExecutionDegreeForYear(
             final java.util.function.Predicate<DegreeType> degreeTypes, final DegreeCurricularPlanState state,
             final ExecutionYear executionYear) {
@@ -1486,11 +1470,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public static Collection<DegreeCurricularPlan> readByAcademicInterval(final AcademicInterval academicInterval) {
         ExecutionYear year = ExecutionYear.readByAcademicInterval(academicInterval);
         return year.getDegreeCurricularPlans();
-    }
-
-    public boolean isCurrentUserScientificCommissionMember(final ExecutionYear executionYear) {
-        final Person person = AccessControl.getPerson();
-        return person != null && getDegree().isMemberOfCurrentScientificCommission(person, executionYear);
     }
 
     public ExecutionYear getInauguralExecutionYear() {

@@ -40,10 +40,7 @@ public class AllCoordinatorsGroup extends GroupStrategy {
 
     @Override
     public Stream<User> getMembers() {
-        return Stream
-                .concat(Bennu.getInstance().getCoordinatorsSet().stream().map(coordinator -> coordinator.getPerson().getUser()),
-                        Bennu.getInstance().getScientificCommissionsSet().stream()
-                                .map(commission -> commission.getPerson().getUser()));
+        return Bennu.getInstance().getCoordinatorsSet().stream().map(coordinator -> coordinator.getPerson().getUser());
     }
 
     @Override
@@ -53,9 +50,7 @@ public class AllCoordinatorsGroup extends GroupStrategy {
 
     @Override
     public boolean isMember(User user) {
-        return user != null
-                && user.getPerson() != null
-                && (!user.getPerson().getCoordinatorsSet().isEmpty() || !user.getPerson().getScientificCommissionsSet().isEmpty());
+        return user != null && user.getPerson() != null && !user.getPerson().getCoordinatorsSet().isEmpty();
     }
 
     @Override

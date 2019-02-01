@@ -255,11 +255,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
                     "error.academicProgram.cannotDeleteBacauseUsedInAccessControl"));
         }
 
-        if (getScientificCommissionGroup() != null) {
-            blockers.add(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION,
-                    "error.academicProgram.cannotDeleteBacauseUsedInAccessControl"));
-        }
-
         if (!getCoordinatorGroupSet().isEmpty()) {
             blockers.add(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION,
                     "error.academicProgram.cannotDeleteBacauseUsedInAccessControl"));
@@ -961,67 +956,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             result.add(i);
         }
         return result;
-    }
-
-    public ScientificCommission getMostRecentScientificCommission(final Person person) {
-        for (ExecutionYear ey = ExecutionYear.readCurrentExecutionYear(); ey != null; ey = ey.getPreviousExecutionYear()) {
-            for (ScientificCommission member : getScientificCommissionMembers(ey)) {
-                if (member.getPerson() == person) {
-                    return member;
-                }
-            }
-        }
-
-        return null;
-    }
-
-    public boolean isMemberOfAnyScientificCommission(final Person person) {
-        return person != null && getMostRecentScientificCommission(person) != null;
-    }
-
-    public boolean isMemberOfCurrentScientificCommission(final Person person) {
-        for (ScientificCommission member : getCurrentScientificCommissionMembers()) {
-            if (member.getPerson() == person) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public boolean isMemberOfCurrentScientificCommission(final Person person, final ExecutionYear executionYear) {
-        if (person != null) {
-            for (ScientificCommission member : getScientificCommissionMembers(executionYear)) {
-                if (member.getPerson() == person) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public Collection<ScientificCommission> getCurrentScientificCommissionMembers() {
-        for (ExecutionYear ey = ExecutionYear.readCurrentExecutionYear(); ey != null; ey = ey.getPreviousExecutionYear()) {
-            Collection<ScientificCommission> members = getScientificCommissionMembers(ey);
-
-            if (!members.isEmpty()) {
-                return members;
-            }
-        }
-
-        return Collections.emptyList();
-    }
-
-    public Collection<ScientificCommission> getScientificCommissionMembers(final ExecutionYear executionYear) {
-        for (DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansForYear(executionYear)) {
-            ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
-
-            if (executionDegree != null) {
-                return new ArrayList<>(executionDegree.getScientificCommissionMembersSet());
-            }
-        }
-
-        return Collections.emptyList();
     }
 
     public boolean isCoordinator(final Person person, final ExecutionYear executionYear) {
