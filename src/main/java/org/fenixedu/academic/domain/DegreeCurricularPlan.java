@@ -360,8 +360,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     private Boolean getCanBeDeleted() {
         return canDeleteRoot() && getStudentCurricularPlansSet().isEmpty() && getCurricularCoursesSet().isEmpty()
-                && getExecutionDegreesSet().isEmpty() && getTeachersWithIncompleteEvaluationWorkGroupSet().isEmpty()
-                && getDegreeContextsSet().isEmpty();
+                && getExecutionDegreesSet().isEmpty() && getTeachersWithIncompleteEvaluationWorkGroupSet().isEmpty();
     }
 
     private boolean canDeleteRoot() {

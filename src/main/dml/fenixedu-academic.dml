@@ -399,13 +399,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
     
         class EmptyDegreeCurricularPlan extends DegreeCurricularPlan;
     
-    
-    class DegreeContext  {
-        AcademicInterval beginInterval (REQUIRED);
-        AcademicInterval endInterval;
-        AcademicPeriod period (REQUIRED);
-    } 
-
     class DegreeInfo  {
         Integer driftsFirst;
         Integer driftsInitial;
@@ -5458,21 +5451,6 @@ relation CourseLoadLessonInstance {
         multiplicity *;
     }
 }
-
-relation DegreeContextRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    DegreeContext playsRole degreeContexts {
-        multiplicity *;
-    }
-}
-
-relation DegreeContextDegreeCurricularPlan {
-    DegreeCurricularPlan playsRole degreeCurricularPlan;
-    DegreeContext playsRole degreeContexts {
-        multiplicity *;
-    }
-}
-
 
 relation AlumniStudent {
     Alumni playsRole alumni;
