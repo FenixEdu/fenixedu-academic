@@ -53,7 +53,6 @@ import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.teacher.CreateLessonPlanning;
 import org.fenixedu.academic.service.services.teacher.DeleteLessonPlanning;
 import org.fenixedu.academic.service.services.teacher.ImportBibliographicReferences;
-import org.fenixedu.academic.service.services.teacher.ImportEvaluationMethod;
 import org.fenixedu.academic.service.services.teacher.ImportLessonPlannings;
 import org.fenixedu.academic.service.services.teacher.MoveLessonPlanning;
 import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
@@ -121,9 +120,6 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
             if (importContentService.equals("ImportBibliographicReferences")) {
                 ImportBibliographicReferences.runImportBibliographicReferences(executionCourseTo.getExternalId(),
                         executionCourseTo, executionCourseFrom, null);
-            } else if (importContentService.equals("ImportEvaluationMethod")) {
-                ImportEvaluationMethod.runImportEvaluationMethod(executionCourseTo.getExternalId(), executionCourseTo,
-                        executionCourseFrom, null);
             } else {
                 throw new UnsupportedOperationException("Sorry, cannot import using " + importContentService);
             }

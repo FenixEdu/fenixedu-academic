@@ -266,29 +266,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return true;
     }
 
-    public void createEvaluationMethod(final LocalizedString evaluationElements) {
-        if (evaluationElements == null) {
-            throw new NullPointerException();
-        }
-
-        final EvaluationMethod evaluationMethod = new EvaluationMethod();
-        evaluationMethod.setExecutionCourse(this);
-        evaluationMethod.setEvaluationElements(evaluationElements);
-
-    }
-
-    public void copyEvaluationMethodFrom(ExecutionCourse executionCourseFrom) {
-        if (executionCourseFrom.getEvaluationMethod() != null) {
-            final EvaluationMethod evaluationMethodFrom = executionCourseFrom.getEvaluationMethod();
-            final EvaluationMethod evaluationMethodTo = this.getEvaluationMethod();
-            if (evaluationMethodTo == null) {
-                this.createEvaluationMethod(evaluationMethodFrom.getEvaluationElements());
-            } else {
-                evaluationMethodTo.edit(evaluationMethodFrom.getEvaluationElements());
-            }
-        }
-    }
-
     public void createBibliographicReference(final String title, final String authors, final String reference, final String year,
             final Boolean optional) {
         if (title == null || authors == null || reference == null || year == null || optional == null) {
@@ -404,9 +381,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         if (getSender() != null) {
             getSender().getRecipientsSet().clear();
             getSender().delete();
-        }
-        if (getEvaluationMethod() != null) {
-            getEvaluationMethod().delete();
         }
 
         for (; !getExportGroupingsSet().isEmpty(); getExportGroupingsSet().iterator().next().delete()) {
@@ -1662,11 +1636,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public String getLocalizedEvaluationMethodText() {
-        final EvaluationMethod evaluationMethod = getEvaluationMethod();
-        if (evaluationMethod != null) {
-            final LocalizedString evaluationElements = evaluationMethod.getEvaluationElements();
-            return evaluationElements.getContent();
-        }
         for (final CompetenceCourse competenceCourse : getCompetenceCourses()) {
             final LocalizedString lstring = competenceCourse.getLocalizedEvaluationMethod(getExecutionPeriod());
             if (lstring != null) {
@@ -1677,29 +1646,11 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public String getEvaluationMethodText() {
-        if (getEvaluationMethod() != null) {
-            final LocalizedString evaluationElements = getEvaluationMethod().getEvaluationElements();
-
-            return evaluationElements != null
-                    && evaluationElements.getContent(org.fenixedu.academic.util.LocaleUtils.PT) != null ? evaluationElements
-                            .getContent(org.fenixedu.academic.util.LocaleUtils.PT) : !getCompetenceCourses()
-                                    .isEmpty() ? getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
-        } else {
-            return !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
-        }
+        return !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
     }
 
     public String getEvaluationMethodTextEn() {
-        if (getEvaluationMethod() != null) {
-            final LocalizedString evaluationElements = getEvaluationMethod().getEvaluationElements();
-
-            return evaluationElements != null
-                    && evaluationElements.getContent(org.fenixedu.academic.util.LocaleUtils.EN) != null ? evaluationElements
-                            .getContent(org.fenixedu.academic.util.LocaleUtils.EN) : !getCompetenceCourses()
-                                    .isEmpty() ? getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
-        } else {
-            return !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
-        }
+        return !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
     }
 
     public Set<ExecutionCourseForum> getForuns() {

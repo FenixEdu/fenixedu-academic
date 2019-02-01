@@ -511,10 +511,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         GradeScale gradeScale;
     }
 
-    class EvaluationMethod  {
-        LocalizedString evaluationElements;
-    }
-
         class FinalEvaluation extends Evaluation {
         }
 
@@ -3458,11 +3454,6 @@ relation ExecutionCourseBibliographicReference {
     ExecutionCourse playsRole executionCourse;
 }
 
-relation ExecutionCourseEvaluationMethod {
-    EvaluationMethod playsRole evaluationMethod;
-    ExecutionCourse playsRole executionCourse;
-}
-
 relation ExecutionCourseProfessorship {
     ExecutionCourse playsRole executionCourse;
     Professorship playsRole professorships {
@@ -4563,13 +4554,6 @@ relation RootDomainObjectEnrolmentWrapper {
 relation RootDomainObjectEvaluation {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Evaluation playsRole evaluations {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectEvaluationMethod {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    EvaluationMethod playsRole evaluationMethods {
         multiplicity *;
     }
 }
