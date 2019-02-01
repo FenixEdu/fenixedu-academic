@@ -1304,10 +1304,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         public RegistrationStateType targetState;
     }
 	
-	class degreeStructure.CycleCourseGroupInformation  {
-		LocalizedString graduateTitleSuffix;
-	}
-	
     class EducationArea  {
         String code;
         String description;
@@ -5962,28 +5958,6 @@ relation EnrolmentEvaluationLogRootDomainObject {
 	log.EnrolmentEvaluationLog playsRole enrolmentEvaluationLog {
 		multiplicity *;
 	}
-}
-
-
-relation CycleCourseGroupInformationRootDomainObject {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	degreeStructure.CycleCourseGroupInformation playsRole cycleCourseGroupInformation {
-		multiplicity *;
-	}
-}
-
-relation CycleCourseGroupInformationExecutionYear {
-	ExecutionYear playsRole executionYear;
-	degreeStructure.CycleCourseGroupInformation playsRole cycleCourseGroupInformation {
-		multiplicity *;
-	}
-}
-
-relation CycleCourseGroupCycleCourseGroupInformation {
-	degreeStructure.CycleCourseGroup playsRole cycleCourseGroup;
-	degreeStructure.CycleCourseGroupInformation playsRole cycleCourseGroupInformation {
-		multiplicity *;
-	}	
 }
 
 relation RootDomainObjectEnrolmentInstructions {

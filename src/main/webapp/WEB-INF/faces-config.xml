@@ -273,13 +273,6 @@
 	</managed-bean>
 	
 	<managed-bean>
-		<description>CycleCourseGroupInformationManagementBackingBean</description>
-		<managed-bean-name>CycleCourseGroupInformationManagement</managed-bean-name>
-		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularPlans.CycleCourseGroupInformationManagementBackingBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	
-	<managed-bean>
 		<description>CourseGroupReportBackingBean</description>
 		<managed-bean-name>CourseGroupReport</managed-bean-name>
 		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularPlans.CourseGroupReportBackingBean</managed-bean-class>
@@ -1560,13 +1553,6 @@
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
-		<from-view-id>/bolonhaManager/curricularPlans/editCycleCourseGroupInformation.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>editCurricularPlanStructure</from-outcome>
-			<to-view-id>/bolonhaManager/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>	
-	<navigation-rule>
 		<from-view-id>/bolonhaManager/curricularPlans/orderCourseGroup.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>editCurricularPlanStructure</from-outcome>
@@ -1786,13 +1772,6 @@
 	</navigation-rule>
 	<navigation-rule>
 		<from-view-id>/academicAdministration/bolonha/curricularPlans/createBranchCourseGroup.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>editCurricularPlanStructure</from-outcome>
-			<to-view-id>/academicAdministration/bolonha/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<from-view-id>/academicAdministration/bolonha/curricularPlans/editCycleCourseGroupInformation.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>editCurricularPlanStructure</from-outcome>
 			<to-view-id>/academicAdministration/bolonha/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>

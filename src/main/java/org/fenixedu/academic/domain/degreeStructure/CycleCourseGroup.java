@@ -18,22 +18,16 @@
  */
 package org.fenixedu.academic.domain.degreeStructure;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-
-import pt.ist.fenixframework.Atomic;
 
 public class CycleCourseGroup extends CycleCourseGroup_Base {
 
@@ -62,15 +56,6 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
         return true;
     }
 
-    final public String getGraduateTitleSuffix(final ExecutionYear executionYear, final Locale locale) {
-        CycleCourseGroupInformation courseGroupInformationForSuffix =
-                getMostRecentCycleCourseGroupInformation(executionYear, true);
-        if (courseGroupInformationForSuffix != null) {
-            return courseGroupInformationForSuffix.getGraduateTitleSuffix().getContent(locale);
-        }
-        return null;
-    }
-
     public boolean isFirstCycle() {
         return getCycleType() == CycleType.FIRST_CYCLE;
     }
@@ -94,51 +79,6 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
 
     public Double getCurrentDefaultEcts() {
         return getDefaultEcts(ExecutionYear.readCurrentExecutionYear());
-    }
-
-    public List<CycleCourseGroupInformation> getCycleCourseGroupInformationOrderedByExecutionYear() {
-        List<CycleCourseGroupInformation> groupInformationList =
-                new ArrayList<CycleCourseGroupInformation>(getCycleCourseGroupInformationSet());
-        Collections.sort(groupInformationList, CycleCourseGroupInformation.COMPARATOR_BY_EXECUTION_YEAR);
-
-        return groupInformationList;
-    }
-
-    public CycleCourseGroupInformation getCycleCourseGroupInformationByExecutionYear(final ExecutionYear executionYear) {
-        for (CycleCourseGroupInformation cycleInformation : getCycleCourseGroupInformationSet()) {
-            if (cycleInformation.getExecutionYear() == executionYear) {
-                return cycleInformation;
-            }
-        }
-
-        return null;
-    }
-
-    public CycleCourseGroupInformation getMostRecentCycleCourseGroupInformation(final ExecutionYear executionYear,
-            boolean isForSuffix) {
-        CycleCourseGroupInformation mostRecent = null;
-
-        for (CycleCourseGroupInformation cycleInformation : getCycleCourseGroupInformationSet()) {
-            if (cycleInformation.getExecutionYear().isAfter(executionYear)) {
-                continue;
-            }
-
-            if ((mostRecent == null) || cycleInformation.getExecutionYear().isAfter(mostRecent.getExecutionYear())) {
-                mostRecent = cycleInformation;
-            }
-        }
-
-        return mostRecent;
-    }
-
-    @Atomic
-    public CycleCourseGroupInformation createCycleCourseGroupInformation(final ExecutionYear executionYear,
-            String graduatedTitleSuffix, String graduatedTitleSuffixEn) {
-        if (getCycleCourseGroupInformationByExecutionYear(executionYear) != null) {
-            throw new DomainException("cycle.course.group.information.exists.in.execution.year");
-        }
-
-        return new CycleCourseGroupInformation(this, executionYear, graduatedTitleSuffix, graduatedTitleSuffixEn);
     }
 
     public Set<CycleCourseGroup> getAllPossibleAffinities() {
@@ -166,13 +106,4 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
 
     }
 
-    public CycleCourseGroupInformation findCycleCourseGroupInformationBy(final ExecutionInterval executionInterval) {
-        for (final CycleCourseGroupInformation each : getCycleCourseGroupInformationSet()) {
-            if (each.isFor(executionInterval)) {
-                return each;
-            }
-        }
-
-        return null;
-    }
 }

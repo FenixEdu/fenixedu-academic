@@ -36,7 +36,6 @@ import java.util.stream.Stream;
 
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ReverseComparator;
-import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionInterval;
@@ -919,14 +918,7 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public String getDegreeNameWithTitleSuffix(final ExecutionYear executionYear, final Locale locale) {
-        String degreeFilteredName = getDegree().getFilteredName(executionYear, locale);
-
-        final String suffix = getGraduateTitleSuffix(executionYear, locale);
-        if (!StringUtils.isEmpty(suffix) && !degreeFilteredName.contains(suffix.trim())) {
-            degreeFilteredName = suffix + " " + degreeFilteredName;
-        }
-
-        return degreeFilteredName;
+        return getDegree().getFilteredName(executionYear, locale);
     }
 
     final public String getGraduateTitle() {
