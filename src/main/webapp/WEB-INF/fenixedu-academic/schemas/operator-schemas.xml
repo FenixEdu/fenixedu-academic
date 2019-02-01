@@ -97,24 +97,6 @@
 	</slot>
 </schema>
 
-<schema name="alumni.identity.request.body" type="org.fenixedu.academic.dto.alumni.AlumniIdentityCheckRequestBean" bundle="MANAGER_RESOURCES">
-	<slot name="fullName" key="label.fullName" />
-	<slot name="dateOfBirthYearMonthDay" key="label.dateOfBirthYearMonthDay" />
-	<slot name="districtOfBirth" key="label.districtOfBirth" />
-	<slot name="districtSubdivisionOfBirth" key="label.districtSubdivisionOfBirth" />
-	<slot name="parishOfBirth" key="label.parishOfBirth" />
-	<slot name="socialSecurityNumber" key="label.socialSecurityNumber" />
-	<slot name="nameOfFather" key="label.nameOfFather" />
-	<slot name="nameOfMother" key="label.nameOfMother" />
-</schema>
-
-<schema name="alumni.identity.request.comment" type="org.fenixedu.academic.dto.alumni.AlumniIdentityCheckRequestBean" bundle="MANAGER_RESOURCES">
-	<slot name="comment" key="label.comment" layout="longText" >
-		<property name="rows" value="4" />
-		<property name="columns" value="40" />
-	</slot>
-</schema>
-
 <schema name="alumni.person.body" type="org.fenixedu.academic.domain.Person" >
 	<slot name="fullName" />
 	<slot name="dateOfBirthYearMonthDay" />

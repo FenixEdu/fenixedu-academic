@@ -22,7 +22,6 @@ package org.fenixedu.academic.domain;
 /*
  * Enums first
  */
-enum org.fenixedu.academic.domain.AlumniRequestType                                                                    as AlumniRequestType;
 enum org.fenixedu.academic.domain.CompetenceCourseType                                                                 as CompetenceCourseType;
 enum org.fenixedu.academic.domain.ContractType                                                                         as ContractType;
 enum org.fenixedu.academic.domain.ExecutionCourseBoardPermittedGroupType                                               as ExecutionCourseBoardPermittedGroupType;
@@ -291,31 +290,7 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
 *
 */
 
-
     class Alumni  {
-        Boolean registered;
-        UUID urlRequestToken;
-        Boolean isEmployed;
-        DateTime registeredWhen;
-    }
-
-    class AlumniIdentityCheckRequest  {
-        String contactEmail;
-        String documentIdNumber;
-        String fullName;
-        YearMonthDay dateOfBirthYearMonthDay;
-        String parishOfBirth;
-        String districtOfBirth;
-        String districtSubdivisionOfBirth;
-        String socialSecurityNumber;
-        String nameOfFather;
-        String nameOfMother;
-        DateTime creationDateTime;
-        Boolean approved;
-        String comment;
-        DateTime decisionDateTime;
-        AlumniRequestType requestType;
-        UUID requestToken;
     }
 
     class Attends  {
@@ -2359,13 +2334,6 @@ class accessControl.PersistentAcademicOperationGroup extends accessControl.Fenix
 }
 
 class accessControl.PersistentResponsibleForExecutionCourseGroup extends accessControl.FenixPredicateGroup;
-
-class accessControl.PersistentNotUpdatedAlumniInfoForSpecificDaysGroup extends accessControl.FenixPredicateGroup {
-    public Integer daysNotUpdated;
-    public Boolean checkJobNotUpdated;
-    public Boolean checkFormationNotUpdated;
-    public Boolean checkPersonalDataNotUpdated;
-}
 
 class accessControl.PersistentStudentGroupGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
@@ -5603,40 +5571,9 @@ relation AlumniStudent {
     }
 }
 
-relation AlumniIdentityCheckRequestAlumni {
-    Alumni playsRole alumni;
-    AlumniIdentityCheckRequest playsRole identityRequests {
-        multiplicity *;
-    }
-}
-
-relation AlumniIdentityCheckRequestPerson {
-    Person playsRole operator;
-    AlumniIdentityCheckRequest playsRole identityRequests {
-        multiplicity *;
-    }
-    }
-
 relation RootDomainObjectAlumni {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Alumni playsRole alumnis {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectAlumniIdentityCheckRequest {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    AlumniIdentityCheckRequest playsRole alumniIdentityRequest {
-        multiplicity *;
-    }
-}
-
-relation AlumniIdentityCheckRequestFiscalCountry {
-	Country playsRole fiscalCountry {
-		multiplicity 0..1;
-	}
-	
-    AlumniIdentityCheckRequest playsRole alumniIdentityRequests {
         multiplicity *;
     }
 }
