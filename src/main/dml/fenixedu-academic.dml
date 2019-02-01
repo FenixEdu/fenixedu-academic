@@ -2160,12 +2160,6 @@ public class accessControl.rules.AccessRule {
 public class accessControl.academicAdministration.AcademicAccessRule extends accessControl.rules.AccessRule {
 }
 
-class PublicCandidacyHashCode  {
-    DateTime whenCreated;
-    String email;
-    String value;
-}
-
 class candidacy.MeasurementTest  {
     EntryPhase entryPhase;
     
@@ -5749,13 +5743,6 @@ relation GepReportFileDegreeType {
 relation QueueJobWithFileResult{
     QueueJobWithFile playsRole job;
     QueueJobResultFile playsRole file;
-}
-
-relation PublicCandidacyHashCodeRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    PublicCandidacyHashCode playsRole candidacyHashCodes {
-        multiplicity *;
-    }
 }
 
 relation CurricularActivitiesRootDomainObject {
