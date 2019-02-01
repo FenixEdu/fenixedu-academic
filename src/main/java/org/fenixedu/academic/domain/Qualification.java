@@ -20,7 +20,6 @@ package org.fenixedu.academic.domain;
 
 import java.util.Comparator;
 
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -90,30 +89,6 @@ public class Qualification extends Qualification_Base {
         setDateYearMonthDay(precedentDegreeInformation.getConclusionYear() == null ? null : new YearMonthDay(
                 precedentDegreeInformation.getConclusionYear(), 1, 1));
         setCountry(precedentDegreeInformation.getCountry() == null ? null : precedentDegreeInformation.getCountry());
-    }
-
-    public Qualification(final Person person, final QualificationBean bean) {
-        this();
-        String[] args = {};
-
-        if (person == null) {
-            throw new DomainException("error.Qualification.invalid.person", args);
-        }
-        checkAttendedPartials(bean.getAttendedBegin(), bean.getAttendedEnd());
-
-        setPerson(person);
-        setType(bean.getType());
-        setSchool(bean.getSchool());
-        setDegree(bean.getDegree());
-        setAttendedBegin(bean.getAttendedBegin());
-        setAttendedEnd(bean.getAttendedEnd());
-        setMark(bean.getMark());
-    }
-
-    private void checkAttendedPartials(Partial attendedBegin, Partial attendedEnd) {
-        if (attendedBegin != null && attendedEnd != null && attendedBegin.isAfter(attendedEnd)) {
-            throw new DomainException("error.Qualification.invalid.attended.dates");
-        }
     }
 
     @Override
