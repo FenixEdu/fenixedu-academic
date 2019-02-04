@@ -38,4 +38,9 @@ public class InterestExemption extends CreditEntry {
     public boolean isToApplyFine() {
         return false;
     }
+
+    @Override
+    public BigDecimal getAmountInAdvance() {
+        return BigDecimal.ZERO;
+    }
 }

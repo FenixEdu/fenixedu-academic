@@ -38,4 +38,9 @@ public class DebtExemption extends CreditEntry {
     public boolean isForFine() {
         return false;
     }
+
+    @Override
+    public BigDecimal getAmountInAdvance() {
+        return BigDecimal.ZERO;
+    }
 }
