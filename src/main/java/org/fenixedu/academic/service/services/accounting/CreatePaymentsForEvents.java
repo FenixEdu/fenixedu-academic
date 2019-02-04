@@ -27,6 +27,7 @@ import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.PaymentMethod;
 import org.fenixedu.academic.dto.accounting.AccountingTransactionDetailDTO;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
+import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
@@ -47,11 +48,23 @@ public class CreatePaymentsForEvents {
     }
 
     private static Map<Event, Collection<EntryDTO>> splitEntryDTOsByEvent(Collection<EntryDTO> entryDTOs) {
-        final Map<Event, Collection<EntryDTO>> result = new HashMap<>();
-
+        // Split entries by event
+        final Map<Event, Collection<EntryDTO>> entriesByEvent = new HashMap<>();
         for (final EntryDTO entryDTO : entryDTOs) {
-            result.computeIfAbsent(entryDTO.getEvent(), k -> new ArrayList<>()).add(entryDTO);
+            entriesByEvent.computeIfAbsent(entryDTO.getEvent(), k -> new ArrayList<>()).add(entryDTO);
         }
+
+        // Reduce entries for the same event into a single one
+        final Map<Event, Collection<EntryDTO>> result = new HashMap<>();
+        entriesByEvent.forEach((event, entries) -> {
+            EntryDTO first = entries.iterator().next();
+            Money totalAmount = entries.stream().map(EntryDTO::getAmountToPay).reduce(Money.ZERO, Money::add);
+
+            EntryDTO totalEntry = new EntryDTO(first.getEntryType(), first.getEvent(), totalAmount,
+                    totalAmount, totalAmount, first.getDescription(), totalAmount);
+
+            result.computeIfAbsent(event, k -> new ArrayList<>()).add(totalEntry);
+        });
 
         return result;
     }
