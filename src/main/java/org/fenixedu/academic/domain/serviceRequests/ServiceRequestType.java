@@ -7,7 +7,6 @@ import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
-import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -208,13 +207,7 @@ public class ServiceRequestType extends ServiceRequestType_Base {
             return academicServiceRequest.getServiceRequestType();
         }
 
-        // Fallback
-        if (academicServiceRequest.isDocumentRequest()) {
-            return findUnique(academicServiceRequest.getAcademicServiceRequestType(),
-                    ((DocumentRequest) academicServiceRequest).getDocumentRequestType());
-        } else {
-            return findUnique(academicServiceRequest.getAcademicServiceRequestType());
-        }
+        return findUnique(academicServiceRequest.getAcademicServiceRequestType());
     }
 
     public static Stream<ServiceRequestType> findByCode(final String code) {

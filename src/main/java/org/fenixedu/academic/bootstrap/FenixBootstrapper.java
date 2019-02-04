@@ -28,7 +28,6 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.bootstrap.FenixBootstrapper.SchoolSetupSection;
 import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.CurricularYear;
-import org.fenixedu.academic.domain.EvaluationConfiguration;
 import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.Installation;
 import org.fenixedu.academic.domain.Person;
@@ -49,7 +48,6 @@ import org.fenixedu.academic.domain.organizationalStructure.SchoolUnit;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.academic.domain.person.RoleType;
-import org.fenixedu.academic.domain.serviceRequests.InstitutionRegistryCodeGenerator;
 import org.fenixedu.academic.domain.serviceRequests.ServiceRequestCategory;
 import org.fenixedu.academic.domain.serviceRequests.ServiceRequestType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
@@ -185,17 +183,12 @@ public class FenixBootstrapper {
                     createSchoolUnit(universityUnit, portalSection.getOrganizationName(), schoolSetupSection.getSchoolAcronym());
             Bennu.getInstance().setInstitutionUnit(institutionUnit);
 
-            setRegistryGenerator(institutionUnit);
             final AggregateUnit serviceUnits = createAggregateUnit(institutionUnit, "Services");
             //createServiceUnits(serviceUnits);
             final AggregateUnit departmentUnits = createAggregateUnit(institutionUnit, "Departments");
             //createDepartmentUnits(departmentUnits);
             final AggregateUnit degreeUnits = createAggregateUnit(institutionUnit, "Degrees");
             //createDegreeUnits(degreeUnits);
-        }
-
-        private void setRegistryGenerator(final SchoolUnit institutionUnit) {
-            institutionUnit.setRegistryCodeGenerator(new InstitutionRegistryCodeGenerator());
         }
 
         private CountryUnit getCountryUnit(final String countryUnitName) {

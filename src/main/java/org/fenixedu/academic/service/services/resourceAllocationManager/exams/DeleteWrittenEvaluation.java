@@ -18,9 +18,7 @@
  */
 package org.fenixedu.academic.service.services.resourceAllocationManager.exams;
 
-import org.fenixedu.academic.domain.Exam;
 import org.fenixedu.academic.domain.WrittenEvaluation;
-import org.fenixedu.academic.domain.serviceRequests.documentRequests.ExamDateCertificateRequest;
 import org.fenixedu.academic.service.filter.EditWrittenEvaluationAuthorization;
 import org.fenixedu.academic.service.filter.ExecutionCourseCoordinatorAuthorizationFilter;
 import org.fenixedu.academic.service.filter.ExecutionCourseLecturingTeacherAuthorizationFilter;
@@ -46,18 +44,8 @@ public class DeleteWrittenEvaluation {
         if (writtenEvaluationToDelete == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }
-        if (writtenEvaluationToDelete instanceof Exam) {
-            disconnectExamCertificateRequests(writtenEvaluationToDelete);
-        }
         Signal.emit("academic.writtenevaluation.deleted", new DomainObjectEvent<>(writtenEvaluationToDelete));
         writtenEvaluationToDelete.delete();
-    }
-
-    private void disconnectExamCertificateRequests(WrittenEvaluation writtenEvaluationToDelete) {
-        Exam examToDelete = (Exam) writtenEvaluationToDelete;
-        for (ExamDateCertificateRequest examDateCertificateRequest : examToDelete.getExamDateCertificateRequestsSet()) {
-            examDateCertificateRequest.removeExams(examToDelete);
-        }
     }
 
     // Service Invokers migrated from Berserk

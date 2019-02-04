@@ -27,7 +27,6 @@
 	<!ENTITY messaging SYSTEM "/fenixedu-academic/schemas/messaging-schemas.xml">
 	<!ENTITY party SYSTEM "/fenixedu-academic/schemas/party-schemas.xml">
 	<!ENTITY execution SYSTEM "/fenixedu-academic/schemas/execution-schemas.xml">
-	<!ENTITY serviceRequests SYSTEM "/fenixedu-academic/schemas/serviceRequests-schemas.xml">
     <!ENTITY executionCourse SYSTEM "/fenixedu-academic/schemas/executionCourse-schemas.xml"> 
 	<!ENTITY academicAdminOffice SYSTEM "/fenixedu-academic/schemas/academicAdminOffice-schemas.xml">	
     <!ENTITY site SYSTEM "/fenixedu-academic/schemas/site-schemas.xml">
@@ -593,7 +592,6 @@
 	&space;
 	&party;
 	&execution;
-	&serviceRequests;
     &executionCourse;
 	&academicAdminOffice;
     &site;

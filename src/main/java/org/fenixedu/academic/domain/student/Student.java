@@ -51,7 +51,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.log.CurriculumLineLog;
 import org.fenixedu.academic.domain.messaging.Forum;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
-import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
@@ -833,15 +832,6 @@ public class Student extends Student_Base {
             }
         }
         return firstYear;
-    }
-
-    public Collection<? extends AcademicServiceRequest> getAcademicServiceRequests(
-            final Class<? extends AcademicServiceRequest> clazz) {
-        final Set<AcademicServiceRequest> result = new HashSet<>();
-        for (final Registration registration : getRegistrationsSet()) {
-            result.addAll(registration.getAcademicServiceRequests(clazz));
-        }
-        return result;
     }
 
     public Collection<ExecutionYear> getEnrolmentsExecutionYears() {

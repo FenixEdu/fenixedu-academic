@@ -59,7 +59,6 @@ enum org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevel         
 enum org.fenixedu.academic.domain.degreeStructure.CurricularStage                                                      as CurricularStage;
 enum org.fenixedu.academic.domain.degreeStructure.CycleType                                                            as CycleType;
 enum org.fenixedu.academic.domain.degreeStructure.RegimeType                                                           as degreeStructure.RegimeType;
-enum org.fenixedu.academic.domain.documents.GeneratedDocumentType                                                      as GeneratedDocumentType;
 enum org.fenixedu.academic.domain.organizationalStructure.AcademicalInstitutionType                                    as AcademicalInstitutionType;
 enum org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum                                       as AccountabilityTypeEnum;
 enum org.fenixedu.academic.domain.organizationalStructure.PartyTypeEnum                                                as PartyTypeEnum;
@@ -80,7 +79,6 @@ enum org.fenixedu.academic.util.RegimeType                                      
 enum org.fenixedu.academic.util.WeekDay                                                                                as WeekDay;
 enum org.fenixedu.academic.domain.EntryPhase                                                                           as EntryPhase;
 enum org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationContext                                                as EnrolmentEvaluationContext;
-enum org.fenixedu.academic.domain.serviceRequests.RectorateSubmissionState                                             as RectorateSubmissionState;
 enum org.fenixedu.academic.domain.OperationType																		  as OperationType;
 enum org.fenixedu.academic.domain.candidacy.FirstTimeCandidacyStage													  as FirstTimeCandidacyStage;
 enum org.fenixedu.academic.domain.contacts.PartyContactValidationState 									              as PartyContactValidationState;
@@ -644,19 +642,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
     	DateTime creationDate;
     }
     
-    /* Documents */
-    class documents.GeneratedDocument extends .org.fenixedu.bennu.io.domain.GenericFile {
-        GeneratedDocumentType type;
-    }
-    
-    class documents.GeneratedDocumentWithoutSource extends documents.GeneratedDocument;
-    
-    class documents.DocumentRequestGeneratedDocument extends documents.GeneratedDocument;
-
-            class documents.AnnualIRSDeclarationDocument extends documents.GeneratedDocument {
-                Integer year;
-            }
-
         class ProjectSubmissionFile extends .org.fenixedu.bennu.io.domain.GenericFile {
         }
 
@@ -1492,35 +1477,12 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
                 }
                 
                 
-    class serviceRequests.InstitutionRegistryCodeGenerator {
-        Integer number;
-    }
-    
-    class serviceRequests.RegistryCode  {
-        String code;
-    }
-
-    class serviceRequests.RectorateSubmissionBatch  {
-       DateTime creation;
-       DateTime submission;
-       DateTime reception;
-       RectorateSubmissionState state;
-    }
-
     class serviceRequests.AcademicServiceRequestSituation  {
         AcademicServiceRequestSituationType academicServiceRequestSituationType;
         String justification;
         DateTime creationDate;
         DateTime situationDate;
     }
-    
-        class serviceRequests.SentToExternalEntityAcademicServiceRequestSituation extends serviceRequests.AcademicServiceRequestSituation {
-                DateTime sentDate;          
-            }
-        
-        class serviceRequests.ReceivedFromExternalEntityAcademicServiceRequestSituation extends serviceRequests.AcademicServiceRequestSituation {
-                DateTime receivedDate;
-            }
     
     class serviceRequests.AcademicServiceRequestYear  {
         Integer year;
@@ -1561,140 +1523,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
 	    CycleType requestedCycle;
     }
         
-        class serviceRequests.RegistrationAcademicServiceRequest extends serviceRequests.AcademicServiceRequest {
-        }
-    
-            class serviceRequests.documentRequests.DocumentRequest extends serviceRequests.RegistrationAcademicServiceRequest {
-            }
-    
-                class serviceRequests.documentRequests.CertificateRequest extends serviceRequests.documentRequests.DocumentRequest {
-                    DocumentPurposeType documentPurposeType;
-                    String otherDocumentPurposeTypeDescription;
-                }
-    
-                    class serviceRequests.documentRequests.ApprovementCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
-                        Boolean ignoreExternalEntries;
-                        Boolean ignoreCurriculumInAdvance;
-                    }
-                    
-                    class serviceRequests.documentRequests.ApprovementMobilityCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
-                    }
-    
-                    class serviceRequests.documentRequests.DegreeFinalizationCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
-                        Boolean average;
-                        Boolean technicalEngineer;
-                        Boolean internshipAbolished;
-                        Boolean internshipApproved;
-                        Boolean studyPlan;
-                        String branch;
-                        YearMonthDay exceptionalConclusionDate;
-                        Boolean ignoreExternalEntries;
-                        Boolean ignoreCurriculumInAdvance;
-                    }
-    
-                    class serviceRequests.documentRequests.EnrolmentCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
-                    }
-    
-                    class serviceRequests.documentRequests.SchoolRegistrationCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
-                    }
-                    
-                    class serviceRequests.documentRequests.ExtraCurricularCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
-                    }
-                    
-                    class serviceRequests.documentRequests.StandaloneEnrolmentCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
-                    }
-    
-                    class serviceRequests.documentRequests.CourseLoadRequest extends serviceRequests.documentRequests.CertificateRequest {
-                    }
-                    
-                        class serviceRequests.documentRequests.ExternalCourseLoadRequest extends serviceRequests.documentRequests.CourseLoadRequest {
-                            Integer numberOfCourseLoads;
-                        }
-                    
-                    class serviceRequests.documentRequests.ExamDateCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
-                    }
-                    
-                    class serviceRequests.documentRequests.ProgramCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
-                    }
-                    
-                        class serviceRequests.documentRequests.ExternalProgramCertificateRequest extends serviceRequests.documentRequests.ProgramCertificateRequest {
-                            Integer numberOfPrograms;
-                        }
-    
-                class serviceRequests.documentRequests.DeclarationRequest extends serviceRequests.documentRequests.DocumentRequest {
-                    DocumentPurposeType documentPurposeType;
-                    String otherDocumentPurposeTypeDescription;
-                }
-    
-                    class serviceRequests.documentRequests.EnrolmentDeclarationRequest extends serviceRequests.documentRequests.DeclarationRequest {
-                    }
-    
-                    class serviceRequests.documentRequests.IRSDeclarationRequest extends serviceRequests.documentRequests.DeclarationRequest {
-                        Integer year;
-                    }
-    
-                    class serviceRequests.documentRequests.SchoolRegistrationDeclarationRequest extends serviceRequests.documentRequests.DeclarationRequest {
-                    }
-    
-                    class serviceRequests.documentRequests.GenericDeclarationRequest extends serviceRequests.documentRequests.DeclarationRequest {
-                    }
-    
-                class serviceRequests.documentRequests.DiplomaRequest extends serviceRequests.documentRequests.DocumentRequest {
-                }
-                
-                class serviceRequests.documentRequests.PastDiplomaRequest extends serviceRequests.documentRequests.DocumentRequest {
-                }
-
-                class serviceRequests.documentRequests.RegistryDiplomaRequest extends serviceRequests.documentRequests.DocumentRequest {
-                }
-
-                class serviceRequests.documentRequests.DiplomaSupplementRequest extends serviceRequests.documentRequests.DocumentRequest {
-                }
-            
-                class serviceRequests.documentRequests.PhotocopyRequest extends serviceRequests.documentRequests.DocumentRequest {
-                    String subject;
-                    String purpose;
-                }
-                
-                class serviceRequests.Under23TransportsDeclarationRequest extends serviceRequests.documentRequests.DocumentRequest {
-                }
-
-            class serviceRequests.StudentReingressionRequest extends serviceRequests.RegistrationAcademicServiceRequest {
-            }
-            
-            class serviceRequests.EquivalencePlanRequest extends serviceRequests.RegistrationAcademicServiceRequest {
-                Integer numberOfEquivalences;
-            }
-            
-            class serviceRequests.EquivalencePlanRevisionRequest extends serviceRequests.RegistrationAcademicServiceRequest {
-            }
-            
-            class serviceRequests.CourseGroupChangeRequest extends serviceRequests.RegistrationAcademicServiceRequest {
-            }
-            
-            class serviceRequests.ExtraExamRequest extends serviceRequests.RegistrationAcademicServiceRequest {
-            }
-            
-            class serviceRequests.FreeSolicitationAcademicRequest extends serviceRequests.RegistrationAcademicServiceRequest {
-                String subject;
-                String purpose;
-            }
-            
-            class serviceRequests.DuplicateRequest extends serviceRequests.RegistrationAcademicServiceRequest {
-            	String description;
-            	Money amountToPay;
-            }
-            
-            class serviceRequests.SpecialSeasonRequest extends serviceRequests.RegistrationAcademicServiceRequest {
-            	Boolean deferred;
-            }
-            
-            class serviceRequests.PartialRegistrationRegimeRequest extends serviceRequests.RegistrationAcademicServiceRequest {
-            }
-            
-            class serviceRequests.CustomServiceRequestRequest extends serviceRequests.RegistrationAcademicServiceRequest {
-            }
-            
     class student.curriculum.ConclusionProcess  {
     }
 
@@ -2107,7 +1935,7 @@ class QueueJobWithFile extends QueueJob {
        String contentType;
 }
 
-class QueueJobResultFile extends documents.GeneratedDocument{}
+class QueueJobResultFile extends .org.fenixedu.bennu.io.domain.GenericFile {}
 
 class reports.GepReportFile extends QueueJobWithFile {
     String type;
@@ -2545,173 +2373,11 @@ relation AcademicServiceRequestAdministrativeOffice {
     }
 }
 
-relation RegistryDiplomaSupplement {
-    serviceRequests.documentRequests.RegistryDiplomaRequest playsRole registryDiplomaRequest;
-    serviceRequests.documentRequests.DiplomaSupplementRequest playsRole diplomaSupplement;
-}
-
-relation RegistryDiplomaProgramConclusion {
-    serviceRequests.documentRequests.RegistryDiplomaRequest playsRole registryDiplomaRequest {
-        multiplicity *;
-    }
-    degreeStructure.ProgramConclusion playsRole programConclusion;
-}
-
-relation DiplomaRequestProgramConclusion {
-    serviceRequests.documentRequests.DiplomaRequest playsRole diplomaRequest {
-        multiplicity *;
-    }
-    degreeStructure.ProgramConclusion playsRole programConclusion;
-}
-
-relation DiplomaSupplementRequestProgramConclusion {
-    serviceRequests.documentRequests.DiplomaSupplementRequest playsRole diplomaSupplement {
-        multiplicity *;
-    }
-    degreeStructure.ProgramConclusion playsRole programConclusion;
-}
-
-relation DegreeFinalizationCertificateRequestProgramConclusion {
-    serviceRequests.documentRequests.DegreeFinalizationCertificateRequest playsRole degreeFinalizationCertificateRequest {
-        multiplicity *;
-    }
-    degreeStructure.ProgramConclusion playsRole programConclusion;
-}
-
-relation InstitutionRegistryCodeGeneratorRootDomainObject {
-    serviceRequests.InstitutionRegistryCodeGenerator playsRole registryCodeGenerator {
-        multiplicity *;
-    }
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-}
-
-relation RegistryCodeGeneratorInstitution {
-    serviceRequests.InstitutionRegistryCodeGenerator playsRole registryCodeGenerator;
-    organizationalStructure.Unit playsRole institution;
-}
-
-relation InstitutionRegistryCodeGeneratorCodes {
-    serviceRequests.InstitutionRegistryCodeGenerator playsRole registryCodeGenerator {
-        multiplicity 1..1;
-    }
-    serviceRequests.RegistryCode playsRole registryCode {
-        multiplicity *;
-    }
-}
-
-relation AcademicServiceRequestRegistryCode {
-    serviceRequests.RegistryCode playsRole registryCode;
-    serviceRequests.AcademicServiceRequest playsRole documentRequest {
-        multiplicity *;
-    }
-}
-
-relation RectorateSubmissionBatchRootDomainObject {
-    serviceRequests.RectorateSubmissionBatch playsRole rectorateSubmissionBatch {
-        multiplicity *;
-    }
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-}
-
-relation AdministrativeOfficeRectorateSubmissionBatch {
-    administrativeOffice.AdministrativeOffice playsRole administrativeOffice {
-        multiplicity 1..1;
-    }
-    serviceRequests.RectorateSubmissionBatch playsRole rectorateSubmissionBatch {
-        multiplicity *;
-    }
-}
-
-relation DocumentRequestRectorateSubmissionBatch {
-    serviceRequests.AcademicServiceRequest playsRole documentRequest {
-        multiplicity *;
-    }
-    serviceRequests.RectorateSubmissionBatch playsRole rectorateSubmissionBatch {
-        multiplicity 0..1;
-    }
-}
-
-relation RectorateSubmissionBatchCreator {
-    serviceRequests.RectorateSubmissionBatch playsRole createdRectorateSubmissionBatch {
-        multiplicity *;
-    }
-    Person playsRole creator;
-}
-
-relation RectorateSubmissionBatchSubmitter {
-    serviceRequests.RectorateSubmissionBatch playsRole submittedRectorateSubmissionBatch {
-        multiplicity *;
-    }
-    Person playsRole submitter;
-}
-
-relation RectorateSubmissionBatchReceptor {
-    serviceRequests.RectorateSubmissionBatch playsRole receivedRectorateSubmissionBatch {
-        multiplicity *;
-    }
-    Person playsRole receptor;
-}
-
-relation RegistrationAcademicServiceRequestRegistration {
-    student.Registration playsRole registration;
-    serviceRequests.RegistrationAcademicServiceRequest playsRole academicServiceRequests {
-        multiplicity *;
-    }
-}
-
 relation AcademicServiceRequestSituationCreator {
     serviceRequests.AcademicServiceRequestSituation playsRole academicServiceRequestSituations {
         multiplicity *;
     }
     Person playsRole creator;
-}
-
-relation EquivalencePlanRevisionRequestEquivalencePlanRequest {
-    serviceRequests.EquivalencePlanRequest playsRole equivalencePlanRequest;
-    serviceRequests.EquivalencePlanRevisionRequest playsRole equivalencePlanRevisionRequests {
-        multiplicity *;
-    }
-}
-
-relation SpecialSeasonRequestBeginPeriod {
-    ExecutionSemester playsRole beginExecutionPeriod;
-    serviceRequests.SpecialSeasonRequest playsRole beginningSpecialSeason {
-        multiplicity *;
-    }
-}
-
-relation SpecialSeasonRequestEndPeriod {
-    ExecutionSemester playsRole endExecutionPeriod;
-    serviceRequests.SpecialSeasonRequest playsRole endingSpecialSeason {
-        multiplicity *;
-    }
-}
-
-relation ExamDateCertificateRequestEnrolment {
-    serviceRequests.documentRequests.ExamDateCertificateRequest playsRole examDateCertificateRequests {
-        multiplicity *;
-    }
-    Enrolment playsRole enrolments {
-        multiplicity *;
-    }
-}
-
-relation ExamDateCertificateRequestExam {
-    serviceRequests.documentRequests.ExamDateCertificateRequest playsRole examDateCertificateRequests {
-        multiplicity *;
-    }
-    
-    Exam playsRole exams {
-        multiplicity *;
-    }
-}
-
-relation ExamDateCertificateRequestExecutionPeriod {
-    serviceRequests.documentRequests.ExamDateCertificateRequest playsRole examDateCertificateRequests {
-        multiplicity *;
-    }
-    
-    ExecutionSemester playsRole executionPeriod;
 }
 
 relation ProgramConclusionCourseGroup {
@@ -2728,64 +2394,6 @@ relation ProgramConclusionRoot {
         multiplicity 1..1;
     }
     public degreeStructure.ProgramConclusion playsRole programConclusion {
-        multiplicity *;
-    }
-}
-
-relation CourseGroupChangeRequestOldCourseGroup {
-    degreeStructure.CourseGroup playsRole oldCourseGroup;
-    serviceRequests.CourseGroupChangeRequest playsRole oldCourseGroupChangeRequests {
-        multiplicity *;
-    }
-}
-
-relation CourseGroupChangeRequestNewCourseGroup {
-    degreeStructure.CourseGroup playsRole newCourseGroup;
-    serviceRequests.CourseGroupChangeRequest playsRole newCourseGroupChangeRequests {
-        multiplicity *;
-    }
-}
-
-relation ExtraExamRequestEnrolment {
-    Enrolment playsRole enrolment;
-    serviceRequests.ExtraExamRequest playsRole extraExamRequests {
-        multiplicity *;
-    }
-}
-
-relation CourseLoadRequestEnrolment {
-    Enrolment playsRole enrolments {
-        multiplicity *;
-    }
-    serviceRequests.documentRequests.CourseLoadRequest playsRole courseLoadRequests {
-        multiplicity *;
-    }
-}
-
-relation ExtraCurricularCertificateRequestEnrolment {
-    Enrolment playsRole enrolments {
-        multiplicity *;
-    }
-    serviceRequests.documentRequests.ExtraCurricularCertificateRequest playsRole ExtraCurricularRequests {
-        multiplicity *;
-    }
-}
-
-relation StandaloneEnrolmentCertificateRequestEnrolment {
-    Enrolment playsRole enrolments {
-        multiplicity *;
-    }
-    serviceRequests.documentRequests.StandaloneEnrolmentCertificateRequest playsRole StandaloneEnrolmentRequests {
-        multiplicity *;
-    }
-}
-
-
-relation ProgramCertificateRequestEnrolment {
-    Enrolment playsRole enrolments {
-        multiplicity *;
-    }
-    serviceRequests.documentRequests.ProgramCertificateRequest playsRole programCertificateRequests {
         multiplicity *;
     }
 }
@@ -2823,20 +2431,6 @@ relation AffinityCycleCourseGroup {
         multiplicity *;
     }
     degreeStructure.CycleCourseGroup playsRole destinationAffinities {
-        multiplicity *;
-    }
-}
-
-relation ExternalCourseLoadRequestUnit {
-    organizationalStructure.Unit playsRole institution;
-    serviceRequests.documentRequests.ExternalCourseLoadRequest playsRole externalCourseLoadRequests {
-        multiplicity *;
-    }
-}
-
-relation ExternalProgramCertificateRequestUnit {
-    organizationalStructure.Unit playsRole institution;
-    serviceRequests.documentRequests.ExternalProgramCertificateRequest playsRole externalProgramCertificateRequests {
         multiplicity *;
     }
 }
@@ -2888,29 +2482,6 @@ relation BelongsTo {
         multiplicity *;
     }
     Grouping playsRole grouping;
-}
-
-/* Documents */
-
-relation DocumentOperator {
-    Person playsRole operator;
-    documents.GeneratedDocument playsRole processedDocument {
-        multiplicity *;
-    }
-}
-
-relation DocumentAddressees {
-    organizationalStructure.Party playsRole addressee;
-    documents.GeneratedDocument playsRole addressedDocument {
-        multiplicity *;
-    }
-}
-
-relation DocumentRequestDocuments {
-    serviceRequests.AcademicServiceRequest playsRole source;
-    documents.DocumentRequestGeneratedDocument playsRole document {
-        multiplicity *;
-    }
 }
 
 relation CampusInformationLocality {
@@ -5692,13 +5263,6 @@ relation StudentExtraCurricularActivities {
     }
 }
 
-relation ExtraCurricularActivityFeaturedInPrintedDiploma {
-    serviceRequests.documentRequests.DiplomaSupplementRequest playsRole featuredDiploma;
-    student.curriculum.ExtraCurricularActivity playsRole extraCurricularActivity {
-        multiplicity *;
-    }
-}
-
 relation ExtraCurricularActivityTypeRoot {
     student.curriculum.ExtraCurricularActivityType playsRole extraCurricularActivityType {
         multiplicity *;
@@ -6426,26 +5990,6 @@ relation DocumentPurposeTypeInstanceBennu {
 	}
 
 	public serviceRequests.documentRequests.DocumentPurposeTypeInstance playsRole documentPurposeTypeInstances {
-		multiplicity *;
-	}
-}
-
-relation DocumentPurposeTypeInstanceDeclarationRequest {
-	public serviceRequests.documentRequests.DocumentPurposeTypeInstance playsRole documentPurposeTypeInstance {
-		multiplicity 0..1;
-	}
-
-	public serviceRequests.documentRequests.DeclarationRequest playsRole declarationRequests {
-		multiplicity *;
-	}
-}
-
-relation DocumentPurposeTypeInstanceCertificateRequest {
-	public serviceRequests.documentRequests.DocumentPurposeTypeInstance playsRole documentPurposeTypeInstance {
-		multiplicity 0..1;
-	}
-
-	public serviceRequests.documentRequests.CertificateRequest playsRole certificateRequests {
 		multiplicity *;
 	}
 }

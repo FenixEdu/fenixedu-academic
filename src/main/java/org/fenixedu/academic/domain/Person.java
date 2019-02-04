@@ -47,8 +47,6 @@ import org.fenixedu.academic.domain.contacts.Phone;
 import org.fenixedu.academic.domain.contacts.PhysicalAddress;
 import org.fenixedu.academic.domain.contacts.WebAddress;
 import org.fenixedu.academic.domain.degree.DegreeType;
-import org.fenixedu.academic.domain.documents.AnnualIRSDeclarationDocument;
-import org.fenixedu.academic.domain.documents.GeneratedDocument;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Accountability;
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityType;
@@ -884,33 +882,6 @@ public class Person extends Person_Base {
     public Qualification getLastQualification() {
         return !getAssociatedQualificationsSet().isEmpty() ? Collections.max(getAssociatedQualificationsSet(),
                 Qualification.COMPARATOR_BY_YEAR) : null;
-    }
-
-    public Set<AnnualIRSDeclarationDocument> getAnnualIRSDocuments() {
-        final Set<AnnualIRSDeclarationDocument> result = new HashSet<AnnualIRSDeclarationDocument>();
-
-        for (final GeneratedDocument each : getAddressedDocumentSet()) {
-            if (each instanceof AnnualIRSDeclarationDocument) {
-                result.add((AnnualIRSDeclarationDocument) each);
-            }
-        }
-
-        return result;
-    }
-
-    public AnnualIRSDeclarationDocument getAnnualIRSDocumentFor(final Integer year) {
-        for (final AnnualIRSDeclarationDocument each : getAnnualIRSDocuments()) {
-            if (each.getYear().equals(year)) {
-                return each;
-            }
-        }
-
-        return null;
-
-    }
-
-    public boolean hasAnnualIRSDocumentFor(final Integer year) {
-        return getAnnualIRSDocumentFor(year) != null;
     }
 
     public Professorship getProfessorshipByExecutionCourse(final ExecutionCourse executionCourse) {

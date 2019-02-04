@@ -133,8 +133,7 @@ public class CourseGroup extends CourseGroup_Base {
 
     @Override
     public Boolean getCanBeDeleted() {
-        return super.getCanBeDeleted() && getChildContextsSet().isEmpty() && getOldCourseGroupChangeRequestsSet().isEmpty()
-                && getNewCourseGroupChangeRequestsSet().isEmpty();
+        return super.getCanBeDeleted() && getChildContextsSet().isEmpty();
     }
 
     @Override

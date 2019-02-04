@@ -305,17 +305,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     protected void checkRulesToDelete() {
-        if (!getExtraExamRequestsSet().isEmpty()) {
-            throw new DomainException("error.Enrolment.has.ExtraExamRequests");
-        }
         if (!getEnrolmentWrappersSet().isEmpty()) {
             throw new DomainException("error.Enrolment.is.origin.in.some.Equivalence");
-        }
-        if (!getCourseLoadRequestsSet().isEmpty()) {
-            throw new DomainException("error.Enrolment.has.CourseLoadRequests");
-        }
-        if (!getProgramCertificateRequestsSet().isEmpty()) {
-            throw new DomainException("error.Enrolment.has.ProgramCertificateRequests");
         }
     }
 
@@ -1472,11 +1463,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         enrolment.setCurriculumGroup(curriculumGroup);
 
         enrolment.getEvaluationsSet().addAll(optionalEnrolment.getEvaluationsSet());
-        enrolment.getProgramCertificateRequestsSet().addAll(optionalEnrolment.getProgramCertificateRequestsSet());
-        enrolment.getCourseLoadRequestsSet().addAll(optionalEnrolment.getCourseLoadRequestsSet());
-        enrolment.getExtraExamRequestsSet().addAll(optionalEnrolment.getExtraExamRequestsSet());
         enrolment.getEnrolmentWrappersSet().addAll(optionalEnrolment.getEnrolmentWrappersSet());
-        enrolment.getExamDateCertificateRequestsSet().addAll(optionalEnrolment.getExamDateCertificateRequestsSet());
         changeAttends(optionalEnrolment, enrolment);
         enrolment.createCurriculumLineLog(EnrolmentAction.ENROL);
 

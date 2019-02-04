@@ -28,12 +28,9 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.serviceRequests.RectorateSubmissionBatch;
-import org.fenixedu.academic.domain.serviceRequests.RectorateSubmissionState;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-import org.joda.time.DateTime;
 
 public class AdministrativeOffice extends AdministrativeOffice_Base {
 
@@ -116,9 +113,6 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
         if (!getManagedAcademicProgramSet().isEmpty()) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.AdministrativeOffice.cannot.delete"));
         }
-        if (!getRectorateSubmissionBatchSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.AdministrativeOffice.cannot.delete"));
-        }
         if (!getAcademicAuthorizationGroupSet().isEmpty()) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION,
                     "error.administrativeOffice.cannotDeleteAdministrativeOfficeUsedInAccessControl"));
@@ -133,22 +127,6 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     @Deprecated
     public boolean isMasterDegree() {
         return getAdministrativeOfficeType() == AdministrativeOfficeType.MASTER_DEGREE;
-    }
-
-    public RectorateSubmissionBatch getCurrentRectorateSubmissionBatch() {
-        DateTime last = null;
-        RectorateSubmissionBatch current = null;
-        for (RectorateSubmissionBatch bag : getRectorateSubmissionBatchSet()) {
-            if (!RectorateSubmissionState.UNSENT.equals(bag.getState())) {
-                continue;
-            }
-
-            if (last == null || bag.getCreation().isAfter(last)) {
-                last = bag.getCreation();
-                current = bag;
-            }
-        }
-        return current;
     }
 
     public boolean getHasAnyPhdProgram() {

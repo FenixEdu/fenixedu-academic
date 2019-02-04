@@ -22,7 +22,6 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.util.workflow.IState;
 import org.fenixedu.academic.domain.util.workflow.StateBean;
@@ -55,18 +54,9 @@ public class ConcludedState extends ConcludedState_Base {
 
     private void checkRulesToDelete() {
         final Person person = AccessControl.getPerson();
-        if (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.REPEAT_CONCLUSION_PROCESS, getRegistration()
-                .getDegree(), person.getUser())) {
+        if (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.REPEAT_CONCLUSION_PROCESS,
+                getRegistration().getDegree(), person.getUser())) {
             return;
-        }
-
-        if (!getRegistration().getSucessfullyFinishedDocumentRequests(DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE)
-                .isEmpty()) {
-            throw new DomainException("cannot.delete.concluded.state.of.registration.with.concluded.degree.finalization.request");
-        }
-
-        if (!getRegistration().getSucessfullyFinishedDocumentRequests(DocumentRequestType.DIPLOMA_REQUEST).isEmpty()) {
-            throw new DomainException("cannot.delete.concluded.state.of.registration.with.concluded.diploma.request");
         }
     }
 

@@ -21,7 +21,6 @@ package org.fenixedu.academic.dto.documents;
 import java.io.Serializable;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.documents.GeneratedDocumentType;
 import org.fenixedu.academic.dto.person.PersonBean;
 import org.joda.time.LocalDate;
 
@@ -34,8 +33,6 @@ public class DocumentSearchBean implements Serializable {
     private PersonBean addressee = new PersonBean();
 
     private PersonBean operator = new PersonBean();
-
-    private GeneratedDocumentType type;
 
     private LocalDate creationDate = new LocalDate();
 
@@ -63,14 +60,6 @@ public class DocumentSearchBean implements Serializable {
     public boolean hasOperator() {
         return StringUtils.isNotEmpty(getOperator().getUsername()) || StringUtils.isNotEmpty(getOperator().getName())
                 || StringUtils.isNotEmpty(getOperator().getDocumentIdNumber());
-    }
-
-    public GeneratedDocumentType getType() {
-        return type;
-    }
-
-    public void setType(GeneratedDocumentType type) {
-        this.type = type;
     }
 
     public LocalDate getCreationDate() {
