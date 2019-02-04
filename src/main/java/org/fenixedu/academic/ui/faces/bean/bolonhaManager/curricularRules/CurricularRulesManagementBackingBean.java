@@ -696,9 +696,12 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         if (selectedCurricularRuleType != null && !selectedCurricularRuleType.equals(NO_SELECTION_STRING)) {
             switch (CurricularRuleType.valueOf(selectedCurricularRuleType)) {
             case PRECEDENCY_APPROVED_DEGREE_MODULE:
-            case PRECEDENCY_ENROLED_DEGREE_MODULE:
             case RESTRICTION_NOT_ENROLED_DEGREE_MODULE:
                 getDegreeModules(CurricularCourse.class, result);
+                break;
+
+            case PRECEDENCY_ENROLED_DEGREE_MODULE:
+                getDegreeModules(CurricularCourse.class, result, true);
                 break;
 
             case CREDITS_LIMIT:
@@ -721,11 +724,15 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     }
 
     private void getDegreeModules(final Class<? extends DegreeModule> clazz, final List<SelectItem> result) {
+        getDegreeModules(clazz, result, false);
+    }
+
+    private void getDegreeModules(final Class<? extends DegreeModule> clazz, final List<SelectItem> result, boolean includeSelf) {
         final List<List<DegreeModule>> degreeModulesSet =
                 getDegreeCurricularPlan().getDcpDegreeModulesIncludingFullPath(clazz, null);
         for (final List<DegreeModule> degreeModules : degreeModulesSet) {
             final DegreeModule lastDegreeModule = (degreeModules.size() > 0) ? degreeModules.get(degreeModules.size() - 1) : null;
-            if (lastDegreeModule != getDegreeModule()) {
+            if (includeSelf || lastDegreeModule != getDegreeModule()) {
                 final StringBuilder pathName = new StringBuilder();
                 for (final DegreeModule degreeModule : degreeModules) {
                     pathName.append((pathName.length() == 0) ? "" : " > ").append(degreeModule.getName());
