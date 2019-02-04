@@ -311,7 +311,7 @@ public class DebtInterestCalculator {
     }
 
     public List<ExcessRefund> getExcessRefundsOrderedByCreated() {
-        return getExcessRefundStream().sorted(Comparator.comparing(DebtEntry::getCreated)).collect(Collectors.toList());
+        return getExcessRefundStream().sorted(Comparator.comparing(DebtEntry::getCreated).thenComparing(DebtEntry::getDate).thenComparing(DebtEntry::getId)).collect(Collectors.toList());
     }
 
     private static String toString(Map<LocalDate, BigDecimal> map) {
