@@ -18,6 +18,7 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
@@ -102,19 +103,44 @@
 
 			<h:outputText styleClass="warning0" rendered="#{evaluationManagementBackingBean.mixedGrades}" value="#{bundle['message.teacher.edit.marks.mixedGrades']}" />
 				
-			<h:outputText value="<div><table><tr>" escape="false"/>
+			<h:outputText value="<div><table class='tstyle5'><tr>" escape="false"/>
+
 				<h:outputText value="<td>" escape="false"/>
 					<h:outputText value="#{bundle['label.teacher.marks.filter.evaluation.type']}" escape="false"/>
 				<h:outputText value="</td>" escape="false"/>
-				
+
 				<h:outputText value="<td>" escape="false"/>
 					<h:selectOneMenu id="enrolmentFilter" value="#{evaluationManagementBackingBean.enrolmentTypeFilter}">
 						<f:selectItems value="#{evaluationManagementBackingBean.enrolmentTypeFilterOptions}"/>
 					</h:selectOneMenu>
+				<h:outputText value="</td></tr>" escape="false"/>
+
+				<c:if test="${evaluationManagementBackingBean.hasDegreeFilter()}">
+
+					<h:outputText value="<tr>" escape="false" />
+
+						<h:outputText value="<td>" escape="false"/>
+						<h:outputText value="#{bundle['label.teacher.marks.filter.degree']}" escape="false"/>
+						<h:outputText value="</td>" escape="false"/>
+
+						<h:outputText value="<td>" escape="false"/>
+						<h:selectOneMenu id="degreeFilter" value="#{evaluationManagementBackingBean.degreeFilter}">
+							<f:selectItems value="#{evaluationManagementBackingBean.degreeFilterOptions}"/>
+						</h:selectOneMenu>
+						<h:outputText value="</td>" escape="false"/>
+
+					<h:outputText value="</tr>" escape="false" />
+
+				</c:if>
+
+				<h:outputText value="<tr><td>" escape="false" />
+
 					<h:commandButton style="display:none; visibility: hidden;" action="#{evaluationManagementBackingBean.editMarks}" value=""/>
 					<h:commandButton styleClass="inputbutton" action="#{evaluationManagementBackingBean.filterByEnrolmentType}" value="#{bundle['button.show']}" />
-				<h:outputText value="</td>" escape="false"/>
-			<h:outputText value="</tr></table></div>" escape="false"/>
+
+				<h:outputText value="</td></tr>" escape="false" />
+
+			<h:outputText value="</table></div>" escape="false"/>
 	
 			<h:dataTable value="#{evaluationManagementBackingBean.executionCourseAttends}" var="attends" styleClass="tstyle4">
 				<h:column>
