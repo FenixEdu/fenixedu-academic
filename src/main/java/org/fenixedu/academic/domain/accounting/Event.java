@@ -1133,6 +1133,9 @@ public abstract class Event extends Event_Base {
             throw new DomainException("error.event.cannot.be.refunded");
         }
 
+        //force open state before exemption creation
+        super.setEventState(EventState.OPEN);
+        
         final DateTime now = new DateTime().minusSeconds(2);
         
         DebtInterestCalculator debtInterestCalculator = getDebtInterestCalculator(now);
