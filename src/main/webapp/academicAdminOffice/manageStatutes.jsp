@@ -46,8 +46,10 @@
 			</fr:view>
 		</td>
 		<td style="vertical-align: top; padding-left: 10px;">
-			<bean:define id="personID" name="student" property="person.username"/>
-			<html:img align="middle" src="<%= request.getContextPath() + "/user/photo/" + personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES"/>
+			<logic:notEmpty name="student" property="person.username">
+				<bean:define id="personID" name="student" property="person.username"/>
+				<html:img align="middle" src="<%= request.getContextPath() + "/user/photo/" + personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES"/>
+			</logic:notEmpty>
 		</td>
 	</tr>
 </table>
