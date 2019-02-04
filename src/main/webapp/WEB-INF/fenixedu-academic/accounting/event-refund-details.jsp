@@ -38,7 +38,7 @@
         <h1>
             <jsp:include page="heading-event.jsp"/>
             <c:if test="${event.currentEventState == 'CANCELLED'}">
-                <span class="text-danger"> (Cancelada)</span>
+                <span class="text-danger"> <spring:message code="accounting.event.details.currentEventState.cancelled" text="(Cancelled)"/></span>
             </c:if>
         </h1>
     </header>
@@ -55,7 +55,7 @@
         <div class="col-md-5">
             <section class="payment-metadata">
                 <dl>
-                    <dt>Data Criação:</dt>
+                    <dt><spring:message code="accounting.event.details.creation.date" text="Creation Date"/>:</dt>
                     <time datetime="${refund.whenOccured.toString('yyyy-MM-dd HH:mm:ss')}">${refund.whenOccured.toString('dd/MM/yyyy HH:mm:ss')}</time>
                 </dl>
                 <dl>
@@ -71,7 +71,7 @@
                     </dd>
                 </dl>
                 <dl>
-                    <dt>Valor:</dt>
+                    <dt><spring:message code="accounting.event.details.value" text="Value"/>:</dt>
                     <dd>
                         <c:out value="${refund.amount.toPlainString()}"/><span>€</span>
                     </dd>
@@ -97,7 +97,7 @@
     <div class="row">
         <div class="col-md-12">
             <header>
-                <h2>Dívidas</h2>
+                <h2><spring:message code="accounting.event.details.debts" text="Debts"/></h2>
             </header>
         </div>
     </div>
@@ -105,18 +105,18 @@
         <table class="table">
             <thead>
             <tr>
-                <th>Descrição</th>
-                <th>Data limite</th>
-                <th>Total Pago</th>
-                <th>Dívida</th>
-                <th>Juros/Multas</th>
-                <th><span class="sr-only">Acções</span></th>
+                <th><spring:message code="accounting.event.details.description" text="Description"/></th>
+                <th><spring:message code="accounting.event.details.date" text="Date"/></th>
+                <th><spring:message code="accounting.event.details.total" text="Total"/></th>
+                <th><spring:message code="accounting.event.details.transactions.debt" text="Debt"/></th>
+                <th><spring:message code="accounting.event.details.transactions.interestOrFine" text="Interest/Fine"/></th>
+                <th><span class="sr-only"><spring:message code="accounting.event.details.transactions.actions" text="Actions"/></span></th>
             </tr>
             </thead>
             <tbody>
             <c:if test="${empty payments}">
                 <tr>
-                    <td colspan="6">Não existem prestações associadas.</td>
+                    <td colspan="6"><spring:message code="accounting.event.details.noInstallments" text="There are no installments."/></td>
                 </tr>
                 </c:if>
             <c:if test="${not empty payments}">

@@ -55,7 +55,7 @@ ${portal.toolkit()}
     <jsp:include page="heading-person.jsp"/>
 
     <div class="row">
-        <h3>Cancelar Divida</h3>
+        <h3><spring:message code="accounting.event.cancel.title" text="Cancel Debt"/></h3>
         <form:form role="form" class="form-horizontal" action="${cancelUrl}" method="post">
             ${csrf.field()}
             <div class="form-group">

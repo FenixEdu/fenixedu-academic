@@ -51,7 +51,7 @@ ${portal.toolkit()}
     </header>
 
     <div class="row">
-        <h3>Pesquisa</h3>
+        <h3><spring:message code="label.search" text="Search"/></h3>
         <%--@elvariable id="searchBean" type="org.fenixedu.academic.dto.person.SimpleSearchPersonWithStudentBean"--%>
         <form:form modelAttribute="searchBean" role="form" class="form-horizontal" action="${searchUrl}" method="post">
             ${csrf.field()}
@@ -100,9 +100,9 @@ ${portal.toolkit()}
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>Tipo de Documento</th>
-                        <th>Número de Documento</th>
+                        <th><spring:message code="label.name" text="Name"/></th>
+                        <th><spring:message code="label.document.type" text="Document Type"/></th>
+                        <th><spring:message code="label.document.id" text="ID Document"/></th>
                     </tr>
                     </thead>
                     <tbody>

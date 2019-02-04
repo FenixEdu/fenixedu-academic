@@ -207,7 +207,7 @@
     <div class="row">
         <div class="col-md-12">
             <header>
-                <h2>Transacções (Pagamentos, Isenções e Reembolsos)</h2>
+                <h2><spring:message code="accounting.event.details.transactions" text="Transactions (Payments, Exemptions, Refunds)"/></h2>
             </header>
         </div>
     </div>
@@ -216,20 +216,20 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Data de processamento</th>
-                    <th>Data efectiva</th>
-                    <th>Tipo</th>
-                    <th>Total</th>
-                    <th>Divida</th>
-                    <th>Juro/Multa</th>
-                    <th>Adiantamento</th>
-                    <th><span class="sr-only">Acções</span></th>
+                    <th><spring:message code="accounting.event.details.transactions.processingDate" text="Processing Date"/></th>
+                    <th><spring:message code="accounting.event.details.transactions.effectiveDate" text="Effective Date"/></th>
+                    <th><spring:message code="accounting.event.details.transactions.type" text="Type"/></th>
+                    <th><spring:message code="accounting.event.details.transactions.total" text="Total"/></th>
+                    <th><spring:message code="accounting.event.details.transactions.debt" text="Debt"/></th>
+                    <th><spring:message code="accounting.event.details.transactions.interestOrFine" text="Interest/Fine"/></th>
+                    <th><spring:message code="accounting.event.details.transactions.advance" text="Advance"/></th>
+                    <th><span class="sr-only"><spring:message code="accounting.event.details.transactions.actions" text="Actions"/></span></th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:if test="${empty transactions}">
                     <tr>
-                        <td colspan="6">Não existem transacções</td>
+                        <td colspan="6"><spring:message code="accounting.event.details.noTransactions" text="There are no transactions"/></td>
                     </tr>
                 </c:if>
                 <c:if test="${not empty transactions}">
@@ -268,7 +268,7 @@
         <div class="row">
             <div class="col-md-12">
                 <header>
-                    <h2>Adiantamentos</h2>
+                    <h2><spring:message code="accounting.event.details.advances" text="Advances"/></h2>
                 </header>
             </div>
         </div>
@@ -277,11 +277,11 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Data de criação</th>
-                        <th>Data Efectiva</th>
-                        <th>Tipo</th>
-                        <th>Valor</th>
-                        <th><span class="sr-only">Acções</span></th>
+                        <th><spring:message code="accounting.event.details.creation.date" text="Creation Date"/></th>
+                        <th><spring:message code="accounting.event.details.transactions.effectiveDate" text="Effective Date"/></th>
+                        <th><spring:message code="accounting.event.details.transactions.type" text="Type"/></th>
+                        <th><spring:message code="accounting.event.details.value" text="Value"/></th>
+                        <th><span class="sr-only"><spring:message code="accounting.event.details.transactions.actions" text="Actions"/></span></th>
                     </tr>
                     </thead>
                     <tbody>
