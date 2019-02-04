@@ -1937,28 +1937,6 @@ class QueueJobWithFile extends QueueJob {
 
 class QueueJobResultFile extends .org.fenixedu.bennu.io.domain.GenericFile {}
 
-class reports.GepReportFile extends QueueJobWithFile {
-    String type;
-}
-
-
-class reports.EurAceReportFile extends reports.GepReportFile {}
-class reports.EctsLabelDegreeReportFile extends reports.GepReportFile {}
-class reports.EctsLabelCurricularCourseReportFile extends reports.GepReportFile {}
-class reports.StatusAndApprovalReportFile extends reports.GepReportFile {}
-class reports.EtiReportFile extends reports.GepReportFile {}
-class reports.CourseLoadAndResponsiblesReportFile extends reports.GepReportFile {}
-class reports.RegistrationReportFile extends reports.GepReportFile {}
-class reports.FlunkedReportFile extends reports.GepReportFile {}
-class reports.CourseLoadReportFile extends reports.GepReportFile {}
-class reports.DissertationsProposalsReportFile extends reports.GepReportFile {}
-class reports.GraduationReportFile extends reports.GepReportFile {}
-class reports.RaidesGraduationReportFile extends reports.GepReportFile {}
-class reports.RaidesDfaReportFile extends reports.GepReportFile {}
-class reports.RaidesSpecializationReportFile extends reports.GepReportFile {}
-class reports.SummaryOccupancyReportFile extends reports.GepReportFile {}
-class reports.WrittenEvaluationReportFile extends reports.GepReportFile {}
-
 public class accessControl.rules.AccessRuleSystem;
 
 public class accessControl.rules.AccessRule {
@@ -5225,21 +5203,6 @@ relation QueueJobRootDomainObject {
                multiplicity *;
        }
        .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-}
-
-
-relation ExecutionYearGepReportFile {
-    ExecutionYear playsRole executionYear;
-    reports.GepReportFile playsRole gepReportFile{
-            multiplicity *;
-    }
-}
-
-relation GepReportFileDegreeType {
-    degree.DegreeType playsRole degreeType;
-    reports.GepReportFile playsRole gepReportFile{
-            multiplicity *;
-    }
 }
 
 relation QueueJobWithFileResult{
