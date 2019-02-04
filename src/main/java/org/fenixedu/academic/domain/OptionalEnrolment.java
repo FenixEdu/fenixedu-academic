@@ -180,11 +180,7 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
         optionalEnrolment.setOptionalCurricularCourse(optionalCurricularCourse);
 
         optionalEnrolment.getEvaluationsSet().addAll(enrolment.getEvaluationsSet());
-        optionalEnrolment.getProgramCertificateRequestsSet().addAll(enrolment.getProgramCertificateRequestsSet());
-        optionalEnrolment.getCourseLoadRequestsSet().addAll(enrolment.getCourseLoadRequestsSet());
-        optionalEnrolment.getExtraExamRequestsSet().addAll(enrolment.getExtraExamRequestsSet());
         optionalEnrolment.getEnrolmentWrappersSet().addAll(enrolment.getEnrolmentWrappersSet());
-        optionalEnrolment.getExamDateCertificateRequestsSet().addAll(enrolment.getExamDateCertificateRequestsSet());
         changeAttends(enrolment, optionalEnrolment);
         optionalEnrolment.createCurriculumLineLog(EnrolmentAction.ENROL);
 

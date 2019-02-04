@@ -2147,9 +2147,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         }
 
         final OptionalEnrolment result = OptionalEnrolment.createBasedOn(enrolment, curriculumGroup, curricularCourse);
-        enrolment.getProgramCertificateRequestsSet().clear();
-        enrolment.getCourseLoadRequestsSet().clear();
-        enrolment.getExamDateCertificateRequestsSet().clear();
         enrolment.delete();
 
         if (result.getStudentCurricularPlan() != this) {
@@ -2186,9 +2183,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         }
 
         final Enrolment result = Enrolment.createBasedOn(enrolment, curriculumGroup);
-        enrolment.getProgramCertificateRequestsSet().clear();
-        enrolment.getCourseLoadRequestsSet().clear();
-        enrolment.getExamDateCertificateRequestsSet().clear();
         enrolment.delete();
 
         if (result.getStudentCurricularPlan() != this) {

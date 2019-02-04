@@ -21,7 +21,6 @@ package org.fenixedu.academic.domain.serviceRequests;
 import java.util.Comparator;
 
 import org.fenixedu.academic.domain.DomainObjectUtil;
-import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -171,18 +170,8 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
     public static AcademicServiceRequestSituation create(final AcademicServiceRequest academicServiceRequest,
             final AcademicServiceRequestBean academicServiceRequestBean) {
 
-        AcademicServiceRequestSituation situation = null;
-
-        switch (academicServiceRequestBean.getAcademicServiceRequestSituationType()) {
-        case SENT_TO_EXTERNAL_ENTITY:
-            situation =
-                    new SentToExternalEntityAcademicServiceRequestSituation(academicServiceRequest, academicServiceRequestBean);
-        case RECEIVED_FROM_EXTERNAL_ENTITY:
-            situation = new ReceivedFromExternalEntityAcademicServiceRequestSituation(academicServiceRequest,
-                    academicServiceRequestBean);
-        default:
-            situation = new AcademicServiceRequestSituation(academicServiceRequest, academicServiceRequestBean);
-        }
+        AcademicServiceRequestSituation situation =
+                new AcademicServiceRequestSituation(academicServiceRequest, academicServiceRequestBean);
 
         return situation;
     }

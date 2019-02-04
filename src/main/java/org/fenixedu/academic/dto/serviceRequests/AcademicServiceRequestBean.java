@@ -25,10 +25,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequestSituationType;
-import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequest;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -139,19 +136,6 @@ public class AcademicServiceRequestBean implements Serializable {
     }
 
     public String getJustification() {
-        if (StringUtils.isEmpty(justification) && getAcademicServiceRequest().isDocumentRequest()
-                && ((DocumentRequest) getAcademicServiceRequest()).isDiploma()) {
-            if (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.CONCLUDED) {
-                return BundleUtil.getString(Bundle.ACADEMIC, "DiplomaRequest.diploma.concluded");
-            }
-            if (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY) {
-                return BundleUtil.getString(Bundle.ACADEMIC, "DiplomaRequest.diploma.sent");
-            }
-            if (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY) {
-                return BundleUtil.getString(Bundle.ACADEMIC, "DiplomaRequest.diploma.received");
-            }
-        }
-
         return justification;
     }
 

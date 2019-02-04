@@ -35,10 +35,8 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
-import org.fenixedu.academic.domain.documents.GeneratedDocument;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
-import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequest;
 import org.fenixedu.academic.domain.treasury.IAcademicServiceRequestAndAcademicTaxTreasuryEvent;
 import org.fenixedu.academic.domain.treasury.IAcademicTreasuryEvent;
 import org.fenixedu.academic.domain.treasury.ITreasuryBridgeAPI;
@@ -400,14 +398,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
         body += "' " + BundleUtil.getString(Bundle.APPLICATION, "mail.academicServiceRequest.concluded.message3");
 
         if (getAcademicServiceRequestType() == AcademicServiceRequestType.SPECIAL_SEASON_REQUEST) {
-            if (((SpecialSeasonRequest) this).getDeferred() == null) {
-                throw new DomainException("special.season.request.deferment.cant.be.null");
-            }
-            if (((SpecialSeasonRequest) this).getDeferred() == true) {
-                body += "\n" + BundleUtil.getString(Bundle.APPLICATION, "mail.academicServiceRequest.concluded.messageSSR4A");
-            } else {
-                body += "\n" + BundleUtil.getString(Bundle.APPLICATION, "mail.academicServiceRequest.concluded.messageSSR4B");
-            }
+            body += "\n" + BundleUtil.getString(Bundle.APPLICATION, "mail.academicServiceRequest.concluded.messageSSR4B");
             body += "\n\n" + BundleUtil.getString(Bundle.APPLICATION, "mail.academicServiceRequest.concluded.messageSSR5");
         } else {
 
@@ -741,7 +732,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     final public boolean isDocumentRequest() {
-        return this instanceof DocumentRequest;
+        return false;
     }
 
     /**
@@ -874,20 +865,8 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
         return false;
     }
 
-    public GeneratedDocument getLastGeneratedDocument() {
-        DateTime last = null;
-        GeneratedDocument lastDoc = null;
-        for (GeneratedDocument document : getDocumentSet()) {
-            if (last == null || document.getCreationDate().isAfter(last)) {
-                last = document.getCreationDate();
-                lastDoc = document;
-            }
-        }
-        return lastDoc;
-    }
-
     public boolean isBatchSet() {
-        return getRectorateSubmissionBatch() != null;
+        return false; //getRectorateSubmissionBatch() != null;
     }
 
     @Override
@@ -895,11 +874,6 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     public boolean hasExecutionYear() {
         return getExecutionYear() != null;
-    }
-
-    @Override
-    public boolean hasRegistryCode() {
-        return getRegistryCode() != null;
     }
 
     @Override

@@ -67,7 +67,7 @@ public class ExtraCurricularActivity extends ExtraCurricularActivity_Base {
     }
 
     public boolean getIsDeletable() {
-        return getFeaturedDiploma() == null;
+        return true;
     }
 
     @Override

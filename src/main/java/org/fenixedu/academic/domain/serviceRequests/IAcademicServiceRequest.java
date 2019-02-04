@@ -30,36 +30,33 @@ import org.joda.time.DateTime;
  *
  */
 public interface IAcademicServiceRequest {
-    
+
     public Person getPerson();
 
     public AcademicProgram getAcademicProgram();
-    
+
     public CycleType getRequestedCycle();
-    
+
     /* request variations */
-    
+
     public boolean isRequestedWithCycle();
-    
+
     public boolean isDetailed();
-    
+
     public boolean isUrgentRequest();
-    
+
     public Locale getLanguage();
-    
+
     public DateTime getRequestDate();
-    
+
     public Integer getNumberOfUnits();
-    
+
     public Integer getNumberOfPages();
-    
+
     public String getDescription();
 
     public boolean isRequestForRegistration();
 
     public boolean isRequestForPhd();
 
-    public RegistryCode getRegistryCode();
-
-    public boolean hasRegistryCode();
 }

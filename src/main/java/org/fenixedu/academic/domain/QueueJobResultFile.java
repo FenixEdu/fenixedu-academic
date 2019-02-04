@@ -18,7 +18,7 @@
  */
 package org.fenixedu.academic.domain;
 
-import org.fenixedu.academic.domain.documents.GeneratedDocumentType;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -27,7 +27,7 @@ public class QueueJobResultFile extends QueueJobResultFile_Base {
     protected QueueJobResultFile(QueueJobWithFile job, Person operator, String filename, byte[] content) {
         super();
         setJob(job);
-        init(GeneratedDocumentType.QUEUE_JOB, operator, operator, filename, content);
+        init(filename, filename, content);
     }
 
     @Override
@@ -39,6 +39,11 @@ public class QueueJobResultFile extends QueueJobResultFile_Base {
     @Atomic
     public static void store(QueueJobWithFile job, Person person, String filename, byte[] content) {
         new QueueJobResultFile(job, person, filename, content);
+    }
+
+    @Override
+    public boolean isAccessible(User arg0) {
+        return false;
     }
 
 }
