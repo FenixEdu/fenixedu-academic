@@ -205,4 +205,9 @@ public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluat
     protected StudentCurricularPlan getStudentCurricularPlan() {
         return getCurriculumGroup().getStudentCurricularPlan();
     }
+
+    @Override
+    public String getFullPath() {
+        return getDegreeModule().getOneFullName();
+    }
 }
