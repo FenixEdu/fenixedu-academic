@@ -29,7 +29,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.Holiday;
-import org.fenixedu.academic.domain.Locality;
 import org.fenixedu.academic.service.services.commons.FactoryExecutor;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.manager.DeleteHoliday;
@@ -56,7 +55,6 @@ public class ManageHolidaysDA extends FenixDispatchAction {
         private Integer year;
         private Integer monthOfYear;
         private Integer dayOfMonth;
-        private Locality localityReference;
 
         public Integer getDayOfMonth() {
             return dayOfMonth;
@@ -82,16 +80,6 @@ public class ManageHolidaysDA extends FenixDispatchAction {
             this.year = year;
         }
 
-        public Locality getLocality() {
-            return localityReference;
-        }
-
-        public void setLocality(Locality locality) {
-            if (locality != null) {
-                this.localityReference = locality;
-            }
-        }
-
         @Override
         public Holiday execute() {
             Partial date = new Partial();
@@ -104,12 +92,13 @@ public class ManageHolidaysDA extends FenixDispatchAction {
             if (getDayOfMonth() != null) {
                 date = date.with(DateTimeFieldType.dayOfMonth(), getDayOfMonth());
             }
-            return new Holiday(date, getLocality());
+            return new Holiday(date);
         }
     }
 
     @EntryPoint
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
         final Set<Holiday> holidays = rootDomainObject.getHolidaysSet();
         request.setAttribute("holidays", holidays);
         return mapping.findForward("showHolidays");

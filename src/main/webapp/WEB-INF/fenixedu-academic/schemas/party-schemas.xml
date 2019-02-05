@@ -23,25 +23,13 @@
 	<slot name="name"/>
 	<slot name="email"/>
 </schema>
-<schema name="locality.name" type="org.fenixedu.academic.domain.Locality">
-	<slot name="name"/>
-</schema>
 <schema name="Holiday" type="org.fenixedu.academic.domain.Holiday">
 	<slot name="date"/>
-	<slot name="locality" layout="null-as-label">
-		<property name="label" value=""/>
-		<property name="subLayout" value="values"/>
-		<property name="subSchema" value="locality.name"/>
-	</slot>
 </schema>
 <schema name="HolidayFactoryCreatory" type="org.fenixedu.academic.ui.struts.action.manager.ManageHolidaysDA$HolidayFactoryCreator">
 	<slot name="year" bundle="MANAGER_RESOURCES" key="label.year"/>
 	<slot name="monthOfYear" bundle="MANAGER_RESOURCES" key="label.month"/>
 	<slot name="dayOfMonth" bundle="MANAGER_RESOURCES" key="label.day"/>
-	<slot name="locality" bundle="MANAGER_RESOURCES" key="label.locality" layout="menu-select">
-		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.LocalityProvider"/>
-		<property name="format" value="${name}"/>
-	</slot>
 </schema>
 
 <schema name="org.fenixedu.academic.domain.Person" type="org.fenixedu.academic.domain.Person" bundle="MANAGER_RESOURCES" > 

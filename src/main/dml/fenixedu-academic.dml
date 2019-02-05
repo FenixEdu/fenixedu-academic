@@ -689,10 +689,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         LocalizedString title;
     }
 
-    class Locality  {
-        String name;
-    }
-
     class Mark  {
         String mark;
         String publishedMark;
@@ -2462,13 +2458,6 @@ relation BelongsTo {
     Grouping playsRole grouping;
 }
 
-relation CampusInformationLocality {
-    .org.fenixedu.spaces.domain.Space playsRole campusInformation {
-        multiplicity *;
-    }
-    Locality playsRole locality;
-}
-
 relation CandidacyCandidacyDocument {
     candidacy.Candidacy playsRole candidacy;
     candidacy.CandidacyDocument playsRole candidacyDocuments {
@@ -3231,13 +3220,6 @@ relation GroupingAttends {
     Grouping playsRole groupings {
         multiplicity *;
     }
-}
-
-relation HolidayLocality {
-    Holiday playsRole holidays {
-        multiplicity *;
-    }
-    Locality playsRole locality;
 }
 
 relation IdDocumentPerson {
@@ -4190,13 +4172,6 @@ relation RootDomainObjectLesson {
 relation RootDomainObjectLessonPlanning {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     LessonPlanning playsRole lessonPlannings {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectLocality {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    Locality playsRole localities {
         multiplicity *;
     }
 }

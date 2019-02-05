@@ -19,10 +19,8 @@
 package org.fenixedu.academic.domain;
 
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.spaces.domain.Space;
 import org.joda.time.LocalDate;
 import org.joda.time.Partial;
-import org.joda.time.ReadablePartial;
 
 public class Holiday extends Holiday_Base {
     public Holiday() {
@@ -30,29 +28,19 @@ public class Holiday extends Holiday_Base {
         setRootDomainObject(Bennu.getInstance());
     }
 
-    public Holiday(final Partial date, final Locality locality) {
+    public Holiday(final Partial date) {
         this();
-
         setDate(date);
-        setLocality(locality);
     }
 
     public void delete() {
-        setLocality(null);
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
     public static boolean isHoliday(final LocalDate date) {
-        return isHoliday(date, null);
-    }
-
-    public static boolean isHoliday(final ReadablePartial date, final Space campus) {
-        final Locality campusLocality = campus == null ? null : campus.getLocality();
         for (final Holiday holiday : Bennu.getInstance().getHolidaysSet()) {
-            final Locality locality = holiday.getLocality();
-            if ((locality == null || (campus != null && locality == campusLocality))
-                    && holiday.getDate().isMatch(date)) {
+            if (holiday.getDate().isMatch(date)) {
                 return true;
             }
         }
