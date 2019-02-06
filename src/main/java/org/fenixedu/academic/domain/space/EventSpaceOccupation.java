@@ -121,8 +121,7 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
             return true;
         }
 
-        if (occupation.isLessonInstanceSpaceOccupation() || occupation.isWrittenEvaluationSpaceOccupation()
-                || intersects(occupation.getBeginDate(), occupation.getEndDate())) {
+        if (occupation.isLessonInstanceSpaceOccupation() || intersects(occupation.getBeginDate(), occupation.getEndDate())) {
 
             List<Interval> thisOccupationIntervals =
                     getEventSpaceOccupationIntervals(occupation.getBeginDate(), occupation.getEndDate());
@@ -141,10 +140,6 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
         return false;
     }
 
-    private boolean isWrittenEvaluationSpaceOccupation() {
-        return this instanceof WrittenEvaluationSpaceOccupation;
-    }
-
     private boolean isLessonInstanceSpaceOccupation() {
         return this instanceof LessonInstanceSpaceOccupation;
     }
@@ -159,9 +154,8 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
         if (intersects(startDate, endDate)) {
 
             List<Interval> thisOccupationIntervals = getEventSpaceOccupationIntervals(startDate, endDate);
-            List<Interval> passedOccupationIntervals =
-                    generateEventSpaceOccupationIntervals(startDate, endDate, startTime, endTime, frequency, dayOfWeek,
-                            dailyFrequencyMarkSaturday, dailyFrequencyMarkSunday, null, null);
+            List<Interval> passedOccupationIntervals = generateEventSpaceOccupationIntervals(startDate, endDate, startTime,
+                    endTime, frequency, dayOfWeek, dailyFrequencyMarkSaturday, dailyFrequencyMarkSunday, null, null);
 
             for (Interval interval : thisOccupationIntervals) {
                 for (Interval passedInterval : passedOccupationIntervals) {
@@ -246,8 +240,8 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
                     Interval interval = createNewInterval(begin, begin, beginTime, endTime);
 
                     if (!frequency.equals(FrequencyType.DAILY)
-                            || ((dailyFrequencyMarkSaturday || interval.getStart().getDayOfWeek() != SATURDAY_IN_JODA_TIME) && (dailyFrequencyMarkSunday || interval
-                                    .getStart().getDayOfWeek() != SUNDAY_IN_JODA_TIME))) {
+                            || ((dailyFrequencyMarkSaturday || interval.getStart().getDayOfWeek() != SATURDAY_IN_JODA_TIME)
+                                    && (dailyFrequencyMarkSunday || interval.getStart().getDayOfWeek() != SUNDAY_IN_JODA_TIME))) {
 
                         result.add(interval);
                     }
@@ -282,8 +276,8 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
 
                 DateTime intervalEnd = begin.toDateTime(new TimeOfDay(endTime.getHour(), endTime.getMinuteOfHour(), 0, 0));
                 if (!frequency.equals(FrequencyType.DAILY)
-                        || ((dailyFrequencyMarkSaturday || intervalEnd.getDayOfWeek() != SATURDAY_IN_JODA_TIME) && (dailyFrequencyMarkSunday || intervalEnd
-                                .getDayOfWeek() != SUNDAY_IN_JODA_TIME))) {
+                        || ((dailyFrequencyMarkSaturday || intervalEnd.getDayOfWeek() != SATURDAY_IN_JODA_TIME)
+                                && (dailyFrequencyMarkSunday || intervalEnd.getDayOfWeek() != SUNDAY_IN_JODA_TIME))) {
 
                     if (firstInstant) {
                         return begin.toDateTime(new TimeOfDay(beginTime.getHour(), beginTime.getMinuteOfHour(), 0, 0));

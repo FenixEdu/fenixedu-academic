@@ -22,7 +22,6 @@ import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.FrequencyType;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.dto.InfoCurricularYear;
-import org.fenixedu.academic.dto.InfoExam;
 import org.fenixedu.academic.dto.InfoExecutionCourse;
 import org.fenixedu.academic.dto.InfoExecutionDegree;
 import org.fenixedu.academic.dto.InfoLesson;
@@ -30,7 +29,6 @@ import org.fenixedu.academic.dto.InfoLessonInstance;
 import org.fenixedu.academic.dto.InfoLessonInstanceAggregation;
 import org.fenixedu.academic.dto.InfoShift;
 import org.fenixedu.academic.dto.InfoShowOccupation;
-import org.fenixedu.academic.dto.InfoWrittenTest;
 import org.fenixedu.academic.servlet.taglib.sop.v3.LessonSlot;
 import org.fenixedu.academic.servlet.taglib.sop.v3.LessonSlotContentRenderer;
 import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
@@ -48,7 +46,8 @@ public class SopClassTimeTableLessonContentRenderer extends LessonSlotContentRen
 
     private InfoExecutionDegree infoExecutionDegree = null;
 
-    public SopClassTimeTableLessonContentRenderer(InfoExecutionDegree infoExecutionDegree, InfoCurricularYear infoCurricularYear) {
+    public SopClassTimeTableLessonContentRenderer(InfoExecutionDegree infoExecutionDegree,
+            InfoCurricularYear infoCurricularYear) {
         super();
         this.infoCurricularYear = infoCurricularYear;
         this.infoExecutionDegree = infoExecutionDegree;
@@ -147,31 +146,6 @@ public class SopClassTimeTableLessonContentRenderer extends LessonSlotContentRen
                 strBuffer.append(allocatableSpace.getName());
             }
 
-        } else if (showOccupation instanceof InfoExam) {
-            InfoExam infoExam = (InfoExam) showOccupation;
-            for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) {
-                InfoExecutionCourse infoEC = infoExam.getAssociatedExecutionCourse().get(iterEC);
-                if (iterEC != 0) {
-                    strBuffer.append(", ");
-                }
-                strBuffer.append(infoEC.getSigla());
-
-            }
-            strBuffer.append(" - ");
-            strBuffer.append(infoExam.getSeason().getSeason());
-            strBuffer.append("� �poca");
-
-        } else if (showOccupation instanceof InfoWrittenTest) {
-            InfoWrittenTest infoWrittenTest = (InfoWrittenTest) showOccupation;
-            for (int iterEC = 0; iterEC < infoWrittenTest.getAssociatedExecutionCourse().size(); iterEC++) {
-                InfoExecutionCourse infoEC = infoWrittenTest.getAssociatedExecutionCourse().get(iterEC);
-                if (iterEC != 0) {
-                    strBuffer.append(", ");
-                }
-                strBuffer.append(infoEC.getSigla());
-            }
-            strBuffer.append(" - ");
-            strBuffer.append(infoWrittenTest.getDescription());
         }
 
         return strBuffer;

@@ -24,7 +24,6 @@ import org.fenixedu.academic.dto.InfoLessonInstance;
 import org.fenixedu.academic.dto.InfoLessonInstanceAggregation;
 import org.fenixedu.academic.dto.InfoOccupation;
 import org.fenixedu.academic.dto.InfoShowOccupation;
-import org.fenixedu.academic.dto.InfoWrittenEvaluation;
 import org.fenixedu.academic.servlet.taglib.sop.v3.ColorPicker;
 
 public class ExecutionCourseTimeTableColorPicker extends ColorPicker {
@@ -39,9 +38,6 @@ public class ExecutionCourseTimeTableColorPicker extends ColorPicker {
         }
         if (infoShowOccupation instanceof InfoLessonInstanceAggregation) {
             return key((InfoLessonInstanceAggregation) infoShowOccupation);
-        }
-        if (infoShowOccupation instanceof InfoWrittenEvaluation) {
-            return key((InfoWrittenEvaluation) infoShowOccupation);
         }
         if (infoShowOccupation instanceof InfoOccupation) {
             return "GenericEvent";
@@ -63,10 +59,6 @@ public class ExecutionCourseTimeTableColorPicker extends ColorPicker {
 
     private String key(final InfoLessonInstance infoLessonInstance) {
         return key(infoLessonInstance.getLessonInstance().getLesson());
-    }
-
-    private String key(final InfoWrittenEvaluation infoWrittenEvaluation) {
-        return infoWrittenEvaluation.getWrittenEvaluation().getExternalId();
     }
 
 }

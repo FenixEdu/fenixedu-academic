@@ -26,24 +26,12 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.Evaluation;
-import org.fenixedu.academic.domain.Exam;
 import org.fenixedu.academic.domain.ExecutionCourse;
-import org.fenixedu.academic.domain.Grouping;
-import org.fenixedu.academic.domain.StudentGroup;
-import org.fenixedu.academic.domain.WrittenEvaluation;
-import org.fenixedu.academic.domain.WrittenEvaluationEnrolment;
-import org.fenixedu.academic.domain.WrittenTest;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.EvaluationType;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-import org.joda.time.DateTime;
-import org.joda.time.Interval;
-import org.joda.time.YearMonthDay;
 
 public class StudentPortalBean implements Serializable {
 
@@ -63,58 +51,6 @@ public class StudentPortalBean implements Serializable {
 
             private boolean registered;
             private boolean groupEnrolment;
-
-            public EvaluationAnnouncement(WrittenTest writtenTest) {
-                setEvaluationType(writtenTest.getEvaluationType().toString());
-                setIdentification(writtenTest.getDescription());
-                setRegister(isStudentEnrolled(writtenTest));
-                setRealization(writtenTest);
-                setEnrolment(writtenTest);
-                setRoom(writtenTest);
-                setGroupEnrolment(false);
-            }
-
-            public EvaluationAnnouncement(Exam exam) {
-                setEvaluationType(exam.getEvaluationType().toString());
-                setIdentification(exam.getName());
-                setRegister(isStudentEnrolled(exam));
-                setRealization(exam);
-                setEnrolment(exam);
-                setRoom(exam);
-                setGroupEnrolment(false);
-            }
-
-            public EvaluationAnnouncement(Grouping grouping) {
-                setEvaluationType(BundleUtil.getString(Bundle.APPLICATION, "label.grouping"));
-                setIdentification(grouping.getName());
-                setRegister(isStudentEnrolled(grouping));
-                setRealization(grouping);
-                setEnrolment(grouping);
-                setRoom("-");
-                setGroupEnrolment(true);
-            }
-
-            private boolean isStudentEnrolled(WrittenEvaluation writtenEvaluation) {
-                for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : writtenEvaluation
-                        .getWrittenEvaluationEnrolmentsSet()) {
-                    if (writtenEvaluationEnrolment.getStudent() != null
-                            && writtenEvaluationEnrolment.getStudent().getStudent() == getStudent()) {
-                        return true;
-                    }
-                }
-                return false;
-            }
-
-            private boolean isStudentEnrolled(Grouping grouping) {
-                for (final StudentGroup studentGroup : grouping.getStudentGroupsSet()) {
-                    for (Attends attends : studentGroup.getAttendsSet()) {
-                        if (attends.getAluno().getStudent() == getStudent()) {
-                            return true;
-                        }
-                    }
-                }
-                return false;
-            }
 
             public String getEvaluationType() {
                 return evaluationType;
@@ -223,77 +159,6 @@ public class StudentPortalBean implements Serializable {
                 this.identification = identification;
             }
 
-            public void setRealization(WrittenEvaluation writtenEvaluation) {
-                this.realizationPast = writtenEvaluation.getBeginningDateTime().isBeforeNow();
-
-                this.realization =
-                        YearMonthDay.fromDateFields(writtenEvaluation.getBeginningDateTime().toDate()).toString()
-                                + " "
-                                + writtenEvaluation.getBeginningDateTime().getHourOfDay()
-                                + ":"
-                                + (writtenEvaluation.getBeginningDateTime().getMinuteOfHour() == 0 ? "00" : writtenEvaluation
-                                        .getBeginningDateTime().getMinuteOfHour());
-            }
-
-            public void setRealization(Grouping grouping) {
-                this.realization = "-";
-            }
-
-            public void setEnrolment(WrittenEvaluation writtenEvaluation) {
-
-                DateTime beginDateTime = writtenEvaluation.getEnrolmentPeriodStart();
-                DateTime endDateTime = writtenEvaluation.getEnrolmentPeriodEnd();
-
-                this.enrolmentPast = endDateTime == null ? false : endDateTime.isBeforeNow();
-
-                this.enrolmentElapsing = false;
-
-                if (writtenEvaluation.getEnrollmentBeginDayDateYearMonthDay() != null
-                        && writtenEvaluation.getEnrollmentEndDayDateYearMonthDay() != null) {
-                    this.enrolmentElapsing = new Interval(beginDateTime, endDateTime).containsNow();
-
-                    this.enrolment =
-                            writtenEvaluation.getEnrollmentBeginDayDateYearMonthDay().toString() + " "
-                                    + BundleUtil.getString(Bundle.STUDENT, "message.out.until") + " "
-                                    + writtenEvaluation.getEnrollmentEndDayDateYearMonthDay().toString();
-                } else {
-                    this.enrolment = "-";
-                    this.register = "-";
-                }
-            }
-
-            public void setEnrolment(Grouping grouping) {
-                this.enrolmentPast = new DateTime(grouping.getEnrolmentEndDay()).isBeforeNow();
-                this.enrolmentElapsing =
-                        new DateTime(grouping.getEnrolmentBeginDay()).isBeforeNow()
-                                && new DateTime(grouping.getEnrolmentEndDay()).isAfterNow();
-
-                this.enrolment =
-                        YearMonthDay.fromDateFields(grouping.getEnrolmentBeginDayDate()).toString() + " "
-                                + BundleUtil.getString(Bundle.STUDENT, "message.out.until") + " "
-                                + YearMonthDay.fromDateFields(grouping.getEnrolmentEndDayDate()).toString();
-            }
-
-            public void setRoom(WrittenEvaluation writtenEvaluation) {
-                for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : writtenEvaluation
-                        .getWrittenEvaluationEnrolmentsSet()) {
-                    if (writtenEvaluationEnrolment.getStudent() != null
-                            && writtenEvaluationEnrolment.getStudent().getStudent() == getStudent()) {
-                        if (writtenEvaluationEnrolment.getRoom() != null) {
-                            this.room = writtenEvaluationEnrolment.getRoom().getName();
-                            return;
-                        } else {
-                            break;
-                        }
-                    }
-                }
-                if (writtenEvaluation.getAssociatedRooms().isEmpty() == false) {
-                    this.room = writtenEvaluation.getAssociatedRoomsAsString();
-                } else {
-                    this.room = "-";
-                }
-            }
-
             public void setRoom(String room) {
                 this.room = room;
             }
@@ -323,19 +188,6 @@ public class StudentPortalBean implements Serializable {
         public ExecutionCoursesAnnouncements(ExecutionCourse executionCourse) {
             setExecutionCourse(executionCourse);
             setEvaluationAnnouncements(new ArrayList<EvaluationAnnouncement>());
-            for (Evaluation evaluation : executionCourse.getOrderedAssociatedEvaluations()) {
-                if (evaluation.getEvaluationType() == EvaluationType.TEST_TYPE) {
-                    addEvaluationAnnouncement(new EvaluationAnnouncement((WrittenTest) evaluation));
-                } else if (evaluation.getEvaluationType() == EvaluationType.EXAM_TYPE) {
-                    Exam exam = (Exam) evaluation;
-                    if (exam.isExamsMapPublished()) {
-                        addEvaluationAnnouncement(new EvaluationAnnouncement(exam));
-                    }
-                }
-            }
-            for (Grouping grouping : executionCourse.getGroupings()) {
-                addEvaluationAnnouncement(new EvaluationAnnouncement(grouping));
-            }
         }
 
         public ExecutionCourse getExecutionCourse() {

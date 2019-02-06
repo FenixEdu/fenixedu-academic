@@ -118,10 +118,6 @@ public abstract class DegreeModuleScope {
 
     public abstract boolean isActiveForAcademicInterval(AcademicInterval academicInterval);
 
-    public static List<DegreeModuleScope> getDegreeModuleScopes(WrittenEvaluation writtenEvaluation) {
-        return getDegreeModuleScopes(writtenEvaluation.getAssociatedContextsSet());
-    }
-
     public static List<DegreeModuleScope> getDegreeModuleScopes(CurricularCourse curricularCourse) {
         return getDegreeModuleScopes(curricularCourse.getParentContextsSet());
     }

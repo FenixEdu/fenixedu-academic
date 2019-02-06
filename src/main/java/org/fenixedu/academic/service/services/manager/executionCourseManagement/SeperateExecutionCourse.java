@@ -31,15 +31,10 @@ import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.CourseLoad;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
-import org.fenixedu.academic.domain.Evaluation;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.Grouping;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Shift;
-import org.fenixedu.academic.domain.StudentGroup;
-import org.fenixedu.academic.domain.WrittenEvaluation;
-import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.service.services.manager.CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod;
@@ -76,12 +71,8 @@ public class SeperateExecutionCourse {
 
         transferShifts(originExecutionCourse, destinationExecutionCourse, shiftsToTransfer);
 
-        handleEvaluations(originExecutionCourse, destinationExecutionCourse, curricularCourseToTransfer);
-
         fixStudentShiftEnrolements(originExecutionCourse);
         fixStudentShiftEnrolements(destinationExecutionCourse);
-
-        associateGroupings(originExecutionCourse, destinationExecutionCourse);
 
         return destinationExecutionCourse;
     }
@@ -107,29 +98,6 @@ public class SeperateExecutionCourse {
             final Enrolment enrolment = attends.getEnrolment();
             if (enrolment != null && curricularCourses.contains(enrolment.getCurricularCourse())) {
                 attends.setDisciplinaExecucao(destinationExecutionCourse);
-            }
-        }
-    }
-
-    private static void handleEvaluations(ExecutionCourse originExecutionCourse, ExecutionCourse destinationExecutionCourse,
-            List<CurricularCourse> curricularCourseToTransfer) {
-        if (!originExecutionCourse.getAssociatedEvaluationsSet().isEmpty()) {
-            for (Evaluation evaluation : originExecutionCourse.getAssociatedEvaluationsSet()) {
-                if (evaluation instanceof WrittenEvaluation) {
-                    WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
-                    boolean isToRemove = true;
-                    for (Context context : writtenEvaluation.getAssociatedContextsSet()) {
-                        if (curricularCourseToTransfer.contains(context.getChildDegreeModule())) {
-                            destinationExecutionCourse.getAssociatedEvaluationsSet().add(evaluation);
-                        }
-                        if (originExecutionCourse.getAssociatedCurricularCoursesSet().contains(context.getChildDegreeModule())) {
-                            isToRemove = false;
-                        }
-                    }
-                    if (isToRemove) {
-                        originExecutionCourse.getAssociatedEvaluationsSet().remove(evaluation);
-                    }
-                }
             }
         }
     }
@@ -161,17 +129,6 @@ public class SeperateExecutionCourse {
                     shift.removeStudents(registration);
                 }
             }
-        }
-    }
-
-    private static void associateGroupings(final ExecutionCourse originExecutionCourse,
-            final ExecutionCourse destinationExecutionCourse) {
-        for (final Grouping grouping : originExecutionCourse.getGroupings()) {
-            for (final StudentGroup studentGroup : grouping.getStudentGroupsSet()) {
-                studentGroup.getAttendsSet().clear();
-                studentGroup.delete();
-            }
-            grouping.delete();
         }
     }
 

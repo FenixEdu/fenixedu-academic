@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -143,17 +142,6 @@ public class Shift extends Shift_Base {
         return StringUtils.isNotBlank(getNome()) && !getNome().matches(cleanSigla + "[a-zA-Z]+[0-9]+");
     }
 
-    @Override
-    public Set<StudentGroup> getAssociatedStudentGroupsSet() {
-        Set<StudentGroup> result = new HashSet<StudentGroup>();
-        for (StudentGroup sg : super.getAssociatedStudentGroupsSet()) {
-            if (sg.getValid()) {
-                result.add(sg);
-            }
-        }
-        return Collections.unmodifiableSet(result);
-    }
-
     public void delete() {
         check(this, ResourceAllocationRolePredicates.checkPermissionsToManageShifts);
         DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
@@ -168,9 +156,6 @@ public class Shift extends Shift_Base {
 
         getAssociatedClassesSet().clear();
         getCourseLoadsSet().clear();
-        if (getShiftGroupingProperties() != null) {
-            getShiftGroupingProperties().delete();
-        }
         setRootDomainObject(null);
         super.deleteDomainObject();
 
@@ -242,9 +227,6 @@ public class Shift extends Shift_Base {
     @Override
     protected void checkForDeletionBlockers(Collection<String> blockers) {
         super.checkForDeletionBlockers(blockers);
-        if (!getAssociatedStudentGroupsSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.RESOURCE_ALLOCATION, "error.deleteShift.with.studentGroups", getNome()));
-        }
         if (!getStudentsSet().isEmpty()) {
             blockers.add(BundleUtil.getString(Bundle.RESOURCE_ALLOCATION, "error.deleteShift.with.students", getNome()));
         }
@@ -532,15 +514,6 @@ public class Shift extends Shift_Base {
         new Message(sender, sender.getConcreteReplyTos(), recipients, subject, body, "");
     }
 
-    public boolean hasAnyStudentsInAssociatedStudentGroups() {
-        for (final StudentGroup studentGroup : getAssociatedStudentGroupsSet()) {
-            if (studentGroup.getAttendsSet().size() > 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public String getPresentationName() {
         StringBuilder stringBuilder = new StringBuilder(this.getNome());
         if (!this.getAssociatedLessonsSet().isEmpty()) {
@@ -587,16 +560,6 @@ public class Shift extends Shift_Base {
             }
         }
         return stringBuilder.toString();
-    }
-
-    public List<StudentGroup> getAssociatedStudentGroups(Grouping grouping) {
-        List<StudentGroup> result = new ArrayList<StudentGroup>();
-        for (StudentGroup studentGroup : getAssociatedStudentGroupsSet()) {
-            if (studentGroup.getGrouping() == grouping) {
-                result.add(studentGroup);
-            }
-        }
-        return result;
     }
 
     public boolean isTotalShiftLoadExceeded() {

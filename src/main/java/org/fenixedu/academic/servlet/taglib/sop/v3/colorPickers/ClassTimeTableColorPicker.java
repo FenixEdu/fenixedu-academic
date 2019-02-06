@@ -25,12 +25,10 @@ import java.util.TreeSet;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Lesson;
-import org.fenixedu.academic.domain.WrittenEvaluation;
 import org.fenixedu.academic.dto.InfoLesson;
 import org.fenixedu.academic.dto.InfoLessonInstance;
 import org.fenixedu.academic.dto.InfoLessonInstanceAggregation;
 import org.fenixedu.academic.dto.InfoShowOccupation;
-import org.fenixedu.academic.dto.InfoWrittenEvaluation;
 import org.fenixedu.academic.servlet.taglib.sop.v3.ColorPicker;
 
 public class ClassTimeTableColorPicker extends ColorPicker {
@@ -45,9 +43,6 @@ public class ClassTimeTableColorPicker extends ColorPicker {
         }
         if (infoShowOccupation instanceof InfoLessonInstanceAggregation) {
             return key((InfoLessonInstanceAggregation) infoShowOccupation);
-        }
-        if (infoShowOccupation instanceof InfoWrittenEvaluation) {
-            return key((InfoWrittenEvaluation) infoShowOccupation);
         } else {
             return "GenericEvent";
         }
@@ -67,15 +62,6 @@ public class ClassTimeTableColorPicker extends ColorPicker {
 
     private String key(final InfoLessonInstanceAggregation infoLessonInstanceAggregation) {
         return infoLessonInstanceAggregation.getShift().getExecutionCourse().getExternalId();
-    }
-
-    private String key(final InfoWrittenEvaluation infoWrittenEvaluation) {
-        final StringBuilder stringBuilder = new StringBuilder();
-        final WrittenEvaluation writtenEvaluation = infoWrittenEvaluation.getWrittenEvaluation();
-        for (final ExecutionCourse executionCourse : sort(writtenEvaluation.getAssociatedExecutionCoursesSet())) {
-            stringBuilder.append(executionCourse.getExternalId());
-        }
-        return stringBuilder.toString();
     }
 
     private SortedSet<ExecutionCourse> sort(final Set<ExecutionCourse> associatedExecutionCoursesSet) {

@@ -65,9 +65,7 @@ public class CalendarDebugDA extends FenixAction {
     private String content(HttpServletRequest request, HashMap<Registration, String> hm, Registration registration) {
         try {
             return "<b>Classes: </b>"
-                    + StringEscapeUtils.escapeHtml(ICalStudentTimeTable.getUrl("syncClasses", registration, request)) + "<br/>"
-                    + "<b>Exams: </b>"
-                    + StringEscapeUtils.escapeHtml(ICalStudentTimeTable.getUrl("syncExams", registration, request)) + "<br/>";
+                    + StringEscapeUtils.escapeHtml(ICalStudentTimeTable.getUrl("syncClasses", registration, request)) + "<br/>";
         } catch (Exception e) {
             throw new Error(e);
         }

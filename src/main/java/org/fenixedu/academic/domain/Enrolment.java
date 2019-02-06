@@ -281,7 +281,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
             attendsIter.remove();
             attends.setEnrolment(null);
 
-            if (attends.getAssociatedMarksSet().isEmpty() && attends.getStudentGroupsSet().isEmpty()) {
+            if (attends.getAssociatedMarksSet().isEmpty()) {
                 boolean hasShiftEnrolment = false;
                 for (Shift shift : attends.getExecutionCourse().getAssociatedShifts()) {
                     if (shift.getStudentsSet().contains(registration)) {

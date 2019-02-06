@@ -130,13 +130,6 @@ display: inline !important;
 				<fr:property name="order(viewSchedule)" value="0" />
 				<fr:property name="visibleIf(viewSchedule)" value="withSchedule"/>
 				
-				<fr:property name="link(viewWrittenEvaluation)" value="/spaces/writtenEvaluationsByRoom.faces" />					
-				<fr:property name="param(viewWrittenEvaluation)" value="space.externalId/selectedRoomID,academicInterval.resumedRepresentationInStringFormat/academicInterval" />
-				<fr:property name="key(viewWrittenEvaluation)" value="link.view.written.evaluations" />
-				<fr:property name="bundle(viewWrittenEvaluation)" value="DEFAULT" />
-				<fr:property name="order(viewWrittenEvaluation)" value="1" />
-				<fr:property name="visibleIf(viewWrittenEvaluation)" value="withWrittenEvaluations"/>
-											
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>

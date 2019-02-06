@@ -36,9 +36,6 @@ public class ShiftJsonAdapter implements JsonViewer<Shift> {
         object.addProperty("externalId", shift.getExternalId());
         object.add("lessons", ctx.view(shift.getLessonsOrderedByWeekDayAndStartTime()));
         object.addProperty("capacity", shift.getLotacao());
-        if (shift.getShiftGroupingProperties() != null && shift.getShiftGroupingProperties().getCapacity() != null) {
-            object.addProperty("groupCapacity", shift.getShiftGroupingProperties().getCapacity());
-        }
         object.add("shiftTypes", ctx.view(shift.getTypes()));
 
         return object;

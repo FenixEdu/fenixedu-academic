@@ -19,10 +19,8 @@
 package org.fenixedu.academic.ui.struts.action.resourceAllocationManager;
 
 import org.apache.struts.actions.ForwardAction;
-import org.fenixedu.academic.ui.struts.action.commons.FacesEntryPoint;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.StrutsApplication;
-import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 @StrutsApplication(bundle = "ResourceAllocationManagerResources", path = "resource-allocation-manager",
         titleKey = "title.resourceAllocationManager.management", hint = "Resource Allocation Manager",
@@ -61,14 +59,6 @@ public class RAMApplication extends ForwardAction {
     @StrutsApplication(bundle = BUNDLE, path = "evaluations", titleKey = "link.writtenEvaluationManagement", hint = HINT,
             accessGroup = ACCESS_GROUP)
     public static class RAMEvaluationsApp {
-    }
-
-    // Faces Entry Points
-
-    @StrutsFunctionality(app = RAMEvaluationsApp.class, path = "written-evaluations-by-room",
-            titleKey = "link.writtenEvaluation.by.room")
-    @Mapping(path = "/writtenEvaluations/writtenEvaluationsByRoom", module = "resourceAllocationManager")
-    public static class WrittenEvaluationsByRoom extends FacesEntryPoint {
     }
 
 }
