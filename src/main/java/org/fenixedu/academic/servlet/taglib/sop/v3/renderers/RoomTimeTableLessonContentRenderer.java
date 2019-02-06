@@ -20,21 +20,19 @@ package org.fenixedu.academic.servlet.taglib.sop.v3.renderers;
 
 import org.fenixedu.academic.domain.FrequencyType;
 import org.fenixedu.academic.domain.person.RoleType;
-import org.fenixedu.academic.dto.InfoExam;
 import org.fenixedu.academic.dto.InfoExecutionCourse;
 import org.fenixedu.academic.dto.InfoLesson;
 import org.fenixedu.academic.dto.InfoLessonInstance;
 import org.fenixedu.academic.dto.InfoOccupation;
 import org.fenixedu.academic.dto.InfoShowOccupation;
-import org.fenixedu.academic.dto.InfoWrittenTest;
 import org.fenixedu.academic.servlet.taglib.sop.v3.LessonSlot;
 import org.fenixedu.academic.servlet.taglib.sop.v3.LessonSlotContentRenderer;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
-import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
-
 import com.google.common.base.Strings;
+
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 
 /**
  * @author jpvl
@@ -90,31 +88,6 @@ public class RoomTimeTableLessonContentRenderer extends LessonSlotContentRendere
             }
             strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint())
                     .append(")&nbsp;");
-
-        } else if (showOccupation instanceof InfoExam) {
-            InfoExam infoExam = (InfoExam) showOccupation;
-            for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) {
-                InfoExecutionCourse infoEC = infoExam.getAssociatedExecutionCourse().get(iterEC);
-                if (iterEC != 0) {
-                    strBuffer.append(", ");
-                }
-                strBuffer.append(infoEC.getSigla());
-            }
-            strBuffer.append(" - ");
-            strBuffer.append(infoExam.getSeason().getSeason());
-            strBuffer.append("ª Época");
-
-        } else if (showOccupation instanceof InfoWrittenTest) {
-            InfoWrittenTest infoWrittenTest = (InfoWrittenTest) showOccupation;
-            for (int iterEC = 0; iterEC < infoWrittenTest.getAssociatedExecutionCourse().size(); iterEC++) {
-                InfoExecutionCourse infoEC = infoWrittenTest.getAssociatedExecutionCourse().get(iterEC);
-                if (iterEC != 0) {
-                    strBuffer.append(", ");
-                }
-                strBuffer.append(infoEC.getSigla());
-            }
-            strBuffer.append(" - ");
-            strBuffer.append(infoWrittenTest.getDescription());
 
         } else if (showOccupation instanceof InfoOccupation) {
 

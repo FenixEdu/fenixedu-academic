@@ -459,89 +459,12 @@
 		</slot>
 	</schema>
 
-	<schema name="evaluation.project.view-with-name-description-and-grouping" type="org.fenixedu.academic.domain.Project" bundle="APPLICATION_RESOURCES">
-	    <slot name="name" />
-	    <slot name="description" layout="null-as-label">
-	    	<property name="label" value="-"/>
-	    </slot>
-	    <slot name="projectBeginDateTime" key="label.org.fenixedu.academic.domain.Project.projectBeginDateTime"/>
-	    <slot name="projectEndDateTime" key="label.org.fenixedu.academic.domain.Project.projectEndDateTime"/>
-   	    <slot name="grouping.name" />
-	</schema>
-	
 	<schema name="list.student.execution.periods" type="org.fenixedu.academic.dto.student.ManageStudentStatuteBean" bundle="APPLICATION_RESOURCES">
 	<slot name="executionPeriod" key="label.org.fenixedu.academic.domain.ProjectSubmission.execution.semester" layout="menu-select-postback">
     	<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.StudentExecutionPeriodsProvider"/>
     	<property name="format" value="${year} - ${semester}º Sem."/>	
     	<property name="destination" value="postBack"/>
     </slot>
-	</schema>
-	
-	<schema name="projectSubmission.view-full" type="org.fenixedu.academic.domain.ProjectSubmission" bundle="APPLICATION_RESOURCES">
-	    <slot name="studentGroup.groupNumber" />
-   	    <slot name="attends.aluno.person.firstAndLastName" key="label.name"/>
-   	    <slot name="submissionDateTime" />
-   	    <slot name="projectSubmissionFile.filename" layout="link">
-   	    	<property name="useParent" value="true"/>
-   	    	<property name="linkFormat" value="${projectSubmissionFile.downloadUrl}"/>
-   	    </slot>
-   	    <slot name="projectSubmissionFile.size" layout="fileSize"/>
-   	    <slot name="projectSubmissionFile.checksum"/>
-   	    <slot name="projectSubmissionFile.checksumAlgorithm"/>
-	</schema>
-
-	<schema name="deletedProjectSubmission.view-full" type="org.fenixedu.academic.domain.ProjectSubmission" bundle="APPLICATION_RESOURCES">
-	    <slot name="studentGroup.groupNumber" layout="link">
-   	    	<property name="useParent" value="true"/>
-   	    	<property name="moduleRelative" value="true"/>
-   	    	<property name="contextRelative" value="true"/>
-   	    	<property name="destination" value="groupNumberLink" />	
-   	    </slot>
-   	    <slot name="attends.aluno.person.firstAndLastName" key="label.name"/>
-   	    <slot name="submissionDateTime" />
-   	    <slot name="projectSubmissionFile.filename" layout="link">
-   	    	<property name="useParent" value="true"/>
-   	    	<property name="linkFormat" value="${projectSubmissionFile.downloadUrl}"/>
-   	    </slot>
-   	    <slot name="projectSubmissionFile.size" layout="fileSize"/>
-	</schema>
-	
-	<schema name="studentGroupRendering" type="org.fenixedu.academic.domain.StudentGroup" bundle="APPLICATION_RESOURCES">
-		<slot name="groupNumber" />
-	</schema>
-	
-	<schema name="projectSubmission.viewObservation" type="org.fenixedu.academic.domain.ProjectSubmission" bundle="APPLICATION_RESOURCES">
-	    <slot name="studentGroup.groupNumber" />
-   	    <slot name="attends.aluno.number" />
-   	    <slot name="attends.aluno.person.name" key="label.name" />		
-   	    <slot name="teacherObservation" key="link.teacher.executionCourseManagement.evaluation.project.viewLastProjectSubmissionForEachGroup.groupComment"/>
-	</schema>
-
-	<schema name="projectSubmission.editObservation" type="org.fenixedu.academic.domain.ProjectSubmission" bundle="APPLICATION_RESOURCES">
-	    <slot name="studentGroup.groupNumber" read-only="true"/>
-   	    <slot name="attends.aluno.number" read-only="true"/>
-   	    <slot name="attends.aluno.person.name" key="label.name" read-only="true"/>
-		<slot name="teacherObservation" layout="longText" key="link.teacher.executionCourseManagement.evaluation.project.viewLastProjectSubmissionForEachGroup.groupComment">
-			<property name="rows" value="10"/>
-			<property name="columns" value="60"/>
-		</slot>
-	</schema>
-		
-	<schema name="projectSubmission.create" type="org.fenixedu.academic.dto.projectSubmission.CreateProjectSubmissionBean">
-		<slot name="inputStream" key="label.projectSubmission.projectFile" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-			<property name="fileNameSlot" value="filename"/>
-		</slot>
-	</schema>
-	
-	<schema name="projectSubmissionLog.view-full" type="org.fenixedu.academic.domain.ProjectSubmissionLog" bundle="APPLICATION_RESOURCES">
-	    <slot name="studentGroup.groupNumber"/>
-   	    <slot name="attends.aluno.number" />
-   	    <slot name="attends.aluno.person.firstAndLastName" key="label.name"/>
-   	    <slot name="submissionDateTime" />
-   	    <slot name="filename" />
-   	    <slot name="fileSize" layout="fileSize"/>
-   	    <slot name="fileChecksum"/>
-   	    <slot name="fileChecksumAlgorithm"/>
 	</schema>
 	
 	<schema name="person.view-with-name-and-idDocumentType-and-documentIdNumber" type="org.fenixedu.academic.domain.Person" bundle="APPLICATION_RESOURCES">

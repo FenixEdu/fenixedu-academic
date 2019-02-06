@@ -29,23 +29,17 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
-import org.fenixedu.academic.domain.Exam;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Lesson;
 import org.fenixedu.academic.domain.LessonInstance;
-import org.fenixedu.academic.domain.WrittenEvaluation;
-import org.fenixedu.academic.domain.WrittenTest;
 import org.fenixedu.academic.domain.space.LessonInstanceSpaceOccupation;
 import org.fenixedu.academic.domain.space.LessonSpaceOccupation;
-import org.fenixedu.academic.domain.space.WrittenEvaluationSpaceOccupation;
-import org.fenixedu.academic.dto.InfoExam;
 import org.fenixedu.academic.dto.InfoLesson;
 import org.fenixedu.academic.dto.InfoLessonInstance;
 import org.fenixedu.academic.dto.InfoObject;
 import org.fenixedu.academic.dto.InfoOccupation;
 import org.fenixedu.academic.dto.InfoRoom;
 import org.fenixedu.academic.dto.InfoSiteRoomTimeTable;
-import org.fenixedu.academic.dto.InfoWrittenTest;
 import org.fenixedu.spaces.domain.Space;
 import org.fenixedu.spaces.domain.occupation.Occupation;
 import org.joda.time.Interval;
@@ -82,12 +76,7 @@ public class RoomSiteComponentBuilder {
 
         for (final Occupation roomOccupation : room.getOccupationSet()) {
 
-            if (roomOccupation instanceof WrittenEvaluationSpaceOccupation) {
-                Collection<WrittenEvaluation> writtenEvaluations =
-                        ((WrittenEvaluationSpaceOccupation) roomOccupation).getWrittenEvaluationsSet();
-                getWrittenEvaluationRoomOccupations(infoShowOccupations, weekStartYearMonthDay, weekEndYearMonthDay,
-                        writtenEvaluations);
-            } else if (roomOccupation instanceof LessonSpaceOccupation) {
+            if (roomOccupation instanceof LessonSpaceOccupation) {
                 final Lesson lesson = ((LessonSpaceOccupation) roomOccupation).getLesson();
                 getLessonOccupations(infoShowOccupations, weekStartYearMonthDay, weekEndYearMonthDay, lesson);
             } else if (roomOccupation instanceof LessonInstanceSpaceOccupation) {
@@ -113,10 +102,8 @@ public class RoomSiteComponentBuilder {
     private static void getLessonOccupations(List<InfoObject> infoShowOccupations, YearMonthDay weekStartYearMonthDay,
             YearMonthDay weekEndYearMonthDay, Lesson lesson) {
 
-        if (lesson != null
-                && lesson.getShift() != null
-                && lesson.containsWithoutCheckInstanceDates(new Interval(weekStartYearMonthDay.toDateTimeAtMidnight(),
-                        weekEndYearMonthDay.toDateTimeAtMidnight()))) {
+        if (lesson != null && lesson.getShift() != null && lesson.containsWithoutCheckInstanceDates(
+                new Interval(weekStartYearMonthDay.toDateTimeAtMidnight(), weekEndYearMonthDay.toDateTimeAtMidnight()))) {
             infoShowOccupations.add(InfoLesson.newInfoFromDomain(lesson));
         }
     }
@@ -135,29 +122,4 @@ public class RoomSiteComponentBuilder {
         }
     }
 
-    private static void getWrittenEvaluationRoomOccupations(List<InfoObject> infoShowOccupations,
-            final YearMonthDay weekStartYearMonthDay, final YearMonthDay weekEndYearMonthDay,
-            final Collection<WrittenEvaluation> writtenEvaluations) {
-
-        if (writtenEvaluations != null) {
-
-            for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {
-
-                final YearMonthDay evaluationDate = writtenEvaluation.getDayDateYearMonthDay();
-
-                if (!evaluationDate.isBefore(weekStartYearMonthDay) && !evaluationDate.isAfter(weekEndYearMonthDay)) {
-
-                    if (writtenEvaluation instanceof Exam) {
-                        final Exam exam = (Exam) writtenEvaluation;
-                        if (exam.isExamsMapPublished()) {
-                            infoShowOccupations.add(InfoExam.newInfoFromDomain(exam));
-                        }
-                    } else if (writtenEvaluation instanceof WrittenTest) {
-                        final WrittenTest writtenTest = (WrittenTest) writtenEvaluation;
-                        infoShowOccupations.add(InfoWrittenTest.newInfoFromDomain(writtenTest));
-                    }
-                }
-            }
-        }
-    }
 }

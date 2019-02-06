@@ -26,20 +26,15 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.fortuna.ical4j.model.Calendar;
-
 import org.apache.commons.lang.CharEncoding;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Lesson;
 import org.fenixedu.academic.domain.Professorship;
-import org.fenixedu.academic.domain.Project;
 import org.fenixedu.academic.domain.Shift;
-import org.fenixedu.academic.domain.WrittenEvaluation;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.util.icalendar.CalendarFactory;
@@ -52,6 +47,7 @@ import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.joda.time.DateTime;
 
+import net.fortuna.ical4j.model.Calendar;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -109,76 +105,10 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
         return allEvents;
     }
 
-    private Calendar getExamsCalendar(User user, DateTime validity, HttpServletRequest request) {
-
-        List<EventBean> allEvents = getExams(user);
-
-        String url = CoreConfiguration.getConfiguration().applicationUrl() + "/login";
-        EventBean event =
-                new EventBean("Renovar a chave do calendario.", validity.minusMinutes(30), validity.plusMinutes(30), false, null,
-                        url, "A sua chave de sincronização do calendario vai expirar. Diriga-se ao Fénix para gerar nova chave");
-
-        allEvents.add(event);
-
-        return CalendarFactory.createCalendar(allEvents);
-
-    }
-
-    public List<EventBean> getExams(User user) {
-        List<EventBean> allEvents = new ArrayList<EventBean>();
-        ExecutionSemester currentExecutionSemester = ExecutionSemester.readActualExecutionSemester();
-
-        for (Registration registration : user.getPerson().getStudent().getRegistrationsSet()) {
-            for (WrittenEvaluation writtenEvaluation : registration.getWrittenEvaluations(currentExecutionSemester)) {
-                allEvents.addAll(writtenEvaluation.getAllEvents(registration));
-            }
-
-            for (Attends attends : registration.getAttendsForExecutionPeriod(currentExecutionSemester)) {
-                for (Project project : attends.getExecutionCourse().getAssociatedProjects()) {
-                    allEvents.addAll(project.getAllEvents(attends.getExecutionCourse()));
-                }
-            }
-
-            for (WrittenEvaluation writtenEvaluation : registration.getWrittenEvaluations(currentExecutionSemester
-                    .getPreviousExecutionPeriod())) {
-                allEvents.addAll(writtenEvaluation.getAllEvents(registration));
-            }
-
-            for (Attends attends : registration.getAttendsForExecutionPeriod(currentExecutionSemester
-                    .getPreviousExecutionPeriod())) {
-                for (Project project : attends.getExecutionCourse().getAssociatedProjects()) {
-                    allEvents.addAll(project.getAllEvents(attends.getExecutionCourse()));
-                }
-            }
-        }
-        return allEvents;
-    }
-
-    public List<EventBean> getTeachingExams(User user) {
-
-        List<EventBean> allEvents = new ArrayList<EventBean>();
-
-        for (Professorship professorShip : user.getPerson().getProfessorshipsSet()) {
-            ExecutionCourse executionCourse = professorShip.getExecutionCourse();
-
-            for (WrittenEvaluation writtenEvaluation : executionCourse.getWrittenEvaluations()) {
-                allEvents.addAll(writtenEvaluation.getAllEvents(null));
-            }
-
-            for (Project project : executionCourse.getAssociatedProjects()) {
-                allEvents.addAll(project.getAllEvents(executionCourse));
-            }
-
-        }
-        return allEvents;
-    }
-
     private Calendar getCalendar(String method, User user, DateTime validity, HttpServletRequest request)
             throws FenixActionException {
         if (method == "syncClasses") {
             return getClassCalendar(user, validity, request);
-        } else if (method == "syncExams") {
-            return getExamsCalendar(user, validity, request);
         } else {
             throw new FenixActionException("unexpected.syncing.method");
         }
@@ -222,12 +152,6 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
         } else {
             returnError(httpServletResponse, "invalid.request");
         }
-    }
-
-    public ActionForward syncExams(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            final HttpServletResponse httpServletResponse) throws Exception {
-        sync(request, httpServletResponse, "syncExams");
-        return null;
     }
 
     public ActionForward syncClasses(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

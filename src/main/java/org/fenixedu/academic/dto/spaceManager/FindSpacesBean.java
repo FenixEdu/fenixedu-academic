@@ -25,12 +25,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.space.SpaceUtils;
-import org.fenixedu.academic.domain.space.WrittenEvaluationSpaceOccupation;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.dto.LinkObject;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.spaces.domain.Space;
-import org.fenixedu.spaces.domain.occupation.Occupation;
 import org.fenixedu.spaces.domain.occupation.SharedOccupation;
 
 public class FindSpacesBean implements Serializable {
@@ -183,11 +181,6 @@ public class FindSpacesBean implements Serializable {
     }
 
     public Boolean getIsOccupiedByWrittenEvaluations() {
-        for (Occupation occupation : getSpace().getOccupationSet()) {
-            if (occupation instanceof WrittenEvaluationSpaceOccupation) {
-                return true;
-            }
-        }
         return false;
     }
 

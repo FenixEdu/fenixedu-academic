@@ -23,7 +23,6 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.space.LessonInstanceSpaceOccupation;
 import org.fenixedu.academic.domain.space.LessonSpaceOccupation;
 import org.fenixedu.academic.domain.space.SpaceOccupation;
-import org.fenixedu.academic.domain.space.WrittenEvaluationSpaceOccupation;
 
 public class SpacePredicates {
 
@@ -33,14 +32,6 @@ public class SpacePredicates {
                 public boolean evaluate(SpaceOccupation spaceOccupation) {
                     spaceOccupation.checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManager();
                     return true;
-                }
-            };
-    public static final AccessControlPredicate<WrittenEvaluationSpaceOccupation> checkPermissionsToManageWrittenEvaluationSpaceOccupations =
-            new AccessControlPredicate<WrittenEvaluationSpaceOccupation>() {
-                @Override
-                public boolean evaluate(WrittenEvaluationSpaceOccupation spaceOccupation) {
-//                    ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(AccessControl.getPerson());
-                    return checkPermissionsToManageOccupationsWithoutCheckSpaceManager.evaluate(spaceOccupation);
                 }
             };
 //

@@ -19,13 +19,10 @@
 package org.fenixedu.academic.servlet.taglib.sop.v3.renderers;
 
 import org.fenixedu.academic.domain.FrequencyType;
-import org.fenixedu.academic.dto.InfoExam;
-import org.fenixedu.academic.dto.InfoExecutionCourse;
 import org.fenixedu.academic.dto.InfoLesson;
 import org.fenixedu.academic.dto.InfoLessonInstance;
 import org.fenixedu.academic.dto.InfoOccupation;
 import org.fenixedu.academic.dto.InfoShowOccupation;
-import org.fenixedu.academic.dto.InfoWrittenTest;
 import org.fenixedu.academic.servlet.taglib.sop.v3.LessonSlot;
 import org.fenixedu.academic.servlet.taglib.sop.v3.LessonSlotContentRenderer;
 import org.fenixedu.academic.util.Bundle;
@@ -53,40 +50,6 @@ public class SpaceManagerRoomTimeTableLessonContentRenderer extends LessonSlotCo
             InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
             strBuffer.append("&nbsp;(").append(lesson.getShiftTypeCodesPrettyPrint()).append(")");
-
-        } else if (showOccupation instanceof InfoExam) {
-
-            InfoExam infoExam = (InfoExam) showOccupation;
-
-            strBuffer.append(BundleUtil.getString(Bundle.SPACE, "label.written.exam")).append(" ");
-            strBuffer.append(infoExam.getSeason().getSeason());
-            strBuffer.append(BundleUtil.getString(Bundle.SPACE, "label.written.exam.season")).append(" - ");
-
-            for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) {
-                InfoExecutionCourse infoEC = infoExam.getAssociatedExecutionCourse().get(iterEC);
-                if (iterEC != 0) {
-                    strBuffer.append(", ");
-                }
-                strBuffer.append(infoEC.getSigla());
-
-            }
-
-        } else if (showOccupation instanceof InfoWrittenTest) {
-
-            InfoWrittenTest infoWrittenTest = (InfoWrittenTest) showOccupation;
-
-            strBuffer.append("<span title=\"").append(infoWrittenTest.getDescription()).append("\">");
-            strBuffer.append(BundleUtil.getString(Bundle.SPACE, "label.written.test")).append(" - ");
-
-            for (int iterEC = 0; iterEC < infoWrittenTest.getAssociatedExecutionCourse().size(); iterEC++) {
-                InfoExecutionCourse infoEC = infoWrittenTest.getAssociatedExecutionCourse().get(iterEC);
-                if (iterEC != 0) {
-                    strBuffer.append(", ");
-                }
-                strBuffer.append(infoEC.getSigla());
-            }
-
-            strBuffer.append("</span>");
 
         } else if (showOccupation instanceof InfoOccupation) {
 

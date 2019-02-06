@@ -18,9 +18,7 @@
  */
 package org.fenixedu.academic.domain;
 
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.InvalidMarkDomainException;
-import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 public class Mark extends Mark_Base {
@@ -43,7 +41,8 @@ public class Mark extends Mark_Base {
         if (validateMark(mark)) {
             super.setMark(mark);
         } else {
-            throw new InvalidMarkDomainException("errors.invalidMark", mark, getAttend().getRegistration().getNumber().toString());
+            throw new InvalidMarkDomainException("errors.invalidMark", mark,
+                    getAttend().getRegistration().getNumber().toString());
         }
     }
 
@@ -55,25 +54,7 @@ public class Mark extends Mark_Base {
     }
 
     private boolean validateMark(String mark) {
-        GradeScale gradeScale;
-        if (getEvaluation() instanceof Project || getEvaluation() instanceof FinalEvaluation) {
-            if (getAttend().getEnrolment() == null) {
-                final Registration registration = getAttend().getRegistration();
-                final StudentCurricularPlan studentCurricularPlan =
-                        registration.getStudentCurricularPlan(getAttend().getExecutionPeriod());
-                final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
-                final DegreeType degreeType = degreeCurricularPlan.getDegreeType();
-                if (degreeType.isEmpty()) {
-                    gradeScale = GradeScale.TYPE20;
-                } else {
-                    gradeScale = degreeCurricularPlan.getGradeScaleChain();
-                }
-            } else {
-                gradeScale = getAttend().getEnrolment().getCurricularCourse().getGradeScaleChain();
-            }
-        } else {
-            gradeScale = getEvaluation().getGradeScale();
-        }
+        GradeScale gradeScale = getEvaluation().getGradeScale();
         return gradeScale.isValid(mark, getEvaluation().getEvaluationType());
     }
 

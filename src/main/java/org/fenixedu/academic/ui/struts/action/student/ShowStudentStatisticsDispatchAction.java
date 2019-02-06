@@ -38,7 +38,6 @@ import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.GradeScale;
 import org.fenixedu.academic.domain.Mark;
-import org.fenixedu.academic.domain.WrittenEvaluation;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
@@ -88,8 +87,8 @@ public class ShowStudentStatisticsDispatchAction extends FenixDispatchAction {
         if (student != null && executionCourse != null) {
             request.setAttribute("executionCourse", executionCourse);
             request.setAttribute("executionCourseStatistics", computeStudentExecutionCourseStatistics(student, executionCourse));
-            request.setAttribute("curricularCourseOvertimeStatistics", computeCurricularCourseOvertimeStatistics(student
-                    .getAttends(executionCourse).getEnrolment().getCurricularCourse()));
+            request.setAttribute("curricularCourseOvertimeStatistics", computeCurricularCourseOvertimeStatistics(
+                    student.getAttends(executionCourse).getEnrolment().getCurricularCourse()));
         }
         return mapping.findForward("showExecutionCourseStatistics");
     }
@@ -225,35 +224,8 @@ public class ShowStudentStatisticsDispatchAction extends FenixDispatchAction {
         executionCourseJsonObject.addProperty("acronym", executionCourse.getSigla());
         executionCourseJsonObject.addProperty("name", executionCourse.getNameI18N().getContent());
         executionCourseJsonObject.add("student", computeStudentInfo(student));
-        JsonArray evaluationsArray = computeExecutionCourseEvaluations(student, executionCourse);
-        evaluationsArray.add(computeFinalGrades(executionCourse));
-
-        executionCourseJsonObject.add("evaluations", evaluationsArray);
+        executionCourseJsonObject.add("evaluations", new JsonArray());
         return executionCourseJsonObject;
-    }
-
-    private JsonArray computeExecutionCourseEvaluations(Student student, ExecutionCourse executionCourse) {
-        JsonArray evaluationsArray = new JsonArray();
-        for (WrittenEvaluation writtenEvaluation : executionCourse.getAssociatedWrittenEvaluations()) {
-            JsonObject writtenEvaluationJsonObject = computeWrittenEvaluation(writtenEvaluation);
-            if (writtenEvaluationJsonObject != null) {
-                evaluationsArray.add(writtenEvaluationJsonObject);
-            }
-        }
-        return evaluationsArray;
-    }
-
-    private JsonObject computeWrittenEvaluation(WrittenEvaluation writtenEvaluation) {
-        if (writtenEvaluation.getMarksSet().size() > 0) {
-            JsonObject writtenEvaluationJsonObject = new JsonObject();
-            writtenEvaluationJsonObject.addProperty("name", writtenEvaluation.getPresentationName());
-            writtenEvaluationJsonObject.addProperty("grade-scale", writtenEvaluation.getGradeScale().name());
-            populateMinAndMaxGrade(writtenEvaluation.getGradeScale(), writtenEvaluationJsonObject);
-            writtenEvaluationJsonObject.add("grades", computeWrittenEvaluationGrades(writtenEvaluation));
-            return writtenEvaluationJsonObject;
-        } else {
-            return null;
-        }
     }
 
     private void populateMinAndMaxGrade(GradeScale scale, JsonObject evaluationJsonObject) {
@@ -277,14 +249,6 @@ public class ShowStudentStatisticsDispatchAction extends FenixDispatchAction {
         evaluationJsonObject.addProperty("minRequiredGrade", minRequiredGrade);
         evaluationJsonObject.addProperty("minGrade", minGrade);
         evaluationJsonObject.addProperty("maxGrade", maxGrade);
-    }
-
-    private JsonArray computeWrittenEvaluationGrades(WrittenEvaluation writtenEvaluation) {
-        JsonArray gradesArray = new JsonArray();
-        for (Mark mark : writtenEvaluation.getMarksSet()) {
-            gradesArray.add(computeMark(mark));
-        }
-        return gradesArray;
     }
 
     private JsonElement computeMark(Mark mark) {

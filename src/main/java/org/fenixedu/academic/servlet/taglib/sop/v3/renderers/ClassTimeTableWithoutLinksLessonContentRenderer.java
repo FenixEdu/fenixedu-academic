@@ -19,12 +19,9 @@
 package org.fenixedu.academic.servlet.taglib.sop.v3.renderers;
 
 import org.fenixedu.academic.domain.FrequencyType;
-import org.fenixedu.academic.dto.InfoExam;
-import org.fenixedu.academic.dto.InfoExecutionCourse;
 import org.fenixedu.academic.dto.InfoLesson;
 import org.fenixedu.academic.dto.InfoLessonInstance;
 import org.fenixedu.academic.dto.InfoShowOccupation;
-import org.fenixedu.academic.dto.InfoWrittenTest;
 import org.fenixedu.academic.servlet.taglib.sop.v3.LessonSlot;
 import org.fenixedu.academic.servlet.taglib.sop.v3.LessonSlotContentRenderer;
 import org.fenixedu.academic.util.Bundle;
@@ -67,9 +64,8 @@ public class ClassTimeTableWithoutLinksLessonContentRenderer extends LessonSlotC
                 }
             }
 
-            if (lessonSlot.isSinleSlot()
-                    || (lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended() && !lessonSlot.getInfoLessonWrapper()
-                            .isSecondRowAlreadyAppended())) {
+            if (lessonSlot.isSinleSlot() || (lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended()
+                    && !lessonSlot.getInfoLessonWrapper().isSecondRowAlreadyAppended())) {
                 lessonSlot.getInfoLessonWrapper().setSecondRowAlreadyAppended(true);
             }
 
@@ -88,9 +84,8 @@ public class ClassTimeTableWithoutLinksLessonContentRenderer extends LessonSlotC
                 strBuffer.append("<br/>");
             }
 
-            if (lessonSlot.isSinleSlot()
-                    || (lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended() && !lessonSlot.getInfoLessonWrapper()
-                            .isSecondRowAlreadyAppended())) {
+            if (lessonSlot.isSinleSlot() || (lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended()
+                    && !lessonSlot.getInfoLessonWrapper().isSecondRowAlreadyAppended())) {
 
                 strBuffer.append("(").append(lesson.getShiftTypeCodesPrettyPrint()).append(")&nbsp;");
 
@@ -99,9 +94,8 @@ public class ClassTimeTableWithoutLinksLessonContentRenderer extends LessonSlotC
                 }
             }
 
-            if (lessonSlot.isSinleSlot()
-                    || (lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended() && !lessonSlot.getInfoLessonWrapper()
-                            .isSecondRowAlreadyAppended())) {
+            if (lessonSlot.isSinleSlot() || (lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended()
+                    && !lessonSlot.getInfoLessonWrapper().isSecondRowAlreadyAppended())) {
                 lessonSlot.getInfoLessonWrapper().setSecondRowAlreadyAppended(true);
             }
 
@@ -109,32 +103,6 @@ public class ClassTimeTableWithoutLinksLessonContentRenderer extends LessonSlotC
                 lessonSlot.getInfoLessonWrapper().setFirstRowAlreadyAppended(true);
             }
 
-        } else if (showOccupation instanceof InfoExam) {
-
-            InfoExam infoExam = (InfoExam) showOccupation;
-            for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) {
-                InfoExecutionCourse infoEC = infoExam.getAssociatedExecutionCourse().get(iterEC);
-                if (iterEC != 0) {
-                    strBuffer.append(", ");
-                }
-                strBuffer.append(infoEC.getSigla());
-            }
-            strBuffer.append(" - ");
-            strBuffer.append(infoExam.getSeason().getSeason());
-            strBuffer.append("ª época");
-
-        } else if (showOccupation instanceof InfoWrittenTest) {
-
-            InfoWrittenTest infoWrittenTest = (InfoWrittenTest) showOccupation;
-            for (int iterEC = 0; iterEC < infoWrittenTest.getAssociatedExecutionCourse().size(); iterEC++) {
-                InfoExecutionCourse infoEC = infoWrittenTest.getAssociatedExecutionCourse().get(iterEC);
-                if (iterEC != 0) {
-                    strBuffer.append(", ");
-                }
-                strBuffer.append(infoEC.getSigla());
-            }
-            strBuffer.append(" - ");
-            strBuffer.append(infoWrittenTest.getDescription());
         }
 
         return strBuffer;

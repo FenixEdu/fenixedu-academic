@@ -110,7 +110,6 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
                 request.setAttribute("expirationDate", privateKey.getPrivateKeyValidity().toString("dd/MM/yyyy HH:mm"));
                 request.setAttribute("user", Authenticate.getUser().getUsername());
                 request.setAttribute("classURL", getUrl("syncClasses", registration, request));
-                request.setAttribute("examsURL", getUrl("syncExams", registration, request));
             }
             request.setAttribute("stillValid", true);
         } else {

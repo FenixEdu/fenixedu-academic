@@ -38,14 +38,11 @@ import org.fenixedu.academic.domain.CourseLoad;
 import org.fenixedu.academic.domain.Evaluation;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionCourseLog;
-import org.fenixedu.academic.domain.ExportGrouping;
-import org.fenixedu.academic.domain.FinalEvaluation;
 import org.fenixedu.academic.domain.LessonInstance;
 import org.fenixedu.academic.domain.Mark;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Shift;
-import org.fenixedu.academic.domain.StudentGroup;
 import org.fenixedu.academic.domain.Summary;
 import org.fenixedu.academic.domain.accessControl.PersistentSpecialCriteriaOverExecutionCourseGroup;
 import org.fenixedu.academic.domain.accessControl.PersistentStudentGroup;
@@ -121,7 +118,6 @@ public class MergeExecutionCourses {
         registerMergeHandler(MergeExecutionCourses::copyAttends);
         registerMergeHandler(MergeExecutionCourses::copyBibliographicReference);
         registerMergeHandler(MergeExecutionCourses::copySummaries);
-        registerMergeHandler(MergeExecutionCourses::copyGroupPropertiesExecutionCourse);
         registerMergeHandler(MergeExecutionCourses::removeEvaluations);
         registerMergeHandler(MergeExecutionCourses::copyForuns);
         registerMergeHandler(MergeExecutionCourses::copyExecutionCourseLogs);
@@ -194,35 +190,12 @@ public class MergeExecutionCourses {
         }
     }
 
-    private static void copyGroupPropertiesExecutionCourse(final ExecutionCourse executionCourseFrom,
-            final ExecutionCourse executionCourseTo) {
-        final List<ExportGrouping> associatedGroupPropertiesExecutionCourse = new ArrayList<ExportGrouping>();
-        associatedGroupPropertiesExecutionCourse.addAll(executionCourseFrom.getExportGroupingsSet());
-
-        for (final ExportGrouping groupPropertiesExecutionCourse : associatedGroupPropertiesExecutionCourse) {
-            if (executionCourseTo.hasGrouping(groupPropertiesExecutionCourse.getGrouping())) {
-                groupPropertiesExecutionCourse.delete();
-            } else {
-                groupPropertiesExecutionCourse.setExecutionCourse(executionCourseTo);
-            }
-        }
-    }
-
     private static void removeEvaluations(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
             throws FenixServiceException {
         while (!executionCourseFrom.getAssociatedEvaluationsSet().isEmpty()) {
             final Evaluation evaluation = executionCourseFrom.getAssociatedEvaluationsSet().iterator().next();
-            if (evaluation instanceof FinalEvaluation) {
-                final FinalEvaluation finalEvaluationFrom = (FinalEvaluation) evaluation;
-                if (!finalEvaluationFrom.getMarksSet().isEmpty()) {
-                    throw new FenixServiceException("error.merge.execution.course.final.evaluation.exists");
-                } else {
-                    finalEvaluationFrom.delete();
-                }
-            } else {
-                executionCourseTo.getAssociatedEvaluationsSet().add(evaluation);
-                executionCourseFrom.getAssociatedEvaluationsSet().remove(evaluation);
-            }
+            executionCourseTo.getAssociatedEvaluationsSet().add(evaluation);
+            executionCourseFrom.getAssociatedEvaluationsSet().remove(evaluation);
         }
     }
 
@@ -284,9 +257,6 @@ public class MergeExecutionCourses {
                 }
                 for (Mark mark : attends.getAssociatedMarksSet()) {
                     otherAttends.addAssociatedMarks(mark);
-                }
-                for (StudentGroup group : attends.getAllStudentGroups()) {
-                    otherAttends.addStudentGroups(group);
                 }
                 attends.delete();
             }

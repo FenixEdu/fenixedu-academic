@@ -22,18 +22,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.struts.util.MessageResources;
-import org.fenixedu.academic.domain.Exam;
-import org.fenixedu.academic.domain.ExecutionCourse;
-import org.fenixedu.academic.domain.Project;
-import org.fenixedu.academic.domain.WrittenEvaluation;
-import org.fenixedu.academic.domain.WrittenTest;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.DateFormatUtil;
 
 public class CalendarLink {
     private Calendar objectOccurrence;
@@ -48,17 +41,6 @@ public class CalendarLink {
 
     public CalendarLink() {
         this(true);
-    }
-
-    public CalendarLink(final ExecutionCourse executionCourse, final WrittenEvaluation writtenEvaluation, final Locale locale) {
-        setObjectOccurrence(writtenEvaluation.getDay());
-        setObjectLinkLabel(constructCalendarPresentation(executionCourse, writtenEvaluation, locale));
-    }
-
-    public CalendarLink(final ExecutionCourse executionCourse, final Project project, final Date date, final String tail,
-            final Locale locale) {
-        setObjectOccurrence(date);
-        setObjectLinkLabel(constructCalendarPresentation(executionCourse, project, date, tail, locale));
     }
 
     public void setObjectOccurrence(Calendar objectOccurrence) {
@@ -93,7 +75,8 @@ public class CalendarLink {
 
         if (this.linkParameters != null && !this.linkParameters.isEmpty()) {
             linkParameters.append(editLinkPage.indexOf('?') > 0 ? '&' : '?');
-            for (final Iterator<Entry<String, String>> iterator = this.linkParameters.entrySet().iterator(); iterator.hasNext();) {
+            for (final Iterator<Entry<String, String>> iterator = this.linkParameters.entrySet().iterator(); iterator
+                    .hasNext();) {
                 final Entry<String, String> entry = iterator.next();
                 linkParameters.append(entry.getKey());
                 linkParameters.append('=');
@@ -112,37 +95,6 @@ public class CalendarLink {
     }
 
     private static final MessageResources messages = MessageResources.getMessageResources(Bundle.DEGREE);
-
-    private String constructCalendarPresentation(final ExecutionCourse executionCourse,
-            final WrittenEvaluation writtenEvaluation, final Locale locale) {
-        final StringBuilder stringBuilder = new StringBuilder();
-        if (writtenEvaluation instanceof WrittenTest) {
-            stringBuilder.append(messages.getMessage(locale, "label.evaluation.shortname.test"));
-        } else if (writtenEvaluation instanceof Exam) {
-            stringBuilder.append(messages.getMessage(locale, "label.evaluation.shortname.exam"));
-        }
-        stringBuilder.append(" ");
-        stringBuilder.append(executionCourse.getSigla());
-        stringBuilder.append(" (");
-        stringBuilder.append(DateFormatUtil.format("HH:mm", writtenEvaluation.getBeginningDate()));
-        stringBuilder.append("-");
-        stringBuilder.append(DateFormatUtil.format("HH:mm", writtenEvaluation.getEndDate()));
-        stringBuilder.append(")");
-        return stringBuilder.toString();
-    }
-
-    private String constructCalendarPresentation(final ExecutionCourse executionCourse, final Project project, final Date time,
-            final String tail, final Locale locale) {
-        final StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(messages.getMessage(locale, "label.evaluation.shortname.project"));
-        stringBuilder.append(" ");
-        stringBuilder.append(executionCourse.getSigla());
-        stringBuilder.append(" (");
-        stringBuilder.append(DateFormatUtil.format("HH:mm", time));
-        stringBuilder.append(") ");
-        stringBuilder.append(tail);
-        return stringBuilder.toString();
-    }
 
     public boolean isAsLink() {
         return asLink;

@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -41,7 +42,6 @@ import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Mark;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Shift;
-import org.fenixedu.academic.domain.StudentGroup;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.domain.util.email.ExecutionCourseSender;
@@ -91,9 +91,6 @@ public class AttendsSearchController extends ExecutionCourseController {
         return csrfTokenBean;
     }
 
-    @Autowired
-    StudentGroupService studentGroupService;
-
     @Override
     protected Class<?> getFunctionalityType() {
         return ManageExecutionCourseDA.class;
@@ -115,7 +112,7 @@ public class AttendsSearchController extends ExecutionCourseController {
         }
 
         model.addAttribute("attendsStates", studentAttendsStateTypes);
-        model.addAttribute("groupings", view(executionCourse.getGroupings()));
+        model.addAttribute("groupings", view(Collections.emptyList()));
 
         model.addAttribute("curricularPlans", view(executionCourse.getAttendsDegreeCurricularPlans()));
         model.addAttribute("shifts", view(executionCourse.getShiftsOrderedByLessons()));
@@ -160,11 +157,6 @@ public class AttendsSearchController extends ExecutionCourseController {
                         addCell(getLabel("label.number"), attends.getRegistration().getNumber());
                         addCell(getLabel("label.name"), attends.getRegistration().getPerson().getName());
                         addCell(getLabel("label.email"), attends.getRegistration().getPerson().getDefaultEmailAddressValue());
-                        executionCourse.getGroupings()
-                                .forEach(gr -> addCell(getLabel("label.projectGroup") + " " + gr.getName(),
-                                        attends.getStudentGroupsSet().stream().filter(sg -> sg.getGrouping().equals(gr))
-                                                .map(StudentGroup::getGroupNumber).map(gn -> gn.toString()).findAny()
-                                                .orElse("")));
                         executionCourse.getShiftTypes()
                                 .forEach(shiftType -> addCell(getLabel("label.shift") + " " + shiftType.getFullNameTipoAula(),
                                         Optional.ofNullable(

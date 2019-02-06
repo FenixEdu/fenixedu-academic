@@ -219,7 +219,6 @@ public class Context extends Context_Base implements Comparable<Context> {
         super.setBeginExecutionPeriod(null);
         setEndExecutionPeriod(null);
         setRootDomainObject(null);
-        getAssociatedWrittenEvaluationsSet().clear();
         super.deleteDomainObject();
     }
 

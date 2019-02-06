@@ -30,13 +30,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.academic.domain.WrittenEvaluation;
-import org.fenixedu.academic.domain.WrittenTest;
 import org.fenixedu.academic.domain.space.EventSpaceOccupation;
 import org.fenixedu.academic.domain.space.LessonInstanceSpaceOccupation;
 import org.fenixedu.academic.domain.space.LessonSpaceOccupation;
 import org.fenixedu.academic.domain.space.SpaceUtils;
-import org.fenixedu.academic.domain.space.WrittenEvaluationSpaceOccupation;
 import org.fenixedu.academic.dto.resourceAllocationManager.OccupationType;
 import org.fenixedu.academic.dto.resourceAllocationManager.SearchOccupationEventsBean;
 import org.fenixedu.academic.dto.resourceAllocationManager.SpaceOccupationEventBean;
@@ -52,10 +49,10 @@ import org.fenixedu.spaces.domain.occupation.Occupation;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
-import pt.ist.fenixframework.Atomic;
-
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+
+import pt.ist.fenixframework.Atomic;
 
 @StrutsFunctionality(app = RAMEvaluationsApp.class, path = "search-occupations", titleKey = "title.search.occupations")
 @Mapping(module = "resourceAllocationManager", path = "/searchOccupations", parameter = "method")
@@ -93,10 +90,6 @@ public class SearchOccupationsDA extends FenixDispatchAction {
             return OccupationType.LESSON;
         }
 
-        if (occupation instanceof WrittenEvaluationSpaceOccupation) {
-            return OccupationType.EVALUATION;
-        }
-
         if (occupation.getClass().equals(Occupation.class)) {
             return OccupationType.GENERIC;
         }
@@ -131,23 +124,6 @@ public class SearchOccupationsDA extends FenixDispatchAction {
                 OccupationType occupationType = getType(occupation);
                 if (!types.contains(occupationType)) {
                     continue;
-                }
-                if (occupation instanceof WrittenEvaluationSpaceOccupation) {
-                    WrittenEvaluationSpaceOccupation evalOccupation = (WrittenEvaluationSpaceOccupation) occupation;
-                    for (WrittenEvaluation eval : evalOccupation.getWrittenEvaluationsSet()) {
-                        final Interval durationInterval = eval.getDurationInterval();
-                        if (searchInterval.overlaps(durationInterval)) {
-                            String desc;
-                            if (eval instanceof WrittenTest) {
-                                desc =
-                                        String.format("(%s) %s - %s", eval.getEvaluationType(), eval.getName(),
-                                                ((WrittenTest) eval).getDescription());
-                            } else {
-                                desc = String.format("(%s) %s", eval.getEvaluationType(), eval.getName());
-                            }
-                            beans.add(new SpaceOccupationEventBean(space, durationInterval, desc, occupationType));
-                        }
-                    }
                 } else {
                     final String desc = getPresentationString(occupation);
                     for (Interval interval : map.get(occupation)) {

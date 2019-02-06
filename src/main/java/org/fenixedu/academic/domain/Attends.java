@@ -27,7 +27,6 @@ package org.fenixedu.academic.domain;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
@@ -35,16 +34,13 @@ import java.util.List;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.student.GroupEnrolment;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
-import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 /**
  *
@@ -57,40 +53,6 @@ public class Attends extends Attends_Base {
         public String getQualifiedName() {
             return StudentAttendsStateType.class.getSimpleName() + "." + name();
         }
-    }
-
-    static {
-        getRelationExecutionCourseAttends().addListener(new RelationAdapter<ExecutionCourse, Attends>() {
-            @Override
-            public void afterAdd(ExecutionCourse executionCourse, Attends attends) {
-                if (executionCourse != null && attends != null) {
-                    for (Grouping grouping : executionCourse.getGroupings()) {
-                        if (grouping.getAutomaticEnrolment() && !grouping.getStudentGroupsSet().isEmpty()) {
-                            grouping.addAttends(attends);
-
-                            int groupNumber = 1;
-                            final List<StudentGroup> studentGroups = new ArrayList<StudentGroup>(grouping.getStudentGroupsSet());
-                            Collections.sort(studentGroups, StudentGroup.COMPARATOR_BY_GROUP_NUMBER);
-
-                            for (final StudentGroup studentGroup : studentGroups) {
-                                if (studentGroup.getGroupNumber() > groupNumber) {
-                                    break;
-                                }
-                                groupNumber = studentGroup.getGroupNumber() + 1;
-                            }
-
-                            grouping.setGroupMaximumNumber(grouping.getStudentGroupsSet().size() + 1);
-                            try {
-                                GroupEnrolment.enrole(grouping.getExternalId(), null, groupNumber, new ArrayList<String>(),
-                                        attends.getRegistration().getStudent().getPerson().getUsername());
-                            } catch (FenixServiceException e) {
-                                throw new Error(e);
-                            }
-                        }
-                    }
-                }
-            }
-        });
     }
 
     public static final Comparator<Attends> COMPARATOR_BY_STUDENT_NUMBER = new Comparator<Attends>() {
@@ -156,8 +118,6 @@ public class Attends extends Attends_Base {
     public void delete() throws DomainException {
         DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
 
-        getProjectSubmissionLogsSet().clear();
-        getGroupingsSet().clear();
         setAluno(null);
         setDisciplinaExecucao(null);
         setEnrolment(null);
@@ -166,35 +126,14 @@ public class Attends extends Attends_Base {
         deleteDomainObject();
     }
 
-    public Collection<StudentGroup> getAllStudentGroups() {
-        return super.getStudentGroupsSet();
-    }
-
-    @Override
-    public Set<StudentGroup> getStudentGroupsSet() {
-        Set<StudentGroup> result = new HashSet<StudentGroup>();
-        for (StudentGroup sg : super.getStudentGroupsSet()) {
-            if (sg.getValid()) {
-                result.add(sg);
-            }
-        }
-        return Collections.unmodifiableSet(result);
-    }
-
     @Override
     protected void checkForDeletionBlockers(Collection<String> blockers) {
         super.checkForDeletionBlockers(blockers);
         if (hasAnyShiftEnrolments()) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.attends.cant.delete"));
         }
-        if (!getStudentGroupsSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.attends.cant.delete.has.student.groups"));
-        }
         if (!getAssociatedMarksSet().isEmpty()) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.attends.cant.delete.has.associated.marks"));
-        }
-        if (!getProjectSubmissionsSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.attends.cant.delete.has.project.submissions"));
         }
     }
 
@@ -233,15 +172,6 @@ public class Attends extends Attends_Base {
         }
 
         return foundShiftTypes.size() == shiftTypes.size();
-    }
-
-    public FinalMark getFinalMark() {
-        for (Mark mark : getAssociatedMarksSet()) {
-            if (mark instanceof FinalMark) {
-                return (FinalMark) mark;
-            }
-        }
-        return null;
     }
 
     public Mark getMarkByEvaluation(Evaluation evaluation) {
@@ -393,15 +323,6 @@ public class Attends extends Attends_Base {
             return StudentAttendsStateType.ENROLED;
         }
 
-        return null;
-    }
-
-    public StudentGroup getStudentGroupByGrouping(final Grouping grouping) {
-        for (StudentGroup studentGroup : getStudentGroupsSet()) {
-            if (studentGroup.getGrouping().equals(grouping)) {
-                return studentGroup;
-            }
-        }
         return null;
     }
 

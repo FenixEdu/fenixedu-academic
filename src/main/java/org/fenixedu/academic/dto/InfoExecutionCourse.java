@@ -31,9 +31,7 @@ import org.fenixedu.academic.domain.CourseLoad;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.EntryPhase;
 import org.fenixedu.academic.domain.Evaluation;
-import org.fenixedu.academic.domain.Exam;
 import org.fenixedu.academic.domain.ExecutionCourse;
-import org.fenixedu.academic.domain.Grouping;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.ShiftType;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
@@ -189,32 +187,6 @@ public class InfoExecutionCourse extends InfoObject {
         return getAssociatedInfoCurricularCourses().size() > 1;
     }
 
-    public List<InfoExam> getAssociatedInfoExams() {
-        if (filteredAssociatedInfoExams == null) {
-            List<InfoExam> result = new ArrayList<InfoExam>();
-            for (final Exam exam : getExecutionCourse().getAssociatedExams()) {
-                result.add(InfoExam.newInfoFromDomain(exam));
-            }
-            return result;
-        } else {
-            return getFilteredAssociatedInfoExams();
-        }
-    }
-
-    public List<InfoGrouping> getInfoGroupings() {
-        if (filteredInfoGroupings == null) {
-            List<InfoGrouping> result = new ArrayList<InfoGrouping>();
-
-            for (final Grouping grouping : getExecutionCourse().getGroupings()) {
-                result.add(InfoGrouping.newInfoFromDomain(grouping));
-            }
-
-            return result;
-        } else {
-            return getFilteredInfoGroupings();
-        }
-    }
-
     public Collection<CourseLoad> getCourseLoads() {
         return getExecutionCourse().getCourseLoadsSet();
     }
@@ -260,29 +232,9 @@ public class InfoExecutionCourse extends InfoObject {
         this.filteredAssociatedInfoCurricularCourses = filteredAssociatedInfoCurricularCourses;
     }
 
-    private List<InfoExam> filteredAssociatedInfoExams;
-
-    private List<InfoExam> getFilteredAssociatedInfoExams() {
-        return filteredAssociatedInfoExams;
-    }
-
-    public void setFilteredAssociatedInfoExams(final List<InfoExam> filteredAssociatedInfoExams) {
-        this.filteredAssociatedInfoExams = filteredAssociatedInfoExams;
-    }
-
     @Override
     public String toString() {
         return getExecutionCourse().toString();
-    }
-
-    private List<InfoGrouping> filteredInfoGroupings;
-
-    private List<InfoGrouping> getFilteredInfoGroupings() {
-        return filteredInfoGroupings;
-    }
-
-    public void setFilteredInfoGroupings(List<InfoGrouping> filteredInfoGroupings) {
-        this.filteredInfoGroupings = filteredInfoGroupings;
     }
 
     public EntryPhase getEntryPhase() {

@@ -50,8 +50,6 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Enrolment;
-import org.fenixedu.academic.domain.Evaluation;
-import org.fenixedu.academic.domain.Exam;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionSemester;
@@ -59,15 +57,11 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.Project;
 import org.fenixedu.academic.domain.SchoolClass;
 import org.fenixedu.academic.domain.SchoolLevelType;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.ShiftType;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
-import org.fenixedu.academic.domain.WrittenEvaluation;
-import org.fenixedu.academic.domain.WrittenEvaluationEnrolment;
-import org.fenixedu.academic.domain.WrittenTest;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
@@ -387,102 +381,6 @@ public class Registration extends Registration_Base {
             }
         }
         return false;
-    }
-
-    final public List<WrittenEvaluation> getWrittenEvaluations(final ExecutionSemester executionSemester) {
-        final List<WrittenEvaluation> result = new ArrayList<>();
-        for (final Attends attend : this.getAssociatedAttendsSet()) {
-            if (attend.isFor(executionSemester)) {
-                for (final Evaluation evaluation : attend.getExecutionCourse().getAssociatedEvaluationsSet()) {
-                    if (evaluation instanceof WrittenEvaluation && !result.contains(evaluation)) {
-                        result.add((WrittenEvaluation) evaluation);
-                    }
-                }
-            }
-        }
-        return result;
-    }
-
-    final public List<Exam> getEnroledExams(final ExecutionSemester executionSemester) {
-        final List<Exam> result = new ArrayList<>();
-        for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : this.getWrittenEvaluationEnrolmentsSet()) {
-            if (writtenEvaluationEnrolment.getWrittenEvaluation() instanceof Exam
-                    && writtenEvaluationEnrolment.isForExecutionPeriod(executionSemester)) {
-                result.add((Exam) writtenEvaluationEnrolment.getWrittenEvaluation());
-            }
-        }
-        return result;
-    }
-
-    final public List<Exam> getUnenroledExams(final ExecutionSemester executionSemester) {
-        final List<Exam> result = new ArrayList<>();
-        for (final Attends attend : this.getAssociatedAttendsSet()) {
-            if (attend.isFor(executionSemester)) {
-                for (final Evaluation evaluation : attend.getExecutionCourse().getAssociatedEvaluationsSet()) {
-                    if (evaluation instanceof Exam && !this.isEnroledIn(evaluation)) {
-                        result.add((Exam) evaluation);
-                    }
-                }
-            }
-        }
-        return result;
-    }
-
-    final public List<WrittenTest> getEnroledWrittenTests(final ExecutionSemester executionSemester) {
-        final List<WrittenTest> result = new ArrayList<>();
-        for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : this.getWrittenEvaluationEnrolmentsSet()) {
-            if (writtenEvaluationEnrolment.getWrittenEvaluation() instanceof WrittenTest
-                    && writtenEvaluationEnrolment.isForExecutionPeriod(executionSemester)) {
-                result.add((WrittenTest) writtenEvaluationEnrolment.getWrittenEvaluation());
-            }
-        }
-        return result;
-    }
-
-    final public List<WrittenTest> getUnenroledWrittenTests(final ExecutionSemester executionSemester) {
-        final List<WrittenTest> result = new ArrayList<>();
-        for (final Attends attend : this.getAssociatedAttendsSet()) {
-            if (attend.getExecutionCourse().getExecutionPeriod() == executionSemester) {
-                for (final Evaluation evaluation : attend.getExecutionCourse().getAssociatedEvaluationsSet()) {
-                    if (evaluation instanceof WrittenTest && !this.isEnroledIn(evaluation)) {
-                        result.add((WrittenTest) evaluation);
-                    }
-                }
-            }
-        }
-        return result;
-    }
-
-    public List<Project> getProjects(final ExecutionSemester executionSemester) {
-        final List<Project> result = new ArrayList<>();
-        for (final Attends attend : this.getAssociatedAttendsSet()) {
-            if (attend.isFor(executionSemester)) {
-                for (final Evaluation evaluation : attend.getExecutionCourse().getAssociatedEvaluationsSet()) {
-                    if (evaluation instanceof Project) {
-                        result.add((Project) evaluation);
-                    }
-                }
-            }
-        }
-        return result;
-    }
-
-    final public boolean isEnroledIn(final Evaluation evaluation) {
-        for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : this.getWrittenEvaluationEnrolmentsSet()) {
-            if (writtenEvaluationEnrolment.getWrittenEvaluation() == evaluation) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    final public Space getRoomFor(final WrittenEvaluation writtenEvaluation) {
-        for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : this.getWrittenEvaluationEnrolmentsSet()) {
-            if (writtenEvaluationEnrolment.getWrittenEvaluation() == writtenEvaluation) {
-                return writtenEvaluationEnrolment.getRoom();
-            }
-        }
-        return null;
     }
 
     final public Stream<StudentCurricularPlan> getStudentCurricularPlanStream() {

@@ -186,10 +186,6 @@ public class Lesson extends Lesson_Base {
         final Shift shift = getShift();
         final boolean isLastLesson = isLastLesson(shift);
 
-        if (isLastLesson && shift.hasAnyStudentsInAssociatedStudentGroups()) {
-            throw new DomainException("error.deleteLesson.with.Shift.with.studentGroups", prettyPrint());
-        }
-
         if (isLastLesson && !shift.getStudentsSet().isEmpty()) {
             throw new DomainException("error.deleteLesson.with.Shift.with.students", prettyPrint());
         }

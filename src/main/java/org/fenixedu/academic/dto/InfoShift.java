@@ -38,7 +38,6 @@ import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Lesson;
 import org.fenixedu.academic.domain.SchoolClass;
 import org.fenixedu.academic.domain.Shift;
-import org.fenixedu.academic.domain.ShiftGroupingProperties;
 import org.fenixedu.academic.domain.ShiftType;
 import org.fenixedu.academic.util.DateFormatUtil;
 import org.fenixedu.academic.util.NumberUtils;
@@ -69,12 +68,7 @@ public class InfoShift extends InfoObject {
 
     public InfoShift(final Shift shift) {
         this.shift = shift;
-        ShiftGroupingProperties groupingProperties = getShift().getShiftGroupingProperties();
-        if (groupingProperties != null) {
-            this.capacity = groupingProperties.getCapacity();
-        } else {
-            this.capacity = 0;
-        }
+        this.capacity = 0;
     }
 
     public Integer getSize() {
