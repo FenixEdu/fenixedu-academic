@@ -20,6 +20,8 @@ package org.fenixedu.academic.domain.student;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
@@ -173,6 +175,10 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
 
     static public RegistrationProtocol findByCode(String code) {
         return findAll().stream().filter(rp -> rp.getCode().equals(code)).findFirst().orElse(null);
+    }
+
+    public static Stream<RegistrationProtocol> findByPredicate(Predicate<RegistrationProtocol> predicate) {
+        return Bennu.getInstance().getRegistrationProtocolsSet().stream().filter(predicate);
     }
 
 }

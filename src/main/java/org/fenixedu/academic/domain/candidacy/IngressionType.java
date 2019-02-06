@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.candidacy;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -59,6 +60,10 @@ public class IngressionType extends IngressionType_Base {
     public static Optional<IngressionType> findIngressionTypeByCode(String name) {
         Predicate<? super IngressionType> matchesName = ingressionType -> name.equals(ingressionType.getCode());
         return Bennu.getInstance().getIngressionTypesSet().stream().filter(matchesName).findAny();
+    }
+
+    public static Stream<IngressionType> findAllByPredicate(Predicate<IngressionType> predicate) {
+        return Bennu.getInstance().getIngressionTypesSet().stream().filter(predicate);
     }
 
     public static Optional<IngressionType> findByPredicate(Predicate<IngressionType> predicate) {
