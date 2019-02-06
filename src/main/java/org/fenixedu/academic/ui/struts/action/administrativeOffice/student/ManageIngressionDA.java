@@ -28,7 +28,6 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.dto.candidacy.IngressionInformationBean;
-import org.fenixedu.academic.service.factoryExecutors.RegistrationIngressionFactorExecutor.RegistrationIngressionEditor;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.FenixActionForm;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
@@ -38,6 +37,7 @@ import org.fenixedu.bennu.struts.annotations.Input;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -54,21 +54,30 @@ public class ManageIngressionDA extends FenixDispatchAction {
         return getDomainObject(request, "registrationId");
     }
 
-    private RegistrationIngressionEditor getRegistrationIngressionEditor() {
+    private IngressionInformationBean getRegistrationIngressionEditor() {
         return getRenderedObject();
     }
 
     @Input
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        request.setAttribute("ingressionBean", new RegistrationIngressionEditor(getRegistration(request)));
+
+        final Registration registration = getRegistration(request);
+        final IngressionInformationBean bean = new IngressionInformationBean(registration);
+        bean.setRegistrationProtocol(registration.getRegistrationProtocol());
+        bean.setAgreementInformation(registration.getAgreementInformation());
+        bean.setIngressionType(registration.getIngressionType());
+        bean.setEntryPhase(registration.getEntryPhase());
+
+        request.setAttribute("ingressionBean", bean);
+
         return mapping.findForward("showEditIngression");
     }
 
     public ActionForward postBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
-        RegistrationIngressionEditor ingressionInformationBean = getRegistrationIngressionEditor();
+        IngressionInformationBean ingressionInformationBean = getRegistrationIngressionEditor();
         if (!ingressionInformationBean.hasRegistrationProtocol()
                 || ingressionInformationBean.getRegistrationProtocol().isEnrolmentByStudentAllowed()) {
             ingressionInformationBean.setAgreementInformation(null);
@@ -81,19 +90,29 @@ public class ManageIngressionDA extends FenixDispatchAction {
 
     public ActionForward editIngression(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
+        final IngressionInformationBean bean = getRegistrationIngressionEditor();
         try {
-            executeFactoryMethod();
+            editIngressionService(bean);
         } catch (final DomainException e) {
-            request.setAttribute("ingressionBean", getRegistrationIngressionEditor());
+            request.setAttribute("ingressionBean", bean);
             RenderUtils.invalidateViewState();
             addActionMessage(request, e.getKey());
             return mapping.findForward("showEditIngression");
         }
 
         addActionMessage(request, "message.registration.ingression.and.agreement.edit.success");
-        request.setAttribute("registrationId", getRegistrationIngressionEditor().getRegistration().getExternalId());
+        request.setAttribute("registrationId", bean.getRegistration().getExternalId());
 
         return prepare(mapping, actionForm, request, response);
+    }
+
+    @Atomic
+    private void editIngressionService(IngressionInformationBean bean) {
+        final Registration registration = bean.getRegistration();
+        registration.setRegistrationProtocol(bean.getRegistrationProtocol());
+        registration.setAgreementInformation(bean.getAgreementInformation());
+        registration.setIngressionType(bean.getIngressionType());
+        registration.setEntryPhase(bean.getEntryPhase());
     }
 
     public ActionForward prepareCreateReingression(final ActionMapping mapping, final ActionForm form,

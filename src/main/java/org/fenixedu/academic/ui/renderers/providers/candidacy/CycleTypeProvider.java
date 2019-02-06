@@ -22,7 +22,6 @@ import java.util.ArrayList;
 
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.dto.administrativeOffice.ExecutionDegreeBean;
-import org.fenixedu.academic.service.factoryExecutors.StudentCurricularPlanFactoryExecutor.StudentCurricularPlanCreator;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -41,11 +40,6 @@ public class CycleTypeProvider implements DataProvider {
             ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) source;
             if (executionDegreeBean.getDegree() != null) {
                 return executionDegreeBean.getDegree().getDegreeType().getCycleTypes();
-            }
-        } else if (source instanceof StudentCurricularPlanCreator) {
-            StudentCurricularPlanCreator studentCurricularPlanCreator = (StudentCurricularPlanCreator) source;
-            if (studentCurricularPlanCreator.getDegree() != null) {
-                return studentCurricularPlanCreator.getDegree().getDegreeType().getCycleTypes();
             }
         }
 
