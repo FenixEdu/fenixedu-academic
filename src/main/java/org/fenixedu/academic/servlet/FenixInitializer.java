@@ -19,6 +19,8 @@
 package org.fenixedu.academic.servlet;
 
 import java.util.Properties;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -28,6 +30,8 @@ import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpServletRequest;
 
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
+import org.fenixedu.academic.domain.Evaluation;
+import org.fenixedu.academic.domain.FinalEvaluation;
 import org.fenixedu.academic.domain.Installation;
 import org.fenixedu.academic.domain.organizationalStructure.UnitNamePart;
 import org.fenixedu.academic.service.StudentWarningsDefaultCheckers;
@@ -35,16 +39,17 @@ import org.fenixedu.academic.service.StudentWarningsService;
 import org.fenixedu.academic.service.services.commons.ReadCurrentExecutionPeriod;
 import org.fenixedu.academic.ui.struts.action.externalServices.PhoneValidationUtils;
 import org.fenixedu.bennu.core.api.SystemResource;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.rest.Healthcheck;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.sun.mail.smtp.SMTPTransport;
 
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter.ChecksumPredicate;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
-
-import com.sun.mail.smtp.SMTPTransport;
 
 @WebListener
 public class FenixInitializer implements ServletContextListener {
@@ -64,6 +69,17 @@ public class FenixInitializer implements ServletContextListener {
 
         registerHealthchecks();
         registerDefaultStudentWarningCheckers();
+
+        deleteFinalEvaluations();
+    }
+
+    @Atomic
+    private void deleteFinalEvaluations() {
+        final Set<Evaluation> finalEvaluations = Bennu.getInstance().getEvaluationsSet().stream()
+                .filter(e -> e instanceof FinalEvaluation).collect(Collectors.toSet());
+        int size = finalEvaluations.size();
+        finalEvaluations.forEach(e -> e.delete());
+        logger.info(String.format("Deleted %d FinalEvaluations", size));
     }
 
     private void registerDefaultStudentWarningCheckers() {
@@ -117,8 +133,8 @@ public class FenixInitializer implements ServletContextListener {
                 if (uri.indexOf("/student/fillInquiries.do") >= 0) {
                     return false;
                 }
-                if ((uri.indexOf("/teacher/executionCourseForumManagement.do") >= 0 || uri
-                        .indexOf("/student/viewExecutionCourseForuns.do") >= 0)
+                if ((uri.indexOf("/teacher/executionCourseForumManagement.do") >= 0
+                        || uri.indexOf("/student/viewExecutionCourseForuns.do") >= 0)
                         && request.getQueryString().indexOf("method=viewThread") >= 0) {
                     return false;
                 }

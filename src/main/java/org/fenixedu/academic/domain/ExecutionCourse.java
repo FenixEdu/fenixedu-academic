@@ -167,7 +167,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         super();
 
         setRootDomainObject(Bennu.getInstance());
-        addAssociatedEvaluations(new FinalEvaluation());
         setAvailableGradeSubmission(Boolean.TRUE);
 
         setNome(nome);
