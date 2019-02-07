@@ -95,6 +95,7 @@ public class AccountingEventForOwnerController extends AccountingController {
             model.addAttribute("fines", fines);
             model.addAttribute("debts", debts);
             model.addAttribute("paymentCodeEntries", paymentCodeEntries);
+            model.addAttribute("availableAdvancements", Event.availableAdvancements(loggedUser.getPerson()));
 
             return view("event-payment-options");
         }

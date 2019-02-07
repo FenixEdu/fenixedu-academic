@@ -121,6 +121,23 @@
                 </div>
             </div>
         </c:if>
+        <div class="row">
+            <h2>
+                <spring:message code="label.payment.methods" text="Payment Methods"/>
+            </h2>
+        </div>
+
+        <c:if test="${not empty availableAdvancements}">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="overall-description">
+                        <spring:url value="owner-accounting-events" var="eventContextPrefix" scope="request"/>
+                        <jsp:include page="event-depositAdvancment.jsp"/>
+                    </div>
+                </div>
+            </div>
+        </c:if>
+
         <c:if test="${not empty paymentCodeEntries}">
             <div class="row">
                 <div class="col-xs-12 col-md-4">
