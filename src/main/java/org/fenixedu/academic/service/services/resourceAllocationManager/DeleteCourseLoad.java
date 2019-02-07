@@ -18,10 +18,7 @@
  */
 package org.fenixedu.academic.service.services.resourceAllocationManager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.CourseLoad;
-import org.fenixedu.academic.predicate.RolePredicates;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -29,7 +26,6 @@ public class DeleteCourseLoad {
 
     @Atomic
     public static void run(CourseLoad courseLoad) {
-        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
         if (courseLoad != null) {
             courseLoad.delete();
         }

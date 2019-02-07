@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.student;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -88,7 +86,6 @@ import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
 import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.domain.studentCurriculum.StandaloneCurriculumGroup;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.predicate.RegistrationPredicates;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -2063,8 +2060,6 @@ public class Registration extends Registration_Base {
     }
 
     public void conclude(final CurriculumGroup curriculumGroup) {
-        check(this, RegistrationPredicates.MANAGE_CONCLUSION_PROCESS);
-
         if (curriculumGroup == null
                 || getStudentCurricularPlansSet().stream().noneMatch(scp -> scp.hasCurriculumModule(curriculumGroup))) {
             throw new DomainException("error.Registration.invalid.cycleCurriculumGroup");

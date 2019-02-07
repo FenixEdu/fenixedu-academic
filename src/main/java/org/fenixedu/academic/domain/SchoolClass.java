@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,7 +25,6 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
-import org.fenixedu.academic.predicate.ResourceAllocationRolePredicates;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
@@ -77,7 +74,6 @@ public class SchoolClass extends SchoolClass_Base {
     }
 
     public void edit(String name) {
-        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageSchoolClass);
         if (name != null && !StringUtils.isEmpty(name.trim())) {
             final SchoolClass otherClassWithSameNewName =
                     getExecutionDegree().findSchoolClassesByExecutionPeriodAndName(getExecutionPeriod(), name.trim());
@@ -89,7 +85,6 @@ public class SchoolClass extends SchoolClass_Base {
     }
 
     public void delete() {
-        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageSchoolClass);
         getAssociatedShiftsSet().clear();
         super.setExecutionDegree(null);
         super.setExecutionPeriod(null);

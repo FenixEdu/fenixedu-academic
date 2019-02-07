@@ -22,10 +22,7 @@
  */
 package org.fenixedu.academic.service.services.student.enrolment;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 
 import pt.ist.fenixframework.Atomic;
@@ -34,7 +31,6 @@ public class ReadStudentByUsername {
 
     @Atomic
     public static Registration run(String studentUsername) throws FenixServiceException {
-        check(RolePredicates.STUDENT_PREDICATE);
         final Registration registration = Registration.readByUsername(studentUsername);
         if (registration == null) {
             throw new FenixServiceException("error.noStudent");

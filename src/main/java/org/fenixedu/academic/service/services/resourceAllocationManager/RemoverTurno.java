@@ -18,15 +18,12 @@
  */
 package org.fenixedu.academic.service.services.resourceAllocationManager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.fenixedu.academic.domain.SchoolClass;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.dto.InfoClass;
 import org.fenixedu.academic.dto.InfoShift;
-import org.fenixedu.academic.predicate.RolePredicates;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -35,7 +32,6 @@ public class RemoverTurno {
 
     @Atomic
     public static Object run(final InfoShift infoShift, final InfoClass infoClass) {
-        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
         final Shift shift = FenixFramework.getDomainObject(infoShift.getExternalId());
         if (shift == null) {
             return Boolean.FALSE;

@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.studentCurriculum;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Collections;
@@ -40,7 +38,6 @@ import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
 import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
 import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean.SelectedOptionalCurricularCourse;
-import org.fenixedu.academic.predicate.CreditsPredicates;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
@@ -234,7 +231,6 @@ public class Credits extends Credits_Base {
     }
 
     final public void delete() {
-        check(this, CreditsPredicates.DELETE);
         disconnect();
         super.deleteDomainObject();
     }

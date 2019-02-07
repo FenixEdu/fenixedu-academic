@@ -21,8 +21,6 @@
  */
 package org.fenixedu.academic.service.services.student.administrativeOfficeServices;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Qualification;
 import org.fenixedu.academic.domain.candidacy.RegisteredCandidacySituation;
@@ -35,7 +33,6 @@ import org.fenixedu.academic.dto.candidacy.IngressionInformationBean;
 import org.fenixedu.academic.dto.candidacy.OriginInformationBean;
 import org.fenixedu.academic.dto.candidacy.PrecedentDegreeInformationBean;
 import org.fenixedu.academic.dto.person.PersonBean;
-import org.fenixedu.academic.predicate.AcademicPredicates;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -50,7 +47,6 @@ public class CreateStudent {
     public static Registration run(PersonBean personBean, ExecutionDegreeBean executionDegreeBean,
             PrecedentDegreeInformationBean precedentDegreeInformationBean, IngressionInformationBean ingressionInformationBean,
             OriginInformationBean originInformationBean) {
-        check(AcademicPredicates.CREATE_REGISTRATION);
 
         // get or update person
         Person person = getPerson(personBean);

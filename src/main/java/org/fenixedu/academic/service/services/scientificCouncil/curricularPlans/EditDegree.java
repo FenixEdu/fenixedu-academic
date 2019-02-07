@@ -18,15 +18,12 @@
  */
 package org.fenixedu.academic.service.services.scientificCouncil.curricularPlans;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.List;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.GradeScale;
 import org.fenixedu.academic.domain.degree.DegreeType;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
 import org.fenixedu.academic.service.services.exceptions.NonExistingServiceException;

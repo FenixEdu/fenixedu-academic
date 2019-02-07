@@ -18,15 +18,12 @@
  */
 package org.fenixedu.academic.service.services.resourceAllocationManager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.Collection;
 import java.util.List;
 
 import org.fenixedu.academic.domain.SchoolClass;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.dto.InfoClass;
-import org.fenixedu.academic.predicate.RolePredicates;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -35,7 +32,6 @@ public class RemoveShifts {
 
     @Atomic
     public static Boolean run(final InfoClass infoClass, final List<String> shiftOIDs) {
-        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
         final SchoolClass schoolClass = FenixFramework.getDomainObject(infoClass.getExternalId());
         final Collection<Shift> shifts = schoolClass.getAssociatedShiftsSet();
 

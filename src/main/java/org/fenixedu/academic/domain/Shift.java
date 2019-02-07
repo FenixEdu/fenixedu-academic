@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.math.BigDecimal;
 import java.text.Collator;
 import java.util.ArrayList;
@@ -41,7 +39,6 @@ import org.fenixedu.academic.domain.util.email.ExecutionCourseSender;
 import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.academic.domain.util.email.Recipient;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.predicate.ResourceAllocationRolePredicates;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.DiaSemana;
 import org.fenixedu.academic.util.WeekDay;
@@ -108,7 +105,6 @@ public class Shift extends Shift_Base {
 
     public void edit(List<ShiftType> newTypes, Integer newCapacity, ExecutionCourse newExecutionCourse, String newName,
             String comment) {
-        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageShifts);
 
         ExecutionCourse beforeExecutionCourse = getExecutionCourse();
 
@@ -143,7 +139,6 @@ public class Shift extends Shift_Base {
     }
 
     public void delete() {
-        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageShifts);
         DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         final ExecutionCourse executionCourse = getExecutionCourse();
 

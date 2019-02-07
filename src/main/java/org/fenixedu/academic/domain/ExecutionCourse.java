@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.math.BigDecimal;
 import java.text.Collator;
 import java.util.ArrayList;
@@ -55,7 +53,6 @@ import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.dto.GenericPair;
 import org.fenixedu.academic.dto.teacher.executionCourse.SearchExecutionCourseAttendsBean;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.predicate.ExecutionCoursePredicates;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.DateFormatUtil;
 import org.fenixedu.academic.util.LocaleUtils;
@@ -1558,7 +1555,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public void searchAttends(SearchExecutionCourseAttendsBean attendsBean) {
-        check(this, ExecutionCoursePredicates.executionCourseLecturingTeacherOrDegreeCoordinator);
         final Predicate<Attends> filter = attendsBean.getFilters();
         final Collection<Attends> validAttends = new HashSet<Attends>();
         final Map<Integer, Integer> enrolmentNumberMap = new HashMap<Integer, Integer>();

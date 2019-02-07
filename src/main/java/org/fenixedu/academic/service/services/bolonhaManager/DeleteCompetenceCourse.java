@@ -21,10 +21,7 @@
  */
 package org.fenixedu.academic.service.services.bolonhaManager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.CompetenceCourse;
-import org.fenixedu.academic.predicate.RolePredicates;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -33,7 +30,6 @@ public class DeleteCompetenceCourse {
 
     @Atomic
     public static void run(final String competenceCourseID) {
-        check(RolePredicates.BOLONHA_MANAGER_PREDICATE);
         final CompetenceCourse competenceCourse = FenixFramework.getDomainObject(competenceCourseID);
         if (competenceCourse != null) {
             competenceCourse.delete();

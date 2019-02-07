@@ -18,15 +18,12 @@
  */
 package org.fenixedu.academic.service.services.scientificCouncil.curricularPlans;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.GradeScale;
 import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
-import org.fenixedu.academic.predicate.RolePredicates;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -37,7 +34,6 @@ public class EditDegreeCurricularPlan {
             final DegreeCurricularPlanState state, final GradeScale gradeScale, final ExecutionYear executionInterval,
             final AcademicPeriod duration, final Boolean applyPreviousYearsEnrolmentRule) {
 
-        check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
 
         if (degreeCurricularPlan == null) {
             throw new IllegalArgumentException("error.degreeCurricularPlan.no.existing.degreeCurricularPlan");

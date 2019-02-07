@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.space;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.List;
 import java.util.SortedSet;
 
@@ -28,7 +26,6 @@ import org.fenixedu.academic.domain.FrequencyType;
 import org.fenixedu.academic.domain.Lesson;
 import org.fenixedu.academic.domain.OccupationPeriod;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.predicate.SpacePredicates;
 import org.fenixedu.academic.util.DiaSemana;
 import org.fenixedu.academic.util.HourMinuteSecond;
 import org.fenixedu.bennu.core.groups.Group;
@@ -67,8 +64,6 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
     }
 
     public void edit(Space allocatableSpace) {
-        check(this, SpacePredicates.checkPermissionsToManageLessonSpaceOccupations);
-
         if (getPeriod() == null) {
             throw new DomainException("error.LessonSpaceOccupation.empty.period");
         }
@@ -87,7 +82,6 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
 
     @Override
     public void delete() {
-        check(this, SpacePredicates.checkPermissionsToDeleteLessonSpaceOccupations);
         super.setLesson(null);
         super.delete();
     }

@@ -18,14 +18,11 @@
  */
 package org.fenixedu.academic.service.services.resourceAllocationManager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.List;
 
 import org.fenixedu.academic.domain.SchoolClass;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.dto.InfoClass;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
 
@@ -36,7 +33,6 @@ public class AddShiftsToSchoolClass {
 
     @Atomic
     public static void run(InfoClass infoClass, List<String> shiftOIDs) throws FenixServiceException {
-        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
         final SchoolClass schoolClass = FenixFramework.getDomainObject(infoClass.getExternalId());
         if (schoolClass == null) {
             throw new InvalidArgumentsServiceException();

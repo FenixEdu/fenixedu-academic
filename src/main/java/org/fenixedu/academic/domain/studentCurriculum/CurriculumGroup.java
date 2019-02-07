@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.studentCurriculum;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,8 +28,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
@@ -60,7 +58,6 @@ import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.domain.student.curriculum.ProgramConclusionProcess;
 import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.predicate.CycleCurriculumGroupPredicates;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.predicates.AndPredicate;
 import org.fenixedu.academic.util.predicates.ResultCollection;
@@ -1300,7 +1297,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
         }
         return null;
     }
-    
+
     public ConclusionProcess readConclusionProcessEvenIfInactive() {
         return super.getConclusionProcess();
     }
@@ -1308,7 +1305,6 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     // Stuff moved from CycleCurriculumGroup
 
     public void conclude() {
-        check(this, CycleCurriculumGroupPredicates.MANAGE_CONCLUSION_PROCESS);
         if (isConclusionProcessed()) {
             if (!getRegistration().canRepeatConclusionProcess(AccessControl.getPerson())) {
                 throw new DomainException("error.CycleCurriculumGroup.cycle.is.already.concluded", getDegreeModule().getName());
@@ -1448,9 +1444,9 @@ public class CurriculumGroup extends CurriculumGroup_Base {
         return super.getCreditsConcluded();
     }
 
-	@Override
-	public Stream<CurriculumLine> getCurriculumLineStream() {
-		return getCurriculumModulesSet().stream().flatMap(m -> m.getCurriculumLineStream());
-	}
+    @Override
+    public Stream<CurriculumLine> getCurriculumLineStream() {
+        return getCurriculumModulesSet().stream().flatMap(m -> m.getCurriculumLineStream());
+    }
 
 }

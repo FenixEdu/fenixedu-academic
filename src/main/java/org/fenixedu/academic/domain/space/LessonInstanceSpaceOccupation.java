@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.space;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -29,7 +27,6 @@ import org.fenixedu.academic.domain.FrequencyType;
 import org.fenixedu.academic.domain.Lesson;
 import org.fenixedu.academic.domain.LessonInstance;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.predicate.SpacePredicates;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.DiaSemana;
 import org.fenixedu.academic.util.HourMinuteSecond;
@@ -60,8 +57,6 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
     }
 
     public void edit(LessonInstance lessonInstance) {
-        check(this, SpacePredicates.checkPermissionsToManageLessonInstanceSpaceOccupationsWithTeacherCheck);
-
         if (getLessonInstancesSet().contains(lessonInstance)) {
             removeLessonInstances(lessonInstance);
         }
@@ -84,7 +79,6 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
 
     @Override
     public void delete() {
-        check(this, SpacePredicates.checkPermissionsToManageLessonInstanceSpaceOccupations);
         if (getDeletionBlockers().isEmpty()) {
             super.delete();
         }

@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.service.services.resourceAllocationManager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,7 +29,6 @@ import org.fenixedu.academic.domain.util.email.ConcreteReplyTo;
 import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.academic.domain.util.email.Recipient;
 import org.fenixedu.academic.domain.util.email.Sender;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -46,7 +43,6 @@ public class ChangeStudentsShift {
     @Atomic
     public static void run(User userView, String oldShiftId, String newShiftId, final Set<Registration> registrations)
             throws FenixServiceException {
-        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
 
         if (newShiftId != null && newShiftId.isEmpty()) {
             return;

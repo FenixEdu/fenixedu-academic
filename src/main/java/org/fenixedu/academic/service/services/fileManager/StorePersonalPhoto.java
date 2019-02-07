@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.service.services.fileManager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,13 +26,12 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.PhotoType;
 import org.fenixedu.academic.domain.Photograph;
 import org.fenixedu.academic.dto.person.PhotographUploadBean;
-import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.service.services.ExcepcaoInexistente;
 import org.fenixedu.academic.util.ContentType;
 
-import pt.ist.fenixframework.Atomic;
-
 import com.google.common.io.ByteStreams;
+
+import pt.ist.fenixframework.Atomic;
 
 /**
  * 
@@ -61,7 +58,6 @@ public class StorePersonalPhoto {
     @Atomic
     static public void uploadPhoto(final PhotographUploadBean photoBean, final Person person) throws FileNotFoundException,
             IOException {
-        check(AcademicPredicates.MANAGE_PHD_PROCESSES);
         try (InputStream stream = photoBean.getFileInputStream()) {
             person.setPersonalPhoto(new Photograph(PhotoType.INSTITUTIONAL,
                     ContentType.getContentType(photoBean.getContentType()), ByteStreams.toByteArray(stream)));

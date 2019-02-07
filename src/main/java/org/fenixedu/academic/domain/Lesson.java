@@ -44,8 +44,6 @@ import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.util.icalendar.ClassEventBean;
 import org.fenixedu.academic.domain.util.icalendar.EventBean;
 import org.fenixedu.academic.dto.GenericPair;
-import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.predicate.ResourceAllocationRolePredicates;
 import org.fenixedu.academic.util.DiaSemana;
 import org.fenixedu.academic.util.HourMinuteSecond;
 import org.fenixedu.academic.util.WeekDay;
@@ -146,7 +144,6 @@ public class Lesson extends Lesson_Base {
 
     public void edit(YearMonthDay newBeginDate, YearMonthDay newEndDate, DiaSemana diaSemana, Calendar inicio, Calendar fim,
             FrequencyType frequency, Boolean createLessonInstances, Space newRoom) {
-        AccessControl.check(this, ResourceAllocationRolePredicates.checkPermissionsToManageLessons);
 
         if (newBeginDate != null && newEndDate != null && newBeginDate.isAfter(newEndDate)) {
             throw new DomainException("error.Lesson.new.begin.date.after.new.end.date");
@@ -177,12 +174,10 @@ public class Lesson extends Lesson_Base {
     }
 
     public void edit(final Space newRoom) {
-        AccessControl.check(this, ResourceAllocationRolePredicates.checkPermissionsToManageLessons);
         lessonSpaceOccupationManagement(newRoom);
     }
 
     public void delete() {
-        AccessControl.check(this, ResourceAllocationRolePredicates.checkPermissionsToManageLessons);
         final Shift shift = getShift();
         final boolean isLastLesson = isLastLesson(shift);
 

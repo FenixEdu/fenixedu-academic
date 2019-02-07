@@ -18,10 +18,7 @@
  */
 package org.fenixedu.academic.service.services.scientificCouncil.curricularPlans;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.DegreeOfficialPublication;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
 
@@ -39,7 +36,6 @@ public class ChangeDegreeOfficialPublicationReference {
     @Atomic
     public static void run(DegreeOfficialPublication degreeOfficialPublication, String officialReference)
             throws FenixServiceException {
-        check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
 
         if (degreeOfficialPublication == null || officialReference == null) {
             throw new InvalidArgumentsServiceException();

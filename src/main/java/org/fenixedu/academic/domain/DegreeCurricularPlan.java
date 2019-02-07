@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -65,7 +63,6 @@ import org.fenixedu.academic.domain.time.calendarStructure.AcademicYears;
 import org.fenixedu.academic.dto.CurricularPeriodInfoDTO;
 import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.predicate.DegreeCurricularPlanPredicates;
 import org.fenixedu.academic.util.MarkType;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
@@ -840,26 +837,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public void setCurricularPlanMembersGroup(final Group group) {
-        check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
         setMembersGroup(group.toPersistentGroup());
-    }
-
-    @Override
-    public void setCurricularStage(final CurricularStage curricularStage) {
-        check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
-        super.setCurricularStage(curricularStage);
-    }
-
-    @Override
-    public void setDegree(final Degree degree) {
-        check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
-        super.setDegree(degree);
-    }
-
-    @Override
-    public void setRoot(final RootCourseGroup courseGroup) {
-        check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
-        super.setRoot(courseGroup);
     }
 
     @Atomic
@@ -876,7 +854,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     @Override
     public void setDegreeStructure(final CurricularPeriod degreeStructure) {
-        check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
 
         if (degreeStructure == null || !(degreeStructure.getAcademicPeriod() instanceof AcademicYears)) {
             throw new DomainException("error.degreeCurricularPlan.degreeStructure.must.be.specified.in.years");
@@ -898,18 +875,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
 
         super.setDegreeStructure(degreeStructure);
-    }
-
-    @Override
-    public void setGradeScale(final GradeScale gradeScale) {
-        check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
-        super.setGradeScale(gradeScale);
-    }
-
-    @Override
-    public void setName(final String name) {
-        check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
-        super.setName(name);
     }
 
     public String getPresentationName() {

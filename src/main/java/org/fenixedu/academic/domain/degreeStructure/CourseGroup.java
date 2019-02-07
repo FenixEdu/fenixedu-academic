@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.degreeStructure;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -47,7 +45,6 @@ import org.fenixedu.academic.domain.curricularRules.CurricularRule;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleType;
 import org.fenixedu.academic.domain.curricularRules.DegreeModulesSelectionLimit;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.predicate.CourseGroupPredicates;
 import org.fenixedu.academic.util.StringFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.I18N;
@@ -310,18 +307,6 @@ public class CourseGroup extends CourseGroup_Base {
                 .map(CourseGroup::getProgramConclusion).filter(Objects::nonNull).anyMatch(pc -> pc.equals(programConclusion))) {
             throw new DomainException("error.program.conclusion.already.exists", programConclusion.getName().getContent());
         }
-    }
-
-    @Override
-    public void setName(String name) {
-        check(this, CourseGroupPredicates.curricularPlanMemberWritePredicate);
-        super.setName(name);
-    }
-
-    @Override
-    public void setNameEn(String nameEn) {
-        check(this, CourseGroupPredicates.curricularPlanMemberWritePredicate);
-        super.setNameEn(nameEn);
     }
 
     public void checkDuplicateChildNames(final String name, final String nameEn) {

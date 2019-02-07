@@ -23,14 +23,11 @@
 
 package org.fenixedu.academic.service.services.resourceAllocationManager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.fenixedu.academic.domain.Lesson;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceMultipleException;
 
@@ -41,7 +38,6 @@ public class DeleteLessons {
 
     @Atomic
     public static void run(final List<String> lessonOIDs) throws FenixServiceException {
-        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
         final List<DomainException> exceptionList = new ArrayList<DomainException>();
 
         for (final String lessonOID : lessonOIDs) {
