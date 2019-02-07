@@ -24,8 +24,6 @@
 
 package org.fenixedu.academic.service.services.resourceAllocationManager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.Collection;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -34,7 +32,6 @@ import org.fenixedu.academic.domain.SchoolClass;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.dto.InfoClass;
 import org.fenixedu.academic.dto.InfoShift;
-import org.fenixedu.academic.predicate.RolePredicates;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -43,7 +40,6 @@ public class ReadShiftsByClass {
 
     @Atomic
     public static Object run(InfoClass infoClass) {
-        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
         SchoolClass schoolClass = FenixFramework.getDomainObject(infoClass.getExternalId());
 
         Collection<Shift> shifts = schoolClass.getAssociatedShiftsSet();

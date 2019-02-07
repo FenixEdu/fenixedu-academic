@@ -18,10 +18,7 @@
  */
 package org.fenixedu.academic.service.services.scientificCouncil.curricularPlans;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
 import org.fenixedu.academic.service.services.exceptions.NonExistingServiceException;
@@ -33,7 +30,6 @@ public class DeleteDegreeCurricularPlan {
 
     @Atomic
     public static void run(String externalId) throws FenixServiceException {
-        check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
         if (externalId == null) {
             throw new InvalidArgumentsServiceException();
         }

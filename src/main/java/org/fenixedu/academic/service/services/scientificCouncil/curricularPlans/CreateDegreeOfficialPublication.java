@@ -18,11 +18,8 @@
  */
 package org.fenixedu.academic.service.services.scientificCouncil.curricularPlans;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeOfficialPublication;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
 import org.joda.time.LocalDate;
@@ -40,7 +37,6 @@ public class CreateDegreeOfficialPublication {
      */
     @Atomic
     public static void run(Degree degree, LocalDate date, String officialReference) throws FenixServiceException {
-        check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
 
         if (degree == null || date == null) {
             throw new InvalidArgumentsServiceException();

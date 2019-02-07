@@ -21,8 +21,6 @@
  */
 package org.fenixedu.academic.ui.faces.bean.bolonhaManager.competenceCourses;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -58,7 +56,6 @@ import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.dto.bolonhaManager.CourseLoad;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.predicate.IllegalDataAccessException;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.bolonhaManager.CreateCompetenceCourse;
 import org.fenixedu.academic.service.services.bolonhaManager.DeleteCompetenceCourse;
 import org.fenixedu.academic.service.services.bolonhaManager.EditCompetenceCourse;
@@ -1142,7 +1139,6 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public String transferCompetenceCourse() {
-        check(this, RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
         try {
             if (getCompetenceCourse() == null || readCompetenceCourseGroupUnitToTransferTo() == null
                     || getExecutionSemester() == null) {

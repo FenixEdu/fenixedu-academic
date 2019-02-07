@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.student;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -55,7 +53,6 @@ import org.fenixedu.academic.domain.student.registrationStates.RegistrationState
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.dto.student.StudentStatuteBean;
-import org.fenixedu.academic.predicate.StudentPredicates;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.spaces.domain.Space;
 
@@ -648,7 +645,6 @@ public class Student extends Student_Base {
     }
 
     public List<Registration> getTransitionRegistrationsForDegreeCurricularPlansManagedByCoordinator(final Person coordinator) {
-        check(this, StudentPredicates.checkIfLoggedPersonIsCoordinator);
         final List<Registration> result = new ArrayList<>();
         for (final Registration registration : super.getRegistrationsSet()) {
             if (registration.isTransition() && coordinator.isCoordinatorFor(registration.getLastDegreeCurricularPlan(),

@@ -18,11 +18,8 @@
  */
 package org.fenixedu.academic.service.services.resourceAllocationManager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.SchoolClass;
 import org.fenixedu.academic.dto.InfoClass;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.ExistingServiceException;
 
 import pt.ist.fenixframework.Atomic;
@@ -32,7 +29,6 @@ public class EditarTurma {
 
     @Atomic
     public static Object run(final String externalId, final String className) throws ExistingServiceException {
-        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
 
         final SchoolClass classToEdit = FenixFramework.getDomainObject(externalId);
         classToEdit.edit(className);

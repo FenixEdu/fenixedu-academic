@@ -18,14 +18,11 @@
  */
 package org.fenixedu.academic.service.services.scientificCouncil.curricularPlans;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.GradeScale;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
 
@@ -37,7 +34,6 @@ public class CreateDegreeCurricularPlan {
     @Atomic
     public static void run(String degreeId, String name, GradeScale gradeScale, AcademicPeriod duration)
             throws FenixServiceException {
-        check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
 
         if (degreeId == null || name == null) {
             throw new InvalidArgumentsServiceException();

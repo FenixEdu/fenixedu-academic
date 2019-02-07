@@ -18,13 +18,10 @@
  */
 package org.fenixedu.academic.service.services.resourceAllocationManager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.SortedSet;
 
 import org.fenixedu.academic.domain.Lesson;
 import org.fenixedu.academic.dto.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
@@ -33,7 +30,6 @@ public class DeleteLessonInstance {
 
     @Atomic
     public static void run(Lesson lesson, YearMonthDay day) {
-        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
         if (lesson != null && day != null) {
             lesson.deleteLessonInstanceIn(day);
         }

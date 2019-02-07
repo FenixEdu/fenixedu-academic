@@ -23,8 +23,6 @@
  */
 package org.fenixedu.academic.service.services.resourceAllocationManager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -33,7 +31,6 @@ import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.dto.InfoExecutionCourse;
 import org.fenixedu.academic.dto.InfoShift;
-import org.fenixedu.academic.predicate.RolePredicates;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -42,7 +39,6 @@ public class LerTurnosDeDisciplinaExecucao {
 
     @Atomic
     public static List<InfoShift> run(InfoExecutionCourse infoExecutionCourse) {
-        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
 
         List<InfoShift> infoShifts = new ArrayList<InfoShift>();
 

@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -61,7 +59,6 @@ import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.dto.person.PersonBean;
-import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.PeriodState;
@@ -317,7 +314,6 @@ public class Person extends Person_Base {
     }
 
     public Person editPersonalInformation(final PersonBean personBean) {
-        check(this, AcademicPredicates.EDIT_STUDENT_PERSONAL_DATA);
         setProperties(personBean);
         return this;
     }

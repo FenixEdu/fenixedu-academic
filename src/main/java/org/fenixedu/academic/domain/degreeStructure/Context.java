@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.degreeStructure;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.text.Collator;
 import java.util.Collection;
 import java.util.Comparator;
@@ -36,7 +34,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
-import org.fenixedu.academic.predicate.ContextPredicates;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
@@ -59,7 +56,8 @@ public class Context extends Context_Base implements Comparable<Context> {
         @Override
         public int compare(Context leftContext, Context rightContext) {
             int comparationResult = leftContext.getCurricularYear().compareTo(rightContext.getCurricularYear());
-            return (comparationResult == 0) ? leftContext.getExternalId().compareTo(rightContext.getExternalId()) : comparationResult;
+            return (comparationResult == 0) ? leftContext.getExternalId()
+                    .compareTo(rightContext.getExternalId()) : comparationResult;
         }
     };
 
@@ -240,24 +238,6 @@ public class Context extends Context_Base implements Comparable<Context> {
         }
     }
 
-    @Override
-    public void setParentCourseGroup(CourseGroup courseGroup) {
-        check(this, ContextPredicates.curricularPlanMemberWritePredicate);
-        super.setParentCourseGroup(courseGroup);
-    }
-
-    @Override
-    public void setCurricularPeriod(CurricularPeriod curricularPeriod) {
-        check(this, ContextPredicates.curricularPlanMemberWritePredicate);
-        super.setCurricularPeriod(curricularPeriod);
-    }
-
-    @Override
-    public void setChildDegreeModule(DegreeModule degreeModule) {
-        check(this, ContextPredicates.curricularPlanMemberWritePredicate);
-        super.setChildDegreeModule(degreeModule);
-    }
-
     public boolean isValid(final ExecutionSemester executionSemester) {
         if (isOpen(executionSemester)) {
             if (getChildDegreeModule().isCurricularCourse()) {
@@ -332,7 +312,8 @@ public class Context extends Context_Base implements Comparable<Context> {
 
     /**
      * 
-     * Beware of {@link #containsInterval(ExecutionInterval, ExecutionInterval)} method because it only checks for intersection, not a
+     * Beware of {@link #containsInterval(ExecutionInterval, ExecutionInterval)} method because it only checks for intersection,
+     * not a
      * full
      * contains.
      * 
@@ -465,8 +446,8 @@ public class Context extends Context_Base implements Comparable<Context> {
         @Override
         public boolean isActiveForExecutionPeriod(final ExecutionSemester executionSemester) {
             final ExecutionYear executionYear = executionSemester.getExecutionYear();
-            return getCurricularCourse().isAnual(executionYear) ? getContext().isValid(executionYear) : getContext().isValid(
-                    executionSemester);
+            return getCurricularCourse().isAnual(executionYear) ? getContext().isValid(executionYear) : getContext()
+                    .isValid(executionSemester);
         }
 
         @Override

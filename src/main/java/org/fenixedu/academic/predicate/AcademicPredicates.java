@@ -18,21 +18,15 @@
  */
 package org.fenixedu.academic.predicate;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.AcademicProgram;
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
-import org.fenixedu.academic.domain.student.Student;
-import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 public class AcademicPredicates {
@@ -61,109 +55,6 @@ public class AcademicPredicates {
         public boolean evaluate(final Object program) {
             return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_EXECUTION_COURSES_ADV,
                     (AcademicProgram) program, Authenticate.getUser());
-        };
-    };
-
-    public static final AccessControlPredicate<Object> CREATE_REGISTRATION = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object unused) {
-            return AcademicAuthorizationGroup.get(AcademicOperationType.CREATE_REGISTRATION).isMember(Authenticate.getUser());
-        };
-    };
-
-    public static final AccessControlPredicate<Object> MANAGE_MARKSHEETS = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object unused) {
-            return AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_MARKSHEETS).isMember(Authenticate.getUser());
-        };
-    };
-
-    @Deprecated
-    public static final AccessControlPredicate<Object> MANAGE_PAYMENTS = new AccessControlPredicate<Object>() {
-
-        @Override
-        public boolean evaluate(Object c) {
-            return Group.managers().isMember(Authenticate.getUser());
-        }
-
-    };
-
-    public static final AccessControlPredicate<AcademicServiceRequest> SERVICE_REQUESTS_REVERT_TO_PROCESSING_STATE =
-            new AccessControlPredicate<AcademicServiceRequest>() {
-                @Override
-                public boolean evaluate(final AcademicServiceRequest request) {
-                    return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.REPEAT_CONCLUSION_PROCESS,
-                            request.getAcademicProgram(), Authenticate.getUser());
-                };
-            };
-
-    public static final AccessControlPredicate<Object> EDIT_STUDENT_PERSONAL_DATA = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(final Object unused) {
-            return AcademicAuthorizationGroup.get(AcademicOperationType.EDIT_STUDENT_PERSONAL_DATA)
-                    .isMember(Authenticate.getUser());
-        };
-    };
-
-    public static final AccessControlPredicate<Object> MANAGE_ACCOUNTING_EVENTS = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(final Object unused) {
-            return AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_ACCOUNTING_EVENTS)
-                    .isMember(Authenticate.getUser());
-        };
-    };
-
-    public static final AccessControlPredicate<Object> MANAGE_STUDENT_PAYMENTS = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(final Object unused) {
-            return AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_STUDENT_PAYMENTS).isMember(Authenticate.getUser());
-        };
-    };
-
-    public static final AccessControlPredicate<Object> MANAGE_STUDENT_PAYMENTS_ADV = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(final Object personToBeViewed) {
-            Set<AcademicProgram> allowedPrograms = AcademicAccessRule
-                    .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_STUDENT_PAYMENTS_ADV, Authenticate.getUser())
-                    .collect(Collectors.toSet());
-            Person person = (Person) personToBeViewed;
-            // logic:
-            //  if target person is student
-            //      1. can be accessed if it has/had at least one of the allowed degrees
-            //  if target person has candidacies
-            //      2. can be accessed if it has at least one of the allowed degrees
-            //      3. or if it has at least one candidacy with no degrees
-            //  if target person has phdPrograms
-            //      4. can be accessed if it has at least one of the allowed phdPrograms
-            //  else, not a student, no candidacies
-            //      5. no access
-            Student student = person.getStudent();
-            if (student != null) {
-                Collection<StudentCurricularPlan> curricularPlans = student.getAllStudentCurricularPlans();
-                for (StudentCurricularPlan curricularPlan : curricularPlans) {
-                    if (allowedPrograms.contains(curricularPlan.getDegree())) {
-                        return true; // 1.
-                    }
-                }
-            }
-
-            return false; // 5.
-        };
-    };
-
-    public static final AccessControlPredicate<Object> MANAGE_ENROLMENT_PERIODS = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(final Object degree) {
-            return AcademicAccessRule
-                    .getDegreesAccessibleToFunction(AcademicOperationType.MANAGE_ENROLMENT_PERIODS, Authenticate.getUser())
-                    .anyMatch(d -> d == degree);
-        };
-    };
-
-    public static final AccessControlPredicate<Object> MANAGE_PHD_PROCESSES = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(final Object unused) {
-            return AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES).isMember(Authenticate.getUser());
         };
     };
 

@@ -21,8 +21,6 @@
  */
 package org.fenixedu.academic.service.services.bolonhaManager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.Objects;
 
 import org.fenixedu.academic.domain.CompetenceCourse;
@@ -32,7 +30,6 @@ import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevel;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.degreeStructure.RegimeType;
 import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGroupUnit;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.ExistingCompetenceCourseInformationException;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.util.StringFormatter;
@@ -46,8 +43,6 @@ public class CreateCompetenceCourse {
     public static CompetenceCourse run(String name, String nameEn, String acronym, Boolean basic, RegimeType regimeType,
             CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, String unitID,
             ExecutionSemester startSemester, String code) throws FenixServiceException {
-        check(RolePredicates.BOLONHA_MANAGER_PREDICATE);
-
         final CompetenceCourseGroupUnit unit = (CompetenceCourseGroupUnit) FenixFramework.getDomainObject(unitID);
         if (unit == null) {
             throw new FenixServiceException("error.invalidUnit");

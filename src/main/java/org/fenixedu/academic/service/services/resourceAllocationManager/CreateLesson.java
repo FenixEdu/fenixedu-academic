@@ -22,8 +22,6 @@
  */
 package org.fenixedu.academic.service.services.resourceAllocationManager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.Calendar;
 
 import org.fenixedu.academic.domain.ExecutionSemester;
@@ -33,7 +31,6 @@ import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.space.SpaceUtils;
 import org.fenixedu.academic.dto.InfoRoomOccupationEditor;
 import org.fenixedu.academic.dto.InfoShift;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.util.DiaSemana;
 import org.fenixedu.spaces.domain.Space;
@@ -48,7 +45,6 @@ public class CreateLesson {
     public static Lesson run(DiaSemana weekDay, Calendar begin, Calendar end, FrequencyType frequency,
             InfoRoomOccupationEditor infoRoomOccupation, InfoShift infoShift, YearMonthDay beginDate, YearMonthDay endDate)
             throws FenixServiceException {
-        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
 
         final ExecutionSemester executionSemester =
                 FenixFramework.getDomainObject(infoShift.getInfoDisciplinaExecucao().getInfoExecutionPeriod().getExternalId());

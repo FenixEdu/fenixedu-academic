@@ -18,11 +18,8 @@
  */
 package org.fenixedu.academic.service.services.resourceAllocationManager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 
 import pt.ist.fenixframework.Atomic;
@@ -32,7 +29,6 @@ public class DefineExamComment {
 
     @Atomic
     public static void run(String executionCourseInitials, String executionPeriodId, String comment) throws FenixServiceException {
-        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
         final ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodId);
         final ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(executionCourseInitials);
 

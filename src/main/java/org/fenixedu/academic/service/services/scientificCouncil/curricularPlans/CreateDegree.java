@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.service.services.scientificCouncil.curricularPlans;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.List;
 
 import org.fenixedu.academic.domain.Degree;
@@ -27,7 +25,6 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.GradeScale;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.degree.DegreeType;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
 import org.fenixedu.bennu.core.signals.DomainObjectEvent;
@@ -41,7 +38,6 @@ public class CreateDegree {
     public static void run(String name, String nameEn, String acronym, DegreeType degreeType, Double ectsCredits,
             GradeScale gradeScale, String prevailingScientificArea, AdministrativeOffice administrativeOffice)
             throws FenixServiceException {
-        check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
 
         if (name == null || nameEn == null || acronym == null || degreeType == null || ectsCredits == null) {
             throw new InvalidArgumentsServiceException();

@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -50,10 +48,7 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
 import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
-import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.predicate.CompetenceCoursePredicates;
 import org.fenixedu.academic.service.services.bolonhaManager.CompetenceCourseManagementAccessControl;
 import org.fenixedu.academic.util.UniqueAcronymCreator;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -94,9 +89,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         try {
             Set<CompetenceCourse> competenceCourses = (Set<CompetenceCourse>) CompetenceCourse.readBolonhaCompetenceCourses();
             competenceCourses.remove(this);
-            final UniqueAcronymCreator<CompetenceCourse> uniqueAcronymCreator =
-                    new UniqueAcronymCreator<CompetenceCourse>(CompetenceCourse::getName, CompetenceCourse::getAcronym,
-                            competenceCourses);
+            final UniqueAcronymCreator<CompetenceCourse> uniqueAcronymCreator = new UniqueAcronymCreator<CompetenceCourse>(
+                    CompetenceCourse::getName, CompetenceCourse::getAcronym, competenceCourses);
             competenceCourseInformation.setAcronym(uniqueAcronymCreator.create(this).getLeft());
         } catch (Exception e) {
             throw new DomainException("competence.course.unable.to.create.acronym");
@@ -196,9 +190,9 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     /**
      * @deprecated This method sets attributes that are no longer used. Set the corresponding attributes in the
-     * appropriate
-     * {@link org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation CompetenceCourseInformation}
-     * object.
+     *             appropriate
+     *             {@link org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation CompetenceCourseInformation}
+     *             object.
      */
     @Deprecated
     public void edit(String code, String name, Collection<Department> departments) {
@@ -347,7 +341,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return getChangeRequestDraft(semester) != null;
     }
 
-    public CompetenceCourseInformation findCompetenceCourseInformationForExecutionPeriod(final ExecutionSemester executionSemester) {
+    public CompetenceCourseInformation findCompetenceCourseInformationForExecutionPeriod(
+            final ExecutionSemester executionSemester) {
         if (executionSemester == null) {
             return getMostRecentCompetenceCourseInformation();
         }
@@ -975,33 +970,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return result;
     }
 
-//    @Override
-//    public void addCompetenceCourseInformations(CompetenceCourseInformation competenceCourseInformations) {
-//        check(this, CompetenceCoursePredicates.writePredicate);
-//        super.addCompetenceCourseInformations(competenceCourseInformations);
-//    }
-
-    @Override
-    public void addDepartments(Department departments) {
-        check(this, CompetenceCoursePredicates.writePredicate);
-        super.addDepartments(departments);
-    }
-
-    @Override
-    public void removeCompetenceCourseInformations(CompetenceCourseInformation competenceCourseInformations) {
-        check(this, CompetenceCoursePredicates.writePredicate);
-        super.removeCompetenceCourseInformations(competenceCourseInformations);
-    }
-
-    @Override
-    public void removeDepartments(Department departments) {
-        check(this, CompetenceCoursePredicates.writePredicate);
-        super.removeDepartments(departments);
-    }
-
     @Override
     public void setCode(String code) {
-        check(this, CompetenceCoursePredicates.writePredicate);
         final CompetenceCourse existing = CompetenceCourse.find(code);
 
         if (existing != null && existing != this) {
@@ -1017,18 +987,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
             throw new DomainException("competenceCourse.has.already.associated.curricular.courses");
         }
         super.setCurricularStage(curricularStage);
-    }
-
-    @Override
-    public void setName(String name) {
-        check(this, CompetenceCoursePredicates.writePredicate);
-        super.setName(name);
-    }
-
-    @Override
-    public void addAssociatedCurricularCourses(CurricularCourse associatedCurricularCourses) {
-        check(this, CompetenceCoursePredicates.writePredicate);
-        super.addAssociatedCurricularCourses(associatedCurricularCourses);
     }
 
     public ScientificAreaUnit getScientificAreaUnit() {
@@ -1234,7 +1192,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     static public Collection<CompetenceCourse> readBolonhaCompetenceCourses() {
         final Set<CompetenceCourse> result = new TreeSet<CompetenceCourse>(COMPETENCE_COURSE_COMPARATOR_BY_NAME);
         for (final CompetenceCourse competenceCourse : Bennu.getInstance().getCompetenceCoursesSet()) {
-                result.add(competenceCourse);
+            result.add(competenceCourse);
         }
         return result;
     }
@@ -1281,7 +1239,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     @Deprecated
     public void setCreationDate(java.util.Date date) {
-        check(this, CompetenceCoursePredicates.writePredicate);
         if (date == null) {
             setCreationDateYearMonthDay(null);
         } else {
@@ -1324,6 +1281,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     /**
      * Find the most recent <b>until</b> given {@link ExecutionInterval}:
      * usefull for getting current info
+     * 
      * @param input the interval to find this competence coure information
      */
     public CompetenceCourseInformation findInformationMostRecentUntil(final ExecutionInterval input) {

@@ -24,11 +24,8 @@
 
 package org.fenixedu.academic.service.services.resourceAllocationManager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.SchoolClass;
 import org.fenixedu.academic.dto.InfoClass;
-import org.fenixedu.academic.predicate.RolePredicates;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -37,7 +34,6 @@ public class ApagarTurma {
 
     @Atomic
     public static Boolean run(InfoClass infoClass) {
-        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
         FenixFramework.<SchoolClass> getDomainObject(infoClass.getExternalId()).delete();
         return Boolean.TRUE;
     }

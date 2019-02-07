@@ -23,12 +23,9 @@
 
 package org.fenixedu.academic.service.services.resourceAllocationManager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.List;
 
 import org.fenixedu.academic.domain.SchoolClass;
-import org.fenixedu.academic.predicate.RolePredicates;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -37,7 +34,6 @@ public class DeleteClasses {
 
     @Atomic
     public static Boolean run(final List<String> classOIDs) {
-        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
         for (final String classId : classOIDs) {
             FenixFramework.<SchoolClass> getDomainObject(classId).delete();
         }

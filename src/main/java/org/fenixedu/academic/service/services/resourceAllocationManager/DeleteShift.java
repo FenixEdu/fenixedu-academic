@@ -23,11 +23,8 @@
 
 package org.fenixedu.academic.service.services.resourceAllocationManager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.dto.InfoShift;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 
 import pt.ist.fenixframework.Atomic;
@@ -37,7 +34,6 @@ public class DeleteShift {
 
     @Atomic
     public static void run(InfoShift infoShift) throws FenixServiceException {
-        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
         FenixFramework.<Shift> getDomainObject(infoShift.getExternalId()).delete();
     }
 

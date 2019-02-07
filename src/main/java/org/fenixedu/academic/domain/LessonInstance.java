@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Collection;
@@ -28,7 +26,6 @@ import java.util.Comparator;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.space.LessonInstanceSpaceOccupation;
 import org.fenixedu.academic.domain.space.SpaceUtils;
-import org.fenixedu.academic.predicate.ResourceAllocationRolePredicates;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.DiaSemana;
 import org.fenixedu.academic.util.HourMinuteSecond;
@@ -143,7 +140,6 @@ public class LessonInstance extends LessonInstance_Base {
     }
 
     public void delete() {
-        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstances);
         DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
 
         LessonInstanceSpaceOccupation occupation = getLessonInstanceSpaceOccupation();
@@ -159,7 +155,6 @@ public class LessonInstance extends LessonInstance_Base {
     }
 
     public void summaryAndCourseLoadManagement(Summary summary, Lesson lesson) {
-        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstancesWithTeacherCheck);
         CourseLoad courseLoad = null;
         if (lesson != null && summary != null) {
             courseLoad = lesson.getExecutionCourse().getCourseLoadByShiftType(summary.getSummaryType());

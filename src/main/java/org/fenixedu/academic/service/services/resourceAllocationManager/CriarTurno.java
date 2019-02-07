@@ -22,13 +22,10 @@
 
 package org.fenixedu.academic.service.services.resourceAllocationManager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.dto.InfoShift;
 import org.fenixedu.academic.dto.InfoShiftEditor;
-import org.fenixedu.academic.predicate.RolePredicates;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -37,7 +34,6 @@ public class CriarTurno {
 
     @Atomic
     public static InfoShift run(InfoShiftEditor infoTurno) {
-        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
         final ExecutionCourse executionCourse =
                 FenixFramework.getDomainObject(infoTurno.getInfoDisciplinaExecucao().getExternalId());
         final Shift newShift = new Shift(executionCourse, infoTurno.getTipos(), infoTurno.getLotacao());

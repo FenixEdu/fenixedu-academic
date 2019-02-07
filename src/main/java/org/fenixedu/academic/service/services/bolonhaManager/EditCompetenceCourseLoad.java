@@ -21,8 +21,6 @@
  */
 package org.fenixedu.academic.service.services.bolonhaManager;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.List;
 
 import org.fenixedu.academic.domain.CompetenceCourse;
@@ -30,7 +28,6 @@ import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLoad;
 import org.fenixedu.academic.domain.degreeStructure.RegimeType;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.dto.bolonhaManager.CourseLoad;
-import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 
 import pt.ist.fenixframework.Atomic;
@@ -41,7 +38,6 @@ public class EditCompetenceCourseLoad {
     @Atomic
     public static void run(String competenceCourseID, RegimeType regimeType, Integer numberOfPeriods,
             List<CourseLoad> courseLoads) throws FenixServiceException {
-        check(RolePredicates.BOLONHA_MANAGER_PREDICATE);
         final CompetenceCourse competenceCourse = FenixFramework.getDomainObject(competenceCourseID);
         if (competenceCourse == null) {
             throw new FenixServiceException("error.noCompetenceCourse");

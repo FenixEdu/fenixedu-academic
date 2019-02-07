@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.student.registrationStates;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -38,7 +36,6 @@ import org.fenixedu.academic.domain.util.workflow.StateBean;
 import org.fenixedu.academic.domain.util.workflow.StateMachine;
 import org.fenixedu.academic.dto.student.RegistrationStateBean;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.predicate.RegistrationStatePredicates;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.EnrolmentAction;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -214,7 +211,6 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     }
 
     public void delete() {
-        check(this, RegistrationStatePredicates.deletePredicate);
         RegistrationState nextState = getNext();
         RegistrationState previousState = getPrevious();
         if (nextState != null && previousState != null

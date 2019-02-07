@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -94,7 +92,6 @@ import org.fenixedu.academic.domain.studentCurriculum.curriculumLine.MoveCurricu
 import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
 import org.fenixedu.academic.dto.administrativeOffice.studentEnrolment.NoCourseGroupEnrolmentBean;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.predicate.StudentCurricularPlanPredicates;
 import org.fenixedu.academic.util.predicates.AndPredicate;
 import org.fenixedu.academic.util.predicates.ResultCollection;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -1440,8 +1437,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             final Set<IDegreeModuleToEvaluate> degreeModulesToEnrol, final List<CurriculumModule> curriculumModulesToRemove,
             final CurricularRuleLevel curricularRuleLevel) {
 
-        check(this, StudentCurricularPlanPredicates.ENROL);
-
         return enrol(executionSemester, degreeModulesToEnrol, curriculumModulesToRemove, curricularRuleLevel,
                 (EvaluationSeason) null);
     }
@@ -1450,8 +1445,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     final public RuleResult enrol(final ExecutionSemester executionSemester,
             final Set<IDegreeModuleToEvaluate> degreeModulesToEnrol, final List<CurriculumModule> curriculumModulesToRemove,
             final CurricularRuleLevel curricularRuleLevel, final EvaluationSeason season) {
-
-        check(this, StudentCurricularPlanPredicates.ENROL);
 
         final EnrolmentContext enrolmentContext = new EnrolmentContext(this, executionSemester, degreeModulesToEnrol,
                 curriculumModulesToRemove, curricularRuleLevel, season);
@@ -1466,7 +1459,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     @Atomic
     public void enrolInAffinityCycle(final CycleCourseGroup cycleCourseGroup, final ExecutionSemester executionSemester) {
-        check(this, StudentCurricularPlanPredicates.ENROL_IN_AFFINITY_CYCLE);
         CurriculumGroupFactory.createGroup(getRoot(), cycleCourseGroup, executionSemester);
     }
 
@@ -1899,7 +1891,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public void moveCurriculumLines(final MoveCurriculumLinesBean moveCurriculumLinesBean) {
-        check(this, StudentCurricularPlanPredicates.MOVE_CURRICULUM_LINES);
         boolean runRules = false;
         Person responsible = AccessControl.getPerson();
 
@@ -1947,8 +1938,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public void moveCurriculumLinesWithoutRules(final Person responsiblePerson,
             final MoveCurriculumLinesBean moveCurriculumLinesBean) {
-        check(this, StudentCurricularPlanPredicates.MOVE_CURRICULUM_LINES_WITHOUT_RULES);
-
         for (final CurriculumLineLocationBean curriculumLineLocationBean : moveCurriculumLinesBean.getCurriculumLineLocations()) {
 
             final CurriculumGroup destination = curriculumLineLocationBean.getCurriculumGroup();
