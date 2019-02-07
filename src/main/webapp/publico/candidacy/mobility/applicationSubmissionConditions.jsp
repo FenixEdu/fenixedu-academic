@@ -61,7 +61,5 @@
 
 
 
-<div class="h_box" id="contacts">
-	<bean:message key="erasmus.contacts.text" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="CANDIDATE_RESOURCES" />
-</div>
 
+<p><em><bean:message key="erasmus.contacts.text" bundle="CANDIDATE_RESOURCES"/>.</em></p>
