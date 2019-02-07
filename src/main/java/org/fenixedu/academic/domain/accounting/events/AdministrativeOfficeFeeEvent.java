@@ -63,8 +63,16 @@ public class AdministrativeOfficeFeeEvent extends AdministrativeOfficeFeeEvent_B
 
     @Override protected LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter labelFormatter = new LabelFormatter();
-        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION).appendLabel(" - ")
-                .appendLabel(getExecutionYear().getYear());
+
+        labelFormatter.appendLabel(entryType.name(), Bundle.ENUMERATION);
+
+        if (getAdministrativeOffice() != null) {
+            labelFormatter.appendLabel(" (");
+            labelFormatter.appendLabel(getAdministrativeOffice().getName().getContent());
+            labelFormatter.appendLabel(")");
+        }
+        
+        labelFormatter.appendLabel(" - ").appendLabel(getExecutionYear().getYear());
 
         return labelFormatter;
     }
