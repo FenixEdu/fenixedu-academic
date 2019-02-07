@@ -22,7 +22,6 @@ import org.fenixedu.academic.domain.Evaluation;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Mark;
 import org.fenixedu.academic.service.filter.ExecutionCourseLecturingTeacherAuthorizationFilter;
-import org.fenixedu.academic.service.services.ExcepcaoInexistente;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
 import org.fenixedu.bennu.core.signals.Signal;
@@ -38,7 +37,7 @@ public class PublishMarks {
     public static final String MARKS_PUBLISHED_SIGNAL = "academic.PublishMarks.marks.published";
 
     protected Object run(String executionCourseCode, String evaluationCode, String publishmentMessage, String announcementTitle)
-            throws ExcepcaoInexistente, FenixServiceException {
+            throws FenixServiceException {
 
         final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
         final Evaluation evaluation = FenixFramework.getDomainObject(evaluationCode);
@@ -93,7 +92,7 @@ public class PublishMarks {
 
     @Atomic
     public static Object runPublishMarks(String executionCourseCode, String evaluationCode, String publishmentMessage,
-            Boolean sendSMS, String announcementTitle) throws ExcepcaoInexistente, FenixServiceException, NotAuthorizedException {
+            Boolean sendSMS, String announcementTitle) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
         return serviceInstance.run(executionCourseCode, evaluationCode, publishmentMessage, announcementTitle);
     }

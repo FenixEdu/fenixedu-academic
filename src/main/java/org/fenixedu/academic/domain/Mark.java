@@ -18,7 +18,7 @@
  */
 package org.fenixedu.academic.domain;
 
-import org.fenixedu.academic.domain.exceptions.InvalidMarkDomainException;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 public class Mark extends Mark_Base {
@@ -41,8 +41,7 @@ public class Mark extends Mark_Base {
         if (validateMark(mark)) {
             super.setMark(mark);
         } else {
-            throw new InvalidMarkDomainException("errors.invalidMark", mark,
-                    getAttend().getRegistration().getNumber().toString());
+            throw new DomainException("errors.invalidMark", mark, getAttend().getRegistration().getNumber().toString());
         }
     }
 

@@ -25,8 +25,8 @@ import java.io.InputStream;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.PhotoType;
 import org.fenixedu.academic.domain.Photograph;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.person.PhotographUploadBean;
-import org.fenixedu.academic.service.services.ExcepcaoInexistente;
 import org.fenixedu.academic.util.ContentType;
 
 import com.google.common.io.ByteStreams;
@@ -41,11 +41,11 @@ import pt.ist.fenixframework.Atomic;
 public class StorePersonalPhoto {
 
     @Atomic
-    public static void run(byte[] contents, ContentType contentType, String personUsername) throws ExcepcaoInexistente {
+    public static void run(byte[] contents, ContentType contentType, String personUsername) {
         Person person = Person.readPersonByUsername(personUsername);
 
         if (person == null) {
-            throw new ExcepcaoInexistente("Unknown Person !!");
+            throw new DomainException("Unknown Person !!");
         }
 
         storePersonalPhoto(contents, contentType, person);
@@ -56,8 +56,8 @@ public class StorePersonalPhoto {
     }
 
     @Atomic
-    static public void uploadPhoto(final PhotographUploadBean photoBean, final Person person) throws FileNotFoundException,
-            IOException {
+    static public void uploadPhoto(final PhotographUploadBean photoBean, final Person person)
+            throws FileNotFoundException, IOException {
         try (InputStream stream = photoBean.getFileInputStream()) {
             person.setPersonalPhoto(new Photograph(PhotoType.INSTITUTIONAL,
                     ContentType.getContentType(photoBean.getContentType()), ByteStreams.toByteArray(stream)));

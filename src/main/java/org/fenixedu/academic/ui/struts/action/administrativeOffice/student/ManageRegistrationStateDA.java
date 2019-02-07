@@ -27,7 +27,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationStateLog;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
@@ -101,8 +100,6 @@ public class ManageRegistrationStateDA extends FenixDispatchAction {
             executeFactoryMethod(creator);
 
             addActionMessage(request, "message.success.state.edit");
-        } catch (DomainExceptionWithLabelFormatter e) {
-            addActionMessage(request, e.getKey(), solveLabelFormatterArgs(request, e.getLabelFormatterArgs()));
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage(), e.getArgs());
         }
