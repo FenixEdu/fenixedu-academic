@@ -1579,81 +1579,10 @@
 		bundle="APPLICATION_RESOURCES">
 	<slot name="numberOfRegisteredStudents" key="label.numberOfRegisteredStudents"/>
 </schema>
-<schema name="AnnualIRSDeclarationDocument.view" type="org.fenixedu.academic.domain.documents.AnnualIRSDeclarationDocument" bundle="APPLICATION_RESOURCES">
-	<slot name="year" />
-	<slot name="filename" />
-   	<slot name="size"/>
-   	<slot name="this" layout="link" key="documents.link" />
-</schema>
 
 <schema name="view.academicProgram.name" type="org.fenixedu.academic.domain.AcademicProgram">
 	<slot name="presentationName" key="label.name" />
 </schema>
-
-<schema name="rectorateSubmission.batchIndex"
-	type="org.fenixedu.academic.domain.serviceRequests.RectorateSubmissionBatch" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="creation" key="label.rectorateSubmission.creation" />
-    <slot name="creator" key="label.rectorateSubmission.creator" layout="null-as-label">
-        <property name="subLayout" value="values" />
-		<property name="subSchema" value="responsible.name"/>
-    </slot>
-    <slot name="administrativeOffice.unit.name" key="label.rectorateSubmission.administrativeOffice" />
-    <slot name="submission" key="label.rectorateSubmission.submission" />
-    <slot name="submitter" key="label.rectorateSubmission.submitter" layout="null-as-label">
-        <property name="subLayout" value="values" />
-		<property name="subSchema" value="responsible.name"/>
-    </slot>
-    <slot name="reception" key="label.rectorateSubmission.reception" />
-    <slot name="receptor" key="label.rectorateSubmission.receiver" layout="null-as-label">
-        <property name="subLayout" value="values" />
-		<property name="subSchema" value="responsible.name"/>
-    </slot>
-    <slot name="range" key="label.rectorateSubmission.registryCodeRange" />
-    <slot name="documentRequestCount" key="label.rectorateSubmission.documentRequestCount" />
-</schema>
-
-<schema name="rectorateSubmission.batchIndex.RECEIVED" extends="rectorateSubmission.batchIndex"
-    type="org.fenixedu.academic.domain.serviceRequests.RectorateSubmissionBatch"
-    bundle="ACADEMIC_OFFICE_RESOURCES">
-</schema>
-
-<schema name="rectorateSubmission.batchIndex.SENT" extends="rectorateSubmission.batchIndex.RECEIVED"
-    type="org.fenixedu.academic.domain.serviceRequests.RectorateSubmissionBatch" bundle="ACADEMIC_OFFICE_RESOURCES">
-    <remove name="reception" />
-    <remove name="receptor" />
-</schema>
-
-<schema name="rectorateSubmission.batchIndex.RECEIVEDFROMACADEMICOFFICE" extends="rectorateSubmission.batchIndex.SENT"
-    type="org.fenixedu.academic.domain.serviceRequests.RectorateSubmissionBatch" bundle="ACADEMIC_OFFICE_RESOURCES">
-    <remove name="documentRequestCount" />
-    <slot name="diplomaDocumentRequestCount" key="label.rectorateSubmission.documentRequestCount" />
-</schema>
-
-<schema name="rectorateSubmission.batchIndex.CLOSED" extends="rectorateSubmission.batchIndex.SENT"
-    type="org.fenixedu.academic.domain.serviceRequests.RectorateSubmissionBatch"
-    bundle="ACADEMIC_OFFICE_RESOURCES">
-    <remove name="submission" />
-    <remove name="submitter" />
-</schema>
-
-<schema name="rectorateSubmission.batchIndex.UNSENT" extends="rectorateSubmission.batchIndex.CLOSED"
-	type="org.fenixedu.academic.domain.serviceRequests.RectorateSubmissionBatch"
-	bundle="ACADEMIC_OFFICE_RESOURCES">
-</schema>
-
-<schema name="rectorateSubmission.batchDocuments"
-	type="org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequest"
-	bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="serviceRequestNumberYear" key="label.serviceRequestNumberYear" />
-	<slot name="activeSituationDate" key="last.modification"
-		layout="no-time" />
-	<slot name="student.number" key="label.studentNumber" />
-	<slot name="description"
-		key="label.org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest.description" />
-	<slot name="academicServiceRequestSituationType"
-		key="label.currentSituation" />
-</schema>
-
 
 <schema name="enrolment.evaluation.view" type="org.fenixedu.academic.domain.EnrolmentEvaluation" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="evaluationSeason.name.content" key="label.set.evaluation.type" />

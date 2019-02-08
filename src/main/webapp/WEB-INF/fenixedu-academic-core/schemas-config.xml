@@ -183,12 +183,6 @@
     <slot name="name"/>
   </schema>
   
-  <schema name="weekly.work.load.bean" type="org.fenixedu.academic.ui.struts.action.student.WeeklyWorkLoadBean">
-    <slot name="contact"/>
-    <slot name="autonomousStudy"/>
-    <slot name="other"/>
-  </schema>
-  
   <schema name="list.connectionRules" type="org.fenixedu.academic.domain.organizationalStructure.ConnectionRule">
     <slot name="accountabilityType.type"/>
     <slot name="allowedChildPartyType.type"/>
