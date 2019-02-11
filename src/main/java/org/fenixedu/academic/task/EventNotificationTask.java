@@ -128,12 +128,12 @@ public class EventNotificationTask extends CronTask {
     private Stream<String> generateNotifications(final Event event, final DateTime now, final LocalDate afterTomorrow, final LocalDate yesterday, final Locale locale) {
         try {
             final DebtInterestCalculator calculator = event.getDebtInterestCalculator(now);
-            if (event.getWhenOccured().toLocalDate().equals(yesterday) && calculator.getDueAmount().signum() == 1) {
+            if (!event.isCancelled() && event.getWhenOccured().toLocalDate().equals(yesterday) && calculator.getDueAmount().signum() == 1) {
                 return Stream.of(createMessage("event.notification.new.event", event, "debtAmount", calculator.getDebtAmount().toPlainString(), locale));
             }
             
             final Stream<String> dueAmountNotifications = calculator.getDebtsOrderedByDueDate().stream()
-                    .filter(d -> d.isOpen() && d.getDueDate().equals(afterTomorrow))
+                    .filter(d -> !event.isCancelled() && d.isOpen() && d.getDueDate().equals(afterTomorrow))
                     .map(d -> createMessage("event.notification.due.event", event, "dueAmount", d.getAmount().toPlainString(), locale));
             
             final BigDecimal totalUnusedAmount = calculator.getTotalUnusedAmount();
