@@ -227,8 +227,9 @@ public abstract class AccountingController {
         events.forEach(event -> {
             try {
                 event.getDebtInterestCalculator(new DateTime());
+                event.getDescription();
             }
-            catch (DomainException e){
+            catch (Throwable e){
                 invalidEventsMap.put(event, e.getLocalizedMessage());
             }
         });
