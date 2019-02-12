@@ -38,6 +38,7 @@
             </div>
         </header>
         <jsp:include page="heading-person.jsp"/>
+        <jsp:include page="stats-person.jsp"/>
         <section>
             <div class="row">
                 <div class="col-md-12">

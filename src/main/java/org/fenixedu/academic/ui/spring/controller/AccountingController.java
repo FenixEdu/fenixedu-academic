@@ -15,11 +15,12 @@ import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.accounting.Refund;
 import org.fenixedu.academic.domain.accounting.calculator.AccountingEntry;
-import org.fenixedu.academic.domain.accounting.calculator.ExcessRefund;
 import org.fenixedu.academic.domain.accounting.calculator.CreditEntry;
 import org.fenixedu.academic.domain.accounting.calculator.Debt;
 import org.fenixedu.academic.domain.accounting.calculator.DebtEntry;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
+import org.fenixedu.academic.domain.accounting.calculator.ExcessRefund;
+import org.fenixedu.academic.domain.accounting.report.EventStats;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.ui.spring.service.AccountingManagementAccessControlService;
 import org.fenixedu.academic.ui.spring.service.AccountingManagementService;
@@ -35,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.google.common.base.Strings;
+
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -75,6 +77,7 @@ public abstract class AccountingController {
             model.addAttribute("otherEvents", validEvents.stream().filter(e -> !e.isOpen()).sorted(MOST_RECENT_EVENTS_FIRST).collect(Collectors.toList()));
             model.addAttribute("invalidEvents", invalidEventsMap);
             model.addAttribute("isPaymentManager", accessControlService.isPaymentManager(loggedUser));
+            model.addAttribute("stats", new EventStats(validEvents));
 
             return view("events");
         }
