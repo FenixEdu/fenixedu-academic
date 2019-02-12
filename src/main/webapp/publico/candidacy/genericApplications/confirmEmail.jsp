@@ -43,7 +43,7 @@
 <bean:define id="unsavedChangesMessage" type="java.lang.String"><bean:message bundle="CANDIDATE_RESOURCES" key="label.application.unsaved.changes"/></bean:define>
 
 <script src="https://rawgithub.com/timrwood/moment/2.0.0/moment.js"></script>
-<script src="https://cdn.rawgit.com/AfonsoFGarcia/Portuguese-ID-Validator/v1.1.1/validator.js"></script>
+<script src="<%= request.getContextPath()%>/javaScript/portugueseIdValidator.js"></script>
 <script>
 	var fieldChanged = false;
 
