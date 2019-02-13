@@ -208,6 +208,6 @@ public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluat
 
     @Override
     public String getFullPath() {
-        return getDegreeModule().getOneFullName();
+        return getCurriculumGroup().getFullPath() + " > " + getName();
     }
 }
