@@ -20,7 +20,9 @@ package org.fenixedu.academic.ui.struts.action.publico.candidacies;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.SortedSet;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,6 +40,7 @@ import org.fenixedu.academic.domain.candidacy.util.GenericApplicationRecommendat
 import org.fenixedu.academic.domain.candidacy.util.GenericApplicationUploadBean;
 import org.fenixedu.academic.domain.candidacy.util.GenericApplicationUserBean;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.period.CandidacyPeriod;
 import org.fenixedu.academic.domain.period.GenericApplicationPeriod;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.publico.PublicApplication.PublicCandidaciesApp;
@@ -72,8 +75,7 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
     public ActionForward listApplicationPeriods(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        final SortedSet<GenericApplicationPeriod> periods = GenericApplicationPeriod.getPeriods();
-        request.setAttribute("periods", periods);
+        request.setAttribute("periods", getSortedCandidacyPeriods());
 
         final User userView = Authenticate.getUser();
         if (userView != null && Group.managers().isMember(userView)) {
@@ -82,6 +84,12 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
         }
 
         return mapping.findForward("genericApplications.listApplicationPeriods");
+    }
+
+    private List<GenericApplicationPeriod> getSortedCandidacyPeriods() {
+        return GenericApplicationPeriod.getPeriods().stream()
+                .sorted(Comparator.comparing(CandidacyPeriod::getStart).reversed())
+                .collect(Collectors.toList());
     }
 
     public ActionForward viewApplicationPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,

@@ -24,7 +24,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@page import="org.fenixedu.academic.domain.period.GenericApplicationPeriod"%>
-<%@page import="java.util.SortedSet"%>
+<%@page import="java.util.List"%>
 
 <html:xhtml/>
 
@@ -46,7 +46,7 @@
 </logic:present>
 
 <%
-	final SortedSet<GenericApplicationPeriod> periods = (SortedSet<GenericApplicationPeriod>) request.getAttribute("periods");
+	final List<GenericApplicationPeriod> periods = (List<GenericApplicationPeriod>) request.getAttribute("periods");
 	if (periods.isEmpty()) {
 %>
 		<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.periods.none"/>
