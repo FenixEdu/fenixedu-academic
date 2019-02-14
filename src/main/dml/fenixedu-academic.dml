@@ -179,12 +179,6 @@ valueType org.fenixedu.academic.util.EnrolmentEvaluationState as EnrolmentEvalua
     internalizeWith valueOf();
 }
 
-valueType org.fenixedu.academic.util.EnrolmentGroupPolicyType as EnrolmentGroupPolicyType {
-    externalizeWith {
-        Integer getType();
-    }
-}
-
 valueType org.fenixedu.academic.util.HourMinuteSecond as HourMinuteSecond {
     externalizeWith {
         LocalTime toLocalTime();
@@ -210,18 +204,6 @@ valueType org.fenixedu.academic.util.PeriodState as PeriodState {
 valueType org.fenixedu.academic.util.Season as Season {
     externalizeWith {
         Integer getseason();
-    }
-}
-
-valueType org.fenixedu.academic.util.SituationName as SituationName {
-    externalizeWith {
-        Integer getSituationName();
-    }
-}
-
-valueType org.fenixedu.academic.util.State as State {
-    externalizeWith {
-        Integer getState();
     }
 }
 
