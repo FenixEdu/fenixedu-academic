@@ -277,7 +277,7 @@ public class Unit extends Unit_Base {
         return null;
     }
 
-    public DepartmentUnit getDepartmentUnit() {
+    public DepartmentUnit getAssociatedDepartmentUnit() {
         if (this.isDepartmentUnit()) {
             return (DepartmentUnit) this;
         } else {
@@ -285,7 +285,7 @@ public class Unit extends Unit_Base {
                 if (parentUnit.isDepartmentUnit()) {
                     return (DepartmentUnit) parentUnit;
                 } else if (parentUnit.hasAnyParentUnits()) {
-                    Unit departmentUnit = parentUnit.getDepartmentUnit();
+                    Unit departmentUnit = parentUnit.getAssociatedDepartmentUnit();
                     if (departmentUnit == null) {
                         continue;
                     } else {

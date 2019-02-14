@@ -35,8 +35,8 @@ import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
@@ -104,7 +104,7 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
 
     @Deprecated
     @Override
-    public DepartmentUnit getDepartmentUnit() {
+    public DepartmentUnit getAssociatedDepartmentUnit() {
         final ScientificAreaUnit area = getScientificAreaUnit();
         if (area != null) {
             for (final Unit parent : area.getParentUnits()) {
@@ -151,8 +151,8 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
                 new TreeSet<CompetenceCourse>(CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);
         for (CompetenceCourseInformation competenceInformation : getCompetenceCourseInformationsSet()) {
             CompetenceCourse course = competenceInformation.getCompetenceCourse();
-            if ((course.getDepartmentUnit() != getDepartmentUnit())
-                    && (course.getMostRecentGroupInDepartment(getDepartmentUnit()) == this)) {
+            if ((course.getDepartmentUnit() != getAssociatedDepartmentUnit())
+                    && (course.getMostRecentGroupInDepartment(getAssociatedDepartmentUnit()) == this)) {
                 result.add(competenceInformation.getCompetenceCourse());
             }
         }
