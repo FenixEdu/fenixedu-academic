@@ -117,7 +117,7 @@ public class Department extends Department_Base {
         return cycles;
     }
 
-    public String getAcronym() {        
+    public String getAcronym() {
         return StringUtils.isNotBlank(getCode()) ? getCode() : WordUtils.initials(getName()).replaceAll("[a-z]", "");
     }
 
@@ -228,7 +228,7 @@ public class Department extends Department_Base {
             final Unit unit = Unit.readByCostCenterCode(new Integer(departmentCode));
             if (unit != null) {
                 final org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit departmentUnit =
-                        unit.getDepartmentUnit();
+                        unit.getAssociatedDepartmentUnit();
                 return departmentUnit == null ? null : departmentUnit.getDepartment();
             }
         }

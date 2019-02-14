@@ -159,7 +159,7 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
     }
 
     public DepartmentUnit getDepartmentUnit() {
-        return getCompetenceCourseGroupUnit().getDepartmentUnit();
+        return getCompetenceCourseGroupUnit().getAssociatedDepartmentUnit();
     }
 
     public void delete() {

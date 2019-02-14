@@ -121,7 +121,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     }
 
     public DepartmentUnit getDepartmentUnit() {
-        return getCompetenceCourseGroupUnit().getDepartmentUnit();
+        return getCompetenceCourseGroupUnit().getAssociatedDepartmentUnit();
     }
 
     private void checkParameters(final String name, final String nameEn, final Boolean basic, final RegimeType regimeType,
