@@ -339,7 +339,7 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
 	    public boolean masterDegree;
 	    public boolean dea;
 	    public boolean dfa;
-	    protected CycleTypes cycles (REQUIRED);
+	    public CycleTypes cycles (REQUIRED);
 	    protected CycleTypes cyclesToEnrol (REQUIRED);
 	    public Boolean active;
 	}
