@@ -199,12 +199,6 @@ valueType org.fenixedu.academic.util.MarkType as MarkType {
     }
 }
 
-valueType org.fenixedu.academic.util.Money as Money {
-    externalizeWith {
-        String toString();
-    }
-}
-
 valueType org.fenixedu.academic.util.PeriodState as PeriodState {
     externalizeWith {
         String getStateCode();

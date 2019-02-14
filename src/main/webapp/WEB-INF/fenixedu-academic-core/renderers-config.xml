@@ -156,13 +156,8 @@ Documentation:
     	<property name="nullLabel" value="-"/>
     </renderer>
 
-    <!--@ Money output -->
-    <renderer type="org.fenixedu.academic.util.Money" class="org.fenixedu.academic.ui.renderers.MoneyRenderer"/>
-
     <!-- input -->
     
-    <renderer mode="input" type="org.fenixedu.academic.util.Money" class="org.fenixedu.academic.ui.renderers.MoneyInputRenderer"/>
-
 	<renderer mode="input" type="java.util.Date" class="pt.ist.fenixWebFramework.renderers.DateInputRenderer"/>
 
 	<renderer mode="input" type="org.joda.time.Partial" layout="month-day" class="pt.ist.fenixWebFramework.rendererExtensions.PartialInputRenderer">
