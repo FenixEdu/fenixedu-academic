@@ -74,15 +74,6 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
     }
 
     @Override
-    public void setUtlStudent(Boolean newUtlStudent) {
-        Boolean utlStudent = super.getUtlStudent();
-        if (getEvent() != null && !Objects.nullSafeEquals(utlStudent, newUtlStudent)) {
-            throw new DomainException("Can't change this since an event is already created");
-        }
-        super.setUtlStudent(newUtlStudent);
-    }
-
-    @Override
     protected void checkParameters(final Person person, final IndividualCandidacyProcess process,
             final IndividualCandidacyProcessBean bean) {
         DegreeCandidacyForGraduatedPersonIndividualProcess degreeCandidacyProcess =

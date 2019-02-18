@@ -397,13 +397,5 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
         getDegreeChangeIndividualCandidacySeriesGrade().setSeriesCandidacyGrade(value);
     }
 
-    @Override
-    public void setUtlStudent(Boolean newUtlStudent) {
-        Boolean utlStudent = super.getUtlStudent();
-        if (getEvent() != null && !Objects.nullSafeEquals(utlStudent, newUtlStudent)) {
-            throw new DomainException("Can't change this since an event is already created");
-        }
-        super.setUtlStudent(newUtlStudent);
-    }
 
 }
