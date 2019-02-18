@@ -46,6 +46,7 @@ import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Strings;
 import pt.ist.fenixframework.Atomic;
 
 public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandidacyContestGroup_Base implements
@@ -215,22 +216,37 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
                                 getString("label.ects.completed.cycle.second"), getString("label.average.cycle.second"));
                     }
 
-                    for (final OutboundMobilityCandidacy c : submission.getSortedOutboundMobilityCandidacySet()) {
-                        final OutboundMobilityCandidacyContest contestFromCandidacy = c.getOutboundMobilityCandidacyContest();
+                    for (final OutboundMobilityCandidacy outboundMobilityCandidacy : submission.getSortedOutboundMobilityCandidacySet()) {
+                        final OutboundMobilityCandidacyContest contestFromCandidacy = outboundMobilityCandidacy.getOutboundMobilityCandidacyContest();
                         final MobilityAgreement mobilityAgreement = contestFromCandidacy.getMobilityAgreement();
                         final UniversityUnit unit = mobilityAgreement.getUniversityUnit();
                         final Country country = unit.getCountry();
 
                         final Row row2 = spreadsheetOptions.addRow();
                         row2.setCell(getString("label.username"), person.getUsername());
-                        row2.setCell(getString("label.preference.order"), c.getPreferenceOrder());
+                        row2.setCell(getString("label.preference.order"), outboundMobilityCandidacy.getPreferenceOrder());
                         row2.setCell(getString("label.degrees"), contestFromCandidacy.getOutboundMobilityCandidacyContestGroup()
                                 .getDescription());
                         row2.setCell(getString("label.mobility.program"), mobilityAgreement.getMobilityProgram()
                                 .getRegistrationProtocol().getDescription().getContent());
                         row2.setCell(getString("label.country"), country == null ? "" : country.getName());
                         row2.setCell(getString("label.university"), unit.getPresentationName());
-                        row2.setCell(getString("label.candidate.selected"), c.getSelected() == null ? "-" : (c.getSelected() ? getString("label.yes") : getString("label.no")));
+                        row2.setCell(getString("label.candidate.selected"), outboundMobilityCandidacy.getSelected() == null ? "-" : (outboundMobilityCandidacy.getSelected() ? getString("label.yes") : getString("label.no")));
+
+                        OutboundMobilityCandidacySubmission outboundMobilityCandidacySubmission =
+                                outboundMobilityCandidacy.getOutboundMobilityCandidacySubmission();
+
+                        if (outboundMobilityCandidacySubmission != null) {
+                            final OutboundMobilityCandidacyPeriod outboundMobilityCandidacyPeriod =
+                                    outboundMobilityCandidacySubmission.getOutboundMobilityCandidacyPeriod();
+                            final String optionIntroductoryDestription = outboundMobilityCandidacyPeriod.getOptionIntroductoryDestription();
+                            if (!Strings.isNullOrEmpty(optionIntroductoryDestription)) {
+                                if (outboundMobilityCandidacySubmission.getConfirmationOption() != null) {
+                                    row2.setCell(optionIntroductoryDestription,
+                                            outboundMobilityCandidacySubmission.getConfirmationOption().getOptionValue());
+                                }
+                            }
+                        }
                     }
 
                     final Row contactRow = spreadsheetContactInformation.addRow();
