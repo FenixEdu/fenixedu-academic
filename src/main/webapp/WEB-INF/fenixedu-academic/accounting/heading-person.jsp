@@ -48,6 +48,12 @@
 </style>
 
 <div class="info-div">
+    <c:if test="${not empty error}">
+        <div class="alert alert-danger">
+            <c:out value="${error}" escapeXml="false"/>
+        </div>
+        <hr />
+    </c:if>
     <div class="row">
         <div class="col-md-1">
             <c:if test="${not empty person.user}">

@@ -1,5 +1,6 @@
 package org.fenixedu.academic.domain.accounting;
 
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.User;
@@ -28,6 +29,7 @@ public class Refund extends Refund_Base {
 
     @Atomic(mode = Atomic.TxMode.WRITE)
     protected void delete(boolean annulAccountingTransaction) {
+        DomainException.throwWhenDeleteBlocked(this.getDeletionBlockers());
         final AccountingTransaction accountingTransaction = getAccountingTransaction();
 
         if (accountingTransaction != null && annulAccountingTransaction) {

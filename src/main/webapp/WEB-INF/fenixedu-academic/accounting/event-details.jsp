@@ -65,6 +65,7 @@
             </div>
         </div>
     </header>
+    <c:set var="error" scope="page" value="${error}"/>
     <c:set var="person" scope="request" value="${event.person}"/>
     <jsp:include page="heading-person.jsp"/>
     <div class="row">

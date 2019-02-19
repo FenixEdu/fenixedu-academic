@@ -114,7 +114,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
     }
 
     @RequestMapping("{event}/delete/{transaction}")
-    public String delete(@PathVariable DomainObject transaction, @PathVariable Event event, User user, Model model) {
+    public String delete(@PathVariable DomainObject transaction, @PathVariable Event event, User user, Model model, RedirectAttributes ra) {
         accessControlService.checkAdvancedPaymentManager(event, user);
         if (transaction instanceof AccountingTransaction) {
             model.addAttribute("annulAccountingTransactionBean", new AnnulAccountingTransactionBean((AccountingTransaction) transaction));
@@ -126,7 +126,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
                 DeleteExemption.run((Exemption) transaction);
             }
             catch (DomainException e) {
-                model.addAttribute("error", e.getLocalizedMessage());
+                ra.addFlashAttribute("error", e.getLocalizedMessage());
             }
         }
         else if (transaction instanceof Discount) {
@@ -134,13 +134,13 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
                 AccessControl.check(AcademicPredicates.MANAGE_STUDENT_PAYMENTS);
                 ((Discount) transaction).delete();
             } catch (DomainException e) {
-                model.addAttribute("error", e.getLocalizedMessage());
+                ra.addFlashAttribute("error", e.getLocalizedMessage());
             }
         } else if (transaction instanceof Refund) {
             try {
                 ((Refund) transaction).delete();
             } catch (DomainException e) {
-                model.addAttribute("error", e.getLocalizedMessage());
+                ra.addFlashAttribute("error", e.getLocalizedMessage());
             }
         }
         else {
@@ -152,13 +152,21 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
 
     @RequestMapping(value = "{event}/deleteTransaction", method = RequestMethod.POST)
     public String deleteTransaction(@PathVariable Event event, User user, Model model,
-            @ModelAttribute AnnulAccountingTransactionBean annulAccountingTransactionBean){
+            @ModelAttribute AnnulAccountingTransactionBean annulAccountingTransactionBean, RedirectAttributes ra){
         accessControlService.checkAdvancedPaymentManager(event, user);
         try {
             AnnulAccountingTransaction.run(annulAccountingTransactionBean);
         }
         catch (DomainException e){
             model.addAttribute("error", e.getLocalizedMessage());
+        } catch (RuntimeException re) {
+            if (re.getCause() instanceof DomainException) {
+                DomainException de = (DomainException) re.getCause();
+                ra.addFlashAttribute("error", de.getLocalizedMessage());
+                return redirectToDelete(event, annulAccountingTransactionBean);
+            } else {
+                throw re;
+            }
         }
         return redirectToEventDetails(event);
     }
@@ -410,4 +418,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
         return deposit(event, user, model);
     }
 
+    private String redirectToDelete(@PathVariable final Event event, @ModelAttribute final AnnulAccountingTransactionBean annulAccountingTransactionBean) {
+        return String.format("redirect:%s/%s/delete/%s", REQUEST_MAPPING, event.getExternalId(), annulAccountingTransactionBean.getTransaction().getExternalId());
+    }
 }
