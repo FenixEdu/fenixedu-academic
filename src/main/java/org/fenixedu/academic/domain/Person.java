@@ -49,6 +49,7 @@ import org.fenixedu.academic.domain.accounting.ResidenceEvent;
 import org.fenixedu.academic.domain.accounting.ServiceAgreement;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
+import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeEvent;
 import org.fenixedu.academic.domain.accounting.events.AnnualEvent;
 import org.fenixedu.academic.domain.accounting.events.PastAdministrativeOfficeFeeAndInsuranceEvent;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
@@ -868,7 +869,7 @@ public class Person extends Person_Base {
                 .map(event -> (InsuranceEvent) event)
                 .filter(insuranceEvent -> !insuranceEvent.isCancelled())
                 .filter(insuranceEvent -> insuranceEvent.isFor(executionYear))
-                .findFirst().orElse(null);
+                .findAny().orElse(null);
     }
 
     public boolean hasInsuranceEventFor(final ExecutionYear executionYear) {
@@ -899,11 +900,23 @@ public class Person extends Person_Base {
                 .map(event -> (AdministrativeOfficeFeeAndInsuranceEvent) event)
                 .filter(administrativeOfficeFeeAndInsuranceEvent -> !administrativeOfficeFeeAndInsuranceEvent.isCancelled())
                 .filter(administrativeOfficeFeeAndInsuranceEvent -> administrativeOfficeFeeAndInsuranceEvent.isFor(executionYear))
-                .findFirst().orElse(null);
+                .findAny().orElse(null);
     }
 
     public boolean hasAdministrativeOfficeFeeInsuranceEventFor(final ExecutionYear executionYear) {
-        return getAdministrativeOfficeFeeInsuranceEventFor(executionYear) != null;
+        return getAdministrativeOfficeFeeInsuranceEventFor(executionYear) != null || (hasInsuranceEventFor(executionYear) && hasAdministrativeOfficeFeeEventFor(executionYear));
+    }
+
+    private boolean hasAdministrativeOfficeFeeEventFor(final ExecutionYear executionYear) {
+        return getAdministrativeOfficeFeeEventFor(executionYear) != null;
+    }
+
+    private AdministrativeOfficeFeeEvent getAdministrativeOfficeFeeEventFor(final ExecutionYear executionYear) {
+            return getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE).stream()
+                    .map(event -> (AdministrativeOfficeFeeEvent) event)
+                    .filter(administrativeOfficeFeeEvent -> !administrativeOfficeFeeEvent.isCancelled())
+                    .filter(administrativeOfficeFeeEvent -> administrativeOfficeFeeEvent.isFor(executionYear))
+                    .findAny().orElse(null);
     }
 
     public Set<Event> getEventsSupportingPaymentByOtherParties() {

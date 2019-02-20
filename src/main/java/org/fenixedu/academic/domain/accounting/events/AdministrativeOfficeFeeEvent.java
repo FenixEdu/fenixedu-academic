@@ -25,24 +25,6 @@ import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class AdministrativeOfficeFeeEvent extends AdministrativeOfficeFeeEvent_Base implements IAdministrativeOfficeFeeEvent {
 
-    static {
-        getRelationPersonAccountingEvent().addListener(new RelationAdapter<Party, Event>() {
-            @Override public void beforeAdd(Party party, Event event) {
-                if (event instanceof AdministrativeOfficeFeeEvent && party != null && party instanceof Person) {
-                    Person person = (Person) party;
-                    final AdministrativeOfficeFeeEvent administrativeOfficeFeeEvent =
-                            (AdministrativeOfficeFeeEvent) event;
-                    if (person.hasAdministrativeOfficeFeeInsuranceEventFor(
-                            administrativeOfficeFeeEvent.getExecutionYear())) {
-                        throw new DomainException(
-                                "error.org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent.event.is.already.defined.for.execution.year");
-
-                    }
-                }
-            }
-        });
-    }
-    
     protected AdministrativeOfficeFeeEvent() {
         super();
     }
