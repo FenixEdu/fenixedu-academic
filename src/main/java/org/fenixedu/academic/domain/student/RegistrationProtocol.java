@@ -20,8 +20,11 @@ package org.fenixedu.academic.domain.student;
 
 import java.util.Comparator;
 
+import static org.fenixedu.academic.domain.RegistrationProtocolLog.createLog;
+
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.LocalizedString;
 
@@ -44,7 +47,7 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
 
     public RegistrationProtocol(String code, LocalizedString description, Boolean enrolmentByStudentAllowed, Boolean payGratuity,
             Boolean allowsIDCard, Boolean onlyAllowedDegreeEnrolment, Boolean isAlien, Boolean exempted, Boolean mobility,
-            Boolean military, Boolean allowDissertationCandidacyWithoutChecks, Boolean forOfficialMobilityReporting,
+            Boolean military, Boolean forOfficialMobilityReporting,
             Boolean attemptAlmaMatterFromPrecedent) {
         setRootDomainObject(Bennu.getInstance());
         setCode(code);
@@ -57,7 +60,75 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
         setExempted(exempted);
         setMobility(mobility);
         setMilitary(military);
-        setAllowDissertationCandidacyWithoutChecks(allowDissertationCandidacyWithoutChecks);
+        setForOfficialMobilityReporting(forOfficialMobilityReporting);
+        setAttemptAlmaMatterFromPrecedent(attemptAlmaMatterFromPrecedent);
+    }
+
+    @Atomic
+    public static void create(String code, LocalizedString description, Boolean enrolmentByStudentAllowed, Boolean payGratuity,
+            Boolean allowsIDCard, Boolean onlyAllowedDegreeEnrolment, Boolean isAlien, Boolean exempted, Boolean mobility,
+            Boolean military, Boolean forOfficialMobilityReporting,
+            Boolean attemptAlmaMatterFromPrecedent) {
+
+        RegistrationProtocol rp = new RegistrationProtocol(code, description, enrolmentByStudentAllowed,
+                payGratuity, allowsIDCard, onlyAllowedDegreeEnrolment, isAlien, exempted, mobility,
+                military, forOfficialMobilityReporting,
+                attemptAlmaMatterFromPrecedent);
+
+        createLog(Bundle.MESSAGING, "log.registrationProtocol.created", rp.getExternalId(), code,
+                description.toString(),
+                enrolmentByStudentAllowed.toString(),
+                payGratuity.toString(),
+                allowsIDCard.toString(),
+                onlyAllowedDegreeEnrolment.toString(),
+                isAlien.toString(),
+                exempted.toString(),
+                mobility.toString(),
+                military.toString(),
+                forOfficialMobilityReporting.toString(),
+                attemptAlmaMatterFromPrecedent.toString());
+    }
+
+    @Atomic
+    public void edit(String code, LocalizedString description, Boolean enrolmentByStudentAllowed, Boolean payGratuity,
+            Boolean allowsIDCard, Boolean onlyAllowedDegreeEnrolment, Boolean isAlien, Boolean exempted, Boolean mobility,
+            Boolean military, Boolean forOfficialMobilityReporting,
+            Boolean attemptAlmaMatterFromPrecedent) {
+
+        createLog(Bundle.MESSAGING, "log.registrationProtocol.edited", getExternalId(), getCode(), code,
+                getDescription().toString(),
+                description.toString(),
+                getEnrolmentByStudentAllowed().toString(),
+                enrolmentByStudentAllowed.toString(),
+                getPayGratuity().toString(),
+                payGratuity.toString(),
+                getAllowsIDCard().toString(),
+                allowsIDCard.toString(),
+                getOnlyAllowedDegreeEnrolment().toString(),
+                onlyAllowedDegreeEnrolment.toString(),
+                getAlien().toString(),
+                isAlien.toString(),
+                getExempted().toString(),
+                exempted.toString(),
+                getMobility().toString(),
+                mobility.toString(),
+                getMilitary().toString(),
+                military.toString(),
+                getForOfficialMobilityReporting().toString(),
+                forOfficialMobilityReporting.toString(),
+                getAttemptAlmaMatterFromPrecedent().toString(),
+                attemptAlmaMatterFromPrecedent.toString());
+
+        setCode(code);
+        setDescription(description);
+        setEnrolmentByStudentAllowed(enrolmentByStudentAllowed);
+        setPayGratuity(payGratuity);
+        setAllowsIDCard(allowsIDCard);
+        setOnlyAllowedDegreeEnrolment(onlyAllowedDegreeEnrolment);
+        setAlien(isAlien);
+        setExempted(exempted);
+        setMobility(mobility);
+        setMilitary(military);
         setForOfficialMobilityReporting(forOfficialMobilityReporting);
         setAttemptAlmaMatterFromPrecedent(attemptAlmaMatterFromPrecedent);
     }
@@ -95,11 +166,6 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
 
     public boolean isToPayGratuity() {
         return getPayGratuity() != null && getPayGratuity().booleanValue();
-    }
-
-    public boolean allowDissertationCandidacyWithoutChecks() {
-        return getAllowDissertationCandidacyWithoutChecks() != null
-                && getAllowDissertationCandidacyWithoutChecks().booleanValue();
     }
 
     public boolean isMobilityAgreement() {
