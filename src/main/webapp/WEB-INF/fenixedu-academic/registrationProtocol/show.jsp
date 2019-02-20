@@ -65,7 +65,7 @@
                 <c:out value="${registrationProtocol.code}"/>
             </td>
             <td>
-                <c:out value="${registrationProtocol.description.json()}"/>
+                <c:out value="${registrationProtocol.description.content}"/>
             </td>
             <td>
                 <button class="btn btn-default showHideDetailsButton show-details"><i class="glyphicon glyphicon-collapse-down"></i><spring:message code="label.details"/></button>
