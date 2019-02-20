@@ -30,11 +30,13 @@ import org.fenixedu.academic.domain.QueueJobResultFile;
 import org.fenixedu.academic.domain.QueueJobWithFile;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.bennu.scheduler.CronTask;
 import org.fenixedu.bennu.scheduler.annotation.Task;
 import org.fenixedu.messaging.core.domain.Message;
 import org.joda.time.DateTime;
 
+import com.google.common.base.Strings;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 
@@ -115,14 +117,25 @@ public class JobQueueDispatcher extends CronTask {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             t.printStackTrace(pw);
-            String subject = String.format("Job %s failed 3 times", job.getClass().getName());
-            String body =
-                    "Viva\n\n" + "O trabalho com o externalId de " + job.getExternalId() + " falhou mais de 3 vezes.\n\n"
-                            + "Request Time : " + job.getRequestDate() + "\n" + "Start Time : " + job.getJobStartTime() + "\n"
-                            + "User : " + getQueueJobResponsibleName(job) + "\n" + "\n\n Error Stack Trace:\n" + sw.toString();
-            Group tos = Group.managers();
-            Message.fromSystem()
-                    .to(tos)
+            final String subject = String.format("Tarefa %s falhou 3 vezes", job.getClass().getName());
+            final String body = String.format(
+                    "A tarefa '%s' com o externalId de %s falhou mais de 3 vezes.\n\nRequest Time : %s\nStart Time : %s\nUser : %s\n\n\n Error Stack Trace:\n%s",
+                    job.getDescription(), job.getExternalId(), job.getRequestDate(), job.getJobStartTime(), getQueueJobResponsibleName(job), sw.toString());
+
+            final Message.MessageBuilder messageBuilder = Message.fromSystem();
+            final String defaultSupportEmailAddress = CoreConfiguration.getConfiguration().defaultSupportEmailAddress();
+
+            if (Strings.isNullOrEmpty(defaultSupportEmailAddress)) {
+                messageBuilder.bcc(Group.managers());
+            } else {
+                messageBuilder.singleTos(defaultSupportEmailAddress);
+            }
+
+            if (job.getPerson() != null && job.getPerson().getUser() != null) {
+                messageBuilder.cc(Group.users(job.getPerson().getUser()));
+            }
+            
+            messageBuilder
                     .subject(subject)
                     .textBody(body)
                     .send();
