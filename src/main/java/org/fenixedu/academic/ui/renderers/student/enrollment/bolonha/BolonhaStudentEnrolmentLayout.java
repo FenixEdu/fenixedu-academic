@@ -381,7 +381,6 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 
                 if (degreeModulesToSelect.contains(degreeModuleToEvaluate)) {
                     checkBox.setChecked(true);
-                    checkBox.addClass("pre-selected");
                 }
                 checkBox.setName("degreeModuleToEnrolCheckBox" + degreeModuleToEvaluate.getKey());
                 checkBox.setUserValue(degreeModuleToEvaluate.getKey());
@@ -518,7 +517,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 
         HtmlCheckBox checkBox = new HtmlCheckBox(true);
         checkBox.setClasses("enrolment-checkbox");
-        checkBox.setAttribute("data-fullpath", enrolment.getDegreeModule().getOneFullName());
+        checkBox.setAttribute("data-fullpath", enrolment.getCurriculumGroup().getFullPath() + " > " + enrolment.getPresentationName().getContent());
         checkBox.setName("enrolmentCheckBox" + enrolment.getExternalId());
         checkBox.setUserValue(enrolmentMetaObject.getKey().toString());
         enrollmentsController.addCheckBox(checkBox);

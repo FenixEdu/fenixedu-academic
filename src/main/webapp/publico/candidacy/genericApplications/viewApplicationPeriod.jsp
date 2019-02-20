@@ -163,7 +163,7 @@
 <br/>
 
 <div class="infoop">
-	<%= genericApplicationPeriod.getDescription() %>
+	<%= genericApplicationPeriod.getDescription().getContent() %>
 </div>
 
 <div id="informationBlock">

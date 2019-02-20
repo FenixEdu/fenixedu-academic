@@ -2119,20 +2119,23 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             if (group != null && group.getParentCycleCurriculumGroup() != null
                     && group.getParentCycleCurriculumGroup().isConclusionProcessed()
                     && !hasUpdateRegistrationAfterConclusionProcessPermission) {
-                throw new DomainException("error.StudentCurricularPlan.cannot.create.dismissals");
+                throw new DomainException("error.StudentCurricularPlan.cannot.create.dismissals.curriculumGroup.concluded", group.getPresentationName().getContent());
             }
         } else if (curriculumGroup != null) {
             if (curriculumGroup.getParentCycleCurriculumGroup() != null
                     && curriculumGroup.getParentCycleCurriculumGroup().isConclusionProcessed()
                     && !hasUpdateRegistrationAfterConclusionProcessPermission) {
-                throw new DomainException("error.StudentCurricularPlan.cannot.create.dismissals");
+                throw new DomainException("error.StudentCurricularPlan.cannot.create.dismissals.curriculumGroup.concluded", curriculumGroup.getPresentationName().getContent());
             }
         } else {
             for (final SelectedCurricularCourse selected : dismissals) {
                 if (selected.getCurriculumGroup().getParentCycleCurriculumGroup() != null
                         && selected.getCurriculumGroup().getParentCycleCurriculumGroup().isConclusionProcessed()
                         && !hasUpdateRegistrationAfterConclusionProcessPermission) {
-                    throw new DomainException("error.StudentCurricularPlan.cannot.create.dismissals");
+                    CurricularCourse curricularCourse = selected.getCurricularCourse();
+                    CurriculumGroup group = selected.getCurriculumGroup();
+                    throw new DomainException("error.StudentCurricularPlan.cannot.create.dismissals.selected.curricularCourse",
+                            curricularCourse.getNameI18N().getContent(), group.getPresentationName().getContent());
                 }
             }
         }

@@ -27,16 +27,28 @@ import org.fenixedu.academic.domain.period.GenericApplicationPeriod;
 import org.fenixedu.academic.domain.person.IDDocumentType;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 import org.fenixedu.messaging.core.domain.Message;
-import org.fenixedu.messaging.core.domain.MessagingSystem;
+import org.fenixedu.messaging.core.template.DeclareMessageTemplate;
+import org.fenixedu.messaging.core.template.TemplateParameter;
 import pt.ist.fenixframework.Atomic;
 
 import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
 
+@DeclareMessageTemplate(
+        id = "candidacy.generic.application.email",
+        bundle = Bundle.CANDIDATE,
+        description = "candidacy.generic.application.description",
+        subject = "candidacy.generic.application.subject",
+        text = "candidacy.generic.application.text",
+        parameters = {
+                @TemplateParameter(id = "applicationNumber", description = "candidacy.generic.application.param.application.number"),
+                @TemplateParameter(id = "title", description = "candidacy.generic.application.param.title"),
+                @TemplateParameter(id = "link", description = "candidacy.generic.application.param.link"),
+                @TemplateParameter(id = "institution", description = "candidacy.generic.application.param.institution"),
+        }
+)
 public class GenericApplication extends GenericApplication_Base {
 
     public static final Comparator<GenericApplication> COMPARATOR_BY_APPLICATION_NUMBER = new Comparator<GenericApplication>() {
@@ -74,18 +86,15 @@ public class GenericApplication extends GenericApplication_Base {
     }
 
     public void sendEmailForApplication() {
-        final String subject =
-                BundleUtil.getString(Bundle.CANDIDATE, "label.application.email.subject", getGenericApplicationPeriod()
-                        .getTitle().getContent());
-        final String body =
-                BundleUtil.getString(Bundle.CANDIDATE, "label.application.email.body", getApplicationNumber(),
-                        generateConfirmationLink(), getGenericApplicationPeriod().getTitle().getContent(),
-                        Unit.getInstitutionAcronym());
         Message.fromSystem()
                 .replyToSender()
                 .singleBcc(getEmail())
-                .subject(subject)
-                .textBody(body)
+                .template("candidacy.generic.application.email")
+                    .parameter("applicationNumber", getApplicationNumber())
+                    .parameter("title", getGenericApplicationPeriod().getTitle())
+                    .parameter("link", generateConfirmationLink())
+                    .parameter("institution", Unit.getInstitutionAcronym())
+                .and()
                 .send();
     }
 

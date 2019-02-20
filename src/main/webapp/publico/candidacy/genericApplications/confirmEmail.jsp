@@ -43,7 +43,7 @@
 <bean:define id="unsavedChangesMessage" type="java.lang.String"><bean:message bundle="CANDIDATE_RESOURCES" key="label.application.unsaved.changes"/></bean:define>
 
 <script src="https://rawgithub.com/timrwood/moment/2.0.0/moment.js"></script>
-<script src="https://cdn.rawgit.com/AfonsoFGarcia/Portuguese-ID-Validator/v1.1.1/validator.js"></script>
+<script src="<%= request.getContextPath()%>/javaScript/portugueseIdValidator.js"></script>
 <script>
 	var fieldChanged = false;
 
@@ -271,7 +271,7 @@
 <br/>
 
 <div class="infoop">
-	<%= genericApplication.getGenericApplicationPeriod().getDescription() %>
+	<%= genericApplication.getGenericApplicationPeriod().getDescription().getContent() %>
 </div>
 
 <% if (genericApplication.getSubmitted() != null && genericApplication.getSubmitted()) { %>
@@ -474,7 +474,7 @@
 							<fr:slot name="nationality" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
 									layout="menu-select">
 								<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.CountryProvider"/>
-								<fr:property name="format" value="${localizedName}" />
+								<fr:property name="format" value="${localizedName.content}" />
 								<fr:property name="sortBy" value="localizedName"/>
 							</fr:slot>
 						</fr:schema>

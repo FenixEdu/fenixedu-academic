@@ -195,41 +195,17 @@ function submitForm(btn) {
 
 function getSelectedModules() {
     return $.makeArray($('.module-enrol-checkbox:checked, .enrolment-checkbox:checked').map(function(i, obj) {
-        console.log(obj)
-        var preEnrolledNotice = $(obj).hasClass('pre-selected') ?
-			`<small>(${portal.message('resources.StudentResources', 'label.enrollment.courses.preEnrolled')})</small>` : '';
 
-        return '<li>' + $(obj).data('fullpath') + ' ' + preEnrolledNotice + '</li>';
+        return '<li>' + $(obj).data('fullpath') + '</li>';
     })).join("") || '${portal.message('resources.StudentResources', 'label.enrollment.courses.selected.empty')}';
 }
 
 (function () {
 	$('table').removeClass('table');
 
-    $('.pre-selected').each(function(i, obj) {
-        // Get all row's cells
-        var cells = $(obj).parent().siblings().andSelf();
-        var courseNameCell = $(cells[0]);
-
-		if ($(obj).is(":checked")) {
-
-            courseNameCell.append('<strong> - ${portal.message('resources.StudentResources', 'label.enrollment.courses.preEnrolled')}</strong>');
-		} else {
-            courseNameCell.append('<span style="color: #888"> - ${portal.message('resources.StudentResources', 'label.enrollment.courses.preEnrolled')}</span>');
-		}
-    });
-
     $('.module-enrol-checkbox:checked').each(function(i, obj) {
         var cells = $(obj).parent().siblings().andSelf();
 		cells.addClass('se_temporary');
-    });
-
-    $('.pre-selected:checked').one( "click", function(el) {
-        var cells = $(this).parent().siblings().andSelf();
-
-        $(cells[0]).children('strong').remove();
-        $(cells[0]).append('<span style="color: #888"> - ${portal.message('resources.StudentResources', 'label.enrollment.courses.preEnrolled')}</span>');
-        cells.removeClass('se_temporary');
     });
 
     $('.selected-modules').html(getSelectedModules());

@@ -857,6 +857,9 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
     class AffinityCycleCourseGroupLog extends DomainOperationLog {
     }
 
+    class RegistrationProtocolLog extends DomainOperationLog {
+    }
+
     class CourseLoad  {
         ShiftType type;
         BigDecimal totalQuantity;
@@ -3085,7 +3088,6 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
         Boolean exempted;
         Boolean mobility;
         Boolean military;
-        Boolean allowDissertationCandidacyWithoutChecks;
         Boolean forOfficialMobilityReporting; // RAIDES
         Boolean attemptAlmaMatterFromPrecedent; // Spooky... but maintaining the logic
 
@@ -8534,6 +8536,16 @@ relation RegistrationProtocolRootDomainObject {
 		multiplicity *;
 	}
 	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+}
+
+relation BennuRegistrationProtocolLog {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectRegistrationProtocolLog {
+        multiplicity 1..1;
+    }
+
+    RegistrationProtocolLog playsRole RegistrationProtocolLog  {
+        multiplicity 0..*;
+    }
 }
 
 relation ReimbursementGuideEntryGuideEntry {

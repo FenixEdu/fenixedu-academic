@@ -38,8 +38,10 @@ import org.fenixedu.academic.service.services.accounting.DeleteExemption;
 import org.fenixedu.academic.ui.spring.service.AccountingManagementAccessControlService;
 import org.fenixedu.academic.ui.spring.service.AccountingManagementService;
 import org.fenixedu.academic.util.Money;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.spring.portal.SpringFunctionality;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -177,6 +179,12 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
     @RequestMapping(value = "{event}/depositAmount", method = RequestMethod.POST)
     public String depositAmount(@PathVariable Event event, User user, Model model, @ModelAttribute DepositAmountBean depositAmountBean) {
         accessControlService.checkPaymentManager(event, user);
+
+        if (depositAmountBean.getPaymentMethod() == Bennu.getInstance().getSibsPaymentMethod()
+                || depositAmountBean.getPaymentMethod() == Bennu.getInstance().getPaymentMethodForRefundDeposit()) {
+            model.addAttribute("error", messageSource.getMessage("error.deposit.invalid.payment.method", null, I18N.getLocale()));
+            return deposit(event, user, model);
+        }
 
         try {
             accountingManagementService.depositAmount(event, user, depositAmountBean);

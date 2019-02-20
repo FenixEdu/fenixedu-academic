@@ -24,12 +24,14 @@ package org.fenixedu.academic.domain.candidacyProcess.erasmus;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcess;
 import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityApplicationProcess;
 import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityEmailTemplateType;
 import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityProgram;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
+import org.fenixedu.academic.domain.student.RegistrationProtocol_Base;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 public class SendReceptionEmailBean implements java.io.Serializable {
@@ -55,17 +57,9 @@ public class SendReceptionEmailBean implements java.io.Serializable {
 
     // Look for erasmus program
     private MobilityProgram findSomeDefaultMobilityProgram() {
-        for (final MobilityProgram mobilityProgram : Bennu.getInstance().getProgramsSet()) {
-            final RegistrationProtocol protocol = mobilityProgram.getRegistrationProtocol();
-            if (!protocol.isEnrolmentByStudentAllowed() && !protocol.isToPayGratuity() && protocol.allowsIDCard()
-                    && !protocol.isOnlyAllowedDegreeEnrolment() && !protocol.isAlien()
-                    && protocol.allowDissertationCandidacyWithoutChecks() && !protocol.isForOfficialMobilityReporting()
-                    && !protocol.attemptAlmaMatterFromPrecedent()) {
-                return mobilityProgram;
-            }
-        }
-        return null;
-    }
+        return Bennu.getInstance().getRegistrationProtocolsSet().stream().filter(r -> r.getMobilityProgram() != null && FenixEduAcademicConfiguration
+                .getConfiguration().mobilityDefaultErasmusProgram().equals(r.getCode())).map(RegistrationProtocol_Base::getMobilityProgram).findAny().orElseThrow(UnsupportedOperationException::new);
+   }
 
     public void removeProcess(MobilityIndividualApplicationProcess individualCandidacyProcess) {
         this.subjectProcesses.remove(individualCandidacyProcess);

@@ -37,16 +37,13 @@ import pt.ist.fenixframework.Atomic;
 
 public class GenericApplicationPeriod extends GenericApplicationPeriod_Base {
 
-    public static final Comparator<GenericApplicationPeriod> COMPARATOR_BY_DATES = new Comparator<GenericApplicationPeriod>() {
-        @Override
-        public int compare(final GenericApplicationPeriod o1, final GenericApplicationPeriod o2) {
-            final int s = o1.getStart().compareTo(o2.getStart());
-            if (s == 0) {
-                final int e = o1.getEnd().compareTo(o2.getEnd());
-                return e == 0 ? o1.getExternalId().compareTo(o2.getExternalId()) : e;
-            }
-            return s;
+    public static final Comparator<GenericApplicationPeriod> COMPARATOR_BY_DATES = (o1, o2) -> {
+        final int s = o1.getStart().compareTo(o2.getStart());
+        if (s == 0) {
+            final int e = o1.getEnd().compareTo(o2.getEnd());
+            return e == 0 ? o1.getExternalId().compareTo(o2.getExternalId()) : e;
         }
+        return s;
     };
 
     public GenericApplicationPeriod(final LocalizedString title, final LocalizedString description, final DateTime start,
@@ -63,8 +60,7 @@ public class GenericApplicationPeriod extends GenericApplicationPeriod_Base {
     }
 
     public static SortedSet<GenericApplicationPeriod> getPeriods() {
-        final SortedSet<GenericApplicationPeriod> result =
-                new TreeSet<GenericApplicationPeriod>(GenericApplicationPeriod.COMPARATOR_BY_DATES);
+        final SortedSet<GenericApplicationPeriod> result = new TreeSet<>(GenericApplicationPeriod.COMPARATOR_BY_DATES);
         for (final CandidacyPeriod candidacyPeriod : Bennu.getInstance().getCandidacyPeriodsSet()) {
             if (candidacyPeriod instanceof GenericApplicationPeriod) {
                 result.add((GenericApplicationPeriod) candidacyPeriod);
@@ -88,8 +84,7 @@ public class GenericApplicationPeriod extends GenericApplicationPeriod_Base {
     }
 
     public SortedSet<GenericApplication> getOrderedGenericApplicationSet() {
-        final SortedSet<GenericApplication> result =
-                new TreeSet<GenericApplication>(GenericApplication.COMPARATOR_BY_APPLICATION_NUMBER);
+        final SortedSet<GenericApplication> result = new TreeSet<>(GenericApplication.COMPARATOR_BY_APPLICATION_NUMBER);
         result.addAll(getGenericApplicationSet());
         return result;
     }

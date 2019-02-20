@@ -52,6 +52,4 @@
 
 The application has not been found. Please contact us.
 
-<div class="mtop15" id="contacts">
-	<bean:message key="erasmus.contacts.text" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="CANDIDATE_RESOURCES" />
-</div>
+<p><em><bean:message key="erasmus.contacts.text" bundle="CANDIDATE_RESOURCES"/>.</em></p>
