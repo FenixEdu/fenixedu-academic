@@ -18,6 +18,9 @@
  */
 package org.fenixedu.academic.domain.time.calendarStructure;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import org.fenixedu.academic.domain.time.AcademicPeriodType;
 import org.fenixedu.academic.domain.time.chronologies.durationFields.AcademicTrimestersDurationFieldType;
 import org.joda.time.DurationFieldType;
@@ -50,6 +53,11 @@ public class AcademicTrimesters extends AcademicPeriod {
     @Override
     public AcademicPeriod getPossibleChild() {
         return null;
+    }
+
+    @Override
+    public Collection<AcademicPeriod> getPossibleChilds() {
+        return Collections.emptySet();
     }
 
 }

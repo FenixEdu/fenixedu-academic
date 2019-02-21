@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.domain.time.calendarStructure;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -116,6 +117,9 @@ public abstract class AcademicPeriod extends BaseSingleFieldPeriod {
         return this.compareTo(input) <= 0;
     }
 
+    @Deprecated
     abstract public AcademicPeriod getPossibleChild();
+
+    abstract public Collection<AcademicPeriod> getPossibleChilds();
 
 }

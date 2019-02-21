@@ -18,6 +18,10 @@
  */
 package org.fenixedu.academic.domain.time.calendarStructure;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.fenixedu.academic.domain.time.AcademicPeriodType;
 import org.fenixedu.academic.domain.time.chronologies.durationFields.AcademicSemestersDurationFieldType;
 import org.joda.time.DurationFieldType;
@@ -47,6 +51,18 @@ public class AcademicSemesters extends AcademicPeriod {
     @Override
     public AcademicPeriod getPossibleChild() {
         return getValue() > 1 ? AcademicPeriod.SEMESTER : AcademicPeriod.TRIMESTER;
+    }
+
+    @Override
+    public Collection<AcademicPeriod> getPossibleChilds() {
+        final Set<AcademicPeriod> result = new HashSet<>();
+
+        if (getValue() > 1) {
+            result.add(AcademicPeriod.SEMESTER);
+        }
+//        result.add(AcademicPeriod.TRIMESTER);
+
+        return result;
     }
 
 }

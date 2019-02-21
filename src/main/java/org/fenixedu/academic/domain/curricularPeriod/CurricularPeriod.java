@@ -22,9 +22,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.ExecutionSemester;
@@ -68,17 +71,6 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
         sortedChilds.addAll(getChildsSet());
         Collections.sort(sortedChilds);
         return sortedChilds;
-    }
-
-    public CurricularPeriod getChildByOrder(Integer order) {
-
-        for (CurricularPeriod curricularPeriod : getChildsSet()) {
-            if (curricularPeriod.getChildOrder().equals(order)) {
-                return curricularPeriod;
-            }
-        }
-
-        return null;
     }
 
     private CurricularPeriod findChild(AcademicPeriod academicPeriod, Integer order) {
@@ -161,10 +153,22 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
 
     public void delete() {
 
-        getContextsSet().clear();
+        if (!getContextsSet().isEmpty()) {
+            throw new DomainException("error.delete.CurricularPeriod.existingContexts");
+        }
+
         setDegreeCurricularPlan(null);
 
+        final CurricularPeriod parent = getParent();
         setParent(null);
+
+        // reorder remaining 'brothers' periods
+        if (parent != null) {
+            final Map<AcademicPeriod, AtomicInteger> counter = new HashMap<>();
+            parent.getSortedChilds().forEach(child -> child.setChildOrder(
+                    counter.computeIfAbsent(child.getAcademicPeriod(), x -> new AtomicInteger()).incrementAndGet()));
+        }
+
         for (CurricularPeriod child : getChildsSet()) {
             child.delete();
         }
@@ -218,26 +222,17 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
                 return;
             }
 
-            if (child.getAcademicPeriod().getWeight() >= parent.getAcademicPeriod().getWeight()) {
+            final AcademicPeriod childAcademicPeriod = child.getAcademicPeriod();
+            if (childAcademicPeriod.getWeight() >= parent.getAcademicPeriod().getWeight()) {
                 throw new DomainException("error.childTypeGreaterThanParentType");
             }
 
             // re-order childs
             Integer order = child.getChildOrder();
             if (order == null) {
-                child.setChildOrder(parent.getChildsSet().size() + 1);
-            }
-        }
-    }
-    
-    public void createChilds(final AcademicPeriod smallest) {
-        AcademicPeriod academicPeriod = getAcademicPeriod();
-        AcademicPeriod possibleChild = academicPeriod.getPossibleChild();
-        if (possibleChild != null && (smallest == null || possibleChild.isBiggerOrEquals(smallest))) {
-            final int childs = Float.valueOf(academicPeriod.getWeight() / possibleChild.getWeight()).intValue();
-            for (int order = 1; order <= childs; order++) {
-                final CurricularPeriod child = new CurricularPeriod(possibleChild, order, this);
-                child.createChilds(smallest);
+                long count =
+                        parent.getChildsSet().stream().filter(p -> p.getAcademicPeriod().equals(childAcademicPeriod)).count();
+                child.setChildOrder(Math.toIntExact(count) + 1);
             }
         }
     }
