@@ -981,6 +981,8 @@
 	</slot>
 	
 	<slot name="toSendEmail" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+
+    <slot name="otherRecipientsEmails"/>
 	
 	<slot name="fireDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	

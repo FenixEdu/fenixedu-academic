@@ -56,6 +56,7 @@
 				
 				<logic:equal name="alert" property="class.simpleName" value="PhdCustomAlert"> 
 					<fr:slot name="targetGroupInText" />
+					<fr:slot name="otherRecipientsInFormattedText" />
 				</logic:equal>
 				
 				<fr:slot name="formattedSubject" />
@@ -72,7 +73,7 @@
 
 </logic:notEmpty>
 
-<h3>Possiveis emails</h3>
+<h3><bean:message key="title.phd.alertMessages.possible.emails" bundle="PHD_RESOURCES" /></h3>
 
 <bean:define id="possibleEmails" name="alertMessage" property="emailsWithMatchWithThisMessage" />
 
