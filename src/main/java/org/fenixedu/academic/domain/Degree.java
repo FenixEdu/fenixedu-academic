@@ -150,11 +150,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public Degree(final String name, final String nameEn, final String code, final DegreeType degreeType,
-            final GradeScale gradeScale) {
-        this(name, nameEn, code, degreeType, gradeScale, ExecutionYear.readCurrentExecutionYear());
-    }
-
-    public Degree(final String name, final String nameEn, final String code, final DegreeType degreeType,
             final GradeScale gradeScale, final ExecutionYear executionYear) {
         this();
         commonFieldsChange(name, nameEn, code, gradeScale, executionYear);
@@ -933,10 +928,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
                 executionYear);
     }
 
-    public DegreeInfo createCurrentDegreeInfo() {
-        return createCurrentDegreeInfo(ExecutionYear.readCurrentExecutionYear());
-    }
-
     /**
      * @deprecated Degree should not answer duration questions.
      *
@@ -1078,25 +1069,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             }
         }
         return new ArrayList<>(result);
-    }
-
-    public Collection<Space> getCurrentCampus() {
-        ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-        Collection<Space> result = this.getCampus(executionYear);
-
-        if (!result.isEmpty()) {
-            return result;
-        }
-
-        for (; executionYear != null; executionYear = executionYear.getNextExecutionYear()) {
-            result = this.getCampus(executionYear);
-
-            if (!result.isEmpty()) {
-                return result;
-            }
-        }
-
-        return new ArrayList<>();
     }
 
     public String constructSchoolClassPrefix(final Integer curricularYear) {
@@ -1245,16 +1217,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public void setNome(final String nome) {
         super.setNome(nome);
         setIdCardName(nome);
-    }
-
-    public boolean isActive() {
-        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-        for (DegreeCurricularPlan curricularPlan : getDegreeCurricularPlansSet()) {
-            if (curricularPlan.getExecutionDegreeByYear(currentExecutionYear) != null) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public boolean canCreateGratuityEvent() {

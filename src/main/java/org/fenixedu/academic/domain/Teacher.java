@@ -41,7 +41,6 @@ import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.spaces.domain.Space;
-import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
 public class Teacher extends Teacher_Base {
@@ -321,26 +320,6 @@ public class Teacher extends Teacher_Base {
         super.setPerson(null);
         setRootDomainObject(null);
         deleteDomainObject();
-    }
-
-    public boolean hasLessons(DateTime begin, DateTime end) {
-        return hasLessons(begin, end, ExecutionYear.readCurrentExecutionYear());
-    }
-
-    public boolean hasLessons(DateTime begin, DateTime end, ExecutionYear executionYear) {
-        final Interval interval = new Interval(begin, end);
-        for (Professorship professorship : getProfessorships(executionYear)) {
-            Set<Shift> associatedShifts = professorship.getExecutionCourse().getAssociatedShifts();
-            for (Shift shift : associatedShifts) {
-                Collection<Lesson> associatedLessons = shift.getAssociatedLessonsSet();
-                for (Lesson lesson : associatedLessons) {
-                    if (lesson.contains(interval)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
     }
 
     public Collection<? extends Forum> getForuns(final ExecutionSemester executionSemester) {

@@ -43,7 +43,6 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
-import org.fenixedu.academic.domain.candidacy.PersonalInformationBean;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.log.CurriculumLineLog;
@@ -435,10 +434,6 @@ public class Student extends Student_Base {
         return false;
     }
 
-    public boolean isSeniorForCurrentExecutionYear() {
-        return isSenior(ExecutionYear.readCurrentExecutionYear());
-    }
-
     public void addApprovedEnrolments(final Collection<Enrolment> enrolments) {
         for (final Registration registration : getRegistrationsSet()) {
             registration.addApprovedEnrolments(enrolments);
@@ -644,17 +639,6 @@ public class Student extends Student_Base {
         return result;
     }
 
-    public List<Registration> getTransitionRegistrationsForDegreeCurricularPlansManagedByCoordinator(final Person coordinator) {
-        final List<Registration> result = new ArrayList<>();
-        for (final Registration registration : super.getRegistrationsSet()) {
-            if (registration.isTransition() && coordinator.isCoordinatorFor(registration.getLastDegreeCurricularPlan(),
-                    ExecutionYear.readCurrentExecutionYear())) {
-                result.add(registration);
-            }
-        }
-        return result;
-    }
-
     public List<Registration> getTransitedRegistrations() {
         List<Registration> result = new ArrayList<>();
         for (Registration registration : super.getRegistrationsSet()) {
@@ -849,31 +833,6 @@ public class Student extends Student_Base {
 
     public boolean hasAttends(final ExecutionCourse executionCourse) {
         return getRegistrationStream().flatMap(r -> r.getAssociatedAttendsSet().stream()).anyMatch(a -> a.isFor(executionCourse));
-    }
-
-    public boolean hasAnyMissingPersonalInformation() {
-        final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-        if (getRegistrationStream()
-                .anyMatch(r -> r.isValidForRAIDES() && r.hasMissingPersonalInformation(currentExecutionYear))) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public List<PersonalInformationBean> getPersonalInformationsWithMissingInformation() {
-        final List<PersonalInformationBean> result = new ArrayList<>();
-        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-
-        for (final Registration registration : getRegistrationsSet()) {
-            if (registration.isValidForRAIDES() && registration.hasMissingPersonalInformation(currentExecutionYear)) {
-                result.add(registration.getPersonalInformationBean(currentExecutionYear));
-            }
-        }
-
-        Collections.sort(result, PersonalInformationBean.COMPARATOR_BY_DESCRIPTION);
-
-        return result;
     }
 
     @Override

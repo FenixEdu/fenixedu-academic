@@ -356,16 +356,6 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     }
 
     @Override
-    public List<CurricularCourse> getDissertationCurricularCourses(ExecutionYear year) {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<CurricularCourse> getDissertationCurricularCourses() {
-        return Collections.emptyList();
-    }
-
-    @Override
     public Set<CurricularCourse> getCurricularCoursesByExecutionYearAndCurricularYear(ExecutionYear eY, Integer cY) {
         return Collections.emptySet();
     }

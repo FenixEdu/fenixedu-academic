@@ -640,10 +640,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return false;
     }
 
-    final public boolean hasAnyEnrolmentForCurrentExecutionYear() {
-        return hasAnyEnrolmentForExecutionYear(ExecutionYear.readCurrentExecutionYear());
-    }
-
     final public Collection<Enrolment> getLatestCurricularCoursesEnrolments(final ExecutionYear executionYear) {
         final Map<CurricularCourse, Enrolment> result = new HashMap<CurricularCourse, Enrolment>();
 

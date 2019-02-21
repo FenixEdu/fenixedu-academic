@@ -168,8 +168,8 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
             if (getRegistration().getIngressionType().isDirectAccessFrom1stCycle()
                     || getRegistration().getIngressionType().isInternal2ndCycleAccess()) {
                 final User userView = Authenticate.getUser();
-                if (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, getRegistration()
-                        .getDegree(), userView.getPerson().getUser())
+                if (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS,
+                        getRegistration().getDegree(), userView.getPerson().getUser())
                         || Group.managers().isMember(userView.getPerson().getUser())) {
                     return;
                 }
@@ -179,9 +179,8 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
         /* For Integrated master degrees one of the cycles must exists */
         if (getCurriculumGroup().getDegreeType().isIntegratedMasterDegree()) {
             if (getCurriculumGroup().getRootCurriculumGroup().getCycleCurriculumGroups().size() == 1) {
-                throw new DomainException(
-                        "error.studentCurriculum.CycleCurriculumGroup.degree.type.requires.this.cycle.to.exist", getName()
-                                .getContent());
+                throw new DomainException("error.studentCurriculum.CycleCurriculumGroup.degree.type.requires.this.cycle.to.exist",
+                        getName().getContent());
             }
         }
     }
@@ -201,10 +200,6 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
         }
 
         return result;
-    }
-
-    public Double getCurrentDefaultEcts() {
-        return getDegreeModule().getCurrentDefaultEcts();
     }
 
     public Double getDefaultEcts(final ExecutionYear executionYear) {

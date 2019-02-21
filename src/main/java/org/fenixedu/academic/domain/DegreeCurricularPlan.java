@@ -1015,30 +1015,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return getDegreeStructure().addCurricularPeriod(curricularPeriodInfos);
     }
 
-    @Override
-    public YearMonthDay getInitialDateYearMonthDay() {
-        if (isBolonhaDegree() && !getExecutionDegreesSet().isEmpty()) {
-            final ExecutionDegree firstExecutionDegree = getFirstExecutionDegree();
-            return firstExecutionDegree.getExecutionYear().getBeginDateYearMonthDay();
-        } else {
-            return super.getInitialDateYearMonthDay();
-        }
-    }
-
-    @Override
-    public YearMonthDay getEndDateYearMonthDay() {
-        if (isBolonhaDegree() && !getExecutionDegreesSet().isEmpty()) {
-            final ExecutionDegree mostRecentExecutionDegree = getMostRecentExecutionDegree();
-            if (mostRecentExecutionDegree.getExecutionYear() == ExecutionYear.readCurrentExecutionYear()) {
-                return null;
-            } else {
-                return mostRecentExecutionDegree.getExecutionYear().getBeginDateYearMonthDay();
-            }
-        } else {
-            return super.getEndDateYearMonthDay();
-        }
-    }
-
     public Collection<StudentCurricularPlan> getActiveStudentCurricularPlans() {
         final Collection<StudentCurricularPlan> result = new HashSet<>();
 
@@ -1152,46 +1128,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public String getGraduateTitle(final ExecutionYear executionYear, final ProgramConclusion programConclusion,
             final Locale locale) {
         return programConclusion.groupFor(this).map(cg -> cg.getGraduateTitle(executionYear, locale)).orElse(null);
-    }
-
-    public List<CurricularCourse> getDissertationCurricularCourses(ExecutionYear year) {
-        List<CurricularCourse> result = new ArrayList<>();
-
-        List<ExecutionYear> years = new ArrayList<>();
-
-        if (year == null) {
-            year = ExecutionYear.readCurrentExecutionYear();
-            while (year != null) {
-                years.add(year);
-                year = year.getPreviousExecutionYear();
-            }
-        } else {
-            years.add(year);
-        }
-
-        for (ExecutionYear executionYear : years) {
-            for (CurricularCourse curricularCourse : getCurricularCourses(executionYear)) {
-                if (curricularCourse.isDissertation()) {
-                    result.add(curricularCourse);
-                }
-            }
-        }
-
-        return result;
-    }
-
-    public Set<Enrolment> getDissertationEnrolments(final ExecutionYear executionYear) {
-        final Set<Enrolment> enrolments = new HashSet<>();
-        for (CurricularCourse curricularCourse : getDissertationCurricularCourses(executionYear)) {
-            for (Enrolment enrolment : curricularCourse.getEnrolmentsByExecutionYear(executionYear)) {
-                enrolments.add(enrolment);
-            }
-        }
-        return enrolments;
-    }
-
-    public List<CurricularCourse> getDissertationCurricularCourses() {
-        return getDissertationCurricularCourses(ExecutionYear.readCurrentExecutionYear());
     }
 
     public boolean hasDegreeModule(final DegreeModule degreeModule) {

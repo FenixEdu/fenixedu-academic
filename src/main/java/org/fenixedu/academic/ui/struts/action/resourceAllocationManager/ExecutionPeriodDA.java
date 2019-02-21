@@ -56,9 +56,9 @@ import org.fenixedu.academic.dto.resourceAllocationManager.StudentContextSelecti
 import org.fenixedu.academic.service.services.person.SearchPerson;
 import org.fenixedu.academic.service.services.person.SearchPerson.SearchParameters;
 import org.fenixedu.academic.ui.struts.action.base.FenixContextDispatchAction;
-import org.fenixedu.academic.ui.struts.action.externalSupervision.consult.ShowStudentTimeTable;
 import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.RAMApplication.RAMSchedulesApp;
 import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
+import org.fenixedu.academic.ui.struts.action.student.ViewStudentTimeTable;
 import org.fenixedu.academic.util.CollectionPager;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
@@ -76,7 +76,8 @@ import pt.ist.fenixframework.Atomic;
 @StrutsFunctionality(app = RAMSchedulesApp.class, path = "manage", titleKey = "link.schedules.chooseContext")
 @Mapping(path = "/chooseExecutionPeriod", module = "resourceAllocationManager")
 @Forwards({
-        @Forward(name = "toggleFirstYearShiftsCapacity", path = "/resourceAllocationManager/toggleFirstYearShiftsCapacity_bd.jsp"),
+        @Forward(name = "toggleFirstYearShiftsCapacity",
+                path = "/resourceAllocationManager/toggleFirstYearShiftsCapacity_bd.jsp"),
         @Forward(name = "showForm", path = "/resourceAllocationManager/chooseExecutionPeriod_bd.jsp"),
         @Forward(name = "showTimeTable", path = "/resourceAllocationManager/showTimetable.jsp") })
 public class ExecutionPeriodDA extends FenixContextDispatchAction {
@@ -109,9 +110,8 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
                 new StudentContextSelectionBean(contextSelectionBean.getAcademicInterval());
         request.setAttribute("studentContextSelectionBean", studentContextSelectionBean);
 
-        final List<ExecutionDegree> executionDegrees =
-                new ArrayList<ExecutionDegree>(ExecutionDegree.filterByAcademicInterval(contextSelectionBean
-                        .getAcademicInterval()));
+        final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(
+                ExecutionDegree.filterByAcademicInterval(contextSelectionBean.getAcademicInterval()));
         Collections.sort(executionDegrees, executionDegreeComparator);
         request.setAttribute("executionDegrees", executionDegrees);
         ExecutionSemester executionSemester =
@@ -183,7 +183,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
         final ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterId");
 
         request.setAttribute("registration", registration);
-        return new ShowStudentTimeTable().forwardToShowTimeTable(registration, mapping, request, executionSemester);
+        return new ViewStudentTimeTable().forwardToShowTimeTable(registration, mapping, request, executionSemester);
     }
 
     public ActionForward toggleFirstYearShiftsCapacity(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -230,12 +230,11 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
         final Set<Shift> shifts = new HashSet<Shift>();
         final Map<ExecutionDegree, Integer> modified = new HashMap<ExecutionDegree, Integer>();
 
-        for (final Degree degree : Degree.readAllMatching(DegreeType.oneOf(DegreeType::isBolonhaDegree,
-                DegreeType::isIntegratedMasterDegree))) {
+        for (final Degree degree : Degree
+                .readAllMatching(DegreeType.oneOf(DegreeType::isBolonhaDegree, DegreeType::isIntegratedMasterDegree))) {
             for (final DegreeCurricularPlan degreeCurricularPlan : degree.getActiveDegreeCurricularPlans()) {
-                final ExecutionDegree executionDegree =
-                        degreeCurricularPlan.getExecutionDegreeByAcademicInterval(executionSemester.getExecutionYear()
-                                .getAcademicInterval());
+                final ExecutionDegree executionDegree = degreeCurricularPlan
+                        .getExecutionDegreeByAcademicInterval(executionSemester.getExecutionYear().getAcademicInterval());
 
                 if (executionDegree != null) {
                     for (final SchoolClass schoolClass : executionDegree.getSchoolClassesSet()) {
@@ -277,8 +276,8 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
         }
 
         if (modified.size() > 0) {
-            new FirstYearShiftsCapacityToggleLog(executionYear.getFirstExecutionPeriod(), Authenticate.getUser().getPerson()
-                    .getUser());
+            new FirstYearShiftsCapacityToggleLog(executionYear.getFirstExecutionPeriod(),
+                    Authenticate.getUser().getPerson().getUser());
         }
 
         return modified;

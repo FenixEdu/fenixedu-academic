@@ -24,7 +24,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Formatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
@@ -49,7 +48,6 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionCourse;
-import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
@@ -158,18 +156,6 @@ public class Registration extends Registration_Base {
 
     public Registration(final Person person, final StudentCandidacy studentCandidacy) {
         this(person, null, RegistrationProtocol.getDefault(), null, studentCandidacy);
-    }
-
-    public Registration(final Person person, final Integer studentNumber, final Degree degree) {
-        this(person, studentNumber, RegistrationProtocol.getDefault(), null, degree);
-    }
-
-    public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan) {
-        this(person, degreeCurricularPlan, RegistrationProtocol.getDefault(), null, null);
-    }
-
-    public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan, final CycleType cycleType) {
-        this(person, degreeCurricularPlan, RegistrationProtocol.getDefault(), cycleType, null);
     }
 
     public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan, final RegistrationProtocol protocol,
@@ -2013,10 +1999,6 @@ public class Registration extends Registration_Base {
         return result;
     }
 
-    final public CycleType getCurrentCycleType() {
-        return getCycleType(ExecutionYear.readCurrentExecutionYear());
-    }
-
     final public CycleType getCycleType(final ExecutionYear executionYear) {
         if (!isBolonha() || isEmptyDegree() || getDegreeType().isEmpty()) {
             return null;
@@ -2126,10 +2108,6 @@ public class Registration extends Registration_Base {
     final public StudentCurricularPlan getStudentCurricularPlan(final ExecutionYear executionYear) {
         return executionYear == null ? getStudentCurricularPlan(new YearMonthDay()) : getStudentCurricularPlan(
                 executionYear.getEndDateYearMonthDay());
-    }
-
-    final public StudentCurricularPlan getStudentCurricularPlanForCurrentExecutionYear() {
-        return getStudentCurricularPlan(ExecutionYear.readCurrentExecutionYear());
     }
 
     final public StudentCurricularPlan getStudentCurricularPlan(final ExecutionSemester executionSemester) {
@@ -2460,14 +2438,6 @@ public class Registration extends Registration_Base {
         }
     }
 
-    public boolean hasMissingPersonalInformation(final ExecutionYear executionYear) {
-        if (getPrecedentDegreeInformation(executionYear) != null && getPersonalInformationBean(executionYear).isValid()) {
-            return false;
-        }
-
-        return true;
-    }
-
     public boolean hasMissingPersonalInformationForAcademicService(final ExecutionYear executionYear) {
         if (getPrecedentDegreeInformation(executionYear) != null
                 && !getPersonalInformationBean(executionYear).isEditableByAcademicService()) {
@@ -2599,18 +2569,6 @@ public class Registration extends Registration_Base {
         }
     }
 
-    public void exportValues(final StringBuilder result) {
-        Formatter formatter = new Formatter(result);
-        final Student student = getStudent();
-        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.ingression"),
-                getIngressionType() == null ? " - " : getIngressionType().getDescription().getContent());
-        formatter.format("%s: %d\n", BundleUtil.getString(Bundle.ACADEMIC, "label.studentNumber"), student.getNumber());
-        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.Student.Person.name"),
-                student.getPerson().getName());
-        formatter.format("%s: %s\n", BundleUtil.getString(Bundle.ACADEMIC, "label.degree"), getDegree().getPresentationName());
-        formatter.close();
-    }
-
     public RegistrationState getLastActiveState() {
         List<RegistrationState> activeStateList = new ArrayList<>();
 
@@ -2626,25 +2584,4 @@ public class Registration extends Registration_Base {
         return !activeStateList.isEmpty() ? Collections.max(activeStateList, RegistrationState.DATE_COMPARATOR) : null;
     }
 
-    public boolean hasDissertationEnrolment(final ExecutionDegree executionDegree) {
-        final ExecutionYear previousExecutionYear = executionDegree.getExecutionYear();
-        if (previousExecutionYear.hasNextExecutionYear()) {
-            final ExecutionYear executionYear = previousExecutionYear.getNextExecutionYear();
-            for (final Attends attends : getAssociatedAttendsSet()) {
-                if (attends.getExecutionYear() == executionYear && attends.getEnrolment() != null) {
-                    final Enrolment enrolment = attends.getEnrolment();
-                    if (enrolment.isDissertation()
-                            && enrolment.getDegreeCurricularPlanOfDegreeModule() == executionDegree.getDegreeCurricularPlan()) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    public boolean isValidForRAIDES() {
-        return FenixEduAcademicConfiguration.getConfiguration().getRaidesRequestInfo() && isActive() && isBolonha()
-                && !getDegreeType().isEmpty() && getRegistrationProtocol().isForOfficialMobilityReporting();
-    }
 }

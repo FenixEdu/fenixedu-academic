@@ -26,7 +26,6 @@ import java.util.Set;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 
 public class CycleCourseGroup extends CycleCourseGroup_Base {
@@ -75,10 +74,6 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
     @Override
     public Collection<CycleCourseGroup> getParentCycleCourseGroups() {
         return Collections.singletonList(this);
-    }
-
-    public Double getCurrentDefaultEcts() {
-        return getDefaultEcts(ExecutionYear.readCurrentExecutionYear());
     }
 
     public Set<CycleCourseGroup> getAllPossibleAffinities() {

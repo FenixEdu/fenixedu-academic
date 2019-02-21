@@ -30,7 +30,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import org.fenixedu.academic.domain.student.Registration;
@@ -72,7 +71,6 @@ public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStude
 
             List<ExecutionSemester> openedEnrolmentPeriodsSemesters = Collections.EMPTY_LIST;
             if (registration != null) {
-                ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
                 DegreeCurricularPlan lastDegreeCurricularPlan = registration.getLastDegreeCurricularPlan();
                 StudentCurricularPlan studentCurricularPlan = registration.getStudentCurricularPlan(lastDegreeCurricularPlan);
             }

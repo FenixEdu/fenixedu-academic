@@ -35,12 +35,7 @@ public class ReadNotClosedPublicExecutionPeriodsByExecutionYear {
     @Atomic
     public static List run(InfoExecutionYear infoExecutionYear) throws FenixServiceException {
 
-        final ExecutionYear executionYear;
-        if (infoExecutionYear == null) {
-            executionYear = ExecutionYear.readCurrentExecutionYear();
-        } else {
-            executionYear = FenixFramework.getDomainObject(infoExecutionYear.getExternalId());
-        }
+        final ExecutionYear executionYear = FenixFramework.getDomainObject(infoExecutionYear.getExternalId());
 
         final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();
         for (final ExecutionSemester executionSemester : executionYear.readNotClosedPublicExecutionPeriods()) {

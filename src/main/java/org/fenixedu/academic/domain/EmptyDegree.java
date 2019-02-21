@@ -255,11 +255,6 @@ public class EmptyDegree extends EmptyDegree_Base {
     }
 
     @Override
-    public DegreeInfo createCurrentDegreeInfo() {
-        throw new DomainException("EmptyDegree.not.available");
-    }
-
-    @Override
     public List<Integer> buildFullCurricularYearList() {
         return Collections.emptyList();
     }

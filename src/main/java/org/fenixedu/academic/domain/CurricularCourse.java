@@ -1390,9 +1390,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public boolean isActive(final ExecutionYear executionYear) {
-        final ExecutionYear executionYearToCheck =
-                executionYear == null ? ExecutionYear.readCurrentExecutionYear() : executionYear;
-        for (final ExecutionSemester executionSemester : executionYearToCheck.getExecutionPeriodsSet()) {
+        for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
             if (isActive(executionSemester)) {
                 return true;
             }
