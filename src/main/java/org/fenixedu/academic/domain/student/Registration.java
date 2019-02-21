@@ -2523,8 +2523,13 @@ public class Registration extends Registration_Base {
     }
 
     public int getNumberEnroledCurricularCoursesInCurrentYear() {
-        return getLastStudentCurricularPlan() == null ? 0 : getLastStudentCurricularPlan()
-                .countEnrolments(ExecutionYear.readCurrentExecutionYear());
+        final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
+        if (lastStudentCurricularPlan == null) {
+            return 0;
+        }
+        long result = lastStudentCurricularPlan.getEnrolmentsSet().stream()
+                .filter(e -> e.getExecutionPeriod().getExecutionYear().isCurrent()).count();
+        return Math.toIntExact(result);
     }
 
     public List<CycleCurriculumGroup> getInternalCycleCurriculumGrops() {
