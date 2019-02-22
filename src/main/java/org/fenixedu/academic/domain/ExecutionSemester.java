@@ -25,6 +25,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
@@ -408,6 +409,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 
     static transient private ExecutionSemester firstEnrolmentsExecutionPeriod = null;
 
+    @Deprecated
     public static ExecutionSemester readActualExecutionSemester() {
         if (currentExecutionPeriod == null || currentExecutionPeriod.getRootDomainObject() != Bennu.getInstance()
                 || !currentExecutionPeriod.isCurrent()) {
@@ -419,6 +421,10 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
             }
         }
         return currentExecutionPeriod;
+    }
+    
+    public static Collection<ExecutionSemester> findCurrents() {
+        return Bennu.getInstance().getExecutionPeriodsSet().stream().filter(es -> es.isCurrent()).collect(Collectors.toSet());
     }
 
     static private ExecutionSemester readFromProperties(ExecutionSemester executionSemester, String yearString,

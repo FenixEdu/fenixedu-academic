@@ -28,11 +28,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicYearCE;
 import org.fenixedu.academic.util.PeriodState;
@@ -384,6 +386,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
         return null;
     }
 
+    @Deprecated
     static public ExecutionYear readCurrentExecutionYear() {
         ExecutionSemester semester = ExecutionSemester.readActualExecutionSemester();
         if (semester != null) {
@@ -391,6 +394,25 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
         } else {
             return null;
         }
+    }
+
+    public static Collection<ExecutionYear> findCurrents() {
+        return Stream.concat(Bennu.getInstance().getExecutionYearsSet().stream().filter(ey -> ey.isCurrent()),
+                ExecutionSemester.findCurrents().stream().map(es -> es.getExecutionYear())).collect(Collectors.toSet());
+    }
+
+    /**
+     * Returns current ExecutionYear for provided calendar.
+     * If provided calendar is null, use default academic calendar
+     * 
+     * @param calendar the calendar to search in
+     * @return the current ExecutionYear
+     */
+    public static ExecutionYear findCurrent(final AcademicCalendarRootEntry calendar) {
+        final AcademicCalendarRootEntry calendarToCheck =
+                calendar != null ? calendar : Bennu.getInstance().getDefaultAcademicCalendar();
+        return findCurrents().stream().filter(ey -> ey.getAcademicInterval().getAcademicCalendar() == calendarToCheck).findFirst()
+                .orElse(null);
     }
 
     static public List<ExecutionYear> readOpenExecutionYears() {
