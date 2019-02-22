@@ -2048,6 +2048,11 @@ relation DegreeTypeDegree {
     }
 }
 
+relation DegreeCalendar {
+    public Degree playsRole degrees  { multiplicity *; }
+    public time.calendarStructure.AcademicCalendarRootEntry playsRole calendar;
+}
+
 relation BennuDegreeType {
     public degree.DegreeType playsRole degreeType {
         multiplicity *;

@@ -164,7 +164,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             final Double ectsCredits, final GradeScale gradeScale, final String prevailingScientificArea,
             final AdministrativeOffice administrativeOffice) {
         this();
-        commonFieldsChange(name, nameEn, acronym, gradeScale, ExecutionYear.readCurrentExecutionYear());
+        commonFieldsChange(name, nameEn, acronym, gradeScale, ExecutionYear.findCurrent(getCalendar()));
         newStructureFieldsChange(degreeType, ectsCredits, prevailingScientificArea);
         setAdministrativeOffice(administrativeOffice);
     }
@@ -594,7 +594,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     final public LocalizedString getNameI18N() {
-        return getNameFor(ExecutionYear.readCurrentExecutionYear());
+        return getNameFor(ExecutionYear.findCurrent(getCalendar()));
     }
 
     final public LocalizedString getNameI18N(final ExecutionYear executionYear) {
@@ -602,7 +602,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public LocalizedString getPresentationNameI18N() {
-        return getPresentationNameI18N(ExecutionYear.readCurrentExecutionYear());
+        return getPresentationNameI18N(ExecutionYear.findCurrent(getCalendar()));
     }
 
     public LocalizedString getPresentationNameI18N(final ExecutionYear executionYear) {
@@ -838,7 +838,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public DegreeInfo getMostRecentDegreeInfo() {
-        return getMostRecentDegreeInfo(ExecutionYear.readCurrentExecutionYear());
+        return getMostRecentDegreeInfo(ExecutionYear.findCurrent(getCalendar()));
     }
 
     public DegreeInfo getDegreeInfoFor(final ExecutionYear executionYear) {
@@ -987,7 +987,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         SortedSet<ExecutionYear> years = new TreeSet<ExecutionYear>(new ReverseComparator(ExecutionYear.COMPARATOR_BY_YEAR));
         years.addAll(getDegreeCurricularPlansExecutionYears());
 
-        ExecutionYear current = ExecutionYear.readCurrentExecutionYear();
+        ExecutionYear current = ExecutionYear.findCurrent(getCalendar());
         for (ExecutionYear year : years) {
             if (year.isAfter(current)) {
                 continue;
