@@ -92,7 +92,6 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.signals.DomainObjectEvent;
 import org.fenixedu.bennu.core.signals.Signal;
-import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -1378,27 +1377,6 @@ public class Registration extends Registration_Base {
         return getDegree().getNameFor(getStartExecutionYear()).getContent();
     }
 
-    final public String getDegreeDescription() {
-        final DegreeType degreeType = getDegreeType();
-        return getDegreeDescription(
-                degreeType.hasExactlyOneCycleType() ? degreeType.getCycleType() : getLastConcludedCycleType());
-    }
-
-    @Deprecated
-    final public String getDegreeDescription(final CycleType cycleType) {
-        return getDegreeDescription(cycleType, I18N.getLocale());
-    }
-
-    @Deprecated
-    final public String getDegreeDescription(final ExecutionYear executionYear, final CycleType cycleType) {
-        return getDegreeDescription(executionYear, cycleType, I18N.getLocale());
-    }
-
-    @Deprecated
-    final public String getDegreeDescription(final CycleType cycleType, final Locale locale) {
-        return getDegreeDescription(this.getStartExecutionYear(), cycleType, locale);
-    }
-
     final public String getDegreeDescription(final ExecutionYear executionYear, ProgramConclusion programConclusion,
             final Locale locale) {
         final StringBuilder res = new StringBuilder();
@@ -1428,17 +1406,9 @@ public class Registration extends Registration_Base {
             }
         }
 
-        res.append(degree.getFilteredName(executionYear, locale).toUpperCase());
+        res.append(degree.getNameFor(executionYear).getContent(locale).toUpperCase());
 
         return res.toString();
-    }
-
-    @Deprecated
-    final public String getDegreeDescription(final ExecutionYear executionYear, final CycleType cycleType, final Locale locale) {
-        CycleCourseGroup cycleCourseGroup = getLastStudentCurricularPlan().getCycleCourseGroup(cycleType);
-        ProgramConclusion programConclusion = cycleCourseGroup != null ? cycleCourseGroup.getProgramConclusion() : null;
-
-        return getDegreeDescription(executionYear, programConclusion, locale);
     }
 
     public String getDegreeCurricularPlanName() {

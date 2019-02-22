@@ -902,7 +902,7 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public String getDegreeNameWithTitleSuffix(final ExecutionYear executionYear, final Locale locale) {
-        return getDegree().getFilteredName(executionYear, locale);
+        return getDegree().getNameFor(executionYear).getContent(locale);
     }
 
     final public String getGraduateTitle() {

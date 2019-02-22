@@ -626,27 +626,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return getPresentationNameI18N(executionYear).getContent(locale);
     }
 
-    final public String getFilteredName() {
-        return getFilteredName(ExecutionYear.readCurrentExecutionYear(), I18N.getLocale());
-    }
-
-    final public String getFilteredName(final ExecutionYear executionYear) {
-        return getFilteredName(executionYear, I18N.getLocale());
-    }
-
-    public String getFilteredName(final ExecutionYear executionYear, final Locale locale) {
-        final StringBuilder res = new StringBuilder(getNameFor(executionYear).getContent(locale));
-
-        for (final Space campus : Space.getAllCampus()) {
-            String toRemove = " - " + campus.getName();
-            if (res.toString().contains(toRemove)) {
-                res.replace(res.indexOf(toRemove), res.indexOf(toRemove) + toRemove.length(), StringUtils.EMPTY);
-            }
-        }
-
-        return res.toString();
-    }
-
     public DegreeCurricularPlan getMostRecentDegreeCurricularPlan() {
         ExecutionDegree mostRecentExecutionDegree = null;
         boolean mustGetByInitialDate = false;

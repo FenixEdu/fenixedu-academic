@@ -21,7 +21,6 @@ package org.fenixedu.academic.domain;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
@@ -212,11 +211,6 @@ public class EmptyDegree extends EmptyDegree_Base {
     @Override
     final public String getPresentationName(ExecutionYear executionYear) {
         return getNameFor((ExecutionYear) null).getContent(org.fenixedu.academic.util.LocaleUtils.PT);
-    }
-
-    @Override
-    final public String getFilteredName(final ExecutionYear executionYear, final Locale locale) {
-        return getNameFor(executionYear).getContent(locale);
     }
 
     @Override
