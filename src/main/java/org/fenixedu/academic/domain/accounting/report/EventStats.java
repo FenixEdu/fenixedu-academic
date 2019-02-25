@@ -20,7 +20,9 @@ public class EventStats implements Serializable {
     Money unused = Money.ZERO;
 
     public EventStats(final Set<Event> events) {
-        events.stream().map(e -> e.getDebtInterestCalculator(new DateTime())).forEach(c -> addStats(c));
+        events.stream().filter(event -> !event.isCancelled())
+                .map(e -> e.getDebtInterestCalculator(new DateTime()))
+                .forEach(this::addStats);
     }
 
     private void addStats(final DebtInterestCalculator calculator) {
