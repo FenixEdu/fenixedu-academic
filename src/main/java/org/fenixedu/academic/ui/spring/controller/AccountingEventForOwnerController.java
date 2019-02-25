@@ -95,7 +95,7 @@ public class AccountingEventForOwnerController extends AccountingController {
             model.addAttribute("fines", fines);
             model.addAttribute("debts", debts);
             model.addAttribute("paymentCodeEntries", paymentCodeEntries);
-            model.addAttribute("availableAdvancements", Event.availableAdvancements(loggedUser.getPerson()));
+            model.addAttribute("availableAdvancements", event.availableAdvancements());
 
             return view("event-payment-options");
         }
@@ -113,7 +113,7 @@ public class AccountingEventForOwnerController extends AccountingController {
 
         model.addAttribute("paymentCodeEntry", paymentCodeEntry);
         model.addAttribute("maxDaysBetweenPromiseAndPayment", FenixEduAcademicConfiguration.getConfiguration().getMaxDaysBetweenPromiseAndPayment());
-        model.addAttribute("availableAdvancements", Event.availableAdvancements(loggedUser.getPerson()));
+        model.addAttribute("availableAdvancements", event.availableAdvancements());
         return view("payment-reference");
     }
 
