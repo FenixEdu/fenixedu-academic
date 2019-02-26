@@ -84,7 +84,10 @@ ${portal.toolkit()}
             <div class="form-group">
                 <label class="control-label col-sm-1"><spring:message code="label.org.fenixedu.academic.dto.accounting.DepositAmountBean.paymentMethod"/></label>
                 <div class="col-sm-4">
-                    <form:select path="paymentMethod" items="${paymentMethods}" itemLabel="localizedName" itemValue="externalId" class="form-control"/>
+                    <form:select path="paymentMethod" class="form-control" required="true">
+                        <form:option value="" selected="true" disabled="true" hidden="true"><spring:message code="label.org.fenixedu.academic.dto.accounting.DepositAmountBean.paymentMethod.placeholder"/></form:option>
+                        <form:options items="${paymentMethods}" itemLabel="localizedName" itemValue="externalId" />
+                    </form:select>
                 </div>
             </div>
             <div class="form-group">
@@ -120,11 +123,11 @@ ${portal.toolkit()}
 <script type="text/javascript">
 
     $(function () {
-        updatePaymentReference($("input[name='whenRegistered']").val());
+        !$("#paymentMethod").val() ? $("#paymentReference").val("") : updatePaymentReference($("input[name='whenRegistered']").val());
     });
 
     $("#whenRegistered, #paymentMethod").change(function () {
-        updatePaymentReference($("input[name='whenRegistered']").val());
+        !$("#paymentMethod").val() ? $("#paymentReference").val("") : updatePaymentReference($("input[name='whenRegistered']").val());
     });
 
 </script>
