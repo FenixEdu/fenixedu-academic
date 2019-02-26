@@ -154,7 +154,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
         setState(IndividualCandidacyState.CANCELLED);
         setResponsible(person.getUsername());
         if (getEvent() != null) {
-            getEvent().cancel("IndividualCandidacy.canceled");
+            getEvent().cancel(person, "IndividualCandidacy.canceled");
         }
     }
 
