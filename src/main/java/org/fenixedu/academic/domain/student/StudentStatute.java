@@ -129,10 +129,6 @@ public class StudentStatute extends StudentStatute_Base {
         return false;
     }
 
-    public boolean isValidInCurrentExecutionPeriod() {
-        return this.isValidInExecutionPeriod(ExecutionSemester.readActualExecutionSemester());
-    }
-
     public void edit(final Student student, final ExecutionSemester beginExecutionPeriod,
             final ExecutionSemester endExecutionPeriod, final LocalDate beginDate, final LocalDate endDate,
             final String comment) {
@@ -170,10 +166,6 @@ public class StudentStatute extends StudentStatute_Base {
     public boolean isValidOnAnyExecutionPeriodFor(final Registration registration, final ExecutionYear executionYear) {
         return isValidOnAnyExecutionPeriodFor(executionYear)
                 && (!getType().isAppliedOnRegistration() || getRegistration() == registration);
-    }
-
-    public boolean isValidInCurrentExecutionPeriod(final Registration registration) {
-        return isValidInCurrentExecutionPeriod() && (!getType().isAppliedOnRegistration() || getRegistration() == registration);
     }
 
     public void delete() {

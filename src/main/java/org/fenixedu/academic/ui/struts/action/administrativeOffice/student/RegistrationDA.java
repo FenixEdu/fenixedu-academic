@@ -21,10 +21,6 @@ package org.fenixedu.academic.ui.struts.action.administrativeOffice.student;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.SortedMap;
-import java.util.SortedSet;
-import java.util.TreeMap;
-import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,12 +29,9 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionDegree;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
@@ -46,12 +39,10 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationRegime;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
-import org.fenixedu.academic.dto.AddAttendsBean;
 import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
 import org.fenixedu.academic.dto.student.RegistrationCurriculumBean;
 import org.fenixedu.academic.predicate.IllegalDataAccessException;
 import org.fenixedu.academic.service.services.administrativeOffice.student.RegistrationConclusionProcess;
-import org.fenixedu.academic.service.services.enrollment.shift.WriteStudentAttendingCourse;
 import org.fenixedu.academic.service.services.registration.DeleteRegistrationRegime;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -60,7 +51,6 @@ import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/registration", module = "academicAdministration", functionality = SearchForStudentsDA.class)
 @Forwards({
@@ -73,8 +63,6 @@ import pt.ist.fenixframework.FenixFramework;
         @Forward(name = "registrationConclusion", path = "/academicAdminOffice/student/registration/registrationConclusion.jsp"),
         @Forward(name = "registrationConclusionDocument",
                 path = "/academicAdminOffice/student/registration/registrationConclusionDocument.jsp"),
-        @Forward(name = "viewAttends", path = "/academicAdminOffice/student/registration/viewAttends.jsp"),
-        @Forward(name = "addAttends", path = "/academicAdminOffice/student/registration/addAttends.jsp"),
         @Forward(name = "showRegimes", path = "/academicAdminOffice/student/registration/showRegimes.jsp"),
         @Forward(name = "createRegime", path = "/academicAdminOffice/student/registration/createRegime.jsp") })
 public class RegistrationDA extends StudentRegistrationDA {
@@ -244,55 +232,6 @@ public class RegistrationDA extends StudentRegistrationDA {
         return mapping.findForward("registrationConclusionDocument");
     }
 
-    public ActionForward viewAttends(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
-        RenderUtils.invalidateViewState();
-
-        final Registration registration = getAndSetRegistration(request);
-        request.setAttribute("registration", registration);
-
-        if (registration != null) {
-            final SortedMap<ExecutionSemester, SortedSet<Attends>> attendsMap =
-                    new TreeMap<ExecutionSemester, SortedSet<Attends>>();
-            for (final Attends attends : registration.getAssociatedAttendsSet()) {
-                final ExecutionSemester executionSemester = attends.getExecutionPeriod();
-                SortedSet<Attends> attendsSet = attendsMap.get(executionSemester);
-                if (attendsSet == null) {
-                    attendsSet = new TreeSet<Attends>(Attends.ATTENDS_COMPARATOR);
-                    attendsMap.put(executionSemester, attendsSet);
-                }
-                attendsSet.add(attends);
-            }
-            request.setAttribute("attendsMap", attendsMap);
-        }
-
-        return mapping.findForward("viewAttends");
-    }
-
-    public ActionForward prepareAddAttends(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
-        final Registration registration = getAndSetRegistration(request);
-        request.setAttribute("registration", registration);
-
-        AddAttendsBean addAttendsBean = (AddAttendsBean) getObjectFromViewState("addAttendsBean");
-        if (addAttendsBean == null) {
-            addAttendsBean = new AddAttendsBean();
-            final ExecutionSemester executionPeriod = ExecutionSemester.readActualExecutionSemester();
-            final ExecutionYear executionYear = executionPeriod.getExecutionYear();
-            final Degree degree = registration.getDegree();
-            final ExecutionDegree executionDegree = getExecutionDegree(executionYear, degree);
-
-            addAttendsBean.setExecutionPeriod(executionPeriod);
-            addAttendsBean.setExecutionYear(executionYear);
-            addAttendsBean.setExecutionDegree(executionDegree);
-        }
-        request.setAttribute("addAttendsBean", addAttendsBean);
-
-        RenderUtils.invalidateViewState();
-
-        return mapping.findForward("addAttends");
-    }
-
     protected ExecutionDegree getExecutionDegree(final ExecutionYear executionYear, final Degree degree) {
         for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
             for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
@@ -302,51 +241,6 @@ public class RegistrationDA extends StudentRegistrationDA {
             }
         }
         return null;
-    }
-
-    public ActionForward addAttends(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final Registration registration = getAndSetRegistration(request);
-        request.setAttribute("registration", registration);
-
-        final AddAttendsBean addAttendsBean = (AddAttendsBean) getObjectFromViewState("addAttendsBean");
-        final ExecutionCourse executionCourse = addAttendsBean.getExecutionCourse();
-
-        WriteStudentAttendingCourse.runWriteStudentAttendingCourse(registration, executionCourse.getExternalId());
-
-        return viewAttends(mapping, actionForm, request, response);
-    }
-
-    public ActionForward deleteAttends(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final Registration registration = getAndSetRegistration(request);
-        request.setAttribute("registration", registration);
-
-        final String attendsIdString = request.getParameter("attendsId");
-        final Attends attends = FenixFramework.getDomainObject(attendsIdString);
-
-        try {
-            registration.removeAttendFor(attends.getExecutionCourse());
-        } catch (final DomainException e) {
-            addActionMessage(request, e.getMessage(), e.getArgs());
-        }
-
-        return viewAttends(mapping, actionForm, request, response);
-    }
-
-    public ActionForward deleteShiftEnrolments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final Registration registration = getAndSetRegistration(request);
-        request.setAttribute("registration", registration);
-
-        final String attendsIdString = request.getParameter("attendsId");
-        final Attends attends = FenixFramework.getDomainObject(attendsIdString);
-
-        if (attends != null) {
-            attends.deleteShiftEnrolments();
-        }
-
-        return viewAttends(mapping, actionForm, request, response);
     }
 
     public ActionForward showRegimes(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

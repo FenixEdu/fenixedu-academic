@@ -32,7 +32,6 @@ import org.fenixedu.academic.domain.Installation;
 import org.fenixedu.academic.domain.organizationalStructure.UnitNamePart;
 import org.fenixedu.academic.service.StudentWarningsDefaultCheckers;
 import org.fenixedu.academic.service.StudentWarningsService;
-import org.fenixedu.academic.service.services.commons.ReadCurrentExecutionPeriod;
 import org.fenixedu.academic.ui.struts.action.externalServices.PhoneValidationUtils;
 import org.fenixedu.bennu.core.api.SystemResource;
 import org.fenixedu.bennu.core.rest.Healthcheck;
@@ -54,7 +53,6 @@ public class FenixInitializer implements ServletContextListener {
     @Override
     @Atomic(mode = TxMode.READ)
     public void contextInitialized(ServletContextEvent event) {
-        ReadCurrentExecutionPeriod.run();
 
         Installation.ensureInstallation();
         loadUnitNames();

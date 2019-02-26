@@ -1121,10 +1121,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return result.contains(curricularCourse);
     }
 
-    final public boolean isEnroledInExecutionPeriod(final CurricularCourse curricularCourse) {
-        return isEnroledInExecutionPeriod(curricularCourse, ExecutionSemester.readActualExecutionSemester());
-    }
-
     final public boolean isEnroledInExecutionPeriod(final CurricularCourse curricularCourse,
             final ExecutionSemester executionSemester) {
         return getRoot().isEnroledInExecutionPeriod(curricularCourse, executionSemester);
@@ -1149,10 +1145,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         }
 
         return curricularCourseAcumulatedEnrolments;
-    }
-
-    final public Integer getCurricularCourseAcumulatedEnrollments(CurricularCourse curricularCourse) {
-        return getCurricularCourseAcumulatedEnrollments(curricularCourse, ExecutionSemester.readActualExecutionSemester());
     }
 
     final public List<Enrolment> getAllStudentEnrolledEnrollmentsInExecutionPeriod(final ExecutionSemester executionSemester) {

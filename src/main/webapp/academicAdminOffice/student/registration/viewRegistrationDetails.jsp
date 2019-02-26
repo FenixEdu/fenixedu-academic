@@ -155,14 +155,6 @@
 						<bean:message key="student.regimes" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 					</html:link>
 				</span>
-				<academic:allowed operation="STUDENT_ENROLMENTS" program="<%= registration.getDegree() %>">
-				<span class="dblock pbottom03">	
-					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-					<html:link page="/registration.do?method=viewAttends" paramId="registrationId" paramName="registration" paramProperty="externalId">
-						<bean:message key="student.registrationViewAttends" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-					</html:link>
-				</span>
-				</academic:allowed>		
 			</p>
 			</academic:allowed>
 		</td>

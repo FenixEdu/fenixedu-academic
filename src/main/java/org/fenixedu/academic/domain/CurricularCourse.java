@@ -34,8 +34,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
-import org.fenixedu.academic.domain.curricularRules.CurricularRule;
-import org.fenixedu.academic.domain.curricularRules.RestrictionDoneDegreeModule;
 import org.fenixedu.academic.domain.curriculum.CurricularCourseType;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevel;
@@ -278,16 +276,6 @@ public class CurricularCourse extends CurricularCourse_Base {
         return false;
     }
 
-    public boolean hasAnyActiveDegreModuleScope() {
-        for (final DegreeModuleScope degreeModuleScope : getDegreeModuleScopes()) {
-            if (degreeModuleScope.isActive()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public boolean hasAnyActiveDegreModuleScope(final ExecutionSemester executionSemester) {
         for (final DegreeModuleScope degreeModuleScope : getDegreeModuleScopes()) {
             if (degreeModuleScope.isActiveForExecutionPeriod(executionSemester)) {
@@ -345,26 +333,6 @@ public class CurricularCourse extends CurricularCourse_Base {
     // -------------------------------------------------------------
     // BEGIN: Only for enrollment purposes
     // -------------------------------------------------------------
-
-    public boolean hasRestrictionDone(final CurricularCourse precedence) {
-        if (!isBolonhaDegree()) {
-            throw new DomainException("CurricularCourse.method.only.appliable.to.bolonha.structure");
-        }
-
-        final ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
-
-        for (final CurricularRule curricularRule : getCurricularRulesSet()) {
-            if (curricularRule.isValid(currentExecutionPeriod) && curricularRule instanceof RestrictionDoneDegreeModule) {
-                final RestrictionDoneDegreeModule restrictionDone = (RestrictionDoneDegreeModule) curricularRule;
-
-                if (restrictionDone.getPrecedenceDegreeModule() == precedence) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
 
     public String getCurricularCourseUniqueKeyForEnrollment() {
         final DegreeType degreeType =
@@ -1372,21 +1340,6 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public Integer getSecondTimeEnrolmentStudentNumber(ExecutionSemester executionSemester) {
         return getTotalEnrolmentStudentNumber(executionSemester) - getFirstTimeEnrolmentStudentNumber(executionSemester);
-    }
-
-    public List<ExecutionCourse> getMostRecentExecutionCourses() {
-        ExecutionSemester period = ExecutionSemester.readActualExecutionSemester();
-
-        while (period != null) {
-            List<ExecutionCourse> executionCourses = getExecutionCoursesByExecutionPeriod(period);
-            if (executionCourses != null && !executionCourses.isEmpty()) {
-                return executionCourses;
-            }
-
-            period = period.getPreviousExecutionPeriod();
-        }
-
-        return new ArrayList<ExecutionCourse>();
     }
 
     public boolean isActive(final ExecutionYear executionYear) {

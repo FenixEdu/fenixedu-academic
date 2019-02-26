@@ -46,7 +46,6 @@ import org.fenixedu.academic.dto.InfoExecutionPeriod;
 import org.fenixedu.academic.dto.InfoLesson;
 import org.fenixedu.academic.dto.InfoShift;
 import org.fenixedu.academic.dto.resourceAllocationManager.ContextSelectionBean;
-import org.fenixedu.academic.service.services.commons.ReadCurrentExecutionPeriod;
 import org.fenixedu.academic.service.services.commons.ReadCurricularYearByOID;
 import org.fenixedu.academic.service.services.commons.ReadExecutionCourseByOID;
 import org.fenixedu.academic.service.services.commons.ReadExecutionDegreeByOID;
@@ -80,7 +79,8 @@ public class ContextUtils {
         }
 
         String executionPeriodOID = null;
-        if (executionPeriodOIDString != null && !executionPeriodOIDString.equals("") && !executionPeriodOIDString.equals("null")) {
+        if (executionPeriodOIDString != null && !executionPeriodOIDString.equals("")
+                && !executionPeriodOIDString.equals("null")) {
             executionPeriodOID = executionPeriodOIDString;
         }
 
@@ -88,7 +88,7 @@ public class ContextUtils {
         if (executionPeriodOID != null) {
             infoExecutionPeriod = ReadExecutionPeriodByOID.run(executionPeriodOID);
         } else {
-            infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
+            infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(ExecutionSemester.readActualExecutionSemester());
         }
         if (infoExecutionPeriod != null) {
             // Place it in request
@@ -173,7 +173,8 @@ public class ContextUtils {
         }
 
         String executionCourseOID = null;
-        if (executionCourseOIDString != null && !executionCourseOIDString.equals("") && !executionCourseOIDString.equals("null")) {
+        if (executionCourseOIDString != null && !executionCourseOIDString.equals("")
+                && !executionCourseOIDString.equals("null")) {
             executionCourseOID = executionCourseOIDString;
         }
 
@@ -393,8 +394,8 @@ public class ContextUtils {
             context.setCourseName(courseName);
         }
         request.setAttribute(PresentationConstants.CONTEXT_SELECTION_BEAN, context);
-        request.setAttribute(PresentationConstants.ACADEMIC_INTERVAL, context.getAcademicInterval()
-                .getResumedRepresentationInStringFormat());
+        request.setAttribute(PresentationConstants.ACADEMIC_INTERVAL,
+                context.getAcademicInterval().getResumedRepresentationInStringFormat());
 
         if (context.getExecutionDegree() != null) {
             request.setAttribute(PresentationConstants.EXECUTION_DEGREE, new InfoExecutionDegree(context.getExecutionDegree()));

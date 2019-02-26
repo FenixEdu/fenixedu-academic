@@ -19,7 +19,6 @@
 package org.fenixedu.academic.ui.struts.action.resourceAllocationManager;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -31,7 +30,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -41,25 +39,18 @@ import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.SchoolClass;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.log.FirstYearShiftsCapacityToggleLog;
-import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
-import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicYearCE;
 import org.fenixedu.academic.dto.resourceAllocationManager.ContextSelectionBean;
 import org.fenixedu.academic.dto.resourceAllocationManager.StudentContextSelectionBean;
-import org.fenixedu.academic.service.services.person.SearchPerson;
-import org.fenixedu.academic.service.services.person.SearchPerson.SearchParameters;
 import org.fenixedu.academic.ui.struts.action.base.FenixContextDispatchAction;
 import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.RAMApplication.RAMSchedulesApp;
 import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
-import org.fenixedu.academic.ui.struts.action.student.ViewStudentTimeTable;
-import org.fenixedu.academic.util.CollectionPager;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -78,8 +69,7 @@ import pt.ist.fenixframework.Atomic;
 @Forwards({
         @Forward(name = "toggleFirstYearShiftsCapacity",
                 path = "/resourceAllocationManager/toggleFirstYearShiftsCapacity_bd.jsp"),
-        @Forward(name = "showForm", path = "/resourceAllocationManager/chooseExecutionPeriod_bd.jsp"),
-        @Forward(name = "showTimeTable", path = "/resourceAllocationManager/showTimetable.jsp") })
+        @Forward(name = "showForm", path = "/resourceAllocationManager/chooseExecutionPeriod_bd.jsp") })
 public class ExecutionPeriodDA extends FenixContextDispatchAction {
 
     static private final Integer FIRST_CURRICULAR_YEAR = Integer.valueOf(1);
@@ -134,56 +124,6 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
         }
 
         return mapping.findForward("showForm");
-    }
-
-    public ActionForward chooseStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final StudentContextSelectionBean studentContextSelectionBean = getRenderedObject();
-
-        final String number = studentContextSelectionBean.getNumber();
-        if (number != null && !number.isEmpty()) {
-            final AcademicInterval academicInterval = studentContextSelectionBean.getAcademicInterval();
-            final ExecutionInterval executionInterval = ExecutionInterval.getExecutionInterval(academicInterval);
-
-            final SearchParameters searchParameters = new SearchParameters();
-            if (StringUtils.isNumeric(number)) {
-                searchParameters.setStudentNumber(Integer.valueOf(number));
-            } else {
-                searchParameters.setUsername(number);
-            }
-            final CollectionPager<Person> people =
-                    new SearchPerson().run(searchParameters, new SearchPerson.SearchPersonPredicate(searchParameters));
-            final Collection<Registration> registrations = new ArrayList<Registration>();
-            for (final Person person : people.getCollection()) {
-                if (person.getStudent() != null) {
-                    for (final Registration registration : person.getStudent().getRegistrationsSet()) {
-                        if (registration.hasAnyActiveState((ExecutionSemester) executionInterval)) {
-                            registrations.add(registration);
-                        }
-                    }
-                }
-            }
-
-            if (studentContextSelectionBean.getToEdit()) {
-                request.setAttribute("toEditScheduleRegistrations", registrations);
-            } else {
-                request.setAttribute("registrations", registrations);
-            }
-            request.setAttribute("timeTableExecutionSemester", executionInterval);
-
-        }
-
-        return prepare(mapping, form, request, response);
-    }
-
-    public ActionForward chooseStudentById(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        final Registration registration = getDomainObject(request, "registrationId");
-        final ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterId");
-
-        request.setAttribute("registration", registration);
-        return new ViewStudentTimeTable().forwardToShowTimeTable(registration, mapping, request, executionSemester);
     }
 
     public ActionForward toggleFirstYearShiftsCapacity(ActionMapping mapping, ActionForm form, HttpServletRequest request,

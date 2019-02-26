@@ -209,11 +209,6 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     }
 
     @Override
-    public Set<CurricularCourse> getActiveCurricularCourses() {
-        return Collections.emptySet();
-    }
-
-    @Override
     public Set<CurricularCourse> getActiveCurricularCourses(final ExecutionSemester executionSemester) {
         return Collections.emptySet();
     }

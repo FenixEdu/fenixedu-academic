@@ -37,7 +37,6 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
 import org.fenixedu.academic.domain.curricularRules.CurricularRule;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleValidationType;
-import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup;
@@ -199,16 +198,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         setState(DegreeCurricularPlanState.ACTIVE);
 
         newStructureFieldsChange(CurricularStage.DRAFT, null);
-
-        createDefaultCurricularRules();
     }
 
     private void createDefaultCourseGroups() {
         RootCourseGroup.createRoot(this, getName(), getName());
-    }
-
-    private void createDefaultCurricularRules() {
-        new MaximumNumberOfCreditsForEnrolmentPeriod(getRoot(), ExecutionSemester.readActualExecutionSemester());
     }
 
     private void newStructureFieldsChange(final CurricularStage curricularStage, final ExecutionYear beginExecutionYear) {
@@ -709,16 +702,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         } else {
             return new ArrayList<>();
         }
-    }
-
-    public Set<CurricularCourse> getActiveCurricularCourses() {
-        final Set<CurricularCourse> result = new HashSet<>();
-        for (final CurricularCourse curricularCourse : getCurricularCoursesSet()) {
-            if (curricularCourse.hasAnyActiveDegreModuleScope()) {
-                result.add(curricularCourse);
-            }
-        }
-        return result;
     }
 
     public Set<CurricularCourse> getActiveCurricularCourses(final ExecutionSemester executionSemester) {

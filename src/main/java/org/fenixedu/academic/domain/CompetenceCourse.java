@@ -97,14 +97,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         }
     }
 
-    public CompetenceCourse(String name, String nameEn, Boolean basic, RegimeType regimeType,
-            CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, CurricularStage curricularStage,
-            CompetenceCourseGroupUnit unit) {
-
-        this(name, nameEn, basic, regimeType, competenceCourseLevel, type, curricularStage, unit,
-                ExecutionSemester.readActualExecutionSemester());
-    }
-
     public void addCompetenceCourseLoad(Double theoreticalHours, Double problemsHours, Double laboratorialHours,
             Double seminaryHours, Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours,
             Double otherHours, Double autonomousWorkHours, Double ectsCredits, Integer order, AcademicPeriod academicPeriod) {
@@ -854,10 +846,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return firstInformation != null ? firstInformation.getExecutionInterval() : null;
     }
 
-    public CompetenceCourseInformation getActiveCompetenceCourseInformation() {
-        return getMostRecentCompetenceCourseInformationUntil(ExecutionSemester.readActualExecutionSemester());
-    }
-
     public Boolean hasActiveScopesInExecutionYear(ExecutionYear executionYear) {
         Collection<ExecutionSemester> executionSemesters = executionYear.getExecutionPeriodsSet();
         Collection<CurricularCourse> curricularCourses = this.getAssociatedCurricularCoursesSet();
@@ -930,15 +918,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
      */
     public CompetenceCourseGroupUnit getCompetenceCourseGroupUnit() {
         return getCompetenceCourseGroupUnit(ExecutionSemester.readActualExecutionSemester());
-    }
-
-    /**
-     * @see #getDepartmentUnit(ExecutionSemester)
-     * @return
-     */
-    public CompetenceCourseGroupUnit getCompetenceCourseGroupUnit(ExecutionYear executionYear) {
-        ExecutionSemester semester = ExecutionSemester.readBySemesterAndExecutionYear(2, executionYear.getYear());
-        return getCompetenceCourseGroupUnit(semester);
     }
 
     public CompetenceCourseGroupUnit getCompetenceCourseGroupUnit(ExecutionSemester semester) {

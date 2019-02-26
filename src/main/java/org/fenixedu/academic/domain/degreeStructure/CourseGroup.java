@@ -824,10 +824,6 @@ public class CourseGroup extends CourseGroup_Base {
         return getAllCurricularCourses(null);
     }
 
-    public Set<CurricularCourse> getAllOpenCurricularCourses() {
-        return getAllCurricularCourses(ExecutionSemester.readActualExecutionSemester());
-    }
-
     public Set<ExecutionYear> getBeginContextExecutionYears() {
         final Set<ExecutionYear> result = new HashSet<ExecutionYear>();
         for (final Context context : getChildContexts(CourseGroup.class)) {
