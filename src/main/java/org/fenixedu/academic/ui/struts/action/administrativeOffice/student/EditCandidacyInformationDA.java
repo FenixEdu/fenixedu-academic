@@ -64,10 +64,10 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
             request.setAttribute("studentID", chooseRegistrationOrPhd.getStudent().getExternalId());
             return null;
         }
-        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
         if (chooseRegistrationOrPhd.getPhdRegistrationWrapper().isRegistration()) {
-            return chooseRegistrationOrPhd.getPhdRegistrationWrapper().getRegistration()
-                    .getPersonalInformationBean(currentExecutionYear);
+            final Registration registration = chooseRegistrationOrPhd.getPhdRegistrationWrapper().getRegistration();
+            ExecutionYear currentExecutionYear = ExecutionYear.findCurrent(registration.getDegree().getCalendar());
+            return registration.getPersonalInformationBean(currentExecutionYear);
         }
         return null;
     }

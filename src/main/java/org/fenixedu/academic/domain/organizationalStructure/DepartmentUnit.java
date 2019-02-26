@@ -40,8 +40,8 @@ import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.util.email.UnitBasedSender;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
@@ -58,8 +58,8 @@ public class DepartmentUnit extends DepartmentUnit_Base {
             Boolean canBeResponsibleOfSpaces, Space campus) {
 
         DepartmentUnit departmentUnit = new DepartmentUnit();
-        departmentUnit.init(departmentName, departmentNameCard, costCenterCode, departmentAcronym, beginDate, endDate,
-                webAddress, classification, null, canBeResponsibleOfSpaces, campus);
+        departmentUnit.init(departmentName, departmentNameCard, costCenterCode, departmentAcronym, beginDate, endDate, webAddress,
+                classification, null, canBeResponsibleOfSpaces, campus);
         departmentUnit.setDepartment(department);
         departmentUnit.addParentUnit(parentUnit, accountabilityType);
 
@@ -138,9 +138,8 @@ public class DepartmentUnit extends DepartmentUnit_Base {
     @Override
     public Accountability addParentUnit(Unit parentUnit, AccountabilityType accountabilityType) {
         if (getDepartment() == null) {
-            if (parentUnit != null
-                    && (!parentUnit.isOfficialExternal() || (!parentUnit.isCountryUnit() && !parentUnit.isSchoolUnit() && !parentUnit
-                            .isUniversityUnit()))) {
+            if (parentUnit != null && (!parentUnit.isOfficialExternal()
+                    || (!parentUnit.isCountryUnit() && !parentUnit.isSchoolUnit() && !parentUnit.isUniversityUnit()))) {
                 throw new DomainException("error.unit.invalid.parentUnit");
             }
         } else {
@@ -189,8 +188,8 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 
     @Override
     public void delete() {
-        for (; !getParticipatingAnyCurricularCourseCurricularRulesSet().isEmpty(); getParticipatingAnyCurricularCourseCurricularRulesSet()
-                .iterator().next().delete()) {
+        for (; !getParticipatingAnyCurricularCourseCurricularRulesSet()
+                .isEmpty(); getParticipatingAnyCurricularCourseCurricularRulesSet().iterator().next().delete()) {
             ;
         }
         super.setDepartment(null);
@@ -201,20 +200,18 @@ public class DepartmentUnit extends DepartmentUnit_Base {
         if (departmentUnit.getDepartment() == null) {
             for (Unit parentUnit : departmentUnit.getParentUnits()) {
                 for (Unit subUnit : parentUnit.getAllSubUnits()) {
-                    if (!subUnit.equals(departmentUnit)
-                            && subUnit.isDepartmentUnit()
-                            && (departmentUnit.getName().equalsIgnoreCase(subUnit.getName()) || departmentUnit.getAcronym()
-                                    .equalsIgnoreCase(subUnit.getAcronym()))) {
+                    if (!subUnit.equals(departmentUnit) && subUnit.isDepartmentUnit()
+                            && (departmentUnit.getName().equalsIgnoreCase(subUnit.getName())
+                                    || departmentUnit.getAcronym().equalsIgnoreCase(subUnit.getAcronym()))) {
                         throw new DomainException("error.unit.already.exists.unit.with.same.name.or.acronym");
                     }
                 }
             }
         } else {
             for (Unit unit : UnitUtils.readInstitutionUnit().getAllSubUnits()) {
-                if (!unit.equals(departmentUnit)
-                        && unit.isDepartmentUnit()
-                        && (departmentUnit.getAcronym().equalsIgnoreCase(unit.getAcronym()) || departmentUnit.getName()
-                                .equalsIgnoreCase(unit.getName()))) {
+                if (!unit.equals(departmentUnit) && unit.isDepartmentUnit()
+                        && (departmentUnit.getAcronym().equalsIgnoreCase(unit.getAcronym())
+                                || departmentUnit.getName().equalsIgnoreCase(unit.getName()))) {
                     throw new DomainException("error.unit.already.exists.unit.with.same.name.or.acronym");
                 }
             }
@@ -225,11 +222,12 @@ public class DepartmentUnit extends DepartmentUnit_Base {
     public List<Group> getDefaultGroups() {
         List<Group> groups = super.getDefaultGroups();
 
-        ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
         Department department = this.getDepartment();
         if (department != null) {
 
-            groups.add(TeacherGroup.get(department, currentYear));
+            for (final ExecutionYear currentYear : ExecutionYear.findCurrents()) {
+                groups.add(TeacherGroup.get(department, currentYear));
+            }
             groups.add(UnitGroup.recursiveWorkers(department.getDepartmentUnit()));
 
             SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);

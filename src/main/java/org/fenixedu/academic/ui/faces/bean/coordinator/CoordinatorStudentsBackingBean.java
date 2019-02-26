@@ -280,7 +280,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
             ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
             return executionDegree.getExecutionYear();
         }
-        return ExecutionYear.readCurrentExecutionYear();
+        return ExecutionYear.findCurrent(null);
     }
 
     private SearchDegreeStudentsGroup getSearchCriteriaGroup() {

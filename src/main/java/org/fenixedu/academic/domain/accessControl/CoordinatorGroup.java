@@ -107,14 +107,15 @@ public class CoordinatorGroup extends FenixGroup {
     public Stream<User> getMembers() {
         Set<User> users = new HashSet<>();
         if (degreeType != null) {
-            ExecutionYear year = ExecutionYear.readCurrentExecutionYear();
-            for (final ExecutionDegree executionDegree : year.getExecutionDegreesSet()) {
-                if (degreeType.equals(executionDegree.getDegreeType())) {
-                    for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
-                        if (responsible == null || responsible.equals(coordinator.isResponsible())) {
-                            User user = coordinator.getPerson().getUser();
-                            if (user != null) {
-                                users.add(user);
+            for (ExecutionYear year : ExecutionYear.findCurrents()) {
+                for (final ExecutionDegree executionDegree : year.getExecutionDegreesSet()) {
+                    if (degreeType.equals(executionDegree.getDegreeType())) {
+                        for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
+                            if (responsible == null || responsible.equals(coordinator.isResponsible())) {
+                                User user = coordinator.getPerson().getUser();
+                                if (user != null) {
+                                    users.add(user);
+                                }
                             }
                         }
                     }
@@ -127,13 +128,14 @@ public class CoordinatorGroup extends FenixGroup {
         }
 
         if (degree == null && degreeType == null) {
-            final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-            for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
-                for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
-                    if (responsible == null || responsible.equals(coordinator.isResponsible())) {
-                        User user = coordinator.getPerson().getUser();
-                        if (user != null) {
-                            users.add(user);
+            for (ExecutionYear executionYear : ExecutionYear.findCurrents()) {
+                for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
+                    for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
+                        if (responsible == null || responsible.equals(coordinator.isResponsible())) {
+                            User user = coordinator.getPerson().getUser();
+                            if (user != null) {
+                                users.add(user);
+                            }
                         }
                     }
                 }
@@ -197,8 +199,7 @@ public class CoordinatorGroup extends FenixGroup {
     public boolean equals(Object object) {
         if (object instanceof CoordinatorGroup) {
             CoordinatorGroup other = (CoordinatorGroup) object;
-            return Objects.equal(degreeType, other.degreeType) 
- && Objects.equal(degree, other.degree)
+            return Objects.equal(degreeType, other.degreeType) && Objects.equal(degree, other.degree)
                     && Objects.equal(responsible, other.responsible);
         }
         return false;

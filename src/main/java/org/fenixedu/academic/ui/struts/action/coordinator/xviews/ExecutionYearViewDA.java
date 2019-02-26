@@ -83,7 +83,8 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
         return executionYearJson;
     }
 
-    public ActionForward showHome(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward showHome(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
         User userView = Authenticate.getUser();
 
         String degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
@@ -94,7 +95,7 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
 
         String executionYearId = request.getParameter("executionYear");
 
-        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+        ExecutionYear currentExecutionYear = ExecutionYear.findCurrent(degreeCurricularPlan.getDegree().getCalendar());
 
         if (executionYearId != null) {
             currentExecutionYear = FenixFramework.getDomainObject(executionYearId);
@@ -284,8 +285,8 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
             JsonObject year = new JsonObject();
             year.addProperty("year", i);
             JsonArray curricularCoursesArray = new JsonArray();
-            for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesByExecutionYearAndCurricularYear(
-                    executionYear, i)) {
+            for (CurricularCourse curricularCourse : degreeCurricularPlan
+                    .getCurricularCoursesByExecutionYearAndCurricularYear(executionYear, i)) {
                 if (curricularCourseGradeMap.containsKey(curricularCourse)) {
                     CurricularCourseGradeEntry entry = curricularCourseGradeMap.get(curricularCourse);
 

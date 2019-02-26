@@ -74,9 +74,8 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
 
     public ManagerCurricularCourseManagementBackingBean() {
         if (getCurricularCourse() != null && getExecutionYear() != null) {
-            curricularCourseSemesterBean =
-                    new CurricularCourseByExecutionSemesterBean(getCurricularCourse(),
-                            ExecutionSemester.readBySemesterAndExecutionYear(2, getExecutionYear().getYear()));
+            curricularCourseSemesterBean = new CurricularCourseByExecutionSemesterBean(getCurricularCourse(),
+                    ExecutionSemester.readBySemesterAndExecutionYear(2, getExecutionYear().getYear()));
         }
     }
 
@@ -191,9 +190,8 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
 
     public Integer getMaximumValueForAcumulatedEnrollments() {
         if (maximumValueForAcumulatedEnrollments == null) {
-            maximumValueForAcumulatedEnrollments =
-                    (getCurricularCourse() != null) ? getCurricularCourse().getMaximumValueForAcumulatedEnrollments() : Integer
-                            .valueOf(0);
+            maximumValueForAcumulatedEnrollments = (getCurricularCourse() != null) ? getCurricularCourse()
+                    .getMaximumValueForAcumulatedEnrollments() : Integer.valueOf(0);
         }
         return maximumValueForAcumulatedEnrollments;
     }
@@ -204,9 +202,8 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
 
     public Integer getMinimumValueForAcumulatedEnrollments() {
         if (minimumValueForAcumulatedEnrollments == null) {
-            minimumValueForAcumulatedEnrollments =
-                    (getCurricularCourse() != null) ? getCurricularCourse().getMinimumValueForAcumulatedEnrollments() : Integer
-                            .valueOf(0);
+            minimumValueForAcumulatedEnrollments = (getCurricularCourse() != null) ? getCurricularCourse()
+                    .getMinimumValueForAcumulatedEnrollments() : Integer.valueOf(0);
         }
         return minimumValueForAcumulatedEnrollments;
     }
@@ -284,12 +281,12 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
                 result.add(new SelectItem(executionYear.getExternalId(), executionYear.getYear()));
             }
             if (getExecutionYearID() == null) {
-                setExecutionYearID(ExecutionYear.readCurrentExecutionYear().getExternalId());
+                setExecutionYearID(ExecutionYear.findCurrent(getDegree().getCalendar()).getExternalId());
             }
         } else {
             for (final ExecutionDegree executionDegree : executionDegrees) {
-                result.add(new SelectItem(executionDegree.getExecutionYear().getExternalId(), executionDegree.getExecutionYear()
-                        .getYear()));
+                result.add(new SelectItem(executionDegree.getExecutionYear().getExternalId(),
+                        executionDegree.getExecutionYear().getYear()));
             }
             if (getExecutionYearID() == null) {
                 setExecutionYearID(getDegreeCurricularPlan().getMostRecentExecutionDegree().getExecutionYear().getExternalId());
@@ -302,7 +299,7 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
             result.add(new SelectItem(executionYear.getExternalId(), executionYear.getYear()));
         }
         if (getExecutionYearID() == null) {
-            setExecutionYearID(ExecutionYear.readCurrentExecutionYear().getExternalId());
+            setExecutionYearID(ExecutionYear.findCurrent(getDegree().getCalendar()).getExternalId());
         }
     }
 

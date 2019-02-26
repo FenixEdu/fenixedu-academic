@@ -465,7 +465,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             return null;
         }
 
-        final ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
+        final ExecutionYear currentYear = ExecutionYear.findCurrent(getDegree().getCalendar());
         ExecutionDegree result = getExecutionDegreeByYear(currentYear);
         if (result != null) {
             return result;
@@ -878,7 +878,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public String getPresentationName() {
-        return getPresentationName(ExecutionYear.readCurrentExecutionYear(), I18N.getLocale());
+        return getPresentationName(ExecutionYear.findCurrent(getDegree().getCalendar()), I18N.getLocale());
     }
 
     public String getPresentationName(final ExecutionYear executionYear) {
@@ -1218,20 +1218,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             }
         }
         return degreeCurricularPlans;
-    }
-
-    public List<StudentCurricularPlan> getStudentsCurricularPlanGivenEntryYear(final ExecutionYear entryYear) {
-        List<StudentCurricularPlan> studentsGivenEntryYear = new ArrayList<>();
-        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-
-        for (Registration registration : this.getActiveRegistrations()) {
-            if (registration.getStartDate() != null && registration.getStartExecutionYear().equals(entryYear)
-                    && registration.isRegistered(currentExecutionYear)
-                    && !registration.getRegistrationProtocol().isMobilityAgreement()) {
-                studentsGivenEntryYear.add(registration.getActiveStudentCurricularPlan());
-            }
-        }
-        return studentsGivenEntryYear;
     }
 
     public Set<CurricularCourse> getCurricularCoursesByExecutionYearAndCurricularYear(final ExecutionYear executionYear,

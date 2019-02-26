@@ -1214,7 +1214,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             executionYearID = getAndHoldStringParameter("executionYearID");
         }
         if (executionYearID == null) {
-            executionYearID = ExecutionYear.readCurrentExecutionYear().getExternalId();
+            executionYearID = ExecutionYear.findCurrent(null).getExternalId();
         }
         return executionYearID;
     }

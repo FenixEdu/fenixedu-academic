@@ -94,7 +94,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
                         .collect(Collectors.toList());
 
         final Set<CompetenceCourse> taughtCompetenceCourses = AccessControl.getPerson()
-                .getProfessorships(ExecutionYear.readCurrentExecutionYear()).stream().filter(p -> p.isResponsibleFor())
+                .getProfessorships(ExecutionYear.findCurrent(null)).stream().filter(p -> p.isResponsibleFor())
                 .flatMap(p -> p.getExecutionCourse().getCompetenceCourses().stream()).collect(Collectors.toSet());
 
         request.setAttribute("competenceCourses", taughtCompetenceCourses);

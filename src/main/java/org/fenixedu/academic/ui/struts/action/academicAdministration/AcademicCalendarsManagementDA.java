@@ -55,19 +55,18 @@ import pt.ist.fenixframework.FenixFramework;
         accessGroup = "academic(MANAGE_ACADEMIC_CALENDARS)")
 @Mapping(module = "academicAdministration", path = "/academicCalendarsManagement", input = "/index.do",
         formBean = "academicCalendarsManagementForm")
-@Forwards(
-        value = {
-                @Forward(name = "viewAcademicCalendar",
-                        path = "/academicAdministration/academicCalendarsManagement/viewAcademicCalendar.jsp"),
-                @Forward(name = "prepareCreateCalendarEntry",
-                        path = "/academicAdministration/academicCalendarsManagement/createCalendarEntry.jsp"),
-                @Forward(name = "prepareChooseCalendar",
-                        path = "/academicAdministration/academicCalendarsManagement/chooseCalendar.jsp") })
+@Forwards(value = {
+        @Forward(name = "viewAcademicCalendar",
+                path = "/academicAdministration/academicCalendarsManagement/viewAcademicCalendar.jsp"),
+        @Forward(name = "prepareCreateCalendarEntry",
+                path = "/academicAdministration/academicCalendarsManagement/createCalendarEntry.jsp"),
+        @Forward(name = "prepareChooseCalendar",
+                path = "/academicAdministration/academicCalendarsManagement/chooseCalendar.jsp") })
 public class AcademicCalendarsManagementDA extends FenixDispatchAction {
     public ActionForward prepareCreateAcademicCalendar(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+        ExecutionYear currentExecutionYear = ExecutionYear.findCurrent(null);
         Partial begin;
         Partial end;
         if (currentExecutionYear != null) {
@@ -98,7 +97,7 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         AcademicCalendarEntry academicCalendar = getAcademicCalendarEntryFromParameter(request);
-        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+        ExecutionYear currentExecutionYear = ExecutionYear.findCurrent(null);
 
         Partial begin;
         Partial end;
@@ -110,9 +109,8 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
             end = CalendarEntryBean.getPartialFromYearMonthDay(new YearMonthDay().plusMonths(12));
         }
 
-        CalendarEntryBean bean =
-                CalendarEntryBean.createCalendarEntryBeanToCreateEntry((AcademicCalendarRootEntry) academicCalendar,
-                        academicCalendar, begin, end);
+        CalendarEntryBean bean = CalendarEntryBean
+                .createCalendarEntryBeanToCreateEntry((AcademicCalendarRootEntry) academicCalendar, academicCalendar, begin, end);
 
         return generateGanttDiagram(mapping, request, bean);
     }
@@ -127,7 +125,7 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
 
         if (beginDate.isAfter(endDate)) {
             addActionMessage(request, "error.begin.after.end");
-            ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+            ExecutionYear currentExecutionYear = ExecutionYear.findCurrent(null);
             Partial begin = CalendarEntryBean.getPartialFromYearMonthDay(currentExecutionYear.getBeginDateYearMonthDay());
             Partial end = CalendarEntryBean.getPartialFromYearMonthDay(currentExecutionYear.getEndDateYearMonthDay());
             bean = CalendarEntryBean.createCalendarEntryBeanToCreateEntry(bean.getRootEntry(), bean.getRootEntry(), begin, end);
@@ -160,8 +158,8 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
         return generateGanttDiagram(mapping, request, bean);
     }
 
-    public ActionForward chooseCalendarEntryTypePostBack(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward chooseCalendarEntryTypePostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         CalendarEntryBean bean = getRenderedObject("calendarEntryBeanWithType");
         if (bean == null) {
@@ -202,8 +200,8 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
             return mapping.findForward("prepareCreateCalendarEntry");
         }
 
-        return generateGanttDiagram(mapping, request, CalendarEntryBean.createCalendarEntryBeanToCreateEntry(
-                entry.getRootEntry(), entry, bean.getBeginDateToDisplay(), bean.getEndDateToDisplay()));
+        return generateGanttDiagram(mapping, request, CalendarEntryBean.createCalendarEntryBeanToCreateEntry(entry.getRootEntry(),
+                entry, bean.getBeginDateToDisplay(), bean.getEndDateToDisplay()));
     }
 
     public ActionForward prepareEditEntry(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -236,8 +234,8 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
             return mapping.findForward("prepareCreateCalendarEntry");
         }
 
-        return generateGanttDiagram(mapping, request, CalendarEntryBean.createCalendarEntryBeanToCreateEntry(
-                entry.getRootEntry(), entry, bean.getBeginDateToDisplay(), bean.getEndDateToDisplay()));
+        return generateGanttDiagram(mapping, request, CalendarEntryBean.createCalendarEntryBeanToCreateEntry(entry.getRootEntry(),
+                entry, bean.getBeginDateToDisplay(), bean.getEndDateToDisplay()));
     }
 
     public ActionForward deleteEntry(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -267,8 +265,8 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
             return prepareChooseCalendar(mapping, actionForm, request, response);
 
         } else if (entryParentEntry != null) {
-            return generateGanttDiagram(mapping, request,
-                    CalendarEntryBean.createCalendarEntryBeanToCreateEntry(rootEntry, entryParentEntry, beginPartial, endPartial));
+            return generateGanttDiagram(mapping, request, CalendarEntryBean.createCalendarEntryBeanToCreateEntry(rootEntry,
+                    entryParentEntry, beginPartial, endPartial));
 
         } else {
             return generateGanttDiagram(mapping, request,

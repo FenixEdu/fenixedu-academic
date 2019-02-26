@@ -360,8 +360,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
         this.selectionName = selectionName;
     }
 
-    private static Function<StudentCurricularPlanRenderer, Layout> layoutProvider = renderer -> new StudentCurricularPlanLayout(
-            renderer);
+    private static Function<StudentCurricularPlanRenderer, Layout> layoutProvider =
+            renderer -> new StudentCurricularPlanLayout(renderer);
 
     public static void setLayoutProvider(Function<StudentCurricularPlanRenderer, Layout> layoutProvider) {
         StudentCurricularPlanRenderer.layoutProvider = layoutProvider;
@@ -392,8 +392,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
         protected static final int COLUMNS_FROM_ECTS_AND_ENROLMENT_EVALUATION_DATE = 4;
 
-        protected static final int COLUMNS_BETWEEN_TEXT_AND_ENROLMENT_EVALUATION_DATE = COLUMNS_BETWEEN_TEXT_AND_ECTS
-                + COLUMNS_FROM_ECTS_AND_ENROLMENT_EVALUATION_DATE;
+        protected static final int COLUMNS_BETWEEN_TEXT_AND_ENROLMENT_EVALUATION_DATE =
+                COLUMNS_BETWEEN_TEXT_AND_ECTS + COLUMNS_FROM_ECTS_AND_ENROLMENT_EVALUATION_DATE;
 
         protected static final int LATEST_ENROLMENT_EVALUATION_COLUMNS = 3;
 
@@ -452,7 +452,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
         protected ExecutionYear initializeExecutionYear() {
 
             if (!studentCurricularPlan.getRegistration().hasConcluded()) {
-                return ExecutionYear.readCurrentExecutionYear();
+                return ExecutionYear.findCurrent(studentCurricularPlan.getDegree().getCalendar());
             }
 
             final ExecutionYear lastApprovementExecutionYear = studentCurricularPlan.getLastApprovementExecutionYear();
@@ -465,7 +465,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
                 return lastSCPExecutionYear;
             }
 
-            return ExecutionYear.readCurrentExecutionYear();
+            return ExecutionYear.findCurrent(studentCurricularPlan.getDegree().getCalendar());
         }
 
         protected void generateRowsForExecutionYearsOrganization(HtmlTable mainTable) {
@@ -511,8 +511,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             generateChildGroupRows(mainTable, curriculumGroup, level + 1);
         }
 
-        protected void generateGroupRowWithText(final HtmlTable mainTable, final String text, boolean addHeaders,
-                final int level, final CurriculumGroup curriculumGroup) {
+        protected void generateGroupRowWithText(final HtmlTable mainTable, final String text, boolean addHeaders, final int level,
+                final CurriculumGroup curriculumGroup) {
 
             final HtmlTableRow groupRow = mainTable.createRow();
             groupRow.setClasses(renderer.getCurriculumGroupRowClass());
@@ -523,9 +523,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
             final HtmlComponent body;
             if (curriculumGroup != null && curriculumGroup.isRoot()) {
-                body =
-                        createDegreeCurricularPlanNameLink(curriculumGroup.getDegreeCurricularPlanOfDegreeModule(),
-                                executionPeriodContext);
+                body = createDegreeCurricularPlanNameLink(curriculumGroup.getDegreeCurricularPlanOfDegreeModule(),
+                        executionPeriodContext);
             } else {
                 body = new HtmlText(createGroupName(text, curriculumGroup).toString(), false);
             }
@@ -550,9 +549,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             final StringBuilder groupName = new StringBuilder(text);
             if (curriculumGroup != null && curriculumGroup.getDegreeModule() != null) {
 
-                final CreditsLimit creditsLimit =
-                        (CreditsLimit) curriculumGroup.getMostRecentActiveCurricularRule(CurricularRuleType.CREDITS_LIMIT,
-                                executionYearContext);
+                final CreditsLimit creditsLimit = (CreditsLimit) curriculumGroup
+                        .getMostRecentActiveCurricularRule(CurricularRuleType.CREDITS_LIMIT, executionYearContext);
 
                 if (creditsLimit != null) {
                     groupName.append(" <span title=\"");
@@ -588,47 +586,41 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
                         && creditsLimit != null) {
 
                     final ConclusionValue value = curriculumGroup.isConcluded(executionYearContext);
-                    groupName.append("<em style=\"background-color:" + getBackgroundColor(value) + "; color:" + getColor(value)
-                            + "\"");
+                    groupName.append(
+                            "<em style=\"background-color:" + getBackgroundColor(value) + "; color:" + getColor(value) + "\"");
                     groupName.append("> ");
                     groupName.append(value.getLocalizedName());
                     groupName.append("</em>");
 
-
                     ProgramConclusion programConclusion = curriculumGroup.getDegreeModule().getProgramConclusion();
-                    if (programConclusion != null && curriculumGroup == programConclusion.groupFor(this.studentCurricularPlan
-                            .getRegistration())
-                            .orElse(null)) {
+                    if (programConclusion != null && curriculumGroup == programConclusion
+                            .groupFor(this.studentCurricularPlan.getRegistration()).orElse(null)) {
                         final StringBuilder conclusionText = new StringBuilder();
 
                         ConclusionProcess conclusionProcess = curriculumGroup.getConclusionProcess();
                         if (conclusionProcess != null) {
-                            conclusionText.append(" <em style=\"background-color:" + getBackgroundColor(ConclusionValue.CONCLUDED) +
-                                    "; color:" + getColor
-                                    (ConclusionValue.CONCLUDED)
-                                    + "\"");
+                            conclusionText.append(" <em style=\"background-color:" + getBackgroundColor(ConclusionValue.CONCLUDED)
+                                    + "; color:" + getColor(ConclusionValue.CONCLUDED) + "\"");
                             conclusionText.append(">");
 
-                            String conclusionDate = conclusionProcess.getConclusionDate()
-                                    .toString
-                                            ("yyyy-MM-dd");
+                            String conclusionDate = conclusionProcess.getConclusionDate().toString("yyyy-MM-dd");
 
-                            conclusionText.append(BundleUtil.getString(Bundle.APPLICATION, "label.curriculum.group.concluded", conclusionDate));
+                            conclusionText.append(
+                                    BundleUtil.getString(Bundle.APPLICATION, "label.curriculum.group.concluded", conclusionDate));
                             conclusionText.append("</em>");
                         } else {
-                            conclusionText.append(" <em style=\"background-color:" + getBackgroundColor(ConclusionValue.NOT_CONCLUDED) +
-                                    "; color:" + getColor
-                                    (ConclusionValue.NOT_CONCLUDED)
-                                    + "\"");
+                            conclusionText
+                                    .append(" <em style=\"background-color:" + getBackgroundColor(ConclusionValue.NOT_CONCLUDED)
+                                            + "; color:" + getColor(ConclusionValue.NOT_CONCLUDED) + "\"");
                             conclusionText.append(">");
 
-                            conclusionText.append(BundleUtil.getString(Bundle.APPLICATION, "label.curriculum.group.not.concluded"));
+                            conclusionText
+                                    .append(BundleUtil.getString(Bundle.APPLICATION, "label.curriculum.group.not.concluded"));
                             conclusionText.append("</em>");
                         }
 
                         final HtmlComponent programConclusionLink = createProgramConclusionLink(conclusionText.toString(),
-                                curriculumGroup.getRegistration(),
-                                programConclusion);
+                                curriculumGroup.getRegistration(), programConclusion);
                         try {
                             StringWriter stringWriter = new StringWriter();
                             programConclusionLink.draw(stringWriter);
@@ -735,10 +727,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
         }
 
         protected void generateCellsBetweenLabelAndGradeCell(HtmlTableRow dismissalRow) {
-            generateCellsWithText(
-                    dismissalRow,
-                    COLUMNS_BETWEEN_TEXT_AND_GRADE,
-                    EMPTY_INFO,
+            generateCellsWithText(dismissalRow, COLUMNS_BETWEEN_TEXT_AND_GRADE, EMPTY_INFO,
                     new String[] { renderer.getDegreeCurricularPlanCellClass(), renderer.getEnrolmentTypeCellClass(),
                             renderer.getEnrolmentStateCellClass() });
 
@@ -761,7 +750,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             if (isViewerAllowedToViewFullStudentCurriculum(studentCurricularPlan)) {
                 if (approvementDate != null) {
                     generateCellWithSpan(enrolmentRow, approvementDate.toString(DATE_FORMAT),
-                            BundleUtil.getString(Bundle.APPLICATION, "label.data.avaliacao"), renderer.getCreationDateCellClass());
+                            BundleUtil.getString(Bundle.APPLICATION, "label.data.avaliacao"),
+                            renderer.getCreationDateCellClass());
                 } else {
                     generateCellWithText(enrolmentRow, EMPTY_INFO, renderer.getCreationDateCellClass());
                 }
@@ -806,9 +796,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
                 container.addChild(checkBox);
             }
 
-            final HtmlText text =
-                    new HtmlText(BundleUtil.getString(Bundle.STUDENT, "label.dismissal."
-                            + dismissal.getCredits().getClass().getSimpleName()));
+            final HtmlText text = new HtmlText(
+                    BundleUtil.getString(Bundle.STUDENT, "label.dismissal." + dismissal.getCredits().getClass().getSimpleName()));
             container.addChild(text);
 
             final CurricularCourse curricularCourse = dismissal.getCurricularCourse();
@@ -820,9 +809,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
                 }
                 codeAndName += dismissal.getName().getContent();
 
-                ExecutionCourse executionCourse =
-                        dismissal.getCurricularCourse().getExecutionCoursesByExecutionPeriod(dismissal.getExecutionPeriod())
-                                .stream().findAny().orElse(null);
+                ExecutionCourse executionCourse = dismissal.getCurricularCourse()
+                        .getExecutionCoursesByExecutionPeriod(dismissal.getExecutionPeriod()).stream().findAny().orElse(null);
 
                 final HtmlComponent executionCourseLink = createExecutionCourseLink(codeAndName, executionCourse);
 
@@ -978,8 +966,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             if (evaluation.getExecutionPeriod() != null) {
                 generateCellWithText(enrolmentRow, evaluation.getExecutionPeriod().getExecutionYear().getYear(),
                         renderer.getEnrolmentExecutionYearCellClass());
-                generateCellWithText(
-                        enrolmentRow,
+                generateCellWithText(enrolmentRow,
                         evaluation.getExecutionPeriod().getSemester().toString() + " "
                                 + BundleUtil.getString(Bundle.APPLICATION, "label.semester.short"),
                         renderer.getEnrolmentSemesterCellClass());
@@ -999,7 +986,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
                 final Person person = evaluation.getPersonResponsibleForGrade();
                 final String username = person.getUsername();
                 generateCellWithSpan(enrolmentRow, username,
-                        BundleUtil.getString(Bundle.APPLICATION, "label.grade.responsiblePerson"), renderer.getCreatorCellClass());
+                        BundleUtil.getString(Bundle.APPLICATION, "label.grade.responsiblePerson"),
+                        renderer.getCreatorCellClass());
             } else {
                 generateCellWithText(enrolmentRow, EMPTY_INFO, renderer.getCreatorCellClass());
             }
@@ -1051,7 +1039,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
                 if (lastEnrolmentEvaluation != null && lastEnrolmentEvaluation.getExamDateYearMonthDay() != null) {
 
                     generateCellWithSpan(enrolmentRow, lastEnrolmentEvaluation.getExamDateYearMonthDay().toString(DATE_FORMAT),
-                            BundleUtil.getString(Bundle.APPLICATION, "label.data.avaliacao"), renderer.getCreationDateCellClass());
+                            BundleUtil.getString(Bundle.APPLICATION, "label.data.avaliacao"),
+                            renderer.getCreationDateCellClass());
                 } else {
                     generateCellWithText(enrolmentRow, EMPTY_INFO, renderer.getCreationDateCellClass());
                 }
@@ -1068,18 +1057,16 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
         }
 
         protected int calculateSpacerColspan() {
-            return MAX_LINE_SIZE
-                    - MAX_COL_SPAN_FOR_TEXT_ON_CURRICULUM_LINES
-                    - COLUMNS_BETWEEN_TEXT_AND_ENROLMENT_EVALUATION_DATE
-                    - (isViewerAllowedToViewFullStudentCurriculum(studentCurricularPlan) ? LATEST_ENROLMENT_EVALUATION_COLUMNS : 0);
+            return MAX_LINE_SIZE - MAX_COL_SPAN_FOR_TEXT_ON_CURRICULUM_LINES - COLUMNS_BETWEEN_TEXT_AND_ENROLMENT_EVALUATION_DATE
+                    - (isViewerAllowedToViewFullStudentCurriculum(
+                            studentCurricularPlan) ? LATEST_ENROLMENT_EVALUATION_COLUMNS : 0);
         }
 
         protected void generateSemesterCell(final HtmlTableRow row, final ICurriculumEntry entry) {
             final String semester;
             if (entry.hasExecutionPeriod()) {
-                semester =
-                        entry.getExecutionPeriod().getSemester().toString() + " "
-                                + BundleUtil.getString(Bundle.APPLICATION, "label.semester.short");
+                semester = entry.getExecutionPeriod().getSemester().toString() + " "
+                        + BundleUtil.getString(Bundle.APPLICATION, "label.semester.short");
             } else {
                 semester = EMPTY_INFO;
             }
@@ -1154,18 +1141,14 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
         }
 
         protected void generateEnrolmentStateCell(HtmlTableRow enrolmentRow, Enrolment enrolment) {
-            generateCellWithText(
-                    enrolmentRow,
-                    enrolment.isApproved() ? EMPTY_INFO : BundleUtil.getString(Bundle.ENUMERATION, enrolment.getEnrollmentState()
-                            .getQualifiedName()), renderer.getEnrolmentStateCellClass());
+            generateCellWithText(enrolmentRow, enrolment.isApproved() ? EMPTY_INFO : BundleUtil.getString(Bundle.ENUMERATION,
+                    enrolment.getEnrollmentState().getQualifiedName()), renderer.getEnrolmentStateCellClass());
 
         }
 
         protected void generateEnrolmentTypeCell(HtmlTableRow enrolmentRow, Enrolment enrolment) {
-            generateCellWithText(
-                    enrolmentRow,
-                    enrolment.isEnrolmentTypeNormal() ? EMPTY_INFO : BundleUtil.getString(Bundle.ENUMERATION,
-                            enrolment.getEnrolmentTypeName()), renderer.getEnrolmentTypeCellClass());
+            generateCellWithText(enrolmentRow, enrolment.isEnrolmentTypeNormal() ? EMPTY_INFO : BundleUtil
+                    .getString(Bundle.ENUMERATION, enrolment.getEnrolmentTypeName()), renderer.getEnrolmentTypeCellClass());
         }
 
         protected void generateDegreeCurricularPlanCell(final HtmlTableRow enrolmentRow, final Enrolment enrolment) {
@@ -1256,13 +1239,12 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             return new HtmlText(text);
         }
 
-        protected HtmlComponent createProgramConclusionLink(final String text, final Registration registration, final
-        ProgramConclusion programConclusion) {
-
+        protected HtmlComponent createProgramConclusionLink(final String text, final Registration registration,
+                final ProgramConclusion programConclusion) {
 
             if (registration != null && programConclusion != null) {
-                boolean canManageConclusion = AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_CONCLUSION, registration.getDegree()).isMember
-                        (Authenticate.getUser());
+                boolean canManageConclusion = AcademicAuthorizationGroup
+                        .get(AcademicOperationType.MANAGE_CONCLUSION, registration.getDegree()).isMember(Authenticate.getUser());
                 if (canManageConclusion) {
                     final HtmlLink result = new HtmlLink();
                     result.setText(text);
@@ -1343,7 +1325,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             generateCellWithSpan(row, text, null, cssClass);
         }
 
-        protected void generateCellWithSpan(final HtmlTableRow row, final String text, final String title, final String cssClass) {
+        protected void generateCellWithSpan(final HtmlTableRow row, final String text, final String title,
+                final String cssClass) {
             generateCellWithSpan(row, text, title, cssClass, 1);
         }
 

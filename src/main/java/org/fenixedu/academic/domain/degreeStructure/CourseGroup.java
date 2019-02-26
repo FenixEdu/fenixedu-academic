@@ -906,7 +906,7 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     final public String getGraduateTitle() {
-        return getGraduateTitle(ExecutionYear.readCurrentExecutionYear(), I18N.getLocale());
+        return getGraduateTitle(ExecutionYear.findCurrent(getDegree().getCalendar()), I18N.getLocale());
     }
 
     public String getGraduateTitleSuffix(final ExecutionYear executionYear, final Locale locale) {

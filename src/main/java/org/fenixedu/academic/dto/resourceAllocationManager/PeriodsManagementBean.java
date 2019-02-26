@@ -66,7 +66,7 @@ public class PeriodsManagementBean implements Serializable {
     // Typical bean methods
 
     public PeriodsManagementBean() {
-        setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+        setExecutionYear(ExecutionYear.findCurrent(null));
         this.availablePeriodTypes = computeAvailablePeriodTypes();
     }
 

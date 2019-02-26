@@ -100,7 +100,7 @@ public class TeacherGroup extends FenixGroup {
     }
 
     private ExecutionYear getExecutionYear() {
-        return executionYear != null ? executionYear : ExecutionYear.readCurrentExecutionYear();
+        return executionYear != null ? executionYear : ExecutionYear.findCurrent(null);
     }
 
     @Override
@@ -219,7 +219,8 @@ public class TeacherGroup extends FenixGroup {
                 }
             }
             if (department != null) {
-                if (department.equals(user.getPerson().getTeacher().getLastDepartment(getExecutionYear().getAcademicInterval()))) {
+                if (department
+                        .equals(user.getPerson().getTeacher().getLastDepartment(getExecutionYear().getAcademicInterval()))) {
                     return true;
                 }
             }

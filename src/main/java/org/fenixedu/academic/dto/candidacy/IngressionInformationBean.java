@@ -76,7 +76,7 @@ public class IngressionInformationBean implements Serializable {
 
     public Collection<ExecutionYear> getExecutionYearsSinceRegistrationStart() {
         return ExecutionYear.readExecutionYears(getRegistration().getStartExecutionYear(),
-                ExecutionYear.readCurrentExecutionYear());
+                ExecutionYear.findCurrent(getRegistration().getDegree().getCalendar()));
     }
 
     public LocalDate getReingressionDate() {

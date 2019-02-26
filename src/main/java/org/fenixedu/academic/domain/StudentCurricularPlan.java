@@ -1463,7 +1463,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     final public String getPresentationName() {
-        return getPresentationName(ExecutionYear.readCurrentExecutionYear());
+        return getPresentationName(ExecutionYear.findCurrent(getDegree().getCalendar()));
     }
 
     final public String getPresentationName(final ExecutionYear executionYear) {

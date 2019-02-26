@@ -79,12 +79,8 @@ public class ResponsibleForExecutionCourseGroup extends FenixGroup {
     @Override
     public boolean isMember(User user) {
         if (user != null && user.getPerson().getTeacher() != null) {
-            for (final Professorship professorship : user.getPerson().getTeacher()
-                    .getProfessorships(ExecutionYear.readCurrentExecutionYear())) {
-                if (professorship.isResponsibleFor()) {
-                    return true;
-                }
-            }
+            return user.getPerson().getProfessorshipsSet().stream()
+                    .anyMatch(p -> p.isResponsibleFor() && p.getExecutionCourse().getExecutionYear().isCurrent());
         }
         return false;
     }

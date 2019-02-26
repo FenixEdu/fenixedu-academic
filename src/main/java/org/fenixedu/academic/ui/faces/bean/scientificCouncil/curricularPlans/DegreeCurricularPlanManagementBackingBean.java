@@ -33,7 +33,6 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.GradeScale;
-import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleValidationType;
 import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
@@ -43,7 +42,6 @@ import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicYears;
 import org.fenixedu.academic.dto.InfoExecutionYear;
 import org.fenixedu.academic.predicate.IllegalDataAccessException;
-import org.fenixedu.academic.service.services.commons.ReadCurrentExecutionYear;
 import org.fenixedu.academic.service.services.commons.ReadNotClosedExecutionYears;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.scientificCouncil.curricularPlans.CreateDegreeCurricularPlan;
@@ -96,7 +94,8 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     }
 
     public List<SelectItem> getCurricularRuleValidationTypes() {
-        return (curricularRuleValidationTypes == null) ? (curricularRuleValidationTypes = readCurricularRuleValidationTypes()) : curricularRuleValidationTypes;
+        return (curricularRuleValidationTypes == null) ? (curricularRuleValidationTypes =
+                readCurricularRuleValidationTypes()) : curricularRuleValidationTypes;
     }
 
     private List<SelectItem> readCurricularRuleValidationTypes() {
@@ -157,9 +156,8 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
 
         Group curricularPlanMembersGroup = getDcp().getCurricularPlanMembersGroup();
         if (curricularPlanMembersGroup != null) {
-            curricularPlanMembersGroup.getMembers().forEach(
-                    user -> result.add(new SelectItem(user.getExternalId(), user.getPerson().getName() + " ("
-                            + user.getUsername() + ")")));
+            curricularPlanMembersGroup.getMembers().forEach(user -> result
+                    .add(new SelectItem(user.getExternalId(), user.getPerson().getName() + " (" + user.getUsername() + ")")));
         }
 
         return result;
@@ -295,13 +293,13 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
         List<SelectItem> result = new ArrayList<SelectItem>();
 
         if (getDcp().getExecutionDegreesSet().isEmpty()) {
-            result.add(new SelectItem(CurricularStage.DRAFT.name(), BundleUtil.getString(Bundle.ENUMERATION,
-                    CurricularStage.DRAFT.getName())));
+            result.add(new SelectItem(CurricularStage.DRAFT.name(),
+                    BundleUtil.getString(Bundle.ENUMERATION, CurricularStage.DRAFT.getName())));
         }
-        result.add(new SelectItem(CurricularStage.PUBLISHED.name(), BundleUtil.getString(Bundle.ENUMERATION,
-                CurricularStage.PUBLISHED.getName())));
-        result.add(new SelectItem(CurricularStage.APPROVED.name(), BundleUtil.getString(Bundle.ENUMERATION,
-                CurricularStage.APPROVED.getName())));
+        result.add(new SelectItem(CurricularStage.PUBLISHED.name(),
+                BundleUtil.getString(Bundle.ENUMERATION, CurricularStage.PUBLISHED.getName())));
+        result.add(new SelectItem(CurricularStage.APPROVED.name(),
+                BundleUtil.getString(Bundle.ENUMERATION, CurricularStage.APPROVED.getName())));
 
         return result;
     }
@@ -309,14 +307,14 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     public List<SelectItem> getStates() {
         List<SelectItem> result = new ArrayList<SelectItem>();
 
-        result.add(new SelectItem(DegreeCurricularPlanState.ACTIVE.name(), BundleUtil.getString(Bundle.ENUMERATION,
-                DegreeCurricularPlanState.ACTIVE.getName())));
-        result.add(new SelectItem(DegreeCurricularPlanState.NOT_ACTIVE.name(), BundleUtil.getString(Bundle.ENUMERATION,
-                DegreeCurricularPlanState.NOT_ACTIVE.getName())));
-        result.add(new SelectItem(DegreeCurricularPlanState.CONCLUDED.name(), BundleUtil.getString(Bundle.ENUMERATION,
-                DegreeCurricularPlanState.CONCLUDED.getName())));
-        result.add(new SelectItem(DegreeCurricularPlanState.PAST.name(), BundleUtil.getString(Bundle.ENUMERATION,
-                DegreeCurricularPlanState.PAST.getName())));
+        result.add(new SelectItem(DegreeCurricularPlanState.ACTIVE.name(),
+                BundleUtil.getString(Bundle.ENUMERATION, DegreeCurricularPlanState.ACTIVE.getName())));
+        result.add(new SelectItem(DegreeCurricularPlanState.NOT_ACTIVE.name(),
+                BundleUtil.getString(Bundle.ENUMERATION, DegreeCurricularPlanState.NOT_ACTIVE.getName())));
+        result.add(new SelectItem(DegreeCurricularPlanState.CONCLUDED.name(),
+                BundleUtil.getString(Bundle.ENUMERATION, DegreeCurricularPlanState.CONCLUDED.getName())));
+        result.add(new SelectItem(DegreeCurricularPlanState.PAST.name(),
+                BundleUtil.getString(Bundle.ENUMERATION, DegreeCurricularPlanState.PAST.getName())));
 
         return result;
     }
@@ -336,7 +334,8 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     public List<SelectItem> getExecutionYearItems() throws FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
 
-        final InfoExecutionYear currentInfoExecutionYear = ReadCurrentExecutionYear.run();
+        final InfoExecutionYear currentInfoExecutionYear =
+                InfoExecutionYear.newInfoFromDomain(ExecutionYear.findCurrent(getDcp().getDegree().getCalendar()));
         final List<InfoExecutionYear> notClosedInfoExecutionYears = ReadNotClosedExecutionYears.run();
 
         for (final InfoExecutionYear notClosedInfoExecutionYear : notClosedInfoExecutionYears) {
@@ -457,8 +456,8 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
                 continue;
             }
 
-            result.add(new SelectItem(entry.getRepresentationInStringFormat(), BundleUtil.getString(Bundle.ENUMERATION,
-                    entry.getName())));
+            result.add(new SelectItem(entry.getRepresentationInStringFormat(),
+                    BundleUtil.getString(Bundle.ENUMERATION, entry.getName())));
         }
 
         result.add(0, new SelectItem(NO_SELECTION, BundleUtil.getString(Bundle.SCIENTIFIC, "choose")));

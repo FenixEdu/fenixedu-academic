@@ -34,7 +34,7 @@ public class OpenExecutionYearsProvider implements DataProvider {
     public Object provide(Object source, Object currentValue) {
 
         final List<ExecutionYear> executionYears = ExecutionYear.readOpenExecutionYears();
-        executionYears.add(ExecutionYear.readCurrentExecutionYear());
+        executionYears.addAll(ExecutionYear.findCurrents());
 
         Collections.sort(executionYears, new ReverseComparator());
 

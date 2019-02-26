@@ -46,9 +46,9 @@ import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.academic.util.predicates.ResultCollection;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -257,7 +257,8 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
             }
         }
 
-        return executionYears.isEmpty() ? ExecutionYear.readCurrentExecutionYear() : executionYears.last();
+        return executionYears.isEmpty() ? ExecutionYear.findCurrent(getRegistration().getDegree().getCalendar()) : executionYears
+                .last();
     }
 
     final public Collection<CurriculumLine> getApprovedCurriculumLines() {
@@ -365,7 +366,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
     abstract public Set<CurriculumLine> getAllCurriculumLines();
 
-	abstract public Stream<CurriculumLine> getCurriculumLineStream();
+    abstract public Stream<CurriculumLine> getCurriculumLineStream();
 
     abstract public ConclusionValue isConcluded(ExecutionYear executionYear);
 

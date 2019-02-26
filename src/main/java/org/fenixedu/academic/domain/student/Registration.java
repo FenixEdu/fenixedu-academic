@@ -167,9 +167,14 @@ public class Registration extends Registration_Base {
             final DegreeCurricularPlan degreeCurricularPlan, final StudentCandidacy studentCandidacy,
             final RegistrationProtocol protocol, final CycleType cycleType, final ExecutionYear executionYear,
             final Integer studentNumber) {
+
+        if (executionYear == null) {
+            throw new DomainException("error.creation.Registration.executionYearIsRequired");
+        }
+
         final Degree degree = degreeCurricularPlan == null ? null : degreeCurricularPlan.getDegree();
         Registration registration = new Registration(person, calculateStartDate(executionYear), studentNumber, degree);
-        registration.setRegistrationYear(executionYear == null ? ExecutionYear.readCurrentExecutionYear() : executionYear);
+        registration.setRegistrationYear(executionYear);
         registration.setRequestedChangeDegree(false);
         registration.setRequestedChangeBranch(false);
         registration.setRegistrationProtocol(protocol == null ? RegistrationProtocol.getDefault() : protocol);
@@ -208,7 +213,11 @@ public class Registration extends Registration_Base {
 
         this(person, calculateStartDate(executionYear), registrationNumber, degree);
 
-        setRegistrationYear(executionYear == null ? ExecutionYear.readCurrentExecutionYear() : executionYear);
+        if (executionYear == null) {
+            throw new DomainException("error.creation.Registration.executionYearIsRequired");
+        }
+
+        setRegistrationYear(executionYear);
         setRequestedChangeDegree(false);
         setRequestedChangeBranch(false);
         setRegistrationProtocol(protocol == null ? RegistrationProtocol.getDefault() : protocol);
@@ -1800,7 +1809,7 @@ public class Registration extends Registration_Base {
     }
 
     final public int getCurricularYear() {
-        return getCurricularYear(ExecutionYear.readCurrentExecutionYear());
+        return getCurricularYear(ExecutionYear.findCurrent(getDegree().getCalendar()));
     }
 
     final public int getCurricularYear(final ExecutionYear executionYear) {
@@ -2072,7 +2081,7 @@ public class Registration extends Registration_Base {
     }
 
     final public boolean isFirstTime() {
-        return isFirstTime(ExecutionYear.readCurrentExecutionYear());
+        return isFirstTime(ExecutionYear.findCurrent(getDegree().getCalendar()));
     }
 
     final public StudentCurricularPlan getStudentCurricularPlan(final ExecutionYear executionYear) {
@@ -2479,7 +2488,7 @@ public class Registration extends Registration_Base {
     public PrecedentDegreeInformation getLatestPrecedentDegreeInformation() {
         TreeSet<PrecedentDegreeInformation> degreeInformations =
                 new TreeSet<>(Collections.reverseOrder(PrecedentDegreeInformation.COMPARATOR_BY_EXECUTION_YEAR));
-        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+        ExecutionYear currentExecutionYear = ExecutionYear.findCurrent(getDegree().getCalendar());
         for (PrecedentDegreeInformation pdi : getPrecedentDegreesInformationsSet()) {
             if (!pdi.getExecutionYear().isAfter(currentExecutionYear)) {
                 degreeInformations.add(pdi);

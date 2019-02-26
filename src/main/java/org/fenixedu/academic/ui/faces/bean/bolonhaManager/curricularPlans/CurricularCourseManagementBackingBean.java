@@ -455,7 +455,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             return FenixFramework.getDomainObject(executionYearId);
         }
 
-        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+        ExecutionYear currentExecutionYear = ExecutionYear.findCurrent(getDegree().getCalendar());
 
         if (oldestContextExecutionYear != null && oldestContextExecutionYear.isAfter(currentExecutionYear)) {
             return oldestContextExecutionYear;

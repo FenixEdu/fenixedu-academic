@@ -96,12 +96,10 @@ public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean
             } else {
                 result = new ArrayList<SelectItem>();
 
-                final List<DegreeCurricularPlan> toShow =
-                        DegreeCurricularPlan.readByDegreeTypeAndState(Predicate.isEqual(degreeType),
-                                DegreeCurricularPlanState.ACTIVE);
-                Collections
-                        .sort(toShow,
-                                DegreeCurricularPlan.DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE);
+                final List<DegreeCurricularPlan> toShow = DegreeCurricularPlan
+                        .readByDegreeTypeAndState(Predicate.isEqual(degreeType), DegreeCurricularPlanState.ACTIVE);
+                Collections.sort(toShow,
+                        DegreeCurricularPlan.DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE);
 
                 for (final DegreeCurricularPlan degreeCurricularPlan : toShow) {
                     result.add(new SelectItem(degreeCurricularPlan.getExternalId(), degreeType.getName().getContent() + " "
@@ -162,7 +160,7 @@ public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean
             result.add(new SelectItem(executionYear.getExternalId(), executionYear.getYear()));
         }
         if (getChoosenExecutionYearID() == null && result.size() > 0) {
-            setChoosenExecutionYearID(ExecutionYear.readCurrentExecutionYear().getExternalId());
+            setChoosenExecutionYearID(ExecutionYear.findCurrent(null).getExternalId());
         }
         return result;
     }
@@ -181,10 +179,9 @@ public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean
 
     public String createExecutionDegrees() throws FenixActionException {
         try {
-            createdDegreeCurricularPlans =
-                    CreateExecutionDegreesForExecutionYear.run(getChoosenDegreeCurricularPlansIDs(),
-                            getChoosenBolonhaDegreeCurricularPlansIDs(), getChoosenExecutionYearID(), getCampus(),
-                            !getTemporaryExamMap());
+            createdDegreeCurricularPlans = CreateExecutionDegreesForExecutionYear.run(getChoosenDegreeCurricularPlansIDs(),
+                    getChoosenBolonhaDegreeCurricularPlansIDs(), getChoosenExecutionYearID(), getCampus(),
+                    !getTemporaryExamMap());
         } catch (IllegalDataAccessException e) {
             throw new FenixActionException(e);
         } catch (DomainException e) {

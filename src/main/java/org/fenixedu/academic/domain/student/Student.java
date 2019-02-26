@@ -366,7 +366,7 @@ public class Student extends Student_Base {
     }
 
     public Collection<StudentStatuteBean> getCurrentStatutes() {
-        return getStatutesValidOnAnyExecutionSemesterFor(ExecutionYear.readCurrentExecutionYear());
+        return getStatutesValidOnAnyExecutionSemesterFor(ExecutionYear.findCurrent(null));
     }
 
     public Collection<StudentStatuteBean> getStatutes(final ExecutionSemester executionSemester) {
@@ -875,7 +875,7 @@ public class Student extends Student_Base {
     }
 
     public PersonalIngressionData getLatestPersonalIngressionData() {
-        final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+        final ExecutionYear currentExecutionYear = ExecutionYear.findCurrent(null);
         final Comparator<PersonalIngressionData> comparator =
                 Collections.reverseOrder(PersonalIngressionData.COMPARATOR_BY_EXECUTION_YEAR);
         return getPersonalIngressionsDataSet().stream().filter(pid -> !pid.getExecutionYear().isAfter(currentExecutionYear))

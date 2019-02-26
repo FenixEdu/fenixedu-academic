@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
@@ -49,8 +50,8 @@ public class ExecutionPeriodsForStudentCurricularPlanProvider implements DataPro
         // ArrayList<ExecutionSemester>();
         final StudentCurricularPlan studentCurricularPlan = ((IStudentCurricularPlanBean) source).getStudentCurricularPlan();
 
-        final List<ExecutionSemester> executionPeriodsInTimePeriod =
-                ExecutionSemester.readExecutionPeriodsInTimePeriod(studentCurricularPlan.getStartDate(), getEndDate());
+        final List<ExecutionSemester> executionPeriodsInTimePeriod = ExecutionSemester.readExecutionPeriodsInTimePeriod(
+                studentCurricularPlan.getStartDate(), getEndDate(studentCurricularPlan.getDegree()));
 
         /*
          * 26/08/2009 - For curriculum validation we want execution semesters
@@ -79,8 +80,8 @@ public class ExecutionPeriodsForStudentCurricularPlanProvider implements DataPro
         return executionPeriodsInTimePeriod;
     }
 
-    private Date getEndDate() {
-        return ExecutionYear.readCurrentExecutionYear().getLastExecutionPeriod().getEndDate();
+    private Date getEndDate(Degree degree) {
+        return ExecutionYear.findCurrent(degree.getCalendar()).getLastExecutionPeriod().getEndDate();
     }
 
     @Override

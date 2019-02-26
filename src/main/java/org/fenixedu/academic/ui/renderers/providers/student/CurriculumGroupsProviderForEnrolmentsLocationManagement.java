@@ -50,9 +50,9 @@ public class CurriculumGroupsProviderForEnrolmentsLocationManagement implements 
         final EnrolmentLocationBean bean = (EnrolmentLocationBean) source;
         final Set<DegreeModule> result = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME);
 
-        final Set<AcademicProgram> programs =
-                AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS,
-                        Authenticate.getUser()).collect(Collectors.toSet());
+        final Set<AcademicProgram> programs = AcademicAccessRule
+                .getProgramsAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, Authenticate.getUser())
+                .collect(Collectors.toSet());
 
         for (final Registration registration : bean.getStudent().getRegistrationsSet()) {
 
@@ -72,16 +72,14 @@ public class CurriculumGroupsProviderForEnrolmentsLocationManagement implements 
                 }
 
                 final DegreeCurricularPlan degreeCurricularPlan = cycle.getDegreeCurricularPlanOfDegreeModule();
-                final List<DegreeModule> modules =
-                        degreeCurricularPlan.getDcpDegreeModules(OptionalCurricularCourse.class,
-                                ExecutionYear.readCurrentExecutionYear());
+                final List<DegreeModule> modules = degreeCurricularPlan.getDcpDegreeModules(OptionalCurricularCourse.class,
+                        ExecutionYear.findCurrent(degreeCurricularPlan.getDegree().getCalendar()));
 
                 final Iterator<DegreeModule> degreeModulesIter = modules.iterator();
                 while (degreeModulesIter.hasNext()) {
                     final CurricularCourse curricularCourse = (CurricularCourse) degreeModulesIter.next();
-                    if (studentCurricularPlan.isApproved(curricularCourse)
-                            || studentCurricularPlan.getCurricularCoursePossibleGroupsWithoutNoCourseGroupCurriculumGroups(
-                                    curricularCourse).isEmpty()) {
+                    if (studentCurricularPlan.isApproved(curricularCourse) || studentCurricularPlan
+                            .getCurricularCoursePossibleGroupsWithoutNoCourseGroupCurriculumGroups(curricularCourse).isEmpty()) {
                         degreeModulesIter.remove();
                     }
                 }

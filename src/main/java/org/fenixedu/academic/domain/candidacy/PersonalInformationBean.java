@@ -808,7 +808,8 @@ public class PersonalInformationBean implements Serializable {
     }
 
     private PrecedentDegreeInformation getPrecedentDegreeInformation() {
-        return getRegistration().getPrecedentDegreeInformation(ExecutionYear.readCurrentExecutionYear());
+        final ExecutionYear currentExecutionYear = ExecutionYear.findCurrent(getRegistration().getDegree().getCalendar());
+        return getRegistration().getPrecedentDegreeInformation(currentExecutionYear);
     }
 
     public Student getStudent() {
@@ -824,7 +825,7 @@ public class PersonalInformationBean implements Serializable {
             precedentInfo = new PrecedentDegreeInformation();
             precedentInfo.setRegistration(getRegistration());
 
-            ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+            final ExecutionYear currentExecutionYear = ExecutionYear.findCurrent(getRegistration().getDegree().getCalendar());
             personalData = getStudent().getPersonalIngressionDataByExecutionYear(currentExecutionYear);
             if (personalData == null) {
                 personalData = new PersonalIngressionData(getStudent(), currentExecutionYear, precedentInfo);

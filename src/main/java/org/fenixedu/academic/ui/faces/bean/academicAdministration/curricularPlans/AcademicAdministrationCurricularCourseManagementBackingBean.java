@@ -76,9 +76,8 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
 
     public AcademicAdministrationCurricularCourseManagementBackingBean() {
         if (getCurricularCourse() != null && getExecutionYear() != null) {
-            curricularCourseSemesterBean =
-                    new CurricularCourseByExecutionSemesterBean(getCurricularCourse(),
-                            ExecutionSemester.readBySemesterAndExecutionYear(2, getExecutionYear().getYear()));
+            curricularCourseSemesterBean = new CurricularCourseByExecutionSemesterBean(getCurricularCourse(),
+                    ExecutionSemester.readBySemesterAndExecutionYear(2, getExecutionYear().getYear()));
         }
     }
 
@@ -193,9 +192,8 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
 
     public Integer getMaximumValueForAcumulatedEnrollments() {
         if (maximumValueForAcumulatedEnrollments == null) {
-            maximumValueForAcumulatedEnrollments =
-                    (getCurricularCourse() != null) ? getCurricularCourse().getMaximumValueForAcumulatedEnrollments() : Integer
-                            .valueOf(0);
+            maximumValueForAcumulatedEnrollments = (getCurricularCourse() != null) ? getCurricularCourse()
+                    .getMaximumValueForAcumulatedEnrollments() : Integer.valueOf(0);
         }
         return maximumValueForAcumulatedEnrollments;
     }
@@ -206,9 +204,8 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
 
     public Integer getMinimumValueForAcumulatedEnrollments() {
         if (minimumValueForAcumulatedEnrollments == null) {
-            minimumValueForAcumulatedEnrollments =
-                    (getCurricularCourse() != null) ? getCurricularCourse().getMinimumValueForAcumulatedEnrollments() : Integer
-                            .valueOf(0);
+            minimumValueForAcumulatedEnrollments = (getCurricularCourse() != null) ? getCurricularCourse()
+                    .getMinimumValueForAcumulatedEnrollments() : Integer.valueOf(0);
         }
         return minimumValueForAcumulatedEnrollments;
     }
@@ -219,9 +216,9 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
 
     /**
      * @deprecated This method sets attributes that are no longer used. Set the corresponding attributes in the
-     * appropriate
-     * {@link org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation CompetenceCourseInformation}
-     * object.
+     *             appropriate
+     *             {@link org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation CompetenceCourseInformation}
+     *             object.
      */
     @Deprecated
     public String createOldCurricularCourse() {
@@ -253,12 +250,11 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
         return "buildCurricularPlan";
     }
 
-
-     /**
+    /**
      * @deprecated This method sets attributes that are no longer used. Set the corresponding attributes in the
-     * appropriate
-     * {@link org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation CompetenceCourseInformation}
-     * object.
+     *             appropriate
+     *             {@link org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation CompetenceCourseInformation}
+     *             object.
      */
     @Deprecated
     public String editOldCurricularCourse() {
@@ -298,8 +294,9 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
         }
         if (getExecutionYearID() == null) {
             final ExecutionDegree mostRecentExecutionDegree = getDegreeCurricularPlan().getMostRecentExecutionDegree();
-            setExecutionYearID(mostRecentExecutionDegree != null ? mostRecentExecutionDegree.getExecutionYear().getExternalId() : ExecutionYear
-                    .readCurrentExecutionYear().getExternalId());
+            setExecutionYearID(mostRecentExecutionDegree != null ? mostRecentExecutionDegree.getExecutionYear()
+                    .getExternalId() : ExecutionYear.findCurrent(getDegreeCurricularPlan().getDegree().getCalendar())
+                            .getExternalId());
         }
     }
 
@@ -308,7 +305,7 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
             result.add(new SelectItem(executionYear.getExternalId(), executionYear.getYear()));
         }
         if (getExecutionYearID() == null) {
-            setExecutionYearID(ExecutionYear.readCurrentExecutionYear().getExternalId());
+            setExecutionYearID(ExecutionYear.findCurrent(getDegreeCurricularPlan().getDegree().getCalendar()).getExternalId());
         }
     }
 
@@ -362,9 +359,9 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
     }
 
     public boolean isToAddNewContext() {
-        if(toAddNewContext == null) {
+        if (toAddNewContext == null) {
             toAddNewContext = getAndHoldBooleanParameter("toAddNewContext");
-            if(toAddNewContext == null) {
+            if (toAddNewContext == null) {
                 toAddNewContext = false;
             }
         }

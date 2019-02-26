@@ -69,8 +69,8 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
     private final AcademicCalendarRootEntry academicCalendarRootEntry;
 
     private AcademicInterval(String entryExternalId, String academicCalendarExternalId) {
-        this((AcademicCalendarEntry) FenixFramework.getDomainObject(entryExternalId), (AcademicCalendarRootEntry) FenixFramework
-                .getDomainObject(academicCalendarExternalId));
+        this((AcademicCalendarEntry) FenixFramework.getDomainObject(entryExternalId),
+                (AcademicCalendarRootEntry) FenixFramework.getDomainObject(academicCalendarExternalId));
     }
 
     public AcademicInterval(final AcademicCalendarEntry entry, final AcademicCalendarRootEntry rootEntry) {
@@ -227,9 +227,8 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 
         AcademicInterval closest = null;
         for (AcademicInterval academicInterval : academicIntervals) {
-            if (closest == null
-                    || Math.abs(academicInterval.getStart().getMillis() - now.getMillis()) > Math.abs(closest.getStart()
-                            .getMillis() - now.getMillis())) {
+            if (closest == null || Math.abs(academicInterval.getStart().getMillis() - now.getMillis()) > Math
+                    .abs(closest.getStart().getMillis() - now.getMillis())) {
                 closest = academicInterval;
             }
         }
@@ -240,7 +239,7 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
         if (academicPeriod.equals(AcademicPeriod.SEMESTER)) {
             return ExecutionSemester.readActualExecutionSemester().getAcademicInterval();
         } else if (academicPeriod.equals(AcademicPeriod.YEAR)) {
-            return ExecutionYear.readCurrentExecutionYear().getAcademicInterval();
+            return ExecutionYear.findCurrent(null).getAcademicInterval();
         }
 
         throw new UnsupportedOperationException("Unknown AcademicPeriod " + academicPeriod);

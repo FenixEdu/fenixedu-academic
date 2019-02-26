@@ -49,18 +49,19 @@ public class CreateDegree {
             if (degree.getSigla().equalsIgnoreCase(acronym)) {
                 throw new FenixServiceException("error.existing.degree.acronym");
             }
-            ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+            ExecutionYear currentExecutionYear = ExecutionYear.findCurrent(degree.getCalendar());
 
-            if ((degree.getNameFor(currentExecutionYear).getContent(org.fenixedu.academic.util.LocaleUtils.PT).equalsIgnoreCase(name) || degree
-                    .getNameFor(currentExecutionYear).getContent(org.fenixedu.academic.util.LocaleUtils.EN).equalsIgnoreCase(nameEn))
+            if ((degree.getNameFor(currentExecutionYear).getContent(org.fenixedu.academic.util.LocaleUtils.PT)
+                    .equalsIgnoreCase(name)
+                    || degree.getNameFor(currentExecutionYear).getContent(org.fenixedu.academic.util.LocaleUtils.EN)
+                            .equalsIgnoreCase(nameEn))
                     && degree.getDegreeType().equals(degreeType)) {
                 throw new FenixServiceException("error.existing.degree.name.and.type");
             }
         }
 
-        Degree degree =
-                new Degree(name, nameEn, acronym, degreeType, ectsCredits, gradeScale, prevailingScientificArea,
-                        administrativeOffice);
+        Degree degree = new Degree(name, nameEn, acronym, degreeType, ectsCredits, gradeScale, prevailingScientificArea,
+                administrativeOffice);
         Signal.emit(Degree.CREATED_SIGNAL, new DomainObjectEvent<Degree>(degree));
     }
 
