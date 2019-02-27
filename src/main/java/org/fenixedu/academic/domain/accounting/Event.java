@@ -1177,15 +1177,17 @@ public abstract class Event extends Event_Base {
         return refund;
     }
 
-    public static Map<Event, BigDecimal> availableAdvancements(final Person person) {
+    public Map<Event, BigDecimal> availableAdvancements() {
         final DateTime now = new DateTime();
         final Map<Event, BigDecimal> result = new HashMap<>();
-        for (final Event event : person.getEventsSet()) {
+        for (final Event event : getPerson().getEventsSet()) {
             if (event.isRefundable()) {
                 final DebtInterestCalculator calculator = event.getDebtInterestCalculator(now);
                 final BigDecimal unusedAmount = calculator.getPaidUnusedAmount();
                 if (unusedAmount.signum() > 0) {
-                    result.put(event, unusedAmount);
+                    if (event instanceof ResidenceEvent == this instanceof ResidenceEvent){
+                        result.put(event, unusedAmount);
+                    }
                 }
             }
         }

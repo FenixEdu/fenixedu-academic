@@ -17,6 +17,7 @@ import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.accounting.PaymentMethod;
 import org.fenixedu.academic.domain.accounting.Refund;
+import org.fenixedu.academic.domain.accounting.ResidenceEvent;
 import org.fenixedu.academic.domain.accounting.calculator.CreditEntry;
 import org.fenixedu.academic.domain.accounting.calculator.Debt;
 import org.fenixedu.academic.domain.accounting.calculator.DebtEntry;
@@ -287,6 +288,12 @@ public class AccountingManagementService {
 
     @Atomic
     public AccountingTransaction depositAdvancement(final Event eventToDeposit, final Event eventToRefund, final User user) {
+
+        // In case of ResidenceEvents, source and target must be of the same type
+        if (eventToRefund instanceof ResidenceEvent ^ eventToDeposit instanceof ResidenceEvent) {
+            throw new DomainException("error.deposit.advancement.residenceEvent.source.not.equal.target");
+        }
+
         final Money availableAmountToDeposit = eventToDeposit.getTotalAmountToPay();
         final Money availableAmountToRefund =
                 new Money(eventToRefund.getDebtInterestCalculator(new DateTime()).getPaidUnusedAmount());

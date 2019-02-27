@@ -180,7 +180,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
         model.addAttribute("person", person);
         model.addAttribute("event", event);
         model.addAttribute("depositAmountBean", new DepositAmountBean());
-        model.addAttribute("availableAdvancements", Event.availableAdvancements(person));
+        model.addAttribute("availableAdvancements", event.availableAdvancements());
         return view("event-deposit");
     }
 
