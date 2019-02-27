@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.phd.alert;
 
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -32,6 +33,7 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.messaging.core.domain.Message;
+import org.fenixedu.messaging.core.domain.MessagingSystem;
 import org.joda.time.LocalDate;
 
 public class PhdCustomAlert extends PhdCustomAlert_Base {
@@ -41,19 +43,19 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
     }
 
     public PhdCustomAlert(PhdIndividualProgramProcess process, Group targetGroup, LocalizedString subject,
-            LocalizedString body, Boolean sendMail, LocalDate fireDate, Boolean userDefined, Boolean shared) {
+            LocalizedString body, Boolean sendMail, String otherRecipientsEmails, LocalDate fireDate, Boolean userDefined, Boolean shared) {
         this();
-        init(process, targetGroup, subject, body, sendMail, fireDate, userDefined, shared);
+        init(process, targetGroup, subject, body, sendMail, otherRecipientsEmails, fireDate, userDefined, shared);
     }
 
     public PhdCustomAlert(PhdCustomAlertBean bean) {
         this(bean.getProcess(), bean.calculateTargetGroup(), new LocalizedString(Locale.getDefault(), bean.getSubject()),
-                new LocalizedString(Locale.getDefault(), bean.getBody()), bean.isToSendEmail(), bean.getFireDate(), bean
+                new LocalizedString(Locale.getDefault(), bean.getBody()), bean.isToSendEmail(), bean.getOtherRecipientsEmails(), bean.getFireDate(), bean
                         .getUserDefined(), bean.getShared());
     }
 
     protected void init(PhdIndividualProgramProcess process, Group targetGroup, LocalizedString subject,
-            LocalizedString body, Boolean sendEmail, LocalDate whenToFire, Boolean userDefined, Boolean shared) {
+            LocalizedString body, Boolean sendEmail, String otherRecipientsEmails, LocalDate whenToFire, Boolean userDefined, Boolean shared) {
 
         super.init(process, subject, body);
         String[] args = {};
@@ -82,6 +84,7 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
 
         super.setWhenToFire(whenToFire);
         super.setSendEmail(sendEmail);
+        super.setOtherRecipientsEmails(otherRecipientsEmails);
         super.setTargetGroup(targetGroup.toPersistentGroup());
         super.setUserDefined(userDefined);
         super.setShared(shared);
@@ -130,6 +133,7 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
 
         if (isToSendMail()) {
             Message.from(getSender()).to(getTargetAccessGroup())
+                    .singleBcc(MessagingSystem.Util.toEmailSet(getOtherRecipientsEmails()))
                     .subject(buildMailSubject()).textBody(buildMailBody())
                     .send();
         }
@@ -143,6 +147,14 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
         targetGroup.getMembers().forEach(
                 user -> builder.append(user.getPerson().getName()).append(" (")
                         .append(user.getPerson().getEmailForSendingEmails()).append(")\n"));
+        return builder.toString();
+    }
+
+    public String getOtherRecipientsInFormattedText() {
+        StringBuilder builder = new StringBuilder();
+
+        Arrays.stream(getOtherRecipientsEmails().split(",")).forEach(
+                email -> builder.append(email.trim()).append("\n"));
         return builder.toString();
     }
 

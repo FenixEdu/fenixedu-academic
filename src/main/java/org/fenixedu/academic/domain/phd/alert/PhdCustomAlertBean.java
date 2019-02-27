@@ -32,9 +32,7 @@ public class PhdCustomAlertBean implements Serializable {
 
     static enum PhdAlertTargetGroupType {
 
-        MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PERSONS,
-
-        ONLY_FOR_ME;
+        MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PERSONS
 
     }
 
@@ -43,13 +41,15 @@ public class PhdCustomAlertBean implements Serializable {
      */
     private static final long serialVersionUID = -3274906509546432695L;
 
-    private PhdAlertTargetGroupType targetGroupType;
+    private PhdAlertTargetGroupType targetGroupType = PhdAlertTargetGroupType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PERSONS; //by default, since ONLY_FOR_ME group has been deleted
 
     private String subject;
 
     private String body;
 
     private boolean toSendEmail;
+
+    private String otherRecipientsEmails;
 
     private LocalDate fireDate;
 
@@ -106,6 +106,10 @@ public class PhdCustomAlertBean implements Serializable {
         this.toSendEmail = toSendEmail;
     }
 
+    public String getOtherRecipientsEmails() { return otherRecipientsEmails; }
+
+    public void setOtherRecipientsEmails(String otherRecipientsEmails) { this.otherRecipientsEmails = otherRecipientsEmails; }
+
     public LocalDate getFireDate() {
         return fireDate;
     }
@@ -131,8 +135,6 @@ public class PhdCustomAlertBean implements Serializable {
 
         case MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PERSONS:
             return AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES, this.getProcess().getPhdProgram());
-        case ONLY_FOR_ME:
-            return Authenticate.getUser().groupOf();
 
         default:
             throw new RuntimeException("Target group type not supported");
