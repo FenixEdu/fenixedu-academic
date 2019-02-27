@@ -49,7 +49,9 @@ public enum EventExemptionJustificationType {
 
     TIME,
 
-    TRANSFERED_APPLICATION;
+    TRANSFERED_APPLICATION,
+
+    CANCELLED;
 
     public String getName() {
         return name();

@@ -673,9 +673,42 @@ public abstract class Event extends Event_Base {
         if (isCancelled()) {
             return;
         }
+        
         changeState(EventState.CANCELLED, new DateTime());
         super.setResponsibleForCancel(responsible);
         super.setCancelJustification(cancelJustification);
+    }
+
+    public void exempt(Person responsible, String justification) {
+        DateTime when = new DateTime();
+
+        DebtInterestCalculator debtInterestCalculator = getDebtInterestCalculator(when);
+        Money dueInterestAmount = new Money(debtInterestCalculator.getDueInterestAmount());
+        Money dueFineAmount = new Money(debtInterestCalculator.getDueFineAmount());
+        Money dueAmount = new Money(debtInterestCalculator.getDueAmount());
+
+        if (dueInterestAmount.isPositive()) {
+            FixedAmountInterestExemption fixedAmountInterestExemption =
+                    new FixedAmountInterestExemption(this, responsible, dueInterestAmount,
+                            EventExemptionJustificationType.CANCELLED, new DateTime(), justification);
+            fixedAmountInterestExemption.setWhenCreated(when);
+            when = when.plusSeconds(1);
+        }
+
+        if (dueFineAmount.isPositive()) {
+            FixedAmountFineExemption fixedAmountFineExemption =
+                    new FixedAmountFineExemption(this, responsible, dueFineAmount,
+                            EventExemptionJustificationType.CANCELLED, new DateTime(), justification);
+            fixedAmountFineExemption.setWhenCreated(when);
+            when = when.plusSeconds(1);
+        }
+
+        if (dueAmount.isPositive()) {
+            EventExemption eventExemption = new EventExemption(this, responsible, dueAmount,
+                    EventExemptionJustificationType.CANCELLED, new DateTime(), justification);
+            eventExemption.setWhenCreated(when);
+        }
+        
     }
 
     public void cancel(final Person responsible, final String cancelJustification) {
@@ -691,21 +724,8 @@ public abstract class Event extends Event_Base {
         if (getPayedAmount().isPositive()) {
             throw new DomainException("error.accounting.Event.cannot.cancel.events.with.payed.amount.greater.than.zero");
         }
-
+        exempt(responsible, cancelJustification);
         forceCancel(responsible, cancelJustification);
-    }
-
-    public void cancel(final String cancelJustification) {
-        if (isCancelled()) {
-            return;
-        }
-
-        if (getPayedAmount().isPositive()) {
-            throw new DomainException("error.accounting.Event.cannot.cancel.events.with.payed.amount.greater.than.zero");
-        }
-
-        changeState(EventState.CANCELLED, new DateTime());
-        super.setCancelJustification(cancelJustification);
     }
 
     public boolean hasInstallments() {
