@@ -276,7 +276,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
         accessControlService.checkAdvancedPaymentManager(event, user);
 
         final DebtInterestCalculator calculator = event.getDebtInterestCalculator(new DateTime());
-        final BigDecimal payedDebtAmount = calculator.getPaidDebtAmount();
+        final BigDecimal payedDebtAmount = calculator.getPaidDebtAmount().subtract(calculator.getTotalRefundAmount());
         final BigDecimal paidUnusedAmount = calculator.getPaidUnusedAmount();
 
         if (payedDebtAmount.compareTo(BigDecimal.ZERO) == 0 && paidUnusedAmount.compareTo(BigDecimal.ZERO) == 0) {
@@ -295,8 +295,8 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
 
     @RequestMapping(value = "{event}/refundEvent", method = RequestMethod.POST)
     public String refundEvent(final @PathVariable Event event, final User user, final Model model, @RequestParam
-            EventExemptionJustificationType justificationType, @RequestParam String reason) {
-        return doRefund(event, user, model, () -> accountingManagementService.refundEvent(event, user, justificationType, reason));
+            EventExemptionJustificationType justificationType, @RequestParam String reason, @RequestParam BigDecimal amount) {
+        return doRefund(event, user, model, () -> accountingManagementService.refundEvent(event, user, justificationType, reason, amount));
     }
 
     @RequestMapping(value = "{event}/refundExcessPayment", method = RequestMethod.POST)
