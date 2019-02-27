@@ -37,6 +37,12 @@
 	<div class="row">
 		<div class="col-sm-12">
 			<p><a href="${detailsUrl}" class="btn btn-default"><spring:message code="label.back" text="Back"/></a></p>
+			<c:if test="${not empty error}">
+				<div class="alert alert-danger">
+					<c:out value="${error}" />
+				</div>
+				<hr />
+			</c:if>
 			<h2><spring:message code="label.payments.annulTransaction"/></h2>
 		</div>
 	</div>
