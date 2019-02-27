@@ -247,7 +247,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         deleteInformation();
         setEvaluationSeason(null);
         if (getEvent() != null) {
-            getEvent().cancel(Authenticate.getUser().getPerson(), "Enrolment was deleted.");
+            setEvent(null);
         }
         super.delete();
     }
