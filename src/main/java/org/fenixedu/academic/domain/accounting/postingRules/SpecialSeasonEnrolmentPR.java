@@ -18,6 +18,8 @@
  */
 package org.fenixedu.academic.domain.accounting.postingRules;
 
+import java.util.Optional;
+
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
@@ -26,6 +28,7 @@ import org.fenixedu.academic.domain.accounting.events.SpecialSeasonEnrolmentEven
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 public class SpecialSeasonEnrolmentPR extends SpecialSeasonEnrolmentPR_Base implements IEnrolmentEvaluationPR {
 
@@ -62,5 +65,10 @@ public class SpecialSeasonEnrolmentPR extends SpecialSeasonEnrolmentPR_Base impl
     @Override
     public Money getFixedAmountPenalty() {
         return Money.ZERO;
+    }
+
+    @Override
+    public Optional<LocalDate> getDueDate(final Event event) {
+        return Optional.empty();
     }
 }

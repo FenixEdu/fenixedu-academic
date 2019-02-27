@@ -28,8 +28,10 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.EnrolmentEvaluation;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accounting.EnrolmentBlocker;
+import org.fenixedu.academic.domain.accounting.events.EnrolmentEvaluationEvent;
 import org.fenixedu.academic.domain.curricularRules.EnrolmentInSpecialSeasonEvaluation;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfECTSInSpecialSeasonEvaluation;
@@ -197,7 +199,9 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
                         final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
 
                         if (!enrolment.hasSpecialSeason()) {
-                            enrolment.createSpecialSeasonEvaluation(getResponsiblePerson());
+                            EnrolmentEvaluation specialSeasonEvaluation =
+                                    enrolment.createSpecialSeasonEvaluation(getResponsiblePerson());
+                            EnrolmentEvaluationEvent.create(specialSeasonEvaluation);
                         }
                     } else {
                         throw new DomainException(

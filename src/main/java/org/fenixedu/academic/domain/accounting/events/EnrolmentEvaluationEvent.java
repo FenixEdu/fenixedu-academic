@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.EnrolmentEvaluation;
+import org.fenixedu.academic.domain.EnrolmentPeriodInImprovementOfApprovedEnrolment;
+import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.Account;
 import org.fenixedu.academic.domain.accounting.AccountType;
@@ -18,6 +20,8 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
+import org.fenixedu.commons.i18n.LocalizedString;
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.FenixFramework;
@@ -31,9 +35,16 @@ public class EnrolmentEvaluationEvent extends EnrolmentEvaluationEvent_Base {
     public EnrolmentEvaluationEvent(AdministrativeOffice administrativeOffice, Person person, EventType eventType, PostingRule
             postingRule, EnrolmentEvaluation enrolmentEvaluation) {
         init(administrativeOffice, eventType, person);
+        setupEnrolmentEvaluation(enrolmentEvaluation);
         setPostingRule(postingRule);
-        setEnrolmentEvaluation(enrolmentEvaluation);
+        setDueDate(((IEnrolmentEvaluationPR)getPostingRule()).getDueDate(this).orElse(getWhenOccured().toLocalDate()));
         persistDueDateAmountMap();
+    }
+
+    private void setupEnrolmentEvaluation(final EnrolmentEvaluation enrolmentEvaluation) {
+        setEnrolmentEvaluation(enrolmentEvaluation);
+        setCourseName(enrolmentEvaluation.getEnrolment().getName());
+        setExecutionPeriodName(enrolmentEvaluation.getEnrolment().getExecutionPeriod().getQualifiedName());
     }
 
     private static Optional<EventType> getEventType(EnrolmentEvaluation enrolmentEvaluation) {
@@ -103,19 +114,18 @@ public class EnrolmentEvaluationEvent extends EnrolmentEvaluationEvent_Base {
 
     @Override
     public Map<LocalDate, Money> calculateDueDateAmountMap() {
-        return Collections.singletonMap(getDueDateByPaymentCodes().toLocalDate(), ((IEnrolmentEvaluationPR)getEnrolmentEvaluationPostingRule()).getFixedAmount());
+        return Collections.singletonMap(getDueDate(), ((IEnrolmentEvaluationPR)getEnrolmentEvaluationPostingRule()).getFixedAmount());
     }
 
     @Override
     protected LabelFormatter getDescriptionForEntryType(EntryType entryType) {
         final LabelFormatter result = new LabelFormatter();
         result.appendLabel(getEventType().getQualifiedName(), Bundle.ENUMERATION);
-        Enrolment enrolment = getEnrolmentEvaluation().getEnrolment();
         result.appendLabel(" - ");
-        result.appendLabel(enrolment.getName().getContent());
+        result.appendLabel(getCourseName().getContent());
 
         result.appendLabel(" (");
-        result.appendLabel(enrolment.getExecutionPeriod().getQualifiedName());
+        result.appendLabel(getExecutionPeriodName());
         result.appendLabel(")");
 
         return result;
