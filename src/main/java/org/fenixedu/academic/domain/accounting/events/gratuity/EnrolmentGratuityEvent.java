@@ -20,8 +20,6 @@ import org.fenixedu.academic.domain.student.RegistrationRegimeType;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
-import org.fenixedu.bennu.core.signals.DomainObjectEvent;
-import org.fenixedu.bennu.core.signals.Signal;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.FenixFramework;
@@ -29,9 +27,6 @@ import pt.ist.fenixframework.FenixFramework;
 public class EnrolmentGratuityEvent extends EnrolmentGratuityEvent_Base {
 
     static {
-        Signal.register(Enrolment.SIGNAL_CREATED, (DomainObjectEvent<Enrolment> wrapper) -> {
-            create(wrapper.getInstance());
-        });
         FenixFramework.getDomainModel().registerDeletionBlockerListener(Enrolment.class, (enrolment, blockers) -> {
             enrolment.getGratuityEvent().ifPresent(event -> {
                 if (!event.canBeCanceled()) {
