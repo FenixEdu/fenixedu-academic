@@ -24,6 +24,7 @@ package org.fenixedu.academic.service.services.bolonhaManager;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.CurricularRule;
 import org.fenixedu.academic.domain.curricularRules.CurricularRulesManager;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 
 import pt.ist.fenixframework.Atomic;
@@ -40,12 +41,11 @@ public class EditCurricularRule {
             throw new FenixServiceException("error.noCurricularRule");
         }
 
-        final ExecutionSemester beginExecutionPeriod;
         if (beginExecutionPeriodID == null) {
-            beginExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
-        } else {
-            beginExecutionPeriod = FenixFramework.getDomainObject(beginExecutionPeriodID);
+            throw new DomainException("error.EditCurricularRule.beginExecutionPeriod.required");
         }
+
+        final ExecutionSemester beginExecutionPeriod = FenixFramework.getDomainObject(beginExecutionPeriodID);
 
         final ExecutionSemester endExecutionPeriod =
                 (endExecutionPeriodID == null) ? null : FenixFramework.<ExecutionSemester> getDomainObject(endExecutionPeriodID);

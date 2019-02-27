@@ -24,6 +24,7 @@ import java.util.Comparator;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeModuleScope;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.ExecutionInterval;
@@ -295,7 +296,8 @@ public class Context extends Context_Base implements Comparable<Context> {
     }
 
     public boolean isOpen() {
-        return isOpen(ExecutionSemester.readActualExecutionSemester());
+        final Degree degree = getParentCourseGroup().getDegree();
+        return isOpen(ExecutionSemester.findCurrent(degree.getCalendar()));
     }
 
     public boolean intersects(final ExecutionSemester begin, final ExecutionSemester end) {

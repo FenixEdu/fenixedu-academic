@@ -27,8 +27,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -275,21 +273,6 @@ public class Teacher extends Teacher_Base {
 
     public List<Professorship> getProfessorships(ExecutionYear executionYear) {
         return getPerson().getProfessorships(executionYear);
-    }
-
-    public SortedSet<ExecutionCourse> getCurrentExecutionCourses() {
-        final SortedSet<ExecutionCourse> executionCourses =
-                new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
-        final ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
-        final ExecutionSemester previousExecutionPeriod = currentExecutionPeriod.getPreviousExecutionPeriod();
-        for (final Professorship professorship : getProfessorshipsSet()) {
-            final ExecutionCourse executionCourse = professorship.getExecutionCourse();
-            final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
-            if (executionSemester == currentExecutionPeriod || executionSemester == previousExecutionPeriod) {
-                executionCourses.add(executionCourse);
-            }
-        }
-        return executionCourses;
     }
 
     public boolean isResponsibleFor(CurricularCourse curricularCourse, ExecutionSemester executionSemester) {

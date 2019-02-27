@@ -24,10 +24,10 @@ import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 
+import com.google.common.base.Strings;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
-
-import com.google.common.base.Strings;
 
 public class CreateCourseGroup {
 
@@ -45,12 +45,11 @@ public class CreateCourseGroup {
             throw new FenixServiceException("error.noCourseGroup");
         }
 
-        final ExecutionSemester beginExecutionPeriod;
         if (beginExecutionPeriodID == null) {
-            beginExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
-        } else {
-            beginExecutionPeriod = FenixFramework.getDomainObject(beginExecutionPeriodID);
+            throw new FenixServiceException("error.CreateCourseGroup.beginExecutionPeriod.required");
         }
+
+        final ExecutionSemester beginExecutionPeriod = FenixFramework.getDomainObject(beginExecutionPeriodID);
 
         final ExecutionSemester endExecutionPeriod =
                 (endExecutionPeriodID == null) ? null : FenixFramework.<ExecutionSemester> getDomainObject(endExecutionPeriodID);

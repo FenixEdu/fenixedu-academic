@@ -71,7 +71,7 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
     public List<EventBean> getClasses(User user) {
 
         List<EventBean> allEvents = new ArrayList<EventBean>();
-        ExecutionSemester currentExecutionSemester = ExecutionSemester.readActualExecutionSemester();
+        ExecutionSemester currentExecutionSemester = ExecutionSemester.findCurrent(null);
 
         if (user.getPerson().getStudent() != null) {
 

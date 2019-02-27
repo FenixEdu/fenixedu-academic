@@ -26,7 +26,6 @@ import org.fenixedu.academic.domain.curricularRules.AnyCurricularCourseException
 import org.fenixedu.academic.domain.curricularRules.AssertUniqueApprovalInCurricularCourseContexts;
 import org.fenixedu.academic.domain.curricularRules.AssertUniqueCurricularCourseEnrolmentForPeriod;
 import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
-import org.fenixedu.academic.domain.curricularRules.CreditsLimitInExternalCycle;
 import org.fenixedu.academic.domain.curricularRules.DegreeModulesSelectionLimit;
 import org.fenixedu.academic.domain.curricularRules.EnrolmentInSpecialSeasonEvaluation;
 import org.fenixedu.academic.domain.curricularRules.EnrolmentPeriodRestrictions;
@@ -36,15 +35,12 @@ import org.fenixedu.academic.domain.curricularRules.Exclusiveness;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.ImprovementOfApprovedEnrolment;
 import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
-import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfECTSInSpecialSeasonEvaluation;
-import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfEctsInStandaloneCurriculumGroup;
 import org.fenixedu.academic.domain.curricularRules.MinimumNumberOfCreditsToEnrol;
 import org.fenixedu.academic.domain.curricularRules.PreviousYearsEnrolmentCurricularRule;
 import org.fenixedu.academic.domain.curricularRules.RestrictionBetweenDegreeModules;
 import org.fenixedu.academic.domain.curricularRules.RestrictionDoneDegreeModule;
 import org.fenixedu.academic.domain.curricularRules.RestrictionEnroledDegreeModule;
 import org.fenixedu.academic.domain.curricularRules.RestrictionNotEnroledDegreeModule;
-import org.fenixedu.academic.domain.curricularRules.SeniorStatuteSpecialSeasonEnrolmentScope;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 
 public class CurricularRuleExecutorFactory {
@@ -71,13 +67,7 @@ public class CurricularRuleExecutorFactory {
                 new AssertUniqueApprovalInCurricularCourseContextsExecutor());
         executors.put(ImprovementOfApprovedEnrolment.class, new ImprovementOfApprovedEnrolmentExecutor());
         executors.put(EnrolmentInSpecialSeasonEvaluation.class, new EnrolmentInSpecialSeasonEvaluationExecutor());
-        executors.put(MaximumNumberOfECTSInSpecialSeasonEvaluation.class,
-                new MaximumNumberOfECTSInSpecialSeasonEvaluationExecutor());
-        executors.put(CreditsLimitInExternalCycle.class, new CreditsLimitInExternalCycleExecutor());
         executors.put(EvenOddRule.class, new EvenOddExecuter());
-        executors.put(MaximumNumberOfEctsInStandaloneCurriculumGroup.class,
-                new MaximumNumberOfEctsInStandaloneCurriculumGroupExecutor());
-        executors.put(SeniorStatuteSpecialSeasonEnrolmentScope.class, new SeniorStatuteSpecialSeasonEnrolmentScopeExecutor());
         executors.put(AssertUniqueCurricularCourseEnrolmentForPeriod.class,
                 new AssertUniqueCurricularCourseEnrolmentForPeriodExecutor());
 

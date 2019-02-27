@@ -52,7 +52,7 @@ public class AssertUniqueCurricularCourseEnrolmentForPeriod extends CurricularRu
 
     @Override
     public ExecutionSemester getBegin() {
-        return ExecutionSemester.readActualExecutionSemester();
+        return ExecutionSemester.findCurrent(toApply.getDegree().getCalendar());
     }
 
     @Override

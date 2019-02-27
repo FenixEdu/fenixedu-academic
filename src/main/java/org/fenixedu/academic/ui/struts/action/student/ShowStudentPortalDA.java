@@ -29,7 +29,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
@@ -53,13 +52,12 @@ public class ShowStudentPortalDA extends Action {
         List<String> genericDegreeWarnings = new ArrayList<String>();
 
         final Student student = Authenticate.getUser().getPerson().getStudent();
-        final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
         if (student != null) {
             for (Registration registration : student.getAllRegistrations()) {
 
-                final StudentCurricularPlan scp = registration.getStudentCurricularPlan(executionSemester);
+                final StudentCurricularPlan scp = registration.getLastStudentCurricularPlan();
                 if (scp != null) {
-                    DegreeCurricularPlan degreeCurricularPlan = registration.getLastDegreeCurricularPlan();
+                    DegreeCurricularPlan degreeCurricularPlan = scp.getDegreeCurricularPlan();
                     if (registration.getAttendingExecutionCoursesForCurrentExecutionPeriod().isEmpty() == false) {
                         studentPortalBeans.add(new StudentPortalBean(registration.getDegree(), student,
                                 registration.getAttendingExecutionCoursesForCurrentExecutionPeriod(), degreeCurricularPlan));
@@ -70,7 +68,6 @@ public class ShowStudentPortalDA extends Action {
 
         request.setAttribute("genericDegreeWarnings", genericDegreeWarnings);
         request.setAttribute("studentPortalBeans", studentPortalBeans);
-        request.setAttribute("executionSemester", executionSemester.getQualifiedName());
         return mapping.findForward("studentPortal");
     }
 

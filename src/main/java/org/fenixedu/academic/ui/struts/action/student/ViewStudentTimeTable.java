@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.ui.struts.action.student;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,10 +31,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.dto.InfoLessonInstanceAggregation;
 import org.fenixedu.academic.dto.InfoShowOccupation;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
-import org.fenixedu.academic.service.services.student.ReadStudentTimeTable;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.academic.ui.struts.action.student.StudentApplication.StudentViewApp;
@@ -62,9 +64,12 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException, FenixServiceException {
 
-        List<Registration> registrations = getUserView(request).getPerson().getStudent().getActiveRegistrationStream().collect(Collectors.toList());
+        List<Registration> registrations =
+                getUserView(request).getPerson().getStudent().getActiveRegistrationStream().collect(Collectors.toList());
         if (registrations.size() == 1) {
-            return forwardToShowTimeTable(registrations.get(0), mapping, request, ExecutionSemester.readActualExecutionSemester());
+            final Registration registration = registrations.get(0);
+            return forwardToShowTimeTable(registration, mapping, request,
+                    ExecutionSemester.findCurrent(registration.getDegree().getCalendar()));
         } else {
             request.setAttribute("registrations", registrations);
             return mapping.findForward("chooseRegistration");
@@ -74,22 +79,21 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
     public ActionForward showTimeTable(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
+        final Registration registration = getRegistration(actionForm, request);
         ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterID");
         if (executionSemester == null) {
-            executionSemester = ExecutionSemester.readActualExecutionSemester();
+            executionSemester = ExecutionSemester.findCurrent(registration.getDegree().getCalendar());
         }
-        return forwardToShowTimeTable(getRegistration(actionForm, request), mapping, request, executionSemester);
+        return forwardToShowTimeTable(registration, mapping, request, executionSemester);
     }
 
-    protected ActionForward forwardToShowTimeTableForSupervisor(Registration registration, ActionMapping mapping,
-            HttpServletRequest request) throws FenixActionException, FenixServiceException {
-
-        return forwardToShowTimeTable(registration, mapping, request, ExecutionSemester.readActualExecutionSemester());
-    }
-
-    public ActionForward forwardToShowTimeTable(Registration registration, ActionMapping mapping, HttpServletRequest request,
+    private ActionForward forwardToShowTimeTable(Registration registration, ActionMapping mapping, HttpServletRequest request,
             ExecutionSemester executionSemester) throws FenixActionException, FenixServiceException {
-        List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(registration, executionSemester);
+
+        final List<InfoShowOccupation> infoLessons = new ArrayList<InfoShowOccupation>();
+        for (final Shift shift : registration.getShiftsFor(executionSemester)) {
+            infoLessons.addAll(InfoLessonInstanceAggregation.getAggregations(shift));
+        }
 
         request.setAttribute("person", registration.getPerson());
         request.setAttribute("infoLessons", infoLessons);

@@ -43,8 +43,8 @@ public class AssertUniqueApprovalInCurricularCourseContexts extends CurricularRu
 
     @Override
     public List<GenericPair<Object, Boolean>> getLabel() {
-        return Collections.singletonList(new GenericPair<Object, Boolean>("label.assertUniqueApprovalInCurricularCourseContexts",
-                true));
+        return Collections
+                .singletonList(new GenericPair<Object, Boolean>("label.assertUniqueApprovalInCurricularCourseContexts", true));
     }
 
     @Override
@@ -69,7 +69,7 @@ public class AssertUniqueApprovalInCurricularCourseContexts extends CurricularRu
 
     @Override
     public ExecutionSemester getBegin() {
-        return ExecutionSemester.readActualExecutionSemester();
+        return ExecutionSemester.findCurrent(toApply.getDegree().getCalendar());
     }
 
     @Override

@@ -290,7 +290,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     private CompetenceCourseInformation getMostRecentCompetenceCourseInformation() {
-        return getMostRecentCompetenceCourseInformationUntil(ExecutionSemester.readActualExecutionSemester());
+        return getMostRecentCompetenceCourseInformationUntil(ExecutionSemester.findCurrent(null));
     }
 
     private CompetenceCourseInformation getMostRecentCompetenceCourseInformationUntil(ExecutionSemester semester) {
@@ -879,7 +879,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
      * @see #getDepartmentUnit(ExecutionYear)
      */
     public DepartmentUnit getDepartmentUnit() {
-        return getDepartmentUnit(ExecutionSemester.readActualExecutionSemester());
+        return getDepartmentUnit(ExecutionSemester.findCurrent(null));
     }
 
     /**
@@ -917,7 +917,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
      * @see #getDepartmentUnit(ExecutionSemester)
      */
     public CompetenceCourseGroupUnit getCompetenceCourseGroupUnit() {
-        return getCompetenceCourseGroupUnit(ExecutionSemester.readActualExecutionSemester());
+        return getCompetenceCourseGroupUnit(ExecutionSemester.findCurrent(null));
     }
 
     public CompetenceCourseGroupUnit getCompetenceCourseGroupUnit(ExecutionSemester semester) {
@@ -925,7 +925,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public CompetenceCourseGroupUnit getMostRecentGroupInDepartment(DepartmentUnit departmentUnit) {
-        ExecutionSemester semester = ExecutionSemester.readActualExecutionSemester();
+        ExecutionSemester semester = ExecutionSemester.findCurrent(null);
         while (semester != null) {
             if (getDepartmentUnit(semester) == departmentUnit) {
                 return getCompetenceCourseGroupUnit(semester);
@@ -969,7 +969,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public ScientificAreaUnit getScientificAreaUnit() {
-        return getScientificAreaUnit(ExecutionSemester.readActualExecutionSemester());
+        return getScientificAreaUnit(ExecutionSemester.findCurrent(null));
     }
 
     public ScientificAreaUnit getScientificAreaUnit(ExecutionYear executionYear) {
@@ -1268,7 +1268,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
         if (!getCompetenceCourseInformationsSet().isEmpty()) {
             final TreeSet<CompetenceCourseInformation> sorted = getOrderedCompetenceCourseInformations();
-            final ExecutionInterval until = input == null ? ExecutionSemester.readActualExecutionSemester() : input;
+            final ExecutionInterval until = input == null ? ExecutionSemester.findCurrent(null) : input;
 
             result = getOrderedCompetenceCourseInformations().first();
             for (final CompetenceCourseInformation iter : sorted) {

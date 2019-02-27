@@ -32,6 +32,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicSemesterCE;
 import org.fenixedu.academic.dto.InfoExecutionPeriod;
@@ -422,9 +423,23 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
         }
         return currentExecutionPeriod;
     }
-    
+
     public static Collection<ExecutionSemester> findCurrents() {
         return Bennu.getInstance().getExecutionPeriodsSet().stream().filter(es -> es.isCurrent()).collect(Collectors.toSet());
+    }
+
+    /**
+     * Returns current ExecutionSemester for provided calendar.
+     * If provided calendar is null, use default academic calendar
+     * 
+     * @param calendar the calendar to search in
+     * @return the current ExecutionSemester
+     */
+    public static ExecutionSemester findCurrent(final AcademicCalendarRootEntry calendar) {
+        final AcademicCalendarRootEntry calendarToCheck =
+                calendar != null ? calendar : Bennu.getInstance().getDefaultAcademicCalendar();
+        return findCurrents().stream().filter(ey -> ey.getAcademicInterval().getAcademicCalendar() == calendarToCheck).findFirst()
+                .orElse(null);
     }
 
     static private ExecutionSemester readFromProperties(ExecutionSemester executionSemester, String yearString,

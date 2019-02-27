@@ -41,7 +41,7 @@ public class PreviousYearsEnrolmentCurricularRule extends CurricularRuleNotPersi
 
     @Override
     public ExecutionSemester getBegin() {
-        return ExecutionSemester.readActualExecutionSemester();
+        return ExecutionSemester.findCurrent(courseGroup.getDegree().getCalendar());
     }
 
     @Override

@@ -28,7 +28,8 @@ import pt.ist.fenixframework.Atomic;
 public class AlterExecutionPeriodState {
 
     @Atomic
-    public static void run(final String year, final Integer semester, final PeriodState periodState) throws FenixServiceException {
+    public static void run(final String year, final Integer semester, final PeriodState periodState)
+            throws FenixServiceException {
         final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(year);
         final ExecutionSemester executionSemester = executionYear.getExecutionSemesterFor(semester);
         if (executionSemester == null) {
@@ -37,12 +38,12 @@ public class AlterExecutionPeriodState {
 
         if (periodState.getStateCode().equals(PeriodState.CURRENT.getStateCode())) {
             // Deactivate the current
-            final ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
-            if (currentExecutionPeriod != null) {
+            for (ExecutionSemester currentExecutionPeriod : ExecutionSemester.findCurrents()) {
                 final ExecutionYear currentExecutionYear = currentExecutionPeriod.getExecutionYear();
                 currentExecutionPeriod.setState(PeriodState.OPEN);
                 currentExecutionYear.setState(PeriodState.OPEN);
             }
+
             executionSemester.setState(periodState);
             executionSemester.getExecutionYear().setState(periodState);
         } else {

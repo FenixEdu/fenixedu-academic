@@ -221,14 +221,15 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             addSelectItemCurricularRuleType(result, iter);
         }
         Collections.sort(result, new BeanComparator("label"));
-        
+
         result.add(0, new SelectItem(NO_SELECTION_STRING, BundleUtil.getString(Bundle.BOLONHA, "choose")));
         return result;
     }
 
-    static private void addSelectItemCurricularRuleType(final List<SelectItem> result, final CurricularRuleType curricularRuleType) {
-        result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION,
-                curricularRuleType.getName())));
+    static private void addSelectItemCurricularRuleType(final List<SelectItem> result,
+            final CurricularRuleType curricularRuleType) {
+        result.add(new SelectItem(curricularRuleType.getName(),
+                BundleUtil.getString(Bundle.ENUMERATION, curricularRuleType.getName())));
     }
 
     public List<String> getRulesLabels() {
@@ -387,19 +388,19 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 
     public UISelectItems getOptionalsConfigurationItems() {
         if (optionalsConfigurationItems == null) {
-            
+
             final List<SelectItem> values = new ArrayList<SelectItem>(3);
             values.add(0, new SelectItem(NO_SELECTION_STRING, BundleUtil.getString(Bundle.BOLONHA, "all")));
             values.add(1, new SelectItem(Boolean.TRUE.toString(), BundleUtil.getString(Bundle.BOLONHA, "optional")));
             values.add(2, new SelectItem(Boolean.FALSE.toString(), BundleUtil.getString(Bundle.BOLONHA, "mandatory")));
-            
+
             optionalsConfigurationItems = new UISelectItems();
             optionalsConfigurationItems.setValue(values);
         }
-        
+
         return optionalsConfigurationItems;
     }
-    
+
     public void setOptionalsConfigurationItems(final UISelectItems input) {
         this.optionalsConfigurationItems = input;
     }
@@ -417,7 +418,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     }
 
     public CurricularRule getCurricularRule() {
-        return (curricularRule == null) ? (curricularRule = FenixFramework.getDomainObject(getCurricularRuleID())) : curricularRule;
+        return (curricularRule == null) ? (curricularRule =
+                FenixFramework.getDomainObject(getCurricularRuleID())) : curricularRule;
     }
 
     public UISelectItems getDegreeModuleItems() {
@@ -529,7 +531,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         if (getViewState().getAttribute("selectedDegreeID") == null) {
             if (getCurricularRule() != null && getCurricularRule() instanceof AnyCurricularCourse) {
                 AnyCurricularCourse anyCurricularCourse = (AnyCurricularCourse) getCurricularRule();
-                setSelectedDegreeID(anyCurricularCourse.getDegree() != null ? anyCurricularCourse.getDegree().getExternalId() : NO_SELECTION_STRING);
+                setSelectedDegreeID(anyCurricularCourse.getDegree() != null ? anyCurricularCourse.getDegree()
+                        .getExternalId() : NO_SELECTION_STRING);
             } else {
                 setSelectedDegreeID(NO_SELECTION_STRING);
             }
@@ -571,10 +574,10 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 
             degreeTypeItems.setValue(value);
         }
-        
+
         return degreeTypeItems;
     }
-    
+
     public void setDegreeTypeItems(final UISelectItems input) {
         this.degreeTypeItems = input;
     }
@@ -601,8 +604,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             final DegreeType bolonhaDegreeType = getDegreeType(selectedDegreeType);
             for (final Degree degree : allDegrees) {
                 if (degree.isBolonhaDegree() && (bolonhaDegreeType == null || degree.getDegreeType() == bolonhaDegreeType)) {
-                    result.add(new SelectItem(degree.getExternalId(), "[" + degree.getDegreeType().getName().getContent() + "] "
-                            + degree.getNome()));
+                    result.add(new SelectItem(degree.getExternalId(),
+                            "[" + degree.getDegreeType().getName().getContent() + "] " + degree.getNome()));
                 }
             }
             Collections.sort(result, new BeanComparator("label"));
@@ -636,8 +639,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 
     public String getEndExecutionPeriodID() {
         if (getViewState().getAttribute("endExecutionPeriodID") == null && getCurricularRule() != null) {
-            setEndExecutionPeriodID((getCurricularRule().getEnd() == null) ? NO_SELECTION_STRING : getCurricularRule().getEnd()
-                    .getExternalId());
+            setEndExecutionPeriodID(
+                    (getCurricularRule().getEnd() == null) ? NO_SELECTION_STRING : getCurricularRule().getEnd().getExternalId());
         }
         return (String) getViewState().getAttribute("endExecutionPeriodID");
     }
@@ -682,15 +685,15 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 
         final DegreeModule degreeModule = getDegreeModule();
         final ExecutionSemester currentExecutionPeriod =
-                degreeModule != null ? degreeModule.getMinimumExecutionPeriod() : ExecutionSemester.readActualExecutionSemester();
+                degreeModule != null ? degreeModule.getMinimumExecutionPeriod() : ExecutionSemester.findCurrent(null);
 
         final List<ExecutionSemester> notClosedExecutionPeriods = ExecutionSemester.readNotClosedExecutionPeriods();
         Collections.sort(notClosedExecutionPeriods);
 
         for (final ExecutionSemester notClosedExecutionPeriod : notClosedExecutionPeriods) {
             if (notClosedExecutionPeriod.isAfterOrEquals(currentExecutionPeriod)) {
-                result.add(new SelectItem(notClosedExecutionPeriod.getExternalId(), notClosedExecutionPeriod.getName() + " "
-                        + notClosedExecutionPeriod.getExecutionYear().getYear()));
+                result.add(new SelectItem(notClosedExecutionPeriod.getExternalId(),
+                        notClosedExecutionPeriod.getName() + " " + notClosedExecutionPeriod.getExecutionYear().getYear()));
             }
         }
         return (executionPeriodItems = result);
@@ -771,9 +774,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     }
 
     private String getFinalEndExecutionPeriodID() {
-        return (getViewState().getAttribute("endExecutionPeriodID") == null || getViewState()
-                .getAttribute("endExecutionPeriodID").equals(NO_SELECTION_STRING)) ? null : (String) getViewState().getAttribute(
-                "endExecutionPeriodID");
+        return (getViewState().getAttribute("endExecutionPeriodID") == null || getViewState().getAttribute("endExecutionPeriodID")
+                .equals(NO_SELECTION_STRING)) ? null : (String) getViewState().getAttribute("endExecutionPeriodID");
     }
 
     public String createCurricularRule() {
@@ -830,27 +832,26 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     private CurricularRuleParametersDTO buildCurricularRuleParametersDTO() throws FenixServiceException, NumberFormatException {
         final CurricularRuleParametersDTO parametersDTO = new CurricularRuleParametersDTO();
         parametersDTO.setSelectedDegreeModuleID(getSelectedDegreeModuleID());
-        parametersDTO.setContextCourseGroupID((getSelectedContextCourseGroupID() == null || getSelectedContextCourseGroupID()
-                .equals(NO_SELECTION_STRING)) ? null : getSelectedContextCourseGroupID());
-        parametersDTO.setCurricularPeriodInfoDTO(new CurricularPeriodInfoDTO(Integer.valueOf(getSelectedSemester()),
-                AcademicPeriod.SEMESTER));
+        parametersDTO.setContextCourseGroupID((getSelectedContextCourseGroupID() == null
+                || getSelectedContextCourseGroupID().equals(NO_SELECTION_STRING)) ? null : getSelectedContextCourseGroupID());
+        parametersDTO.setCurricularPeriodInfoDTO(
+                new CurricularPeriodInfoDTO(Integer.valueOf(getSelectedSemester()), AcademicPeriod.SEMESTER));
         parametersDTO.setMinimumCredits(getMinimumCredits());
         parametersDTO.setMaximumCredits(getMaximumCredits());
         parametersDTO.setMinimumLimit(getMinimumLimit());
         parametersDTO.setMaximumLimit(getMaximumLimit());
-        parametersDTO
-                .setSelectedDegreeID((getSelectedDegreeID() == null || getSelectedDegreeID().equals(NO_SELECTION_STRING)) ? null : getSelectedDegreeID());
-        parametersDTO.setSelectedDepartmentUnitID((getSelectedDepartmentUnitID() == null || getSelectedDepartmentUnitID().equals(
-                NO_SELECTION_STRING)) ? null : getSelectedDepartmentUnitID());
+        parametersDTO.setSelectedDegreeID((getSelectedDegreeID() == null
+                || getSelectedDegreeID().equals(NO_SELECTION_STRING)) ? null : getSelectedDegreeID());
+        parametersDTO.setSelectedDepartmentUnitID((getSelectedDepartmentUnitID() == null
+                || getSelectedDepartmentUnitID().equals(NO_SELECTION_STRING)) ? null : getSelectedDepartmentUnitID());
         parametersDTO.setDegreeType(getDegreeType(getSelectedDegreeType()));
         // must get these values like this to prevent override values
         parametersDTO.setMinimumYear((Integer) getViewState().getAttribute("minimumYear"));
         parametersDTO.setMaximumYear((Integer) getViewState().getAttribute("maximumYear"));
         parametersDTO.setCredits((Double) getViewState().getAttribute("credits"));
         parametersDTO.setEven(Boolean.valueOf(getSelectedEven()));
-        parametersDTO.setOptionalsConfiguration(getSelectedOptionalsConfiguration() == null
-                || getSelectedOptionalsConfiguration().equals(NO_SELECTION_STRING) ? null : Boolean
-                .valueOf(getSelectedOptionalsConfiguration()));
+        parametersDTO.setOptionalsConfiguration(getSelectedOptionalsConfiguration() == null || getSelectedOptionalsConfiguration()
+                .equals(NO_SELECTION_STRING) ? null : Boolean.valueOf(getSelectedOptionalsConfiguration()));
         return parametersDTO;
     }
 

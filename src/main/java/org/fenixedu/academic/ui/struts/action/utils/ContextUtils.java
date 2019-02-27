@@ -88,7 +88,7 @@ public class ContextUtils {
         if (executionPeriodOID != null) {
             infoExecutionPeriod = ReadExecutionPeriodByOID.run(executionPeriodOID);
         } else {
-            infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(ExecutionSemester.readActualExecutionSemester());
+            infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(ExecutionSemester.findCurrent(null));
         }
         if (infoExecutionPeriod != null) {
             // Place it in request

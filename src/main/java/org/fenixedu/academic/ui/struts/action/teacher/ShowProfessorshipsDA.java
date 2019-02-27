@@ -56,7 +56,7 @@ public class ShowProfessorshipsDA extends FenixAction {
 
         final ExecutionSemester selectedExecutionPeriod;
         if (executionPeriodIDString == null) {
-            selectedExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
+            selectedExecutionPeriod = ExecutionSemester.findCurrent(null);
         } else if (executionPeriodIDString.isEmpty()) {
             selectedExecutionPeriod = null;
         } else {
@@ -82,7 +82,7 @@ public class ShowProfessorshipsDA extends FenixAction {
                 }
             }
         }
-        executionSemesters.add(ExecutionSemester.readActualExecutionSemester());
+        executionSemesters.add(ExecutionSemester.findCurrent(null));
 
         request.setAttribute("semesters", executionSemesters);
 

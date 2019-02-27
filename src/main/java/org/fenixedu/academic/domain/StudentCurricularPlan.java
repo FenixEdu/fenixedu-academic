@@ -1918,9 +1918,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         runRules &= isBolonhaDegree();
 
         if (runRules) {
-            checkEnrolmentRules(
-                    moveCurriculumLinesBean.getIDegreeModulesToEvaluate(ExecutionSemester.readActualExecutionSemester()),
-                    ExecutionSemester.readActualExecutionSemester());
+            final ExecutionSemester executionSemester = ExecutionSemester.findCurrent(getDegree().getCalendar());
+            checkEnrolmentRules(moveCurriculumLinesBean.getIDegreeModulesToEvaluate(executionSemester), executionSemester);
         }
     }
 

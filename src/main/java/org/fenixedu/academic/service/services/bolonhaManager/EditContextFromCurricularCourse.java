@@ -23,6 +23,7 @@ import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.dto.CurricularPeriodInfoDTO;
 
@@ -72,10 +73,10 @@ public class EditContextFromCurricularCourse {
 
     private static ExecutionSemester getBeginExecutionPeriod(final String beginExecutionPeriodID) {
         if (beginExecutionPeriodID == null) {
-            return ExecutionSemester.readActualExecutionSemester();
-        } else {
-            return FenixFramework.getDomainObject(beginExecutionPeriodID);
+            throw new DomainException("error.EditContextFromCurricularCourse.beginExecutionPeriod.required");
         }
+
+        return FenixFramework.getDomainObject(beginExecutionPeriodID);
     }
 
     private static ExecutionSemester getEndExecutionPeriod(String endExecutionPeriodID) {

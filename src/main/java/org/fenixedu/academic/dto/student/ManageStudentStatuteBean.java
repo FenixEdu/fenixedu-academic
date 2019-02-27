@@ -40,8 +40,6 @@ public class ManageStudentStatuteBean implements Serializable {
 
     private ExecutionSemester beginExecutionPeriod;
 
-    private ExecutionSemester executionPeriod;
-
     private ExecutionSemester endExecutionPeriod;
 
     private LocalDate beginDate;
@@ -57,15 +55,6 @@ public class ManageStudentStatuteBean implements Serializable {
     public ManageStudentStatuteBean(Student student) {
         super();
         this.student = student;
-        this.executionPeriod = ExecutionSemester.readActualExecutionSemester();
-    }
-
-    public ExecutionSemester getExecutionPeriod() {
-        return executionPeriod;
-    }
-
-    public void setExecutionPeriod(ExecutionSemester executionSemester) {
-        executionPeriod = executionSemester;
     }
 
     public ExecutionSemester getBeginExecutionPeriod() {

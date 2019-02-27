@@ -31,7 +31,6 @@ import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.curricularRules.EnrolmentInSpecialSeasonEvaluation;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
-import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfECTSInSpecialSeasonEvaluation;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.EnrolmentResultType;
 import org.fenixedu.academic.domain.enrolment.EnroledCurriculumModuleWrapper;
@@ -162,8 +161,6 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
                     if (!enrolment.hasSpecialSeason()) {
                         curricularRules.add(new EnrolmentInSpecialSeasonEvaluation(enrolment, getEvaluationSeason()));
                     }
-
-                    curricularRules.add(new MaximumNumberOfECTSInSpecialSeasonEvaluation());
 
                     result.put(degreeModuleToEvaluate, curricularRules);
                 } else {

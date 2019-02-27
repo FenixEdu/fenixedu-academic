@@ -125,7 +125,7 @@ public class AuthorizationService {
      * @return
      */
     public ExecutionSemester getCurrentPeriod() {
-        return ExecutionSemester.readActualExecutionSemester();
+        return ExecutionSemester.findCurrent(null);
     }
 
     /***

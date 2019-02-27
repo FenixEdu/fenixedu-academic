@@ -61,17 +61,7 @@ public enum CurricularRuleType {
 
     ENROLMENT_IN_SPECIAL_SEASON_EVALUATION,
 
-    MAXIMUM_NUMBER_OF_ECTS_IN_SPECIAL_SEASON_EVALUATION,
-
-    CREDITS_LIMIT_IN_EXTERNAL_CYCLE,
-
     EVEN_ODD,
-
-    MAXIMUM_NUMBER_OF_ECTS_IN_STANDALONE_CURRICULUM_GROUP,
-
-    PHD_VALID_CURRICULAR_COURSES,
-
-    SENIOR_STATUTE_SCOPE,
 
     ASSERT_UNIQUE_CURRICULAR_COURSE_ENROLMENT_FOR_PERIOD;
 
@@ -85,9 +75,8 @@ public enum CurricularRuleType {
                 CurricularRuleType.ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR,
 
                 CurricularRuleType.MINIMUM_NUMBER_OF_CREDITS_TO_ENROL,
-                
+
                 CurricularRuleType.PRECEDENCY_BETWEEN_DEGREE_MODULES
-                
 
         ).contains(this);
     }

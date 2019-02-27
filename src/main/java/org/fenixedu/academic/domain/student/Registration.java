@@ -184,11 +184,6 @@ public class Registration extends Registration_Base {
         return registration;
     }
 
-    public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan, final StudentCandidacy candidacy,
-            final RegistrationProtocol protocol, final CycleType cycleType) {
-        this(person, degreeCurricularPlan, candidacy, protocol, cycleType, null);
-    }
-
     public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
             final StudentCandidacy studentCandidacy, final RegistrationProtocol protocol, final CycleType cycleType,
             final ExecutionYear executionYear) {
@@ -243,13 +238,13 @@ public class Registration extends Registration_Base {
         final YearMonthDay startDay;
         final ExecutionSemester executionSemester;
 
-        if (executionYear == null || executionYear.isCurrent()) {
+        if (executionYear.isCurrent()) {
             startDay = new YearMonthDay();
-            executionSemester = ExecutionSemester.readActualExecutionSemester();
         } else {
             startDay = executionYear.getBeginDateYearMonthDay();
-            executionSemester = executionYear.getFirstExecutionPeriod();
         }
+
+        executionSemester = executionYear.getFirstExecutionPeriod();
 
         return StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan, startDay, executionSemester,
                 cycleType);

@@ -1186,7 +1186,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         if (executionSemesterID == null) {
             executionSemesterID = (String) getViewState().getAttribute("executionSemesterID");
         }
-        ExecutionSemester currentSemester = ExecutionSemester.readActualExecutionSemester();
+        ExecutionSemester currentSemester = ExecutionSemester.findCurrent(null);
         if ((executionSemesterID == null) && (getCompetenceCourse() != null)) {
             if (getCompetenceCourse().getCompetenceCourseInformationsSet().size() == 1) {
                 executionSemesterID =
@@ -1258,7 +1258,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     private List<SelectItem> readFutureExecutionSemesterLabels() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        ExecutionSemester semester = ExecutionSemester.readActualExecutionSemester();
+        ExecutionSemester semester = ExecutionSemester.findCurrent(null);
         while (semester != null) {
             result.add(new SelectItem(semester.getExternalId(), semester.getQualifiedName()));
             semester = semester.getNextExecutionPeriod();

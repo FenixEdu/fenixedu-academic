@@ -122,9 +122,8 @@ public final class SummariesControlAction extends FenixDispatchAction {
 
         DepartmentSummaryElement departmentSummaryElement = getRenderedObject();
         SummaryControlCategory summaryControlCategory = departmentSummaryElement.getSummaryControlCategory();
-        departmentSummaryElement =
-                getDepartmentSummaryResume(departmentSummaryElement.getExecutionSemester(),
-                        departmentSummaryElement.getDepartment());
+        departmentSummaryElement = getDepartmentSummaryResume(departmentSummaryElement.getExecutionSemester(),
+                departmentSummaryElement.getDepartment());
         departmentSummaryElement.setSummaryControlCategory(summaryControlCategory);
 
         request.setAttribute("departmentResume", departmentSummaryElement);
@@ -161,8 +160,8 @@ public final class SummariesControlAction extends FenixDispatchAction {
         return mapping.findForward("success");
     }
 
-    public ActionForward executionCourseSummariesControl(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward executionCourseSummariesControl(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
         String departmentID = (String) getFromRequest(request, "departmentID");
         String categoryControl = (String) getFromRequest(request, "categoryControl");
@@ -191,18 +190,18 @@ public final class SummariesControlAction extends FenixDispatchAction {
 
         List<Pair<ExecutionSemester, List<DetailSummaryElement>>> last4SemestersSummaryControl =
                 new ArrayList<Pair<ExecutionSemester, List<DetailSummaryElement>>>();
-        ExecutionSemester executionSemesterToPresent = ExecutionSemester.readActualExecutionSemester();
+        ExecutionSemester executionSemesterToPresent = ExecutionSemester.findCurrent(null);
 
         List<DetailSummaryElement> executionCoursesResume =
                 getExecutionCourseResume(executionSemesterToPresent, person.getProfessorships(executionSemesterToPresent));
-        last4SemestersSummaryControl.add(new Pair<ExecutionSemester, List<DetailSummaryElement>>(executionSemesterToPresent,
-                executionCoursesResume));
+        last4SemestersSummaryControl
+                .add(new Pair<ExecutionSemester, List<DetailSummaryElement>>(executionSemesterToPresent, executionCoursesResume));
         for (int iter = 0; iter < 3; iter++) {
             executionSemesterToPresent = executionSemesterToPresent.getPreviousExecutionPeriod();
             executionCoursesResume =
                     getExecutionCourseResume(executionSemesterToPresent, person.getProfessorships(executionSemesterToPresent));
-            last4SemestersSummaryControl.add(new Pair<ExecutionSemester, List<DetailSummaryElement>>(executionSemesterToPresent,
-                    executionCoursesResume));
+            last4SemestersSummaryControl.add(
+                    new Pair<ExecutionSemester, List<DetailSummaryElement>>(executionSemesterToPresent, executionCoursesResume));
         }
 
         request.setAttribute("last4SemestersSummaryControl", last4SemestersSummaryControl);
@@ -237,11 +236,11 @@ public final class SummariesControlAction extends FenixDispatchAction {
                 summariesGiven = summariesGiven.setScale(1, RoundingMode.HALF_UP);
                 notTaughtSummaries = notTaughtSummaries.setScale(1, RoundingMode.HALF_UP);
 
-                summariesGivenPercentage = summariesGiven.divide(lessonsGiven, 3, BigDecimal.ROUND_CEILING)
-                        .multiply(BigDecimal.valueOf(100));
+                summariesGivenPercentage =
+                        summariesGiven.divide(lessonsGiven, 3, BigDecimal.ROUND_CEILING).multiply(BigDecimal.valueOf(100));
 
-                notTaughtSummariesPercentage = notTaughtSummaries.divide(lessonsGiven, 3, BigDecimal.ROUND_CEILING)
-                        .multiply(BigDecimal.valueOf(100));
+                notTaughtSummariesPercentage =
+                        notTaughtSummaries.divide(lessonsGiven, 3, BigDecimal.ROUND_CEILING).multiply(BigDecimal.valueOf(100));
 
                 Teacher teacher = professorship.getTeacher();
                 String categoryName = null;
@@ -256,15 +255,13 @@ public final class SummariesControlAction extends FenixDispatchAction {
 
                 String siglas = getSiglas(professorship);
 
-                String teacherEmail =
-                        professorship.getPerson().getDefaultEmailAddress() != null ? professorship.getPerson()
-                                .getDefaultEmailAddress().getPresentationValue() : null;
+                String teacherEmail = professorship.getPerson().getDefaultEmailAddress() != null ? professorship.getPerson()
+                        .getDefaultEmailAddress().getPresentationValue() : null;
 
-                DetailSummaryElement listElementDTO =
-                        new DetailSummaryElement(professorship.getPerson().getName(), professorship.getExecutionCourse()
-                                .getNome(), teacher != null ? teacher.getTeacherId() : null, teacherEmail, categoryName,
-                                summariesGiven, notTaughtSummaries, siglas, lessonsGiven, summariesGivenPercentage,
-                                notTaughtSummariesPercentage);
+                DetailSummaryElement listElementDTO = new DetailSummaryElement(professorship.getPerson().getName(),
+                        professorship.getExecutionCourse().getNome(), teacher != null ? teacher.getTeacherId() : null,
+                        teacherEmail, categoryName, summariesGiven, notTaughtSummaries, siglas, lessonsGiven,
+                        summariesGivenPercentage, notTaughtSummariesPercentage);
 
                 allListElements.add(listElementDTO);
             }
@@ -313,15 +310,13 @@ public final class SummariesControlAction extends FenixDispatchAction {
                 }
                 if (instanceLessonsTotal[1] != 0) {
                     numberOfLessonInstancesWithSummary = BigDecimal.valueOf(instanceLessonsTotal[1]);
-                    result =
-                            numberOfLessonInstancesWithSummary.divide(numberOfLessonInstances, 3, BigDecimal.ROUND_CEILING)
-                                    .multiply(BigDecimal.valueOf(100));
+                    result = numberOfLessonInstancesWithSummary.divide(numberOfLessonInstances, 3, BigDecimal.ROUND_CEILING)
+                            .multiply(BigDecimal.valueOf(100));
                 }
                 if (instanceLessonsTotal[2] != 0) {
                     numberOfLessonInstancesWithNotTaughtSummary = BigDecimal.valueOf(instanceLessonsTotal[2]);
-                    percentageOfLessonsWithNotTaughtSummary =
-                            numberOfLessonInstancesWithNotTaughtSummary.divide(numberOfLessonInstances, 3,
-                                    BigDecimal.ROUND_CEILING).multiply(BigDecimal.valueOf(100));
+                    percentageOfLessonsWithNotTaughtSummary = numberOfLessonInstancesWithNotTaughtSummary
+                            .divide(numberOfLessonInstances, 3, BigDecimal.ROUND_CEILING).multiply(BigDecimal.valueOf(100));
                 }
                 SummaryControlCategory resumeClassification = getResumeClassification(result);
                 Map<SummaryControlCategory, List<ExecutionCourseSummaryElement>> departmentResumeMap =
@@ -330,10 +325,9 @@ public final class SummariesControlAction extends FenixDispatchAction {
                 if (departmentResumeMap == null) {
                     departmentResumeMap = new HashMap<SummaryControlCategory, List<ExecutionCourseSummaryElement>>();
                     executionCoursesSummary = new ArrayList<ExecutionCourseSummaryElement>();
-                    ExecutionCourseSummaryElement executionCourseSummaryElement =
-                            new ExecutionCourseSummaryElement(executionCourse, numberOfLessonInstances,
-                                    numberOfLessonInstancesWithSummary, result, numberOfLessonInstancesWithNotTaughtSummary,
-                                    percentageOfLessonsWithNotTaughtSummary);
+                    ExecutionCourseSummaryElement executionCourseSummaryElement = new ExecutionCourseSummaryElement(
+                            executionCourse, numberOfLessonInstances, numberOfLessonInstancesWithSummary, result,
+                            numberOfLessonInstancesWithNotTaughtSummary, percentageOfLessonsWithNotTaughtSummary);
                     executionCoursesSummary.add(executionCourseSummaryElement);
                     departmentResumeMap.put(resumeClassification, executionCoursesSummary);
                     departmentSummariesElement.setExecutionCoursesResume(departmentResumeMap);
@@ -341,17 +335,15 @@ public final class SummariesControlAction extends FenixDispatchAction {
                     executionCoursesSummary = departmentResumeMap.get(resumeClassification);
                     if (executionCoursesSummary == null) {
                         executionCoursesSummary = new ArrayList<ExecutionCourseSummaryElement>();
-                        ExecutionCourseSummaryElement executionCourseSummaryElement =
-                                new ExecutionCourseSummaryElement(executionCourse, numberOfLessonInstances,
-                                        numberOfLessonInstancesWithSummary, result, numberOfLessonInstancesWithNotTaughtSummary,
-                                        percentageOfLessonsWithNotTaughtSummary);
+                        ExecutionCourseSummaryElement executionCourseSummaryElement = new ExecutionCourseSummaryElement(
+                                executionCourse, numberOfLessonInstances, numberOfLessonInstancesWithSummary, result,
+                                numberOfLessonInstancesWithNotTaughtSummary, percentageOfLessonsWithNotTaughtSummary);
                         executionCoursesSummary.add(executionCourseSummaryElement);
                         departmentResumeMap.put(resumeClassification, executionCoursesSummary);
                     } else {
-                        ExecutionCourseSummaryElement executionCourseSummaryElement =
-                                new ExecutionCourseSummaryElement(executionCourse, numberOfLessonInstances,
-                                        numberOfLessonInstancesWithSummary, result, numberOfLessonInstancesWithNotTaughtSummary,
-                                        percentageOfLessonsWithNotTaughtSummary);
+                        ExecutionCourseSummaryElement executionCourseSummaryElement = new ExecutionCourseSummaryElement(
+                                executionCourse, numberOfLessonInstances, numberOfLessonInstancesWithSummary, result,
+                                numberOfLessonInstancesWithNotTaughtSummary, percentageOfLessonsWithNotTaughtSummary);
                         executionCoursesSummary.add(executionCourseSummaryElement);
                     }
 
@@ -543,9 +535,8 @@ public final class SummariesControlAction extends FenixDispatchAction {
             DateTimeFormatter fmt = DateTimeFormat.forPattern("dd-MM-yyyy");
             String date = fmt.print(dt);
 
-            final String filename =
-                    BundleUtil.getString(Bundle.APPLICATION, "link.summaries.control").replaceAll(" ", "_") + "_"
-                            + controlCategory + "_" + sigla + "_" + date + ".xls";
+            final String filename = BundleUtil.getString(Bundle.APPLICATION, "link.summaries.control").replaceAll(" ", "_") + "_"
+                    + controlCategory + "_" + sigla + "_" + date + ".xls";
 
             response.setContentType("application/vnd.ms-excel");
             response.setHeader("Content-disposition", "attachment; filename=" + filename);
@@ -586,8 +577,8 @@ public final class SummariesControlAction extends FenixDispatchAction {
         for (ExecutionCourseSummaryElement executionCourse : executionCourses) {
             counter = 0;
             List<DetailSummaryElement> executionCoursesResume =
-                    getExecutionCourseResume(executionCourse.getExecutionCourse().getExecutionPeriod(), executionCourse
-                            .getExecutionCourse().getProfessorshipsSet());
+                    getExecutionCourseResume(executionCourse.getExecutionCourse().getExecutionPeriod(),
+                            executionCourse.getExecutionCourse().getProfessorshipsSet());
 
             int lessons = executionCourse.getNumberOfLessonInstances().intValue();
             int lessonsWithSummaries = executionCourse.getNumberOfLessonInstancesWithSummary().intValue();

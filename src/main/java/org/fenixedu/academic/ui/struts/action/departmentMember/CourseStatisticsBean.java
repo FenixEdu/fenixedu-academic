@@ -72,7 +72,7 @@ public class CourseStatisticsBean implements Serializable {
 
     public ExecutionSemester getExecutionSemester() {
         if (executionSemester == null) {
-            executionSemester = ExecutionSemester.readActualExecutionSemester();
+            executionSemester = ExecutionSemester.findCurrent(degree.getCalendar());
         }
         return executionSemester;
     }
@@ -115,9 +115,8 @@ public class CourseStatisticsBean implements Serializable {
     }
 
     private void loadExecutionCourses() throws FenixServiceException {
-        executionCourses =
-                ComputeExecutionCourseStatistics.runComputeExecutionCourseStatistics(getCompetenceCourse(), getDegree(),
-                        getExecutionSemester());
+        executionCourses = ComputeExecutionCourseStatistics.runComputeExecutionCourseStatistics(getCompetenceCourse(),
+                getDegree(), getExecutionSemester());
     }
 
     public List<ExecutionCourseStatisticsDTO> getExecutionCourses() throws FenixServiceException {

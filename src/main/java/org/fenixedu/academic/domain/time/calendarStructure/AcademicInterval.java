@@ -237,7 +237,7 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 
     public static AcademicInterval readDefaultAcademicInterval(AcademicPeriod academicPeriod) {
         if (academicPeriod.equals(AcademicPeriod.SEMESTER)) {
-            return ExecutionSemester.readActualExecutionSemester().getAcademicInterval();
+            return ExecutionSemester.findCurrent(null).getAcademicInterval();
         } else if (academicPeriod.equals(AcademicPeriod.YEAR)) {
             return ExecutionYear.findCurrent(null).getAcademicInterval();
         }

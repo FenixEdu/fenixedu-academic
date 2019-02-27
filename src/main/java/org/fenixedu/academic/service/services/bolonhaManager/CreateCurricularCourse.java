@@ -27,6 +27,7 @@ import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 
 import pt.ist.fenixframework.Atomic;
@@ -51,8 +52,8 @@ public class CreateCurricularCourse {
         // TODO this is not generic thinking... must find a way to abstract from
         // years/semesters
         if (competenceCourse.isAnual()) {
-            degreeCurricularPlan
-                    .createCurricularPeriodFor(curricularCourseArgs.getYear(), curricularCourseArgs.getSemester() + 1);
+            degreeCurricularPlan.createCurricularPeriodFor(curricularCourseArgs.getYear(),
+                    curricularCourseArgs.getSemester() + 1);
         }
 
         degreeCurricularPlan.createCurricularCourse(curricularCourseArgs.getWeight(), curricularCourseArgs.getPrerequisites(),
@@ -106,21 +107,18 @@ public class CreateCurricularCourse {
         CurricularPeriod curricularPeriod =
                 degreeCurricularPlan.getCurricularPeriodFor(curricularCourseArgs.getYear(), curricularCourseArgs.getSemester());
         if (curricularPeriod == null) {
-            curricularPeriod =
-                    degreeCurricularPlan.createCurricularPeriodFor(curricularCourseArgs.getYear(),
-                            curricularCourseArgs.getSemester());
+            curricularPeriod = degreeCurricularPlan.createCurricularPeriodFor(curricularCourseArgs.getYear(),
+                    curricularCourseArgs.getSemester());
         }
         return curricularPeriod;
     }
 
     private static ExecutionSemester readBeginExecutionPeriod(CurricularCourseArgs curricularCourseArgs) {
-        ExecutionSemester beginExecutionPeriod;
         if (curricularCourseArgs.getBeginExecutionPeriodID() == null) {
-            beginExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
-        } else {
-            beginExecutionPeriod = FenixFramework.getDomainObject(curricularCourseArgs.getBeginExecutionPeriodID());
+            throw new DomainException("error.CreateCurricularCourse.beginExecutionPeriod.required");
         }
-        return beginExecutionPeriod;
+
+        return FenixFramework.getDomainObject(curricularCourseArgs.getBeginExecutionPeriodID());
     }
 
     private static ExecutionSemester readEndExecutionPeriod(CurricularCourseArgs curricularCourseArgs) {

@@ -26,9 +26,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+
 import org.fenixedu.academic.domain.CurricularYearList;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionSemester;
@@ -46,13 +46,13 @@ import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.FenixFramework;
-
 import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.Lists;
+
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Joao Carvalho (joao.pedro.carvalho@ist.utl.pt)
@@ -81,7 +81,7 @@ public class OccupationPeriodBean implements Serializable, Comparable<Occupation
 
         this.id = id;
 
-        this.semester = ExecutionSemester.readActualExecutionSemester().getSemester();
+        this.semester = ExecutionSemester.findCurrent(null).getSemester();
 
         this.occupationPeriodType = OccupationPeriodType.LESSONS;
 
@@ -204,8 +204,7 @@ public class OccupationPeriodBean implements Serializable, Comparable<Occupation
 
     @Override
     public int compareTo(OccupationPeriodBean other) {
-        return ComparisonChain
-                .start()
+        return ComparisonChain.start()
                 .compare(this.getOccupationPeriod().getPeriodInterval().getStartMillis(),
                         other.getOccupationPeriod().getPeriodInterval().getStartMillis())
                 .compare(this.getReferences().size(), this.getReferences().size()).result();

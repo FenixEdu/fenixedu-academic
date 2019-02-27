@@ -31,8 +31,6 @@ import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
-import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfEctsInStandaloneCurriculumGroup;
-import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.EnrolmentResultType;
 import org.fenixedu.academic.domain.curriculum.EnrollmentCondition;
@@ -157,20 +155,6 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
         }
 
         return result;
-    }
-
-    @Override
-    protected RuleResult evaluateExtraRules(RuleResult actualResult) {
-        if (actualResult.isFalse()) {
-            return actualResult;
-        }
-
-        if (isEmptyDegree()) {
-            return actualResult.and(new MaximumNumberOfEctsInStandaloneCurriculumGroup(getStandaloneCurriculumGroup())
-                    .evaluate(getEnroledCurriculumGroup(), enrolmentContext));
-        } else {
-            return actualResult;
-        }
     }
 
     private boolean isEmptyDegree() {

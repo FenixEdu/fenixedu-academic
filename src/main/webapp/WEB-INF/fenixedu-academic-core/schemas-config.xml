@@ -453,14 +453,6 @@
 		</slot>
 	</schema>
 
-	<schema name="list.student.execution.periods" type="org.fenixedu.academic.dto.student.ManageStudentStatuteBean" bundle="APPLICATION_RESOURCES">
-	<slot name="executionPeriod" key="label.org.fenixedu.academic.domain.ProjectSubmission.execution.semester" layout="menu-select-postback">
-    	<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.StudentExecutionPeriodsProvider"/>
-    	<property name="format" value="${year} - ${semester}º Sem."/>	
-    	<property name="destination" value="postBack"/>
-    </slot>
-	</schema>
-	
 	<schema name="person.view-with-name-and-idDocumentType-and-documentIdNumber" type="org.fenixedu.academic.domain.Person" bundle="APPLICATION_RESOURCES">
 		<slot name="name"/>
 		<slot name="idDocumentType"/>

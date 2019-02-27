@@ -43,12 +43,8 @@ public class CreateBranchCourseGroup {
             throw new FenixServiceException("error.noCourseGroup");
         }
 
-        final ExecutionSemester beginExecutionPeriod;
-        if (beginExecutionPeriodID == null) {
-            beginExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
-        } else {
-            beginExecutionPeriod = FenixFramework.getDomainObject(beginExecutionPeriodID);
-        }
+        final ExecutionSemester beginExecutionPeriod = beginExecutionPeriodID == null ? ExecutionSemester.findCurrent(
+                degreeCurricularPlan.getDegree().getCalendar()) : FenixFramework.getDomainObject(beginExecutionPeriodID);
 
         final ExecutionSemester endExecutionPeriod =
                 (endExecutionPeriodID == null) ? null : FenixFramework.<ExecutionSemester> getDomainObject(endExecutionPeriodID);
