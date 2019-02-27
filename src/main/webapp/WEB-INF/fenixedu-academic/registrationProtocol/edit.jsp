@@ -27,6 +27,11 @@ ${portal.toolkit()}
 </div>
 
 <section>
+    <div class="alert alert-danger">
+        <h3 class="mvert0"><spring:message code="label.registrationProtocol.warning.title" /></h3>
+        <p class="mtop1" style="font-size:11pt"><spring:message code="label.registrationProtocol.warning.text" /></p>
+        <p class="mtop1 col-sm-offset-0" style="font-size:12pt"><input type="checkbox" onchange="document.getElementById('submitButton').disabled = !this.checked"/>    <spring:message code="label.registrationProtocol.warning.checkbox" /></p>
+    </div>
     <form:form role="form" modelAttribute="bean" method="POST" class="form-horizontal" action="${actionUrl}">
         ${csrf.field()}
         <div class="form-group">
@@ -85,7 +90,7 @@ ${portal.toolkit()}
         <div class="form-group">
             <div class="col-sm-offset-1">
                 <a class="btn btn-default" href="${backUrl}"><spring:message code="label.cancel"/></a>
-                <button type="submit" id="submitButton" class="btn btn-primary"><spring:message code="label.save"/></button>
+                <button type="submit" id="submitButton" class="btn btn-primary" disabled><spring:message code="label.save"/></button>
             </div>
         </div>
     </form:form>
