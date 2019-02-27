@@ -83,7 +83,7 @@
         disableAllPenaltyInputs(penaltySelector);
         enableOnlyFirstDebtInputs(debtSelector);
         recalculateAmount();
-        updatePaymentReference(moment().format("YYYY-MM-DDTHH:mm:ss.SSSZ"));
+        !$("#paymentMethod").val() ? $("#paymentReference").val("") : updatePaymentReference(moment().format("YYYY-MM-DDTHH:mm:ss.SSSZ"));
 
         // Prevent clicks on selected penalty entries
         $(penaltySelector).click(event => event.preventDefault());
@@ -106,7 +106,7 @@
         });
 
         $("#paymentMethod").change(function () {
-            updatePaymentReference(moment().format("YYYY-MM-DDTHH:mm:ss.SSSZ"));
+            !$("#paymentMethod").val() ? $("#paymentReference").val("") : updatePaymentReference(moment().format("YYYY-MM-DDTHH:mm:ss.SSSZ"));
         });
 
     });
@@ -146,6 +146,7 @@
                         <label for="paymentMethod" class="control-label col-sm-1"><spring:message code="label.org.fenixedu.academic.dto.accounting.DepositAmountBean.paymentMethod" text="Payment Method"/></label>
                     <div class="col-sm-4">
                         <select name="paymentMethod" id="paymentMethod" required>
+                                <option value="" selected="selected" disabled="disabled" hidden="hidden"><spring:message code="label.org.fenixedu.academic.dto.accounting.DepositAmountBean.paymentMethod.placeholder" /></option>
                             <c:forEach var="paymentMethod" items="${paymentMethods}">
                                 <option value="${paymentMethod.externalId}"><c:out value="${paymentMethod.localizedName}"/></option>
                             </c:forEach>
