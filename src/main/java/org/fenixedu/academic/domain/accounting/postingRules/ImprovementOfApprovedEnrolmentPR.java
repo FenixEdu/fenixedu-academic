@@ -82,10 +82,15 @@ public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrol
         return getFixedAmount().multiply(((ImprovementOfApprovedEnrolmentEvent) event).getImprovementEnrolmentEvaluationsSet().size());
     }
 
-    private Optional<LocalDate> getDueDate(Event event) {
+    @Override
+    public Optional<LocalDate> getDueDate(Event event) {
         Optional<EnrolmentEvaluation> enrolmentEvaluation;
 
         if (event instanceof EnrolmentEvaluationEvent) {
+            LocalDate dueDate = ((EnrolmentEvaluationEvent) event).getDueDate();
+            if (dueDate != null) {
+                return Optional.of(dueDate);
+            }
             enrolmentEvaluation = Optional.of(((EnrolmentEvaluationEvent) event).getEnrolmentEvaluation());
         } else {
             enrolmentEvaluation = ((ImprovementOfApprovedEnrolmentEvent) event).getImprovementEnrolmentEvaluationsSet().stream()
@@ -100,10 +105,8 @@ public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrol
     @Override
     public Map<LocalDate,Money> getDueDatePenaltyAmountMap(Event event, DateTime when) {
         Optional<LocalDate> dueDate = getDueDate(event);
-        if (!dueDate.isPresent()) {
-            return Collections.emptyMap();
-        }
-        return Collections.singletonMap(dueDate.get(), getFixedAmountPenalty().subtract(getFixedAmount()));
+        return dueDate.map(localDate -> Collections.singletonMap(localDate, getFixedAmountPenalty().subtract(getFixedAmount())))
+                .orElse(Collections.emptyMap());
     }
 
     private EnrolmentPeriodInImprovementOfApprovedEnrolment getEnrolmentPeriodInImprovementOfApprovedEnrolment(

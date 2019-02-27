@@ -1387,6 +1387,9 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
         	}
 
         	class accounting.events.EnrolmentEvaluationEvent extends accounting.AcademicEvent {
+        	    LocalizedString courseName (REQUIRED);
+                String executionPeriodName (REQUIRED);
+                LocalDate dueDate (REQUIRED);
         	}
 
         class accounting.events.dfa.DFACandidacyEvent extends accounting.AcademicEvent {
@@ -7164,7 +7167,7 @@ relation EnrolmentEvaluationSpecialSeasonEnrolmentEvent {
 
 relation EnrolmentEvaluationEvent {
     EnrolmentEvaluation playsRole enrolmentEvaluation {
-        multiplicity 1..1;
+        multiplicity 0..1;
     }
     accounting.events.EnrolmentEvaluationEvent playsRole enrolmentEvaluationEvent {
         multiplicity 0..1;

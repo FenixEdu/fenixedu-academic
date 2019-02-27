@@ -333,6 +333,11 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         if (getImprovementOfApprovedEnrolmentEvent() != null) {
             getImprovementOfApprovedEnrolmentEvent().removeImprovementEnrolmentEvaluations(this);
         }
+
+        if (getEnrolmentEvaluationEvent() != null) {
+            setEnrolmentEvaluationEvent(null);
+        }
+
         setExecutionPeriod(null);
         setEvaluationSeason(null);
 
