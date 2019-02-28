@@ -163,10 +163,6 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             dcp.getRegistrations(executionYear, registrations);
         });
 
-        DegreeCurricularPlan emptyDegreeCurricularPlan = DegreeCurricularPlan.readEmptyDegreeCurricularPlan();
-        if (chosenDegreeType == null || emptyDegreeCurricularPlan.getDegreeType() == chosenDegreeType) {
-            emptyDegreeCurricularPlan.getRegistrations(executionYear, registrations);
-        }
         return filterResults(searchbean, registrations, executionYear);
 
     }

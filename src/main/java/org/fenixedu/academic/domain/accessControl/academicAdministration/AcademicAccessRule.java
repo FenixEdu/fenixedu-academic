@@ -129,7 +129,7 @@ public class AcademicAccessRule extends AcademicAccessRule_Base implements Compa
 
     public Stream<AcademicProgram> getFullProgramSet() {
         Stream<AcademicProgram> managed = getOfficeSet().stream().flatMap(o -> o.getManagedAcademicProgramSet().stream());
-        return Stream.concat(Stream.concat(getProgramSet().stream(), managed), Stream.of(Degree.readEmptyDegree()));
+        return Stream.concat(getProgramSet().stream(), managed);
     }
 
     public static Stream<AcademicAccessRule> accessRules() {

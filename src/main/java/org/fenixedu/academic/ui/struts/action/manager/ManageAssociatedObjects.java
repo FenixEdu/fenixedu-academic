@@ -33,8 +33,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.Department;
-import org.fenixedu.academic.domain.EmptyDegree;
-import org.fenixedu.academic.domain.EmptyDegreeCurricularPlan;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOfficeType;
 import org.fenixedu.academic.domain.degree.DegreeType;
@@ -71,7 +69,6 @@ import pt.ist.fenixframework.FenixFramework;
 @Mapping(path = "/manageAssociatedObjects", module = "manager")
 @Forwards({ @Forward(name = "list", path = "/manager/listAssociatedObjects.jsp"),
         @Forward(name = "createDepartment", path = "/manager/createDepartment.jsp"),
-        @Forward(name = "createEmptyDegree", path = "/manager/createEmptyDegree.jsp"),
         @Forward(name = "createScientificArea", path = "/manager/createScientificArea.jsp"),
         @Forward(name = "editDepartment", path = "/manager/editDepartment.jsp"),
         @Forward(name = "createCompetenceCourseGroup", path = "/manager/createCompetenceCourseGroup.jsp"),
@@ -401,7 +398,6 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
 
         request.setAttribute("departments", departments);
         request.setAttribute("offices", offices);
-        request.setAttribute("emptyDegree", EmptyDegree.getInstance());
         request.setAttribute("degreeTypes", Bennu.getInstance().getDegreeTypeSet());
 
         return mapping.findForward("list");
@@ -503,39 +499,6 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         Unit.createNewUnit(office.getName(), null, null, null, new YearMonthDay(), null, servicesParent,
                 AccountabilityType.readByType(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE), null,
                 UnitClassification.CENTRAL_ORG, office, false, bean.getBuilding());
-    }
-
-    public ActionForward prepareEmptyDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        AssociatedObjectsBean associatedObjectsBean = new AssociatedObjectsBean();
-        associatedObjectsBean.setOffices(Bennu.getInstance().getAdministrativeOfficesSet());
-        request.setAttribute("bean", associatedObjectsBean);
-
-        return mapping.findForward("createEmptyDegree");
-    }
-
-    public ActionForward createEmptyDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        AssociatedObjectsBean bean = getRenderedObject("admOffice");
-
-        createEmptyDegree(bean);
-        return list(mapping, form, request, response);
-    }
-
-    @Atomic(mode = TxMode.WRITE)
-    private void createEmptyDegree(AssociatedObjectsBean bean) {
-        AdministrativeOffice adminOffice = bean.getOffice();
-
-        EmptyDegree emptyDegree = EmptyDegree.getInstance();
-        if (emptyDegree == null) {
-            EmptyDegree.init();
-        }
-        EmptyDegree.getInstance().setAdministrativeOffice(adminOffice);
-
-        EmptyDegreeCurricularPlan emptyDCP = EmptyDegreeCurricularPlan.getInstance();
-        if (emptyDCP == null) {
-            EmptyDegreeCurricularPlan.init();
-        }
     }
 
     public ActionForward prepareAssociatePersonUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,

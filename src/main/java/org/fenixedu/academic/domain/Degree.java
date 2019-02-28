@@ -770,14 +770,12 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return null;
     }
 
+    /**
+     * @deprecated Degrees cannot be empty anymore so usage of this method is unecessary
+     */
+    @Deprecated
     public static List<Degree> readNotEmptyDegrees() {
-        final List<Degree> result = new ArrayList<>(Bennu.getInstance().getDegreesSet());
-        result.remove(readEmptyDegree());
-        return result;
-    }
-
-    public static Degree readEmptyDegree() {
-        return EmptyDegree.getInstance();
+        return new ArrayList<>(Bennu.getInstance().getDegreesSet());
     }
 
     public static List<Degree> readOldDegrees() {
