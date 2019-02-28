@@ -207,7 +207,8 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     public abstract RegistrationStateType getStateType();
 
     public ExecutionYear getExecutionYear() {
-        return ExecutionYear.readByDateTime(getStateDate());
+        return getExecutionInterval() != null ? getExecutionInterval().convert(ExecutionYear.class) : ExecutionYear
+                .readByDateTime(getStateDate());
     }
 
     public void delete() {
@@ -231,9 +232,9 @@ public abstract class RegistrationState extends RegistrationState_Base implement
                 responsablePersonName = "-";
             }
 
-            org.fenixedu.academic.domain.student.RegistrationStateLog
-                    .createRegistrationStateLog(getRegistration(), Bundle.MESSAGING,
-                            "log.registration.registrationstate.removed", getStateType().getDescription(), getRemarks());
+            org.fenixedu.academic.domain.student.RegistrationStateLog.createRegistrationStateLog(getRegistration(),
+                    Bundle.MESSAGING, "log.registration.registrationstate.removed", getStateType().getDescription(),
+                    getRemarks());
             setRegistration(null);
             setResponsiblePerson(null);
             setRootDomainObject(null);
@@ -305,6 +306,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
             createdState = (RegistrationState) StateMachine.execute(previousState, bean);
         }
         createdState.setRemarks(bean.getRemarks());
+        createdState.setExecutionInterval(bean.getExecutionInterval());
 
         final RegistrationState nextState = createdState.getNext();
         if (nextState != null && !createdState.getValidNextStates().contains(nextState.getStateType().name())) {

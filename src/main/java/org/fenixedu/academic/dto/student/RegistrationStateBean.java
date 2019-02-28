@@ -23,6 +23,8 @@ package org.fenixedu.academic.dto.student;
 
 import java.io.Serializable;
 
+import org.fenixedu.academic.domain.ExecutionInterval;
+import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.domain.util.workflow.StateBean;
@@ -37,9 +39,12 @@ public class RegistrationStateBean extends StateBean implements Serializable {
 
     String remarks;
 
+    ExecutionInterval executionInterval;
+
     public RegistrationStateBean(Registration registration) {
         super();
         this.registration = registration;
+        this.executionInterval = ExecutionSemester.findCurrent(registration.getDegree().getCalendar());
         setStateDate(null);
     }
 
@@ -69,6 +74,14 @@ public class RegistrationStateBean extends StateBean implements Serializable {
 
     public void setStateType(final RegistrationStateType stateType) {
         setNextState(stateType == null ? null : stateType.name());
+    }
+
+    public ExecutionInterval getExecutionInterval() {
+        return executionInterval;
+    }
+
+    public void setExecutionInterval(ExecutionInterval executionInterval) {
+        this.executionInterval = executionInterval;
     }
 
 }

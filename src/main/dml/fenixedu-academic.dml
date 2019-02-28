@@ -3485,6 +3485,11 @@ relation RegistrationStateResponsiblePerson {
     Person playsRole responsiblePerson;
 }
 
+relation RegistrationStateExecutionInterval {
+    student.registrationStates.RegistrationState playsRole registrationStates { multiplicity *; }
+    ExecutionInterval playsRole executionInterval;
+}
+
 relation RegistrationStateLogRegistration {
     student.registrationStates.RegistrationStateLog playsRole registrationStateLogs {
         multiplicity *;

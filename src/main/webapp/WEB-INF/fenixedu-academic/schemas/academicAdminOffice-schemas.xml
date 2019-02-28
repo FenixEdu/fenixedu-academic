@@ -506,8 +506,11 @@
 	type="org.fenixedu.academic.dto.student.RegistrationStateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="stateDate" key="label.stateDate">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-		<validator class="org.fenixedu.academic.ui.renderers.validators.DateInExecutionPeriodValidator"/>
 	</slot>
+	<slot name="executionInterval" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.semester">
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.NotClosedExecutionPeriodsProvider" />
+		<property name="format" value="${qualifiedName}" />	
+	</slot>	
 	<slot name="stateType" key="label.state" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="excludedValues" value="TRANSITION" />
 		<!-- 
