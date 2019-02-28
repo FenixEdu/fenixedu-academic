@@ -2149,10 +2149,6 @@ public class Registration extends Registration_Base {
         return registrationYear != null ? registrationYear : ExecutionYear.readByDateTime(getStartDate().toDateTimeAtMidnight());
     }
 
-    final public boolean hasStartedBeforeFirstBolonhaExecutionYear() {
-        return getStartExecutionYear().isBefore(ExecutionYear.readFirstBolonhaExecutionYear());
-    }
-
     final public boolean hasStudentCurricularPlanInExecutionPeriod(final ExecutionSemester executionSemester) {
         return getStudentCurricularPlan(executionSemester) != null;
     }

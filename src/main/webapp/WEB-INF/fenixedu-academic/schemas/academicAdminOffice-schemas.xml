@@ -483,30 +483,6 @@
 	</slot>	
 </schema>
 
-<schema name="student.enrolment.choose.executionPeriod" type="org.fenixedu.academic.dto.administrativeOffice.studentEnrolment.StudentEnrolmentBean">
-	<slot name="studentCurricularPlan.student.student.person.name" key="label.name" read-only="true"/>
-	<slot name="studentCurricularPlan.student.student.number" key="label.studentNumber" read-only="true"/>
-	<slot name="studentCurricularPlan.degreeCurricularPlan.name" key="label.degreeCurricularPlan" read-only="true"/>
-	<slot name="executionPeriod" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
-		<property name="providerClass"
-			value="org.fenixedu.academic.ui.renderers.providers.ExecutionPeriodsForStudentCurricularPlanProvider" />
-		<property name="format" value="${semester}º Sem - ${executionYear.year}" />
-		<property name="destination" value="postBack"/>
-	</slot>
-</schema>
-
-<schema name="bolonha.student.enrolment.choose.executionPeriod" type="org.fenixedu.academic.dto.student.enrollment.bolonha.BolonhaStudentEnrollmentBean">
-	<slot name="studentCurricularPlan.student.student.person.name" key="label.name" read-only="true"/>
-	<slot name="studentCurricularPlan.student.student.number" key="label.studentNumber" read-only="true"/>
-	<slot name="studentCurricularPlan.degreeCurricularPlan.name" key="label.degreeCurricularPlan" read-only="true"/>
-	<slot name="executionPeriod" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
-		<property name="providerClass"
-			value="org.fenixedu.academic.ui.renderers.providers.ExecutionPeriodsForStudentCurricularPlanProvider" />
-		<property name="format" value="${semester}º Sem - ${executionYear.year}" />
-		<property name="destination" value="postBack"/>
-	</slot>
-</schema>
-
 <schema name="student.manageRegistrationStartDates" 
 	type="org.fenixedu.academic.domain.student.Registration" bundle="ACADEMIC_OFFICE_RESOURCES">
 

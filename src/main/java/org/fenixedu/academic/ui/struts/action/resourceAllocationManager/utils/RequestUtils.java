@@ -34,10 +34,8 @@ import org.fenixedu.academic.dto.InfoExecutionCourse;
 import org.fenixedu.academic.dto.InfoExecutionDegree;
 import org.fenixedu.academic.dto.InfoExecutionPeriod;
 import org.fenixedu.academic.dto.InfoExecutionYear;
-import org.fenixedu.academic.service.services.commons.ReadExecutionPeriod;
 import org.fenixedu.academic.service.services.commons.ReadExecutionYear;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
-import org.fenixedu.academic.service.services.publico.ReadExecutionCourse;
 import org.fenixedu.academic.service.services.publico.ReadExecutionDegreesByExecutionYearAndDegreeInitials;
 import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 
@@ -51,9 +49,8 @@ public abstract class RequestUtils {
     public static final InfoExecutionCourse getExecutionCourseBySigla(HttpServletRequest request,
             String infoExecutionCourseInitials) throws Exception {
 
-        AcademicInterval academicInterval =
-                AcademicInterval.getAcademicIntervalFromResumedString((String) request
-                        .getAttribute(PresentationConstants.ACADEMIC_INTERVAL));
+        AcademicInterval academicInterval = AcademicInterval
+                .getAcademicIntervalFromResumedString((String) request.getAttribute(PresentationConstants.ACADEMIC_INTERVAL));
 
         final ExecutionCourse executionCourse =
                 ExecutionCourse.getExecutionCourseByInitials(academicInterval, infoExecutionCourseInitials);
@@ -64,18 +61,8 @@ public abstract class RequestUtils {
         throw new IllegalArgumentException("Not find executionCourse!");
     }
 
-    public static final InfoExecutionCourse getExecutionCourseFromRequest(HttpServletRequest request)
+    public static final InfoExecutionYear getExecutionYearFromRequest(HttpServletRequest request)
             throws FenixActionException, FenixServiceException {
-        InfoExecutionCourse infoExecutionCourse = null;
-        InfoExecutionPeriod infoExecutionPeriod = getExecutionPeriodFromRequest(request);
-        String code = request.getParameter("exeCode");
-
-        infoExecutionCourse = (InfoExecutionCourse) ReadExecutionCourse.run(infoExecutionPeriod, code);
-        return infoExecutionCourse;
-    }
-
-    public static final InfoExecutionYear getExecutionYearFromRequest(HttpServletRequest request) throws FenixActionException,
-            FenixServiceException {
         InfoExecutionYear infoExecutionYear = null;
         String year = (String) request.getAttribute("eYName");
         if (year == null) {
@@ -87,26 +74,6 @@ public abstract class RequestUtils {
             infoExecutionYear = ReadExecutionYear.run(year);
         }
         return infoExecutionYear;
-    }
-
-    public static final InfoExecutionPeriod getExecutionPeriodFromRequest(HttpServletRequest request) throws FenixActionException {
-        InfoExecutionPeriod infoExecutionPeriod = null;
-        InfoExecutionYear infoExecutionYear;
-        try {
-            infoExecutionYear = getExecutionYearFromRequest(request);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
-        String name = (String) request.getAttribute("ePName");
-        if (name == null) {
-            name = request.getParameter("ePName");
-        }
-
-        if (name != null & infoExecutionYear != null) {
-
-            infoExecutionPeriod = ReadExecutionPeriod.run(name, infoExecutionYear);
-        }
-        return infoExecutionPeriod;
     }
 
     public static final InfoExecutionDegree getExecutionDegreeFromRequest(HttpServletRequest request,
@@ -127,9 +94,8 @@ public abstract class RequestUtils {
             nameDegreeCurricularPlan = request.getParameter("nameDegreeCurricularPlan");
         }
 
-        infoExecutionDegree =
-                ReadExecutionDegreesByExecutionYearAndDegreeInitials.run(infoExecutionYear, degreeInitials,
-                        nameDegreeCurricularPlan);
+        infoExecutionDegree = ReadExecutionDegreesByExecutionYearAndDegreeInitials.run(infoExecutionYear, degreeInitials,
+                nameDegreeCurricularPlan);
 
         return infoExecutionDegree;
     }

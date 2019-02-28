@@ -555,7 +555,8 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
     public ExecutionSemester getMinimumExecutionPeriod() {
         if (isRoot()) {
-            return isBolonhaDegree() ? getBeginBolonhaExecutionPeriod() : getFirstExecutionPeriodOfFirstExecutionDegree();
+            return isBolonhaDegree() ? ExecutionSemester
+                    .readFirstExecutionSemester() : getFirstExecutionPeriodOfFirstExecutionDegree();
         }
         final SortedSet<ExecutionSemester> executionSemesters = new TreeSet<ExecutionSemester>();
         for (final Context context : getParentContextsSet()) {
@@ -564,14 +565,10 @@ abstract public class DegreeModule extends DegreeModule_Base {
         return executionSemesters.first();
     }
 
-    public ExecutionSemester getBeginBolonhaExecutionPeriod() {
-        return ExecutionSemester.readFirstBolonhaExecutionPeriod();
-    }
-
     private ExecutionSemester getFirstExecutionPeriodOfFirstExecutionDegree() {
         final ExecutionDegree executionDegree = getParentDegreeCurricularPlan().getFirstExecutionDegree();
-        return executionDegree != null ? executionDegree.getExecutionYear()
-                .getFirstExecutionPeriod() : getBeginBolonhaExecutionPeriod();
+        return executionDegree != null ? executionDegree.getExecutionYear().getFirstExecutionPeriod() : ExecutionSemester
+                .readFirstExecutionSemester();
     }
 
     public DegreeModulesSelectionLimit getDegreeModulesSelectionLimitRule(final ExecutionSemester executionSemester) {

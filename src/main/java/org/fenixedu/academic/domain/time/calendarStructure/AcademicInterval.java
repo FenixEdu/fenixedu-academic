@@ -287,25 +287,6 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
         throw new UnsupportedOperationException("Unknown AcademicPeriod " + academicPeriod);
     }
 
-    public static List<AcademicInterval> readFutureAcademicIntervals(AcademicPeriod academicPeriod) {
-        if (academicPeriod.equals(AcademicPeriod.SEMESTER)) {
-            List<AcademicInterval> result = new ArrayList<AcademicInterval>();
-            for (ExecutionSemester semester : ExecutionSemester.readNotOpenExecutionPeriods()) {
-                result.add(semester.getAcademicInterval());
-            }
-
-            return result;
-        } else if (academicPeriod.equals(AcademicPeriod.YEAR)) {
-            List<AcademicInterval> result = new ArrayList<AcademicInterval>();
-            for (ExecutionYear executionYear : ExecutionYear.readNotOpenExecutionYears()) {
-                result.add(executionYear.getAcademicInterval());
-            }
-
-            return result;
-        }
-        throw new UnsupportedOperationException("Unknown AcademicPeriod " + academicPeriod);
-    }
-
     public AcademicInterval getNextAcademicInterval() {
         AcademicCalendarEntry nextAcademicCalendarEntry = getAcademicCalendarEntry().getNextAcademicCalendarEntry();
         if (nextAcademicCalendarEntry != null) {

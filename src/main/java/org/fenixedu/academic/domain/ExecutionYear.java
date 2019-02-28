@@ -466,10 +466,6 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
         return null;
     }
 
-    static public ExecutionYear readFirstBolonhaExecutionYear() {
-        return ExecutionSemester.readFirstBolonhaExecutionPeriod().getExecutionYear();
-    }
-
     public static class ExecutionYearSearchCache {
         private final Map<Integer, Set<ExecutionYear>> map = new HashMap<Integer, Set<ExecutionYear>>();
 

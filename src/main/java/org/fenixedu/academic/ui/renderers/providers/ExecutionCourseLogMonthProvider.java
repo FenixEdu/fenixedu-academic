@@ -19,6 +19,7 @@
 package org.fenixedu.academic.ui.renderers.providers;
 
 import org.fenixedu.academic.dto.teacher.executionCourse.SearchExecutionCourseLogBean;
+import org.fenixedu.academic.util.Month;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -28,7 +29,7 @@ public class ExecutionCourseLogMonthProvider implements DataProvider {
     @Override
     public Object provide(final Object source, final Object currentValue) {
         final SearchExecutionCourseLogBean searchExecutionCourseLogBean = (SearchExecutionCourseLogBean) source;
-        return searchExecutionCourseLogBean.getExecutionCourse().getExecutionPeriod().getSemesterMonths();
+        return Month.getIntervalMonths(searchExecutionCourseLogBean.getExecutionCourse().getExecutionPeriod());
     }
 
     @Override

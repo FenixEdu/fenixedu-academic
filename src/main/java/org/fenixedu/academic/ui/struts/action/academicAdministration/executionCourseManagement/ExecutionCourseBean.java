@@ -130,7 +130,8 @@ public class ExecutionCourseBean implements Serializable, HasExecutionSemester, 
     public Collection<ExecutionCourse> getExecutionCourses() {
         List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
         if (this.chooseNotLinked) {
-            result = this.getExecutionSemester().getExecutionCoursesWithNoCurricularCourses();
+            result = this.getExecutionSemester().getAssociatedExecutionCoursesSet().stream()
+                    .filter(ec -> ec.getAssociatedCurricularCoursesSet().isEmpty()).collect(Collectors.toList());
         } else {
             for (final CurricularCourse curricularCourse : getDegreeCurricularPlan().getCurricularCourses(getExecutionSemester())) {
                 if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(getCurricularYear(),

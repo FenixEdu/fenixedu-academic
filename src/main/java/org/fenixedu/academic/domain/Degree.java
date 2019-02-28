@@ -128,16 +128,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     static final public Comparator<Degree> COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID = new ComparatorByDegreeTypeAndNameAndId();
 
-    static final public Comparator<Degree> COMPARATOR_BY_FIRST_ENROLMENTS_PERIOD_AND_ID = new Comparator<Degree>() {
-        @Override
-        public int compare(final Degree degree1, final Degree degree2) {
-            ExecutionSemester semester1 = degree1.getFirstDegreeCurricularPlan().getFirstExecutionPeriodEnrolments();
-            ExecutionSemester semester2 = degree2.getFirstDegreeCurricularPlan().getFirstExecutionPeriodEnrolments();
-            final int result = semester1.compareTo(semester2);
-            return result == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(degree1, degree2) : result;
-        }
-    };
-
     @Override
     public int compareTo(final Degree o) {
         return Degree.COMPARATOR_BY_NAME_AND_ID.compare(this, o);

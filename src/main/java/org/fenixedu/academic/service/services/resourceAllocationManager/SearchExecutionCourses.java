@@ -37,63 +37,29 @@ import org.apache.commons.collections.Transformer;
 import org.fenixedu.academic.domain.CurricularYear;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionDegree;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.ShiftType;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
-import org.fenixedu.academic.dto.InfoCurricularYear;
 import org.fenixedu.academic.dto.InfoExecutionCourse;
-import org.fenixedu.academic.dto.InfoExecutionDegree;
-import org.fenixedu.academic.dto.InfoExecutionPeriod;
 import org.fenixedu.academic.service.filter.CoordinatorExecutionDegreeAuthorizationFilter;
 import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
 import org.fenixedu.academic.util.NumberUtils;
 
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.FenixFramework;
 
 public class SearchExecutionCourses {
 
     public List<InfoExecutionCourse> run(AcademicInterval academicInterval, ExecutionDegree executionDegree, String courseName) {
-        List<ExecutionCourse> executionCourses =
-                ExecutionCourse.searchByAcademicIntervalAndExecutionDegreeYearAndName(academicInterval, executionDegree, null,
-                        courseName);
+        List<ExecutionCourse> executionCourses = ExecutionCourse
+                .searchByAcademicIntervalAndExecutionDegreeYearAndName(academicInterval, executionDegree, null, courseName);
         return fillInfoExecutionCourses(academicInterval, executionCourses);
     }
 
     public List<InfoExecutionCourse> run(AcademicInterval academicInterval, ExecutionDegree executionDegree,
             CurricularYear curricularYear, String courseName) {
-        List<ExecutionCourse> executionCourses =
-                ExecutionCourse.searchByAcademicIntervalAndExecutionDegreeYearAndName(academicInterval, executionDegree,
-                        curricularYear, courseName);
+        List<ExecutionCourse> executionCourses = ExecutionCourse.searchByAcademicIntervalAndExecutionDegreeYearAndName(
+                academicInterval, executionDegree, curricularYear, courseName);
         return fillInfoExecutionCourses(academicInterval, executionCourses);
-    }
-
-    public List<InfoExecutionCourse> run(InfoExecutionPeriod infoExecutionPeriod, InfoExecutionDegree infoExecutionDegree,
-            InfoCurricularYear infoCurricularYear, String executionCourseName) {
-
-        List<InfoExecutionCourse> result = null;
-
-        final ExecutionSemester executionSemester = FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
-
-        ExecutionDegree executionDegree = null;
-        if (infoExecutionDegree != null) {
-            executionDegree = FenixFramework.getDomainObject(infoExecutionDegree.getExternalId());
-        }
-
-        CurricularYear curricularYear = null;
-        if (infoCurricularYear != null) {
-            curricularYear = FenixFramework.getDomainObject(infoCurricularYear.getExternalId());
-        }
-
-        List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
-        if (executionSemester != null) {
-            executionCourses =
-                    executionSemester.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
-                            executionDegree.getDegreeCurricularPlan(), curricularYear, executionCourseName);
-        }
-
-        return fillInfoExecutionCourses(executionSemester.getAcademicInterval(), executionCourses);
     }
 
     private List<InfoExecutionCourse> fillInfoExecutionCourses(final AcademicInterval academicInterval,
@@ -234,14 +200,6 @@ public class SearchExecutionCourses {
             ExecutionDegree executionDegree, String courseName) throws NotAuthorizedException {
         CoordinatorExecutionDegreeAuthorizationFilter.instance.execute(executionDegree.getExternalId());
         return serviceInstance.run(academicInterval, executionDegree, courseName);
-    }
-
-    @Atomic
-    public static List<InfoExecutionCourse> runSearchExecutionCourses(InfoExecutionPeriod infoExecutionPeriod,
-            InfoExecutionDegree infoExecutionDegree, InfoCurricularYear infoCurricularYear, String executionCourseName)
-            throws NotAuthorizedException {
-        CoordinatorExecutionDegreeAuthorizationFilter.instance.execute(infoExecutionDegree.getExternalId());
-        return serviceInstance.run(infoExecutionPeriod, infoExecutionDegree, infoCurricularYear, executionCourseName);
     }
 
     @Atomic

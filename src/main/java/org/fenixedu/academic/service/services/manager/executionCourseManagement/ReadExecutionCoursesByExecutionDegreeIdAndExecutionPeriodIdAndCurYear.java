@@ -20,6 +20,7 @@ package org.fenixedu.academic.service.services.manager.executionCourseManagement
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.CurricularYear;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
@@ -51,14 +52,14 @@ public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYe
 
         final List<ExecutionCourse> executionCourseList;
         if (executionDegreeId == null && curricularYearInt == null) {
-            executionCourseList = executionSemester.getExecutionCoursesWithNoCurricularCourses();
+            executionCourseList = executionSemester.getAssociatedExecutionCoursesSet().stream()
+                    .filter(ec -> ec.getAssociatedCurricularCoursesSet().isEmpty()).collect(Collectors.toList());
         } else {
             final ExecutionDegree executionDegree = findExecutionDegreeByID(executionSemester, executionDegreeId);
             final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
             final CurricularYear curricularYear = CurricularYear.readByYear(curricularYearInt);
-            executionCourseList =
-                    executionSemester.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
-                            degreeCurricularPlan, curricularYear, "%");
+            executionCourseList = ExecutionCourse.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
+                    executionSemester, degreeCurricularPlan, curricularYear, "%");
         }
 
         final List infoExecutionCourseList = new ArrayList(executionCourseList.size());

@@ -5071,10 +5071,10 @@ relation DepartmentRevokedTeacherAuthorizations {
 }
 
 relation ExecutionSemesterTeacherAuthorizations {
-    protected ExecutionSemester playsRole executionSemester {
+    public ExecutionSemester playsRole executionSemester {
         multiplicity 0..1;
     }
-    protected TeacherAuthorization playsRole teacherAuthorization {
+    public TeacherAuthorization playsRole teacherAuthorization {
         multiplicity *;
     }
 }

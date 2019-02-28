@@ -1255,10 +1255,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return getApplyPreviousYearsEnrolmentRule();
     }
 
-    public ExecutionSemester getFirstExecutionPeriodEnrolments() {
-        return ExecutionSemester.readFirstEnrolmentsExecutionPeriod();
-    }
-
     public boolean canSubmitImprovementMarkSheets(final ExecutionYear executionYear) {
         if (getExecutionDegreesSet().isEmpty()) {
             return false;

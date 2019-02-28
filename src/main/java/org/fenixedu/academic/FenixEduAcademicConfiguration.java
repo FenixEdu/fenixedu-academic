@@ -86,30 +86,10 @@ public class FenixEduAcademicConfiguration {
         @ConfigurationProperty(key = "receipt.numberSeries.for.years", defaultValue = "")
         public String getReceiptNumberSeriesForYears();
 
-        @ConfigurationProperty(key = "semester.for.from.enrolments", defaultValue = "1")
-        public String getSemesterForFromEnrolments();
-
-        @ConfigurationProperty(key = "semester.for.from.mark.sheet.managment",
-                description = "indicates if pending request should be stored in database to recover current session after new login",
-                defaultValue = "2")
-        public String getSemesterForFromMarkSheetManagment();
-
         @ConfigurationProperty(key = "sibs.entityCode",
                 description = "institution entity code to be used in atm machines with reference to perform payments",
                 defaultValue = "1111")
         public String getSibsEntityCode();
-
-        @ConfigurationProperty(key = "start.semester.for.bolonha.degrees", defaultValue = "1")
-        public String getStartSemesterForBolonhaDegrees();
-
-        @ConfigurationProperty(key = "start.semester.for.bolonha.transition", defaultValue = "1")
-        public String getStartSemesterForBolonhaTransition();
-
-        @ConfigurationProperty(key = "start.year.for.bolonha.degrees", defaultValue = "2006/2007")
-        public String getStartYearForBolonhaDegrees();
-
-        @ConfigurationProperty(key = "start.year.for.bolonha.transition", defaultValue = "2007/2008")
-        public String getStartYearForBolonhaTransition();
 
         @ConfigurationProperty(key = "twilio.from.number")
         public String getTwilioFromNumber();
@@ -128,14 +108,6 @@ public class FenixEduAcademicConfiguration {
 
         @ConfigurationProperty(key = "webServices.internationalRegistration.url")
         public String getWebServicesInternationalRegistrationUrl();
-
-        @ConfigurationProperty(key = "year.for.from.enrolments", defaultValue = "2004/2005")
-        public String getYearForFromEnrolments();
-
-        @ConfigurationProperty(key = "year.for.from.mark.sheet.managment",
-                description = "identifies the execution period after which mark sheet are to be managed in the fenix system.",
-                defaultValue = "2005/2006")
-        public String getYearForFromMarkSheetManagment();
 
         @ConfigurationProperty(key = "maximum.number.of.credits.for.enrolment", defaultValue = "40.5")
         public double getMaximumNumberOfCreditsForEnrolment();

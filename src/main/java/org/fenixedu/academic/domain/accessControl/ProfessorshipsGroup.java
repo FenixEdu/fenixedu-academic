@@ -100,7 +100,7 @@ public class ProfessorshipsGroup extends FenixGroup {
 
     private void fillMembers(Set<User> users, ExecutionSemester semester) {
         if (externalAuthorizations) {
-            users.addAll(semester.getTeacherAuthorizationStream().filter(a -> !a.isContracted())
+            users.addAll(semester.getTeacherAuthorizationSet().stream().filter(a -> !a.isContracted())
                     .map(a -> a.getTeacher().getPerson().getUser()).collect(Collectors.toSet()));
         } else {
             for (final ExecutionCourse executionCourse : semester.getAssociatedExecutionCoursesSet()) {

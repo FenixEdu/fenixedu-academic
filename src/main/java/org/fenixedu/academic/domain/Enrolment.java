@@ -620,7 +620,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
             }
 
             // ImprovingInExecutionPeriodFollowingApproval
-            if (!improvementSemester.isOneYearAfter(enrolmentSemester)) {
+            if (!isOneYearAfter(improvementSemester, enrolmentSemester)) {
 
                 for (ExecutionSemester iter = nextSemester; iter != null && iter != improvementSemester; iter =
                         iter.getNextExecutionPeriod()) {
@@ -635,6 +635,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         }
 
     };
+    
+    public static boolean isOneYearAfter(final ExecutionSemester improvementSemester, final ExecutionSemester enrolmentSemester) {
+        final ExecutionSemester nextExecutionPeriod = enrolmentSemester.getNextExecutionPeriod();
+        return (nextExecutionPeriod == null) ? false : improvementSemester == nextExecutionPeriod.getNextExecutionPeriod();
+    }
 
     static abstract public class EnrolmentPredicate implements java.util.function.Predicate<Enrolment> {
 

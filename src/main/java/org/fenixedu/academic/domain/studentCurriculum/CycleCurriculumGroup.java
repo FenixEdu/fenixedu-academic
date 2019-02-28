@@ -37,7 +37,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.security.Authenticate;
-import org.joda.time.YearMonthDay;
 
 /**
  * 
@@ -183,23 +182,6 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
                         getName().getContent());
             }
         }
-    }
-
-    @Override
-    public YearMonthDay calculateConclusionDate() {
-        YearMonthDay result = super.calculateConclusionDate();
-
-        if (getRegistration().getWasTransition()) {
-            final ExecutionSemester firstBolonhaTransitionExecutionPeriod =
-                    ExecutionSemester.readFirstBolonhaTransitionExecutionPeriod();
-            final YearMonthDay begin = firstBolonhaTransitionExecutionPeriod.getBeginDateYearMonthDay();
-
-            if (result == null || result.isBefore(begin)) {
-                result = begin;
-            }
-        }
-
-        return result;
     }
 
     public Double getDefaultEcts(final ExecutionYear executionYear) {

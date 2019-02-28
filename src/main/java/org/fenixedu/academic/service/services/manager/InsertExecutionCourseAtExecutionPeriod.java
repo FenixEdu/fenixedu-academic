@@ -45,7 +45,7 @@ public class InsertExecutionCourseAtExecutionPeriod {
         }
 
         final ExecutionCourse existentExecutionCourse =
-                executionSemester.getExecutionCourseByInitials(infoExecutionCourse.getSigla());
+                ExecutionCourse.readBySiglaAndExecutionPeriod(infoExecutionCourse.getSigla(), executionSemester);
         if (existentExecutionCourse != null) {
             throw new DomainException("error.manager.executionCourseManagement.acronym.exists",
                     existentExecutionCourse.getSigla(), executionSemester.getName(), executionSemester.getExecutionYear()

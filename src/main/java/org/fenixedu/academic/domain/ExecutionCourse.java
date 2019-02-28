@@ -1602,9 +1602,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         // ExecutionInterval
         ExecutionSemester executionSemester = (ExecutionSemester) ExecutionInterval.getExecutionInterval(academicInterval);
 
-        return executionSemester == null ? Collections.EMPTY_LIST : executionSemester
-                .getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(degreeCurricularPlan,
-                        curricularYear, name);
+        return executionSemester == null ? Collections.EMPTY_LIST : getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
+                executionSemester, degreeCurricularPlan, curricularYear, name);
     }
 
     public static Collection<ExecutionCourse> filterByAcademicInterval(AcademicInterval academicInterval) {
@@ -1621,7 +1620,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         // FIXME (PERIODS) must be changed when ExecutionCourse is linked to
         // ExecutionInterval
         ExecutionSemester executionSemester = (ExecutionSemester) ExecutionInterval.getExecutionInterval(academicInterval);
-        return executionSemester.getExecutionCourseByInitials(courseInitials);
+        return readBySiglaAndExecutionPeriod(courseInitials, executionSemester);
     }
 
     public static List<ExecutionCourse> searchByAcademicIntervalAndExecutionDegreeYearAndName(AcademicInterval academicInterval,
@@ -1631,8 +1630,26 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         // ExecutionInterval
         ExecutionSemester executionSemester = (ExecutionSemester) ExecutionInterval.getExecutionInterval(academicInterval);
 
-        return executionSemester.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
+        return getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(executionSemester,
                 executionDegree.getDegreeCurricularPlan(), curricularYear, name);
+    }
+
+    public static List<ExecutionCourse> getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
+            final ExecutionSemester interval, final DegreeCurricularPlan degreeCurricularPlan,
+            final CurricularYear curricularYear, final String name) {
+
+        final String normalizedName = (name != null) ? StringNormalizer.normalize(name).replaceAll("%", ".*") : null;
+        final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+
+        for (final ExecutionCourse executionCourse : interval.getAssociatedExecutionCoursesSet()) {
+            final String executionCourseName = StringNormalizer.normalize(executionCourse.getNome());
+            if (normalizedName != null && executionCourseName.matches(normalizedName)) {
+                if (executionCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear, degreeCurricularPlan)) {
+                    result.add(executionCourse);
+                }
+            }
+        }
+        return result;
     }
 
     public boolean isSplittable() {

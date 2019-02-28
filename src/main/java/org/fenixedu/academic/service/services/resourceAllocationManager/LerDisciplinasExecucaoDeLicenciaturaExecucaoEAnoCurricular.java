@@ -48,8 +48,8 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular {
 
         if (executionSemester != null) {
             List<ExecutionCourse> listDCDE =
-                    executionSemester.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
-                            degreeCurricularPlan, curricularYear, "%");
+                    ExecutionCourse.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
+                            executionSemester, degreeCurricularPlan, curricularYear, "%");
 
             Iterator iterator = listDCDE.iterator();
             listInfoDE = new ArrayList();
