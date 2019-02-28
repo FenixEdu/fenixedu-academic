@@ -71,9 +71,8 @@ public class StudentsConcludedInExecutionYearGroup extends FenixGroup {
         for (Registration registration : degree.getRegistrationsSet()) {
             if (registration.hasConcluded()) {
                 LocalDate conclusionDate = getConclusionDate(degree, registration);
-                if (conclusionDate != null
-                        && (conclusionDate.getYear() == conclusionYear.getEndCivilYear() || conclusionDate.getYear() == conclusionYear
-                                .getBeginCivilYear())) {
+                if (conclusionDate != null && (conclusionDate.getYear() == conclusionYear.getEndDateYearMonthDay().getYear()
+                        || conclusionDate.getYear() == conclusionYear.getBeginDateYearMonthDay().getYear())) {
                     User user = registration.getPerson().getUser();
                     if (user != null) {
                         users.add(user);
@@ -97,9 +96,8 @@ public class StudentsConcludedInExecutionYearGroup extends FenixGroup {
         for (final Registration registration : user.getPerson().getStudent().getRegistrationsSet()) {
             if (registration.isConcluded() && registration.getDegree().equals(degree)) {
                 LocalDate conclusionDate = getConclusionDate(registration.getDegree(), registration);
-                if (conclusionDate != null
-                        && (conclusionDate.getYear() == conclusionYear.getEndCivilYear() || conclusionDate.getYear() == conclusionYear
-                                .getBeginCivilYear())) {
+                if (conclusionDate != null && (conclusionDate.getYear() == conclusionYear.getEndDateYearMonthDay().getYear()
+                        || conclusionDate.getYear() == conclusionYear.getBeginDateYearMonthDay().getYear())) {
                     return true;
                 }
                 return false;

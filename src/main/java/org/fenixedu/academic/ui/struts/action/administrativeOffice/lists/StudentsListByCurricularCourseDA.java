@@ -42,7 +42,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.DegreeModuleScope;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionInterval;
@@ -107,9 +106,9 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
     private SearchStudentsByCurricularCourseParametersBean getOrCreateSearchBean() {
         SearchStudentsByCurricularCourseParametersBean bean = getRenderedObject("searchBean");
         if (bean == null) {
-            bean =
-                    new SearchStudentsByCurricularCourseParametersBean(AcademicAccessRule.getDegreesAccessibleToFunction(
-                            AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser()).collect(Collectors.toSet()));
+            bean = new SearchStudentsByCurricularCourseParametersBean(AcademicAccessRule
+                    .getDegreesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
+                    .collect(Collectors.toSet()));
         }
         return bean;
     }
@@ -119,9 +118,8 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
 
         final SearchStudentsByCurricularCourseParametersBean searchBean = getOrCreateSearchBean();
 
-        final SortedSet<DegreeModuleScope> degreeModuleScopes =
-                new TreeSet<DegreeModuleScope>(
-                        DegreeModuleScope.COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME_AND_BRANCH);
+        final SortedSet<DegreeModuleScope> degreeModuleScopes = new TreeSet<DegreeModuleScope>(
+                DegreeModuleScope.COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME_AND_BRANCH);
         degreeModuleScopes.addAll(searchBean.getDegreeCurricularPlan().getDegreeModuleScopesFor(searchBean.getExecutionYear()));
 
         if (degreeModuleScopes.isEmpty()) {
@@ -187,9 +185,8 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
         final String year = (String) getFromRequest(request, "year");
 
         try {
-            String filename =
-                    getResourceMessage("label.students") + "_" + curricularCourse.getName() + "_("
-                            + curricularCourse.getDegreeCurricularPlan().getName() + ")_" + executionYear.getYear();
+            String filename = getResourceMessage("label.students") + "_" + curricularCourse.getName() + "_("
+                    + curricularCourse.getDegreeCurricularPlan().getName() + ")_" + executionYear.getYear();
 
             response.setContentType("application/vnd.ms-excel");
             response.setHeader("Content-disposition", "attachment; filename=\"" + filename.replace(" ", "_") + ".xls\"");
@@ -315,7 +312,8 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
 
     private void addStatisticsInformation(final Spreadsheet spreadsheet, final ExecutionYear executionYear,
             final Set<Degree> degreesToInclude) {
-        for (final DegreeCurricularPlan degreeCurricularPlan : executionYear.getDegreeCurricularPlans()) {
+
+        executionYear.getExecutionDegreesSet().stream().map(ed -> ed.getDegreeCurricularPlan()).forEach(degreeCurricularPlan -> {
             final Degree degree = degreeCurricularPlan.getDegree();
             if (degreesToInclude == null || degreesToInclude.contains(degree)) {
                 for (final CurricularCourse curricularCourse : degreeCurricularPlan.getAllCurricularCourses()) {
@@ -331,7 +329,8 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
                     }
                 }
             }
-        }
+        });
+
     }
 
     private int countEnrolments(final CurricularCourse curricularCourse, final ExecutionInterval interval) {
@@ -353,7 +352,8 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
     }
 
     protected Set<DegreeType> getAdministratedDegreeTypes() {
-        return AcademicAccessRule.getDegreeTypesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS,
-                Authenticate.getUser()).collect(Collectors.toSet());
+        return AcademicAccessRule
+                .getDegreeTypesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
+                .collect(Collectors.toSet());
     }
 }

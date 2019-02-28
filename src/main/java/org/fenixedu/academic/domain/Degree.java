@@ -832,7 +832,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public DegreeInfo getDegreeInfoFor(final ExecutionYear executionYear) {
-        return executionYear.getDegreeInfo(this);
+        return getDegreeInfosSet().stream().filter(di -> di.getExecutionYear() == executionYear).findFirst().orElse(null);
     }
 
     @Deprecated
@@ -850,7 +850,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             }
         }
 
-        if (result == null && executionYear.hasNextExecutionYear()) {
+        if (result == null && executionYear.getNextExecutionYear() != null) {
             result = getMostRecentDegreeInfo(executionYear.getNextExecutionYear());
         }
 
@@ -881,7 +881,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     private DegreeInfo createCurrentDegreeInfo(final ExecutionYear executionYear) {
         // first let's check if the current degree info exists already
-        final DegreeInfo shouldBeThisOne = executionYear.getDegreeInfo(this);
+        final DegreeInfo shouldBeThisOne = getDegreeInfoFor(executionYear);
         if (shouldBeThisOne != null) {
             return shouldBeThisOne;
         }

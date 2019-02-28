@@ -1333,11 +1333,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     }
 
-    public static Collection<DegreeCurricularPlan> readByAcademicInterval(final AcademicInterval academicInterval) {
-        ExecutionYear year = ExecutionYear.readByAcademicInterval(academicInterval);
-        return year.getDegreeCurricularPlans();
-    }
-
     public ExecutionYear getInauguralExecutionYear() {
         return getExecutionDegreesSet().stream().min(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR)
                 .map(ExecutionDegree::getExecutionYear).orElse(null);

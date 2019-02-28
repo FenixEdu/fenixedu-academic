@@ -82,16 +82,16 @@ public class SearchStudentsByCurricularCourseParametersBean implements Serializa
     }
 
     public SortedSet<DegreeCurricularPlan> getAvailableDegreeCurricularPlans() {
-        final SortedSet<DegreeCurricularPlan> result =
-                new TreeSet<DegreeCurricularPlan>(
-                        DegreeCurricularPlan.DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE);
+        final SortedSet<DegreeCurricularPlan> result = new TreeSet<DegreeCurricularPlan>(
+                DegreeCurricularPlan.DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE);
         if (executionYear != null) {
             final Set<Degree> degrees = administratedDegrees;
-            for (DegreeCurricularPlan plan : executionYear.getDegreeCurricularPlans()) {
+
+            executionYear.getExecutionDegreesSet().stream().map(ed -> ed.getDegreeCurricularPlan()).forEach(plan -> {
                 if (degrees.contains(plan.getDegree())) {
                     result.add(plan);
                 }
-            }
+            });
         }
         return result;
     }

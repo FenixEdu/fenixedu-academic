@@ -77,10 +77,6 @@ public class InfoExecutionYear extends InfoObject {
         return executionYear == null ? null : new InfoExecutionYear(executionYear);
     }
 
-    public String getNextExecutionYearYear() {
-        return getExecutionYear().getNextYearsYearString();
-    }
-
     public boolean after(InfoExecutionYear infoExecutionYear) {
         return getBeginDate().after(infoExecutionYear.getEndDate());
     }

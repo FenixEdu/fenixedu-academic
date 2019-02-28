@@ -829,11 +829,6 @@ public class Registration extends Registration_Base {
         return result;
     }
 
-    final public ExecutionYear getFirstEnrolmentExecutionYear() {
-        final SortedSet<ExecutionYear> sortedEnrolmentsExecutionYears = getSortedEnrolmentsExecutionYears();
-        return sortedEnrolmentsExecutionYears.isEmpty() ? null : sortedEnrolmentsExecutionYears.first();
-    }
-
     public ExecutionYear getFirstCurriculumLineExecutionYear() {
         final SortedSet<ExecutionYear> executionYears = getSortedCurriculumLinesExecutionYears();
         return executionYears.isEmpty() ? null : executionYears.first();
@@ -2066,11 +2061,6 @@ public class Registration extends Registration_Base {
         return null;
     }
 
-    @Override
-    final public ExecutionYear getRegistrationYear() {
-        return super.getRegistrationYear() == null ? getFirstEnrolmentExecutionYear() : super.getRegistrationYear();
-    }
-
     final public boolean isFirstTime(final ExecutionYear executionYear) {
         return getRegistrationYear() == executionYear;
     }
@@ -2144,9 +2134,12 @@ public class Registration extends Registration_Base {
         return null;
     }
 
+    /**
+     * @deprecated Replaced by {@link #getRegistrationYear()}
+     */
+    @Deprecated
     final public ExecutionYear getStartExecutionYear() {
-        final ExecutionYear registrationYear = getRegistrationYear();
-        return registrationYear != null ? registrationYear : ExecutionYear.readByDateTime(getStartDate().toDateTimeAtMidnight());
+        return getRegistrationYear();
     }
 
     final public boolean hasStudentCurricularPlanInExecutionPeriod(final ExecutionSemester executionSemester) {

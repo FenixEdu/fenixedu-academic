@@ -31,8 +31,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
@@ -104,16 +102,6 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
         return getName();
     }
 
-    public Collection<ExecutionDegree> getExecutionDegreesMatching(java.util.function.Predicate<DegreeType> predicate) {
-        return getExecutionDegreesSet().stream()
-                .filter(degree -> predicate.test(degree.getDegreeCurricularPlan().getDegreeType())).collect(Collectors.toList());
-    }
-
-    public Collection<ExecutionDegree> getExecutionDegreesByType(DegreeType type) {
-        return getExecutionDegreesSet().stream().filter(degree -> degree.getDegreeCurricularPlan().getDegreeType() == type)
-                .collect(Collectors.toList());
-    }
-
     public ExecutionYear getNextExecutionYear() {
         AcademicYearCE year = getAcademicInterval().plusYear(1);
         return getExecutionYear(year);
@@ -122,22 +110,6 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     public ExecutionYear getPreviousExecutionYear() {
         AcademicYearCE year = getAcademicInterval().minusYear(1);
         return getExecutionYear(year);
-    }
-
-    public ExecutionYear getPreviousExecutionYear(final Integer previousCivilYears) {
-        if (previousCivilYears >= 0) {
-            AcademicYearCE year = getAcademicInterval().minusYear(previousCivilYears);
-            return getExecutionYear(year);
-        }
-        return null;
-    }
-
-    public boolean hasPreviousExecutionYear() {
-        return getPreviousExecutionYear() != null;
-    }
-
-    public boolean hasNextExecutionYear() {
-        return getNextExecutionYear() != null;
     }
 
     @Override
@@ -165,20 +137,6 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
         return this.compareTo(executionYear) <= 0;
     }
 
-    public boolean isInclusivelyBetween(final ExecutionYear y1, final ExecutionYear y2) {
-        return (isAfterOrEquals(y1) && isBeforeOrEquals(y2));
-    }
-
-    public boolean isExclusivelyBetween(final ExecutionYear y1, final ExecutionYear y2) {
-        return (isAfter(y1) && isBefore(y2));
-    }
-
-    public Collection<ExecutionDegree> getExecutionDegreesSortedByDegreeName() {
-        final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(getExecutionDegreesSet());
-        Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
-        return executionDegrees;
-    }
-
     public ExecutionSemester getExecutionSemesterFor(final Integer semester) {
         for (final ExecutionSemester executionSemester : getExecutionPeriodsSet()) {
             if (executionSemester.isFor(semester)) {
@@ -196,64 +154,10 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
         return Collections.max(this.getExecutionPeriodsSet(), ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
     }
 
-    public List<ExecutionSemester> readNotClosedPublicExecutionPeriods() {
-        final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
-        for (final ExecutionSemester executionSemester : getExecutionPeriodsSet()) {
-            if (!executionSemester.isClosed() && !executionSemester.isNotOpen()) {
-                result.add(executionSemester);
-            }
-        }
-        return result;
-    }
-
-    public ExecutionSemester readExecutionPeriodByName(final String name) {
-        for (final ExecutionSemester executionSemester : getExecutionPeriodsSet()) {
-            if (executionSemester.getName().equals(name)) {
-                return executionSemester;
-            }
-        }
-        return null;
-    }
-
-    public String getNextYearsYearString() {
-        final int yearPart1 = Integer.parseInt(getYear().substring(0, 4)) + 1;
-        final int yearPart2 = Integer.parseInt(getYear().substring(5, 9)) + 1;
-        return Integer.toString(yearPart1) + getYear().charAt(4) + Integer.toString(yearPart2);
-    }
-
-    public DegreeInfo getDegreeInfo(final Degree degree) {
-        for (final DegreeInfo degreeInfo : getDegreeInfosSet()) {
-            if (degreeInfo.getDegree() == degree) {
-                return degreeInfo;
-            }
-        }
-        return null;
-    }
-
     public boolean containsDate(final DateTime dateTime) {
         final DateMidnight begin = getBeginDateYearMonthDay().toDateMidnight();
         final DateMidnight end = getEndDateYearMonthDay().plusDays(1).toDateMidnight();
         return new Interval(begin, end).contains(dateTime);
-    }
-
-    public boolean overlapsInterval(final Interval interval) {
-        final DateMidnight begin = getBeginDateYearMonthDay().toDateMidnight();
-        final DateMidnight end = getEndDateYearMonthDay().plusDays(1).toDateMidnight();
-        return new Interval(begin, end).overlaps(interval);
-    }
-
-    public boolean containsDate(final LocalDate date) {
-        return !getBeginDateYearMonthDay().isAfter(date) && !getEndDateYearMonthDay().isBefore(date);
-    }
-
-    public List<ExecutionDegree> getExecutionDegreesFor(java.util.function.Predicate<DegreeType> predicate) {
-        final List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
-        for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
-            if (predicate.test(executionDegree.getDegreeCurricularPlan().getDegree().getDegreeType())) {
-                result.add(executionDegree);
-            }
-        }
-        return result;
     }
 
     @Override
@@ -267,10 +171,6 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 
     public boolean isClosed() {
         return getState().equals(PeriodState.CLOSED);
-    }
-
-    private boolean isNotOpen() {
-        return getState().equals(PeriodState.NOT_OPEN);
     }
 
     public boolean isFor(final String year) {
@@ -299,59 +199,6 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
         deleteDomainObject();
     }
 
-    public boolean belongsToCivilYear(int civilYear) {
-        return (getBeginCivilYear() == civilYear || getEndCivilYear() == civilYear);
-    }
-
-    public int getBeginCivilYear() {
-        return getBeginDateYearMonthDay().getYear();
-    }
-
-    public int getEndCivilYear() {
-        return getEndDateYearMonthDay().getYear();
-    }
-
-    public boolean belongsToCivilYearInterval(int beginCivilYear, int endCivilYear) {
-        for (int year = beginCivilYear; year <= endCivilYear; year++) {
-            if (belongsToCivilYear(year)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isBeforeCivilYear(int civilYear) {
-        return getEndCivilYear() < civilYear;
-    }
-
-    public boolean isAfterCivilYear(int civilYear) {
-        return getBeginCivilYear() > civilYear;
-    }
-
-    public int getDistanceInCivilYears(final ExecutionYear executionYear) {
-        if (executionYear == null || executionYear == this) {
-            return 0;
-        }
-
-        return Math.abs(getBeginCivilYear() - executionYear.getBeginCivilYear());
-    }
-
-    public Collection<DegreeCurricularPlan> getDegreeCurricularPlans() {
-        final Collection<DegreeCurricularPlan> result = new HashSet<DegreeCurricularPlan>();
-        for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
-            result.add(executionDegree.getDegreeCurricularPlan());
-        }
-        return result;
-    }
-
-    public List<StudentCandidacy> getStudentCandidacies() {
-        final List<StudentCandidacy> result = new ArrayList<StudentCandidacy>();
-        for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
-            result.addAll(executionDegree.getStudentCandidaciesSet());
-        }
-        return result;
-    }
-
     private static class ExecutionPeriodExecutionYearListener extends RelationAdapter<ExecutionYear, ExecutionSemester> {
         @Override
         public void beforeAdd(ExecutionYear executionYear, ExecutionSemester executionSemester) {
@@ -359,15 +206,6 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
                 throw new DomainException("error.ExecutionYear.exceeded.number.of.executionPeriods", executionYear.getYear());
             }
         }
-    }
-
-    public ExecutionSemester getExecutionSemester(final YearMonthDay date) {
-        for (final ExecutionSemester semester : getExecutionPeriodsSet()) {
-            if (semester.containsDay(date)) {
-                return semester;
-            }
-        }
-        return null;
     }
 
     // -------------------------------------------------------------
@@ -415,30 +253,10 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
                 .orElse(null);
     }
 
-    static public List<ExecutionYear> readOpenExecutionYears() {
-        final List<ExecutionYear> result = new ArrayList<ExecutionYear>();
-        for (final ExecutionYear executionYear : Bennu.getInstance().getExecutionYearsSet()) {
-            if (executionYear.isOpen()) {
-                result.add(executionYear);
-            }
-        }
-        return result;
-    }
-
     static public List<ExecutionYear> readNotClosedExecutionYears() {
         final List<ExecutionYear> result = new ArrayList<ExecutionYear>();
         for (final ExecutionYear executionYear : Bennu.getInstance().getExecutionYearsSet()) {
             if (!executionYear.isClosed()) {
-                result.add(executionYear);
-            }
-        }
-        return result;
-    }
-
-    public static List<ExecutionYear> readNotOpenExecutionYears() {
-        final List<ExecutionYear> result = new ArrayList<ExecutionYear>();
-        for (final ExecutionYear executionYear : Bennu.getInstance().getExecutionYearsSet()) {
-            if (executionYear.isNotOpen()) {
                 result.add(executionYear);
             }
         }
@@ -553,50 +371,18 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
         return readByDateTime(date.toDateTimeAtMidnight());
     }
 
-    static public List<ExecutionYear> readExecutionYearsByCivilYear(int civilYear) {
-        final List<ExecutionYear> result = new ArrayList<ExecutionYear>();
-
-        for (final ExecutionYear executionYear : executionYearSearchCache.map.get(civilYear)) {
-            if (executionYear.belongsToCivilYear(civilYear)) {
-                result.add(executionYear);
-            }
-        }
-
-        return result;
-
-    }
-
     static public ExecutionYear readFirstExecutionYear() {
-        for (final ExecutionYear executionYear : Bennu.getInstance().getExecutionYearsSet()) {
-            if (!executionYear.hasPreviousExecutionYear()) {
-                return executionYear;
-            }
-        }
-        return null;
+        return Bennu.getInstance().getExecutionYearsSet().stream().min(Comparator.naturalOrder()).orElse(null);
     }
 
     static public ExecutionYear readLastExecutionYear() {
-        for (final ExecutionYear executionYear : Bennu.getInstance().getExecutionYearsSet()) {
-            if (!executionYear.hasNextExecutionYear()) {
-                return executionYear;
-            }
-        }
-        return null;
+        return Bennu.getInstance().getExecutionYearsSet().stream().max(Comparator.naturalOrder()).orElse(null);
     }
 
     public static ExecutionYear readByAcademicInterval(AcademicInterval academicInterval) {
         for (final ExecutionYear executionYear : Bennu.getInstance().getExecutionYearsSet()) {
             if (executionYear.getAcademicInterval().equals(academicInterval)) {
                 return executionYear;
-            }
-        }
-        return null;
-    }
-
-    public ExecutionDegree getExecutionDegreeByAcronym(String acronym) {
-        for (ExecutionDegree executionDegree : getExecutionDegreesSet()) {
-            if (executionDegree.getDegree().getSigla().equals(acronym)) {
-                return executionDegree;
             }
         }
         return null;

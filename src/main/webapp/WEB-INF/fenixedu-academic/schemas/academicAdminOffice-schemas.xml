@@ -487,7 +487,7 @@
 	type="org.fenixedu.academic.domain.student.Registration" bundle="ACADEMIC_OFFICE_RESOURCES">
 
 	<slot name="registrationYear" key="label.registrationYear" layout="menu-select" required="true">
-		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.OpenExecutionYearsProvider" />
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.NotClosedExecutionYearsProvider" />
 		<property name="format" value="${qualifiedName}" />
 	</slot>
 	<slot name="startDate" key="label.startDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
@@ -1283,7 +1283,7 @@
 		layout="menu-select-postback"
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
-			value="org.fenixedu.academic.ui.renderers.providers.OpenExecutionYearsProvider" />
+			value="org.fenixedu.academic.ui.renderers.providers.NotClosedExecutionYearsProvider" />
 		<property name="format" value="${year}" />
 		<property name="destination" value="executionYearPostBack"/>
 	</slot>
@@ -1488,7 +1488,7 @@
 		constructor="registration,executionYear,regimeType">
 	<slot name="registration" hidden="true"/>
 	<slot name="executionYear" key="label.executionYear" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.OpenExecutionYearsProvider" />
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.NotClosedExecutionYearsProvider" />
 		<property name="format" value="${year}" />
 		<property name="sortBy" value="year=desc" />
 	</slot>

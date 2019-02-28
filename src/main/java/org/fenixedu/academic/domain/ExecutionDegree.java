@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -575,6 +576,16 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         }
 
         return null;
+    }
+    
+    public static List<ExecutionDegree> getExecutionDegreesFor(ExecutionYear executionYear, Predicate<DegreeType> predicate) {
+        final List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
+        for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
+            if (predicate.test(executionDegree.getDegreeCurricularPlan().getDegree().getDegreeType())) {
+                result.add(executionDegree);
+            }
+        }
+        return result;
     }
 
     public List<Coordinator> getResponsibleCoordinators() {

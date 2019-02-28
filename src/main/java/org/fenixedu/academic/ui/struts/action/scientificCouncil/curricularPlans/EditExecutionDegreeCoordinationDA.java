@@ -203,14 +203,16 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
             }
         }
 
-        List<ExecutionDegree> bachelors = sessionBean.getExecutionYear().getExecutionDegreesFor(DegreeType::isBolonhaDegree);
+        List<ExecutionDegree> bachelors =
+                ExecutionDegree.getExecutionDegreesFor(sessionBean.getExecutionYear(), DegreeType::isBolonhaDegree);
         request.setAttribute("bachelors", bachelors);
 
-        List<ExecutionDegree> masters = sessionBean.getExecutionYear().getExecutionDegreesFor(DegreeType::isBolonhaMasterDegree);
+        List<ExecutionDegree> masters =
+                ExecutionDegree.getExecutionDegreesFor(sessionBean.getExecutionYear(), DegreeType::isBolonhaMasterDegree);
         request.setAttribute("masters", masters);
 
         List<ExecutionDegree> integratedMasters =
-                sessionBean.getExecutionYear().getExecutionDegreesFor(DegreeType::isIntegratedMasterDegree);
+                ExecutionDegree.getExecutionDegreesFor(sessionBean.getExecutionYear(), DegreeType::isIntegratedMasterDegree);
         request.setAttribute("integratedMasters", integratedMasters);
 
         List<ExecutionDegree> otherDegrees =
