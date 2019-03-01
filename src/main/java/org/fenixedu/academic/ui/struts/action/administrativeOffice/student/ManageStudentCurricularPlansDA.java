@@ -38,7 +38,6 @@ import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.joda.time.LocalDate;
-import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -240,7 +239,7 @@ public class ManageStudentCurricularPlansDA extends FenixDispatchAction {
 
     @Atomic
     private void editService(StudentCurricularPlanBean bean) {
-        bean.getStudentCurricularPlan().setStartDate(new YearMonthDay(bean.getStartDate()));
+        bean.getStudentCurricularPlan().editStart(bean.getExecutionInterval());
     }
 
     private StudentCurricularPlan getStudentCurricularPlan(HttpServletRequest request) {

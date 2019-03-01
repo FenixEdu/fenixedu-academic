@@ -24,6 +24,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 
+<%@ page isELIgnored="true"%>
 
 <h1>
 	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"
@@ -65,7 +66,12 @@
 	</fr:layout>
 	<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="<%= request.getAttribute("studentCurricularPlanBean").getClass().getName() %>">
 		<fr:slot name="degreeCurricularPlan.name" readOnly="true" key="label.manageStudentCurricularPlans.degreeCurricularPlan" />
-		<fr:slot name="startDate" required="true" key="label.manageStudentCurricularPlans.startDate"/>
+<%-- 		<fr:slot name="startDate" required="true" key="label.manageStudentCurricularPlans.startDate"/> --%>
+		<fr:slot name="executionInterval" layout="menu-select" key="label.executionYear" required="true" >
+			<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider"/>
+			<fr:property name="format" value="${name}" />
+			<fr:property name="sortBy" value="name=desc"/>
+		</fr:slot>
 	</fr:schema>
 	<fr:destination name="invalid" path="/manageStudentCurricularPlans.do?method=prepareEditInvalid"/>
 	<fr:destination name="cancel" path='<%= "/manageStudentCurricularPlans.do?method=list&registrationId=" + registrationId.toString() %>'/>

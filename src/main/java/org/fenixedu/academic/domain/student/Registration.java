@@ -235,20 +235,11 @@ public class Registration extends Registration_Base {
     private StudentCurricularPlan createStudentCurricularPlan(final DegreeCurricularPlan degreeCurricularPlan,
             final ExecutionYear executionYear, final CycleType cycleType) {
 
-        final YearMonthDay startDay;
-        final ExecutionSemester executionSemester;
-
-        if (executionYear.isCurrent()) {
-            startDay = new YearMonthDay();
-        } else {
-            startDay = executionYear.getBeginDateYearMonthDay();
-        }
-
-        executionSemester = executionYear.getFirstExecutionPeriod();
+        final YearMonthDay startDay = executionYear.isCurrent() ? new YearMonthDay() : executionYear.getBeginDateYearMonthDay();
+        final ExecutionSemester executionSemester = executionYear.getFirstExecutionPeriod();
 
         return StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan, startDay, executionSemester,
                 cycleType);
-
     }
 
     private static DateTime calculateStartDate(final ExecutionYear executionYear) {

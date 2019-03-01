@@ -4279,6 +4279,11 @@ relation StudentCurricularPlanDegreeCurricularPlan {
     DegreeCurricularPlan playsRole degreeCurricularPlan;
 }
 
+relation StudentCurricularPlanExecutionInterval {
+    StudentCurricularPlan playsRole startedStudentCurricularPlans { multiplicity *; }
+    protected ExecutionInterval playsRole startExecutionInterval;    
+}
+
 relation StudentCurricularPlanEnrolment {
     StudentCurricularPlan playsRole studentCurricularPlan;
     Enrolment playsRole enrolments {

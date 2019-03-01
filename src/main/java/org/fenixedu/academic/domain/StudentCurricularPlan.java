@@ -189,29 +189,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         setGivenCredits(Double.valueOf(0));
     }
 
-    private StudentCurricularPlan(Registration registration, DegreeCurricularPlan degreeCurricularPlan, YearMonthDay startDate) {
+    private StudentCurricularPlan(Registration registration, DegreeCurricularPlan degreeCurricularPlan, YearMonthDay startDate,
+            ExecutionSemester executionSemester, CycleType cycleType) {
         this();
-        init(registration, degreeCurricularPlan, startDate);
-    }
-
-    static public StudentCurricularPlan createWithEmptyStructure(final Registration registration,
-            final DegreeCurricularPlan degreeCurricularPlan, final YearMonthDay startDate) {
-
-        final StudentCurricularPlan result = new StudentCurricularPlan(registration, degreeCurricularPlan, startDate);
-
-        CurriculumGroupFactory.createRoot(result, degreeCurricularPlan.getRoot(), null);
-
-        return result;
-    }
-
-    static public StudentCurricularPlan createWithEmptyStructure(final Registration registration,
-            final DegreeCurricularPlan degreeCurricularPlan, final CycleType cycleType, final YearMonthDay startDate) {
-
-        final StudentCurricularPlan result = new StudentCurricularPlan(registration, degreeCurricularPlan, startDate);
-
-        CurriculumGroupFactory.createRoot(result, degreeCurricularPlan.getRoot(), cycleType);
-
-        return result;
+        init(registration, degreeCurricularPlan, startDate, executionSemester);
+        CurriculumGroupFactory.createRoot(this, getDegreeCurricularPlan().getRoot(), executionSemester, cycleType); // createStructure
     }
 
     static public StudentCurricularPlan createBolonhaStudentCurricularPlan(Registration registration,
@@ -226,27 +208,19 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return new StudentCurricularPlan(registration, degreeCurricularPlan, startDate, executionSemester, cycleType);
     }
 
-    private StudentCurricularPlan(Registration registration, DegreeCurricularPlan degreeCurricularPlan, YearMonthDay startDate,
-            ExecutionSemester executionSemester, CycleType cycleType) {
+    private void init(Registration registration, DegreeCurricularPlan degreeCurricularPlan, YearMonthDay startDate,
+            ExecutionInterval startInterval) {
 
-        this(registration, degreeCurricularPlan, startDate);
-        createStructure(executionSemester, cycleType);
-    }
-
-    private void createStructure(final ExecutionSemester executionSemester, CycleType cycleType) {
-        CurriculumGroupFactory.createRoot(this, getDegreeCurricularPlan().getRoot(), executionSemester, cycleType);
-    }
-
-    private void init(Registration registration, DegreeCurricularPlan degreeCurricularPlan, YearMonthDay startDate) {
-
-        checkParameters(registration, degreeCurricularPlan, startDate);
+        checkParameters(registration, degreeCurricularPlan, startDate, startInterval);
 
         setDegreeCurricularPlan(degreeCurricularPlan);
         setRegistration(registration);
         setStartDateYearMonthDay(startDate);
+        setStartExecutionInterval(startInterval);
     }
 
-    private void checkParameters(Registration registration, DegreeCurricularPlan degreeCurricularPlan, YearMonthDay startDate) {
+    private void checkParameters(Registration registration, DegreeCurricularPlan degreeCurricularPlan, YearMonthDay startDate,
+            ExecutionInterval startInterval) {
 
         if (registration == null) {
             throw new DomainException("error.studentCurricularPlan.registration.cannot.be.null");
@@ -257,10 +231,31 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         if (startDate == null) {
             throw new DomainException("error.studentCurricularPlan.startDate.cannot.be.null");
         }
+        if (startInterval == null) {
+            throw new DomainException("error.studentCurricularPlan.startInterval.cannot.be.null");
+        }
 
         if (registration.getStudentCurricularPlan(degreeCurricularPlan) != null) {
             throw new DomainException("error.registrationAlreadyHasSCPWithGivenDCP");
         }
+
+        if (registration.getStudentCurricularPlansSet().stream().anyMatch(
+                scp -> scp.getStartExecutionInterval() == startInterval && scp.getStartDateYearMonthDay().equals(startDate))) {
+            throw new DomainException("error.registrationAlreadyHasSCPWithGivenStartIntervalAndDates");
+        }
+    }
+
+    public void editStart(final ExecutionInterval startInterval) {
+        final YearMonthDay startDate = startInterval.getBeginDateYearMonthDay();
+
+        if (getRegistration().getStudentCurricularPlansSet().stream().filter(scp -> scp != this).anyMatch(
+                scp -> (scp.getStartExecutionInterval() == startInterval || scp.getStartExecutionYear() == startInterval)
+                        && scp.getStartDateYearMonthDay().equals(startDate))) {
+            throw new DomainException("error.registrationAlreadyHasSCPWithGivenStartIntervalAndDates");
+        }
+
+        setStartExecutionInterval(startInterval.convert(ExecutionSemester.class));
+        setStartDate(startDate);
     }
 
     public void delete() throws DomainException {
@@ -275,6 +270,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             ;
         }
 
+        setStartExecutionInterval(null);
         setDegreeCurricularPlan(null);
         setStudent(null);
         setRootDomainObject(null);
@@ -413,6 +409,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public void setStartDate(YearMonthDay startDate) {
+        if (startDate != null && getStartExecutionInterval() != null
+                && !getStartExecutionInterval().getAcademicInterval().contains(startDate.toDateTimeAtMidnight())) {
+            throw new DomainException("error.StudentCurricularPlan.setting.startDate.outsideExecutionInterval");
+        }
         super.setStartDateYearMonthDay(startDate);
     }
 
@@ -849,11 +849,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return result;
     }
 
-    final public ExecutionYear getStartExecutionYear() {
-        return ExecutionYear.getExecutionYearByDate(getStartDateYearMonthDay());
+    public ExecutionYear getStartExecutionYear() {
+        return getStartExecutionInterval() != null ? getStartExecutionInterval().convert(ExecutionYear.class) : ExecutionYear
+                .getExecutionYearByDate(getStartDateYearMonthDay());
     }
 
     public ExecutionSemester getStartExecutionPeriod() {
+        if (getStartExecutionInterval() != null) {
+            return getStartExecutionInterval().convert(ExecutionSemester.class);
+        }
+
         ExecutionSemester result = null;
 
         final YearMonthDay startDate = getStartDateYearMonthDay();
