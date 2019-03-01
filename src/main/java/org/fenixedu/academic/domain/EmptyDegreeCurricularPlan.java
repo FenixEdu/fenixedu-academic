@@ -73,16 +73,16 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     }
 
     public static synchronized void init() {
-        synchronized (EmptyDegreeCurricularPlan.class) {
-            final EmptyDegreeCurricularPlan existing = getInstance();
-            if (existing == null) {
-                final EmptyDegreeCurricularPlan newinstance = new EmptyDegreeCurricularPlan();
-                newinstance.setNameOnSuper("Plano Curricular de Unidades Isoladas");
-                newinstance.setDegreeOnSuper(EmptyDegree.getInstance());
-                RootCourseGroup.createRoot(newinstance, newinstance.getName(), newinstance.getName());
-                instance = newinstance;
-            }
-        }
+//        synchronized (EmptyDegreeCurricularPlan.class) {
+//            final EmptyDegreeCurricularPlan existing = getInstance();
+//            if (existing == null) {
+//                final EmptyDegreeCurricularPlan newinstance = new EmptyDegreeCurricularPlan();
+//                newinstance.setNameOnSuper("Plano Curricular de Unidades Isoladas");
+//                newinstance.setDegreeOnSuper(EmptyDegree.getInstance());
+//                RootCourseGroup.createRoot(newinstance, newinstance.getName(), newinstance.getName());
+//                instance = newinstance;
+//            }
+//        }
     }
 
     private void setDegreeOnSuper(final Degree degree) {
@@ -114,11 +114,6 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     @Override
     public CurricularStage getCurricularStage() {
         return CurricularStage.APPROVED;
-    }
-
-    @Override
-    public void delete() {
-        throw new DomainException("EmptyDegreeCurricularPlan.not.available");
     }
 
     @Override
@@ -259,10 +254,10 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
         throw new DomainException("EmptyDegreeCurricularPlan.not.available");
     }
 
-    @Override
-    public void setDegree(Degree degree) {
-        throw new DomainException("EmptyDegreeCurricularPlan.not.available");
-    }
+//    @Override
+//    public void setDegree(Degree degree) {
+//        throw new DomainException("EmptyDegreeCurricularPlan.not.available");
+//    }
 
     @Override
     public void setRoot(RootCourseGroup courseGroup) {

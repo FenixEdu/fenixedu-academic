@@ -70,14 +70,14 @@ public class EmptyDegree extends EmptyDegree_Base {
     }
 
     public static void init() {
-        synchronized (EmptyDegree.class) {
-            final EmptyDegree existing = getInstance();
-            if (existing == null) {
-                final EmptyDegree newinstance = new EmptyDegree();
-                newinstance.setNomeOnSuper("Curso de Unidades Isoladas");
-                instance = newinstance;
-            }
-        }
+//        synchronized (EmptyDegree.class) {
+//            final EmptyDegree existing = getInstance();
+//            if (existing == null) {
+//                final EmptyDegree newinstance = new EmptyDegree();
+//                newinstance.setNomeOnSuper("Curso de Unidades Isoladas");
+//                instance = newinstance;
+//            }
+//        }
     }
 
     private void setNomeOnSuper(final String nome) {
@@ -96,11 +96,11 @@ public class EmptyDegree extends EmptyDegree_Base {
         throw new DomainException("EmptyDegree.not.available");
     }
 
-    @Override
-    protected void checkForDeletionBlockers(Collection<String> blockers) {
-        super.checkForDeletionBlockers(blockers);
-        blockers.add(BundleUtil.getString(Bundle.APPLICATION, "EmptyDegree.not.available"));
-    }
+//    @Override
+//    protected void checkForDeletionBlockers(Collection<String> blockers) {
+//        super.checkForDeletionBlockers(blockers);
+//        blockers.add(BundleUtil.getString(Bundle.APPLICATION, "EmptyDegree.not.available"));
+//    }
 
     @Override
     public DegreeCurricularPlan createDegreeCurricularPlan(String name, GradeScale gradeScale, Person creator,
@@ -153,10 +153,10 @@ public class EmptyDegree extends EmptyDegree_Base {
         throw new DomainException("EmptyDegree.not.available");
     }
 
-    @Override
-    public void setDegreeType(final DegreeType degreeType) {
-        throw new DomainException("EmptyDegree.not.available");
-    }
+//    @Override
+//    public void setDegreeType(final DegreeType degreeType) {
+//        throw new DomainException("EmptyDegree.not.available");
+//    }
 
     @Override
     public boolean isBolonhaDegree() {
