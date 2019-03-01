@@ -141,13 +141,21 @@ public class Registration extends Registration_Base {
         setRegistrationProtocol(RegistrationProtocol.getDefault());
     }
 
-    private Registration(final Person person, final DateTime start, final Integer registrationNumber, final Degree degree) {
+    private Registration(final Person person, final DateTime start, final Integer registrationNumber, final Degree degree,
+            final ExecutionYear executionYear) {
         this();
+
+        if (executionYear == null) {
+            throw new DomainException("error.creation.Registration.executionYearIsRequired");
+        }
+
         setStudent(person.getStudent() != null ? person.getStudent() : new Student(person, registrationNumber));
         setNumber(registrationNumber == null ? getStudent().getNumber() : registrationNumber);
         setStartDate(start.toYearMonthDay());
         setDegree(degree);
-        RegistrationState.createRegistrationState(this, AccessControl.getPerson(), start, RegistrationStateType.REGISTERED);
+        setRegistrationYear(executionYear);
+        RegistrationState.createRegistrationState(this, AccessControl.getPerson(), start, RegistrationStateType.REGISTERED,
+                executionYear.getFirstExecutionPeriod());
 
         //Emit the Signal
         Signal.emit(REGISTRATION_CREATE_SIGNAL, new DomainObjectEvent<>(this));
@@ -168,13 +176,9 @@ public class Registration extends Registration_Base {
             final RegistrationProtocol protocol, final CycleType cycleType, final ExecutionYear executionYear,
             final Integer studentNumber) {
 
-        if (executionYear == null) {
-            throw new DomainException("error.creation.Registration.executionYearIsRequired");
-        }
-
         final Degree degree = degreeCurricularPlan == null ? null : degreeCurricularPlan.getDegree();
-        Registration registration = new Registration(person, calculateStartDate(executionYear), studentNumber, degree);
-        registration.setRegistrationYear(executionYear);
+        Registration registration =
+                new Registration(person, calculateStartDate(executionYear), studentNumber, degree, executionYear);
         registration.setRequestedChangeDegree(false);
         registration.setRequestedChangeBranch(false);
         registration.setRegistrationProtocol(protocol == null ? RegistrationProtocol.getDefault() : protocol);
@@ -206,13 +210,8 @@ public class Registration extends Registration_Base {
     private Registration(final Person person, final Integer registrationNumber, final RegistrationProtocol protocol,
             final ExecutionYear executionYear, final Degree degree) {
 
-        this(person, calculateStartDate(executionYear), registrationNumber, degree);
+        this(person, calculateStartDate(executionYear), registrationNumber, degree, executionYear);
 
-        if (executionYear == null) {
-            throw new DomainException("error.creation.Registration.executionYearIsRequired");
-        }
-
-        setRegistrationYear(executionYear);
         setRequestedChangeDegree(false);
         setRequestedChangeBranch(false);
         setRegistrationProtocol(protocol == null ? RegistrationProtocol.getDefault() : protocol);
@@ -2013,8 +2012,9 @@ public class Registration extends Registration_Base {
 
         if (conclusion != null && conclusion.getTargetState() != null
                 && !conclusion.getTargetState().equals(getActiveStateType())) {
+            final ExecutionYear conclusionYear = curriculumGroup.getConclusionYear();
             RegistrationState.createRegistrationState(this, AccessControl.getPerson(), new DateTime(),
-                    conclusion.getTargetState());
+                    conclusion.getTargetState(), conclusionYear != null ? conclusionYear.getLastExecutionPeriod() : null);
         }
 
     }

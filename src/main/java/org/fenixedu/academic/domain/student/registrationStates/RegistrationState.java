@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
 
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -235,6 +236,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
             org.fenixedu.academic.domain.student.RegistrationStateLog.createRegistrationStateLog(getRegistration(),
                     Bundle.MESSAGING, "log.registration.registrationstate.removed", getStateType().getDescription(),
                     getRemarks());
+            setExecutionInterval(null);
             setRegistration(null);
             setResponsiblePerson(null);
             setRootDomainObject(null);
@@ -287,11 +289,12 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     }
 
     public static RegistrationState createRegistrationState(Registration registration, Person responsible, DateTime creation,
-            RegistrationStateType stateType) {
+            RegistrationStateType stateType, ExecutionInterval executionInterval) {
         RegistrationStateBean bean = new RegistrationStateBean(registration);
         bean.setResponsible(responsible);
         bean.setStateDateTime(creation);
         bean.setStateType(stateType);
+        bean.setExecutionInterval(executionInterval);
         return createRegistrationState(bean);
     }
 
