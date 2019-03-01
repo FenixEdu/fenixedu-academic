@@ -3,6 +3,7 @@ package org.fenixedu.academic.domain.accounting.calculator;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -119,6 +120,11 @@ public abstract class CreditEntry extends AccountingEntry implements Cloneable {
 
     public Set<PartialPayment> getPartialPayments() {
         return Collections.unmodifiableSet(partialPayments);
+    }
+
+    public Stream<PartialPayment> getSortedPartialPayments() {
+        return partialPayments.stream().sorted((a,b) -> Comparator.comparing(DebtEntry::getCreated).thenComparing(DebtEntry::getDate)
+                .thenComparing(DebtEntry::getId).compare(a.getDebtEntry(), b.getDebtEntry()));
     }
 
     @Override

@@ -383,7 +383,7 @@ public class DebtInterestCalculator {
                 final BigDecimal[] amount = new BigDecimal[] {refund.getAmount()};
 
                 getPayments().filter(p -> p.getCreated().isBefore(refund.getCreated())).forEach(payment -> {
-                    payment.getPartialPayments().stream().filter(p -> p.getDebtEntry() instanceof Debt).forEach(entry -> {
+                    payment.getSortedPartialPayments().filter(p -> p.getDebtEntry() instanceof Debt).forEach(entry -> {
                         final BigDecimal currentAmount = amount[0];
                         if (currentAmount.signum() == 1) {
                             BigDecimal adjustment = entry.getAmount();
