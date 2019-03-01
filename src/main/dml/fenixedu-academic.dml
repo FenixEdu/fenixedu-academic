@@ -4306,10 +4306,8 @@ relation StudentEnrolmentLog {
 }
 
 relation StudentExecutionYear {
-    student.Registration playsRole students {
-        multiplicity *;
-    }
-    ExecutionYear playsRole registrationYear;
+    student.Registration playsRole students { multiplicity *; }
+	ExecutionYear playsRole registrationYear { multiplicity 1..1; }
 }
 
 relation RegistrationExternalEnrolment {
