@@ -275,6 +275,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             setSender(null);
         }
 
+        setCalendar(null);
         setUnit(null);
         setDegreeType(null);
         setRootDomainObject(null);
