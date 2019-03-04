@@ -19,9 +19,17 @@
 package org.fenixedu.academic.domain.accounting;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accounting.calculator.AccountingEntry;
+import org.fenixedu.academic.domain.accounting.calculator.DebtExemption;
+import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
+import org.fenixedu.academic.domain.accounting.calculator.FineExemption;
+import org.fenixedu.academic.domain.accounting.calculator.InterestExemption;
+import org.fenixedu.academic.domain.accounting.calculator.PaymentPlaceholder;
+import org.fenixedu.academic.domain.accounting.calculator.Refund;
 import org.fenixedu.academic.domain.accounting.events.EventExemptionJustification;
 import org.fenixedu.academic.domain.accounting.events.EventExemptionJustificationType;
 import org.fenixedu.academic.domain.accounting.events.ExemptionJustification;
@@ -31,6 +39,10 @@ import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+
+import com.twilio.rest.autopilot.v1.assistant.Task;
+
+import pt.ist.fenixframework.FenixFramework;
 
 public abstract class Exemption extends Exemption_Base {
 
@@ -82,8 +94,21 @@ public abstract class Exemption extends Exemption_Base {
         if (recalculateEventState) {
             event.recalculateState(new DateTime());
         }
-
         super.deleteDomainObject();
+        if (!event.getRefundSet().isEmpty()) {
+            final DebtInterestCalculator calculator = event.getDebtInterestCalculator(new DateTime());
+            final AccountingEntry accountingEntry = calculator.getAccountingEntries().stream()
+                .filter(e -> !(e instanceof PaymentPlaceholder))
+                .sorted(Comparator.comparing(AccountingEntry::getCreated).thenComparing(AccountingEntry::getDate).thenComparing(AccountingEntry::getId).reversed())
+                .findFirst().orElse(null);
+            if (accountingEntry instanceof DebtExemption || accountingEntry instanceof FineExemption || accountingEntry instanceof InterestExemption) {
+                final Exemption exemption = FenixFramework.getDomainObject(accountingEntry.getId());
+                exemption.delete(recalculateEventState);
+            } else if (accountingEntry instanceof Refund) {
+                final org.fenixedu.academic.domain.accounting.Refund refund = FenixFramework.getDomainObject(accountingEntry.getId());
+                refund.delete();
+            }
+        }
     }
 
     @Override

@@ -285,6 +285,10 @@ public class DebtInterestCalculator {
         return sum(Stream.of(getDebtAmount(), getInterestAmount(), getFineAmount()));
     }
 
+    public BigDecimal getTotalRefundAmount() {
+        return sum(getRefunds(), Refund::getAmount);
+    }
+
     private Stream<Interest> getInterestStream() {
         return getDebtStream().flatMap(d -> d.getInterests().stream());
     }
@@ -375,12 +379,25 @@ public class DebtInterestCalculator {
 
             if (creditEntry instanceof Refund) {
                 Refund refund = ((Refund)creditEntry);
+
+                final BigDecimal[] amount = new BigDecimal[] {refund.getAmount()};
+
                 getPayments().filter(p -> p.getCreated().isBefore(refund.getCreated())).forEach(payment -> {
-                    payment.getPartialPayments().stream().filter(p -> p.getDebtEntry() instanceof Debt).forEach(entry -> {
-                        BigDecimal adjustment = entry.getAmount().negate();
-                        entry.getDebtEntry().addPartialPayment(refund, adjustment);
+                    payment.getSortedPartialPayments().filter(p -> p.getDebtEntry() instanceof Debt).forEach(entry -> {
+                        final BigDecimal currentAmount = amount[0];
+                        if (currentAmount.signum() == 1) {
+                            BigDecimal adjustment = entry.getAmount();
+                            if (adjustment.subtract(currentAmount).signum() > -1) {
+                                adjustment = currentAmount;
+                                amount[0] = BigDecimal.ZERO;
+                            } else {
+                                amount[0] = currentAmount.subtract(adjustment);
+                            }
+                            entry.getDebtEntry().addPartialPayment(refund, adjustment.negate());
+                        }
                     });
                 });
+
             } else {
                 for (Debt debt : getDebtsOrderedByDueDate()) {
                     debt.deposit(creditEntry);

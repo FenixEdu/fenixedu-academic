@@ -331,10 +331,17 @@ public class AccountingManagementService {
 
     }
 
+    @Deprecated
     @Atomic
     public Refund refundEvent(final Event event, final User creator, EventExemptionJustificationType
             justificationType, String reason) {
         return event.refund(creator, justificationType, reason);
+    }
+
+    @Atomic
+    public Refund refundEvent(final Event event, final User creator, EventExemptionJustificationType
+            justificationType, String reason, BigDecimal value) {
+        return event.refund(creator, justificationType, reason, value);
     }
 
     @Atomic

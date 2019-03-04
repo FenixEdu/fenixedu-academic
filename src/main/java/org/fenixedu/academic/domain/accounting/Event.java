@@ -678,9 +678,12 @@ public abstract class Event extends Event_Base {
         super.setResponsibleForCancel(responsible);
         super.setCancelJustification(cancelJustification);
     }
-
     public void exempt(Person responsible, String justification) {
-        DateTime when = new DateTime();
+        exempt(responsible, EventExemptionJustificationType.CANCELLED, justification);
+    }
+
+    public void exempt(Person responsible, EventExemptionJustificationType justificationType, String justification) {
+        DateTime when = new DateTime().minusSeconds(2);
 
         DebtInterestCalculator debtInterestCalculator = getDebtInterestCalculator(when);
         Money dueInterestAmount = new Money(debtInterestCalculator.getDueInterestAmount());
@@ -690,7 +693,7 @@ public abstract class Event extends Event_Base {
         if (dueInterestAmount.isPositive()) {
             FixedAmountInterestExemption fixedAmountInterestExemption =
                     new FixedAmountInterestExemption(this, responsible, dueInterestAmount,
-                            EventExemptionJustificationType.CANCELLED, new DateTime(), justification);
+                            justificationType, new DateTime(), justification);
             fixedAmountInterestExemption.setWhenCreated(when);
             when = when.plusSeconds(1);
         }
@@ -698,14 +701,14 @@ public abstract class Event extends Event_Base {
         if (dueFineAmount.isPositive()) {
             FixedAmountFineExemption fixedAmountFineExemption =
                     new FixedAmountFineExemption(this, responsible, dueFineAmount,
-                            EventExemptionJustificationType.CANCELLED, new DateTime(), justification);
+                            justificationType, new DateTime(), justification);
             fixedAmountFineExemption.setWhenCreated(when);
             when = when.plusSeconds(1);
         }
 
         if (dueAmount.isPositive()) {
             EventExemption eventExemption = new EventExemption(this, responsible, dueAmount,
-                    EventExemptionJustificationType.CANCELLED, new DateTime(), justification);
+                    justificationType, new DateTime(), justification);
             eventExemption.setWhenCreated(when);
         }
         
@@ -1147,52 +1150,39 @@ public abstract class Event extends Event_Base {
                 .isAfter(d.getDueDate()));
     }
 
+    @Deprecated
     @Atomic(mode = Atomic.TxMode.WRITE)
     public Refund refund(User creator, EventExemptionJustificationType justificationType, String reason) {
+        final DateTime now = new DateTime().minusSeconds(2);
+        DebtInterestCalculator debtInterestCalculator = getDebtInterestCalculator(now);
+        return refund(creator, justificationType, reason, debtInterestCalculator.getPaidDebtAmount());
+    }
+
+    @Atomic(mode = Atomic.TxMode.WRITE)
+    public Refund refund(User creator, EventExemptionJustificationType justificationType, String reason, BigDecimal value) {
         if (!isRefundable()) {
             throw new DomainException("error.event.cannot.be.refunded");
+        }
+        if (value.signum() == 0) {
+            throw new DomainException("error.accounting.refund.not.possible.zero.value");
         }
 
         //force open state before exemption creation
         super.setEventState(EventState.OPEN);
         
-        final DateTime now = new DateTime().minusSeconds(2);
+        final DateTime now = new DateTime().minusSeconds(3);
         
         DebtInterestCalculator debtInterestCalculator = getDebtInterestCalculator(now);
-        debtInterestCalculator.getRefunds().findAny().ifPresent(refund -> {
-            throw new DomainException(Optional.of(Bundle.ACCOUNTING), "error.accounting.refund.not.possible", refund.getCreated
-                    ().toString("dd-MM-yyyy HH:mm:ss"));
-        });
-        final BigDecimal paidDebtAmount = debtInterestCalculator.getPaidDebtAmount();
-        final Refund refund = new Refund(this, new Money(paidDebtAmount), creator, false, now);
+        final BigDecimal paidDebtAmount = debtInterestCalculator.getPaidDebtAmount().subtract(debtInterestCalculator.getTotalRefundAmount());
+        if (paidDebtAmount.subtract(value).signum() < 0) {
+            throw new DomainException(Optional.of(Bundle.ACCOUNTING), "error.accounting.refund.not.possible");
+        }
+        if (paidDebtAmount.subtract(value).signum() != 0 && debtInterestCalculator.getDueAmount().signum() == 1) {
+            throw new DomainException(Optional.of(Bundle.ACCOUNTING), "error.accounting.refund.not.possible.openDebt.notTotalValue");
+        }
+        final Refund refund = new Refund(this, new Money(value), creator, false, now);
         
-        debtInterestCalculator = getDebtInterestCalculator(now);
-
-        final BigDecimal dueAmount = debtInterestCalculator.getDueAmount();
-        final BigDecimal dueFineAmount = debtInterestCalculator.getDueFineAmount();
-        final BigDecimal dueInterestAmount = debtInterestCalculator.getDueInterestAmount();
-        boolean createdInterestOrFineExemptions = false;
-
-        if (dueInterestAmount.signum() == 1) {
-            FixedAmountInterestExemption fixedAmountInterestExemption =
-                    new FixedAmountInterestExemption(this, creator.getPerson(), new Money(dueInterestAmount), justificationType,
-                            now, reason);
-            fixedAmountInterestExemption.setWhenCreated(now.plusSeconds(1));
-            createdInterestOrFineExemptions = true;
-        }
-        if (dueFineAmount.signum() == 1) {
-            FixedAmountFineExemption fixedAmountFineExemption =
-                    new FixedAmountFineExemption(this, creator.getPerson(), new Money(dueFineAmount), justificationType, now,
-                            reason);
-            fixedAmountFineExemption.setWhenCreated(now.plusSeconds(1));
-            createdInterestOrFineExemptions = true;
-        }
-        
-        if (dueAmount.signum() == 1) {
-            EventExemption eventExemption =
-                    new EventExemption(this, creator.getPerson(), new Money(dueAmount), justificationType, now, reason);
-            eventExemption.setWhenCreated(now.plusSeconds(createdInterestOrFineExemptions ? 2 : 1));
-        }
+        exempt(creator.getPerson(), justificationType, reason);
 
         return refund;
     }

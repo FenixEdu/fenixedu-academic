@@ -46,6 +46,14 @@ ${portal.toolkit()}
         <div class="col-md-12">
                <form method="post" class="form-horizontal" action="<%= request.getContextPath() %>/accounting-management/${event.externalId}/refundEvent" style="display: inline;">
                     ${csrf.field()}
+                    <c:if test="${not (paidUnusedAmount > 0)}">
+                        <div class="form-group">
+                            <label class="control-label col-sm-1"><spring:message code="label.org.fenixedu.academic.dto.accounting.DepositAmountBean.amount"/></label>
+                            <div class="col-sm-4">
+                                <input name="amount" type="text" pattern="[0-9]+([\.][0-9]{0,2})?" required value="${payedDebtAmount}"><span> €</span>
+                            </div>
+                        </div>
+                    </c:if>
                     <div class="form-group">
                         <label class="control-label col-sm-1"><spring:message code="label.org.fenixedu.academic.dto.accounting.CreateExemptionBean.justificationType"/></label>
                         <div class="col-sm-4">
@@ -65,9 +73,6 @@ ${portal.toolkit()}
                     </div>
                     <c:if test="${not (paidUnusedAmount > 0)}">
                         <button type="submit" class="btn btn-primary"><spring:message code="label.create.refund"/></button>
-                    </c:if>
-                    <c:if test="${paidUnusedAmount > 0}">
-                        <button type="submit" class="btn btn-default"><spring:message code="label.create.refund"/></button>
                     </c:if>
                 </form>
                 <c:if test="${paidUnusedAmount > 0}">
