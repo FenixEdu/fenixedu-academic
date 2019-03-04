@@ -39,11 +39,13 @@ public enum EventState {
 
     public static class ChangeStateEvent {
 
+        private final EventState oldState;
         private final EventState newState;
         private final Event event;
         private final DateTime when;
 
         public ChangeStateEvent(EventState newState, Event event, DateTime when) {
+            this.oldState = event.getEventState();
             this.newState = newState;
             this.event = event;
             this.when = when;
@@ -51,6 +53,10 @@ public enum EventState {
 
         public EventState getNewState() {
             return newState;
+        }
+
+        public EventState getOldState() {
+            return oldState;
         }
 
         public Event getEvent() {
