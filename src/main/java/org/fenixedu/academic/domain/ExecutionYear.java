@@ -20,7 +20,6 @@ package org.fenixedu.academic.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -147,11 +146,11 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     public ExecutionSemester getFirstExecutionPeriod() {
-        return Collections.min(this.getExecutionPeriodsSet(), ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
+        return this.getExecutionPeriodsSet().stream().min(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR).orElse(null);
     }
 
     public ExecutionSemester getLastExecutionPeriod() {
-        return Collections.max(this.getExecutionPeriodsSet(), ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
+        return this.getExecutionPeriodsSet().stream().max(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR).orElse(null);
     }
 
     public boolean containsDate(final DateTime dateTime) {
