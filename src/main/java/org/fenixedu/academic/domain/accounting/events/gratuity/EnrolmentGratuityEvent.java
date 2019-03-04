@@ -26,16 +26,6 @@ import pt.ist.fenixframework.FenixFramework;
 
 public class EnrolmentGratuityEvent extends EnrolmentGratuityEvent_Base {
 
-    static {
-        FenixFramework.getDomainModel().registerDeletionBlockerListener(Enrolment.class, (enrolment, blockers) -> {
-            enrolment.getGratuityEvent().ifPresent(event -> {
-                if (!event.canBeCanceled()) {
-                    blockers.add("Can't delete enrolment since it has an event that can't be canceled.");
-                }
-            });
-        });
-    }
-
     protected EnrolmentGratuityEvent(Person person, Enrolment enrolment, EnrolmentGratuityPR postingRule) {
         super();
         final AdministrativeOffice administrativeOffice =
