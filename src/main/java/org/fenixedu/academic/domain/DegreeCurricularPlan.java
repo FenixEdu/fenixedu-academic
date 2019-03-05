@@ -876,14 +876,12 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     // read static methods
     // -------------------------------------------------------------
 
+    /**
+     * @deprecated DegreeCurricularPlans cannot be empty anymore so usage of this method is unecessary
+     */
+    @Deprecated
     public static List<DegreeCurricularPlan> readNotEmptyDegreeCurricularPlans() {
-        final List<DegreeCurricularPlan> result = new ArrayList<>(Bennu.getInstance().getDegreeCurricularPlansSet());
-        result.remove(readEmptyDegreeCurricularPlan());
-        return result;
-    }
-
-    public static DegreeCurricularPlan readEmptyDegreeCurricularPlan() {
-        return EmptyDegreeCurricularPlan.getInstance();
+        return new ArrayList<>(Bennu.getInstance().getDegreeCurricularPlansSet());
     }
 
     public static Set<DegreeCurricularPlan> readBolonhaDegreeCurricularPlans() {

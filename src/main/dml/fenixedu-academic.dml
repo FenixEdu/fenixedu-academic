@@ -333,8 +333,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         String code;
     }
     
-        class EmptyDegree extends Degree;
-        
     class DegreeOfficialPublication  {
        LocalDate publication (REQUIRED);
        String dgesReference;
@@ -364,8 +362,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         Boolean applyPreviousYearsEnrolmentRule;
         CurricularRuleValidationType curricularRuleValidationType;
     }
-    
-        class EmptyDegreeCurricularPlan extends DegreeCurricularPlan;
     
     class DegreeInfo  {
         Integer driftsFirst;
