@@ -234,8 +234,9 @@ public class Registration extends Registration_Base {
     private StudentCurricularPlan createStudentCurricularPlan(final DegreeCurricularPlan degreeCurricularPlan,
             final ExecutionYear executionYear, final CycleType cycleType) {
 
-        final YearMonthDay startDay = executionYear.isCurrent() ? new YearMonthDay() : executionYear.getBeginDateYearMonthDay();
         final ExecutionSemester executionSemester = executionYear.getFirstExecutionPeriod();
+        final YearMonthDay startDay =
+                executionSemester.isCurrent() ? new YearMonthDay() : executionSemester.getBeginDateYearMonthDay();
 
         return StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan, startDay, executionSemester,
                 cycleType);
