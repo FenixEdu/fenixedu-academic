@@ -335,7 +335,9 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     protected void addErrorMessage(HttpServletRequest request, Exception e) {
-        addActionMessageLiteral("error", request, e.getLocalizedMessage());
+        final ActionMessages messages = getErrors(request);
+        messages.add("error", new ActionMessage(e.getLocalizedMessage(), false));
+        saveErrors(request, messages);
     }
 
     @SuppressWarnings("unchecked")

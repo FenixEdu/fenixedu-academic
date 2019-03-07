@@ -125,6 +125,11 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
             response.flushBuffer();
             return null;
         } catch (DomainException e) {
+            if (documentRequest instanceof DocumentRequest) {
+                request.setAttribute("registration", ((DocumentRequest) documentRequest).getRegistration());
+                addErrorMessage(request, e);
+                return mapping.findForward("viewRegistrationDetails");
+            }
             throw e;
         }
     }
