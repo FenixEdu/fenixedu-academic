@@ -257,6 +257,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         setStartExecutionInterval(startInterval.convert(ExecutionSemester.class));
         setStartDate(startDate);
     }
+    
+    public boolean migrateStartDateToExecutionInterval() {
+        if (getStartExecutionInterval() == null) {
+            setStartExecutionInterval(ExecutionSemester.readByDateTime(getStartDateYearMonthDay().toDateTimeAtMidnight()));
+            return true;
+        }
+
+        return false;
+    }
 
     public void delete() throws DomainException {
 
