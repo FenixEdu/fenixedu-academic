@@ -260,7 +260,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     
     public boolean migrateStartDateToExecutionInterval() {
         if (getStartExecutionInterval() == null) {
-            setStartExecutionInterval(ExecutionSemester.readByDateTime(getStartDateYearMonthDay().toDateTimeAtMidnight()));
+            final ExecutionYear year = ExecutionYear.getExecutionYearByDate(getStartDateYearMonthDay());
+            setStartExecutionInterval(year.getFirstExecutionPeriod());
             return true;
         }
 
