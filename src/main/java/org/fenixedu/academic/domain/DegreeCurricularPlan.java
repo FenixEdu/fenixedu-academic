@@ -488,10 +488,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public ExecutionDegree getFirstExecutionDegree() {
-        if (getExecutionDegreesSet().isEmpty()) {
-            return null;
-        }
-        return Collections.min(getExecutionDegreesSet(), ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
+        return getExecutionDegreesSet().stream().min(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR).orElse(null);
     }
 
     public Set<ExecutionCourse> getExecutionCoursesByExecutionPeriod(final ExecutionSemester executionSemester) {
@@ -994,6 +991,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         final CurricularPeriodInfoDTO[] curricularPeriodInfos = buildCurricularPeriodInfoDTOsFor(year, semester);
 
         return getDegreeStructure().addCurricularPeriod(curricularPeriodInfos);
+    }
+
+    @Override
+    public YearMonthDay getInitialDateYearMonthDay() {
+        final ExecutionDegree firstExecutionDegree = getFirstExecutionDegree();
+        return firstExecutionDegree != null ? firstExecutionDegree.getExecutionYear()
+                .getBeginDateYearMonthDay() : super.getInitialDateYearMonthDay();
     }
 
     public Collection<StudentCurricularPlan> getActiveStudentCurricularPlans() {
