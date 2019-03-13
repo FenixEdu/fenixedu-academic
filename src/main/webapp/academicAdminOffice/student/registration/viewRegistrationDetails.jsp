@@ -74,6 +74,13 @@
 		</ul>
 	</logic:messagesPresent>
 
+	<html:messages id="error" bundle="ACADEMIC_OFFICE_RESOURCES">
+		<ul class="list7 mtop2">
+			<li><span class="error"><bean:write name="error" /></span></li>
+		</ul>
+	</html:messages>
+
+
 
 
 

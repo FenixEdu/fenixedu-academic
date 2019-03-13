@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -36,6 +37,7 @@ import org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.Cert
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.NoEctsComparabilityTableFound;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.ApprovementMobilityCertificateRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.CertificateRequest;
@@ -207,6 +209,10 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
                 Grade grade =
                         enrolment.getEctsGrade(getDocumentRequest().getRegistration().getLastStudentCurricularPlan(),
                                 processingDate);
+                if (grade == null) {
+                    throw new DomainException(Optional.of(Bundle.ACADEMIC), "error.missing.ects.grade.for.enrolment",
+                            enrolment.getDescription());
+                }
                 return grade.getValue();
             } catch (NoEctsComparabilityTableFound nectfe) {
                 return "--";
