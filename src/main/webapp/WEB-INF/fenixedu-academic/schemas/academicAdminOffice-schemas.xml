@@ -510,6 +510,7 @@
 	<slot name="executionInterval" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.semester">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.NotClosedExecutionPeriodsProvider" />
 		<property name="format" value="${qualifiedName}" />	
+		<property name="sortBy" value="beginLocalDate=desc" />
 	</slot>	
 	<slot name="stateType" key="label.state" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="excludedValues" value="TRANSITION" />
@@ -526,10 +527,10 @@
 
 <schema name="student.viewRegistrationStatesHistoric" 
 	type="org.fenixedu.academic.domain.student.registrationStates.RegistrationState" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="executionYear" key="label.falseLabel" layout="null-as-label" >
+	<slot name="executionInterval" key="label.falseLabel" layout="null-as-label" >
 		<property name="label" value=" - "/>
 		<property name="subLayout" value="values"/>
-		<property name="subSchema" value="executionYear.year"/>
+		<property name="subSchema" value="executionInterval.name"/>
 	</slot>
 	<slot name="stateDate" key="label.stateDate"/>
 	<slot name="stateType" key="label.state" />
@@ -547,6 +548,10 @@
 
 <schema name="executionYear.year" type="org.fenixedu.academic.domain.ExecutionYear">
 	<slot name="year" />
+</schema>
+
+<schema name="executionInterval.name" type="org.fenixedu.academic.domain.ExecutionInterval">
+	<slot name="qualifiedName" />
 </schema>
 
 <schema name="studentOptionalEnrolment.base" bundle="ACADEMIC_OFFICE_RESOURCES"

@@ -29,8 +29,6 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
-import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.LocalDate;
@@ -115,20 +113,6 @@ public class StudentCurricularPlanEnrolmentPreConditions {
         final Registration registration = scp.getRegistration();
         return registration.getSourceRegistration() != null
                 && registration.getSourceRegistration().getLastStudentCurricularPlan().hasSpecialSeasonFor(semester);
-    }
-
-    /*
-     * Student must have flunked state and then registered (in same year), otherwise is not considered to be prescribed
-     */
-    private static boolean hasPrescribed(StudentCurricularPlan scp, ExecutionSemester semester) {
-        for (RegistrationState state : scp.getRegistration().getRegistrationStates(semester.getExecutionYear())) {
-            if (state.getExecutionYear().equals(semester.getExecutionYear())
-                    && RegistrationStateType.FLUNKED.equals(state.getStateType())) {
-                return scp.getRegistration().hasRegisteredActiveState();
-            }
-        }
-
-        return false;
     }
 
 }

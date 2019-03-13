@@ -100,7 +100,7 @@
 				</html:link>
 			</fr:property>			
 			
-			<fr:property name="sortBy" value="stateDate=desc"/>
+			<fr:property name="sortBy" value="executionInterval=desc,stateDate=desc"/>
 
 		</fr:layout>
 	</fr:view>

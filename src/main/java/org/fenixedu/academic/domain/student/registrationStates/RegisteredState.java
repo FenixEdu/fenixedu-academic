@@ -45,6 +45,7 @@ public class RegisteredState extends RegisteredState_Base {
     @Override
     public Set<String> getValidNextStates() {
         Set<String> states = new HashSet<String>();
+        states.add(RegistrationStateType.REGISTERED.name());
         states.add(RegistrationStateType.CONCLUDED.name());
         states.add(RegistrationStateType.STUDYPLANCONCLUDED.name());
         states.add(RegistrationStateType.SCHOOLPARTCONCLUDED.name());

@@ -350,21 +350,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     final public boolean isConcluded() {
-
-        if (isEmptyDegree()) {
-            return getRegistration().getLastActiveState().getStateType().equals(RegistrationStateType.CONCLUDED);
-        }
-
         return ProgramConclusion.isConcluded(this);
-
     }
 
     final public boolean isConclusionProcessed() {
-
-        if (isEmptyDegree()) {
-            return getRegistration().getLastActiveState().getStateType().equals(RegistrationStateType.CONCLUDED);
-        }
-
         return ProgramConclusion.isConclusionProcessed(this);
     }
 

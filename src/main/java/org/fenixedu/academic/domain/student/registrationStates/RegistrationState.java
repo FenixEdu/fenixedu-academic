@@ -18,13 +18,12 @@
  */
 package org.fenixedu.academic.domain.student.registrationStates;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -84,17 +83,9 @@ public abstract class RegistrationState extends RegistrationState_Base implement
         }
     };
 
-    public static Comparator<RegistrationState> DATE_AND_STATE_TYPE_COMPARATOR = new Comparator<RegistrationState>() {
-        @Override
-        public int compare(RegistrationState leftState, RegistrationState rightState) {
-            int comparationResult = DATE_COMPARATOR.compare(leftState, rightState);
-            if (comparationResult != 0) {
-                return comparationResult;
-            }
-            comparationResult = leftState.getStateType().compareTo(rightState.getStateType());
-            return (comparationResult == 0) ? leftState.getExternalId().compareTo(rightState.getExternalId()) : comparationResult;
-        }
-    };
+    public static Comparator<RegistrationState> EXECUTION_INTERVAL_AND_DATE_COMPARATOR =
+            Comparator.comparing(RegistrationState::getExecutionInterval, ExecutionInterval.COMPARATOR_BY_BEGIN_DATE)
+                    .thenComparing(DATE_COMPARATOR);
 
     public RegistrationState() {
         super();
@@ -146,7 +137,6 @@ public abstract class RegistrationState extends RegistrationState_Base implement
             newState = new InactiveState(registration, person, dateTime);
             break;
         }
-        registration.getStudent().updateStudentRole();
 
         return newState;
     }
@@ -247,36 +237,17 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     }
 
     public RegistrationState getNext() {
-        List<RegistrationState> sortedRegistrationsStates =
-                new ArrayList<RegistrationState>(getRegistration().getRegistrationStatesSet());
-        Collections.sort(sortedRegistrationsStates, DATE_COMPARATOR);
-        for (ListIterator<RegistrationState> iter = sortedRegistrationsStates.listIterator(); iter.hasNext();) {
-            RegistrationState state = iter.next();
-            if (state.equals(this)) {
-                if (iter.hasNext()) {
-                    return iter.next();
-                }
-                return null;
-            }
-        }
-        return null;
+        final List<RegistrationState> sortedStates = getRegistration().getRegistrationStatesSet().stream()
+                .sorted(EXECUTION_INTERVAL_AND_DATE_COMPARATOR).collect(Collectors.toList());
+        int indexOfThis = sortedStates.indexOf(this);
+        return sortedStates.size() > indexOfThis + 1 ? sortedStates.get(indexOfThis + 1) : null;
     }
 
     public RegistrationState getPrevious() {
-        List<RegistrationState> sortedRegistrationsStates =
-                new ArrayList<RegistrationState>(getRegistration().getRegistrationStatesSet());
-        Collections.sort(sortedRegistrationsStates, DATE_COMPARATOR);
-        for (ListIterator<RegistrationState> iter = sortedRegistrationsStates.listIterator(sortedRegistrationsStates.size()); iter
-                .hasPrevious();) {
-            RegistrationState state = iter.previous();
-            if (state.equals(this)) {
-                if (iter.hasPrevious()) {
-                    return iter.previous();
-                }
-                return null;
-            }
-        }
-        return null;
+        final List<RegistrationState> sortedStates = getRegistration().getRegistrationStatesSet().stream()
+                .sorted(EXECUTION_INTERVAL_AND_DATE_COMPARATOR).collect(Collectors.toList());
+        int indexOfThis = sortedStates.indexOf(this);
+        return indexOfThis > 0 ? sortedStates.get(indexOfThis - 1) : null;
     }
 
     public DateTime getEndDate() {
@@ -301,23 +272,23 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     public static RegistrationState createRegistrationState(RegistrationStateBean bean) {
         RegistrationState createdState = null;
 
-        final RegistrationState previousState = bean.getRegistration().getStateInDate(bean.getStateDateTime());
+        final Registration registration = bean.getRegistration();
+        final RegistrationState previousState = registration.getStateInDate(bean.getStateDateTime());
         if (previousState == null) {
-            createdState =
-                    RegistrationState.createState(bean.getRegistration(), null, bean.getStateDateTime(), bean.getStateType());
+            createdState = RegistrationState.createState(registration, null, bean.getStateDateTime(), bean.getStateType());
         } else {
             createdState = (RegistrationState) StateMachine.execute(previousState, bean);
         }
         createdState.setRemarks(bean.getRemarks());
         createdState.setExecutionInterval(bean.getExecutionInterval());
+        registration.getStudent().updateStudentRole();
 
         final RegistrationState nextState = createdState.getNext();
         if (nextState != null && !createdState.getValidNextStates().contains(nextState.getStateType().name())) {
             throw new DomainException("error.cannot.add.registrationState.incoherentState");
         }
-        org.fenixedu.academic.domain.student.RegistrationStateLog.createRegistrationStateLog(bean.getRegistration(),
-                Bundle.MESSAGING, "log.registration.registrationstate.added", bean.getStateType().getDescription(),
-                bean.getRemarks());
+        org.fenixedu.academic.domain.student.RegistrationStateLog.createRegistrationStateLog(registration, Bundle.MESSAGING,
+                "log.registration.registrationstate.added", bean.getStateType().getDescription(), bean.getRemarks());
         return createdState;
     }
 

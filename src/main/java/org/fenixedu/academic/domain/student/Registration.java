@@ -28,6 +28,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
@@ -36,8 +37,6 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
@@ -48,6 +47,7 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
@@ -95,7 +95,6 @@ import org.fenixedu.bennu.core.signals.Signal;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
-import org.joda.time.ReadableInstant;
 import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1451,7 +1450,7 @@ public class Registration extends Registration_Base {
         return false;
     }
 
-    final public Set<RegistrationStateType> getRegistrationStatesTypes(final ExecutionYear executionYear) {
+    public Set<RegistrationStateType> getRegistrationStatesTypes(final ExecutionYear executionYear) {
         final Set<RegistrationStateType> result = new HashSet<>();
 
         for (final RegistrationState registrationState : getRegistrationStates(executionYear)) {
@@ -1461,53 +1460,22 @@ public class Registration extends Registration_Base {
         return result;
     }
 
-    final public Set<RegistrationStateType> getRegistrationStatesTypes(final ExecutionSemester executionSemester) {
-        final Set<RegistrationStateType> result = new HashSet<>();
-
-        for (final RegistrationState registrationState : getRegistrationStates(executionSemester)) {
-            result.add(registrationState.getStateType());
-        }
-
-        return result;
-    }
-
-    public boolean isRegistered(final DateTime when) {
-        final RegistrationState stateInDate = getStateInDate(when);
-        return stateInDate != null && stateInDate.isActive() || hasAnyEnrolmentsIn(ExecutionSemester.readByDateTime(when));
-    }
-
     public boolean isRegistered(final ExecutionSemester executionSemester) {
         return hasAnyActiveState(executionSemester) || hasAnyEnrolmentsIn(executionSemester);
     }
 
-    final public boolean isRegistered(final ExecutionYear executionYear) {
+    public boolean isRegistered(final ExecutionYear executionYear) {
         return hasAnyActiveState(executionYear) || hasAnyEnrolmentsIn(executionYear);
     }
 
-    final public RegistrationState getActiveState() {
-        if (!getRegistrationStatesSet().isEmpty()) {
-            RegistrationState activeState = null;
-            for (RegistrationState state : getRegistrationStatesSet()) {
-                if (!state.getStateDate().isAfterNow()) {
-                    if (activeState == null || RegistrationState.DATE_COMPARATOR.compare(activeState, state) < 0) {
-                        activeState = state;
-                    }
-                }
-            }
-            return activeState;
-        } else {
-            return null;
-        }
+    public RegistrationState getActiveState() {
+        return getRegistrationStatesSet().stream().filter(
+                s -> s.getExecutionInterval() != null && s.getExecutionInterval().getAcademicInterval().getStart().isBeforeNow())
+                .max(RegistrationState.EXECUTION_INTERVAL_AND_DATE_COMPARATOR).orElseGet(() -> getLastState());
     }
 
-    public RegistrationState getLastState() {
-        RegistrationState result = null;
-        for (final RegistrationState state : getRegistrationStatesSet()) {
-            if (result == null || state.getStateDate().isAfter(result.getStateDate())) {
-                result = state;
-            }
-        }
-        return result;
+    private RegistrationState getLastState() {
+        return getRegistrationStatesSet().stream().max(RegistrationState.EXECUTION_INTERVAL_AND_DATE_COMPARATOR).orElse(null);
     }
 
     public RegistrationStateType getLastStateType() {
@@ -1515,66 +1483,38 @@ public class Registration extends Registration_Base {
         return registrationState == null ? null : registrationState.getStateType();
     }
 
-    final public RegistrationState getFirstState() {
-        return getFirstRegistrationState();
-    }
-
-    final public RegistrationStateType getActiveStateType() {
+    public RegistrationStateType getActiveStateType() {
         final RegistrationState activeState = getActiveState();
         return activeState != null ? activeState.getStateType() : RegistrationStateType.REGISTERED;
     }
 
-    final public boolean isActive() {
+    public boolean isActive() {
         return getActiveStateType().isActive();
     }
 
-    public boolean hasAnyActiveState(final ExecutionSemester executionSemester) {
-        for (RegistrationState registrationState : getRegistrationStates(executionSemester)) {
-            if (registrationState.isActive()) {
-                return true;
-            }
-        }
-        return false;
+    private boolean hasAnyActiveState(final ExecutionSemester executionSemester) {
+        return getRegistrationStates(executionSemester).stream().anyMatch(s -> s.isActive());
     }
 
     public boolean hasAnyActiveState(final ExecutionYear executionYear) {
-        for (RegistrationState registrationState : getRegistrationStates(executionYear)) {
-            if (registrationState.isActive()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean hasActiveFirstState(final ExecutionYear period) {
-        final Set<RegistrationState> states = getRegistrationStates(period);
-        return states.isEmpty() ? false : Collections.min(states, RegistrationState.DATE_COMPARATOR).isActive();
+        return getRegistrationStates(executionYear).stream().anyMatch(s -> s.isActive());
     }
 
     public boolean hasActiveLastState(final ExecutionSemester executionSemester) {
         final Set<RegistrationState> states = getRegistrationStates(executionSemester);
-        return states.isEmpty() ? false : Collections.max(states, RegistrationState.DATE_COMPARATOR).isActive();
+        return states.isEmpty() ? false : Collections.max(states, RegistrationState.EXECUTION_INTERVAL_AND_DATE_COMPARATOR)
+                .isActive();
     }
 
-    public boolean hasRegistrationState(final RegistrationStateType stateType) {
-        for (final RegistrationState state : getRegistrationStatesSet()) {
-            if (state.getStateType() == stateType) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    final public boolean isInRegisteredState() {
+    public boolean isInRegisteredState() {
         return getActiveStateType() == RegistrationStateType.REGISTERED;
     }
 
-    final public boolean isInternalAbandon() {
+    public boolean isInternalAbandon() {
         return getActiveStateType() == RegistrationStateType.INTERNAL_ABANDON;
     }
 
-    final public boolean getInterruptedStudies() {
+    public boolean getInterruptedStudies() {
         return isInterrupted();
     }
 
@@ -1582,7 +1522,7 @@ public class Registration extends Registration_Base {
         return getActiveStateType() == RegistrationStateType.INTERRUPTED;
     }
 
-    final public boolean getFlunked() {
+    public boolean getFlunked() {
         return isFlunked();
     }
 
@@ -1590,7 +1530,7 @@ public class Registration extends Registration_Base {
         return getActiveStateType() == RegistrationStateType.FLUNKED;
     }
 
-    final public boolean isInMobilityState() {
+    public boolean isInMobilityState() {
         return getActiveStateType() == RegistrationStateType.MOBILITY;
     }
 
@@ -1610,28 +1550,15 @@ public class Registration extends Registration_Base {
         return getActiveStateType() == RegistrationStateType.CANCELED;
     }
 
-    final public boolean isTransited(final DateTime when) {
-        final RegistrationState stateInDate = getStateInDate(when);
-        return stateInDate != null && stateInDate.getStateType() == RegistrationStateType.TRANSITED;
-    }
-
-    final public boolean isTransited(final ExecutionYear executionYear) {
+    public boolean isTransited(final ExecutionYear executionYear) {
         return hasStateType(executionYear, RegistrationStateType.TRANSITED);
     }
 
-    final public boolean isTransition() {
+    public boolean isTransition() {
         return getActiveStateType() == RegistrationStateType.TRANSITION;
     }
 
-    final public boolean isTransition(final ExecutionYear executionYear) {
-        return hasStateType(executionYear, RegistrationStateType.TRANSITION);
-    }
-
-    final public boolean getWasTransition() {
-        return hasState(RegistrationStateType.TRANSITION);
-    }
-
-    final public RegistrationState getStateInDate(final DateTime dateTime) {
+    public RegistrationState getStateInDate(final DateTime dateTime) {
 
         List<RegistrationState> sortedRegistrationStates = new ArrayList<>(getRegistrationStatesSet());
         Collections.sort(sortedRegistrationStates, RegistrationState.DATE_COMPARATOR);
@@ -1648,7 +1575,11 @@ public class Registration extends Registration_Base {
         return null;
     }
 
-    final public RegistrationState getStateInDate(final LocalDate localDate) {
+    /**
+     * @deprecated use {@link #getStateInDate(DateTime)}
+     */
+    @Deprecated
+    public RegistrationState getStateInDate(final LocalDate localDate) {
         final List<RegistrationState> sortedRegistrationStates = new ArrayList<>(getRegistrationStatesSet());
         Collections.sort(sortedRegistrationStates, RegistrationState.DATE_COMPARATOR);
 
@@ -1665,112 +1596,45 @@ public class Registration extends Registration_Base {
     }
 
     public Set<RegistrationState> getRegistrationStates(final ExecutionYear executionYear) {
-        return getRegistrationStates(executionYear.getBeginDateYearMonthDay().toDateTimeAtMidnight(),
-                executionYear.getEndDateYearMonthDay().toDateTimeAtMidnight());
+        return executionYear.getExecutionPeriodsSet().stream().flatMap(es -> getRegistrationStates(es).stream())
+                .collect(Collectors.toSet());
     }
 
-    public Set<RegistrationState> getRegistrationStates(final ExecutionSemester executionSemester) {
-        return getRegistrationStates(executionSemester.getBeginDateYearMonthDay().toDateTimeAtMidnight(),
-                executionSemester.getEndDateYearMonthDay().toDateTimeAtMidnight());
-    }
+    private Set<RegistrationState> getRegistrationStates(final ExecutionSemester executionSemester) {
 
-    public Set<RegistrationState> getRegistrationStates(final ReadableInstant beginDateTime, final ReadableInstant endDateTime) {
-        final Set<RegistrationState> result = new HashSet<>();
-        populateRegistrationStates(beginDateTime, endDateTime, result);
-        return result;
-    }
+        // group states by intervals
+        final Map<ExecutionInterval, List<RegistrationState>> map =
+                getRegistrationStatesSet().stream().collect(Collectors.groupingBy(RegistrationState::getExecutionInterval));
 
-    public List<RegistrationState> getRegistrationStatesList(final ExecutionYear executionYear) {
-        return getRegistrationStatesList(executionYear.getBeginDateYearMonthDay().toDateTimeAtMidnight(),
-                executionYear.getEndDateYearMonthDay().toDateTimeAtMidnight());
-    }
-
-    public List<RegistrationState> getRegistrationStatesList(final ExecutionSemester executionSemester) {
-        return getRegistrationStatesList(executionSemester.getBeginDateYearMonthDay().toDateTimeAtMidnight(),
-                executionSemester.getEndDateYearMonthDay().toDateTimeAtMidnight());
-    }
-
-    public List<RegistrationState> getRegistrationStatesList(final ReadableInstant beginDateTime,
-            final ReadableInstant endDateTime) {
-        final List<RegistrationState> result = new ArrayList<>();
-        populateRegistrationStates(beginDateTime, endDateTime, result);
-        return result;
-    }
-
-    private void populateRegistrationStates(final ReadableInstant beginDateTime, final ReadableInstant endDateTime,
-            final Collection<RegistrationState> result) {
-        List<RegistrationState> sortedRegistrationsStates = new ArrayList<>(getRegistrationStatesSet());
-        Collections.sort(sortedRegistrationsStates, RegistrationState.DATE_COMPARATOR);
-
-        for (ListIterator<RegistrationState> iter = sortedRegistrationsStates.listIterator(sortedRegistrationsStates.size()); iter
-                .hasPrevious();) {
-            RegistrationState state = iter.previous();
-
-            if (state.getStateDate().isAfter(endDateTime)) {
-                continue;
-            }
-
-            result.add(state);
-
-            if (!state.getStateDate().isAfter(beginDateTime)) {
-                break;
-            }
-
+        ExecutionSemester interval = executionSemester;
+        while (interval != null && !map.containsKey(interval)) {
+            interval = interval.getPreviousExecutionPeriod(); // find previous interval with explicit states
         }
+
+        if (interval == null) { // invalid interval
+            return Collections.emptySet();
+
+        } else if (interval == executionSemester) { // if found in provided interval, return all states
+            return new HashSet<>(map.get(interval));
+
+        } else { // otherwise return olny the last one
+            return map.get(interval).stream().max(RegistrationState.EXECUTION_INTERVAL_AND_DATE_COMPARATOR).map(Stream::of)
+                    .orElseGet(Stream::empty).collect(Collectors.toSet());
+        }
+
     }
 
     public RegistrationState getFirstRegistrationState() {
-        return getRegistrationStatesSet().stream().min(RegistrationState.DATE_COMPARATOR).orElse(null);
+        return getRegistrationStatesSet().stream().min(RegistrationState.EXECUTION_INTERVAL_AND_DATE_COMPARATOR).orElse(null);
     }
 
-    final public RegistrationState getLastRegistrationState(final ExecutionYear executionYear) {
-        return getRegistrationStatesSet().stream().sorted(RegistrationState.DATE_COMPARATOR.reversed())
-                .filter(state -> !state.getStateDate().isAfter(executionYear.getEndDateYearMonthDay().toDateTimeAtMidnight()))
-                .findFirst().orElse(null);
+    public RegistrationState getLastRegistrationState(final ExecutionYear executionYear) {
+        return getRegistrationStatesSet().stream().filter(s -> s.getExecutionYear().isBeforeOrEquals(executionYear))
+                .max(RegistrationState.EXECUTION_INTERVAL_AND_DATE_COMPARATOR).orElse(null);
     }
 
-    public boolean hasState(final RegistrationStateType stateType) {
-        return hasAnyState(Collections.singletonList(stateType));
-    }
-
-    public boolean hasAnyState(final Collection<RegistrationStateType> stateTypes) {
-        for (final RegistrationState registrationState : getRegistrationStatesSet()) {
-            if (stateTypes.contains(registrationState.getStateType())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    final public boolean hasStateType(final ExecutionSemester executionSemester,
-            final RegistrationStateType registrationStateType) {
-        return getRegistrationStatesTypes(executionSemester).contains(registrationStateType);
-    }
-
-    final public boolean hasStateType(final ExecutionYear executionYear, final RegistrationStateType registrationStateType) {
+    public boolean hasStateType(final ExecutionYear executionYear, final RegistrationStateType registrationStateType) {
         return getRegistrationStatesTypes(executionYear).contains(registrationStateType);
-    }
-
-    public boolean hasFlunkedState(final ExecutionYear executionYear) {
-        return hasStateType(executionYear, RegistrationStateType.FLUNKED);
-    }
-
-    public boolean hasRegisteredActiveState() {
-        return getActiveStateType() == RegistrationStateType.REGISTERED;
-    }
-
-    public Collection<RegistrationState> getRegistrationStates(final RegistrationStateType registrationStateType) {
-        return getRegistrationStates(Collections.singletonList(registrationStateType));
-    }
-
-    public Collection<RegistrationState> getRegistrationStates(final Collection<RegistrationStateType> registrationStateTypes) {
-        final Collection<RegistrationState> result = new HashSet<>();
-        for (final RegistrationState registrationState : getRegistrationStatesSet()) {
-            if (registrationStateTypes.contains(registrationState.getStateType())) {
-                result.add(registrationState);
-            }
-        }
-        return result;
     }
 
     final public double getEctsCredits() {
@@ -1807,27 +1671,6 @@ public class Registration extends Registration_Base {
 
     public boolean isQualifiedToRegistrationConclusionProcess() {
         return isActive() || isConcluded() || isSchoolPartConcluded();
-    }
-
-    public ExecutionYear calculateConclusionYear() {
-        ExecutionYear result = getLastApprovementExecutionYear();
-
-        if (result == null) {
-            if (hasState(RegistrationStateType.CONCLUDED)) {
-                return getFirstRegistrationState(RegistrationStateType.CONCLUDED).getExecutionYear();
-
-            } else if (isOldMasterDegree() && hasState(RegistrationStateType.SCHOOLPARTCONCLUDED)) {
-                return getFirstRegistrationState(RegistrationStateType.SCHOOLPARTCONCLUDED).getExecutionYear();
-            }
-        }
-
-        return result;
-    }
-
-    private RegistrationState getFirstRegistrationState(final RegistrationStateType stateType) {
-        final SortedSet<RegistrationState> states = new TreeSet<>(RegistrationState.DATE_COMPARATOR);
-        states.addAll(getRegistrationStates(stateType));
-        return states.first();
     }
 
     private boolean isOldMasterDegree() {
@@ -2527,21 +2370,6 @@ public class Registration extends Registration_Base {
 
             registrationData.edit(firstEnrolment.getCreationDateDateTime().toLocalDate());
         }
-    }
-
-    public RegistrationState getLastActiveState() {
-        List<RegistrationState> activeStateList = new ArrayList<>();
-
-        CollectionUtils.select(getRegistrationStatesSet(), new Predicate() {
-
-            @Override
-            public boolean evaluate(final Object arg0) {
-                return ((RegistrationState) arg0).getStateType().isActive();
-            }
-
-        }, activeStateList);
-
-        return !activeStateList.isEmpty() ? Collections.max(activeStateList, RegistrationState.DATE_COMPARATOR) : null;
     }
 
 }
