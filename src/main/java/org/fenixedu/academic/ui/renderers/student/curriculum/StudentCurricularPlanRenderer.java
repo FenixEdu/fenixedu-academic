@@ -1166,10 +1166,6 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
         protected HtmlComponent createDegreeCurricularPlanNameLink(final DegreeCurricularPlan degreeCurricularPlan,
                 ExecutionSemester executionSemester) {
-            if (degreeCurricularPlan.isPast() || degreeCurricularPlan.isEmpty()) {
-                return new HtmlText(degreeCurricularPlan.getName());
-            }
-
             final String siteUrl = degreeCurricularPlan.getDegree().getSiteUrl();
 
             if (Strings.isNullOrEmpty(siteUrl)) {

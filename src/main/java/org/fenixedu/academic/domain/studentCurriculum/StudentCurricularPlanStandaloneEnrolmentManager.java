@@ -34,7 +34,6 @@ import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.EnrolmentResultType;
 import org.fenixedu.academic.domain.curriculum.EnrollmentCondition;
-import org.fenixedu.academic.domain.enrolment.EnroledCurriculumModuleWrapper;
 import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -100,9 +99,7 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
 
     @Override
     protected void addEnroled() {
-        if (!isEmptyDegree()) {
-            addEnroledFromStudentCurricularPlan();
-        }
+        addEnroledFromStudentCurricularPlan();
         addEnroledFromStandaloneGroup();
         changeCurricularRuleLevel();
     }
@@ -155,18 +152,6 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
         }
 
         return result;
-    }
-
-    private boolean isEmptyDegree() {
-        return getStudentCurricularPlan().isEmptyDegree();
-    }
-
-    private IDegreeModuleToEvaluate getEnroledCurriculumGroup() {
-        return new EnroledCurriculumModuleWrapper(getRoot(), getExecutionSemester());
-    }
-
-    private StandaloneCurriculumGroup getStandaloneCurriculumGroup() {
-        return getStudentCurricularPlan().getStandaloneCurriculumGroup();
     }
 
     @Override

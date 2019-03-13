@@ -221,11 +221,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 
         final HtmlTableCell titleCell = groupHeaderRow.createCell();
         if (studentCurriculumGroupBean.getCurriculumModule().isRoot()) {
-            if (studentCurriculumGroupBean.getCurriculumModule().getDegreeCurricularPlanOfStudent().isEmpty()) {
-                titleCell.setBody(new HtmlText(studentCurriculumGroupBean.getCurriculumModule().getName().getContent()));
-            } else {
-                titleCell.setBody(createDegreeCurricularPlanLink(studentCurriculumGroupBean));
-            }
+            titleCell.setBody(createDegreeCurricularPlanLink(studentCurriculumGroupBean));
         } else if (studentCurriculumGroupBean.getCurriculumModule().isCycleCurriculumGroup()) {
             setTitleCellInformation(groupHeaderRow, titleCell, studentCurriculumGroupBean, executionSemester);
 

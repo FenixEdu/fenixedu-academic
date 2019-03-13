@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.EvaluationSeason;
@@ -33,8 +32,6 @@ import org.fenixedu.academic.domain.enrolment.EnroledCurriculumModuleWrapper;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
-import org.fenixedu.academic.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
-import org.fenixedu.academic.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
 
 @SuppressWarnings("serial")
 public class ImprovementStudentCurriculumGroupBean implements Serializable {
@@ -101,36 +98,11 @@ public class ImprovementStudentCurriculumGroupBean implements Serializable {
                 final List<StudentCurriculumGroupBean> result = new ArrayList<StudentCurriculumGroupBean>();
 
                 Set<CurriculumGroup> curriculumGroupsToEnrolmentProcess = parentGroup.getCurriculumGroupsToEnrolmentProcess();
-                if (parentGroup.getStudentCurricularPlan().isEmptyDegree()) {
-                    curriculumGroupsToEnrolmentProcess = filterGroups(parentGroup);
-                }
-
                 for (final CurriculumGroup curriculumGroup : curriculumGroupsToEnrolmentProcess) {
                     result.add(create(curriculumGroup, executionSemester));
                 }
 
                 return result;
-            }
-
-            // EmptyDegreeImprovementStudentCurriculumGroupBean
-            private Set<CurriculumGroup> filterGroups(CurriculumGroup parentGroup) {
-                final Set<CurriculumGroup> groups = new TreeSet<CurriculumGroup>(CurriculumModule.COMPARATOR_BY_NAME_AND_ID);
-
-                for (final CurriculumModule curriculumModule : parentGroup.getCurriculumModulesSet()) {
-
-                    if (!curriculumModule.isLeaf()) {
-
-                        if (curriculumModule.isNoCourseGroupCurriculumGroup()) {
-                            final NoCourseGroupCurriculumGroup noCourseGroup = (NoCourseGroupCurriculumGroup) curriculumModule;
-                            if (noCourseGroup.getNoCourseGroupCurriculumGroupType() != NoCourseGroupCurriculumGroupType.STANDALONE) {
-                                continue;
-                            }
-                        }
-
-                        groups.add((CurriculumGroup) curriculumModule);
-                    }
-                }
-                return groups;
             }
 
             @Override

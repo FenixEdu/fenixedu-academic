@@ -63,7 +63,6 @@ import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.student.curriculum.Curriculum;
-import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.domain.studentCurriculum.BranchCurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.Credits;
 import org.fenixedu.academic.domain.studentCurriculum.CreditsManager;
@@ -257,7 +256,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         setStartExecutionInterval(startInterval.convert(ExecutionSemester.class));
         setStartDate(startDate);
     }
-    
+
     public boolean migrateStartDateToExecutionInterval() {
         if (getStartExecutionInterval() == null) {
             final ExecutionYear year = ExecutionYear.getExecutionYearByDate(getStartDateYearMonthDay());
@@ -2172,6 +2171,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return result;
     }
 
+    @Deprecated
     public boolean isEmptyDegree() {
         return getDegreeCurricularPlan().isEmpty();
     }

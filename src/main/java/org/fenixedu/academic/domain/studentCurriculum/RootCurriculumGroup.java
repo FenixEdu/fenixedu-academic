@@ -57,7 +57,6 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
             ExecutionSemester executionSemester, CycleType cycleType) {
         this();
         init(studentCurricularPlan, rootCourseGroup, executionSemester, cycleType);
-        createStandaloneCurriculumGroupIfNecessary();
     }
 
     private void init(StudentCurricularPlan studentCurricularPlan, RootCourseGroup courseGroup,
@@ -84,7 +83,6 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
             CycleType cycleType) {
         this();
         init(studentCurricularPlan, rootCourseGroup, cycleType);
-        createStandaloneCurriculumGroupIfNecessary();
     }
 
     private void init(final StudentCurricularPlan studentCurricularPlan, final RootCourseGroup rootCourseGroup,
@@ -175,12 +173,6 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 
     private void createPropaedeuticsCurriculumGroup() {
         NoCourseGroupCurriculumGroup.create(NoCourseGroupCurriculumGroupType.PROPAEDEUTICS, this);
-    }
-
-    private void createStandaloneCurriculumGroupIfNecessary() {
-        if (hasStudentCurricularPlan() && getStudentCurricularPlan().isEmptyDegree()) {
-            NoCourseGroupCurriculumGroup.create(NoCourseGroupCurriculumGroupType.STANDALONE, this);
-        }
     }
 
     public CycleCurriculumGroup getCycleCurriculumGroup(CycleType cycleType) {

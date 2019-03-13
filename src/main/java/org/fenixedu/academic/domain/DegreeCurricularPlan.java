@@ -332,6 +332,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return getDegree().isBolonhaDegree();
     }
 
+    @Deprecated
     public boolean isEmpty() {
         return false;
     }

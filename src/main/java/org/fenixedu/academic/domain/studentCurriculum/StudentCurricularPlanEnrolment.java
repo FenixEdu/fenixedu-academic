@@ -172,7 +172,7 @@ abstract public class StudentCurricularPlanEnrolment {
     }
 
     protected boolean isStudentCurricularPlanConcluded() {
-        return !getStudentCurricularPlan().isEmptyDegree() && getStudentCurricularPlan().isConclusionProcessed();
+        return getStudentCurricularPlan().isConclusionProcessed();
     }
 
     protected void checkEnrolmentWithoutRules() {

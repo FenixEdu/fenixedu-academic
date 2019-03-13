@@ -348,6 +348,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return getDegreeType().isBolonhaType();
     }
 
+    @Deprecated
     public boolean isEmpty() {
         return false;
     }
