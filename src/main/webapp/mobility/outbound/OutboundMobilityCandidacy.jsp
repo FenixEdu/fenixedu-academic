@@ -29,6 +29,8 @@
 <%@page import="org.fenixedu.academic.domain.ExecutionDegree"%>
 <%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyContest"%>
 <%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyPeriod"%>
+<%@ page import="org.fenixedu.bennu.core.i18n.BundleUtil" %>
+<%@ page import="org.fenixedu.academic.util.Bundle" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -47,6 +49,7 @@
 	.savedGrade { font-size: large; color: green; font-weight: bold; }
 </style>
 <script type="text/javascript">
+
 	function EscapeKeyAbort (event, toggle1, toggle2) {
 		if (event.keyCode == 27) {
 			ToggleVacanciesInput(toggle1, toggle2);
@@ -94,6 +97,7 @@
 <logic:present name="outboundMobilityContextBean">
 
 	<bean:define id="outboundMobilityContextBean" name="outboundMobilityContextBean" type="org.fenixedu.academic.ui.struts.action.mobility.outbound.OutboundMobilityContextBean"/>
+
 
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -322,11 +326,28 @@
 		</div>
 	<% } %>
 
-	<%
+		<%
 		if (outboundMobilityContextBean.getCandidacyPeriods().size() == 1) {
-		    final OutboundMobilityCandidacyPeriod candidacyPeriod = outboundMobilityContextBean.getCandidacyPeriods().iterator().next();
-		    request.setAttribute("candidacyPeriod", candidacyPeriod);
-	%>
+				final OutboundMobilityCandidacyPeriod candidacyPeriod = outboundMobilityContextBean.getCandidacyPeriods().iterator().next();
+				request.setAttribute("candidacyPeriod", candidacyPeriod);
+		%>
+		<script type="text/javascript">
+			var selectedOptionsCount = {};
+
+			<% for (final OutboundMobilityCandidacyPeriodConfirmationOption option : candidacyPeriod.getSortedOptions()) { %>
+				<% if (option.getSubmissionsThatSelectedOptionSet().size() > 0) { %>
+					<%= "selectedOptionsCount['" + option.getExternalId() + "'] = '" + BundleUtil.getString(Bundle.ACADEMIC, "label.mobility.outbound.delete.selected.options", Integer.toString(option.getSubmissionsThatSelectedOptionSet().size())) + "';" %>
+				<% } %>
+			<% } %>
+
+			function confirmDeleteOption(id) {
+				var selectedCount = selectedOptionsCount[id];
+				if (selectedCount) {
+					return confirm(selectedCount);
+				}
+				return true;
+			}
+		</script>
 		<div id="EditCandidacyPeriodBlock" style="display: none;">
 			<h3><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.edit.period"/></h3>
 			<fr:edit id="editCandidacyPeriod" name="candidacyPeriod" action="/outboundMobilityCandidacy.do?method=editCandidacyPeriod">
@@ -359,7 +380,7 @@
 								<%= option.getOptionValue() %>
 								&nbsp;&nbsp;
 								<html:link href="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?method=deleteOption&candidacyPeriodOid=" + candidacyPeriod.getExternalId() + "&optionOid=" + option.getExternalId() %>"
-									style="border-bottom: 0px;"><img src="<%= request.getContextPath() + "/images/iconRemoveOff.png" %>" alt="remove"></html:link>
+									style="border-bottom: 0px;"><img src="<%= request.getContextPath() + "/images/iconRemoveOff.png" %>" alt="remove" onclick="return confirmDeleteOption('<%= option.getExternalId() %>')"></html:link>
 								<% if (option.getAvailableForCandidates() != null && option.getAvailableForCandidates().booleanValue()) { %>
 									<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.isavailableForCandidates"/>
 								<% } %>

@@ -35,6 +35,7 @@ public class OutboundMobilityCandidacyPeriodConfirmationOption extends OutboundM
 
     @Atomic
     public void delete() {
+        getSubmissionsThatSelectedOptionSet().clear();
         setOutboundMobilityCandidacyPeriod(null);
         setRootDomainObject(null);
         deleteDomainObject();
