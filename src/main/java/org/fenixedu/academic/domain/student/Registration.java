@@ -467,26 +467,6 @@ public class Registration extends Registration_Base {
         return programConclusion.groupFor(this).map(CurriculumGroup::getFinalGrade).orElse(null);
     }
 
-    final public boolean isInFinalDegreeYear() {
-        return getCurricularYear() == getLastStudentCurricularPlan().getDegreeCurricularPlan().getDurationInYears();
-    }
-
-    final public boolean isQualifiedForSeniority() {
-        return isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree()
-                && (isConcluded() || isActive() && isInFinalDegreeForSeniority());
-    }
-
-    public boolean isInFinalDegreeForSeniority() {
-        int years = 0;
-        final StudentCurricularPlan studentCurricularPlan = getLastStudentCurricularPlan();
-        for (final CycleType type : getDegreeType().getCycleTypes()) {
-            if (studentCurricularPlan.hasCycleCurriculumGroup(type)) {
-                years += studentCurricularPlan.getDegreeCurricularPlan().getDurationInYears(type);
-            }
-        }
-        return getCurricularYear() == years;
-    }
-
     final public Collection<CurricularCourse> getCurricularCoursesApprovedByEnrolment() {
         final Collection<CurricularCourse> result = new HashSet<>();
 
@@ -953,17 +933,6 @@ public class Registration extends Registration_Base {
             }
         }
         return nonActiveRegistration;
-    }
-
-    final public static Registration readRegisteredRegistrationByNumberAndDegreeType(final Integer number,
-            final DegreeType degreeType) {
-        for (Registration registration : Bennu.getInstance().getRegistrationsSet()) {
-            if (registration.getNumber().intValue() == number.intValue() && registration.getDegreeType().equals(degreeType)
-                    && registration.isInRegisteredState()) {
-                return registration;
-            }
-        }
-        return null;
     }
 
     final public static Collection<Registration> readRegistrationsByNumberAndDegreeTypes(final Integer number,
@@ -1506,32 +1475,12 @@ public class Registration extends Registration_Base {
                 .isActive();
     }
 
-    public boolean isInRegisteredState() {
-        return getActiveStateType() == RegistrationStateType.REGISTERED;
-    }
-
-    public boolean isInternalAbandon() {
-        return getActiveStateType() == RegistrationStateType.INTERNAL_ABANDON;
-    }
-
     public boolean getInterruptedStudies() {
-        return isInterrupted();
-    }
-
-    public boolean isInterrupted() {
         return getActiveStateType() == RegistrationStateType.INTERRUPTED;
     }
 
     public boolean getFlunked() {
-        return isFlunked();
-    }
-
-    public boolean isFlunked() {
         return getActiveStateType() == RegistrationStateType.FLUNKED;
-    }
-
-    public boolean isInMobilityState() {
-        return getActiveStateType() == RegistrationStateType.MOBILITY;
     }
 
     public boolean isSchoolPartConcluded() {
@@ -1542,16 +1491,8 @@ public class Registration extends Registration_Base {
         return getActiveStateType() == RegistrationStateType.CONCLUDED;
     }
 
-    public boolean isTransited() {
-        return getActiveStateType() == RegistrationStateType.TRANSITED;
-    }
-
     public boolean isCanceled() {
         return getActiveStateType() == RegistrationStateType.CANCELED;
-    }
-
-    public boolean isTransited(final ExecutionYear executionYear) {
-        return hasStateType(executionYear, RegistrationStateType.TRANSITED);
     }
 
     public RegistrationState getStateInDate(final DateTime dateTime) {
@@ -1987,10 +1928,6 @@ public class Registration extends Registration_Base {
 
     public Degree getLastDegree() {
         return getLastDegreeCurricularPlan().getDegree();
-    }
-
-    final public boolean hasToPayGratuityOrInsurance() {
-        return getInterruptedStudies() ? false : getRegistrationProtocol().isToPayGratuity();
     }
 
     final public boolean isInactive() {

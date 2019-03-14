@@ -231,7 +231,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
 
     private void checkRegistrationState() {
 
-        if (getRegistration().hasAnyActiveState(getExecutionYear()) || getRegistration().isTransited(getExecutionYear())
+        if (getRegistration().hasAnyActiveState(getExecutionYear())
                 || (getRegistration().isConcluded() && getEvaluationSeason().isImprovement())) {
 
             return;
