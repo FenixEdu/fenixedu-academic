@@ -266,15 +266,6 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
         return result;
     }
 
-    public static ExecutionSemester readBySemesterAndExecutionYear(final Integer semester, final String year) {
-        for (final ExecutionSemester executionSemester : Bennu.getInstance().getExecutionPeriodsSet()) {
-            if (executionSemester.isFor(semester) && executionSemester.getExecutionYear().isFor(year)) {
-                return executionSemester;
-            }
-        }
-        return null;
-    }
-
     public static ExecutionSemester readByDateTime(final DateTime dateTime) {
         final YearMonthDay yearMonthDay = dateTime.toYearMonthDay();
         for (final ExecutionSemester executionSemester : Bennu.getInstance().getExecutionPeriodsSet()) {

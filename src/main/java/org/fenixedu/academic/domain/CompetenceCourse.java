@@ -886,7 +886,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
      * @see #getDepartmentUnit(ExecutionSemester)
      */
     public DepartmentUnit getDepartmentUnit(ExecutionYear executionYear) {
-        ExecutionSemester semester = ExecutionSemester.readBySemesterAndExecutionYear(2, executionYear.getYear());
+        ExecutionSemester semester = executionYear.getLastExecutionPeriod();
         return getDepartmentUnit(semester);
     }
 
@@ -973,7 +973,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public ScientificAreaUnit getScientificAreaUnit(ExecutionYear executionYear) {
-        ExecutionSemester semester = ExecutionSemester.readBySemesterAndExecutionYear(2, executionYear.getYear());
+        ExecutionSemester semester = executionYear.getLastExecutionPeriod();
         return getScientificAreaUnit(semester);
     }
 

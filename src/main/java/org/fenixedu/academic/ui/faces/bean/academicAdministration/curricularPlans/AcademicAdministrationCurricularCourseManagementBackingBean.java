@@ -77,7 +77,7 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
     public AcademicAdministrationCurricularCourseManagementBackingBean() {
         if (getCurricularCourse() != null && getExecutionYear() != null) {
             curricularCourseSemesterBean = new CurricularCourseByExecutionSemesterBean(getCurricularCourse(),
-                    ExecutionSemester.readBySemesterAndExecutionYear(2, getExecutionYear().getYear()));
+                    getExecutionYear().getLastExecutionPeriod());
         }
     }
 

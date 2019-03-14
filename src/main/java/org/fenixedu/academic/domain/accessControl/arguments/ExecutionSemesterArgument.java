@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.accessControl.arguments;
 
 import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.bennu.core.annotation.GroupArgumentParser;
 import org.fenixedu.bennu.core.groups.ArgumentParser;
 
@@ -27,7 +28,8 @@ public class ExecutionSemesterArgument implements ArgumentParser<ExecutionSemest
     @Override
     public ExecutionSemester parse(String argument) {
         String[] parts = argument.split(":");
-        return ExecutionSemester.readBySemesterAndExecutionYear(Integer.valueOf(parts[0]), parts[1]);
+        ExecutionYear year = ExecutionYear.readExecutionYearByName(parts[1]);
+        return year != null ? year.getExecutionSemesterFor(Integer.valueOf(parts[0])) : null;
     }
 
     @Override

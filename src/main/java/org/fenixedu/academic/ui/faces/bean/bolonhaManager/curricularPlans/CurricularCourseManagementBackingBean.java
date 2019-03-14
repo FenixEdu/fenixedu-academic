@@ -111,7 +111,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public CurricularCourseManagementBackingBean() {
         if (getCurricularCourse() != null && getExecutionYear() != null) {
             curricularCourseSemesterBean = new CurricularCourseByExecutionSemesterBean(getCurricularCourse(),
-                    ExecutionSemester.readBySemesterAndExecutionYear(2, getExecutionYear().getYear()));
+                    getExecutionYear().getLastExecutionPeriod());
         }
     }
 
