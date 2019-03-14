@@ -47,9 +47,8 @@ public class MultiSemesterEnrolmentReporter {
         this.semesterToReport = semesterToReport;
     }
 
-    public void report(final int year, final int month, final int day, final int hour) {
+    public void report(final ExecutionSemester semester, final int year, final int month, final int day, final int hour) {
         final DateTime enrolmentStartTime = new DateTime(year, month, day, hour, 0, 0, 0);
-        final ExecutionSemester semester = ExecutionSemester.readByDateTime(enrolmentStartTime);
         final DateTime endTimeToReport = enrolmentStartTime.plusHours(hoursToReport);
 
         if (semester.getSemester().intValue() == semesterToReport) {

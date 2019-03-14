@@ -257,16 +257,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         setStartDate(startDate);
     }
 
-    public boolean migrateStartDateToExecutionInterval() {
-        if (getStartExecutionInterval() == null) {
-            final ExecutionYear year = ExecutionYear.getExecutionYearByDate(getStartDateYearMonthDay());
-            setStartExecutionInterval(year.getFirstExecutionPeriod());
-            return true;
-        }
-
-        return false;
-    }
-
     public void delete() throws DomainException {
 
         for (; !getEnrolmentsSet().isEmpty(); getEnrolmentsSet().iterator().next().delete()) {
@@ -848,27 +838,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public ExecutionYear getStartExecutionYear() {
-        return getStartExecutionInterval() != null ? getStartExecutionInterval().convert(ExecutionYear.class) : ExecutionYear
-                .getExecutionYearByDate(getStartDateYearMonthDay());
+        return getStartExecutionInterval().convert(ExecutionYear.class);
     }
 
     public ExecutionSemester getStartExecutionPeriod() {
-        if (getStartExecutionInterval() != null) {
-            return getStartExecutionInterval().convert(ExecutionSemester.class);
-        }
-
-        ExecutionSemester result = null;
-
-        final YearMonthDay startDate = getStartDateYearMonthDay();
-        if (startDate != null) {
-            result = ExecutionSemester.readByDateTime(startDate.toDateTimeAtMidnight());
-
-            if (result == null) {
-                result = ExecutionYear.readByDateTime(startDate.toDateTimeAtMidnight()).getFirstExecutionPeriod();
-            }
-        }
-
-        return result != null ? result : getFirstExecutionPeriod();
+        return getStartExecutionInterval().convert(ExecutionSemester.class);
     }
 
     final public ExecutionSemester getFirstExecutionPeriod() {

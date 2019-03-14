@@ -1952,7 +1952,7 @@ public class Registration extends Registration_Base {
     }
 
     @Override
-    final public YearMonthDay getStartDate() {
+    public YearMonthDay getStartDate() {
 
         if (super.getStartDate() != null) {
             return super.getStartDate();
@@ -2121,40 +2121,31 @@ public class Registration extends Registration_Base {
         return isActive();
     }
 
-    public void editStartDates(final LocalDate startDate, final LocalDate homologationDate, final LocalDate studiesStartDate) {
-
-        editStartDates(new YearMonthDay(startDate), new YearMonthDay(homologationDate), new YearMonthDay(studiesStartDate));
-    }
-
-    public void editStartDates(final YearMonthDay startDate, final YearMonthDay homologationDate,
-            final YearMonthDay studiesStartDate) {
-
-        editStartDates((ExecutionYear) null, startDate, homologationDate, studiesStartDate);
-    }
-
     public void editStartDates(final ExecutionYear registrationYear, final YearMonthDay startDate,
             final YearMonthDay homologationDate, final YearMonthDay studiesStartDate) {
 
         setStartDate(startDate);
 
         // registration year
-        if (registrationYear != null) {
-            if (getStartDate().isAfter(registrationYear.getEndLocalDate())) {
-                throw new DomainException("error.Registration.startDate.after.registrationYear");
-            }
-            setRegistrationYear(registrationYear);
+        if (registrationYear == null) {
+            throw new DomainException("error.Registration.invalid.execution.year");
         }
+        if (getStartDate().isAfter(registrationYear.getEndLocalDate())) {
+            throw new DomainException("error.Registration.startDate.after.registrationYear");
+        }
+        setRegistrationYear(registrationYear);
 
-        // edit RegistrationState start date
+        // edit RegistrationState execution interval and date
         final RegistrationState firstRegistrationState = getFirstRegistrationState();
         firstRegistrationState.setStateDate(startDate);
+        firstRegistrationState.setExecutionInterval(registrationYear.getFirstExecutionPeriod());
         if (firstRegistrationState != getFirstRegistrationState()) {
             throw new DomainException("error.Registration.startDate.changes.first.registration.state");
         }
 
-        // edit Scp start date
+        // edit Scp start year
         final StudentCurricularPlan first = getFirstStudentCurricularPlan();
-        first.setStartDate(startDate);
+        first.editStart(registrationYear);
         if (first != getFirstStudentCurricularPlan()) {
             throw new DomainException("error.Registration.startDate.changes.first.scp");
         }
@@ -2169,12 +2160,6 @@ public class Registration extends Registration_Base {
             throw new DomainException("error.Registration.null.startDate");
         }
         super.setStartDate(startDate);
-
-        final ExecutionYear year = ExecutionYear.readByDateTime(startDate.toLocalDate());
-        if (year == null) {
-            throw new DomainException("error.Registration.invalid.execution.year");
-        }
-        setRegistrationYear(year);
     }
 
     public void setHomologationDate(final LocalDate homologationDate) {

@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.domain.student.registrationStates;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -30,7 +29,6 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.domain.util.workflow.IState;
 import org.fenixedu.academic.domain.util.workflow.StateBean;
 import org.fenixedu.academic.domain.util.workflow.StateMachine;
@@ -177,7 +175,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     }
 
     private void checkCurriculumLinesForStateDate(final StateBean bean) {
-        final ExecutionYear year = ExecutionYear.readByDateTime(bean.getStateDateTime());
+        final ExecutionYear year = ((RegistrationStateBean) bean).getExecutionInterval().convert(ExecutionYear.class);
         final RegistrationStateType nextStateType = RegistrationStateType.valueOf(bean.getNextState());
 
         if (nextStateType.canHaveCurriculumLinesOnCreation()) {
@@ -198,8 +196,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     public abstract RegistrationStateType getStateType();
 
     public ExecutionYear getExecutionYear() {
-        return getExecutionInterval() != null ? getExecutionInterval().convert(ExecutionYear.class) : ExecutionYear
-                .readByDateTime(getStateDate());
+        return getExecutionInterval().convert(ExecutionYear.class);
     }
 
     public void delete() {
@@ -294,25 +291,6 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 
     public boolean isActive() {
         return getStateType().isActive();
-    }
-
-    public boolean includes(final ExternalEnrolment externalEnrolment) {
-        if (getStateType() == RegistrationStateType.MOBILITY) {
-            final DateTime mobilityDate = getStateDate();
-            return externalEnrolment.hasExecutionPeriod() && externalEnrolment.getExecutionYear().containsDate(mobilityDate);
-        }
-
-        throw new DomainException("RegistrationState.external.enrolments.only.included.in.mobility.states");
-    }
-
-    static public boolean hasAnyState(final Collection<RegistrationState> states, final Collection<RegistrationStateType> types) {
-        for (final RegistrationState state : states) {
-            if (types.contains(state.getStateType())) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
 }
