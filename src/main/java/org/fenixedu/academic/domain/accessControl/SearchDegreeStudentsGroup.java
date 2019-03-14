@@ -40,9 +40,9 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
-import pt.ist.fenixframework.FenixFramework;
-
 import com.google.common.base.Joiner;
+
+import pt.ist.fenixframework.FenixFramework;
 
 public class SearchDegreeStudentsGroup implements Serializable {
 
@@ -284,14 +284,9 @@ public class SearchDegreeStudentsGroup implements Serializable {
             return new Comparator<StudentCurricularPlan>() {
                 @Override
                 public int compare(StudentCurricularPlan left, StudentCurricularPlan right) {
-                    int result =
-                            left.getRegistration()
-                                    .getLastRegistrationState(getExecutionYear())
-                                    .getStateType()
-                                    .getDescription()
-                                    .compareTo(
-                                            right.getRegistration().getLastRegistrationState(getExecutionYear()).getStateType()
-                                                    .getDescription());
+                    int result = left.getRegistration().getLastRegistrationState(getExecutionYear()).getStateType()
+                            .getDescription().compareTo(right.getRegistration().getLastRegistrationState(getExecutionYear())
+                                    .getStateType().getDescription());
                     return result == 0 ? left.getRegistration().getStudent().getNumber()
                             .compareTo(right.getRegistration().getStudent().getNumber()) : result;
                 }
@@ -420,7 +415,7 @@ public class SearchDegreeStudentsGroup implements Serializable {
     }
 
     public boolean matchesSelectCriteria(final StudentCurricularPlan studentCurricularPlan) {
-        if (!studentCurricularPlan.hasRegistration() || studentCurricularPlan.getRegistration().isTransition()) {
+        if (!studentCurricularPlan.hasRegistration()) {
             return false;
         }
 
@@ -484,16 +479,15 @@ public class SearchDegreeStudentsGroup implements Serializable {
 
     public String getLabel() {
         String label = new String();
-        label =
-                String.format("%s : %s \n%s : %s \n%s : %s \n%s : %s \n%s : %s",
-                        getApplicationResourcesString("label.selectStudents"), getRegistrationStateType().getDescription(),
-                        getApplicationResourcesString("label.student.number"), getMinStudentNumberString() + " - "
-                                + getMaxStudentNumberString(), getApplicationResourcesString("label.average"),
-                        getMinGradeString() + " - " + getMaxGradeString(),
-                        getApplicationResourcesString("label.number.approved.curricular.courses"), getMinNumberApprovedString()
-                                + " - " + getMaxNumberApprovedString(),
-                        getApplicationResourcesString("label.student.curricular.year"), getMinimumYearString() + " - "
-                                + getMaximumYearString());
+        label = String.format("%s : %s \n%s : %s \n%s : %s \n%s : %s \n%s : %s",
+                getApplicationResourcesString("label.selectStudents"), getRegistrationStateType().getDescription(),
+                getApplicationResourcesString("label.student.number"),
+                getMinStudentNumberString() + " - " + getMaxStudentNumberString(), getApplicationResourcesString("label.average"),
+                getMinGradeString() + " - " + getMaxGradeString(),
+                getApplicationResourcesString("label.number.approved.curricular.courses"),
+                getMinNumberApprovedString() + " - " + getMaxNumberApprovedString(),
+                getApplicationResourcesString("label.student.curricular.year"),
+                getMinimumYearString() + " - " + getMaximumYearString());
         return label;
     }
 

@@ -600,53 +600,7 @@ public class Student extends Student_Base {
     }
 
     public Stream<Registration> getRegistrationStream() {
-        return super.getRegistrationsSet().stream().filter(r -> !r.isTransition());
-    }
-
-    /**
-     * -> Temporary overrides due migrations - Filter 'InTransition'
-     * registrations -> Do not use this method to add new registrations directly
-     * (use {@link addRegistrations} method)
-     */
-    @Override
-    public Set<Registration> getRegistrationsSet() {
-        final Set<Registration> result = new HashSet<>();
-        for (final Registration registration : super.getRegistrationsSet()) {
-            if (!registration.isTransition()) {
-                result.add(registration);
-            }
-        }
-        return Collections.unmodifiableSet(result);
-    }
-
-    public boolean hasTransitionRegistrations() {
-        for (final Registration registration : super.getRegistrationsSet()) {
-            if (registration.isTransition()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public List<Registration> getTransitionRegistrations() {
-        final List<Registration> result = new ArrayList<>();
-        for (final Registration registration : super.getRegistrationsSet()) {
-            if (registration.isTransition()) {
-                result.add(registration);
-            }
-        }
-        return result;
-    }
-
-    public List<Registration> getTransitedRegistrations() {
-        List<Registration> result = new ArrayList<>();
-        for (Registration registration : super.getRegistrationsSet()) {
-            if (registration.isTransited()) {
-                result.add(registration);
-            }
-        }
-        return result;
+        return super.getRegistrationsSet().stream();
     }
 
     public List<Registration> getRegistrationsFor(final DegreeCurricularPlan degreeCurricularPlan) {
@@ -713,16 +667,6 @@ public class Student extends Student_Base {
             }
         }
         return false;
-    }
-
-    public Registration getTransitionRegistrationFor(final DegreeCurricularPlan degreeCurricularPlan) {
-        for (final Registration registration : getTransitionRegistrations()) {
-            if (registration.getLastDegreeCurricularPlan() == degreeCurricularPlan) {
-                return registration;
-            }
-        }
-
-        return null;
     }
 
     public boolean isGrantOwner(final ExecutionYear executionYear) {

@@ -358,10 +358,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return getDegreeCurricularPlan().isPast();
     }
 
-    public boolean isTransition() {
-        return getRegistration().isTransition();
-    }
-
     final public boolean isBolonhaDegree() {
         return getDegreeCurricularPlan().isBolonhaDegree();
     }

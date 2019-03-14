@@ -60,7 +60,6 @@
 				<f:selectItem itemLabel="#{bundleEnum['RegistrationStateType.SCHOOLPARTCONCLUDED']}" itemValue="SCHOOLPARTCONCLUDED"/>
 				<f:selectItem itemLabel="#{bundleEnum['RegistrationStateType.INTERNAL_ABANDON']}" itemValue="INTERNAL_ABANDON"/>
 				<f:selectItem itemLabel="#{bundleEnum['RegistrationStateType.EXTERNAL_ABANDON']}" itemValue="EXTERNAL_ABANDON"/>
-				<f:selectItem itemLabel="#{bundleEnum['RegistrationStateType.TRANSITION']}" itemValue="TRANSITION"/>
 				<f:selectItem itemLabel="#{bundleEnum['RegistrationStateType.TRANSITED']}" itemValue="TRANSITED"/>
 				<f:selectItem itemLabel="#{bundleEnum['RegistrationStateType.STUDYPLANCONCLUDED']}" itemValue="STUDYPLANCONCLUDED"/>
 				<f:selectItem itemLabel="#{bundleEnum['RegistrationStateType.INACTIVE']}" itemValue="INACTIVE"/>
