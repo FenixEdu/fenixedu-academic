@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -118,7 +119,9 @@ public class StudentDismissalsDA extends FenixDispatchAction {
     protected Collection<SelectedEnrolment> buildStudentEnrolmentsInformation(final DismissalBean dismissalBean) {
         final Collection<SelectedEnrolment> enrolments = new HashSet<SelectedEnrolment>();
 
-        for (final StudentCurricularPlan scp : dismissalBean.getStudent().getAllStudentCurricularPlans()) {
+        final Collection<StudentCurricularPlan> scps = dismissalBean.getStudent().getRegistrationsSet().stream()
+                .flatMap(r -> r.getStudentCurricularPlansSet().stream()).collect(Collectors.toList());
+        for (final StudentCurricularPlan scp : scps) {
 
             final List<Enrolment> approvedEnrolments = new ArrayList<Enrolment>(scp.getDismissalApprovedEnrolments());
             Collections.sort(approvedEnrolments, Enrolment.COMPARATOR_BY_EXECUTION_YEAR_AND_NAME_AND_ID);

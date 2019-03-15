@@ -92,7 +92,7 @@ public class CurriculumGroupsProviderForMoveCurriculumLines implements DataProvi
 
     static private boolean isConcluded(final Student student, final CycleCurriculumGroup cycle) {
         return cycle.getConclusionProcess() != null
-                || (cycle.isExternal() && student.hasRegistrationFor(cycle.getDegreeCurricularPlanOfDegreeModule()));
+                || (cycle.isExternal() && !student.getRegistrationsFor(cycle.getDegreeCurricularPlanOfDegreeModule()).isEmpty());
     }
 
     @Override

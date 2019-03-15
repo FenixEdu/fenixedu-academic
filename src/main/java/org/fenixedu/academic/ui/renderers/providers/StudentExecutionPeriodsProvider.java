@@ -22,6 +22,8 @@ import java.util.Collections;
 import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.dto.student.ManageStudentStatuteBean;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
@@ -39,12 +41,28 @@ public class StudentExecutionPeriodsProvider implements DataProvider {
     public Object provide(Object source, Object currentValue) {
 
         final ExecutionYear firstExecutionYear =
-                ((ManageStudentStatuteBean) source).getStudent().getFirstRegistrationExecutionYear();
+                getFirstRegistrationExecutionYear(((ManageStudentStatuteBean) source).getStudent());
 
         return ExecutionYear.readNotClosedExecutionYears().stream().filter(ey -> ey.isAfterOrEquals(firstExecutionYear))
                 .flatMap(ey -> ey.getExecutionPeriodsSet().stream())
                 .sorted(Collections.reverseOrder(ExecutionYear.COMPARATOR_BY_BEGIN_DATE)).collect(Collectors.toList());
 
+    }
+
+    private ExecutionYear getFirstRegistrationExecutionYear(final Student student) {
+
+        ExecutionYear firstYear = null;
+        for (Registration registration : student.getRegistrationsSet()) {
+            if (firstYear == null) {
+                firstYear = registration.getRegistrationYear();
+                continue;
+            }
+
+            if (registration.getRegistrationYear().isBefore(firstYear)) {
+                firstYear = registration.getRegistrationYear();
+            }
+        }
+        return firstYear;
     }
 
     @Override

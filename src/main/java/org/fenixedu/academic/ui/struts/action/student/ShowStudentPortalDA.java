@@ -53,7 +53,7 @@ public class ShowStudentPortalDA extends Action {
 
         final Student student = Authenticate.getUser().getPerson().getStudent();
         if (student != null) {
-            for (Registration registration : student.getAllRegistrations()) {
+            for (Registration registration : student.getRegistrationsSet()) {
 
                 final StudentCurricularPlan scp = registration.getLastStudentCurricularPlan();
                 if (scp != null) {

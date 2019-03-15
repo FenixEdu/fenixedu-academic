@@ -1075,8 +1075,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
         }
 
         protected void generateStatisticsLinkCell(final HtmlTableRow row, final Enrolment enrolment) {
-            if (enrolment.getStudent() == AccessControl.getPerson().getStudent()
-                    && enrolment.getStudent().hasAnyActiveRegistration()) {
+            if (enrolment.getStudent() == AccessControl.getPerson().getStudent() && enrolment.getRegistration().isActive()) {
                 ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(enrolment.getExecutionPeriod());
                 if (executionCourse != null) {
                     final HtmlInlineContainer inlineContainer = new HtmlInlineContainer();

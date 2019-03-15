@@ -18,6 +18,9 @@
  */
 package org.fenixedu.academic.ui.struts.action.manager.enrolments;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,6 +30,7 @@ import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.log.CurriculumLineLog;
 import org.fenixedu.academic.domain.log.EnrolmentLog;
+import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.dto.curriculumLineLog.SearchCurriculumLineLog;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
@@ -65,8 +69,17 @@ public class CurriculumLineLogsDA extends FenixDispatchAction {
             return mapping.findForward("searchCurriculumLineLogs");
         }
 
-        request.setAttribute("curriculumLineLogs", student.getCurriculumLineLogs(searchCurriculumLineLog.getExecutionPeriod()));
+        request.setAttribute("curriculumLineLogs", getCurriculumLineLogs(student, searchCurriculumLineLog.getExecutionPeriod()));
         return mapping.findForward("searchCurriculumLineLogs");
+    }
+
+    private Collection<CurriculumLineLog> getCurriculumLineLogs(final Student student,
+            final ExecutionSemester executionSemester) {
+        final Collection<CurriculumLineLog> res = new HashSet<>();
+        for (final Registration registration : student.getRegistrationsSet()) {
+            res.addAll(registration.getCurriculumLineLogs(executionSemester));
+        }
+        return res;
     }
 
     public static class CurriculumLineLogStatisticsCalculator {

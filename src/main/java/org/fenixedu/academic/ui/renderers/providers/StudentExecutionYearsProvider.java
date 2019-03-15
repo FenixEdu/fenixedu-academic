@@ -19,11 +19,16 @@
 package org.fenixedu.academic.ui.renderers.providers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.dto.student.RegistrationSelectExecutionYearBean;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
@@ -34,11 +39,18 @@ public class StudentExecutionYearsProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        List<ExecutionYear> result =
-                new ArrayList(((RegistrationSelectExecutionYearBean) source).getRegistration().getStudent()
-                        .getEnrolmentsExecutionYears());
+        List<ExecutionYear> result = new ArrayList(
+                getEnrolmentsExecutionYears(((RegistrationSelectExecutionYearBean) source).getRegistration().getStudent()));
         Collections.sort(result, new BeanComparator("year"));
         return result;
+    }
+
+    private Collection<ExecutionYear> getEnrolmentsExecutionYears(final Student student) {
+        Set<ExecutionYear> executionYears = new HashSet<>();
+        for (final Registration registration : student.getRegistrationsSet()) {
+            executionYears.addAll(registration.getEnrolmentsExecutionYears());
+        }
+        return executionYears;
     }
 
     @Override

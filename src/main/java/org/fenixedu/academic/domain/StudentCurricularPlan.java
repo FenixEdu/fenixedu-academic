@@ -61,7 +61,6 @@ import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
-import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.domain.studentCurriculum.BranchCurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.Credits;
@@ -2050,20 +2049,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public Collection<NoCourseGroupCurriculumGroup> getNoCourseGroupCurriculumGroups() {
         return getRoot().getNoCourseGroupCurriculumGroups();
-    }
-
-    public boolean hasAnyActiveRegistrationWithFirstCycleAffinity() {
-        final CycleCurriculumGroup firstCycle = getFirstCycle();
-        if (firstCycle == null) {
-            return false;
-        }
-        final Student student = getRegistration().getStudent();
-        for (final CycleCourseGroup affinity : getCycleCourseGroup(firstCycle.getCycleType()).getDestinationAffinitiesSet()) {
-            if (student.hasActiveRegistrationFor(affinity.getParentDegreeCurricularPlan())) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public Collection<CycleType> getCycleTypes() {

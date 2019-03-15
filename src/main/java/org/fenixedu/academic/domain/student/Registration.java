@@ -547,12 +547,6 @@ public class Registration extends Registration_Base {
                 .getEnrolmentsByExecutionPeriod(executionSemester) : Collections.EMPTY_LIST;
     }
 
-    final public void addApprovedEnrolments(final Collection<Enrolment> enrolments) {
-        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-            studentCurricularPlan.addApprovedEnrolments(enrolments);
-        }
-    }
-
     final public Collection<Enrolment> getApprovedEnrolments() {
         final Collection<Enrolment> result = new HashSet<>();
 
