@@ -78,10 +78,7 @@ public class ManageIngressionDA extends FenixDispatchAction {
             HttpServletResponse response) {
 
         IngressionInformationBean ingressionInformationBean = getRegistrationIngressionEditor();
-        if (!ingressionInformationBean.hasRegistrationProtocol()
-                || ingressionInformationBean.getRegistrationProtocol().isEnrolmentByStudentAllowed()) {
-            ingressionInformationBean.setAgreementInformation(null);
-        }
+        ingressionInformationBean.setAgreementInformation(null);
 
         RenderUtils.invalidateViewState();
         request.setAttribute("ingressionBean", ingressionInformationBean);

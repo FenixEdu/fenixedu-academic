@@ -2041,19 +2041,6 @@ public class Registration extends Registration_Base {
         return result;
     }
 
-    public boolean isEnrolmentByStudentAllowed() {
-        return isActive() && getRegistrationProtocol().isEnrolmentByStudentAllowed();
-    }
-
-    @Deprecated
-    public boolean isEnrolmentByStudentAllowed(final DegreeType type) {
-        return DEGREE_TYPES_TO_ENROL_BY_STUDENT.test(type);
-    }
-
-    public boolean isEnrolmentByStudentInShiftsAllowed() {
-        return isActive();
-    }
-
     public void editStartDates(final ExecutionYear registrationYear, final YearMonthDay startDate,
             final YearMonthDay homologationDate, final YearMonthDay studiesStartDate) {
 

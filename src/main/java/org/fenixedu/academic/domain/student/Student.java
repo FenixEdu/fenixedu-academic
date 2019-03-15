@@ -510,51 +510,6 @@ public class Student extends Student_Base {
         return attends;
     }
 
-    public List<Registration> getRegistrationsToEnrolByStudent() {
-        final List<Registration> result = new ArrayList<>();
-        for (final Registration registration : getRegistrationsSet()) {
-            if (registration.isEnrolmentByStudentAllowed()) {
-                result.add(registration);
-            }
-        }
-
-        return result;
-
-    }
-
-    public List<Registration> getRegistrationsToEnrolInShiftByStudent() {
-        final List<Registration> result = new ArrayList<>();
-        for (final Registration registration : getRegistrationsSet()) {
-            if (registration.isEnrolmentByStudentInShiftsAllowed()) {
-                result.add(registration);
-            }
-        }
-
-        return result;
-    }
-
-    public boolean isCurrentlyEnroled(final DegreeCurricularPlan degreeCurricularPlan) {
-        for (Registration registration : getRegistrationsSet()) {
-            final RegistrationState registrationState = registration.getActiveState();
-            if (!registration.isActive() && registrationState.getStateType() != RegistrationStateType.TRANSITED) {
-                continue;
-            }
-
-            StudentCurricularPlan lastStudentCurricularPlan = registration.getLastStudentCurricularPlan();
-            if (lastStudentCurricularPlan == null) {
-                continue;
-            }
-
-            if (lastStudentCurricularPlan.getDegreeCurricularPlan() != degreeCurricularPlan) {
-                continue;
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
     public Set<Enrolment> getDissertationEnrolments() {
         final Set<Enrolment> result = new TreeSet<>(Enrolment.COMPARATOR_BY_REVERSE_EXECUTION_PERIOD_AND_NAME_AND_ID);
         for (final Registration registration : getRegistrationsSet()) {

@@ -105,19 +105,12 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
         final Collection<Registration> registrations = new HashSet<Registration>();
 
         for (final Registration registration : student.getRegistrationsSet()) {
-            if (isRegistrationEnrolmentByStudentAllowed(registration)) {
-
-                if (registration.isActive() || isRegistrationAvailableToEnrol(registration)) {
-                    registrations.add(registration);
-                }
+            if (registration.isActive() || isRegistrationAvailableToEnrol(registration)) {
+                registrations.add(registration);
             }
         }
 
         return registrations;
-    }
-
-    static private boolean isRegistrationEnrolmentByStudentAllowed(final Registration registration) {
-        return registration.getRegistrationProtocol().isEnrolmentByStudentAllowed();
     }
 
     private boolean isRegistrationAvailableToEnrol(final Registration registration) {

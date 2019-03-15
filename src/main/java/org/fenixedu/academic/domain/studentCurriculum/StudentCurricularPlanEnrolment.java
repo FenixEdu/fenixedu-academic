@@ -230,10 +230,6 @@ abstract public class StudentCurricularPlanEnrolment {
 
     protected void assertStudentEnrolmentPreConditions() {
 
-        if (!getResponsiblePerson().getStudent().getRegistrationsToEnrolByStudent().contains(getRegistration())) {
-            throw new DomainException("error.StudentCurricularPlan.student.is.not.allowed.to.perform.enrol");
-        }
-
         if (getCurricularRuleLevel() != CurricularRuleLevel.ENROLMENT_WITH_RULES) {
             throw new DomainException("error.StudentCurricularPlan.invalid.curricular.rule.level");
         }
