@@ -215,4 +215,17 @@ public class SchoolClass extends SchoolClass_Base {
         setAnoCurricular(curricularYear);
     }
 
+    /**
+     * @deprecated use {@link #getExecutionInterval()} instead.
+     */
+    @Deprecated
+    @Override
+    public ExecutionSemester getExecutionPeriod() {
+        return super.getExecutionPeriod();
+    }
+
+    public ExecutionInterval getExecutionInterval() {
+        return super.getExecutionPeriod();
+    }
+
 }

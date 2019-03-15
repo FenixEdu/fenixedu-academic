@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
@@ -337,4 +338,16 @@ public class Credits extends Credits_Base {
         return true;
     }
 
+    /**
+     * @deprecated use {@link #getExecutionInterval()} instead.
+     */
+    @Deprecated
+    @Override
+    public ExecutionSemester getExecutionPeriod() {
+        return super.getExecutionPeriod();
+    }
+
+    public ExecutionInterval getExecutionInterval() {
+        return super.getExecutionPeriod();
+    }
 }

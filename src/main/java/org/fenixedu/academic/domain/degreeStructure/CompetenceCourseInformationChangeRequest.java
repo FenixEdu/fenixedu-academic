@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.degreeStructure;
 import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import org.fenixedu.academic.domain.CompetenceCourse;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -255,4 +256,16 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
                 getExecutionPeriod());
     }
 
+    /**
+     * @deprecated use {@link #getExecutionInterval()} instead.
+     */
+    @Deprecated
+    @Override
+    public ExecutionSemester getExecutionPeriod() {
+        return super.getExecutionPeriod();
+    }
+
+    public ExecutionInterval getExecutionInterval() {
+        return super.getExecutionPeriod();
+    }
 }

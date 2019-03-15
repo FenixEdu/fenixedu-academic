@@ -486,4 +486,30 @@ public class Context extends Context_Base implements Comparable<Context> {
         }
     }
 
+    /**
+     * @deprecated use {@link #getBeginExecutionInterval()} instead.
+     */
+    @Deprecated
+    @Override
+    public ExecutionSemester getBeginExecutionPeriod() {
+        return super.getBeginExecutionPeriod();
+    }
+
+    public ExecutionInterval getBeginExecutionInterval() {
+        return super.getBeginExecutionPeriod();
+    }
+
+    /**
+     * @deprecated use {@link #getEndExecutionInterval()} instead.
+     */
+    @Deprecated
+    @Override
+    public ExecutionSemester getEndExecutionPeriod() {
+        return super.getEndExecutionPeriod();
+    }
+
+    public ExecutionInterval getEndExecutionInterval() {
+        return super.getEndExecutionPeriod();
+    }
+
 }

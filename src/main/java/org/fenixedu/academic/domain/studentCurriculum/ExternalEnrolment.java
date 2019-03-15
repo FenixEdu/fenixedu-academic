@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.ExternalCurricularCourse;
@@ -290,4 +291,17 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
         return getExecutionPeriod() != null;
     }
 
+    /**
+     * @deprecated use {@link #getExecutionInterval()} instead.
+     */
+    @Deprecated
+    @Override
+    public ExecutionSemester getExecutionPeriod() {
+        return super.getExecutionPeriod();
+    }
+
+    public ExecutionInterval getExecutionInterval() {
+        return super.getExecutionPeriod();
+    }
+    
 }

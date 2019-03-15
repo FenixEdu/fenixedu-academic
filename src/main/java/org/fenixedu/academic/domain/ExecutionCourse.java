@@ -1836,4 +1836,17 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return result;
     }
 
+    /**
+     * @deprecated use {@link #getExecutionInterval()} instead.
+     */
+    @Deprecated
+    @Override
+    public ExecutionSemester getExecutionPeriod() {
+        return super.getExecutionPeriod();
+    }
+
+    public ExecutionInterval getExecutionInterval() {
+        return super.getExecutionPeriod();
+    }
+
 }

@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain.curricularRules;
 
 import java.util.List;
 
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
@@ -118,15 +119,31 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
         return getParentCompositeRule() != null;
     }
 
+    /**
+     * @deprecated use {@link #getBeginInterval()} instead.
+     */
+    @Deprecated
     @Override
     public ExecutionSemester getBegin() {
         return belongsToCompositeRule() ? getParentCompositeRule().getBegin() : super.getBegin();
     }
 
+    public ExecutionInterval getBeginInterval() {
+        return belongsToCompositeRule() ? getParentCompositeRule().getBegin() : super.getBegin();
+    }
+
+    /**
+     * @deprecated use {@link #getEndInterval()} instead.
+     */
+    @Deprecated
     @Override
     public ExecutionSemester getEnd() {
         return belongsToCompositeRule() ? getParentCompositeRule().getEnd() : super.getEnd();
     }
+    
+    public ExecutionInterval getEndInterval() {
+        return belongsToCompositeRule() ? getParentCompositeRule().getEnd() : super.getEnd();
+    }    
 
     @Override
     public DegreeModule getDegreeModuleToApplyRule() {

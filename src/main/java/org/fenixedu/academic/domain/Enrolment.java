@@ -635,7 +635,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         }
 
     };
-    
+
     public static boolean isOneYearAfter(final ExecutionSemester improvementSemester, final ExecutionSemester enrolmentSemester) {
         final ExecutionSemester nextExecutionPeriod = enrolmentSemester.getNextExecutionPeriod();
         return (nextExecutionPeriod == null) ? false : improvementSemester == nextExecutionPeriod.getNextExecutionPeriod();
@@ -1553,4 +1553,16 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         }
     }
 
+    /**
+     * @deprecated use {@link #getExecutionInterval()} instead.
+     */
+    @Deprecated
+    @Override
+    public ExecutionSemester getExecutionPeriod() {
+        return super.getExecutionPeriod();
+    }
+
+    public ExecutionInterval getExecutionInterval() {
+        return super.getExecutionPeriod();
+    }
 }

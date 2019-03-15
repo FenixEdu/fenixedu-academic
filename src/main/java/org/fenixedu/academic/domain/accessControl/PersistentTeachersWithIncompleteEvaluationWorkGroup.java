@@ -24,14 +24,15 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
-
-import pt.ist.fenixframework.dml.runtime.Relation;
 
 import com.google.common.collect.Sets;
 
-public abstract class PersistentTeachersWithIncompleteEvaluationWorkGroup extends
-        PersistentTeachersWithIncompleteEvaluationWorkGroup_Base {
+import pt.ist.fenixframework.dml.runtime.Relation;
+
+public abstract class PersistentTeachersWithIncompleteEvaluationWorkGroup
+        extends PersistentTeachersWithIncompleteEvaluationWorkGroup_Base {
     protected PersistentTeachersWithIncompleteEvaluationWorkGroup() {
         super();
     }
@@ -53,5 +54,18 @@ public abstract class PersistentTeachersWithIncompleteEvaluationWorkGroup extend
                 () -> ((Optional<T>) period.getTeachersWithIncompleteEvaluationWorkGroupSet().stream()
                         .filter(group -> Objects.equals(group.getDegreeCurricularPlan(), degreeCurricularPlan)).findAny()),
                 creator);
+    }
+
+    /**
+     * @deprecated use {@link #getInterval()} instead.
+     */
+    @Deprecated
+    @Override
+    public ExecutionSemester getPeriod() {
+        return super.getPeriod();
+    }
+
+    public ExecutionInterval getInterval() {
+        return super.getPeriod();
     }
 }

@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.domain.log;
 
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -97,6 +98,19 @@ abstract public class CurriculumLineLog extends CurriculumLineLog_Base {
         } else {
             setDateDateTime(new org.joda.time.DateTime(date.getTime()));
         }
+    }
+
+    /**
+     * @deprecated use {@link #getExecutionInterval()} instead.
+     */
+    @Deprecated
+    @Override
+    public ExecutionSemester getExecutionPeriod() {
+        return super.getExecutionPeriod();
+    }
+
+    public ExecutionInterval getExecutionInterval() {
+        return super.getExecutionPeriod();
     }
 
 }

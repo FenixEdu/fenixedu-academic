@@ -94,6 +94,10 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
         return super.getDepartment();
     }
 
+    /**
+     * @deprecated use {@link #getExecutionInterval()} instead.
+     */
+    @Deprecated
     @Override
     public ExecutionSemester getExecutionSemester() {
         if (getRevokedRootDomainObject() != null) {
@@ -102,6 +106,14 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
         // FIXME: Removed when framework support read-only slots
         return super.getExecutionSemester();
     }
+
+    public ExecutionInterval getExecutionInterval() {
+        if (getRevokedRootDomainObject() != null) {
+            return getRevokedExecutionSemester();
+        }
+        // FIXME: Removed when framework support read-only slots
+        return super.getExecutionSemester();
+    }   
 
     @Override
     public Teacher getTeacher() {
@@ -166,4 +178,18 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
         }
         return getExternalId().compareTo(o.getExternalId());
     }
+    
+    /**
+     * @deprecated use {@link #getRevokedExecutionInterval()} instead.
+     */
+    @Deprecated
+    @Override
+    protected ExecutionSemester getRevokedExecutionSemester() {
+        return super.getRevokedExecutionSemester();
+    }
+
+    protected ExecutionInterval getRevokedExecutionInterval() {
+        return super.getRevokedExecutionSemester();
+    }
+    
 }

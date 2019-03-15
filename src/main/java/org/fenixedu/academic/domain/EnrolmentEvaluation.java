@@ -421,6 +421,10 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         return event != null && event.isPayed(this);
     }
 
+    /**
+     * @deprecated use {@link #getExecutionInterval()} instead.
+     */
+    @Deprecated
     @Override
     public ExecutionSemester getExecutionPeriod() {
         if (getEvaluationSeason().isImprovement()) {
@@ -433,6 +437,18 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
 
         return null;
     }
+
+    public ExecutionInterval getExecutionInterval() {
+        if (getEvaluationSeason().isImprovement()) {
+            return super.getExecutionPeriod();
+        }
+
+        if (getEnrolment() != null) {
+            return getEnrolment().getExecutionPeriod();
+        }
+
+        return null;
+    }  
 
     @Deprecated
     public java.util.Date getExamDate() {
