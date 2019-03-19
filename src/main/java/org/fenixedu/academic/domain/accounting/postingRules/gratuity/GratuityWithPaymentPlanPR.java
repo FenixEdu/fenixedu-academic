@@ -166,7 +166,17 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base im
 
     @Override
     public Money getDefaultGratuityAmount(ExecutionYear executionYear) {
-        return getServiceAgreementTemplate().getDefaultPaymentPlan(executionYear).calculateOriginalTotalAmount();
+        ServiceAgreementTemplate serviceAgreementTemplate = getServiceAgreementTemplate();
+        if (serviceAgreementTemplate == null) {
+            throw new DomainException("error.event.postingRule.serviceAgreement.missing", getStartDate().toString("dd/MM/yyyy"),
+                    BundleUtil.getString(Bundle.ENUMERATION, getEventType().getQualifiedName()));
+        }
+        PaymentPlan defaultPaymentPlan = serviceAgreementTemplate.getDefaultPaymentPlan(executionYear);
+        if (defaultPaymentPlan == null) {
+            throw new DomainException("error.event.postingRule.serviceAgreement.default.missing", getStartDate().toString("dd/MM/yyyy"),
+                    BundleUtil.getString(Bundle.ENUMERATION, getEventType().getQualifiedName()), executionYear.getName());
+        }
+        return defaultPaymentPlan.calculateOriginalTotalAmount();
     }
 
     public Money getDefaultGratuityAmount() {

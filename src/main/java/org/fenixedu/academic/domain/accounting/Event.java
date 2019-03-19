@@ -514,7 +514,12 @@ public abstract class Event extends Event_Base {
     }
 
     protected Map<LocalDate, Money> calculateDueDateAmountMap() {
-        return Collections.singletonMap(getDueDateByPaymentCodes().toLocalDate(), getPostingRule().doCalculationForAmountToPay(this));
+        PostingRule postingRule = getPostingRule();
+        if (postingRule == null) {
+            throw new DomainException("error.event.postingRule.missing",
+                    BundleUtil.getString(Bundle.ENUMERATION, getEventType().getQualifiedName()), getEventStartDate().toString("dd/MM/yyyy"));
+        }
+        return Collections.singletonMap(getDueDateByPaymentCodes().toLocalDate(), postingRule.doCalculationForAmountToPay(this));
     }
 
     private Money calculateTotalAmountToPay(DateTime whenRegistered) {
