@@ -116,10 +116,6 @@ public class StatuteType extends StatuteType_Base {
         return getGrantOwnerStatute();
     }
 
-    public boolean isHandicappedStatute() {
-        return getHandicappedStatute();
-    }
-
     public boolean isAppliedOnRegistration() {
         return getAppliedOnRegistration();
     }
@@ -154,10 +150,6 @@ public class StatuteType extends StatuteType_Base {
 
     public static Optional<StatuteType> findSpecialSeasonGrantedByRequestStatuteType() {
         return readAll(StatuteType::isSpecialSeasonGrantedByRequest).findFirst();
-    }
-
-    public static Optional<StatuteType> findHandicappedStatuteType() {
-        return readAll(StatuteType::isHandicappedStatute).findFirst();
     }
 
     @Deprecated

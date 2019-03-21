@@ -216,10 +216,6 @@ public class Student extends Student_Base {
             }
         }
 
-        if (isHandicapped()) {
-            result.add(new StudentStatuteBean(StatuteType.findHandicappedStatuteType().orElse(null), executionSemester));
-        }
-
         return result;
     }
 
@@ -236,10 +232,6 @@ public class Student extends Student_Base {
             }
         }
 
-        if (isHandicapped()) {
-            result.add(new StudentStatuteBean(StatuteType.findHandicappedStatuteType().orElse(null)));
-        }
-
         return result;
     }
 
@@ -247,10 +239,6 @@ public class Student extends Student_Base {
         List<StudentStatuteBean> result = new ArrayList<>();
         for (StudentStatute statute : getStudentStatutesSet()) {
             result.add(new StudentStatuteBean(statute));
-        }
-
-        if (isHandicapped()) {
-            result.add(new StudentStatuteBean(StatuteType.findHandicappedStatuteType().orElse(null)));
         }
 
         return result;
@@ -262,15 +250,6 @@ public class Student extends Student_Base {
             aprovedEnrolments.addAll(registration.getApprovedEnrolments());
         }
         return aprovedEnrolments;
-    }
-
-    public boolean isHandicapped() {
-        for (Registration registration : getRegistrationsSet()) {
-            if (registration.getIngressionType() != null && registration.getIngressionType().isHandicappedContingent()) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public Attends readAttendByExecutionCourse(final ExecutionCourse executionCourse) {
