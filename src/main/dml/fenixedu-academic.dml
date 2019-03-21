@@ -5039,19 +5039,19 @@ relation BennuRevokedTeacherAuthorizations {
 }
 
 relation TeacherTeacherAuthorization {
-	protected Teacher playsRole teacher {
+	Teacher playsRole teacher {
 	    multiplicity 0..1;
 	}
-	protected TeacherAuthorization playsRole authorization {
+	TeacherAuthorization playsRole authorization {
     	multiplicity *;
 	}
 }
 
 relation TeacherRevokedTeacherAuthorization {
-    protected Teacher playsRole revokedTeacher {
+    Teacher playsRole revokedTeacher {
         multiplicity 0..1;
     }
-    protected TeacherAuthorization playsRole revokedAuthorization {
+    TeacherAuthorization playsRole revokedAuthorization {
         multiplicity *;
     }
 }
