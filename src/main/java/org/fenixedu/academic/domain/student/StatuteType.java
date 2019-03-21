@@ -32,23 +32,24 @@ import pt.ist.fenixframework.Atomic;
 
 public class StatuteType extends StatuteType_Base {
 
-    public static Comparator<StatuteType> COMPARATOR_BY_NAME = Comparator.comparing(StatuteType::getName).thenComparing(
-            DomainObjectUtil.COMPARATOR_BY_ID);
+    public static Comparator<StatuteType> COMPARATOR_BY_NAME =
+            Comparator.comparing(StatuteType::getName).thenComparing(DomainObjectUtil.COMPARATOR_BY_ID);
 
     private StatuteType() {
         super();
         setRootDomainObject(Bennu.getInstance());
     }
-    
+
     public StatuteType(String code, LocalizedString name, boolean workingStudentStatute, boolean associativeLeaderStatute,
             boolean specialSeasonGrantedByRequest, boolean grantOwnerStatute, boolean seniorStatute, boolean handicappedStatute,
-            boolean active, boolean explicitCreation, boolean visible, boolean specialSeasonGranted, final boolean appliedOnRegistration) {
-        
-        this(code, name, workingStudentStatute, associativeLeaderStatute, specialSeasonGrantedByRequest, grantOwnerStatute, seniorStatute,
-                handicappedStatute, active, explicitCreation, visible, specialSeasonGranted);
+            boolean active, boolean explicitCreation, boolean visible, boolean specialSeasonGranted,
+            final boolean appliedOnRegistration) {
+
+        this(code, name, workingStudentStatute, associativeLeaderStatute, specialSeasonGrantedByRequest, grantOwnerStatute,
+                seniorStatute, handicappedStatute, active, explicitCreation, visible, specialSeasonGranted);
 
         setAppliedOnRegistration(appliedOnRegistration);
-        
+
         checkRules();
     }
 
@@ -79,7 +80,8 @@ public class StatuteType extends StatuteType_Base {
         if (code == null || code.trim().isEmpty()) {
             super.setCode(null);
         } else {
-            if (readAll().filter(statute -> code.equals(statute.getCode()) && statute != StatuteType.this).findAny().isPresent()) {
+            if (readAll().filter(statute -> code.equals(statute.getCode()) && statute != StatuteType.this).findAny()
+                    .isPresent()) {
                 throw new DomainException("error.StatuteType.code.alreadyUsed");
             }
             super.setCode(code);
@@ -114,14 +116,10 @@ public class StatuteType extends StatuteType_Base {
         return getGrantOwnerStatute();
     }
 
-    public boolean isSeniorStatute() {
-        return getSeniorStatute();
-    }
-
     public boolean isHandicappedStatute() {
         return getHandicappedStatute();
     }
-    
+
     public boolean isAppliedOnRegistration() {
         return getAppliedOnRegistration();
     }
@@ -156,10 +154,6 @@ public class StatuteType extends StatuteType_Base {
 
     public static Optional<StatuteType> findSpecialSeasonGrantedByRequestStatuteType() {
         return readAll(StatuteType::isSpecialSeasonGrantedByRequest).findFirst();
-    }
-
-    public static Optional<StatuteType> findSeniorStatuteType() {
-        return readAll(StatuteType::isSeniorStatute).findFirst();
     }
 
     public static Optional<StatuteType> findHandicappedStatuteType() {

@@ -719,8 +719,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
             // checkPermissions
             final StudentCurricularPlan scp = enrolment.getStudentCurricularPlan();
             final Registration registration = scp.getRegistration();
-            if (!isSpecialSeasonGrantedByStatute(registration)
-                    && !registration.getStudent().isSenior(getExecutionSemester().getExecutionYear())) {
+            if (!isSpecialSeasonGrantedByStatute(registration)) {
                 throw new DomainException("error.special.season.not.granted");
             }
 

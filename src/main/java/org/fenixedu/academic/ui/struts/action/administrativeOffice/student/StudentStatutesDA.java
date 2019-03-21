@@ -127,8 +127,7 @@ public class StudentStatutesDA extends FenixDispatchAction {
         request.setAttribute("student", student);
         request.setAttribute("manageStatuteBean", manageStatuteBean);
 
-        if (manageStatuteBean.getStatuteType() != null && (manageStatuteBean.getStatuteType().isSeniorStatute()
-                || manageStatuteBean.getStatuteType().isAppliedOnRegistration())) {
+        if (manageStatuteBean.getStatuteType() != null && manageStatuteBean.getStatuteType().isAppliedOnRegistration()) {
             request.setAttribute("schemaName", "student.createSeniorStatute");
         } else {
             request.setAttribute("schemaName", "student.createStatutes");

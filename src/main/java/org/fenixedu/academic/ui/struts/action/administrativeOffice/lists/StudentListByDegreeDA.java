@@ -393,9 +393,6 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
 
                 fillSpreadSheetPreBolonhaInfo(spreadsheet, registration);
 
-                spreadsheet.addCell(
-                        getResourceMessage(registration.getStudent().isSenior(executionYear) ? "label.yes" : "label.no"));
-
                 final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
 
                 if (getAdministratedCycleTypes().contains(CycleType.FIRST_CYCLE)) {

@@ -256,15 +256,6 @@ public class Student extends Student_Base {
         return result;
     }
 
-    public boolean isSenior(final ExecutionYear executionYear) {
-        for (StudentStatute statute : getStudentStatutesSet()) {
-            if (statute.isValidOn(executionYear) && statute.getType().isSeniorStatute()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public Set<Enrolment> getApprovedEnrolments() {
         final Set<Enrolment> aprovedEnrolments = new HashSet<>();
         for (final Registration registration : getRegistrationsSet()) {
