@@ -516,7 +516,7 @@ public abstract class Event extends Event_Base {
     protected Map<LocalDate, Money> calculateDueDateAmountMap() {
         PostingRule postingRule = getPostingRule();
         if (postingRule == null) {
-            throw new DomainException("error.event.postingRule.missing",
+            throw new DomainException("error.accounting.agreement.ServiceAgreementTemplate.cannot.find.postingRule.for.eventType.and.date.desc",
                     BundleUtil.getString(Bundle.ENUMERATION, getEventType().getQualifiedName()), getEventStartDate().toString("dd/MM/yyyy"));
         }
         return Collections.singletonMap(getDueDateByPaymentCodes().toLocalDate(), postingRule.doCalculationForAmountToPay(this));

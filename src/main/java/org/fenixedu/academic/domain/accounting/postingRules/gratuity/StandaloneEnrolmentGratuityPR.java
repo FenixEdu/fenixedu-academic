@@ -37,7 +37,9 @@ import org.fenixedu.academic.domain.accounting.events.gratuity.StandaloneEnrolme
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.Money;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.signals.DomainObjectEvent;
 import org.fenixedu.bennu.core.signals.Signal;
 import org.joda.time.DateTime;
@@ -157,6 +159,11 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
         final IGratuityPR gratuityPR =
                 (IGratuityPR) degreeCurricularPlan.getServiceAgreementTemplate().findPostingRuleBy(EventType.GRATUITY,
                         gratuityEvent.getStartDate(), gratuityEvent.getEndDate());
+
+        if (gratuityPR == null) {
+            throw new DomainException("error.accounting.agreement.ServiceAgreementTemplate.cannot.find.postingRule.for.eventType.and.date.desc",
+                    gratuityEvent.getWhenOccured().toString("dd/MM/yyyy"), BundleUtil.getString(Bundle.ENUMERATION,gratuityEvent.getEventType().getQualifiedName()));
+        }
 
         final Money degreeGratuityAmount = gratuityPR.getDefaultGratuityAmount(gratuityEvent.getExecutionYear());
         final BigDecimal creditsProporcion = enroledEcts.divide(getEctsForYear(), 10, RoundingMode.HALF_EVEN);
