@@ -112,10 +112,12 @@
                     <c:if test="${eventTotalAmountToPay > 0 && isEventOwner}">
                         <a class="btn btn-primary btn-block" href="${payUrl}"><spring:message code="accounting.event.action.pay" text="Pay"/></a>
                     </c:if>
-                    <c:if test="${isAdvancedPaymentManager}">
-                        <c:if test="${event.refundable && payedDebtAmount > 0}">
-                            <a class="btn btn-default btn-block" href="${refundUrl}"><spring:message code="accounting.event.action.refund" text="Refund"/></a>
-                        </c:if>
+                </c:if>
+                <c:if test="${isAdvancedPaymentManager}">
+                    <c:if test="${event.refundable && (payedDebtAmount > 0 || eventPaidUnusedAmount > 0)}">
+                        <a class="btn btn-default btn-block" href="${refundUrl}"><spring:message code="accounting.event.action.refund" text="Refund"/></a>
+                    </c:if>
+                    <c:if test="${event.currentEventState != 'CANCELLED'}">
                         <c:if test="${eventTotalAmountToPay > 0}">
                             <a class="btn btn-default btn-block" href="${exemptUrl}"><spring:message code="accounting.event.action.exempt" text="Exempt"/></a>
                         </c:if>
