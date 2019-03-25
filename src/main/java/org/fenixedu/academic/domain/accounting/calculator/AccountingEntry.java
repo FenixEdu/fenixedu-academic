@@ -1,6 +1,7 @@
 package org.fenixedu.academic.domain.accounting.calculator;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -13,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 /**
  * Created by Sérgio Silva (hello@fenixedu.org).
  */
-public abstract class AccountingEntry {
+public abstract class AccountingEntry implements Comparable<AccountingEntry> {
 
     interface View {
         interface Simple {
@@ -70,4 +71,11 @@ public abstract class AccountingEntry {
     public LocalizedString getTypeDescription() {
         return BundleUtil.getLocalizedString(Bundle.ACCOUNTING, "label.accounting.entry." + getClass().getSimpleName());
     }
+
+    @Override
+    public int compareTo(final AccountingEntry o) {
+        return Comparator.comparing(AccountingEntry::getCreated).thenComparing(AccountingEntry::getDate)
+                .thenComparing(AccountingEntry::getId).compare(this, o);
+    }
+
 }
