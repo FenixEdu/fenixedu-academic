@@ -133,24 +133,6 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
         return hasExemptionsOfType(PhdGratuityExternalScholarshipExemption.class);
     }
 
-    @Override
-    public boolean isOpen() {
-        if (isCancelled()) {
-            return false;
-        }
-
-        return calculateAmountToPay(new DateTime()).greaterThan(Money.ZERO);
-    }
-
-    @Override
-    public boolean isClosed() {
-        if (isCancelled()) {
-            return false;
-        }
-
-        return calculateAmountToPay(new DateTime()).lessOrEqualThan(Money.ZERO);
-    }
-
     @Override public EntryType getEntryType() {
         return EntryType.GRATUITY_FEE;
     }

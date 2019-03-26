@@ -30,7 +30,6 @@ import org.fenixedu.academic.domain.accounting.Account;
 import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.Entry;
 import org.fenixedu.academic.domain.accounting.EntryType;
-import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventState;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.Exemption;
@@ -41,13 +40,11 @@ import org.fenixedu.academic.domain.accounting.events.administrativeOfficeFee.IA
 import org.fenixedu.academic.domain.accounting.events.insurance.IInsuranceEvent;
 import org.fenixedu.academic.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import org.fenixedu.academic.domain.accounting.postingRules.AdministrativeOfficeFeeAndInsurancePR;
-import org.fenixedu.academic.domain.accounting.postingRules.AdministrativeOfficeFeePR;
 import org.fenixedu.academic.domain.accounting.postingRules.IAdministrativeOfficeFeeAndInsurancePR;
 import org.fenixedu.academic.domain.accounting.postingRules.PastAdministrativeOfficeFeeAndInsurancePR;
 import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.dto.accounting.EntryDTO;
 import org.fenixedu.academic.dto.accounting.SibsTransactionDetailDTO;
 import org.fenixedu.academic.util.LabelFormatter;
@@ -56,8 +53,6 @@ import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
-
-import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 /***
  * Use {@link org.fenixedu.academic.domain.accounting.events.insurance.InsuranceEvent} and {@link AdministrativeOfficeFeeEvent}
@@ -170,16 +165,6 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
     protected Set<Entry> internalProcess(User responsibleUser, PaymentCode paymentCode, Money amountToPay,
             SibsTransactionDetailDTO transactionDetail) {
         return internalProcess(responsibleUser, buildEntryDTOsFrom(amountToPay), transactionDetail);
-    }
-
-    @Override public boolean isInDebt() {
-        return isOpen() && ((getPaymentEndDate() != null && getPaymentEndDate().isBefore(new YearMonthDay()))
-                || getSpecificPostingRule().getWhenToApplyFixedAmountPenalty().isBefore(new YearMonthDay()));
-    }
-
-    private AdministrativeOfficeFeePR getSpecificPostingRule() {
-        return (AdministrativeOfficeFeePR) getServiceAgreementTemplate()
-                .findPostingRuleBy(EventType.ADMINISTRATIVE_OFFICE_FEE, getStartDate(), getEndDate());
     }
 
     private List<EntryDTO> buildEntryDTOsFrom(final Money amountToPay) {
@@ -296,36 +281,6 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 
     @Override public EntryType getEntryType() {
         return EntryType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE;
-    }
-
-    @Override public boolean isOpen() {
-        if (isCancelled()) {
-            return false;
-        }
-
-        return calculateAmountToPay(new DateTime()).greaterThan(Money.ZERO);
-    }
-
-    @Override public boolean isClosed() {
-        if (isCancelled()) {
-            return false;
-        }
-
-        return calculateAmountToPay(new DateTime()).lessOrEqualThan(Money.ZERO);
-    }
-
-    @Override public boolean isInState(final EventState eventState) {
-        switch (eventState) {
-            case OPEN:
-                return isOpen();
-            case CLOSED:
-                return isClosed();
-            case CANCELLED:
-                return isCancelled();
-            default:
-                throw new DomainException(
-                        "error.org.fenixedu.academic.domain.accounting.events.gratuity.DfaGratuityEvent.unexpected.state.to.test");
-        }
     }
 
     @Override public boolean isAdministrativeOfficeAndInsuranceEvent() {

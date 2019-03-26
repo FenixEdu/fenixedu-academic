@@ -182,11 +182,6 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
         return getInstallments().stream().anyMatch(this::installmentIsInDebtToday);
     }
 
-    @Override
-    public boolean isInDebt() {
-        return isOpen() && hasAnyInstallmentInDebtToday();
-    }
-
     public boolean hasPenaltyExemptionFor(final Installment installment) {
         return getExemptionsSet().stream()
                 .filter(exemption -> exemption instanceof InstallmentPenaltyExemption)
