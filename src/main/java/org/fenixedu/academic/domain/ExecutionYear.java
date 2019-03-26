@@ -52,7 +52,7 @@ import pt.ist.fenixframework.dml.runtime.RelationAdapter;
  * @author Jo�o Mota ciapl Dominio
  * 
  */
-public class ExecutionYear extends ExecutionYear_Base implements Comparable<ExecutionYear> {
+public class ExecutionYear extends ExecutionYear_Base {
 
     static {
         getRelationExecutionPeriodExecutionYear().addListener(new ExecutionPeriodExecutionYearListener());
@@ -111,29 +111,9 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
         return getExecutionYear(year);
     }
 
-    @Override
+    @Deprecated
     public int compareTo(ExecutionYear object) {
-        if (object == null) {
-            return 1;
-        }
-        return getAcademicInterval().getStartDateTimeWithoutChronology()
-                .compareTo(object.getAcademicInterval().getStartDateTimeWithoutChronology());
-    }
-
-    public boolean isAfter(final ExecutionYear executionYear) {
-        return this.compareTo(executionYear) > 0;
-    }
-
-    public boolean isAfterOrEquals(final ExecutionYear executionYear) {
-        return this.compareTo(executionYear) >= 0;
-    }
-
-    public boolean isBefore(final ExecutionYear executionYear) {
-        return this.compareTo(executionYear) < 0;
-    }
-
-    public boolean isBeforeOrEquals(final ExecutionYear executionYear) {
-        return this.compareTo(executionYear) <= 0;
+        return super.compareTo(object);
     }
 
     public ExecutionSemester getExecutionSemesterFor(final Integer semester) {
@@ -400,4 +380,10 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 
         return result;
     }
+
+    @Override
+    public ExecutionYear getExecutionYear() {
+        return this;
+    }
+
 }

@@ -44,7 +44,7 @@ import org.joda.time.YearMonthDay;
  * @author jpvl
  * 
  */
-public class ExecutionSemester extends ExecutionSemester_Base implements Comparable<ExecutionSemester> {
+public class ExecutionSemester extends ExecutionSemester_Base {
 
     public static final Comparator<ExecutionSemester> COMPARATOR_BY_SEMESTER_AND_YEAR = new Comparator<ExecutionSemester>() {
 
@@ -118,12 +118,10 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
         return semester != null ? ExecutionSemester.getExecutionPeriod(semester) : null;
     }
 
-    @Override
+//    @Override
+    @Deprecated
     public int compareTo(ExecutionSemester object) {
-        if (object == null) {
-            return 1;
-        }
-        return COMPARATOR_BY_SEMESTER_AND_YEAR.compare(this, object);
+        return super.compareTo(object);
     }
 
     @Override
@@ -136,22 +134,6 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 
     public boolean containsDay(final YearMonthDay date) {
         return !getBeginDateYearMonthDay().isAfter(date) && !getEndDateYearMonthDay().isBefore(date);
-    }
-
-    public boolean isAfter(ExecutionSemester executionSemester) {
-        return this.compareTo(executionSemester) > 0;
-    }
-
-    public boolean isAfterOrEquals(ExecutionSemester executionSemester) {
-        return this.compareTo(executionSemester) >= 0;
-    }
-
-    public boolean isBefore(ExecutionSemester executionSemester) {
-        return this.compareTo(executionSemester) < 0;
-    }
-
-    public boolean isBeforeOrEquals(ExecutionSemester executionSemester) {
-        return this.compareTo(executionSemester) <= 0;
     }
 
     @Override

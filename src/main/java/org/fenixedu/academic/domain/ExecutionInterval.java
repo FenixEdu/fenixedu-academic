@@ -27,7 +27,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-abstract public class ExecutionInterval extends ExecutionInterval_Base {
+abstract public class ExecutionInterval extends ExecutionInterval_Base implements Comparable<ExecutionInterval> {
 
     public static final Comparator<ExecutionInterval> COMPARATOR_BY_BEGIN_DATE = new Comparator<ExecutionInterval>() {
 
@@ -87,14 +87,39 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
         return null;
     }
 
-    public boolean isAfter(final ExecutionInterval input) {
-        return this.compareExecutionInterval(input) > 0;
+    public boolean isAfter(ExecutionInterval input) {
+        return this.compareTo(input) > 0;
     }
 
-    public boolean isAfterOrEquals(final ExecutionInterval input) {
-        return this.compareExecutionInterval(input) >= 0;
+    public boolean isAfterOrEquals(ExecutionInterval input) {
+        return this.compareTo(input) >= 0;
     }
 
+    public boolean isBefore(ExecutionInterval input) {
+        return this.compareTo(input) < 0;
+    }
+
+    public boolean isBeforeOrEquals(ExecutionInterval input) {
+        return this.compareTo(input) <= 0;
+    }
+
+    @Override
+    public int compareTo(ExecutionInterval anotherInterval) {
+        if (anotherInterval == null) {
+            return 1;
+        }
+
+        final Comparator<ExecutionInterval> comparatorByStart = (ei1, ei2) -> ei1.getAcademicInterval()
+                .getStartDateTimeWithoutChronology().compareTo(ei2.getAcademicInterval().getStartDateTimeWithoutChronology());
+
+        final Comparator<ExecutionInterval> comparatorByEnd = (ei1, ei2) -> ei1.getAcademicInterval()
+                .getEndDateTimeWithoutChronology().compareTo(ei2.getAcademicInterval().getEndDateTimeWithoutChronology());
+
+        return comparatorByStart.thenComparing(comparatorByEnd.reversed()).thenComparing(ExecutionInterval::getExternalId)
+                .compare(this, anotherInterval);
+    }
+
+    @Deprecated
     public int compareExecutionInterval(final ExecutionInterval input) {
         int result = 0;
         if (input == null) {
@@ -165,4 +190,7 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
     }
 
     public abstract <E extends ExecutionInterval> E convert(final Class<E> concreteExecution);
+
+    public abstract ExecutionYear getExecutionYear();
+
 }
