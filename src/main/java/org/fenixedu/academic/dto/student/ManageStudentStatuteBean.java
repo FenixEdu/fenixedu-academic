@@ -23,7 +23,7 @@ package org.fenixedu.academic.dto.student;
 
 import java.io.Serializable;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.StatuteType;
 import org.fenixedu.academic.domain.student.Student;
@@ -38,9 +38,9 @@ public class ManageStudentStatuteBean implements Serializable {
 
     private StatuteType statuteType;
 
-    private ExecutionSemester beginExecutionPeriod;
+    private ExecutionInterval beginExecutionPeriod;
 
-    private ExecutionSemester endExecutionPeriod;
+    private ExecutionInterval endExecutionPeriod;
 
     private LocalDate beginDate;
 
@@ -57,11 +57,11 @@ public class ManageStudentStatuteBean implements Serializable {
         this.student = student;
     }
 
-    public ExecutionSemester getBeginExecutionPeriod() {
+    public ExecutionInterval getBeginExecutionPeriod() {
         return beginExecutionPeriod;
     }
 
-    public ExecutionSemester getEndExecutionPeriod() {
+    public ExecutionInterval getEndExecutionPeriod() {
         return endExecutionPeriod;
     }
 
@@ -93,11 +93,11 @@ public class ManageStudentStatuteBean implements Serializable {
         return registration;
     }
 
-    public void setBeginExecutionPeriod(ExecutionSemester beginExecutionPeriod) {
+    public void setBeginExecutionPeriod(ExecutionInterval beginExecutionPeriod) {
         this.beginExecutionPeriod = beginExecutionPeriod;
     }
 
-    public void setEndExecutionPeriod(ExecutionSemester endExecutionPeriod) {
+    public void setEndExecutionPeriod(ExecutionInterval endExecutionPeriod) {
         this.endExecutionPeriod = endExecutionPeriod;
     }
 

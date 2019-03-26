@@ -71,13 +71,13 @@ public class StudentStatuteBean implements Serializable {
     }
 
     public String getBeginPeriodFormatted() {
-        return getStudentStatute() != null && getStudentStatute().getBeginExecutionPeriod() != null ? getStudentStatute()
-                .getBeginExecutionPeriod().getQualifiedName() : " ... ";
+        return getStudentStatute() != null && getStudentStatute().getBeginExecutionInterval() != null ? getStudentStatute()
+                .getBeginExecutionInterval().getQualifiedName() : " ... ";
     }
 
     public String getEndPeriodFormatted() {
-        return getStudentStatute() != null && getStudentStatute().getEndExecutionPeriod() != null ? getStudentStatute()
-                .getEndExecutionPeriod().getQualifiedName() : " ... ";
+        return getStudentStatute() != null && getStudentStatute().getEndExecutionInterval() != null ? getStudentStatute()
+                .getEndExecutionInterval().getQualifiedName() : " ... ";
     }
 
     public String getDescription() {

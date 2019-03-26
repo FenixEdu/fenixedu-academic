@@ -56,13 +56,9 @@ public class StudentStatutesDA extends FenixDispatchAction {
 
         @Override
         public Object execute() {
-            if (getStatuteType().isAppliedOnRegistration()) {
-                return new StudentStatute(getStudent(), getStatuteType(), getBeginExecutionPeriod(), getEndExecutionPeriod(),
-                        getBeginDate(), getEndDate(), getComment(), getRegistration());
-            } else {
-                return new StudentStatute(getStudent(), getStatuteType(), getBeginExecutionPeriod(), getEndExecutionPeriod(),
-                        getBeginDate(), getEndDate(), getComment(), null);
-            }
+            return new StudentStatute(getStudent(), getStatuteType(), getBeginExecutionPeriod(), getEndExecutionPeriod(),
+                    getBeginDate(), getEndDate(), getComment(),
+                    getStatuteType().isAppliedOnRegistration() ? getRegistration() : null);
         }
     }
 
@@ -184,8 +180,8 @@ public class StudentStatutesDA extends FenixDispatchAction {
 
         ManageStudentStatuteBean bean = new CreateStudentStatuteFactory(student);
         bean.setStatuteType(studentStatute.getType());
-        bean.setBeginExecutionPeriod(studentStatute.getBeginExecutionPeriod());
-        bean.setEndExecutionPeriod(studentStatute.getEndExecutionPeriod());
+        bean.setBeginExecutionPeriod(studentStatute.getBeginExecutionInterval());
+        bean.setEndExecutionPeriod(studentStatute.getEndExecutionInterval());
         bean.setBeginDate(studentStatute.getBeginDate());
         bean.setEndDate(studentStatute.getEndDate());
         bean.setComment(studentStatute.getComment());

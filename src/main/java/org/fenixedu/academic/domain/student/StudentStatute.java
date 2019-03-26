@@ -44,8 +44,8 @@ public class StudentStatute extends StudentStatute_Base {
         setCreationDate(new DateTime());
     }
 
-    public StudentStatute(final Student student, final StatuteType statuteType, final ExecutionSemester beginExecutionPeriod,
-            final ExecutionSemester endExecutionPeriod, final LocalDate beginDate, final LocalDate endDate, final String comment,
+    public StudentStatute(final Student student, final StatuteType statuteType, final ExecutionInterval beginExecutionPeriod,
+            final ExecutionInterval endExecutionPeriod, final LocalDate beginDate, final LocalDate endDate, final String comment,
             final Registration registration) {
         this();
         setType(statuteType);
@@ -54,8 +54,8 @@ public class StudentStatute extends StudentStatute_Base {
     }
 
     protected void checkRules() {
-        if (getBeginExecutionPeriod() != null && getEndExecutionPeriod() != null) {
-            if (getBeginExecutionPeriod().isAfter(getEndExecutionPeriod())) {
+        if (getBeginExecutionInterval() != null && getEndExecutionInterval() != null) {
+            if (getBeginExecutionInterval().isAfter(getEndExecutionInterval())) {
                 throw new DomainException("error.studentStatute.beginPeriod.after.endPeriod");
             }
         }
@@ -88,11 +88,11 @@ public class StudentStatute extends StudentStatute_Base {
      */
 
     public boolean isValidInExecutionPeriod(final ExecutionSemester executionSemester) {
-        if (getBeginExecutionPeriod() != null && getBeginExecutionPeriod().isAfter(executionSemester)) {
+        if (getBeginExecutionInterval() != null && getBeginExecutionInterval().isAfter(executionSemester)) {
             return false;
         }
 
-        if (getEndExecutionPeriod() != null && getEndExecutionPeriod().isBefore(executionSemester)) {
+        if (getEndExecutionInterval() != null && getEndExecutionInterval().isBefore(executionSemester)) {
             return false;
         }
 
@@ -129,12 +129,12 @@ public class StudentStatute extends StudentStatute_Base {
         return false;
     }
 
-    public void edit(final Student student, final ExecutionSemester beginExecutionPeriod,
-            final ExecutionSemester endExecutionPeriod, final LocalDate beginDate, final LocalDate endDate,
+    public void edit(final Student student, final ExecutionInterval beginExecutionPeriod,
+            final ExecutionInterval endExecutionPeriod, final LocalDate beginDate, final LocalDate endDate,
             final String comment) {
 
-        setBeginExecutionPeriod(beginExecutionPeriod);
-        setEndExecutionPeriod(endExecutionPeriod);
+        setBeginExecutionPeriod(beginExecutionPeriod.convert(ExecutionSemester.class));
+        setEndExecutionPeriod(endExecutionPeriod.convert(ExecutionSemester.class));
         setBeginDate(beginDate);
         setEndDate(endDate);
         setComment(comment);
@@ -184,17 +184,17 @@ public class StudentStatute extends StudentStatute_Base {
         if (statute == this) {
             return false;
         }
-        ExecutionSemester statuteBegin = statute.getBeginExecutionPeriod() != null ? statute
-                .getBeginExecutionPeriod() : ExecutionSemester.readFirstExecutionSemester();
-        ExecutionSemester statuteEnd = statute.getEndExecutionPeriod() != null ? statute
-                .getEndExecutionPeriod() : ExecutionSemester.readLastExecutionSemester();
+        ExecutionInterval statuteBegin = statute.getBeginExecutionInterval() != null ? statute
+                .getBeginExecutionInterval() : ExecutionSemester.readFirstExecutionSemester();
+        ExecutionInterval statuteEnd = statute.getEndExecutionInterval() != null ? statute
+                .getEndExecutionInterval() : ExecutionSemester.readLastExecutionSemester();
 
         return overlapsWith(statute.getType(), statuteBegin, statuteEnd, statute.getRegistration());
 
     }
 
-    public boolean overlapsWith(final StatuteType statuteType, final ExecutionSemester statuteBegin,
-            final ExecutionSemester statuteEnd, final Registration registration) {
+    public boolean overlapsWith(final StatuteType statuteType, final ExecutionInterval statuteBegin,
+            final ExecutionInterval statuteEnd, final Registration registration) {
 
         if (statuteType != getType()) {
             return false;
@@ -204,37 +204,37 @@ public class StudentStatute extends StudentStatute_Base {
             return false;
         }
 
-        ExecutionSemester thisStatuteBegin =
-                getBeginExecutionPeriod() != null ? getBeginExecutionPeriod() : ExecutionSemester.readFirstExecutionSemester();
-        ExecutionSemester thisStatuteEnd =
-                getEndExecutionPeriod() != null ? getEndExecutionPeriod() : ExecutionSemester.readLastExecutionSemester();
+        ExecutionInterval thisStatuteBegin = getBeginExecutionInterval() != null ? getBeginExecutionInterval() : ExecutionSemester
+                .readFirstExecutionSemester();
+        ExecutionInterval thisStatuteEnd =
+                getEndExecutionInterval() != null ? getEndExecutionInterval() : ExecutionSemester.readLastExecutionSemester();
 
         return statuteBegin.isAfterOrEquals(thisStatuteBegin) && statuteBegin.isBeforeOrEquals(thisStatuteEnd)
                 || statuteEnd.isAfterOrEquals(thisStatuteBegin) && statuteEnd.isBeforeOrEquals(thisStatuteEnd);
 
     }
 
-    public void add(final StudentStatute statute) {
-        if (this.overlapsWith(statute)) {
-            if (statute.getBeginExecutionPeriod() == null || getBeginExecutionPeriod() != null
-                    && statute.getBeginExecutionPeriod().isBefore(getBeginExecutionPeriod())) {
-                setBeginExecutionPeriod(statute.getBeginExecutionPeriod());
-            }
-
-            if (statute.getEndExecutionPeriod() == null
-                    || getEndExecutionPeriod() != null && statute.getEndExecutionPeriod().isAfter(getEndExecutionPeriod())) {
-                setEndExecutionPeriod(statute.getEndExecutionPeriod());
-            }
-        }
-    }
+//    public void add(final StudentStatute statute) {
+//        if (this.overlapsWith(statute)) {
+//            if (statute.getBeginExecutionInterval() == null || getBeginExecutionInterval() != null
+//                    && statute.getBeginExecutionInterval().isBefore(getBeginExecutionInterval())) {
+//                setBeginExecutionPeriod(statute.getBeginExecutionInterval());
+//            }
+//
+//            if (statute.getEndExecutionInterval() == null || getEndExecutionInterval() != null
+//                    && statute.getEndExecutionInterval().isAfter(getEndExecutionInterval())) {
+//                setEndExecutionPeriod(statute.getEndExecutionInterval());
+//            }
+//        }
+//    }
 
     public boolean isGrantOwnerStatute() {
         return getType().isGrantOwnerStatute();
     }
 
     public String toDetailedString() {
-        return (getBeginExecutionPeriod() != null ? getBeginExecutionPeriod().getQualifiedName() : " - ") + " ..... "
-                + (getEndExecutionPeriod() != null ? getEndExecutionPeriod().getQualifiedName() : " - ");
+        return (getBeginExecutionInterval() != null ? getBeginExecutionInterval().getQualifiedName() : " - ") + " ..... "
+                + (getEndExecutionInterval() != null ? getEndExecutionInterval().getQualifiedName() : " - ");
     }
 
     public void checkRulesToDelete() {
@@ -245,7 +245,7 @@ public class StudentStatute extends StudentStatute_Base {
 
     public boolean hasSpecialSeasonEnrolments() {
 
-        ExecutionSemester lastSemester = getEndExecutionPeriod();
+        ExecutionInterval lastSemester = getEndExecutionInterval();
 
         Set<Registration> registrations = getStudent().getRegistrationsSet();
         for (Registration registration : registrations) {
@@ -266,7 +266,7 @@ public class StudentStatute extends StudentStatute_Base {
     public boolean hasSeniorStatuteForRegistration(final Registration registration) {
         return false;
     }
-    
+
     /**
      * @deprecated use {@link #getBeginExecutionInterval()} instead.
      */
