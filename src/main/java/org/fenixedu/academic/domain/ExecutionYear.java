@@ -116,6 +116,26 @@ public class ExecutionYear extends ExecutionYear_Base {
         return super.compareTo(object);
     }
 
+    @Deprecated
+    public boolean isAfter(final ExecutionYear executionYear) {
+        return super.compareTo(executionYear) > 0;
+    }
+
+    @Deprecated
+    public boolean isAfterOrEquals(final ExecutionYear executionYear) {
+        return super.compareTo(executionYear) >= 0;
+    }
+
+    @Deprecated
+    public boolean isBefore(final ExecutionYear executionYear) {
+        return super.compareTo(executionYear) < 0;
+    }
+
+    @Deprecated
+    public boolean isBeforeOrEquals(final ExecutionYear executionYear) {
+        return super.compareTo(executionYear) <= 0;
+    }
+
     public ExecutionSemester getExecutionSemesterFor(final Integer semester) {
         for (final ExecutionSemester executionSemester : getExecutionPeriodsSet()) {
             if (executionSemester.isFor(semester)) {

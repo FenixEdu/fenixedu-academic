@@ -136,6 +136,26 @@ public class ExecutionSemester extends ExecutionSemester_Base {
         return !getBeginDateYearMonthDay().isAfter(date) && !getEndDateYearMonthDay().isBefore(date);
     }
 
+    @Deprecated
+    public boolean isAfter(ExecutionSemester executionSemester) {
+        return super.compareTo(executionSemester) > 0;
+    }
+
+    @Deprecated
+    public boolean isAfterOrEquals(ExecutionSemester executionSemester) {
+        return super.compareTo(executionSemester) >= 0;
+    }
+
+    @Deprecated
+    public boolean isBefore(ExecutionSemester executionSemester) {
+        return super.compareTo(executionSemester) < 0;
+    }
+
+    @Deprecated
+    public boolean isBeforeOrEquals(ExecutionSemester executionSemester) {
+        return super.compareTo(executionSemester) <= 0;
+    }
+
     @Override
     public boolean isCurrent() {
         return getState().equals(PeriodState.CURRENT);
