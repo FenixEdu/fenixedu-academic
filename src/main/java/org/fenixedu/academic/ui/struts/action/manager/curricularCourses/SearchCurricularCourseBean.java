@@ -65,12 +65,12 @@ public class SearchCurricularCourseBean implements Serializable {
             }
 
             if (getBeginExecutionYear() != null
-                    && context.getBeginExecutionPeriod().getExecutionYear().isBefore(getBeginExecutionYear())) {
+                    && context.getBeginExecutionInterval().getExecutionYear().isBefore(getBeginExecutionYear())) {
                 continue;
             }
 
             if (getEndExecutionYear() != null
-                    && context.getEndExecutionPeriod().getExecutionYear().isAfter(getEndExecutionYear())) {
+                    && context.getEndExecutionInterval().getExecutionYear().isAfter(getEndExecutionYear())) {
                 continue;
             }
 

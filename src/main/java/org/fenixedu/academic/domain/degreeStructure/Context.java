@@ -282,8 +282,8 @@ public class Context extends Context_Base implements Comparable<Context> {
     }
 
     public boolean isOpen(final ExecutionSemester executionSemester) {
-        return getBeginExecutionPeriod().isBeforeOrEquals(executionSemester)
-                && (getEndExecutionPeriod() == null || getEndExecutionPeriod().isAfterOrEquals(executionSemester));
+        return getBeginExecutionInterval().isBeforeOrEquals(executionSemester)
+                && (getEndExecutionInterval() == null || getEndExecutionInterval().isAfterOrEquals(executionSemester));
     }
 
     public boolean isOpen(final ExecutionYear executionYear) {
@@ -305,10 +305,10 @@ public class Context extends Context_Base implements Comparable<Context> {
             throw new DomainException("context.begin.is.after.end.execution.period");
         }
 
-        if (begin.isAfterOrEquals(getBeginExecutionPeriod())) {
-            return getEndExecutionPeriod() == null || begin.isBeforeOrEquals(getEndExecutionPeriod());
+        if (begin.isAfterOrEquals(getBeginExecutionInterval())) {
+            return getEndExecutionInterval() == null || begin.isBeforeOrEquals(getEndExecutionInterval());
         } else {
-            return end == null || end.isAfterOrEquals(getBeginExecutionPeriod());
+            return end == null || end.isAfterOrEquals(getBeginExecutionInterval());
         }
     }
 
@@ -324,8 +324,8 @@ public class Context extends Context_Base implements Comparable<Context> {
      * @return
      */
     public boolean containsInterval(ExecutionInterval begin, ExecutionInterval end) {
-        if (begin.isAfterOrEquals(getBeginExecutionPeriod())) {
-            return (getEndExecutionPeriod() == null) || (end != null && !end.isAfter(getEndExecutionPeriod()));
+        if (begin.isAfterOrEquals(getBeginExecutionInterval())) {
+            return (getEndExecutionInterval() == null) || (end != null && !end.isAfter(getEndExecutionInterval()));
         } else {
             return false;
         }

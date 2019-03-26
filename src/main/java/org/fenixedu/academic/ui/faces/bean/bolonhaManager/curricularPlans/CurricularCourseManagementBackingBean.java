@@ -470,7 +470,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public String getBeginExecutionPeriodID() {
         if (getViewState().getAttribute("beginExecutionPeriodID") == null && getContext(getContextID()) != null) {
-            setBeginExecutionPeriodID(getContext(getContextID()).getBeginExecutionPeriod().getExternalId());
+            setBeginExecutionPeriodID(getContext(getContextID()).getBeginExecutionInterval().getExternalId());
         }
         return (String) getViewState().getAttribute("beginExecutionPeriodID");
     }
@@ -481,8 +481,8 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public String getEndExecutionPeriodID() {
         if (getViewState().getAttribute("endExecutionPeriodID") == null && getContext(getContextID()) != null) {
-            setEndExecutionPeriodID((getContext(getContextID()).getEndExecutionPeriod() != null) ? getContext(getContextID())
-                    .getEndExecutionPeriod().getExternalId() : NO_SELECTION_STRING);
+            setEndExecutionPeriodID((getContext(getContextID()).getEndExecutionInterval() != null) ? getContext(getContextID())
+                    .getEndExecutionInterval().getExternalId() : NO_SELECTION_STRING);
         }
         return (String) getViewState().getAttribute("endExecutionPeriodID");
     }

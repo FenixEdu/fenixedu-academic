@@ -58,7 +58,7 @@ public class RootCourseGroup extends RootCourseGroup_Base {
     public ExecutionInterval getBeginExecutionInterval() {
         final SortedSet<ExecutionInterval> executionIntervals = new TreeSet<ExecutionInterval>();
         for (final Context context : getChildContextsSet()) {
-            executionIntervals.add(context.getBeginExecutionPeriod());
+            executionIntervals.add(context.getBeginExecutionInterval());
         }
         return executionIntervals.isEmpty() ? null : executionIntervals.first();
     }

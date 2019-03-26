@@ -558,11 +558,11 @@ abstract public class DegreeModule extends DegreeModule_Base {
             return isBolonhaDegree() ? ExecutionSemester
                     .readFirstExecutionSemester() : getFirstExecutionPeriodOfFirstExecutionDegree();
         }
-        final SortedSet<ExecutionSemester> executionSemesters = new TreeSet<ExecutionSemester>();
+        final SortedSet<ExecutionInterval> executionIntervals = new TreeSet<ExecutionInterval>();
         for (final Context context : getParentContextsSet()) {
-            executionSemesters.add(context.getBeginExecutionPeriod());
+            executionIntervals.add(context.getBeginExecutionInterval());
         }
-        return executionSemesters.first();
+        return executionIntervals.first().convert(ExecutionSemester.class);
     }
 
     private ExecutionSemester getFirstExecutionPeriodOfFirstExecutionDegree() {
