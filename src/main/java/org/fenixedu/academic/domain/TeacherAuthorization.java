@@ -32,12 +32,12 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
         setCreationDate(DateTime.now());
     }
 
-    protected TeacherAuthorization(Teacher teacher, Department department, ExecutionSemester executionSemester,
+    protected TeacherAuthorization(Teacher teacher, Department department, ExecutionInterval executionInterval,
             TeacherCategory teacherCategory, Boolean contracted, Double lessonHours, Double workPercentageInInstitution) {
         this();
         setTeacher(teacher);
         setDepartment(department);
-        setExecutionSemester(executionSemester);
+        setExecutionSemester(executionInterval.convert(ExecutionSemester.class));
         setTeacherCategory(teacherCategory);
         setContracted(contracted);
         setLessonHours(lessonHours);
@@ -45,15 +45,15 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
         setAuthorizer(Authenticate.getUser());
     }
 
-    public static TeacherAuthorization createOrUpdate(Teacher teacher, Department department, ExecutionSemester executionSemester,
+    public static TeacherAuthorization createOrUpdate(Teacher teacher, Department department, ExecutionInterval executionInterval,
             TeacherCategory teacherCategory, Boolean contracted, Double lessonHours, Double workPercentageInInstitution) {
         Objects.requireNonNull(teacher);
         Objects.requireNonNull(department);
-        Objects.requireNonNull(executionSemester);
+        Objects.requireNonNull(executionInterval);
         Objects.requireNonNull(teacherCategory);
         Objects.requireNonNull(contracted);
         Objects.requireNonNull(lessonHours);
-        TeacherAuthorization existing = teacher.getTeacherAuthorization(executionSemester.getAcademicInterval()).orElse(null);
+        TeacherAuthorization existing = teacher.getTeacherAuthorization(executionInterval.getAcademicInterval()).orElse(null);
         if (existing != null) {
             if (existing.getDepartment().equals(department) && existing.getContracted().equals(contracted)
                     && existing.getLessonHours().equals(lessonHours)) {
@@ -62,7 +62,7 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
                 existing.revoke();
             }
         }
-        return new TeacherAuthorization(teacher, department, executionSemester, teacherCategory, contracted, lessonHours,
+        return new TeacherAuthorization(teacher, department, executionInterval, teacherCategory, contracted, lessonHours,
                 workPercentageInInstitution);
     }
 
@@ -168,7 +168,7 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
 
     @Override
     public int compareTo(TeacherAuthorization o) {
-        int semester = getExecutionSemester().compareTo(o.getExecutionSemester());
+        int semester = getExecutionInterval().compareTo(o.getExecutionInterval());
         if (semester != 0) {
             return semester;
         }

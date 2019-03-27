@@ -267,8 +267,8 @@ public class Teacher extends Teacher_Base {
         return selectedTeachers;
     }
 
-    public List<Professorship> getProfessorships(ExecutionSemester executionSemester) {
-        return getPerson().getProfessorships(executionSemester);
+    public List<Professorship> getProfessorships(ExecutionInterval executionInterval) {
+        return getPerson().getProfessorships(executionInterval);
     }
 
     public List<Professorship> getProfessorships(ExecutionYear executionYear) {
@@ -356,7 +356,7 @@ public class Teacher extends Teacher_Base {
     }
 
     public Optional<TeacherAuthorization> getTeacherAuthorization(AcademicInterval interval) {
-        return getTeacherAuthorizationStream().filter(a -> a.getExecutionSemester().getAcademicInterval().equals(interval))
+        return getTeacherAuthorizationStream().filter(a -> a.getExecutionInterval().getAcademicInterval().equals(interval))
                 .findFirst();
     }
 
@@ -373,12 +373,12 @@ public class Teacher extends Teacher_Base {
     }
 
     protected Optional<TeacherAuthorization> getLastTeacherAuthorization(AcademicInterval interval) {
-        return getTeacherAuthorizationStream().filter(a -> !a.getExecutionSemester().getAcademicInterval().isAfter(interval))
+        return getTeacherAuthorizationStream().filter(a -> !a.getExecutionInterval().getAcademicInterval().isAfter(interval))
                 .findFirst();
     }
 
     public Optional<TeacherAuthorization> getLatestTeacherAuthorizationInInterval(Interval interval) {
-        return getTeacherAuthorizationStream().filter(a -> a.getExecutionSemester().getAcademicInterval().overlaps(interval))
+        return getTeacherAuthorizationStream().filter(a -> a.getExecutionInterval().getAcademicInterval().overlaps(interval))
                 .findFirst();
     }
 

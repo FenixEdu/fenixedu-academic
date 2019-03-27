@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -456,14 +457,9 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     @SuppressWarnings("unchecked")
-    public List<ExecutionCourse> getExecutionCoursesByExecutionPeriod(final ExecutionSemester executionSemester) {
-        return (List<ExecutionCourse>) CollectionUtils.select(getAssociatedExecutionCoursesSet(), new Predicate() {
-            @Override
-            public boolean evaluate(Object o) {
-                ExecutionCourse executionCourse = (ExecutionCourse) o;
-                return executionCourse.getExecutionPeriod().equals(executionSemester);
-            }
-        });
+    public List<ExecutionCourse> getExecutionCoursesByExecutionPeriod(final ExecutionInterval executionInterval) {
+        return getAssociatedExecutionCoursesSet().stream().filter(ec -> ec.getExecutionInterval() == executionInterval)
+                .collect(Collectors.toList());
     }
 
     @SuppressWarnings("unchecked")

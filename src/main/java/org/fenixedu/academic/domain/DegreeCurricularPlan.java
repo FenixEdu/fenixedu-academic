@@ -492,9 +492,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return getExecutionDegreesSet().stream().min(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR).orElse(null);
     }
 
-    public Set<ExecutionCourse> getExecutionCoursesByExecutionPeriod(final ExecutionSemester executionSemester) {
+    public Set<ExecutionCourse> getExecutionCoursesByExecutionPeriod(final ExecutionInterval executionInterval) {
         final Set<ExecutionCourse> result = new HashSet<>();
-        addExecutionCoursesForExecutionPeriod(result, executionSemester, getRoot().getChildContextsSet());
+        addExecutionCoursesForExecutionPeriod(result, executionInterval, getRoot().getChildContextsSet());
         return result;
     }
 
@@ -534,15 +534,15 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public void addExecutionCoursesForExecutionPeriod(final Set<ExecutionCourse> executionCourses,
-            final ExecutionSemester executionSemester, final Set<Context> contexts) {
+            final ExecutionInterval executionInterval, final Set<Context> contexts) {
         for (final Context context : contexts) {
             final DegreeModule degreeModule = context.getChildDegreeModule();
             if (degreeModule instanceof CurricularCourse) {
                 final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
-                executionCourses.addAll(curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester));
+                executionCourses.addAll(curricularCourse.getExecutionCoursesByExecutionPeriod(executionInterval));
             } else if (degreeModule instanceof CourseGroup) {
                 final CourseGroup courseGroup = (CourseGroup) degreeModule;
-                addExecutionCoursesForExecutionPeriod(executionCourses, executionSemester, courseGroup.getChildContextsSet());
+                addExecutionCoursesForExecutionPeriod(executionCourses, executionInterval, courseGroup.getChildContextsSet());
             }
         }
     }

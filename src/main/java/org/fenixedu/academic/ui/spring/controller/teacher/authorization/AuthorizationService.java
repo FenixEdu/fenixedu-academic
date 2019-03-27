@@ -29,6 +29,7 @@ import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.academic.domain.TeacherAuthorization;
@@ -103,7 +104,7 @@ public class AuthorizationService {
      * 
      * @return
      */
-    public List<ExecutionSemester> getExecutionPeriods() {
+    public List<ExecutionInterval> getExecutionPeriods() {
         return Bennu.getInstance().getExecutionPeriodsSet().stream().distinct()
                 .sorted(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR.reversed()).collect(Collectors.toList());
     }
@@ -114,9 +115,9 @@ public class AuthorizationService {
      * @param teacher
      * @return
      */
-    public List<ExecutionSemester> getExecutionPeriods(Teacher teacher) {
-        return teacher.getTeacherAuthorizationStream().map(TeacherAuthorization::getExecutionSemester).distinct()
-                .sorted(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR.reversed()).collect(Collectors.toList());
+    public List<ExecutionInterval> getExecutionPeriods(Teacher teacher) {
+        return teacher.getTeacherAuthorizationStream().map(TeacherAuthorization::getExecutionInterval).distinct()
+                .sorted(ExecutionInterval.COMPARATOR_BY_BEGIN_DATE.reversed()).collect(Collectors.toList());
     }
 
     /***
@@ -155,7 +156,7 @@ public class AuthorizationService {
      */
 
     @Atomic(mode = TxMode.WRITE)
-    public TeacherAuthorization createTeacherAuthorization(User user, Department department, ExecutionSemester semester,
+    public TeacherAuthorization createTeacherAuthorization(User user, Department department, ExecutionInterval interval,
             TeacherCategory category, Boolean contracted, Double lessonHours, Double workPercentageInInstitution) {
 
         Teacher teacher;
@@ -166,7 +167,7 @@ public class AuthorizationService {
             teacher = user.getPerson().getTeacher();
         }
 
-        return TeacherAuthorization.createOrUpdate(teacher, department, semester, category, contracted, lessonHours,
+        return TeacherAuthorization.createOrUpdate(teacher, department, interval, category, contracted, lessonHours,
                 workPercentageInInstitution);
     }
 
@@ -215,7 +216,7 @@ public class AuthorizationService {
      * @return
      */
     public List<TeacherAuthorization> searchAuthorizations(final SearchBean search) {
-        return getAuthorizations(search.getDepartment()).filter(t -> t.getExecutionSemester().equals(search.getPeriod()))
+        return getAuthorizations(search.getDepartment()).filter(t -> t.getExecutionInterval().equals(search.getPeriod()))
                 .distinct().collect(Collectors.toList());
     }
 
@@ -292,7 +293,7 @@ public class AuthorizationService {
                 addCell(message("teacher.authorizations.displayname"), user.getProfile().getDisplayName());
                 addCell(message("teacher.authorizations.category"), item.getTeacherCategory().getName().getContent());
                 addCell(message("teacher.authorizations.department"), item.getDepartment().getNameI18n().getContent());
-                addCell(message("teacher.authorizations.period"), item.getExecutionSemester().getQualifiedName());
+                addCell(message("teacher.authorizations.period"), item.getExecutionInterval().getQualifiedName());
                 addCell(message("teacher.authorizations.authorized"), item.getAuthorizer() == null ? "" : String.format("%s (%s)",
                         item.getAuthorizer().getProfile().getDisplayName(), item.getAuthorizer().getUsername()));
             }

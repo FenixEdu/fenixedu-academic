@@ -76,17 +76,17 @@ public class Department extends Department_Base {
     }
 
     public List<Teacher> getAllTeachers(AcademicInterval interval) {
-        return getTeacherAuthorizationStream().filter(a -> a.getExecutionSemester().getAcademicInterval().overlaps(interval))
+        return getTeacherAuthorizationStream().filter(a -> a.getExecutionInterval().getAcademicInterval().overlaps(interval))
                 .map(TeacherAuthorization::getTeacher).distinct().collect(Collectors.toList());
     }
 
     public List<Teacher> getAllTeachers(ExecutionSemester semester) {
-        return getTeacherAuthorizationStream().filter(a -> a.getExecutionSemester().equals(semester))
+        return getTeacherAuthorizationStream().filter(a -> a.getExecutionInterval().equals(semester))
                 .map(TeacherAuthorization::getTeacher).distinct().collect(Collectors.toList());
     }
 
     public List<Teacher> getAllTeachers(ExecutionYear executionYear) {
-        return getTeacherAuthorizationStream().filter(a -> a.getExecutionSemester().getExecutionYear().equals(executionYear))
+        return getTeacherAuthorizationStream().filter(a -> a.getExecutionInterval().getExecutionYear().equals(executionYear))
                 .map(TeacherAuthorization::getTeacher).distinct().collect(Collectors.toList());
     }
 

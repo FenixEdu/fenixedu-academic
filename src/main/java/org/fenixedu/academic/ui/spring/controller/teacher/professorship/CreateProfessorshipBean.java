@@ -20,13 +20,13 @@ package org.fenixedu.academic.ui.spring.controller.teacher.professorship;
 
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionDegree;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.Person;
 import org.springframework.beans.factory.annotation.Value;
 
 public class CreateProfessorshipBean {
 
-    private ExecutionSemester period;
+    private ExecutionInterval period;
     private Person teacher;
     private ExecutionDegree degree;
     private ExecutionCourse course;
@@ -34,11 +34,11 @@ public class CreateProfessorshipBean {
     @Value("false")
     private Boolean responsibleFor;
 
-    public ExecutionSemester getPeriod() {
+    public ExecutionInterval getPeriod() {
         return period;
     }
 
-    public void setPeriod(ExecutionSemester period) {
+    public void setPeriod(ExecutionInterval period) {
         this.period = period;
     }
 

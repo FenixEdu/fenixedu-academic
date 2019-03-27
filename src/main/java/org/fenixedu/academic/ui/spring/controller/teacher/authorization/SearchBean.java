@@ -19,12 +19,12 @@
 package org.fenixedu.academic.ui.spring.controller.teacher.authorization;
 
 import org.fenixedu.academic.domain.Department;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 
 public class SearchBean {
 
     private Department department;
-    private ExecutionSemester period;
+    private ExecutionInterval period;
 
     public Department getDepartment() {
         return department;
@@ -34,11 +34,11 @@ public class SearchBean {
         this.department = department;
     }
 
-    public ExecutionSemester getPeriod() {
+    public ExecutionInterval getPeriod() {
         return period;
     }
 
-    public void setPeriod(ExecutionSemester period) {
+    public void setPeriod(ExecutionInterval period) {
         this.period = period;
     }
 

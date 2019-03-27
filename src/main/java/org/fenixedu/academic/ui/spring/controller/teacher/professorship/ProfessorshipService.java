@@ -28,6 +28,7 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Teacher;
@@ -71,12 +72,12 @@ public class ProfessorshipService {
         return messageSource.getMessage(code, args, I18N.getLocale());
     }
 
-    public List<Professorship> getProfessorships(User user, ExecutionSemester period) {
+    public List<Professorship> getProfessorships(User user, ExecutionInterval interval) {
         Teacher teacher = user.getPerson().getTeacher();
         if (teacher == null) {
             return ImmutableList.<Professorship> builder().build();
         }
-        return teacher.getProfessorships(period).stream().collect(Collectors.toList());
+        return teacher.getProfessorships(interval).stream().collect(Collectors.toList());
     }
 
     public String getDegreeAcronyms(Professorship professorship, String separator) {
@@ -93,20 +94,20 @@ public class ProfessorshipService {
         return professorship.getResponsibleFor();
     }
 
-    public List<ExecutionDegree> getDegrees(ExecutionSemester period) {
-        if (period == null) {
+    public List<ExecutionDegree> getDegrees(ExecutionInterval interval) {
+        if (interval == null) {
             return ImmutableList.<ExecutionDegree> builder().build();
         }
-        return period.getExecutionYear().getExecutionDegreesSet().stream()
+        return interval.getExecutionYear().getExecutionDegreesSet().stream()
                 .sorted(ExecutionDegree.EXECUTION_DEGREE_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME).distinct()
                 .collect(Collectors.toList());
     }
 
-    public List<ExecutionCourse> getCourses(ExecutionDegree executionDegree, ExecutionSemester period) {
+    public List<ExecutionCourse> getCourses(ExecutionDegree executionDegree, ExecutionInterval interval) {
         if (executionDegree == null) {
             return ImmutableList.<ExecutionCourse> builder().build();
         }
-        return executionDegree.getDegreeCurricularPlan().getExecutionCoursesByExecutionPeriod(period).stream().distinct()
+        return executionDegree.getDegreeCurricularPlan().getExecutionCoursesByExecutionPeriod(interval).stream().distinct()
                 .sorted(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR).collect(Collectors.toList());
     }
 
@@ -164,7 +165,7 @@ public class ProfessorshipService {
         List<String> parts = Lists.newArrayList("teacherProfessorships");
         Department department = search.getDepartment();
         parts.add(department != null ? department.getAcronym() : message("label.all"));
-        ExecutionSemester period = search.getPeriod();
+        ExecutionInterval period = search.getPeriod();
         if (period != null) {
             parts.add(period.getQualifiedName().replace(" ", "_"));
         }

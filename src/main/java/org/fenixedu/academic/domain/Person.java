@@ -895,10 +895,10 @@ public class Person extends Person_Base {
         return null;
     }
 
-    public List<Professorship> getProfessorships(final ExecutionSemester executionSemester) {
+    public List<Professorship> getProfessorships(final ExecutionInterval executionInterval) {
         final List<Professorship> professorships = new ArrayList<Professorship>();
         for (final Professorship professorship : getProfessorshipsSet()) {
-            if (professorship.getExecutionCourse().getExecutionPeriod().equals(executionSemester)) {
+            if (professorship.getExecutionCourse().getExecutionPeriod().equals(executionInterval)) {
                 professorships.add(professorship);
             }
         }

@@ -105,7 +105,7 @@ public class ProfessorshipController {
             @ModelAttribute CreateProfessorshipBean bean) {
 
         if (bean.getPeriod() == null) {
-            bean.setPeriod(authorization.getExecutionSemester());
+            bean.setPeriod(authorization.getExecutionInterval());
         }
 
         final List<ExecutionDegree> degrees = professorshipService.getDegrees(bean.getPeriod());
