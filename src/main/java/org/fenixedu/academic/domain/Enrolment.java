@@ -359,7 +359,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
                 return false;
             }
 
-            if (evaluation.getEvaluationSeason().isImprovement() && evaluation.getExecutionPeriod() != semester) {
+            if (evaluation.getEvaluationSeason().isImprovement() && evaluation.getExecutionInterval() != semester) {
                 return false;
             }
 
@@ -831,7 +831,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     final public boolean hasImprovementFor(final ExecutionSemester executionSemester) {
         for (EnrolmentEvaluation enrolmentEvaluation : this.getEvaluationsSet()) {
             if (enrolmentEvaluation.getEvaluationSeason().isImprovement()) {
-                final ExecutionSemester evalPeriod = enrolmentEvaluation.getExecutionPeriod();
+                final ExecutionInterval evalPeriod = enrolmentEvaluation.getExecutionInterval();
                 if (evalPeriod != null && evalPeriod == executionSemester) {
                     return true;
                 }

@@ -963,8 +963,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
             generateCellWithText(enrolmentRow, "", renderer.getEctsCreditsCellClass(), GRADE_NEXT_COLUMN_SPAN);
 
-            if (evaluation.getExecutionPeriod() != null) {
-                generateCellWithText(enrolmentRow, evaluation.getExecutionPeriod().getExecutionYear().getYear(),
+            if (evaluation.getExecutionInterval() != null) {
+                generateCellWithText(enrolmentRow, evaluation.getExecutionInterval().getExecutionYear().getYear(),
                         renderer.getEnrolmentExecutionYearCellClass());
                 generateCellWithText(enrolmentRow,
                         evaluation.getExecutionPeriod().getSemester().toString() + " "

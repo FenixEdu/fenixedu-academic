@@ -242,7 +242,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
     }
 
     private ExecutionYear getExecutionYear() {
-        return getExecutionPeriod().getExecutionYear();
+        return getExecutionInterval().getExecutionYear();
     }
 
     public void confirmSubmission(Person person, String observation) {

@@ -1467,7 +1467,7 @@ public class CurricularCourse extends CurricularCourse_Base {
             if (season.isImprovement()) {
                 EnrolmentEvaluation latestEnrolmentEvaluationBy = enrolment.getLatestEnrolmentEvaluationBySeason(season);
                 if (latestEnrolmentEvaluationBy != null
-                        && latestEnrolmentEvaluationBy.getExecutionPeriod().equals(executionSemester)
+                        && latestEnrolmentEvaluationBy.getExecutionInterval().equals(executionSemester)
                         && latestEnrolmentEvaluationBy.isFinal()
                         && latestEnrolmentEvaluationBy.getExamDateYearMonthDay() != null) {
                     res.add(latestEnrolmentEvaluationBy);
