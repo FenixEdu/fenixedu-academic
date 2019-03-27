@@ -426,7 +426,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
                 addAttends(attend);
             } else {
                 throw new DomainException("error.cannot.create.multiple.enrolments.for.student.in.execution.course",
-                        executionCourse.getNome(), executionCourse.getExecutionPeriod().getQualifiedName());
+                        executionCourse.getNome(), executionCourse.getExecutionInterval().getQualifiedName());
             }
         }
     }
@@ -472,7 +472,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
                     @Override
                     final public boolean evaluate(final Object arg0) {
                         ExecutionCourse executionCourse = (ExecutionCourse) arg0;
-                        if (executionCourse.getExecutionPeriod() == executionSemester
+                        if (executionCourse.getExecutionInterval() == executionSemester
                                 && executionCourse.getEntryPhase() == EntryPhase.FIRST_PHASE) {
                             return true;
                         }
@@ -531,7 +531,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     final public boolean isImprovementForExecutionCourse(final ExecutionCourse executionCourse) {
-        return getExecutionPeriod() != executionCourse.getExecutionPeriod()
+        return getExecutionInterval() != executionCourse.getExecutionInterval()
                 && getCurricularCourse().getAssociatedExecutionCoursesSet().contains(executionCourse);
     }
 
@@ -1111,7 +1111,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     final public ExecutionCourse getExecutionCourseFor(final ExecutionSemester executionSemester) {
         for (final Attends attend : getAttendsSet()) {
-            if (attend.getExecutionCourse().getExecutionPeriod() == executionSemester) {
+            if (attend.getExecutionCourse().getExecutionInterval() == executionSemester) {
                 return attend.getExecutionCourse();
             }
         }

@@ -62,11 +62,11 @@ public class ExecutionCourseSender extends ExecutionCourseSender_Base {
     }
 
     public String createFromName() {
-        if (getCourse() != null && getCourse().getExecutionPeriod() != null
-                && getCourse().getExecutionPeriod().getQualifiedName() != null) {
+        if (getCourse() != null && getCourse().getExecutionInterval() != null
+                && getCourse().getExecutionInterval().getQualifiedName() != null) {
             String degreeName = getCourse().getDegreePresentationString();
             String courseName = getCourse().getNome();
-            String period = getCourse().getExecutionPeriod().getQualifiedName().replace('/', '-');
+            String period = getCourse().getExecutionInterval().getQualifiedName().replace('/', '-');
             return String.format("%s (%s: %s, %s)", Unit.getInstitutionAcronym(), degreeName, courseName, period);
         } else {
             return getFromName();

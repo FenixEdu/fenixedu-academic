@@ -840,12 +840,6 @@ public class Registration extends Registration_Base {
         return result;
     }
 
-    final public Set<Attends> getOrderedAttends() {
-        final Set<Attends> result = new TreeSet<>(Attends.ATTENDS_COMPARATOR);
-        result.addAll(getAssociatedAttendsSet());
-        return result;
-    }
-
     final public int countCompletedCoursesForActiveUndergraduateCurricularPlan() {
         return getActiveStudentCurricularPlan().getAprovedEnrolments().size();
     }
@@ -872,7 +866,7 @@ public class Registration extends Registration_Base {
     public List<Attends> readAttendsInCurrentExecutionPeriod() {
         final List<Attends> attends = new ArrayList<>();
         for (final Attends attend : this.getAssociatedAttendsSet()) {
-            if (attend.getExecutionCourse().getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
+            if (attend.getExecutionCourse().getExecutionInterval().isCurrent()) {
                 attends.add(attend);
             }
         }
@@ -1015,7 +1009,7 @@ public class Registration extends Registration_Base {
     final public Set<ExecutionCourse> getAttendingExecutionCoursesForCurrentExecutionPeriod() {
         final Set<ExecutionCourse> result = new HashSet<>();
         for (final Attends attends : getAssociatedAttendsSet()) {
-            if (attends.getExecutionCourse().getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
+            if (attends.getExecutionCourse().getExecutionInterval().isCurrent()) {
                 result.add(attends.getExecutionCourse());
             }
         }
@@ -1064,7 +1058,7 @@ public class Registration extends Registration_Base {
     final public List<Shift> getShiftsForCurrentExecutionPeriod() {
         final List<Shift> result = new ArrayList<>();
         for (final Shift shift : getShiftsSet()) {
-            if (shift.getExecutionCourse().getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
+            if (shift.getExecutionCourse().getExecutionInterval().isCurrent()) {
                 result.add(shift);
             }
         }
@@ -1074,7 +1068,7 @@ public class Registration extends Registration_Base {
     final public List<Shift> getShiftsFor(final ExecutionSemester executionSemester) {
         final List<Shift> result = new ArrayList<>();
         for (final Shift shift : getShiftsSet()) {
-            if (shift.getExecutionCourse().getExecutionPeriod() == executionSemester) {
+            if (shift.getExecutionCourse().getExecutionInterval() == executionSemester) {
                 result.add(shift);
             }
         }
@@ -1103,7 +1097,7 @@ public class Registration extends Registration_Base {
     private int countNumberOfDistinctExecutionCoursesOfShiftsFor(final ExecutionSemester executionSemester) {
         final Set<ExecutionCourse> result = new HashSet<>();
         for (final Shift shift : getShiftsSet()) {
-            if (shift.getExecutionCourse().getExecutionPeriod() == executionSemester) {
+            if (shift.getExecutionCourse().getExecutionInterval() == executionSemester) {
                 result.add(shift.getExecutionCourse());
             }
         }
@@ -1144,7 +1138,7 @@ public class Registration extends Registration_Base {
         for (final Attends attends : getAssociatedAttendsSet()) {
             final ExecutionCourse executionCourse = attends.getExecutionCourse();
 
-            if (executionCourse.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
+            if (executionCourse.getExecutionInterval().isCurrent()) {
                 result.addAll(getSchoolClassesToEnrolBy(executionCourse));
             }
         }

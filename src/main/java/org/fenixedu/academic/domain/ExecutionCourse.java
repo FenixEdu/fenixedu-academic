@@ -38,7 +38,6 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.curriculum.CurricularCourseType;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
@@ -141,7 +140,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                     ExecutionCourse previous = null;
                     for (final ExecutionCourse otherExecutionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
                         if (previous == null
-                                || otherExecutionCourse.getExecutionPeriod().isAfter(previous.getExecutionPeriod())) {
+                                || otherExecutionCourse.getExecutionInterval().isAfter(previous.getExecutionInterval())) {
                             previous = otherExecutionCourse;
                         }
                     }
@@ -400,19 +399,19 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     private int countAssociatedStudentsByEnrolmentNumber(int enrolmentNumber) {
         int executionCourseAssociatedStudents = 0;
-        ExecutionSemester courseExecutionPeriod = getExecutionPeriod();
+        ExecutionInterval courseExecutionPeriod = getExecutionInterval();
 
         for (CurricularCourse curricularCourseFromExecutionCourseEntry : getAssociatedCurricularCoursesSet()) {
             for (Enrolment enrolment : curricularCourseFromExecutionCourseEntry.getEnrolments()) {
 
-                if (enrolment.getExecutionPeriod() == courseExecutionPeriod) {
+                if (enrolment.getExecutionInterval() == courseExecutionPeriod) {
 
                     StudentCurricularPlan studentCurricularPlanEntry = enrolment.getStudentCurricularPlan();
                     int numberOfEnrolmentsForThatExecutionCourse = 0;
 
                     for (Enrolment enrolmentsFromStudentCPEntry : studentCurricularPlanEntry.getEnrolmentsSet()) {
                         if (enrolmentsFromStudentCPEntry.getCurricularCourse() == curricularCourseFromExecutionCourseEntry
-                                && (enrolmentsFromStudentCPEntry.getExecutionPeriod().compareTo(courseExecutionPeriod) <= 0)) {
+                                && (enrolmentsFromStudentCPEntry.getExecutionInterval().compareTo(courseExecutionPeriod) <= 0)) {
                             ++numberOfEnrolmentsForThatExecutionCourse;
                             if (numberOfEnrolmentsForThatExecutionCourse > enrolmentNumber) {
                                 break;
@@ -434,7 +433,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         int executionCourseStudentNumber = 0;
         for (final CurricularCourse curricularCourseFromExecutionCourseEntry : getAssociatedCurricularCoursesSet()) {
             for (final Enrolment enrolment : curricularCourseFromExecutionCourseEntry.getEnrolments()) {
-                if (enrolment.getExecutionPeriod() == getExecutionPeriod()) {
+                if (enrolment.getExecutionInterval() == getExecutionInterval()) {
                     executionCourseStudentNumber++;
                 }
             }
@@ -522,21 +521,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return results;
     }
 
-    public boolean areAllOptionalCurricularCoursesWithLessTenEnrolments() {
-        int enrolments = 0;
-        for (CurricularCourse curricularCourse : this.getAssociatedCurricularCoursesSet()) {
-            if (curricularCourse.getType() != null && curricularCourse.getType().equals(CurricularCourseType.OPTIONAL_COURSE)) {
-                enrolments += curricularCourse.getEnrolmentsByExecutionPeriod(this.getExecutionPeriod()).size();
-                if (enrolments >= 10) {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        }
-        return true;
-    }
-
     public static final Comparator<Evaluation> EVALUATION_COMPARATOR = new Comparator<Evaluation>() {
 
         @Override
@@ -569,7 +553,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         @Override
         public void afterAdd(ExecutionCourse execution, CurricularCourse curricular) {
             for (final Enrolment enrolment : curricular.getEnrolments()) {
-                if (enrolment.getExecutionPeriod().equals(execution.getExecutionPeriod())) {
+                if (enrolment.getExecutionInterval().equals(execution.getExecutionInterval())) {
                     associateAttend(enrolment, execution);
                 }
             }
@@ -588,7 +572,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
 
         private static void associateAttend(Enrolment enrolment, ExecutionCourse executionCourse) {
-            if (!alreadyHasAttend(enrolment, executionCourse.getExecutionPeriod())) {
+            if (!alreadyHasAttend(enrolment, executionCourse.getExecutionInterval())) {
                 Attends attends = executionCourse.getAttendsByStudent(enrolment.getStudentCurricularPlan().getRegistration());
                 if (attends == null) {
                     attends = new Attends(enrolment.getStudentCurricularPlan().getRegistration(), executionCourse);
@@ -597,9 +581,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
         }
 
-        private static boolean alreadyHasAttend(Enrolment enrolment, ExecutionSemester executionSemester) {
+        private static boolean alreadyHasAttend(Enrolment enrolment, ExecutionInterval executionInterval) {
             for (Attends attends : enrolment.getAttendsSet()) {
-                if (attends.getExecutionCourse().getExecutionPeriod().equals(executionSemester)) {
+                if (attends.getExecutionCourse().getExecutionInterval().equals(executionInterval)) {
                     return true;
                 }
             }
@@ -1144,7 +1128,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public ExecutionYear getExecutionYear() {
-        return getExecutionPeriod().getExecutionYear();
+        return getExecutionInterval().getExecutionYear();
     }
 
     public CurricularCourse getCurricularCourseFor(final DegreeCurricularPlan degreeCurricularPlan) {
@@ -1462,7 +1446,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public AcademicInterval getAcademicInterval() {
-        return getExecutionPeriod().getAcademicInterval();
+        return getExecutionInterval().getAcademicInterval();
     }
 
     public static ExecutionCourse readBySiglaAndExecutionPeriod(final String sigla, ExecutionSemester executionSemester) {
@@ -1790,7 +1774,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         Collection<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCoursesSet();
 
         for (ExecutionCourse executionCourse : executionCourses) {
-            if (this != executionCourse && executionCourse.getExecutionPeriod() == getExecutionPeriod()) {
+            if (this != executionCourse && executionCourse.getExecutionInterval() == getExecutionInterval()) {
                 throw new DomainException("error.executionCourse.curricularCourse.already.associated");
             }
         }

@@ -29,7 +29,7 @@ public class ExecutionCourseLogMonthProvider implements DataProvider {
     @Override
     public Object provide(final Object source, final Object currentValue) {
         final SearchExecutionCourseLogBean searchExecutionCourseLogBean = (SearchExecutionCourseLogBean) source;
-        return Month.getIntervalMonths(searchExecutionCourseLogBean.getExecutionCourse().getExecutionPeriod());
+        return Month.getIntervalMonths(searchExecutionCourseLogBean.getExecutionCourse().getExecutionInterval());
     }
 
     @Override

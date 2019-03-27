@@ -58,9 +58,9 @@ public class ComputeExecutionCourseStatistics extends ComputeCourseStatistics {
             executionCourseStatistics.setExternalId(competenceCourse.getExternalId());
             executionCourseStatistics.setName(competenceCourse.getNameI18N(executionSemester).getContent());
 
-            executionCourseStatistics.setExecutionPeriod(executionCourse.getExecutionPeriod().getName());
+            executionCourseStatistics.setExecutionPeriod(executionCourse.getExecutionInterval().getName());
             executionCourseStatistics.setTeachers(getResponsibleTeachersName(executionCourse));
-            executionCourseStatistics.setExecutionYear(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+            executionCourseStatistics.setExecutionYear(executionCourse.getExecutionInterval().getExecutionYear().getYear());
             executionCourseStatistics.setDegrees(getDegrees(executionCourse));
 
             createCourseStatistics(executionCourseStatistics, executionCourse.getActiveEnrollments());

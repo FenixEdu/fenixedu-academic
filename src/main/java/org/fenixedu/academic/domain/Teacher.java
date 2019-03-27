@@ -204,7 +204,7 @@ public class Teacher extends Teacher_Base {
         for (Professorship professorship : getProfessorships()) {
             ExecutionCourse executionCourse = professorship.getExecutionCourse();
 
-            if (executionCourse.getExecutionPeriod().equals(executionSemester)) {
+            if (executionCourse.getExecutionInterval().equals(executionSemester)) {
                 executionCourses.add(executionCourse);
             }
         }
@@ -238,7 +238,7 @@ public class Teacher extends Teacher_Base {
             @Override
             public boolean evaluate(Object arg0) {
                 Professorship professorship = (Professorship) arg0;
-                return professorship.getExecutionCourse().getExecutionPeriod() == executionSemester
+                return professorship.getExecutionCourse().getExecutionInterval() == executionSemester
                         && !professorship.getExecutionCourse().isMasterDegreeDFAOrDEAOnly();
             }
         });
@@ -271,13 +271,18 @@ public class Teacher extends Teacher_Base {
         return getPerson().getProfessorships(executionInterval);
     }
 
+    @Deprecated
+    public List<Professorship> getProfessorships(ExecutionSemester executionSemester) {
+        return getPerson().getProfessorships(executionSemester);
+    }
+    
     public List<Professorship> getProfessorships(ExecutionYear executionYear) {
         return getPerson().getProfessorships(executionYear);
     }
 
     public boolean isResponsibleFor(CurricularCourse curricularCourse, ExecutionSemester executionSemester) {
         for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
-            if (executionCourse.getExecutionPeriod() == executionSemester) {
+            if (executionCourse.getExecutionInterval() == executionSemester) {
                 if (isResponsibleFor(executionCourse) != null) {
                     return true;
                 }
@@ -308,7 +313,7 @@ public class Teacher extends Teacher_Base {
     public Collection<? extends Forum> getForuns(final ExecutionSemester executionSemester) {
         final Collection<Forum> res = new HashSet<Forum>();
         for (Professorship professorship : getProfessorshipsSet()) {
-            if (professorship.getExecutionCourse().getExecutionPeriod() == executionSemester) {
+            if (professorship.getExecutionCourse().getExecutionInterval() == executionSemester) {
                 res.addAll(professorship.getExecutionCourse().getForuns());
             }
         }
@@ -318,7 +323,7 @@ public class Teacher extends Teacher_Base {
     public boolean teachesAt(final Space campus) {
         for (final Professorship professorship : getProfessorshipsSet()) {
             final ExecutionCourse executionCourse = professorship.getExecutionCourse();
-            if (executionCourse.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
+            if (executionCourse.getExecutionInterval().isCurrent()) {
                 if (executionCourse.functionsAt(campus)) {
                     return true;
                 }

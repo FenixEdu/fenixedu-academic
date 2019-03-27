@@ -471,7 +471,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             if (degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE)) {
                 for (final CurricularCourse course : degreeCurricularPlan.getCurricularCoursesSet()) {
                     for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCoursesSet()) {
-                        if (executionCourse.getExecutionPeriod().getExecutionYear().equals(executionYear)) {
+                        if (executionCourse.getExecutionInterval().getExecutionYear().equals(executionYear)) {
                             result.add(course);
                             break;
                         }
@@ -489,7 +489,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             for (final CurricularCourse course : degreeCurricularPlan.getCurricularCoursesSet()) {
                 if (course.getAcronym() != null && course.getAcronym().equalsIgnoreCase(curricularCourseAcronym)) {
                     for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCoursesSet()) {
-                        if (executionSemester == executionCourse.getExecutionPeriod()) {
+                        if (executionSemester == executionCourse.getExecutionInterval()) {
                             result.add(executionCourse);
                         }
                     }

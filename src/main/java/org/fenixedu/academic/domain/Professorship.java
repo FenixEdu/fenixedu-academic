@@ -56,7 +56,7 @@ public class Professorship extends Professorship_Base {
     }
 
     public boolean belongsToExecutionPeriod(ExecutionSemester executionSemester) {
-        return this.getExecutionCourse().getExecutionPeriod().equals(executionSemester);
+        return this.getExecutionCourse().getExecutionInterval().equals(executionSemester);
     }
 
     @Atomic

@@ -230,7 +230,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
             if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear, degreeCurricularPlan,
                     executionSemester)) {
                 for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
-                    if (executionCourse.getExecutionPeriod() == executionSemester) {
+                    if (executionCourse.getExecutionInterval() == executionSemester) {
                         shifts.addAll(executionCourse.getAssociatedShifts());
                     }
                 }

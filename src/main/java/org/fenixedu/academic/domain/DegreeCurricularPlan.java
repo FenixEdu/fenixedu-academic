@@ -556,7 +556,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 if (degreeModuleScope.getCurricularSemester().equals(semester)
                         && degreeModuleScope.getCurricularYear().equals(curricularYear)) {
                     for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
-                        if (executionCourse.getExecutionPeriod().equals(executionSemester)) {
+                        if (executionCourse.getExecutionInterval().equals(executionSemester)) {
                             result.add(executionCourse);
                         }
                     }

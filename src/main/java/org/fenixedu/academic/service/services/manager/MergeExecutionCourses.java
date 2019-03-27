@@ -178,7 +178,7 @@ public class MergeExecutionCourses {
 
     private static boolean isMergeAllowed(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
         return executionCourseTo != null && executionCourseFrom != null
-                && executionCourseFrom.getExecutionPeriod().equals(executionCourseTo.getExecutionPeriod())
+                && executionCourseFrom.getExecutionInterval().equals(executionCourseTo.getExecutionInterval())
                 && executionCourseFrom != executionCourseTo;
     }
 

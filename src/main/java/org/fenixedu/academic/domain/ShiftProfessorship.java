@@ -35,7 +35,7 @@ public class ShiftProfessorship extends ShiftProfessorship_Base {
     }
 
     public boolean belongsToExecutionPeriod(ExecutionSemester executionSemester) {
-        return this.getProfessorship().getExecutionCourse().getExecutionPeriod().equals(executionSemester);
+        return this.getProfessorship().getExecutionCourse().getExecutionInterval().equals(executionSemester);
     }
 
 }

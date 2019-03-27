@@ -170,7 +170,7 @@ public class SchoolClass extends SchoolClass_Base {
         for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
             if (curricularCourse.hasScopeForCurricularYear(getAnoCurricular(), getExecutionPeriod())) {
                 for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
-                    if (executionCourse.getExecutionPeriod() == getExecutionInterval()) {
+                    if (executionCourse.getExecutionInterval() == getExecutionInterval()) {
                         shifts.addAll(executionCourse.getAssociatedShifts());
                     }
                 }

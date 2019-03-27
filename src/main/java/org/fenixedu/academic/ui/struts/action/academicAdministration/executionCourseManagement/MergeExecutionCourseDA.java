@@ -120,7 +120,7 @@ public class MergeExecutionCourseDA extends FenixDispatchAction {
 
         final String sourceName = degreeBean.getSource().getSourcePresentationName();
         final String destinationName = degreeBean.getDestination().getDestinationPresentationName();
-        final String periodName = destinationExecutionCourse.getExecutionPeriod().getQualifiedName();
+        final String periodName = destinationExecutionCourse.getExecutionInterval().getQualifiedName();
 
         try {
             MergeExecutionCourses.merge(destinationExecutionCourse, sourceExecutionCourse);

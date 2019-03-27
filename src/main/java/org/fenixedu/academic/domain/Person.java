@@ -581,8 +581,7 @@ public class Person extends Person_Base {
         for (final Registration registration : getStudentsSet()) {
             for (final Attends attend : registration.getAssociatedAttendsSet()) {
                 final ExecutionCourse executionCourse = attend.getExecutionCourse();
-                final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
-                if (executionSemester.getState().equals(PeriodState.CURRENT)) {
+                if (executionCourse.getExecutionInterval().isCurrent()) {
                     attends.add(attend);
                 }
             }
@@ -898,7 +897,7 @@ public class Person extends Person_Base {
     public List<Professorship> getProfessorships(final ExecutionInterval executionInterval) {
         final List<Professorship> professorships = new ArrayList<Professorship>();
         for (final Professorship professorship : getProfessorshipsSet()) {
-            if (professorship.getExecutionCourse().getExecutionPeriod().equals(executionInterval)) {
+            if (professorship.getExecutionCourse().getExecutionInterval().equals(executionInterval)) {
                 professorships.add(professorship);
             }
         }
@@ -908,7 +907,7 @@ public class Person extends Person_Base {
     public List<Professorship> getProfessorships(final ExecutionYear executionYear) {
         final List<Professorship> professorships = new ArrayList<Professorship>();
         for (final Professorship professorship : getProfessorshipsSet()) {
-            if (professorship.getExecutionCourse().getExecutionPeriod().getExecutionYear().equals(executionYear)) {
+            if (professorship.getExecutionCourse().getExecutionInterval().getExecutionYear().equals(executionYear)) {
                 professorships.add(professorship);
             }
         }

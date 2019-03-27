@@ -66,27 +66,6 @@ public class Attends extends Attends_Base {
         }
     };
 
-    public static final Comparator<Attends> ATTENDS_COMPARATOR = new Comparator<Attends>() {
-        @Override
-        public int compare(final Attends attends1, final Attends attends2) {
-            final ExecutionCourse executionCourse1 = attends1.getExecutionCourse();
-            final ExecutionCourse executionCourse2 = attends2.getExecutionCourse();
-            if (executionCourse1 == executionCourse2) {
-                final Registration registration1 = attends1.getRegistration();
-                final Registration registration2 = attends2.getRegistration();
-                return registration1.getNumber().compareTo(registration2.getNumber());
-            } else {
-                final ExecutionSemester executionPeriod1 = executionCourse1.getExecutionPeriod();
-                final ExecutionSemester executionPeriod2 = executionCourse2.getExecutionPeriod();
-                if (executionPeriod1 == executionPeriod2) {
-                    return executionCourse1.getNome().compareTo(executionCourse2.getNome());
-                } else {
-                    return executionPeriod1.compareTo(executionPeriod2);
-                }
-            }
-        }
-    };
-
     public static final Comparator<Attends> ATTENDS_COMPARATOR_BY_EXECUTION_COURSE_NAME = new Comparator<Attends>() {
 
         @Override
@@ -109,7 +88,7 @@ public class Attends extends Attends_Base {
         final Student student = registration.getStudent();
         if (student.hasAttends(executionCourse)) {
             throw new DomainException("error.cannot.create.multiple.enrolments.for.student.in.execution.course",
-                    executionCourse.getNome(), executionCourse.getExecutionPeriod().getQualifiedName());
+                    executionCourse.getNome(), executionCourse.getExecutionInterval().getQualifiedName());
         }
         setRegistration(registration);
         setDisciplinaExecucao(executionCourse);
@@ -225,7 +204,7 @@ public class Attends extends Attends_Base {
     }
 
     public boolean isFor(final ExecutionSemester executionSemester) {
-        return getExecutionCourse().getExecutionPeriod() == executionSemester;
+        return getExecutionCourse().getExecutionInterval() == executionSemester;
     }
 
     public boolean isFor(final ExecutionCourse executionCourse) {

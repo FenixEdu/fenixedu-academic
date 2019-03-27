@@ -19,6 +19,7 @@
 package org.fenixedu.academic.servlet.taglib.sop.v3.renderers;
 
 import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.FrequencyType;
 import org.fenixedu.academic.domain.Shift;
@@ -88,7 +89,7 @@ public class ExecutionCourseTimeTableLessonContentRenderer extends LessonSlotCon
             final InfoLessonInstanceAggregation aggregation = (InfoLessonInstanceAggregation) showOccupation;
             final Shift shift = aggregation.getShift();
             final ExecutionCourse executionCourse = shift.getExecutionCourse();
-            final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
+            final ExecutionInterval executionInterval = executionCourse.getExecutionInterval();
 
             strBuffer.append(shift.getShiftTypesCodePrettyPrint()).append("&nbsp;");
             final Space allocatableSpace = aggregation.getAllocatableSpace();
@@ -96,9 +97,9 @@ public class ExecutionCourseTimeTableLessonContentRenderer extends LessonSlotCon
                 strBuffer.append("<a href='").append(context).append("/publico/");
                 strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=");
                 strBuffer.append(allocatableSpace.getName()).append("&amp;objectCode=");
-                strBuffer.append(executionSemester.getExternalId());
+                strBuffer.append(executionInterval.getExternalId());
                 strBuffer.append("&amp;executionPeriodOID=");
-                strBuffer.append(executionSemester.getExternalId()).append("'>");
+                strBuffer.append(executionInterval.getExternalId()).append("'>");
                 strBuffer.append(allocatableSpace.getName()).append("</a>");
             }
 

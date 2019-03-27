@@ -52,8 +52,6 @@ public class ReadAvailableClassesForShift {
 
         final Shift shift = FenixFramework.getDomainObject(shiftOID);
         final ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
-        final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
-        final ExecutionYear executionYear = executionSemester.getExecutionYear();
 
         final Set<SchoolClass> availableSchoolClasses = new HashSet<SchoolClass>();
 

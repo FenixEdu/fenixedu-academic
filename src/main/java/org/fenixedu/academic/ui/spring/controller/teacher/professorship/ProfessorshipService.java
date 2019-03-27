@@ -147,7 +147,7 @@ public class ProfessorshipService {
                 addCell(message("teacher.professorships.csv.column.3.courseAcronym"), course.getSigla());
                 addCell(message("teacher.professorships.csv.column.4.courseCode"), course.getCode());
                 addCell(message("teacher.professorships.csv.column.5.courseName"), course.getNome());
-                addCell(message("teacher.professorships.csv.column.6.semester"), course.getExecutionPeriod().getQualifiedName());
+                addCell(message("teacher.professorships.csv.column.6.semester"), course.getExecutionInterval().getQualifiedName());
                 addCell(message("teacher.professorships.csv.column.7.responsible"), item.isResponsibleFor() ? "Y" : "N");
             }
         });

@@ -468,7 +468,7 @@ public class CurricularCourse extends CurricularCourse_Base {
             @Override
             public boolean evaluate(Object o) {
                 ExecutionCourse executionCourse = (ExecutionCourse) o;
-                return executionCourse.getExecutionPeriod().getExecutionYear().equals(executionYear);
+                return executionCourse.getExecutionInterval().getExecutionYear().equals(executionYear);
             }
         });
     }
@@ -1435,7 +1435,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public boolean hasAnyExecutionCourseIn(ExecutionSemester executionSemester) {
         for (ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
-            if (executionCourse.getExecutionPeriod().equals(executionSemester)) {
+            if (executionCourse.getExecutionInterval().equals(executionSemester)) {
                 return true;
             }
         }
@@ -1505,7 +1505,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
         for (ExecutionCourse executionCourse : executionCourses) {
             if (associatedExecutionCourses != executionCourse
-                    && executionCourse.getExecutionPeriod() == associatedExecutionCourses.getExecutionPeriod()) {
+                    && executionCourse.getExecutionInterval() == associatedExecutionCourses.getExecutionInterval()) {
                 throw new DomainException("error.executionCourse.curricularCourse.already.associated");
             }
         }
