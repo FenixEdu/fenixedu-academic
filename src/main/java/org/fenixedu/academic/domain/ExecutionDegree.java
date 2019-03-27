@@ -239,21 +239,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         return shifts;
     }
 
-    @Deprecated
-    public Set<SchoolClass> findSchoolClassesByExecutionPeriod(final ExecutionSemester executionSemester) {
-        final Set<SchoolClass> schoolClasses = new HashSet<SchoolClass>();
-        for (final SchoolClass schoolClass : getSchoolClassesSet()) {
-            if (schoolClass.getExecutionPeriod() == executionSemester) {
-                schoolClasses.add(schoolClass);
-            }
-        }
-        return schoolClasses;
-    }
-
     public Set<SchoolClass> findSchoolClassesByAcademicInterval(final AcademicInterval academicInterval) {
         final Set<SchoolClass> schoolClasses = new HashSet<SchoolClass>();
         for (final SchoolClass schoolClass : getSchoolClassesSet()) {
-            if (schoolClass.getExecutionPeriod().getAcademicInterval().equals(academicInterval)) {
+            if (schoolClass.getExecutionInterval().getAcademicInterval().equals(academicInterval)) {
                 schoolClasses.add(schoolClass);
             }
         }
@@ -276,7 +265,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
             final Integer curricularYear) {
         final Set<SchoolClass> schoolClasses = new HashSet<SchoolClass>();
         for (final SchoolClass schoolClass : getSchoolClassesSet()) {
-            if (schoolClass.getExecutionPeriod().getAcademicInterval().equals(academicInterval)
+            if (schoolClass.getExecutionInterval().getAcademicInterval().equals(academicInterval)
                     && schoolClass.getAnoCurricular().equals(curricularYear)) {
                 schoolClasses.add(schoolClass);
             }
@@ -284,9 +273,9 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         return schoolClasses;
     }
 
-    public SchoolClass findSchoolClassesByExecutionPeriodAndName(final ExecutionSemester executionSemester, final String name) {
+    public SchoolClass findSchoolClassesByExecutionPeriodAndName(final ExecutionInterval executionInterval, final String name) {
         for (final SchoolClass schoolClass : getSchoolClassesSet()) {
-            if (schoolClass.getExecutionPeriod() == executionSemester && schoolClass.getNome().equalsIgnoreCase(name)) {
+            if (schoolClass.getExecutionInterval() == executionInterval && schoolClass.getNome().equalsIgnoreCase(name)) {
                 return schoolClass;
             }
         }
@@ -577,7 +566,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
         return null;
     }
-    
+
     public static List<ExecutionDegree> getExecutionDegreesFor(ExecutionYear executionYear, Predicate<DegreeType> predicate) {
         final List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
         for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {

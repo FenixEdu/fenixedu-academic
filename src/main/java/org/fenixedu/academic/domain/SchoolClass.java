@@ -76,7 +76,7 @@ public class SchoolClass extends SchoolClass_Base {
     public void edit(String name) {
         if (name != null && !StringUtils.isEmpty(name.trim())) {
             final SchoolClass otherClassWithSameNewName =
-                    getExecutionDegree().findSchoolClassesByExecutionPeriodAndName(getExecutionPeriod(), name.trim());
+                    getExecutionDegree().findSchoolClassesByExecutionPeriodAndName(getExecutionInterval(), name.trim());
             if (otherClassWithSameNewName != null && !otherClassWithSameNewName.equals(this)) {
                 throw new DomainException("Duplicate Entry: " + otherClassWithSameNewName.getNome());
             }
@@ -132,8 +132,8 @@ public class SchoolClass extends SchoolClass_Base {
         if (executionDegree != null && executionSemester != null && curricularYear != null && className != null) {
 
             final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-            final Set<SchoolClass> classes =
-                    executionDegree.findSchoolClassesByExecutionPeriodAndCurricularYear(executionSemester, curricularYear);
+            final Set<SchoolClass> classes = executionDegree.findSchoolClassesByAcademicIntervalAndCurricularYear(
+                    executionSemester.getAcademicInterval(), curricularYear);
             final Degree degree = degreeCurricularPlan.getDegree();
             final String schoolClassName = degree.constructSchoolClassPrefix(curricularYear) + className;
 
@@ -170,7 +170,7 @@ public class SchoolClass extends SchoolClass_Base {
         for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
             if (curricularCourse.hasScopeForCurricularYear(getAnoCurricular(), getExecutionPeriod())) {
                 for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
-                    if (executionCourse.getExecutionPeriod() == getExecutionPeriod()) {
+                    if (executionCourse.getExecutionPeriod() == getExecutionInterval()) {
                         shifts.addAll(executionCourse.getAssociatedShifts());
                     }
                 }
@@ -187,7 +187,7 @@ public class SchoolClass extends SchoolClass_Base {
     }
 
     public AcademicInterval getAcademicInterval() {
-        return getExecutionPeriod().getAcademicInterval();
+        return getExecutionInterval().getAcademicInterval();
     }
 
     public String getName() {

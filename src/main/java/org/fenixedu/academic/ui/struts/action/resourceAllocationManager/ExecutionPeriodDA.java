@@ -179,7 +179,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
                 if (executionDegree != null) {
                     for (final SchoolClass schoolClass : executionDegree.getSchoolClassesSet()) {
                         if (schoolClass.getAnoCurricular().equals(FIRST_CURRICULAR_YEAR)
-                                && schoolClass.getExecutionPeriod() == executionSemester) {
+                                && schoolClass.getExecutionInterval() == executionSemester) {
                             for (final Shift shift : schoolClass.getAssociatedShiftsSet()) {
                                 Set<ExecutionDegree> executionDegrees = shiftsDegrees.get(shift);
                                 if (executionDegrees == null) {
