@@ -21,6 +21,7 @@ package org.fenixedu.academic.service.services.department;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.CurricularCourse;
@@ -36,7 +37,8 @@ public class ComputeDegreeCourseStatistics extends ComputeCourseStatistics {
 
     public List<DegreeCourseStatisticsDTO> run(CompetenceCourse competenceCourse, ExecutionSemester executionSemester)
             throws FenixServiceException {
-        Map<Degree, List<CurricularCourse>> groupedCourses = competenceCourse.getAssociatedCurricularCoursesGroupedByDegree();
+        Map<Degree, List<CurricularCourse>> groupedCourses = competenceCourse.getAssociatedCurricularCoursesSet().stream()
+                .collect(Collectors.groupingBy(cc -> cc.getDegreeCurricularPlan().getDegree()));
 
         List<DegreeCourseStatisticsDTO> results = new ArrayList<DegreeCourseStatisticsDTO>();
 

@@ -23,11 +23,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -169,38 +167,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         info.setBibliographicReferences(info.getBibliographicReferences().movingBibliographicReference(oldPosition, newPosition));
     }
 
-    private void fillFields(String code, String name) {
-        if (code == null || code.length() == 0) {
-            throw new DomainException("invalid.competenceCourse.values");
-        }
-        if (name == null || name.length() == 0) {
-            throw new DomainException("invalid.competenceCourse.values");
-        }
-        super.setCode(code);
-        super.setName(name);
-    }
-
-    /**
-     * @deprecated This method sets attributes that are no longer used. Set the corresponding attributes in the
-     *             appropriate
-     *             {@link org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation CompetenceCourseInformation}
-     *             object.
-     */
-    @Deprecated
-    public void edit(String code, String name, Collection<Department> departments) {
-        fillFields(code, name);
-        for (final Department department : this.getDepartmentsSet()) {
-            if (!departments.contains(department)) {
-                super.removeDepartments(department);
-            }
-        }
-        for (final Department department : departments) {
-            if (!getDepartmentsSet().contains(department)) {
-                super.addDepartments(department);
-            }
-        }
-    }
-
     public void edit(String name, String nameEn, Boolean basic, CompetenceCourseLevel competenceCourseLevel,
             CompetenceCourseType type, CurricularStage curricularStage) {
         changeCurricularStage(curricularStage);
@@ -266,23 +232,15 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         super.deleteDomainObject();
     }
 
-    public void addCurricularCourses(Collection<CurricularCourse> curricularCourses) {
-        for (CurricularCourse curricularCourse : curricularCourses) {
-            addAssociatedCurricularCourses(curricularCourse);
-        }
-    }
-
-    public void addDepartments(Collection<Department> departments) {
-        for (Department department : departments) {
-            super.addDepartments(department);
-        }
-    }
-
+    /**
+     * @deprecated use {@code #getOrderedCompetenceCourseInformations()}}
+     */
+    @Deprecated
     public TreeSet<CompetenceCourseInformation> getSortedCompetenceCourseInformations() {
         return getOrderedCompetenceCourseInformations();
     }
 
-    private TreeSet<CompetenceCourseInformation> getOrderedCompetenceCourseInformations() {
+    public TreeSet<CompetenceCourseInformation> getOrderedCompetenceCourseInformations() {
         TreeSet<CompetenceCourseInformation> informations =
                 new TreeSet<CompetenceCourseInformation>(CompetenceCourseInformation.COMPARATORY_BY_EXECUTION_PERIOD);
         informations.addAll(getCompetenceCourseInformationsSet());
@@ -752,40 +710,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return (information != null) ? information.getEctsCredits(order) : 0.0;
     }
 
-    public Map<Degree, List<CurricularCourse>> getAssociatedCurricularCoursesGroupedByDegree() {
-        Map<Degree, List<CurricularCourse>> curricularCoursesMap = new HashMap<Degree, List<CurricularCourse>>();
-        for (CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-            Degree degree = curricularCourse.getDegreeCurricularPlan().getDegree();
-            List<CurricularCourse> curricularCourses = curricularCoursesMap.get(degree);
-            if (curricularCourses == null) {
-                curricularCourses = new ArrayList<CurricularCourse>();
-                curricularCoursesMap.put(degree, curricularCourses);
-            }
-            curricularCourses.add(curricularCourse);
-        }
-        return curricularCoursesMap;
-    }
-
-    public Set<DegreeCurricularPlan> presentIn() {
-        Set<DegreeCurricularPlan> result = new HashSet<DegreeCurricularPlan>();
-        for (CurricularCourse curricularCourse : this.getAssociatedCurricularCoursesSet()) {
-            result.add(curricularCourse.getDegreeCurricularPlan());
-        }
-
-        return result;
-    }
-
-    public boolean isAssociatedToAnyDegree(final Set<Degree> degrees) {
-        for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-            final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
-            final Degree degree = degreeCurricularPlan.getDegree();
-            if (degrees.contains(degree)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @SuppressWarnings("unchecked")
     public List<CurricularCourse> getCurricularCoursesWithActiveScopesInExecutionPeriod(
             final ExecutionSemester executionSemester) {
@@ -1090,15 +1014,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return resultSet;
     }
 
-    public boolean hasEnrolmentForPeriod(ExecutionSemester executionSemester) {
-        for (CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-            if (curricularCourse.hasEnrolmentForPeriod(executionSemester)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public boolean isDissertation() {
         return getType() == CompetenceCourseType.DISSERTATION;
     }
@@ -1194,16 +1109,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         final Set<CompetenceCourse> result = new TreeSet<CompetenceCourse>(COMPETENCE_COURSE_COMPARATOR_BY_NAME);
         for (final CompetenceCourse competenceCourse : Bennu.getInstance().getCompetenceCoursesSet()) {
             if (competenceCourse.isApproved()) {
-                result.add(competenceCourse);
-            }
-        }
-        return result;
-    }
-
-    static public Collection<CompetenceCourse> readApprovedBolonhaDissertations() {
-        final List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
-        for (final CompetenceCourse competenceCourse : Bennu.getInstance().getCompetenceCoursesSet()) {
-            if (competenceCourse.isApproved() && competenceCourse.isDissertation()) {
                 result.add(competenceCourse);
             }
         }

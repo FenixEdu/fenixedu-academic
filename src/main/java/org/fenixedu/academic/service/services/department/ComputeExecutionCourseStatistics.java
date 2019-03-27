@@ -21,7 +21,9 @@ package org.fenixedu.academic.service.services.department;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.CurricularCourse;
@@ -40,7 +42,8 @@ public class ComputeExecutionCourseStatistics extends ComputeCourseStatistics {
     public List<ExecutionCourseStatisticsDTO> run(CompetenceCourse competenceCourse, Degree degree,
             ExecutionSemester executionSemester) throws FenixServiceException {
 
-        List<CurricularCourse> curricularCourses = competenceCourse.getAssociatedCurricularCoursesGroupedByDegree().get(degree);
+        List<CurricularCourse> curricularCourses = competenceCourse.getAssociatedCurricularCoursesSet().stream()
+                .filter(cc -> cc.getDegreeCurricularPlan().getDegree() == degree).collect(Collectors.toList());
 
         List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
 

@@ -1242,29 +1242,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     // END: Only for enrollment purposes (PROTECTED)
     // -------------------------------------------------------------
 
-    public int numberCompletedCoursesForSpecifiedDegrees(final Set<Degree> degrees) {
-        int numberCompletedCourses = 0;
-        for (final StudentCurricularPlan studentCurricularPlan : getRegistration().getStudentCurricularPlansSet()) {
-            for (Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
-                if (!enrolment.isInvisible() && enrolment.isApproved()) {
-                    final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
-                    final ExecutionYear executionYear = executionSemester.getExecutionYear();
-                    if (!executionYear.isCurrent()) {
-                        final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
-                        final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
-                        final Degree degree = degreeCurricularPlan.getDegree();
-                        final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
-                        if (degrees.contains(degree)
-                                || (competenceCourse != null && competenceCourse.isAssociatedToAnyDegree(degrees))) {
-                            numberCompletedCourses++;
-                        }
-                    }
-                }
-            }
-        }
-        return numberCompletedCourses;
-    }
-
     public boolean isEnroledInSpecialSeason(final ExecutionSemester executionSemester) {
         return getRoot().isEnroledInSpecialSeason(executionSemester);
     }
