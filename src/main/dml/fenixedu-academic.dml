@@ -1930,8 +1930,6 @@ class accessControl.PersistentResponsibleForExecutionCourseGroup extends accessC
 
 class accessControl.PersistentStudentsConcludedInExecutionYearGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
-class accessControl.PersistentTeachersWithIncompleteEvaluationWorkGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
-
 class accessControl.PersistentUnitGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup {
     public AccountabilityTypeEnum relationType;
     public Boolean includeSubUnits (REQUIRED);
@@ -5361,24 +5359,6 @@ relation PersistentUnitGroupUnit {
     }
     public organizationalStructure.Unit playsRole unit {
         multiplicity 1..1;
-    }
-}
-
-relation PersistentTeachersWithIncompleteEvaluationWorkGroupPeriod {
-    public accessControl.PersistentTeachersWithIncompleteEvaluationWorkGroup playsRole teachersWithIncompleteEvaluationWorkGroup {
-        multiplicity *;
-    }
-    public ExecutionSemester playsRole period {
-        multiplicity 1..1;
-    }
-}
-
-relation PersistentTeachersWithIncompleteEvaluationWorkGroupDegreeCurricularPlan {
-    public accessControl.PersistentTeachersWithIncompleteEvaluationWorkGroup playsRole teachersWithIncompleteEvaluationWorkGroup {
-        multiplicity *;
-    }
-    public DegreeCurricularPlan playsRole degreeCurricularPlan {
-        multiplicity 0..1;
     }
 }
 
