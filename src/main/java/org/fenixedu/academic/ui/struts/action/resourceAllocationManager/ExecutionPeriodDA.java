@@ -42,7 +42,6 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.SchoolClass;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.degree.DegreeType;
-import org.fenixedu.academic.domain.log.FirstYearShiftsCapacityToggleLog;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicYearCE;
@@ -51,7 +50,6 @@ import org.fenixedu.academic.dto.resourceAllocationManager.StudentContextSelecti
 import org.fenixedu.academic.ui.struts.action.base.FenixContextDispatchAction;
 import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.RAMApplication.RAMSchedulesApp;
 import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
-import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -213,11 +211,6 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
                     modified.put(executionDegree, 1);
                 }
             }
-        }
-
-        if (modified.size() > 0) {
-            new FirstYearShiftsCapacityToggleLog(executionYear.getFirstExecutionPeriod(),
-                    Authenticate.getUser().getPerson().getUser());
         }
 
         return modified;

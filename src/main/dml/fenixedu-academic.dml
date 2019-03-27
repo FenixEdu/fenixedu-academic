@@ -562,10 +562,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
     class photograph.PictureOriginal extends photograph.Picture {
     }
 
-    class log.FirstYearShiftsCapacityToggleLog  {
-    	DateTime creationDate;
-    }
-    
         class candidacy.CandidacyDocumentFile extends .org.fenixedu.bennu.io.domain.GenericFile {
         }
         
@@ -2956,20 +2952,6 @@ relation ExternalEnrolmentExecutionPeriod {
     ExecutionSemester playsRole executionPeriod;
 }
 
-relation FirstYearShiftsCapacityLogWithExecutionSemester {
-	ExecutionSemester playsRole executionSemester;
-	log.FirstYearShiftsCapacityToggleLog playsRole firstYearShiftsCapacityToggleLog {
-		multiplicity *;
-	}
-}
-
-relation FirstYearShiftsCapacityLogWithUser {
-	.org.fenixedu.bennu.core.domain.User playsRole creator;
-	log.FirstYearShiftsCapacityToggleLog playsRole firstYearShiftsCapacityToggleLog {
-		multiplicity *;
-	}
-}
-
 relation PersonPhoto {
     Photograph playsRole personalPhoto;
     Person playsRole person;
@@ -3863,13 +3845,6 @@ relation RootDomainObjectExternalEnrolment {
 relation RootDomainObjectExternalInstitutionUnit {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectForExternalInstitutionUnit;
     organizationalStructure.Unit playsRole externalInstitutionUnit;
-}
-
-relation RootDomainObjectFirstYearShiftsCapacityToggleLog {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    log.FirstYearShiftsCapacityToggleLog playsRole firstYearShiftsCapacityToggleLogs {
-        multiplicity *;
-    }
 }
 
 relation RootDomainObjectPhotographs {
