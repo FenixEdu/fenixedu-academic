@@ -492,10 +492,18 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return getExecutionDegreesSet().stream().min(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR).orElse(null);
     }
 
-    public Set<ExecutionCourse> getExecutionCoursesByExecutionPeriod(final ExecutionInterval executionInterval) {
+    public Set<ExecutionCourse> getExecutionCourses(final ExecutionInterval executionInterval) {
         final Set<ExecutionCourse> result = new HashSet<>();
         addExecutionCoursesForExecutionPeriod(result, executionInterval, getRoot().getChildContextsSet());
         return result;
+    }
+
+    /**
+     * @deprecated use {@link #getExecutionCoursesByExecutionInterval(ExecutionInterval)}
+     */
+    @Deprecated
+    public Set<ExecutionCourse> getExecutionCoursesByExecutionPeriod(final ExecutionSemester executionSemester) {
+        return getExecutionCourses(executionSemester);
     }
 
     public SortedSet<DegreeModuleScope> getDegreeModuleScopes() {
@@ -533,7 +541,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return result;
     }
 
-    public void addExecutionCoursesForExecutionPeriod(final Set<ExecutionCourse> executionCourses,
+    private void addExecutionCoursesForExecutionPeriod(final Set<ExecutionCourse> executionCourses,
             final ExecutionInterval executionInterval, final Set<Context> contexts) {
         for (final Context context : contexts) {
             final DegreeModule degreeModule = context.getChildDegreeModule();
