@@ -143,12 +143,11 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
                 beanPeriod = ExecutionSemester.findCurrent(null);
                 bean.setExecutionPeriod(beanPeriod);
             }
-            information = bean.getCompetenceCourse().findCompetenceCourseInformationForExecutionPeriod(beanPeriod);
+            information = bean.getCompetenceCourse().findInformationMostRecentUntil(beanPeriod);
         }
 
         if (bean == null) {
-            bean = new CompetenceCourseInformationRequestBean(course.findCompetenceCourseInformationForExecutionPeriod(
-                    (period != null) ? period : ExecutionSemester.findCurrent(null)));
+            bean = new CompetenceCourseInformationRequestBean(course.findInformationMostRecentUntil(period));
         } else {
             if (information == null) {
                 bean.reset();
@@ -164,10 +163,9 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
         } else {
             if (information != null && information.getCompetenceCourseLoadsSet().size() > 0) {
                 load = new CompetenceCourseLoadBean(information.getCompetenceCourseLoadsSet().iterator().next());
-            } else if (period != null && course.findCompetenceCourseInformationForExecutionPeriod(period)
-                    .getCompetenceCourseLoadsSet().size() > 0) {
-                load = new CompetenceCourseLoadBean(course.findCompetenceCourseInformationForExecutionPeriod(period)
-                        .getCompetenceCourseLoadsSet().iterator().next());
+            } else if (period != null && course.findInformationMostRecentUntil(period).getCompetenceCourseLoadsSet().size() > 0) {
+                load = new CompetenceCourseLoadBean(
+                        course.findInformationMostRecentUntil(period).getCompetenceCourseLoadsSet().iterator().next());
             } else {
                 load = new CompetenceCourseLoadBean();
             }

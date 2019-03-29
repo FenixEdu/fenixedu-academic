@@ -68,6 +68,10 @@ import org.fenixedu.commons.i18n.LocalizedString;
  */
 public class CompetenceCourseInformation extends CompetenceCourseInformation_Base {
 
+    static public final Comparator<CompetenceCourseInformation> COMPARATORY_BY_EXECUTION_INTERVAL =
+            Comparator.comparing(CompetenceCourseInformation::getExecutionInterval);
+    
+    @Deprecated
     static public final Comparator<CompetenceCourseInformation> COMPARATORY_BY_EXECUTION_PERIOD =
             new Comparator<CompetenceCourseInformation>() {
                 @Override

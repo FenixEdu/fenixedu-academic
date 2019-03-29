@@ -103,7 +103,7 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
 
     public boolean isCompetenceCourseDefinedForExecutionPeriod() {
         if (getCompetenceCourse() != null && getExecutionPeriod() != null) {
-            return getCompetenceCourse().isCompetenceCourseInformationDefinedAtExecutionPeriod(getExecutionPeriod());
+            return getCompetenceCourse().findInformation(getExecutionPeriod()) != null;
         }
         return false;
     }

@@ -203,9 +203,8 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
         CompetenceCourse course = getCompetenceCourse();
 
         ExecutionSemester executionSemester = getExecutionPeriod();
-        CompetenceCourseInformation information = null;
-        if (course.isCompetenceCourseInformationDefinedAtExecutionPeriod(executionSemester)) {
-            information = course.findCompetenceCourseInformationForExecutionPeriod(executionSemester);
+        CompetenceCourseInformation information = course.findInformation(executionSemester);
+        if (information != null) {
             information.edit(getName(), getNameEn(), information.getBasic(), getCompetenceCourseLevel(),
                     getCompetenceCourseGroupUnit());
             information.setRegime(getRegime());

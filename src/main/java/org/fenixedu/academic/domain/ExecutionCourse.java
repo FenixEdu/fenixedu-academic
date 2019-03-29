@@ -719,7 +719,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
             if (competenceCourse != null) {
                 final CompetenceCourseInformation competenceCourseInformation =
-                        competenceCourse.findCompetenceCourseInformationForExecutionPeriod(getExecutionPeriod());
+                        competenceCourse.findInformationMostRecentUntil(getExecutionInterval());
                 if (competenceCourseInformation != null) {
                     competenceCourseInformations.add(competenceCourseInformation);
                 }
@@ -869,7 +869,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
             if (competenceCourse != null) {
                 final CompetenceCourseInformation competenceCourseInformation =
-                        competenceCourse.findCompetenceCourseInformationForExecutionPeriod(getExecutionPeriod());
+                        competenceCourse.findInformationMostRecentUntil(getExecutionInterval());
                 if (competenceCourseInformation != null) {
                     final org.fenixedu.academic.domain.degreeStructure.BibliographicReferences bibliographicReferences =
                             competenceCourseInformation.getBibliographicReferences();
