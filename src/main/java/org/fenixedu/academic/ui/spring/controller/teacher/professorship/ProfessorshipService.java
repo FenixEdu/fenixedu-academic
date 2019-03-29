@@ -29,7 +29,6 @@ import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.academic.domain.TeacherAuthorization;
@@ -107,7 +106,7 @@ public class ProfessorshipService {
         if (executionDegree == null) {
             return ImmutableList.<ExecutionCourse> builder().build();
         }
-        return executionDegree.getDegreeCurricularPlan().getExecutionCoursesByExecutionPeriod(interval).stream().distinct()
+        return executionDegree.getDegreeCurricularPlan().getExecutionCourses(interval).stream().distinct()
                 .sorted(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR).collect(Collectors.toList());
     }
 
@@ -147,7 +146,8 @@ public class ProfessorshipService {
                 addCell(message("teacher.professorships.csv.column.3.courseAcronym"), course.getSigla());
                 addCell(message("teacher.professorships.csv.column.4.courseCode"), course.getCode());
                 addCell(message("teacher.professorships.csv.column.5.courseName"), course.getNome());
-                addCell(message("teacher.professorships.csv.column.6.semester"), course.getExecutionInterval().getQualifiedName());
+                addCell(message("teacher.professorships.csv.column.6.semester"),
+                        course.getExecutionInterval().getQualifiedName());
                 addCell(message("teacher.professorships.csv.column.7.responsible"), item.isResponsibleFor() ? "Y" : "N");
             }
         });
