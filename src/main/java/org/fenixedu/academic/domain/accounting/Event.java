@@ -517,7 +517,7 @@ public abstract class Event extends Event_Base {
         PostingRule postingRule = getPostingRule();
         if (postingRule == null) {
             throw new DomainException("error.accounting.agreement.ServiceAgreementTemplate.cannot.find.postingRule.for.eventType.and.date.desc",
-                    BundleUtil.getString(Bundle.ENUMERATION, getEventType().getQualifiedName()), getEventStartDate().toString("dd/MM/yyyy"));
+                    getEventStartDate().toString("dd/MM/yyyy"), BundleUtil.getString(Bundle.ENUMERATION, getEventType().getQualifiedName()));
         }
         return Collections.singletonMap(getDueDateByPaymentCodes().toLocalDate(), postingRule.doCalculationForAmountToPay(this));
     }
