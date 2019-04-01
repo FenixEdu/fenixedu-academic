@@ -129,30 +129,23 @@ public class PostingRulesManager {
 
     private static void deactivateExistingEnrolmentGratuityPR(final EventType eventType, final DateTime when,
             final ServiceAgreementTemplate serviceAgreementTemplate, boolean forAliens) {
-        if (!serviceAgreementTemplate.hasPostingRuleFor(eventType, when)) {
-            return;
-        }
 
-        final EnrolmentGratuityPR existingPostingRule = (EnrolmentGratuityPR) serviceAgreementTemplate.findPostingRuleByEventTypeAndDate(eventType,
-                when);
-        
-        if (existingPostingRule != null && existingPostingRule.isForAliens() == forAliens) {
-            existingPostingRule.deactivate(when);
+        for (final PostingRule postingRule : serviceAgreementTemplate.getPostingRulesSet()) {
+            if (postingRule.getEventType() == eventType && postingRule.isActiveForDate(when)
+                    && ((EnrolmentGratuityPR)postingRule).isForAliens() == forAliens) {
+                postingRule.deactivate(when);
+            }
         }
     }
 
     private static void deactivateExistingPartialRegimePR(final EventType eventType, final DateTime when,
             final ServiceAgreementTemplate serviceAgreementTemplate, boolean forAliens) {
-        if (!serviceAgreementTemplate.hasPostingRuleFor(eventType, when)) {
-            return;
-        }
 
-        final PartialRegimePR existingPostingRule = (PartialRegimePR) serviceAgreementTemplate
-                .findPostingRuleByEventTypeAndDate(eventType,
-                when);
-
-        if (existingPostingRule != null && existingPostingRule.isForAliens() == forAliens) {
-            existingPostingRule.deactivate(when);
+        for (final PostingRule postingRule : serviceAgreementTemplate.getPostingRulesSet()) {
+            if (postingRule.getEventType() == eventType && postingRule.isActiveForDate(when)
+                    && ((PartialRegimePR)postingRule).isForAliens() == forAliens) {
+                postingRule.deactivate(when);
+            }
         }
     }
 
