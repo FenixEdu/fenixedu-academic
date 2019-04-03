@@ -57,11 +57,6 @@ public class PastAdministrativeOfficeFeeAndInsuranceEvent extends PastAdministra
     }
 
     @Override
-    public boolean isInDebt() {
-        return isOpen();
-    }
-
-    @Override
     public Map<LocalDate, Money> calculateDueDateAmountMap() {
         return Collections.singletonMap(getDueDateByPaymentCodes().toLocalDate(), getPostingRule().calculateTotalAmountToPay(this));
     }

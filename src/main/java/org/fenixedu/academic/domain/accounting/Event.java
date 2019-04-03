@@ -115,31 +115,31 @@ public abstract class Event extends Event_Base {
         }
     }
 
-    public boolean isOpen() {
+    public final boolean isOpen() {
         return (super.getEventState() == EventState.OPEN);
     }
 
-    public boolean isInDebt() {
+    public final boolean isInDebt() {
         return isOpen();
     }
 
-    public boolean isClosed() {
+    public final boolean isClosed() {
         return (super.getEventState() == EventState.CLOSED);
     }
 
-    public boolean isPayed() {
+    public final boolean isPayed() {
         return isClosed();
     }
 
-    public boolean isCancelled() {
+    public final boolean isCancelled() {
         return (super.getEventState() == EventState.CANCELLED);
     }
 
-    public EventState getCurrentEventState() {
+    public final EventState getCurrentEventState() {
         return super.getEventState();
     }
 
-    public boolean isInState(final EventState eventState) {
+    public final boolean isInState(final EventState eventState) {
         return super.getEventState() == eventState;
     }
 

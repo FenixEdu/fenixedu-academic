@@ -199,40 +199,7 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
     }
 
     @Override
-    public boolean isOpen() {
-        if (isCancelled()) {
-            return false;
-        }
-
-        return calculateAmountToPay(new DateTime()).greaterThan(Money.ZERO);
-    }
-
-    @Override
-    public boolean isClosed() {
-        if (isCancelled()) {
-            return false;
-        }
-
-        return calculateAmountToPay(new DateTime()).lessOrEqualThan(Money.ZERO);
-    }
-
-
-    @Override
     public boolean isTransferable() { return isOpen() && !hasExternalScholarshipGratuityExemption(); }
-
-    @Override
-    public boolean isInState(final EventState eventState) {
-        if (eventState == EventState.OPEN) {
-            return isOpen();
-        } else if (eventState == EventState.CLOSED) {
-            return isClosed();
-        } else if (eventState == EventState.CANCELLED) {
-            return isCancelled();
-        } else {
-            throw new DomainException(
-                    "error.org.fenixedu.academic.domain.accounting.events.gratuity.DfaGratuityEvent.unexpected.state.to.test");
-        }
-    }
 
     @Override
     protected void internalRecalculateState(DateTime whenRegistered) {
