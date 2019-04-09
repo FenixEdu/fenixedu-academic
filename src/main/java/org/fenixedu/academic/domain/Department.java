@@ -30,7 +30,6 @@ package org.fenixedu.academic.domain;
 
 import java.text.Collator;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
@@ -131,15 +130,6 @@ public class Department extends Department_Base {
             }
         }
         return courses;
-    }
-
-    public void addAllBolonhaCompetenceCourses(final Collection<CompetenceCourse> competenceCourses,
-            final ExecutionSemester period) {
-        for (CompetenceCourse course : getBolonhaCompetenceCourses()) {
-            if (!course.getCurricularCoursesWithActiveScopesInExecutionPeriod(period).isEmpty()) {
-                competenceCourses.add(course);
-            }
-        }
     }
 
     // -------------------------------------------------------------

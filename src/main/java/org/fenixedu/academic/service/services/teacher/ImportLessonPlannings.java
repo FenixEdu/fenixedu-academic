@@ -18,8 +18,16 @@
  */
 package org.fenixedu.academic.service.services.teacher;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.LessonPlanning;
 import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.ShiftType;
+import org.fenixedu.academic.domain.Summary;
 import org.fenixedu.academic.service.filter.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
 
@@ -33,7 +41,18 @@ public class ImportLessonPlannings {
             if (shift == null) {
                 executionCourseTo.copyLessonPlanningsFrom(executionCourseFrom);
             } else {
-                executionCourseTo.createLessonPlanningsUsingSummariesFrom(shift);
+                createLessonPlanningsUsingSummariesFrom(executionCourseTo, shift);
+            }
+        }
+    }
+
+    private void createLessonPlanningsUsingSummariesFrom(ExecutionCourse executionCourseTo, Shift shift) {
+        List<Summary> summaries = new ArrayList<Summary>();
+        summaries.addAll(shift.getAssociatedSummariesSet());
+        Collections.sort(summaries, new ReverseComparator(Summary.COMPARATOR_BY_DATE_AND_HOUR));
+        for (Summary summary : summaries) {
+            for (ShiftType shiftType : shift.getTypes()) {
+                new LessonPlanning(summary.getTitle(), summary.getSummaryText(), shiftType, executionCourseTo);
             }
         }
     }

@@ -70,7 +70,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 
     static public final Comparator<CompetenceCourseInformation> COMPARATORY_BY_EXECUTION_INTERVAL =
             Comparator.comparing(CompetenceCourseInformation::getExecutionInterval);
-    
+
     @Deprecated
     static public final Comparator<CompetenceCourseInformation> COMPARATORY_BY_EXECUTION_PERIOD =
             new Comparator<CompetenceCourseInformation>() {
@@ -88,7 +88,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     public CompetenceCourseInformation(final CompetenceCourseInformation existingInformation) {
         this(existingInformation.getName(), existingInformation.getNameEn(), existingInformation.getBasic(),
                 existingInformation.getRegime(), existingInformation.getCompetenceCourseLevel(),
-                existingInformation.getExecutionPeriod(), existingInformation.getCompetenceCourseGroupUnit());
+                existingInformation.getExecutionInterval(), existingInformation.getCompetenceCourseGroupUnit());
         setCompetenceCourse(existingInformation.getCompetenceCourse());
         for (CompetenceCourseLoad load : existingInformation.getCompetenceCourseLoadsSet()) {
             CompetenceCourseLoad newLoad = new CompetenceCourseLoad(load);
@@ -105,7 +105,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     }
 
     public CompetenceCourseInformation(final String name, final String nameEn, final Boolean basic, final RegimeType regimeType,
-            final CompetenceCourseLevel competenceCourseLevel, final ExecutionSemester period,
+            final CompetenceCourseLevel competenceCourseLevel, final ExecutionInterval interval,
             final CompetenceCourseGroupUnit unit) {
 
         this();
@@ -116,7 +116,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setRegime(regimeType);
         setCompetenceCourseLevel(competenceCourseLevel);
         setBibliographicReferences(new BibliographicReferences());
-        setExecutionPeriod(period);
+        setExecutionInterval(interval);
         setCompetenceCourseGroupUnit(unit);
     }
 
@@ -508,7 +508,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     public ExecutionYear getExecutionYear() {
         return getExecutionPeriod().getExecutionYear();
     }
-    
+
     /**
      * @deprecated use {@link #getExecutionInterval()} instead.
      */

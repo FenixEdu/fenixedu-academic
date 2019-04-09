@@ -85,7 +85,6 @@ import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.domain.studentCurriculum.StandaloneCurriculumGroup;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -1111,26 +1110,6 @@ public class Registration extends Registration_Base {
     final public Integer getNumberOfExecutionCoursesWithEnroledShiftsFor(final ExecutionSemester executionSemester) {
         return getAttendingExecutionCoursesFor(executionSemester).size()
                 - countNumberOfDistinctExecutionCoursesOfShiftsFor(executionSemester);
-    }
-
-    final public Integer getNumberOfExecutionCoursesHavingNotEnroledShiftsFor(final ExecutionSemester executionSemester) {
-        int result = 0;
-        final List<Shift> enroledShifts = getShiftsFor(executionSemester);
-        for (final ExecutionCourse executionCourse : getAttendingExecutionCoursesFor(executionSemester)) {
-            for (final ShiftType shiftType : executionCourse.getOldShiftTypesToEnrol()) {
-                if (!enroledShiftsContainsShiftWithSameExecutionCourseAndShiftType(enroledShifts, executionCourse, shiftType)) {
-                    result++;
-                    break;
-                }
-            }
-        }
-        return Integer.valueOf(result);
-    }
-
-    private boolean enroledShiftsContainsShiftWithSameExecutionCourseAndShiftType(final List<Shift> enroledShifts,
-            final ExecutionCourse executionCourse, final ShiftType shiftType) {
-        return enroledShifts.stream().anyMatch(
-                enroledShift -> enroledShift.getExecutionCourse() == executionCourse && enroledShift.containsType(shiftType));
     }
 
     final public Set<SchoolClass> getSchoolClassesToEnrol() {

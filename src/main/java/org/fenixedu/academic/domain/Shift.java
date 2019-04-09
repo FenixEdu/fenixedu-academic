@@ -108,8 +108,7 @@ public class Shift extends Shift_Base {
 
         ExecutionCourse beforeExecutionCourse = getExecutionCourse();
 
-        final Shift otherShiftWithSameNewName = newExecutionCourse.findShiftByName(newName);
-        if (otherShiftWithSameNewName != null && otherShiftWithSameNewName != this) {
+        if (newExecutionCourse.getAssociatedShifts().stream().anyMatch(s -> s.getNome().equals(newName) && s != this)) {
             throw new DomainException("error.Shift.with.this.name.already.exists");
         }
 

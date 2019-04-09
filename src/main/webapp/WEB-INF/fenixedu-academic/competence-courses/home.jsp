@@ -264,10 +264,10 @@ ${portal.angularToolkit()}
                                                                 <c:forEach var="competenceCourse" items="${competenceCourseGroupUnit.competenceCourses}">
                                                                     <%@include file="fragments/competenceCourseRow.jsp"%>
                                                                 </c:forEach>
-                                                                <c:set var="showOldCompetenceCourses" value="true"/>
-                                                                <c:forEach var="competenceCourse" items="${competenceCourseGroupUnit.oldCompetenceCourses}">
-                                                                    <%@include file="fragments/competenceCourseRow.jsp"%>
-                                                                </c:forEach>
+<%--                                                                 <c:set var="showOldCompetenceCourses" value="true"/> --%>
+<%--                                                                 <c:forEach var="competenceCourse" items="${competenceCourseGroupUnit.oldCompetenceCourses}"> --%>
+<%--                                                                     <%@include file="fragments/competenceCourseRow.jsp"%> --%>
+<%--                                                                 </c:forEach> --%>
                                                             </tbody>
                                                         </table>
                                                     </li>

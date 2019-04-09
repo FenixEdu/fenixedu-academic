@@ -555,21 +555,6 @@ public class CompetenceCourseVersionList extends OutputRenderer {
                             cell.setClasses("aright");
                         }
                     }
-                    if (isShowOldCompetenceCourses()) {
-                        for (CompetenceCourse course : group.getOldCompetenceCourses()) {
-                            if (course.getCurricularStage().equals(stage)) {
-                                HtmlTableRow courseRow = table.createRow();
-                                HtmlComponent coursePresentation = getOldCoursePresentation(course);
-                                if (getCourseNameClasses() != null) {
-                                    coursePresentation.setClasses(getCourseNameClasses());
-                                }
-                                courseRow.createCell().setBody(coursePresentation);
-                                HtmlTableCell cell = courseRow.createCell();
-                                cell.setBody(getLinks(course));
-                                cell.setClasses("aright");
-                            }
-                        }
-                    }
                     courseContainer.addChild(table);
                     if (getTableClasses() != null) {
                         table.setClasses(getTableClasses());

@@ -39,6 +39,7 @@ import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.CompetenceCourseType;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Department;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReference;
@@ -719,7 +720,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public List<CompetenceCourseLoad> getSortedCompetenceCourseLoads() {
-        return getCompetenceCourse().getSortedCompetenceCourseLoads(getAssociatedExecutionPeriod());
+        return getCompetenceCourse().getCompetenceCourseLoads(getAssociatedExecutionPeriod()).stream().sorted()
+                .collect(Collectors.toList());
     }
 
     public List<BibliographicReference> getMainBibliographicReferences() {
@@ -1317,7 +1319,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
             ExecutionYear year = null;
             if (getCompetenceCourse() != null) {
-                final ExecutionSemester semester = getCompetenceCourse().getStartExecutionSemester();
+                final ExecutionInterval semester = getCompetenceCourse().getStartExecutionInterval();
                 year = semester != null ? semester.getExecutionYear() : null;
             }
 

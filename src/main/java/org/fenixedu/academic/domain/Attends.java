@@ -25,12 +25,10 @@
 package org.fenixedu.academic.domain;
 
 import java.text.Collator;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -162,19 +160,6 @@ public class Attends extends Attends_Base {
         return null;
     }
 
-    public List<Mark> getAssociatedMarksOrderedByEvaluationDate() {
-        final List<Evaluation> orderedEvaluations = getExecutionCourse().getOrderedAssociatedEvaluations();
-        final List<Mark> orderedMarks = new ArrayList<Mark>(orderedEvaluations.size());
-        for (int i = 0; i < orderedEvaluations.size(); i++) {
-            orderedMarks.add(null);
-        }
-        for (final Mark mark : getAssociatedMarksSet()) {
-            final Evaluation evaluation = mark.getEvaluation();
-            orderedMarks.set(orderedEvaluations.indexOf(evaluation), mark);
-        }
-        return orderedMarks;
-    }
-
     public Date getBegginingOfLessonPeriod() {
         final ExecutionSemester executionSemester = getExecutionCourse().getExecutionPeriod();
         final StudentCurricularPlan studentCurricularPlan = getEnrolment().getStudentCurricularPlan();
@@ -203,8 +188,8 @@ public class Attends extends Attends_Base {
         }
     }
 
-    public boolean isFor(final ExecutionSemester executionSemester) {
-        return getExecutionCourse().getExecutionInterval() == executionSemester;
+    public boolean isFor(final ExecutionInterval interval) {
+        return getExecutionCourse().getExecutionInterval() == interval;
     }
 
     public boolean isFor(final ExecutionCourse executionCourse) {

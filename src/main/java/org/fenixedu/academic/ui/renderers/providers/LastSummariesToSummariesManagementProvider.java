@@ -42,7 +42,7 @@ public class LastSummariesToSummariesManagementProvider implements DataProvider 
 
             ExecutionCourse executionCourse = bean.getExecutionCourse();
             List<Summary> summaries = new ArrayList<Summary>();
-            summaries.addAll(executionCourse.getSummariesByShiftType(lessonType));
+            summaries.addAll(getSummariesByShiftType(executionCourse, lessonType));
             Collections.sort(summaries, Summary.COMPARATOR_BY_DATE_AND_HOUR);
 
             List<Summary> result = new ArrayList<Summary>();
@@ -59,6 +59,16 @@ public class LastSummariesToSummariesManagementProvider implements DataProvider 
             return result;
         }
         return new ArrayList<Summary>();
+    }
+
+    private static List<Summary> getSummariesByShiftType(ExecutionCourse executionCourse, ShiftType shiftType) {
+        List<Summary> summaries = new ArrayList<Summary>();
+        for (Summary summary : executionCourse.getAssociatedSummariesSet()) {
+            if (summary.getSummaryType() != null && summary.getSummaryType().equals(shiftType)) {
+                summaries.add(summary);
+            }
+        }
+        return summaries;
     }
 
     @Override

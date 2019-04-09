@@ -18,6 +18,8 @@
  */
 package org.fenixedu.academic.service.services.teacher;
 
+import java.util.List;
+
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.LessonPlanning;
 import org.fenixedu.academic.domain.ShiftType;
@@ -33,7 +35,14 @@ public class DeleteLessonPlanning {
         if (lessonPlanning != null) {
             lessonPlanning.delete();
         } else if (executionCourse != null && shiftType != null) {
-            executionCourse.deleteLessonPlanningsByLessonType(shiftType);
+            deleteLessonPlanningsByLessonType(executionCourse, shiftType);
+        }
+    }
+
+    private void deleteLessonPlanningsByLessonType(ExecutionCourse executionCourse, ShiftType shiftType) {
+        List<LessonPlanning> lessonPlanningsOrderedByOrder = executionCourse.getLessonPlanningsOrderedByOrder(shiftType);
+        for (LessonPlanning planning : lessonPlanningsOrderedByOrder) {
+            planning.deleteWithoutReOrder();
         }
     }
 

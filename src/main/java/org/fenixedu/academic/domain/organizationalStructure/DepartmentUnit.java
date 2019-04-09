@@ -19,10 +19,8 @@
 package org.fenixedu.academic.domain.organizationalStructure;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -30,8 +28,6 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Department;
-import org.fenixedu.academic.domain.ExecutionCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accessControl.StudentGroup;
 import org.fenixedu.academic.domain.accessControl.TeacherGroup;
@@ -264,14 +260,6 @@ public class DepartmentUnit extends DepartmentUnit_Base {
     @Override
     public boolean hasDepartment() {
         return getDepartment() != null;
-    }
-
-    public Set<ExecutionCourse> getAllExecutionCoursesByExecutionPeriod(final ExecutionSemester executionSemester) {
-        Set<ExecutionCourse> executionCourses = new HashSet<ExecutionCourse>();
-        for (CompetenceCourse competenceCourse : getCompetenceCourses()) {
-            competenceCourse.getExecutionCoursesByExecutionPeriod(executionSemester, executionCourses);
-        }
-        return executionCourses;
     }
 
 }

@@ -24,6 +24,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.fenixedu.academic.domain.CourseLoad;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.ShiftType;
@@ -48,7 +49,7 @@ public class ListShiftsToImportLessonPlanningsProvider implements DataProvider {
 
             List<ShiftType> shiftTypesTo = new ArrayList<ShiftType>();
             for (ShiftType shiftType : executionCourseTo.getShiftTypes()) {
-                if (executionCourseTo.hasCourseLoadForType(shiftType)) {
+                if (hasCourseLoadForType(executionCourseTo, shiftType)) {
                     shiftTypesTo.add(shiftType);
                 }
             }
@@ -65,6 +66,11 @@ public class ListShiftsToImportLessonPlanningsProvider implements DataProvider {
         }
 
         return shifts;
+    }
+
+    private boolean hasCourseLoadForType(ExecutionCourse executionCourse, ShiftType type) {
+        CourseLoad courseLoad = executionCourse.getCourseLoadByShiftType(type);
+        return courseLoad != null && !courseLoad.isEmpty();
     }
 
     @Override

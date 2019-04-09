@@ -50,7 +50,7 @@ public class EnrollStudentInShifts {
             return errorReport;
         }
 
-        if (registration == null || !selectedShift.getExecutionCourse().hasAttendsFor(registration.getStudent())) {
+        if (registration == null || selectedShift.getExecutionCourse().getAttendsByStudent(registration.getStudent()) == null) {
             throw new StudentNotFoundServiceException();
         }
 

@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.Department;
@@ -47,11 +48,16 @@ public class ComputeCompetenceCourseStatistics extends ComputeCourseStatistics {
         final List<CompetenceCourseStatisticsDTO> results = new ArrayList<CompetenceCourseStatisticsDTO>();
 
         final Set<CompetenceCourse> competenceCourses = new HashSet<CompetenceCourse>();
-
-        department.addAllBolonhaCompetenceCourses(competenceCourses, executionSemester);
+        for (CompetenceCourse course : department.getBolonhaCompetenceCourses()) {
+            if (!course.getCurricularCoursesWithActiveScopesInExecutionPeriod(executionSemester).isEmpty()) {
+                competenceCourses.add(course);
+            }
+        }
 
         for (CompetenceCourse competenceCourse : competenceCourses) {
-            final List<Enrolment> enrollments = competenceCourse.getActiveEnrollments(executionSemester);
+            final List<Enrolment> enrollments = competenceCourse.getAssociatedCurricularCoursesSet().stream()
+                    .flatMap(cc -> cc.getActiveEnrollments(executionSemester).stream()).collect(Collectors.toList());
+
             if (enrollments.size() > 0) {
                 CompetenceCourseStatisticsDTO competenceCourseStatistics = new CompetenceCourseStatisticsDTO();
                 competenceCourseStatistics.setExternalId(competenceCourse.getExternalId());

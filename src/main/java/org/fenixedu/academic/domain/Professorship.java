@@ -34,9 +34,9 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
-
 import org.fenixedu.bennu.core.signals.DomainObjectEvent;
 import org.fenixedu.bennu.core.signals.Signal;
+
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -44,8 +44,8 @@ import pt.ist.fenixframework.Atomic;
  */
 public class Professorship extends Professorship_Base {
 
-    public static final Comparator<Professorship> COMPARATOR_BY_PERSON_NAME = new BeanComparator("person.name",
-            Collator.getInstance());
+    public static final Comparator<Professorship> COMPARATOR_BY_PERSON_NAME =
+            new BeanComparator("person.name", Collator.getInstance());
 
     public static final String PROFESSORSHIP_CREATED = "academic.professorship.created";
 
@@ -78,21 +78,23 @@ public class Professorship extends Professorship_Base {
         professorShip.setResponsibleFor(responsibleFor);
 
         if (person.getTeacher() != null) {
-            executionCourse.moveSummariesFromTeacherToProfessorship(person.getTeacher(), professorShip);
+            executionCourse.getAssociatedSummariesSet().stream()
+                    .filter(s -> s.getTeacher() != null && s.getTeacher().equals(person.getTeacher()))
+                    .forEach(s -> s.moveFromTeacherToProfessorship(professorShip));
         }
 
-        Signal.emit(PROFESSORSHIP_CREATED,new DomainObjectEvent<>(professorShip));
+        Signal.emit(PROFESSORSHIP_CREATED, new DomainObjectEvent<>(professorShip));
         ProfessorshipManagementLog.createLog(professorShip.getExecutionCourse(), Bundle.MESSAGING,
-                "log.executionCourse.professorship.added", professorShip.getPerson().getPresentationName(), professorShip
-                        .getExecutionCourse().getNome(), professorShip.getExecutionCourse().getDegreePresentationString());
+                "log.executionCourse.professorship.added", professorShip.getPerson().getPresentationName(),
+                professorShip.getExecutionCourse().getNome(), professorShip.getExecutionCourse().getDegreePresentationString());
         return professorShip;
     }
 
     public void delete() {
         DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         ProfessorshipManagementLog.createLog(getExecutionCourse(), Bundle.MESSAGING, "log.executionCourse.professorship.removed",
-                getPerson().getPresentationName(), getExecutionCourse().getNome(), getExecutionCourse()
-                        .getDegreePresentationString());
+                getPerson().getPresentationName(), getExecutionCourse().getNome(),
+                getExecutionCourse().getDegreePresentationString());
         setExecutionCourse(null);
         setPerson(null);
         if (super.getPermissions() != null) {
@@ -110,8 +112,8 @@ public class Professorship extends Professorship_Base {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.remove.professorship.hasAnyAssociatedSummaries"));
         }
         if (!getAssociatedShiftProfessorshipSet().isEmpty()) {
-            blockers.add(BundleUtil
-                    .getString(Bundle.APPLICATION, "error.remove.professorship.hasAnyAssociatedShiftProfessorship"));
+            blockers.add(
+                    BundleUtil.getString(Bundle.APPLICATION, "error.remove.professorship.hasAnyAssociatedShiftProfessorship"));
         }
     }
 
@@ -169,7 +171,8 @@ public class Professorship extends Professorship_Base {
             for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
                 if (curricularCourse.getBasic() == null || curricularCourse.getBasic().equals(basic)) {
                     if (executionYear != null) {
-                        for (ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionYear(executionYear)) {
+                        for (ExecutionCourse executionCourse : curricularCourse
+                                .getExecutionCoursesByExecutionYear(executionYear)) {
                             professorships.addAll(executionCourse.getProfessorshipsSet());
                         }
                     } else {

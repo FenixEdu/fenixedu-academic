@@ -34,11 +34,13 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.LessonPlanning;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.ShiftType;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
@@ -440,8 +442,8 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
         final ActionErrors actionErrors = new ActionErrors();
         if (person != null) {
             try {
-                ShiftEnrollmentErrorReport errorReport =
-                        new EnrollStudentInShifts().run(executionCourse.getRegistration(person), request.getParameter("shiftID"));
+                ShiftEnrollmentErrorReport errorReport = new EnrollStudentInShifts().run(getRegistration(executionCourse, person),
+                        request.getParameter("shiftID"));
                 if (errorReport.getUnAvailableShifts().size() > 0) {
                     actionErrors.add("error", new ActionMessage("error.exception.shift.full"));
                 }
@@ -458,6 +460,23 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
         saveErrors(request, actionErrors);
         return editShift(mapping, form, request, response);
     }
+
+    private static Registration getRegistration(ExecutionCourse executionCourse, Person person) {
+        for (Registration registration : person.getStudents()) {
+            for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
+                for (Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
+                    for (ExecutionCourse course : enrolment.getExecutionCourses()) {
+                        if (course.equals(executionCourse)) {
+                            return registration;
+                        }
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+    
 
     public ActionForward removeAttendsFromShift(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {

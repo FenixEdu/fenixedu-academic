@@ -294,15 +294,15 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
                     .toString());
             row.setCell(curricularPeriod.getChildOrder().toString());
 
-            row.setCell(curricularCourse.getEctsCredits(curricularPeriod).toString());
-            row.setCell(curricularCourse.getTheoreticalHours(curricularPeriod).toString());
-            row.setCell(curricularCourse.getProblemsHours(curricularPeriod).toString());
-            row.setCell(curricularCourse.getLaboratorialHours(curricularPeriod).toString());
-            row.setCell(curricularCourse.getFieldWorkHours(curricularPeriod).toString());
-            row.setCell(curricularCourse.getSeminaryHours().toString());
-            row.setCell(curricularCourse.getTrainingPeriodHours(curricularPeriod).toString());
-            row.setCell(curricularCourse.getTutorialOrientationHours(curricularPeriod).toString());
-            row.setCell(curricularCourse.getAutonomousWorkHours(curricularPeriod).toString());
+//            row.setCell(curricularCourse.getEctsCredits(curricularPeriod).toString());
+//            row.setCell(curricularCourse.getTheoreticalHours(curricularPeriod).toString());
+//            row.setCell(curricularCourse.getProblemsHours(curricularPeriod).toString());
+//            row.setCell(curricularCourse.getLaboratorialHours(curricularPeriod).toString());
+//            row.setCell(curricularCourse.getFieldWorkHours(curricularPeriod).toString());
+//            row.setCell(curricularCourse.getSeminaryHours().toString());
+//            row.setCell(curricularCourse.getTrainingPeriodHours(curricularPeriod).toString());
+//            row.setCell(curricularCourse.getTutorialOrientationHours(curricularPeriod).toString());
+//            row.setCell(curricularCourse.getAutonomousWorkHours(curricularPeriod).toString());
         }
         row.setCell(""); // notes
     }

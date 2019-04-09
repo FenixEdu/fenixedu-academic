@@ -43,7 +43,8 @@ public class LerAlunosDeTurno {
     public static List<InfoStudent> run(ShiftKey keyTurno) {
 
         final ExecutionCourse executionCourse = FenixFramework.getDomainObject(keyTurno.getInfoExecutionCourse().getExternalId());
-        final Shift shift = executionCourse.findShiftByName(keyTurno.getShiftName());
+        final Shift shift = executionCourse.getAssociatedShifts().stream()
+                .filter(s -> s.getNome().equals(keyTurno.getShiftName())).findFirst().orElse(null);
 
         Collection<Registration> alunos = shift.getStudentsSet();
 

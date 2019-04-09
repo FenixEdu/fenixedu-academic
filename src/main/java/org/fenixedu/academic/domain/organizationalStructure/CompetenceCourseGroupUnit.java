@@ -30,7 +30,6 @@ import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -146,19 +145,6 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
         return new ArrayList<CompetenceCourse>(result);
     }
 
-    public List<CompetenceCourse> getOldCompetenceCourses() {
-        final SortedSet<CompetenceCourse> result =
-                new TreeSet<CompetenceCourse>(CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);
-        for (CompetenceCourseInformation competenceInformation : getCompetenceCourseInformationsSet()) {
-            CompetenceCourse course = competenceInformation.getCompetenceCourse();
-            if ((course.getDepartmentUnit() != getAssociatedDepartmentUnit())
-                    && (course.getMostRecentGroupInDepartment(getAssociatedDepartmentUnit()) == this)) {
-                result.add(competenceInformation.getCompetenceCourse());
-            }
-        }
-        return new ArrayList<CompetenceCourse>(result);
-    }
-
     @Override
     public void setType(PartyTypeEnum partyTypeEnum) {
         throw new DomainException("unit.impossible.set.type");
@@ -173,18 +159,6 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
         }
 
         return curricularCourses;
-    }
-
-    public List<CompetenceCourse> getCompetenceCoursesByExecutionYear(ExecutionYear executionYear) {
-        List<CompetenceCourse> competenceCourses = this.getCompetenceCourses();
-        List<CompetenceCourse> competenceCoursesByExecutionYear = new ArrayList<CompetenceCourse>();
-        for (CompetenceCourse competenceCourse : competenceCourses) {
-            if (competenceCourse.hasActiveScopesInExecutionYear(executionYear)) {
-                competenceCoursesByExecutionYear.add(competenceCourse);
-            }
-
-        }
-        return competenceCoursesByExecutionYear;
     }
 
     @Override

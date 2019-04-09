@@ -35,7 +35,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.messaging.Forum;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
-import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.spaces.domain.Space;
@@ -233,17 +232,6 @@ public class Teacher extends Teacher_Base {
         return (getProfessorshipByExecutionCourse(executionCourse) != null);
     }
 
-    public List<Professorship> getDegreeProfessorshipsByExecutionPeriod(final ExecutionSemester executionSemester) {
-        return (List<Professorship>) CollectionUtils.select(getProfessorships(), new Predicate() {
-            @Override
-            public boolean evaluate(Object arg0) {
-                Professorship professorship = (Professorship) arg0;
-                return professorship.getExecutionCourse().getExecutionInterval() == executionSemester
-                        && !professorship.getExecutionCourse().isMasterDegreeDFAOrDEAOnly();
-            }
-        });
-    }
-
     /*
      * PRIVATE METHODS *
      * */
@@ -275,7 +263,7 @@ public class Teacher extends Teacher_Base {
     public List<Professorship> getProfessorships(ExecutionSemester executionSemester) {
         return getPerson().getProfessorships(executionSemester);
     }
-    
+
     public List<Professorship> getProfessorships(ExecutionYear executionYear) {
         return getPerson().getProfessorships(executionYear);
     }

@@ -359,8 +359,7 @@ public final class SummariesControlAction extends FenixDispatchAction {
 
         for (Teacher teacher : allDepartmentTeachers) {
             for (Professorship professorship : teacher.getProfessorships()) {
-                if (professorship.belongsToExecutionPeriod(executionSemester)
-                        && !professorship.getExecutionCourse().isMasterDegreeDFAOrDEAOnly()) {
+                if (professorship.belongsToExecutionPeriod(executionSemester)) {
                     executionCourses.add(professorship.getExecutionCourse());
                 }
             }

@@ -21,6 +21,7 @@ package org.fenixedu.academic.service.services.resourceAllocationManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.SchoolClass;
@@ -38,7 +39,8 @@ public class ReadClassesByExecutionCourse {
 
     public List<InfoClass> run(ExecutionCourse executionCourse) {
 
-        final Set<SchoolClass> classes = executionCourse.findSchoolClasses();
+        final Set<SchoolClass> classes = executionCourse.getAssociatedShifts().stream()
+                .flatMap(s -> s.getAssociatedClassesSet().stream()).collect(Collectors.toSet());
         final List<InfoClass> infoClasses = new ArrayList<InfoClass>(classes.size());
 
         for (final SchoolClass schoolClass : classes) {
