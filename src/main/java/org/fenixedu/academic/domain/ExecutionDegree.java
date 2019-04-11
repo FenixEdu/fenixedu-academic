@@ -33,19 +33,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.fenixedu.academic.domain.candidacy.CandidacySituationType;
-import org.fenixedu.academic.domain.candidacy.DFACandidacy;
-import org.fenixedu.academic.domain.candidacy.DegreeCandidacy;
-import org.fenixedu.academic.domain.candidacy.IMDCandidacy;
-import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.domain.degree.DegreeType;
-import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
@@ -222,38 +214,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         return this == Collections.min(executionDegrees, EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
     }
 
-    public Set<Shift> findAvailableShifts(final CurricularYear curricularYear, final ExecutionSemester executionSemester) {
-        final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
-        final Set<Shift> shifts = new HashSet<Shift>();
-        for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
-            if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear, degreeCurricularPlan,
-                    executionSemester)) {
-                for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
-                    if (executionCourse.getExecutionInterval() == executionSemester) {
-                        shifts.addAll(executionCourse.getAssociatedShifts());
-                    }
-                }
-            }
-        }
-        return shifts;
-    }
-
     public Set<SchoolClass> findSchoolClassesByAcademicInterval(final AcademicInterval academicInterval) {
         final Set<SchoolClass> schoolClasses = new HashSet<SchoolClass>();
         for (final SchoolClass schoolClass : getSchoolClassesSet()) {
             if (schoolClass.getExecutionInterval().getAcademicInterval().equals(academicInterval)) {
-                schoolClasses.add(schoolClass);
-            }
-        }
-        return schoolClasses;
-    }
-
-    @Deprecated
-    public Set<SchoolClass> findSchoolClassesByExecutionPeriodAndCurricularYear(final ExecutionSemester executionSemester,
-            final Integer curricularYear) {
-        final Set<SchoolClass> schoolClasses = new HashSet<SchoolClass>();
-        for (final SchoolClass schoolClass : getSchoolClassesSet()) {
-            if (schoolClass.getExecutionPeriod() == executionSemester && schoolClass.getAnoCurricular().equals(curricularYear)) {
                 schoolClasses.add(schoolClass);
             }
         }
@@ -300,122 +264,9 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
                 }
             };
 
-    public static List<ExecutionDegree> getAllByExecutionYear(String year) {
-
-        if (year == null) {
-            return Collections.emptyList();
-        }
-
-        final List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
-        for (ExecutionDegree executionDegree : Bennu.getInstance().getExecutionDegreesSet()) {
-            if (year.equals(executionDegree.getExecutionYear().getYear())) {
-                result.add(executionDegree);
-            }
-        }
-        Collections.sort(result, COMPARATOR_BY_DEGREE_CURRICULAR_PLAN_ID_INTERNAL_DESC);
-
-        return result;
-    }
-
     public static List<ExecutionDegree> getAllByExecutionYear(ExecutionYear executionYear) {
-
-        if (executionYear == null) {
-            return Collections.emptyList();
-        }
-
-        final List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
-
-        for (final ExecutionDegree executionDegree : Bennu.getInstance().getExecutionDegreesSet()) {
-            if (executionDegree.getExecutionYear() == executionYear) {
-                result.add(executionDegree);
-            }
-        }
-        Collections.sort(result, COMPARATOR_BY_DEGREE_CURRICULAR_PLAN_ID_INTERNAL_DESC);
-
-        return result;
-    }
-
-    public static List<ExecutionDegree> getAllByExecutionCourseAndTeacher(ExecutionCourse executionCourse, Person person) {
-        List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
-
-        for (ExecutionDegree executionDegree : Bennu.getInstance().getExecutionDegreesSet()) {
-            boolean matchExecutionCourse = false;
-            for (CurricularCourse curricularCourse : executionDegree.getDegreeCurricularPlan().getCurricularCoursesSet()) {
-                if (curricularCourse.getAssociatedExecutionCoursesSet().contains(executionCourse)) {
-                    matchExecutionCourse = true;
-                    break;
-                }
-            }
-
-            if (!matchExecutionCourse) {
-                continue;
-            }
-
-            // if teacher is not a coordinator of the executionDegree
-            if (executionDegree.getCoordinatorByTeacher(person) == null) {
-                continue;
-            }
-
-            result.add(executionDegree);
-        }
-
-        return result;
-    }
-
-    public static List<ExecutionDegree> getAllCoordinatedByTeacher(Person person) {
-        List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
-
-        if (person == null) {
-            return result;
-        }
-
-        for (Coordinator coordinator : person.getCoordinatorsSet()) {
-            result.add(coordinator.getExecutionDegree());
-        }
-
-        Comparator<ExecutionDegree> degreNameComparator = new Comparator<ExecutionDegree>() {
-
-            @Override
-            public int compare(ExecutionDegree o1, ExecutionDegree o2) {
-                String name1 = o1.getDegreeCurricularPlan().getDegree().getName();
-                String name2 = o2.getDegreeCurricularPlan().getDegree().getName();
-
-                return String.CASE_INSENSITIVE_ORDER.compare(name1, name2);
-            }
-
-        };
-
-        Comparator<ExecutionDegree> yearComparator = new Comparator<ExecutionDegree>() {
-
-            @Override
-            public int compare(ExecutionDegree o1, ExecutionDegree o2) {
-                String year1 = o1.getExecutionYear().getYear();
-                String year2 = o2.getExecutionYear().getYear();
-
-                return String.CASE_INSENSITIVE_ORDER.compare(year1, year2);
-            }
-
-        };
-
-        // sort by degreeCurricularPlan.degree.nome ascending,
-        // executionYear.year descending
-        ComparatorChain comparatorChain = new ComparatorChain();
-        comparatorChain.addComparator(degreNameComparator, false);
-        comparatorChain.addComparator(yearComparator, true);
-
-        Collections.sort(result, comparatorChain);
-
-        return result;
-    }
-
-    public static List<ExecutionDegree> getAllByExecutionYearAndDegreeType(String year, DegreeType... typeOfCourse) {
-
-        if (year == null || typeOfCourse == null) {
-            return Collections.emptyList();
-        }
-
-        final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(year);
-        return getAllByExecutionYearAndDegreeType(executionYear, typeOfCourse);
+        return executionYear == null ? Collections.emptyList() : executionYear.getExecutionDegreesSet().stream()
+                .sorted(COMPARATOR_BY_DEGREE_CURRICULAR_PLAN_ID_INTERNAL_DESC).collect(Collectors.toList());
     }
 
     public static List<ExecutionDegree> getAllByExecutionYearAndDegreeType(ExecutionYear executionYear,
@@ -442,65 +293,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         return result;
     }
 
-    public static List<ExecutionDegree> getAllByDegreeAndExecutionYear(Degree degree, String year) {
-        List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
-
-        if (degree == null || year == null) {
-            return result;
-        }
-
-        ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(year);
-        if (executionYear == null) {
-            return result;
-        }
-
-        for (ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
-            if (degree.equals(executionDegree.getDegreeCurricularPlan().getDegree())) {
-                result.add(executionDegree);
-            }
-        }
-
-        return result;
-    }
-
-    public static List<ExecutionDegree> getAllByDegree(final Degree degree) {
-        List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
-
-        for (ExecutionDegree executionDegree : Bennu.getInstance().getExecutionDegreesSet()) {
-            if (executionDegree.getDegree() == degree) {
-                result.add(executionDegree);
-            }
-        }
-
-        return result;
-    }
-
-    public static List<ExecutionDegree> getAllByDegreeAndCurricularStage(Degree degree, CurricularStage stage) {
-        List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
-
-        if (degree == null) {
-            return result;
-        }
-
-        if (stage == null) {
-            return result;
-        }
-
-        for (ExecutionDegree executionDegree : Bennu.getInstance().getExecutionDegreesSet()) {
-            if (!degree.equals(executionDegree.getDegreeCurricularPlan().getDegree())) {
-                continue;
-            }
-
-            if (!stage.equals(executionDegree.getDegreeCurricularPlan().getCurricularStage())) {
-                continue;
-            }
-
-            result.add(executionDegree);
-        }
-
-        return result;
-    }
-
     public static ExecutionDegree getByDegreeCurricularPlanAndExecutionYear(DegreeCurricularPlan degreeCurricularPlan,
             ExecutionYear executionYear) {
         if (degreeCurricularPlan == null || executionYear == null) {
@@ -514,66 +306,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         }
 
         return null;
-    }
-
-    public static ExecutionDegree getByDegreeCurricularPlanAndExecutionYear(DegreeCurricularPlan degreeCurricularPlan,
-            String executionYear) {
-        if (degreeCurricularPlan == null) {
-            return null;
-        }
-
-        if (executionYear == null) {
-            return null;
-        }
-
-        for (ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
-            if (executionYear.equalsIgnoreCase(executionDegree.getExecutionYear().getYear())) {
-                return executionDegree;
-            }
-        }
-
-        return null;
-    }
-
-    public static ExecutionDegree getByDegreeCurricularPlanNameAndExecutionYear(String degreeName, ExecutionYear executionYear) {
-        if (degreeName == null) {
-            return null;
-        }
-
-        if (executionYear == null) {
-            return null;
-        }
-
-        for (ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
-            if (degreeName.equalsIgnoreCase(executionDegree.getDegreeCurricularPlan().getName())) {
-                return executionDegree;
-            }
-        }
-
-        return null;
-    }
-
-    public static ExecutionDegree readByDegreeCodeAndExecutionYearAndCampus(String degreeCode, ExecutionYear executionYear,
-            Space campus) {
-        for (final Degree degree : Degree.readAllByDegreeCode(degreeCode)) {
-            final ExecutionDegree executionDegree =
-                    degree.getMostRecentDegreeCurricularPlan().getExecutionDegreeByYear(executionYear);
-            if (executionDegree.getCampus() == campus) {
-                return executionDegree;
-            }
-        }
-
-        return null;
-    }
-
-    public static List<ExecutionDegree> getExecutionDegreesFor(ExecutionYear executionYear, Predicate<DegreeType> predicate) {
-        final List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
-        for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
-            if (predicate.test(executionDegree.getDegreeCurricularPlan().getDegree().getDegreeType())) {
-                result.add(executionDegree);
-            }
-        }
-        return result;
     }
 
     public List<Coordinator> getResponsibleCoordinators() {
@@ -612,109 +344,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
     public DegreeType getDegreeType() {
         return getDegree().getDegreeType();
-    }
-
-    public Set<DFACandidacy> getDfaCandidacies() {
-        return getDFACandidacies();
-    }
-
-    public Set<DegreeCandidacy> getDegreeCandidacies() {
-        final Set<DegreeCandidacy> result = new HashSet<DegreeCandidacy>();
-
-        for (final StudentCandidacy studentCandidacy : getStudentCandidaciesSet()) {
-            if (studentCandidacy instanceof DegreeCandidacy) {
-                result.add((DegreeCandidacy) studentCandidacy);
-            }
-        }
-
-        return result;
-    }
-
-    public Set<StudentCandidacy> getFirstCycleCandidacies() {
-        final Set<StudentCandidacy> result = new HashSet<StudentCandidacy>();
-        for (final StudentCandidacy studentCandidacy : getStudentCandidaciesSet()) {
-            if (studentCandidacy.isFirstCycleCandidacy()) {
-                result.add(studentCandidacy);
-            }
-        }
-        return result;
-    }
-
-    public Collection<StudentCandidacy> getFirstCycleCandidacies(final CandidacySituationType candidacySituationType) {
-        final Collection<StudentCandidacy> result = new HashSet<StudentCandidacy>();
-        for (final StudentCandidacy studentCandidacy : getStudentCandidaciesSet()) {
-            if ((studentCandidacy instanceof DegreeCandidacy || studentCandidacy instanceof IMDCandidacy)
-                    && studentCandidacy.getActiveCandidacySituationType() == candidacySituationType) {
-                result.add(studentCandidacy);
-            }
-        }
-        return result;
-    }
-
-    public List<Registration> getRegistrationsForDegreeCandidacies() {
-        final List<Registration> result = new ArrayList<Registration>();
-        for (final DegreeCandidacy degreeCandidacy : getDegreeCandidacies()) {
-            if (degreeCandidacy.getRegistration() != null) {
-                result.add(degreeCandidacy.getRegistration());
-            }
-        }
-        return result;
-    }
-
-    public List<Registration> getRegistrationsForFirstCycleCandidacies() {
-        final List<Registration> result = new ArrayList<Registration>();
-        for (final StudentCandidacy studentCandidacy : getFirstCycleCandidacies()) {
-            if (studentCandidacy.getRegistration() != null) {
-                result.add(studentCandidacy.getRegistration());
-            }
-        }
-        return result;
-    }
-
-    public Set<DFACandidacy> getDFACandidacies() {
-        final Set<DFACandidacy> result = new HashSet<DFACandidacy>();
-
-        for (final StudentCandidacy studentCandidacy : getStudentCandidaciesSet()) {
-            if (studentCandidacy instanceof DFACandidacy) {
-                result.add((DFACandidacy) studentCandidacy);
-            }
-        }
-
-        return result;
-    }
-
-    public List<DegreeCandidacy> getDegreeCandidaciesBy(CandidacySituationType candidacySituationType) {
-        final List<DegreeCandidacy> result = new ArrayList<DegreeCandidacy>();
-        for (final DegreeCandidacy candidacy : getDegreeCandidacies()) {
-            if (candidacy.getActiveCandidacySituation().getCandidacySituationType() == candidacySituationType) {
-                result.add(candidacy);
-            }
-        }
-        return result;
-    }
-
-    public List<StudentCandidacy> getFirstCycleCandidaciesBy(CandidacySituationType candidacySituationType) {
-        final List<StudentCandidacy> result = new ArrayList<StudentCandidacy>();
-        for (final StudentCandidacy candidacy : getFirstCycleCandidacies()) {
-            // TODO remove this first if when data is corrected
-            if (candidacy.getActiveCandidacySituation() != null) {
-                if (candidacy.getActiveCandidacySituation().getCandidacySituationType() == candidacySituationType) {
-                    result.add(candidacy);
-                }
-            }
-        }
-        return result;
-    }
-
-    public List<DegreeCandidacy> getNotConcludedDegreeCandidacies() {
-        final List<DegreeCandidacy> result = new ArrayList<DegreeCandidacy>();
-        for (final DegreeCandidacy degreeCandidacy : getDegreeCandidacies()) {
-            if (!degreeCandidacy.isConcluded()) {
-                result.add(degreeCandidacy);
-            }
-        }
-
-        return result;
     }
 
     public static List<ExecutionDegree> filterByAcademicInterval(AcademicInterval academicInterval) {

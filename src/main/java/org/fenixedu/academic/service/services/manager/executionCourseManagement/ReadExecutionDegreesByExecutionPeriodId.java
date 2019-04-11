@@ -60,11 +60,8 @@ public class ReadExecutionDegreesByExecutionPeriodId {
         }
         ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodId);
 
-        List<ExecutionDegree> executionDegrees =
-                ExecutionDegree.getAllByExecutionYear(executionSemester.getExecutionYear().getYear());
-
         List<InfoExecutionDegree> infoExecutionDegreeList = new ArrayList<InfoExecutionDegree>();
-        for (final ExecutionDegree executionDegree : executionDegrees) {
+        for (final ExecutionDegree executionDegree : executionSemester.getExecutionYear().getExecutionDegreesSet()) {
             if (permission != null) {
                 if (!permission.evaluate(executionDegree.getDegree())) {
                     continue;

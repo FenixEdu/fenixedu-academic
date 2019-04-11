@@ -34,7 +34,7 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeInitials {
         final DegreeCurricularPlan degreeCurricularPlan =
                 DegreeCurricularPlan.readByNameAndDegreeSigla(nameDegreeCurricularPlan, degreeInitials);
         final ExecutionDegree executionDegree =
-                ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, infoExecutionYear.getYear());
+                degreeCurricularPlan.getExecutionDegreeByYear(infoExecutionYear.getExecutionYear());
         return getInfoExecutionDegree(executionDegree);
     }
 

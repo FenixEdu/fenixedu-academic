@@ -53,8 +53,7 @@ public class ReadPublicExecutionDegreeByDCPID {
         DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
         ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);
 
-        ExecutionDegree executionDegree =
-                ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear.getYear());
+        ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
         if (executionDegree == null) {
             return null;
         }

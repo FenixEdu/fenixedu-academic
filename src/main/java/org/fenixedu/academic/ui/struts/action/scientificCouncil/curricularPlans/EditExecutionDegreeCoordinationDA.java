@@ -21,6 +21,7 @@ package org.fenixedu.academic.ui.struts.action.scientificCouncil.curricularPlans
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,7 +36,6 @@ import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.OperationType;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.scientificCouncil.ScientificCouncilApplication.ScientificBolonhaProcessApp;
 import org.fenixedu.bennu.struts.annotations.Forward;
@@ -80,9 +80,8 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
         String backTo = String.valueOf(request.getParameter("from"));
         String backPath;
         if (backTo.equals("byYears")) {
-            backPath =
-                    "/curricularPlans/editExecutionDegreeCoordination.do?method=editByYears&executionYearId="
-                            + executionDegree.getExecutionYear().getExternalId().toString();
+            backPath = "/curricularPlans/editExecutionDegreeCoordination.do?method=editByYears&executionYearId="
+                    + executionDegree.getExecutionYear().getExternalId().toString();
         } else {
             backPath =
                     "/curricularPlans/editExecutionDegreeCoordination.do?method=prepareEditCoordination&degreeCurricularPlanId="
@@ -203,16 +202,19 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
             }
         }
 
-        List<ExecutionDegree> bachelors =
-                ExecutionDegree.getExecutionDegreesFor(sessionBean.getExecutionYear(), DegreeType::isBolonhaDegree);
+        List<ExecutionDegree> bachelors = sessionBean.getExecutionYear().getExecutionDegreesSet().stream()
+                .filter(ed -> ed.getDegreeCurricularPlan().getDegree().getDegreeType().isBolonhaDegree())
+                .collect(Collectors.toList());
         request.setAttribute("bachelors", bachelors);
 
-        List<ExecutionDegree> masters =
-                ExecutionDegree.getExecutionDegreesFor(sessionBean.getExecutionYear(), DegreeType::isBolonhaMasterDegree);
+        List<ExecutionDegree> masters = sessionBean.getExecutionYear().getExecutionDegreesSet().stream()
+                .filter(ed -> ed.getDegreeCurricularPlan().getDegree().getDegreeType().isBolonhaMasterDegree())
+                .collect(Collectors.toList());
         request.setAttribute("masters", masters);
 
-        List<ExecutionDegree> integratedMasters =
-                ExecutionDegree.getExecutionDegreesFor(sessionBean.getExecutionYear(), DegreeType::isIntegratedMasterDegree);
+        List<ExecutionDegree> integratedMasters = sessionBean.getExecutionYear().getExecutionDegreesSet().stream()
+                .filter(ed -> ed.getDegreeCurricularPlan().getDegree().getDegreeType().isIntegratedMasterDegree())
+                .collect(Collectors.toList());
         request.setAttribute("integratedMasters", integratedMasters);
 
         List<ExecutionDegree> otherDegrees =

@@ -43,8 +43,7 @@ public class ReadCurricularCoursesByDegree {
         ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearString);
 
         // Read degree
-        ExecutionDegree executionDegree =
-                ExecutionDegree.getByDegreeCurricularPlanNameAndExecutionYear(degreeName, executionYear);
+        ExecutionDegree executionDegree = getByDegreeCurricularPlanNameAndExecutionYear(degreeName, executionYear);
 
         if (executionDegree == null || executionDegree.getDegreeCurricularPlan() == null
                 || executionDegree.getDegreeCurricularPlan().getCurricularCoursesSet() == null
@@ -59,6 +58,24 @@ public class ReadCurricularCoursesByDegree {
 
         return infoCurricularCourses;
 
+    }
+
+    private static ExecutionDegree getByDegreeCurricularPlanNameAndExecutionYear(String degreeName, ExecutionYear executionYear) {
+        if (degreeName == null) {
+            return null;
+        }
+
+        if (executionYear == null) {
+            return null;
+        }
+
+        for (ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
+            if (degreeName.equalsIgnoreCase(executionDegree.getDegreeCurricularPlan().getName())) {
+                return executionDegree;
+            }
+        }
+
+        return null;
     }
 
     @Atomic
