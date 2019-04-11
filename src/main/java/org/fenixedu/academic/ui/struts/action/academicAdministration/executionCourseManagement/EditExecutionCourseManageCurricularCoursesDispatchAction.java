@@ -40,6 +40,7 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -70,19 +71,17 @@ import pt.ist.fenixframework.FenixFramework;
 @Mapping(module = "academicAdministration", path = "/editExecutionCourseManageCurricularCourses",
         input = "/editExecutionCourse.do?method=prepareEditExecutionCourse&page=0", formBean = "executionCourseForm",
         functionality = EditExecutionCourseDA.class)
-@Forwards(
-        value = {
-                @Forward(name = "editExecutionCourse",
-                        path = "/academicAdministration/editExecutionCourse.do?method=editExecutionCourse&page=0"),
-                @Forward(name = "listExecutionCourseActions",
-                        path = "/academicAdministration/executionCourseManagement/listExecutionCourseActions.jsp"),
-                @Forward(name = "manageCurricularSeparation",
-                        path = "/academicAdministration/seperateExecutionCourse.do?method=manageCurricularSeparation"),
-                @Forward(name = "associateCurricularCourse",
-                        path = "/academicAdministration/executionCourseManagement/associateCurricularCourse.jsp"),
-                @Forward(
-                        name = "prepareAssociateCurricularCourseChooseDegreeCurricularPlan",
-                        path = "/academicAdministration/executionCourseManagement/prepareAssociateCurricularCourseChooseDegreeCurricularPlan.jsp") })
+@Forwards(value = {
+        @Forward(name = "editExecutionCourse",
+                path = "/academicAdministration/editExecutionCourse.do?method=editExecutionCourse&page=0"),
+        @Forward(name = "listExecutionCourseActions",
+                path = "/academicAdministration/executionCourseManagement/listExecutionCourseActions.jsp"),
+        @Forward(name = "manageCurricularSeparation",
+                path = "/academicAdministration/seperateExecutionCourse.do?method=manageCurricularSeparation"),
+        @Forward(name = "associateCurricularCourse",
+                path = "/academicAdministration/executionCourseManagement/associateCurricularCourse.jsp"),
+        @Forward(name = "prepareAssociateCurricularCourseChooseDegreeCurricularPlan",
+                path = "/academicAdministration/executionCourseManagement/prepareAssociateCurricularCourseChooseDegreeCurricularPlan.jsp") })
 public class EditExecutionCourseManageCurricularCoursesDispatchAction extends FenixDispatchAction {
 
     public ActionForward dissociateCurricularCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -201,15 +200,15 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
             request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
             String executionCourseId = RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
             final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
-            final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
+            final ExecutionInterval executionInterval = executionCourse.getExecutionInterval();
             final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
             for (final DegreeModule degreeModule : rootDomainObject.getDegreeModulesSet()) {
                 if (degreeModule instanceof CurricularCourse) {
                     final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
                     if (!executionCourse.getAssociatedCurricularCoursesSet().contains(curricularCourse)
-                            && !curricularCourse.hasAnyExecutionCourseIn(executionSemester)) {
+                            && !curricularCourse.hasAnyExecutionCourseIn(executionInterval)) {
                         if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(null, degreeCurricularPlan,
-                                executionSemester)) {
+                                executionInterval)) {
                             infoCurricularCourses.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
                         }
                     }
@@ -265,16 +264,16 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
         return mapping.findForward("manageCurricularSeparation");
     }
 
-    protected void buildExecutionDegreeLabelValueBean(List<InfoExecutionDegree> executionDegreeList, List<LabelValueBean> courses) {
+    protected void buildExecutionDegreeLabelValueBean(List<InfoExecutionDegree> executionDegreeList,
+            List<LabelValueBean> courses) {
 
         for (InfoExecutionDegree infoExecutionDegree : executionDegreeList) {
-            String name =
-                    infoExecutionDegree.getInfoDegreeCurricularPlan().getDegreeCurricularPlan()
-                            .getPresentationName(infoExecutionDegree.getInfoExecutionYear().getExecutionYear());
+            String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getDegreeCurricularPlan()
+                    .getPresentationName(infoExecutionDegree.getInfoExecutionYear().getExecutionYear());
             /*
             TODO: DUPLICATE check really needed?
             name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().getLocalizedName() + " em " + name;
-
+            
             name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-" + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
             */
             // courses.add(new LabelValueBean(name, name + "~" + infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId().toString()));

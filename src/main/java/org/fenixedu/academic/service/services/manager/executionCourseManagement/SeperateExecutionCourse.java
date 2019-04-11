@@ -32,6 +32,7 @@ import org.fenixedu.academic.domain.CourseLoad;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Shift;
@@ -134,7 +135,7 @@ public class SeperateExecutionCourse {
 
     private static ExecutionCourse createNewExecutionCourse(ExecutionCourse originExecutionCourse) {
         final String sigla = getUniqueExecutionCourseCode(originExecutionCourse.getNome(),
-                originExecutionCourse.getExecutionPeriod(), originExecutionCourse.getSigla());
+                originExecutionCourse.getExecutionInterval(), originExecutionCourse.getSigla());
 
         final ExecutionCourse destinationExecutionCourse =
                 new ExecutionCourse(originExecutionCourse.getNome(), sigla, originExecutionCourse.getExecutionPeriod(), null);
@@ -157,8 +158,8 @@ public class SeperateExecutionCourse {
     }
 
     private static String getUniqueExecutionCourseCode(final String executionCourseName,
-            final ExecutionSemester executionSemester, final String originalExecutionCourseCode) {
-        Set<String> executionCourseCodes = getExecutionCourseCodes(executionSemester);
+            final ExecutionInterval executionInterval, final String originalExecutionCourseCode) {
+        Set<String> executionCourseCodes = getExecutionCourseCodes(executionInterval);
         return CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod.getUniqueSigla(executionCourseCodes,
                 originalExecutionCourseCode);
         //
@@ -179,8 +180,8 @@ public class SeperateExecutionCourse {
         // return destinationExecutionCourseCode;
     }
 
-    private static Set<String> getExecutionCourseCodes(ExecutionSemester executionSemester) {
-        Collection<ExecutionCourse> executionCourses = executionSemester.getAssociatedExecutionCoursesSet();
+    private static Set<String> getExecutionCourseCodes(ExecutionInterval executionInterval) {
+        Collection<ExecutionCourse> executionCourses = executionInterval.getAssociatedExecutionCoursesSet();
         return new HashSet<String>(CollectionUtils.collect(executionCourses, new Transformer() {
             @Override
             public Object transform(Object arg0) {

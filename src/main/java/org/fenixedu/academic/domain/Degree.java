@@ -521,25 +521,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     // -- fim da nova operação -- Ricardo Marcão
 
-    public List<ExecutionCourse> getExecutionCourses(final Integer curricularYear, final ExecutionSemester executionSemester) {
-        final List<ExecutionCourse> result = new ArrayList<>();
-        for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
-            for (final CurricularCourse course : degreeCurricularPlan.getCurricularCoursesSet()) {
-                for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCoursesSet()) {
-                    if (executionSemester == executionCourse.getExecutionPeriod()) {
-                        for (final DegreeModuleScope scope : course.getDegreeModuleScopes()) {
-                            if (scope.isActiveForExecutionPeriod(executionSemester) && scope.getCurricularYear() == curricularYear
-                                    && scope.getCurricularSemester() == executionSemester.getSemester()) {
-                                result.add(executionCourse);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return result;
-    }
-
     @Deprecated
     public LocalizedString getNameFor(final ExecutionYear executionYear) {
         DegreeInfo degreeInfo = executionYear == null ? getMostRecentDegreeInfo() : getMostRecentDegreeInfo(executionYear);

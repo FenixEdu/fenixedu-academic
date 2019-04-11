@@ -54,12 +54,12 @@ public class AttendsJsonAdapter implements JsonViewer<Attends> {
                 BundleUtil.getString(Bundle.ENUMERATION, attends.getAttendsStateType().getQualifiedName()));
 
         object.addProperty("workingStudent",
-                attends.getRegistration().getStudent().hasWorkingStudentStatuteInPeriod(attends.getExecutionPeriod()));
+                attends.getRegistration().getStudent().hasWorkingStudentStatuteInPeriod(attends.getExecutionInterval()));
 
         JsonArray statutesArray = new JsonArray();
 
         attends.getRegistration().getStudent().getStudentStatutesSet().stream()
-                .filter(s -> s.isValidInExecutionPeriod(attends.getExecutionPeriod()))
+                .filter(s -> s.isValidInExecutionInterval(attends.getExecutionInterval()))
                 .forEach(ss -> statutesArray.add(ctx.view(ss)));
 
         object.add("studentStatutes", statutesArray);

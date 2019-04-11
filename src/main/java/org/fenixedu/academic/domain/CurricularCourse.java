@@ -915,11 +915,11 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public boolean hasScopeInGivenSemesterAndCurricularYearInDCP(CurricularYear curricularYear,
-            DegreeCurricularPlan degreeCurricularPlan, final ExecutionSemester executionSemester) {
+            DegreeCurricularPlan degreeCurricularPlan, final ExecutionInterval executionInterval) {
 
         if (degreeCurricularPlan == null || getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
             for (DegreeModuleScope degreeModuleScope : getDegreeModuleScopes()) {
-                if (degreeModuleScope.isActiveForExecutionPeriod(executionSemester)
+                if (degreeModuleScope.isActiveForAcademicInterval(executionInterval.getAcademicInterval())
                         && (curricularYear == null || degreeModuleScope.getCurricularYear().equals(curricularYear.getYear()))) {
                     return true;
                 }
@@ -1006,8 +1006,12 @@ public class CurricularCourse extends CurricularCourse_Base {
         return false;
     }
 
-    public boolean isActive(final ExecutionSemester executionSemester) {
-        return getActiveDegreeModuleScopesInExecutionPeriod(executionSemester).size() > 0;
+//    public boolean isActive(final ExecutionSemester executionSemester) {
+//        return getActiveDegreeModuleScopesInExecutionPeriod(executionSemester).size() > 0;
+//    }
+    
+    public boolean isActive(final ExecutionInterval interval) {
+        return getActiveDegreeModuleScopesInAcademicInterval(interval.getAcademicInterval()).size() > 0;
     }
 
     public boolean hasEnrolmentForPeriod(final ExecutionSemester executionSemester) {
@@ -1092,9 +1096,9 @@ public class CurricularCourse extends CurricularCourse_Base {
         return null;
     }
 
-    public boolean hasAnyExecutionCourseIn(ExecutionSemester executionSemester) {
+    public boolean hasAnyExecutionCourseIn(ExecutionInterval executionInterval) {
         for (ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
-            if (executionCourse.getExecutionInterval().equals(executionSemester)) {
+            if (executionCourse.getExecutionInterval().equals(executionInterval)) {
                 return true;
             }
         }

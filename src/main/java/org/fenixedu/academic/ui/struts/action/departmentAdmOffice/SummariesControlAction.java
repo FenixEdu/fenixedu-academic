@@ -49,6 +49,7 @@ import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Lesson;
 import org.fenixedu.academic.domain.LessonInstance;
@@ -169,7 +170,7 @@ public final class SummariesControlAction extends FenixDispatchAction {
         ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
 
         List<DetailSummaryElement> executionCoursesResume =
-                getExecutionCourseResume(executionCourse.getExecutionPeriod(), executionCourse.getProfessorshipsSet());
+                getExecutionCourseResume(executionCourse.getExecutionInterval(), executionCourse.getProfessorshipsSet());
 
         request.setAttribute("departmentID", departmentID);
         request.setAttribute("categoryControl", categoryControl);
@@ -213,7 +214,7 @@ public final class SummariesControlAction extends FenixDispatchAction {
         return mapping.findForward("success");
     }
 
-    private List<DetailSummaryElement> getExecutionCourseResume(final ExecutionSemester executionSemester,
+    private List<DetailSummaryElement> getExecutionCourseResume(final ExecutionInterval executionInterval,
             Collection<Professorship> professorships) {
         List<DetailSummaryElement> allListElements = new ArrayList<DetailSummaryElement>();
         LocalDate today = new LocalDate();
@@ -224,7 +225,7 @@ public final class SummariesControlAction extends FenixDispatchAction {
             BigDecimal summariesGivenPercentage = EMPTY;
             BigDecimal notTaughtSummaries = EMPTY;
             BigDecimal notTaughtSummariesPercentage = EMPTY;
-            if (professorship.belongsToExecutionPeriod(executionSemester)) {
+            if (professorship.belongsToExecutionInterval(executionInterval)) {
                 for (Shift shift : professorship.getExecutionCourse().getAssociatedShifts()) {
                     lessonsGiven = lessonsGiven.add(BigDecimal.valueOf(shift.getNumberOfLessonInstances()));
 
@@ -246,7 +247,7 @@ public final class SummariesControlAction extends FenixDispatchAction {
                 String categoryName = null;
                 if (teacher != null) {
                     final Optional<TeacherAuthorization> authorization =
-                            teacher.getTeacherAuthorization(executionSemester.getAcademicInterval());
+                            teacher.getTeacherAuthorization(executionInterval.getAcademicInterval());
 
                     categoryName =
                             authorization.isPresent() ? authorization.get().getTeacherCategory().getName().getContent() : null;
@@ -359,7 +360,7 @@ public final class SummariesControlAction extends FenixDispatchAction {
 
         for (Teacher teacher : allDepartmentTeachers) {
             for (Professorship professorship : teacher.getProfessorships()) {
-                if (professorship.belongsToExecutionPeriod(executionSemester)) {
+                if (professorship.belongsToExecutionInterval(executionSemester)) {
                     executionCourses.add(professorship.getExecutionCourse());
                 }
             }
@@ -576,7 +577,7 @@ public final class SummariesControlAction extends FenixDispatchAction {
         for (ExecutionCourseSummaryElement executionCourse : executionCourses) {
             counter = 0;
             List<DetailSummaryElement> executionCoursesResume =
-                    getExecutionCourseResume(executionCourse.getExecutionCourse().getExecutionPeriod(),
+                    getExecutionCourseResume(executionCourse.getExecutionCourse().getExecutionInterval(),
                             executionCourse.getExecutionCourse().getProfessorshipsSet());
 
             int lessons = executionCourse.getNumberOfLessonInstances().intValue();

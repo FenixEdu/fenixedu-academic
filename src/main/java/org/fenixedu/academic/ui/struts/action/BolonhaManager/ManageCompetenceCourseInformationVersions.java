@@ -38,6 +38,7 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.DegreeModuleScope;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
@@ -433,13 +434,13 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
                 if (competenceCourse.getCurricularStage() == CurricularStage.APPROVED) {
                     for (final CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCoursesSet()) {
                         for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
-                            final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
+                            final ExecutionInterval executionInterval = executionCourse.getExecutionInterval();
                             for (final DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
-                                if (degreeModuleScope.isActiveForExecutionPeriod(executionSemester)) {
+                                if (degreeModuleScope.isActiveForAcademicInterval(executionInterval.getAcademicInterval())) {
                                     final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
                                     final Row row = spreadsheet.addRow();
 
-                                    row.setCell(competenceCourse.getName(executionSemester));
+                                    row.setCell(competenceCourse.getName(executionInterval));
                                     row.setCell(degreeCurricularPlan.getName());
                                     row.setCell(degreeModuleScope.getCurricularYear());
                                     row.setCell(degreeModuleScope.getCurricularSemester());

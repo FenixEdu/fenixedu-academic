@@ -18,7 +18,9 @@
  */
 package org.fenixedu.academic.domain;
 
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.Set;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
@@ -193,4 +195,9 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base implement
 
     public abstract ExecutionYear getExecutionYear();
 
+    // TEMP method, until executionCourses relation isn't moved up from ExecutionSemester to ExecutionInterval
+    public Set<ExecutionCourse> getAssociatedExecutionCoursesSet() {
+        return Collections.emptySet();
+    }
+    
 }

@@ -432,7 +432,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     final public void createAttends(final Registration registration, final ExecutionCourse executionCourse) {
-        final Attends attendsFor = this.getAttendsFor(executionCourse.getExecutionPeriod());
+        final Attends attendsFor = this.getAttendsFor(executionCourse.getExecutionInterval());
         if (attendsFor != null) {
             try {
                 attendsFor.delete();
@@ -828,11 +828,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return getEvaluationsSet().stream().filter(i -> i.getEvaluationSeason().isImprovement()).findAny().isPresent();
     }
 
-    final public boolean hasImprovementFor(final ExecutionSemester executionSemester) {
+    public boolean hasImprovementFor(final ExecutionInterval interval) {
         for (EnrolmentEvaluation enrolmentEvaluation : this.getEvaluationsSet()) {
             if (enrolmentEvaluation.getEvaluationSeason().isImprovement()) {
                 final ExecutionInterval evalPeriod = enrolmentEvaluation.getExecutionInterval();
-                if (evalPeriod != null && evalPeriod == executionSemester) {
+                if (evalPeriod != null && evalPeriod == interval) {
                     return true;
                 }
             }
@@ -1093,11 +1093,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return false;
     }
 
-    final public Attends getAttendsFor(final ExecutionSemester executionSemester) {
+    final public Attends getAttendsFor(final ExecutionInterval interval) {
         Attends result = null;
 
         for (final Attends attends : getAttendsSet()) {
-            if (attends.isFor(executionSemester)) {
+            if (attends.isFor(interval)) {
                 if (result == null) {
                     result = attends;
                 } else {

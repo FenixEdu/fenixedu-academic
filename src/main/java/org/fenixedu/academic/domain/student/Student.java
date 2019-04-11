@@ -36,6 +36,7 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
@@ -326,10 +327,10 @@ public class Student extends Student_Base {
         return result;
     }
 
-    public boolean hasWorkingStudentStatuteInPeriod(final ExecutionSemester executionSemester) {
+    public boolean hasWorkingStudentStatuteInPeriod(final ExecutionInterval executionInterval) {
         for (StudentStatute studentStatute : getStudentStatutesSet()) {
             if (studentStatute.getType().isWorkingStudentStatute()
-                    && studentStatute.isValidInExecutionPeriod(executionSemester)) {
+                    && studentStatute.isValidInExecutionInterval(executionInterval)) {
                 return true;
             }
         }

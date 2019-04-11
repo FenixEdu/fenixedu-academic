@@ -55,6 +55,14 @@ public class Professorship extends Professorship_Base {
         new ProfessorshipPermissions(this);
     }
 
+    public boolean belongsToExecutionInterval(ExecutionInterval executionInterval) {
+        return this.getExecutionCourse().getExecutionInterval().equals(executionInterval);
+    }
+
+    /**
+     * @deprecated Use {@link #belongsToExecutionInterval(ExecutionInterval)
+     */
+    @Deprecated
     public boolean belongsToExecutionPeriod(ExecutionSemester executionSemester) {
         return this.getExecutionCourse().getExecutionInterval().equals(executionSemester);
     }

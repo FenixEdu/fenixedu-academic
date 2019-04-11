@@ -28,6 +28,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Professorship;
@@ -54,7 +55,7 @@ public class ShowProfessorshipsDA extends FenixAction {
 
         final String executionPeriodIDString = request.getParameter("executionPeriodID");
 
-        final ExecutionSemester selectedExecutionPeriod;
+        final ExecutionInterval selectedExecutionPeriod;
         if (executionPeriodIDString == null) {
             selectedExecutionPeriod = ExecutionSemester.findCurrent(null);
         } else if (executionPeriodIDString.isEmpty()) {
@@ -69,22 +70,22 @@ public class ShowProfessorshipsDA extends FenixAction {
         request.setAttribute("executionCourses", executionCourses);
 
         final Person person = AccessControl.getPerson();
-        final SortedSet<ExecutionSemester> executionSemesters =
-                new TreeSet<ExecutionSemester>(Ordering.from(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR).reverse());
+        final SortedSet<ExecutionInterval> executionIntervals =
+                new TreeSet<>(ExecutionInterval.COMPARATOR_BY_BEGIN_DATE.reversed());
         if (person != null) {
             for (final Professorship professorship : person.getProfessorshipsSet()) {
                 final ExecutionCourse executionCourse = professorship.getExecutionCourse();
-                final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
+                final ExecutionInterval executionInterval = executionCourse.getExecutionInterval();
 
-                executionSemesters.add(executionSemester);
-                if (selectedExecutionPeriod == null || selectedExecutionPeriod == executionSemester) {
+                executionIntervals.add(executionInterval);
+                if (selectedExecutionPeriod == null || selectedExecutionPeriod == executionInterval) {
                     executionCourses.add(executionCourse);
                 }
             }
         }
-        executionSemesters.add(ExecutionSemester.findCurrent(null));
+        executionIntervals.add(ExecutionSemester.findCurrent(null));
 
-        request.setAttribute("semesters", executionSemesters);
+        request.setAttribute("semesters", executionIntervals);
 
         return mapping.findForward("list");
     }

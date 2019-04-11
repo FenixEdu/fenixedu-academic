@@ -180,7 +180,7 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
                 }
 
                 private WorkingStudentSelectionType getWorkingStudentType(Attends attends) {
-                    if (attends.getRegistration().getStudent().hasWorkingStudentStatuteInPeriod(attends.getExecutionPeriod())) {
+                    if (attends.getRegistration().getStudent().hasWorkingStudentStatuteInPeriod(attends.getExecutionInterval())) {
                         return WorkingStudentSelectionType.WORKING_STUDENT;
                     } else {
                         return WorkingStudentSelectionType.NOT_WORKING_STUDENT;

@@ -27,7 +27,6 @@ package org.fenixedu.academic.domain;
 import java.text.Collator;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -160,34 +159,6 @@ public class Attends extends Attends_Base {
         return null;
     }
 
-    public Date getBegginingOfLessonPeriod() {
-        final ExecutionSemester executionSemester = getExecutionCourse().getExecutionPeriod();
-        final StudentCurricularPlan studentCurricularPlan = getEnrolment().getStudentCurricularPlan();
-        final ExecutionDegree executionDegree =
-                studentCurricularPlan.getDegreeCurricularPlan().getExecutionDegreeByYear(executionSemester.getExecutionYear());
-        if (executionSemester.getSemester().intValue() == 1) {
-            return executionDegree.getPeriodLessonsFirstSemester().getStart();
-        } else if (executionSemester.getSemester().intValue() == 2) {
-            return executionDegree.getPeriodLessonsSecondSemester().getStart();
-        } else {
-            throw new DomainException("unsupported.execution.period.semester");
-        }
-    }
-
-    public Date getEndOfExamsPeriod() {
-        final ExecutionSemester executionSemester = getExecutionCourse().getExecutionPeriod();
-        final StudentCurricularPlan studentCurricularPlan = getEnrolment().getStudentCurricularPlan();
-        final ExecutionDegree executionDegree =
-                studentCurricularPlan.getDegreeCurricularPlan().getExecutionDegreeByYear(executionSemester.getExecutionYear());
-        if (executionSemester.getSemester().intValue() == 1) {
-            return executionDegree.getPeriodExamsFirstSemester().getEnd();
-        } else if (executionSemester.getSemester().intValue() == 2) {
-            return executionDegree.getPeriodExamsSecondSemester().getEnd();
-        } else {
-            throw new DomainException("unsupported.execution.period.semester");
-        }
-    }
-
     public boolean isFor(final ExecutionInterval interval) {
         return getExecutionCourse().getExecutionInterval() == interval;
     }
@@ -249,12 +220,17 @@ public class Attends extends Attends_Base {
         return super.getDisciplinaExecucao();
     }
 
+    public ExecutionInterval getExecutionInterval() {
+        return getExecutionCourse().getExecutionInterval();
+    }
+
+    @Deprecated
     public ExecutionSemester getExecutionPeriod() {
         return getExecutionCourse().getExecutionPeriod();
     }
 
     public ExecutionYear getExecutionYear() {
-        return getExecutionPeriod().getExecutionYear();
+        return getExecutionInterval().getExecutionYear();
     }
 
     public void removeShifts() {
@@ -275,8 +251,8 @@ public class Attends extends Attends_Base {
             return StudentAttendsStateType.NOT_ENROLED;
         }
 
-        if (!getEnrolment().getExecutionPeriod().equals(getExecutionPeriod())
-                && getEnrolment().hasImprovementFor(getExecutionPeriod())) {
+        if (!getEnrolment().getExecutionInterval().equals(getExecutionInterval())
+                && getEnrolment().hasImprovementFor(getExecutionInterval())) {
             return StudentAttendsStateType.IMPROVEMENT;
         }
 
@@ -307,7 +283,7 @@ public class Attends extends Attends_Base {
         if (getEnrolment() != null) {
             return !from.hasEnrolments(getEnrolment()) && to.hasEnrolments(getEnrolment());
         }
-        return !getExecutionPeriod().isBefore(to.getStartExecutionPeriod());
+        return !getExecutionInterval().isBefore(to.getStartExecutionInterval());
     }
 
     @Atomic

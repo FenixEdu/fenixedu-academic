@@ -19,7 +19,7 @@
 package org.fenixedu.academic.service.services.manager.executionCourseManagement;
 
 import org.fenixedu.academic.domain.ExecutionCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.InfoExecutionCourse;
 import org.fenixedu.academic.dto.InfoExecutionCourseEditor;
@@ -38,18 +38,18 @@ public class EditExecutionCourseInfo {
             throw new InvalidArgumentsServiceException();
         }
 
-        final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
+        final ExecutionInterval executionInterval = executionCourse.getExecutionInterval();
 
-        if (executionSemester == null) {
+        if (executionInterval == null) {
             throw new DomainException("message.nonExistingExecutionPeriod");
         }
 
         final ExecutionCourse existentExecutionCourse =
-                ExecutionCourse.readBySiglaAndExecutionPeriod(infoExecutionCourse.getSigla(), executionSemester);
+                ExecutionCourse.readBySiglaAndExecutionPeriod(infoExecutionCourse.getSigla(), executionInterval);
         if (existentExecutionCourse != null && !existentExecutionCourse.equals(executionCourse)) {
             throw new DomainException("error.manager.executionCourseManagement.acronym.exists",
-                    existentExecutionCourse.getSigla(), executionSemester.getName(), executionSemester.getExecutionYear()
-                            .getYear(), existentExecutionCourse.getName());
+                    existentExecutionCourse.getSigla(), executionInterval.getName(),
+                    executionInterval.getExecutionYear().getYear(), existentExecutionCourse.getName());
         }
 
         executionCourse.editInformation(infoExecutionCourse.getNome(), infoExecutionCourse.getSigla(),

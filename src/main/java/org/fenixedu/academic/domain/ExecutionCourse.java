@@ -42,7 +42,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.messaging.ExecutionCourseForum;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
-import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.dto.GenericPair;
 import org.fenixedu.academic.dto.teacher.executionCourse.SearchExecutionCourseAttendsBean;
@@ -78,7 +77,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
                 @Override
                 public int compare(ExecutionCourse o1, ExecutionCourse o2) {
-                    return o1.getExecutionPeriod().compareTo(o2.getExecutionPeriod());
+                    return o1.getExecutionInterval().compareTo(o2.getExecutionInterval());
                 }
 
             };
@@ -441,20 +440,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         List<Enrolment> results = new ArrayList<Enrolment>();
 
         for (CurricularCourse curricularCourse : this.getAssociatedCurricularCoursesSet()) {
-            List<Enrolment> enrollments = curricularCourse.getActiveEnrollments(this.getExecutionPeriod());
+            List<Enrolment> enrollments =
+                    curricularCourse.getEnrolmentsByAcademicInterval(this.getExecutionInterval().getAcademicInterval());
 
             results.addAll(enrollments);
-        }
-        return results;
-    }
-
-    public List<Dismissal> getDismissals() {
-        List<Dismissal> results = new ArrayList<Dismissal>();
-
-        for (CurricularCourse curricularCourse : this.getAssociatedCurricularCoursesSet()) {
-            List<Dismissal> dismissals = curricularCourse.getDismissals(this.getExecutionPeriod());
-
-            results.addAll(dismissals);
         }
         return results;
     }
@@ -518,7 +507,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
         private void fillCourseLoads(ExecutionCourse execution, CurricularCourse curricular) {
             for (ShiftType shiftType : ShiftType.values()) {
-                BigDecimal totalHours = curricular.getTotalHoursByShiftType(shiftType, execution.getExecutionPeriod());
+                BigDecimal totalHours = curricular.getTotalHoursByShiftType(shiftType, execution.getExecutionInterval());
                 if (totalHours != null && totalHours.compareTo(BigDecimal.ZERO) == 1) {
                     CourseLoad courseLoad = execution.getCourseLoadByShiftType(shiftType);
                     if (courseLoad == null) {
@@ -788,7 +777,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             if (type.equals(ShiftType.DUVIDAS) || type.equals(ShiftType.RESERVA)) {
                 return true;
             }
-            BigDecimal ccTotalHours = curricularCourse.getTotalHoursByShiftType(type, getExecutionPeriod());
+            BigDecimal ccTotalHours = curricularCourse.getTotalHoursByShiftType(type, getExecutionInterval());
             CourseLoad courseLoad = getCourseLoadByShiftType(type);
             if ((courseLoad == null && ccTotalHours == null)
                     || (courseLoad == null && ccTotalHours != null && ccTotalHours.compareTo(BigDecimal.ZERO) == 0)
@@ -808,7 +797,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             final Set<String> names = new HashSet<String>();
 
             for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-                if (!curricularCourse.getActiveDegreeModuleScopesInExecutionPeriod(getExecutionPeriod()).isEmpty()) {
+                if (!curricularCourse.getActiveDegreeModuleScopesInAcademicInterval(getExecutionInterval().getAcademicInterval())
+                        .isEmpty()) {
                     final String name = curricularCourse.getNameEn();
                     if (!names.contains(name)) {
                         names.add(name);
@@ -1059,8 +1049,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return getExecutionInterval().getAcademicInterval();
     }
 
-    public static ExecutionCourse readBySiglaAndExecutionPeriod(final String sigla, ExecutionSemester executionSemester) {
-        for (ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
+    public static ExecutionCourse readBySiglaAndExecutionPeriod(final String sigla, ExecutionInterval executionInterval) {
+        for (ExecutionCourse executionCourse : executionInterval.getAssociatedExecutionCoursesSet()) {
             if (sigla.equalsIgnoreCase(executionCourse.getSigla())) {
                 return executionCourse;
             }
@@ -1091,7 +1081,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     private boolean existsMatchingCode(final String code) {
-        for (final ExecutionCourse executionCourse : getExecutionPeriod().getAssociatedExecutionCoursesSet()) {
+        for (final ExecutionCourse executionCourse : getExecutionInterval().getAssociatedExecutionCoursesSet()) {
             if (executionCourse != this && executionCourse.getSigla().equalsIgnoreCase(code)) {
                 return true;
             }
@@ -1209,7 +1199,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
         final Predicate<ExecutionCourse> hasScopePredicate = ec -> ec.getAssociatedCurricularCoursesSet().stream()
                 .anyMatch(cc -> cc.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear, degreeCurricularPlan,
-                        ec.getExecutionPeriod()));
+                        ec.getExecutionInterval()));
 
         for (final ExecutionCourse executionCourse : interval.getAssociatedExecutionCoursesSet()) {
             final String executionCourseName = StringNormalizer.normalize(executionCourse.getNome());
@@ -1258,7 +1248,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         final Set<String> names = new HashSet<String>();
 
         for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-            if (!curricularCourse.getActiveDegreeModuleScopesInExecutionPeriod(getExecutionPeriod()).isEmpty()) {
+            if (!curricularCourse.getActiveDegreeModuleScopesInAcademicInterval(getExecutionInterval().getAcademicInterval())
+                    .isEmpty()) {
                 final String name = curricularCourse.getNameEn();
                 if (!names.contains(name)) {
                     names.add(name);
@@ -1344,7 +1335,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public Double getEctsCredits() {
         Double ects = null;
         for (CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-            if (curricularCourse.isActive(getExecutionPeriod())) {
+            if (curricularCourse.isActive(getExecutionInterval())) {
                 if (ects == null) {
                     ects = curricularCourse.getEctsCredits();
                 } else if (!ects.equals(curricularCourse.getEctsCredits())) {
