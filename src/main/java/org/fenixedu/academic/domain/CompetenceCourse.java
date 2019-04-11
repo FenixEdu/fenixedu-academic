@@ -280,6 +280,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
             }
             result = information;
         }
+        
+        // if no result found and no explicit interval specified, return first information to attempt more null safety
+        if (result == null && interval == null && !orderedInformations.isEmpty()) {
+            return orderedInformations.get(0);
+        }
 
         return result;
     }
