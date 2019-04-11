@@ -58,7 +58,6 @@ import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
-import org.joda.time.DateTime;
 
 import com.google.common.base.Strings;
 
@@ -371,18 +370,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return null;
     }
 
-    public List<DegreeCurricularPlan> findDegreeCurricularPlansByState(final DegreeCurricularPlanState state) {
-        List<DegreeCurricularPlan> result = new ArrayList<>();
-        if (!isBolonhaDegree()) {
-            for (DegreeCurricularPlan degreeCurricularPlan : this.getDegreeCurricularPlansSet()) {
-                if (degreeCurricularPlan.getState().equals(state)) {
-                    result.add(degreeCurricularPlan);
-                }
-            }
-        }
-        return result;
-    }
-
     public List<DegreeCurricularPlan> getActiveDegreeCurricularPlans() {
         List<DegreeCurricularPlan> result = new ArrayList<>();
 
@@ -392,16 +379,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             }
         }
 
-        return result;
-    }
-
-    public List<DegreeCurricularPlan> getPastDegreeCurricularPlans() {
-        List<DegreeCurricularPlan> result = new ArrayList<>();
-        for (DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
-            if (degreeCurricularPlan.getState() == DegreeCurricularPlanState.PAST) {
-                result.add(degreeCurricularPlan);
-            }
-        }
         return result;
     }
 
@@ -458,45 +435,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             }
         }
         return new ArrayList<>(result);
-    }
-
-    public List<CurricularCourse> getExecutedCurricularCoursesByExecutionYear(final ExecutionYear executionYear) {
-
-        if (isBolonhaDegree()) {
-            return Collections.emptyList();
-        }
-
-        final List<CurricularCourse> result = new ArrayList<>();
-        for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
-            if (degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE)) {
-                for (final CurricularCourse course : degreeCurricularPlan.getCurricularCoursesSet()) {
-                    for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCoursesSet()) {
-                        if (executionCourse.getExecutionInterval().getExecutionYear().equals(executionYear)) {
-                            result.add(course);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        return result;
-    }
-
-    public List<ExecutionCourse> getExecutionCourses(final String curricularCourseAcronym,
-            final ExecutionSemester executionSemester) {
-        final List<ExecutionCourse> result = new ArrayList<>();
-        for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
-            for (final CurricularCourse course : degreeCurricularPlan.getCurricularCoursesSet()) {
-                if (course.getAcronym() != null && course.getAcronym().equalsIgnoreCase(curricularCourseAcronym)) {
-                    for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCoursesSet()) {
-                        if (executionSemester == executionCourse.getExecutionInterval()) {
-                            result.add(executionCourse);
-                        }
-                    }
-                }
-            }
-        }
-        return result;
     }
 
     // início da nova operação -- Ricardo Marcão
@@ -668,23 +606,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return firstDCP.getInitialDateYearMonthDay() == null ? null : firstDCP;
     }
 
-    public DegreeCurricularPlan getLastActiveDegreeCurricularPlan() {
-        DegreeCurricularPlan result = null;
-        ExecutionDegree mostRecentExecutionDegree = null;
-
-        for (final DegreeCurricularPlan degreeCurricularPlan : getActiveDegreeCurricularPlans()) {
-            final ExecutionDegree executionDegree = degreeCurricularPlan.getMostRecentExecutionDegree();
-
-            if (executionDegree == null) {
-                result = degreeCurricularPlan;
-            } else if (mostRecentExecutionDegree == null || mostRecentExecutionDegree.isBefore(executionDegree)) {
-                mostRecentExecutionDegree = executionDegree;
-            }
-        }
-
-        return mostRecentExecutionDegree == null ? result : mostRecentExecutionDegree.getDegreeCurricularPlan();
-    }
-
     // -------------------------------------------------------------
     // read static methods
     // -------------------------------------------------------------
@@ -785,29 +706,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return DegreeType.all().filter(predicate).flatMap(type -> type.getDegreeSet().stream()).collect(Collectors.toList());
     }
 
-    public static List<Degree> readAllByDegreeCode(final String degreeCode) {
-        final List<Degree> result = new ArrayList<>();
-        for (final Degree degree : Degree.readNotEmptyDegrees()) {
-            if (degree.hasMinistryCode() && degree.getMinistryCode().equals(degreeCode)) {
-                result.add(degree);
-            }
-        }
-
-        return result;
-    }
-
-    private boolean hasMinistryCode() {
-        return getMinistryCode() != null;
-    }
-
-    public LocalizedString getQualificationLevel(final ExecutionYear executionYear) {
-        return getMostRecentDegreeInfo(executionYear).getQualificationLevel();
-    }
-
-    public LocalizedString getProfessionalExits(final ExecutionYear executionYear) {
-        return getMostRecentDegreeInfo(executionYear).getProfessionalExits();
-    }
-
     public DegreeInfo getMostRecentDegreeInfo() {
         return getMostRecentDegreeInfo(ExecutionYear.findCurrent(getCalendar()));
     }
@@ -860,63 +758,10 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return result;
     }
 
-    private DegreeInfo createCurrentDegreeInfo(final ExecutionYear executionYear) {
-        // first let's check if the current degree info exists already
-        final DegreeInfo shouldBeThisOne = getDegreeInfoFor(executionYear);
-        if (shouldBeThisOne != null) {
-            return shouldBeThisOne;
-        }
-
-        // ok, so let's create a new one based on the most recent one, if
-        // existing
-        return tryCreateUsingMostRecentInfo(executionYear);
-    }
-
     private DegreeInfo tryCreateUsingMostRecentInfo(final ExecutionYear executionYear) {
         final DegreeInfo mostRecentDegreeInfo = getMostRecentDegreeInfo(executionYear);
         return mostRecentDegreeInfo != null ? new DegreeInfo(mostRecentDegreeInfo, executionYear) : new DegreeInfo(this,
                 executionYear);
-    }
-
-    /**
-     * @deprecated Degree should not answer duration questions.
-     *
-     *             For more accurate results use {@link org.fenixedu.academic.domain.DegreeCurricularPlan#getDurationInYears()}
-     *
-     */
-    @Deprecated
-    public List<Integer> buildFullCurricularYearList() {
-
-        final DegreeCurricularPlan degreeCurricularPlan = getMostRecentDegreeCurricularPlan();
-        if (degreeCurricularPlan == null) {
-            throw new DomainException("error.degree.unable.to.find.degree.curricular.plan.to.calculate.duration");
-        }
-
-        final List<Integer> result = new ArrayList<>();
-        for (int i = 1; i <= degreeCurricularPlan.getDurationInYears(); i++) {
-            result.add(i);
-        }
-        return result;
-    }
-
-    public boolean isCoordinator(final Person person, final ExecutionYear executionYear) {
-        for (final Coordinator coordinator : getCoordinators(executionYear, false)) {
-            if (coordinator.getPerson() == person) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    final public boolean isCurrentCoordinator(final Person person) {
-        for (final Coordinator coordinator : getCurrentCoordinators(false)) {
-            if (coordinator.getPerson() == person) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**
@@ -1025,14 +870,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return isBolonhaDegree() ? getSigla() + "0" + curricularYear.toString() : StringUtils.EMPTY;
     }
 
-    public List<StudentCurricularPlan> getStudentCurricularPlans(final ExecutionYear executionYear) {
-        List<StudentCurricularPlan> result = new ArrayList<>();
-        for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansForYear(executionYear)) {
-            degreeCurricularPlan.getStudentsCurricularPlans(executionYear, result);
-        }
-        return result;
-    }
-
     public boolean isFirstCycle() {
         return getDegreeType().isFirstCycle();
     }
@@ -1052,64 +889,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         List<Student> result = new ArrayList<>();
         for (Registration registration : getActiveRegistrations()) {
             result.add(registration.getStudent());
-        }
-        return result;
-    }
-
-    public List<Student> getStudentsFromGivenCurricularYear(final int curricularYear, final ExecutionYear executionYear) {
-        List<Student> result = new ArrayList<>();
-        for (Registration registration : getActiveRegistrations()) {
-            if (registration.getCurricularYear(executionYear) == curricularYear) {
-                result.add(registration.getStudent());
-            }
-        }
-        return result;
-    }
-
-    /*
-     * CURRICULAR COURSES FROM DEGREE
-     */
-    public Set<CurricularCourse> getAllCurricularCourses(final ExecutionYear executionYear) {
-        Set<CurricularCourse> result = new HashSet<>();
-        for (DegreeCurricularPlan dcp : getActiveDegreeCurricularPlans()) {
-            result.addAll(dcp.getCurricularCoursesWithExecutionIn(executionYear));
-        }
-        return result;
-    }
-
-    public Set<CurricularCourse> getCurricularCoursesFromGivenCurricularYear(final int curricularYear,
-            final ExecutionYear executionYear) {
-        Set<CurricularCourse> result = new HashSet<>();
-        for (DegreeCurricularPlan dcp : getActiveDegreeCurricularPlans()) {
-            result.addAll(dcp.getCurricularCoursesByExecutionYearAndCurricularYear(executionYear, curricularYear));
-        }
-        return result;
-    }
-
-    /*
-     * This method is directed to Bolonha Integrated Master Degrees
-     */
-    public Set<CurricularCourse> getFirstCycleCurricularCourses(final ExecutionYear executionYear) {
-        Set<CurricularCourse> result = new HashSet<>();
-        for (DegreeCurricularPlan dcp : getActiveDegreeCurricularPlans()) {
-            // TODO how to make this nothardcoded?
-            for (int i = 1; i <= 3; i++) {
-                result.addAll(dcp.getCurricularCoursesByExecutionYearAndCurricularYear(executionYear, i));
-            }
-        }
-        return result;
-    }
-
-    /*
-     * This method is directed to Bolonha Integrated Master Degrees
-     */
-    public Set<CurricularCourse> getSecondCycleCurricularCourses(final ExecutionYear executionYear) {
-        Set<CurricularCourse> result = new HashSet<>();
-        for (DegreeCurricularPlan dcp : getActiveDegreeCurricularPlans()) {
-            for (int i = 4; i <= 5; i++) { // TODO: how to make this not
-                // hardcoded?
-                result.addAll(dcp.getCurricularCoursesByExecutionYearAndCurricularYear(executionYear, i));
-            }
         }
         return result;
     }
@@ -1148,36 +927,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public void setNome(final String nome) {
         super.setNome(nome);
         setIdCardName(nome);
-    }
-
-    public boolean canCreateGratuityEvent() {
-        return true;
-    }
-
-    public boolean isDEA() {
-        return getDegreeType().isAdvancedSpecializationDiploma();
-    }
-
-    public DegreeOfficialPublication getOfficialPublication(final DateTime when) {
-        DegreeOfficialPublication found = null;
-        for (DegreeOfficialPublication publication : getOfficialPublicationSet()) {
-            DateTime publicationDate = publication.getPublication().toDateTimeAtStartOfDay();
-            if (found == null && publicationDate.isBefore(when)) {
-                found = publication;
-            } else if (found != null && publicationDate.isBefore(when)
-                    && publication.getPublication().isAfter(found.getPublication())) {
-                found = publication;
-            }
-        }
-        return found;
-    }
-
-    public List<Teacher> getAllTeachers(final AcademicInterval academicInterval) {
-        List<Teacher> teachers = new ArrayList<>();
-        for (Department department : getDepartmentsSet()) {
-            teachers.addAll(department.getAllTeachers(academicInterval));
-        }
-        return teachers;
     }
 
     public String getDegreeTypeName() {
