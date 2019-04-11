@@ -43,7 +43,6 @@ import org.fenixedu.academic.domain.space.SpaceUtils;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.util.icalendar.ClassEventBean;
 import org.fenixedu.academic.domain.util.icalendar.EventBean;
-import org.fenixedu.academic.dto.GenericPair;
 import org.fenixedu.academic.util.DiaSemana;
 import org.fenixedu.academic.util.HourMinuteSecond;
 import org.fenixedu.academic.util.WeekDay;
@@ -85,11 +84,11 @@ public class Lesson extends Lesson_Base {
         super();
 
         if (shift != null) {
-            GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = shift.getExecutionCourse().getMaxLessonsPeriod();
-            if (period == null || period.getStartYearMonthDay().isBefore(maxLessonsPeriod.getLeft())) {
+            final Interval maxLessonsInterval = shift.getExecutionCourse().getMaxLessonsInterval();
+            if (period == null || period.getStartYearMonthDay().isBefore(maxLessonsInterval.getStart().toLocalDate())) {
                 throw new DomainException("error.Lesson.invalid.begin.date");
             }
-            if (period.getEndYearMonthDayWithNextPeriods().isAfter(maxLessonsPeriod.getRight())) {
+            if (period.getEndYearMonthDayWithNextPeriods().isAfter(maxLessonsInterval.getEnd().toLocalDate())) {
                 throw new DomainException("error.invalid.new.date");
             }
         }
@@ -117,13 +116,14 @@ public class Lesson extends Lesson_Base {
         OccupationPeriod period = null;
         if (shift != null) {
             final ExecutionCourse executionCourse = shift.getExecutionCourse();
-            GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = executionCourse.getMaxLessonsPeriod();
-            if (beginDate == null || beginDate.isBefore(maxLessonsPeriod.getLeft())) {
+            final Interval maxLessonsInterval = executionCourse.getMaxLessonsInterval();
+            if (beginDate == null || beginDate.isBefore(maxLessonsInterval.getStart().toLocalDate())) {
                 throw new DomainException("error.Lesson.invalid.begin.date");
             }
-            if (endDate == null || endDate.isAfter(maxLessonsPeriod.getRight())) {
+            if (endDate == null || endDate.isAfter(maxLessonsInterval.getEnd().toLocalDate())) {
                 throw new DomainException("error.invalid.new.date");
             }
+
             period = OccupationPeriod.createOccupationPeriodForLesson(executionCourse, beginDate, endDate);
         }
 
@@ -149,15 +149,16 @@ public class Lesson extends Lesson_Base {
             throw new DomainException("error.Lesson.new.begin.date.after.new.end.date");
         }
 
-        GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = getShift().getExecutionCourse().getMaxLessonsPeriod();
-        if (newBeginDate == null || newBeginDate.isBefore(maxLessonsPeriod.getLeft())) {
+        final ExecutionCourse executionCourse = getShift().getExecutionCourse();
+        final Interval maxLessonsInterval = executionCourse.getMaxLessonsInterval();
+        if (newBeginDate == null || newBeginDate.isBefore(maxLessonsInterval.getStart().toLocalDate())) {
             throw new DomainException("error.Lesson.invalid.new.begin.date");
         }
-        if (newEndDate == null || newEndDate.isAfter(maxLessonsPeriod.getRight())) {
+        if (newEndDate == null || newEndDate.isAfter(maxLessonsInterval.getEnd().toLocalDate())) {
             throw new DomainException("error.invalid.new.end.date");
         }
 
-        refreshPeriodAndInstancesInEditOperation(newBeginDate, newEndDate, createLessonInstances, maxLessonsPeriod);
+        refreshPeriodAndInstancesInEditOperation(newBeginDate, newEndDate, createLessonInstances);
 
         if (wasFinished() && (getLessonSpaceOccupation() != null || !hasAnyLessonInstances())) {
             throw new DomainException("error.Lesson.empty.period");
@@ -348,7 +349,7 @@ public class Lesson extends Lesson_Base {
     }
 
     private void refreshPeriodAndInstancesInEditOperation(YearMonthDay newBeginDate, YearMonthDay newEndDate,
-            Boolean createLessonInstances, GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod) {
+            Boolean createLessonInstances) {
 
         removeExistentInstancesWithoutSummaryAfterOrEqual(newBeginDate);
         SortedSet<YearMonthDay> instanceDates =
@@ -1225,10 +1226,10 @@ public class Lesson extends Lesson_Base {
         final SortedSet<Integer> weeks = new TreeSet<Integer>();
 
         final ExecutionCourse executionCourse = getExecutionCourse();
-        final YearMonthDay firstPossibleLessonDay = executionCourse.getMaxLessonsPeriod().getLeft();
-        final YearMonthDay lastPossibleLessonDay = executionCourse.getMaxLessonsPeriod().getRight();
+        final Interval maxLessonsInterval = executionCourse.getMaxLessonsInterval();
+        final LocalDate start = maxLessonsInterval.getStart().toLocalDate();
         for (final Interval interval : getAllLessonIntervals()) {
-            final Integer week = Weeks.weeksBetween(firstPossibleLessonDay, interval.getStart().toLocalDate()).getWeeks() + 1;
+            final Integer week = Weeks.weeksBetween(start, interval.getStart().toLocalDate()).getWeeks() + 1;
             weeks.add(week);
         }
 

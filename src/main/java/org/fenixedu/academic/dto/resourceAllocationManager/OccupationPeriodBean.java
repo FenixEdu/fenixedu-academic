@@ -31,6 +31,7 @@ import java.util.stream.StreamSupport;
 
 import org.fenixedu.academic.domain.CurricularYearList;
 import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.OccupationPeriod;
 import org.fenixedu.academic.domain.OccupationPeriodReference;
@@ -253,20 +254,23 @@ public class OccupationPeriodBean implements Serializable, Comparable<Occupation
         for (final Entry<ExecutionDegree, CurricularYearList> entry : degreeMap.entrySet()) {
             OccupationPeriodReference reference = null;
 
+            final ExecutionDegree executionDegree = entry.getKey();
             for (OccupationPeriodReference ref : getReferences()) {
-                if (ref.getExecutionDegree().equals(entry.getKey())) {
+                if (ref.getExecutionDegree().equals(executionDegree)) {
                     reference = ref;
                     break;
                 }
             }
 
+            final ExecutionInterval executionInterval = executionDegree.getExecutionYear().getExecutionSemesterFor(semester);
             if (reference == null) {
-                references.add(new OccupationPeriodReference(occupationPeriod, entry.getKey(), occupationPeriodType, semester,
-                        entry.getValue()));
+                references.add(new OccupationPeriodReference(occupationPeriod, executionDegree, occupationPeriodType,
+                        executionInterval, entry.getValue()));
             } else {
                 reference.setOccupationPeriod(occupationPeriod);
                 reference.setPeriodType(occupationPeriodType);
                 reference.setSemester(semester);
+                reference.setExecutionInterval(executionInterval);
                 reference.setCurricularYears(entry.getValue());
             }
 
@@ -374,8 +378,9 @@ public class OccupationPeriodBean implements Serializable, Comparable<Occupation
         newBean.setSemester(semester);
 
         for (OccupationPeriodReference reference : references) {
-            newBean.addReference(new OccupationPeriodReference(reference.getOccupationPeriod(), reference.getExecutionDegree(),
-                    newPeriodType, semester, reference.getCurricularYears()));
+            final ExecutionDegree executionDegree = reference.getExecutionDegree();
+            newBean.addReference(new OccupationPeriodReference(reference.getOccupationPeriod(), executionDegree, newPeriodType,
+                    executionDegree.getExecutionYear().getExecutionSemesterFor(semester), reference.getCurricularYears()));
         }
 
         return newBean;

@@ -2873,6 +2873,11 @@ relation OccupationPeriodReferenceExecutionDegree {
 	}
 }
 
+relation OccupationPeriodReferenceExecutionInterval {
+	ExecutionInterval playsRole executionInterval;
+	OccupationPeriodReference playsRole occupationPeriodReferences { multiplicity *; }
+}
+
 relation OccupationPeriodReferencePeriod {
 	OccupationPeriod playsRole occupationPeriod;
 	OccupationPeriodReference playsRole executionDegrees {

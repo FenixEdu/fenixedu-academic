@@ -34,7 +34,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.fenixedu.academic.domain.candidacy.CandidacySituationType;
@@ -54,7 +54,6 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
-import org.joda.time.DateTime;
 
 /**
  * 
@@ -738,96 +737,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         return getExecutionYear().getAcademicInterval();
     }
 
-    public OccupationPeriod getPeriodLessons(final ExecutionSemester executionSemester) {
-        return getOnePeriod(OccupationPeriodType.LESSONS, executionSemester.getSemester());
-    }
-
-    /*
-     * Deprecated methods, created due to the refactoring.
-     * 
-     * Note that all these methods are not recommended, due to the fact that
-     * with the new domain, there can be more than one period per type/semester
-     * (due to the different years). This API gives NO guarantee regarding which
-     * period will be returned. Different calls to the methods might even return
-     * different periods!
-     */
-
-    @Deprecated
-    public OccupationPeriod getPeriodLessonsFirstSemester() {
-        return getOnePeriod(OccupationPeriodType.LESSONS, 1);
-    }
-
-    @Deprecated
-    public OccupationPeriod getPeriodLessonsSecondSemester() {
-        return getOnePeriod(OccupationPeriodType.LESSONS, 2);
-    }
-
-    @Deprecated
-    public OccupationPeriod getPeriodExamsFirstSemester() {
-        return getOnePeriod(OccupationPeriodType.EXAMS, 1);
-    }
-
-    @Deprecated
-    public OccupationPeriod getPeriodExamsSecondSemester() {
-        return getOnePeriod(OccupationPeriodType.EXAMS, 2);
-    }
-
-    @Deprecated
-    public OccupationPeriod getPeriodExamsSpecialSeason() {
-        return getOnePeriod(OccupationPeriodType.EXAMS_SPECIAL_SEASON, null);
-    }
-
-    /*
-     * Temporary method to update the new relation. With some refactoring, might
-     * become the actual method on the new API
-     */
-
-    private OccupationPeriod getOnePeriod(OccupationPeriodType type, Integer semester) {
-        return getPeriods(type, semester).findAny().orElse(null);
-    }
-
-    /*
-     * New API
-     */
-
-    public Stream<OccupationPeriod> getPeriods(OccupationPeriodType type, Integer semester, List<Integer> years) {
-        return getPeriodReferences(type, semester, years).map(OccupationPeriodReference::getOccupationPeriod);
-    }
-
-    public Stream<OccupationPeriodReference> getPeriodReferences(final OccupationPeriodType type, final Integer semester,
-            final List<Integer> years) {
-        Stream<OccupationPeriodReference> stream = getOccupationPeriodReferencesSet().stream();
-        if (type != null) {
-            stream = stream.filter(r -> r.getPeriodType() == type);
-        }
-        if (semester != null) {
-            stream = stream.filter(r -> r.getSemester() == null || r.getSemester() == semester);
-        }
-        if (years != null) {
-            stream = stream.filter(r -> r.getCurricularYears().getYears().containsAll(years));
-        }
-        return stream;
-    }
-
-    public Stream<OccupationPeriod> getPeriods(OccupationPeriodType type) {
-        return getPeriods(type, null, null);
-    }
-
-    public Stream<OccupationPeriod> getPeriods(OccupationPeriodType type, Integer semester) {
-        return getPeriods(type, semester, null);
-    }
-
-    public Stream<OccupationPeriod> getPeriodsByCurricularYear(Integer year) {
-        return getPeriods(null, null, Collections.singletonList(year));
-    }
-
-    public Stream<OccupationPeriod> getPeriodsByCurricularYears(List<Integer> years) {
-        return getPeriods(null, null, years);
-    }
-
-    public boolean isDateInPeriodOfType(final DateTime date, OccupationPeriodType type, Integer semester) {
-        return getPeriods(type, semester).anyMatch(o -> o.getPeriodInterval().contains(date));
-
+    public Collection<OccupationPeriod> getPeriodLessons(final ExecutionInterval interval) {
+        return getOccupationPeriodReferencesSet().stream()
+                .filter(opr -> OccupationPeriodType.LESSONS.equals(opr.getPeriodType()) && opr.getExecutionInterval() == interval)
+                .map(OccupationPeriodReference::getOccupationPeriod).collect(Collectors.toSet());
     }
 
     public boolean isPublishedExam(ExecutionSemester executionSemester) {

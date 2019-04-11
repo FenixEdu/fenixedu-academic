@@ -30,7 +30,7 @@ public class OccupationPeriodReference extends OccupationPeriodReference_Base {
     }
 
     public OccupationPeriodReference(OccupationPeriod period, ExecutionDegree degree, OccupationPeriodType type,
-            Integer semester, CurricularYearList curricularYears) {
+            ExecutionInterval interval, CurricularYearList curricularYears) {
         this();
         if (period == null || degree == null) {
             throw new DomainException("exception.null.arguments");
@@ -38,8 +38,14 @@ public class OccupationPeriodReference extends OccupationPeriodReference_Base {
         setOccupationPeriod(period);
         setExecutionDegree(degree);
         setPeriodType(type);
-        setSemester(semester);
+        setExecutionInterval(interval);
         setCurricularYears(curricularYears);
+    }
+
+    @Deprecated
+    public OccupationPeriodReference(OccupationPeriod period, ExecutionDegree degree, OccupationPeriodType type, Integer semester,
+            CurricularYearList curricularYears) {
+        this(period, degree, type, degree.getExecutionYear().getExecutionSemesterFor(semester), curricularYears);
     }
 
     /**
@@ -152,6 +158,30 @@ public class OccupationPeriodReference extends OccupationPeriodReference_Base {
         }
 
         return returnStr.toString();
+    }
+
+    @Override
+    public ExecutionInterval getExecutionInterval() {
+        return super.getExecutionInterval() != null ? super.getExecutionInterval() : getExecutionDegree().getExecutionYear()
+                .getExecutionSemesterFor(getSemester());
+    }
+
+    @Deprecated
+    @Override
+    public Integer getSemester() {
+        return super.getExecutionInterval() instanceof ExecutionSemester ? ((ExecutionSemester) super.getExecutionInterval())
+                .getSemester() : super.getSemester();
+    }
+
+    public boolean migrateExecutionInterval() {
+        if (super.getExecutionInterval() == null) {
+            final ExecutionSemester interval = getExecutionDegree().getExecutionYear().getExecutionSemesterFor(getSemester());
+            if (interval != null) {
+                setExecutionInterval(interval);
+                return true;
+            }
+        }
+        return false;
     }
 
 }

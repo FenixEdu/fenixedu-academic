@@ -255,12 +255,13 @@ public class OccupationPeriod extends OccupationPeriod_Base {
             final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
             for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
                 if (executionCourse.getExecutionYear() == executionDegree.getExecutionYear()) {
-                    final OccupationPeriod occupationPeriod =
-                            executionDegree.getPeriodLessons(executionCourse.getExecutionPeriod());
-                    if (result == null) {
-                        result = occupationPeriod;
-                    } else if (!result.isEqualTo(occupationPeriod)) {
-                        ok = false;
+                    for (OccupationPeriod occupationPeriod : executionDegree
+                            .getPeriodLessons(executionCourse.getExecutionInterval())) {
+                        if (result == null) {
+                            result = occupationPeriod;
+                        } else if (!result.isEqualTo(occupationPeriod)) {
+                            ok = false;
+                        }
                     }
                 }
             }

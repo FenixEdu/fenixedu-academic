@@ -928,10 +928,6 @@ public class CurricularCourse extends CurricularCourse_Base {
         return false;
     }
 
-    public boolean isGradeSubmissionAvailableFor(ExecutionSemester executionSemester) {
-        return EvaluationSeason.all().anyMatch(s -> s.isGradeSubmissionAvailable(this, executionSemester));
-    }
-
     public ExecutionDegree getExecutionDegreeFor(AcademicInterval academicInterval) {
         return getDegreeCurricularPlan().getExecutionDegreeByAcademicInterval(academicInterval);
     }
@@ -1009,7 +1005,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 //    public boolean isActive(final ExecutionSemester executionSemester) {
 //        return getActiveDegreeModuleScopesInExecutionPeriod(executionSemester).size() > 0;
 //    }
-    
+
     public boolean isActive(final ExecutionInterval interval) {
         return getActiveDegreeModuleScopesInAcademicInterval(interval.getAcademicInterval()).size() > 0;
     }

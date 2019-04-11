@@ -95,40 +95,12 @@ public class EvaluationSeason extends EvaluationSeason_Base implements Comparabl
         return all().filter(EvaluationSeason::isImprovement);
     }
 
-    /**
-     * @deprecated Hazardous behaviour.
-     *             Random EvaluationSeason may be returned if multiple EvaluationSeasons are created with this property
-     */
-    @Deprecated
-    public static EvaluationSeason readSpecialAuthorization() {
-        return all().filter(EvaluationSeason::isSpecialAuthorization).findAny().orElse(null);
-    }
-
     public static Stream<EvaluationSeason> readSpecialAuthorizations() {
         return all().filter(EvaluationSeason::isSpecialAuthorization);
     }
 
     public static Stream<EvaluationSeason> all() {
         return EvaluationConfiguration.getInstance().getEvaluationSeasonSet().stream();
-    }
-
-    public Stream<OccupationPeriod> getExamPeriods(ExecutionDegree executionDegree, ExecutionSemester semester) {
-        return executionDegree.getPeriodReferences(null, semester == null ? null : semester.getSemester(), null)
-                .filter(r -> r.getEvaluationSeasonSet().contains(this)).distinct()
-                .map(OccupationPeriodReference::getOccupationPeriod);
-    }
-
-    public boolean isGradeSubmissionAvailable(CurricularCourse curricularCourse, ExecutionSemester semester) {
-        final ExecutionDegree executionDegree = curricularCourse.getExecutionDegreeFor(semester.getExecutionYear());
-        return executionDegree.getPeriodReferences(null, semester == null ? null : semester.getSemester(), null)
-                .filter(r -> r.getEvaluationSeasonSet().contains(this)).distinct()
-                .map(OccupationPeriodReference::getOccupationPeriod).anyMatch(o -> o.getPeriodInterval().containsNow());
-    }
-
-    public Stream<OccupationPeriod> getGradeSubmissionPeriods(ExecutionDegree executionDegree, ExecutionSemester semester) {
-        return executionDegree.getPeriodReferences(null, semester == null ? null : semester.getSemester(), null)
-                .filter(r -> r.getEvaluationSeasonSet().contains(this)).distinct()
-                .map(OccupationPeriodReference::getOccupationPeriod);
     }
 
     @Override

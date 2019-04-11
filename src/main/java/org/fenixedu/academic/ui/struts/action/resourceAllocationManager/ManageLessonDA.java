@@ -42,7 +42,6 @@ import org.fenixedu.academic.domain.LessonInstance;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.space.SpaceUtils;
-import org.fenixedu.academic.dto.GenericPair;
 import org.fenixedu.academic.dto.InfoLesson;
 import org.fenixedu.academic.dto.InfoRoom;
 import org.fenixedu.academic.dto.InfoRoomOccupationEditor;
@@ -124,9 +123,8 @@ public class ManageLessonDA extends FenixShiftAndExecutionCourseAndExecutionDegr
 
         final InfoLesson infoLesson = (InfoLesson) request.getAttribute(PresentationConstants.LESSON);
         final Lesson lesson = infoLesson.getLesson();
-        final Set<NextPossibleSummaryLessonsAndDatesBean> lessonDatesBean =
-                new TreeSet<NextPossibleSummaryLessonsAndDatesBean>(
-                        NextPossibleSummaryLessonsAndDatesBean.COMPARATOR_BY_DATE_AND_HOUR);
+        final Set<NextPossibleSummaryLessonsAndDatesBean> lessonDatesBean = new TreeSet<NextPossibleSummaryLessonsAndDatesBean>(
+                NextPossibleSummaryLessonsAndDatesBean.COMPARATOR_BY_DATE_AND_HOUR);
 
         for (final LessonInstance instance : infoLesson.getLesson().getLessonInstancesSet()) {
             final NextPossibleSummaryLessonsAndDatesBean bean =
@@ -213,19 +211,19 @@ public class ManageLessonDA extends FenixShiftAndExecutionCourseAndExecutionDegr
 
         InfoShift infoShift = (InfoShift) request.getAttribute(PresentationConstants.SHIFT);
         Shift shift = FenixFramework.getDomainObject(infoShift.getExternalId());
-        GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = shift.getExecutionCourse().getMaxLessonsPeriod();
+        final Interval maxLessonsInterval = shift.getExecutionCourse().getMaxLessonsInterval();
 
-        if (maxLessonsPeriod != null) {
-            request.setAttribute("executionDegreeLessonsStartDate", maxLessonsPeriod.getLeft().toString("dd/MM/yyyy"));
-            request.setAttribute("executionDegreeLessonsEndDate", maxLessonsPeriod.getRight().toString("dd/MM/yyyy"));
-            manageLessonForm.set("newBeginDate", maxLessonsPeriod.getLeft().toString("dd/MM/yyyy"));
-            manageLessonForm.set("newEndDate", maxLessonsPeriod.getRight().toString("dd/MM/yyyy"));
+        if (maxLessonsInterval != null) {
+            request.setAttribute("executionDegreeLessonsStartDate", maxLessonsInterval.getStart().toString("dd/MM/yyyy"));
+            request.setAttribute("executionDegreeLessonsEndDate", maxLessonsInterval.getEnd().toString("dd/MM/yyyy"));
+            manageLessonForm.set("newBeginDate", maxLessonsInterval.getStart().toString("dd/MM/yyyy"));
+            manageLessonForm.set("newEndDate", maxLessonsInterval.getEnd().toString("dd/MM/yyyy"));
             manageLessonForm.set("createLessonInstances", Boolean.TRUE);
 
         } else {
             ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("error.executionDegree.empty.lessonsPeriod", new ActionError(
-                    "error.executionDegree.empty.lessonsPeriod"));
+            actionErrors.add("error.executionDegree.empty.lessonsPeriod",
+                    new ActionError("error.executionDegree.empty.lessonsPeriod"));
             saveErrors(request, actionErrors);
             return mapping.findForward("EditShift");
         }
@@ -265,10 +263,10 @@ public class ManageLessonDA extends FenixShiftAndExecutionCourseAndExecutionDegr
         manageLessonForm.set("createLessonInstances", Boolean.TRUE);
 
         Lesson lesson = FenixFramework.getDomainObject(infoLesson.getExternalId());
-        GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = lesson.getShift().getExecutionCourse().getMaxLessonsPeriod();
-        if (maxLessonsPeriod != null) {
-            request.setAttribute("executionDegreeLessonsStartDate", maxLessonsPeriod.getLeft().toString("dd/MM/yyyy"));
-            request.setAttribute("executionDegreeLessonsEndDate", maxLessonsPeriod.getRight().toString("dd/MM/yyyy"));
+        final Interval maxLessonsInterval = lesson.getShift().getExecutionCourse().getMaxLessonsInterval();
+        if (maxLessonsInterval != null) {
+            request.setAttribute("executionDegreeLessonsStartDate", maxLessonsInterval.getStart().toString("dd/MM/yyyy"));
+            request.setAttribute("executionDegreeLessonsEndDate", maxLessonsInterval.getEnd().toString("dd/MM/yyyy"));
         }
 
         request.setAttribute("action", "edit");
@@ -373,9 +371,8 @@ public class ManageLessonDA extends FenixShiftAndExecutionCourseAndExecutionDegr
                 Boolean createLessonInstances = (Boolean) manageLessonForm.get("createLessonInstances");
 
                 try {
-                    lesson =
-                            EditLesson.run(infoLessonOld, weekDay, inicio, fim, frequency, infoRoomOccupation, infoShift,
-                                    newBeginDate, newEndDate, createLessonInstances);
+                    lesson = EditLesson.run(infoLessonOld, weekDay, inicio, fim, frequency, infoRoomOccupation, infoShift,
+                            newBeginDate, newEndDate, createLessonInstances);
 
                 } catch (DomainException domainException) {
                     actionErrors.add(domainException.getMessage(),
@@ -385,9 +382,8 @@ public class ManageLessonDA extends FenixShiftAndExecutionCourseAndExecutionDegr
 
             } else {
                 try {
-                    lesson =
-                            CreateLesson.run(weekDay, inicio, fim, frequency, infoRoomOccupation, infoShift, newBeginDate,
-                                    newEndDate);
+                    lesson = CreateLesson.run(weekDay, inicio, fim, frequency, infoRoomOccupation, infoShift, newBeginDate,
+                            newEndDate);
 
                 } catch (DomainException domainException) {
                     actionErrors.add(domainException.getMessage(),
@@ -489,11 +485,10 @@ public class ManageLessonDA extends FenixShiftAndExecutionCourseAndExecutionDegr
         }
 
         if (begining.getTime().getTime() >= end.getTime().getTime()) {
-            actionErrors.add(
-                    INVALID_TIME_INTERVAL,
-                    new ActionError(INVALID_TIME_INTERVAL, "" + begining.get(Calendar.HOUR_OF_DAY) + ":"
-                            + begining.get(Calendar.MINUTE) + beginMinAppend + " - " + end.get(Calendar.HOUR_OF_DAY) + ":"
-                            + end.get(Calendar.MINUTE) + endMinAppend));
+            actionErrors.add(INVALID_TIME_INTERVAL,
+                    new ActionError(INVALID_TIME_INTERVAL,
+                            "" + begining.get(Calendar.HOUR_OF_DAY) + ":" + begining.get(Calendar.MINUTE) + beginMinAppend + " - "
+                                    + end.get(Calendar.HOUR_OF_DAY) + ":" + end.get(Calendar.MINUTE) + endMinAppend));
         }
 
         if (weekday.getDiaSemana().intValue() < 1 || weekday.getDiaSemana().intValue() > 7) {

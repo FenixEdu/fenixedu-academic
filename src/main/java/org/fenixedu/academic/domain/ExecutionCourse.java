@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -57,7 +58,9 @@ import org.fenixedu.commons.StringNormalizer;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
+import org.joda.time.DateTime;
 import org.joda.time.Duration;
+import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
@@ -974,34 +977,40 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         super.setUnitCreditValue(unitCreditValue);
     }
 
+    public Interval getMaxLessonsInterval() {
+
+        final Collection<Interval> allIntervals =
+                getAssociatedCurricularCoursesSet().stream().map(cc -> cc.getExecutionDegreeFor(getExecutionYear()))
+                        .filter(Objects::nonNull).flatMap(ed -> ed.getPeriodLessons(getExecutionInterval()).stream())
+                        .map(p -> p.getIntervalWithNextPeriods()).collect(Collectors.toSet());
+
+        if (!allIntervals.isEmpty()) {
+            final DateTime start = allIntervals.stream().map(i -> i.getStart()).min(Comparator.naturalOrder()).get();
+            final DateTime end = allIntervals.stream().map(i -> i.getEnd()).max(Comparator.naturalOrder()).get();
+            return new Interval(start, end);
+        }
+
+        return null;
+    }
+
+    /**
+     * @deprecated use {@link #getMaxLessonsInterval()}
+     */
+    @Deprecated
     public GenericPair<YearMonthDay, YearMonthDay> getMaxLessonsPeriod() {
 
-        YearMonthDay minBeginDate = null, maxEndDate = null;
-        Integer semester = getExecutionPeriod().getSemester();
+        YearMonthDay minBeginDate = null;
+        YearMonthDay maxEndDate = null;
 
         for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
             final ExecutionDegree executionDegree = curricularCourse.getExecutionDegreeFor(getExecutionYear());
-            if (semester.intValue() == 1) {
-                final OccupationPeriod periodLessonsFirstSemester = executionDegree.getPeriodLessonsFirstSemester();
-                if (periodLessonsFirstSemester != null) {
-                    if (minBeginDate == null || minBeginDate.isAfter(periodLessonsFirstSemester.getStartYearMonthDay())) {
-                        minBeginDate = periodLessonsFirstSemester.getStartYearMonthDay();
-                    }
-                    if (maxEndDate == null
-                            || maxEndDate.isBefore(periodLessonsFirstSemester.getEndYearMonthDayWithNextPeriods())) {
-                        maxEndDate = periodLessonsFirstSemester.getEndYearMonthDayWithNextPeriods();
-                    }
+
+            for (final OccupationPeriod period : executionDegree.getPeriodLessons(getExecutionInterval())) {
+                if (minBeginDate == null || minBeginDate.isAfter(period.getStartYearMonthDay())) {
+                    minBeginDate = period.getStartYearMonthDay();
                 }
-            } else {
-                final OccupationPeriod periodLessonsSecondSemester = executionDegree.getPeriodLessonsSecondSemester();
-                if (periodLessonsSecondSemester != null) {
-                    if (minBeginDate == null || minBeginDate.isAfter(periodLessonsSecondSemester.getStartYearMonthDay())) {
-                        minBeginDate = periodLessonsSecondSemester.getStartYearMonthDay();
-                    }
-                    if (maxEndDate == null
-                            || maxEndDate.isBefore(periodLessonsSecondSemester.getEndYearMonthDayWithNextPeriods())) {
-                        maxEndDate = periodLessonsSecondSemester.getEndYearMonthDayWithNextPeriods();
-                    }
+                if (maxEndDate == null || maxEndDate.isBefore(period.getEndYearMonthDayWithNextPeriods())) {
+                    maxEndDate = period.getEndYearMonthDayWithNextPeriods();
                 }
             }
         }
@@ -1355,7 +1364,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
         });
         for (final ExecutionDegree executionDegree : getExecutionDegrees()) {
-            result.add(executionDegree.getPeriodLessons(getExecutionPeriod()));
+            result.addAll(executionDegree.getPeriodLessons(getExecutionInterval()));
         }
         return result;
     }
