@@ -1025,25 +1025,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return isBolonhaDegree() ? getSigla() + "0" + curricularYear.toString() : StringUtils.EMPTY;
     }
 
-    public List<StudentCurricularPlan> getLastStudentCurricularPlans() {
-        final List<StudentCurricularPlan> result = new ArrayList<>();
-
-        for (final DegreeCurricularPlan degreeCurricularPlan : this.getDegreeCurricularPlansSet()) {
-            for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlansSet()) {
-                if (studentCurricularPlan.getRegistration() == null) {
-                    continue;
-                }
-
-                if (!result.contains(studentCurricularPlan)) {
-
-                    result.add(studentCurricularPlan.getRegistration().getLastStudentDegreeCurricularPlansByDegree(this));
-                }
-            }
-        }
-
-        return new ArrayList<>(result);
-    }
-
     public List<StudentCurricularPlan> getStudentCurricularPlans(final ExecutionYear executionYear) {
         List<StudentCurricularPlan> result = new ArrayList<>();
         for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansForYear(executionYear)) {

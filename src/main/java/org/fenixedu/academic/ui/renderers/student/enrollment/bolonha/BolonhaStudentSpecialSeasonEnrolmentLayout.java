@@ -21,16 +21,17 @@ package org.fenixedu.academic.ui.renderers.student.enrollment.bolonha;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 
 public class BolonhaStudentSpecialSeasonEnrolmentLayout extends BolonhaStudentEnrolmentLayout {
 
     @Override
-    protected void generateCycleCourseGroupsToEnrol(final HtmlBlockContainer container,
-            final ExecutionSemester executionSemester, final StudentCurricularPlan studentCurricularPlan, int depth) {
+    protected void generateCycleCourseGroupsToEnrol(final HtmlBlockContainer container, final ExecutionSemester executionSemester,
+            final StudentCurricularPlan studentCurricularPlan, int depth) {
 
-        if (studentCurricularPlan.hasConcludedAnyInternalCycle()
+        if (hasConcludedAnyInternalCycle(studentCurricularPlan)
                 && studentCurricularPlan.getDegreeType().hasExactlyOneCycleType()) {
             return;
         }
@@ -38,11 +39,21 @@ public class BolonhaStudentSpecialSeasonEnrolmentLayout extends BolonhaStudentEn
         if (canPerformStudentEnrolments) {
             for (final CycleType cycleType : getAllCycleTypesToEnrolPreviousToFirstExistingCycle(studentCurricularPlan)) {
                 generateCourseGroupToEnroll(container,
-                        buildDegreeModuleToEnrolForCycle(studentCurricularPlan, cycleType, executionSemester), depth
-                                + getRenderer().getWidthDecreasePerLevel());
+                        buildDegreeModuleToEnrolForCycle(studentCurricularPlan, cycleType, executionSemester),
+                        depth + getRenderer().getWidthDecreasePerLevel());
 
             }
         }
+    }
+
+    private boolean hasConcludedAnyInternalCycle(final StudentCurricularPlan studentCurricularPlan) {
+        for (final CycleCurriculumGroup cycleCurriculumGroup : studentCurricularPlan.getInternalCycleCurriculumGrops()) {
+            if (cycleCurriculumGroup.isConcluded()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

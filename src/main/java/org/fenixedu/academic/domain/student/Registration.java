@@ -995,16 +995,6 @@ public class Registration extends Registration_Base {
         return students;
     }
 
-    final public Enrolment findEnrolmentByEnrolmentID(final String enrolmentID) {
-        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-            final Enrolment enrolment = studentCurricularPlan.findEnrolmentByEnrolmentID(enrolmentID);
-            if (enrolment != null) {
-                return enrolment;
-            }
-        }
-        return null;
-    }
-
     final public Set<ExecutionCourse> getAttendingExecutionCoursesForCurrentExecutionPeriod() {
         final Set<ExecutionCourse> result = new HashSet<>();
         for (final Attends attends : getAssociatedAttendsSet()) {
@@ -1977,17 +1967,6 @@ public class Registration extends Registration_Base {
             enrolments.addAll(scp.getDissertationEnrolments());
         }
         return enrolments;
-    }
-
-    final public StudentCurricularPlan getLastStudentDegreeCurricularPlansByDegree(final Degree degree) {
-        final SortedSet<StudentCurricularPlan> result = new TreeSet<>(StudentCurricularPlan.DATE_COMPARATOR);
-        for (DegreeCurricularPlan degreeCurricularPlan : this.getDegreeCurricularPlans()) {
-            if (degreeCurricularPlan.getDegree() == degree) {
-                result.add(this.getStudentCurricularPlan(degreeCurricularPlan));
-            }
-        }
-        return result.last();
-
     }
 
     final public ExternalEnrolment findExternalEnrolment(final Unit university, final ExecutionSemester period,
