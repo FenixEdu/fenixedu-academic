@@ -107,6 +107,7 @@ public class OccupationPeriodReference extends OccupationPeriodReference_Base {
         setOccupationPeriod(null);
         setExecutionDegree(null);
         setRootDomainObject(null);
+        setExecutionInterval(null);
         getEvaluationSeasonSet().forEach(s -> removeEvaluationSeason(s));
 
         deleteDomainObject();
