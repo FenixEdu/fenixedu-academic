@@ -200,39 +200,6 @@ public class CurricularCourse extends CurricularCourse_Base {
         setCurricularStage(curricularStage);
     }
 
-    /**
-     * - Edit Pre-Bolonha CurricularCourse
-     * 
-     * @deprecated This method sets attributes that are no longer used. Set the corresponding attributes in the
-     *             appropriate
-     *             {@link org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation CompetenceCourseInformation}
-     *             object.
-     */
-    public void edit(String name, String nameEn, String code, String acronym, Double weigth, Double credits, Double ectsCredits,
-            Integer enrolmentWeigth, Integer minimumValueForAcumulatedEnrollments, Integer maximumValueForAcumulatedEnrollments,
-            final Double theoreticalHours, final Double labHours, final Double praticalHours, final Double theoPratHours,
-            final GradeScale gradeScale) {
-        checkForCurricularCourseWithSameAttributes(getDegreeCurricularPlan(), name, code, acronym);
-        setName(name);
-        setNameEn(nameEn);
-        setCode(code);
-        setAcronym(acronym);
-        setWeigth(weigth);
-        setCredits(credits);
-        setEctsCredits(ectsCredits);
-
-        setEnrollmentWeigth(enrolmentWeigth);
-        setMinimumValueForAcumulatedEnrollments(minimumValueForAcumulatedEnrollments);
-        setMaximumValueForAcumulatedEnrollments(maximumValueForAcumulatedEnrollments);
-
-        setTheoreticalHours(theoreticalHours);
-        setLabHours(labHours);
-        setPraticalHours(praticalHours);
-        setTheoPratHours(theoPratHours);
-
-        super.setGradeScale(gradeScale);
-    }
-
     private void checkForCurricularCourseWithSameAttributes(DegreeCurricularPlan degreeCurricularPlan, String name, String code,
             String acronym) {
         for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {

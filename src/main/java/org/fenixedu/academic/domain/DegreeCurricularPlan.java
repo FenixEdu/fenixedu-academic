@@ -498,6 +498,20 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return result;
     }
 
+    private void addExecutionCoursesForExecutionPeriod(final Set<ExecutionCourse> executionCourses,
+            final ExecutionInterval executionInterval, final Set<Context> contexts) {
+        for (final Context context : contexts) {
+            final DegreeModule degreeModule = context.getChildDegreeModule();
+            if (degreeModule instanceof CurricularCourse) {
+                final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
+                executionCourses.addAll(curricularCourse.getExecutionCoursesByExecutionPeriod(executionInterval));
+            } else if (degreeModule instanceof CourseGroup) {
+                final CourseGroup courseGroup = (CourseGroup) degreeModule;
+                addExecutionCoursesForExecutionPeriod(executionCourses, executionInterval, courseGroup.getChildContextsSet());
+            }
+        }
+    }
+
     /**
      * @deprecated use {@link #getExecutionCoursesByExecutionInterval(ExecutionInterval)}
      */
@@ -515,19 +529,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return degreeModuleScopes;
     }
 
-    public Set<DegreeModuleScope> getDegreeModuleScopesFor(final Integer year, final Integer semester) {
-        final Set<DegreeModuleScope> result =
-                new TreeSet<>(DegreeModuleScope.COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME);
-
-        for (final DegreeModuleScope each : getDegreeModuleScopes()) {
-            if (each.isActive(year, semester)) {
-                result.add(each);
-            }
-        }
-
-        return result;
-    }
-
     public Set<DegreeModuleScope> getDegreeModuleScopesFor(final ExecutionYear executionYear) {
         final Set<DegreeModuleScope> result =
                 new TreeSet<>(DegreeModuleScope.COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME);
@@ -541,21 +542,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return result;
     }
 
-    private void addExecutionCoursesForExecutionPeriod(final Set<ExecutionCourse> executionCourses,
-            final ExecutionInterval executionInterval, final Set<Context> contexts) {
-        for (final Context context : contexts) {
-            final DegreeModule degreeModule = context.getChildDegreeModule();
-            if (degreeModule instanceof CurricularCourse) {
-                final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
-                executionCourses.addAll(curricularCourse.getExecutionCoursesByExecutionPeriod(executionInterval));
-            } else if (degreeModule instanceof CourseGroup) {
-                final CourseGroup courseGroup = (CourseGroup) degreeModule;
-                addExecutionCoursesForExecutionPeriod(executionCourses, executionInterval, courseGroup.getChildContextsSet());
-            }
-        }
-    }
-
-    public List<ExecutionCourse> getExecutionCoursesByExecutionPeriodAndSemesterAndYear(final ExecutionSemester executionSemester,
+    public List<ExecutionCourse> getExecutionCoursesByExecutionPeriodAndSemesterAndYear(final ExecutionInterval interval,
             final Integer curricularYear, final Integer semester) {
 
         List<ExecutionCourse> result = new ArrayList<>();
@@ -564,7 +551,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 if (degreeModuleScope.getCurricularSemester().equals(semester)
                         && degreeModuleScope.getCurricularYear().equals(curricularYear)) {
                     for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
-                        if (executionCourse.getExecutionInterval().equals(executionSemester)) {
+                        if (executionCourse.getExecutionInterval().equals(interval)) {
                             result.add(executionCourse);
                         }
                     }
@@ -641,14 +628,14 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return this.getCurricularCourses((ExecutionYear) null);
     }
 
-    public Set<CurricularCourse> getCurricularCourses(final ExecutionSemester executionSemester) {
+    public Set<CurricularCourse> getCurricularCourses(final ExecutionInterval executionInterval) {
         final Set<CurricularCourse> curricularCourses = new HashSet<>();
         for (final CurricularCourse curricularCourse : super.getCurricularCoursesSet()) {
-            if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(null, null, executionSemester)) {
+            if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(null, null, executionInterval)) {
                 curricularCourses.add(curricularCourse);
             }
         }
-        final ExecutionYear executionYear = executionSemester.getExecutionYear();
+        final ExecutionYear executionYear = executionInterval.getExecutionYear();
         for (final DegreeModule degreeModule : getDcpDegreeModules(CurricularCourse.class, executionYear)) {
             curricularCourses.add((CurricularCourse) degreeModule);
         }
@@ -720,22 +707,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return result;
     }
 
-    /**
-     * Used to create a CurricularCourse to non box structure
-     *
-     * @deprecated Curricular courses should no longer be created without a competence.
-     */
-    @Deprecated
-    public CurricularCourse createCurricularCourse(final String name, final String code, final String acronym,
-            final Boolean enrolmentAllowed, final CurricularStage curricularStage) {
-        return new CurricularCourse(this, name, code, acronym, enrolmentAllowed, curricularStage);
-    }
-
-    public CourseGroup createCourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
-            final ExecutionSemester begin, final ExecutionSemester end) {
-        return new CourseGroup(parentCourseGroup, name, nameEn, begin, end, null);
-    }
-
     public CourseGroup createCourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
             final ExecutionSemester begin, final ExecutionSemester end, final ProgramConclusion programConclusion) {
         return new CourseGroup(parentCourseGroup, name, nameEn, begin, end, programConclusion);
@@ -781,11 +752,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public List<DegreeModule> getDcpDegreeModules(final Class<? extends DegreeModule> clazz, final ExecutionYear executionYear) {
         return new ArrayList<>(getRoot().collectAllChildDegreeModules(clazz, executionYear));
-    }
-
-    public List<DegreeModule> getDcpDegreeModules(final Class<? extends DegreeModule> clazz,
-            final ExecutionSemester executionSemester) {
-        return new ArrayList<>(getRoot().collectAllChildDegreeModules(clazz, executionSemester));
     }
 
     public List<List<DegreeModule>> getDcpDegreeModulesIncludingFullPath(final Class<? extends DegreeModule> clazz,
@@ -1382,20 +1348,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         } else {
             setInitialDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
         }
-    }
-
-    public Set<CurricularCourse> getCurricularCoursesWithoutExecutionCourseFor(final ExecutionSemester semester) {
-        Set<CurricularCourse> curricularCourses = getCurricularCourses(semester);
-
-        Set<CurricularCourse> result = new HashSet<>();
-
-        for (CurricularCourse curricularCourse : curricularCourses) {
-            if (curricularCourse.getExecutionCoursesByExecutionPeriod(semester).isEmpty()) {
-                result.add(curricularCourse);
-            }
-        }
-
-        return result;
     }
 
     public int getDurationInYears() {

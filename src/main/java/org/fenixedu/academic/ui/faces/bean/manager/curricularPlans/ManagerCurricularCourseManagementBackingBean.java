@@ -31,14 +31,8 @@ import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.GradeScale;
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.commons.CurricularCourseByExecutionSemesterBean;
-import org.fenixedu.academic.predicate.IllegalDataAccessException;
-import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
-import org.fenixedu.academic.service.services.manager.CreateOldCurricularCourse;
-import org.fenixedu.academic.service.services.manager.EditOldCurricularCourse;
 import org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularPlans.CurricularCourseManagementBackingBean;
-import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
@@ -210,51 +204,6 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
 
     public void setMinimumValueForAcumulatedEnrollments(Integer minimumValueForAcumulatedEnrollments) {
         this.minimumValueForAcumulatedEnrollments = minimumValueForAcumulatedEnrollments;
-    }
-
-    @Deprecated
-    public String createOldCurricularCourse() {
-        try {
-            checkCourseGroup();
-            checkCurricularSemesterAndYear();
-
-            CreateOldCurricularCourse.run(getDegreeCurricularPlanID(), getCourseGroupID(), getName(), getNameEn(), getCode(),
-                    getAcronym(), getMinimumValueForAcumulatedEnrollments(), getMaximumValueForAcumulatedEnrollments(),
-                    getWeight(), getEnrollmentWeigth(), getCredits(), getEctsCredits(), getCurricularYearID(),
-                    getCurricularSemesterID(), getBeginExecutionPeriodID(), getEndExecutionPeriodID(), getGradeScale());
-        } catch (FenixActionException e) {
-            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
-            return "";
-        } catch (IllegalDataAccessException e) {
-            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "error.notAuthorized"));
-            return "buildCurricularPlan";
-        } catch (FenixServiceException e) {
-            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
-            return "";
-        } catch (DomainException e) {
-            this.addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
-            return "";
-        } catch (Exception e) {
-            this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, "general.error"));
-            return "buildCurricularPlan";
-        }
-        addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "curricularCourseCreated"));
-        return "buildCurricularPlan";
-    }
-
-    @Deprecated
-    public String editOldCurricularCourse() {
-        try {
-            EditOldCurricularCourse.run(getCurricularCourseID(), getName(), getNameEn(), getCode(), getAcronym(),
-                    getMinimumValueForAcumulatedEnrollments(), getMaximumValueForAcumulatedEnrollments(), getWeight(),
-                    getEnrollmentWeigth(), getCredits(), getEctsCredits(), getTheoreticalHours(), getLabHours(),
-                    getPraticalHours(), getTheoPratHours(), getGradeScale());
-            setContextID(null); // resetContextID
-        } catch (FenixServiceException e) {
-            addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
-        }
-        addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "curricularCourseEdited"));
-        return "";
     }
 
     @Override

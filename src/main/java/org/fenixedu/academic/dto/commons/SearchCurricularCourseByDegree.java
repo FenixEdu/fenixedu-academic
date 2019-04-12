@@ -26,14 +26,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.AcademicProgram;
-import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.dto.academicAdministration.DegreeByExecutionYearBean;
 import org.fenixedu.bennu.core.security.Authenticate;
 
@@ -121,9 +119,9 @@ public class SearchCurricularCourseByDegree implements Serializable {
         @Override
         public Object provide(Object source, Object currentValue) {
 
-            Set<AcademicProgram> programs =
-                    AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES,
-                            Authenticate.getUser()).collect(Collectors.toSet());
+            Set<AcademicProgram> programs = AcademicAccessRule
+                    .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES, Authenticate.getUser())
+                    .collect(Collectors.toSet());
 
             final SearchCurricularCourseByDegree bean = (SearchCurricularCourseByDegree) source;
             final List<DegreeByExecutionYearBean> result = new ArrayList<DegreeByExecutionYearBean>();
@@ -188,44 +186,4 @@ public class SearchCurricularCourseByDegree implements Serializable {
         }
     }
 
-    static public class SearchCurricularCourseCurricularCoursesProvider implements DataProvider {
-
-        @Override
-        public Object provide(Object source, Object currentValue) {
-            final SearchCurricularCourseByDegree bean = (SearchCurricularCourseByDegree) source;
-            if (bean.hasDegreeBean() && bean.hasDegreeCurricularPlan()) {
-                return getSortedCurricularCourses(bean);
-            }
-            return Collections.<DegreeCurricularPlan> emptyList();
-        }
-
-        private List<CurricularCourseByExecutionSemesterBean> getSortedCurricularCourses(final SearchCurricularCourseByDegree bean) {
-            final DegreeCurricularPlan dcp = bean.getDegreeCurricularPlan();
-            final List<CurricularCourseByExecutionSemesterBean> result = new ArrayList<CurricularCourseByExecutionSemesterBean>();
-
-            for (final DegreeModule degreeModule : dcp.getDcpDegreeModules(CurricularCourse.class, bean.getExecutionSemester())) {
-                result.add(new CurricularCourseByExecutionSemesterBean((CurricularCourse) degreeModule, bean
-                        .getExecutionSemester()));
-            }
-
-            Collections.sort(result);
-            return result;
-        }
-
-        @Override
-        public Converter getConverter() {
-            return new BiDirectionalConverter() {
-
-                @Override
-                public Object convert(Class type, Object value) {
-                    return CurricularCourseByExecutionSemesterBean.buildFrom((String) value);
-                }
-
-                @Override
-                public String deserialize(Object object) {
-                    return (object == null) ? "" : ((CurricularCourseByExecutionSemesterBean) object).getKey();
-                }
-            };
-        }
-    }
 }
