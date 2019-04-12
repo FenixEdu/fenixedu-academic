@@ -43,9 +43,7 @@ import org.fenixedu.academic.domain.degreeStructure.RegimeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.log.CurriculumLineLog;
 import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
-import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
-import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.commons.i18n.LocalizedString;
@@ -433,34 +431,16 @@ public class CurricularCourse extends CurricularCourse_Base {
         return getEctsCredits();
     }
 
-    final public Double getWeight(ExecutionSemester semester) {
-        return getEctsCredits(semester);
-    }
-
-    private List<Enrolment> getActiveEnrollments(ExecutionSemester executionSemester, Registration registration) {
-        final List<Enrolment> results = new ArrayList<Enrolment>();
-        for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-            if (curriculumModule.isEnrolment()) {
-                Enrolment enrollment = (Enrolment) curriculumModule;
-                boolean filters = true;
-                filters &= !enrollment.isAnnulled();
-                filters &= executionSemester == null || enrollment.getExecutionPeriod().equals(executionSemester);
-                filters &= registration == null || enrollment.getStudentCurricularPlan().getRegistration().equals(registration);
-
-                if (filters) {
-                    results.add(enrollment);
-                }
-            }
-        }
-        return results;
+    final public Double getWeight(ExecutionInterval executionInterval) {
+        return getEctsCredits(executionInterval);
     }
 
     @Deprecated
-    private void addActiveEnrollments(final Collection<Enrolment> enrolments, final ExecutionSemester executionSemester) {
+    private void addActiveEnrollments(final Collection<Enrolment> enrolments, final ExecutionInterval executionInterval) {
         for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
             if (curriculumModule.isEnrolment()) {
                 final Enrolment enrolment = (Enrolment) curriculumModule;
-                if (!enrolment.isAnnulled() && enrolment.getExecutionPeriod() == executionSemester) {
+                if (!enrolment.isAnnulled() && enrolment.getExecutionInterval() == executionInterval) {
                     enrolments.add(enrolment);
                 }
             }
@@ -471,9 +451,9 @@ public class CurricularCourse extends CurricularCourse_Base {
      * @deprecated {@link #getEnrolmentsByAcademicInterval(AcademicInterval)}
      */
     @Deprecated
-    public List<Enrolment> getEnrolmentsByExecutionPeriod(final ExecutionSemester executionSemester) {
+    public List<Enrolment> getEnrolmentsByExecutionPeriod(final ExecutionInterval executionInterval) {
         List<Enrolment> result = new ArrayList<Enrolment>();
-        addActiveEnrollments(result, executionSemester);
+        addActiveEnrollments(result, executionInterval);
         return result;
     }
 
@@ -505,10 +485,6 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
 
-    public List<Enrolment> getEnrolmentsByYear(String year) {
-        return getEnrolmentsByExecutionYear(ExecutionYear.readExecutionYearByName(year));
-    }
-
     public List<Enrolment> getEnrolmentsByExecutionYear(ExecutionYear executionYear) {
         List<Enrolment> result = new ArrayList<Enrolment>();
         for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
@@ -522,43 +498,6 @@ public class CurricularCourse extends CurricularCourse_Base {
         return result;
     }
 
-    public List<Enrolment> getActiveEnrollments(Registration registration) {
-        return getActiveEnrollments(null, registration);
-    }
-
-    public List<Enrolment> getActiveEnrollments() {
-        return getActiveEnrollments(null, null);
-    }
-
-    public List<Enrolment> getActiveEnrollments(ExecutionSemester executionSemester) {
-        List<Enrolment> enrolments = new ArrayList<Enrolment>();
-        addActiveEnrollments(enrolments, executionSemester);
-        return enrolments;
-    }
-
-    public List<Dismissal> getDismissals(ExecutionSemester executionSemester) {
-        List<Dismissal> dismissals = new ArrayList<Dismissal>();
-        for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-            if (curriculumModule.isDismissal()) {
-                final Dismissal dismissal = (Dismissal) curriculumModule;
-                if (dismissal.getExecutionPeriod() == executionSemester) {
-                    dismissals.add(dismissal);
-                }
-            }
-        }
-        return dismissals;
-    }
-
-    public List<Enrolment> getActiveEnrollments(ExecutionYear executionYear) {
-        List<Enrolment> results = new ArrayList<Enrolment>();
-
-        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
-            results.addAll(getActiveEnrollments(executionSemester));
-        }
-
-        return results;
-    }
-
     protected String getBaseName() {
         return super.getName();
     }
@@ -568,8 +507,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     @Override
-    public String getName(ExecutionSemester period) {
-        return getCompetenceCourse() != null ? getCompetenceCourse().getName(period) : null;
+    public String getName(ExecutionInterval interval) {
+        return getCompetenceCourse() != null ? getCompetenceCourse().getName(interval) : null;
     }
 
     @Override
@@ -578,8 +517,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     @Override
-    public String getNameEn(ExecutionSemester period) {
-        return getCompetenceCourse() != null ? getCompetenceCourse().getNameEn(period) : null;
+    public String getNameEn(ExecutionInterval interval) {
+        return getCompetenceCourse() != null ? getCompetenceCourse().getNameEn(interval) : null;
     }
 
     @Override
@@ -587,8 +526,8 @@ public class CurricularCourse extends CurricularCourse_Base {
         return getNameEn(null);
     }
 
-    public String getAcronym(ExecutionSemester period) {
-        return getCompetenceCourse() != null ? getCompetenceCourse().getAcronym(period) : null;
+    public String getAcronym(ExecutionInterval interval) {
+        return getCompetenceCourse() != null ? getCompetenceCourse().getAcronym(interval) : null;
     }
 
     @Override
@@ -596,16 +535,12 @@ public class CurricularCourse extends CurricularCourse_Base {
         return getAcronym(null);
     }
 
-    public DepartmentUnit getDepartmentUnit(ExecutionSemester semester) {
-        return getCompetenceCourse().getDepartmentUnit(semester);
-    }
-
     public DepartmentUnit getDepartmentUnit() {
         return getCompetenceCourse().getDepartmentUnit();
     }
 
-    public Boolean getBasic(ExecutionSemester period) {
-        return getCompetenceCourse() != null && getCompetenceCourse().isBasic(period);
+    public Boolean getBasic(ExecutionInterval interval) {
+        return getCompetenceCourse() != null && getCompetenceCourse().isBasic(interval);
     }
 
     @Override
@@ -613,74 +548,40 @@ public class CurricularCourse extends CurricularCourse_Base {
         return getBasic(null);
     }
 
-    public String getObjectives(ExecutionSemester period) {
-        if (getCompetenceCourse() != null) {
-            return getCompetenceCourse().getObjectives(period);
-        }
-        return null;
-    }
-
     public String getObjectives() {
-        if (getCompetenceCourse() != null) {
-            return getCompetenceCourse().getObjectives();
-        }
-        return null;
-    }
-
-    public String getObjectivesEn(ExecutionSemester period) {
-        if (getCompetenceCourse() != null) {
-            return getCompetenceCourse().getObjectivesEn(period);
-        }
-        return null;
+        return getCompetenceCourse() != null ? getCompetenceCourse().getObjectives() : null;
     }
 
     public String getObjectivesEn() {
-        if (getCompetenceCourse() != null) {
-            return getCompetenceCourse().getObjectivesEn();
-        }
-        return null;
+        return getCompetenceCourse() != null ? getCompetenceCourse().getObjectivesEn() : null;
     }
 
-    public LocalizedString getObjectivesI18N(ExecutionSemester period) {
-        if (getCompetenceCourse() != null) {
-            return getCompetenceCourse().getObjectivesI18N(period);
-        }
-        return new LocalizedString();
-    }
-
-    public String getProgram(ExecutionSemester period) {
-        if (getCompetenceCourse() != null) {
-            return getCompetenceCourse().getProgram(period);
-        }
-        return null;
+    public LocalizedString getObjectivesI18N(ExecutionInterval interval) {
+        return getCompetenceCourse() != null ? getCompetenceCourse().getObjectivesI18N(interval) : new LocalizedString();
     }
 
     public String getProgram() {
-        if (getCompetenceCourse() != null) {
-            return getCompetenceCourse().getProgram();
-        }
-        return null;
-    }
-
-    public String getProgramEn(ExecutionSemester period) {
-        if (getCompetenceCourse() != null) {
-            return getCompetenceCourse().getProgramEn(period);
-        }
-        return null;
+        return getCompetenceCourse() != null ? getCompetenceCourse().getProgram() : null;
     }
 
     public String getProgramEn() {
-        if (getCompetenceCourse() != null) {
-            return getCompetenceCourse().getProgramEn();
-        }
-        return null;
+        return getCompetenceCourse() != null ? getCompetenceCourse().getProgramEn() : null;
     }
 
-    public LocalizedString getProgramI18N(ExecutionSemester period) {
-        if (getCompetenceCourse() != null) {
-            return getCompetenceCourse().getProgramI18N(period);
-        }
-        return new LocalizedString();
+    public LocalizedString getProgramI18N(ExecutionInterval interval) {
+        return getCompetenceCourse() != null ? getCompetenceCourse().getProgramI18N(interval) : new LocalizedString();
+    }
+
+    public String getEvaluationMethod() {
+        return getCompetenceCourse() != null ? getCompetenceCourse().getEvaluationMethod() : null;
+    }
+
+    public String getEvaluationMethodEn() {
+        return getCompetenceCourse() != null ? getCompetenceCourse().getEvaluationMethodEn() : null;
+    }
+
+    public LocalizedString getEvaluationMethodI18N(ExecutionInterval interval) {
+        return getCompetenceCourse() != null ? getCompetenceCourse().getEvaluationMethodI18N(interval) : new LocalizedString();
     }
 
     public LocalizedString getPrerequisitesI18N() {
@@ -688,59 +589,9 @@ public class CurricularCourse extends CurricularCourse_Base {
                 .with(org.fenixedu.academic.util.LocaleUtils.EN, getPrerequisitesEn());
     }
 
-    public String getEvaluationMethod(ExecutionSemester period) {
-        if (getCompetenceCourse() != null) {
-            return getCompetenceCourse().getEvaluationMethod(period);
-        }
-        if (hasAnyExecutionCourseIn(period)) {
-            return getExecutionCoursesByExecutionPeriod(period).iterator().next().getEvaluationMethodText();
-        } else {
-            return null;
-        }
-    }
-
-    public String getEvaluationMethod() {
-        if (getCompetenceCourse() != null) {
-            return getCompetenceCourse().getEvaluationMethod();
-        }
-        return null;
-    }
-
-    public String getEvaluationMethodEn(ExecutionSemester period) {
-        if (getCompetenceCourse() != null) {
-            return getCompetenceCourse().getEvaluationMethodEn(period);
-        }
-        if (hasAnyExecutionCourseIn(period)) {
-            return getExecutionCoursesByExecutionPeriod(period).iterator().next().getEvaluationMethodTextEn();
-        } else {
-            return null;
-        }
-    }
-
-    public String getEvaluationMethodEn() {
-        if (getCompetenceCourse() != null) {
-            return getCompetenceCourse().getEvaluationMethodEn();
-        }
-        return null;
-    }
-
-    public LocalizedString getEvaluationMethodI18N(ExecutionSemester period) {
-        if (getCompetenceCourse() != null) {
-            return new LocalizedString(org.fenixedu.academic.util.LocaleUtils.PT,
-                    getCompetenceCourse().getEvaluationMethod(period)).with(org.fenixedu.academic.util.LocaleUtils.EN,
-                            getCompetenceCourse().getEvaluationMethodEn(period));
-        }
-        List<ExecutionCourse> courses = getExecutionCoursesByExecutionPeriod(period);
-        if (courses.isEmpty()) {
-            return new LocalizedString();
-        }
-        return new LocalizedString(org.fenixedu.academic.util.LocaleUtils.PT, courses.iterator().next().getEvaluationMethodText())
-                .with(org.fenixedu.academic.util.LocaleUtils.EN, courses.iterator().next().getEvaluationMethodTextEn());
-    }
-
-    public RegimeType getRegime(final ExecutionSemester period) {
+    public RegimeType getRegime(final ExecutionInterval interval) {
         final CompetenceCourse competenceCourse = getCompetenceCourse();
-        return competenceCourse == null ? null : competenceCourse.getRegime(period);
+        return competenceCourse == null ? null : competenceCourse.getRegime(interval);
     }
 
     public RegimeType getRegime(final ExecutionYear executionYear) {
@@ -763,21 +614,6 @@ public class CurricularCourse extends CurricularCourse_Base {
         return getRegime(executionYear) != null;
     }
 
-    /**
-     * Maintened for legacy code compatibility purposes only. Makes no sense to
-     * check an Enrolment concept in a CurricularCourse.
-     * 
-     * @return true if CurricularCourseType checks accordingly
-     */
-    @Deprecated
-    final public boolean isPropaedeutic() {
-        // if (isBolonhaDegree()) {
-        // throw new
-        // DomainException("CurricularCourse.must.check.propaedeutic.status.in.enrolment.in.bolonha.degrees");
-        // }
-        return getType().equals(CurricularCourseType.P_TYPE_COURSE);
-    }
-
     public boolean isOptionalCurricularCourse() {
         return false;
     }
@@ -785,10 +621,6 @@ public class CurricularCourse extends CurricularCourse_Base {
     @Override
     final public boolean isOptional() {
         return getType() == CurricularCourseType.OPTIONAL_COURSE;
-    }
-
-    final public boolean isTFC() {
-        return getType() == CurricularCourseType.TFC_COURSE;
     }
 
     @Override
@@ -814,11 +646,6 @@ public class CurricularCourse extends CurricularCourse_Base {
                 && getCompetenceCourse().getAssociatedCurricularCoursesSet().contains(oldCurricularCourse));
     }
 
-    public boolean hasScopeForCurricularYear(final Integer curricularYear, final ExecutionSemester executionSemester) {
-        return getParentContextsByExecutionSemester(executionSemester).stream()
-                .anyMatch(c -> c.getCurricularYear().equals(curricularYear));
-    }
-
     public boolean hasScopeInGivenSemesterAndCurricularYearInDCP(CurricularYear curricularYear,
             DegreeCurricularPlan degreeCurricularPlan, final ExecutionInterval executionInterval) {
 
@@ -838,58 +665,6 @@ public class CurricularCourse extends CurricularCourse_Base {
         return getDegreeCurricularPlan().getExecutionDegreeByYear(executionYear);
     }
 
-    private int countAssociatedStudentsByExecutionPeriodAndEnrolmentNumber(ExecutionSemester executionSemester,
-            int enrolmentNumber) {
-        int curricularCourseAndExecutionPeriodAssociatedStudents = 0;
-
-        for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-            if (curriculumModule.isEnrolment()) {
-                Enrolment enrolmentsEntry = (Enrolment) curriculumModule;
-                if (enrolmentsEntry.getExecutionPeriod() == executionSemester) {
-
-                    StudentCurricularPlan studentCurricularPlanEntry = enrolmentsEntry.getStudentCurricularPlan();
-                    int numberOfEnrolmentsForThatCurricularCourseAndExecutionPeriod = 0;
-
-                    for (Enrolment enrolmentsFromStudentCPEntry : studentCurricularPlanEntry.getEnrolmentsSet()) {
-                        if (enrolmentsFromStudentCPEntry.getCurricularCourse() == this
-                                && (enrolmentsFromStudentCPEntry.getExecutionPeriod().compareTo(executionSemester) <= 0)) {
-                            ++numberOfEnrolmentsForThatCurricularCourseAndExecutionPeriod;
-                        }
-                    }
-
-                    if (numberOfEnrolmentsForThatCurricularCourseAndExecutionPeriod == enrolmentNumber) {
-                        curricularCourseAndExecutionPeriodAssociatedStudents++;
-                    }
-                }
-            }
-        }
-
-        return curricularCourseAndExecutionPeriodAssociatedStudents;
-    }
-
-    public Integer getTotalEnrolmentStudentNumber(ExecutionSemester executionSemester) {
-        int curricularCourseAndExecutionPeriodStudentNumber = 0;
-
-        for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-            if (curriculumModule.isEnrolment()) {
-                Enrolment enrolmentsEntry = (Enrolment) curriculumModule;
-                if (enrolmentsEntry.getExecutionPeriod() == executionSemester) {
-                    curricularCourseAndExecutionPeriodStudentNumber++;
-                }
-            }
-        }
-
-        return curricularCourseAndExecutionPeriodStudentNumber;
-    }
-
-    public Integer getFirstTimeEnrolmentStudentNumber(ExecutionSemester executionSemester) {
-        return countAssociatedStudentsByExecutionPeriodAndEnrolmentNumber(executionSemester, 1);
-    }
-
-    public Integer getSecondTimeEnrolmentStudentNumber(ExecutionSemester executionSemester) {
-        return getTotalEnrolmentStudentNumber(executionSemester) - getFirstTimeEnrolmentStudentNumber(executionSemester);
-    }
-
     public boolean isActive(final ExecutionYear executionYear) {
         for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
             if (isActive(executionSemester)) {
@@ -907,16 +682,8 @@ public class CurricularCourse extends CurricularCourse_Base {
         return getParentContextsSet().stream().anyMatch(ctx -> ctx.isValid(interval.getAcademicInterval()));
     }
 
-    public boolean hasEnrolmentForPeriod(final ExecutionSemester executionSemester) {
-        for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-            if (curriculumModule.isEnrolment()) {
-                final Enrolment enrolment = (Enrolment) curriculumModule;
-                if (!enrolment.isAnnulled() && enrolment.getExecutionPeriod() == executionSemester) {
-                    return true;
-                }
-            }
-        }
-        return false;
+    public boolean isActive(final ExecutionInterval interval, final Integer curricularYear) {
+        return getParentContexts(interval).stream().anyMatch(c -> c.getCurricularYear().equals(curricularYear));
     }
 
     @Override

@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain.degreeStructure;
 
 import java.util.List;
 
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
 import org.fenixedu.academic.domain.curricularRules.AnyCurricularCourse;
@@ -95,17 +96,17 @@ public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
     }
 
     @Override
-    public LocalizedString getObjectivesI18N(ExecutionSemester period) {
+    public LocalizedString getObjectivesI18N(ExecutionInterval interval) {
         return new LocalizedString();
     }
 
     @Override
-    public LocalizedString getProgramI18N(ExecutionSemester period) {
+    public LocalizedString getProgramI18N(ExecutionInterval interval) {
         return new LocalizedString();
     }
 
     @Override
-    public LocalizedString getEvaluationMethodI18N(ExecutionSemester period) {
+    public LocalizedString getEvaluationMethodI18N(ExecutionInterval interval) {
         return new LocalizedString();
     }
 
@@ -120,12 +121,12 @@ public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
     }
 
     @Override
-    public String getName(ExecutionSemester period) {
+    public String getName(ExecutionInterval interval) {
         return getBaseName();
     }
 
     @Override
-    public String getNameEn(ExecutionSemester period) {
+    public String getNameEn(ExecutionInterval interval) {
         return getBaseNameEn();
     }
 

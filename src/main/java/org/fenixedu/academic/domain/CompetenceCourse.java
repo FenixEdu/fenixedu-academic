@@ -280,7 +280,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
             }
             result = information;
         }
-        
+
         // if no result found and no explicit interval specified, return first information to attempt more null safety
         if (result == null && interval == null && !orderedInformations.isEmpty()) {
             return orderedInformations.get(0);
@@ -776,6 +776,23 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         String programEn = getProgramEn(interval);
         if (programEn != null && programEn.length() > 0) {
             LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.EN, programEn);
+        }
+        return LocalizedString;
+    }
+
+    public LocalizedString getEvaluationMethodI18N() {
+        return getEvaluationMethodI18N(null);
+    }
+
+    public LocalizedString getEvaluationMethodI18N(ExecutionInterval interval) {
+        LocalizedString LocalizedString = new LocalizedString();
+        String evaluationMethod = getEvaluationMethod(interval);
+        if (evaluationMethod != null && evaluationMethod.length() > 0) {
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.PT, evaluationMethod);
+        }
+        String evaluationMethodEn = getEvaluationMethodEn(interval);
+        if (evaluationMethodEn != null && evaluationMethodEn.length() > 0) {
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.EN, evaluationMethodEn);
         }
         return LocalizedString;
     }

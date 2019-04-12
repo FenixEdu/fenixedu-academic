@@ -1041,14 +1041,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return null;
     }
 
-    public String getEvaluationMethodText() {
-        return !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
-    }
-
-    public String getEvaluationMethodTextEn() {
-        return !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
-    }
-
     public Set<ExecutionCourseForum> getForuns() {
         return getForumSet();
     }

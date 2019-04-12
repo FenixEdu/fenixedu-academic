@@ -29,6 +29,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections.Predicate;
 import org.fenixedu.academic.domain.CurricularCourse;
@@ -179,11 +180,11 @@ abstract public class DegreeModule extends DegreeModule_Base {
         return getNameI18N((ExecutionSemester) null);
     }
 
-    protected String getName(final ExecutionSemester executionSemester) {
+    protected String getName(final ExecutionInterval executionInterval) {
         return getName();
     }
 
-    protected String getNameEn(final ExecutionSemester executionSemester) {
+    protected String getNameEn(final ExecutionInterval executionInterval) {
         return getNameEn();
     }
 
@@ -318,6 +319,11 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
     private boolean isCurricularRuleValid(final ICurricularRule curricularRule, final ExecutionYear executionYear) {
         return executionYear == null || curricularRule.isValid(executionYear);
+    }
+
+    public List<Context> getParentContexts(final ExecutionInterval interval) {
+        return getParentContextsSet().stream().filter(c -> interval == null || c.isValid(interval.getAcademicInterval()))
+                .collect(Collectors.toList());
     }
 
     public List<Context> getParentContextsByExecutionYear(final ExecutionYear executionYear) {

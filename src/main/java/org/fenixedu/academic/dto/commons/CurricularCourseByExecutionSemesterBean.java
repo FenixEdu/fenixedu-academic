@@ -27,7 +27,8 @@ import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
 
 import pt.ist.fenixframework.FenixFramework;
 
-public class CurricularCourseByExecutionSemesterBean implements Serializable, Comparable<CurricularCourseByExecutionSemesterBean> {
+public class CurricularCourseByExecutionSemesterBean
+        implements Serializable, Comparable<CurricularCourseByExecutionSemesterBean> {
 
     private CurricularCourse curricularCourse;
     private ExecutionSemester executionSemester;
@@ -86,7 +87,8 @@ public class CurricularCourseByExecutionSemesterBean implements Serializable, Co
     }
 
     public DepartmentUnit getDepartmentUnit() {
-        return getCurricularCourse().getDepartmentUnit(getExecutionSemester());
+        return getCurricularCourse().getCompetenceCourse() == null ? null : getCurricularCourse().getCompetenceCourse()
+                .getDepartmentUnit(getExecutionSemester());
     }
 
     public Double getWeight() {
@@ -94,32 +96,39 @@ public class CurricularCourseByExecutionSemesterBean implements Serializable, Co
     }
 
     public String getObjectives() {
-        return getCurricularCourse().getObjectives(getExecutionSemester());
+        return getCurricularCourse().getCompetenceCourse() == null ? null : getCurricularCourse().getCompetenceCourse()
+                .getObjectives(getExecutionSemester());
     }
 
     public String getObjectivesEn() {
-        return getCurricularCourse().getObjectivesEn(getExecutionSemester());
+        return getCurricularCourse().getCompetenceCourse() == null ? null : getCurricularCourse().getCompetenceCourse()
+                .getObjectivesEn(getExecutionSemester());
     }
 
     public String getProgram() {
-        return getCurricularCourse().getProgram(getExecutionSemester());
+        return getCurricularCourse().getCompetenceCourse() == null ? null : getCurricularCourse().getCompetenceCourse()
+                .getProgram(getExecutionSemester());
     }
 
     public String getProgramEn() {
-        return getCurricularCourse().getProgramEn(getExecutionSemester());
+        return getCurricularCourse().getCompetenceCourse() == null ? null : getCurricularCourse().getCompetenceCourse()
+                .getProgramEn(getExecutionSemester());
     }
 
     public String getEvaluationMethod() {
-        return getCurricularCourse().getEvaluationMethod(getExecutionSemester());
+        return getCurricularCourse().getCompetenceCourse() == null ? null : getCurricularCourse().getCompetenceCourse()
+                .getEvaluationMethod(getExecutionSemester());
     }
 
     public String getEvaluationMethodEn() {
-        return getCurricularCourse().getEvaluationMethodEn(getExecutionSemester());
+        return getCurricularCourse().getCompetenceCourse() == null ? null : getCurricularCourse().getCompetenceCourse()
+                .getEvaluationMethodEn(getExecutionSemester());
     }
 
     @Override
     public boolean equals(Object obj) {
-        return (obj instanceof CurricularCourseByExecutionSemesterBean) ? equals((CurricularCourseByExecutionSemesterBean) obj) : false;
+        return (obj instanceof CurricularCourseByExecutionSemesterBean) ? equals(
+                (CurricularCourseByExecutionSemesterBean) obj) : false;
     }
 
     public boolean equals(CurricularCourseByExecutionSemesterBean obj) {
@@ -133,8 +142,8 @@ public class CurricularCourseByExecutionSemesterBean implements Serializable, Co
 
     @Override
     public int compareTo(CurricularCourseByExecutionSemesterBean other) {
-        return other == null ? 1 : CurricularCourse.COMPARATOR_BY_NAME
-                .compare(getCurricularCourse(), other.getCurricularCourse());
+        return other == null ? 1 : CurricularCourse.COMPARATOR_BY_NAME.compare(getCurricularCourse(),
+                other.getCurricularCourse());
     }
 
     static public CurricularCourseByExecutionSemesterBean buildFrom(final String key) {
