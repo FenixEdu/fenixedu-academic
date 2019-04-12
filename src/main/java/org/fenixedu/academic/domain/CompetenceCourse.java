@@ -568,10 +568,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     @SuppressWarnings("unchecked")
     public List<CurricularCourse> getCurricularCoursesWithActiveScopesInExecutionPeriod(final ExecutionInterval interval) {
-        final AcademicInterval academicInterval = interval.getAcademicInterval();
-        return getAssociatedCurricularCoursesSet().stream().filter(
-                cc -> cc.getDegreeModuleScopes().stream().anyMatch(dms -> dms.isActiveForAcademicInterval(academicInterval)))
-                .collect(Collectors.toList());
+        return getAssociatedCurricularCoursesSet().stream().filter(cc -> cc.isActive(interval)).collect(Collectors.toList());
     }
 
     public Collection<Context> getCurricularCourseContexts() {
@@ -610,8 +607,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         Collection<CurricularCourse> curricularCourses = this.getAssociatedCurricularCoursesSet();
         for (ExecutionSemester executionSemester : executionSemesters) {
             for (CurricularCourse curricularCourse : curricularCourses) {
-                if (curricularCourse.getActiveDegreeModuleScopesInAcademicInterval(executionSemester.getAcademicInterval())
-                        .size() > 0) {
+                if (curricularCourse.hasAnyActiveContext(executionSemester)) {
                     return Boolean.TRUE;
                 }
             }

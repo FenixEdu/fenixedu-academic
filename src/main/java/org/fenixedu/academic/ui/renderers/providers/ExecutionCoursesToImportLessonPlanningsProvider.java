@@ -22,10 +22,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.CurricularYear;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.dto.teacher.executionCourse.ImportContentBean;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
@@ -41,13 +44,34 @@ public class ExecutionCoursesToImportLessonPlanningsProvider implements DataProv
         CurricularYear curricularYear = bean.getCurricularYear();
         DegreeCurricularPlan degreeCurricularPlan = bean.getExecutionDegree().getDegreeCurricularPlan();
         if (degreeCurricularPlan != null && executionSemester != null && curricularYear != null) {
-            List<ExecutionCourse> executionCourses =
-                    degreeCurricularPlan.getExecutionCoursesByExecutionPeriodAndSemesterAndYear(executionSemester,
-                            curricularYear.getYear(), executionSemester.getSemester());
+            List<ExecutionCourse> executionCourses = getExecutionCoursesByExecutionPeriodAndSemesterAndYear(degreeCurricularPlan,
+                    executionSemester, curricularYear.getYear(), executionSemester.getSemester());
             Collections.sort(executionCourses, ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
             return executionCourses;
         }
         return new ArrayList<ExecutionCourse>();
+    }
+
+    private static List<ExecutionCourse> getExecutionCoursesByExecutionPeriodAndSemesterAndYear(
+            final DegreeCurricularPlan degreeCurricularPlan, final ExecutionInterval interval, final Integer curricularYear,
+            final Integer semester) {
+
+        List<ExecutionCourse> result = new ArrayList<>();
+        for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
+            for (Context context : curricularCourse.getParentContextsSet()) {
+                if (context.getCurricularPeriod().getChildOrder().equals(semester)
+                        && context.getCurricularYear().equals(curricularYear)) {
+
+                    for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
+                        if (executionCourse.getExecutionInterval().equals(interval)) {
+                            result.add(executionCourse);
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        return result;
     }
 
     @Override

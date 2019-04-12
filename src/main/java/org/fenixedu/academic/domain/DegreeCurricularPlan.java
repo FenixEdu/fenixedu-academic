@@ -520,48 +520,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return getExecutionCourses(executionSemester);
     }
 
-    public SortedSet<DegreeModuleScope> getDegreeModuleScopes() {
-        final SortedSet<DegreeModuleScope> degreeModuleScopes =
-                new TreeSet<>(DegreeModuleScope.COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME);
-        for (final CurricularCourse curricularCourse : this.getCurricularCoursesSet()) {
-            degreeModuleScopes.addAll(curricularCourse.getDegreeModuleScopes());
-        }
-        return degreeModuleScopes;
-    }
-
-    public Set<DegreeModuleScope> getDegreeModuleScopesFor(final ExecutionYear executionYear) {
-        final Set<DegreeModuleScope> result =
-                new TreeSet<>(DegreeModuleScope.COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME);
-
-        for (final DegreeModuleScope each : getDegreeModuleScopes()) {
-            if (each.isActiveForExecutionYear(executionYear)) {
-                result.add(each);
-            }
-        }
-
-        return result;
-    }
-
-    public List<ExecutionCourse> getExecutionCoursesByExecutionPeriodAndSemesterAndYear(final ExecutionInterval interval,
-            final Integer curricularYear, final Integer semester) {
-
-        List<ExecutionCourse> result = new ArrayList<>();
-        for (final CurricularCourse curricularCourse : this.getCurricularCoursesSet()) {
-            for (final DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
-                if (degreeModuleScope.getCurricularSemester().equals(semester)
-                        && degreeModuleScope.getCurricularYear().equals(curricularYear)) {
-                    for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
-                        if (executionCourse.getExecutionInterval().equals(interval)) {
-                            result.add(executionCourse);
-                        }
-                    }
-                    break;
-                }
-            }
-        }
-        return result;
-    }
-
     public Set<CurricularCourse> getAllCurricularCourses() {
         final Set<DegreeModule> curricularCourses = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME) {
             @Override
@@ -700,7 +658,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public Set<CurricularCourse> getActiveCurricularCourses(final ExecutionSemester executionSemester) {
         final Set<CurricularCourse> result = new HashSet<>();
         for (final CurricularCourse curricularCourse : getCurricularCoursesSet()) {
-            if (curricularCourse.hasAnyActiveDegreModuleScope(executionSemester)) {
+            if (curricularCourse.hasAnyActiveContext(executionSemester)) {
                 result.add(curricularCourse);
             }
         }
@@ -1185,10 +1143,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         Set<CurricularCourse> result = new HashSet<>();
 
         for (final CurricularCourse curricularCourse : getCurricularCoursesWithExecutionIn(executionYear)) {
-            for (final DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
-                if (degreeModuleScope.getCurricularYear().equals(curricularYear)) {
-                    result.add(curricularCourse);
-                }
+            if (curricularCourse.getParentContextsSet().stream()
+                    .anyMatch(ctx -> ctx.getCurricularYear().equals(curricularYear))) {
+                result.add(curricularCourse);
             }
         }
         return result;

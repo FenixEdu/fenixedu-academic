@@ -35,9 +35,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.Attends;
-import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.DegreeModuleScope;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Professorship;
@@ -231,23 +229,23 @@ public class ListExecutionCourseGroupingsDA extends FenixDispatchAction {
     private Map<Degree, Set<Integer>> constructDegreeOccurenceMap(final AcademicInterval academicInterval,
             final ExecutionCourse executionCourse) {
         final Map<Degree, Set<Integer>> degreeOccurenceMap = new HashMap<Degree, Set<Integer>>();
-        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
-            final List<DegreeModuleScope> degreeModuleScopes =
-                    curricularCourse.getActiveDegreeModuleScopesInAcademicInterval(academicInterval);
-            for (final DegreeModuleScope degreeModuleScope : degreeModuleScopes) {
-                final Degree degree = curricularCourse.getDegreeCurricularPlan().getDegree();
-
-                final Set<Integer> curricularYears;
-                if (degreeOccurenceMap.containsKey(degree)) {
-                    curricularYears = degreeOccurenceMap.get(degree);
-                } else {
-                    curricularYears = new TreeSet<Integer>();
-                    degreeOccurenceMap.put(degree, curricularYears);
-                }
-
-                curricularYears.add(degreeModuleScope.getCurricularYear());
-            }
-        }
+//        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
+//            final List<DegreeModuleScope> degreeModuleScopes =
+//                    curricularCourse.getActiveDegreeModuleScopesInAcademicInterval(academicInterval);
+//            for (final DegreeModuleScope degreeModuleScope : degreeModuleScopes) {
+//                final Degree degree = curricularCourse.getDegreeCurricularPlan().getDegree();
+//
+//                final Set<Integer> curricularYears;
+//                if (degreeOccurenceMap.containsKey(degree)) {
+//                    curricularYears = degreeOccurenceMap.get(degree);
+//                } else {
+//                    curricularYears = new TreeSet<Integer>();
+//                    degreeOccurenceMap.put(degree, curricularYears);
+//                }
+//
+//                curricularYears.add(degreeModuleScope.getCurricularYear());
+//            }
+//        }
         return degreeOccurenceMap;
     }
 

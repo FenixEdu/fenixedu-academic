@@ -800,8 +800,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             final Set<String> names = new HashSet<String>();
 
             for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-                if (!curricularCourse.getActiveDegreeModuleScopesInAcademicInterval(getExecutionInterval().getAcademicInterval())
-                        .isEmpty()) {
+                if (curricularCourse.isActive(getExecutionInterval())) {
                     final String name = curricularCourse.getNameEn();
                     if (!names.contains(name)) {
                         names.add(name);
@@ -1257,8 +1256,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         final Set<String> names = new HashSet<String>();
 
         for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-            if (!curricularCourse.getActiveDegreeModuleScopesInAcademicInterval(getExecutionInterval().getAcademicInterval())
-                    .isEmpty()) {
+            if (curricularCourse.isActive(getExecutionInterval())) {
                 final String name = curricularCourse.getNameEn();
                 if (!names.contains(name)) {
                     names.add(name);

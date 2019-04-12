@@ -27,8 +27,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletOutputStream;
@@ -42,7 +40,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.DegreeModuleScope;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
@@ -52,6 +49,7 @@ import org.fenixedu.academic.domain.accessControl.academicAdministration.Academi
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.contacts.PartyContact;
 import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
 import org.fenixedu.academic.dto.academicAdministration.SearchStudentsByCurricularCourseParametersBean;
@@ -118,14 +116,14 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
 
         final SearchStudentsByCurricularCourseParametersBean searchBean = getOrCreateSearchBean();
 
-        final SortedSet<DegreeModuleScope> degreeModuleScopes = new TreeSet<DegreeModuleScope>(
-                DegreeModuleScope.COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME_AND_BRANCH);
-        degreeModuleScopes.addAll(searchBean.getDegreeCurricularPlan().getDegreeModuleScopesFor(searchBean.getExecutionYear()));
+        final List<Context> contexts = searchBean.getDegreeCurricularPlan().getCurricularCoursesSet().stream()
+                .flatMap(cc -> cc.getParentContextsByExecutionYear(searchBean.getExecutionYear()).stream())
+                .sorted(Context.COMPARATOR_BY_DEGREE_MODULE_NAME).collect(Collectors.toList());
 
-        if (degreeModuleScopes.isEmpty()) {
+        if (contexts.isEmpty()) {
             addActionMessage("message", request, "error.nonExisting.AssociatedCurricularCourses");
         } else {
-            request.setAttribute("degreeModuleScopes", degreeModuleScopes);
+            request.setAttribute("contexts", contexts);
         }
 
         request.setAttribute("searchBean", searchBean);

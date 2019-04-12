@@ -48,7 +48,6 @@ import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
 import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
 
@@ -72,16 +71,6 @@ public class CurricularCourse extends CurricularCourse_Base {
                     return CurricularCourse.COMPARATOR_BY_NAME.compare(o1, o2);
                 }
             };
-
-    public static List<CurricularCourse> readCurricularCourses() {
-        List<CurricularCourse> result = new ArrayList<CurricularCourse>();
-        for (DegreeModule degreeModule : Bennu.getInstance().getDegreeModulesSet()) {
-            if (degreeModule instanceof CurricularCourse) {
-                result.add((CurricularCourse) degreeModule);
-            }
-        }
-        return result;
-    }
 
     public CurricularCourse() {
         super();
@@ -225,44 +214,8 @@ public class CurricularCourse extends CurricularCourse_Base {
         super.deleteDomainObject();
     }
 
-    public boolean hasAnyActiveDegreModuleScope(final ExecutionSemester executionSemester) {
-        for (final DegreeModuleScope degreeModuleScope : getDegreeModuleScopes()) {
-            if (degreeModuleScope.isActiveForExecutionPeriod(executionSemester)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public boolean hasAnyActiveContext(final ExecutionSemester executionSemester) {
-        for (final Context context : getParentContextsSet()) {
-            if (context.isValid(executionSemester)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Deprecated
-    public List<DegreeModuleScope> getActiveDegreeModuleScopesInExecutionPeriod(final ExecutionSemester executionSemester) {
-        final List<DegreeModuleScope> activeScopesInExecutionPeriod = new ArrayList<DegreeModuleScope>();
-        for (final DegreeModuleScope scope : getDegreeModuleScopes()) {
-            if (scope.isActiveForExecutionPeriod(executionSemester)) {
-                activeScopesInExecutionPeriod.add(scope);
-            }
-        }
-        return activeScopesInExecutionPeriod;
-    }
-
-    public List<DegreeModuleScope> getActiveDegreeModuleScopesInAcademicInterval(AcademicInterval academicInterval) {
-        final List<DegreeModuleScope> activeScopesInExecutionPeriod = new ArrayList<DegreeModuleScope>();
-        for (final DegreeModuleScope scope : getDegreeModuleScopes()) {
-            if (scope.isActiveForAcademicInterval(academicInterval)) {
-                activeScopesInExecutionPeriod.add(scope);
-            }
-        }
-        return activeScopesInExecutionPeriod;
+        return getParentContextsSet().stream().anyMatch(ctx -> ctx.isValid(executionSemester));
     }
 
     // -------------------------------------------------------------
@@ -862,35 +815,16 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public boolean hasScopeForCurricularYear(final Integer curricularYear, final ExecutionSemester executionSemester) {
-        for (final DegreeModuleScope degreeModuleScope : getDegreeModuleScopes()) {
-            if (degreeModuleScope.isActiveForExecutionPeriod(executionSemester)
-                    && degreeModuleScope.getCurricularYear().equals(curricularYear)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    static public List<CurricularCourse> readByCurricularStage(final CurricularStage curricularStage) {
-        final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
-        for (CurricularCourse curricularCourse : CurricularCourse.readCurricularCourses()) {
-            if (curricularCourse.getCurricularStage() != null && curricularCourse.getCurricularStage().equals(curricularStage)) {
-                result.add(curricularCourse);
-            }
-        }
-        return result;
+        return getParentContextsByExecutionSemester(executionSemester).stream()
+                .anyMatch(c -> c.getCurricularYear().equals(curricularYear));
     }
 
     public boolean hasScopeInGivenSemesterAndCurricularYearInDCP(CurricularYear curricularYear,
             DegreeCurricularPlan degreeCurricularPlan, final ExecutionInterval executionInterval) {
 
         if (degreeCurricularPlan == null || getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
-            for (DegreeModuleScope degreeModuleScope : getDegreeModuleScopes()) {
-                if (degreeModuleScope.isActiveForAcademicInterval(executionInterval.getAcademicInterval())
-                        && (curricularYear == null || degreeModuleScope.getCurricularYear().equals(curricularYear.getYear()))) {
-                    return true;
-                }
-            }
+            return getParentContextsSet().stream().anyMatch(ctx -> ctx.isValid(executionInterval.getAcademicInterval())
+                    && (curricularYear == null || ctx.getCurricularYear().equals(curricularYear.getYear())));
         }
         return false;
     }
@@ -902,10 +836,6 @@ public class CurricularCourse extends CurricularCourse_Base {
     @Deprecated
     public ExecutionDegree getExecutionDegreeFor(ExecutionYear executionYear) {
         return getDegreeCurricularPlan().getExecutionDegreeByYear(executionYear);
-    }
-
-    public List<DegreeModuleScope> getDegreeModuleScopes() {
-        return DegreeModuleScope.getDegreeModuleScopes(this);
     }
 
     private int countAssociatedStudentsByExecutionPeriodAndEnrolmentNumber(ExecutionSemester executionSemester,
@@ -974,7 +904,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 //    }
 
     public boolean isActive(final ExecutionInterval interval) {
-        return getActiveDegreeModuleScopesInAcademicInterval(interval.getAcademicInterval()).size() > 0;
+        return getParentContextsSet().stream().anyMatch(ctx -> ctx.isValid(interval.getAcademicInterval()));
     }
 
     public boolean hasEnrolmentForPeriod(final ExecutionSemester executionSemester) {
@@ -997,12 +927,6 @@ public class CurricularCourse extends CurricularCourse_Base {
     @Override
     public boolean isCurricularCourse() {
         return true;
-    }
-
-    public DegreeModuleScope getOldestDegreeModuleScope() {
-        List<DegreeModuleScope> scopes = new ArrayList<DegreeModuleScope>(getDegreeModuleScopes());
-        Collections.sort(scopes, DegreeModuleScope.COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME);
-        return scopes.iterator().next();
     }
 
     @Override

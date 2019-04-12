@@ -76,45 +76,32 @@
 	</html:link>
 </logic:present>
 
-<logic:present name="degreeModuleScopes">
+<logic:present name="contexts">
 
 	<bean:define id="executionYear" name="searchBean" property="executionYear.externalId" />
 
 	<table class="tstyle1 thleft thlight">
-		<%
-		    int semester = 0;
-		%>
-		<logic:iterate id="degreeModuleScope" name="degreeModuleScopes">
-			<bean:define id="semesterI" type="java.lang.Integer" name="degreeModuleScope" property="curricularSemester" />
-			<%
-			    if (semester != semesterI.intValue()) {
-						semester = semesterI.intValue();
-			%>
+		<tr>
+			<th><bean:message key="label.curricularCourseScope.curricularYear" bundle="CURRICULUM_HISTORIC_RESOURCES" /></th>
+			<th><bean:message key="label.curricularCourseScope.curricularSemester" bundle="CURRICULUM_HISTORIC_RESOURCES" /></th>
+			<th><bean:message key="label.curricularCourse" bundle="CURRICULUM_HISTORIC_RESOURCES" /></th>
+		</tr>
+		<logic:iterate id="context" name="contexts">
 			<tr>
-				<th><bean:message key="label.curricularCourseScope.curricularYear" bundle="CURRICULUM_HISTORIC_RESOURCES" /></th>
-				<th><bean:message key="label.curricularCourseScope.curricularSemester" bundle="CURRICULUM_HISTORIC_RESOURCES" />
-				</th>
-				<th><bean:message key="label.curricularCourse" bundle="CURRICULUM_HISTORIC_RESOURCES" /></th>
-				<th><bean:message key="label.curricularCourseScope.branch" bundle="CURRICULUM_HISTORIC_RESOURCES" /></th>
-			</tr>
-			<%
-			    }
-			%>
-			<tr>
-				<td class="acenter"><bean:write name="degreeModuleScope" property="curricularYear" /></td>
-				<td class="acenter"><bean:write name="degreeModuleScope" property="curricularSemester" /></td>
-				<td style="text-align: left"><bean:define id="curricularCourseCode" name="degreeModuleScope"
-						property="curricularCourse.externalId" /> <bean:define id="currentSemester" name="degreeModuleScope"
-						property="curricularSemester" /> <bean:define id="currentYear" name="degreeModuleScope" property="curricularYear" />
+				<td class="acenter"><bean:write name="context" property="curricularYear" /></td>
+				<td class="acenter"><bean:write name="context" property="curricularPeriod.childOrder" /></td>
+				<td style="text-align: left">
+						<bean:define id="curricularCourseCode" name="context" property="childDegreeModule.externalId" />
+						<bean:define id="currentSemester" name="context" property="curricularPeriod.childOrder" />
+						<bean:define id="currentYear" name="context" property="curricularYear" />
 					<html:link
 						page="<%="/studentsListByCurricularCourse.do?method=searchByCurricularCourse&amp;curricularCourseCode="
 				+ curricularCourseCode + "&amp;semester="
 				+ pageContext.findAttribute("currentSemester").toString() + "&amp;year="
 				+ pageContext.findAttribute("currentYear").toString() + "&amp;executionYearID="
 				+ pageContext.findAttribute("executionYear").toString()%>">
-						<bean:write name="degreeModuleScope" property="curricularCourse.name" />
+						<bean:write name="context" property="childDegreeModule.name" />
 					</html:link></td>
-				<td><bean:write name="degreeModuleScope" property="branch" /></td>
 			</tr>
 		</logic:iterate>
 	</table>

@@ -35,7 +35,6 @@ import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.DegreeModuleScope;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionInterval;
@@ -46,6 +45,7 @@ import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLoadBean;
+import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
@@ -435,15 +435,16 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
                     for (final CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCoursesSet()) {
                         for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
                             final ExecutionInterval executionInterval = executionCourse.getExecutionInterval();
-                            for (final DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
-                                if (degreeModuleScope.isActiveForAcademicInterval(executionInterval.getAcademicInterval())) {
+
+                            for (final Context context : curricularCourse.getParentContextsSet()) {
+                                if (context.isValid(executionInterval.getAcademicInterval())) {
                                     final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
                                     final Row row = spreadsheet.addRow();
 
                                     row.setCell(competenceCourse.getName(executionInterval));
                                     row.setCell(degreeCurricularPlan.getName());
-                                    row.setCell(degreeModuleScope.getCurricularYear());
-                                    row.setCell(degreeModuleScope.getCurricularSemester());
+                                    row.setCell(context.getCurricularYear());
+                                    row.setCell(context.getCurricularPeriod().getChildOrder());
                                 }
                             }
                         }

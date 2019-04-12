@@ -25,7 +25,6 @@ import java.util.Set;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.DegreeModuleScope;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
@@ -371,10 +370,6 @@ public class Context extends Context_Base implements Comparable<Context> {
         return firstCurricularPeriodOrder <= argumentOrder && argumentOrder <= lastCurricularPeriodOrder;
     }
 
-    public DegreeModuleScopeContext getDegreeModuleScopeContext() {
-        return new DegreeModuleScopeContext(this);
-    }
-
     @Override
     public void setBeginExecutionPeriod(ExecutionSemester beginExecutionPeriod) {
         if (beginExecutionPeriod == null) {
@@ -411,79 +406,6 @@ public class Context extends Context_Base implements Comparable<Context> {
 
     public boolean hasCurricularPeriod(final CurricularPeriod curricularPeriod) {
         return getCurricularPeriod() != null && getCurricularPeriod().equals(curricularPeriod);
-    }
-
-    public static class DegreeModuleScopeContext extends DegreeModuleScope {
-
-        private final Context context;
-
-        private DegreeModuleScopeContext(Context context) {
-            this.context = context;
-        }
-
-        @Override
-        public String getExternalId() {
-            return context.getExternalId();
-        }
-
-        @Override
-        public Integer getCurricularSemester() {
-            return context.getCurricularPeriod().getChildOrder();
-        }
-
-        @Override
-        public Integer getCurricularYear() {
-            return context.getCurricularYear();
-        }
-
-        @Override
-        public String getBranch() {
-            return "";
-        }
-
-        public Context getContext() {
-            return context;
-        }
-
-        @Override
-        public boolean isActiveForExecutionPeriod(final ExecutionSemester executionSemester) {
-            final ExecutionYear executionYear = executionSemester.getExecutionYear();
-            return getCurricularCourse().isAnual(executionYear) ? getContext().isValid(executionYear) : getContext()
-                    .isValid(executionSemester);
-        }
-
-        @Override
-        public boolean isActiveForAcademicInterval(final AcademicInterval academicInterval) {
-            return getContext().isValid(academicInterval);
-        }
-
-        @Override
-        public CurricularCourse getCurricularCourse() {
-            return (CurricularCourse) context.getChildDegreeModule();
-        }
-
-        @Override
-        public String getAnotation() {
-            return null;
-        }
-
-        @Override
-        public String getClassName() {
-            return context.getClass().getName();
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (!(obj instanceof DegreeModuleScopeContext)) {
-                return false;
-            }
-            return context.equals(((DegreeModuleScopeContext) obj).getContext());
-        }
-
-        @Override
-        public int hashCode() {
-            return context.hashCode();
-        }
     }
 
     /**

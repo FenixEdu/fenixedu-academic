@@ -63,8 +63,7 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod {
             final Collection<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCoursesSet();
             for (final CurricularCourse curricularCourse : curricularCourses) {
 
-                if (curricularCourse.isOptionalCurricularCourse()
-                        || curricularCourse.getActiveDegreeModuleScopesInExecutionPeriod(executionSemester).isEmpty()) {
+                if (curricularCourse.isOptionalCurricularCourse() || !curricularCourse.hasAnyActiveContext(executionSemester)) {
                     continue;
                 }
                 if (curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester).isEmpty()) {
