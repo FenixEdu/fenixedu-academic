@@ -139,7 +139,7 @@ public class Registration extends Registration_Base {
         setRegistrationProtocol(RegistrationProtocol.getDefault());
     }
 
-    private Registration(final Person person, final DateTime start, final Integer registrationNumber, final Degree degree,
+    private Registration(final Person person, final Integer registrationNumber, final Degree degree,
             final ExecutionYear executionYear) {
         this();
 
@@ -147,12 +147,14 @@ public class Registration extends Registration_Base {
             throw new DomainException("error.creation.Registration.executionYearIsRequired");
         }
 
+        final DateTime now = new DateTime();
+
         setStudent(person.getStudent() != null ? person.getStudent() : new Student(person, registrationNumber));
         setNumber(registrationNumber == null ? getStudent().getNumber() : registrationNumber);
-        setStartDate(start.toYearMonthDay());
+        setStartDate(now.toYearMonthDay());
         setDegree(degree);
         setRegistrationYear(executionYear);
-        RegistrationState.createRegistrationState(this, AccessControl.getPerson(), start, RegistrationStateType.REGISTERED,
+        RegistrationState.createRegistrationState(this, AccessControl.getPerson(), now, RegistrationStateType.REGISTERED,
                 executionYear.getFirstExecutionPeriod());
 
         //Emit the Signal
@@ -175,8 +177,7 @@ public class Registration extends Registration_Base {
             final Integer studentNumber) {
 
         final Degree degree = degreeCurricularPlan == null ? null : degreeCurricularPlan.getDegree();
-        Registration registration =
-                new Registration(person, calculateStartDate(executionYear), studentNumber, degree, executionYear);
+        Registration registration = new Registration(person, studentNumber, degree, executionYear);
         registration.setRequestedChangeDegree(false);
         registration.setRequestedChangeBranch(false);
         registration.setRegistrationProtocol(protocol == null ? RegistrationProtocol.getDefault() : protocol);
@@ -208,7 +209,7 @@ public class Registration extends Registration_Base {
     private Registration(final Person person, final Integer registrationNumber, final RegistrationProtocol protocol,
             final ExecutionYear executionYear, final Degree degree) {
 
-        this(person, calculateStartDate(executionYear), registrationNumber, degree, executionYear);
+        this(person, registrationNumber, degree, executionYear);
 
         setRequestedChangeDegree(false);
         setRequestedChangeBranch(false);
@@ -238,13 +239,6 @@ public class Registration extends Registration_Base {
 
         return StudentCurricularPlan.createBolonhaStudentCurricularPlan(this, degreeCurricularPlan, startDay, executionSemester,
                 cycleType);
-    }
-
-    private static DateTime calculateStartDate(final ExecutionYear executionYear) {
-        DateTime now = new DateTime();
-        return executionYear == null
-                || executionYear.isCurrent() && executionYear.getAcademicInterval().contains(now) ? now : executionYear
-                        .getBeginDateYearMonthDay().toDateTimeAtMidnight();
     }
 
     @Override
