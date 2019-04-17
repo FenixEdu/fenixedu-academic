@@ -276,9 +276,12 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
         for (CompetenceCourseInformation information : orderedInformations) {
             if (information.getExecutionInterval().isAfter(intervalNullSafe)) {
-                return result;
+                if (result != null) { // only return if there is an previous information already found
+                    return result;
+                }
+            } else {
+                result = information;
             }
-            result = information;
         }
 
         // if no result found and no explicit interval specified, return first information to attempt more null safety
