@@ -686,7 +686,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public ScientificAreaUnit getScientificAreaUnit() {
-        return getScientificAreaUnit();
+        return getScientificAreaUnit(null);
     }
 
     public ScientificAreaUnit getScientificAreaUnit(ExecutionInterval interval) {
