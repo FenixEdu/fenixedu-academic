@@ -801,12 +801,9 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public List<ExecutionCourse> getExecutionCoursesByExecutionPeriod(final ExecutionInterval executionInterval) {
-        List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
-        List<CurricularCourse> curricularCourses = getCurricularCoursesWithActiveScopesInExecutionPeriod(executionInterval);
-        for (CurricularCourse curricularCourse : curricularCourses) {
-            result.addAll(curricularCourse.getExecutionCoursesByExecutionPeriod(executionInterval));
-        }
-        return result;
+        return getCurricularCoursesWithActiveScopesInExecutionPeriod(executionInterval).stream()
+                .flatMap(cc -> cc.getExecutionCoursesByExecutionPeriod(executionInterval).stream()).distinct()
+                .collect(Collectors.toList());
     }
 
     public boolean isDissertation() {
