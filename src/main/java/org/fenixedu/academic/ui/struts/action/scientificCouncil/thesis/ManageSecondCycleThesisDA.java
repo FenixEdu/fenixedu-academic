@@ -500,6 +500,7 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
 
                 addCell("ThesisId", thesis.getExternalId());
                 addCell("Username", user.getUsername());
+                addCell("Number", student.getNumber());
                 addCell("Name", person.getName());
                 addCell("DegreeType", degreeType.getName().getContent());
                 addCell("Degree", degree.getPresentationName(executionYear));
