@@ -303,4 +303,13 @@ public class AccountingEventsManager {
         return result;
     }
 
+    @Atomic
+    public InvocationResult createAdministrativeOfficeFeeEvent(final Person person, final ExecutionYear executionYear,
+                                                               final AdministrativeOffice administrativeOffice) {
+        final InvocationResult result = InvocationResult.createSuccess();
+        if (result.isSuccess()) {
+            new AdministrativeOfficeFeeEvent(administrativeOffice, person, executionYear);
+        }
+        return result;
+    }
 }
