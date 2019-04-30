@@ -111,12 +111,6 @@ public class PhdAccountingEventsManagementDA extends PhdProcessDA {
             HttpServletResponse response) {
         try {
             PhdGratuityCreationInformation renderedObject = (PhdGratuityCreationInformation) getRenderedObject("yearBean");
-            for (PhdGratuityEvent event : getProcess(request).getPhdGratuityEventsSet()) {
-                if (event.getYear().intValue() == ((PhdGratuityCreationInformation) getRenderedObject("yearBean")).getYear()
-                        && event.isOpen()) {
-                    throw new DomainException("already.has.phd.gratuity.for.that.year");
-                }
-            }
 
             PhdIndividualProgramProcess process = getProcess(request);
             int lastOpenYear = new DateTime().getYear();
@@ -141,7 +135,7 @@ public class PhdAccountingEventsManagementDA extends PhdProcessDA {
             }
 
             PhdGratuityEvent.create(getProcess(request), year, process.getWhenFormalizedRegistration().toDateTimeAtMidnight());
-
+            addActionMessage("success", request, "message.phd.accounting.events.gratuity.created.with.success");
             return prepare(mapping, actionForm, request, response);
 
         } catch (DomainException e) {

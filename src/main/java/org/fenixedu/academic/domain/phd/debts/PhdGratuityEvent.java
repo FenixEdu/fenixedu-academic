@@ -41,9 +41,6 @@ import pt.ist.fenixframework.Atomic;
 public class PhdGratuityEvent extends PhdGratuityEvent_Base {
     public PhdGratuityEvent(PhdIndividualProgramProcess process, int year, DateTime phdGratuityDate) {
         super();
-        if (process.hasPhdGratuityEventForYear(year)) {
-            throw new DomainException("error.PhdRegistrationFee.process.already.has.registration.fee.for.this.year");
-        }
         init(EventType.PHD_GRATUITY, process.getPerson(), year, process, phdGratuityDate);
     }
 
