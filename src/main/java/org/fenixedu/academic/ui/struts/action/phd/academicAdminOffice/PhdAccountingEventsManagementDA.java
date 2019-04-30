@@ -50,7 +50,8 @@ import org.joda.time.DateTime;
 @Forwards({ @Forward(name = "chooseEventType", path = "/phd/academicAdminOffice/payments/chooseEventType.jsp"),
         @Forward(name = "chooseYear", path = "/phd/academicAdminOffice/payments/chooseYear.jsp"),
         @Forward(name = "chooseYear2", path = "/phd/academicAdminOffice/payments/chooseYear2.jsp"),
-        @Forward(name = "createInsuranceEvent", path = "/phd/academicAdminOffice/payments/createInsuranceEvent.jsp") })
+        @Forward(name = "createInsuranceEvent", path = "/phd/academicAdminOffice/payments/createInsuranceEvent.jsp"),
+        @Forward(name = "createAdministrativeFeeEvent", path = "/phd/academicAdminOffice/payments/createAdministratitveFeeEvent.jsp") })
 public class PhdAccountingEventsManagementDA extends PhdProcessDA {
 
     public static class PhdGratuityCreationInformation implements Serializable {
@@ -198,6 +199,46 @@ public class PhdAccountingEventsManagementDA extends PhdProcessDA {
         }
 
         return prepareCreateInsuranceEvent(mapping, actionForm, request, response);
+    }
+
+    public ActionForward prepareCreateAdministrativeOfficeFeeEvent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+                                                     HttpServletResponse response) {
+
+        request.setAttribute("eventBean", new AccountingEventCreateBean());
+        return mapping.findForward("createAdministrativeFeeEvent");
+    }
+
+    public ActionForward createAdministrativeOfficeFeeEvent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+                                              HttpServletResponse response) {
+        try {
+
+            final AccountingEventCreateBean bean = getRenderedObject("eventBean");
+            final PhdIndividualProgramProcess process = getProcess(request);
+
+            if (process.getExecutionYear().isAfter(bean.getExecutionYear())) {
+                addActionMessage("error", request, "error.phd.accounting.events.administrativeFee.invalid.execution.period", process
+                        .getExecutionYear().getQualifiedName());
+                return prepareCreateInsuranceEvent(mapping, actionForm, request, response);
+            }
+
+            final InvocationResult result =
+                    new AccountingEventsManager().createAdministrativeOfficeFeeEvent(process.getPerson(), bean.getExecutionYear(),
+                            process.getAdministrativeOffice());
+
+            if (result.isSuccess()) {
+                addActionMessage("success", request, "message.phd.accounting.events.administrativeFee.created.with.success");
+                return prepare(mapping, actionForm, request, response);
+            } else {
+                addActionMessages("error", request, result.getMessages());
+            }
+
+        } catch (DomainExceptionWithInvocationResult e) {
+            addActionMessages("error", request, e.getInvocationResult().getMessages());
+        } catch (DomainException e) {
+            addActionMessage("error", request, e.getKey(), e.getArgs());
+        }
+
+        return prepareCreateAdministrativeOfficeFeeEvent(mapping, actionForm, request, response);
     }
 
 }

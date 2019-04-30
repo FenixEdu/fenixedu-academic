@@ -18,27 +18,28 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess"%>
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
-<html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
+
+<%@page import="org.fenixedu.academic.dto.accounting.events.AccountingEventCreateBean"%>
+<%@page import="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider"%>
+
+<html:xhtml/>
 
 <%-- ### Title #### --%>
 <h2><bean:message key="label.phd.accounting.events.create" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
+
+
 <bean:define id="processId" name="process" property="externalId" />
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
-<%--
-<div class="breadcumbs">
-	<span class="actual">Step 1: Step Name</span> > 
-	<span>Step N: Step name </span>
-</div>
---%>
-<html:link action="<%= "/phdIndividualProgramProcess.do?method=viewProcess&processId=" + processId.toString() %>">
+
+<html:link action="<%= "/phdAccountingEventsManagement.do?method=prepare&processId=" + processId.toString() %>">
 	<bean:message bundle="PHD_RESOURCES" key="label.back"/>
 </html:link>
 <br/><br/>
@@ -61,38 +62,22 @@
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 
-	<ul>
-		<li>
-			<html:link action="/phdAccountingEventsManagement.do?method=createPhdRegistrationFee" paramId="processId" paramName="process" paramProperty="externalId">
-				<bean:message bundle="PHD_RESOURCES" key="label.phd.accounting.events.create.registration.fee"/>
-			</html:link>
-		</li>
-		<li>
-			<html:link action="/phdAccountingEventsManagement.do?method=prepareCreateInsuranceEvent" paramId="processId" paramName="process" paramProperty="externalId">
-				<bean:message bundle="PHD_RESOURCES" key="label.phd.accounting.events.create.insurance.event"/>
-			</html:link>
-		</li>
-		<li>
-			<html:link action="/phdAccountingEventsManagement.do?method=prepareCreateGratuityEvent" paramId="processId" paramName="process" paramProperty="externalId">
-				<bean:message bundle="PHD_RESOURCES" key="label.phd.accounting.events.create.gratuity.event"/>
-			</html:link>
-		</li>
-		<%-- <logic:equal name="process" property="hasStartedStudies" value="true" > --%>		
-		<li>
-			<html:link action="/phdAccountingEventsManagement.do?method=prepareCreateAdministrativeOfficeFeeEvent" paramId="processId" paramName="process" paramProperty="externalId">
-				<bean:message bundle="PHD_RESOURCES" key="label.phd.accounting.events.create.administrativeFee.event"/>
-			</html:link>
-		</li>
-		<%-- </logic:equal>--%>
-		<logic:notEmpty name="process" property="thesisProcess" >
-			<li>
-				<html:link action="/phdAccountingEventsManagement.do?method=createPhdThesisRequestFee" paramId="processId" paramName="process" paramProperty="externalId">
-					<bean:message bundle="PHD_RESOURCES" key="label.phd.accounting.events.create.thesis.request.fee"/>
-				</html:link>
-			</li>
-		</logic:notEmpty>
-	</ul>
-	
-	
+	<fr:edit id="eventBean" name="eventBean" action="<%= "/phdAccountingEventsManagement.do?method=createAdministrativeOfficeFeeEvent&processId=" + processId.toString() %>">
+
+		<fr:schema bundle="PHD_RESOURCES" type="<%= AccountingEventCreateBean.class.getName() %>">
+			<fr:slot name="executionYear" key="label.execution.year" layout="menu-select" required="true">
+				<fr:property name="providerClass" value="<%= ExecutionYearsProvider.class.getName() %>" />
+				<fr:property name="format" value="${year}" />
+			</fr:slot>			
+		</fr:schema>
+
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle2 thlight" />
+			<fr:property name="columnClasses" value="nowrap," />
+		</fr:layout>
+
+		<fr:destination name="invalid" path="<%= "/phdAccountingEventsManagement.do?method=prepareCreateAdministrativeOfficeFeeEvent&processId=" + processId.toString() %>" />
+		<fr:destination name="cancel" path="<%= "/phdAccountingEventsManagement.do?method=prepare&processId=" + processId.toString() %>" />
+	</fr:edit>
 
 <%--  ### End of Operation Area  ### --%>
