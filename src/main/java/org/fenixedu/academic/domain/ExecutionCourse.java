@@ -557,6 +557,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return countAssociatedStudentsByEnrolmentNumber(1);
     }
 
+    public Integer getSecondTimeEnrolmentStudentNumber() {
+        return countAssociatedStudentsByEnrolmentNumber(2);
+    }
+
     public Integer getSecondOrMoreTimeEnrolmentStudentNumber() {
         return getTotalEnrolmentStudentNumber() - getFirstTimeEnrolmentStudentNumber();
     }
