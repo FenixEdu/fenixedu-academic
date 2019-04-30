@@ -165,10 +165,10 @@ public abstract class PartyContact extends PartyContact_Base {
             } else {
                 final List<PartyContact> partyContacts = (List<PartyContact>) getParty().getPartyContacts(getClass());
                 if (partyContacts.isEmpty() || partyContacts.size() == 1) {
-                    super.setDefaultContact(Boolean.TRUE);
+                    setDefaultContact(Boolean.TRUE);
                 } else {
                     setAnotherContactAsDefault();
-                    super.setDefaultContact(Boolean.FALSE);
+                    setDefaultContact(Boolean.FALSE);
                 }
             }
         }
@@ -179,7 +179,7 @@ public abstract class PartyContact extends PartyContact_Base {
         if (defaultPartyContact != null && defaultPartyContact != this) {
             defaultPartyContact.setDefaultContact(Boolean.FALSE);
         }
-        super.setDefaultContact(Boolean.TRUE);
+        setDefaultContact(Boolean.TRUE);
     }
 
     private void checkParameters(final Party party, final PartyContactType type) {
