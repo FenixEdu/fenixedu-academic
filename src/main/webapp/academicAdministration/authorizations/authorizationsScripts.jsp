@@ -46,7 +46,7 @@
 }
 
 #cursos_acc {
-	max-height: 90%;
+	max-height: 95%;
 	min-height: 400px;
 	overflow-y: auto;
 }

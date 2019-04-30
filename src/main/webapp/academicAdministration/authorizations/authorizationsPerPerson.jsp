@@ -23,6 +23,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@page import="org.apache.struts.action.ActionMessages"%>
+<%@ page import="org.fenixedu.academic.domain.Degree" %>
+<%@ page import="org.fenixedu.academic.domain.EmptyDegree" %>
 
 <jsp:include page="authorizationsScripts.jsp"/>
 
@@ -246,9 +248,28 @@
 								<div class="draggable_course degree">
 									<div id="oid" style="display:none"><bean:write name="program" property="oid"/></div>
 									<div id="presentationName" style="display:none"><bean:write name="program" property="presentationName"/></div>
-									<div id="name"><bean:write name="program" property="name"/></div>
+									<div id="name"><bean:write name="program" property="name.content"/></div>
 								</div>
 							</logic:iterate>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							<a data-toggle="collapse" data-parent="#cursos_acc" data-target="#collapseThree" href="#">
+								<bean:message key="label.others" bundle="APPLICATION_RESOURCES"/>
+							</a>
+						</h3>
+					</div>
+					<div id="collapseThree" class="panel-collapse collapse">
+						<div class="panel-body">
+							<% request.setAttribute("emptyDegree", EmptyDegree.getInstance()); %>
+							<div class="draggable_course degree">
+								<div id="oid" style="display:none"><bean:write name="emptyDegree" property="oid"/></div>
+								<div id="presentationName" style="display:none"><bean:write name="emptyDegree" property="presentationName"/></div>
+								<div id="name"><bean:write name="emptyDegree" property="name"/></div>
+							</div>
 						</div>
 					</div>
 				</div>
