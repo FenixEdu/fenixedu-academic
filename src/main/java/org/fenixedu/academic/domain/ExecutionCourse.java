@@ -511,31 +511,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     private int countAssociatedStudentsByEnrolmentNumber(int enrolmentNumber) {
         int executionCourseAssociatedStudents = 0;
-        ExecutionSemester courseExecutionPeriod = getExecutionPeriod();
 
-        for (CurricularCourse curricularCourseFromExecutionCourseEntry : getAssociatedCurricularCoursesSet()) {
-            for (Enrolment enrolment : curricularCourseFromExecutionCourseEntry.getEnrolments()) {
-
-                if (enrolment.getExecutionPeriod() == courseExecutionPeriod) {
-
-                    StudentCurricularPlan studentCurricularPlanEntry = enrolment.getStudentCurricularPlan();
-                    int numberOfEnrolmentsForThatExecutionCourse = 0;
-
-                    for (Enrolment enrolmentsFromStudentCPEntry : studentCurricularPlanEntry.getEnrolmentsSet()) {
-                        if (enrolmentsFromStudentCPEntry.getCurricularCourse() == curricularCourseFromExecutionCourseEntry
-                                && (enrolmentsFromStudentCPEntry.getExecutionPeriod().compareTo(courseExecutionPeriod) <= 0)) {
-                            ++numberOfEnrolmentsForThatExecutionCourse;
-                            if (numberOfEnrolmentsForThatExecutionCourse > enrolmentNumber) {
-                                break;
-                            }
-                        }
-                    }
-
-                    if (numberOfEnrolmentsForThatExecutionCourse == enrolmentNumber) {
-                        executionCourseAssociatedStudents++;
-                    }
-                }
-            }
+        for (CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
+            executionCourseAssociatedStudents = curricularCourse.countAssociatedStudentsByExecutionPeriodAndEnrolmentNumber(
+                    getExecutionPeriod(), enrolmentNumber, executionCourseAssociatedStudents);
         }
 
         return executionCourseAssociatedStudents;
