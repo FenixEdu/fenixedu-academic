@@ -35,6 +35,7 @@ import org.fenixedu.academic.domain.Lesson;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.DiaSemana;
 import org.fenixedu.academic.util.HourMinuteSecond;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
@@ -363,6 +364,11 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
 
     public abstract boolean isOccupiedByExecutionCourse(final ExecutionCourse executionCourse, final DateTime start,
             final DateTime end);
+
+    @Override
+    public Group getAccessGroup() {
+        return null;
+    }
 
     @Override
     public void delete() {
