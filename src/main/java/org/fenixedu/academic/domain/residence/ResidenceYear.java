@@ -18,10 +18,10 @@
  */
 package org.fenixedu.academic.domain.residence;
 
+import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.fenixedu.academic.domain.organizationalStructure.ResidenceManagementUnit;
 import org.fenixedu.academic.util.Month;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -45,7 +45,7 @@ public class ResidenceYear extends ResidenceYear_Base {
     }
 
     public Set<ResidenceMonth> getSortedMonths() {
-        TreeSet<ResidenceMonth> months = new TreeSet<ResidenceMonth>(new BeanComparator("month"));
+        TreeSet<ResidenceMonth> months = new TreeSet<>(Comparator.comparing(ResidenceMonth::getMonth));
         months.addAll(getMonthsSet());
         return months;
     }
@@ -63,12 +63,7 @@ public class ResidenceYear extends ResidenceYear_Base {
 
     public static ResidenceYear getCurrentYear() {
         Integer currentYear = new LocalDate().getYear();
-        for (ResidenceYear year : Bennu.getInstance().getResidenceYearsSet()) {
-            if (year.getYear().equals(currentYear)) {
-                return year;
-            }
-        }
-        return null;
+        return Bennu.getInstance().getResidenceYearsSet().stream().filter(year -> year.getYear().equals(currentYear)).findFirst().orElse(null);
     }
 
     public static boolean hasCurrentYear() {
@@ -76,7 +71,7 @@ public class ResidenceYear extends ResidenceYear_Base {
     }
 
     public boolean isFor(int year) {
-        return getYear().intValue() == year;
+        return getYear() == year;
     }
 
 }

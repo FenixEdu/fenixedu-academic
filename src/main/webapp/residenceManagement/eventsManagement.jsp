@@ -84,25 +84,11 @@
 				<html:link page="<%=  "/residenceManagement.do?method=importData&monthOID=" + monthOID + (request.getParameter("sortBy") != null ? "&sortBy=" + request.getParameter("sortBy") : "")%>">
 					<bean:message key="label.importFile" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>
 				</html:link>
-				|
-				<html:link page="<%=  "/residenceManagement.do?method=importCurrentDebts&monthOID=" + monthOID +  (request.getParameter("sortBy") != null ? "&sortBy=" + request.getParameter("sortBy") : "") %>">
-					Actualizar dividas (Excel)
-				</html:link>
 			</logic:equal>
 			|
 			<html:link page="<%=  "/residenceManagement.do?method=editPaymentLimitDay&monthOID=" + monthOID %>">
 				<bean:message key="label.modify.limitPaymentDay" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>
 			</html:link>
-			|
-			<html:link page="<%=  "/residenceManagement.do?method=editRoomValues&monthOID=" + monthOID %>">
-				<bean:message key="label.modify.roomValues" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>
-			</html:link>
-			<logic:present role="role(MANAGER)">
-			|
-			<html:link page="<%= "/residenceEventManagement.do?method=generatePaymentCodes&monthOID=" + monthOID %>">
-				<bean:message key="label.residence.events.generate.payment.codes" bundle="RESIDENCE_MANAGEMENT_RESOURCES" />
-			</html:link>
-			</logic:present>
 		</p>
 
 		<logic:notEmpty name="searchBean" property="residenceMonth.events">		
