@@ -1593,7 +1593,7 @@ public class Registration extends Registration_Base {
     }
 
     public static void checkIngression(IngressionType ingressionType, Person person, DegreeCurricularPlan degreeCurricularPlan) {
-        if (ingressionType.isReIngression()) {
+        if (ingressionType!=null && ingressionType.isReIngression()) {
             if (person == null || person.getStudent() == null) {
                 throw new DomainException("error.registration.preBolonhaSourceDegreeNotFound");
             }
