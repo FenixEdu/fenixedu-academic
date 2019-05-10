@@ -171,13 +171,13 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach var="eventEntry" items="${invalidEvents}">
+                                <c:forEach var="eventEntry" items="${invalidEvents}">                           
                                     <tr>
                                         <td style="width: 100px;">
                                             <time datetime="${eventEntry.key.whenOccured.toString('yyyy-MM-dd')}">${eventEntry.key.whenOccured.toString('dd/MM/yyyy')}</time>
                                         </td>
-                                        <td>
-                                            <c:out value="${eventEntry.key.description}"/>
+                                        <td>                                        
+                                         	<c:out value="${eventEntry.key['class'].simpleName}"/>                                    
                                         </td>
                                         <td><c:out value="${eventEntry.value}"/></td>
                                         <td><c:out value="${eventEntry.key.externalId}"/></td>
