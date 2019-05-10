@@ -1327,30 +1327,17 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public int countAssociatedStudentsByEnrolmentNumber(int enrolmentNumber, ExecutionSemester executionSemester) {
+        return countAssociatedStudentsByEnrolmentNumberAndDegrees(enrolmentNumber, executionSemester, null);
+    }
+
+    public int countAssociatedStudentsByEnrolmentNumberAndDegrees(int enrolmentNumber, ExecutionSemester executionSemester,
+                                                                  Set<DegreeCurricularPlan> degrees) {
         int executionCourseAssociatedStudents = 0;
 
-        for (CurricularCourse curricularCourseFromExecutionCourseEntry : getAssociatedCurricularCoursesSet()) {
-            for (Enrolment enrolment : curricularCourseFromExecutionCourseEntry.getEnrolments()) {
-
-                if (enrolment.getExecutionPeriod() == executionSemester) {
-
-                    StudentCurricularPlan studentCurricularPlanEntry = enrolment.getStudentCurricularPlan();
-                    int numberOfEnrolmentsForThatExecutionCourse = 0;
-
-                    for (Enrolment enrolmentsFromStudentCPEntry : studentCurricularPlanEntry.getEnrolmentsSet()) {
-                        if (enrolmentsFromStudentCPEntry.getCurricularCourse() == curricularCourseFromExecutionCourseEntry
-                                && (enrolmentsFromStudentCPEntry.getExecutionPeriod().compareTo(executionSemester) <= 0)) {
-                            ++numberOfEnrolmentsForThatExecutionCourse;
-                            if (numberOfEnrolmentsForThatExecutionCourse > enrolmentNumber) {
-                                break;
-                            }
-                        }
-                    }
-
-                    if (numberOfEnrolmentsForThatExecutionCourse == enrolmentNumber) {
-                        executionCourseAssociatedStudents++;
-                    }
-                }
+        for (CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
+            if (degrees == null || degrees.contains(curricularCourse.getDegreeCurricularPlan())) {
+                executionCourseAssociatedStudents = curricularCourse.countAssociatedStudentsByExecutionPeriodAndEnrolmentNumber(
+                        executionSemester, enrolmentNumber, executionCourseAssociatedStudents);
             }
         }
 

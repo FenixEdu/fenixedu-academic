@@ -1855,9 +1855,8 @@ public class CurricularCourse extends CurricularCourse_Base {
         return DegreeModuleScope.getDegreeModuleScopes(this);
     }
 
-    private int countAssociatedStudentsByExecutionPeriodAndEnrolmentNumber(ExecutionSemester executionSemester,
-            int enrolmentNumber) {
-        int curricularCourseAndExecutionPeriodAssociatedStudents = 0;
+    public int countAssociatedStudentsByExecutionPeriodAndEnrolmentNumber(ExecutionSemester executionSemester,
+            int enrolmentNumber, int curricularCourseAndExecutionPeriodAssociatedStudents) {
 
         for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
             if (curriculumModule.isEnrolment()) {
@@ -1871,6 +1870,9 @@ public class CurricularCourse extends CurricularCourse_Base {
                         if (enrolmentsFromStudentCPEntry.getCurricularCourse() == this
                                 && (enrolmentsFromStudentCPEntry.getExecutionPeriod().compareTo(executionSemester) <= 0)) {
                             ++numberOfEnrolmentsForThatCurricularCourseAndExecutionPeriod;
+                            if (numberOfEnrolmentsForThatCurricularCourseAndExecutionPeriod > enrolmentNumber) {
+                                break;
+                            }
                         }
                     }
 
@@ -1900,7 +1902,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public Integer getFirstTimeEnrolmentStudentNumber(ExecutionSemester executionSemester) {
-        return countAssociatedStudentsByExecutionPeriodAndEnrolmentNumber(executionSemester, 1);
+        return countAssociatedStudentsByExecutionPeriodAndEnrolmentNumber(executionSemester, 1, 0);
     }
 
     public Integer getSecondTimeEnrolmentStudentNumber(ExecutionSemester executionSemester) {
