@@ -19,6 +19,8 @@
 package org.fenixedu.academic.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -516,6 +518,14 @@ public enum GradeScale {
 
         boolean belongsTo(final String value);
 
+        default boolean hasRestrictedGrades() {
+            return false;
+        }
+
+        default Collection<Grade> getPossibleGrades() {
+            return Collections.emptySet();
+        }
+
         default LocalizedString getExtendedValue(Grade grade) {
             return BundleUtil.getLocalizedString(Bundle.ENUMERATION, GradeScale.class.getSimpleName() + "." + grade.getValue());
         }
@@ -634,6 +644,14 @@ public enum GradeScale {
 
     public LocalizedString getExtendedValue(Grade grade) {
         return logic.getExtendedValue(grade);
+    }
+
+    public boolean hasRestrictedGrades() {
+        return logic.hasRestrictedGrades();
+    }
+
+    public Collection<Grade> getPossibleGrades() {
+        return logic.getPossibleGrades();
     }
 
     @Deprecated
