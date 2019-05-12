@@ -77,6 +77,14 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         if (outboundMobilityContextBean == null) {
             outboundMobilityContextBean = new OutboundMobilityContextBean();
         }
+
+        //dirty hack to populate option description text box with current description
+        if (outboundMobilityContextBean.getOptionIntroductoryDestription() == null
+                && outboundMobilityContextBean.getCandidacyPeriods().size() == 1) {
+            outboundMobilityContextBean.setOptionIntroductoryDestription(outboundMobilityContextBean
+                    .getCandidacyPeriods().first().getOptionIntroductoryDestription());
+        }
+
         return prepare(mapping, request, outboundMobilityContextBean);
     }
 
