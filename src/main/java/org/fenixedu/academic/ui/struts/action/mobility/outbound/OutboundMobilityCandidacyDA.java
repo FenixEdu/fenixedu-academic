@@ -77,12 +77,20 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         if (outboundMobilityContextBean == null) {
             outboundMobilityContextBean = new OutboundMobilityContextBean();
         }
+
         return prepare(mapping, request, outboundMobilityContextBean);
     }
 
     public ActionForward prepare(final ActionMapping mapping, final HttpServletRequest request,
             final OutboundMobilityContextBean outboundMobilityContextBean) {
         RenderUtils.invalidateViewState();
+
+        //dirty hack to populate option description text box with current description
+        if (outboundMobilityContextBean.getCandidacyPeriods().size() == 1) {
+            outboundMobilityContextBean.setOptionIntroductoryDestription(outboundMobilityContextBean
+                    .getCandidacyPeriods().first().getOptionIntroductoryDestription());
+        }
+
         request.setAttribute("outboundMobilityContextBean", outboundMobilityContextBean);
         return mapping.findForward("prepare");
     }
