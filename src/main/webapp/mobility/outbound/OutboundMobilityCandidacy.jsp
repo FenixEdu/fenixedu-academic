@@ -98,29 +98,64 @@
 
 	<bean:define id="outboundMobilityContextBean" name="outboundMobilityContextBean" type="org.fenixedu.academic.ui.struts.action.mobility.outbound.OutboundMobilityContextBean"/>
 
-
 	<script type="text/javascript">
 		$(document).ready(function() {
 
-			var mobilityProgramsState = false;
-			// disable label text selection
-			$("label[for$=mobilityProgramsAsList]").attr('style', 'user-select: none;');
+			var mobilityProgramsState;
+			var mobilityGroupsState;
 
-			// toggle mobility program checkboxes state
-			$("label[for$=mobilityProgramsAsList]").click(function() {
-				mobilityProgramsState = !mobilityProgramsState;
-				$("input[value*=MobilityProgram]").prop('checked', mobilityProgramsState ? 'checked' : '');
-			});
+			if($("input[value*=MobilityProgram]").length > 0) {
+				mobilityProgramsState = $("input[value*=MobilityProgram]").not(':checked').length > 0 ? false : true;
 
-			var mobilityGroupsState = false;
-			// disable label text selection
-			$("label[for$=mobilityGroupsAsList]").attr('style', 'user-select: none;');
+				//add checkbox select all
+				$("ul[id$=mobilityProgramsAsList]")
+					.prepend("<li style=''><span><label class='dinline' for='selectAllMobilityPrograms'><input type='checkbox' id='selectAllMobilityPrograms'/><span><span><b>&nbsp;<%= BundleUtil.getString(Bundle.ACADEMIC, "label.select.all")%></b></span></span></label></span></li>");
 
-			// toggle mobility contest groups checkboxes state
-			$("label[for$=mobilityGroupsAsList]").click(function() {
-				mobilityGroupsState = !mobilityGroupsState;
-				$("input[value*=OutboundMobilityCandidacyContestGroup]").prop('checked', mobilityGroupsState ? 'checked' : '');
-			});
+				$("input[id=selectAllMobilityPrograms]").prop('checked', mobilityProgramsState ? true : false);
+
+
+				// toggle mobility program checkboxes state
+				$("input[id=selectAllMobilityPrograms]").click(function() {
+					mobilityProgramsState = !mobilityProgramsState;
+					$("input[value*=MobilityProgram]").prop('checked', mobilityProgramsState ? true : false);
+				});
+
+				$("input[value*=MobilityProgram]").click(function () {
+					if($("input[value*=MobilityProgram]").not(':checked').length > 0) {
+						mobilityProgramsState = false;
+					} else {
+						mobilityProgramsState = true;
+					}
+					$("input[id=selectAllMobilityPrograms]").prop('checked', mobilityProgramsState ? true : false);
+				});
+			}
+
+			if($("input[value*=OutboundMobilityCandidacyContestGroup]").length > 0) {
+				mobilityGroupsState = $("input[value*=OutboundMobilityCandidacyContestGroup]").not(':checked').length > 0 ? false : true;
+
+				//add checkbox select all
+				$("ul[id$=mobilityGroupsAsList]")
+						.prepend("<li style=''><span><label class='dinline' for='selectAllMobilityGroups'><input type='checkbox' id='selectAllMobilityGroups'/><span><span><b>&nbsp;<%= BundleUtil.getString(Bundle.ACADEMIC, "label.select.all")%></b></span></span></label></span></li>");
+
+				$("input[id=selectAllMobilityGroups]").prop('checked', mobilityGroupsState ? true : false);
+
+
+				// toggle mobility program checkboxes state
+				$("input[id=selectAllMobilityGroups]").click(function() {
+					mobilityGroupsState = !mobilityGroupsState;
+					$("input[value*=OutboundMobilityCandidacyContestGroup]").prop('checked', mobilityGroupsState ? true : false);
+				});
+
+				$("input[value*=OutboundMobilityCandidacyContestGroup]").click(function () {
+					if($("input[value*=OutboundMobilityCandidacyContestGroup]").not(':checked').length > 0) {
+						mobilityGroupsState = false;
+					} else {
+						mobilityGroupsState = true;
+					}
+					$("input[id=selectAllMobilityGroups]").prop('checked', mobilityGroupsState ? true : false);
+				});
+			}
+
 		});
 	</script>
 	<fr:form id="prepareForm" action="/outboundMobilityCandidacy.do">
@@ -145,7 +180,7 @@
         					<fr:property name="classes" value="nobullet noindent degreeSelectors"/>
         					<fr:property name="listItemStyle" value=""/>
 		    			</fr:slot>
-			    		<fr:slot name="mobilityGroupsAsList" layout="option-select" key="label.mobility.group">
+						<fr:slot name="mobilityGroupsAsList" layout="option-select" key="label.mobility.group">
     			    		<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.OutboundMobilityCandidacyGroupProvider" />
         					<fr:property name="eachSchema" value="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup.description"/>
         					<fr:property name="eachLayout" value="values"/>
@@ -157,6 +192,7 @@
 						<fr:property name="classes" value="tstyle5 thlight thmiddle thright mtop1 fullSpace"/>
 						<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
 					</fr:layout>
+					<fr:destination name="postback" path="/outboundMobilityCandidacy.do?method=executionYearPostback" />
 				</fr:edit>
 		<html:submit value="<%= org.fenixedu.bennu.core.i18n.BundleUtil.getString("resources.AcademicAdminOffice", "label.submit") %>"/>
 		<academic:allowed operation="MANAGE_MOBILITY_OUTBOUND">
