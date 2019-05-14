@@ -27,7 +27,6 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
-import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.curriculum.ConclusionProcess;
@@ -63,14 +62,13 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     private String observations;
 
     private StudentCurricularPlan studentCurricularPlan;
+    
+    protected RegistrationConclusionBean() {
+        super();
+    }
 
     public RegistrationConclusionBean(final Registration registration) {
         setRegistration(registration);
-    }
-
-    @Deprecated
-    public RegistrationConclusionBean(final Registration registration, final CycleType cycleType) {
-        this(registration, registration.getLastStudentCurricularPlan().getCycle(cycleType));
     }
 
     @Deprecated
