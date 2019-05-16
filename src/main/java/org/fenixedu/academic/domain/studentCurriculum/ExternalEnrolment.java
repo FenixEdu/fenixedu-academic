@@ -32,6 +32,7 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.ExternalCurricularCourse;
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.IEnrolment;
+import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degreeStructure.RegimeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
@@ -232,8 +233,8 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     }
 
     @Override
-    public Set<CurriculumLine> getCurriculumLinesForCurriculum() {
-        return getRegistration().getLastStudentCurricularPlan().getCreditsSet().stream()
+    public Set<CurriculumLine> getCurriculumLinesForCurriculum(final StudentCurricularPlan studentCurricularPlan) {
+        return studentCurricularPlan.getCreditsSet().stream()
                 .filter(c -> c.getEnrolmentsSet().stream().anyMatch(ew -> ew.getIEnrolment() == this))
                 .flatMap(c -> c.getDismissalsSet().stream()).collect(Collectors.toSet());
     }
@@ -303,5 +304,5 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     public ExecutionInterval getExecutionInterval() {
         return super.getExecutionPeriod();
     }
-    
+
 }

@@ -1222,8 +1222,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     @Override
-    public Set<CurriculumLine> getCurriculumLinesForCurriculum() {
-        return getRegistration().getLastStudentCurricularPlan().getCreditsSet().stream()
+    public Set<CurriculumLine> getCurriculumLinesForCurriculum(final StudentCurricularPlan studentCurricularPlan) {
+        return studentCurricularPlan.getCreditsSet().stream()
                 .filter(c -> c.getEnrolmentsSet().stream().anyMatch(ew -> ew.getIEnrolment() == this))
                 .flatMap(c -> c.getDismissalsSet().stream()).collect(Collectors.toSet());
     }
