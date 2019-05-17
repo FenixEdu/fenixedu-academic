@@ -24,6 +24,7 @@ import static org.fenixedu.academic.domain.RegistrationProtocolLog.createLog;
 
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityProgram;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.LocalizedString;
@@ -62,6 +63,9 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
         setMilitary(military);
         setForOfficialMobilityReporting(forOfficialMobilityReporting);
         setAttemptAlmaMatterFromPrecedent(attemptAlmaMatterFromPrecedent);
+        if (mobility != null && mobility) {
+            new MobilityProgram(this);
+        }
     }
 
     @Atomic
@@ -128,6 +132,9 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
         setAlien(isAlien);
         setExempted(exempted);
         setMobility(mobility);
+        if (mobility && getMobilityProgram() == null) {
+            new MobilityProgram(this);
+        }
         setMilitary(military);
         setForOfficialMobilityReporting(forOfficialMobilityReporting);
         setAttemptAlmaMatterFromPrecedent(attemptAlmaMatterFromPrecedent);
