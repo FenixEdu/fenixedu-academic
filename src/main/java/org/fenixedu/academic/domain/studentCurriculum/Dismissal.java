@@ -328,8 +328,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 
     @Override
     public Set<CurriculumLine> getCurriculumLinesForCurriculum(final StudentCurricularPlan studentCurricularPlan) {
-        return getCredits().isEquivalence() && getStudentCurricularPlan() == studentCurricularPlan ? Sets.newHashSet(this) : Sets
-                .newHashSet();
+        return getCredits().isEquivalence() ? Sets.newHashSet(this) : Sets.newHashSet();
     }
 
     public Double getWeigth() {
