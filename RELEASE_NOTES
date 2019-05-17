@@ -1,3 +1,4 @@
+21.2.1 (17-05-2019)
 - Bug Fix: Collecting target curriculum lines for Dismisal should not filter by student curricular plan (Dismissals can only be collected as part of target plan curriculum) 
 
 21.2.0 (16-05-2019)
