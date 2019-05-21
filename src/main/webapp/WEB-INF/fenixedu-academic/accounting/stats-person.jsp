@@ -44,10 +44,6 @@ Highcharts.chart('container', {
         data: [${stats.debt}],
         color: '#ffec49'
     }, {
-    	name: '<spring:message code="label.unused" text="Unused"/>',
-        data: [${stats.unused}],
-        color: '#ff49ff'
-    }, {
     	name: '<spring:message code="label.payed.overdue" text="Payed Overdue"/>',
         data: [${stats.payedOverdue}],
         color: '#4572A7'
