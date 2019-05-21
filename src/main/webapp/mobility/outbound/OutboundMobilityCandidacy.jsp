@@ -393,8 +393,7 @@
 				<fr:schema type="org.fenixedu.academic.ui.struts.action.mobility.outbound.OutboundMobilityContextBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 					<fr:slot name="optionIntroductoryDestription" bundle="ACADEMIC_OFFICE_RESOURCES" layout="rich-text" key="label.optionIntroductoryDestription"
 							validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-					<fr:slot name="optionValue" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.option"
-							validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+					<fr:slot name="optionValue" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.option"/>
 					<fr:slot name="availableForCandidates" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.availableForCandidates"/>
 				</fr:schema>
 				<fr:layout name="tabular">
