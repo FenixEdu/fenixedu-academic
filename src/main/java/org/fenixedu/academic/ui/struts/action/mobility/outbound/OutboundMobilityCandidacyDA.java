@@ -95,6 +95,13 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         return mapping.findForward("prepare");
     }
 
+    public ActionForward executionYearPostback(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            final HttpServletResponse response) {
+        OutboundMobilityContextBean outboundMobilityContextBean = getRenderedObject();
+        outboundMobilityContextBean.selectLastOpenedCandidacyPeriod();
+        return prepare(mapping, request, outboundMobilityContextBean);
+    }
+
     public ActionForward invalidadeAndPrepare(final ActionMapping mapping, final ActionForm actionForm,
             final HttpServletRequest request, final HttpServletResponse response) {
         OutboundMobilityContextBean outboundMobilityContextBean = getRenderedObject();
