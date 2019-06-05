@@ -271,6 +271,7 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         Integer referenceOrder;
         String title;
         String year;
+        String url;
     }
 
     class CompetenceCourse  {

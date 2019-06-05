@@ -40,7 +40,7 @@ public class EditBibliographicReference {
         if (bibliographicReference == null) {
             throw new InvalidArgumentsServiceException();
         }
-        bibliographicReference.edit(newTitle, newAuthors, newReference, newYear, optional);
+        bibliographicReference.edit(newTitle, newAuthors, newReference, newYear, bibliographicReference.getUrl(), optional);
 
         return true;
     }
