@@ -48,11 +48,19 @@ public class FenixFacesServlet implements Servlet {
     public FenixFacesServlet() {
         super();
         facesServlet = new FacesServlet();
+
     }
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         facesServlet.init(config);
+
+        AddSignatureToViewStateObjects taskToAddSignatures =  new AddSignatureToViewStateObjects();
+        try {
+            taskToAddSignatures.runTask();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
