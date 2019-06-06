@@ -89,6 +89,7 @@
 						<fr:validator name="<%= FileValidator.class.getName() %>">
 							<fr:property name="maxSize" value="100mb" />
 							<fr:property name="acceptedExtensions" value="pdf" />
+							<fr:property name="acceptedTypes" value="application/pdf" />
 						</fr:validator>
 						<fr:property name="fileNameSlot" value="documentBean.filename"/>
 						<fr:property name="size" value="20"/>

@@ -99,6 +99,7 @@
 								<fr:property name="required" value="true" />
 								<fr:property name="maxSize" value="2mb" />
 								<fr:property name="acceptedExtensions" value="pdf" />
+								<fr:property name="acceptedTypes" value="application/pdf" />
 							</fr:validator>
 							<fr:property name="fileNameSlot" value="guidingAcceptanceLetter.filename"/>
 							<fr:property name="size" value="20"/>
@@ -189,6 +190,7 @@
 								<fr:property name="required" value="true" />
 								<fr:property name="maxSize" value="2mb" />
 								<fr:property name="acceptedExtensions" value="pdf" />
+								<fr:property name="acceptedTypes" value="application/pdf" />
 							</fr:validator>
 							<fr:property name="fileNameSlot" value="guidingAcceptanceLetter.filename"/>
 							<fr:property name="size" value="20"/>

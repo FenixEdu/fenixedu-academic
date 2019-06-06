@@ -109,6 +109,7 @@
 									<fr:property name="required" value="true" />
 									<fr:property name="maxSize" value="8mb" />
 									<fr:property name="acceptedExtensions" value="pdf" />
+									<fr:property name="acceptedTypes" value="application/pdf" />
 								</fr:validator>
 								<fr:property name="fileNameSlot" value="filename"/>
 								<fr:property name="size" value="40"/>

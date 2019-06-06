@@ -373,7 +373,8 @@
 		<validator
 			class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
 			<property name="maxSize" value="3698688"/>
-			<property name="acceptedExtensions" value="gif,jpg,png,pdf,doc" />
+			<property name="acceptedExtensions" value="gif,jpg,png,pdf" />
+			<property name="acceptedTypes" value="image/gif,image/jpg,image/png,application/pdf" />
 			<property name="required" value="true"/>
 		</validator>
 	</slot>

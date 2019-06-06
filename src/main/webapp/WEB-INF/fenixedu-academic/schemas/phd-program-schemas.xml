@@ -641,6 +641,7 @@
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
 			<property name="maxSize" value="3mb" />
 			<property name="acceptedExtensions" value="pdf" />
+			<property name="acceptedTypes" value="application/pdf" />
 		</validator>
 		<property name="fileNameSlot" value="filename"/>
 		<property name="size" value="20"/>
@@ -658,6 +659,7 @@
 			<property name="required" value="true" />
 			<property name="maxSize" value="8mb" />
 			<property name="acceptedExtensions" value="pdf" />
+			<property name="acceptedTypes" value="application/pdf" />
 		</validator>
 		<property name="fileNameSlot" value="filename"/>
 		<property name="size" value="20"/>
@@ -672,6 +674,7 @@
 			<property name="required" value="true" />
 			<property name="maxSize" value="3mb" />
 			<property name="acceptedExtensions" value="pdf" />
+			<property name="acceptedTypes" value="application/pdf" />
 		</validator>
 		<property name="fileNameSlot" value="filename"/>
 		<property name="size" value="20"/>
@@ -685,6 +688,7 @@
 			<property name="required" value="true" />
 			<property name="maxSize" value="3mb" />
 			<property name="acceptedExtensions" value="pdf" />
+			<property name="acceptedTypes" value="application/pdf" />
 		</validator>
 		<property name="fileNameSlot" value="filename"/>
 		<property name="size" value="20"/>
@@ -698,6 +702,7 @@
 			<property name="required" value="true" />
 			<property name="maxSize" value="3mb" />
 			<property name="acceptedExtensions" value="pdf" />
+			<property name="acceptedTypes" value="application/pdf" />
 		</validator>
 		<property name="fileNameSlot" value="filename"/>
 		<property name="size" value="20"/>
@@ -709,6 +714,7 @@
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
 			<property name="maxSize" value="3mb" />
 			<property name="acceptedExtensions" value="pdf" />
+			<property name="acceptedTypes" value="application/pdf" />
 		</validator>
 		<property name="fileNameSlot" value="filename"/>
 		<property name="size" value="20"/>
@@ -720,6 +726,7 @@
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
 			<property name="maxSize" value="3mb" />
 			<property name="acceptedExtensions" value="pdf" />
+			<property name="acceptedTypes" value="application/pdf" />
 		</validator>
 		<property name="fileNameSlot" value="filename"/>
 		<property name="size" value="20"/>
@@ -731,6 +738,7 @@
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
 			<property name="maxSize" value="3mb" />
 			<property name="acceptedExtensions" value="pdf" />
+			<property name="acceptedTypes" value="application/pdf" />
 		</validator>
 		<property name="fileNameSlot" value="filename"/>
 		<property name="size" value="20"/>
@@ -744,6 +752,7 @@
 			<property name="required" value="true" />
 			<property name="maxSize" value="3mb" />
 			<property name="acceptedExtensions" value="pdf" />
+			<property name="acceptedTypes" value="application/pdf" />
 		</validator>
 		<property name="fileNameSlot" value="filename"/>
 		<property name="size" value="20"/>
@@ -915,6 +924,7 @@
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
 			<property name="maxSize" value="8mb" />
 			<property name="acceptedExtensions" value="pdf" />
+			<property name="acceptedTypes" value="application/pdf" />
 			<property name="required" value="true" />
 		</validator>
 		<property name="subProperty(fileNameSlot)" value="filename"/>
