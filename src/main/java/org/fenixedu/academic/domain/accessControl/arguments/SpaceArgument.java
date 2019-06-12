@@ -23,10 +23,17 @@ import org.fenixedu.bennu.core.annotation.GroupArgumentParser;
 import org.fenixedu.bennu.core.groups.ArgumentParser;
 import org.fenixedu.spaces.domain.Space;
 
+import pt.ist.fenixframework.DomainObject;
+import pt.ist.fenixframework.FenixFramework;
+
 @GroupArgumentParser
 public class SpaceArgument implements ArgumentParser<Space> {
     @Override
     public Space parse(String argument) {
+        final Space space = FenixFramework.getDomainObject(argument);
+        if (FenixFramework.isDomainObjectValid(space)) {
+            return space;
+        }
         return SpaceUtils.getSpaceByName(argument);
     }
 
