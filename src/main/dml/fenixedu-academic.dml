@@ -3502,6 +3502,7 @@ class caseHandling.ProcessLog  {
 /* Candidacies */
 
 class period.CandidacyPeriod  {
+    LocalizedString title;
     DateTime start;
     DateTime end;
 }
@@ -3541,7 +3542,6 @@ class period.CandidacyPeriod  {
 
     class period.GenericApplicationPeriod extends period.CandidacyPeriod {
     	Integer periodNumber;
-    	LocalizedString title;
     	LocalizedString description;
     } 
 

@@ -1829,6 +1829,7 @@
 </schema>
 
 <schema name="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyPeriod.interval" type="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyPeriod">
+	<slot name="title"/>
 	<slot name="intervalAsString"/>
 </schema>
 

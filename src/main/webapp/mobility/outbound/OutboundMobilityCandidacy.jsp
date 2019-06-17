@@ -293,6 +293,8 @@
 		<fr:edit id="outboundMobilityContextBeanCreateCandidacyPeriod" name="outboundMobilityContextBean"
 				action="/outboundMobilityCandidacy.do?method=createNewOutboundMobilityCandidacyPeriod">
 			<fr:schema type="org.fenixedu.academic.ui.struts.action.mobility.outbound.OutboundMobilityContextBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+				<fr:slot name="title" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.title"
+						 validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 				<fr:slot name="startDateTime" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.startDate"
 						validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 				<fr:slot name="endDateTime" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.endDate"
@@ -388,6 +390,8 @@
 			<h3><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.edit.period"/></h3>
 			<fr:edit id="editCandidacyPeriod" name="candidacyPeriod" action="/outboundMobilityCandidacy.do?method=editCandidacyPeriod">
 				<fr:schema type="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyPeriod" bundle="ACADEMIC_OFFICE_RESOURCES">
+					<fr:slot name="title" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.title"
+							 validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 					<fr:slot name="start" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.startDate"
 							validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 					<fr:slot name="end" bundle="ACADEMIC_OFFICE_RESOURCES" key="label.endDate"
@@ -582,7 +586,11 @@
 		%>
 			<tr>
 				<% if (outboundMobilityContextBean.getCandidacyPeriods().size() > 1) { %>
-					<td><%= contest.getOutboundMobilityCandidacyPeriod().getIntervalAsString() %></td>
+					<% if (contest.getOutboundMobilityCandidacyPeriod().getTitle() == null) { %>
+						<td><%= contest.getOutboundMobilityCandidacyPeriod().getIntervalAsString() %></td>
+					<% } else { %>
+						<td><%= contest.getOutboundMobilityCandidacyPeriod().getTitle().getContent() + " – " + contest.getOutboundMobilityCandidacyPeriod().getIntervalAsString() %></td>
+					<% } %>
 				<% } %>
 				<% if (outboundMobilityContextBean.getMobilityGroups().size() > 1) { %>
 					<td>

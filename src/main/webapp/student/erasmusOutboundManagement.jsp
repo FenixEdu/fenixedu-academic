@@ -101,7 +101,13 @@
 						<table style="width: 100%;"><tr>
 						<td>
 						<ul>
-							<li><bean:message key="label.candidacy.period"/>: <strong><%= candidacyPeriod.getIntervalAsString() %></strong></li>
+							<li><bean:message key="label.candidacy.period"/>: <strong>
+								<% if (candidacyPeriod.getTitle() == null) { %>
+									<%= candidacyPeriod.getIntervalAsString() %>
+								<% } else { %>
+									<%= candidacyPeriod.getTitle().getContent() + " – " + candidacyPeriod.getIntervalAsString() %>
+								<% } %>
+							</strong></li>
 							<li>
 								<bean:message key="label.submitted.candidacies"/>:
 								<div style="margin-top: 10px; margin-left: 15px;">
@@ -219,7 +225,13 @@
 					<bean:message key="label.execution.year"/>: <%= ((ExecutionYear)candidacyPeriod.getExecutionInterval()).getNextYearsYearString() %>
 				</h3>
 				<ul>
-					<li><bean:message key="label.candidacy.period"/>: <%= outboundMobilityCandidacyPeriod.getIntervalAsString() %></li>
+					<li><bean:message key="label.candidacy.period"/>:
+						<% if (outboundMobilityCandidacyPeriod.getTitle() == null) { %>
+						<td><%= outboundMobilityCandidacyPeriod.getIntervalAsString() %></td>
+						<% } else { %>
+						<td><%= outboundMobilityCandidacyPeriod.getTitle().getContent() + " – " + outboundMobilityCandidacyPeriod.getIntervalAsString() %></td>
+						<% } %>
+					</li>
 					<li>
 						<bean:message key="label.available.candidacies"/>:
 						<div style="margin-top: 10px; margin-left: 15px; width: 1050px;">
