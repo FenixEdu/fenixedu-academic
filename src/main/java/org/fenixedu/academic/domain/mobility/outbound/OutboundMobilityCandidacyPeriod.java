@@ -19,13 +19,7 @@
 package org.fenixedu.academic.domain.mobility.outbound;
 
 import java.math.BigDecimal;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.ExecutionDegree;
@@ -43,6 +37,7 @@ import org.fenixedu.academic.domain.student.curriculum.ICurriculum;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
 import org.joda.time.DateTime;
@@ -53,9 +48,10 @@ import pt.ist.fenixframework.Atomic;
 
 public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPeriod_Base implements Comparable<CandidacyPeriod> {
 
-    public OutboundMobilityCandidacyPeriod(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
+    public OutboundMobilityCandidacyPeriod(final ExecutionInterval executionInterval, final LocalizedString title, final DateTime start, final DateTime end) {
         super();
         init(executionInterval, start, end);
+        setTitle(title);
 
         final OutboundMobilityCandidacyPeriod previousPeriod = findPreviousPeriod();
         for (final OutboundMobilityCandidacyContestGroup group : previousPeriod.getOutboundMobilityCandidacyContestGroupSet()) {
@@ -80,9 +76,9 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
     }
 
     @Atomic
-    public static OutboundMobilityCandidacyPeriod create(final ExecutionInterval executionInterval, final DateTime start,
+    public static OutboundMobilityCandidacyPeriod create(final ExecutionInterval executionInterval, final LocalizedString title, final DateTime start,
             final DateTime end) {
-        return new OutboundMobilityCandidacyPeriod(executionInterval, start, end);
+        return new OutboundMobilityCandidacyPeriod(executionInterval, title, start, end);
     }
 
     @Atomic

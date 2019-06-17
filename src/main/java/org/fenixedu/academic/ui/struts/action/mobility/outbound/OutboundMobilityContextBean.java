@@ -33,6 +33,7 @@ import org.fenixedu.academic.domain.period.CandidacyPeriod;
 import org.fenixedu.academic.domain.period.CandidacyPeriod_Base;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -52,6 +53,7 @@ public class OutboundMobilityContextBean implements Serializable {
     private SortedSet<OutboundMobilityCandidacyContestGroup> mobilityGroups =
             new TreeSet<OutboundMobilityCandidacyContestGroup>();
 
+    private LocalizedString title;
     private DateTime startDateTime;
     private DateTime endDateTime;
 
@@ -149,6 +151,14 @@ public class OutboundMobilityContextBean implements Serializable {
         this.mobilityPrograms.addAll(mobilityProgramsAsList);
     }
 
+    public LocalizedString getTitle() {
+        return title;
+    }
+
+    public void setTitle(LocalizedString title) {
+        this.title = title;
+    }
+
     public DateTime getStartDateTime() {
         return startDateTime;
     }
@@ -167,7 +177,7 @@ public class OutboundMobilityContextBean implements Serializable {
 
     public void createNewOutboundMobilityCandidacyPeriod() {
         final OutboundMobilityCandidacyPeriod candidacyPeriod =
-                OutboundMobilityCandidacyPeriod.create(getExecutionYear(), getStartDateTime(), getEndDateTime());
+                OutboundMobilityCandidacyPeriod.create(getExecutionYear(), getTitle(), getStartDateTime(), getEndDateTime());
         candidacyPeriods.add(candidacyPeriod);
     }
 
