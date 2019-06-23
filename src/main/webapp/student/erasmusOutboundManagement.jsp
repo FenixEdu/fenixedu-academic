@@ -18,18 +18,13 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption"%>
-<%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup"%>
-<%@page import="org.fenixedu.academic.domain.organizationalStructure.Unit"%>
-<%@page import="org.fenixedu.academic.domain.ExecutionDegree"%>
 <%@page import="org.fenixedu.academic.domain.Country"%>
-<%@ page language="java" %>
-<%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacy"%>
-<%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyContest"%>
-<%@page import="org.fenixedu.academic.domain.period.CandidacyPeriod"%>
 <%@page import="org.fenixedu.academic.domain.ExecutionYear"%>
-<%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacyPeriod"%>
-<%@page import="org.fenixedu.academic.domain.mobility.outbound.OutboundMobilityCandidacySubmission"%>
+<%@page import="org.fenixedu.academic.domain.mobility.outbound.*"%>
+<%@page import="org.fenixedu.academic.domain.organizationalStructure.Unit"%>
+<%@page import="org.fenixedu.academic.domain.period.CandidacyPeriod"%>
+<%@ page language="java" %>
+<%@page import="java.math.BigDecimal"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -45,6 +40,7 @@
   html>body #sortable li { line-height: 1.2em; }
   .ui-state-highlight { height: 1.5em; line-height: 1.2em; }
   .ui-state-default-selected { border: 1px; border-color: green; border-style: solid; background: #CCFFCC url(images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #555555; }
+  .ui-state-default-not-selected { border: 1px; border-color: red; border-style: solid; background: #FFDDDB url(images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #555555; }
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -102,6 +98,19 @@
 						<td>
 						<ul>
 							<li><bean:message key="label.candidacy.period"/>: <strong><%= candidacyPeriod.getIntervalAsString() %></strong></li>
+								<%
+									final OutboundMobilityCandidacyContestGroup groupForGrade = submission.getSortedOutboundMobilityCandidacySet().first()
+											.getOutboundMobilityCandidacyContest().getOutboundMobilityCandidacyContestGroup();
+									if(groupForGrade.areCandidatesNotofiedOfSelectionResults(candidacyPeriod)) { %>
+										<li><bean:message key="label.candidate.classification"/>:
+									<%
+										final BigDecimal grade = submission.getGrade(groupForGrade);
+										if(grade != null) {
+									%>
+									<strong><%= grade.toString() %></strong>
+									<% } %>
+								<% } %>
+										</li>
 							<li>
 								<bean:message key="label.submitted.candidacies"/>:
 								<div style="margin-top: 10px; margin-left: 15px;">
@@ -116,10 +125,12 @@
 											    final OutboundMobilityCandidacyContestGroup group = contest.getOutboundMobilityCandidacyContestGroup();
 											    final Unit unit = contest.getMobilityAgreement().getUniversityUnit();
 											    final Country country = unit.getCountry();
-											    final String liClass = candidacy.getSubmissionFromSelectedCandidacy() != null
-											            && group.areCandidatesNotofiedOfSelectionResults(candidacyPeriod) ? "ui-state-default ui-state-default-selected" : "ui-state-default";
-										%>
-												<li class="<%= liClass %>" id="<%= candidacy.getExternalId() %>">
+											    String liClass = "ui-state-default";
+											    if(group.areCandidatesNotofiedOfSelectionResults(candidacyPeriod)) {
+											    	liClass += " " + (candidacy.getSubmissionFromSelectedCandidacy() != null? "ui-state-default-selected" : "ui-state-default-not-selected");
+
+												} %>
+										<li class="<%= liClass %>" id="<%= candidacy.getExternalId() %>">
 														<% final String name = unit.getName(); %>
 														<strong><%= name %></strong>
 														<%= name.length() >= 70 ? "<br/>" : "" %>&nbsp;-&nbsp;
