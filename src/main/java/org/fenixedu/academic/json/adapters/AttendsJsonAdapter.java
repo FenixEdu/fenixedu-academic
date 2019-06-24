@@ -19,6 +19,7 @@
 package org.fenixedu.academic.json.adapters;
 
 import org.fenixedu.academic.domain.Attends;
+import org.fenixedu.academic.domain.Attends.StudentAttendsStateType;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.util.Bundle;
@@ -50,8 +51,9 @@ public class AttendsJsonAdapter implements JsonViewer<Attends> {
         object.addProperty("registrationState",
                 registrationState == null ? "" : registrationState.getStateType().getDescription());
 
+        final StudentAttendsStateType attendsStateType = attends.getAttendsStateType();
         object.addProperty("enrolmentType",
-                BundleUtil.getString(Bundle.ENUMERATION, attends.getAttendsStateType().getQualifiedName()));
+                attendsStateType != null ? BundleUtil.getString(Bundle.ENUMERATION, attendsStateType.getQualifiedName()) : "");
 
         object.addProperty("workingStudent",
                 attends.getRegistration().getStudent().hasWorkingStudentStatuteInPeriod(attends.getExecutionInterval()));

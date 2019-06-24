@@ -1,3 +1,5 @@
+- Bug Fix: Avoid NPE when Attends State type is not defined yet
+
 21.2.2 (05-06-2019)
 - Improvement: Added URL slot to BibliographicReference
 
