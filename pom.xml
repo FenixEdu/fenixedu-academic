@@ -6,7 +6,7 @@
         <groupId>org.fenixedu</groupId>
         <artifactId>fenix-framework-project</artifactId>
         <version>2.5.2</version>
-        <relativePath />
+        <relativePath/>
     </parent>
 
     <artifactId>fenixedu-academic</artifactId>
@@ -24,7 +24,7 @@
         <version.com.googlecode.libphonenumber.libphonenumber>8.10.0</version.com.googlecode.libphonenumber.libphonenumber>
         <version.com.lowagie.itext>2.1.7</version.com.lowagie.itext>
         <version.com.sun.mail.javax.mail>1.6.2</version.com.sun.mail.javax.mail>
-        <version.com.twilio.sdk.twilio-java-sdk>7.31.0</version.com.twilio.sdk.twilio-java-sdk>
+        <version.com.twilio.sdk.twilio-java-sdk>7.32.0</version.com.twilio.sdk.twilio-java-sdk>
         <version.commons-beanutils.commons-beanutils>1.9.3</version.commons-beanutils.commons-beanutils>
         <version.commons-collections.commons-collections>3.2.2</version.commons-collections.commons-collections>
         <version.commons-httpclient.commons-httpclient>3.1</version.commons-httpclient.commons-httpclient>
