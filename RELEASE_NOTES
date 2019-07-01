@@ -1,5 +1,7 @@
+- Improvement: Added new method for enrolment in shifts
+
 21.2.4 (26-06-2019)
-- Improvement: made courses evaluation methods labels consistent 
+- Improvement: Made courses evaluation methods labels consistent 
 
 21.2.3 (24-06-2019)
 - Bug Fix: Avoid NPE when Attends State type is not defined yet

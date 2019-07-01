@@ -33,12 +33,10 @@ import java.util.TreeSet;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.util.email.ExecutionCourseSender;
 import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.academic.domain.util.email.Recipient;
-import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.DiaSemana;
 import org.fenixedu.academic.util.WeekDay;
@@ -340,20 +338,50 @@ public class Shift extends Shift_Base {
         return Integer.valueOf(stringBuilder.toString());
     }
 
+    /**
+     * Enrolls provided registration in this shift (if vacancies available), and unenroll it from other shifts of same type and
+     * course
+     * 
+     * @param registration registration to enroll in this shift
+     * @return <code>true</code> if registration enrolled successfully in this shift
+     */
+    public boolean enrol(final Registration registration) {
+        final boolean result = getVacancies() > 0;
+        if (result) {
+            final ExecutionCourse executionCourse = getExecutionCourse();
+
+            // remove registration from shifts of the same type
+            for (final ShiftType shiftType : getTypes()) {
+                final Shift shift = registration.getShiftFor(executionCourse, shiftType);
+                if (shift != null) {
+                    GroupsAndShiftsManagementLog.createLog(getExecutionCourse(), Bundle.MESSAGING,
+                            "log.executionCourse.groupAndShifts.shifts.attends.removed", registration.getNumber().toString(),
+                            shift.getNome(), executionCourse.getNome(), executionCourse.getDegreePresentationString());
+                    registration.removeShifts(shift);
+                }
+            }
+
+            GroupsAndShiftsManagementLog.createLog(executionCourse, Bundle.MESSAGING,
+                    "log.executionCourse.groupAndShifts.shifts.attends.added", registration.getNumber().toString(), getNome(),
+                    executionCourse.getNome(), executionCourse.getDegreePresentationString());
+            addStudents(registration);
+        }
+        return result;
+    }
+
+    /**
+     * @deprecated use {@link #enrol(Registration)}
+     */
+    @Deprecated
     public boolean reserveForStudent(final Registration registration) {
         final boolean result = getLotacao().intValue() > getStudentsSet().size();
-        if (result || isResourceAllocationManager()) {
+        if (result) {
             GroupsAndShiftsManagementLog.createLog(getExecutionCourse(), Bundle.MESSAGING,
                     "log.executionCourse.groupAndShifts.shifts.attends.added", registration.getNumber().toString(), getNome(),
                     getExecutionCourse().getNome(), getExecutionCourse().getDegreePresentationString());
             addStudents(registration);
         }
         return result;
-    }
-
-    private boolean isResourceAllocationManager() {
-        final Person person = AccessControl.getPerson();
-        return person != null && RoleType.RESOURCE_ALLOCATION_MANAGER.isMember(person.getUser());
     }
 
     public SortedSet<ShiftEnrolment> getShiftEnrolmentsOrderedByDate() {
@@ -452,7 +480,7 @@ public class Shift extends Shift_Base {
         return false;
     }
 
-    public void unEnrolStudent(final Registration registration) {
+    private void unEnrolStudent(final Registration registration) {
         final ShiftEnrolment shiftEnrolment = findShiftEnrolment(registration);
         if (shiftEnrolment != null) {
             shiftEnrolment.delete();
