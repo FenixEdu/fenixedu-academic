@@ -149,8 +149,8 @@
 	</slot>
 	<slot name="nationality" layout="menu-select" key="label.nationality" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.CountryProvider"/>
-		<property name="format" value="${nationality}" />
-		<property name="sortBy" value="nationality"/>
+		<property name="format" value="${countryNationality.content}" />
+		<property name="sortBy" value="countryNationality.content"/>
 	</slot>
 	<slot name="parishOfBirth" />
 	<slot name="districtSubdivisionOfBirth" />
