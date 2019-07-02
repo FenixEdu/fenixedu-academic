@@ -120,7 +120,7 @@
             </fr:slot>
             <fr:slot name="registration" layout="menu-select" key="label.studentRegistrations" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
                 <fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.StudentRegisrationsProvider" />
-                <fr:property name="format" value="${degree.presentationName}" />
+                <fr:property name="format" value="${degree.presentationName} [${activeState.stateType.description}]" />
             </fr:slot>
         </fr:schema>
 
