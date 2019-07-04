@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -284,6 +285,11 @@ public enum SchoolLevelType implements IPresentableEnum {
 
         return result;
 
+    }
+
+    static public List<SchoolLevelType> getTypesForStudentMinusOther() {
+        return getTypesForStudent().stream().filter(l -> !l.isOther())
+                .collect(Collectors.toList());
     }
 
     static public List<SchoolLevelType> getTypesForMobilityStudent() {

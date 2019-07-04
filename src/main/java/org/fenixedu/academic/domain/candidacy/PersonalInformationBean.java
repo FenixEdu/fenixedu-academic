@@ -53,6 +53,9 @@ import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.Atomic;
 
+import static org.fenixedu.academic.domain.GrantOwnerType.STUDENT_WITHOUT_SCHOLARSHIP;
+import static org.fenixedu.academic.domain.SchoolLevelType.OTHER_SITUATION;
+
 public class PersonalInformationBean implements Serializable {
 
     static private final LocalDate limitDate = new LocalDate(2014, 12, 16);
@@ -623,6 +626,14 @@ public class PersonalInformationBean implements Serializable {
         return false;
     }
 
+    public boolean isCountryOfResidenceDefaultCountry() { return getCountryOfResidence() != null && getCountryOfResidence().isDefaultCountry(); }
+
+    public boolean isCountryWhereFinishedPreviousCompleteDegreeDefaultCountry() { return getCountryWhereFinishedPreviousCompleteDegree() != null && getCountryWhereFinishedPreviousCompleteDegree().isDefaultCountry(); }
+
+    public boolean isGrantProviderAnotherInstitution() { return getGrantOwnerType() != null && !getGrantOwnerType().getName().equals(STUDENT_WITHOUT_SCHOLARSHIP.getName()); }
+
+    public boolean isSchoolLevelOther() { return getSchoolLevel() != null && getSchoolLevel().isOther(); }
+
     public boolean isMaritalStatusValid() {
         return hasMaritalStatus() && getMaritalStatus() != MaritalStatus.UNKNOWN;
     }
@@ -710,6 +721,16 @@ public class PersonalInformationBean implements Serializable {
     public void resetDegree() {
         setDegreeDesignation(null);
         setRaidesDegreeDesignation(null);
+    }
+
+    public void resetDistrictSubdivisionOfResidence() {
+        setDistrictSubdivisionOfResidence(null);
+    }
+
+    public void resetGrantOwnerProvider() {
+        setGrantOwnerProvider(null);
+        setGrantOwnerProviderName(null);
+        setGrantOwnerProviderUnitName(null);
     }
 
     public String getFormattedValues() {

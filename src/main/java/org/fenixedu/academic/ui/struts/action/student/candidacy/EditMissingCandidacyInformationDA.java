@@ -129,11 +129,45 @@ public class EditMissingCandidacyInformationDA extends FenixDispatchAction {
         return mapping.findForward("editMissingPersonalInformation");
     }
 
+    public ActionForward countryOfResidencePostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("personalInformationsWithMissingInformation", getPersonalInformationsWithMissingInfo());
+        final PersonalInformationBean personalInformationBean = getRenderedObject("personalInformationBean");
+        personalInformationBean.resetDistrictSubdivisionOfResidence();
+        request.setAttribute("personalInformationBean", personalInformationBean);
+        RenderUtils.invalidateViewState();
+
+        return mapping.findForward("editMissingPersonalInformation");
+    }
+
+    public ActionForward grantOwnerTypePostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        request.setAttribute("personalInformationsWithMissingInformation", getPersonalInformationsWithMissingInfo());
+        final PersonalInformationBean personalInformationBean = getRenderedObject("personalInformationBean");
+        personalInformationBean.resetGrantOwnerProvider();
+        request.setAttribute("personalInformationBean", personalInformationBean);
+        RenderUtils.invalidateViewState();
+
+        return mapping.findForward("editMissingPersonalInformation");
+    }
+
     public ActionForward prepareEditPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
         request.setAttribute("personalInformationsWithMissingInformation", getPersonalInformationsWithMissingInfo());
         PersonalInformationBean personalInformationBean = getRenderedObject("personalInformationBean");
+        personalInformationBean.resetInstitutionAndDegree();
+        request.setAttribute("personalInformationBean", personalInformationBean);
+        RenderUtils.invalidateViewState();
+
+        return mapping.findForward("editMissingPersonalInformation");
+    }
+
+    public ActionForward schoolLevelPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+
+        request.setAttribute("personalInformationsWithMissingInformation", getPersonalInformationsWithMissingInfo());
+        final PersonalInformationBean personalInformationBean = getRenderedObject("personalInformationBean");
         personalInformationBean.resetInstitutionAndDegree();
         request.setAttribute("personalInformationBean", personalInformationBean);
         RenderUtils.invalidateViewState();
