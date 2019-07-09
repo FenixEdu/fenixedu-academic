@@ -1,4 +1,5 @@
-- Improvement: added method to findAll competenceCourses (deprecated previous readBolonhaCompetenceCourses) 
+- Improvement: added method to findAll competenceCourses (deprecated previous readBolonhaCompetenceCourses)
+- Refactor: deprecated MaximumNumberOfCreditsForEnrolmentPeriod rule 
 
 21.2.6 (02-07-2019)
 - Improvement: Added information about registration active state (statute creation)

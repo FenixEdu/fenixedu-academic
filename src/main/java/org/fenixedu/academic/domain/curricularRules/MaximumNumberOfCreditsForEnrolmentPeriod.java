@@ -31,6 +31,7 @@ import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.GenericPair;
 
+@Deprecated
 public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCreditsForEnrolmentPeriod_Base {
 
     static final public double MAXIMUM_NUMBER_OF_CREDITS = FenixEduAcademicConfiguration.getConfiguration().getMaximumNumberOfCreditsForEnrolment();
