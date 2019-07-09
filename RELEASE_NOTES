@@ -1,3 +1,5 @@
+- Improvement: added method to findAll competenceCourses (deprecated previous readBolonhaCompetenceCourses) 
+
 21.2.6 (02-07-2019)
 - Improvement: Added information about registration active state (statute creation)
 21.2.5 (01-07-2019)

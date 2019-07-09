@@ -880,12 +880,17 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return getOldestCompetenceCourseInformation().getExecutionInterval();
     }
 
+    @Deprecated
     static public Collection<CompetenceCourse> readBolonhaCompetenceCourses() {
         final Set<CompetenceCourse> result = new TreeSet<CompetenceCourse>(COMPETENCE_COURSE_COMPARATOR_BY_NAME);
         for (final CompetenceCourse competenceCourse : Bennu.getInstance().getCompetenceCoursesSet()) {
             result.add(competenceCourse);
         }
         return result;
+    }
+
+    static public Collection<CompetenceCourse> findAll() {
+        return Bennu.getInstance().getCompetenceCoursesSet().stream().collect(Collectors.toSet());
     }
 
     static public Collection<CompetenceCourse> searchBolonhaCompetenceCourses(String searchName, String searchCode) {
