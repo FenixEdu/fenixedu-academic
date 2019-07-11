@@ -85,6 +85,7 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
     }
 
     public void delete() {
+        super.setCurricularPeriod(null);
         removeOwnParameters();
         removeCommonParameters();
         setRootDomainObject(null);
@@ -102,7 +103,8 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
 
     @Override
     public boolean appliesToContext(final Context context) {
-        return context == null || appliesToCourseGroup(context.getParentCourseGroup());
+        return (context == null || appliesToCourseGroup(context.getParentCourseGroup()))
+                && (getCurricularPeriod() == null || getCurricularPeriod() == context.getCurricularPeriod());
     }
 
     @Override
@@ -140,15 +142,15 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
     public ExecutionSemester getEnd() {
         return belongsToCompositeRule() ? getParentCompositeRule().getEnd() : super.getEnd();
     }
-    
+
     public ExecutionInterval getEndInterval() {
         return belongsToCompositeRule() ? getParentCompositeRule().getEnd() : super.getEnd();
-    }    
+    }
 
     @Override
     public DegreeModule getDegreeModuleToApplyRule() {
-        return belongsToCompositeRule() ? getParentCompositeRule().getDegreeModuleToApplyRule() : super
-                .getDegreeModuleToApplyRule();
+        return belongsToCompositeRule() ? getParentCompositeRule()
+                .getDegreeModuleToApplyRule() : super.getDegreeModuleToApplyRule();
     }
 
     @Override
@@ -167,8 +169,8 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
 
     @Override
     public boolean isValid(ExecutionSemester executionSemester) {
-        return (getBegin().isBeforeOrEquals(executionSemester) && (getEnd() == null || getEnd()
-                .isAfterOrEquals(executionSemester)));
+        return (getBegin().isBeforeOrEquals(executionSemester)
+                && (getEnd() == null || getEnd().isAfterOrEquals(executionSemester)));
     }
 
     @Override
@@ -198,7 +200,8 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
     }
 
     @Override
-    public RuleResult evaluate(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+    public RuleResult evaluate(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+            final EnrolmentContext enrolmentContext) {
         return CurricularRuleExecutorFactory.findExecutor(this).execute(this, sourceDegreeModuleToEvaluate, enrolmentContext);
     }
 
@@ -213,11 +216,12 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
     abstract public boolean isLeaf();
 
     abstract public boolean isRulePreventingAutomaticEnrolment();
-    
+
     @Override
     abstract public List<GenericPair<Object, Boolean>> getLabel();
 
-    static public CurricularRule createCurricularRule(final LogicOperator logicOperator, final CurricularRule... curricularRules) {
+    static public CurricularRule createCurricularRule(final LogicOperator logicOperator,
+            final CurricularRule... curricularRules) {
         switch (logicOperator) {
         case AND:
             return new AndRule(curricularRules);

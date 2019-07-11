@@ -5519,3 +5519,14 @@ relation DocumentPurposeTypeInstanceServiceRequestType {
 		multiplicity *;
 	}
 }
+
+
+relation CurricularRuleCurricularPeriod {
+	curricularRules.CurricularRule playsRole curricularRules {
+		multiplicity *;
+	}
+	
+	curricularPeriod.CurricularPeriod playsRole curricularPeriod {
+		multiplicity 0..1;
+	}
+}
