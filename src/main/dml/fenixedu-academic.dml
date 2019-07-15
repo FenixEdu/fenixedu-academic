@@ -967,6 +967,7 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
                 }
 
                 class curricularRules.RestrictionDoneDegreeModule extends curricularRules.PrecedenceRule {
+                	boolean requiresPrecedenceApprovalAtStartOfYear;
                 }
 
                 class curricularRules.RestrictionEnroledDegreeModule extends curricularRules.PrecedenceRule {

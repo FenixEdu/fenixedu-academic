@@ -80,6 +80,12 @@ public class RestrictionDoneDegreeModule extends RestrictionDoneDegreeModule_Bas
         } else {
             labelList.add(new GenericPair<Object, Boolean>("label.precedenceDone", true));
         }
+        
+        if (getRequiresPrecedenceApprovalAtStartOfYear()) {
+            labelList.add(new GenericPair<Object, Boolean>(" (", false));
+            labelList.add(new GenericPair<Object, Boolean>("label.startOfYear", true));
+            labelList.add(new GenericPair<Object, Boolean>(")", false));
+        }
 
         labelList.add(new GenericPair<Object, Boolean>(": ", false));
 

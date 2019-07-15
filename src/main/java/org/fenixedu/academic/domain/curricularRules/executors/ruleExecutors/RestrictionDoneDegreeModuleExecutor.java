@@ -29,7 +29,10 @@ import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
+import org.fenixedu.academic.domain.student.curriculum.Curriculum;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
+import org.joda.time.DateTime;
 
 public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor {
 
@@ -44,20 +47,35 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
         }
 
         final CurricularCourse curricularCourse = rule.getPrecedenceDegreeModule();
+        if (rule.getRequiresPrecedenceApprovalAtStartOfYear()) {
+
+            if (isApprovedAtStartOfYear(enrolmentContext, curricularCourse)) {
+                return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
+            }
+
+            return createFalseOrImpossibleResult(enrolmentContext, rule, sourceDegreeModuleToEvaluate,
+                    "curricularRules.ruleExecutors.RestrictionDoneDegreeModuleExecutor.student.is.not.approved.to.precendenceDegreeModule");
+        }
+
         if (isApproved(enrolmentContext, curricularCourse)) {
             return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
         }
 
         if (isEnrolledOrEnrollingInSameSemester(enrolmentContext, rule)) {
-            return createFalseOrImpossibleResult(
-                    enrolmentContext,
-                    rule,
-                    sourceDegreeModuleToEvaluate,
+            return createFalseOrImpossibleResult(enrolmentContext, rule, sourceDegreeModuleToEvaluate,
                     "curricularRules.ruleExecutors.RestrictionDoneDegreeModuleExecutor.cannot.enrol.simultaneously.to.degreeModule.and.precedenceDegreeModule");
         }
 
         return enrolmentContext.isToEvaluateRulesByYear() ? evaluateByYear(sourceDegreeModuleToEvaluate, enrolmentContext, rule,
                 curricularCourse) : evaluateBySemester(sourceDegreeModuleToEvaluate, enrolmentContext, rule, curricularCourse);
+    }
+
+    private boolean isApprovedAtStartOfYear(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse) {
+        final Curriculum curriculum =
+                enrolmentContext.getStudentCurricularPlan().getCurriculum(new DateTime(), enrolmentContext.getExecutionYear());
+
+        return curriculum.getCurricularYearEntries().stream().filter(e -> e instanceof CurriculumLine)
+                .map(CurriculumLine.class::cast).anyMatch(cl -> cl.isApproved(curricularCourse, null));
     }
 
     private RuleResult evaluateByYear(IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext,
@@ -71,10 +89,10 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
         }
 
         //precedent must be approved first
-        if (isEnrolledOrEnrolling(enrolmentContext, curricularCourse, enrolmentContext.getExecutionYear()
-                .getFirstExecutionPeriod())
-                && isEnrolledOrEnrolling(enrolmentContext, rule.getDegreeModuleToApplyRule(), enrolmentContext.getExecutionYear()
-                        .getLastExecutionPeriod())) {
+        if (isEnrolledOrEnrolling(enrolmentContext, curricularCourse,
+                enrolmentContext.getExecutionYear().getFirstExecutionPeriod())
+                && isEnrolledOrEnrolling(enrolmentContext, rule.getDegreeModuleToApplyRule(),
+                        enrolmentContext.getExecutionYear().getLastExecutionPeriod())) {
             return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
         }
 
@@ -92,7 +110,8 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
         return false;
     }
 
-    private boolean isEnrolledOrEnrolling(EnrolmentContext enrolmentContext, DegreeModule degreeModule, ExecutionSemester period) {
+    private boolean isEnrolledOrEnrolling(EnrolmentContext enrolmentContext, DegreeModule degreeModule,
+            ExecutionSemester period) {
         final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
         return hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, period)
                 || isEnrolling(enrolmentContext, curricularCourse, period);
@@ -121,10 +140,10 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
             final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 
         final RestrictionDoneDegreeModule rule = (RestrictionDoneDegreeModule) curricularRule;
-        
+
         final RuleResult ruleResult =
                 executeEnrolmentVerificationWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
-        
+
         if (ruleResult.isFalse() || ruleResult.isImpossibleEnrolmentResultType(sourceDegreeModuleToEvaluate.getDegreeModule())) {
             if (hasPreviousPeriodEnrolmentWithEnroledState(enrolmentContext, rule.getPrecedenceDegreeModule())) {
                 return RuleResult.createTrue(EnrolmentResultType.TEMPORARY, sourceDegreeModuleToEvaluate.getDegreeModule());
@@ -139,24 +158,24 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
             CurricularCourse curricularCourse) {
 
         if (enrolmentContext.isToEvaluateRulesByYear()) {
-            return hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, enrolmentContext.getExecutionYear()
-                    .getPreviousExecutionYear());
+            return hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse,
+                    enrolmentContext.getExecutionYear().getPreviousExecutionYear());
         }
 
-        return hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, enrolmentContext.getExecutionPeriod()
-                .getPreviousExecutionPeriod());
+        return hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse,
+                enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod());
     }
 
     private RuleResult createFalseRuleResult(final RestrictionDoneDegreeModule rule,
             final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final String message) {
-        return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(), message, rule.getDegreeModuleToApplyRule()
-                .getName(), rule.getPrecedenceDegreeModule().getName());
+        return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(), message,
+                rule.getDegreeModuleToApplyRule().getName(), rule.getPrecedenceDegreeModule().getName());
     }
 
     private RuleResult createImpossibleRuleResult(final RestrictionDoneDegreeModule rule,
             final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final String message) {
-        return RuleResult.createImpossible(sourceDegreeModuleToEvaluate.getDegreeModule(), message, rule
-                .getDegreeModuleToApplyRule().getName(), rule.getPrecedenceDegreeModule().getName());
+        return RuleResult.createImpossible(sourceDegreeModuleToEvaluate.getDegreeModule(), message,
+                rule.getDegreeModuleToApplyRule().getName(), rule.getPrecedenceDegreeModule().getName());
     }
 
     @Override
