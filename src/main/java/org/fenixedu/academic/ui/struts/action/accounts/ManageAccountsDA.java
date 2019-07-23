@@ -20,6 +20,7 @@ package org.fenixedu.academic.ui.struts.action.accounts;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -33,6 +34,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.contacts.EmailAddress;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.util.email.Message;
 import org.fenixedu.academic.domain.util.email.SystemSender;
 import org.fenixedu.academic.dto.person.PersonBean;
@@ -267,7 +269,17 @@ public class ManageAccountsDA extends FenixDispatchAction {
 
     private void sendLastEmail(final String to) {
         SystemSender systemSender = Bennu.getInstance().getSystemSender();
-        LocalizedString institutionName = Bennu.getInstance().getInstitutionUnit().getNameI18n();
+        Unit institutionUnit = Bennu.getInstance().getInstitutionUnit();
+        LocalizedString institutionName = institutionUnit.getNameI18n();
+        List<Unit> parents = institutionUnit.getParentUnitsPath();
+        Unit parentUnit = parents.isEmpty() ? null : parents.get(parents.size() - 1);
+        LocalizedString parentName = new LocalizedString(new Locale("pt"), "").with(new Locale("en"), "");
+        String separator = "";
+        if (parentUnit != null) {
+            parentName = parentUnit.getNameI18n();
+            separator = " - ";
+        }
+
         String supportEmail = PortalConfiguration.getInstance().getSupportEmailAddress();
 
         StringBuilder sb = new StringBuilder();
@@ -278,10 +290,12 @@ public class ManageAccountsDA extends FenixDispatchAction {
 
         sb = new StringBuilder();
         sb.append(BundleUtil.getString(Bundle.STUDENT, new Locale("pt"), "label.account.ManageAccountsDA.email.body",
-                institutionName.getContent(new Locale("pt")) + " da Universidade de Lisboa", supportEmail));
+                institutionName.getContent(new Locale("pt")) + separator + parentName.getContent(new Locale("pt")),
+                supportEmail));
         sb.append("\n=================================\n");
         sb.append(BundleUtil.getString(Bundle.STUDENT, new Locale("en"), "label.account.ManageAccountsDA.email.body",
-                institutionName.getContent(new Locale("en")) + " of the Universidade de Lisboa", supportEmail));
+                institutionName.getContent(new Locale("en")) + separator + parentName.getContent(new Locale("en")),
+                supportEmail));
         String body = sb.toString();
 
         new Message(systemSender, to, subject, body);
