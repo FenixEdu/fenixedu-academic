@@ -61,7 +61,6 @@ import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.dto.person.PersonBean;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.academic.util.StringFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
@@ -466,6 +465,7 @@ public class Person extends Person_Base {
         }
 
         super.setCountry(null);
+        super.setSecondNationality(null);
         super.setCountryOfBirth(null);
         setProfile(null);
         super.setUser(null);

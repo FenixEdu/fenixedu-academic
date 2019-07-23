@@ -3144,6 +3144,13 @@ relation PartyCountry {
     Country playsRole nationality;
 }
 
+relation PersonSecondNationality {
+	Person playsRole secondNationalityPersons {
+		multiplicity *;
+	}
+    Country playsRole secondNationality;
+}
+
 relation PartyPartyContact {
     organizationalStructure.Party playsRole party;
     contacts.PartyContact playsRole partyContacts {
