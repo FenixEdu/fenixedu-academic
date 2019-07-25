@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.GradeScale;
 import org.fenixedu.academic.domain.OptionalEnrolment;
@@ -510,7 +511,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
     protected void encodeCurricularRules(final HtmlTable groupTable, final IDegreeModuleToEvaluate degreeModuleToEvaluate) {
         final DegreeModule degreeModule = degreeModuleToEvaluate.getDegreeModule();
         final List<CurricularRule> curricularRules =
-                degreeModule.getCurricularRules(degreeModuleToEvaluate.getContext(), degreeModuleToEvaluate.getExecutionPeriod());
+                degreeModule.getCurricularRules(degreeModuleToEvaluate.getContext(), degreeModuleToEvaluate.getExecutionInterval());
         if (!curricularRules.isEmpty()) {
             encodeCurricularRules(groupTable, curricularRules);
         }
@@ -575,7 +576,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         final HtmlTableCell yearCell = htmlTableRow.createCell();
         yearCell.setClasses(enrolmentYearClasses);
 
-        final String year = enrolment.getExecutionPeriod().getExecutionYear().getYear();
+        final String year = enrolment.getExecutionInterval().getExecutionYear().getYear();
         yearCell.setBody(new HtmlText(year));
 
         // Semester
@@ -622,11 +623,11 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         }
 
         if (enrolment instanceof OptionalEnrolment) {
-            final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
+            final ExecutionInterval executionInterval = enrolment.getExecutionInterval();
             final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) enrolment;
 
-            result = optionalEnrolment.getOptionalCurricularCourse().getNameI18N(executionSemester).getContent() + " (" + code
-                    + optionalEnrolment.getCurricularCourse().getNameI18N(executionSemester).getContent() + ")";
+            result = optionalEnrolment.getOptionalCurricularCourse().getNameI18N(executionInterval).getContent() + " (" + code
+                    + optionalEnrolment.getCurricularCourse().getNameI18N(executionInterval).getContent() + ")";
         } else {
 
             result = code + enrolment.getName().getContent();

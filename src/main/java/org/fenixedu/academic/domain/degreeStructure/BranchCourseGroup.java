@@ -18,7 +18,7 @@
  */
 package org.fenixedu.academic.domain.degreeStructure;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 
 public class BranchCourseGroup extends BranchCourseGroup_Base {
@@ -37,7 +37,7 @@ public class BranchCourseGroup extends BranchCourseGroup_Base {
     }
 
     public BranchCourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
-            final BranchType branchType, final ExecutionSemester begin, final ExecutionSemester end) {
+            final BranchType branchType, final ExecutionInterval begin, final ExecutionInterval end) {
 
         String[] args = {};
         if (branchType == null) {

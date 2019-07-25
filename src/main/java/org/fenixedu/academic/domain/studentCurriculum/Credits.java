@@ -53,38 +53,38 @@ public class Credits extends Credits_Base {
     }
 
     public Credits(StudentCurricularPlan studentCurricularPlan, Collection<SelectedCurricularCourse> dismissals,
-            Collection<IEnrolment> enrolments, ExecutionSemester executionSemester) {
+            Collection<IEnrolment> enrolments, ExecutionInterval executionInterval) {
         this();
-        init(studentCurricularPlan, dismissals, enrolments, executionSemester);
+        init(studentCurricularPlan, dismissals, enrolments, executionInterval);
     }
 
     public Credits(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, Collection<IEnrolment> enrolments,
-            Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, ExecutionSemester executionSemester) {
+            Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, ExecutionInterval executionInterval) {
         this();
-        init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, executionSemester);
+        init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, executionInterval);
     }
 
     public Credits(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
-            Collection<IEnrolment> enrolments, Double credits, ExecutionSemester executionSemester) {
+            Collection<IEnrolment> enrolments, Double credits, ExecutionInterval executionInterval) {
         this();
-        init(studentCurricularPlan, curriculumGroup, enrolments, new HashSet<CurricularCourse>(0), credits, executionSemester);
+        init(studentCurricularPlan, curriculumGroup, enrolments, new HashSet<CurricularCourse>(0), credits, executionInterval);
     }
 
-    final protected void initExecutionPeriod(ExecutionSemester executionSemester) {
-        if (executionSemester == null) {
+    final protected void initExecutionPeriod(ExecutionInterval executionInterval) {
+        if (executionInterval == null) {
             throw new DomainException("error.credits.wrong.arguments");
         }
-        setExecutionPeriod(executionSemester);
+        setExecutionPeriod(executionInterval.convert(ExecutionSemester.class));
     }
 
     protected void init(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, Collection<IEnrolment> enrolments,
-            Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, ExecutionSemester executionSemester) {
+            Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, ExecutionInterval executionInterval) {
         if (studentCurricularPlan == null || courseGroup == null || credits == null) {
             throw new DomainException("error.credits.wrong.arguments");
         }
 
-        checkGivenCredits(studentCurricularPlan, courseGroup, credits, executionSemester);
-        initExecutionPeriod(executionSemester);
+        checkGivenCredits(studentCurricularPlan, courseGroup, credits, executionInterval);
+        initExecutionPeriod(executionInterval);
 
         setStudentCurricularPlan(studentCurricularPlan);
         setGivenCredits(credits);
@@ -95,12 +95,12 @@ public class Credits extends Credits_Base {
 
     protected void init(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
             Collection<IEnrolment> enrolments, Collection<CurricularCourse> noEnrolCurricularCourses, Double credits,
-            ExecutionSemester executionSemester) {
+            ExecutionInterval executionInterval) {
         if (studentCurricularPlan == null || curriculumGroup == null || credits == null) {
             throw new DomainException("error.credits.wrong.arguments");
         }
 
-        initExecutionPeriod(executionSemester);
+        initExecutionPeriod(executionInterval);
 
         setStudentCurricularPlan(studentCurricularPlan);
         setGivenCredits(credits);
@@ -110,26 +110,26 @@ public class Credits extends Credits_Base {
     }
 
     private void checkGivenCredits(final StudentCurricularPlan studentCurricularPlan, final CourseGroup courseGroup,
-            final Double credits, final ExecutionSemester executionSemester) {
+            final Double credits, final ExecutionInterval executionInterval) {
         if (courseGroup.isBolonhaDegree()
-                && !allowsEctsCredits(studentCurricularPlan, courseGroup, executionSemester, credits.doubleValue())) {
+                && !allowsEctsCredits(studentCurricularPlan, courseGroup, executionInterval, credits.doubleValue())) {
             throw new DomainException("error.credits.invalid.credits", credits.toString());
         }
     }
 
     private boolean allowsEctsCredits(final StudentCurricularPlan studentCurricularPlan, final CourseGroup courseGroup,
-            final ExecutionSemester executionSemester, final double ectsCredits) {
+            final ExecutionInterval executionInterval, final double ectsCredits) {
         final double ectsCreditsForCourseGroup =
                 studentCurricularPlan.getCreditsConcludedForCourseGroup(courseGroup).doubleValue();
-        if (ectsCredits + ectsCreditsForCourseGroup > courseGroup.getMaxEctsCredits(executionSemester).doubleValue()) {
+        if (ectsCredits + ectsCreditsForCourseGroup > courseGroup.getMaxEctsCredits(executionInterval).doubleValue()) {
             return false;
         }
         if (courseGroup.isCycleCourseGroup() || courseGroup.isRoot()) {
             return true;
         }
         for (final Context context : courseGroup.getParentContextsSet()) {
-            if (context.isOpen(executionSemester)) {
-                if (allowsEctsCredits(studentCurricularPlan, context.getParentCourseGroup(), executionSemester, ectsCredits)) {
+            if (context.isOpen(executionInterval)) {
+                if (allowsEctsCredits(studentCurricularPlan, context.getParentCourseGroup(), executionInterval, ectsCredits)) {
                     return true;
                 }
             }
@@ -138,12 +138,12 @@ public class Credits extends Credits_Base {
     }
 
     protected void init(StudentCurricularPlan studentCurricularPlan, Collection<SelectedCurricularCourse> dismissals,
-            Collection<IEnrolment> enrolments, ExecutionSemester executionSemester) {
+            Collection<IEnrolment> enrolments, ExecutionInterval executionInterval) {
         if (studentCurricularPlan == null || dismissals == null || dismissals.isEmpty()) {
             throw new DomainException("error.credits.wrong.arguments");
         }
 
-        initExecutionPeriod(executionSemester);
+        initExecutionPeriod(executionInterval);
         setStudentCurricularPlan(studentCurricularPlan);
         addEnrolments(enrolments);
 

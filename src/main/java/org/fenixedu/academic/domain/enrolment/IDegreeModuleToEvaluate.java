@@ -22,6 +22,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.curricularRules.CurricularRule;
@@ -37,7 +38,7 @@ public interface IDegreeModuleToEvaluate {
 
                 @Override
                 public int compare(IDegreeModuleToEvaluate o1, IDegreeModuleToEvaluate o2) {
-                    return o1.getExecutionPeriod().compareTo(o2.getExecutionPeriod());
+                    return o1.getExecutionInterval().compareTo(o2.getExecutionInterval());
                 }
 
             };
@@ -59,7 +60,13 @@ public interface IDegreeModuleToEvaluate {
 
     public boolean isFor(final DegreeModule degreeModule);
 
-    public ExecutionSemester getExecutionPeriod();
+//    /**
+//     * @deprecated use {@link #getExecutionInterval()}
+//     */
+//    @Deprecated
+//    public ExecutionSemester getExecutionPeriod();
+
+    public ExecutionInterval getExecutionInterval();
 
     public boolean isLeaf();
 
@@ -83,13 +90,13 @@ public interface IDegreeModuleToEvaluate {
 
     public Double getEctsCredits();
 
-    public Double getEctsCredits(final ExecutionSemester executionSemester);
+    public Double getEctsCredits(final ExecutionInterval executionInterval);
 
-    public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester);
+    public double getAccumulatedEctsCredits(final ExecutionInterval executionInterval);
 
-    public List<CurricularRule> getCurricularRulesFromDegreeModule(final ExecutionSemester executionSemester);
+    public List<CurricularRule> getCurricularRulesFromDegreeModule(final ExecutionInterval executionInterval);
 
-    public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(final ExecutionSemester executionSemester);
+    public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(final ExecutionInterval executionInterval);
 
     public boolean isAnnualCurricularCourse(final ExecutionYear executionYear);
 

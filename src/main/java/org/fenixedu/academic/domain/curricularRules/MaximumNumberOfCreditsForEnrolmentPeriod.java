@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
@@ -34,7 +34,8 @@ import org.fenixedu.academic.dto.GenericPair;
 @Deprecated
 public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCreditsForEnrolmentPeriod_Base {
 
-    static final public double MAXIMUM_NUMBER_OF_CREDITS = FenixEduAcademicConfiguration.getConfiguration().getMaximumNumberOfCreditsForEnrolment();
+    static final public double MAXIMUM_NUMBER_OF_CREDITS =
+            FenixEduAcademicConfiguration.getConfiguration().getMaximumNumberOfCreditsForEnrolment();
 
     static final public double MAXIMUM_NUMBER_OF_CREDITS_PARTIAL_TIME = MAXIMUM_NUMBER_OF_CREDITS / 2;
 
@@ -47,15 +48,15 @@ public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCre
      */
     static final private double ACCUMULATED_FACTOR = 1.0d;
 
-    public MaximumNumberOfCreditsForEnrolmentPeriod(final DegreeModule degreeModuleToApplyRule, final ExecutionSemester begin,
-            final ExecutionSemester end) {
+    public MaximumNumberOfCreditsForEnrolmentPeriod(final DegreeModule degreeModuleToApplyRule, final ExecutionInterval begin,
+            final ExecutionInterval end) {
 
         super();
         checkDegreeModule(degreeModuleToApplyRule);
         init(degreeModuleToApplyRule, null, begin, end, CurricularRuleType.MAXIMUM_NUMBER_OF_CREDITS_FOR_ENROLMENT_PERIOD);
     }
 
-    public MaximumNumberOfCreditsForEnrolmentPeriod(final DegreeModule degreeModuleToApplyRule, final ExecutionSemester begin) {
+    public MaximumNumberOfCreditsForEnrolmentPeriod(final DegreeModule degreeModuleToApplyRule, final ExecutionInterval begin) {
         this(degreeModuleToApplyRule, begin, null);
     }
 
@@ -66,7 +67,7 @@ public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCre
     }
 
     @Override
-    protected void checkParameters(final DegreeModule degreeModuleToApplyRule, final ExecutionSemester begin) {
+    protected void checkParameters(final DegreeModule degreeModuleToApplyRule, final ExecutionInterval begin) {
         if (degreeModuleToApplyRule == null || begin == null) {
             throw new DomainException("curricular.rule.invalid.parameters");
         }
@@ -97,8 +98,8 @@ public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCre
         return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
     }
 
-    static public Double getAccumulatedEcts(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
-        return curricularCourse.getEctsCredits(executionSemester.getSemester(), executionSemester) * ACCUMULATED_FACTOR;
+    static public Double getAccumulatedEcts(final CurricularCourse curricularCourse, final ExecutionInterval executionInterval) {
+        return curricularCourse.getEctsCredits(executionInterval.getChildOrder(), executionInterval) * ACCUMULATED_FACTOR;
     }
 
     /**
@@ -107,7 +108,7 @@ public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCre
     @Deprecated
     static public double getMaximumNumberOfCredits(final StudentCurricularPlan studentCurricularPlan,
             final ExecutionYear executionYear) {
-    	return MAXIMUM_NUMBER_OF_CREDITS;
+        return MAXIMUM_NUMBER_OF_CREDITS;
     }
 
 }

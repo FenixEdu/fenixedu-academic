@@ -32,7 +32,7 @@ import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Enrolment;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.Person;
@@ -196,10 +196,10 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
                 || ((NoCourseGroupCurriculumGroup) getCurriculumGroup()).allowAccumulatedEctsCredits();
     }
 
-    public Set<ICurricularRule> getCurricularRules(ExecutionSemester executionSemester) {
+    public Set<ICurricularRule> getCurricularRules(ExecutionInterval executionInterval) {
         final Set<ICurricularRule> result = getCurriculumGroup() != null ? getCurriculumGroup()
-                .getCurricularRules(executionSemester) : new HashSet<ICurricularRule>();
-        result.addAll(getDegreeModule().getCurricularRules(executionSemester));
+                .getCurricularRules(executionInterval) : new HashSet<ICurricularRule>();
+        result.addAll(getDegreeModule().getCurricularRules(executionInterval));
 
         return result;
     }
@@ -211,9 +211,9 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     }
 
     public ICurricularRule getMostRecentActiveCurricularRule(final CurricularRuleType ruleType,
-            final ExecutionSemester executionSemester) {
+            final ExecutionInterval executionInterval) {
         return getDegreeModule().getMostRecentActiveCurricularRule(ruleType, getCurriculumGroup().getDegreeModule(),
-                executionSemester);
+                executionInterval);
     }
 
     public String getFullPath() {
@@ -252,8 +252,8 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
         final SortedSet<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(ExecutionYear.COMPARATOR_BY_YEAR);
 
         for (final CurriculumLine curriculumLine : getApprovedCurriculumLines()) {
-            if (curriculumLine.hasExecutionPeriod()) {
-                executionYears.add(curriculumLine.getExecutionPeriod().getExecutionYear());
+            if (curriculumLine.getExecutionInterval() != null) {
+                executionYears.add(curriculumLine.getExecutionInterval().getExecutionYear());
             }
         }
 
@@ -316,8 +316,8 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     }
 
     public boolean hasEnrolmentWithEnroledState(final CurricularCourse curricularCourse, final ExecutionYear executionYear) {
-        for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
-            if (hasEnrolmentWithEnroledState(curricularCourse, executionSemester)) {
+        for (final ExecutionInterval executionInterval : executionYear.getChildIntervals()) {
+            if (hasEnrolmentWithEnroledState(curricularCourse, executionInterval)) {
                 return true;
             }
         }
@@ -329,14 +329,14 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
     abstract public Double getAprovedEctsCredits();
 
-    abstract public Double getEnroledEctsCredits(final ExecutionSemester executionSemester);
+    abstract public Double getEnroledEctsCredits(final ExecutionInterval executionInterval);
 
     abstract public Double getEnroledEctsCredits(final ExecutionYear executionYear);
 
-    abstract public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester);
+    abstract public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionInterval executionInterval);
 
     abstract public boolean isEnroledInExecutionPeriod(final CurricularCourse curricularCourse,
-            final ExecutionSemester executionSemester);
+            final ExecutionInterval executionInterval);
 
     abstract public boolean hasAnyEnrolments();
 
@@ -345,14 +345,14 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     abstract public boolean hasAnyApprovedCurriculumLines();
 
     abstract public boolean hasEnrolmentWithEnroledState(final CurricularCourse curricularCourse,
-            final ExecutionSemester executionSemester);
+            final ExecutionInterval executionInterval);
 
     abstract public ExecutionYear getIEnrolmentsLastExecutionYear();
 
     abstract public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse,
-            final ExecutionSemester executionSemester);
+            final ExecutionInterval executionInterval);
 
-    abstract public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(final ExecutionSemester executionSemester);
+    abstract public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(final ExecutionInterval executionInterval);
 
     abstract public Enrolment getApprovedEnrolment(final CurricularCourse curricularCourse);
 
@@ -382,9 +382,9 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
     abstract public boolean hasEnrolment(ExecutionYear executionYear);
 
-    abstract public boolean hasEnrolment(ExecutionSemester executionSemester);
+    abstract public boolean hasEnrolment(ExecutionInterval executionInterval);
 
-    abstract public boolean isEnroledInSpecialSeason(final ExecutionSemester executionSemester);
+    abstract public boolean isEnroledInSpecialSeason(final ExecutionInterval executionInterval);
 
     abstract public boolean isEnroledInSpecialSeason(final ExecutionYear executionYear);
 
@@ -437,7 +437,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
         }
     }
 
-    abstract public int getNumberOfAllApprovedEnrolments(final ExecutionSemester executionSemester);
+    abstract public int getNumberOfAllApprovedEnrolments(final ExecutionInterval executionInterval);
 
     abstract public void getCurriculumModules(final ResultCollection<CurriculumModule> collection);
 
@@ -472,19 +472,19 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
     }
 
-    static public class CurriculumModulePredicateByExecutionSemester implements Predicate<CurriculumModule> {
+    static public class CurriculumModulePredicateByExecutionInterval implements Predicate<CurriculumModule> {
 
-        private final ExecutionSemester executionSemester;
+        private final ExecutionInterval executionInterval;
 
-        public CurriculumModulePredicateByExecutionSemester(final ExecutionSemester executionSemester) {
-            this.executionSemester = executionSemester;
+        public CurriculumModulePredicateByExecutionInterval(final ExecutionInterval executionInterval) {
+            this.executionInterval = executionInterval;
         }
 
         @Override
         public boolean test(final CurriculumModule curriculumModule) {
             if (curriculumModule.isCurriculumLine()) {
                 final CurriculumLine curriculumLine = (CurriculumLine) curriculumModule;
-                if (curriculumLine.getExecutionPeriod().equals(executionSemester)) {
+                if (curriculumLine.getExecutionInterval().equals(executionInterval)) {
                     return true;
                 }
             }

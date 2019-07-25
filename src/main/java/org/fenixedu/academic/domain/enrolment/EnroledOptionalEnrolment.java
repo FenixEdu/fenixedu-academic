@@ -21,7 +21,7 @@ package org.fenixedu.academic.domain.enrolment;
 import java.util.Collections;
 import java.util.List;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.OptionalEnrolment;
 import org.fenixedu.academic.domain.curricularRules.CurricularRule;
@@ -41,8 +41,8 @@ public class EnroledOptionalEnrolment extends EnroledCurriculumModuleWrapper {
     private OptionalCurricularCourse optionalCurricularCourse;
 
     public EnroledOptionalEnrolment(CurriculumModule curriculumModule, OptionalCurricularCourse optionalCurricularCourse,
-            ExecutionSemester executionSemester) {
-        super(curriculumModule, executionSemester);
+            ExecutionInterval executionInterval) {
+        super(curriculumModule, executionInterval);
         setOptionalCurricularCourse(optionalCurricularCourse);
 
     }
@@ -56,10 +56,10 @@ public class EnroledOptionalEnrolment extends EnroledCurriculumModuleWrapper {
     }
 
     @Override
-    public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionSemester executionSemester) {
+    public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionInterval executionInterval) {
         final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) getCurriculumModule();
-        return optionalEnrolment.isApproved() ? Collections.EMPTY_LIST : getOptionalCurricularCourse().getCurricularRules(
-                getContext(), executionSemester);
+        return optionalEnrolment.isApproved() ? Collections.EMPTY_LIST : getOptionalCurricularCourse()
+                .getCurricularRules(getContext(), executionInterval);
     }
 
     @Override
@@ -67,7 +67,8 @@ public class EnroledOptionalEnrolment extends EnroledCurriculumModuleWrapper {
         if (this.context == null) {
             if (!getCurriculumModule().isRoot()) {
                 final CurriculumGroup parentCurriculumGroup = getCurriculumModule().getCurriculumGroup();
-                for (final Context context : parentCurriculumGroup.getDegreeModule().getValidChildContexts(getExecutionPeriod())) {
+                for (final Context context : parentCurriculumGroup.getDegreeModule()
+                        .getValidChildContexts(getExecutionInterval())) {
                     if (context.getChildDegreeModule() == getOptionalCurricularCourse()) {
                         setContext(context);
                         break;

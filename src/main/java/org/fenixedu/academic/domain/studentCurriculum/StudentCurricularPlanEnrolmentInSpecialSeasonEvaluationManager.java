@@ -210,7 +210,7 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
         List<StudentStatute> validSeniorStatutes = new ArrayList<StudentStatute>();
         List<StudentStatute> validOtherStatutes = new ArrayList<StudentStatute>();
         for (StudentStatute statute : statutesReader) {
-            if (statute.getType().isSpecialSeasonGranted() && statute.isValidInExecutionPeriod(getExecutionSemester())) {
+            if (statute.getType().isSpecialSeasonGranted() && statute.isValidInExecutionInterval(getExecutionSemester())) {
                 validOtherStatutes.add(statute);
             }
         }

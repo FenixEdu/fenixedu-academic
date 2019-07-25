@@ -606,11 +606,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public Boolean hasActiveScopesInExecutionYear(ExecutionYear executionYear) {
-        Collection<ExecutionSemester> executionSemesters = executionYear.getExecutionPeriodsSet();
+        Collection<ExecutionInterval> executionIntervals = executionYear.getChildIntervals();
         Collection<CurricularCourse> curricularCourses = this.getAssociatedCurricularCoursesSet();
-        for (ExecutionSemester executionSemester : executionSemesters) {
+        for (ExecutionInterval executionInterval : executionIntervals) {
             for (CurricularCourse curricularCourse : curricularCourses) {
-                if (curricularCourse.hasAnyActiveContext(executionSemester)) {
+                if (curricularCourse.hasAnyActiveContext(executionInterval)) {
                     return Boolean.TRUE;
                 }
             }

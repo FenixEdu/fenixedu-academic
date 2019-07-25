@@ -27,7 +27,7 @@ import java.util.Set;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
@@ -118,9 +118,9 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
     }
 
     private void addEnroledFromStudentCurricularPlan() {
-        for (final ExecutionSemester semester : enrolmentContext.getExecutionSemestersToEvaluate()) {
+        for (final ExecutionInterval interval : enrolmentContext.getExecutionIntervalsToEvaluate()) {
             for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : getStudentCurricularPlan()
-                    .getDegreeModulesToEvaluate(semester)) {
+                    .getDegreeModulesToEvaluate(interval)) {
                 enrolmentContext.addDegreeModuleToEvaluate(degreeModuleToEvaluate);
             }
         }
@@ -129,8 +129,8 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
     private void addEnroledFromStandaloneGroup() {
         final StandaloneCurriculumGroup group = getStudentCurricularPlan().getStandaloneCurriculumGroup();
         for (final CurriculumLine curriculumLine : group.getChildCurriculumLines()) {
-            for (final ExecutionSemester semester : enrolmentContext.getExecutionSemestersToEvaluate()) {
-                for (final IDegreeModuleToEvaluate module : curriculumLine.getDegreeModulesToEvaluate(semester)) {
+            for (final ExecutionInterval interval : enrolmentContext.getExecutionIntervalsToEvaluate()) {
+                for (final IDegreeModuleToEvaluate module : curriculumLine.getDegreeModulesToEvaluate(interval)) {
                     enrolmentContext.addDegreeModuleToEvaluate(module);
                 }
             }

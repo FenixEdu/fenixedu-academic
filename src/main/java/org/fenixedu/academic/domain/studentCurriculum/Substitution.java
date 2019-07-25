@@ -22,7 +22,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.IEnrolment;
@@ -40,44 +40,44 @@ public class Substitution extends Substitution_Base {
     }
 
     public Substitution(final StudentCurricularPlan studentCurricularPlan, final Collection<SelectedCurricularCourse> dismissals,
-            final Collection<IEnrolment> enrolments, ExecutionSemester executionSemester) {
+            final Collection<IEnrolment> enrolments, ExecutionInterval executionInterval) {
         this();
-        init(studentCurricularPlan, dismissals, enrolments, executionSemester);
+        init(studentCurricularPlan, dismissals, enrolments, executionInterval);
     }
 
     public Substitution(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, Collection<IEnrolment> enrolments,
-            Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, ExecutionSemester executionSemester) {
+            Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, ExecutionInterval executionInterval) {
         this();
-        init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, executionSemester);
+        init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, executionInterval);
     }
 
     public Substitution(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
-            Collection<IEnrolment> enrolments, Double credits, ExecutionSemester executionSemester) {
+            Collection<IEnrolment> enrolments, Double credits, ExecutionInterval executionInterval) {
         this();
-        init(studentCurricularPlan, curriculumGroup, enrolments, new HashSet<CurricularCourse>(0), credits, executionSemester);
+        init(studentCurricularPlan, curriculumGroup, enrolments, new HashSet<CurricularCourse>(0), credits, executionInterval);
     }
 
     @Override
     protected void init(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, Collection<IEnrolment> enrolments,
-            Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, ExecutionSemester executionSemester) {
+            Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, ExecutionInterval executionInterval) {
         checkEnrolments(enrolments);
-        super.init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, executionSemester);
+        super.init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, executionInterval);
     }
 
     @Override
     protected void init(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
             Collection<IEnrolment> enrolments, Collection<CurricularCourse> noEnrolCurricularCourses, Double credits,
-            ExecutionSemester executionSemester) {
+            ExecutionInterval executionInterval) {
         checkEnrolments(enrolments);
-        super.init(studentCurricularPlan, curriculumGroup, enrolments, noEnrolCurricularCourses, credits, executionSemester);
+        super.init(studentCurricularPlan, curriculumGroup, enrolments, noEnrolCurricularCourses, credits, executionInterval);
     }
 
     @Override
     protected void init(final StudentCurricularPlan studentCurricularPlan, final Collection<SelectedCurricularCourse> dismissals,
-            final Collection<IEnrolment> enrolments, ExecutionSemester executionSemester) {
+            final Collection<IEnrolment> enrolments, ExecutionInterval executionInterval) {
 
         checkEnrolments(enrolments);
-        super.init(studentCurricularPlan, dismissals, enrolments, executionSemester);
+        super.init(studentCurricularPlan, dismissals, enrolments, executionInterval);
     }
 
     private void checkEnrolments(final Collection<IEnrolment> enrolments) {

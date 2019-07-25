@@ -23,6 +23,7 @@ import java.util.Comparator;
 import java.util.Set;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
@@ -44,8 +45,8 @@ public interface ICurriculumEntry {
     static final Comparator<ICurriculumEntry> COMPARATOR_BY_EXECUTION_PERIOD = new Comparator<ICurriculumEntry>() {
         @Override
         public int compare(ICurriculumEntry o1, ICurriculumEntry o2) {
-            final ExecutionSemester e1 = o1.getExecutionPeriod();
-            final ExecutionSemester e2 = o2.getExecutionPeriod();
+            final ExecutionInterval e1 = o1.getExecutionInterval();
+            final ExecutionInterval e2 = o2.getExecutionInterval();
 
             if (e1 == null && e2 == null) {
                 return 0;
@@ -176,8 +177,15 @@ public interface ICurriculumEntry {
 
     BigDecimal getEctsCreditsForCurriculum();
 
+    ExecutionInterval getExecutionInterval();
+
+    /**
+     * @deprecated use {@link #getExecutionInterval()}
+     */
+    @Deprecated
     ExecutionSemester getExecutionPeriod();
 
+    @Deprecated
     boolean hasExecutionPeriod();
 
     ExecutionYear getExecutionYear();

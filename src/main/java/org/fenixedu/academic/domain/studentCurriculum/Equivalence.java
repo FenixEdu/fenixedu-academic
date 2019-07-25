@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.HashSet;
 
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.IEnrolment;
@@ -44,43 +44,43 @@ public class Equivalence extends Equivalence_Base {
     }
 
     public Equivalence(StudentCurricularPlan studentCurricularPlan, Collection<SelectedCurricularCourse> dismissals,
-            Collection<IEnrolment> enrolments, Grade grade, ExecutionSemester executionSemester) {
+            Collection<IEnrolment> enrolments, Grade grade, ExecutionInterval executionInterval) {
         this();
-        init(studentCurricularPlan, dismissals, enrolments, grade, executionSemester);
+        init(studentCurricularPlan, dismissals, enrolments, grade, executionInterval);
     }
 
     public Equivalence(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, Collection<IEnrolment> enrolments,
             Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, Grade grade,
-            ExecutionSemester executionSemester) {
+            ExecutionInterval executionInterval) {
         this();
-        init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, grade, executionSemester);
+        init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, grade, executionInterval);
     }
 
     public Equivalence(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
-            Collection<IEnrolment> enrolments, Double credits, Grade grade, ExecutionSemester executionSemester) {
+            Collection<IEnrolment> enrolments, Double credits, Grade grade, ExecutionInterval executionInterval) {
         this();
         init(studentCurricularPlan, curriculumGroup, enrolments, new HashSet<CurricularCourse>(0), credits, grade,
-                executionSemester);
+                executionInterval);
     }
 
     protected void init(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, Collection<IEnrolment> enrolments,
             Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, Grade grade,
-            ExecutionSemester executionSemester) {
+            ExecutionInterval executionInterval) {
         initGrade(enrolments, grade);
-        super.init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, executionSemester);
+        super.init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, executionInterval);
     }
 
     protected void init(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
-            Collection<IEnrolment> enrolments, Collection<CurricularCourse> noEnrolCurricularCourses, Double credits,
-            Grade grade, ExecutionSemester executionSemester) {
+            Collection<IEnrolment> enrolments, Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, Grade grade,
+            ExecutionInterval executionInterval) {
         initGrade(enrolments, grade);
-        super.init(studentCurricularPlan, curriculumGroup, enrolments, noEnrolCurricularCourses, credits, executionSemester);
+        super.init(studentCurricularPlan, curriculumGroup, enrolments, noEnrolCurricularCourses, credits, executionInterval);
     }
 
     protected void init(StudentCurricularPlan studentCurricularPlan, Collection<SelectedCurricularCourse> dismissals,
-            Collection<IEnrolment> enrolments, Grade grade, ExecutionSemester executionSemester) {
+            Collection<IEnrolment> enrolments, Grade grade, ExecutionInterval executionInterval) {
         initGrade(enrolments, grade);
-        super.init(studentCurricularPlan, dismissals, enrolments, executionSemester);
+        super.init(studentCurricularPlan, dismissals, enrolments, executionInterval);
     }
 
     private void initGrade(Collection<IEnrolment> enrolments, Grade grade) {

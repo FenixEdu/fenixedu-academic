@@ -144,10 +144,10 @@ public class Student extends Student_Base {
         return result;
     }
 
-    public List<Registration> getActiveRegistrationsIn(final ExecutionSemester executionSemester) {
+    public List<Registration> getActiveRegistrationsIn(final ExecutionInterval executionInterval) {
         final List<Registration> result = new ArrayList<>();
         for (final Registration registration : getRegistrationsSet()) {
-            if (registration.hasActiveLastState(executionSemester)) {
+            if (registration.hasActiveLastState(executionInterval)) {
                 result.add(registration);
             }
         }
@@ -197,8 +197,8 @@ public class Student extends Student_Base {
         deleteDomainObject();
     }
 
-    public Set<ExecutionSemester> getEnroledExecutionPeriods() {
-        Set<ExecutionSemester> result = new TreeSet<>(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
+    public Set<ExecutionInterval> getEnroledExecutionPeriods() {
+        Set<ExecutionInterval> result = new TreeSet<>(ExecutionInterval.COMPARATOR_BY_BEGIN_DATE);
         for (Registration registration : getRegistrationsSet()) {
             result.addAll(registration.getEnrolmentsExecutionPeriods());
         }
@@ -263,10 +263,10 @@ public class Student extends Student_Base {
         return null;
     }
 
-    public SortedSet<Attends> getAttendsForExecutionPeriod(final ExecutionSemester executionSemester) {
+    public SortedSet<Attends> getAttendsForExecutionPeriod(final ExecutionInterval executionInterval) {
         SortedSet<Attends> attends = new TreeSet<>(Attends.ATTENDS_COMPARATOR_BY_EXECUTION_COURSE_NAME);
         for (Registration registration : getRegistrationsSet()) {
-            attends.addAll(registration.getAttendsForExecutionPeriod(executionSemester));
+            attends.addAll(registration.getAttendsForExecutionPeriod(executionInterval));
         }
         return attends;
     }

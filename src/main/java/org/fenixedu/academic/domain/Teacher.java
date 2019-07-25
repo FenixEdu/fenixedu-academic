@@ -192,18 +192,18 @@ public class Teacher extends Teacher_Base {
 
     public List<ExecutionCourse> getLecturedExecutionCoursesByExecutionYear(ExecutionYear executionYear) {
         List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
-        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
-            executionCourses.addAll(getLecturedExecutionCoursesByExecutionPeriod(executionSemester));
+        for (ExecutionInterval executionInterval : executionYear.getChildIntervals()) {
+            executionCourses.addAll(getLecturedExecutionCoursesByExecutionPeriod(executionInterval));
         }
         return executionCourses;
     }
 
-    public List<ExecutionCourse> getLecturedExecutionCoursesByExecutionPeriod(final ExecutionSemester executionSemester) {
+    public List<ExecutionCourse> getLecturedExecutionCoursesByExecutionPeriod(final ExecutionInterval executionInterval) {
         List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
         for (Professorship professorship : getProfessorships()) {
             ExecutionCourse executionCourse = professorship.getExecutionCourse();
 
-            if (executionCourse.getExecutionInterval().equals(executionSemester)) {
+            if (executionCourse.getExecutionInterval().equals(executionInterval)) {
                 executionCourses.add(executionCourse);
             }
         }
@@ -259,18 +259,13 @@ public class Teacher extends Teacher_Base {
         return getPerson().getProfessorships(executionInterval);
     }
 
-    @Deprecated
-    public List<Professorship> getProfessorships(ExecutionSemester executionSemester) {
-        return getPerson().getProfessorships(executionSemester);
-    }
-
     public List<Professorship> getProfessorships(ExecutionYear executionYear) {
         return getPerson().getProfessorships(executionYear);
     }
 
-    public boolean isResponsibleFor(CurricularCourse curricularCourse, ExecutionSemester executionSemester) {
+    public boolean isResponsibleFor(CurricularCourse curricularCourse, ExecutionInterval executionInterval) {
         for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
-            if (executionCourse.getExecutionInterval() == executionSemester) {
+            if (executionCourse.getExecutionInterval() == executionInterval) {
                 if (isResponsibleFor(executionCourse) != null) {
                     return true;
                 }

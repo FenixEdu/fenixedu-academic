@@ -145,7 +145,7 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
         for (final CurriculumLine curriculumLine : group.getCurriculumLines()) {
             if (curriculumLine.isEnrolment()) {
                 Enrolment enrolment = (Enrolment) curriculumLine;
-                if (enrolment.getExecutionPeriod().equals(executionSemester) && enrolment.isEnroled()) {
+                if (enrolment.getExecutionInterval().equals(executionSemester) && enrolment.isEnroled()) {
                     result.add(new StudentCurriculumEnrolmentBean((Enrolment) curriculumLine));
                 }
             }

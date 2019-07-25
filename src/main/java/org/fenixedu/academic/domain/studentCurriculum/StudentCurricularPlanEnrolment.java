@@ -30,7 +30,7 @@ import java.util.function.Supplier;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
@@ -294,7 +294,7 @@ abstract public class StudentCurricularPlanEnrolment {
         information.add(degreeModuleToEnrol);
     }
 
-    protected ExecutionSemester getExecutionSemester() {
+    protected ExecutionInterval getExecutionSemester() {
         return enrolmentContext.getExecutionPeriod();
     }
 

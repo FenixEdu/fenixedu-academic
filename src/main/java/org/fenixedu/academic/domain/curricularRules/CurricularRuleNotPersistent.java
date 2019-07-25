@@ -18,7 +18,7 @@
  */
 package org.fenixedu.academic.domain.curricularRules;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleExecutorFactory;
@@ -28,7 +28,6 @@ import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
-import org.joda.time.YearMonthDay;
 
 abstract public class CurricularRuleNotPersistent implements ICurricularRule {
 
@@ -86,15 +85,15 @@ abstract public class CurricularRuleNotPersistent implements ICurricularRule {
     }
 
     @Override
-    public boolean isValid(ExecutionSemester executionSemester) {
-        return (getBegin().isBeforeOrEquals(executionSemester) && (getEnd() == null || getEnd()
-                .isAfterOrEquals(executionSemester)));
+    public boolean isValid(ExecutionInterval executionInterval) {
+        return (getBeginInterval().isBeforeOrEquals(executionInterval)
+                && (getEndInterval() == null || getEndInterval().isAfterOrEquals(executionInterval)));
     }
 
     @Override
     public boolean isValid(ExecutionYear executionYear) {
-        for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
-            if (isValid(executionSemester)) {
+        for (ExecutionInterval executionInterval : executionYear.getChildIntervals()) {
+            if (isValid(executionInterval)) {
                 return true;
             }
         }
@@ -108,7 +107,7 @@ abstract public class CurricularRuleNotPersistent implements ICurricularRule {
 
     @Override
     public boolean isActive() {
-        return getEnd() == null || getEnd().containsDay(new YearMonthDay());
+        return getEndInterval() == null || getEndInterval().getAcademicInterval().containsNow();
     }
 
     @Override

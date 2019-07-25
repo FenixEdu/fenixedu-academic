@@ -145,12 +145,12 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
     }
 
     protected EnrolmentEvaluation(Enrolment enrolment, EvaluationSeason season, EnrolmentEvaluationState evaluationState,
-            Person person, ExecutionSemester executionSemester) {
+            Person person, ExecutionInterval executionInterval) {
         this(enrolment, season, evaluationState, person);
-        if (executionSemester == null) {
+        if (executionInterval == null) {
             throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
         }
-        setExecutionPeriod(executionSemester);
+        setExecutionPeriod(executionInterval.convert(ExecutionSemester.class));
     }
 
     public EnrollmentState getEnrollmentStateByGrade() {
@@ -444,11 +444,11 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         }
 
         if (getEnrolment() != null) {
-            return getEnrolment().getExecutionPeriod();
+            return getEnrolment().getExecutionInterval();
         }
 
         return null;
-    }  
+    }
 
     @Deprecated
     public java.util.Date getExamDate() {

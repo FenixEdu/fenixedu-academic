@@ -20,7 +20,7 @@ package org.fenixedu.academic.domain.log;
 
 import java.math.BigDecimal;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.degreeStructure.OptionalCurricularCourse;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
@@ -35,13 +35,13 @@ public class OptionalDismissalLog extends OptionalDismissalLog_Base {
 
     public OptionalDismissalLog(final EnrolmentAction action, final Registration registration,
             final OptionalCurricularCourse optionalCurricularCourse, final Credits credits, final Double ectsCredits,
-            final ExecutionSemester executionSemester, final String who) {
+            final ExecutionInterval executionInterval, final String who) {
         this();
         String[] args = {};
         if (optionalCurricularCourse == null) {
             throw new DomainException("error.OptionalDismissalLog.invalid.optionalCurricularCourse", args);
         }
-        init(action, registration, optionalCurricularCourse, executionSemester, who);
+        init(action, registration, optionalCurricularCourse, executionInterval, who);
         setCredits(BigDecimal.valueOf(ectsCredits));
         setSourceDescription(buildSourceDescription(credits));
     }

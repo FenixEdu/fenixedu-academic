@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.CurricularRule;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
@@ -50,14 +51,14 @@ public class NoCourseGroupEnroledCurriculumModuleWrapper extends EnroledCurricul
     }
 
     @Override
-    public double getAccumulatedEctsCredits(ExecutionSemester executionSemester) {
+    public double getAccumulatedEctsCredits(ExecutionInterval executionInterval) {
         if (getCurriculumModule().isEnrolment()) {
             final Enrolment enrolment = (Enrolment) getCurriculumModule();
 
             if (!enrolment.isBolonhaDegree()) {
-                return enrolment.getAccumulatedEctsCredits(executionSemester);
+                return enrolment.getAccumulatedEctsCredits(executionInterval);
             } else {
-                return enrolment.getStudentCurricularPlan().getAccumulatedEctsCredits(getExecutionPeriod(),
+                return enrolment.getStudentCurricularPlan().getAccumulatedEctsCredits(getExecutionInterval(),
                         enrolment.getCurricularCourse());
             }
         } else {
@@ -66,12 +67,12 @@ public class NoCourseGroupEnroledCurriculumModuleWrapper extends EnroledCurricul
     }
 
     @Override
-    public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(ExecutionSemester executionSemester) {
+    public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(ExecutionInterval executionInterval) {
         return Collections.emptySet();
     }
 
     @Override
-    public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionSemester executionSemester) {
+    public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionInterval executionInterval) {
         return Collections.emptyList();
     }
 

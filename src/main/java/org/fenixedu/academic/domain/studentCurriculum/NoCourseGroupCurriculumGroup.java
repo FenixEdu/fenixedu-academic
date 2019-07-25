@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleType;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
@@ -84,23 +84,24 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
 
     @Override
     public LocalizedString getName() {
-        return new LocalizedString(org.fenixedu.academic.util.LocaleUtils.PT, getNoCourseGroupCurriculumGroupType().getLocalizedName(
-                org.fenixedu.academic.util.LocaleUtils.PT)).with(org.fenixedu.academic.util.LocaleUtils.EN,
-                getNoCourseGroupCurriculumGroupType().getLocalizedName(org.fenixedu.academic.util.LocaleUtils.EN));
+        return new LocalizedString(org.fenixedu.academic.util.LocaleUtils.PT,
+                getNoCourseGroupCurriculumGroupType().getLocalizedName(org.fenixedu.academic.util.LocaleUtils.PT)).with(
+                        org.fenixedu.academic.util.LocaleUtils.EN,
+                        getNoCourseGroupCurriculumGroupType().getLocalizedName(org.fenixedu.academic.util.LocaleUtils.EN));
     }
 
     @Override
-    public List<Context> getCurricularCourseContextsToEnrol(ExecutionSemester executionSemester) {
+    public List<Context> getCurricularCourseContextsToEnrol(ExecutionInterval executionInterval) {
         return Collections.emptyList();
     }
 
     @Override
-    public List<Context> getCourseGroupContextsToEnrol(ExecutionSemester executionSemester) {
+    public List<Context> getCourseGroupContextsToEnrol(ExecutionInterval executionInterval) {
         return Collections.emptyList();
     }
 
     @Override
-    public Collection<CurricularCourse> getCurricularCoursesToDismissal(final ExecutionSemester executionSemester) {
+    public Collection<CurricularCourse> getCurricularCoursesToDismissal(final ExecutionInterval executionInterval) {
         return Collections.emptyList();
     }
 
@@ -142,24 +143,24 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     }
 
     @Override
-    public Integer getChildOrder(final ExecutionSemester executionSemester) {
+    public Integer getChildOrder(final ExecutionInterval executionInterval) {
         return Integer.MAX_VALUE;
     }
 
     @Override
-    protected Integer searchChildOrderForChild(final CurriculumGroup child, final ExecutionSemester executionSemester) {
+    protected Integer searchChildOrderForChild(final CurriculumGroup child, final ExecutionInterval executionInterval) {
         final List<CurriculumModule> result = new ArrayList<CurriculumModule>(getCurriculumModulesSet());
         Collections.sort(result, CurriculumModule.COMPARATOR_BY_NAME_AND_ID);
         return result.indexOf(child);
     }
 
     @Override
-    public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionSemester executionSemester) {
+    public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionInterval executionInterval) {
         return Collections.emptySet();
     }
 
     @Override
-    public Set<ICurricularRule> getCurricularRules(ExecutionSemester executionSemester) {
+    public Set<ICurricularRule> getCurricularRules(ExecutionInterval executionInterval) {
         return Collections.emptySet();
     }
 
@@ -208,7 +209,8 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     }
 
     @Override
-    public ICurricularRule getMostRecentActiveCurricularRule(final CurricularRuleType ruleType, final ExecutionYear executionYear) {
+    public ICurricularRule getMostRecentActiveCurricularRule(final CurricularRuleType ruleType,
+            final ExecutionYear executionYear) {
         return null;
     }
 
@@ -220,7 +222,7 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     }
 
     @Override
-    public int getNumberOfAllApprovedEnrolments(ExecutionSemester executionSemester) {
+    public int getNumberOfAllApprovedEnrolments(ExecutionInterval executionInterval) {
         return 0;
     }
 

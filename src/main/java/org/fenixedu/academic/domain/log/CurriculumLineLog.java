@@ -36,19 +36,19 @@ abstract public class CurriculumLineLog extends CurriculumLineLog_Base {
     }
 
     protected void init(final EnrolmentAction action, final Registration registration, final DegreeModule degreeModule,
-            final ExecutionSemester executionSemester, final String who) {
+            final ExecutionInterval executionInterval, final String who) {
 
-        checkParameters(action, registration, degreeModule, executionSemester);
+        checkParameters(action, registration, degreeModule, executionInterval);
 
         setAction(action);
         setStudent(registration);
         setDegreeModule(degreeModule);
-        setExecutionPeriod(executionSemester);
+        setExecutionPeriod(executionInterval.convert(ExecutionSemester.class));
         setWho(who);
     }
 
     private void checkParameters(final EnrolmentAction action, final Registration registration, final DegreeModule degreeModule,
-            final ExecutionSemester executionSemester) {
+            final ExecutionInterval executionInterval) {
         String[] args = {};
         if (action == null) {
             throw new DomainException("error.log.EnrolmentLog.invalid.action", args);
@@ -62,7 +62,7 @@ abstract public class CurriculumLineLog extends CurriculumLineLog_Base {
             throw new DomainException("error.log.DismissalLog.invalid.degreeModule", args2);
         }
         String[] args3 = {};
-        if (executionSemester == null) {
+        if (executionInterval == null) {
             throw new DomainException("error.log.EnrolmentLog.invalid.executionSemester", args3);
         }
     }
@@ -81,8 +81,8 @@ abstract public class CurriculumLineLog extends CurriculumLineLog_Base {
 
     abstract public String getDescription();
 
-    public boolean isFor(final ExecutionSemester executionSemester) {
-        return getExecutionPeriod() == executionSemester;
+    public boolean isFor(final ExecutionInterval executionInterval) {
+        return getExecutionInterval() == executionInterval;
     }
 
     @Deprecated

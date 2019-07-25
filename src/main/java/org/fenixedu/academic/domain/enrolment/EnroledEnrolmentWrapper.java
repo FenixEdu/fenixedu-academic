@@ -22,15 +22,15 @@ import java.util.Collections;
 import java.util.List;
 
 import org.fenixedu.academic.domain.Enrolment;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.curricularRules.CurricularRule;
 
 public class EnroledEnrolmentWrapper extends EnroledCurriculumModuleWrapper {
 
     private static final long serialVersionUID = 8766503234444669518L;
 
-    public EnroledEnrolmentWrapper(final Enrolment enrolment, final ExecutionSemester executionSemester) {
-        super(enrolment, executionSemester);
+    public EnroledEnrolmentWrapper(final Enrolment enrolment, final ExecutionInterval executionInterval) {
+        super(enrolment, executionInterval);
     }
 
     @Override
@@ -48,8 +48,8 @@ public class EnroledEnrolmentWrapper extends EnroledCurriculumModuleWrapper {
     }
 
     @Override
-    public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionSemester executionSemester) {
-        return isApproved() ? Collections.EMPTY_LIST : super.getCurricularRulesFromDegreeModule(executionSemester);
+    public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionInterval executionInterval) {
+        return isApproved() ? Collections.EMPTY_LIST : super.getCurricularRulesFromDegreeModule(executionInterval);
     }
 
     @Override

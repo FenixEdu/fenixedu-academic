@@ -28,7 +28,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleType;
@@ -54,27 +54,27 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
     }
 
     protected RootCurriculumGroup(StudentCurricularPlan studentCurricularPlan, RootCourseGroup rootCourseGroup,
-            ExecutionSemester executionSemester, CycleType cycleType) {
+            ExecutionInterval executionInterval, CycleType cycleType) {
         this();
-        init(studentCurricularPlan, rootCourseGroup, executionSemester, cycleType);
+        init(studentCurricularPlan, rootCourseGroup, executionInterval, cycleType);
     }
 
     private void init(StudentCurricularPlan studentCurricularPlan, RootCourseGroup courseGroup,
-            ExecutionSemester executionSemester, CycleType cycleType) {
+            ExecutionInterval executionInterval, CycleType cycleType) {
 
-        checkParameters(studentCurricularPlan, courseGroup, executionSemester);
+        checkParameters(studentCurricularPlan, courseGroup, executionInterval);
         checkInitConstraints(studentCurricularPlan, courseGroup);
 
         setParentStudentCurricularPlan(studentCurricularPlan);
         setDegreeModule(courseGroup);
 
-        addChildCurriculumGroups(courseGroup, executionSemester, cycleType);
+        addChildCurriculumGroups(courseGroup, executionInterval, cycleType);
     }
 
     private void checkParameters(final StudentCurricularPlan studentCurricularPlan, final RootCourseGroup courseGroup,
-            final ExecutionSemester executionSemester) {
+            final ExecutionInterval executionInterval) {
         checkParameters(studentCurricularPlan, courseGroup);
-        if (executionSemester == null) {
+        if (executionInterval == null) {
             throw new DomainException("error.studentCurriculum.executionPeriod.cannot.be.null");
         }
     }
@@ -104,12 +104,12 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
         }
     }
 
-    private void addChildCurriculumGroups(final RootCourseGroup rootCourseGroup, final ExecutionSemester executionSemester,
+    private void addChildCurriculumGroups(final RootCourseGroup rootCourseGroup, final ExecutionInterval executionInterval,
             CycleType cycle) {
         if (rootCourseGroup.hasCycleGroups()) {
-            createCycle(rootCourseGroup, executionSemester, cycle);
+            createCycle(rootCourseGroup, executionInterval, cycle);
         } else {
-            super.addChildCurriculumGroups(rootCourseGroup, executionSemester);
+            super.addChildCurriculumGroups(rootCourseGroup, executionInterval);
         }
     }
 
@@ -119,12 +119,12 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
         }
     }
 
-    private void createCycle(final RootCourseGroup rootCourseGroup, final ExecutionSemester executionSemester, CycleType cycle) {
+    private void createCycle(final RootCourseGroup rootCourseGroup, final ExecutionInterval executionInterval, CycleType cycle) {
         if (cycle == null) {
             cycle = rootCourseGroup.getDegree().getDegreeType().getFirstOrderedCycleType();
         }
         if (cycle != null) {
-            CurriculumGroupFactory.createGroup(this, rootCourseGroup.getCycleCourseGroup(cycle), executionSemester);
+            CurriculumGroupFactory.createGroup(this, rootCourseGroup.getCycleCourseGroup(cycle), executionInterval);
         }
     }
 

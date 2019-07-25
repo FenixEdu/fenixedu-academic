@@ -108,11 +108,19 @@ public class ExecutionSemester extends ExecutionSemester_Base {
         return getAcademicInterval().getAcademicSemesterOfAcademicYear();
     }
 
+    /**
+     * @deprecated use {@link #getNext()}
+     */
+    @Deprecated
     public ExecutionSemester getNextExecutionPeriod() {
         AcademicSemesterCE semester = getAcademicInterval().plusSemester(1);
         return semester != null ? ExecutionSemester.getExecutionPeriod(semester) : null;
     }
 
+    /**
+     * @deprecated use {@link #getPrevious()}
+     */
+    @Deprecated
     public ExecutionSemester getPreviousExecutionPeriod() {
         AcademicSemesterCE semester = getAcademicInterval().minusSemester(1);
         return semester != null ? ExecutionSemester.getExecutionPeriod(semester) : null;
@@ -288,4 +296,20 @@ public class ExecutionSemester extends ExecutionSemester_Base {
 
         return result;
     }
+
+    @Override
+    public Integer getChildOrder() {
+        return getSemester();
+    }
+
+    @Override
+    public ExecutionInterval getNext() {
+        return getNextExecutionPeriod();
+    }
+
+    @Override
+    public ExecutionInterval getPrevious() {
+        return getPreviousExecutionPeriod();
+    }
+
 }

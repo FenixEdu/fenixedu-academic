@@ -39,6 +39,7 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
@@ -503,7 +504,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     protected List<SelectItem> readExecutionPeriodItems() {
 
-        final ExecutionSemester minimumExecutionPeriod = getMinimumExecutionPeriod();
+        final ExecutionInterval minimumExecutionPeriod = getMinimumExecutionPeriod();
         final List<ExecutionSemester> notClosedExecutionPeriods = ExecutionSemester.readNotClosedExecutionPeriods();
         Collections.sort(notClosedExecutionPeriods);
 
@@ -517,7 +518,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
-    protected ExecutionSemester getMinimumExecutionPeriod() {
+    protected ExecutionInterval getMinimumExecutionPeriod() {
         return (getCourseGroup() == null) ? null : getCourseGroup().getMinimumExecutionPeriod();
     }
 

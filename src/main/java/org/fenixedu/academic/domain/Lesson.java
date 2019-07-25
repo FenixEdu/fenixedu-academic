@@ -79,7 +79,7 @@ public class Lesson extends Lesson_Base {
     };
 
     public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, Shift shift, FrequencyType frequency,
-            ExecutionSemester executionSemester, OccupationPeriod period, Space room) {
+            ExecutionInterval executionInterval, OccupationPeriod period, Space room) {
 
         super();
 
@@ -109,7 +109,7 @@ public class Lesson extends Lesson_Base {
     }
 
     public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, Shift shift, FrequencyType frequency,
-            ExecutionSemester executionSemester, YearMonthDay beginDate, YearMonthDay endDate, Space room) {
+            ExecutionInterval executionInterval, YearMonthDay beginDate, YearMonthDay endDate, Space room) {
 
         super();
 
@@ -293,7 +293,7 @@ public class Lesson extends Lesson_Base {
         return getShift().getExecutionCourse();
     }
 
-    public ExecutionSemester getExecutionPeriod() {
+    public ExecutionInterval getExecutionPeriod() {
         return getShift().getExecutionPeriod();
     }
 

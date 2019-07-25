@@ -244,7 +244,7 @@ public class Summary extends Summary_Base {
         super.setShift(shift);
     }
 
-    private void checkIfSummaryDateIsValid(YearMonthDay date, ExecutionSemester executionSemester, Lesson lesson,
+    private void checkIfSummaryDateIsValid(YearMonthDay date, ExecutionInterval executionSemester, Lesson lesson,
             Boolean isExtraLesson) {
         if (!isExtraLesson) {
             Summary summary = lesson.getSummaryByDate(date);
@@ -257,7 +257,7 @@ public class Summary extends Summary_Base {
             if (!lesson.isTimeValidToInsertSummary(new HourMinuteSecond(), date)) {
                 throw new DomainException("error.summary.no.valid.time.to.lesson");
             }
-        } else if (!executionSemester.containsDay(date)) {
+        } else if (!executionSemester.getAcademicInterval().contains(date.toDateTimeAtCurrentTime())) {
             throw new DomainException("error.summary.no.valid.date");
         }
     }

@@ -21,7 +21,6 @@ package org.fenixedu.academic.domain.degreeStructure;
 import java.util.List;
 
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
 import org.fenixedu.academic.domain.curricularRules.AnyCurricularCourse;
 import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
@@ -40,7 +39,7 @@ public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
      * will represent any curricular course accordding to a rule
      */
     public OptionalCurricularCourse(CourseGroup parentCourseGroup, String name, String nameEn, CurricularStage curricularStage,
-            CurricularPeriod curricularPeriod, ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
+            CurricularPeriod curricularPeriod, ExecutionInterval beginExecutionPeriod, ExecutionInterval endExecutionPeriod) {
 
         this();
         setName(name);
@@ -63,12 +62,12 @@ public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
     }
 
     @Override
-    public Double getMaxEctsCredits(final ExecutionSemester executionSemester) {
-        final CreditsLimit creditsLimitRule = getCreditsLimitRule(executionSemester);
+    public Double getMaxEctsCredits(final ExecutionInterval executionInterval) {
+        final CreditsLimit creditsLimitRule = getCreditsLimitRule(executionInterval);
         if (creditsLimitRule != null) {
             return creditsLimitRule.getMaximumCredits();
         }
-        final AnyCurricularCourse anyCurricularCourseRule = getAnyCurricularCourseRule(executionSemester);
+        final AnyCurricularCourse anyCurricularCourseRule = getAnyCurricularCourseRule(executionInterval);
         if (anyCurricularCourseRule != null) {
             return anyCurricularCourseRule.hasCredits() ? anyCurricularCourseRule.getCredits() : 0;
         }
@@ -76,21 +75,21 @@ public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
     }
 
     @Override
-    public Double getMinEctsCredits(ExecutionSemester executionSemester) {
-        final CreditsLimit creditsLimitRule = getCreditsLimitRule(executionSemester);
+    public Double getMinEctsCredits(ExecutionInterval executionInterval) {
+        final CreditsLimit creditsLimitRule = getCreditsLimitRule(executionInterval);
         if (creditsLimitRule != null) {
             return creditsLimitRule.getMinimumCredits();
         }
-        final AnyCurricularCourse anyCurricularCourseRule = getAnyCurricularCourseRule(executionSemester);
+        final AnyCurricularCourse anyCurricularCourseRule = getAnyCurricularCourseRule(executionInterval);
         if (anyCurricularCourseRule != null) {
             return anyCurricularCourseRule.hasCredits() ? anyCurricularCourseRule.getCredits() : 0;
         }
         return Double.valueOf(0d);
     }
 
-    private AnyCurricularCourse getAnyCurricularCourseRule(final ExecutionSemester executionSemester) {
+    private AnyCurricularCourse getAnyCurricularCourseRule(final ExecutionInterval executionInterval) {
         final List<AnyCurricularCourse> result =
-                (List<AnyCurricularCourse>) getCurricularRules(CurricularRuleType.ANY_CURRICULAR_COURSE, executionSemester);
+                (List<AnyCurricularCourse>) getCurricularRules(CurricularRuleType.ANY_CURRICULAR_COURSE, executionInterval);
         // must have only one
         return result.isEmpty() ? null : (AnyCurricularCourse) result.iterator().next();
     }

@@ -21,7 +21,7 @@ package org.fenixedu.academic.domain.curricularRules;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -29,15 +29,15 @@ import org.fenixedu.academic.dto.GenericPair;
 
 public class EnrolmentPeriodRestrictions extends EnrolmentPeriodRestrictions_Base {
 
-    public EnrolmentPeriodRestrictions(final DegreeModule degreeModuleToApplyRule, final ExecutionSemester begin,
-            final ExecutionSemester end) {
+    public EnrolmentPeriodRestrictions(final DegreeModule degreeModuleToApplyRule, final ExecutionInterval begin,
+            final ExecutionInterval end) {
 
         super();
         checkDegreeModule(degreeModuleToApplyRule);
         init(degreeModuleToApplyRule, null, begin, end, CurricularRuleType.ENROLMENT_PERIOD_RESTRICTIONS);
     }
 
-    public EnrolmentPeriodRestrictions(final DegreeModule degreeModuleToApplyRule, final ExecutionSemester begin) {
+    public EnrolmentPeriodRestrictions(final DegreeModule degreeModuleToApplyRule, final ExecutionInterval begin) {
         this(degreeModuleToApplyRule, begin, null);
     }
 
@@ -48,7 +48,7 @@ public class EnrolmentPeriodRestrictions extends EnrolmentPeriodRestrictions_Bas
     }
 
     @Override
-    protected void checkParameters(final DegreeModule degreeModuleToApplyRule, final ExecutionSemester begin) {
+    protected void checkParameters(final DegreeModule degreeModuleToApplyRule, final ExecutionInterval begin) {
         if (degreeModuleToApplyRule == null || begin == null) {
             throw new DomainException("curricular.rule.invalid.parameters");
         }

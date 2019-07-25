@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
@@ -26,8 +27,8 @@ public class AssertUniqueCurricularCourseEnrolmentForPeriod extends CurricularRu
 
     @Override
     public List<GenericPair<Object, Boolean>> getLabel() {
-        return Collections.singletonList(new GenericPair<Object, Boolean>("label.assertUniqueCurricularCourseEnrolmentForPeriod",
-                true));
+        return Collections
+                .singletonList(new GenericPair<Object, Boolean>("label.assertUniqueCurricularCourseEnrolmentForPeriod", true));
     }
 
     @Override
@@ -59,6 +60,16 @@ public class AssertUniqueCurricularCourseEnrolmentForPeriod extends CurricularRu
     public ExecutionSemester getEnd() {
         return null;
 
+    }
+
+    @Override
+    public ExecutionInterval getBeginInterval() {
+        return getBegin();
+    }
+
+    @Override
+    public ExecutionInterval getEndInterval() {
+        return null;
     }
 
     @Override

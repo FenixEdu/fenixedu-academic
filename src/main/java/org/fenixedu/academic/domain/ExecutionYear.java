@@ -101,11 +101,19 @@ public class ExecutionYear extends ExecutionYear_Base {
         return getName();
     }
 
+    /**
+     * @deprecated use {@link #getNext()}
+     */
+    @Deprecated
     public ExecutionYear getNextExecutionYear() {
         AcademicYearCE year = getAcademicInterval().plusYear(1);
         return getExecutionYear(year);
     }
 
+    /**
+     * @deprecated use {@link #getPrevious()}
+     */
+    @Deprecated
     public ExecutionYear getPreviousExecutionYear() {
         AcademicYearCE year = getAcademicInterval().minusYear(1);
         return getExecutionYear(year);
@@ -404,6 +412,25 @@ public class ExecutionYear extends ExecutionYear_Base {
     @Override
     public ExecutionYear getExecutionYear() {
         return this;
+    }
+
+    @Override
+    public Integer getChildOrder() {
+        return null;
+    }
+
+    public Set<ExecutionInterval> getChildIntervals() {
+        return getExecutionPeriodsSet().stream().collect(Collectors.toSet());
+    }
+
+    @Override
+    public ExecutionInterval getNext() {
+        return getNextExecutionYear();
+    }
+
+    @Override
+    public ExecutionInterval getPrevious() {
+        return getPreviousExecutionYear();
     }
 
 }

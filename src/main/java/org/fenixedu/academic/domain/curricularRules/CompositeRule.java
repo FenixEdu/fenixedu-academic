@@ -76,11 +76,11 @@ public abstract class CompositeRule extends CompositeRule_Base {
     private ExecutionSemester getEndExecutionPeriod(CurricularRule[] curricularRules) {
         ExecutionSemester executionSemester = null;
         for (CurricularRule rule : curricularRules) {
-            if (rule.getEnd() == null) {
+            if (rule.getEndInterval() == null) {
                 return null;
             }
-            if (executionSemester == null || rule.getEnd().isAfter(executionSemester)) {
-                executionSemester = rule.getEnd();
+            if (executionSemester == null || rule.getEndInterval().isAfter(executionSemester)) {
+                executionSemester = rule.getEndInterval().convert(ExecutionSemester.class);
             }
         }
         return executionSemester;
@@ -89,7 +89,7 @@ public abstract class CompositeRule extends CompositeRule_Base {
     private ExecutionSemester getBeginExecutionPeriod(CurricularRule... curricularRules) {
         ExecutionSemester executionSemester = null;
         for (CurricularRule rule : curricularRules) {
-            if (executionSemester == null || rule.getBegin().isBefore(executionSemester)) {
+            if (executionSemester == null || rule.getBeginInterval().isBefore(executionSemester)) {
                 executionSemester = rule.getBegin();
             }
         }
@@ -126,7 +126,8 @@ public abstract class CompositeRule extends CompositeRule_Base {
     }
 
     @Override
-    public RuleResult evaluate(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+    public RuleResult evaluate(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+            final EnrolmentContext enrolmentContext) {
         throw new DomainException("unsupported.composite.rule");
     }
 

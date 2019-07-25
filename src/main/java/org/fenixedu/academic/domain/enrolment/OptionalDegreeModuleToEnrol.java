@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.enrolment;
 
 import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
@@ -74,8 +75,8 @@ public class OptionalDegreeModuleToEnrol extends DegreeModuleToEnrol {
     }
 
     @Override
-    public Double getEctsCredits(final ExecutionSemester executionSemester) {
-        return getCurricularCourse().getEctsCredits(executionSemester);
+    public Double getEctsCredits(final ExecutionInterval executionInterval) {
+        return getCurricularCourse().getEctsCredits(executionInterval);
     }
 
     @Override
@@ -84,9 +85,9 @@ public class OptionalDegreeModuleToEnrol extends DegreeModuleToEnrol {
     }
 
     @Override
-    public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester) {
+    public double getAccumulatedEctsCredits(final ExecutionInterval executionInterval) {
         if (isLeaf()) {
-            return getCurriculumGroup().getStudentCurricularPlan().getAccumulatedEctsCredits(executionSemester,
+            return getCurriculumGroup().getStudentCurricularPlan().getAccumulatedEctsCredits(executionInterval,
                     getCurricularCourse());
         } else {
             return 0d;

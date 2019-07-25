@@ -20,7 +20,7 @@ package org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.curricularRules.AnyCurricularCourse;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
@@ -78,32 +78,30 @@ public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
             }
 
         } else if (sourceDegreeModuleToEvaluate.isEnroled()) {
-            curricularCourseToEnrol =
-                    (CurricularCourse) ((EnroledOptionalEnrolment) sourceDegreeModuleToEvaluate).getCurriculumModule()
-                            .getDegreeModule();
+            curricularCourseToEnrol = (CurricularCourse) ((EnroledOptionalEnrolment) sourceDegreeModuleToEvaluate)
+                    .getCurriculumModule().getDegreeModule();
         } else {
             throw new DomainException(
                     "error.curricularRules.executors.ruleExecutors.AnyCurricularCourseExecutor.unexpected.degree.module.to.evaluate");
         }
 
-        final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
+        final ExecutionInterval executionInterval = enrolmentContext.getExecutionPeriod();
         final Degree degree = curricularCourseToEnrol.getDegree();
 
         boolean result = true;
 
-        result &=
-                rule.hasMinimumCredits() ? rule.getMinimumCredits() <= curricularCourseToEnrol.getEctsCredits(executionSemester) : true;
+        result &= rule.hasMinimumCredits() ? rule.getMinimumCredits() <= curricularCourseToEnrol
+                .getEctsCredits(executionInterval) : true;
 
-        result &=
-                rule.hasMaximumCredits() ? rule.getMaximumCredits() >= curricularCourseToEnrol.getEctsCredits(executionSemester) : true;
+        result &= rule.hasMaximumCredits() ? rule.getMaximumCredits() >= curricularCourseToEnrol
+                .getEctsCredits(executionInterval) : true;
 
-        result &=
-                rule.getDegree() != null ? rule.getDegree() == degree : rule.hasBolonhaDegreeType() ? degree.getDegreeType() == rule
-                        .getBolonhaDegreeType() : true;
+        result &= rule.getDegree() != null ? rule.getDegree() == degree : rule
+                .hasBolonhaDegreeType() ? degree.getDegreeType() == rule.getBolonhaDegreeType() : true;
 
         if (rule.getDepartmentUnit() != null) {
             final DepartmentUnit departmentUnit =
-                    curricularCourseToEnrol.getCompetenceCourse().getDepartmentUnit(executionSemester);
+                    curricularCourseToEnrol.getCompetenceCourse().getDepartmentUnit(executionInterval);
             result &= departmentUnit != null && departmentUnit.equals(rule.getDepartmentUnit());
         }
 

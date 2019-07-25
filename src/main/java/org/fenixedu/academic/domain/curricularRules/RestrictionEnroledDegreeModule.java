@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.RestrictionEnroledDegreeModuleVerifier;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
@@ -45,7 +45,7 @@ public class RestrictionEnroledDegreeModule extends RestrictionEnroledDegreeModu
 
     public RestrictionEnroledDegreeModule(final CurricularCourse toApplyRule, final CurricularCourse toBeEnroled,
             final CourseGroup contextCourseGroup, final CurricularPeriodInfoDTO curricularPeriodInfoDTO,
-            final ExecutionSemester begin, final ExecutionSemester end) {
+            final ExecutionInterval begin, final ExecutionInterval end) {
 
         this(toBeEnroled);
         init(toApplyRule, contextCourseGroup, begin, end);

@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.IEnrolment;
@@ -34,52 +35,52 @@ public class CreditsManager {
 
     static public Equivalence createEquivalence(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup,
             CurriculumGroup curriculumGroup, Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments,
-            Double givenCredits, Grade givenGrade, ExecutionSemester executionSemester) {
+            Double givenCredits, Grade givenGrade, ExecutionInterval executionInterval) {
 
         if (courseGroup != null) {
             return new Equivalence(studentCurricularPlan, courseGroup, enrolments, buildNoEnrolCurricularCourses(dismissals),
-                    givenCredits, givenGrade, executionSemester);
+                    givenCredits, givenGrade, executionInterval);
 
         } else if (curriculumGroup != null) {
             return new Equivalence(studentCurricularPlan, curriculumGroup, enrolments, givenCredits, givenGrade,
-                    executionSemester);
+                    executionInterval);
 
         } else {
-            return new Equivalence(studentCurricularPlan, dismissals, enrolments, givenGrade, executionSemester);
+            return new Equivalence(studentCurricularPlan, dismissals, enrolments, givenGrade, executionInterval);
         }
 
     }
 
     static public Substitution createSubstitution(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup,
             CurriculumGroup curriculumGroup, Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments,
-            Double givenCredits, ExecutionSemester executionSemester) {
+            Double givenCredits, ExecutionInterval executionInterval) {
 
         if (courseGroup != null) {
             return new Substitution(studentCurricularPlan, courseGroup, enrolments, buildNoEnrolCurricularCourses(dismissals),
-                    givenCredits, executionSemester);
+                    givenCredits, executionInterval);
 
         } else if (curriculumGroup != null) {
-            return new Substitution(studentCurricularPlan, curriculumGroup, enrolments, givenCredits, executionSemester);
+            return new Substitution(studentCurricularPlan, curriculumGroup, enrolments, givenCredits, executionInterval);
 
         } else {
-            return new Substitution(studentCurricularPlan, dismissals, enrolments, executionSemester);
+            return new Substitution(studentCurricularPlan, dismissals, enrolments, executionInterval);
         }
 
     }
 
     static public InternalSubstitution createInternalSubstitution(StudentCurricularPlan studentCurricularPlan,
             CourseGroup courseGroup, CurriculumGroup curriculumGroup, Collection<SelectedCurricularCourse> dismissals,
-            Collection<IEnrolment> enrolments, Double givenCredits, ExecutionSemester executionSemester) {
+            Collection<IEnrolment> enrolments, Double givenCredits, ExecutionInterval executionInterval) {
 
         if (courseGroup != null) {
             return new InternalSubstitution(studentCurricularPlan, courseGroup, enrolments,
-                    buildNoEnrolCurricularCourses(dismissals), givenCredits, executionSemester);
+                    buildNoEnrolCurricularCourses(dismissals), givenCredits, executionInterval);
 
         } else if (curriculumGroup != null) {
-            return new InternalSubstitution(studentCurricularPlan, curriculumGroup, enrolments, givenCredits, executionSemester);
+            return new InternalSubstitution(studentCurricularPlan, curriculumGroup, enrolments, givenCredits, executionInterval);
 
         } else {
-            return new InternalSubstitution(studentCurricularPlan, dismissals, enrolments, executionSemester);
+            return new InternalSubstitution(studentCurricularPlan, dismissals, enrolments, executionInterval);
         }
 
     }

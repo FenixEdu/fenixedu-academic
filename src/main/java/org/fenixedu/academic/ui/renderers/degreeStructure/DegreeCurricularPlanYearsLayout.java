@@ -107,7 +107,13 @@ class DegreeCurricularPlanYearsLayout extends DegreeCurricularPlanLayout {
     }
 
     private Collection<Context> getSortedContextsByCurricularCourseName(final CurricularPeriod period) {
-        final List<Context> contexts = new ArrayList<Context>(period.getContextsWithCurricularCourses());
+        final List<Context> contexts = new ArrayList<Context>();
+        for (final Context context : period.getContextsSet()) {
+            if (CurricularCourse.class.isAssignableFrom(context.getChildDegreeModule().getClass())) {
+                contexts.add(context);
+            }
+        }
+
         Collections.sort(contexts, Context.COMPARATOR_BY_DEGREE_MODULE_NAME);
         return contexts;
     }

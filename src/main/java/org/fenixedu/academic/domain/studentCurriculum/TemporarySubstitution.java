@@ -21,7 +21,7 @@ package org.fenixedu.academic.domain.studentCurriculum;
 import java.util.Collection;
 import java.util.Collections;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
@@ -36,9 +36,9 @@ public class TemporarySubstitution extends TemporarySubstitution_Base {
     }
 
     public TemporarySubstitution(StudentCurricularPlan studentCurricularPlan, Collection<SelectedCurricularCourse> dismissals,
-            Collection<IEnrolment> enrolments, ExecutionSemester executionSemester) {
+            Collection<IEnrolment> enrolments, ExecutionInterval executionInterval) {
         this();
-        init(studentCurricularPlan, dismissals, enrolments, executionSemester);
+        init(studentCurricularPlan, dismissals, enrolments, executionInterval);
     }
 
     @Override

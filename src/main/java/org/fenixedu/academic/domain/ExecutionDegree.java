@@ -372,10 +372,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
                 .map(OccupationPeriodReference::getOccupationPeriod).collect(Collectors.toSet());
     }
 
-    public boolean isPublishedExam(ExecutionSemester executionSemester) {
-        return this.getPublishedExamMapsSet().contains(executionSemester);
-    }
-
     public java.util.SortedSet<org.fenixedu.academic.domain.SchoolClass> getSortedSchoolClasses() {
         final SortedSet<SchoolClass> result = new TreeSet<>(SchoolClass.COMPARATOR_BY_NAME);
         result.addAll(getSchoolClassesSet());

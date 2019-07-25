@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.ExclusivenessVerifier;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
@@ -33,7 +33,7 @@ import org.fenixedu.academic.dto.GenericPair;
 public class Exclusiveness extends Exclusiveness_Base {
 
     public Exclusiveness(final DegreeModule toApplyRule, final DegreeModule exclusiveDegreeModule,
-            final CourseGroup contextCourseGroup, final ExecutionSemester begin, final ExecutionSemester end) {
+            final CourseGroup contextCourseGroup, final ExecutionInterval begin, final ExecutionInterval end) {
 
         super();
         checkParameters(toApplyRule, exclusiveDegreeModule);

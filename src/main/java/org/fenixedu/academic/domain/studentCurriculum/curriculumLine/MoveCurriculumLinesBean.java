@@ -24,7 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.enrolment.CurriculumModuleMoveWrapper;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
@@ -66,10 +66,10 @@ public class MoveCurriculumLinesBean implements Serializable {
         this.studentCurricularPlan = studentCurricularPlan;
     }
 
-    public Set<IDegreeModuleToEvaluate> getIDegreeModulesToEvaluate(final ExecutionSemester executionSemester) {
+    public Set<IDegreeModuleToEvaluate> getIDegreeModulesToEvaluate(final ExecutionInterval executionInterval) {
         final Set<IDegreeModuleToEvaluate> result = new HashSet<IDegreeModuleToEvaluate>();
         for (final CurriculumLineLocationBean bean : this.curriculumLineLocations) {
-            result.add(CurriculumModuleMoveWrapper.create(bean.getCurriculumGroup(), executionSemester));
+            result.add(CurriculumModuleMoveWrapper.create(bean.getCurriculumGroup(), executionInterval));
         }
         return result;
     }

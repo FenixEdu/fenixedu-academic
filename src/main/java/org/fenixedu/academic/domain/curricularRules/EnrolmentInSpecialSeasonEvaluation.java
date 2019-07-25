@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.EvaluationSeason;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
@@ -84,6 +85,16 @@ public class EnrolmentInSpecialSeasonEvaluation extends CurricularRuleNotPersist
 
     @Override
     public ExecutionSemester getEnd() {
+        return null;
+    }
+
+    @Override
+    public ExecutionInterval getBeginInterval() {
+        return getBegin();
+    }
+
+    @Override
+    public ExecutionInterval getEndInterval() {
         return null;
     }
 

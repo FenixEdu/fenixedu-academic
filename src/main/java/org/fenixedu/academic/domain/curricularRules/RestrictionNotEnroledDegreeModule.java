@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.RestrictionNotEnroledDegreeModuleVerifier;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
@@ -49,7 +49,7 @@ public class RestrictionNotEnroledDegreeModule extends RestrictionNotEnroledDegr
 
     protected RestrictionNotEnroledDegreeModule(final CurricularCourse toApplyRule, final CurricularCourse toNotBeEnroled,
             final CourseGroup contextCourseGroup, final CurricularPeriodInfoDTO curricularPeriodInfoDTO,
-            final ExecutionSemester begin, final ExecutionSemester end) {
+            final ExecutionInterval begin, final ExecutionInterval end) {
 
         this(toNotBeEnroled);
         init(toApplyRule, contextCourseGroup, begin, end);

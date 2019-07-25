@@ -29,6 +29,7 @@ import java.util.TreeSet;
 import java.util.function.Function;
 
 import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
@@ -157,19 +158,19 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     }
 
     @Override
-    public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
-        return isValid(executionSemester) && hasCurricularCourse(getCurricularCourse(), curricularCourse, executionSemester);
+    public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionInterval executionInterval) {
+        return isValid(executionInterval) && hasCurricularCourse(getCurricularCourse(), curricularCourse, executionInterval);
     }
 
     @Override
-    public boolean isValid(final ExecutionSemester executionSemester) {
-        return executionSemester == null || getExecutionPeriod() == null
-                || getExecutionPeriod().isBeforeOrEquals(executionSemester);
+    public boolean isValid(final ExecutionInterval executionInterval) {
+        return executionInterval == null || getExecutionInterval() == null
+                || getExecutionInterval().isBeforeOrEquals(executionInterval);
     }
 
     protected boolean isValid(final ExecutionYear executionYear) {
-        return executionYear == null || getExecutionPeriod() == null
-                || getExecutionPeriod().getExecutionYear().isBeforeOrEquals(executionYear);
+        return executionYear == null || getExecutionInterval() == null
+                || getExecutionInterval().getExecutionYear().isBeforeOrEquals(executionYear);
     }
 
     @Override
@@ -184,7 +185,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
         // FIXME must migrate Dismissal with optional curricular courses to
         // OptionalDismissal
         return getCurricularCourse().isOptionalCurricularCourse() ? getEnrolmentsEcts() : getCurricularCourse()
-                .getEctsCredits(getExecutionPeriod());
+                .getEctsCredits(getExecutionInterval());
     }
 
     @Override
@@ -200,7 +201,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     }
 
     @Override
-    public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester) {
+    public double getAccumulatedEctsCredits(final ExecutionInterval executionInterval) {
         return getEctsCredits().doubleValue();
     }
 
@@ -214,7 +215,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     }
 
     @Override
-    public Double getEnroledEctsCredits(final ExecutionSemester executionSemester) {
+    public Double getEnroledEctsCredits(final ExecutionInterval executionInterval) {
         return Double.valueOf(0d);
     }
 
@@ -272,8 +273,8 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 
     @Override
     public ConclusionValue isConcluded(final ExecutionYear executionYear) {
-        return ConclusionValue.create(executionYear == null || !hasExecutionPeriod()
-                || getExecutionPeriod().getExecutionYear().isBeforeOrEquals(executionYear));
+        return ConclusionValue.create(executionYear == null || getExecutionInterval() == null
+                || getExecutionInterval().getExecutionYear().isBeforeOrEquals(executionYear));
     }
 
     @Override
@@ -291,7 +292,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
         final SortedSet<IEnrolment> iEnrolments = new TreeSet<IEnrolment>(IEnrolment.COMPARATOR_BY_APPROVEMENT_DATE);
         iEnrolments.addAll(getSourceIEnrolments());
 
-        final YearMonthDay beginDate = getExecutionPeriod().getBeginDateYearMonthDay();
+        final YearMonthDay beginDate = getExecutionInterval().getBeginDateYearMonthDay();
         if (!iEnrolments.isEmpty()) {
             final IEnrolment enrolment = iEnrolments.last();
             final YearMonthDay approvementDate = enrolment.getApprovementDate();
@@ -359,19 +360,23 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
         return hasCurricularCourse() ? getCurricularCourse().getCode() : null;
     }
 
+    /**
+     * @deprecated use {@link #getExecutionInterval()} instead.
+     */
+    @Deprecated
     @Override
     public ExecutionSemester getExecutionPeriod() {
         return getCredits().getExecutionPeriod();
     }
 
     @Override
-    public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionSemester executionSemester) {
-        if (executionSemester != null && executionSemester != getExecutionPeriod()) {
+    public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionInterval executionInterval) {
+        if (executionInterval != null && executionInterval != getExecutionInterval()) {
             return Collections.EMPTY_SET;
         }
 
         final Set<IDegreeModuleToEvaluate> result = new HashSet<IDegreeModuleToEvaluate>(1);
-        result.add(new DismissalCurriculumModuleWrapper(this, executionSemester));
+        result.add(new DismissalCurriculumModuleWrapper(this, executionInterval));
         return result;
     }
 
@@ -398,6 +403,10 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     @Override
     public String getModuleTypeName() {
         return BundleUtil.getString(Bundle.ENUMERATION, this.getClass().getName());
+    }
+
+    public ExecutionInterval getExecutionInterval() {
+        return getExecutionPeriod();
     }
 
 }

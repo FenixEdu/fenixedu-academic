@@ -21,7 +21,7 @@ package org.fenixedu.academic.domain.curricularRules;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.EnrolmentToBeApprovedByCoordinatorVerifier;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
@@ -36,7 +36,7 @@ public class EnrolmentToBeApprovedByCoordinator extends EnrolmentToBeApprovedByC
     }
 
     public EnrolmentToBeApprovedByCoordinator(final DegreeModule toApplyRule, final CourseGroup contextCourseGroup,
-            final ExecutionSemester begin, final ExecutionSemester end) {
+            final ExecutionInterval begin, final ExecutionInterval end) {
 
         this();
         init(toApplyRule, contextCourseGroup, begin, end);

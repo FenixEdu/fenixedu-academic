@@ -810,7 +810,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
                 codeAndName += dismissal.getName().getContent();
 
                 ExecutionCourse executionCourse = dismissal.getCurricularCourse()
-                        .getExecutionCoursesByExecutionPeriod(dismissal.getExecutionPeriod()).stream().findAny().orElse(null);
+                        .getExecutionCoursesByExecutionPeriod(dismissal.getExecutionInterval()).stream().findAny().orElse(null);
 
                 final HtmlComponent executionCourseLink = createExecutionCourseLink(codeAndName, executionCourse);
 
@@ -1064,7 +1064,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
         protected void generateSemesterCell(final HtmlTableRow row, final ICurriculumEntry entry) {
             final String semester;
-            if (entry.hasExecutionPeriod()) {
+            if (entry.getExecutionPeriod() != null) {
                 semester = entry.getExecutionPeriod().getSemester().toString() + " "
                         + BundleUtil.getString(Bundle.APPLICATION, "label.semester.short");
             } else {
@@ -1089,7 +1089,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
         }
 
         protected void generateExecutionYearCell(HtmlTableRow row, final ICurriculumEntry entry) {
-            generateCellWithText(row, entry.hasExecutionPeriod() ? entry.getExecutionYear().getYear() : EMPTY_INFO,
+            generateCellWithText(row, entry.getExecutionInterval() != null ? entry.getExecutionYear().getYear() : EMPTY_INFO,
                     renderer.getEnrolmentExecutionYearCellClass());
         }
 
@@ -1213,7 +1213,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             if (enrolment instanceof OptionalEnrolment) {
                 final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) enrolment;
                 return optionalEnrolment.getOptionalCurricularCourse().getName() + " (" + code
-                        + optionalEnrolment.getCurricularCourse().getName(optionalEnrolment.getExecutionPeriod()) + ")";
+                        + optionalEnrolment.getCurricularCourse().getName(optionalEnrolment.getExecutionInterval()) + ")";
             } else {
                 return code + enrolment.getName().getContent();
             }

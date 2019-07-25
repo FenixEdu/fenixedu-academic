@@ -120,7 +120,7 @@ public class Context extends Context_Base implements Comparable<Context> {
     }
 
     public Context(final CourseGroup courseGroup, final DegreeModule degreeModule, final CurricularPeriod curricularPeriod,
-            final ExecutionSemester begin, final ExecutionSemester end) {
+            final ExecutionInterval begin, final ExecutionInterval end) {
 
         this();
 
@@ -132,8 +132,8 @@ public class Context extends Context_Base implements Comparable<Context> {
         super.setParentCourseGroup(courseGroup);
         super.setChildDegreeModule(degreeModule);
         super.setCurricularPeriod(curricularPeriod);
-        super.setBeginExecutionPeriod(begin);
-        super.setEndExecutionPeriod(end);
+        super.setBeginExecutionPeriod(begin.convert(ExecutionSemester.class));
+        super.setEndExecutionPeriod(end != null ? end.convert(ExecutionSemester.class) : null);
     }
 
     private void checkIfCanAddDegreeModuleToCourseGroup(final CourseGroup courseGroup, final DegreeModule degreeModule,
@@ -158,14 +158,14 @@ public class Context extends Context_Base implements Comparable<Context> {
         parent.checkDuplicateChildNames(courseGroup.getName(), courseGroup.getNameEn());
     }
 
-    private void checkParameters(CourseGroup courseGroup, DegreeModule degreeModule, ExecutionSemester beginExecutionPeriod) {
+    private void checkParameters(CourseGroup courseGroup, DegreeModule degreeModule, ExecutionInterval beginExecutionPeriod) {
         if (courseGroup == null || degreeModule == null || beginExecutionPeriod == null) {
             throw new DomainException("error.incorrectContextValues");
         }
     }
 
     private void checkExistingCourseGroupContexts(final CourseGroup courseGroup, final DegreeModule degreeModule,
-            final CurricularPeriod curricularPeriod, final ExecutionSemester begin, final ExecutionSemester end) {
+            final CurricularPeriod curricularPeriod, final ExecutionInterval begin, final ExecutionInterval end) {
 
         for (final Context context : courseGroup.getChildContextsSet()) {
             if (context != this && context.hasChildDegreeModule(degreeModule) && context.hasCurricularPeriod(curricularPeriod)
@@ -175,18 +175,18 @@ public class Context extends Context_Base implements Comparable<Context> {
         }
     }
 
-    public void edit(final CourseGroup parent, final CurricularPeriod curricularPeriod, final ExecutionSemester begin,
-            final ExecutionSemester end) {
+    public void edit(final CourseGroup parent, final CurricularPeriod curricularPeriod, final ExecutionInterval begin,
+            final ExecutionInterval end) {
         setParentCourseGroup(parent);
         setCurricularPeriod(curricularPeriod);
         edit(begin, end);
     }
 
-    protected void edit(final ExecutionSemester begin, final ExecutionSemester end) {
+    protected void edit(final ExecutionInterval begin, final ExecutionInterval end) {
         checkExecutionPeriods(begin, end);
         checkExistingCourseGroupContexts(getParentCourseGroup(), getChildDegreeModule(), getCurricularPeriod(), begin, end);
-        setBeginExecutionPeriod(begin);
-        setEndExecutionPeriod(end);
+        setBeginExecutionPeriod(begin.convert(ExecutionSemester.class));
+        setEndExecutionPeriod(end != null ? end.convert(ExecutionSemester.class) : null);
         checkCurriculumLines(getChildDegreeModule());
     }
 
@@ -194,8 +194,8 @@ public class Context extends Context_Base implements Comparable<Context> {
         for (final CurriculumModule curriculumModule : degreeModule.getCurriculumModulesSet()) {
             if (curriculumModule.isCurriculumLine()) {
                 final CurriculumLine curriculumLine = (CurriculumLine) curriculumModule;
-                if (curriculumLine.hasExecutionPeriod()
-                        && !degreeModule.hasAnyOpenParentContexts(curriculumLine.getExecutionPeriod())) {
+                if (curriculumLine.getExecutionInterval() != null
+                        && !degreeModule.hasAnyOpenParentContexts(curriculumLine.getExecutionInterval())) {
                     throw new DomainException("error.Context.cannot.modify.begin.and.end.because.of.enroled.curriculumLines");
                 }
             }
@@ -238,7 +238,7 @@ public class Context extends Context_Base implements Comparable<Context> {
         }
     }
 
-    public boolean isValid(final ExecutionSemester executionSemester) {
+    private boolean isValid(final ExecutionSemester executionSemester) {
         if (isOpen(executionSemester)) {
             if (getChildDegreeModule().isCurricularCourse()) {
                 CurricularCourse curricularCourse = (CurricularCourse) getChildDegreeModule();
@@ -251,27 +251,30 @@ public class Context extends Context_Base implements Comparable<Context> {
         return false;
     }
 
-    public boolean isValid(final ExecutionYear executionYear) {
-        for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
-            if (isValid(executionSemester)) {
+    private boolean isValid(final ExecutionYear executionYear) {
+        for (final ExecutionInterval executionInterval : executionYear.getExecutionPeriodsSet()) {
+            if (isValid(executionInterval)) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean isValid(AcademicInterval academicInterval) {
-        ExecutionInterval interval = ExecutionInterval.getExecutionInterval(academicInterval);
+    public boolean isValid(ExecutionInterval interval) {
         if (interval instanceof ExecutionSemester) {
             return isValid((ExecutionSemester) interval);
         }
         if (interval instanceof ExecutionYear) {
             return isValid((ExecutionYear) interval);
         }
-        throw new UnsupportedOperationException("Unknown academicIntervalType: " + academicInterval);
+        throw new UnsupportedOperationException("Unknown Interval Type: " + interval);
     }
 
-    protected void checkExecutionPeriods(ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
+    public boolean isValid(AcademicInterval academicInterval) {
+        return isValid(ExecutionInterval.getExecutionInterval(academicInterval));
+    }
+
+    protected void checkExecutionPeriods(ExecutionInterval beginExecutionPeriod, ExecutionInterval endExecutionPeriod) {
         if (beginExecutionPeriod == null) {
             throw new DomainException("context.begin.execution.period.cannot.be.null");
         }
@@ -280,14 +283,14 @@ public class Context extends Context_Base implements Comparable<Context> {
         }
     }
 
-    public boolean isOpen(final ExecutionSemester executionSemester) {
-        return getBeginExecutionInterval().isBeforeOrEquals(executionSemester)
-                && (getEndExecutionInterval() == null || getEndExecutionInterval().isAfterOrEquals(executionSemester));
+    public boolean isOpen(final ExecutionInterval executionInterval) {
+        return getBeginExecutionInterval().isBeforeOrEquals(executionInterval)
+                && (getEndExecutionInterval() == null || getEndExecutionInterval().isAfterOrEquals(executionInterval));
     }
 
     public boolean isOpen(final ExecutionYear executionYear) {
-        for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
-            if (isOpen(executionSemester)) {
+        for (final ExecutionInterval executionInterval : executionYear.getChildIntervals()) {
+            if (isOpen(executionInterval)) {
                 return true;
             }
         }
@@ -299,7 +302,7 @@ public class Context extends Context_Base implements Comparable<Context> {
         return isOpen(ExecutionSemester.findCurrent(degree.getCalendar()));
     }
 
-    public boolean intersects(final ExecutionSemester begin, final ExecutionSemester end) {
+    public boolean intersects(final ExecutionInterval begin, final ExecutionInterval end) {
         if (end != null && begin.isAfter(end)) {
             throw new DomainException("context.begin.is.after.end.execution.period");
         }

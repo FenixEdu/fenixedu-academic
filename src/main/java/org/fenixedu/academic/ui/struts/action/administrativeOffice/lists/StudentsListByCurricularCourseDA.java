@@ -336,8 +336,8 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
         for (final CurriculumModule curriculumModule : curricularCourse.getCurriculumModulesSet()) {
             if (curriculumModule.isEnrolment()) {
                 final Enrolment enrolment = (Enrolment) curriculumModule;
-                final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
-                if (interval == executionSemester || interval == executionSemester.getExecutionYear()) {
+                final ExecutionInterval executionInterval = enrolment.getExecutionInterval();
+                if (interval == executionInterval || interval == executionInterval.getExecutionYear()) {
                     c++;
                 }
             }

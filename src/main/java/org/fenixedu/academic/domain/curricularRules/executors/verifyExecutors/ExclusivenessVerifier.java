@@ -75,9 +75,8 @@ public class ExclusivenessVerifier extends VerifyRuleExecutor {
             }
 
             final CurricularCourse curricularCourse = (CurricularCourse) exclusiveDegreeModule;
-            if (isApproved(enrolmentContext, curricularCourse, rootOrCycleCourseGroup)
-                    || hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, enrolmentContext.getExecutionPeriod()
-                            .getPreviousExecutionPeriod())) {
+            if (isApproved(enrolmentContext, curricularCourse, rootOrCycleCourseGroup) || hasEnrolmentWithEnroledState(
+                    enrolmentContext, curricularCourse, enrolmentContext.getExecutionPeriod().getPrevious())) {
                 return RuleResult.createFalse(degreeModuleToVerify);
             }
         }

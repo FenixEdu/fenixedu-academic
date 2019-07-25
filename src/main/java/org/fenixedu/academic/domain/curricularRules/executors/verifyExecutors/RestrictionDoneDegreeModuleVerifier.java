@@ -47,7 +47,7 @@ public class RestrictionDoneDegreeModuleVerifier extends VerifyRuleExecutor {
 
         if (isApproved(enrolmentContext, restrictionDoneDegreeModule.getPrecedenceDegreeModule(), parentCourseGroup)
                 || hasEnrolmentWithEnroledState(enrolmentContext, restrictionDoneDegreeModule.getPrecedenceDegreeModule(),
-                        enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod())) {
+                        enrolmentContext.getExecutionPeriod().getPrevious())) {
             return RuleResult.createTrue(degreeModuleToVerify);
         }
 

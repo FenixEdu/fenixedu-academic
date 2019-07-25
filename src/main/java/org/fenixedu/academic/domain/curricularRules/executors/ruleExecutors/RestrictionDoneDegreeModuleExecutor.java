@@ -21,7 +21,7 @@ package org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors;
 import java.util.Collection;
 
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.RestrictionDoneDegreeModule;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
@@ -101,9 +101,9 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
     }
 
     private boolean isEnrolledOrEnrollingInSameSemester(EnrolmentContext enrolmentContext, RestrictionDoneDegreeModule rule) {
-        for (final ExecutionSemester executionPeriod : enrolmentContext.getExecutionYear().getExecutionPeriodsSet()) {
-            if (isEnrolledOrEnrolling(enrolmentContext, rule.getDegreeModuleToApplyRule(), executionPeriod)
-                    && isEnrolledOrEnrolling(enrolmentContext, rule.getPrecedenceDegreeModule(), executionPeriod)) {
+        for (final ExecutionInterval executionInterval : enrolmentContext.getExecutionYear().getChildIntervals()) {
+            if (isEnrolledOrEnrolling(enrolmentContext, rule.getDegreeModuleToApplyRule(), executionInterval)
+                    && isEnrolledOrEnrolling(enrolmentContext, rule.getPrecedenceDegreeModule(), executionInterval)) {
                 return true;
             }
         }
@@ -111,10 +111,10 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
     }
 
     private boolean isEnrolledOrEnrolling(EnrolmentContext enrolmentContext, DegreeModule degreeModule,
-            ExecutionSemester period) {
+            ExecutionInterval interval) {
         final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
-        return hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, period)
-                || isEnrolling(enrolmentContext, curricularCourse, period);
+        return hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, interval)
+                || isEnrolling(enrolmentContext, curricularCourse, interval);
     }
 
     private RuleResult evaluateBySemester(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
@@ -163,7 +163,7 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
         }
 
         return hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse,
-                enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod());
+                enrolmentContext.getExecutionPeriod().getPrevious());
     }
 
     private RuleResult createFalseRuleResult(final RestrictionDoneDegreeModule rule,

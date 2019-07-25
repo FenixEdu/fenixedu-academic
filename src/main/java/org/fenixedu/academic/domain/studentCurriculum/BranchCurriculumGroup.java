@@ -21,7 +21,7 @@ package org.fenixedu.academic.domain.studentCurriculum;
 import java.util.Collections;
 import java.util.Set;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.BranchType;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
@@ -39,9 +39,9 @@ public class BranchCurriculumGroup extends BranchCurriculumGroup_Base {
         init(parentNode, branch);
     }
 
-    public BranchCurriculumGroup(CurriculumGroup parentNode, BranchCourseGroup branch, ExecutionSemester executionSemester) {
+    public BranchCurriculumGroup(CurriculumGroup parentNode, BranchCourseGroup branch, ExecutionInterval executionInterval) {
         super();
-        init(parentNode, branch, executionSemester);
+        init(parentNode, branch, executionInterval);
     }
 
     @Override

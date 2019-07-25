@@ -22,7 +22,7 @@
 package org.fenixedu.academic.domain.log;
 
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.util.EnrolmentAction;
 
@@ -37,9 +37,9 @@ public class EnrolmentLog extends EnrolmentLog_Base {
     }
 
     public EnrolmentLog(final EnrolmentAction action, final Registration registration, final CurricularCourse curricularCourse,
-            final ExecutionSemester executionSemester, final String who) {
+            final ExecutionInterval executionInterval, final String who) {
         this();
-        init(action, registration, curricularCourse, executionSemester, who);
+        init(action, registration, curricularCourse, executionInterval, who);
     }
 
     @Override

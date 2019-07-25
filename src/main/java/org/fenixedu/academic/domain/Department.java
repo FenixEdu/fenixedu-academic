@@ -79,8 +79,8 @@ public class Department extends Department_Base {
                 .map(TeacherAuthorization::getTeacher).distinct().collect(Collectors.toList());
     }
 
-    public List<Teacher> getAllTeachers(ExecutionSemester semester) {
-        return getTeacherAuthorizationStream().filter(a -> a.getExecutionInterval().equals(semester))
+    public List<Teacher> getAllTeachers(ExecutionInterval interval) {
+        return getTeacherAuthorizationStream().filter(a -> a.getExecutionInterval().equals(interval))
                 .map(TeacherAuthorization::getTeacher).distinct().collect(Collectors.toList());
     }
 

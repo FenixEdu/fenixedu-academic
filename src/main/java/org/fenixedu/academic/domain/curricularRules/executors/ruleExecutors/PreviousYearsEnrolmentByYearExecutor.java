@@ -558,7 +558,7 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
                 final Context context = degreeModuleToEvaluate.getContext();
                 if (context == null) {
                     throw new DomainException("error.degreeModuleToEvaluate.has.invalid.context",
-                            degreeModuleToEvaluate.getName(), degreeModuleToEvaluate.getExecutionPeriod().getQualifiedName());
+                            degreeModuleToEvaluate.getName(), degreeModuleToEvaluate.getExecutionInterval().getQualifiedName());
                 }
                 result.add(context);
             }
@@ -617,7 +617,7 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
 
                 if (degreeModuleToEvaluate.getContext() == null) {
                     throw new DomainException("error.degreeModuleToEvaluate.has.invalid.context",
-                            degreeModuleToEvaluate.getName(), degreeModuleToEvaluate.getExecutionPeriod().getQualifiedName());
+                            degreeModuleToEvaluate.getName(), degreeModuleToEvaluate.getExecutionInterval().getQualifiedName());
                 }
 
                 if (hasCurricularCoursesToEnrolInPreviousYears(curricularCoursesToEnrolByYearWithTemporaries,
@@ -702,7 +702,7 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
 
                 if (degreeModuleToEvaluate.getContext() == null) {
                     throw new DomainException("error.degreeModuleToEvaluate.has.invalid.context",
-                            degreeModuleToEvaluate.getName(), degreeModuleToEvaluate.getExecutionPeriod().getQualifiedName());
+                            degreeModuleToEvaluate.getName(), degreeModuleToEvaluate.getExecutionInterval().getQualifiedName());
                 }
 
                 if (hasCurricularCoursesToEnrolInPreviousYears(curricularCoursesToEnrolByYear,

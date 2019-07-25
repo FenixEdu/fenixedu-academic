@@ -82,7 +82,7 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
                     }
                 }
 
-                for (Shift shift : registration.getShiftsFor(currentExecutionSemester.getPreviousExecutionPeriod())) {
+                for (Shift shift : registration.getShiftsFor(currentExecutionSemester.getPrevious())) {
                     for (Lesson lesson : shift.getAssociatedLessonsSet()) {
                         allEvents.addAll(lesson.getAllLessonsEvents());
                     }

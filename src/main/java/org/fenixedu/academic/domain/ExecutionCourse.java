@@ -1154,44 +1154,36 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             AcademicInterval academicInterval, DegreeCurricularPlan degreeCurricularPlan, CurricularYear curricularYear,
             String name) {
 
-        // FIXME (PERIODS) must be changed when ExecutionCourse is linked to
-        // ExecutionInterval
-        ExecutionSemester executionSemester = (ExecutionSemester) ExecutionInterval.getExecutionInterval(academicInterval);
+        ExecutionInterval executionInterval = ExecutionInterval.getExecutionInterval(academicInterval);
 
-        return executionSemester == null ? Collections.EMPTY_LIST : getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
-                executionSemester, degreeCurricularPlan, curricularYear, name);
+        return executionInterval == null ? Collections.EMPTY_LIST : getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
+                executionInterval, degreeCurricularPlan, curricularYear, name);
     }
 
     public static Collection<ExecutionCourse> filterByAcademicInterval(AcademicInterval academicInterval) {
-        // FIXME (PERIODS) must be changed when ExecutionCourse is linked to
-        // ExecutionInterval
-        ExecutionSemester executionSemester = (ExecutionSemester) ExecutionInterval.getExecutionInterval(academicInterval);
+        ExecutionInterval executionInterval = ExecutionInterval.getExecutionInterval(academicInterval);
 
-        return executionSemester == null ? Collections.<ExecutionCourse> emptyList() : executionSemester
+        return executionInterval == null ? Collections.<ExecutionCourse> emptyList() : executionInterval
                 .getAssociatedExecutionCoursesSet();
     }
 
     public static ExecutionCourse getExecutionCourseByInitials(AcademicInterval academicInterval, String courseInitials) {
 
-        // FIXME (PERIODS) must be changed when ExecutionCourse is linked to
-        // ExecutionInterval
-        ExecutionSemester executionSemester = (ExecutionSemester) ExecutionInterval.getExecutionInterval(academicInterval);
-        return readBySiglaAndExecutionPeriod(courseInitials, executionSemester);
+        ExecutionInterval executionInterval = ExecutionInterval.getExecutionInterval(academicInterval);
+        return readBySiglaAndExecutionPeriod(courseInitials, executionInterval);
     }
 
     public static List<ExecutionCourse> searchByAcademicIntervalAndExecutionDegreeYearAndName(AcademicInterval academicInterval,
             ExecutionDegree executionDegree, CurricularYear curricularYear, String name) {
 
-        // FIXME (PERIODS) must be changed when ExecutionCourse is linked to
-        // ExecutionInterval
-        ExecutionSemester executionSemester = (ExecutionSemester) ExecutionInterval.getExecutionInterval(academicInterval);
+        ExecutionInterval executionInterval = ExecutionInterval.getExecutionInterval(academicInterval);
 
-        return getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(executionSemester,
+        return getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(executionInterval,
                 executionDegree.getDegreeCurricularPlan(), curricularYear, name);
     }
 
     public static List<ExecutionCourse> getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
-            final ExecutionSemester interval, final DegreeCurricularPlan degreeCurricularPlan,
+            final ExecutionInterval interval, final DegreeCurricularPlan degreeCurricularPlan,
             final CurricularYear curricularYear, final String name) {
 
         final String normalizedName = (name != null) ? StringNormalizer.normalize(name).replaceAll("%", ".*") : null;

@@ -23,7 +23,7 @@ import java.util.Collection;
 import java.util.function.Supplier;
 
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
@@ -165,7 +165,7 @@ abstract public class CurricularRuleExecutor {
         boolean isApproved(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse);
 
         boolean isApproved(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse,
-                final ExecutionSemester executionSemester);
+                final ExecutionInterval executionInterval);
     }
 
     static public CurricularRuleApprovalExecutor getCurricularRuleApprovalExecutor() {
@@ -191,9 +191,9 @@ abstract public class CurricularRuleExecutor {
 
                 @Override
                 public boolean isApproved(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse,
-                        final ExecutionSemester executionSemester) {
+                        final ExecutionInterval executionInterval) {
 
-                    return enrolmentContext.getStudentCurricularPlan().isApproved(curricularCourse, executionSemester);
+                    return enrolmentContext.getStudentCurricularPlan().isApproved(curricularCourse, executionInterval);
                 }
             };
 
@@ -202,8 +202,8 @@ abstract public class CurricularRuleExecutor {
     }
 
     protected boolean isApproved(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse,
-            final ExecutionSemester executionSemester) {
-        return getCurricularRuleApprovalExecutor().isApproved(enrolmentContext, curricularCourse, executionSemester);
+            final ExecutionInterval executionInterval) {
+        return getCurricularRuleApprovalExecutor().isApproved(enrolmentContext, curricularCourse, executionInterval);
     }
 
     protected boolean isEnroled(final EnrolmentContext enrolmentContext, final DegreeModule degreeModule) {
@@ -212,8 +212,8 @@ abstract public class CurricularRuleExecutor {
     }
 
     private boolean isEnroled(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse) {
-        for (final ExecutionSemester executionSemester : enrolmentContext.getExecutionSemestersToEvaluate()) {
-            if (enrolmentContext.getStudentCurricularPlan().isEnroledInExecutionPeriod(curricularCourse, executionSemester)) {
+        for (final ExecutionInterval executionInterval : enrolmentContext.getExecutionIntervalsToEvaluate()) {
+            if (enrolmentContext.getStudentCurricularPlan().isEnroledInExecutionPeriod(curricularCourse, executionInterval)) {
                 return true;
             }
         }
@@ -226,14 +226,14 @@ abstract public class CurricularRuleExecutor {
     }
 
     protected boolean isEnroled(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse,
-            final ExecutionSemester executionSemester) {
-        return enrolmentContext.getStudentCurricularPlan().isEnroledInExecutionPeriod(curricularCourse, executionSemester);
+            final ExecutionInterval executionInterval) {
+        return enrolmentContext.getStudentCurricularPlan().isEnroledInExecutionPeriod(curricularCourse, executionInterval);
     }
 
     protected boolean isEnroled(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse,
             final ExecutionYear executionYear) {
-        for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
-            if (enrolmentContext.getStudentCurricularPlan().isEnroledInExecutionPeriod(curricularCourse, executionSemester)) {
+        for (final ExecutionInterval executionInterval : executionYear.getChildIntervals()) {
+            if (enrolmentContext.getStudentCurricularPlan().isEnroledInExecutionPeriod(curricularCourse, executionInterval)) {
                 return true;
             }
         }
@@ -242,17 +242,17 @@ abstract public class CurricularRuleExecutor {
     }
 
     protected boolean hasEnrolmentWithEnroledState(final EnrolmentContext enrolmentContext,
-            final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
+            final CurricularCourse curricularCourse, final ExecutionInterval executionInterval) {
         return enrolmentContext.getStudentCurricularPlan().getRoot().hasEnrolmentWithEnroledState(curricularCourse,
-                executionSemester);
+                executionInterval);
     }
 
     protected boolean hasEnrolmentWithEnroledState(final EnrolmentContext enrolmentContext,
             final CurricularCourse curricularCourse, final ExecutionYear executionYear) {
 
-        for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
+        for (final ExecutionInterval executionInterval : executionYear.getChildIntervals()) {
             if (enrolmentContext.getStudentCurricularPlan().getRoot().hasEnrolmentWithEnroledState(curricularCourse,
-                    executionSemester)) {
+                    executionInterval)) {
                 return true;
             }
         }
@@ -266,10 +266,10 @@ abstract public class CurricularRuleExecutor {
     }
 
     protected boolean isEnrolling(final EnrolmentContext enrolmentContext, final DegreeModule degreeModule,
-            final ExecutionSemester executionPeriod) {
+            final ExecutionInterval executionInterval) {
         final IDegreeModuleToEvaluate degreeModuleToEvaluate = searchDegreeModuleToEvaluate(enrolmentContext, degreeModule);
         return degreeModuleToEvaluate != null && !degreeModuleToEvaluate.isEnroled()
-                && degreeModuleToEvaluate.getExecutionPeriod() == executionPeriod;
+                && degreeModuleToEvaluate.getExecutionInterval() == executionInterval;
     }
 
     protected RuleResult executeEnrolmentWithNoRules(final ICurricularRule curricularRule,

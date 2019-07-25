@@ -19,7 +19,7 @@
 package org.fenixedu.academic.domain.log;
 
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.degreeStructure.OptionalCurricularCourse;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
@@ -33,14 +33,14 @@ public class OptionalEnrolmentLog extends OptionalEnrolmentLog_Base {
 
     public OptionalEnrolmentLog(final EnrolmentAction action, final Registration registration,
             final CurricularCourse curricularCourse, final OptionalCurricularCourse optionalCurricularCourse,
-            final ExecutionSemester executionSemester, final String who) {
+            final ExecutionInterval executionInterval, final String who) {
 
         this();
         String[] args = {};
         if (optionalCurricularCourse == null) {
             throw new DomainException("error.OptionalEnrolmentLog.invalid.optionalCurricularCourse", args);
         }
-        init(action, registration, curricularCourse, executionSemester, who);
+        init(action, registration, curricularCourse, executionInterval, who);
         setOptionalCurricularCourse(optionalCurricularCourse);
     }
 

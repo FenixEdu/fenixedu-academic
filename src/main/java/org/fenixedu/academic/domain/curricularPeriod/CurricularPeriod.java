@@ -29,10 +29,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.degreeStructure.Context;
-import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.dto.CurricularPeriodInfoDTO;
@@ -301,25 +297,6 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
             final int numberOfBrothersAndSisters = parentCurricularPeriod.getChildsSet().size();
             return (absoluteOrderOfParent - 1) * numberOfBrothersAndSisters + getChildOrder().intValue();
         }
-    }
-
-    public List<Context> getContextsWithCurricularCourses() {
-        return getContextsWithCurricularCourses(null);
-    }
-
-    public List<Context> getContextsWithCurricularCourses(final ExecutionSemester executionSemester) {
-        return getChildContexts(CurricularCourse.class, executionSemester);
-    }
-
-    public List<Context> getChildContexts(final Class<? extends DegreeModule> clazz, final ExecutionSemester executionSemester) {
-        final List<Context> result = new ArrayList<Context>();
-        for (final Context context : super.getContextsSet()) {
-            if ((clazz == null || clazz.isAssignableFrom(context.getChildDegreeModule().getClass()))
-                    && (executionSemester == null || context.isValid(executionSemester))) {
-                result.add(context);
-            }
-        }
-        return result;
     }
 
     public boolean hasChildOrder() {

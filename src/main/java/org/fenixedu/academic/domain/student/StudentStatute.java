@@ -110,8 +110,8 @@ public class StudentStatute extends StudentStatute_Base {
     }
 
     public boolean isValidOn(final ExecutionYear executionYear) {
-        for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
-            if (!isValidInExecutionPeriod(executionSemester)) {
+        for (final ExecutionInterval executionInterval : executionYear.getChildIntervals()) {
+            if (!isValidInExecutionInterval(executionInterval)) {
                 return false;
             }
         }
@@ -120,8 +120,8 @@ public class StudentStatute extends StudentStatute_Base {
     }
 
     public boolean isValidOnAnyExecutionPeriodFor(final ExecutionYear executionYear) {
-        for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
-            if (isValidInExecutionPeriod(executionSemester)) {
+        for (final ExecutionInterval executionInterval : executionYear.getChildIntervals()) {
+            if (isValidInExecutionInterval(executionInterval)) {
                 return true;
             }
         }

@@ -26,7 +26,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.fenixedu.academic.domain.EvaluationSeason;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
@@ -47,7 +47,7 @@ public class EnrolmentContext {
 
     private StudentCurricularPlan studentCurricularPlan;
 
-    private ExecutionSemester executionSemester;
+    private ExecutionInterval executionInterval;
 
     private final Set<IDegreeModuleToEvaluate> degreeModulesToEvaluate;
 
@@ -59,7 +59,7 @@ public class EnrolmentContext {
 
     private final User userView;
 
-    public EnrolmentContext(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
+    public EnrolmentContext(final StudentCurricularPlan studentCurricularPlan, final ExecutionInterval executionInterval,
             final Set<IDegreeModuleToEvaluate> degreeModulesToEnrol, final List<CurriculumModule> curriculumModulesToRemove,
             final CurricularRuleLevel curricularRuleLevel) {
 
@@ -77,15 +77,15 @@ public class EnrolmentContext {
             this.addDegreeModuleToEvaluate(moduleToEnrol);
         }
 
-        this.executionSemester = executionSemester;
+        this.executionInterval = executionInterval;
         this.curriculumModulesToRemove = curriculumModulesToRemove;
         this.curricularRuleLevel = curricularRuleLevel;
     }
 
-    public EnrolmentContext(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
+    public EnrolmentContext(final StudentCurricularPlan studentCurricularPlan, final ExecutionInterval executionInterval,
             final Set<IDegreeModuleToEvaluate> degreeModulesToEnrol, final List<CurriculumModule> curriculumModulesToRemove,
             final CurricularRuleLevel curricularRuleLevel, final EvaluationSeason evaluationSeason) {
-        this(studentCurricularPlan, executionSemester, degreeModulesToEnrol, curriculumModulesToRemove, curricularRuleLevel);
+        this(studentCurricularPlan, executionInterval, degreeModulesToEnrol, curriculumModulesToRemove, curricularRuleLevel);
         setEvaluationSeason(evaluationSeason);
     }
 
@@ -112,12 +112,12 @@ public class EnrolmentContext {
         return degreeModulesToEvaluate != null && !degreeModulesToEvaluate.isEmpty();
     }
 
-    public ExecutionSemester getExecutionPeriod() {
-        return executionSemester;
+    public ExecutionInterval getExecutionPeriod() {
+        return executionInterval;
     }
 
-    public void setExecutionPeriod(ExecutionSemester executionSemester) {
-        this.executionSemester = executionSemester;
+    public void setExecutionPeriod(ExecutionInterval executionInterval) {
+        this.executionInterval = executionInterval;
     }
 
     public StudentCurricularPlan getStudentCurricularPlan() {
@@ -202,31 +202,32 @@ public class EnrolmentContext {
     }
 
     public boolean isToEvaluateRulesByYear() {
-        return getStudentCurricularPlan().getDegreeCurricularPlan().getCurricularRuleValidationType() == CurricularRuleValidationType.YEAR;
+        return getStudentCurricularPlan().getDegreeCurricularPlan()
+                .getCurricularRuleValidationType() == CurricularRuleValidationType.YEAR;
     }
 
     public ExecutionYear getExecutionYear() {
         return getExecutionPeriod().getExecutionYear();
     }
 
-    public SortedSet<ExecutionSemester> getExecutionSemestersToEvaluate() {
-        final SortedSet<ExecutionSemester> result = new TreeSet<>(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
-        result.addAll(isToEvaluateRulesByYear() ? getExecutionYear().getExecutionPeriodsSet() : Collections
-                .singleton(getExecutionPeriod()));
+    public SortedSet<ExecutionInterval> getExecutionIntervalsToEvaluate() {
+        final SortedSet<ExecutionInterval> result = new TreeSet<>(ExecutionInterval.COMPARATOR_BY_BEGIN_DATE);
+        result.addAll(
+                isToEvaluateRulesByYear() ? getExecutionYear().getChildIntervals() : Collections.singleton(getExecutionPeriod()));
 
         return result;
     }
 
     @SuppressWarnings("unchecked")
     static public EnrolmentContext createForVerifyWithRules(final StudentCurricularPlan studentCurricularPlan,
-            final ExecutionSemester executionSemester) {
-        return createForVerifyWithRules(studentCurricularPlan, executionSemester, Collections.EMPTY_SET);
+            final ExecutionInterval executionInterval) {
+        return createForVerifyWithRules(studentCurricularPlan, executionInterval, Collections.EMPTY_SET);
     }
 
     @SuppressWarnings("unchecked")
     static public EnrolmentContext createForVerifyWithRules(final StudentCurricularPlan studentCurricularPlan,
-            final ExecutionSemester executionSemester, final Set<IDegreeModuleToEvaluate> degreeModulesToEvaluate) {
-        return new EnrolmentContext(studentCurricularPlan, executionSemester, degreeModulesToEvaluate, Collections.EMPTY_LIST,
+            final ExecutionInterval executionInterval, final Set<IDegreeModuleToEvaluate> degreeModulesToEvaluate) {
+        return new EnrolmentContext(studentCurricularPlan, executionInterval, degreeModulesToEvaluate, Collections.EMPTY_LIST,
                 CurricularRuleLevel.ENROLMENT_WITH_RULES);
     }
 
@@ -234,9 +235,9 @@ public class EnrolmentContext {
     static public EnrolmentContext createForNoCourseGroupCurriculumGroupEnrolment(
             final StudentCurricularPlan studentCurricularPlan, final NoCourseGroupEnrolmentBean bean) {
 
-        final IDegreeModuleToEvaluate moduleToEvaluate =
-                new ExternalCurricularCourseToEnrol(readOrCreateNoCourseGroupCurriculumGroup(studentCurricularPlan,
-                        bean.getGroupType()), bean.getSelectedCurricularCourse(), bean.getExecutionPeriod());
+        final IDegreeModuleToEvaluate moduleToEvaluate = new ExternalCurricularCourseToEnrol(
+                readOrCreateNoCourseGroupCurriculumGroup(studentCurricularPlan, bean.getGroupType()),
+                bean.getSelectedCurricularCourse(), bean.getExecutionPeriod());
 
         return new EnrolmentContext(studentCurricularPlan, bean.getExecutionPeriod(), Collections.singleton(moduleToEvaluate),
                 Collections.EMPTY_LIST, bean.getCurricularRuleLevel());

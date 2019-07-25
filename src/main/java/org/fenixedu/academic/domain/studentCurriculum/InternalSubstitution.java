@@ -24,7 +24,7 @@ import java.util.HashSet;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
@@ -44,37 +44,37 @@ public class InternalSubstitution extends InternalSubstitution_Base {
 
     public InternalSubstitution(final StudentCurricularPlan studentCurricularPlan,
             final Collection<SelectedCurricularCourse> dismissals, final Collection<IEnrolment> enrolments,
-            ExecutionSemester executionSemester) {
+            ExecutionInterval executionInterval) {
 
         this();
 
         checkEnrolments(studentCurricularPlan, enrolments);
         changeParentCurriculumGroup(studentCurricularPlan, enrolments);
 
-        init(studentCurricularPlan, dismissals, enrolments, executionSemester);
+        init(studentCurricularPlan, dismissals, enrolments, executionInterval);
     }
 
     public InternalSubstitution(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup,
             Collection<IEnrolment> enrolments, Collection<CurricularCourse> noEnrolCurricularCourses, Double credits,
-            ExecutionSemester executionSemester) {
+            ExecutionInterval executionInterval) {
 
         this();
 
         checkEnrolments(studentCurricularPlan, enrolments);
         changeParentCurriculumGroup(studentCurricularPlan, enrolments);
 
-        init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, executionSemester);
+        init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, executionInterval);
     }
 
     public InternalSubstitution(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
-            Collection<IEnrolment> enrolments, Double credits, ExecutionSemester executionSemester) {
+            Collection<IEnrolment> enrolments, Double credits, ExecutionInterval executionInterval) {
 
         this();
 
         checkEnrolments(studentCurricularPlan, enrolments);
         changeParentCurriculumGroup(studentCurricularPlan, enrolments);
 
-        init(studentCurricularPlan, curriculumGroup, enrolments, new HashSet<CurricularCourse>(0), credits, executionSemester);
+        init(studentCurricularPlan, curriculumGroup, enrolments, new HashSet<CurricularCourse>(0), credits, executionInterval);
     }
 
     private void checkEnrolments(final StudentCurricularPlan studentCurricularPlan, final Collection<IEnrolment> enrolments) {
@@ -147,9 +147,8 @@ public class InternalSubstitution extends InternalSubstitution_Base {
     }
 
     private void deleteSourceGroupIfEmpty() {
-        final NoCourseGroupCurriculumGroup group =
-                getStudentCurricularPlan().getNoCourseGroupCurriculumGroup(
-                        NoCourseGroupCurriculumGroupType.INTERNAL_CREDITS_SOURCE_GROUP);
+        final NoCourseGroupCurriculumGroup group = getStudentCurricularPlan()
+                .getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.INTERNAL_CREDITS_SOURCE_GROUP);
 
         if (group != null && group.isDeletable()) {
             group.delete();
@@ -178,8 +177,8 @@ public class InternalSubstitution extends InternalSubstitution_Base {
             final Enrolment enrolment = (Enrolment) wrapper.getIEnrolment();
 
             if (enrolment.wasCreated(when)) {
-                curriculum.add(new Curriculum(dismissal, year, Collections.<ICurriculumEntry> singleton(enrolment), Collections
-                        .<ICurriculumEntry> emptySet(), Collections.<ICurriculumEntry> singleton(enrolment)));
+                curriculum.add(new Curriculum(dismissal, year, Collections.<ICurriculumEntry> singleton(enrolment),
+                        Collections.<ICurriculumEntry> emptySet(), Collections.<ICurriculumEntry> singleton(enrolment)));
             }
         }
 

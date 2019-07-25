@@ -19,7 +19,7 @@
 package org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors;
 
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
@@ -85,9 +85,9 @@ abstract public class VerifyRuleExecutor {
     }
 
     protected boolean hasEnrolmentWithEnroledState(final EnrolmentContext enrolmentContext,
-            final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
-        return enrolmentContext.getStudentCurricularPlan().getRoot()
-                .hasEnrolmentWithEnroledState(curricularCourse, executionSemester);
+            final CurricularCourse curricularCourse, final ExecutionInterval executionInterval) {
+        return enrolmentContext.getStudentCurricularPlan().getRoot().hasEnrolmentWithEnroledState(curricularCourse,
+                executionInterval);
     }
 
     protected RuleResult verifyDegreeConclusionWithRules(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,

@@ -29,6 +29,7 @@ import java.util.stream.Stream;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
@@ -58,9 +59,9 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
         setUsedInSeparationCycle(false);
     }
 
-    final public ExecutionYear getExecutionYear() {
-        final ExecutionSemester executionSemester = getExecutionPeriod();
-        return executionSemester == null ? null : executionSemester.getExecutionYear();
+    public ExecutionYear getExecutionYear() {
+        final ExecutionInterval executionInterval = getExecutionInterval();
+        return executionInterval == null ? null : executionInterval.getExecutionYear();
     }
 
     public YearMonthDay getApprovementDate() {
@@ -78,12 +79,12 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     }
 
     @Override
-    public boolean isApproved(CurricularCourse curricularCourse, ExecutionSemester executionSemester) {
+    public boolean isApproved(CurricularCourse curricularCourse, ExecutionInterval executionInterval) {
         return false;
     }
 
     @Override
-    public boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse, ExecutionSemester executionSemester) {
+    public boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse, ExecutionInterval executionInterval) {
         return false;
     }
 
@@ -144,7 +145,7 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 
     @Override
     public boolean hasEnrolmentWithEnroledState(final CurricularCourse curricularCourse,
-            final ExecutionSemester executionSemester) {
+            final ExecutionInterval executionInterval) {
         return false;
     }
 
@@ -179,12 +180,12 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     }
 
     @Override
-    public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
+    public Enrolment findEnrolmentFor(final CurricularCourse curricularCourse, final ExecutionInterval executionInterval) {
         return null;
     }
 
     @Override
-    public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionSemester executionSemester) {
+    public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionInterval executionInterval) {
         return Collections.emptySet();
     }
 
@@ -210,18 +211,19 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 
     @Override
     public LocalizedString getName() {
-        ExecutionSemester period = getExecutionPeriod();
+        ExecutionInterval interval = getExecutionInterval();
         CurricularCourse course = getCurricularCourse();
-        return new LocalizedString().with(org.fenixedu.academic.util.LocaleUtils.PT, course.getName(period))
-                .with(org.fenixedu.academic.util.LocaleUtils.EN, course.getNameEn(period));
+        return new LocalizedString().with(org.fenixedu.academic.util.LocaleUtils.PT, course.getName(interval))
+                .with(org.fenixedu.academic.util.LocaleUtils.EN, course.getNameEn(interval));
     }
 
+    @Deprecated
     public boolean hasExecutionPeriod() {
         return getExecutionPeriod() != null;
     }
 
     protected boolean hasCurricularCourse(final CurricularCourse own, final CurricularCourse other,
-            final ExecutionSemester executionSemester) {
+            final ExecutionInterval executionInterval) {
         return own.isEquivalent(other);
     }
 
@@ -241,12 +243,18 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 
     abstract public boolean isApproved();
 
-    abstract public boolean isValid(ExecutionSemester executionSemester);
+    abstract public boolean isValid(ExecutionInterval executionInterval);
 
+    /**
+     * @deprecated use {@link #getExecutionInterval()}
+     */
+    @Deprecated
     abstract public ExecutionSemester getExecutionPeriod();
 
+    abstract public ExecutionInterval getExecutionInterval();
+
     @Override
-    public boolean hasEnrolment(ExecutionSemester executionSemester) {
+    public boolean hasEnrolment(ExecutionInterval executionInterval) {
         return false;
     }
 
@@ -256,7 +264,7 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     }
 
     @Override
-    public boolean isEnroledInSpecialSeason(ExecutionSemester executionSemester) {
+    public boolean isEnroledInSpecialSeason(ExecutionInterval executionInterval) {
         return false;
     }
 
@@ -270,7 +278,7 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     }
 
     @Override
-    public int getNumberOfAllApprovedEnrolments(final ExecutionSemester executionSemester) {
+    public int getNumberOfAllApprovedEnrolments(final ExecutionInterval executionInterval) {
         return 0;
     }
 
@@ -288,7 +296,7 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 
     abstract public BigDecimal getEctsCreditsForCurriculum();
 
-    abstract public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester);
+    abstract public double getAccumulatedEctsCredits(final ExecutionInterval executionInterval);
 
     abstract public String getModuleTypeName();
 

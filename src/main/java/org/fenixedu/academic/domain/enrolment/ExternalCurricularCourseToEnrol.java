@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.curricularRules.CurricularRule;
@@ -47,8 +48,8 @@ public class ExternalCurricularCourseToEnrol extends DegreeModuleToEnrol {
     }
 
     @Override
-    public double getAccumulatedEctsCredits(ExecutionSemester executionSemester) {
-        return getStudentCurricularPlan().getAccumulatedEctsCredits(executionSemester, getDegreeModule());
+    public double getAccumulatedEctsCredits(ExecutionInterval executionInterval) {
+        return getStudentCurricularPlan().getAccumulatedEctsCredits(executionInterval, getDegreeModule());
     }
 
     @Override
@@ -57,12 +58,12 @@ public class ExternalCurricularCourseToEnrol extends DegreeModuleToEnrol {
     }
 
     @Override
-    public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(ExecutionSemester executionSemester) {
+    public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(ExecutionInterval executionInterval) {
         return Collections.emptySet();
     }
 
     @Override
-    public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionSemester executionSemester) {
+    public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionInterval executionInterval) {
         return Collections.emptyList();
     }
 
@@ -72,8 +73,8 @@ public class ExternalCurricularCourseToEnrol extends DegreeModuleToEnrol {
     }
 
     @Override
-    public Double getEctsCredits(ExecutionSemester executionSemester) {
-        return getDegreeModule().getEctsCredits(executionSemester);
+    public Double getEctsCredits(ExecutionInterval executionInterval) {
+        return getDegreeModule().getEctsCredits(executionInterval);
     }
 
     @Override
@@ -81,13 +82,13 @@ public class ExternalCurricularCourseToEnrol extends DegreeModuleToEnrol {
         final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(getCurriculumGroup().getClass().getName()).append(":").append(getCurriculumGroup().getExternalId())
                 .append(",").append(this.getDegreeModule().getClass().getName()).append(":").append(getName()).append(",")
-                .append(getExecutionPeriod().getClass().getName()).append(":").append(getExecutionPeriod().getExternalId());
+                .append(getExecutionInterval().getClass().getName()).append(":").append(getExecutionInterval().getExternalId());
         return stringBuilder.toString();
     }
 
     @Override
     public String getName() {
-        return getDegreeModule().getName(getExecutionPeriod());
+        return getDegreeModule().getName(getExecutionInterval());
     }
 
     @Override

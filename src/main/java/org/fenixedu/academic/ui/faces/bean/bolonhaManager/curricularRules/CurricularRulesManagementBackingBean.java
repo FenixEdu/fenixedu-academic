@@ -37,6 +37,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.AnyCurricularCourse;
 import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
@@ -628,7 +629,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 
     public String getBeginExecutionPeriodID() {
         if (getViewState().getAttribute("beginExecutionPeriodID") == null && getCurricularRule() != null) {
-            setBeginExecutionPeriodID(getCurricularRule().getBegin().getExternalId());
+            setBeginExecutionPeriodID(getCurricularRule().getBeginInterval().getExternalId());
         }
         return (String) getViewState().getAttribute("beginExecutionPeriodID");
     }
@@ -639,8 +640,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 
     public String getEndExecutionPeriodID() {
         if (getViewState().getAttribute("endExecutionPeriodID") == null && getCurricularRule() != null) {
-            setEndExecutionPeriodID(
-                    (getCurricularRule().getEnd() == null) ? NO_SELECTION_STRING : getCurricularRule().getEnd().getExternalId());
+            setEndExecutionPeriodID((getCurricularRule().getEndInterval() == null) ? NO_SELECTION_STRING : getCurricularRule()
+                    .getEndInterval().getExternalId());
         }
         return (String) getViewState().getAttribute("endExecutionPeriodID");
     }
@@ -684,7 +685,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         final List<SelectItem> result = new ArrayList<SelectItem>();
 
         final DegreeModule degreeModule = getDegreeModule();
-        final ExecutionSemester currentExecutionPeriod =
+        final ExecutionInterval currentExecutionPeriod =
                 degreeModule != null ? degreeModule.getMinimumExecutionPeriod() : ExecutionSemester.findCurrent(null);
 
         final List<ExecutionSemester> notClosedExecutionPeriods = ExecutionSemester.readNotClosedExecutionPeriods();

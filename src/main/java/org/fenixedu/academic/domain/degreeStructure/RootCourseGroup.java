@@ -27,7 +27,6 @@ import java.util.TreeSet;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -48,13 +47,13 @@ public class RootCourseGroup extends RootCourseGroup_Base {
     }
 
     private void createCycleCourseGroups(DegreeType degreeType) {
-        ExecutionSemester executionSemester = ExecutionYear.findCurrent(getDegree().getCalendar()).getFirstExecutionPeriod();
+        ExecutionInterval executionInterval = ExecutionYear.findCurrent(getDegree().getCalendar()).getFirstExecutionPeriod();
         for (final CycleType cycleType : degreeType.getCycleTypes()) {
             new CycleCourseGroup(this, cycleType.getDescription(Locale.getDefault()), cycleType.getDescription(Locale.ENGLISH),
-                    cycleType, executionSemester, null);
+                    cycleType, executionInterval, null);
         }
     }
-    
+
     public ExecutionInterval getBeginExecutionInterval() {
         final SortedSet<ExecutionInterval> executionIntervals = new TreeSet<ExecutionInterval>();
         for (final Context context : getChildContextsSet()) {

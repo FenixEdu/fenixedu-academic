@@ -270,8 +270,8 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
                             depth + getWidthDecreasePerLevel());
                     curriculumGroups.remove(0);
                 } else if (curriculumGroups.isEmpty() && !courseGroupsToEnrol.isEmpty()) {
-                    generateCourseGroupToEnroll(blockContainer, courseGroupsToEnrol.iterator().next(), depth
-                            + getWidthDecreasePerLevel());
+                    generateCourseGroupToEnroll(blockContainer, courseGroupsToEnrol.iterator().next(),
+                            depth + getWidthDecreasePerLevel());
                     courseGroupsToEnrol.remove(0);
                 } else {
                     Context context = courseGroupsToEnrol.iterator().next().getContext();
@@ -281,8 +281,8 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
                                 executionSemester, depth + getWidthDecreasePerLevel());
                         curriculumGroups.remove(0);
                     } else {
-                        generateCourseGroupToEnroll(blockContainer, courseGroupsToEnrol.iterator().next(), depth
-                                + getWidthDecreasePerLevel());
+                        generateCourseGroupToEnroll(blockContainer, courseGroupsToEnrol.iterator().next(),
+                                depth + getWidthDecreasePerLevel());
                         courseGroupsToEnrol.remove(0);
                     }
                 }
@@ -375,7 +375,7 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
             for (CurriculumModuleBean curriculumModule : curriculumModuleBean.getCurricularCoursesEnroled()) {
                 if (((CurriculumLine) curriculumModule.getCurriculumModule()).isEnrolment()) {
                     Enrolment enrolment = (Enrolment) curriculumModule.getCurriculumModule();
-                    if (enrolment.getExecutionPeriod().equals(executionSemester) && enrolment.isEnroled()) {
+                    if (enrolment.getExecutionInterval().equals(executionSemester) && enrolment.isEnroled()) {
                         generateEnrolment(groupTable, enrolment);
                     }
                 }
@@ -393,7 +393,7 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
             yearCell.setClasses(getEnrolmentYearClasses());
 
             final StringBuilder year = new StringBuilder();
-            year.append(enrolment.getExecutionPeriod().getExecutionYear().getYear());
+            year.append(enrolment.getExecutionInterval().getExecutionYear().getYear());
             yearCell.setBody(new HtmlText(year.toString()));
 
             // Semester

@@ -160,11 +160,11 @@ public class Professorship extends Professorship_Base {
     }
 
     public static List<Professorship> readByDegreeCurricularPlanAndExecutionPeriod(DegreeCurricularPlan degreeCurricularPlan,
-            ExecutionSemester executionSemester) {
+            ExecutionInterval executionInterval) {
 
         Set<Professorship> professorships = new HashSet<Professorship>();
         for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
-            for (ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester)) {
+            for (ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionPeriod(executionInterval)) {
                 professorships.addAll(executionCourse.getProfessorshipsSet());
             }
         }

@@ -22,7 +22,7 @@ import java.math.BigDecimal;
 import java.util.Iterator;
 
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.studentCurriculum.Credits;
@@ -37,9 +37,9 @@ public class DismissalLog extends DismissalLog_Base {
     }
 
     public DismissalLog(final EnrolmentAction action, final Registration registration, final CurricularCourse curricularCourse,
-            final Credits credits, final ExecutionSemester executionSemester, final String who) {
+            final Credits credits, final ExecutionInterval executionInterval, final String who) {
         this();
-        init(action, registration, curricularCourse, executionSemester, who);
+        init(action, registration, curricularCourse, executionInterval, who);
         setCredits(BigDecimal.valueOf(credits.getGivenCredits()));
         setSourceDescription(buildSourceDescription(credits));
     }

@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.EvenOddRuleVerifier;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.degreeStructure.Context;
@@ -32,13 +32,13 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.dto.GenericPair;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 public class EvenOddRule extends EvenOddRule_Base {
 
     public EvenOddRule(final DegreeModule toApplyRule, final CourseGroup contextCourseGroup, final Integer semester,
-            final AcademicPeriod academicPeriod, final Boolean even, final ExecutionSemester begin, final ExecutionSemester end) {
+            final AcademicPeriod academicPeriod, final Boolean even, final ExecutionInterval begin, final ExecutionInterval end) {
         super();
         checkParameters(toApplyRule, semester, academicPeriod, even);
         init(toApplyRule, contextCourseGroup, begin, end, CurricularRuleType.EVEN_ODD);

@@ -687,10 +687,10 @@ public class Person extends Person_Base {
     }
 
     public boolean isResponsibleOrCoordinatorFor(final CurricularCourse curricularCourse,
-            final ExecutionSemester executionSemester) {
+            final ExecutionInterval executionInterval) {
         final Teacher teacher = getTeacher();
-        return teacher != null && teacher.isResponsibleFor(curricularCourse, executionSemester)
-                || isCoordinatorFor(curricularCourse.getDegreeCurricularPlan(), executionSemester.getExecutionYear());
+        return teacher != null && teacher.isResponsibleFor(curricularCourse, executionInterval)
+                || isCoordinatorFor(curricularCourse.getDegreeCurricularPlan(), executionInterval.getExecutionYear());
     }
 
     public boolean isCoordinatorFor(final ExecutionYear executionYear, final List<DegreeType> degreeTypes) {

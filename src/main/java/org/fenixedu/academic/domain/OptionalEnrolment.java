@@ -31,8 +31,8 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.log.OptionalEnrolmentLog;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.util.EnrolmentAction;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 public class OptionalEnrolment extends OptionalEnrolment_Base {
 
@@ -41,29 +41,29 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
     }
 
     public OptionalEnrolment(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
-            CurricularCourse curricularCourse, ExecutionSemester executionSemester, EnrollmentCondition enrolmentCondition,
+            CurricularCourse curricularCourse, ExecutionInterval executionInterval, EnrollmentCondition enrolmentCondition,
             String createdBy, OptionalCurricularCourse optionalCurricularCourse) {
 
-        if (studentCurricularPlan == null || curriculumGroup == null || curricularCourse == null || executionSemester == null
+        if (studentCurricularPlan == null || curriculumGroup == null || curricularCourse == null || executionInterval == null
                 || enrolmentCondition == null || createdBy == null || optionalCurricularCourse == null) {
             throw new DomainException("invalid arguments");
         }
-        checkInitConstraints(studentCurricularPlan, curricularCourse, executionSemester, optionalCurricularCourse);
+        checkInitConstraints(studentCurricularPlan, curricularCourse, executionInterval, optionalCurricularCourse);
         // TODO: check this
         // validateDegreeModuleLink(curriculumGroup, curricularCourse);
-        initializeAsNew(studentCurricularPlan, curriculumGroup, curricularCourse, executionSemester, enrolmentCondition,
+        initializeAsNew(studentCurricularPlan, curriculumGroup, curricularCourse, executionInterval, enrolmentCondition,
                 createdBy);
         setOptionalCurricularCourse(optionalCurricularCourse);
         createCurriculumLineLog(EnrolmentAction.ENROL);
     }
 
     protected void checkInitConstraints(StudentCurricularPlan studentCurricularPlan, CurricularCourse curricularCourse,
-            ExecutionSemester executionSemester, OptionalCurricularCourse optionalCurricularCourse) {
-        super.checkInitConstraints(studentCurricularPlan, curricularCourse, executionSemester);
+            ExecutionInterval executionInterval, OptionalCurricularCourse optionalCurricularCourse) {
+        super.checkInitConstraints(studentCurricularPlan, curricularCourse, executionInterval);
 
         final OptionalEnrolment optionalEnrolment =
-                (OptionalEnrolment) studentCurricularPlan.findEnrolmentFor(optionalCurricularCourse, executionSemester);
-        if (optionalEnrolment != null && optionalEnrolment.isValid(executionSemester)) {
+                (OptionalEnrolment) studentCurricularPlan.findEnrolmentFor(optionalCurricularCourse, executionInterval);
+        if (optionalEnrolment != null && optionalEnrolment.isValid(executionInterval)) {
             throw new DomainException("error.OptionalEnrolment.duplicate.enrolment", optionalCurricularCourse.getName());
 
         }
@@ -76,25 +76,24 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
     }
 
     @Override
-    final public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
-        if (executionSemester == null || getExecutionPeriod().isBeforeOrEquals(executionSemester)) {
-            return isApproved() && hasCurricularCourseOrOptionalCurricularCourse(curricularCourse, executionSemester);
+    final public boolean isApproved(final CurricularCourse curricularCourse, final ExecutionInterval executionInterval) {
+        if (executionInterval == null || getExecutionInterval().isBeforeOrEquals(executionInterval)) {
+            return isApproved() && hasCurricularCourseOrOptionalCurricularCourse(curricularCourse, executionInterval);
         } else {
             return false;
         }
     }
 
     private boolean hasCurricularCourseOrOptionalCurricularCourse(final CurricularCourse curricularCourse,
-            final ExecutionSemester executionSemester) {
-        return hasCurricularCourse(getCurricularCourse(), curricularCourse, executionSemester)
-                || hasCurricularCourse(getOptionalCurricularCourse(), curricularCourse, executionSemester);
+            final ExecutionInterval executionInterval) {
+        return hasCurricularCourse(getCurricularCourse(), curricularCourse, executionInterval)
+                || hasCurricularCourse(getOptionalCurricularCourse(), curricularCourse, executionInterval);
     }
 
     @Override
-    final public boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse, ExecutionSemester executionSemester) {
-        return this.getExecutionPeriod().equals(executionSemester)
-                && (this.getCurricularCourse().equals(curricularCourse) || this.getOptionalCurricularCourse().equals(
-                        curricularCourse));
+    final public boolean isEnroledInExecutionPeriod(CurricularCourse curricularCourse, ExecutionInterval executionInterval) {
+        return this.getExecutionInterval().equals(executionInterval) && (this.getCurricularCourse().equals(curricularCourse)
+                || this.getOptionalCurricularCourse().equals(curricularCourse));
     }
 
     @Override
@@ -104,24 +103,23 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
 
     @Override
     public LocalizedString getName() {
-        final ExecutionSemester executionSemester = getExecutionPeriod();
-        return new LocalizedString().with(org.fenixedu.academic.util.LocaleUtils.PT,
-                this.getOptionalCurricularCourse().getName(executionSemester)).with(org.fenixedu.academic.util.LocaleUtils.EN,
-                this.getOptionalCurricularCourse().getNameEn(executionSemester));
+        final ExecutionInterval executionInterval = getExecutionInterval();
+        return new LocalizedString()
+                .with(org.fenixedu.academic.util.LocaleUtils.PT, this.getOptionalCurricularCourse().getName(executionInterval))
+                .with(org.fenixedu.academic.util.LocaleUtils.EN, this.getOptionalCurricularCourse().getNameEn(executionInterval));
     }
 
     @Override
     public LocalizedString getPresentationName() {
 
-        final String namePt =
-                String.format("%s (%s)", getOptionalCurricularCourse().getName(getExecutionPeriod()), getCurricularCourse()
-                        .getName(getExecutionPeriod()));
+        final String namePt = String.format("%s (%s)", getOptionalCurricularCourse().getName(getExecutionInterval()),
+                getCurricularCourse().getName(getExecutionInterval()));
 
-        final String nameEn =
-                String.format("%s (%s)", getOptionalCurricularCourse().getNameEn(getExecutionPeriod()), getCurricularCourse()
-                        .getNameEn(getExecutionPeriod()));
+        final String nameEn = String.format("%s (%s)", getOptionalCurricularCourse().getNameEn(getExecutionInterval()),
+                getCurricularCourse().getNameEn(getExecutionInterval()));
 
-        return new LocalizedString().with(org.fenixedu.academic.util.LocaleUtils.PT, namePt).with(org.fenixedu.academic.util.LocaleUtils.EN, nameEn);
+        return new LocalizedString().with(org.fenixedu.academic.util.LocaleUtils.PT, namePt)
+                .with(org.fenixedu.academic.util.LocaleUtils.EN, nameEn);
     }
 
     @Override
@@ -140,10 +138,10 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
     }
 
     @Override
-    public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionSemester executionSemester) {
-        if (isValid(executionSemester) && isEnroled()) {
+    public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionInterval executionInterval) {
+        if (isValid(executionInterval) && isEnroled()) {
             final Set<IDegreeModuleToEvaluate> result = new HashSet<IDegreeModuleToEvaluate>(1);
-            result.add(new EnroledOptionalEnrolment(this, getOptionalCurricularCourse(), executionSemester));
+            result.add(new EnroledOptionalEnrolment(this, getOptionalCurricularCourse(), executionInterval));
             return result;
         }
         return Collections.emptySet();

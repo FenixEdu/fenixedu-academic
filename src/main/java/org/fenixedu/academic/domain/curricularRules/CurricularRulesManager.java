@@ -23,7 +23,7 @@ package org.fenixedu.academic.domain.curricularRules;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.degreeStructure.OptionalCurricularCourse;
@@ -35,7 +35,7 @@ import pt.ist.fenixframework.FenixFramework;
 
 public class CurricularRulesManager {
 
-    public static CurricularRule createCurricularRule(DegreeModule toApplyRule, ExecutionSemester begin, ExecutionSemester end,
+    public static CurricularRule createCurricularRule(DegreeModule toApplyRule, ExecutionInterval begin, ExecutionInterval end,
             CurricularRuleType curricularRuleType, CurricularRuleParametersDTO parametersDTO) {
 
         switch (curricularRuleType) {
@@ -87,13 +87,13 @@ public class CurricularRulesManager {
         return CurricularRule.createCurricularRule(logicOperator, curricularRules);
     }
 
-    public static void editCurricularRule(CurricularRule curricularRule, ExecutionSemester beginExecutionPeriod,
-            ExecutionSemester endExecutionPeriod) {
+    public static void editCurricularRule(CurricularRule curricularRule, ExecutionInterval beginExecutionPeriod,
+            ExecutionInterval endExecutionPeriod) {
         curricularRule.edit(beginExecutionPeriod, endExecutionPeriod);
     }
 
-    private static CurricularRule createMinimumNumberOfCreditsToEnrol(DegreeModule toApplyRule, ExecutionSemester begin,
-            ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
+    private static CurricularRule createMinimumNumberOfCreditsToEnrol(DegreeModule toApplyRule, ExecutionInterval begin,
+            ExecutionInterval end, CurricularRuleParametersDTO parametersDTO) {
 
         final CourseGroup contextCourseGroup =
                 (CourseGroup) FenixFramework.getDomainObject(parametersDTO.getContextCourseGroupID());
@@ -101,7 +101,7 @@ public class CurricularRulesManager {
         return new MinimumNumberOfCreditsToEnrol(toApplyRule, contextCourseGroup, begin, end, parametersDTO.getMinimumCredits());
     }
 
-    private static CurricularRule createEvenOdd(DegreeModule toApplyRule, ExecutionSemester begin, ExecutionSemester end,
+    private static CurricularRule createEvenOdd(DegreeModule toApplyRule, ExecutionInterval begin, ExecutionInterval end,
             CurricularRuleParametersDTO parametersDTO) {
 
         final CourseGroup contextCourseGroup =
@@ -112,8 +112,8 @@ public class CurricularRulesManager {
 
     }
 
-    private static CurricularRule createAnyCurricularCourse(DegreeModule toApplyRule, ExecutionSemester begin,
-            ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
+    private static CurricularRule createAnyCurricularCourse(DegreeModule toApplyRule, ExecutionInterval begin,
+            ExecutionInterval end, CurricularRuleParametersDTO parametersDTO) {
 
         final CourseGroup contextCourseGroup =
                 (CourseGroup) FenixFramework.getDomainObject(parametersDTO.getContextCourseGroupID());
@@ -122,22 +122,23 @@ public class CurricularRulesManager {
                 (DepartmentUnit) FenixFramework.getDomainObject(parametersDTO.getSelectedDepartmentUnitID());
 
         return new AnyCurricularCourse((OptionalCurricularCourse) toApplyRule, contextCourseGroup, begin, end,
-                parametersDTO.getMinimumCredits(), parametersDTO.getMaximumCredits(), parametersDTO.getCurricularPeriodInfoDTO()
-                        .getOrder(), parametersDTO.getMinimumYear(), parametersDTO.getMaximumYear(),
-                parametersDTO.getDegreeType(), degree, departmentUnit);
+                parametersDTO.getMinimumCredits(), parametersDTO.getMaximumCredits(),
+                parametersDTO.getCurricularPeriodInfoDTO().getOrder(), parametersDTO.getMinimumYear(),
+                parametersDTO.getMaximumYear(), parametersDTO.getDegreeType(), degree, departmentUnit);
     }
 
-    private static CurricularRule createAnyCurricularCourseExceptions(DegreeModule toApplyRule, ExecutionSemester begin,
-            ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
+    private static CurricularRule createAnyCurricularCourseExceptions(DegreeModule toApplyRule, ExecutionInterval begin,
+            ExecutionInterval end, CurricularRuleParametersDTO parametersDTO) {
 
         final CourseGroup contextCourseGroup =
                 (CourseGroup) FenixFramework.getDomainObject(parametersDTO.getContextCourseGroupID());
 
-        return new AnyCurricularCourseExceptions((OptionalCurricularCourse) toApplyRule, contextCourseGroup, begin, end, parametersDTO.getOptionalsConfiguration());
+        return new AnyCurricularCourseExceptions((OptionalCurricularCourse) toApplyRule, contextCourseGroup, begin, end,
+                parametersDTO.getOptionalsConfiguration());
     }
 
-    private static CurricularRule createExclusiveness(DegreeModule firstExclusiveDegreeModule, ExecutionSemester begin,
-            ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
+    private static CurricularRule createExclusiveness(DegreeModule firstExclusiveDegreeModule, ExecutionInterval begin,
+            ExecutionInterval end, CurricularRuleParametersDTO parametersDTO) {
 
         final DegreeModule secondExclusiveDegreeModule =
                 FenixFramework.getDomainObject(parametersDTO.getSelectedDegreeModuleID());
@@ -152,8 +153,8 @@ public class CurricularRulesManager {
         return firstRule;
     }
 
-    private static CurricularRule createRestrictionBetweenDegreeModules(DegreeModule toApplyRule, ExecutionSemester begin,
-            ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
+    private static CurricularRule createRestrictionBetweenDegreeModules(DegreeModule toApplyRule, ExecutionInterval begin,
+            ExecutionInterval end, CurricularRuleParametersDTO parametersDTO) {
 
         final DegreeModule precedenceDegreeModule = FenixFramework.getDomainObject(parametersDTO.getSelectedDegreeModuleID());
         final CourseGroup contextCourseGroup =
@@ -163,8 +164,8 @@ public class CurricularRulesManager {
                 contextCourseGroup, begin, end);
     }
 
-    private static CurricularRule createEnrolmentToBeApprovedByCoordinator(DegreeModule toApplyRule, ExecutionSemester begin,
-            ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
+    private static CurricularRule createEnrolmentToBeApprovedByCoordinator(DegreeModule toApplyRule, ExecutionInterval begin,
+            ExecutionInterval end, CurricularRuleParametersDTO parametersDTO) {
 
         final CourseGroup contextCourseGroup =
                 (CourseGroup) FenixFramework.getDomainObject(parametersDTO.getContextCourseGroupID());
@@ -172,7 +173,7 @@ public class CurricularRulesManager {
         return new EnrolmentToBeApprovedByCoordinator(toApplyRule, contextCourseGroup, begin, end);
     }
 
-    private static CurricularRule createCreditsLimit(DegreeModule toApplyRule, ExecutionSemester begin, ExecutionSemester end,
+    private static CurricularRule createCreditsLimit(DegreeModule toApplyRule, ExecutionInterval begin, ExecutionInterval end,
             CurricularRuleParametersDTO parametersDTO) {
 
         final CourseGroup contextCourseGroup =
@@ -182,8 +183,8 @@ public class CurricularRulesManager {
                 parametersDTO.getMaximumCredits());
     }
 
-    private static CurricularRule createDegreeModulesSelectionLimit(DegreeModule toApplyRule, ExecutionSemester begin,
-            ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
+    private static CurricularRule createDegreeModulesSelectionLimit(DegreeModule toApplyRule, ExecutionInterval begin,
+            ExecutionInterval end, CurricularRuleParametersDTO parametersDTO) {
 
         final CourseGroup contextCourseGroup =
                 (CourseGroup) FenixFramework.getDomainObject(parametersDTO.getContextCourseGroupID());
@@ -192,8 +193,8 @@ public class CurricularRulesManager {
                 parametersDTO.getMinimumLimit(), parametersDTO.getMaximumLimit());
     }
 
-    private static CurricularRule createRestrictionEnroledDegreeModule(DegreeModule toApplyRule, ExecutionSemester begin,
-            ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
+    private static CurricularRule createRestrictionEnroledDegreeModule(DegreeModule toApplyRule, ExecutionInterval begin,
+            ExecutionInterval end, CurricularRuleParametersDTO parametersDTO) {
 
         final DegreeModule enroledDegreeModule = FenixFramework.getDomainObject(parametersDTO.getSelectedDegreeModuleID());
         final CourseGroup contextCourseGroup =
@@ -203,8 +204,8 @@ public class CurricularRulesManager {
                 contextCourseGroup, parametersDTO.getCurricularPeriodInfoDTO(), begin, end);
     }
 
-    private static CurricularRule createRestrictionNotEnroledDegreeModule(DegreeModule toApplyRule, ExecutionSemester begin,
-            ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
+    private static CurricularRule createRestrictionNotEnroledDegreeModule(DegreeModule toApplyRule, ExecutionInterval begin,
+            ExecutionInterval end, CurricularRuleParametersDTO parametersDTO) {
 
         final DegreeModule notEnroledDegreeModule = FenixFramework.getDomainObject(parametersDTO.getSelectedDegreeModuleID());
         final CourseGroup contextCourseGroup =
@@ -214,8 +215,8 @@ public class CurricularRulesManager {
                 contextCourseGroup, parametersDTO.getCurricularPeriodInfoDTO(), begin, end);
     }
 
-    private static CurricularRule createRestrictionDoneDegreeModule(DegreeModule toApplyRule, ExecutionSemester begin,
-            ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
+    private static CurricularRule createRestrictionDoneDegreeModule(DegreeModule toApplyRule, ExecutionInterval begin,
+            ExecutionInterval end, CurricularRuleParametersDTO parametersDTO) {
 
         final DegreeModule done = FenixFramework.getDomainObject(parametersDTO.getSelectedDegreeModuleID());
         final CourseGroup contextCourseGroup =

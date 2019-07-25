@@ -195,9 +195,15 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base implement
 
     public abstract ExecutionYear getExecutionYear();
 
+    public abstract Integer getChildOrder();
+
+    public abstract ExecutionInterval getNext();
+
+    public abstract ExecutionInterval getPrevious();
+
     // TEMP method, until executionCourses relation isn't moved up from ExecutionSemester to ExecutionInterval
     public Set<ExecutionCourse> getAssociatedExecutionCoursesSet() {
         return Collections.emptySet();
     }
-    
+
 }

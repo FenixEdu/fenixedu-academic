@@ -18,7 +18,7 @@
  */
 package org.fenixedu.academic.domain.studentCurriculum;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
@@ -36,13 +36,13 @@ public class CurriculumGroupFactory {
     }
 
     static public RootCurriculumGroup createRoot(StudentCurricularPlan studentCurricularPlan, RootCourseGroup rootCourseGroup,
-            ExecutionSemester executionSemester, CycleType cycleType) {
+            ExecutionInterval executionInterval, CycleType cycleType) {
 
-        return (executionSemester != null) ?
+        return (executionInterval != null) ?
 
-        new RootCurriculumGroup(studentCurricularPlan, rootCourseGroup, executionSemester, cycleType) :
+                new RootCurriculumGroup(studentCurricularPlan, rootCourseGroup, executionInterval, cycleType) :
 
-        new RootCurriculumGroup(studentCurricularPlan, rootCourseGroup, cycleType);
+                new RootCurriculumGroup(studentCurricularPlan, rootCourseGroup, cycleType);
 
     }
 
@@ -51,33 +51,34 @@ public class CurriculumGroupFactory {
     }
 
     static public CurriculumGroup createGroup(final CurriculumGroup parentGroup, final CourseGroup courseGroup,
-            final ExecutionSemester executionSemester) {
+            final ExecutionInterval executionInterval) {
 
         if (courseGroup.isCycleCourseGroup()) {
             final CycleCourseGroup cycleCourseGroup = (CycleCourseGroup) courseGroup;
 
             if (isExternalCycle(parentGroup, cycleCourseGroup)) {
-                return (executionSemester != null) ?
+                return (executionInterval != null) ?
 
-                new ExternalCurriculumGroup((RootCurriculumGroup) parentGroup, cycleCourseGroup, executionSemester) :
+                        new ExternalCurriculumGroup((RootCurriculumGroup) parentGroup, cycleCourseGroup, executionInterval) :
 
-                new ExternalCurriculumGroup((RootCurriculumGroup) parentGroup, cycleCourseGroup);
+                        new ExternalCurriculumGroup((RootCurriculumGroup) parentGroup, cycleCourseGroup);
 
             }
 
-            return (executionSemester != null) ?
+            return (executionInterval != null) ?
 
-            new CycleCurriculumGroup((RootCurriculumGroup) parentGroup, (CycleCourseGroup) courseGroup, executionSemester) :
+                    new CycleCurriculumGroup((RootCurriculumGroup) parentGroup, (CycleCourseGroup) courseGroup,
+                            executionInterval) :
 
-            new CycleCurriculumGroup((RootCurriculumGroup) parentGroup, (CycleCourseGroup) courseGroup);
+                    new CycleCurriculumGroup((RootCurriculumGroup) parentGroup, (CycleCourseGroup) courseGroup);
 
         } else if (courseGroup.isBranchCourseGroup()) {
 
-            return (executionSemester != null) ?
+            return (executionInterval != null) ?
 
-            new BranchCurriculumGroup(parentGroup, (BranchCourseGroup) courseGroup, executionSemester) :
+                    new BranchCurriculumGroup(parentGroup, (BranchCourseGroup) courseGroup, executionInterval) :
 
-            new BranchCurriculumGroup(parentGroup, (BranchCourseGroup) courseGroup);
+                    new BranchCurriculumGroup(parentGroup, (BranchCourseGroup) courseGroup);
 
         } else if (courseGroup.isRoot()) {
 
@@ -85,11 +86,11 @@ public class CurriculumGroupFactory {
 
         } else {
 
-            return (executionSemester != null) ?
+            return (executionInterval != null) ?
 
-            new CurriculumGroup(parentGroup, courseGroup, executionSemester) :
+                    new CurriculumGroup(parentGroup, courseGroup, executionInterval) :
 
-            new CurriculumGroup(parentGroup, courseGroup);
+                    new CurriculumGroup(parentGroup, courseGroup);
 
         }
     }

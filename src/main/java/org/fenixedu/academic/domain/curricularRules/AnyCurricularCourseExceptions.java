@@ -21,7 +21,7 @@ package org.fenixedu.academic.domain.curricularRules;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.OptionalCurricularCourse;
@@ -30,7 +30,7 @@ import org.fenixedu.academic.dto.GenericPair;
 public class AnyCurricularCourseExceptions extends AnyCurricularCourseExceptions_Base {
 
     public AnyCurricularCourseExceptions(final OptionalCurricularCourse degreeModuleToApplyRule,
-            final CourseGroup contextCourseGroup, final ExecutionSemester begin, final ExecutionSemester end,
+            final CourseGroup contextCourseGroup, final ExecutionInterval begin, final ExecutionInterval end,
             final Boolean optionalsConfiguration) {
 
         super();

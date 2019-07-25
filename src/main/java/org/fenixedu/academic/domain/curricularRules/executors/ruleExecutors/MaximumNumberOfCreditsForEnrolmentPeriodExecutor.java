@@ -19,7 +19,7 @@
 package org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors;
 
 import org.fenixedu.academic.domain.Enrolment;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
@@ -35,29 +35,25 @@ public class MaximumNumberOfCreditsForEnrolmentPeriodExecutor extends Curricular
     protected RuleResult executeEnrolmentVerificationWithRules(final ICurricularRule curricularRule,
             IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
 
-        final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
+        final ExecutionInterval executionInterval = enrolmentContext.getExecutionPeriod();
 
         final StudentCurricularPlan studentCurricularPlan = enrolmentContext.getStudentCurricularPlan();
-        final ExecutionYear executionYear = executionSemester.getExecutionYear();
+        final ExecutionYear executionYear = executionInterval.getExecutionYear();
         final Registration registration = studentCurricularPlan.getRegistration();
 
         double accumulated = 0d;
         for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
-        	accumulated += degreeModuleToEvaluate.getAccumulatedEctsCredits(executionSemester);
+            accumulated += degreeModuleToEvaluate.getAccumulatedEctsCredits(executionInterval);
         }
         final boolean isPartial = registration.isPartialRegime(executionYear);
         if (isPartial) {
-        	for (final ExecutionSemester semester : executionYear.getExecutionPeriodsSet()) {
-        		if (semester != executionSemester) {
-        			accumulated += studentCurricularPlan.getRoot().getCurriculumLineStream()
-        				.filter(cl -> cl.isEnrolment())
-        				.map(cl -> (Enrolment) cl)
-        				.filter(e -> e.getExecutionPeriod() == semester)
-        				.filter(e -> !e.isAnnulled())
-        				.mapToDouble(e -> e.getEctsCredits())
-        				.sum();
-        		}
-        	}
+            for (final ExecutionInterval interval : executionYear.getChildIntervals()) {
+                if (interval != executionInterval) {
+                    accumulated += studentCurricularPlan.getRoot().getCurriculumLineStream().filter(cl -> cl.isEnrolment())
+                            .map(cl -> (Enrolment) cl).filter(e -> e.getExecutionInterval() == interval)
+                            .filter(e -> !e.isAnnulled()).mapToDouble(e -> e.getEctsCredits()).sum();
+                }
+            }
         }
 
         final double maxEcts = MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS;
@@ -65,13 +61,13 @@ public class MaximumNumberOfCreditsForEnrolmentPeriodExecutor extends Curricular
         if (accumulated > maxEcts) {
             if (sourceDegreeModuleToEvaluate.isEnroled()) {
                 return RuleResult.createImpossible(sourceDegreeModuleToEvaluate.getDegreeModule(),
-                        "curricularRules.ruleExecutors.MaximumNumberOfCreditsForEnrolmentPeriodExecutor",
-                        String.valueOf(maxEcts), String.valueOf(accumulated));
+                        "curricularRules.ruleExecutors.MaximumNumberOfCreditsForEnrolmentPeriodExecutor", String.valueOf(maxEcts),
+                        String.valueOf(accumulated));
 
             } else {
                 return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
-                        "curricularRules.ruleExecutors.MaximumNumberOfCreditsForEnrolmentPeriodExecutor",
-                        String.valueOf(maxEcts), String.valueOf(accumulated));
+                        "curricularRules.ruleExecutors.MaximumNumberOfCreditsForEnrolmentPeriodExecutor", String.valueOf(maxEcts),
+                        String.valueOf(accumulated));
             }
         }
 

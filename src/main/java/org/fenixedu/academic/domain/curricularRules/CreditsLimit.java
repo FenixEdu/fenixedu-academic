@@ -21,7 +21,7 @@ package org.fenixedu.academic.domain.curricularRules;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
@@ -39,7 +39,7 @@ public class CreditsLimit extends CreditsLimit_Base {
     }
 
     public CreditsLimit(final DegreeModule degreeModuleToApplyRule, final CourseGroup contextCourseGroup,
-            final ExecutionSemester begin, final ExecutionSemester end, final Double minimum, final Double maximum) {
+            final ExecutionInterval begin, final ExecutionInterval end, final Double minimum, final Double maximum) {
 
         this(minimum, maximum);
         checkParameters(degreeModuleToApplyRule);

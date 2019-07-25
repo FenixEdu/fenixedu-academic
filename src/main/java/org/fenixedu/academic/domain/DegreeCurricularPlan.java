@@ -534,8 +534,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public List<CurricularCourse> getCurricularCoursesWithExecutionIn(final ExecutionYear executionYear) {
         List<CurricularCourse> curricularCourses = new ArrayList<>();
         for (CurricularCourse curricularCourse : getCurricularCoursesSet()) {
-            for (ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
-                List<ExecutionCourse> executionCourses = curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester);
+            for (ExecutionInterval executionInterval : executionYear.getChildIntervals()) {
+                List<ExecutionCourse> executionCourses = curricularCourse.getExecutionCoursesByExecutionPeriod(executionInterval);
                 if (!executionCourses.isEmpty()) {
                     curricularCourses.add(curricularCourse);
                     break;
@@ -655,10 +655,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
     }
 
-    public Set<CurricularCourse> getActiveCurricularCourses(final ExecutionSemester executionSemester) {
+    public Set<CurricularCourse> getActiveCurricularCourses(final ExecutionInterval executionInterval) {
         final Set<CurricularCourse> result = new HashSet<>();
         for (final CurricularCourse curricularCourse : getCurricularCoursesSet()) {
-            if (curricularCourse.hasAnyActiveContext(executionSemester)) {
+            if (curricularCourse.hasAnyActiveContext(executionInterval)) {
                 result.add(curricularCourse);
             }
         }
@@ -666,19 +666,18 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public CourseGroup createCourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
-            final ExecutionSemester begin, final ExecutionSemester end, final ProgramConclusion programConclusion) {
+            final ExecutionInterval begin, final ExecutionInterval end, final ProgramConclusion programConclusion) {
         return new CourseGroup(parentCourseGroup, name, nameEn, begin, end, programConclusion);
     }
 
     public BranchCourseGroup createBranchCourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
-            final BranchType branchType, final ExecutionSemester begin, final ExecutionSemester end) {
+            final BranchType branchType, final ExecutionInterval begin, final ExecutionInterval end) {
         return new BranchCourseGroup(parentCourseGroup, name, nameEn, branchType, begin, end);
     }
 
     public CurricularCourse createCurricularCourse(final Double weight, final String prerequisites, final String prerequisitesEn,
             final CurricularStage curricularStage, final CompetenceCourse competenceCourse, final CourseGroup parentCourseGroup,
-            final CurricularPeriod curricularPeriod, final ExecutionSemester beginExecutionPeriod,
-            final ExecutionSemester endExecutionPeriod) {
+            final CurricularPeriod curricularPeriod, final ExecutionInterval begin, final ExecutionInterval end) {
 
         if (competenceCourse.getCurricularCourse(this) != null) {
             throw new DomainException("competenceCourse.already.has.a.curricular.course.in.degree.curricular.plan");
@@ -686,15 +685,14 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         checkIfAnualBeginsInFirstPeriod(competenceCourse, curricularPeriod);
 
         return new CurricularCourse(weight, prerequisites, prerequisitesEn, curricularStage, competenceCourse, parentCourseGroup,
-                curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
+                curricularPeriod, begin, end);
     }
 
     public CurricularCourse createOptionalCurricularCourse(final CourseGroup parentCourseGroup, final String name,
             final String nameEn, final CurricularStage curricularStage, final CurricularPeriod curricularPeriod,
-            final ExecutionSemester beginExecutionPeriod, final ExecutionSemester endExecutionPeriod) {
+            final ExecutionInterval begin, final ExecutionInterval end) {
 
-        return new OptionalCurricularCourse(parentCourseGroup, name, nameEn, curricularStage, curricularPeriod,
-                beginExecutionPeriod, endExecutionPeriod);
+        return new OptionalCurricularCourse(parentCourseGroup, name, nameEn, curricularStage, curricularPeriod, begin, end);
     }
 
     private void checkIfAnualBeginsInFirstPeriod(final CompetenceCourse competenceCourse,

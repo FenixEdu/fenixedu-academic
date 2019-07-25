@@ -109,7 +109,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public CurricularCourse(Double weight, String prerequisites, String prerequisitesEn, CurricularStage curricularStage,
             CompetenceCourse competenceCourse, CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod,
-            ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
+            ExecutionInterval begin, ExecutionInterval end) {
 
         this();
         setWeigth(weight);
@@ -118,7 +118,7 @@ public class CurricularCourse extends CurricularCourse_Base {
         setCurricularStage(curricularStage);
         setCompetenceCourse(competenceCourse);
         setType(CurricularCourseType.NORMAL_COURSE);
-        new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
+        new Context(parentCourseGroup, this, curricularPeriod, begin, end);
     }
 
     public GradeScale getGradeScaleChain() {
@@ -212,8 +212,8 @@ public class CurricularCourse extends CurricularCourse_Base {
         super.deleteDomainObject();
     }
 
-    public boolean hasAnyActiveContext(final ExecutionSemester executionSemester) {
-        return getParentContextsSet().stream().anyMatch(ctx -> ctx.isValid(executionSemester));
+    public boolean hasAnyActiveContext(final ExecutionInterval executionInterval) {
+        return getParentContextsSet().stream().anyMatch(ctx -> ctx.isValid(executionInterval));
     }
 
     // -------------------------------------------------------------
@@ -411,13 +411,13 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     @Override
-    public Double getMaxEctsCredits(final ExecutionSemester executionSemester) {
-        return getEctsCredits(executionSemester);
+    public Double getMaxEctsCredits(final ExecutionInterval executionInterval) {
+        return getEctsCredits(executionInterval);
     }
 
     @Override
-    public Double getMinEctsCredits(final ExecutionSemester executionSemester) {
-        return getEctsCredits(executionSemester);
+    public Double getMinEctsCredits(final ExecutionInterval executionInterval) {
+        return getEctsCredits(executionInterval);
     }
 
     @Override
@@ -467,8 +467,8 @@ public class CurricularCourse extends CurricularCourse_Base {
         for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
             if (curriculumModule.isEnrolment()) {
                 final Enrolment enrolment = (Enrolment) curriculumModule;
-                if (!enrolment.isAnnulled() && (enrolment.getExecutionPeriod().getAcademicInterval().equals(academicInterval)
-                        || enrolment.getExecutionPeriod().getExecutionYear().getAcademicInterval().equals(academicInterval))) {
+                if (!enrolment.isAnnulled() && (enrolment.getExecutionInterval().getAcademicInterval().equals(academicInterval)
+                        || enrolment.getExecutionInterval().getExecutionYear().getAcademicInterval().equals(academicInterval))) {
                     enrolments.add(enrolment);
                 }
             }
@@ -490,7 +490,7 @@ public class CurricularCourse extends CurricularCourse_Base {
         for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
             if (curriculumModule.isEnrolment()) {
                 final Enrolment enrolment = (Enrolment) curriculumModule;
-                if (enrolment.getExecutionPeriod().getExecutionYear().equals(executionYear)) {
+                if (enrolment.getExecutionInterval().getExecutionYear().equals(executionYear)) {
                     result.add(enrolment);
                 }
             }
@@ -666,8 +666,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public boolean isActive(final ExecutionYear executionYear) {
-        for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
-            if (isActive(executionSemester)) {
+        for (final ExecutionInterval executionInterval : executionYear.getChildIntervals()) {
+            if (isActive(executionInterval)) {
                 return true;
             }
         }
@@ -765,7 +765,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     @Override
-    public Set<CurricularCourse> getAllCurricularCourses(ExecutionSemester executionSemester) {
+    public Set<CurricularCourse> getAllCurricularCourses(ExecutionInterval executionInterval) {
         return getAllCurricularCourses();
     }
 

@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.curricularRules.CurricularRule;
 import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
@@ -32,8 +32,8 @@ public class DismissalCurriculumModuleWrapper extends EnroledCurriculumModuleWra
     private static final long serialVersionUID = 12L;
     private Dismissal dismissal;
 
-    public DismissalCurriculumModuleWrapper(final Dismissal dismissal, final ExecutionSemester executionSemester) {
-        super(dismissal.getCurriculumGroup(), executionSemester);
+    public DismissalCurriculumModuleWrapper(final Dismissal dismissal, final ExecutionInterval executionInterval) {
+        super(dismissal.getCurriculumGroup(), executionInterval);
         setDismissal(dismissal);
     }
 
@@ -85,7 +85,7 @@ public class DismissalCurriculumModuleWrapper extends EnroledCurriculumModuleWra
     }
 
     @Override
-    public List<CurricularRule> getCurricularRulesFromDegreeModule(final ExecutionSemester executionSemester) {
+    public List<CurricularRule> getCurricularRulesFromDegreeModule(final ExecutionInterval executionInterval) {
         return Collections.emptyList();
     }
 

@@ -22,7 +22,7 @@ import java.util.Collection;
 import java.util.Locale;
 
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.log.CreditsDismissalLog;
@@ -78,8 +78,8 @@ public class CreditsDismissal extends CreditsDismissal_Base {
     }
 
     @Override
-    public boolean isApproved(CurricularCourse curricularCourse, ExecutionSemester executionSemester) {
-        return (executionSemester == null || getExecutionPeriod().isBeforeOrEquals(executionSemester))
+    public boolean isApproved(CurricularCourse curricularCourse, ExecutionInterval executionInterval) {
+        return (executionInterval == null || getExecutionInterval().isBeforeOrEquals(executionInterval))
                 && hasEquivalentNoEnrolCurricularCourse(curricularCourse);
     }
 

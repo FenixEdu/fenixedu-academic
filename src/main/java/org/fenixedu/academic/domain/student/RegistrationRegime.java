@@ -21,7 +21,7 @@ package org.fenixedu.academic.domain.student;
 import java.util.Comparator;
 import java.util.function.Supplier;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
@@ -82,8 +82,8 @@ public class RegistrationRegime extends RegistrationRegime_Base {
             final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
 
             double enroledEctsCredits = 0d;
-            for (final ExecutionSemester semester : executionYear.getExecutionPeriodsSet()) {
-                enroledEctsCredits += studentCurricularPlan.getAccumulatedEctsCredits(semester);
+            for (final ExecutionInterval interval : executionYear.getExecutionPeriodsSet()) {
+                enroledEctsCredits += studentCurricularPlan.getAccumulatedEctsCredits(interval);
             }
 
             if (enroledEctsCredits > MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS_PARTIAL_TIME) {

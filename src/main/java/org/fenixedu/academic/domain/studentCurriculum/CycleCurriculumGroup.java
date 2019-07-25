@@ -23,7 +23,7 @@ import java.util.Set;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.fenixedu.academic.domain.DomainObjectUtil;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
@@ -69,9 +69,9 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     }
 
     public CycleCurriculumGroup(RootCurriculumGroup rootCurriculumGroup, CycleCourseGroup cycleCourseGroup,
-            ExecutionSemester executionSemester) {
+            ExecutionInterval executionInterval) {
         this();
-        init(rootCurriculumGroup, cycleCourseGroup, executionSemester);
+        init(rootCurriculumGroup, cycleCourseGroup, executionInterval);
     }
 
     public CycleCurriculumGroup(RootCurriculumGroup rootCurriculumGroup, CycleCourseGroup cycleCourseGroup) {
@@ -86,9 +86,9 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     }
 
     @Override
-    protected void init(CurriculumGroup curriculumGroup, CourseGroup courseGroup, ExecutionSemester executionSemester) {
+    protected void init(CurriculumGroup curriculumGroup, CourseGroup courseGroup, ExecutionInterval executionInterval) {
         checkInitConstraints((RootCurriculumGroup) curriculumGroup, (CycleCourseGroup) courseGroup);
-        super.init(curriculumGroup, courseGroup, executionSemester);
+        super.init(curriculumGroup, courseGroup, executionInterval);
     }
 
     private void checkInitConstraints(final RootCurriculumGroup rootCurriculumGroup, final CycleCourseGroup cycleCourseGroup) {

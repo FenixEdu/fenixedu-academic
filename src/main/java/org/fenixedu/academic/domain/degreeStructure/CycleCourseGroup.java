@@ -25,7 +25,7 @@ import java.util.Set;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 
 public class CycleCourseGroup extends CycleCourseGroup_Base {
@@ -35,7 +35,7 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
     }
 
     public CycleCourseGroup(final RootCourseGroup parentCourseGroup, final String name, final String nameEn,
-            final CycleType cycleType, final ExecutionSemester begin, final ExecutionSemester end) {
+            final CycleType cycleType, final ExecutionInterval begin, final ExecutionInterval end) {
         if (cycleType == null) {
             throw new DomainException("error.degreeStructure.CycleCourseGroup.cycle.type.cannot.be.null");
         }

@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.curricularRules;
 import java.util.Comparator;
 import java.util.List;
 
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
@@ -38,7 +39,7 @@ public interface ICurricularRule {
     static final public Comparator<ICurricularRule> COMPARATOR_BY_BEGIN = new Comparator<ICurricularRule>() {
         @Override
         public int compare(ICurricularRule o1, ICurricularRule o2) {
-            return o1.getBegin().compareTo(o2.getBegin());
+            return o1.getBeginInterval().compareTo(o2.getBeginInterval());
         }
     };
 
@@ -52,8 +53,20 @@ public interface ICurricularRule {
 
     public CurricularRuleType getCurricularRuleType();
 
+    public ExecutionInterval getBeginInterval();
+
+    public ExecutionInterval getEndInterval();
+
+    /**
+     * @deprecated use {@link #getBeginInterval()} instead.
+     */
+    @Deprecated
     public ExecutionSemester getBegin();
 
+    /**
+     * @deprecated use {@link #getEndInterval()} instead.
+     */
+    @Deprecated
     public ExecutionSemester getEnd();
 
     public boolean appliesToContext(final Context context);
@@ -66,7 +79,7 @@ public interface ICurricularRule {
 
     public boolean isCompositeRule();
 
-    public boolean isValid(ExecutionSemester executionSemester);
+    public boolean isValid(ExecutionInterval executionInterval);
 
     public boolean isValid(ExecutionYear executionYear);
 
@@ -74,7 +87,8 @@ public interface ICurricularRule {
 
     public boolean isActive();
 
-    public RuleResult evaluate(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext);
+    public RuleResult evaluate(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+            final EnrolmentContext enrolmentContext);
 
     public RuleResult verify(final VerifyRuleLevel verifyRuleLevel, final EnrolmentContext enrolmentContext,
             final DegreeModule degreeModuleToVerify, final CourseGroup parentCourseGroup);

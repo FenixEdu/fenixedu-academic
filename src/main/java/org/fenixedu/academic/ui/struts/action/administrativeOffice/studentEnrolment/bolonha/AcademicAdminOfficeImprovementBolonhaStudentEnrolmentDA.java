@@ -30,6 +30,7 @@ import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.EnrolmentEvaluation;
 import org.fenixedu.academic.domain.EvaluationSeason;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleValidationType;
@@ -146,7 +147,7 @@ public class AcademicAdminOfficeImprovementBolonhaStudentEnrolmentDA extends Aca
 
         final Set<EnrolmentEvaluation> toInspect = Sets.newHashSet();
         if (isEnrolmentByYear(plan)) {
-            for (final ExecutionSemester iter : semester.getExecutionYear().getExecutionPeriodsSet()) {
+            for (final ExecutionInterval iter : semester.getExecutionYear().getChildIntervals()) {
                 toInspect.addAll(plan.getEnroledImprovements(iter));
             }
         } else {

@@ -20,7 +20,7 @@ package org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors;
 
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.EvaluationSeason;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.curricularRules.EnrolmentInSpecialSeasonEvaluation;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
@@ -50,11 +50,11 @@ public class EnrolmentInSpecialSeasonEvaluationExecutor extends CurricularRuleEx
         final EnrolmentInSpecialSeasonEvaluation rule = (EnrolmentInSpecialSeasonEvaluation) curricularRule;
         final Enrolment enrolment = rule.getEnrolment();
         final EvaluationSeason evaluationSeason = rule.getEvaluationSeason();
-        final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
+        final ExecutionInterval executionInterval = enrolmentContext.getExecutionPeriod();
 
         try {
             Enrolment.getPredicateSpecialSeason()
-                    .fill(evaluationSeason, executionSemester, EnrolmentEvaluationContext.MARK_SHEET_EVALUATION).test(enrolment);
+                    .fill(evaluationSeason, executionInterval, EnrolmentEvaluationContext.MARK_SHEET_EVALUATION).test(enrolment);
         } catch (final DomainException e) {
             return RuleResult.createFalseWithLiteralMessage(sourceDegreeModuleToEvaluate.getDegreeModule(),
                     e.getLocalizedMessage());

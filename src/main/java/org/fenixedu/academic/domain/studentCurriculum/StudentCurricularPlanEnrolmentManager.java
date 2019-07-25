@@ -27,7 +27,7 @@ import java.util.Set;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.curricularRules.AssertUniqueApprovalInCurricularCourseContexts;
 import org.fenixedu.academic.domain.curricularRules.AssertUniqueCurricularCourseEnrolmentForPeriod;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
@@ -82,9 +82,9 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
 
     @Override
     protected void addEnroled() {
-        for (final ExecutionSemester semester : enrolmentContext.getExecutionSemestersToEvaluate()) {
-            for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : getStudentCurricularPlan().getDegreeModulesToEvaluate(
-                    semester)) {
+        for (final ExecutionInterval interval : enrolmentContext.getExecutionIntervalsToEvaluate()) {
+            for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : getStudentCurricularPlan()
+                    .getDegreeModulesToEvaluate(interval)) {
                 enrolmentContext.addDegreeModuleToEvaluate(degreeModuleToEvaluate);
             }
         }
@@ -166,7 +166,8 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
         Signal.emit(ITreasuryBridgeAPI.NORMAL_ENROLMENT, new DomainObjectEvent<Registration>(enrolmentContext.getRegistration()));
     }
 
-    protected EnrollmentCondition getEnrolmentCondition(final Enrolment enrolment, final EnrolmentResultType enrolmentResultType) {
+    protected EnrollmentCondition getEnrolmentCondition(final Enrolment enrolment,
+            final EnrolmentResultType enrolmentResultType) {
         return enrolmentResultType.getEnrollmentCondition();
     }
 
@@ -192,17 +193,15 @@ public class StudentCurricularPlanEnrolmentManager extends StudentCurricularPlan
         if (!getRoot().hasExternalCycles()) {
             final PreviousYearsEnrolmentCurricularRule previousYearsEnrolmentCurricularRule =
                     new PreviousYearsEnrolmentCurricularRule(getRoot().getDegreeModule());
-            finalResult =
-                    finalResult.and(previousYearsEnrolmentCurricularRule.evaluate(new EnroledCurriculumModuleWrapper(getRoot(),
-                            getExecutionSemester()), this.enrolmentContext));
+            finalResult = finalResult.and(previousYearsEnrolmentCurricularRule
+                    .evaluate(new EnroledCurriculumModuleWrapper(getRoot(), getExecutionSemester()), this.enrolmentContext));
 
         } else {
             for (final CycleCurriculumGroup cycleCurriculumGroup : getRoot().getCycleCurriculumGroups()) {
                 final PreviousYearsEnrolmentCurricularRule previousYearsEnrolmentCurricularRule =
                         new PreviousYearsEnrolmentCurricularRule(cycleCurriculumGroup.getDegreeModule());
-                finalResult =
-                        finalResult.and(previousYearsEnrolmentCurricularRule.evaluate(new EnroledCurriculumModuleWrapper(
-                                cycleCurriculumGroup, getExecutionSemester()), this.enrolmentContext));
+                finalResult = finalResult.and(previousYearsEnrolmentCurricularRule.evaluate(
+                        new EnroledCurriculumModuleWrapper(cycleCurriculumGroup, getExecutionSemester()), this.enrolmentContext));
             }
         }
 

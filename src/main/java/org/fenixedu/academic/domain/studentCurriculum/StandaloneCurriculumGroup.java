@@ -18,7 +18,7 @@
  */
 package org.fenixedu.academic.domain.studentCurriculum;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 
 public class StandaloneCurriculumGroup extends StandaloneCurriculumGroup_Base {
 
@@ -52,10 +52,10 @@ public class StandaloneCurriculumGroup extends StandaloneCurriculumGroup_Base {
     }
 
     @Override
-    public int getNumberOfAllApprovedEnrolments(final ExecutionSemester executionSemester) {
+    public int getNumberOfAllApprovedEnrolments(final ExecutionInterval executionInterval) {
         int result = 0;
         for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-            result += curriculumModule.getNumberOfAllApprovedEnrolments(executionSemester);
+            result += curriculumModule.getNumberOfAllApprovedEnrolments(executionInterval);
         }
         return result;
     }

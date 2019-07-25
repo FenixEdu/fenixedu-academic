@@ -37,9 +37,9 @@ public class EnrolmentInstructions extends EnrolmentInstructions_Base {
         setRootDomainObject(Bennu.getInstance());
     }
 
-    public EnrolmentInstructions(final ExecutionSemester executionSemester) {
+    public EnrolmentInstructions(final ExecutionInterval executionInterval) {
         this();
-        setExecutionSemester(executionSemester);
+        setExecutionSemester(executionInterval.convert(ExecutionSemester.class));
         setInstructions("");
         setTempInstructions(new LocalizedString());
     }

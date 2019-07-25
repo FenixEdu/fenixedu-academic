@@ -23,12 +23,11 @@ import static org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPl
 
 import java.util.Collections;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.LocalDate;
@@ -72,7 +71,7 @@ public class StudentCurricularPlanEnrolmentPreConditions {
         }
     }
 
-    static public EnrolmentPreConditionResult checkPreConditionsToEnrol(StudentCurricularPlan scp, ExecutionSemester semester) {
+    static public EnrolmentPreConditionResult checkPreConditionsToEnrol(StudentCurricularPlan scp, ExecutionInterval interval) {
         return checkDebts(scp);
     }
 
@@ -102,17 +101,6 @@ public class StudentCurricularPlanEnrolmentPreConditions {
         }
 
         return createTrue();
-    }
-
-    static private boolean hasSpecialSeason(final StudentCurricularPlan scp, final ExecutionSemester semester) {
-
-        if (scp.hasSpecialSeasonFor(semester)) {
-            return true;
-        }
-
-        final Registration registration = scp.getRegistration();
-        return registration.getSourceRegistration() != null
-                && registration.getSourceRegistration().getLastStudentCurricularPlan().hasSpecialSeasonFor(semester);
     }
 
 }

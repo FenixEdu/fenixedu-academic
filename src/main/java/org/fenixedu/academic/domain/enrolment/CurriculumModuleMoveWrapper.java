@@ -18,7 +18,7 @@
  */
 package org.fenixedu.academic.domain.enrolment;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
@@ -28,17 +28,17 @@ public class CurriculumModuleMoveWrapper extends EnroledCurriculumModuleWrapper 
     private static final long serialVersionUID = 8766523234444669518L;
     private boolean collectRules;
 
-    public CurriculumModuleMoveWrapper(final CurriculumModule curriculumModule, final ExecutionSemester executionPeriod) {
-        super(curriculumModule, executionPeriod);
-        checkParameters(curriculumModule, executionPeriod);
+    public CurriculumModuleMoveWrapper(final CurriculumModule curriculumModule, final ExecutionInterval executionInterval) {
+        super(curriculumModule, executionInterval);
+        checkParameters(curriculumModule, executionInterval);
         collectRules = curriculumModule.isRoot() ? true : !curriculumModule.isNoCourseGroupCurriculumGroup();
     }
 
-    private void checkParameters(final CurriculumModule curriculumModule, final ExecutionSemester executionPeriod) {
+    private void checkParameters(final CurriculumModule curriculumModule, final ExecutionInterval executionInterval) {
         if (curriculumModule == null) {
             throw new DomainException("error.CurriculumModuleMoveWrapper.invalid.curriculumModule");
         }
-        if (executionPeriod == null) {
+        if (executionInterval == null) {
             throw new DomainException("error.CurriculumModuleMoveWrapper.invalid.executionPeriod");
         }
     }
@@ -48,7 +48,7 @@ public class CurriculumModuleMoveWrapper extends EnroledCurriculumModuleWrapper 
         return collectRules;
     }
 
-    static public CurriculumModuleMoveWrapper create(final CurriculumGroup parent, final ExecutionSemester executionPeriod) {
-        return new CurriculumModuleMoveWrapper(parent, executionPeriod);
+    static public CurriculumModuleMoveWrapper create(final CurriculumGroup parent, final ExecutionInterval executionInterval) {
+        return new CurriculumModuleMoveWrapper(parent, executionInterval);
     }
 }

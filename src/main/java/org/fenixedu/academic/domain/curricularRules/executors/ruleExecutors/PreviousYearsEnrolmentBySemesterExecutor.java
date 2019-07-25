@@ -32,7 +32,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
 import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
 import org.fenixedu.academic.domain.curricularRules.CurricularRule;
@@ -172,7 +172,7 @@ public class PreviousYearsEnrolmentBySemesterExecutor extends CurricularRuleExec
                         final ICurriculumEntry curriculumEntry =
                                 (ICurriculumEntry) ((EnroledCurriculumModuleWrapper) degreeModuleToEvaluate)
                                         .getCurriculumModule();
-                        if (curriculumEntry.getExecutionPeriod() != enrolmentContext.getExecutionPeriod()) {
+                        if (curriculumEntry.getExecutionInterval() != enrolmentContext.getExecutionPeriod()) {
                             continue;
                         }
                     }
@@ -180,7 +180,7 @@ public class PreviousYearsEnrolmentBySemesterExecutor extends CurricularRuleExec
 
                 if (degreeModuleToEvaluate.getContext() == null) {
                     throw new DomainException("error.degreeModuleToEvaluate.has.invalid.context",
-                            degreeModuleToEvaluate.getName(), degreeModuleToEvaluate.getExecutionPeriod().getQualifiedName());
+                            degreeModuleToEvaluate.getName(), degreeModuleToEvaluate.getExecutionInterval().getQualifiedName());
                 }
                 if (hasCurricularCoursesToEnrolInPreviousYears(curricularCoursesToEnrolByYear,
                         degreeModuleToEvaluate.getContext().getCurricularYear())) {
@@ -404,18 +404,18 @@ public class PreviousYearsEnrolmentBySemesterExecutor extends CurricularRuleExec
 
     }
 
-    private int getMinModules(final CourseGroup courseGroup, final ExecutionSemester executionSemester) {
+    private int getMinModules(final CourseGroup courseGroup, final ExecutionInterval executionInterval) {
         final DegreeModulesSelectionLimit degreeModulesSelectionLimit =
-                courseGroup.getDegreeModulesSelectionLimitRule(executionSemester);
+                courseGroup.getDegreeModulesSelectionLimitRule(executionInterval);
         if (degreeModulesSelectionLimit != null) {
             return degreeModulesSelectionLimit.getMinimumLimit();
         }
 
-        final CreditsLimit creditsLimit = courseGroup.getCreditsLimitRule(executionSemester);
+        final CreditsLimit creditsLimit = courseGroup.getCreditsLimitRule(executionInterval);
         if (creditsLimit != null) {
             final SortedSet<DegreeModule> sortedChilds =
-                    new TreeSet<DegreeModule>(new DegreeModule.ComparatorByMinEcts(executionSemester));
-            sortedChilds.addAll(courseGroup.getChildDegreeModulesValidOn(executionSemester));
+                    new TreeSet<DegreeModule>(new DegreeModule.ComparatorByMinEcts(executionInterval));
+            sortedChilds.addAll(courseGroup.getChildDegreeModulesValidOn(executionInterval));
             int counter = 0;
             double total = 0d;
             for (final DegreeModule degreeModule : sortedChilds) {
@@ -430,21 +430,21 @@ public class PreviousYearsEnrolmentBySemesterExecutor extends CurricularRuleExec
             return counter;
         }
 
-        return courseGroup.getChildDegreeModulesValidOn(executionSemester).size();
+        return courseGroup.getChildDegreeModulesValidOn(executionInterval).size();
     }
 
-    private int getMaxModules(final CourseGroup courseGroup, final ExecutionSemester executionSemester) {
+    private int getMaxModules(final CourseGroup courseGroup, final ExecutionInterval executionInterval) {
         final DegreeModulesSelectionLimit degreeModulesSelectionLimit =
-                courseGroup.getDegreeModulesSelectionLimitRule(executionSemester);
+                courseGroup.getDegreeModulesSelectionLimitRule(executionInterval);
         if (degreeModulesSelectionLimit != null) {
             return degreeModulesSelectionLimit.getMaximumLimit();
         }
 
-        final CreditsLimit creditsLimit = courseGroup.getCreditsLimitRule(executionSemester);
+        final CreditsLimit creditsLimit = courseGroup.getCreditsLimitRule(executionInterval);
         if (creditsLimit != null) {
             final SortedSet<DegreeModule> sortedChilds =
-                    new TreeSet<DegreeModule>(new DegreeModule.ComparatorByMinEcts(executionSemester));
-            sortedChilds.addAll(courseGroup.getChildDegreeModulesValidOn(executionSemester));
+                    new TreeSet<DegreeModule>(new DegreeModule.ComparatorByMinEcts(executionInterval));
+            sortedChilds.addAll(courseGroup.getChildDegreeModulesValidOn(executionInterval));
             int counter = 0;
             double total = 0d;
             for (final DegreeModule degreeModule : sortedChilds) {
@@ -460,7 +460,7 @@ public class PreviousYearsEnrolmentBySemesterExecutor extends CurricularRuleExec
 
         }
 
-        return courseGroup.getChildDegreeModulesValidOn(executionSemester).size();
+        return courseGroup.getChildDegreeModulesValidOn(executionInterval).size();
     }
 
     private void collectCurricularCoursesToEnrol(final Map<Integer, Set<CurricularCourse>> result, final CourseGroup courseGroup,
@@ -632,7 +632,7 @@ public class PreviousYearsEnrolmentBySemesterExecutor extends CurricularRuleExec
         result += curriculumGroup.getEnroledEctsCredits(enrolmentContext.getExecutionPeriod());
 
         if (withTemporaryEnrolments) {
-            result += curriculumGroup.getEnroledEctsCredits(enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod());
+            result += curriculumGroup.getEnroledEctsCredits(enrolmentContext.getExecutionPeriod().getPrevious());
         }
 
         return result;
@@ -641,8 +641,8 @@ public class PreviousYearsEnrolmentBySemesterExecutor extends CurricularRuleExec
     private boolean isEnroled(final EnrolmentContext enrolmentContext, final CurricularCourse curricularCourse,
             final boolean withTemporaryEnrolments) {
         if (withTemporaryEnrolments) {
-            return isEnroled(enrolmentContext, curricularCourse, enrolmentContext.getExecutionPeriod()) || isEnroled(
-                    enrolmentContext, curricularCourse, enrolmentContext.getExecutionPeriod().getPreviousExecutionPeriod());
+            return isEnroled(enrolmentContext, curricularCourse, enrolmentContext.getExecutionPeriod())
+                    || isEnroled(enrolmentContext, curricularCourse, enrolmentContext.getExecutionPeriod().getPrevious());
         }
 
         return isEnroled(enrolmentContext, curricularCourse, enrolmentContext.getExecutionPeriod());
@@ -668,7 +668,7 @@ public class PreviousYearsEnrolmentBySemesterExecutor extends CurricularRuleExec
 
     private SortedSet<Context> getChildCurricularCoursesContextsToEvaluate(final CourseGroup courseGroup,
             final EnrolmentContext enrolmentContext) {
-        final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
+        final ExecutionInterval executionSemester = enrolmentContext.getExecutionPeriod();
 
         final SortedSet<Context> result = new TreeSet<Context>(Context.COMPARATOR_BY_CURRICULAR_YEAR);
 
@@ -728,7 +728,7 @@ public class PreviousYearsEnrolmentBySemesterExecutor extends CurricularRuleExec
                 final Context context = degreeModuleToEvaluate.getContext();
                 if (context == null) {
                     throw new DomainException("error.degreeModuleToEvaluate.has.invalid.context",
-                            degreeModuleToEvaluate.getName(), degreeModuleToEvaluate.getExecutionPeriod().getQualifiedName());
+                            degreeModuleToEvaluate.getName(), degreeModuleToEvaluate.getExecutionInterval().getQualifiedName());
                 }
 
                 result.add(context);
@@ -740,9 +740,9 @@ public class PreviousYearsEnrolmentBySemesterExecutor extends CurricularRuleExec
 
     private void addValidCurricularCourses(final Map<Integer, Set<CurricularCourse>> result,
             final Set<Context> curricularCoursesContexts, final CourseGroup courseGroup,
-            final ExecutionSemester executionSemester) {
+            final ExecutionInterval executionInterval) {
         for (final Context context : curricularCoursesContexts) {
-            if (context.isValid(executionSemester)) {
+            if (context.isValid(executionInterval)) {
                 addCurricularCourse(result, context.getCurricularYear(), (CurricularCourse) context.getChildDegreeModule());
             }
         }
@@ -812,7 +812,7 @@ public class PreviousYearsEnrolmentBySemesterExecutor extends CurricularRuleExec
 
                 if (degreeModuleToEvaluate.getContext() == null) {
                     throw new DomainException("error.degreeModuleToEvaluate.has.invalid.context",
-                            degreeModuleToEvaluate.getName(), degreeModuleToEvaluate.getExecutionPeriod().getQualifiedName());
+                            degreeModuleToEvaluate.getName(), degreeModuleToEvaluate.getExecutionInterval().getQualifiedName());
                 }
 
                 if (hasCurricularCoursesToEnrolInPreviousYears(curricularCoursesToEnrolByYearWithTemporaries,

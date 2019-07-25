@@ -57,17 +57,17 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
     public static class ComparatorByMinEcts implements Comparator<DegreeModule> {
 
-        private final ExecutionSemester executionSemester;
+        private final ExecutionInterval executionInterval;
 
-        public ComparatorByMinEcts(final ExecutionSemester executionSemester) {
-            this.executionSemester = executionSemester;
+        public ComparatorByMinEcts(final ExecutionInterval executionSemester) {
+            this.executionInterval = executionSemester;
 
         }
 
         @Override
         public int compare(DegreeModule leftDegreeModule, DegreeModule rightDegreeModule) {
-            int comparationResult = leftDegreeModule.getMinEctsCredits(this.executionSemester)
-                    .compareTo(rightDegreeModule.getMinEctsCredits(this.executionSemester));
+            int comparationResult = leftDegreeModule.getMinEctsCredits(this.executionInterval)
+                    .compareTo(rightDegreeModule.getMinEctsCredits(this.executionInterval));
             return (comparationResult == 0) ? leftDegreeModule.getExternalId()
                     .compareTo(rightDegreeModule.getExternalId()) : comparationResult;
         }
@@ -89,15 +89,15 @@ abstract public class DegreeModule extends DegreeModule_Base {
      * contexts on our way to the root course group.
      * 
      * @param result builder for with one possible full name of this course group
-     * @param executionSemester
+     * @param executionInterval
      */
-    protected void getOneFullName(final StringBuilder result, final ExecutionSemester executionSemester) {
-        final String selfName = getNameI18N(executionSemester).getContent();
+    protected void getOneFullName(final StringBuilder result, final ExecutionInterval executionInterval) {
+        final String selfName = getNameI18N(executionInterval).getContent();
 
         if (isRoot()) {
             result.append(selfName);
         } else {
-            Collection<Context> parentContextsByExecutionPeriod = getParentContextsByExecutionSemester(executionSemester);
+            Collection<Context> parentContextsByExecutionPeriod = getParentContextsByExecutionSemester(executionInterval);
             if (parentContextsByExecutionPeriod.isEmpty()) {
                 // if not existing, just return all (as previous implementation
                 // of method
@@ -106,7 +106,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
             final CourseGroup parentCourseGroup = parentContextsByExecutionPeriod.iterator().next().getParentCourseGroup();
 
-            parentCourseGroup.getOneFullName(result, executionSemester);
+            parentCourseGroup.getOneFullName(result, executionInterval);
             result.append(FULL_NAME_SEPARATOR);
             result.append(selfName);
         }
@@ -114,9 +114,9 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
     private static final String FULL_NAME_SEPARATOR = " > ";
 
-    public String getOneFullName(final ExecutionSemester executionSemester) {
+    public String getOneFullName(final ExecutionInterval executionInterval) {
         final StringBuilder result = new StringBuilder();
-        getOneFullName(result, executionSemester);
+        getOneFullName(result, executionInterval);
         return result.toString();
     }
 
@@ -156,7 +156,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
         }
     }
 
-    public LocalizedString getNameI18N(final ExecutionSemester executionSemester) {
+    private LocalizedString getNameI18N(final ExecutionSemester executionSemester) {
         LocalizedString LocalizedString = new LocalizedString();
 
         String name = getName(executionSemester);
@@ -172,7 +172,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
         return LocalizedString;
     }
 
-    public LocalizedString getNameI18N(final ExecutionYear executionYear) {
+    private LocalizedString getNameI18N(final ExecutionYear executionYear) {
         return getNameI18N((executionYear == null) ? null : executionYear.getLastExecutionPeriod());
     }
 
@@ -271,10 +271,10 @@ abstract public class DegreeModule extends DegreeModule_Base {
         return result;
     }
 
-    public List<CurricularRule> getCurricularRules(final ExecutionSemester executionSemester) {
+    public List<CurricularRule> getCurricularRules(final ExecutionInterval executionInterval) {
         final List<CurricularRule> result = new ArrayList<CurricularRule>();
         for (final CurricularRule curricularRule : this.getCurricularRulesSet()) {
-            if (isCurricularRuleValid(curricularRule, executionSemester)) {
+            if (isCurricularRuleValid(curricularRule, executionInterval)) {
                 result.add(curricularRule);
             }
         }
@@ -292,10 +292,10 @@ abstract public class DegreeModule extends DegreeModule_Base {
         return result;
     }
 
-    public List<CurricularRule> getVisibleCurricularRules(final ExecutionSemester executionSemester) {
+    public List<CurricularRule> getVisibleCurricularRules(final ExecutionInterval executionInterval) {
         final List<CurricularRule> result = new ArrayList<CurricularRule>();
         for (final CurricularRule curricularRule : this.getCurricularRulesSet()) {
-            if (curricularRule.isVisible() && isCurricularRuleValid(curricularRule, executionSemester)) {
+            if (curricularRule.isVisible() && isCurricularRuleValid(curricularRule, executionInterval)) {
                 result.add(curricularRule);
             }
         }
@@ -303,18 +303,18 @@ abstract public class DegreeModule extends DegreeModule_Base {
         return result;
     }
 
-    public List<CurricularRule> getCurricularRules(final Context context, final ExecutionSemester executionSemester) {
+    public List<CurricularRule> getCurricularRules(final Context context, final ExecutionInterval executionInterval) {
         final List<CurricularRule> result = new ArrayList<CurricularRule>();
         for (final CurricularRule curricularRule : getCurricularRulesSet()) {
-            if (isCurricularRuleValid(curricularRule, executionSemester) && curricularRule.appliesToContext(context)) {
+            if (isCurricularRuleValid(curricularRule, executionInterval) && curricularRule.appliesToContext(context)) {
                 result.add(curricularRule);
             }
         }
         return result;
     }
 
-    private boolean isCurricularRuleValid(final ICurricularRule curricularRule, final ExecutionSemester executionSemester) {
-        return executionSemester == null || curricularRule.isValid(executionSemester);
+    private boolean isCurricularRuleValid(final ICurricularRule curricularRule, final ExecutionInterval executionInterval) {
+        return executionInterval == null || curricularRule.isValid(executionInterval);
     }
 
     private boolean isCurricularRuleValid(final ICurricularRule curricularRule, final ExecutionYear executionYear) {
@@ -336,20 +336,20 @@ abstract public class DegreeModule extends DegreeModule_Base {
         return result;
     }
 
-    public List<Context> getParentContextsByExecutionSemester(final ExecutionSemester executionSemester) {
+    public List<Context> getParentContextsByExecutionSemester(final ExecutionInterval executionInterval) {
         final List<Context> result = new ArrayList<Context>();
         for (final Context context : getParentContextsSet()) {
-            if (executionSemester == null || context.isValid(executionSemester)) {
+            if (executionInterval == null || context.isValid(executionInterval)) {
                 result.add(context);
             }
         }
         return result;
     }
 
-    public List<Context> getParentContextsBy(final ExecutionSemester executionSemester, final CourseGroup parentCourseGroup) {
+    public List<Context> getParentContextsBy(final ExecutionInterval executionInterval, final CourseGroup parentCourseGroup) {
         final List<Context> result = new ArrayList<Context>();
         for (final Context context : getParentContextsSet()) {
-            if (context.isValid(executionSemester) && context.getParentCourseGroup() == parentCourseGroup) {
+            if (context.isValid(executionInterval) && context.getParentCourseGroup() == parentCourseGroup) {
                 result.add(context);
             }
         }
@@ -357,18 +357,18 @@ abstract public class DegreeModule extends DegreeModule_Base {
         return result;
     }
 
-    public boolean hasAnyParentContexts(final ExecutionSemester executionSemester) {
+    public boolean hasAnyParentContexts(final ExecutionInterval executionInterval) {
         for (final Context context : getParentContextsSet()) {
-            if (executionSemester == null || context.isValid(executionSemester)) {
+            if (executionInterval == null || context.isValid(executionInterval)) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean hasAnyOpenParentContexts(final ExecutionSemester executionSemester) {
+    public boolean hasAnyOpenParentContexts(final ExecutionInterval executionInterval) {
         for (final Context context : getParentContextsSet()) {
-            if (executionSemester == null || context.isOpen(executionSemester)) {
+            if (executionInterval == null || context.isOpen(executionInterval)) {
                 return true;
             }
         }
@@ -411,9 +411,9 @@ abstract public class DegreeModule extends DegreeModule_Base {
         return hasOnlyOneParentCourseGroup(null);
     }
 
-    public boolean hasOnlyOneParentCourseGroup(final ExecutionSemester executionSemester) {
+    public boolean hasOnlyOneParentCourseGroup(final ExecutionInterval executionInterval) {
         DegreeModule degreeModule = null;
-        for (final Context context : getParentContextsByExecutionSemester(executionSemester)) {
+        for (final Context context : getParentContextsByExecutionSemester(executionInterval)) {
             if (degreeModule == null) {
                 degreeModule = context.getParentCourseGroup();
 
@@ -425,19 +425,19 @@ abstract public class DegreeModule extends DegreeModule_Base {
     }
 
     public List<? extends ICurricularRule> getCurricularRules(final CurricularRuleType ruleType,
-            final ExecutionSemester executionSemester) {
+            final ExecutionInterval executionInterval) {
         final List<ICurricularRule> result = new ArrayList<ICurricularRule>();
         for (final ICurricularRule curricularRule : getCurricularRulesSet()) {
-            if (curricularRule.hasCurricularRuleType(ruleType) && isCurricularRuleValid(curricularRule, executionSemester)) {
+            if (curricularRule.hasCurricularRuleType(ruleType) && isCurricularRuleValid(curricularRule, executionInterval)) {
                 result.add(curricularRule);
             }
         }
         return result;
     }
 
-    public boolean hasAnyCurricularRules(final CurricularRuleType ruleType, final ExecutionSemester executionSemester) {
+    public boolean hasAnyCurricularRules(final CurricularRuleType ruleType, final ExecutionInterval executionInterval) {
         for (final ICurricularRule curricularRule : getCurricularRulesSet()) {
-            if (curricularRule.hasCurricularRuleType(ruleType) && isCurricularRuleValid(curricularRule, executionSemester)) {
+            if (curricularRule.hasCurricularRuleType(ruleType) && isCurricularRuleValid(curricularRule, executionInterval)) {
                 return true;
             }
         }
@@ -470,11 +470,11 @@ abstract public class DegreeModule extends DegreeModule_Base {
     }
 
     public List<? extends ICurricularRule> getCurricularRules(final CurricularRuleType ruleType,
-            final CourseGroup parentCourseGroup, final ExecutionSemester executionSemester) {
+            final CourseGroup parentCourseGroup, final ExecutionInterval executionInterval) {
 
         final List<ICurricularRule> result = new ArrayList<ICurricularRule>();
         for (final ICurricularRule curricularRule : getCurricularRulesSet()) {
-            if (curricularRule.hasCurricularRuleType(ruleType) && isCurricularRuleValid(curricularRule, executionSemester)
+            if (curricularRule.hasCurricularRuleType(ruleType) && isCurricularRuleValid(curricularRule, executionInterval)
                     && curricularRule.appliesToCourseGroup(parentCourseGroup)) {
                 result.add(curricularRule);
             }
@@ -521,10 +521,10 @@ abstract public class DegreeModule extends DegreeModule_Base {
     }
 
     public ICurricularRule getMostRecentActiveCurricularRule(final CurricularRuleType ruleType,
-            final CourseGroup parentCourseGroup, final ExecutionSemester executionSemester) {
+            final CourseGroup parentCourseGroup, final ExecutionInterval executionInterval) {
 
         final List<ICurricularRule> curricularRules =
-                new ArrayList<ICurricularRule>(getCurricularRules(ruleType, parentCourseGroup, executionSemester));
+                new ArrayList<ICurricularRule>(getCurricularRules(ruleType, parentCourseGroup, executionInterval));
 
         if (curricularRules.isEmpty()) {
             return null;
@@ -532,7 +532,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
         ICurricularRule result = null;
         for (final ICurricularRule curricularRule : curricularRules) {
-            if (curricularRule.isValid(executionSemester)) {
+            if (curricularRule.isValid(executionInterval)) {
                 if (result != null) {
                     // TODO: remove this throw when curricular rule ensures
                     // that it can be only one active for execution period
@@ -559,7 +559,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
         return this.equals(degreeModule);
     }
 
-    public ExecutionSemester getMinimumExecutionPeriod() {
+    public ExecutionInterval getMinimumExecutionPeriod() {
         if (isRoot()) {
             return isBolonhaDegree() ? ExecutionSemester
                     .readFirstExecutionSemester() : getFirstExecutionPeriodOfFirstExecutionDegree();
@@ -571,26 +571,26 @@ abstract public class DegreeModule extends DegreeModule_Base {
         return executionIntervals.first().convert(ExecutionSemester.class);
     }
 
-    private ExecutionSemester getFirstExecutionPeriodOfFirstExecutionDegree() {
+    private ExecutionInterval getFirstExecutionPeriodOfFirstExecutionDegree() {
         final ExecutionDegree executionDegree = getParentDegreeCurricularPlan().getFirstExecutionDegree();
         return executionDegree != null ? executionDegree.getExecutionYear().getFirstExecutionPeriod() : ExecutionSemester
                 .readFirstExecutionSemester();
     }
 
-    public DegreeModulesSelectionLimit getDegreeModulesSelectionLimitRule(final ExecutionSemester executionSemester) {
+    public DegreeModulesSelectionLimit getDegreeModulesSelectionLimitRule(final ExecutionInterval executionInterval) {
         final List<DegreeModulesSelectionLimit> result =
                 (List<DegreeModulesSelectionLimit>) getCurricularRules(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT,
-                        executionSemester);
+                        executionInterval);
         return result.isEmpty() ? null : (DegreeModulesSelectionLimit) result.iterator().next();
     }
 
-    public CreditsLimit getCreditsLimitRule(final ExecutionSemester executionSemester) {
-        final List<? extends ICurricularRule> result = getCurricularRules(CurricularRuleType.CREDITS_LIMIT, executionSemester);
+    public CreditsLimit getCreditsLimitRule(final ExecutionInterval executionInterval) {
+        final List<? extends ICurricularRule> result = getCurricularRules(CurricularRuleType.CREDITS_LIMIT, executionInterval);
         return result.isEmpty() ? null : (CreditsLimit) result.iterator().next();
     }
 
-    public List<Exclusiveness> getExclusivenessRules(final ExecutionSemester executionSemester) {
-        return (List<Exclusiveness>) getCurricularRules(CurricularRuleType.EXCLUSIVENESS, executionSemester);
+    public List<Exclusiveness> getExclusivenessRules(final ExecutionInterval executionInterval) {
+        return (List<Exclusiveness>) getCurricularRules(CurricularRuleType.EXCLUSIVENESS, executionInterval);
     }
 
     public Collection<CycleCourseGroup> getParentCycleCourseGroups() {
@@ -623,13 +623,13 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
     abstract public boolean isRoot();
 
-    abstract public Double getMaxEctsCredits(final ExecutionSemester executionSemester);
+    abstract public Double getMaxEctsCredits(final ExecutionInterval executionInterval);
 
-    abstract public Double getMinEctsCredits(final ExecutionSemester executionSemester);
+    abstract public Double getMinEctsCredits(final ExecutionInterval executionInterval);
 
     abstract public void getAllDegreeModules(final Collection<DegreeModule> degreeModules);
 
-    abstract public Set<CurricularCourse> getAllCurricularCourses(final ExecutionSemester executionSemester);
+    abstract public Set<CurricularCourse> getAllCurricularCourses(final ExecutionInterval executionInterval);
 
     abstract public Set<CurricularCourse> getAllCurricularCourses();
 

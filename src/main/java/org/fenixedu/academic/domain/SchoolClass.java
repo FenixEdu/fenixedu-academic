@@ -126,14 +126,14 @@ public class SchoolClass extends SchoolClass_Base {
         super.setNome(constructName(degree, name.trim(), getAnoCurricular()));
     }
 
-    private void checkIfExistsSchoolClassWithSameName(ExecutionDegree executionDegree, ExecutionSemester executionSemester,
+    private void checkIfExistsSchoolClassWithSameName(ExecutionDegree executionDegree, ExecutionInterval executionInterval,
             Integer curricularYear, String className) {
 
-        if (executionDegree != null && executionSemester != null && curricularYear != null && className != null) {
+        if (executionDegree != null && executionInterval != null && curricularYear != null && className != null) {
 
             final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
             final Set<SchoolClass> classes = executionDegree.findSchoolClassesByAcademicIntervalAndCurricularYear(
-                    executionSemester.getAcademicInterval(), curricularYear);
+                    executionInterval.getAcademicInterval(), curricularYear);
             final Degree degree = degreeCurricularPlan.getDegree();
             final String schoolClassName = degree.constructSchoolClassPrefix(curricularYear) + className;
 

@@ -19,7 +19,7 @@
 package org.fenixedu.academic.domain.studentCurriculum;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
@@ -46,9 +46,9 @@ public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
     }
 
     public ExternalCurriculumGroup(final RootCurriculumGroup rootCurriculumGroup, final CycleCourseGroup cycleCourseGroup,
-            final ExecutionSemester executionSemester) {
+            final ExecutionInterval executionInterval) {
         this();
-        init(rootCurriculumGroup, cycleCourseGroup, executionSemester);
+        init(rootCurriculumGroup, cycleCourseGroup, executionInterval);
     }
 
     @Override
@@ -68,9 +68,8 @@ public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
             final CourseGroup courseGroup) {
 
         final CycleCourseGroup cycleCourseGroup = (CycleCourseGroup) courseGroup;
-        final CycleCourseGroup sourceAffinityCycleCourseGroup =
-                studentCurricularPlan.getDegreeCurricularPlan().getCycleCourseGroup(
-                        cycleCourseGroup.getCycleType().getSourceCycleAffinity());
+        final CycleCourseGroup sourceAffinityCycleCourseGroup = studentCurricularPlan.getDegreeCurricularPlan()
+                .getCycleCourseGroup(cycleCourseGroup.getCycleType().getSourceCycleAffinity());
 
         if (!sourceAffinityCycleCourseGroup.getDestinationAffinitiesSet().contains(cycleCourseGroup)) {
             throw new DomainException(
@@ -84,7 +83,7 @@ public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
     }
 
     @Override
-    public Integer getChildOrder(ExecutionSemester executionSemester) {
+    public Integer getChildOrder(ExecutionInterval executionInterval) {
         return getChildOrder();
     }
 
@@ -93,15 +92,13 @@ public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
         LocalizedString LocalizedString = new LocalizedString();
 
         if (!StringUtils.isEmpty(getDegreeModule().getName())) {
-            LocalizedString =
-                    LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.PT, getDegreeModule().getName() + " ("
-                            + getDegreeCurricularPlanOfDegreeModule().getName() + ")");
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.PT,
+                    getDegreeModule().getName() + " (" + getDegreeCurricularPlanOfDegreeModule().getName() + ")");
         }
 
         if (!StringUtils.isEmpty(getDegreeModule().getNameEn())) {
-            LocalizedString =
-                    LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.EN, getDegreeModule().getNameEn() + " ("
-                            + getDegreeCurricularPlanOfDegreeModule().getName() + ")");
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.EN,
+                    getDegreeModule().getNameEn() + " (" + getDegreeCurricularPlanOfDegreeModule().getName() + ")");
         }
 
         return LocalizedString;

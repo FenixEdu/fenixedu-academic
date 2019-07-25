@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.Context;
@@ -41,7 +41,7 @@ import org.fenixedu.academic.dto.GenericPair;
 public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 
     public AnyCurricularCourse(final OptionalCurricularCourse toApplyRule, final CourseGroup contextCourseGroup,
-            final ExecutionSemester begin, final ExecutionSemester end, final Double minimumCredits, Double maximumCredits,
+            final ExecutionInterval begin, final ExecutionInterval end, final Double minimumCredits, Double maximumCredits,
             final Integer curricularPeriodOrder, final Integer minimumYear, final Integer maximumYear,
             final DegreeType degreeType, final Degree degree, final DepartmentUnit departmentUnit) {
 

@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 import javax.faces.model.SelectItem;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.CurricularRule;
 import org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup;
@@ -144,7 +145,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
     }
 
     @Override
-    protected ExecutionSemester getMinimumExecutionPeriod() {
+    protected ExecutionInterval getMinimumExecutionPeriod() {
         CourseGroup courseGroup = getCourseGroup(getParentCourseGroupID());;
         if (courseGroup == null) {
             final Context context = getContext(getContextID());
