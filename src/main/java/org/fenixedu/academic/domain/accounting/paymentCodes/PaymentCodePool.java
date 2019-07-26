@@ -95,8 +95,8 @@ public class PaymentCodePool extends PaymentCodePool_Base {
                 });
             });
         }
-        if (getMinSize() != getPaymentCodeSet().size()) {
-            throw new DomainException("Can't proceed");
+        if (getMinSize() != (int) getPaymentCodeStream().filter(paymentCodeIsUsed.negate()).count()) {
+            throw new DomainException("The number of available payment codes is not correct. Do not proceed!");
         }
     }
 
