@@ -2906,7 +2906,7 @@ relation ExecutionPeriodCurriculumLineLog {
     log.CurriculumLineLog playsRole curriculumLineLogs {
         multiplicity *;
     }
-    ExecutionSemester playsRole executionPeriod;
+    ExecutionInterval playsRole executionPeriod;
 }
 
 relation ExecutionPeriodExecutionCourse {

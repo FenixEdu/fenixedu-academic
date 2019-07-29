@@ -43,7 +43,7 @@ abstract public class CurriculumLineLog extends CurriculumLineLog_Base {
         setAction(action);
         setStudent(registration);
         setDegreeModule(degreeModule);
-        setExecutionPeriod(executionInterval.convert(ExecutionSemester.class));
+        setExecutionPeriod(executionInterval);
         setWho(who);
     }
 
@@ -105,8 +105,8 @@ abstract public class CurriculumLineLog extends CurriculumLineLog_Base {
      */
     @Deprecated
     @Override
-    public ExecutionSemester getExecutionPeriod() {
-        return super.getExecutionPeriod();
+    public ExecutionInterval getExecutionPeriod() {
+        return getExecutionInterval();
     }
 
     public ExecutionInterval getExecutionInterval() {

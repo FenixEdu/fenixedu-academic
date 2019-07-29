@@ -1,8 +1,9 @@
+- Refactor: changed CurriculumLineLog domain relations from ExecutionSemester to ExecutionInterval
+
 23.0.0 (29-07-2019)
 - Refactor: changed TeacherAuthorization domain relations from ExecutionSemester to ExecutionInterval 
 - New Fixture: Fiscal addresses. Set fiscal address on fiscal number edition.
 - Refactor: Improve person and account addresses edition in Administrative Office, Person and Manager portals
-
 
 22.0.0 (25-07-2019)
 - Refactor: replaced usages of ExecutionSemester by ExecutionInterval 
