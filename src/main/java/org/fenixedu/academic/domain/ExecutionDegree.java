@@ -182,11 +182,11 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         setExecutionYear(executionYear);
         setCampus(campus);
 
-        for (ExecutionSemester executionSemester : this.getExecutionYear().getExecutionPeriodsSet()) {
+        for (ExecutionInterval executionInterval : this.getExecutionYear().getChildIntervals()) {
             if (publishedExamMap) {
-                this.getPublishedExamMapsSet().add(executionSemester);
+                this.getPublishedExamMapsSet().add(executionInterval);
             } else {
-                this.getPublishedExamMapsSet().remove(executionSemester);
+                this.getPublishedExamMapsSet().remove(executionInterval);
             }
         }
     }

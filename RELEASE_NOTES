@@ -1,4 +1,5 @@
 - Refactor: changed CurriculumLineLog domain relations from ExecutionSemester to ExecutionInterval
+- Refactor: changed ExecutionDegree published exam maps relation from ExecutionSemester to ExecutionInterval
 
 23.0.0 (29-07-2019)
 - Refactor: changed TeacherAuthorization domain relations from ExecutionSemester to ExecutionInterval 

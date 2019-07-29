@@ -2864,7 +2864,7 @@ relation ExecutionDegreeExecutionSemesterExamMap {
     ExecutionDegree playsRole executionDegreesExamMaps {
         multiplicity *;
     }
-    ExecutionSemester playsRole publishedExamMaps {
+    ExecutionInterval playsRole publishedExamMaps {
     	multiplicity *;
     }
 }
