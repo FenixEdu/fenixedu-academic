@@ -77,7 +77,7 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
         setTeacher(null);
         setRevokedDepartment(getDepartment());
         setDepartment(null);
-        setRevokedExecutionSemester(getExecutionSemester());
+        setRevokedExecutionSemester(getExecutionInterval());
         setExecutionSemester(null);
         setRevoker(Authenticate.getUser());
         setRevokeTime(new DateTime());
@@ -99,12 +99,8 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
      */
     @Deprecated
     @Override
-    public ExecutionSemester getExecutionSemester() {
-        if (getRevokedRootDomainObject() != null) {
-            return getRevokedExecutionSemester();
-        }
-        // FIXME: Removed when framework support read-only slots
-        return super.getExecutionSemester();
+    public ExecutionInterval getExecutionSemester() {
+        return getExecutionInterval();
     }
 
     public ExecutionInterval getExecutionInterval() {
@@ -113,7 +109,7 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
         }
         // FIXME: Removed when framework support read-only slots
         return super.getExecutionSemester();
-    }   
+    }
 
     @Override
     public Teacher getTeacher() {
@@ -141,7 +137,7 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
         // FIXME: Removed when framework support read-only slots
         return super.getLessonHours();
     }
-    
+
     @Override
     public Double getWorkPercentageInInstitution() {
         // FIXME: Removed when framework support read-only slots
@@ -178,18 +174,9 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
         }
         return getExternalId().compareTo(o.getExternalId());
     }
-    
-    /**
-     * @deprecated use {@link #getRevokedExecutionInterval()} instead.
-     */
-    @Deprecated
-    @Override
-    protected ExecutionSemester getRevokedExecutionSemester() {
-        return super.getRevokedExecutionSemester();
-    }
 
     protected ExecutionInterval getRevokedExecutionInterval() {
         return super.getRevokedExecutionSemester();
     }
-    
+
 }

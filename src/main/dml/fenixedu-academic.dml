@@ -5062,7 +5062,7 @@ relation DepartmentRevokedTeacherAuthorizations {
 }
 
 relation ExecutionSemesterTeacherAuthorizations {
-    public ExecutionSemester playsRole executionSemester {
+    public ExecutionInterval playsRole executionSemester {
         multiplicity 0..1;
     }
     public TeacherAuthorization playsRole teacherAuthorization {
@@ -5071,7 +5071,7 @@ relation ExecutionSemesterTeacherAuthorizations {
 }
 
 relation ExecutionSemesterRevokedTeacherAuthorizations {
-    protected ExecutionSemester playsRole revokedExecutionSemester {
+    protected ExecutionInterval playsRole revokedExecutionSemester {
         multiplicity 0..1;
     }
     protected TeacherAuthorization playsRole revokedTeacherAuthorization {
