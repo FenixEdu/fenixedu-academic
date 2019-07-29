@@ -322,7 +322,6 @@ public class Person extends Person_Base {
         setGender(personBean.getGender());
         setIdentification(personBean.getDocumentIdNumber(), personBean.getIdDocumentType());
         setExpirationDateOfDocumentIdYearMonthDay(personBean.getDocumentIdExpirationDate());
-        editSocialSecurityNumber(getFiscalCountry(), personBean.getSocialSecurityNumber());
         setDateOfBirthYearMonthDay(personBean.getDateOfBirth());
         setCountry(personBean.getNationality());
         setDefaultPhysicalAddressData(personBean.getPhysicalAddressData());
@@ -398,7 +397,6 @@ public class Person extends Person_Base {
         setEmissionLocationOfDocumentId(personBean.getDocumentIdEmissionLocation());
         setEmissionDateOfDocumentIdYearMonthDay(personBean.getDocumentIdEmissionDate());
         setExpirationDateOfDocumentIdYearMonthDay(personBean.getDocumentIdExpirationDate());
-        editSocialSecurityNumber(personBean.getFiscalCountry(), personBean.getSocialSecurityNumber());
         setEidentifier(personBean.getEidentifier());
 
         // filiation

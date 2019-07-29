@@ -156,11 +156,22 @@
 			<td><bean:message key="label.address" /> (<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):</td>
 			<td>
 				<bean:write name="contact" property="presentationValue" />
+				<logic:notEmpty name="contact" property="areaCode">
+					<bean:write name="contact" property="areaCode" />
+				</logic:notEmpty>				
+				<logic:notEmpty name="contact" property="districtSubdivisionOfResidence">
+					<bean:write name="contact" property="districtSubdivisionOfResidence" />
+				</logic:notEmpty>
+				<logic:notEmpty name="contact" property="countryOfResidence">
+					<bean:write name="contact" property="countryOfResidence.localizedName.content" />
+				</logic:notEmpty>
 				<logic:equal name="contact" property="defaultContact" value="true">
 					<logic:notEqual name="size" value="1">
 						 (<bean:message key="label.partyContacts.defaultContact" />)
 					</logic:notEqual>
-					
+				</logic:equal>
+				<logic:equal name="contact" property="fiscalAddress" value="true">
+						 <em class="highlight1"><bean:message key="label.fiscalAddress" /></em>
 				</logic:equal>
 			</td>
             <td class="acenter">
@@ -193,9 +204,11 @@
 						<bean:message key="label.edit" />
 					</html:link>,
 				</logic:equal>
+				<logic:notEqual name="contact" property="fiscalAddress" value="true">
 				<html:link action="/partyContacts.do?method=deletePartyContact" paramId="contactId" paramName="contact" paramProperty="externalId">
 					<bean:message key="label.clear" />
 				</html:link>
+				</logic:notEqual>
 				<logic:equal name="contact" property="valid" value="false" >
 					,<html:link action="/partyContacts.do?method=prepareValidate" paramId="partyContact" paramName="contact" paramProperty="externalId">
 						<bean:message key="label.validate" />
@@ -626,13 +639,61 @@
 	</div>
 </div>
 
+<div class="row">
+	<div class="col-sm-12">
+<table class="mtop15" width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+		<td class="infoop" width="25"><span class="emphasis-box">4</span></td>
+		<td class="infoop"><strong><bean:message key="label.person.title.fiscalInformation" /></strong></td>
+	</tr>
+</table>
+</div>
+</div>
+<div class="row">
+	<div class="col-sm-12">
+	
+		<table class="tstyle2 thleft thlight mtop15 table">
+		  <tbody>
+		    <tr>
+		      <th scope="row">
+			      	<bean:message key="label.socialSecurityNumber" bundle="APPLICATION_RESOURCES" />
+		      </th>
+		      <td>
+
+		       	<logic:notEmpty name="person" property="fiscalAddress">
+		       		<bean:write name="person" property="fiscalAddress.countryOfResidence.code"/>
+		       		<bean:write name="person" property="socialSecurityNumber"/>
+		       	</logic:notEmpty>
+
+		       	<logic:empty name="person" property="fiscalAddress">
+		       		<bean:write name="person" property="socialSecurityNumber"/>
+		       	</logic:empty>
+		      </td>
+		    </tr>
+		    <tr>
+		      <th scope="row">
+			      	<bean:message key="label.fiscalAddress" bundle="APPLICATION_RESOURCES" />
+		      </th>
+		      <td>
+		       	<logic:notEmpty name="person" property="fiscalAddress">
+			      	<bean:write name="person" property="fiscalAddress.address" />
+			      	<bean:write name="person" property="fiscalAddress.areaCode" />
+			      	<bean:write name="person" property="fiscalAddress.countryOfResidence.localizedName.content" />
+		      	</logic:notEmpty>
+		      </td>
+		    </tr>
+		  </tbody>
+		</table>
+	
+   </div>
+</div>
 
 <!-- Informação de Utilizador -->
 <div class="row">
 	<div class="col-sm-6">
 		<table class="mtop15" width="100%" cellpadding="0" cellspacing="0">
 			<tr>
-				<td class="infoop" width="25"><span class="emphasis-box">4</span></td>
+				<td class="infoop" width="25"><span class="emphasis-box">5</span></td>
 				<td class="infoop"><strong><bean:message key="label.person.title.filiation" /></strong></td>
 			</tr>
 		</table>

@@ -147,7 +147,7 @@ public abstract class PartyContactBean implements Serializable {
         return getType().equals(PartyContactType.INSTITUTIONAL);
     }
 
-    public Boolean edit() {
+    public boolean edit() {
         boolean isValueChanged = isValueChanged();
         boolean createdNewContact = false;
         String newValue = getPresentationValue();
@@ -159,9 +159,15 @@ public abstract class PartyContactBean implements Serializable {
                     contact.getPartyContactValidation().reset();
                 } else {
                     contact = createNewContact();
+
+                    if(getContact() != null && getContact().isPhysicalAddress()) {
+                        ((PhysicalAddress) contact).setFiscalAddress(((PhysicalAddress) getContact()).isFiscalAddress());
+                    }
+                    
                     contact.setPrevPartyContact(getContact());
                     createdNewContact = true;
                 }
+                
                 setContact(contact);
             }
         }

@@ -29,10 +29,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.academic.dto.administrativeOffice.ExecutionDegreeBean;
 import org.fenixedu.academic.dto.candidacy.IngressionInformationBean;
 import org.fenixedu.academic.dto.candidacy.OriginInformationBean;
@@ -67,7 +69,9 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
         @Forward(name = "fillNewPersonData", path = "/academicAdminOffice/fillNewPersonData.jsp"),
         @Forward(name = "fillOriginInformation", path = "/academicAdminOffice/fillOriginInformation.jsp"),
         @Forward(name = "createStudentSuccess", path = "/academicAdminOffice/createStudentSuccess.jsp"),
-        @Forward(name = "showCreateStudentConfirmation", path = "/academicAdminOffice/showCreateStudentConfirmation.jsp") })
+        @Forward(name = "showCreateStudentConfirmation", path = "/academicAdminOffice/showCreateStudentConfirmation.jsp"),
+        @Forward(name = "fillFiscalInformation", path = "/academicAdminOffice/fillFiscalInformation.jsp") })
+
 public class StudentOperationsDispatchAction extends FenixDispatchAction {
 
     @EntryPoint
@@ -309,6 +313,86 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
         return mapping.findForward("fillOriginInformation");
     }
 
+    public ActionForward prepareFillFiscalInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        final PersonBean personBean = getRenderedObject("person");
+
+        request.setAttribute("executionDegreeBean", getRenderedObject("executionDegree"));
+        request.setAttribute("ingressionInformationBean", getRenderedObject("chooseIngression"));
+        request.setAttribute("personBean", personBean);
+        request.setAttribute("precedentDegreeInformationBean", getRenderedObject("precedentDegreeInformation"));
+
+        final String fiscalCountryCode = selectedFiscalCountryCode(personBean);
+        request.setAttribute("fiscalCountryCode", fiscalCountryCode);
+
+        return mapping.findForward("fillFiscalInformation");
+    }
+
+    private String selectedFiscalCountryCode(final PersonBean personBean) {
+        String fiscalCountryCode = "";
+        if (personBean.isUsePhysicalAddress() && personBean.getFiscalAddressInCreateRegistrationBean() != null) {
+            fiscalCountryCode = personBean.getFiscalAddressInCreateRegistrationBean().getCountryOfResidence().getCode();
+        } else if(personBean.isUsePhysicalAddress() && personBean.getPerson() == null && personBean.getCountryOfResidence() != null) {
+            fiscalCountryCode = personBean.getCountryOfResidence().getCode();
+        } else if(!personBean.isUsePhysicalAddress() && personBean.getFiscalAddressCountryOfResidence() != null) {
+            fiscalCountryCode = personBean.getFiscalAddressCountryOfResidence().getCode();
+        }
+        
+        return fiscalCountryCode;
+    }
+
+    public ActionForward fillFiscalInformationInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+
+        return prepareFillFiscalInformation(mapping, actionForm, request, response);
+    }
+
+    public ActionForward fillFiscalInformationPostback(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        final PersonBean personBean = getRenderedObject("person");
+
+        request.setAttribute("executionDegreeBean", getRenderedObject("executionDegree"));
+        request.setAttribute("ingressionInformationBean", getRenderedObject("chooseIngression"));
+        request.setAttribute("personBean", personBean);
+        request.setAttribute("precedentDegreeInformationBean", getRenderedObject("precedentDegreeInformation"));
+
+        final String fiscalCountryCode = selectedFiscalCountryCode(personBean);
+        request.setAttribute("fiscalCountryCode", fiscalCountryCode);
+
+        RenderUtils.invalidateViewState();
+
+        return mapping.findForward("fillFiscalInformation");
+    }
+
+    public ActionForward validateFiscalInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        final PersonBean personBean = getRenderedObject("person");
+
+        final String socialSecurityNumber = personBean.getSocialSecurityNumber();
+
+        Country fiscalAddressCountry = null;
+
+        boolean createNewPerson = personBean.getPerson() == null;
+
+        if (createNewPerson && personBean.isUsePhysicalAddress()) {
+            fiscalAddressCountry = personBean.getCountryOfResidence();
+        } else if (!createNewPerson && personBean.isUsePhysicalAddress()) {
+            fiscalAddressCountry = personBean.getFiscalAddressInCreateRegistrationBean().getCountryOfResidence();
+        } else if (!personBean.isUsePhysicalAddress()) {
+            fiscalAddressCountry = personBean.getFiscalAddressCountryOfResidence();
+        }
+
+        boolean fiscalInfoValid = TreasuryBridgeAPIFactory.implementation().isValidFiscalNumber(fiscalAddressCountry.getCode(),
+                socialSecurityNumber);
+
+        if (!fiscalInfoValid) {
+            addActionMessage(request, "error.PartySocialSecurityNumber.invalid.socialSecurityNumber");
+            return fillFiscalInformationInvalid(mapping, actionForm, request, response);
+        }
+
+        return prepareShowFillOriginInformation(mapping, actionForm, request, response);
+    }
+
     public ActionForward prepareShowCreateStudentConfirmation(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
 
@@ -323,10 +407,10 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareCreateStudentInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
+        final PersonBean personBean = getRenderedObject("person");
 
         request.setAttribute("executionDegreeBean", getRenderedObject("executionDegree"));
         request.setAttribute("ingressionInformationBean", getRenderedObject("chooseIngression"));
-        PersonBean personBean = getRenderedObject("person");
         request.setAttribute("personBean", personBean);
         request.setAttribute("precedentDegreeInformationBean", getRenderedObject("precedentDegreeInformation"));
         request.setAttribute("originInformationBean", getRenderedObject("originInformation"));

@@ -18,7 +18,9 @@
  */
 package org.fenixedu.academic.domain.contacts;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
@@ -74,6 +76,8 @@ public class PhysicalAddress extends PhysicalAddress_Base {
         setVisibleToStudents(Boolean.FALSE);
         setVisibleToStaff(Boolean.FALSE);
         edit(data);
+
+        checkRules();
     }
 
     // Called from renders with constructor clause.
@@ -82,13 +86,20 @@ public class PhysicalAddress extends PhysicalAddress_Base {
             final String districtSubdivisionOfResidence, final String districtOfResidence, final Country countryOfResidence) {
         this(party, type, defaultContact.booleanValue(), new PhysicalAddressData(address, areaCode, areaOfAreaCode, area,
                 parishOfResidence, districtSubdivisionOfResidence, districtOfResidence, countryOfResidence));
+
+        checkRules();
     }
 
     public void edit(final PhysicalAddressData data) {
         if (data == null) {
             return;
         }
+        
         if (!data.equals(new PhysicalAddressData(this))) {
+            if(isFiscalAddress() && getCountryOfResidence() != data.getCountryOfResidence()) {
+                throw new DomainException("error.PhysicalAddress.cannot.change.countryOfResidence.in.fiscal.address");
+            }
+            
             super.setAddress(data.getAddress());
             super.setAreaCode(data.getAreaCode());
             super.setAreaOfAreaCode(data.getAreaOfAreaCode());
@@ -97,12 +108,14 @@ public class PhysicalAddress extends PhysicalAddress_Base {
             super.setDistrictSubdivisionOfResidence(data.getDistrictSubdivisionOfResidence());
             super.setDistrictOfResidence(data.getDistrictOfResidence());
             super.setCountryOfResidence(data.getCountryOfResidence());
+
             if (!waitsValidation()) {
                 new PhysicalAddressValidation(this);
             }
             setLastModifiedDate(new DateTime());
         }
 
+        checkRules();
     }
 
     // Called from renders with edit clause.
@@ -112,6 +125,14 @@ public class PhysicalAddress extends PhysicalAddress_Base {
         super.edit(type, defaultContact);
         edit(new PhysicalAddressData(address, areaCode, areaOfAreaCode, area, parishOfResidence, districtSubdivisionOfResidence,
                 districtOfResidence, countryOfResidence));
+
+        checkRules();
+    }
+
+    private void checkRules() {
+        if(getCountryOfResidence() == null) {
+            throw new DomainException("error.PhysicalAddres.countryOfResidence.required");
+        }
     }
 
     @Override
@@ -125,12 +146,20 @@ public class PhysicalAddress extends PhysicalAddress_Base {
 
     @Override
     public void deleteWithoutCheckRules() {
+        if(getParty().getFiscalAddress() == this) {
+            throw new DomainException("error.domain.contacts.PhysicalAddress.cannot.remove.fiscal.address");
+        }
+        
         setCountryOfResidence(null);
         super.deleteWithoutCheckRules();
     }
 
     @Override
     public void delete() {
+        if(getParty().getFiscalAddress() == this) {
+            throw new DomainException("error.domain.contacts.PhysicalAddress.cannot.remove.fiscal.address");
+        }
+        
         setCountryOfResidence(null);
         super.delete();
     }
@@ -197,8 +226,35 @@ public class PhysicalAddress extends PhysicalAddress_Base {
     public boolean isToBeValidated() {
         return requiresValidation();
     }
+    
+    public boolean isFiscalAddress() {
+        return Boolean.TRUE.equals(super.getFiscalAddress());
+    }
 
     public static boolean requiresValidation() {
         return FenixEduAcademicConfiguration.getPhysicalAddressRequiresValidation();
     }
+    
+    public String getUiFiscalPresentationValue() {
+        final List<String> compounds = new ArrayList<>();
+        
+        if(StringUtils.isNotEmpty(getAddress())) {
+            compounds.add(getAddress());
+        }
+        
+        if(StringUtils.isNotEmpty(getAreaCode())) {
+            compounds.add(getAreaCode());
+        }
+        
+        if(StringUtils.isNotEmpty(getDistrictSubdivisionOfResidence())) {
+            compounds.add(getDistrictSubdivisionOfResidence());
+        }
+        
+        if(getCountryOfResidence() != null) {
+            compounds.add(getCountryOfResidence().getLocalizedName().getContent());
+        }
+        
+        return String.join(" ", compounds);
+    }
+    
 }

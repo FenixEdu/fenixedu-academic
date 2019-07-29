@@ -849,6 +849,7 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         }
 
         class contacts.PhysicalAddress extends contacts.PartyContact {
+        	boolean fiscalAddress;
             String address;
             String area;
             String areaCode;

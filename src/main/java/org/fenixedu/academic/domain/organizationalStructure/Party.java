@@ -29,6 +29,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -416,6 +417,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return PartySocialSecurityNumber.readPartyBySocialSecurityNumber(contributorNumber);
     }
 
+    @Deprecated
     public Country getFiscalCountry() {
         return getPartySocialSecurityNumber() != null ? getPartySocialSecurityNumber().getFiscalCountry() : null;
     }
@@ -432,8 +434,8 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         throw new RuntimeException("use editSocialSecurityNumber");
     }
 
-    public void editSocialSecurityNumber(final Country fiscalCountry, String socialSecurityNumber) {
-        PartySocialSecurityNumber.editFiscalInformation(this, fiscalCountry, socialSecurityNumber);
+    public void editSocialSecurityNumber(final String socialSecurityNumber, final PhysicalAddress fiscalAddress) {
+        PartySocialSecurityNumber.editFiscalInformation(this, socialSecurityNumber, fiscalAddress);
     }
 
     public boolean isPerson() {
@@ -984,6 +986,15 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     public List<PhysicalAddress> getPendingOrValidPhysicalAddresses() {
         return (List<PhysicalAddress>) getPendingOrValidPartyContacts(PhysicalAddress.class);
     }
+    
+    public List<PhysicalAddress> getValidAddressesForFiscalData() {
+        return getPendingOrValidPartyContacts(PhysicalAddress.class).stream()
+            .map(PhysicalAddress.class::cast)
+            .filter(pa -> pa.isActiveAndValid())
+            .filter(pa -> pa.getCountryOfResidence() != null)
+            .filter(pa -> pa.getCurrentPartyContact() == null || !pa.getCurrentPartyContact().isToBeValidated())
+            .collect(Collectors.toList());
+    }
 
     public boolean hasDefaultPhysicalAddress() {
         return hasDefaultPartyContact(PhysicalAddress.class);
@@ -1081,7 +1092,33 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     public void setCountryOfResidence(Country countryOfResidence) {
-        getOrCreateDefaultPhysicalAddress().setCountryOfResidence(countryOfResidence);
+        PhysicalAddress defaultPhysicalAddress = getOrCreateDefaultPhysicalAddress();
+
+        if(defaultPhysicalAddress.isFiscalAddress() && defaultPhysicalAddress.getCountryOfResidence() != countryOfResidence) {
+            throw new DomainException("error.PhysicalAddress.cannot.change.countryOfResidence.in.fiscal.address");
+        }
+        
+        defaultPhysicalAddress.setCountryOfResidence(countryOfResidence);
+    }
+    
+    public PhysicalAddress getFiscalAddress() {
+        return getAllPartyContacts(PhysicalAddress.class).stream()
+                .map(PhysicalAddress.class::cast)
+                .filter(address -> address.isActiveAndValid())
+                .filter(address -> address.isFiscalAddress())
+                .findFirst().orElse(null);
+    }
+    
+    public void markAsFiscalAddress(final PhysicalAddress fiscalAddress) {
+        if(!fiscalAddress.isActiveAndValid()) {
+            throw new DomainException("error.Party.markAsFiscalAddress.fiscalAddress.must.be.active.and.valid");
+        }
+        
+        getAllPartyContacts(PhysicalAddress.class).stream().forEach(address -> {
+            ((PhysicalAddress) address).setFiscalAddress(false);
+        });
+        
+        fiscalAddress.setFiscalAddress(true);
     }
 
     @Override

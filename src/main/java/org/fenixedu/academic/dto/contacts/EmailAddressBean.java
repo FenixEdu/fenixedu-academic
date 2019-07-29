@@ -52,7 +52,7 @@ public class EmailAddressBean extends PartyContactBean {
 
     @Override
     @Atomic
-    public Boolean edit() {
+    public boolean edit() {
         boolean isValueChanged = super.edit();
         if (isValueChanged) {
             getContact().edit(getValue());

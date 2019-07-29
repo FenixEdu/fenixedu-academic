@@ -80,7 +80,45 @@
 
 <h3 class="mbottom025"><bean:message key="label.person.title.addressesInfo" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
 <logic:notEmpty name="personBean" property="sortedPhysicalAdresses">
-	<fr:view name="personBean" property="sortedPhysicalAdresses" schema="contacts.PhysicalAddress.view" >
+	<fr:view name="personBean" property="sortedPhysicalAdresses" >
+		<fr:schema type="org.fenixedu.academic.domain.contacts.PhysicalAddress" bundle="ACADEMIC_OFFICE_RESOURCES">
+			<fr:slot name="defaultContact" key="label.partyContacts.defaultContact">
+				<fr:property name="trueLabel" value="label.partyContacts.view.trueLabel" />
+				<fr:property name="falseLabel" value="label.partyContacts.view.falseLabel" />
+				<fr:property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
+			</fr:slot>
+			<fr:slot name="type" />
+			<fr:slot name="activeAndValid" key="label.partyContacts.isActiveAndValid">
+				<fr:property name="trueLabel" value="label.yes.capitalized" bundle="APPLICATION_RESOURCES"/>
+				<fr:property name="falseLabel" value="label.no.capitalized" bundle="APPLICATION_RESOURCES"/>
+				<fr:property name="bundle" value="APPLICATION_RESOURCES" />
+			</fr:slot>
+			<fr:slot name="address" layout="null-as-label">
+				<fr:property name="label" value="-" />
+			</fr:slot>
+			<fr:slot name="area" layout="null-as-label">
+				<fr:property name="label" value="-" />
+			</fr:slot>
+			<fr:slot name="areaCode" layout="null-as-label">
+				<fr:property name="label" value="-" />
+			</fr:slot>
+			<fr:slot name="areaOfAreaCode" layout="null-as-label">
+				<fr:property name="label" value="-" />
+			</fr:slot>
+			<fr:slot name="parishOfResidence" layout="null-as-label">
+				<fr:property name="label" value="-" />
+			</fr:slot>
+			<fr:slot name="districtSubdivisionOfResidence" layout="null-as-label">
+				<fr:property name="label" value="-" />
+			</fr:slot>
+			<fr:slot name="districtOfResidence" layout="null-as-label">
+				<fr:property name="label" value="-" />
+			</fr:slot>
+			<fr:slot name="countryOfResidenceName" key="label.countryOfResidence" layout="null-as-label">
+				<fr:property name="label" value="-" />
+			</fr:slot>
+		</fr:schema>
+	
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 mtop05" />
 		</fr:layout>

@@ -28,43 +28,54 @@
 <bean:define id="partyContactClass" scope="request" name="partyContactClass" />
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
-<h2><bean:message key="<%= "label.partyContacts.edit" + partyContactClass %>"
-    bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
+<h2><bean:message key="<%= "label.partyContacts.edit" + partyContactClass %>" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 
 <fr:form action="/partyContacts.do">
-    <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method"
-        value="editPartyContact" />
     <bean:define id="studentID" type="java.lang.String" name="student" property="externalId" />
-    <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="studentID"
-        value="<%= studentID.toString() %>" />
 
+    <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="studentID" value="<%= studentID.toString() %>" />
+    <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editPartyContact" />
 
 	<logic:equal name="partyContactClass" value="PhysicalAddress">
 		<bean:define id="partyContact"  name="partyContact" type="org.fenixedu.academic.dto.contacts.PhysicalAddressBean" />
 
+		<logic:equal name="partyContact" property="contact.fiscalAddress" value="true">
+			<p><em class="infoop2"><bean:message key="message.PhysicalAddress.cannot.change.countryOfResidence.in.fiscal.address" bundle="ACADEMIC_OFFICE_RESOURCES" /></em></p>
+		</logic:equal>
+
 		<fr:edit id="edit-contact" name="partyContact">
-	       	<fr:schema type="org.fenixedu.academic.dto.contacts.PhysicalAddressBean" 
-	       		bundle="ACADEMIC_OFFICE_RESOURCES">
+	       	<fr:schema type="org.fenixedu.academic.dto.contacts.PhysicalAddressBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 				<fr:slot name="type" required="true" />
 				<fr:slot name="defaultContact" key="label.partyContacts.defaultContact" />
 				
-				<fr:slot name="countryOfResidence" layout="menu-select-postback"
-					validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-					<fr:property name="providerClass"
-						value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
+				<logic:equal name="partyContact" property="contact.fiscalAddress" value="true">
+				<fr:slot name="countryOfResidence" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" readOnly="true">
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
+					<fr:property name="format" value="${localizedName.content}" />
+				</fr:slot>
+				</logic:equal>
+
+				<logic:equal name="partyContact" property="contact.fiscalAddress" value="false">
+				<fr:slot name="countryOfResidence" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 					<fr:property name="format" value="${localizedName.content}" />
 					<fr:property name="destination" value="postback-select-country" />
 					<fr:property name="sortBy" value="name=asc" />
 				</fr:slot>
+				</logic:equal>
 	       		
 				<fr:slot name="address" required="true">
 					<fr:property name="size" value="50" />
 				</fr:slot>
+				
+				<%-- 
 				<fr:slot name="area">
 					<% if(partyContact.getCountryOfResidence() != null && partyContact.getCountryOfResidence().isDefaultCountry()) { %>
 					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 					<% } %>
 				</fr:slot>
+				--%>
+				
 				<fr:slot name="areaCode">
 					<fr:property name="size" value="10" />
 					<% if(partyContact.getCountryOfResidence() != null && partyContact.getCountryOfResidence().isDefaultCountry()) { %>
@@ -76,38 +87,35 @@
 					</fr:validator>
 					<% } %>
 				</fr:slot>
-				<fr:slot name="areaOfAreaCode">
-					<% if(partyContact.getCountryOfResidence() != null && partyContact.getCountryOfResidence().isDefaultCountry()) { %>
-					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-					<% } %>
-				</fr:slot>
-				<fr:slot name="parishOfResidence">
-					<% if(partyContact.getCountryOfResidence() != null && partyContact.getCountryOfResidence().isDefaultCountry()) { %>
-					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-					<% } %>
-				</fr:slot>
-				<fr:slot name="districtSubdivisionOfResidence">
-					<% if(partyContact.getCountryOfResidence() != null && partyContact.getCountryOfResidence().isDefaultCountry()) { %>
-					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-					<% } %>
-				</fr:slot>
-				<fr:slot name="districtOfResidence">
-					<% if(partyContact.getCountryOfResidence() != null && partyContact.getCountryOfResidence().isDefaultCountry()) { %>
-					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-					<% } %>
-				</fr:slot>
+
+				<% if(partyContact.getCountryOfResidence() != null && partyContact.getCountryOfResidence().isDefaultCountry()) { %>
+				<fr:slot name="parishOfResidence" required="true" />
+				<% } %>
+
+				<% if(partyContact.getCountryOfResidence() == null || partyContact.getCountryOfResidence().isDefaultCountry()) { %>
+				<fr:slot name="districtSubdivisionOfResidence" required="true" />
+				<% } %>
+
+				<% if(partyContact.getCountryOfResidence() != null && !partyContact.getCountryOfResidence().isDefaultCountry()) { %>
+				<fr:slot name="districtSubdivisionOfResidence" required="true" key="label.districtSubdivisionOfResidence.city" bundle="ACADEMIC_OFFICE_RESOURCES" />
+				<% } %>
+
+				<% if(partyContact.getCountryOfResidence() != null && partyContact.getCountryOfResidence().isDefaultCountry()) { %>
+				<fr:slot name="districtOfResidence" required="true" />
+				<% } %>
+				
 	       	</fr:schema>
 	        <fr:layout name="tabular-editable">
 	            <fr:property name="classes" value="tstyle5 thlight thright mtop025 thmiddle" />
 	            <fr:property name="columnClasses" value=",,tdclear tderror1" />
 	        </fr:layout>
-	        <fr:destination name="postback-select-country"
-	            path="/partyContacts.do?method=postbackSelectCountry&form=edit" />
+	        <fr:destination name="postback-select-country" path="/partyContacts.do?method=postbackSelectCountry&form=edit" />
 	        <fr:destination name="invalid" path="/partyContacts.do?method=invalid&form=edit"/>
 		</fr:edit>
 	</logic:equal>
 	
 	<logic:notEqual name="partyContactClass" value="PhysicalAddress">
+
 	    <fr:edit id="edit-contact" name="partyContact"
 	        schema="<%= "contacts." + partyContactClass + ".manage" %>">
 	        <fr:layout name="tabular-editable">

@@ -21,10 +21,18 @@
  */
 package org.fenixedu.academic.service.services.student.administrativeOfficeServices;
 
+import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Qualification;
 import org.fenixedu.academic.domain.candidacy.RegisteredCandidacySituation;
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
+import org.fenixedu.academic.domain.contacts.EmailAddress;
+import org.fenixedu.academic.domain.contacts.MobilePhone;
+import org.fenixedu.academic.domain.contacts.PartyContactType;
+import org.fenixedu.academic.domain.contacts.Phone;
+import org.fenixedu.academic.domain.contacts.PhysicalAddress;
+import org.fenixedu.academic.domain.contacts.PhysicalAddressData;
+import org.fenixedu.academic.domain.contacts.WebAddress;
 import org.fenixedu.academic.domain.student.PersonalIngressionData;
 import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
 import org.fenixedu.academic.domain.student.Registration;
@@ -41,15 +49,64 @@ import pt.ist.fenixframework.Atomic;
  * @author - �ngela Almeida (argelina@ist.utl.pt)
  * 
  */
-public class CreateStudent {
 
+public class CreateStudent {
     @Atomic
     public static Registration run(PersonBean personBean, ExecutionDegreeBean executionDegreeBean,
             PrecedentDegreeInformationBean precedentDegreeInformationBean, IngressionInformationBean ingressionInformationBean,
             OriginInformationBean originInformationBean) {
 
+        boolean createNewPerson = personBean.getPerson() == null;
+
         // get or update person
         Person person = getPerson(personBean);
+
+        // Write fiscal information
+        if (createNewPerson) {
+            // Validate all contacts
+            person.getAllPendingPartyContacts().forEach(partyContact -> partyContact.setValid());
+        }
+
+        if (createNewPerson && personBean.isUsePhysicalAddress()) {
+
+            person.editSocialSecurityNumber(personBean.getSocialSecurityNumber(), person.getDefaultPhysicalAddress());
+
+        } else if (!createNewPerson && personBean.isUsePhysicalAddress()) {
+
+            person.editSocialSecurityNumber(personBean.getSocialSecurityNumber(), personBean.getFiscalAddressInCreateRegistrationBean().getPhysicalAddress());
+
+        } else if (!personBean.isUsePhysicalAddress()) {
+
+            final Country fiscalAddressCountryOfResidence = personBean.getFiscalAddressCountryOfResidence();
+            final String fiscalAddressAddress = personBean.getFiscalAddressAddress();
+            final String fiscalAddressAreaCode = personBean.getFiscalAddressAreaCode();
+            final String fiscalAddressParishOfResidence = personBean.getFiscalAddressParishOfResidence();
+
+            String fiscalAddressDistrictSubdivisionOfResidence = personBean.getFiscalAddressDistrictSubdivisionOfResidence();
+            String fiscalAddressDistrictOfResidence = personBean.getFiscalAddressDistrictOfResidence();
+            if (fiscalAddressCountryOfResidence.isDefaultCountry()
+                    && personBean.getFiscalAddressDistrictSubdivisionOfResidenceObject() != null) {
+                fiscalAddressDistrictSubdivisionOfResidence =
+                        personBean.getFiscalAddressDistrictSubdivisionOfResidenceObject().getName();
+
+                fiscalAddressDistrictOfResidence =
+                        personBean.getFiscalAddressDistrictSubdivisionOfResidenceObject().getDistrict().getName();
+            }
+
+            final PhysicalAddressData fiscalAddressData = new PhysicalAddressData();
+            fiscalAddressData.setCountryOfResidence(fiscalAddressCountryOfResidence);
+            fiscalAddressData.setAddress(fiscalAddressAddress);
+            fiscalAddressData.setAreaCode(fiscalAddressAreaCode);
+            fiscalAddressData.setParishOfResidence(fiscalAddressParishOfResidence);
+            fiscalAddressData.setDistrictSubdivisionOfResidence(fiscalAddressDistrictSubdivisionOfResidence);
+            fiscalAddressData.setDistrictOfResidence(fiscalAddressDistrictOfResidence);
+
+            final PhysicalAddress fiscalAddress =
+                    PhysicalAddress.createPhysicalAddress(person, fiscalAddressData, PartyContactType.PERSONAL, false);
+            fiscalAddress.setValid();
+
+            person.editSocialSecurityNumber(personBean.getSocialSecurityNumber(), fiscalAddress);
+        }
 
         // create candidacy
         StudentCandidacy studentCandidacy =
@@ -62,23 +119,20 @@ public class CreateStudent {
         // create registration
         Registration registration = studentCandidacy.getRegistration();
         if (registration == null) {
-            registration =
-                    Registration.createRegistrationWithCustomStudentNumber(person, executionDegreeBean.getDegreeCurricularPlan(),
-                            studentCandidacy, ingressionInformationBean.getRegistrationProtocol(),
-                            executionDegreeBean.getCycleType(), executionDegreeBean.getExecutionYear(),
-                            personBean.getStudentNumber());
+            registration = Registration.createRegistrationWithCustomStudentNumber(person,
+                    executionDegreeBean.getDegreeCurricularPlan(), studentCandidacy,
+                    ingressionInformationBean.getRegistrationProtocol(), executionDegreeBean.getCycleType(),
+                    executionDegreeBean.getExecutionYear(), personBean.getStudentNumber());
         }
         registration.setHomologationDate(ingressionInformationBean.getHomologationDate());
         registration.setStudiesStartDate(ingressionInformationBean.getStudiesStartDate());
 
-        PersonalIngressionData personalIngressionData =
-                registration.getStudent().getPersonalIngressionDataByExecutionYear(
-                        executionDegreeBean.getExecutionDegree().getExecutionYear());
+        PersonalIngressionData personalIngressionData = registration.getStudent()
+                .getPersonalIngressionDataByExecutionYear(executionDegreeBean.getExecutionDegree().getExecutionYear());
 
         if (personalIngressionData == null) {
-            personalIngressionData =
-                    new PersonalIngressionData(originInformationBean, personBean, registration.getStudent(), executionDegreeBean
-                            .getExecutionDegree().getExecutionYear());
+            personalIngressionData = new PersonalIngressionData(originInformationBean, personBean, registration.getStudent(),
+                    executionDegreeBean.getExecutionDegree().getExecutionYear());
         } else {
             personalIngressionData.edit(originInformationBean, personBean);
         }

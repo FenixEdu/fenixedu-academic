@@ -24,10 +24,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.actions.ForwardAction;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.contacts.PartyContact;
 import org.fenixedu.academic.domain.contacts.PartyContactValidation;
 import org.fenixedu.academic.domain.contacts.PartyContactValidationState;
+import org.fenixedu.academic.domain.contacts.PhysicalAddress;
+import org.fenixedu.academic.domain.contacts.WebAddress;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.dto.contacts.PartyContactBean;
 import org.fenixedu.academic.service.services.contacts.CreatePartyContact;
@@ -53,6 +56,12 @@ public class PartyContactsManagementForAccountManagerDA extends PartyContactsMan
     @Override
     public ActionForward forwardToInputValidationCode(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response, PartyContact partyContact) {
+        if (partyContact == null || !partyContact.isToBeValidated() || partyContact instanceof PhysicalAddress || partyContact instanceof WebAddress) {
+            if (partyContact.getPartyContactValidation() != null) {
+                partyContact.getPartyContactValidation().setState(PartyContactValidationState.VALID);
+            }
+        }
+        
         request.setAttribute("personID", partyContact.getParty().getExternalId());
         return backToShowInformation(mapping, actionForm, request, response);
     }
@@ -60,9 +69,9 @@ public class PartyContactsManagementForAccountManagerDA extends PartyContactsMan
     @Override
     public ActionForward backToShowInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        request.setAttribute("person", getParty(request));
+        final Party party = getParty(request);
 
-        return mapping.findForward("visualizePersonalInformation");
+        return redirect("/accounts/manageAccounts.do?method=viewPerson&personId=" + party.getExternalId(), request);
     }
 
     @Override

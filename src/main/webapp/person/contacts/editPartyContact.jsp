@@ -18,6 +18,7 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+<%@ page isELIgnored="true"%>
 <%@page import="org.fenixedu.academic.ui.struts.action.externalServices.PhoneValidationUtils"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -66,6 +67,7 @@ request.setAttribute("hideValidationWarning", !partyContact.isToBeValidated());
 </table>
 </logic:notEqual>
 
+<%--
 <logic:equal name="isPhone" value="true">
 	<bean:define id="confirm">
 		<bean:message  bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.message.confirm.Phone" />
@@ -74,11 +76,93 @@ request.setAttribute("hideValidationWarning", !partyContact.isToBeValidated());
 	 $(document).ready(function() {
 		 $('#edit-contact').submit(function() {
 					return confirm('<%= confirm %>');
-			})
+			});
 		 });
 	</script>
 </logic:equal>
-    
+--%>
+
+<logic:equal name="partyContactClass" value="PhysicalAddress">
+		<bean:define id="physicalAddressBean"  name="partyContact" type="org.fenixedu.academic.dto.contacts.PhysicalAddressBean" />
+
+		<logic:equal name="partyContact" property="contact.fiscalAddress" value="true">
+			<p><em class="infoop2"><bean:message key="message.PhysicalAddress.cannot.change.countryOfResidence.in.fiscal.address" bundle="ACADEMIC_OFFICE_RESOURCES" /></em></p>
+		</logic:equal>
+
+		<fr:edit id="edit-contact" name="partyContact" action="/partyContacts.do?method=editPartyContact">
+	       	<fr:schema type="org.fenixedu.academic.dto.contacts.PhysicalAddressBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+				<fr:slot name="type" required="true" />
+				<fr:slot name="defaultContact" key="label.partyContacts.defaultContact" />
+				
+				<logic:equal name="partyContact" property="contact.fiscalAddress" value="true">
+				<fr:slot name="countryOfResidence" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" readOnly="true">
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
+					<fr:property name="format" value="${localizedName.content}" />
+				</fr:slot>
+				</logic:equal>
+
+				<logic:equal name="partyContact" property="contact.fiscalAddress" value="false">
+				<fr:slot name="countryOfResidence" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
+					<fr:property name="format" value="${localizedName.content}" />
+					<fr:property name="destination" value="postback-select-country" />
+					<fr:property name="sortBy" value="name=asc" />
+				</fr:slot>
+				</logic:equal>
+	       		
+				<fr:slot name="address" required="true">
+					<fr:property name="size" value="50" />
+				</fr:slot>
+			
+				<%-- 
+				<fr:slot name="area">
+					<% if(physicalAddressBean.getCountryOfResidence() != null && physicalAddressBean.getCountryOfResidence().isDefaultCountry()) { %>
+					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+					<% } %>
+				</fr:slot>
+				--%>
+				
+				<fr:slot name="areaCode">
+					<fr:property name="size" value="10" />
+					<% if(physicalAddressBean.getCountryOfResidence() != null && physicalAddressBean.getCountryOfResidence().isDefaultCountry()) { %>
+					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+						<fr:property name="regexp" value="\d{4}-\d{3}" />
+						<fr:property name="message" value="error.areaCode.invalidFormat" />
+						<fr:property name="key" value="true" />
+						<fr:property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
+					</fr:validator>
+					<% } %>
+				</fr:slot>
+
+				<% if(physicalAddressBean.getCountryOfResidence() != null && physicalAddressBean.getCountryOfResidence().isDefaultCountry()) { %>
+				<fr:slot name="parishOfResidence" required="true" />
+				<% } %>
+
+				<% if(physicalAddressBean.getCountryOfResidence() == null || physicalAddressBean.getCountryOfResidence().isDefaultCountry()) { %>
+				<fr:slot name="districtSubdivisionOfResidence" required="true" />
+				<% } %>
+
+				<% if(physicalAddressBean.getCountryOfResidence() != null && !physicalAddressBean.getCountryOfResidence().isDefaultCountry()) { %>
+				<fr:slot name="districtSubdivisionOfResidence" required="true" key="label.districtSubdivisionOfResidence.city" bundle="ACADEMIC_OFFICE_RESOURCES" />
+				<% } %>
+
+				<% if(physicalAddressBean.getCountryOfResidence() != null && physicalAddressBean.getCountryOfResidence().isDefaultCountry()) { %>
+				<fr:slot name="districtOfResidence" required="true" />
+				<% } %>
+				
+	       	</fr:schema>
+	        <fr:layout name="tabular-editable">
+	            <fr:property name="classes" value="tstyle5 thlight thright mtop025 thmiddle" />
+	            <fr:property name="columnClasses" value=",,tdclear tderror1" />
+	        </fr:layout>
+	        <fr:destination name="postback-select-country" path="/partyContacts.do?method=postbackSelectCountry&form=edit" />
+	        <fr:destination name="invalid" path="/partyContacts.do?method=invalid&form=edit"/>
+		    <fr:destination name="cancel" path="/partyContacts.do?method=backToShowInformation" />
+		</fr:edit>
+			
+</logic:equal>
+
+<logic:notEqual name="partyContactClass" value="PhysicalAddress">
 <fr:edit id="edit-contact" name="partyContact" action="/partyContacts.do?method=editPartyContact"
     schema="<%= "contacts." + (contactType.equals("INSTITUTIONAL") ? "Institutional." : "") + partyContactClass + ".manage-student" %>">
     <fr:layout name="tabular-editable">
@@ -92,3 +176,4 @@ request.setAttribute("hideValidationWarning", !partyContact.isToBeValidated());
     <fr:destination name="invalid" path="/partyContacts.do?method=invalid&form=edit"/>
     <fr:destination name="cancel" path="/partyContacts.do?method=backToShowInformation" />
 </fr:edit>
+</logic:notEqual>

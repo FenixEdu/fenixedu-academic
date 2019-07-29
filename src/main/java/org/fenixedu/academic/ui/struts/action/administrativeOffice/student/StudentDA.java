@@ -19,6 +19,7 @@
 package org.fenixedu.academic.ui.struts.action.administrativeOffice.student;
 
 import java.util.Collection;
+import java.util.concurrent.Callable;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,7 +48,8 @@ import pt.ist.fenixframework.FenixFramework;
 @Forwards({ @Forward(name = "viewStudentDetails", path = "/academicAdminOffice/student/viewStudentDetails.jsp"),
         @Forward(name = "editPersonalData", path = "/academicAdminOffice/editPersonalData.jsp"),
         @Forward(name = "viewPersonalData", path = "/academicAdminOffice/viewPersonalData.jsp"),
-        @Forward(name = "viewStudentLogChanges", path = "/academicAdminOffice/viewStudentLogChanges.jsp") })
+        @Forward(name = "viewStudentLogChanges", path = "/academicAdminOffice/viewStudentLogChanges.jsp"), 
+        @Forward(name = "editFiscalData", path = "/academicAdminOffice/editFiscalData.jsp") })
 public class StudentDA extends StudentRegistrationDA {
 
     public static class PersonBeanFactoryEditor extends PersonBean implements FactoryExecutor {
@@ -136,4 +138,52 @@ public class StudentDA extends StudentRegistrationDA {
         request.setAttribute("logsList", logsList);
         return mapping.findForward("viewStudentLogChanges");
     }
+        
+    public ActionForward prepareEditFiscalData(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request, final HttpServletResponse response) {
+        final Student student = getAndSetStudent(request);
+        final PersonBean personBean = new PersonBean(student.getPerson());
+        
+        request.setAttribute("personBean", personBean);
+
+        return mapping.findForward("editFiscalData");
+    }
+    
+    public ActionForward editFiscalData(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+        getAndSetStudent(request);
+        
+        final PersonBean personBean = getRenderedObject();
+        try {
+            
+            FenixFramework.atomic(() -> {
+                personBean.getPerson().editSocialSecurityNumber(personBean.getSocialSecurityNumber(), personBean.getFiscalAddress());
+            });
+            
+            return prepareEditPersonalData(mapping, actionForm, request, response);
+        } catch (DomainException ex) {
+            addActionMessage(request, ex.getKey(), ex.getArgs());
+
+            request.setAttribute("personBean", personBean);
+            return mapping.findForward("editFiscalData");
+        }
+    }
+    
+    public ActionForward editFiscalDataInvalid(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request, final HttpServletResponse response) {
+        getAndSetStudent(request);
+        final PersonBean personBean = getRenderedObject();
+        
+        request.setAttribute("personBean", personBean);
+        return mapping.findForward("editFiscalData");
+    }
+    
+    public ActionForward editFiscalDataPostback(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request, final HttpServletResponse response) {
+        getAndSetStudent(request);
+
+        final PersonBean personBean = getRenderedObject();
+        request.setAttribute("personBean", personBean);
+        RenderUtils.invalidateViewState();
+        
+        return mapping.findForward("editFiscalData");
+        
+    }
+    
 }

@@ -46,11 +46,23 @@
 			<td><bean:message key="label.address" bundle="APPLICATION_RESOURCES"/> (<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):</td>
 			<td>
 				<bean:write name="contact" property="presentationValue" />
+				<logic:notEmpty name="contact" property="areaCode">
+					<bean:write name="contact" property="areaCode" />
+				</logic:notEmpty>				
+				<logic:notEmpty name="contact" property="districtSubdivisionOfResidence">
+					<bean:write name="contact" property="districtSubdivisionOfResidence" />
+				</logic:notEmpty>
+				<logic:notEmpty name="contact" property="countryOfResidence">
+					<bean:write name="contact" property="countryOfResidence.localizedName.content" />
+				</logic:notEmpty>
+
 				<logic:equal name="contact" property="defaultContact" value="true">
 					<logic:notEqual name="size" value="1">
 						 (<bean:message key="label.partyContacts.defaultContact" bundle="APPLICATION_RESOURCES"/>)
 					</logic:notEqual>
-					
+				</logic:equal>
+				<logic:equal name="contact" property="fiscalAddress" value="true">
+						 <em class="highlight1"><bean:message key="label.fiscalAddress" /></em>
 				</logic:equal>
 			</td>
             <td class="acenter">
@@ -77,6 +89,9 @@
 			<td class="tdclear">
 				<logic:equal name="contact" property="valid" value="false" >
 					<logic:present role="role(MANAGER) | role(OPERATOR)">
+						<html:link action="<%="/accounts/partyContacts.do?method=prepareValidate&personID=" + contact.getParty().getExternalId() %>" paramId="partyContact" paramName="contact" paramProperty="externalId">
+							<bean:message key="label.validate" bundle="APPLICATION_RESOURCES"/>
+						</html:link>,
 						<html:link action="<%="/accounts/partyContacts.do?method=deletePartyContact&contactId="+contact.getExternalId()%>" paramId="personID" paramName="person" paramProperty="externalId">
 							<bean:message key="label.contact.validation.cancel.request" bundle="ACADEMIC_ADMIN_OFFICE"/>
 						</html:link>

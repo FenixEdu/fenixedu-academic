@@ -18,7 +18,9 @@
  */
 package org.fenixedu.academic.service.services.contacts;
 
+import org.fenixedu.academic.domain.contacts.MobilePhone;
 import org.fenixedu.academic.domain.contacts.PartyContact;
+import org.fenixedu.academic.domain.contacts.Phone;
 import org.fenixedu.academic.domain.contacts.PhysicalAddress;
 import org.fenixedu.academic.domain.contacts.WebAddress;
 import org.fenixedu.academic.dto.contacts.PartyContactBean;
@@ -36,7 +38,7 @@ public class EditPartyContact {
             if (toBeValidated) {
                 contact.triggerValidationProcessIfNeeded();
             } else {
-                if (contact instanceof PhysicalAddress || contact instanceof WebAddress) {
+                if (contact instanceof PhysicalAddress) {
                     contact.setValid();
                 }
             }

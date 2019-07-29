@@ -48,7 +48,7 @@ public class PhoneBean extends PartyContactBean {
 
     @Override
     @Atomic
-    public Boolean edit() {
+    public boolean edit() {
         boolean isValueChanged = super.edit();
         if (isValueChanged) {
             if (!getType().equals(PartyContactType.INSTITUTIONAL)) {

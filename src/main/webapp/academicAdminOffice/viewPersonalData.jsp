@@ -18,11 +18,14 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <html:xhtml/>
+
+<bean:define id="person" name="personBean" property="person" />
 
 <h2><bean:message key="link.student.viewPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
@@ -74,9 +77,78 @@
 	</fr:layout>
 </fr:view>
 
+<h3 class="mbottom025"><bean:message key="label.person.title.fiscalInformation" /></h3>
+<fr:view name="person">
+	<fr:schema type="org.fenixedu.academic.domain.Person" bundle="ACADEMIC_OFFICE_RESOURCES" >
+	
+		<logic:notEmpty name="person" property="fiscalAddress">
+			<fr:slot name="this" layout="format" key="label.socialSecurityNumber" bundle="ACADEMIC_OFFICE_RESOURCES">
+				<fr:property name="format" value="${fiscalAddress.countryOfResidence.code} ${socialSecurityNumber}" />
+			</fr:slot>
+		</logic:notEmpty>
+		
+		<logic:empty name="person" property="fiscalAddress">
+			<fr:slot name="this" key="label.socialSecurityNumber" bundle="ACADEMIC_OFFICE_RESOURCES">
+				<fr:property name="format" value="${socialSecurityNumber}" />
+			</fr:slot>
+		</logic:empty>
+		
+			<fr:slot name="fiscalAddress">
+				<fr:property name="format" value="${uiFiscalPresentationValue}" />
+			</fr:slot>
+	</fr:schema>
+	<fr:layout name="tabular" >
+		<fr:property name="classes" value="tstyle1 thright thlight mtop0"/>
+		<fr:property name="columnClasses" value="width14em,"/>
+	</fr:layout>
+</fr:view>
+
 <h3 class="mbottom025"><bean:message key="label.person.title.addressesInfo" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
 <logic:notEmpty name="personBean" property="sortedPhysicalAdresses">
-	<fr:view name="personBean" property="sortedPhysicalAdresses" schema="contacts.PhysicalAddress.view" >
+	<fr:view name="personBean" property="sortedPhysicalAdresses" >
+		<fr:schema type="org.fenixedu.academic.domain.contacts.PhysicalAddress" extends="contacts.PartyContact.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+			<fr:slot name="defaultContact" key="label.partyContacts.defaultContact">
+				<fr:property name="trueLabel" value="label.partyContacts.view.trueLabel" />
+				<fr:property name="falseLabel" value="label.partyContacts.view.falseLabel" />
+				<fr:property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
+			</fr:slot>
+			<fr:slot name="type" />
+			<fr:slot name="activeAndValid" key="label.partyContacts.isActiveAndValid">
+				<fr:property name="trueLabel" value="label.yes.capitalized" bundle="APPLICATION_RESOURCES"/>
+				<fr:property name="falseLabel" value="label.no.capitalized" bundle="APPLICATION_RESOURCES"/>
+				<fr:property name="bundle" value="APPLICATION_RESOURCES" />
+			</fr:slot>
+			<fr:slot name="fiscalAddress">
+				<fr:property name="trueLabel" value="label.partyContacts.view.trueLabel" />
+				<fr:property name="falseLabel" value="label.partyContacts.view.falseLabel" />
+				<fr:property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
+			</fr:slot>
+			<fr:slot name="address" layout="null-as-label">
+				<fr:property name="label" value="-" />
+			</fr:slot>
+			<fr:slot name="area" layout="null-as-label">
+				<fr:property name="label" value="-" />
+			</fr:slot>
+			<fr:slot name="areaCode" layout="null-as-label">
+				<fr:property name="label" value="-" />
+			</fr:slot>
+			<fr:slot name="areaOfAreaCode" layout="null-as-label">
+				<fr:property name="label" value="-" />
+			</fr:slot>
+			<fr:slot name="parishOfResidence" layout="null-as-label">
+				<fr:property name="label" value="-" />
+			</fr:slot>
+			<fr:slot name="districtSubdivisionOfResidence" layout="null-as-label">
+				<fr:property name="label" value="-" />
+			</fr:slot>
+			<fr:slot name="districtOfResidence" layout="null-as-label">
+				<fr:property name="label" value="-" />
+			</fr:slot>
+			<fr:slot name="countryOfResidenceName" key="label.countryOfResidence" layout="null-as-label">
+				<fr:property name="label" value="-" />
+			</fr:slot>
+		</fr:schema>
+	
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle1 thlight mtop05" />
 		</fr:layout>

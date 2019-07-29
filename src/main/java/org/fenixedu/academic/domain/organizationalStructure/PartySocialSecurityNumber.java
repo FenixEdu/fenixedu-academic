@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.organizationalStructure;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.contacts.PhysicalAddress;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -82,8 +83,7 @@ public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
             }
         }
 
-        if (!TreasuryBridgeAPIFactory.implementation().isValidFiscalNumber(getFiscalCountry().getCode(),
-                getSocialSecurityNumber())) {
+        if (!TreasuryBridgeAPIFactory.implementation().isValidFiscalNumber(getFiscalCountry().getCode(), getSocialSecurityNumber())) {
             throw new DomainException("error.PartySocialSecurityNumber.invalid.socialSecurityNumber");
         }
 
@@ -128,6 +128,17 @@ public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
         return !Strings.isNullOrEmpty(getSocialSecurityNumber());
     }
 
+    @Deprecated
+    public Country getFiscalCountry() {
+        return super.getFiscalCountry();
+    }
+    
+    @Deprecated
+    @Override
+    public void setFiscalCountry(Country fiscalCountry) {
+        super.setFiscalCountry(fiscalCountry);
+    }
+    
     // @formatter:off
     /* ********
      * SERVICES
@@ -135,15 +146,30 @@ public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
      */
     // @formatter:on
 
-    public static PartySocialSecurityNumber editFiscalInformation(final Party party, final Country fiscalCountry,
-            final String socialSecurityNumber) {
+    public static PartySocialSecurityNumber editFiscalInformation(final Party party, final String socialSecurityNumber, final PhysicalAddress fiscalAddress) {
+        if(party.isPerson()) {
+            TreasuryBridgeAPIFactory.implementation().saveFiscalAddressFieldsFromPersonInActiveCustomer((Person) party);
+        }
+        
+        if(fiscalAddress == null || fiscalAddress.getCountryOfResidence() == null) {
+            throw new DomainException("error.PartySocialSecurityNumber.fiscalAddress.country.required");
+        }
+        
+        if(fiscalAddress != null && !fiscalAddress.isActiveAndValid()) {
+            throw new DomainException("error.PartySocialSecurityNumber.fiscalAddress.must.be.active.and.valid");
+        }
+        
+        if(!fiscalAddress.isFiscalAddress()) {
+            party.markAsFiscalAddress(fiscalAddress);
+        }
+        
         final PartySocialSecurityNumber partySocialSecurityNumber = party.getPartySocialSecurityNumber();
 
         if (partySocialSecurityNumber == null) {
-            return new PartySocialSecurityNumber(party, fiscalCountry, socialSecurityNumber);
+            return new PartySocialSecurityNumber(party, fiscalAddress.getCountryOfResidence(), socialSecurityNumber);
         }
 
-        partySocialSecurityNumber.edit(fiscalCountry, socialSecurityNumber);
+        partySocialSecurityNumber.edit(fiscalAddress.getCountryOfResidence(), socialSecurityNumber);
 
         return partySocialSecurityNumber;
     }

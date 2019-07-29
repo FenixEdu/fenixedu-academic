@@ -104,12 +104,6 @@
 		<property name="size" value="50" />
 	</slot>
 	<slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="fiscalCountry" key="label.fiscalCountry" layout="menu-select">
-			<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.CountryProvider" />
-			<property name="format" value="${name} (${code})"/>
-			<property name="sortBy" value="name"/>
-	</slot>
-	<slot name="socialSecurityNumber" />
 	<slot name="professionType" />
 	<slot name="professionalCondition" layout="menu-select">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides"/>
@@ -379,7 +373,7 @@
 
 <schema name="student.show.ingressionInformation" type="org.fenixedu.academic.dto.candidacy.IngressionInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="registrationProtocol.description.content" key="label.registrationAgreement" />
-	<slot name="ingressionType" layout="format"  >
+	<slot name="ingressionType" layout="format" key="label.ingression" >
 		<property name="format" value="${code} - ${description.content}" />
 	</slot>		
 	<slot name="entryPhase" layout="format"  >

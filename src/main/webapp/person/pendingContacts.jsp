@@ -56,6 +56,16 @@
 			<td><bean:message key="label.address" /> (<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):</td>
 			<td>
 				<bean:write name="contact" property="presentationValue" />
+				<logic:notEmpty name="contact" property="areaCode">
+					<bean:write name="contact" property="areaCode" />
+				</logic:notEmpty>				
+				<logic:notEmpty name="contact" property="districtSubdivisionOfResidence">
+					<bean:write name="contact" property="districtSubdivisionOfResidence" />
+				</logic:notEmpty>
+				<logic:notEmpty name="contact" property="countryOfResidence">
+					<bean:write name="contact" property="countryOfResidence.localizedName.content" />
+				</logic:notEmpty>
+
 				<logic:equal name="contact" property="defaultContact" value="true">
 					<logic:notEqual name="size" value="1">
 						 (<bean:message key="label.partyContacts.defaultContact" />)

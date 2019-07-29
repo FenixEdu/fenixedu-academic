@@ -47,7 +47,7 @@ public class WebAddressBean extends PartyContactBean {
 
     @Override
     @Atomic
-    public Boolean edit() {
+    public boolean edit() {
         final boolean isValueChanged = super.edit();
         if (isValueChanged) {
             if (!getType().equals(PartyContactType.INSTITUTIONAL)) {

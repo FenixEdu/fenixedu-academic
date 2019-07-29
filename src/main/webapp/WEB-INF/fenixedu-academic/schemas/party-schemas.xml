@@ -133,7 +133,6 @@
     <slot name="expirationDateOfDocumentIdYearMonthDay" key="label.person.identificationDocumentExpirationDate">
         <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
     </slot>
-    <slot name="socialSecurityNumber" key="label.person.contributorNumber"/>
     <slot name="profession" key="label.person.occupation"/>
     <slot name="maritalStatus" key="label.person.maritalStatus"/>
     <slot name="dateOfBirthYearMonthDay" key="label.person.birth"/>

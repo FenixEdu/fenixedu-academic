@@ -102,12 +102,88 @@
 		<html:cancel onclick="this.form.method.value='visualizeStudent';" ><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:cancel>
 	</p>	
 	
+    <h3 class="mtop2 mbottom025"><bean:message key="label.person.title.fiscalInformation" /></h3>
+    <fr:view name="person">
+        <fr:schema type="org.fenixedu.academic.domain.Person" bundle="ACADEMIC_OFFICE_RESOURCES" >
+        	
+        	<logic:notEmpty name="person" property="fiscalAddress">
+			<fr:slot name="this" layout="format" key="label.socialSecurityNumber" bundle="ACADEMIC_OFFICE_RESOURCES">
+				<fr:property name="format" value="${fiscalAddress.countryOfResidence.code} ${socialSecurityNumber}" />
+			</fr:slot>
+			</logic:notEmpty>
+			
+        	<logic:empty name="person" property="fiscalAddress">
+			<fr:slot name="this" key="label.socialSecurityNumber" bundle="ACADEMIC_OFFICE_RESOURCES">
+				<fr:property name="format" value="${socialSecurityNumber}" />
+			</fr:slot>
+			</logic:empty>
+			
+        	<fr:slot name="fiscalAddress">
+				<fr:property name="format" value="${address} ${areaCode} ${countryOfResidence.name}" />
+        	</fr:slot>
+        </fr:schema>
+	    <fr:layout name="tabular" >
+	        <fr:property name="classes" value="tstyle1 thright thlight mtop0"/>
+	        <fr:property name="columnClasses" value="width14em,"/>
+	    </fr:layout>
+    </fr:view>
+
+    <div class="mbottom2">
+		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+		<html:link page="/student.do?method=prepareEditFiscalData" paramId="studentID" paramName="student" paramProperty="externalId">
+			<bean:message key="link.student.editFiscalData" bundle="ACADEMIC_OFFICE_RESOURCES" />
+		</html:link>
+    </div>
+    
 	<h3 class="mtop2 mbottom025"><bean:message key="label.person.title.addressesInfo" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
-	<fr:view name="personBean" property="sortedPhysicalAdresses" schema="contacts.PhysicalAddress.view">
+	<fr:view name="personBean" property="sortedPhysicalAdresses" >
+		<fr:schema type="org.fenixedu.academic.domain.contacts.PhysicalAddress" bundle="ACADEMIC_OFFICE_RESOURCES">
+			<fr:slot name="defaultContact" key="label.partyContacts.defaultContact">
+				<fr:property name="trueLabel" value="label.partyContacts.view.trueLabel" />
+				<fr:property name="falseLabel" value="label.partyContacts.view.falseLabel" />
+				<fr:property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
+			</fr:slot>
+			<fr:slot name="type" />
+			<fr:slot name="activeAndValid" key="label.partyContacts.isActiveAndValid">
+				<fr:property name="trueLabel" value="label.yes.capitalized""/>
+				<fr:property name="falseLabel" value="label.no.capitalized"/>
+				<fr:property name="bundle" value="APPLICATION_RESOURCES" />
+			</fr:slot>
+			<fr:slot name="fiscalAddress">
+				<fr:property name="trueLabel" value="label.partyContacts.view.trueLabel" />
+				<fr:property name="falseLabel" value="label.partyContacts.view.falseLabel" />
+				<fr:property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
+			</fr:slot>
+			<fr:slot name="address" layout="null-as-label">
+				<fr:property name="label" value="-" />
+			</fr:slot>
+			<fr:slot name="area" layout="null-as-label">
+				<fr:property name="label" value="-" />
+			</fr:slot>
+			<fr:slot name="areaCode" layout="null-as-label">
+				<fr:property name="label" value="-" />
+			</fr:slot>
+			<fr:slot name="areaOfAreaCode" layout="null-as-label">
+				<fr:property name="label" value="-" />
+			</fr:slot>
+			<fr:slot name="parishOfResidence" layout="null-as-label">
+				<fr:property name="label" value="-" />
+			</fr:slot>
+			<fr:slot name="districtSubdivisionOfResidence" layout="null-as-label">
+				<fr:property name="label" value="-" />
+			</fr:slot>
+			<fr:slot name="districtOfResidence" layout="null-as-label">
+				<fr:property name="label" value="-" />
+			</fr:slot>
+			<fr:slot name="countryOfResidenceName" key="label.countryOfResidence" layout="null-as-label">
+				<fr:property name="label" value="-" />
+			</fr:slot>
+		</fr:schema>
+	
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle1 thlight mtop05" />
 			
-			<fr:property name="linkFormat(edit)" value="<%="/partyContacts.do?method=prepareEditPartyContact&amp;contactId=${externalId}&amp;studentID=" + studentID %>"/>
+			<fr:property name="linkFormat(edit)" value="<%="/partyContacts.do?method=prepareEditPhysicalAddress&amp;contactId=${externalId}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(edit)" value="label.partyContacts.edit"/>
 			<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			<fr:property name="order(edit)" value="1"/>
@@ -116,6 +192,7 @@
 			<fr:property name="key(delete)" value="label.partyContacts.delete"/>
 			<fr:property name="bundle(delete)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			<fr:property name="order(delete)" value="2"/>
+
 		</fr:layout>
 	</fr:view>
 

@@ -201,7 +201,7 @@
 <h3 class="mbottom025"><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <p class="mtop05 mbottom15">
     <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-    <html:link href="<%= request.getContextPath() + TreasuryBridgeAPIFactory.implementation().getPersonAccountTreasuryManagementURL(student.getPerson()) %>" >
+    <%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><html:link href="<%= request.getContextPath() + TreasuryBridgeAPIFactory.implementation().getPersonAccountTreasuryManagementURL(student.getPerson()) %>" >
         <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.management" />
     </html:link>
 </p>
