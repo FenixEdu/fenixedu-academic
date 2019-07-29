@@ -133,8 +133,8 @@ public class StudentStatute extends StudentStatute_Base {
             final ExecutionInterval endExecutionPeriod, final LocalDate beginDate, final LocalDate endDate,
             final String comment) {
 
-        setBeginExecutionPeriod(beginExecutionPeriod.convert(ExecutionSemester.class));
-        setEndExecutionPeriod(endExecutionPeriod.convert(ExecutionSemester.class));
+        setBeginExecutionPeriod(beginExecutionPeriod);
+        setEndExecutionPeriod(endExecutionPeriod);
         setBeginDate(beginDate);
         setEndDate(endDate);
         setComment(comment);
@@ -251,12 +251,12 @@ public class StudentStatute extends StudentStatute_Base {
         for (Registration registration : registrations) {
             Set<StudentCurricularPlan> plans = registration.getStudentCurricularPlansSet();
             for (StudentCurricularPlan scp : plans) {
-                ExecutionSemester semesterIterator = getBeginExecutionPeriod();
-                while (semesterIterator != null && semesterIterator.isBeforeOrEquals(lastSemester)) {
-                    if (scp.isEnroledInSpecialSeason(semesterIterator)) {
+                ExecutionInterval interval = getBeginExecutionInterval();
+                while (interval != null && interval.isBeforeOrEquals(lastSemester)) {
+                    if (scp.isEnroledInSpecialSeason(interval)) {
                         return true;
                     }
-                    semesterIterator = semesterIterator.getNextExecutionPeriod();
+                    interval = interval.getNext();
                 }
             }
         }
@@ -272,8 +272,8 @@ public class StudentStatute extends StudentStatute_Base {
      */
     @Deprecated
     @Override
-    public ExecutionSemester getBeginExecutionPeriod() {
-        return super.getBeginExecutionPeriod();
+    public ExecutionInterval getBeginExecutionPeriod() {
+        return getBeginExecutionInterval();
     }
 
     public ExecutionInterval getBeginExecutionInterval() {
@@ -285,8 +285,8 @@ public class StudentStatute extends StudentStatute_Base {
      */
     @Deprecated
     @Override
-    public ExecutionSemester getEndExecutionPeriod() {
-        return super.getEndExecutionPeriod();
+    public ExecutionInterval getEndExecutionPeriod() {
+        return getEndExecutionInterval();
     }
 
     public ExecutionInterval getEndExecutionInterval() {

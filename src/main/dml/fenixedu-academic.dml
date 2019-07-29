@@ -4312,14 +4312,14 @@ relation StudentStudentNumber {
 }
 
 relation StudentStatuteBeginPeriod {
-    ExecutionSemester playsRole beginExecutionPeriod;
+    ExecutionInterval playsRole beginExecutionPeriod;
     student.StudentStatute playsRole beginningStudentStatutes {
         multiplicity *;
     }
 }
 
 relation StudentStatuteEndPeriod {
-    ExecutionSemester playsRole endExecutionPeriod;
+    ExecutionInterval playsRole endExecutionPeriod;
     student.StudentStatute playsRole endingStudentStatutes {
         multiplicity *;
     }
