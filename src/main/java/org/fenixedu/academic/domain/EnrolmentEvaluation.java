@@ -426,16 +426,8 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
      */
     @Deprecated
     @Override
-    public ExecutionSemester getExecutionPeriod() {
-        if (getEvaluationSeason().isImprovement()) {
-            return super.getExecutionPeriod();
-        }
-
-        if (getEnrolment() != null) {
-            return getEnrolment().getExecutionPeriod();
-        }
-
-        return null;
+    public ExecutionInterval getExecutionPeriod() {
+        return getExecutionInterval();
     }
 
     public ExecutionInterval getExecutionInterval() {

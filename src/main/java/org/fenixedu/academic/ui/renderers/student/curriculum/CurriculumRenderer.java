@@ -386,8 +386,9 @@ public class CurriculumRenderer extends InputRenderer {
         }
 
         private void generateSemesterCell(final HtmlTableRow enrolmentRow, final ICurriculumEntry entry) {
-            final String semester = entry.getExecutionPeriod() == null ? "-" : entry.getExecutionPeriod().getSemester().toString()
-                    + " " + BundleUtil.getString(Bundle.APPLICATION, "label.semester.short");
+            final String semester =
+                    entry.getExecutionInterval() == null ? "-" : entry.getExecutionInterval().getChildOrder().toString() + " "
+                            + BundleUtil.getString(Bundle.APPLICATION, "label.semester.short");
 
             generateCellWithText(enrolmentRow, semester, renderer.getEnrolmentSemesterCellClass());
         }

@@ -20,6 +20,7 @@ package org.fenixedu.academic.dto.administrativeOffice.externalUnits;
 
 import java.io.Serializable;
 
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExternalCurricularCourse;
 import org.fenixedu.academic.domain.Grade;
@@ -28,7 +29,7 @@ import org.joda.time.YearMonthDay;
 public class CreateExternalEnrolmentBean implements Serializable {
 
     private ExternalCurricularCourse externalCurricularCourse;
-    private ExecutionSemester executionSemester;
+    private ExecutionInterval executionSemester;
 
     private Integer studentNumber;
     private Grade grade;
@@ -58,11 +59,11 @@ public class CreateExternalEnrolmentBean implements Serializable {
         this.studentNumber = studentNumber;
     }
 
-    public ExecutionSemester getExecutionPeriod() {
+    public ExecutionInterval getExecutionPeriod() {
         return this.executionSemester;
     }
 
-    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+    public void setExecutionPeriod(ExecutionInterval executionSemester) {
         this.executionSemester = executionSemester;
     }
 

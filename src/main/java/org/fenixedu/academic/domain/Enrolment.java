@@ -792,7 +792,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     final public void deleteTemporaryEvaluationForSpecialSeason(final EvaluationSeason season) throws DomainException {
 
-        final EnrolmentEvaluation temporarySpecialSeason = getTemporaryEvaluation(season, getExecutionPeriod()).orElse(null);
+        final EnrolmentEvaluation temporarySpecialSeason = getTemporaryEvaluation(season, getExecutionInterval()).orElse(null);
         if (temporarySpecialSeason == null || !temporarySpecialSeason.isTemporary()) {
             throw new DomainException("error.enrolment.cant.unenroll");
         }
@@ -843,7 +843,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         for (final EnrolmentEvaluation evaluation : getEvaluationsSet()) {
             final EvaluationSeason season = evaluation.getEvaluationSeason();
 
-            if (season.isSpecial() && isEnroledInSeason(season, getExecutionPeriod())) {
+            if (season.isSpecial() && isEnroledInSeason(season, getExecutionInterval())) {
                 return true;
             }
         }
@@ -1009,8 +1009,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     @Override
-    final public void setExecutionPeriod(final ExecutionSemester executionSemester) {
-        super.setExecutionPeriod(executionSemester);
+    final public void setExecutionPeriod(final ExecutionInterval executionInterval) {
+        super.setExecutionPeriod(executionInterval);
         resetIsFirstTimeEnrolment();
     }
 
@@ -1031,7 +1031,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     protected void createCurriculumLineLog(final EnrolmentAction action) {
-        new EnrolmentLog(action, getRegistration(), getCurricularCourse(), getExecutionPeriod(), getCurrentUser());
+        new EnrolmentLog(action, getRegistration(), getCurricularCourse(), getExecutionInterval(), getCurrentUser());
     }
 
     @Override
@@ -1547,8 +1547,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
      */
     @Deprecated
     @Override
-    public ExecutionSemester getExecutionPeriod() {
-        return super.getExecutionPeriod();
+    public ExecutionInterval getExecutionPeriod() {
+        return getExecutionInterval();
     }
 
     public ExecutionInterval getExecutionInterval() {

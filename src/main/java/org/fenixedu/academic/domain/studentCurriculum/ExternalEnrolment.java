@@ -297,8 +297,8 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
      */
     @Deprecated
     @Override
-    public ExecutionSemester getExecutionPeriod() {
-        return super.getExecutionPeriod();
+    public ExecutionInterval getExecutionPeriod() {
+        return getExecutionInterval();
     }
 
     public ExecutionInterval getExecutionInterval() {

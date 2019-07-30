@@ -24,13 +24,13 @@ import java.util.List;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curriculum.EnrollmentState;
 
 public class ExecutionPeriodStatisticsBean implements Serializable {
 
-    private ExecutionSemester executionSemester;
+    private ExecutionInterval executionInterval;
     private List<Enrolment> enrolmentsWithinExecutionPeriod;
     private Integer totalEnrolmentsNumber;
     private Integer approvedEnrolmentsNumber;
@@ -45,17 +45,17 @@ public class ExecutionPeriodStatisticsBean implements Serializable {
         this.aritmeticAverage = 0.0;
     }
 
-    public ExecutionPeriodStatisticsBean(ExecutionSemester executionSemester) {
-        setExecutionPeriod(executionSemester);
+    public ExecutionPeriodStatisticsBean(ExecutionInterval executionInterval) {
+        setExecutionPeriod(executionInterval);
         this.enrolmentsWithinExecutionPeriod = new ArrayList<Enrolment>();
     }
 
-    public ExecutionSemester getExecutionPeriod() {
-        return (executionSemester);
+    public ExecutionInterval getExecutionPeriod() {
+        return (executionInterval);
     }
 
-    public void setExecutionPeriod(ExecutionSemester executionSemester) {
-        this.executionSemester = executionSemester;
+    public void setExecutionPeriod(ExecutionInterval executionSemester) {
+        this.executionInterval = executionSemester;
     }
 
     public List<Enrolment> getEnrolmentsWithinExecutionPeriod() {

@@ -24,7 +24,6 @@ import java.util.Set;
 
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.CurricularRule;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.degreeStructure.Context;
@@ -36,8 +35,8 @@ public class NoCourseGroupEnroledCurriculumModuleWrapper extends EnroledCurricul
     private static final long serialVersionUID = 1L;
 
     public NoCourseGroupEnroledCurriculumModuleWrapper(final CurriculumModule curriculumModule,
-            final ExecutionSemester executionSemester) {
-        super(curriculumModule, executionSemester);
+            final ExecutionInterval executionInterval) {
+        super(curriculumModule, executionInterval);
     }
 
     @Override

@@ -365,8 +365,8 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
      */
     @Deprecated
     @Override
-    public ExecutionSemester getExecutionPeriod() {
-        return getCredits().getExecutionPeriod();
+    public ExecutionInterval getExecutionPeriod() {
+        return getCredits().getExecutionInterval();
     }
 
     @Override

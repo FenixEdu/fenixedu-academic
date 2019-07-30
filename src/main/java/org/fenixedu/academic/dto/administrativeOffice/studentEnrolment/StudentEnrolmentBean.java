@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
@@ -34,7 +35,7 @@ import org.fenixedu.academic.dto.student.IStudentCurricularPlanBean;
 public class StudentEnrolmentBean implements Serializable, IStudentCurricularPlanBean {
 
     private StudentCurricularPlan studentCurricularPlan;
-    private ExecutionSemester executionSemester;
+    private ExecutionInterval executionSemester;
     private List<CurriculumModule> curriculumModules;
     private List<DegreeModuleToEnrol> degreeModulesToEnrol;
     private CurriculumModuleBean curriculumModuleBean;
@@ -48,11 +49,11 @@ public class StudentEnrolmentBean implements Serializable, IStudentCurricularPla
         this.studentCurricularPlan = studentCurricularPlan;
     }
 
-    public ExecutionSemester getExecutionPeriod() {
+    public ExecutionInterval getExecutionPeriod() {
         return this.executionSemester;
     }
 
-    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+    public void setExecutionPeriod(ExecutionInterval executionSemester) {
         this.executionSemester = executionSemester;
     }
 

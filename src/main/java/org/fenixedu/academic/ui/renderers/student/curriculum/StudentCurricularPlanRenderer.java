@@ -35,6 +35,7 @@ import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.EnrolmentEvaluation;
 import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
@@ -471,14 +472,14 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
         protected void generateRowsForExecutionYearsOrganization(HtmlTable mainTable) {
 
             if (renderer.isToShowEnrolments()) {
-                final Set<ExecutionSemester> enrolmentExecutionPeriods =
-                        new TreeSet<ExecutionSemester>(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
+                final Set<ExecutionInterval> enrolmentExecutionPeriods =
+                        new TreeSet<>(ExecutionInterval.COMPARATOR_BY_BEGIN_DATE);
                 enrolmentExecutionPeriods.addAll(this.studentCurricularPlan.getEnrolmentsExecutionPeriods());
 
-                for (final ExecutionSemester enrolmentsExecutionPeriod : enrolmentExecutionPeriods) {
+                for (final ExecutionInterval enrolmentsExecutionPeriod : enrolmentExecutionPeriods) {
                     generateGroupRowWithText(mainTable,
-                            enrolmentsExecutionPeriod.getYear() + ", " + enrolmentsExecutionPeriod.getName(), true, 0,
-                            (CurriculumGroup) null);
+                            enrolmentsExecutionPeriod.getExecutionYear().getYear() + ", " + enrolmentsExecutionPeriod.getName(),
+                            true, 0, (CurriculumGroup) null);
                     generateEnrolmentRows(mainTable,
                             this.studentCurricularPlan.getEnrolmentsByExecutionPeriod(enrolmentsExecutionPeriod), 0);
                 }
@@ -967,7 +968,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
                 generateCellWithText(enrolmentRow, evaluation.getExecutionInterval().getExecutionYear().getYear(),
                         renderer.getEnrolmentExecutionYearCellClass());
                 generateCellWithText(enrolmentRow,
-                        evaluation.getExecutionPeriod().getSemester().toString() + " "
+                        evaluation.getExecutionInterval().getChildOrder().toString() + " "
                                 + BundleUtil.getString(Bundle.APPLICATION, "label.semester.short"),
                         renderer.getEnrolmentSemesterCellClass());
             } else {
@@ -1064,8 +1065,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
         protected void generateSemesterCell(final HtmlTableRow row, final ICurriculumEntry entry) {
             final String semester;
-            if (entry.getExecutionPeriod() != null) {
-                semester = entry.getExecutionPeriod().getSemester().toString() + " "
+            if (entry.getExecutionInterval() != null) {
+                semester = entry.getExecutionInterval().getChildOrder().toString() + " "
                         + BundleUtil.getString(Bundle.APPLICATION, "label.semester.short");
             } else {
                 semester = EMPTY_INFO;
@@ -1158,13 +1159,13 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
                 final HtmlTableCell cell = enrolmentRow.createCell();
                 cell.setClasses(renderer.getDegreeCurricularPlanCellClass());
                 cell.setBody(createDegreeCurricularPlanNameLink(enrolment.getDegreeCurricularPlanOfDegreeModule(),
-                        enrolment.getExecutionPeriod()));
+                        enrolment.getExecutionInterval()));
             }
 
         }
 
         protected HtmlComponent createDegreeCurricularPlanNameLink(final DegreeCurricularPlan degreeCurricularPlan,
-                ExecutionSemester executionSemester) {
+                ExecutionInterval executionInterval) {
             final String siteUrl = degreeCurricularPlan.getDegree().getSiteUrl();
 
             if (Strings.isNullOrEmpty(siteUrl)) {

@@ -72,7 +72,7 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
     @Override
     protected void createCurriculumLineLog(final EnrolmentAction action) {
         new OptionalEnrolmentLog(action, getRegistration(), getCurricularCourse(), getOptionalCurricularCourse(),
-                getExecutionPeriod(), getCurrentUser());
+                getExecutionInterval(), getCurrentUser());
     }
 
     @Override

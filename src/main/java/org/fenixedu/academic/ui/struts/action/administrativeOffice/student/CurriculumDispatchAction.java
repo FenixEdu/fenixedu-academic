@@ -37,7 +37,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
@@ -391,23 +391,22 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
         /* Make a 'studentStatistics' Array of ExecutionPeriodStatisticsBean that has info on # enrolments, etc */
         List<ExecutionPeriodStatisticsBean> studentStatistics = new ArrayList<ExecutionPeriodStatisticsBean>();
 
-        Map<ExecutionSemester, ExecutionPeriodStatisticsBean> enrolmentsByExecutionPeriod =
-                new HashMap<ExecutionSemester, ExecutionPeriodStatisticsBean>();
+        Map<ExecutionInterval, ExecutionPeriodStatisticsBean> enrolmentsByExecutionPeriod = new HashMap<>();
 
         for (StudentCurricularPlan studentCurricularPlan : getSortedStudentCurricularPlans(registration)) {
-            for (ExecutionSemester executionSemester : studentCurricularPlan.getEnrolmentsExecutionPeriods()) {
-                if (enrolmentsByExecutionPeriod.containsKey(executionSemester)) {
+            for (ExecutionInterval executionInterval : studentCurricularPlan.getEnrolmentsExecutionPeriods()) {
+                if (enrolmentsByExecutionPeriod.containsKey(executionInterval)) {
                     ExecutionPeriodStatisticsBean executionPeriodStatisticsBean =
-                            enrolmentsByExecutionPeriod.get(executionSemester);
+                            enrolmentsByExecutionPeriod.get(executionInterval);
                     executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(
-                            studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionSemester));
-                    enrolmentsByExecutionPeriod.put(executionSemester, executionPeriodStatisticsBean);
+                            studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionInterval));
+                    enrolmentsByExecutionPeriod.put(executionInterval, executionPeriodStatisticsBean);
                 } else {
                     ExecutionPeriodStatisticsBean executionPeriodStatisticsBean =
-                            new ExecutionPeriodStatisticsBean(executionSemester);
+                            new ExecutionPeriodStatisticsBean(executionInterval);
                     executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(
-                            studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionSemester));
-                    enrolmentsByExecutionPeriod.put(executionSemester, executionPeriodStatisticsBean);
+                            studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionInterval));
+                    enrolmentsByExecutionPeriod.put(executionInterval, executionPeriodStatisticsBean);
                 }
             }
         }
@@ -421,7 +420,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
         for (ExecutionPeriodStatisticsBean executionPeriodStatisticsBean : studentStatistics) {
             JsonArray jsonArray = new JsonArray();
             jsonArray.add(new JsonPrimitive(executionPeriodStatisticsBean.getExecutionPeriod().getExecutionYear().getYear()
-                    + " - " + executionPeriodStatisticsBean.getExecutionPeriod().getSemester().toString() + "º sem"));
+                    + " - " + executionPeriodStatisticsBean.getExecutionPeriod().getChildOrder().toString() + "º sem"));
             jsonArray.add(new JsonPrimitive(executionPeriodStatisticsBean.getTotalEnrolmentsNumber()));
             jsonArray.add(new JsonPrimitive(executionPeriodStatisticsBean.getApprovedEnrolmentsNumber()));
             periodsJSONArray.add(jsonArray);

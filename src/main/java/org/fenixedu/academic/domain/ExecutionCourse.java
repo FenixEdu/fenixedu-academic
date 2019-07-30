@@ -1130,7 +1130,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             enrolmentsNumber = 0;
         } else {
             enrolmentsNumber =
-                    attends.getEnrolment().getNumberOfTotalEnrolmentsInThisCourse(attends.getEnrolment().getExecutionPeriod());
+                    attends.getEnrolment().getNumberOfTotalEnrolmentsInThisCourse(attends.getEnrolment().getExecutionInterval());
         }
 
         Integer mapValue = enrolmentNumberMap.get(enrolmentsNumber);

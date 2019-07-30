@@ -26,7 +26,7 @@ import java.util.List;
 import org.apache.commons.beanutils.BeanComparator;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.enrolment.DegreeModuleToEnrol;
@@ -215,7 +215,7 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
         }
 
         private void generateModules(HtmlBlockContainer blockContainer, StudentCurricularPlan studentCurricularPlan,
-                CurriculumModuleBean curriculumModuleBean, ExecutionSemester executionSemester, int depth) {
+                CurriculumModuleBean curriculumModuleBean, ExecutionInterval executionInterval, int depth) {
             final HtmlTable groupTable = new HtmlTable();
             blockContainer.addChild(groupTable);
             groupTable.setClasses(getTablesClasses());
@@ -248,25 +248,25 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
             coursesTable.setStyle("width: " + (getInitialWidth() - depth - getWidthDecreasePerLevel()) + "em; margin-left: "
                     + (depth + getWidthDecreasePerLevel()) + "em;");
 
-            generateEnrolments(curriculumModuleBean, executionSemester, coursesTable);
-            generateCurricularCoursesToEnrol(coursesTable, curriculumModuleBean, executionSemester);
-            generateGroups(blockContainer, curriculumModuleBean, studentCurricularPlan, executionSemester, depth);
+            generateEnrolments(curriculumModuleBean, executionInterval, coursesTable);
+            generateCurricularCoursesToEnrol(coursesTable, curriculumModuleBean, executionInterval);
+            generateGroups(blockContainer, curriculumModuleBean, studentCurricularPlan, executionInterval, depth);
         }
 
         private void generateGroups(HtmlBlockContainer blockContainer, CurriculumModuleBean curriculumModuleBean,
-                StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester, int depth) {
+                StudentCurricularPlan studentCurricularPlan, ExecutionInterval executionInterval, int depth) {
             List<DegreeModuleToEnrol> courseGroupsToEnrol =
                     new ArrayList<DegreeModuleToEnrol>(curriculumModuleBean.getGroupsToEnrol());
             Collections.sort(courseGroupsToEnrol, new BeanComparator("context"));
 
             List<CurriculumModuleBean> curriculumGroups =
                     new ArrayList<CurriculumModuleBean>(curriculumModuleBean.getGroupsEnroled());
-            Collections.sort(curriculumGroups, new CurriculumModuleComparator(executionSemester));
+            Collections.sort(curriculumGroups, new CurriculumModuleComparator(executionInterval));
 
             while (!courseGroupsToEnrol.isEmpty() || !curriculumGroups.isEmpty()) {
 
                 if (!curriculumGroups.isEmpty() && courseGroupsToEnrol.isEmpty()) {
-                    generateModules(blockContainer, studentCurricularPlan, curriculumGroups.iterator().next(), executionSemester,
+                    generateModules(blockContainer, studentCurricularPlan, curriculumGroups.iterator().next(), executionInterval,
                             depth + getWidthDecreasePerLevel());
                     curriculumGroups.remove(0);
                 } else if (curriculumGroups.isEmpty() && !courseGroupsToEnrol.isEmpty()) {
@@ -276,9 +276,9 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
                 } else {
                     Context context = courseGroupsToEnrol.iterator().next().getContext();
                     CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumGroups.iterator().next().getCurriculumModule();
-                    if (curriculumGroup.getChildOrder(executionSemester) <= context.getChildOrder()) {
+                    if (curriculumGroup.getChildOrder(executionInterval) <= context.getChildOrder()) {
                         generateModules(blockContainer, studentCurricularPlan, curriculumGroups.iterator().next(),
-                                executionSemester, depth + getWidthDecreasePerLevel());
+                                executionInterval, depth + getWidthDecreasePerLevel());
                         curriculumGroups.remove(0);
                     } else {
                         generateCourseGroupToEnroll(blockContainer, courseGroupsToEnrol.iterator().next(),
@@ -310,7 +310,7 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
         }
 
         private void generateCurricularCoursesToEnrol(HtmlTable groupTable, CurriculumModuleBean curriculumModuleBean,
-                ExecutionSemester executionSemester) {
+                ExecutionInterval executionInterval) {
             List<DegreeModuleToEnrol> coursesToEnrol = curriculumModuleBean.getCurricularCoursesToEnrol();
             Collections.sort(coursesToEnrol, new BeanComparator("context"));
 
@@ -370,12 +370,12 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
             }
         }
 
-        private void generateEnrolments(CurriculumModuleBean curriculumModuleBean, ExecutionSemester executionSemester,
+        private void generateEnrolments(CurriculumModuleBean curriculumModuleBean, ExecutionInterval executionInterval,
                 final HtmlTable groupTable) {
             for (CurriculumModuleBean curriculumModule : curriculumModuleBean.getCurricularCoursesEnroled()) {
                 if (((CurriculumLine) curriculumModule.getCurriculumModule()).isEnrolment()) {
                     Enrolment enrolment = (Enrolment) curriculumModule.getCurriculumModule();
-                    if (enrolment.getExecutionInterval().equals(executionSemester) && enrolment.isEnroled()) {
+                    if (enrolment.getExecutionInterval().equals(executionInterval) && enrolment.isEnroled()) {
                         generateEnrolment(groupTable, enrolment);
                     }
                 }
@@ -401,7 +401,7 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
             semesterCell.setClasses(getEnrolmentSemesterClasses());
 
             final StringBuilder semester = new StringBuilder();
-            semester.append(enrolment.getExecutionPeriod().getSemester().toString());
+            semester.append(enrolment.getExecutionInterval().getChildOrder().toString());
             semester.append(" ");
             semester.append(BundleUtil.getString(Bundle.ENUMERATION, "SEMESTER.ABBREVIATION"));
             semesterCell.setBody(new HtmlText(semester.toString()));
@@ -430,17 +430,17 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 
     public static class CurriculumModuleComparator implements Comparator<CurriculumModuleBean> {
 
-        private final ExecutionSemester executionSemester;
+        private final ExecutionInterval executionInterval;
 
-        public CurriculumModuleComparator(ExecutionSemester executionSemester) {
-            this.executionSemester = executionSemester;
+        public CurriculumModuleComparator(ExecutionInterval executionInterval) {
+            this.executionInterval = executionInterval;
         }
 
         @Override
         public int compare(CurriculumModuleBean o1, CurriculumModuleBean o2) {
             CurriculumGroup c1 = (CurriculumGroup) o1.getCurriculumModule();
             CurriculumGroup c2 = (CurriculumGroup) o2.getCurriculumModule();
-            return c1.getChildOrder(executionSemester).compareTo(c2.getChildOrder(executionSemester));
+            return c1.getChildOrder(executionInterval).compareTo(c2.getChildOrder(executionInterval));
         }
 
     }

@@ -249,7 +249,7 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
      * @deprecated use {@link #getExecutionInterval()}
      */
     @Deprecated
-    abstract public ExecutionSemester getExecutionPeriod();
+    abstract public ExecutionInterval getExecutionPeriod();
 
     abstract public ExecutionInterval getExecutionInterval();
 

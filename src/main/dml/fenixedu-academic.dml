@@ -2441,7 +2441,7 @@ relation CreditsDismissalEquivalence {
 }
 
 relation CreditsExecutionPeriod {
-    ExecutionSemester playsRole executionPeriod {
+    ExecutionInterval playsRole executionPeriod {
         multiplicity 1..1;
     }
     studentCurriculum.Credits playsRole credits {
@@ -2733,7 +2733,7 @@ relation EnrolmentEvaluationExecutionPeriod {
     EnrolmentEvaluation playsRole enrolmentEvaluations {
         multiplicity *;
     }
-    ExecutionSemester playsRole executionPeriod;
+    ExecutionInterval playsRole executionPeriod;
 }
 
 relation EnrolmentEvaluationResponsiblePerson {
@@ -2747,7 +2747,7 @@ relation EnrolmentExecutionPeriod {
     Enrolment playsRole enrolments {
         multiplicity *;
     }
-    ExecutionSemester playsRole executionPeriod;
+    ExecutionInterval playsRole executionPeriod;
 }
 
 relation EnrolmentWrapperCredits {
@@ -2955,7 +2955,7 @@ relation ExternalEnrolmentExecutionPeriod {
     studentCurriculum.ExternalEnrolment playsRole externalEnrolments {
         multiplicity *;
     }
-    ExecutionSemester playsRole executionPeriod;
+    ExecutionInterval playsRole executionPeriod;
 }
 
 relation PersonPhoto {

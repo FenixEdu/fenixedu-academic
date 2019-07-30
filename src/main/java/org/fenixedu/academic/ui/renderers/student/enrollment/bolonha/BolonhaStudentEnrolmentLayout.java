@@ -510,8 +510,8 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 
     protected void encodeCurricularRules(final HtmlTable groupTable, final IDegreeModuleToEvaluate degreeModuleToEvaluate) {
         final DegreeModule degreeModule = degreeModuleToEvaluate.getDegreeModule();
-        final List<CurricularRule> curricularRules =
-                degreeModule.getCurricularRules(degreeModuleToEvaluate.getContext(), degreeModuleToEvaluate.getExecutionInterval());
+        final List<CurricularRule> curricularRules = degreeModule.getCurricularRules(degreeModuleToEvaluate.getContext(),
+                degreeModuleToEvaluate.getExecutionInterval());
         if (!curricularRules.isEmpty()) {
             encodeCurricularRules(groupTable, curricularRules);
         }
@@ -584,7 +584,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         semesterCell.setClasses(enrolmentSemesterClasses);
 
         final StringBuilder semester = new StringBuilder();
-        semester.append(enrolment.getExecutionPeriod().getSemester().toString());
+        semester.append(enrolment.getExecutionInterval().getChildOrder().toString());
         semester.append(" ");
         semester.append(BundleUtil.getString(Bundle.ENUMERATION, "SEMESTER.ABBREVIATION"));
         semesterCell.setBody(new HtmlText(semester.toString()));

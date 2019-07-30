@@ -625,11 +625,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return null;
     }
 
-    final public Set<ExecutionSemester> getEnrolmentsExecutionPeriods() {
-        final Set<ExecutionSemester> result = new HashSet<ExecutionSemester>();
+    public Set<ExecutionInterval> getEnrolmentsExecutionPeriods() {
+        final Set<ExecutionInterval> result = new HashSet<>();
 
         for (final Enrolment enrolment : this.getEnrolmentsSet()) {
-            result.add(enrolment.getExecutionPeriod());
+            result.add(enrolment.getExecutionInterval());
         }
 
         return result;

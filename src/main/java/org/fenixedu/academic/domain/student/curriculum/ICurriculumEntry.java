@@ -183,7 +183,7 @@ public interface ICurriculumEntry {
      * @deprecated use {@link #getExecutionInterval()}
      */
     @Deprecated
-    ExecutionSemester getExecutionPeriod();
+    ExecutionInterval getExecutionPeriod();
 
     @Deprecated
     boolean hasExecutionPeriod();

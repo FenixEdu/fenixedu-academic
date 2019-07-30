@@ -86,9 +86,9 @@ public class SpecialSeasonStudentCurriculumGroupBean implements Serializable {
 
                             if (enrolment.parentCurriculumGroupIsNoCourseGroupCurriculumGroup()) {
                                 result.add(new NoCourseGroupEnroledCurriculumModuleWrapper(enrolment,
-                                        enrolment.getExecutionPeriod()));
+                                        enrolment.getExecutionInterval()));
                             } else {
-                                result.add(new EnroledCurriculumModuleWrapper(enrolment, enrolment.getExecutionPeriod()));
+                                result.add(new EnroledCurriculumModuleWrapper(enrolment, enrolment.getExecutionInterval()));
                             }
                         }
                     }
@@ -102,8 +102,9 @@ public class SpecialSeasonStudentCurriculumGroupBean implements Serializable {
                     ExecutionSemester executionSemester, int[] curricularYears) {
 
                 final List<StudentCurriculumGroupBean> result = new ArrayList<StudentCurriculumGroupBean>();
-                
-                final Set<CurriculumGroup> curriculumGroupsToEnrolmentProcess = parentGroup.getCurriculumGroupsToEnrolmentProcess();
+
+                final Set<CurriculumGroup> curriculumGroupsToEnrolmentProcess =
+                        parentGroup.getCurriculumGroupsToEnrolmentProcess();
                 if (!parentGroup.isNoCourseGroupCurriculumGroup()) {
                     for (final NoCourseGroupCurriculumGroup curriculumGroup : parentGroup.getNoCourseGroupCurriculumGroups()) {
                         if (curriculumGroup.isVisible()) {

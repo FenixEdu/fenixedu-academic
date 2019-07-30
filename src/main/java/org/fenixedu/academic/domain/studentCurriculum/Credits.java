@@ -343,8 +343,8 @@ public class Credits extends Credits_Base {
      */
     @Deprecated
     @Override
-    public ExecutionSemester getExecutionPeriod() {
-        return super.getExecutionPeriod();
+    public ExecutionInterval getExecutionPeriod() {
+        return getExecutionInterval();
     }
 
     public ExecutionInterval getExecutionInterval() {
