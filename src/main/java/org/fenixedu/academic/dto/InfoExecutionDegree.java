@@ -71,7 +71,7 @@ public class InfoExecutionDegree extends InfoObject {
     }
 
     public boolean isPublishedExam(ExecutionSemester executionSemester) {
-        return getExecutionDegree().getPublishedExamMapsSet().contains(executionSemester);
+        return true;
     }
 
     public InfoCampus getInfoCampus() {

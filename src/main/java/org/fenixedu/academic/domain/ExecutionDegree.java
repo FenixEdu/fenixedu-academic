@@ -140,10 +140,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         setExecutionYear(executionYear);
         setCampus(campus);
 
-        if (publishedExamMap) {
-            getPublishedExamMapsSet().addAll(executionYear.getExecutionPeriodsSet());
-        }
-
     }
 
     @Override
@@ -163,7 +159,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         for (; !getCoordinatorsListSet().isEmpty(); getCoordinatorsListSet().iterator().next().delete()) {
             ;
         }
-        getPublishedExamMapsSet().clear();
 
         setExecutionYear(null);
         setDegreeCurricularPlan(null);
@@ -178,17 +173,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     public void edit(ExecutionYear executionYear, Space campus, Boolean publishedExamMap) {
-
         setExecutionYear(executionYear);
         setCampus(campus);
-
-        for (ExecutionInterval executionInterval : this.getExecutionYear().getChildIntervals()) {
-            if (publishedExamMap) {
-                this.getPublishedExamMapsSet().add(executionInterval);
-            } else {
-                this.getPublishedExamMapsSet().remove(executionInterval);
-            }
-        }
     }
 
     public boolean isBolonhaDegree() {
