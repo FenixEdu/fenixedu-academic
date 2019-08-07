@@ -248,7 +248,7 @@ public class Over23IndividualCandidacyProcessRefactoredDA extends RefactoredIndi
 
         if (persons.size() > 1) {
             addActionMessage("individualCandidacyMessages", request, getProcessType().getSimpleName()
-                    + ".error.public.candidacies.fill.personal.information.and.institution.person.already.exist");
+                    + ".error.public.candidacies.fill.personal.information.and.institution.id.person.already.exist");
             return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
         }
 
