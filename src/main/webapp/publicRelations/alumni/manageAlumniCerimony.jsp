@@ -46,7 +46,7 @@
 			<fr:slot name="begin" key="label.publicRelationOffice.alumniCerimonyInquiry.begin"/>
 			<fr:slot name="end" key="label.publicRelationOffice.alumniCerimonyInquiry.end"/>
 		</fr:schema>
-		<fr:layout name="tabular">		
+		<fr:layout name="tabular-sortable">
 			<fr:property name="classes" value="tstyle1"/>
 
 			<fr:property name="link(view)" value="/alumniCerimony.do?method=viewInquiry"/>
@@ -60,6 +60,10 @@
 			<fr:property name="key(delete)" value="link.delete"/>
 			<fr:property name="param(delete)" value="externalId/cerimonyInquiryId"/>
 			<fr:property name="order(delete)" value="2"/>
+
+			<fr:property name="sortParameter" value="sortBy"/>
+			<fr:property name="sortUrl" value="/alumniCerimony.do?method=manage"/>
+			<fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "begin=desc" : request.getParameter("sortBy") %>"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
