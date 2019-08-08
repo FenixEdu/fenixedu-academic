@@ -25,6 +25,7 @@ import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
@@ -107,6 +108,8 @@ public class Qualification extends Qualification_Base {
         setDegree(bean.getDegree());
         setAttendedBegin(bean.getAttendedBegin());
         setAttendedEnd(bean.getAttendedEnd());
+        setDateYearMonthDay(new YearMonthDay(bean.getAttendedEnd().get(DateTimeFieldType.year()),
+                bean.getAttendedEnd().get(DateTimeFieldType.monthOfYear()), 1));
         setMark(bean.getMark());
     }
 
