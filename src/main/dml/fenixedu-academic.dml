@@ -11634,6 +11634,16 @@ relation TeacherAuthorizationTeacherCategory {
     }
 }
 
+relation TeacherAuthorizationCampus {
+    .org.fenixedu.spaces.domain.Space playsRole campus {
+        multiplicity 0..1;
+    }
+    TeacherAuthorization playsRole teacherAuthorization {
+        multiplicity 0..1;
+    }
+}
+
+
 relation PhdGratuityPaymentPeriodRootDomainObject {
 	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     phd.debts.PhdGratuityPaymentPeriod playsRole phdGratuityPaymentPeriods {

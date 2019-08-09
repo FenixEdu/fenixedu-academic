@@ -23,6 +23,7 @@ import java.util.Objects;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 
 public class TeacherAuthorization extends TeacherAuthorization_Base implements Comparable<TeacherAuthorization> {
@@ -33,7 +34,7 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
     }
 
     protected TeacherAuthorization(Teacher teacher, Department department, ExecutionSemester executionSemester,
-            TeacherCategory teacherCategory, Boolean contracted, Double lessonHours) {
+            TeacherCategory teacherCategory, Boolean contracted, Double lessonHours, Space campus) {
         this();
         setTeacher(teacher);
         setDepartment(department);
@@ -42,16 +43,24 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
         setContracted(contracted);
         setLessonHours(lessonHours);
         setAuthorizer(Authenticate.getUser());
+        setCampus(campus);
     }
 
     public static TeacherAuthorization createOrUpdate(Teacher teacher, Department department,
             ExecutionSemester executionSemester, TeacherCategory teacherCategory, Boolean contracted, Double lessonHours) {
+        return createOrUpdate(teacher, department,
+                executionSemester, teacherCategory, contracted, lessonHours, null);
+    }
+
+    public static TeacherAuthorization createOrUpdate(Teacher teacher, Department department,
+            ExecutionSemester executionSemester, TeacherCategory teacherCategory, Boolean contracted, Double lessonHours, Space campus) {
         Objects.requireNonNull(teacher);
         Objects.requireNonNull(department);
         Objects.requireNonNull(executionSemester);
         Objects.requireNonNull(teacherCategory);
         Objects.requireNonNull(contracted);
         Objects.requireNonNull(lessonHours);
+
         TeacherAuthorization existing = teacher.getTeacherAuthorization(executionSemester.getAcademicInterval()).orElse(null);
         if (existing != null) {
             if (existing.getDepartment().equals(department) && existing.getContracted().equals(contracted)
@@ -62,7 +71,7 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
             }
         }
         teacher.getPerson().getUser().openLoginPeriod();
-        return new TeacherAuthorization(teacher, department, executionSemester, teacherCategory, contracted, lessonHours);
+        return new TeacherAuthorization(teacher, department, executionSemester, teacherCategory, contracted, lessonHours, campus);
     }
 
     @Override
