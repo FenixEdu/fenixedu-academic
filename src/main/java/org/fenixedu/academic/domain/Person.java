@@ -1733,6 +1733,9 @@ public class Person extends Person_Base {
     public void setSocialSecurityNumber(String arg) {
         logSetterNullString("log.personInformation.edit.generalTemplate.personalId", getSocialSecurityNumber(), arg,
                 "label.socialSecurityNumber");
+        if (arg != null) {
+            arg = arg.toUpperCase();
+        }
         super.setSocialSecurityNumber(arg);
     }
 

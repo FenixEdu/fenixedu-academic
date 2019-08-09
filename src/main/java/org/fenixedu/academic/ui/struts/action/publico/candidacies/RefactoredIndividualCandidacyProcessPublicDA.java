@@ -243,6 +243,12 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
         final PersonBean personBean = bean.getPersonBean();
 
+        if (personBean.getNationality().isDefaultCountry() && StringUtils.isEmpty(personBean.getSocialSecurityNumber())) {
+            addActionMessage("individualCandidacyMessages", request, getProcessType().getSimpleName()
+                    + ".error.public.candidacies.fill.personal.information.and.institution.id.contributorNumber");
+            return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
+        }
+
         if (existsIndividualCandidacyProcessForDocumentId(request, personBean.getIdDocumentType(),
                 personBean.getDocumentIdNumber())) {
             addActionMessage("individualCandidacyMessages", request, "error.candidacy.for.person.already.exists");
