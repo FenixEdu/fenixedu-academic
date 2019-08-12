@@ -713,6 +713,23 @@ public class PersonBean implements Serializable {
         return new PhysicalAddressData(address, areaCode, areaOfAreaCode, area, parishOfResidence,
                 districtSubdivisionOfResidence, districtOfResidence, countryOfResidence);
     }
+    
+    public boolean isPhysicalAddressDataNotEmpty() {
+        PhysicalAddressData physicalAddressData = getPhysicalAddressData();
+        
+        boolean result = false;
+        
+        result |= StringUtils.isNotEmpty(physicalAddressData.getAddress());
+        result |= StringUtils.isNotEmpty(physicalAddressData.getAreaCode());
+        result |= StringUtils.isNotEmpty(physicalAddressData.getAreaOfAreaCode());
+        result |= StringUtils.isNotEmpty(physicalAddressData.getArea());
+        result |= StringUtils.isNotEmpty(physicalAddressData.getParishOfResidence());
+        result |= StringUtils.isNotEmpty(physicalAddressData.getDistrictOfResidence());
+        result |= StringUtils.isNotEmpty(physicalAddressData.getDistrictSubdivisionOfResidence());
+        result |= physicalAddressData.getCountryOfResidence() != null;
+        
+        return result;
+    }
 
     public List<Phone> getSortedPhones() {
         final List<Phone> result = getPerson().getPendingOrValidPhones();

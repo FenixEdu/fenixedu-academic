@@ -285,7 +285,10 @@ public class Person extends Person_Base {
 
         setProperties(personBean);
 
-        PhysicalAddress.createPhysicalAddress(this, personBean.getPhysicalAddressData(), PartyContactType.PERSONAL, true);
+        if(personBean.isPhysicalAddressDataNotEmpty()) {
+            PhysicalAddress.createPhysicalAddress(this, personBean.getPhysicalAddressData(), PartyContactType.PERSONAL, true);
+        }
+        
         Phone.createPhone(this, personBean.getPhone(), PartyContactType.PERSONAL, true);
         MobilePhone.createMobilePhone(this, personBean.getMobile(), PartyContactType.PERSONAL, true);
         final EmailAddress emailAddress =

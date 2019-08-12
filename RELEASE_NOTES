@@ -1,3 +1,5 @@
+- Improvement: On person creation, create physical address only when physical address data is not empty
+
 24.1.0 (31-07-2019)
 - Refactor: removed unused relation
 
