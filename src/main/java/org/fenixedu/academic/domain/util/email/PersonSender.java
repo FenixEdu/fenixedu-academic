@@ -19,7 +19,6 @@
 package org.fenixedu.academic.domain.util.email;
 
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.Atomic;
@@ -36,11 +35,11 @@ public class PersonSender extends PersonSender_Base {
         this();
         setPerson(person);
         setMembers(person.getUser().groupOf());
-        setFromName(createFromName());
     }
 
-    public String createFromName() {
-        return String.format("%s (%s)", Unit.getInstitutionAcronym(), getPerson().getName());
+    @Override
+    public String getFromName() {
+        return getPerson().getName();
     }
 
     @Override

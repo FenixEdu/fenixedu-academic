@@ -25,7 +25,6 @@ import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.accessControl.StudentGroup;
 import org.fenixedu.academic.domain.accessControl.TeacherGroup;
 import org.fenixedu.academic.domain.accessControl.TeacherResponsibleOfExecutionCourseGroup;
-import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -34,8 +33,8 @@ import pt.ist.fenixframework.Atomic;
 
 public class ExecutionCourseSender extends ExecutionCourseSender_Base {
 
-    public static Comparator<ExecutionCourseSender> COMPARATOR_BY_EXECUTION_COURSE_SENDER = Comparator.nullsFirst(Comparator
-            .comparing(ExecutionCourseSender::getCourse, ExecutionCourse.EXECUTION_COURSE_EXECUTION_PERIOD_COMPARATOR
+    public static Comparator<ExecutionCourseSender> COMPARATOR_BY_EXECUTION_COURSE_SENDER = Comparator.nullsFirst(
+            Comparator.comparing(ExecutionCourseSender::getCourse, ExecutionCourse.EXECUTION_COURSE_EXECUTION_PERIOD_COMPARATOR
                     .thenComparing(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR)));
 
     public ExecutionCourseSender(ExecutionCourse executionCourse) {
@@ -45,12 +44,12 @@ public class ExecutionCourseSender extends ExecutionCourseSender_Base {
         addReplyTos(new ExecutionCourseReplyTo());
         addReplyTos(new CurrentUserReplyTo());
         setMembers(TeacherGroup.get(executionCourse));
-        final String labelECTeachers = BundleUtil
-                .getString(Bundle.SITE, "label.org.fenixedu.academic.domain.accessControl.ExecutionCourseTeachersGroupWithName",
-                        executionCourse.getNome());
-        final String labelECStudents = BundleUtil
-                .getString(Bundle.SITE, "label.org.fenixedu.academic.domain.accessControl.ExecutionCourseStudentsGroupWithName",
-                        executionCourse.getNome());
+        final String labelECTeachers = BundleUtil.getString(Bundle.SITE,
+                "label.org.fenixedu.academic.domain.accessControl.ExecutionCourseTeachersGroupWithName",
+                executionCourse.getNome());
+        final String labelECStudents = BundleUtil.getString(Bundle.SITE,
+                "label.org.fenixedu.academic.domain.accessControl.ExecutionCourseStudentsGroupWithName",
+                executionCourse.getNome());
         final String labelECResponsibleTeachers = BundleUtil.getString(Bundle.SITE,
                 "label.org.fenixedu.academic.domain.accessControl.ExecutionCourseResponsibleTeachersGroupWithName",
                 executionCourse.getNome());
@@ -58,20 +57,19 @@ public class ExecutionCourseSender extends ExecutionCourseSender_Base {
         addRecipients(new Recipient(labelECTeachers, TeacherGroup.get(executionCourse)));
         addRecipients(new Recipient(labelECStudents, StudentGroup.get(executionCourse)));
         addRecipients(new Recipient(labelECResponsibleTeachers, TeacherResponsibleOfExecutionCourseGroup.get(executionCourse)));
-        setFromName(createFromName());
     }
 
-    public String createFromName() {
+    @Override
+    public String getFromName() {
         if (getCourse() != null && getCourse().getExecutionInterval() != null
                 && getCourse().getExecutionInterval().getQualifiedName() != null) {
             String degreeName = getCourse().getDegreePresentationString();
+            String courseCode = getCourse().getCode();
             String courseName = getCourse().getNome();
             String period = getCourse().getExecutionInterval().getQualifiedName().replace('/', '-');
-            return String.format("%s (%s: %s, %s)", Unit.getInstitutionAcronym(), degreeName, courseName, period);
-        } else {
-            return getFromName();
+            return String.format("%s - %s, %s (%s)", courseCode, courseName, period, degreeName);
         }
-
+        return super.getFromName();
     }
 
     @Override
