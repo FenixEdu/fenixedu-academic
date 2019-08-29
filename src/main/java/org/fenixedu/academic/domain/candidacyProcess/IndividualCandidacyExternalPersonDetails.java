@@ -65,7 +65,7 @@ public class IndividualCandidacyExternalPersonDetails extends IndividualCandidac
         setArea(personBean.getArea());
         setAreaCode(personBean.getAreaCode());
 
-        setTelephoneContact(personBean.getPhone());
+        setTelephoneContact(personBean.getMobile());
         setEmail(personBean.getEmail());
         setCountryOfResidence(personBean.getCountryOfResidence());
     }
