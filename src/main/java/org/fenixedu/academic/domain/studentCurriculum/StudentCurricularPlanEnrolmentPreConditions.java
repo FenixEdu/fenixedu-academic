@@ -99,19 +99,7 @@ public class StudentCurricularPlanEnrolmentPreConditions {
             return result;
         }
 
-        if (registrationIsOnly1stCycleAndConcluded(scp)) {
-            return createFalse("error.StudentCurricularPlan.cannot.enrol.registration.concluded");
-        }
-
         return checkDebts(scp);
-    }
-
-    private static boolean registrationIsOnly1stCycleAndConcluded(final StudentCurricularPlan scp) {
-        if (scp.getDegree().isFirstCycle()) {
-            final CycleCurriculumGroup firstCycle = scp.getFirstCycle();
-            return firstCycle != null && firstCycle.isConcluded();
-        }
-        return false;
     }
 
     /**
