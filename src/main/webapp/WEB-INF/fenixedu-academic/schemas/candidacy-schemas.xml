@@ -491,7 +491,8 @@
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
     </slot>
     <slot name="socialSecurityNumber">
-		 <validator class="org.fenixedu.academic.ui.renderers.validators.SocialSecurityNumberValidator"/>
+		<validator class="org.fenixedu.academic.ui.renderers.validators.SocialSecurityNumberValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
     </slot>
     <slot name="professionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ActiveProfessionTypeProvider" />
