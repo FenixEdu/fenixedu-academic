@@ -11,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.PaymentCode;
+import org.fenixedu.academic.domain.accounting.PaymentCodeState;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -59,6 +60,21 @@ public class PaymentCodePool extends PaymentCodePool_Base {
         Lists.partition(paymentCodesToRefresh, CHUNK_SIZE).forEach(codes -> {
             FenixFramework.atomic(() -> {
                 codes.forEach(code -> code.edit(start, start.plusMonths(getNumberOfMonths())));
+            });
+        });
+    }
+
+    public void invalidatePaymentCodes(LocalDate today) {
+        final List<EventPaymentCode> paymentCodesToCancel =
+                getPaymentCodeStream()
+                        .filter(EventPaymentCode::isNew)
+                        .filter(paymentCodeHasOpenEvent.negate())
+                        .filter(pc -> pc.getEndDate().toLocalDate().isBefore(today))
+                        .collect(Collectors.toList());
+
+        Lists.partition(paymentCodesToCancel, CHUNK_SIZE).forEach(codes -> {
+            FenixFramework.atomic(() -> {
+                codes.forEach(code -> code.setState(PaymentCodeState.CANCELLED));
             });
         });
     }
