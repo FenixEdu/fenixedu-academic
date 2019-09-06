@@ -192,9 +192,8 @@ public class PhoneValidationUtils {
         return sendTwilioSMS(toNumber, from, TWILIO_DEFAULT_MESSAGING_SERVICE_SID, message);
     }
 
-    public boolean sendSMS(String number, String token) {
+    public boolean sendSMSMessage(String number, String message) {
         number = number.replace(" ", "");
-        final String message = "Bem-vindo ao sistema Fenix. Introduza o codigo " + token + " . Obrigado!";
         if (canRun()) {
             PostMethod method = new PostMethod(CIIST_SMS_GATEWAY_URL);
             method.addParameter(new NameValuePair("number", number));
@@ -205,11 +204,9 @@ public class PhoneValidationUtils {
                     return false;
                 }
             } catch (HttpException e) {
-                // TODO Auto-generated catch block
                 logger.error(e.getMessage(), e);
                 return false;
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 logger.error(e.getMessage(), e);
                 return false;
             }
@@ -217,5 +214,10 @@ public class PhoneValidationUtils {
             logger.info("SMS to >" + number + "<: " + message);
         }
         return true;
+    }
+
+    public boolean sendSMS(String number, String token) {
+        final String message = "Bem-vindo ao sistema Fenix. Introduza o codigo " + token + " . Obrigado!";
+        return sendSMSMessage(number, message);
     }
 }
