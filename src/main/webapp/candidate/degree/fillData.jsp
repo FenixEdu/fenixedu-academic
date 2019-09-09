@@ -78,7 +78,7 @@
 	<%@include file="/candidate/degree/firstTimeCandidacyStep7ExtraInfo.jsp"%>
 </logic:equal>
 
-<fr:form action="<%="/degreeCandidacyManagement.do?method=processForm&currentFormPosition=" + currentFormPosition%>">
+<fr:form id="candidacyForm" action="<%="/degreeCandidacyManagement.do?method=processForm&currentFormPosition=" + currentFormPosition%>">
 
 	<bean:define id="isInputForm" name="currentForm" property="input" />
 	<bean:define id="schemaName" name="currentForm" property="schemaName" type="java.lang.String" />
@@ -106,13 +106,21 @@
 		<fr:edit id="<%=editViewStateId%>"
 			name="currentForm" visible="false">
 		</fr:edit>	
-	</logic:equal>	
-		
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" ><bean:message key="button.next" /></html:submit>
-	
+	</logic:equal>
+
+	<input type='submit' name='myButton' value='<bean:message key="button.next" />' onclick="return checkForm();"/>
+
 </fr:form>
 
+<script type="text/javascript">
 
+	function checkForm()
+	{
+		var candidacyForm = document.forms["candidacyForm"];
+		candidacyForm.myButton.disabled = true;
+		candidacyForm.myButton.value = '<bean:message key="please.wait" />';
+		candidacyForm.submit();
+		return true;
+	}
 
-
-
+</script>
