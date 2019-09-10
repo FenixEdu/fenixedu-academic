@@ -593,14 +593,7 @@
     	<property name="size" value="50"/>
 		<property name="maxLength" value="100"/>
     </slot>
-    <slot name="areaCode">
-        <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\d{4}-\d{3})|()"/>
-            <property name="message" value="error.areaCode.invalidFormat"/>
-            <property name="key" value="true"/>
-            <property name="bundle" value="CANDIDATE_RESOURCES"/>
-        </validator>
-    </slot>
+    <slot name="areaCode"/>
     <slot name="areaOfAreaCode" />
     <slot name="area"/>
     <slot name="districtOfResidence" layout="menu-select-postback" >

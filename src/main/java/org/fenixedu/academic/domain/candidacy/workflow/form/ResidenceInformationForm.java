@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.PostalCodeValidator;
 import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.District;
 import org.fenixedu.academic.domain.DistrictSubdivision;
@@ -255,6 +256,7 @@ public class ResidenceInformationForm extends Form {
         checkAddressInformationForForeignStudents(result);
         checkAddressInformationForNationalStudents(result);
         checkAddressInformationForDislocatedStudents(result);
+        checkAreaCode(result);
 
         return result;
     }
@@ -312,6 +314,18 @@ public class ResidenceInformationForm extends Form {
                 }
             }
 
+        }
+    }
+
+    private void checkAreaCode(final List<LabelFormatter> result) {
+        if (getCountryOfResidence() != null) {
+            if (getAreaCode() == null || !PostalCodeValidator.isValidAreaCode(getCountryOfResidence().getCode(), getAreaCode())) {
+                result.add(new LabelFormatter()
+                        .appendLabel(Bundle.CANDIDATE, "label.address.invalid.postCode.for.country",
+                                getAreaCode(), getCountryOfResidence().getCode(),
+                                PostalCodeValidator.formatFor(getCountryOfResidence().getCode()),
+                                PostalCodeValidator.examplePostCodeFor(getCountryOfResidence().getCode())));
+            }
         }
     }
 
