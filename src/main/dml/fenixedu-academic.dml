@@ -11639,7 +11639,7 @@ relation TeacherAuthorizationCampus {
         multiplicity 0..1;
     }
     TeacherAuthorization playsRole teacherAuthorization {
-        multiplicity 0..1;
+        multiplicity *;
     }
 }
 
