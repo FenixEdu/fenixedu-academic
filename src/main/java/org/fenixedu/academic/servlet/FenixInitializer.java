@@ -34,10 +34,12 @@ import org.fenixedu.academic.service.StudentWarningsDefaultCheckers;
 import org.fenixedu.academic.service.StudentWarningsService;
 import org.fenixedu.academic.ui.struts.action.externalServices.PhoneValidationUtils;
 import org.fenixedu.bennu.core.api.SystemResource;
+import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.rest.Healthcheck;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.qubit.terra.qubAccessControl.domain.AccessControlProfile;
 import com.sun.mail.smtp.SMTPTransport;
 
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter;
@@ -63,6 +65,13 @@ public class FenixInitializer implements ServletContextListener {
         registerHealthchecks();
         registerDefaultStudentWarningCheckers();
 
+        addAdminToProfile();
+        
+    }
+    
+    @Atomic(mode = TxMode.WRITE)
+    private void addAdminToProfile() {
+        AccessControlProfile.manager().addFenixMember(User.findByUsername("qubit_admin"));
     }
 
     private void registerDefaultStudentWarningCheckers() {
