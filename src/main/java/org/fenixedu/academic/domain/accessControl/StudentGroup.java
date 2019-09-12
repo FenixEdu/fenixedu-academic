@@ -97,6 +97,10 @@ public class StudentGroup extends FenixGroup {
         return new StudentGroup(null, null, null, null, null, null, null);
     }
 
+    public static StudentGroup get(ExecutionYear executionYear) {
+        return new StudentGroup(null, null, null, null, null, null, executionYear);
+    }
+
     public static StudentGroup get(DegreeType degreeType) {
         return new StudentGroup(degreeType, null, null, null, null, null, null);
     }
@@ -192,6 +196,8 @@ public class StudentGroup extends FenixGroup {
             registrations = getRegistrations(degreeType);
         } else if (degree != null) {
             registrations = getRegistrations(degree);
+        } else if (executionYear != null) {
+            registrations = getRegistrations(executionYear);
         } else {
             registrations = getRegistrations();
         }
@@ -276,6 +282,11 @@ public class StudentGroup extends FenixGroup {
         return registrations.stream();
     }
 
+    private Stream<Registration> getRegistrations(ExecutionYear executionYear) {
+        return executionYear.getChildIntervals().stream().flatMap(ei -> ei.getEnrolmentsSet().stream())
+                .filter(e -> !e.isAnnulled()).map(e -> e.getRegistration());
+    }
+
     private static Stream<Registration> getRegistrations() {
         return RoleType.STUDENT.actualGroup().getMembers().flatMap(u -> u.getPerson().getStudent().getActiveRegistrationStream());
     }
@@ -326,6 +337,10 @@ public class StudentGroup extends FenixGroup {
         }
         for (final Registration registration : user.getPerson().getStudent().getRegistrationsSet()) {
             if (executionCourse != null && registration.getAttendingExecutionCoursesFor().contains(executionCourse)) {
+                return true;
+            }
+            if (executionYear != null && cycle == null
+                    && registration.getEnrolments(executionYear).stream().anyMatch(e -> !e.isAnnulled())) {
                 return true;
             }
             if (registration.isActive()) {
