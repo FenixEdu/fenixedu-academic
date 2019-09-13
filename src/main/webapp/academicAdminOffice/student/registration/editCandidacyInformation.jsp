@@ -49,43 +49,118 @@
 	</logic:messagesPresent>
 
 	<bean:define id="studentID" name="personalInformationBean" property="student.externalId" />
-	
+
 	<fr:form action="/editCandidacyInformation.do#precedentDegree">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="edit"/>
 		<fr:edit id="personalInformationBean" name="personalInformationBean" visible="false" />
-	
-		<fr:edit id="personalInformationBean.editPersonalInformation"
-			name="personalInformationBean"
-			schema="PersonalInformationBean.editPersonalInformation">
+
+		<bean:define id="personalInformationBean" name="personalInformationBean" type="org.fenixedu.academic.domain.candidacy.PersonalInformationBean"/>
+		<fr:edit id="personalInformationBean.editPersonalInformation" name="personalInformationBean">
+			<fr:schema bundle="APPLICATION_RESOURCES" type="org.fenixedu.academic.domain.candidacy.PersonalInformationBean">
+				<fr:slot name="countryOfResidence" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="format" value="${localizedName.content}" />
+					<fr:property name="sortBy" value="name=asc" />
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
+					<fr:property name="destination" value="countryOfResidencePostback" />
+				</fr:slot>
+				<% if (personalInformationBean.isCountryOfResidenceDefaultCountry()) { %>
+					<fr:slot name="districtSubdivisionOfResidence" layout="autoComplete">
+						<fr:property name="size" value="50"/>
+						<fr:property name="format" value="${name} - (${district.name})"/>
+						<fr:property name="indicatorShown" value="true"/>
+						<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchDistrictSubdivisions"/>
+						<fr:property name="args" value="slot=name,size=50"/>
+						<fr:property name="minChars" value="1"/>
+					</fr:slot>
+				<% } %>
+				<fr:slot name="dislocatedFromPermanentResidence" layout="radio" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="classes" value="dinline liinline nobullet"/>
+				</fr:slot>
+				<fr:slot name="schoolTimeDistrictSubdivisionOfResidence" layout="autoComplete">
+					<fr:property name="size" value="50"/>
+					<fr:property name="format" value="${name} - (${district.name})"/>
+					<fr:property name="indicatorShown" value="true"/>
+					<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchDistrictSubdivisions"/>
+					<fr:property name="args" value="slot=name,size=50"/>
+					<fr:property name="minChars" value="1"/>
+				</fr:slot>
+				<fr:slot name="grantOwnerType" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.candidacy.GrantOwnerTypesProvider" />
+					<fr:property name="destination" value="grantOwnerTypePostback" />
+				</fr:slot>
+				<% if (personalInformationBean.isGrantProviderAnotherInstitution()) { %>
+					<fr:slot name="grantOwnerProviderUnitName" layout="autoComplete">
+						<fr:property name="size" value="50"/>
+						<fr:property name="labelField" value="unit.name"/>
+						<fr:property name="indicatorShown" value="true"/>
+						<fr:property name="provider" value="org.fenixedu.academic.service.services.commons.searchers.SearchExternalUnits"/>
+						<fr:property name="args" value="slot=name,size=50"/>
+						<fr:property name="minChars" value="1"/>
+						<fr:property name="rawSlotName" value="grantOwnerProviderName"/>
+					</fr:slot>
+				<% } %>
+				<fr:slot name="highSchoolType" layout="menu-select">
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.candidacy.HighSchoolTypesProvider" />
+					<fr:property name="eachLayout" value="this-does-not-exist" />
+				</fr:slot>
+				<fr:slot name="maritalStatus" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="excludedValues" value="UNKNOWN" />
+				</fr:slot>
+				<fr:slot name="professionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ActiveProfessionTypeProvider" />
+				</fr:slot>
+				<fr:slot name="professionalCondition" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides"/>
+				</fr:slot>
+				<fr:slot name="motherSchoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
+					<fr:property name="eachLayout" value="this-does-not-exist" />
+				</fr:slot>
+				<fr:slot name="motherProfessionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ActiveProfessionTypeProvider" />
+				</fr:slot>
+				<fr:slot name="motherProfessionalCondition" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+				<fr:slot name="fatherSchoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
+					<fr:property name="eachLayout" value="this-does-not-exist" />
+				</fr:slot>
+				<fr:slot name="fatherProfessionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ActiveProfessionTypeProvider" />
+				</fr:slot>
+				<fr:slot name="fatherProfessionalCondition" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+			</fr:schema>
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight thleft mtop15" />
 				<fr:property name="columnClasses" value="width300px,,tdclear tderror1"/>
-				
+
+				<fr:destination name="countryOfResidencePostback" path="/editCandidacyInformation.do?method=countryOfResidencePostback" />
+				<fr:destination name="grantOwnerTypePostback" path="/editCandidacyInformation.do?method=grantOwnerTypePostback" />
 				<fr:destination name="invalid" path="/editCandidacyInformation.do?method=prepareEditInvalid" />
-				<fr:destination name="cancel" path="<%= "/student.do?method=visualizeStudent&studentID=" + studentID %>" />				
+				<fr:destination name="cancel" path="<%= "/student.do?method=visualizeStudent&studentID=" + studentID %>" />
 			</fr:layout>
 		</fr:edit>
 		
 		<br/>
 		<strong><bean:message  key="label.previous.degree.information" bundle="STUDENT_RESOURCES"/></strong>
 		<a name="precedentDegree"> </a>
-		<bean:define id="personalInformationBean" name="personalInformationBean" type="org.fenixedu.academic.domain.candidacy.PersonalInformationBean"/>	
 		<fr:edit id="personalInformationBean.editPrecedentDegreeInformation" name="personalInformationBean">
-			<fr:schema type="org.fenixedu.academic.domain.candidacy.PersonalInformationBean" bundle="APPLICATION_RESOURCES">	
-				<fr:slot name="schoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select-postback">
-					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
-					<fr:property name="destination" value="schoolLevelPostback" />
-				</fr:slot>
-				<fr:slot name="otherSchoolLevel" />
-				<fr:slot name="countryWhereFinishedPreviousCompleteDegree" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-					<fr:property name="format" value="${name}"/>
+			<fr:schema type="org.fenixedu.academic.domain.candidacy.PersonalInformationBean" bundle="APPLICATION_RESOURCES">
+				<fr:slot name="countryWhereFinishedPreviousCompleteDegree" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="format" value="${localizedName.content}"/>
 					<fr:property name="sortBy" value="name=asc" />
 					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 					<fr:property name="destination" value="schoolLevelPostback" />
 				</fr:slot>
+				<fr:slot name="schoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select-postback">
+					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
+					<fr:property name="destination" value="schoolLevelPostback" />
+				</fr:slot>
+				<% if (personalInformationBean.isSchoolLevelOther()) { %>
+				<fr:slot name="otherSchoolLevel" />
+				<% } %>
 				<% if (personalInformationBean.isHightSchoolCountryFieldRequired()) { %>
-					<fr:slot name="countryWhereFinishedHighSchoolLevel" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-						<fr:property name="format" value="${localizedName}"/>
+					<fr:slot name="countryWhereFinishedHighSchoolLevel" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+						<fr:property name="format" value="${localizedName.content}"/>
 						<fr:property name="sortBy" value="name=asc" />
 						<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 					</fr:slot>
@@ -144,7 +219,8 @@
 			            <fr:property name="bundle" value="CANDIDATE_RESOURCES"/>
 			        </fr:validator>
 			    </fr:slot>	
-			    <fr:slot name="degreeChangeOrTransferOrErasmusStudent" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" > 
+			    <fr:slot name="degreeChangeOrTransferOrErasmusStudent" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+					<fr:property name="classes" value="dinline liinline nobullet"/>
 					<fr:property name="destination" value="changePostback" />
 				</fr:slot>			
 			</fr:schema>
