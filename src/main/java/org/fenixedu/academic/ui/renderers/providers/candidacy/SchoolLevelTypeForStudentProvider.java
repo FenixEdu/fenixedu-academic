@@ -21,6 +21,7 @@ package org.fenixedu.academic.ui.renderers.providers.candidacy;
 import org.fenixedu.academic.domain.SchoolLevelType;
 
 import org.fenixedu.academic.domain.candidacy.PersonalInformationBean;
+import org.fenixedu.academic.dto.candidacy.PrecedentDegreeInformationBean;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
@@ -34,10 +35,11 @@ public class SchoolLevelTypeForStudentProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        final PersonalInformationBean bean = (PersonalInformationBean) source;
-
-        if(bean.isCountryWhereFinishedPreviousCompleteDegreeDefaultCountry()) {
-            return SchoolLevelType.getTypesForStudentMinusOther();
+        if (source instanceof PersonalInformationBean) {
+            final PersonalInformationBean bean = (PersonalInformationBean) source;
+            if(bean.isCountryWhereFinishedPreviousCompleteDegreeDefaultCountry()) {
+                return SchoolLevelType.getTypesForStudentMinusOther();
+            }
         }
         return SchoolLevelType.getTypesForStudent();
     }
