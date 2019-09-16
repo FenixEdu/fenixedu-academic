@@ -1079,17 +1079,32 @@ public class Student extends Student_Base {
     }
 
     public boolean hasAnyMissingPersonalInformation() {
-        final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-        if (getRegistrationStream().anyMatch(r -> r.isValidForRAIDES() && r.hasMissingPersonalInformation(currentExecutionYear))) {
+        return hasAnyMissingPersonalInformation(ExecutionYear.readCurrentExecutionYear());
+    }
+
+    public boolean hasAnyMissingPersonalInformation(ExecutionYear executionYear) {
+        if (getRegistrationStream().anyMatch(r -> r.isValidForRAIDES() && r.hasMissingPersonalInformation(executionYear))) {
             return true;
         }
 
         for (final PhdIndividualProgramProcess phdProcess : getPerson().getPhdIndividualProgramProcessesSet()) {
-            if (isValidAndActivePhdProcess(phdProcess) && phdProcess.hasMissingPersonalInformation(currentExecutionYear)) {
+            if (isValidAndActivePhdProcess(phdProcess) && phdProcess.hasMissingPersonalInformation(executionYear)) {
                 return true;
             }
         }
         return false;
+    }
+
+    public boolean hasAnyCompletedPersonalInformationSince(ExecutionYear executionYear) {
+        if (executionYear != null) {
+            if (hasAnyMissingPersonalInformation(executionYear)) {
+                return hasAnyCompletedPersonalInformationSince(executionYear.getNextExecutionYear());
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
     }
 
     public boolean hasActivePhdProgramProcess() {
