@@ -16,6 +16,9 @@ public class PermissionSupplier {
     
     public static BiFunction<AccessControlPermission, User, Set<Degree>> getDegreesAccessibleByUser;
     
+
+    public static BiFunction<AccessControlPermission, User, Boolean> isMember;
+    
     public static Set<Degree> getDegreesForUser(AccessControlPermission permission, User user){
         Set<Degree> degrees =  getDegreesAccessibleByUser.apply(permission, user);
         getDegreeTypesAccessibleByUser.apply(permission, user).forEach(degreeType -> degrees.addAll(degreeType.getDegreeSet()));
