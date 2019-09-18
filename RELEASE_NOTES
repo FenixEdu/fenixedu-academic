@@ -1,3 +1,5 @@
+- Improvement: Add institutional email column to students excel on teacher's perspective
+
 24.2.0 (12-09-2019)
 - Improvement: Person and ExecutionCourse senders name calculated dynamically
 - Improvement: StudentGroup now supports active Registrations for ExecutionYear
