@@ -156,7 +156,8 @@ public class AttendsSearchController extends ExecutionCourseController {
                         addCell(getLabel("label.username"), attends.getRegistration().getPerson().getUsername());
                         addCell(getLabel("label.number"), attends.getRegistration().getNumber());
                         addCell(getLabel("label.name"), attends.getRegistration().getPerson().getName());
-                        addCell(getLabel("label.email"), attends.getRegistration().getPerson().getDefaultEmailAddressValue());
+                        addCell(getLabel("label.institutional.email"), attends.getRegistration().getPerson().getInstitutionalEmailAddressValue());
+                        addCell(getLabel("label.default.email"), attends.getRegistration().getPerson().getDefaultEmailAddressValue());
                         executionCourse.getShiftTypes()
                                 .forEach(shiftType -> addCell(getLabel("label.shift") + " " + shiftType.getFullNameTipoAula(),
                                         Optional.ofNullable(
