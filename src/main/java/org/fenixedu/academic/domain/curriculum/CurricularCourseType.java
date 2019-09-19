@@ -23,30 +23,12 @@ package org.fenixedu.academic.domain.curriculum;
  * 
  *         19/Mar/2003
  */
-
+@Deprecated
 public enum CurricularCourseType {
 
     NORMAL_COURSE,
 
-    OPTIONAL_COURSE,
-
-    PROJECT_COURSE,
-
-    TFC_COURSE,
-
-    TRAINING_COURSE,
-
-    LABORATORY_COURSE,
-
-    M_TYPE_COURSE,
-
-    P_TYPE_COURSE,
-
-    DM_TYPE_COURSE,
-
-    A_TYPE_COURSE,
-
-    ML_TYPE_COURSE;
+    OPTIONAL_COURSE;
 
     public String getName() {
         return name();

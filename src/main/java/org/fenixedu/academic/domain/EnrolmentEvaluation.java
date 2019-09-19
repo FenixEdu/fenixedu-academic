@@ -170,16 +170,12 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         return super.getGradeScale();
     }
 
-    public boolean isNotEvaluated() {
-        return getEnrollmentStateByGrade() == EnrollmentState.NOT_EVALUATED;
-    }
-
     public boolean isFlunked() {
-        return getEnrollmentStateByGrade() == EnrollmentState.NOT_APROVED;
+        return isFinal() && !isApproved();
     }
 
     public boolean isApproved() {
-        return getEnrollmentStateByGrade() == EnrollmentState.APROVED;
+        return isFinal() && getEnrollmentStateByGrade() == EnrollmentState.APROVED;
     }
 
     public void edit(Person responsibleFor, Date evaluationDate) {

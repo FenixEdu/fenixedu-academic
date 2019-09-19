@@ -379,7 +379,7 @@ public class UICourseGroup extends UIDegreeModule {
 
         if (this.toEdit) {
 
-            if (degreeModule.isOptionalCourseGroup()) {
+            if (!degreeModule.isLeaf() && ((CourseGroup) degreeModule).getIsOptional()) {
                 writer.startElement("strong", this);
                 writer.append(" (");
                 writer.append(BundleUtil.getString(Bundle.BOLONHA, "optional"));

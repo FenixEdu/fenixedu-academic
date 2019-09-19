@@ -163,7 +163,7 @@ public class UICurricularCourse extends UIDegreeModule {
 
     private void encodeRegime() throws IOException {
         writer.startElement("td", this);
-        if (!this.curricularCourse.isOptional() && this.curricularCourse.getRegime(this.executionYear) != null) {
+        if (!this.curricularCourse.isOptionalCurricularCourse() && this.curricularCourse.getRegime(this.executionYear) != null) {
             writer.writeAttribute("class", "highlight2 smalltxt", null);
             writer.writeAttribute("align", "center", null);
             writer.writeAttribute("style", "width: 1em;", null);
@@ -177,7 +177,7 @@ public class UICurricularCourse extends UIDegreeModule {
 
     private void encodeLoadsAndCredits(CurricularPeriod curricularPeriod) throws IOException {
         writer.startElement("td", this);
-        if (!this.curricularCourse.isOptional()) {
+        if (!this.curricularCourse.isOptionalCurricularCourse()) {
             writer.writeAttribute("class", "smalltxt", null);
             writer.writeAttribute("align", "right", null);
 
@@ -254,7 +254,7 @@ public class UICurricularCourse extends UIDegreeModule {
         encodeRegime();
 
         writer.startElement("td", this);
-        if (!this.curricularCourse.isOptional()) {
+        if (!this.curricularCourse.isOptionalCurricularCourse()) {
             writer.writeAttribute("class", "smalltxt", null);
             writer.writeAttribute("align", "right", null);
 

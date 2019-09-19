@@ -260,7 +260,12 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
         setPrecedentCountry(null);
         setPrecedentInstitution(null);
 
+        final PersonalIngressionData ingressionData = getPersonalIngressionData();
         setPersonalIngressionData(null);
+        if (ingressionData != null && ingressionData.getPrecedentDegreesInformationsSet().isEmpty()) {
+            ingressionData.delete();
+        }
+
         setRootDomainObject(null);
         deleteDomainObject();
     }

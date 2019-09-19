@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -445,6 +444,17 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return count;
     }
 
+    public List<Enrolment> getEnrolmentsByExecutionYear(final ExecutionYear executionYear) {
+        final List<Enrolment> result = new ArrayList<Enrolment>();
+        for (final Enrolment enrolment : getEnrolmentsSet()) {
+            if (enrolment.getExecutionInterval().getExecutionYear() == executionYear) {
+                result.add(enrolment);
+            }
+        }
+
+        return result;
+    }
+
     public List<Enrolment> getEnrolmentsByExecutionPeriod(final ExecutionInterval executionInterval) {
         List<Enrolment> results = new ArrayList<Enrolment>();
         for (Enrolment enrolment : this.getEnrolmentsSet()) {
@@ -477,17 +487,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         for (final Enrolment enrolment : getEnrolmentsSet()) {
             if (!enrolment.isAnnulled() && !enrolment.isInvisible()
                     && (executionInterval == null || enrolment.isValid(executionInterval))) {
-                result.add(enrolment);
-            }
-        }
-
-        return result;
-    }
-
-    final public List<Enrolment> getEnrolmentsByExecutionYear(final ExecutionYear executionYear) {
-        final List<Enrolment> result = new ArrayList<Enrolment>();
-        for (final Enrolment enrolment : getEnrolmentsSet()) {
-            if (enrolment.getExecutionInterval().getExecutionYear() == executionYear) {
                 result.add(enrolment);
             }
         }
@@ -1283,30 +1282,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     final public Double getCreditsConcludedForCourseGroup(final CourseGroup courseGroup) {
         final CurriculumGroup curriculumGroup = findCurriculumGroupFor(courseGroup);
         return (curriculumGroup == null) ? Double.valueOf(0d) : curriculumGroup.getCreditsConcluded();
-    }
-
-    final public void setIsFirstTimeToNull() {
-        for (final Enrolment enrolment : getEnrolmentsSet()) {
-            enrolment.setIsFirstTime(null);
-        }
-    }
-
-    final public void resetIsFirstTimeEnrolmentForCurricularCourse(final CurricularCourse curricularCourse) {
-        final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
-        for (final Enrolment enrolment : getEnrolmentsSet()) {
-            if (curricularCourse == enrolment.getCurricularCourse()) {
-                enrolments.add(enrolment);
-            }
-        }
-        Boolean b = Boolean.TRUE;
-        for (final Enrolment enrolment : enrolments) {
-            if (!enrolment.isAnnulled()) {
-                enrolment.setIsFirstTime(b);
-                b = Boolean.FALSE;
-            } else {
-                enrolment.setIsFirstTime(Boolean.FALSE);
-            }
-        }
     }
 
     public boolean isLastStudentCurricularPlanFromRegistration() {

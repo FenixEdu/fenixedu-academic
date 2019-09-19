@@ -208,7 +208,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
         for (final Context contextWithCurricularCourse : contextsWithCurricularCourses) {
             CurricularCourse curricularCourse = (CurricularCourse) contextWithCurricularCourse.getChildDegreeModule();
 
-            if (!curricularCourse.isOptional()
+            if (!curricularCourse.isOptionalCurricularCourse()
                     && !scientificAreaUnits.contains(curricularCourse.getCompetenceCourse().getScientificAreaUnit())) {
                 final Row row = spreadsheet.addRow();
 
@@ -267,7 +267,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
 
         row.setCell(curricularCourse.getName());
         row.setCell(parentCourseGroupName);
-        if (curricularCourse.isOptional()) {
+        if (curricularCourse.isOptionalCurricularCourse()) {
             row.setCell(""); // scientific area unit name
             row.setCell(""); // scientific area unit acronym
 

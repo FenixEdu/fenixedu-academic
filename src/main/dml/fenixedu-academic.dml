@@ -1442,7 +1442,9 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         YearMonthDay homologationDate;
         Integer number;
         String agreementInformation;
+        //deprecated
         Boolean requestedChangeBranch;
+        //deprecated
         Boolean requestedChangeDegree;
         YearMonthDay startDate;
         YearMonthDay studiesStartDate;
@@ -1629,7 +1631,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
                 EnrollmentState enrollmentState;
                 EnrollmentCondition enrolmentCondition;
                 Boolean isExtraCurricular;
-                Boolean isFirstTime;
                 Double weigth;
                 DateTime annulmentDate;
             }

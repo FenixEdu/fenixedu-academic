@@ -29,8 +29,10 @@ public class EnrolmentEvaluationState extends FenixUtil {
 
     public static final int TEMPORARY = 2;
 
+    @Deprecated
     public static final int RECTIFIED = 5;
 
+    @Deprecated
     public static final int RECTIFICATION = 3;
 
     public static final int ANNULED = 4;
@@ -40,9 +42,11 @@ public class EnrolmentEvaluationState extends FenixUtil {
     public static final EnrolmentEvaluationState TEMPORARY_OBJ = new EnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY,
             1);
 
+    @Deprecated
     public static final EnrolmentEvaluationState RECTIFIED_OBJ = new EnrolmentEvaluationState(EnrolmentEvaluationState.RECTIFIED,
             3);
 
+    @Deprecated
     public static final EnrolmentEvaluationState RECTIFICATION_OBJ = new EnrolmentEvaluationState(
             EnrolmentEvaluationState.RECTIFICATION, 4);
 

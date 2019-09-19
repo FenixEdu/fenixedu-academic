@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -48,7 +47,6 @@ import org.fenixedu.academic.domain.enrolment.EnroledEnrolmentWrapper;
 import org.fenixedu.academic.domain.enrolment.ExternalDegreeEnrolmentWrapper;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.log.EnrolmentEvaluationLog;
 import org.fenixedu.academic.domain.log.EnrolmentLog;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.student.Registration;
@@ -61,7 +59,6 @@ import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
 import org.fenixedu.academic.domain.studentCurriculum.EctsAndWeightProviderRegistry;
 import org.fenixedu.academic.domain.studentCurriculum.InternalCreditsSourceCurriculumGroup;
-import org.fenixedu.academic.domain.studentCurriculum.InternalEnrolmentWrapper;
 import org.fenixedu.academic.domain.treasury.ITreasuryBridgeAPI;
 import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.academic.util.Bundle;
@@ -164,6 +161,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return getEnrolmentCondition() == EnrollmentCondition.FINAL;
     }
 
+    @Deprecated
     final public boolean isInvisible() {
         return getEnrolmentCondition() == EnrollmentCondition.INVISIBLE;
     }
@@ -172,16 +170,9 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return getEnrolmentCondition() == EnrollmentCondition.TEMPORARY;
     }
 
+    @Deprecated
     final public boolean isImpossible() {
         return getEnrolmentCondition() == EnrollmentCondition.IMPOSSIBLE;
-    }
-
-    /**
-     * @deprecated Use hasSpecialSeason() instead
-     */
-    @Deprecated
-    final public boolean isSpecialSeason() {
-        return hasSpecialSeason();
     }
 
     // new student structure methods
@@ -268,7 +259,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
         final Registration registration = getRegistration();
 
-        getStudentCurricularPlan().setIsFirstTimeToNull();
         setExecutionPeriod(null);
         setStudentCurricularPlan(null);
         setDegreeModule(null);
@@ -861,12 +851,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return hasSpecialSeason();
     }
 
-    final public boolean isNotEvaluated() {
-        final EnrolmentEvaluation latestEnrolmentEvaluation = getFinalEnrolmentEvaluation();
-        return latestEnrolmentEvaluation == null || latestEnrolmentEvaluation.isNotEvaluated();
-    }
-
     final public boolean isFlunked() {
+        if (isAnnulled()) {
+            return true;
+        }
+
         final EnrolmentEvaluation latestEnrolmentEvaluation = getFinalEnrolmentEvaluation();
         return latestEnrolmentEvaluation != null && latestEnrolmentEvaluation.isFlunked();
     }
@@ -949,79 +938,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return this.getEnrollmentState() == EnrollmentState.ENROLLED;
     }
 
-    @Deprecated
-    final public boolean isEnrolmentStateApproved() {
-        return this.getEnrollmentState() == EnrollmentState.APROVED;
-    }
-
-    @Deprecated
-    final public boolean isEnrolmentStateNotApproved() {
-        return this.getEnrollmentState() == EnrollmentState.NOT_APROVED;
-    }
-
-    @Deprecated
-    final public boolean isEnrolmentStateNotEvaluated() {
-        return this.getEnrollmentState() == EnrollmentState.NOT_EVALUATED;
-    }
-
     final public boolean isAnnulled() {
         return this.getEnrollmentState() == EnrollmentState.ANNULED;
-    }
-
-    final public boolean isTemporarilyEnroled() {
-        return this.getEnrollmentState() == EnrollmentState.TEMPORARILY_ENROLLED;
-    }
-
-    final public boolean isEvaluated() {
-        return isEnrolmentStateApproved() || isEnrolmentStateNotApproved();
-    }
-
-    final public boolean isActive() {
-        return !isAnnulled() && !isTemporarilyEnroled();
-    }
-
-    final public Boolean isFirstTime() {
-        if (getIsFirstTime() == null) {
-            resetIsFirstTimeEnrolment();
-        }
-        return getIsFirstTime();
-    }
-
-    final public void resetIsFirstTimeEnrolment() {
-        if (getStudentCurricularPlan() != null && getCurricularCourse() != null && getExecutionInterval() != null
-                && getEnrollmentState() != null) {
-            getStudentCurricularPlan().resetIsFirstTimeEnrolmentForCurricularCourse(getCurricularCourse());
-        } else {
-            setIsFirstTime(Boolean.FALSE);
-        }
-    }
-
-    @Override
-    final public void setDegreeModule(final DegreeModule degreeModule) {
-        super.setDegreeModule(degreeModule);
-        resetIsFirstTimeEnrolment();
-    }
-
-    @Override
-    final public void setEnrollmentState(final EnrollmentState enrollmentState) {
-        super.setEnrollmentState(enrollmentState);
-        resetIsFirstTimeEnrolment();
-    }
-
-    @Override
-    final public void setExecutionPeriod(final ExecutionInterval executionInterval) {
-        super.setExecutionPeriod(executionInterval);
-        resetIsFirstTimeEnrolment();
-    }
-
-    @Override
-    final public void setStudentCurricularPlan(final StudentCurricularPlan studentCurricularPlan) {
-        super.setStudentCurricularPlan(studentCurricularPlan);
-        resetIsFirstTimeEnrolment();
-    }
-
-    final public int getNumberOfTotalEnrolmentsInThisCourse() {
-        return this.getStudentCurricularPlan().countEnrolmentsByCurricularCourse(this.getCurricularCourse());
     }
 
     final public int getNumberOfTotalEnrolmentsInThisCourse(final ExecutionInterval untilExecutionInterval) {
@@ -1040,38 +958,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         builder.append(tabs);
         builder.append("[E ").append(getDegreeModule().getName()).append(" ").append(isApproved()).append(" ]\n");
         return builder;
-    }
-
-    final public EnrolmentEvaluation addNewEnrolmentEvaluation(final EnrolmentEvaluationState enrolmentEvaluationState,
-            final EvaluationSeason evaluationSeason, final Person responsibleFor, final String gradeValue,
-            final Date availableDate, final Date examDate, final ExecutionInterval executionInterval,
-            final GradeScale gradeScale) {
-
-        final Grade grade = Grade.createGrade(gradeValue, gradeScale != null ? gradeScale : getGradeScale());
-
-        final EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(this, enrolmentEvaluationState, evaluationSeason,
-                responsibleFor, grade, availableDate, examDate, new DateTime());
-        if (evaluationSeason.isImprovement()) {
-            enrolmentEvaluation.setExecutionPeriod(executionInterval.convert(ExecutionSemester.class));
-        }
-        return enrolmentEvaluation;
-    }
-
-    final public EnrolmentEvaluation addNewEnrolmentEvaluation(final EnrolmentEvaluationState enrolmentEvaluationState,
-            final EvaluationSeason evaluationSeason, final Person responsibleFor, final String gradeValue,
-            final Date availableDate, final Date examDate, final ExecutionInterval executionInterval, final String bookReference,
-            final String page, final GradeScale gradeScale) {
-
-        EnrolmentEvaluation enrolmentEvaluation = addNewEnrolmentEvaluation(enrolmentEvaluationState, evaluationSeason,
-                responsibleFor, gradeValue, availableDate, examDate, executionInterval, gradeScale);
-        enrolmentEvaluation.setBookReference(bookReference);
-        enrolmentEvaluation.setPage(page);
-        enrolmentEvaluation.setContext(EnrolmentEvaluationContext.CURRICULUM_VALIDATION_EVALUATION);
-        enrolmentEvaluation.setGradeScale(gradeScale);
-
-        EnrolmentEvaluationLog.logEnrolmentEvaluationCreation(enrolmentEvaluation);
-
-        return enrolmentEvaluation;
     }
 
     final public Attends getAttendsByExecutionCourse(final ExecutionCourse executionCourse) {
@@ -1185,30 +1071,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         } else {
             return "COMPULSORY_ENROLMENT";
         }
-    }
-
-    static public int countEvaluated(final List<Enrolment> enrolments) {
-        int result = 0;
-
-        for (final Enrolment enrolment : enrolments) {
-            if (enrolment.isEvaluated()) {
-                result++;
-            }
-        }
-
-        return result;
-    }
-
-    static public int countApproved(final List<Enrolment> enrolments) {
-        int result = 0;
-
-        for (final Enrolment enrolment : enrolments) {
-            if (enrolment.isEnrolmentStateApproved()) {
-                result++;
-            }
-        }
-
-        return result;
     }
 
     @Override
@@ -1336,40 +1198,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
                 .getAccumulatedEctsCredits(executionInterval, getCurricularCourse());
     }
 
-    final public boolean isSpecialSeasonEnroled(final ExecutionYear executionYear) {
-        return isSpecialSeason() && getExecutionInterval().getExecutionYear() == executionYear
-                && getTempSpecialSeasonEvaluation() != null;
-    }
-
-    public boolean isSpecialSeasonEnroled(final ExecutionInterval executionInterval) {
-        return isSpecialSeason() && isValid(executionInterval) && getTempSpecialSeasonEvaluation() != null;
-    }
-
-    private EnrolmentEvaluation getTempSpecialSeasonEvaluation() {
-        return getEnrolmentEvaluationBySeasonAndState(EnrolmentEvaluationState.TEMPORARY_OBJ,
-                EvaluationSeason.readSpecialSeason()).orElse(null);
-    }
-
-    public boolean canBeSpecialSeasonEnroled(final ExecutionYear executionYear) {
-        return !getEvaluationSeason().isSpecial() && getExecutionInterval().getExecutionYear() == executionYear && !isApproved();
-    }
-
-    public boolean canBeSpecialSeasonEnroled(final ExecutionInterval executionInterval) {
-        return !getEvaluationSeason().isSpecial() && getExecutionInterval() == executionInterval && !isApproved();
-    }
-
-    public Collection<Enrolment> getSpecialSeasonEnrolments(final ExecutionYear executionYear) {
-        return getExecutionInterval().getExecutionYear() == executionYear && isSpecialSeason() ? Collections
-                .singleton(this) : Collections.emptySet();
-    }
-
-    public Collection<Enrolment> getSpecialSeasonEnrolments(final ExecutionInterval executionInterval) {
-        if (isSpecialSeason() && isValid(executionInterval)) {
-            return Collections.singleton(this);
-        }
-        return Collections.emptySet();
-    }
-
     @Override
     final public String getDescription() {
         return getStudentCurricularPlan().getDegree().getPresentationName(getExecutionYear()) + " > " + getName().getContent();
@@ -1417,20 +1245,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return isValid(executionInterval) && isApproved() ? 1 : 0;
     }
 
-    public boolean isSourceOfAnyCreditsInCurriculum() {
-        for (final InternalEnrolmentWrapper enrolmentWrapper : getEnrolmentWrappersSet()) {
-            if (enrolmentWrapper.getCredits().hasAnyDismissalInCurriculum()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    static public Enrolment getEnrolmentWithLastExecutionPeriod(final List<Enrolment> enrolments) {
-        Collections.sort(enrolments, Enrolment.REVERSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
-        return enrolments.iterator().next();
-    }
-
     /**
      *
      * After create new Enrolment, must delete OptionalEnrolment (to delete
@@ -1462,16 +1276,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         enrolment.createCurriculumLineLog(EnrolmentAction.ENROL);
 
         return enrolment;
-    }
-
-    @Override
-    public void setCurriculumGroup(final CurriculumGroup curriculumGroup) {
-        super.setCurriculumGroup(curriculumGroup);
-        // Enrolment "isFirstTime" optimization needs to be re-computed, for all
-        // sibling enrolments.
-        if (curriculumGroup != null) {
-            curriculumGroup.getStudentCurricularPlan().setIsFirstTimeToNull();
-        }
     }
 
     static protected void changeAttends(final Enrolment from, final Enrolment to) {
@@ -1535,7 +1339,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     public void activate() {
-        if (!isActive()) {
+        if (isAnnulled()) {
             final Grade finalGrade = getGrade();
             setEnrollmentState(finalGrade.isEmpty() ? EnrollmentState.ENROLLED : finalGrade.getEnrolmentState());
             setAnnulmentDate(null);

@@ -100,8 +100,22 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
         return false;
     }
 
+    public boolean isParentGroupOptional() {
+        return !getCurriculumGroup().isNoCourseGroupCurriculumGroup() && getCurriculumGroup().getDegreeModule().getIsOptional();
+    }
+
     public boolean isStandalone() {
         return getCurriculumGroup().isStandalone();
+    }
+
+    public boolean isAffinity() {
+        final CycleCurriculumGroup cycleCurriculumGroup = getParentCycleCurriculumGroup();
+        return cycleCurriculumGroup != null && cycleCurriculumGroup.isExternal();
+    }
+
+    public boolean isNormal() {
+        return (getCurriculumGroup().isInternalCreditsSourceGroup() || !getCurriculumGroup().isNoCourseGroupCurriculumGroup())
+                && !isAffinity();
     }
 
     final protected void validateDegreeModuleLink(CurriculumGroup curriculumGroup, CurricularCourse curricularCourse) {

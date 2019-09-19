@@ -33,8 +33,6 @@ public enum EnrollmentState {
 
     ENROLLED,
 
-    TEMPORARILY_ENROLLED,
-
     ANNULED,
 
     NOT_EVALUATED;

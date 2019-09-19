@@ -879,7 +879,7 @@ public class CourseGroup extends CourseGroup_Base {
         return context;
     }
 
-    @Override
+    @Deprecated
     public boolean isOptionalCourseGroup() {
         return super.getIsOptional();
     }

@@ -46,14 +46,15 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.EntryPhase;
 import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.SchoolClass;
-import org.fenixedu.academic.domain.SchoolLevelType;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.ShiftType;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
@@ -61,7 +62,9 @@ import org.fenixedu.academic.domain.accessControl.academicAdministration.Academi
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOfficeType;
+import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacy.PersonalInformationBean;
+import org.fenixedu.academic.domain.candidacy.RegisteredCandidacySituation;
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
@@ -138,6 +141,38 @@ public class Registration extends Registration_Base {
         setRegistrationProtocol(RegistrationProtocol.getDefault());
     }
 
+    @Deprecated
+    public Registration(final Person person, final StudentCandidacy studentCandidacy) {
+        this(person, null, RegistrationProtocol.getDefault(), null, getDegreeFromCandidacy(studentCandidacy));
+        setStudentCandidacyInformation(studentCandidacy);
+    }
+
+    @Deprecated
+    public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
+            final StudentCandidacy studentCandidacy, final RegistrationProtocol protocol, final CycleType cycleType,
+            final ExecutionYear executionYear) {
+        this(person, degreeCurricularPlan, protocol, cycleType, executionYear);
+        setStudentCandidacyInformation(studentCandidacy);
+    }
+
+    @Deprecated
+    private Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
+            final RegistrationProtocol protocol, final CycleType cycleType, final ExecutionYear executionYear) {
+        this(person, null, protocol, executionYear, degreeCurricularPlan != null ? degreeCurricularPlan.getDegree() : null);
+        createStudentCurricularPlan(degreeCurricularPlan, executionYear, cycleType);
+    }
+
+    @Deprecated
+    private Registration(final Person person, final Integer registrationNumber, final RegistrationProtocol protocol,
+            final ExecutionYear executionYear, final Degree degree) {
+
+        this(person, registrationNumber, degree, executionYear);
+
+        setRequestedChangeDegree(false);
+        setRequestedChangeBranch(false);
+        setRegistrationProtocol(protocol == null ? RegistrationProtocol.getDefault() : protocol);
+    }
+
     private Registration(final Person person, final Integer registrationNumber, final Degree degree,
             final ExecutionYear executionYear) {
         this();
@@ -160,16 +195,7 @@ public class Registration extends Registration_Base {
         Signal.emit(REGISTRATION_CREATE_SIGNAL, new DomainObjectEvent<>(this));
     }
 
-    public Registration(final Person person, final StudentCandidacy studentCandidacy) {
-        this(person, null, RegistrationProtocol.getDefault(), null, studentCandidacy);
-    }
-
-    public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan, final RegistrationProtocol protocol,
-            final CycleType cycleType, final ExecutionYear executionYear) {
-        this(person, null, protocol, executionYear, degreeCurricularPlan != null ? degreeCurricularPlan.getDegree() : null);
-        createStudentCurricularPlan(degreeCurricularPlan, executionYear, cycleType);
-    }
-
+    @Deprecated
     public static Registration createRegistrationWithCustomStudentNumber(final Person person,
             final DegreeCurricularPlan degreeCurricularPlan, final StudentCandidacy studentCandidacy,
             final RegistrationProtocol protocol, final CycleType cycleType, final ExecutionYear executionYear,
@@ -186,33 +212,100 @@ public class Registration extends Registration_Base {
         return registration;
     }
 
-    public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
-            final StudentCandidacy studentCandidacy, final RegistrationProtocol protocol, final CycleType cycleType,
-            final ExecutionYear executionYear) {
+    public static Registration create(final Student student, final DegreeCurricularPlan degreeCurricularPlan,
+            final ExecutionYear executionYear, final RegistrationProtocol protocol, final IngressionType ingressionType) {
 
-        this(person, degreeCurricularPlan, protocol, cycleType, executionYear);
-        setStudentCandidacyInformation(studentCandidacy);
+        if (student == null) {
+            throw new DomainException("error.Registration.student.cannot.be.null");
+        }
+
+        if (degreeCurricularPlan == null) {
+            throw new DomainException("error.Registration.degreeCurricularPlan.cannot.be.null");
+        }
+
+        if (protocol == null) {
+            throw new DomainException("error.Registration.registrationProtocol.cannot.be.null");
+        }
+
+        if (ingressionType == null) {
+            throw new DomainException("error.Registration.ingressionType.cannot.be.null");
+        }
+
+        //TODO: remove entryGrade, entryPhase and ingressionType from StudentCandidacy
+        final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
+        if (executionDegree == null) {
+            throw new DomainException("error.Registration.execution.degree.for.year.was.not.found");
+        }
+
+        final Registration result =
+                new Registration(student.getPerson(), (Integer) null, degreeCurricularPlan.getDegree(), executionYear);
+        result.setRegistrationProtocol(protocol);
+        result.setIngressionType(ingressionType);
+
+        result.createStudentCurricularPlan(degreeCurricularPlan, executionYear, (CycleType) null);
+
+        final StudentCandidacy studentCandidacy = StudentCandidacy.createStudentCandidacy(executionDegree, student.getPerson());
+
+        //TODO: remove DFACandidacy behavior from RegisteredCandidacySituation (and remove unnecessary arguments)
+        new RegisteredCandidacySituation(studentCandidacy, protocol, (CycleType) null, ingressionType, (EntryPhase) null,
+                (Integer) null);
+        result.setStudentCandidacyInformation(studentCandidacy);
+
+        //TODO: remove this attributes from registration
+        result.setRequestedChangeDegree(false);
+        result.setRequestedChangeBranch(false);
+
+        //TODO: clean personal ingression data
+        final PersonalIngressionData ingressionData = result.getStudent().getPersonalIngressionDataByExecutionYear(executionYear);
+        if (ingressionData == null) {
+            new PersonalIngressionData(result.getStudent(), executionYear, studentCandidacy.getPrecedentDegreeInformation());
+        } else {
+            studentCandidacy.getPrecedentDegreeInformation().setPersonalIngressionData(ingressionData);
+        }
+
+        studentCandidacy.getPrecedentDegreeInformation().setRegistration(result);
+
+        return result;
     }
 
-    private Registration(final Person person, final Integer registrationNumber, final RegistrationProtocol protocol,
-            final ExecutionYear executionYear, final StudentCandidacy studentCandidacy) {
+    /**
+     * @deprecated use {@link StudentCandidacy#getPrecedentDegreeInformation()}
+     */
+    @Deprecated
+    @Override
+    public PrecedentDegreeInformation getPrecedentDegreeInformation() {
+        return super.getPrecedentDegreeInformation();
+    }
 
-        this(person, registrationNumber, protocol, executionYear, getDegreeFromCandidacy(studentCandidacy));
-        setStudentCandidacyInformation(studentCandidacy);
+    /**
+     * @deprecated use {@link StudentCandidacy#setPrecedentDegreeInformation()}
+     */
+    @Deprecated
+    @Override
+    public void setPrecedentDegreeInformation(PrecedentDegreeInformation precedentDegreeInformation) {
+        super.setPrecedentDegreeInformation(precedentDegreeInformation);
+    }
+
+    /**
+     * @deprecated use {@link StudentCandidacy#getPrecedentDegreeInformation()}
+     */
+    @Deprecated
+    @Override
+    public Set<PrecedentDegreeInformation> getPrecedentDegreesInformationsSet() {
+        return super.getPrecedentDegreesInformationsSet();
+    }
+
+    /**
+     * @deprecated use {@link StudentCandidacy#getPrecedentDegreeInformation()}
+     */
+    @Deprecated
+    @Override
+    public void addPrecedentDegreesInformations(PrecedentDegreeInformation precedentDegreesInformations) {
+        super.addPrecedentDegreesInformations(precedentDegreesInformations);
     }
 
     private static Degree getDegreeFromCandidacy(final StudentCandidacy studentCandidacy) {
         return studentCandidacy == null ? null : studentCandidacy.getExecutionDegree().getDegree();
-    }
-
-    private Registration(final Person person, final Integer registrationNumber, final RegistrationProtocol protocol,
-            final ExecutionYear executionYear, final Degree degree) {
-
-        this(person, registrationNumber, degree, executionYear);
-
-        setRequestedChangeDegree(false);
-        setRequestedChangeBranch(false);
-        setRegistrationProtocol(protocol == null ? RegistrationProtocol.getDefault() : protocol);
     }
 
     private void setStudentCandidacyInformation(final StudentCandidacy studentCandidacy) {
@@ -285,6 +378,8 @@ public class Registration extends Registration_Base {
         for (; !getRegistrationStateLogSet().isEmpty(); getRegistrationStateLogSet().iterator().next().delete()) {
             ;
         }
+
+        getPrecedentDegreesInformationsSet().forEach(pd -> pd.delete());
 
         if (getRegistrationNumber() != null) {
             getRegistrationNumber().delete();
@@ -1224,28 +1319,6 @@ public class Registration extends Registration_Base {
         }
     }
 
-    final public String getPrecedentDegreeConclusionGrade(final SchoolLevelType levelType) {
-        return hasPrecedentDegreeInformation(levelType) ? getPrecedentDegreeInformation(levelType).getConclusionGrade() : null;
-    }
-
-    public boolean hasPrecedentDegreeInformation(final SchoolLevelType levelType) {
-        return getPrecedentDegreeInformation(levelType) != null;
-    }
-
-    public PrecedentDegreeInformation getPrecedentDegreeInformation(final SchoolLevelType levelType) {
-        return super.getPrecedentDegreeInformation() != null && super.getPrecedentDegreeInformation()
-                .getSchoolLevel() == levelType ? super.getPrecedentDegreeInformation() : null;
-    }
-
-    public boolean isFirstCycleAtributionIngression() {
-        return getIngressionType().isFirstCycleAttribution();
-
-    }
-
-    public boolean isSecondCycleInternalCandidacyIngression() {
-        return getIngressionType() != null ? getIngressionType().isInternal2ndCycleAccess() : false;
-    }
-
     public ExecutionYear getIngressionYear() {
         return calculateIngressionYear();
     }
@@ -1506,7 +1579,7 @@ public class Registration extends Registration_Base {
         } else if (interval == executionInterval) { // if found in provided interval, return all states
             return new HashSet<>(map.get(interval));
 
-        } else { // otherwise return olny the last one
+        } else { // otherwise return only the last one
             return map.get(interval).stream().max(RegistrationState.EXECUTION_INTERVAL_AND_DATE_COMPARATOR).map(Stream::of)
                     .orElseGet(Stream::empty).collect(Collectors.toSet());
         }
@@ -1517,6 +1590,8 @@ public class Registration extends Registration_Base {
         return getRegistrationStatesSet().stream().min(RegistrationState.EXECUTION_INTERVAL_AND_DATE_COMPARATOR).orElse(null);
     }
 
+    //TODO: change to execution interval
+    //IMPORTANT: when executinInterval is executionYear (higher space) we must first ensure executionInterval is on same space (executionInterval.getExecutionYear) because we cannot compare intervals in different spaces
     public RegistrationState getLastRegistrationState(final ExecutionYear executionYear) {
         return getRegistrationStatesSet().stream().filter(s -> s.getExecutionYear().isBeforeOrEquals(executionYear))
                 .max(RegistrationState.EXECUTION_INTERVAL_AND_DATE_COMPARATOR).orElse(null);

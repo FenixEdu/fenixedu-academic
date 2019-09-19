@@ -44,7 +44,7 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
         }
 
         final DegreeModule degreeModule = rule.getDegreeModuleToApplyRule();
-        if (degreeModule.isOptional()) {
+        if (degreeModule.isLeaf() && ((CurricularCourse) degreeModule).isOptionalCurricularCourse()) {
             return evaluateIfCanEnrolToOptionalDegreeModule(enrolmentContext, rule, sourceDegreeModuleToEvaluate);
 
         } else {
@@ -144,7 +144,7 @@ public class CreditsLimitExecutor extends CurricularRuleExecutor {
         }
 
         final DegreeModule degreeModule = rule.getDegreeModuleToApplyRule();
-        if (degreeModule.isOptional()) {
+        if (degreeModule.isLeaf() && ((CurricularCourse) degreeModule).isOptionalCurricularCourse()) {
             return evaluateIfCanEnrolToOptionalDegreeModule(enrolmentContext, rule, sourceDegreeModuleToEvaluate);
 
         } else {

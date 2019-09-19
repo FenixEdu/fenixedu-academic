@@ -297,7 +297,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         final List<String> notApprovedCompetenceCourses = new ArrayList<>();
         for (final DegreeModule degreeModule : getDcpDegreeModules(CurricularCourse.class)) {
             final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
-            if (!curricularCourse.isOptional() && !curricularCourse.getCompetenceCourse().isApproved()) {
+            if (!curricularCourse.isOptionalCurricularCourse() && !curricularCourse.getCompetenceCourse().isApproved()) {
                 notApprovedCompetenceCourses.add(curricularCourse.getCompetenceCourse().getDepartmentUnit().getName() + " > "
                         + curricularCourse.getCompetenceCourse().getName());
             }

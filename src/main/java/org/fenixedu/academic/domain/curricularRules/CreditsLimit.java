@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.curricularRules;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
@@ -47,7 +48,7 @@ public class CreditsLimit extends CreditsLimit_Base {
     }
 
     private void checkParameters(final DegreeModule degreeModuleToApplyRule) {
-        if (degreeModuleToApplyRule.isLeaf() && !degreeModuleToApplyRule.isOptional()) {
+        if (degreeModuleToApplyRule.isLeaf() && !((CurricularCourse) degreeModuleToApplyRule).isOptionalCurricularCourse()) {
             throw new DomainException(
                     "error.curricularRules.CreditsLimit.invalid.degreeModule.must.be.group.or.optional.curricularCourse");
         }

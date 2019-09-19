@@ -619,11 +619,6 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     @Override
-    final public boolean isOptional() {
-        return getType() == CurricularCourseType.OPTIONAL_COURSE;
-    }
-
-    @Override
     public boolean isDissertation() {
         CompetenceCourse competenceCourse = getCompetenceCourse();
         return competenceCourse == null ? false : competenceCourse.isDissertation();

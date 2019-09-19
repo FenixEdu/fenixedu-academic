@@ -31,10 +31,12 @@ public enum EnrollmentCondition {
 
     TEMPORARY,
 
+    @Deprecated
     IMPOSSIBLE,
 
     VALIDATED,
 
+    @Deprecated
     INVISIBLE;
 
     public String getName() {

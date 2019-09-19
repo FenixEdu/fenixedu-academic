@@ -379,10 +379,6 @@ abstract public class DegreeModule extends DegreeModule_Base {
         return getParentDegreeCurricularPlan().isBolonhaDegree();
     }
 
-    public boolean isOptional() {
-        return false;
-    }
-
     public boolean isBranchCourseGroup() {
         return false;
     }
@@ -635,7 +631,4 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
     abstract public void applyToCurricularCourses(final ExecutionYear executionYear, final Predicate predicate);
 
-    public boolean isOptionalCourseGroup() {
-        return false;
-    }
 }

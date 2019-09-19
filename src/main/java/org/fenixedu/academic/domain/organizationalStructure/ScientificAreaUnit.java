@@ -133,7 +133,7 @@ public class ScientificAreaUnit extends ScientificAreaUnit_Base {
         for (Context context : contexts) {
             if (context.getChildDegreeModule().isLeaf()) {
                 CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
-                if (!curricularCourse.isOptional() && curricularCourse.getCompetenceCourse().getScientificAreaUnit().equals(this)) {
+                if (!curricularCourse.isOptionalCurricularCourse() && curricularCourse.getCompetenceCourse().getScientificAreaUnit().equals(this)) {
                     result += curricularCourse.getCompetenceCourse().getEctsCredits();
                 }
             }
