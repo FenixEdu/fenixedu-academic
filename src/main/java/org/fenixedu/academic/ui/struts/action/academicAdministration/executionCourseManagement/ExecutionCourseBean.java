@@ -33,7 +33,7 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionDegree;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.interfaces.HasExecutionDegree;
 import org.fenixedu.academic.domain.interfaces.HasExecutionSemester;
 
@@ -47,11 +47,11 @@ public class ExecutionCourseBean implements Serializable, HasExecutionSemester, 
     private CurricularYear curricularYear;
     private ExecutionCourse sourceExecutionCourse;
     private ExecutionCourse destinationExecutionCourse;
-    private ExecutionSemester executionSemester;
+    private ExecutionInterval executionInterval;
     private Boolean chooseNotLinked;
 
     @Override
-    public ExecutionSemester getExecutionPeriod() {
+    public ExecutionInterval getExecutionPeriod() {
         return getExecutionSemester();
     }
 
@@ -88,12 +88,12 @@ public class ExecutionCourseBean implements Serializable, HasExecutionSemester, 
         this.curricularYear = curricularYear;
     }
 
-    public ExecutionSemester getExecutionSemester() {
-        return executionSemester;
+    public ExecutionInterval getExecutionSemester() {
+        return executionInterval;
     }
 
-    public void setExecutionSemester(ExecutionSemester executionSemester) {
-        this.executionSemester = executionSemester;
+    public void setExecutionSemester(ExecutionInterval executionInterval) {
+        this.executionInterval = executionInterval;
     }
 
     public ExecutionCourse getSourceExecutionCourse() {
@@ -133,9 +133,10 @@ public class ExecutionCourseBean implements Serializable, HasExecutionSemester, 
             result = this.getExecutionSemester().getAssociatedExecutionCoursesSet().stream()
                     .filter(ec -> ec.getAssociatedCurricularCoursesSet().isEmpty()).collect(Collectors.toList());
         } else {
-            for (final CurricularCourse curricularCourse : getDegreeCurricularPlan().getCurricularCourses(getExecutionSemester())) {
-                if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(getCurricularYear(),
-                        getDegreeCurricularPlan(), getExecutionSemester())) {
+            for (final CurricularCourse curricularCourse : getDegreeCurricularPlan()
+                    .getCurricularCourses(getExecutionSemester())) {
+                if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(getCurricularYear(), getDegreeCurricularPlan(),
+                        getExecutionSemester())) {
                     result.addAll(curricularCourse.getExecutionCoursesByExecutionPeriod(getExecutionSemester()));
                 }
             }
@@ -159,9 +160,8 @@ public class ExecutionCourseBean implements Serializable, HasExecutionSemester, 
 
             final Set<DegreeCurricularPlan> plans;
             if (getDegree() != null) {
-                plans =
-                        Sets.intersection(getDegree().getDegreeCurricularPlansSet(),
-                                Sets.newHashSet(getSourceExecutionCourse().getAssociatedDegreeCurricularPlans()));
+                plans = Sets.intersection(getDegree().getDegreeCurricularPlansSet(),
+                        Sets.newHashSet(getSourceExecutionCourse().getAssociatedDegreeCurricularPlans()));
             } else {
                 plans = Sets.newHashSet(getSourceExecutionCourse().getAssociatedDegreeCurricularPlans());
             }
@@ -181,9 +181,8 @@ public class ExecutionCourseBean implements Serializable, HasExecutionSemester, 
 
             final Set<DegreeCurricularPlan> plans;
             if (getDegree() != null) {
-                plans =
-                        Sets.intersection(getDegree().getDegreeCurricularPlansSet(),
-                                Sets.newHashSet(getDestinationExecutionCourse().getAssociatedDegreeCurricularPlans()));
+                plans = Sets.intersection(getDegree().getDegreeCurricularPlansSet(),
+                        Sets.newHashSet(getDestinationExecutionCourse().getAssociatedDegreeCurricularPlans()));
             } else {
                 plans = Sets.newHashSet(getDestinationExecutionCourse().getAssociatedDegreeCurricularPlans());
             }
@@ -193,7 +192,7 @@ public class ExecutionCourseBean implements Serializable, HasExecutionSemester, 
 
         return result.toString();
     }
-    
+
     public static String getCode(final ExecutionCourse executionCourse) {
         return "[" + executionCourse.getCompetenceCourses().stream().map(cc -> cc.getCode()).distinct()
                 .collect(Collectors.joining(", ")) + "] ";

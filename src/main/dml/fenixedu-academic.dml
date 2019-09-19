@@ -2514,7 +2514,7 @@ relation CurricularRuleBeginExecutionPeriod {
     curricularRules.CurricularRule playsRole participatingBeginCurricularRules {
         multiplicity *;
     }
-    ExecutionSemester playsRole begin;
+    ExecutionInterval playsRole begin;
 }
 
 relation CurricularRuleCompositeRule {
@@ -2535,7 +2535,7 @@ relation CurricularRuleEndExecutionPeriod {
     curricularRules.CurricularRule playsRole participatingEndCurricularRules {
         multiplicity *;
     }
-    ExecutionSemester playsRole end;
+    ExecutionInterval playsRole end;
 }
 
 relation CurricularRuleNotRule {
@@ -2880,14 +2880,14 @@ relation OccupationPeriodReferencePeriod {
 }
 
 relation ExecutionPeriodContextBegin {
-    ExecutionSemester playsRole beginExecutionPeriod;
+    ExecutionInterval playsRole beginExecutionPeriod;
     degreeStructure.Context playsRole beginExecutionPeriodContexts {
         multiplicity *;
     }
 }
 
 relation ExecutionPeriodContextEnd {
-    ExecutionSemester playsRole endExecutionPeriod;
+    ExecutionInterval playsRole endExecutionPeriod;
     degreeStructure.Context playsRole endExecutionPeriodContexts {
         multiplicity *;
     }
@@ -2904,7 +2904,7 @@ relation ExecutionPeriodExecutionCourse {
     ExecutionCourse playsRole associatedExecutionCourses {
         multiplicity *;
     }
-    ExecutionSemester playsRole executionPeriod;
+    ExecutionInterval playsRole executionPeriod;
 }
 
 relation ExecutionPeriodExecutionYear {
@@ -2915,7 +2915,7 @@ relation ExecutionPeriodExecutionYear {
 }
 
 relation ExecutionPeriodSchoolClass {
-    ExecutionSemester playsRole executionPeriod;
+    ExecutionInterval playsRole executionPeriod;
     SchoolClass playsRole schoolClasses {
         multiplicity *;
     }
@@ -4435,7 +4435,7 @@ relation CompetenceCourseInformationChangeRequestExecutionPeriod {
     degreeStructure.CompetenceCourseInformationChangeRequest playsRole competenceCourseInformationChangeRequests {
         multiplicity *;
     }
-    ExecutionSemester playsRole executionPeriod;
+    ExecutionInterval playsRole executionPeriod;
 }
 
 relation CompetenceCourseInformationChangeRequestCompetenceCourse {
@@ -4460,7 +4460,7 @@ relation CompetenceCourseInformationChangeRequestRootDomainObject {
 }
 
 relation CompetenceCourseInformationExecutionPeriod {
-    ExecutionSemester playsRole executionPeriod;
+    ExecutionInterval playsRole executionPeriod;
     degreeStructure.CompetenceCourseInformation playsRole competenceCourseInformations {
         multiplicity *;
     }
@@ -4875,7 +4875,7 @@ relation RootDomainObjectEnrolmentInstructions {
 }
 
 relation ExecutionSemesterEnrolmentInstructions {
-	ExecutionSemester playsRole executionSemester;
+	ExecutionInterval playsRole executionSemester;
 	EnrolmentInstructions playsRole enrolmentInstructions;
 }
 

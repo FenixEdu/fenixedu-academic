@@ -509,13 +509,4 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         return getExecutionPeriod().getExecutionYear();
     }
 
-    /**
-     * @deprecated use {@link #getExecutionInterval()} instead.
-     */
-    @Deprecated
-    @Override
-    public ExecutionSemester getExecutionPeriod() {
-        return super.getExecutionPeriod();
-    }
-
 }

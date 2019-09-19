@@ -22,7 +22,6 @@ import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGroupUnit;
@@ -58,7 +57,7 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
 
     public CompetenceCourseInformationChangeRequest(String name, String nameEn, String justification, RegimeType regime,
             String objectives, String objectivesEn, String program, String programEn, String evaluationMethod,
-            String evaluationMethodEn, CompetenceCourse course, CompetenceCourseLevel level, ExecutionSemester period,
+            String evaluationMethodEn, CompetenceCourse course, CompetenceCourseLevel level, ExecutionInterval period,
             Person requester, Double theoreticalHours, Double problemsHours, Double laboratorialHours, Double seminaryHours,
             Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours, Double otherHours,
             Double autonomousWorkHours, Double ectsCredits, Double secondTheoreticalHours, Double secondProblemsHours,
@@ -253,15 +252,6 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
     public boolean isLoggedPersonAllowedToEdit() {
         return CompetenceCourseManagementAccessControl.isLoggedPersonAllowedToManageChangeRequests(getCompetenceCourse(),
                 getExecutionPeriod());
-    }
-
-    /**
-     * @deprecated use {@link #getExecutionInterval()} instead.
-     */
-    @Deprecated
-    @Override
-    public ExecutionSemester getExecutionPeriod() {
-        return super.getExecutionPeriod();
     }
 
     public ExecutionInterval getExecutionInterval() {

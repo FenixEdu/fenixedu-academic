@@ -132,14 +132,14 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
             HttpServletResponse response) {
 
         CompetenceCourse course = getCompetenceCourse(request);
-        ExecutionSemester period = getExecutionPeriod(request);
+        ExecutionInterval period = getExecutionPeriod(request);
 
         CompetenceCourseInformationRequestBean bean = null;
         IViewState viewState = RenderUtils.getViewState("editVersion");
         CompetenceCourseInformation information = null;
         if (viewState != null) {
             bean = (CompetenceCourseInformationRequestBean) viewState.getMetaObject().getObject();
-            ExecutionSemester beanPeriod = bean.getExecutionPeriod();
+            ExecutionInterval beanPeriod = bean.getExecutionPeriod();
             if (beanPeriod == null) {
                 beanPeriod = ExecutionSemester.findCurrent(null);
                 bean.setExecutionPeriod(beanPeriod);
@@ -187,7 +187,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
         return mapping.findForward("viewVersions");
     }
 
-    private ExecutionSemester getExecutionPeriod(HttpServletRequest request) {
+    private ExecutionInterval getExecutionPeriod(HttpServletRequest request) {
         return getDomainObject(request, "executionPeriodID");
     }
 
@@ -319,7 +319,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
             CompetenceCourseLoadBean loadBean, Person requestor) {
 //        check(RolePredicates.BOLONHA_MANAGER_PREDICATE);
         CompetenceCourse course = bean.getCompetenceCourse();
-        ExecutionSemester period = bean.getExecutionPeriod();
+        ExecutionInterval period = bean.getExecutionPeriod();
         CompetenceCourseInformationChangeRequest request = course.getChangeRequestDraft(period);
         if (request != null) {
             request.edit(bean.getName(), bean.getNameEn(), bean.getJustification(), bean.getRegime(), bean.getObjectives(),

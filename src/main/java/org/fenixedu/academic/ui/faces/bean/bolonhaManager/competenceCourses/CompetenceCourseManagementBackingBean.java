@@ -1240,8 +1240,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     private List<SelectItem> readExecutionSemesterLabels() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        for (ExecutionSemester semester : getOrderedCompetenceCourseExecutionSemesters()) {
-            result.add(new SelectItem(semester.getExternalId(), semester.getQualifiedName()));
+        for (ExecutionInterval interval : getOrderedCompetenceCourseExecutionSemesters()) {
+            result.add(new SelectItem(interval.getExternalId(), interval.getQualifiedName()));
         }
         return result;
     }
@@ -1282,19 +1282,18 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     private List<SelectItem> readCompetenceCourseExecutionSemesterLabels() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        for (ExecutionSemester semester : getOrderedCompetenceCourseExecutionSemesters()) {
-            result.add(new SelectItem(semester.getExternalId(), semester.getQualifiedName()));
+        for (ExecutionInterval interval : getOrderedCompetenceCourseExecutionSemesters()) {
+            result.add(new SelectItem(interval.getExternalId(), interval.getQualifiedName()));
         }
         return result;
     }
 
-    private TreeSet<ExecutionSemester> getOrderedCompetenceCourseExecutionSemesters() {
-        final TreeSet<ExecutionSemester> result =
-                new TreeSet<ExecutionSemester>(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
-        ExecutionSemester semester = getCompetenceCourse().getStartExecutionSemester();
+    private TreeSet<ExecutionInterval> getOrderedCompetenceCourseExecutionSemesters() {
+        final TreeSet<ExecutionInterval> result = new TreeSet<>(ExecutionInterval.COMPARATOR_BY_BEGIN_DATE);
+        ExecutionInterval semester = getCompetenceCourse().getStartExecutionInterval();
         result.add(semester);
-        while (semester.getNextExecutionPeriod() != null) {
-            semester = semester.getNextExecutionPeriod();
+        while (semester.getNext() != null) {
+            semester = semester.getNext();
             result.add(semester);
         }
         return result;

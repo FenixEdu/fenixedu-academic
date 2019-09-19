@@ -132,8 +132,8 @@ public class Context extends Context_Base implements Comparable<Context> {
         super.setParentCourseGroup(courseGroup);
         super.setChildDegreeModule(degreeModule);
         super.setCurricularPeriod(curricularPeriod);
-        super.setBeginExecutionPeriod(begin.convert(ExecutionSemester.class));
-        super.setEndExecutionPeriod(end != null ? end.convert(ExecutionSemester.class) : null);
+        super.setBeginExecutionPeriod(begin);
+        super.setEndExecutionPeriod(end);
     }
 
     private void checkIfCanAddDegreeModuleToCourseGroup(final CourseGroup courseGroup, final DegreeModule degreeModule,
@@ -185,8 +185,8 @@ public class Context extends Context_Base implements Comparable<Context> {
     protected void edit(final ExecutionInterval begin, final ExecutionInterval end) {
         checkExecutionPeriods(begin, end);
         checkExistingCourseGroupContexts(getParentCourseGroup(), getChildDegreeModule(), getCurricularPeriod(), begin, end);
-        setBeginExecutionPeriod(begin.convert(ExecutionSemester.class));
-        setEndExecutionPeriod(end != null ? end.convert(ExecutionSemester.class) : null);
+        setBeginExecutionPeriod(begin);
+        setEndExecutionPeriod(end);
         checkCurriculumLines(getChildDegreeModule());
     }
 
@@ -374,7 +374,7 @@ public class Context extends Context_Base implements Comparable<Context> {
     }
 
     @Override
-    public void setBeginExecutionPeriod(ExecutionSemester beginExecutionPeriod) {
+    public void setBeginExecutionPeriod(ExecutionInterval beginExecutionPeriod) {
         if (beginExecutionPeriod == null) {
             throw new DomainException("curricular.rule.begin.execution.period.cannot.be.null");
         }
@@ -411,26 +411,8 @@ public class Context extends Context_Base implements Comparable<Context> {
         return getCurricularPeriod() != null && getCurricularPeriod().equals(curricularPeriod);
     }
 
-    /**
-     * @deprecated use {@link #getBeginExecutionInterval()} instead.
-     */
-    @Deprecated
-    @Override
-    public ExecutionSemester getBeginExecutionPeriod() {
-        return super.getBeginExecutionPeriod();
-    }
-
     public ExecutionInterval getBeginExecutionInterval() {
         return super.getBeginExecutionPeriod();
-    }
-
-    /**
-     * @deprecated use {@link #getEndExecutionInterval()} instead.
-     */
-    @Deprecated
-    @Override
-    public ExecutionSemester getEndExecutionPeriod() {
-        return super.getEndExecutionPeriod();
     }
 
     public ExecutionInterval getEndExecutionInterval() {

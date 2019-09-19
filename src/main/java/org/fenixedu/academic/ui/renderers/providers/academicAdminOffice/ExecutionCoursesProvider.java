@@ -22,7 +22,7 @@ import java.util.HashSet;
 
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionDegree;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.ui.renderers.providers.AbstractDomainObjectProvider;
 import org.fenixedu.academic.ui.struts.action.academicAdministration.executionCourseManagement.ExecutionCourseBean;
@@ -32,10 +32,10 @@ public class ExecutionCoursesProvider extends AbstractDomainObjectProvider {
     @Override
     public Object provide(Object arg0, Object arg1) {
         ExecutionCourseBean bean = (ExecutionCourseBean) arg0;
-        ExecutionSemester executionSemester = bean.getExecutionSemester();
+        ExecutionInterval executionInterval = bean.getExecutionSemester();
         HashSet<ExecutionCourse> result = new HashSet<ExecutionCourse>();
-        if (executionSemester != null) {
-            for (ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
+        if (executionInterval != null) {
+            for (ExecutionCourse executionCourse : executionInterval.getAssociatedExecutionCoursesSet()) {
                 for (ExecutionDegree degree : executionCourse.getExecutionDegrees()) {
                     if (AcademicPredicates.MANAGE_EXECUTION_COURSES.evaluate(degree.getDegree())) {
                         result.add(executionCourse);

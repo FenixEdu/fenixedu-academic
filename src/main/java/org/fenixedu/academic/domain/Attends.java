@@ -221,11 +221,11 @@ public class Attends extends Attends_Base {
     }
 
     public ExecutionInterval getExecutionInterval() {
-        return getExecutionCourse().getExecutionInterval();
+        return getExecutionCourse().getExecutionPeriod();
     }
 
     @Deprecated
-    public ExecutionSemester getExecutionPeriod() {
+    public ExecutionInterval getExecutionPeriod() {
         return getExecutionCourse().getExecutionPeriod();
     }
 

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
@@ -86,14 +87,14 @@ public abstract class CompositeRule extends CompositeRule_Base {
         return executionSemester;
     }
 
-    private ExecutionSemester getBeginExecutionPeriod(CurricularRule... curricularRules) {
-        ExecutionSemester executionSemester = null;
+    private ExecutionInterval getBeginExecutionPeriod(CurricularRule... curricularRules) {
+        ExecutionInterval executionInterval = null;
         for (CurricularRule rule : curricularRules) {
-            if (executionSemester == null || rule.getBeginInterval().isBefore(executionSemester)) {
-                executionSemester = rule.getBegin();
+            if (executionInterval == null || rule.getBeginInterval().isBefore(executionInterval)) {
+                executionInterval = rule.getBeginInterval();
             }
         }
-        return executionSemester;
+        return executionInterval;
     }
 
     private boolean haveAllSameDegreeModule(CurricularRule... curricularRules) {

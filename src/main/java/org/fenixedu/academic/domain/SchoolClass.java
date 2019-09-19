@@ -43,16 +43,16 @@ public class SchoolClass extends SchoolClass_Base {
 
     };
 
-    public SchoolClass(final ExecutionDegree executionDegree, final ExecutionSemester executionSemester, final String name,
+    public SchoolClass(final ExecutionDegree executionDegree, final ExecutionInterval executionInterval, final String name,
             final Integer curricularYear) {
 //        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageSchoolClass);
         super();
 
-        checkIfExistsSchoolClassWithSameName(executionDegree, executionSemester, curricularYear, name);
+        checkIfExistsSchoolClassWithSameName(executionDegree, executionInterval, curricularYear, name);
 
         setRootDomainObject(Bennu.getInstance());
         setExecutionDegree(executionDegree);
-        setExecutionPeriod(executionSemester);
+        setExecutionPeriod(executionInterval);
         setAnoCurricular(curricularYear);
         setNome(name);
     }
@@ -101,11 +101,11 @@ public class SchoolClass extends SchoolClass_Base {
     }
 
     @Override
-    public void setExecutionPeriod(ExecutionSemester executionSemester) {
-        if (executionSemester == null) {
+    public void setExecutionPeriod(ExecutionInterval executionInterval) {
+        if (executionInterval == null) {
             throw new DomainException("error.SchoolClass.empty.executionPeriod");
         }
-        super.setExecutionPeriod(executionSemester);
+        super.setExecutionPeriod(executionInterval);
     }
 
     @Override
@@ -213,15 +213,6 @@ public class SchoolClass extends SchoolClass_Base {
 
     public void setCurricularYear(final Integer curricularYear) {
         setAnoCurricular(curricularYear);
-    }
-
-    /**
-     * @deprecated use {@link #getExecutionInterval()} instead.
-     */
-    @Deprecated
-    @Override
-    public ExecutionSemester getExecutionPeriod() {
-        return super.getExecutionPeriod();
     }
 
     public ExecutionInterval getExecutionInterval() {

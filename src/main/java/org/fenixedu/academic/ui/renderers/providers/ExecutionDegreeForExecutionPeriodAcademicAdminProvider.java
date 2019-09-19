@@ -23,7 +23,7 @@ import java.util.Comparator;
 import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.ExecutionDegree;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.interfaces.HasExecutionSemester;
 import org.fenixedu.academic.predicate.AcademicPredicates;
@@ -37,16 +37,15 @@ public class ExecutionDegreeForExecutionPeriodAcademicAdminProvider implements D
     @Override
     public Object provide(Object source, Object currentValue) {
         final HasExecutionSemester hasExecutionSemester = (HasExecutionSemester) source;
-        final ExecutionSemester executionPeriod = hasExecutionSemester.getExecutionPeriod();
-        if (executionPeriod != null) {
-            final ExecutionYear executionYear = executionPeriod.getExecutionYear();
+        final ExecutionInterval executionInterval = hasExecutionSemester.getExecutionPeriod();
+        if (executionInterval != null) {
+            final ExecutionYear executionYear = executionInterval.getExecutionYear();
 
-            return executionYear
-                    .getExecutionDegreesSet()
-                    .stream()
+            return executionYear.getExecutionDegreesSet().stream()
                     .filter(ed -> AcademicPredicates.MANAGE_EXECUTION_COURSES.evaluate(ed.getDegree()))
                     .sorted(Comparator.comparing(ExecutionDegree::getDegreeType).thenComparing(ExecutionDegree::getDegreeName)
-                            .thenComparing(ExecutionDegree::getExternalId)).collect(Collectors.toList());
+                            .thenComparing(ExecutionDegree::getExternalId))
+                    .collect(Collectors.toList());
         } else {
             return Collections.emptySet();
         }

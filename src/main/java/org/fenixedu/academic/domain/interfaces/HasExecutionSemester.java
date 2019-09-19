@@ -18,10 +18,10 @@
  */
 package org.fenixedu.academic.domain.interfaces;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 
 public interface HasExecutionSemester {
 
-    public ExecutionSemester getExecutionPeriod();
+    public ExecutionInterval getExecutionPeriod();
 
 }

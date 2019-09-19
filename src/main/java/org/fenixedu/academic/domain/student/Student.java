@@ -37,7 +37,6 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.degree.DegreeType;
@@ -209,11 +208,11 @@ public class Student extends Student_Base {
         return getStatutesValidOnAnyExecutionSemesterFor(ExecutionYear.findCurrent(null));
     }
 
-    public Collection<StudentStatuteBean> getStatutes(final ExecutionSemester executionSemester) {
+    public Collection<StudentStatuteBean> getStatutes(final ExecutionInterval executionInterval) {
         final List<StudentStatuteBean> result = new ArrayList<>();
         for (final StudentStatute statute : getStudentStatutesSet()) {
-            if (statute.isValidInExecutionPeriod(executionSemester)) {
-                result.add(new StudentStatuteBean(statute, executionSemester));
+            if (statute.isValidInExecutionInterval(executionInterval)) {
+                result.add(new StudentStatuteBean(statute, executionInterval));
             }
         }
 

@@ -21,6 +21,7 @@ package org.fenixedu.academic.ui.struts.action.BolonhaManager;
 import java.io.Serializable;
 
 import org.fenixedu.academic.domain.CompetenceCourse;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation;
@@ -32,7 +33,7 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
 
     private CompetenceCourse competenceCourse;
 
-    private ExecutionSemester executionSemester;
+    private ExecutionInterval executionSemester;
 
     private String justification;
 
@@ -122,11 +123,11 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
         return false;
     }
 
-    public ExecutionSemester getExecutionPeriod() {
+    public ExecutionInterval getExecutionPeriod() {
         return executionSemester;
     }
 
-    public void setExecutionPeriod(ExecutionSemester period) {
+    public void setExecutionPeriod(ExecutionInterval period) {
         executionSemester = period;
     }
 

@@ -20,7 +20,7 @@ package org.fenixedu.academic.ui.renderers.providers.manager;
 
 import java.util.Collections;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.ui.renderers.providers.AbstractDomainObjectProvider;
 import org.fenixedu.academic.ui.struts.action.academicAdministration.executionCourseManagement.ExecutionCourseBean;
 
@@ -29,8 +29,8 @@ public class ExecutionCourseProvider extends AbstractDomainObjectProvider {
     @Override
     public Object provide(Object arg0, Object arg1) {
         ExecutionCourseBean bean = (ExecutionCourseBean) arg0;
-        ExecutionSemester executionSemester = bean.getExecutionSemester();
-        return executionSemester == null ? Collections.EMPTY_LIST : executionSemester.getAssociatedExecutionCoursesSet();
+        ExecutionInterval executionInterval = bean.getExecutionSemester();
+        return executionInterval == null ? Collections.EMPTY_LIST : executionInterval.getAssociatedExecutionCoursesSet();
     }
 
 }

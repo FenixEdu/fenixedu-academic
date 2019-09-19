@@ -39,15 +39,15 @@ public class EnrolmentInstructions extends EnrolmentInstructions_Base {
 
     public EnrolmentInstructions(final ExecutionInterval executionInterval) {
         this();
-        setExecutionSemester(executionInterval.convert(ExecutionSemester.class));
+        setExecutionSemester(executionInterval);
         setInstructions("");
         setTempInstructions(new LocalizedString());
     }
 
     @Atomic
-    public static void createIfNecessary(final ExecutionSemester executionSemester) {
-        if (executionSemester.getEnrolmentInstructions() == null) {
-            new EnrolmentInstructions(executionSemester);
+    public static void createIfNecessary(final ExecutionInterval executionInterval) {
+        if (executionInterval.getEnrolmentInstructions() == null) {
+            new EnrolmentInstructions(executionInterval);
         }
     }
 

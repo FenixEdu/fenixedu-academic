@@ -125,7 +125,7 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
      */
     @Deprecated
     @Override
-    public ExecutionSemester getBegin() {
+    public ExecutionInterval getBegin() {
         return belongsToCompositeRule() ? getParentCompositeRule().getBegin() : super.getBegin();
     }
 
@@ -138,7 +138,7 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
      */
     @Deprecated
     @Override
-    public ExecutionSemester getEnd() {
+    public ExecutionInterval getEnd() {
         return belongsToCompositeRule() ? getParentCompositeRule().getEnd() : super.getEnd();
     }
 

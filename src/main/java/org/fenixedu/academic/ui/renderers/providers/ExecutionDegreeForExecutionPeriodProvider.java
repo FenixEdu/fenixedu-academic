@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.fenixedu.academic.domain.ExecutionDegree;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.interfaces.HasExecutionSemester;
 
@@ -38,9 +38,9 @@ public class ExecutionDegreeForExecutionPeriodProvider implements DataProvider {
         final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
 
         final HasExecutionSemester hasExecutionSemester = (HasExecutionSemester) source;
-        final ExecutionSemester executionPeriod = hasExecutionSemester.getExecutionPeriod();
-        if (executionPeriod != null) {
-            final ExecutionYear executionYear = executionPeriod.getExecutionYear();
+        final ExecutionInterval executionInterval = hasExecutionSemester.getExecutionPeriod();
+        if (executionInterval != null) {
+            final ExecutionYear executionYear = executionInterval.getExecutionYear();
             executionDegrees.addAll(executionYear.getExecutionDegreesSet());
         }
 

@@ -22,7 +22,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
@@ -61,13 +60,13 @@ public interface ICurricularRule {
      * @deprecated use {@link #getBeginInterval()} instead.
      */
     @Deprecated
-    public ExecutionSemester getBegin();
+    public ExecutionInterval getBegin();
 
     /**
      * @deprecated use {@link #getEndInterval()} instead.
      */
     @Deprecated
-    public ExecutionSemester getEnd();
+    public ExecutionInterval getEnd();
 
     public boolean appliesToContext(final Context context);
 

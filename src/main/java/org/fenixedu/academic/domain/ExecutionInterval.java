@@ -201,9 +201,4 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base implement
 
     public abstract ExecutionInterval getPrevious();
 
-    // TEMP method, until executionCourses relation isn't moved up from ExecutionSemester to ExecutionInterval
-    public Set<ExecutionCourse> getAssociatedExecutionCoursesSet() {
-        return Collections.emptySet();
-    }
-
 }

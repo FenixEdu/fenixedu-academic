@@ -23,7 +23,7 @@ package org.fenixedu.academic.dto.student;
 
 import java.io.Serializable;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.student.StatuteType;
 import org.fenixedu.academic.domain.student.StudentStatute;
 
@@ -36,21 +36,21 @@ public class StudentStatuteBean implements Serializable {
 
     private StatuteType statuteType;
 
-    private ExecutionSemester executionSemester;
+    private ExecutionInterval executionInterval;
 
     private StudentStatute studentStatute;
 
-    public StudentStatuteBean(StatuteType statuteType, ExecutionSemester executionSemester) {
+    public StudentStatuteBean(StatuteType statuteType, ExecutionInterval executionInterval) {
         this.statuteType = statuteType;
-        this.executionSemester = executionSemester;
+        this.executionInterval = executionInterval;
     }
 
     public StudentStatuteBean(StatuteType statuteType) {
         this.statuteType = statuteType;
     }
 
-    public StudentStatuteBean(StudentStatute studentStatute, ExecutionSemester executionSemester) {
-        this.executionSemester = executionSemester;
+    public StudentStatuteBean(StudentStatute studentStatute, ExecutionInterval executionInterval) {
+        this.executionInterval = executionInterval;
         this.studentStatute = studentStatute;
     }
 
@@ -58,8 +58,8 @@ public class StudentStatuteBean implements Serializable {
         this.studentStatute = studentStatute;
     }
 
-    public ExecutionSemester getExecutionPeriod() {
-        return executionSemester;
+    public ExecutionInterval getExecutionPeriod() {
+        return executionInterval;
     }
 
     public StatuteType getStatuteType() {

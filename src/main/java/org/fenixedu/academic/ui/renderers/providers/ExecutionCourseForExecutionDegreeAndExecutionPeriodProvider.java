@@ -26,7 +26,7 @@ import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionDegree;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.interfaces.HasExecutionDegree;
 import org.fenixedu.academic.domain.interfaces.HasExecutionSemester;
 
@@ -41,14 +41,14 @@ public class ExecutionCourseForExecutionDegreeAndExecutionPeriodProvider impleme
         final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
 
         final HasExecutionSemester hasExecutionSemester = (HasExecutionSemester) source;
-        final ExecutionSemester executionPeriod = hasExecutionSemester.getExecutionPeriod();
+        final ExecutionInterval executionInterval = hasExecutionSemester.getExecutionPeriod();
 
         final HasExecutionDegree hasExecutionDegree = (HasExecutionDegree) source;
         final ExecutionDegree executionDegree = hasExecutionDegree.getExecutionDegree();
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
-        if (executionPeriod != null && executionDegree != null) {
-            for (final ExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCoursesSet()) {
+        if (executionInterval != null && executionDegree != null) {
+            for (final ExecutionCourse executionCourse : executionInterval.getAssociatedExecutionCoursesSet()) {
                 if (matches(executionCourse, degreeCurricularPlan)) {
                     executionCourses.add(executionCourse);
                 }

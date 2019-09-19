@@ -871,11 +871,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return (StringNormalizer.normalize(getCode()).matches(".*" + code.replaceAll(" ", ".*") + ".*"));
     }
 
-    @Deprecated
-    public ExecutionSemester getStartExecutionSemester() {
-        return getOldestCompetenceCourseInformation().getExecutionPeriod();
-    }
-
     public ExecutionInterval getStartExecutionInterval() {
         return getOldestCompetenceCourseInformation().getExecutionInterval();
     }

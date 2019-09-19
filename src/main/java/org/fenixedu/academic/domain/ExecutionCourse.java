@@ -150,7 +150,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         });
     }
 
-    public ExecutionCourse(final String nome, final String sigla, final ExecutionSemester executionSemester,
+    public ExecutionCourse(final String nome, final String sigla, final ExecutionInterval executionInterval,
             EntryPhase entryPhase) {
         super();
 
@@ -158,7 +158,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         setAvailableGradeSubmission(Boolean.TRUE);
 
         setNome(nome);
-        setExecutionPeriod(executionSemester);
+        setExecutionPeriod(executionInterval);
         setSigla(sigla);
         setComment("");
 
@@ -1349,15 +1349,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             result.addAll(executionDegree.getPeriodLessons(getExecutionInterval()));
         }
         return result;
-    }
-
-    /**
-     * @deprecated use {@link #getExecutionInterval()} instead.
-     */
-    @Deprecated
-    @Override
-    public ExecutionSemester getExecutionPeriod() {
-        return super.getExecutionPeriod();
     }
 
     public ExecutionInterval getExecutionInterval() {

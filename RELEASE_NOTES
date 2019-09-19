@@ -1,3 +1,10 @@
+- Refactor: changed ExecutionCourse domain relation from ExecutionSemester to ExecutionInterval
+- Refactor: changed Context domain relations from ExecutionSemester to ExecutionInterval
+- Refactor: changed CompetenceCourseInformation and CompetenceCourseInformationChangeRequest domain relations from ExecutionSemester to ExecutionInterval
+- Refactor: changed CurricularRule domain relations from ExecutionSemester to ExecutionInterval
+- Refactor: changed SchoolClass domain relation from ExecutionSemester to ExecutionInterval
+- Refactor: changed EnrolmentInstructions domain relation from ExecutionSemester to ExecutionInterval
+
 24.2.1 (18-09-2019)
 - Improvement: Add institutional email column to students excel on teacher's perspective
 

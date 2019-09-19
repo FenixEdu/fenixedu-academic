@@ -21,6 +21,7 @@ package org.fenixedu.academic.dto;
 import java.util.Comparator;
 import java.util.Date;
 
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.util.PeriodState;
 
@@ -41,12 +42,12 @@ public class InfoExecutionPeriod extends InfoObject implements Comparable {
 
     };
 
-    private ExecutionSemester executionPeriodDomainReference;
+    private ExecutionInterval executionPeriodDomainReference;
 
     private String qualifiedName;
 
-    public InfoExecutionPeriod(final ExecutionSemester executionSemester) {
-        executionPeriodDomainReference = executionSemester;
+    public InfoExecutionPeriod(final ExecutionInterval executionInterval) {
+        executionPeriodDomainReference = executionInterval;
     }
 
     private InfoExecutionYear infoExecutionYear = null;
@@ -66,8 +67,8 @@ public class InfoExecutionPeriod extends InfoObject implements Comparable {
     public boolean equals(Object obj) {
         if (obj instanceof InfoExecutionPeriod) {
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) obj;
-            return (getInfoExecutionYear().equals(infoExecutionPeriod.getInfoExecutionYear()) && getName().equals(
-                    infoExecutionPeriod.getName()));
+            return (getInfoExecutionYear().equals(infoExecutionPeriod.getInfoExecutionYear())
+                    && getName().equals(infoExecutionPeriod.getName()));
 
         }
         return false;
@@ -83,7 +84,7 @@ public class InfoExecutionPeriod extends InfoObject implements Comparable {
     }
 
     public Integer getSemester() {
-        return getExecutionPeriod().getSemester();
+        return getExecutionPeriod().getChildOrder();
     }
 
     @Override
@@ -121,12 +122,12 @@ public class InfoExecutionPeriod extends InfoObject implements Comparable {
     }
 
     public InfoExecutionPeriod getPreviousInfoExecutionPeriod() {
-        final ExecutionSemester previousInfoExecutionPeriod = getExecutionPeriod().getPreviousExecutionPeriod();
+        final ExecutionInterval previousInfoExecutionPeriod = getExecutionPeriod().getPrevious();
         return previousInfoExecutionPeriod == null ? null : new InfoExecutionPeriod(previousInfoExecutionPeriod);
     }
 
-    public static InfoExecutionPeriod newInfoFromDomain(ExecutionSemester executionSemester) {
-        return executionSemester == null ? null : new InfoExecutionPeriod(executionSemester);
+    public static InfoExecutionPeriod newInfoFromDomain(ExecutionInterval executionInterval) {
+        return executionInterval == null ? null : new InfoExecutionPeriod(executionInterval);
     }
 
     public String getQualifiedName() {
@@ -148,7 +149,7 @@ public class InfoExecutionPeriod extends InfoObject implements Comparable {
         throw new Error("Method should not be called!");
     }
 
-    public ExecutionSemester getExecutionPeriod() {
+    public ExecutionInterval getExecutionPeriod() {
         return executionPeriodDomainReference;
     }
 
