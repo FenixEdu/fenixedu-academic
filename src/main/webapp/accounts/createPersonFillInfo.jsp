@@ -217,9 +217,11 @@
 					<fr:property name="key" value="true" />
 				</fr:validator>
 			</fr:slot>
-			<fr:slot name="email" >
+			<fr:slot name="email" required="true">
 				<fr:property name="size" value="30"/>
 				<fr:property name="maxLength" value="100"/>
+				<fr:validator name="org.fenixedu.academic.ui.renderers.validators.RequiredEmailValidator">
+				</fr:validator>
 			</fr:slot>
 			<fr:slot name="webAddress">
 				<fr:property name="size" value="50"/>
