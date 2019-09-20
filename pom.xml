@@ -314,7 +314,7 @@
         </dependency>
         <dependency>
 			<groupId>com.qubit.terra</groupId>
-			<artifactId>qub-accessControl</artifactId>
+			<artifactId>qub-access-control</artifactId>
 			<version>0.0.0-SNAPSHOT</version>
 		</dependency>
     </dependencies>
