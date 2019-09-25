@@ -5533,57 +5533,6 @@ relation CurricularRuleCurricularPeriod {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 external class .com.qubit.terra.qubAccessControl.domain.AccessControlProfile;
 
 public class groups.PersistentPermissionGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup {
@@ -5598,10 +5547,6 @@ relation PersistentPermissionGroups {
         multiplicity *;
     }
 }
-
-
-
-
 
 relation ProfileMembers {
     .com.qubit.terra.qubAccessControl.domain.AccessControlProfile playsRole accessControlProfile {
