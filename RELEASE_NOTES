@@ -1,4 +1,5 @@
 - New Feature: Profile based access control
+- Bug Fix: when sending emails, clean colon characters from senders name
 
 25.0.1 (20-09-2019)
 - Bug Fix: Require and validate email in account creation, in Manager Portal

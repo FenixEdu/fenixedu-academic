@@ -60,15 +60,15 @@ public class Email extends Email_Base {
     private static Session SESSION = null;
     private static int MAX_MAIL_RECIPIENTS;
 
-    private static DateTimeFormatter rfc5322Fmt = DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss Z").withLocale(
-            Locale.ENGLISH);
+    private static DateTimeFormatter rfc5322Fmt =
+            DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss Z").withLocale(Locale.ENGLISH);
 
     private static synchronized Session init() {
         final Properties properties = new Properties();
         properties.put("mail.smtp.host", FenixEduAcademicConfiguration.getConfiguration().getMailSmtpHost());
         properties.put("mail.smtp.name", FenixEduAcademicConfiguration.getConfiguration().getMailSmtpName());
-        properties
-                .put("mailSender.max.recipients", FenixEduAcademicConfiguration.getConfiguration().getMailSenderMaxRecipients());
+        properties.put("mailSender.max.recipients",
+                FenixEduAcademicConfiguration.getConfiguration().getMailSenderMaxRecipients());
         properties.put("mail.debug", "false");
         final Session tempSession = Session.getDefaultInstance(properties, null);
         MAX_MAIL_RECIPIENTS = Integer.parseInt(properties.getProperty("mailSender.max.recipients"));
@@ -171,7 +171,8 @@ public class Email extends Email_Base {
         setBccAddresses(null);
     }
 
-    private void retry(final EmailAddressList toAddresses, final EmailAddressList ccAddresses, final EmailAddressList bccAddresses) {
+    private void retry(final EmailAddressList toAddresses, final EmailAddressList ccAddresses,
+            final EmailAddressList bccAddresses) {
         setToAddresses(toAddresses);
         setCcAddresses(ccAddresses);
         setBccAddresses(bccAddresses);
@@ -187,7 +188,8 @@ public class Email extends Email_Base {
     }
 
     protected static String constructFromString(final String fromName, String fromAddress) {
-        return (fromName == null || fromName.length() == 0) ? fromAddress : fromName.replace(',', ' ') + " <" + fromAddress + ">";
+        return (fromName == null || fromName.length() == 0) ? fromAddress : fromName.replace(',', ' ').replace(':', ' ') + " <"
+                + fromAddress + ">";
     }
 
     private class EmailMimeMessage extends MimeMessage {
@@ -272,8 +274,8 @@ public class Email extends Email_Base {
         }
 
         private MimeMultipart createMimeMultipart(final String body, final String htmlBody) {
-            return body != null && !body.trim().isEmpty() && htmlBody != null && !htmlBody.trim().isEmpty() ? new MimeMultipart(
-                    "alternative") : new MimeMultipart();
+            return body != null && !body.trim().isEmpty() && htmlBody != null
+                    && !htmlBody.trim().isEmpty() ? new MimeMultipart("alternative") : new MimeMultipart();
         }
 
         private void addRecipientsAux() {
