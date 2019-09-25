@@ -1,3 +1,4 @@
+25.1.0 (25-09-2019)
 - New Feature: Profile based access control
 - Bug Fix: when sending emails, clean colon characters from senders name
 
