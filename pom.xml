@@ -312,6 +312,11 @@
             <artifactId>itext</artifactId>
             <version>${version.com.lowagie.itext}</version>
         </dependency>
+        <dependency>
+			<groupId>com.qubit.terra</groupId>
+			<artifactId>qub-access-control</artifactId>
+			<version>1.0.0</version>
+		</dependency>
     </dependencies>
 
 	<distributionManagement>

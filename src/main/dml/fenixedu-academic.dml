@@ -5531,3 +5531,46 @@ relation CurricularRuleCurricularPeriod {
 		multiplicity 0..1;
 	}
 }
+
+
+external class .com.qubit.terra.qubAccessControl.domain.AccessControlProfile;
+
+public class groups.PersistentPermissionGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup {
+	String code (REQUIRED);
+}
+
+relation PersistentPermissionGroups {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole bennu {
+		multiplicity 0..1;
+	}
+    groups.PersistentPermissionGroup playsRole permissionGroup {
+        multiplicity *;
+    }
+}
+
+relation ProfileMembers {
+    .com.qubit.terra.qubAccessControl.domain.AccessControlProfile playsRole accessControlProfile {
+		multiplicity *;
+	}
+    .org.fenixedu.bennu.core.domain.User playsRole FenixMember {
+        multiplicity *;
+    }
+} 
+
+relation ProfileDegree {
+    .com.qubit.terra.qubAccessControl.domain.AccessControlProfile playsRole accessControlProfile {
+		multiplicity *;
+	}
+    AcademicProgram playsRole degree {
+        multiplicity *;
+    }
+}
+
+relation ProfileDegreeType {
+    .com.qubit.terra.qubAccessControl.domain.AccessControlProfile playsRole accessControlProfile {
+		multiplicity *;
+	}
+    degree.DegreeType playsRole degreeType {
+        multiplicity *;
+    }
+}
