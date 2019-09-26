@@ -76,7 +76,10 @@ public class ViewSentEmailsDA extends FenixDispatchAction {
                 sendersGroups.add(sender);
             }
             if (allow && isExecutionCourseSender) {
-                sendersGroupsCourses.add((ExecutionCourseSender) sender);
+                final ExecutionCourseSender ecSender = (ExecutionCourseSender) sender;
+                if (ecSender.getCourse() != null) {
+                    sendersGroupsCourses.add(ecSender);
+                }
             }
         }
         if (isSenderUnique(sendersGroups, sendersGroupsCourses)) {
