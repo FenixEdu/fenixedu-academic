@@ -544,14 +544,19 @@ public class PersonalInformationBean implements Serializable {
             result.add("error.personalInformation.year.after.current");
         }
 
-        int birthYear = getStudent().getPerson().getDateOfBirthYearMonthDay().getYear();
-        if (getConclusionYear() != null && getConclusionYear() < birthYear) {
-            result.add("error.personalInformation.year.before.birthday");
+        if(getStudent().getPerson().getDateOfBirthYearMonthDay() == null) {
+            result.add("error.personalInformation.date.of.birth.does.not.exist");
         }
+        else {
+            int birthYear = getStudent().getPerson().getDateOfBirthYearMonthDay().getYear();
+            if (getConclusionYear() != null && getConclusionYear() < birthYear) {
+                result.add("error.personalInformation.year.before.birthday");
+            }
 
-        if (getSchoolLevel() != null && !getSchoolLevel().isSchoolLevelBasicCycle() && !getSchoolLevel().isOther()
-                && getConclusionYear() != null && getConclusionYear() < birthYear + 15) {
-            result.add("error.personalInformation.year.before.fifteen.years.old");
+            if (getSchoolLevel() != null && !getSchoolLevel().isSchoolLevelBasicCycle() && !getSchoolLevel().isOther()
+                    && getConclusionYear() != null && getConclusionYear() < birthYear + 15) {
+                result.add("error.personalInformation.year.before.fifteen.years.old");
+            }
         }
 
         if (isUnitFromRaidesListMandatory()) {
