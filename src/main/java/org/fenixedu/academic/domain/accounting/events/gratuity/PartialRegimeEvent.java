@@ -64,19 +64,16 @@ public class PartialRegimeEvent extends PartialRegimeEvent_Base {
             final StudentCurricularPlan studentCurricularPlan = registration.getStudentCurricularPlan(executionYear);
             if (studentCurricularPlan != null) {
                 studentCurricularPlan.getEnrolmentsByExecutionYear(executionYear).forEach(EnrolmentGratuityEvent::create);
-                return Optional.of(studentCurricularPlan.getGratuityEvent(executionYear, PartialRegimeEvent.class)
-                        .map(PartialRegimeEvent.class::cast).findAny().orElseGet(() -> {
-                            try {
-                                return FenixFramework
-                                        .atomic(() -> create(registration.getPerson(), registration, studentCurricularPlan,
-                                                executionYear,
-                                                new IsAlienRule().isAppliableFor(studentCurricularPlan, executionYear)));
-                            } catch (DomainException e) {
-                                throw e;
-                            } catch (Exception e) {
-                                throw new DomainException("key.return.argument", e.getLocalizedMessage());
-                            }
-                        }));
+                try {
+                    return Optional.of(FenixFramework
+                            .atomic(() -> create(registration.getPerson(), registration, studentCurricularPlan,
+                                    executionYear,
+                                    new IsAlienRule().isAppliableFor(studentCurricularPlan, executionYear))));
+                } catch (DomainException e) {
+                    throw e;
+                } catch (Exception e) {
+                    throw new DomainException("key.return.argument", e.getLocalizedMessage());
+                }
             }
         }
         return Optional.empty();

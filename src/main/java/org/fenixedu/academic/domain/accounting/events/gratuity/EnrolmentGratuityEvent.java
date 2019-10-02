@@ -20,6 +20,8 @@ import org.fenixedu.academic.domain.student.RegistrationRegimeType;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
+import org.fenixedu.bennu.core.signals.DomainObjectEvent;
+import org.fenixedu.bennu.core.signals.Signal;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.FenixFramework;
@@ -63,26 +65,22 @@ public class EnrolmentGratuityEvent extends EnrolmentGratuityEvent_Base {
     public static Optional<EnrolmentGratuityEvent> create(Enrolment enrolment) {
         if (enrolment.getStudentCurricularPlan().getRegistration().isActive() && enrolment.getStudentCurricularPlan()
                 .getRegistration().hasToPayGratuityOrInsurance()) {
-            return Optional.ofNullable(enrolment.getGratuityEvent().orElseGet(() -> {
-                EventType eventType = null;
-                if (enrolment.getStudentCurricularPlan().isEmptyDegree() || enrolment.isStandalone()) {
-                    eventType = EventType.STANDALONE_PER_ENROLMENT_GRATUITY;
-                } else {
-                    if (RegistrationRegimeType.PARTIAL_TIME.equals(enrolment.getStudentCurricularPlan().getRegistration()
-                            .getRegimeType(enrolment.getExecutionYear()))) {
-                        eventType = EventType.PARTIAL_REGIME_ENROLMENT_GRATUITY;
-                    }
+            EventType eventType = null;
+            if (enrolment.getStudentCurricularPlan().isEmptyDegree() || enrolment.isStandalone()) {
+                eventType = EventType.STANDALONE_PER_ENROLMENT_GRATUITY;
+            } else {
+                if (RegistrationRegimeType.PARTIAL_TIME.equals(enrolment.getStudentCurricularPlan().getRegistration()
+                        .getRegimeType(enrolment.getExecutionYear()))) {
+                    eventType = EventType.PARTIAL_REGIME_ENROLMENT_GRATUITY;
                 }
+            }
 
-                if (eventType != null) {
-                    final IsAlienRule isAlienRule = new IsAlienRule();
-                    boolean forAliens =
-                            isAlienRule.isAppliableFor(enrolment.getStudentCurricularPlan(), enrolment.getExecutionYear());
-                    return create(enrolment.getPerson(), enrolment, eventType, forAliens);
-                }
-
-                return null;
-            }));
+            if (eventType != null) {
+                final IsAlienRule isAlienRule = new IsAlienRule();
+                boolean forAliens =
+                        isAlienRule.isAppliableFor(enrolment.getStudentCurricularPlan(), enrolment.getExecutionYear());
+                return Optional.of(create(enrolment.getPerson(), enrolment, eventType, forAliens));
+            }
         }
         return Optional.empty();
     }
@@ -109,13 +107,11 @@ public class EnrolmentGratuityEvent extends EnrolmentGratuityEvent_Base {
                 postingRules.stream().map(EnrolmentGratuityPR.class::cast).filter(p -> p.isForAliens() == forAliens).findAny()
                         .orElseThrow(() -> cantCreateEvent(enrolment));
 
-        return enrolment.getGratuityEvent().orElseGet(() -> {
-            try {
-                return FenixFramework.atomic(() -> new EnrolmentGratuityEvent(person, enrolment, enrolmentGratuityPR));
-            } catch (Exception e) {
-                throw cantCreateEvent(enrolment);
-            }
-        });
+        try {
+            return FenixFramework.atomic(() -> new EnrolmentGratuityEvent(person, enrolment, enrolmentGratuityPR));
+        } catch (Exception e) {
+            throw cantCreateEvent(enrolment);
+        }
     }
 
     @Override
