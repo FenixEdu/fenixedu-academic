@@ -158,4 +158,8 @@ public class SibsIncommingPaymentFileDetailLine implements Serializable {
     public int hashCode() {
         return Objects.hash(header.getRawHeader(), rawLine);
     }
+
+    public SibsIncommingPaymentFileHeader getHeader() {
+        return header;
+    }
 }
