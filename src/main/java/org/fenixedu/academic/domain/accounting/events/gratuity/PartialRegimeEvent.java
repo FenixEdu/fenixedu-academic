@@ -52,6 +52,7 @@ public class PartialRegimeEvent extends PartialRegimeEvent_Base {
         return create(registration.getRegistrationRegimesSet().stream().filter(r -> r.getExecutionYear() == executionYear)
                 .findAny().orElse(null));
     }
+
     public static Optional<PartialRegimeEvent> create(RegistrationRegime registrationRegime) {
         if (registrationRegime == null || !registrationRegime.isPartTime()) {
             return Optional.empty();
@@ -93,15 +94,12 @@ public class PartialRegimeEvent extends PartialRegimeEvent_Base {
                 postingRules.stream().map(PartialRegimePR.class::cast).filter(p -> p.isForAliens() == forAliens).findAny()
                         .orElseThrow(PartialRegimeEvent::cantCreateEvent);
 
-        return studentCurricularPlan.getGratuityEvent(executionYear, PartialRegimeEvent.class).findAny().orElseGet(() -> {
-            try {
-                return FenixFramework
-                        .atomic(() -> new PartialRegimeEvent(person, registration, studentCurricularPlan, executionYear,
-                                partialRegimePR));
-            } catch (Exception e) {
-                throw cantCreateEvent(e);
-            }
-        });
+        try {
+            return FenixFramework.atomic(() ->
+                    new PartialRegimeEvent(person, registration, studentCurricularPlan, executionYear, partialRegimePR));
+        } catch (Exception e) {
+            throw cantCreateEvent(e);
+        }
     }
 
     private static DomainException cantCreateEvent() {
