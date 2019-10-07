@@ -70,6 +70,14 @@ public class AccountingEventsManager {
         return result;
     }
 
+
+    public InvocationResult createStandaloneEnrolmentGratuityEvent(final Enrolment enrolment) {
+        IsAlienRule isAlienRule = new IsAlienRule();
+        EnrolmentGratuityEvent.create(enrolment.getPerson(), enrolment, EventType.STANDALONE_PER_ENROLMENT_GRATUITY,
+                isAlienRule.isAppliableFor(enrolment.getStudentCurricularPlan(), enrolment.getExecutionYear()));
+        return InvocationResult.createSuccess();
+    }
+
     private Set<Enrolment> getStandaloneEnrolments(final StudentCurricularPlan studentCurricularPlan,
             final ExecutionYear executionYear) {
 

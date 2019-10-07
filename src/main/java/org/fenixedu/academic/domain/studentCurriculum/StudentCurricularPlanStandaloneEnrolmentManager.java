@@ -183,14 +183,13 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
                     final CurricularCourse curricularCourse = (CurricularCourse) degreeModuleToEvaluate.getDegreeModule();
 
                     checkIDegreeModuleToEvaluate(curricularCourse);
-                    new Enrolment(getStudentCurricularPlan(), degreeModuleToEvaluate.getCurriculumGroup(), curricularCourse,
+                    Enrolment enrolment = new Enrolment(getStudentCurricularPlan(), degreeModuleToEvaluate.getCurriculumGroup(), curricularCourse,
                             getExecutionSemester(), EnrollmentCondition.VALIDATED, getResponsiblePerson().getUsername());
+                    if (getStudentCurricularPlan().getRegistration().getRegistrationProtocol().isToPayGratuity()) {
+                        new AccountingEventsManager().createStandaloneEnrolmentGratuityEvent(enrolment);
+                    }
                 }
             }
-        }
-
-        if (getStudentCurricularPlan().getRegistration().getRegistrationProtocol().isToPayGratuity()) {
-            new AccountingEventsManager().createStandaloneEnrolmentGratuityEvent(getStudentCurricularPlan(), getExecutionYear());
         }
 
         getRegistration().updateEnrolmentDate(getExecutionYear());
