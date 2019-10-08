@@ -18,6 +18,8 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -1238,4 +1240,5 @@ public abstract class Event extends Event_Base {
     public boolean isRefundable() {
         return Event.canBeRefunded.test(this);
     }
+
 }

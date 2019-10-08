@@ -18,25 +18,30 @@
  */
 package org.fenixedu.academic.domain.phd.debts;
 
-import java.util.Collections;
-import java.util.Map;
-
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accounting.DueDateAmountMap;
 import org.fenixedu.academic.domain.accounting.EntryType;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.Exemption;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
+import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessState;
 import org.fenixedu.academic.domain.phd.PhdProgram;
+import org.fenixedu.academic.domain.phd.PhdProgramProcessState;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
-
 import pt.ist.fenixframework.Atomic;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class PhdGratuityEvent extends PhdGratuityEvent_Base {
     public PhdGratuityEvent(PhdIndividualProgramProcess process, int year, DateTime phdGratuityDate) {
@@ -83,7 +88,21 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
     @Atomic
     static public PhdGratuityEvent create(PhdIndividualProgramProcess phdIndividualProgramProcess, int year,
             DateTime phdGratuityDate) {
-        return new PhdGratuityEvent(phdIndividualProgramProcess, year, phdGratuityDate);
+        final LocalDate whenStartedStudies = phdIndividualProgramProcess.getWhenStartedStudies();
+        if (whenStartedStudies != null) {
+            final DateTime dt = new LocalDate().toDateTimeAtStartOfDay().plusDays(1);
+            final LocalDate initialDateForEventCreation = PhdGratuityEvent.initialDateForEventCreation(phdIndividualProgramProcess, dt);
+            if (initialDateForEventCreation != null && year >= initialDateForEventCreation.getYear()) {
+                final PhdProgramProcessState stateForToday = findStateForDate(phdIndividualProgramProcess, dt);
+                final PhdIndividualProgramProcessState type = stateForToday.getType();
+                if (type == PhdIndividualProgramProcessState.WORK_DEVELOPMENT || type == PhdIndividualProgramProcessState.SUSPENDED) {
+                    final PhdGratuityEvent result = new PhdGratuityEvent(phdIndividualProgramProcess, year, dt);
+                    result.fixDueDate(new LocalDate(year, initialDateForEventCreation.getMonthOfYear(), initialDateForEventCreation.getDayOfMonth()));
+                    return result;
+                }
+            }
+        }
+        return null;
     }
 
     @Override
@@ -138,4 +157,34 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
     public Map<LocalDate, Money> calculateDueDateAmountMap() {
         return Collections.singletonMap(getLimitDateToPay().toLocalDate(), getPostingRule().calculateTotalAmountToPay(this));
     }
+
+    private static final Comparator<? super PhdProgramProcessState> STATE_COMPARATOR = Comparator
+            .comparing(PhdProgramProcessState::getWhenCreated)
+            .thenComparing(PhdProgramProcessState::getExternalId);
+
+    public static LocalDate initialDateForEventCreation(final PhdIndividualProgramProcess phdIndividualProgramProcess, final DateTime today) {
+        return phdIndividualProgramProcess.getStatesSet().stream().sorted(STATE_COMPARATOR)
+                .filter(s -> s.getType() == PhdIndividualProgramProcessState.WORK_DEVELOPMENT || s.getType() == PhdIndividualProgramProcessState.SUSPENDED)
+                .filter(s -> !s.getStateDate().isAfter(today))
+                .map(s -> s.getStateDate().toLocalDate())
+                .max((d1, d2) -> d1.compareTo(d2)).orElse(null);
+    }
+
+    public static PhdProgramProcessState findStateForDate(final PhdIndividualProgramProcess phdIndividualProgramProcess, final DateTime tomorrow) {
+        PhdProgramProcessState result = null;
+        for (final PhdProgramProcessState state : phdIndividualProgramProcess.getStatesSet().stream().sorted(STATE_COMPARATOR).collect(Collectors.toList())) {
+            if (!state.getStateDate().isAfter(tomorrow)) {
+                result = state;
+            }
+        }
+        return result;
+    }
+
+    private void fixDueDate(final LocalDate dueDate) {
+        final Map<LocalDate,Money> map = new HashMap<>();
+        final Map.Entry<LocalDate, Money> e = getDueDateAmountMap().entrySet().iterator().next();
+        map.put(dueDate, e.getValue());
+        setDueDateAmountMap(new DueDateAmountMap(map));
+    }
+
 }
