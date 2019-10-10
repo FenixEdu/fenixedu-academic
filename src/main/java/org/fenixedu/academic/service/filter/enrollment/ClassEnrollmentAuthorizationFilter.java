@@ -31,6 +31,7 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
@@ -42,94 +43,96 @@ import org.fenixedu.bennu.core.security.Authenticate;
  */
 public class ClassEnrollmentAuthorizationFilter {
 
-    public static final ClassEnrollmentAuthorizationFilter instance = new ClassEnrollmentAuthorizationFilter();
+	public static final ClassEnrollmentAuthorizationFilter instance = new ClassEnrollmentAuthorizationFilter();
 
-    private static ConcurrentLinkedQueue<ClassEnrollmentCondition> conditions = new ConcurrentLinkedQueue<>();
+	private static ConcurrentLinkedQueue<ClassEnrollmentCondition> conditions = new ConcurrentLinkedQueue<>();
 
-    @FunctionalInterface
-    public static interface ClassEnrollmentCondition {
-        public void verify(Registration registration) throws DomainException;
-    }
+	@FunctionalInterface
+	public static interface ClassEnrollmentCondition {
+		public void verify(Registration registration) throws DomainException;
+	}
 
-    public static void registerCondition(ClassEnrollmentCondition condition) {
-        conditions.add(condition);
-    }
+	public static void registerCondition(ClassEnrollmentCondition condition) {
+		conditions.add(condition);
+	}
 
-    public void execute(Registration registration) throws FenixServiceException {
-        Person person = Authenticate.getUser().getPerson();
+	public void execute(Registration registration) throws FenixServiceException {
+		Person person = Authenticate.getUser().getPerson();
 
-        if (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, registration.getDegree(),
-                person.getUser())) {
-            return;
-        }
+		if (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS,
+				registration.getDegree(), person.getUser())
+				|| PermissionService.isMember("STUDENT_ENROLMENTS", registration.getDegree(), person.getUser())) {
+			return;
+		}
 
-        if (RoleType.RESOURCE_ALLOCATION_MANAGER.isMember(person.getUser())) {
-            person = registration.getPerson();
-        }
+		if (RoleType.RESOURCE_ALLOCATION_MANAGER.isMember(person.getUser())) {
+			person = registration.getPerson();
+		}
 
-        for (ClassEnrollmentCondition condition : conditions) {
-            condition.verify(registration);
-        }
+		for (ClassEnrollmentCondition condition : conditions) {
+			condition.verify(registration);
+		}
 
-        final SortedSet<StudentCurricularPlan> activeStudentCurricularPlans =
-                person.getActiveStudentCurricularPlansSortedByDegreeTypeAndDegreeName();
+		final SortedSet<StudentCurricularPlan> activeStudentCurricularPlans = person
+				.getActiveStudentCurricularPlansSortedByDegreeTypeAndDegreeName();
 
-        if (activeStudentCurricularPlans.isEmpty()) {
-            throw new NoActiveStudentCurricularPlanOfCorrectTypeException();
-        }
+		if (activeStudentCurricularPlans.isEmpty()) {
+			throw new NoActiveStudentCurricularPlanOfCorrectTypeException();
+		}
 
-    }
+	}
 
-    public void execute(Registration registration, ExecutionSemester executionSemester) throws FenixServiceException {
-        Person person = Authenticate.getUser().getPerson();
+	public void execute(Registration registration, ExecutionSemester executionSemester) throws FenixServiceException {
+		Person person = Authenticate.getUser().getPerson();
 
-        if (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, registration.getDegree(),
-                person.getUser())) {
-            return;
-        }
+		if (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS,
+				registration.getDegree(), person.getUser())
+				|| PermissionService.isMember("STUDENT_ENROLMENTS", registration.getDegree(), person.getUser())) {
+			return;
+		}
 
-        if (RoleType.RESOURCE_ALLOCATION_MANAGER.isMember(person.getUser())) {
-            person = registration.getPerson();
-        }
+		if (RoleType.RESOURCE_ALLOCATION_MANAGER.isMember(person.getUser())) {
+			person = registration.getPerson();
+		}
 
-        for (ClassEnrollmentCondition condition : conditions) {
-            condition.verify(registration);
-        }
+		for (ClassEnrollmentCondition condition : conditions) {
+			condition.verify(registration);
+		}
 
-        final SortedSet<StudentCurricularPlan> activeStudentCurricularPlans =
-                person.getActiveStudentCurricularPlansSortedByDegreeTypeAndDegreeName();
+		final SortedSet<StudentCurricularPlan> activeStudentCurricularPlans = person
+				.getActiveStudentCurricularPlansSortedByDegreeTypeAndDegreeName();
 
-        if (activeStudentCurricularPlans.isEmpty()) {
-            throw new NoActiveStudentCurricularPlanOfCorrectTypeException();
-        }
+		if (activeStudentCurricularPlans.isEmpty()) {
+			throw new NoActiveStudentCurricularPlanOfCorrectTypeException();
+		}
 
-    }
+	}
 
-    public static class NoActiveStudentCurricularPlanOfCorrectTypeException extends FenixServiceException {
-    }
+	public static class NoActiveStudentCurricularPlanOfCorrectTypeException extends FenixServiceException {
+	}
 
-    public static class CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan extends FenixServiceException {
-        public CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan() {
-            super("error.enrolmentPeriodNotDefined");
-        }
-    }
+	public static class CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan extends FenixServiceException {
+		public CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan() {
+			super("error.enrolmentPeriodNotDefined");
+		}
+	}
 
-    public static class OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan extends FenixServiceException {
-        public OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan() {
-            super();
-        }
+	public static class OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan extends FenixServiceException {
+		public OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan() {
+			super();
+		}
 
-        public OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan(String message, Throwable cause) {
-            super(message, cause);
-        }
+		public OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan(String message, Throwable cause) {
+			super(message, cause);
+		}
 
-        public OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan(Throwable cause) {
-            super(cause);
-        }
+		public OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan(Throwable cause) {
+			super(cause);
+		}
 
-        public OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan(String message) {
-            super("error.enrollment.period.closed", new String[] { message });
-        }
-    }
+		public OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan(String message) {
+			super("error.enrollment.period.closed", new String[] { message });
+		}
+	}
 
 }

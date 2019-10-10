@@ -78,378 +78,380 @@ import com.google.gson.JsonParser;
 
 import pt.ist.standards.geographic.Planet;
 
-@Bootstrapper(sections = { SchoolSetupSection.class, PortalSection.class, AdminUserSection.class }, name = "bootstrapper.name",
-        bundle = Bundle.APPLICATION, after = PortalBootstrapper.class)
+@Bootstrapper(sections = { SchoolSetupSection.class, PortalSection.class,
+		AdminUserSection.class }, name = "bootstrapper.name", bundle = Bundle.APPLICATION, after = PortalBootstrapper.class)
 public class FenixBootstrapper {
 
-    final static Locale PT = new Locale("pt");
-    final static Locale EN = new Locale("en");
+	final static Locale PT = new Locale("pt");
+	final static Locale EN = new Locale("en");
 
-    @Bootstrap
-    public static List<BootstrapError> boostrap(final SchoolSetupSection schoolSetupSection, final PortalSection portalSection,
-            final AdminUserSection adminSection) {
+	@Bootstrap
+	public static List<BootstrapError> boostrap(final SchoolSetupSection schoolSetupSection,
+			final PortalSection portalSection, final AdminUserSection adminSection) {
 
-        if (Planet.getEarth().getByAlfa3(schoolSetupSection.getCountryCode()) == null
-                || !Planet.getEarth().getByAlfa3(schoolSetupSection.getCountryCode()).alpha3
-                        .equals(schoolSetupSection.getCountryCode())) {
-            return singletonList(new BootstrapError(SchoolSetupSection.class, "getCountryCode", "bootstrapper.error.contry",
-                    Bundle.APPLICATION));
-        }
+		if (Planet.getEarth().getByAlfa3(schoolSetupSection.getCountryCode()) == null
+				|| !Planet.getEarth().getByAlfa3(schoolSetupSection.getCountryCode()).alpha3
+						.equals(schoolSetupSection.getCountryCode())) {
+			return singletonList(new BootstrapError(SchoolSetupSection.class, "getCountryCode",
+					"bootstrapper.error.contry", Bundle.APPLICATION));
+		}
 
-        createManagerUser(adminSection, schoolSetupSection);
-        createAcademicSpaceClassifications();
-        createPartyTypeEnums();
-        createAccountabilityTypeEnums();
-        createCountries(schoolSetupSection);
-        createCurricularYearsAndSemesters();
-        createDistrictAndDistrictSubdivision();
-        createOrganizationalStructure();
+		createManagerUser(adminSection, schoolSetupSection);
+		createAcademicSpaceClassifications();
+		createPartyTypeEnums();
+		createAccountabilityTypeEnums();
+		createCountries(schoolSetupSection);
+		createCurricularYearsAndSemesters();
+		createDistrictAndDistrictSubdivision();
+		createOrganizationalStructure();
 
 //        EvaluationSeason normalSeason = createEvaluationSeason("EN", "RS", "NORMAL", true, false, false, false);
 //        EvaluationConfiguration.getInstance().setDefaultEvaluationSeason(normalSeason);
 //        createEvaluationSeason("MN", "GI", "IMPROVEMENT", false, true, false, false);
 //        createEvaluationSeason("AE", "SA", "SPECIAL_AUTHORIZATION", false, false, true, false);
 //        createEvaluationSeason("EE", "SS", "SPECIAL_SEASON", false, false, false, true);
-        //new CreateExecutionYears().doIt();
-        //new CreateResources().doIt();
+		// new CreateExecutionYears().doIt();
+		// new CreateResources().doIt();
 
-        new CreateOrganizationalStructure().doIt(portalSection, schoolSetupSection);
+		new CreateOrganizationalStructure().doIt(portalSection, schoolSetupSection);
 
-        //new CreateDegrees().doIt(process);
-        //new CreateCurricularPeriods().doIt();
-        //new CreateCurricularStructure().doIt();
-        //new CreateExecutionCourses().doIt();
-        //new CreateEvaluations().doIt();
+		// new CreateDegrees().doIt(process);
+		// new CreateCurricularPeriods().doIt();
+		// new CreateCurricularStructure().doIt();
+		// new CreateExecutionCourses().doIt();
+		// new CreateEvaluations().doIt();
 
-        createEmptyDegreeAndEmptyDegreeCurricularPlan();
-        createDefaultRegistrationProtocol();
-        Installation installation = Installation.getInstance();
-        installation.setInstituitionEmailDomain(schoolSetupSection.getSchoolEmailDomain());
-        installation.setInstituitionURL(schoolSetupSection.getSchoolURL());
+		createEmptyDegreeAndEmptyDegreeCurricularPlan();
+		createDefaultRegistrationProtocol();
+		Installation installation = Installation.getInstance();
+		installation.setInstituitionEmailDomain(schoolSetupSection.getSchoolEmailDomain());
+		installation.setInstituitionURL(schoolSetupSection.getSchoolURL());
 
-        if (Bennu.getInstance().getRootClassificationSet().isEmpty()) {
-            Builder schoolSpaces = new LocalizedString.Builder();
-            CoreConfiguration.supportedLocales().stream().forEach(l -> schoolSpaces.with(l, SpaceUtils.SCHOOL_SPACES));
-            SpaceClassification sc = new SpaceClassification("1", schoolSpaces.build());
+		if (Bennu.getInstance().getRootClassificationSet().isEmpty()) {
+			Builder schoolSpaces = new LocalizedString.Builder();
+			CoreConfiguration.supportedLocales().stream().forEach(l -> schoolSpaces.with(l, SpaceUtils.SCHOOL_SPACES));
+			SpaceClassification sc = new SpaceClassification("1", schoolSpaces.build());
 
-            Builder campus = new LocalizedString.Builder();
-            CoreConfiguration.supportedLocales().stream().forEach(l -> campus.with(l, SpaceUtils.CAMPUS));
-            sc.addChildren(new SpaceClassification("1.1", campus.build()));
+			Builder campus = new LocalizedString.Builder();
+			CoreConfiguration.supportedLocales().stream().forEach(l -> campus.with(l, SpaceUtils.CAMPUS));
+			sc.addChildren(new SpaceClassification("1.1", campus.build()));
 
-            Builder building = new LocalizedString.Builder();
-            CoreConfiguration.supportedLocales().stream().forEach(l -> building.with(l, SpaceUtils.BUILDING));
-            sc.addChildren(new SpaceClassification("1.2", building.build()));
+			Builder building = new LocalizedString.Builder();
+			CoreConfiguration.supportedLocales().stream().forEach(l -> building.with(l, SpaceUtils.BUILDING));
+			sc.addChildren(new SpaceClassification("1.2", building.build()));
 
-            Builder floor = new LocalizedString.Builder();
-            CoreConfiguration.supportedLocales().stream().forEach(l -> floor.with(l, SpaceUtils.FLOOR));
-            sc.addChildren(new SpaceClassification("1.3", floor.build()));
+			Builder floor = new LocalizedString.Builder();
+			CoreConfiguration.supportedLocales().stream().forEach(l -> floor.with(l, SpaceUtils.FLOOR));
+			sc.addChildren(new SpaceClassification("1.3", floor.build()));
 
-            Builder roomSubdivision = new LocalizedString.Builder();
-            CoreConfiguration.supportedLocales().stream().forEach(l -> roomSubdivision.with(l, SpaceUtils.ROOM_SUBDIVISION));
-            sc.addChildren(new SpaceClassification("1.4", roomSubdivision.build()));
+			Builder roomSubdivision = new LocalizedString.Builder();
+			CoreConfiguration.supportedLocales().stream()
+					.forEach(l -> roomSubdivision.with(l, SpaceUtils.ROOM_SUBDIVISION));
+			sc.addChildren(new SpaceClassification("1.4", roomSubdivision.build()));
 
-            Builder room = new LocalizedString.Builder();
-            CoreConfiguration.supportedLocales().stream().forEach(l -> room.with(l, SpaceUtils.ROOM));
-            sc.addChildren(new SpaceClassification("1.4", room.build()));
-        }
+			Builder room = new LocalizedString.Builder();
+			CoreConfiguration.supportedLocales().stream().forEach(l -> room.with(l, SpaceUtils.ROOM));
+			sc.addChildren(new SpaceClassification("1.4", room.build()));
+		}
 
-        createDefaultServiceRequestTypes();
+		createDefaultServiceRequestTypes();
 
-        return Lists.newArrayList();
-    }
+		return Lists.newArrayList();
+	}
 
-    private static EvaluationSeason createEvaluationSeason(final String ptCode, final String enCode, final String nameKey,
-            final boolean normal, final boolean improvement, final boolean specialAuthorization, final boolean special) {
-        final LocalizedString acronym = new LocalizedString.Builder().with(Locale.forLanguageTag("pt-PT"), ptCode)
-                .with(Locale.forLanguageTag("en-GB"), enCode).build();
-        return new EvaluationSeason(acronym, BundleUtil.getLocalizedString(Bundle.ENUMERATION, nameKey), normal, improvement,
-                specialAuthorization, special);
-    }
+	private static EvaluationSeason createEvaluationSeason(final String ptCode, final String enCode,
+			final String nameKey, final boolean normal, final boolean improvement, final boolean specialAuthorization,
+			final boolean special) {
+		final LocalizedString acronym = new LocalizedString.Builder().with(Locale.forLanguageTag("pt-PT"), ptCode)
+				.with(Locale.forLanguageTag("en-GB"), enCode).build();
+		return new EvaluationSeason(acronym, BundleUtil.getLocalizedString(Bundle.ENUMERATION, nameKey), normal,
+				improvement, specialAuthorization, special);
+	}
 
-    private static void createDefaultRegistrationProtocol() {
-        LocalizedString description =
-                LocalizedString.fromJson(new JsonParser().parse("{\"pt-PT\":\"Normal\",\"en-GB\":\"Normal\"}"));
+	private static void createDefaultRegistrationProtocol() {
+		LocalizedString description = LocalizedString
+				.fromJson(new JsonParser().parse("{\"pt-PT\":\"Normal\",\"en-GB\":\"Normal\"}"));
 
-        RegistrationProtocol registrationProtocol = new RegistrationProtocol("NORMAL", description, true, true, true, false,
-                false, false, false, false, false, true, false);
-    }
+		RegistrationProtocol registrationProtocol = new RegistrationProtocol("NORMAL", description, true, true, true,
+				false, false, false, false, false, false, true, false);
+	}
 
-    public static class CreateOrganizationalStructure {
-        public void doIt(final PortalSection portalSection, final SchoolSetupSection schoolSetupSection) {
-            final CountryUnit countryUnit = getCountryUnit(Country.readDefault().getName());
-            final UniversityUnit universityUnit = createUniversityUnit(countryUnit, schoolSetupSection.getUniversityName(),
-                    schoolSetupSection.getUniversityAcronym());
-            final SchoolUnit institutionUnit =
-                    createSchoolUnit(universityUnit, portalSection.getOrganizationName(), schoolSetupSection.getSchoolAcronym());
-            Bennu.getInstance().setInstitutionUnit(institutionUnit);
+	public static class CreateOrganizationalStructure {
+		public void doIt(final PortalSection portalSection, final SchoolSetupSection schoolSetupSection) {
+			final CountryUnit countryUnit = getCountryUnit(Country.readDefault().getName());
+			final UniversityUnit universityUnit = createUniversityUnit(countryUnit,
+					schoolSetupSection.getUniversityName(), schoolSetupSection.getUniversityAcronym());
+			final SchoolUnit institutionUnit = createSchoolUnit(universityUnit, portalSection.getOrganizationName(),
+					schoolSetupSection.getSchoolAcronym());
+			Bennu.getInstance().setInstitutionUnit(institutionUnit);
 
-            final AggregateUnit serviceUnits = createAggregateUnit(institutionUnit, "Services");
-            //createServiceUnits(serviceUnits);
-            final AggregateUnit departmentUnits = createAggregateUnit(institutionUnit, "Departments");
-            //createDepartmentUnits(departmentUnits);
-            final AggregateUnit degreeUnits = createAggregateUnit(institutionUnit, "Degrees");
-            //createDegreeUnits(degreeUnits);
-        }
+			final AggregateUnit serviceUnits = createAggregateUnit(institutionUnit, "Services");
+			// createServiceUnits(serviceUnits);
+			final AggregateUnit departmentUnits = createAggregateUnit(institutionUnit, "Departments");
+			// createDepartmentUnits(departmentUnits);
+			final AggregateUnit degreeUnits = createAggregateUnit(institutionUnit, "Degrees");
+			// createDegreeUnits(degreeUnits);
+		}
 
-        private CountryUnit getCountryUnit(final String countryUnitName) {
-            for (final Party party : Bennu.getInstance().getPartysSet()) {
-                if (party.isCountryUnit()) {
-                    final CountryUnit countryUnit = (CountryUnit) party;
-                    if (countryUnit.getName().equalsIgnoreCase(countryUnitName)) {
-                        return countryUnit;
-                    }
-                }
-            }
-            return null;
-        }
+		private CountryUnit getCountryUnit(final String countryUnitName) {
+			for (final Party party : Bennu.getInstance().getPartysSet()) {
+				if (party.isCountryUnit()) {
+					final CountryUnit countryUnit = (CountryUnit) party;
+					if (countryUnit.getName().equalsIgnoreCase(countryUnitName)) {
+						return countryUnit;
+					}
+				}
+			}
+			return null;
+		}
 
-        private UniversityUnit createUniversityUnit(final CountryUnit countryUnit, final String universityName,
-                final String universityAcronym) {
-            return UniversityUnit.createNewUniversityUnit(new LocalizedString(Locale.getDefault(), universityName), null, null,
-                    universityAcronym, new YearMonthDay(), null, countryUnit, null, null, false, null);
-        }
+		private UniversityUnit createUniversityUnit(final CountryUnit countryUnit, final String universityName,
+				final String universityAcronym) {
+			return UniversityUnit.createNewUniversityUnit(new LocalizedString(Locale.getDefault(), universityName),
+					null, null, universityAcronym, new YearMonthDay(), null, countryUnit, null, null, false, null);
+		}
 
-        private AggregateUnit createAggregateUnit(final Unit parentUnit, final String unitName) {
-            return AggregateUnit.createNewAggregateUnit(new LocalizedString(Locale.getDefault(), unitName), null, null, null,
-                    new YearMonthDay(), null, parentUnit,
-                    AccountabilityType.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE), null, null, Boolean.FALSE,
-                    null);
-        }
+		private AggregateUnit createAggregateUnit(final Unit parentUnit, final String unitName) {
+			return AggregateUnit.createNewAggregateUnit(new LocalizedString(Locale.getDefault(), unitName), null, null,
+					null, new YearMonthDay(), null, parentUnit,
+					AccountabilityType.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE), null, null,
+					Boolean.FALSE, null);
+		}
 
-        private SchoolUnit createSchoolUnit(final UniversityUnit universityUnit, final String universityName,
-                final String universityAcronym) {
-            return SchoolUnit.createNewSchoolUnit(new LocalizedString(Locale.getDefault(), universityName), null, null,
-                    universityAcronym, new YearMonthDay(), null, universityUnit, null, null, Boolean.FALSE, null);
-        }
-    }
+		private SchoolUnit createSchoolUnit(final UniversityUnit universityUnit, final String universityName,
+				final String universityAcronym) {
+			return SchoolUnit.createNewSchoolUnit(new LocalizedString(Locale.getDefault(), universityName), null, null,
+					universityAcronym, new YearMonthDay(), null, universityUnit, null, null, Boolean.FALSE, null);
+		}
+	}
 
-    private static void createEmptyDegreeAndEmptyDegreeCurricularPlan() {
+	private static void createEmptyDegreeAndEmptyDegreeCurricularPlan() {
 //        EmptyDegree.init();
 //        EmptyDegree.getInstance().setAdministrativeOffice(CreateTestData.administrativeOffice);
 //        EmptyDegreeCurricularPlan.init();
 
-    }
+	}
 
-    private static void createCurricularYearsAndSemesters() {
-        new CurricularYear(Integer.valueOf(1), 2);
-        new CurricularYear(Integer.valueOf(2), 2);
-        new CurricularYear(Integer.valueOf(3), 2);
-        new CurricularYear(Integer.valueOf(4), 2);
-        new CurricularYear(Integer.valueOf(5), 2);
-        new CurricularYear(Integer.valueOf(6), 2);
-    }
+	private static void createCurricularYearsAndSemesters() {
+		new CurricularYear(Integer.valueOf(1), 2);
+		new CurricularYear(Integer.valueOf(2), 2);
+		new CurricularYear(Integer.valueOf(3), 2);
+		new CurricularYear(Integer.valueOf(4), 2);
+		new CurricularYear(Integer.valueOf(5), 2);
+		new CurricularYear(Integer.valueOf(6), 2);
+	}
 
-    private static Country createCountries(final SchoolSetupSection schoolSection) {
-        Country defaultCountry = null;
-        for (pt.ist.standards.geographic.Country metaData : Planet.getEarth().getPlaces()) {
-            String localizedNamePT = null;
-            try {
-                localizedNamePT = metaData.getLocalizedName(PT);
-            } catch (MissingResourceException e) {
-            }
+	private static Country createCountries(final SchoolSetupSection schoolSection) {
+		Country defaultCountry = null;
+		for (pt.ist.standards.geographic.Country metaData : Planet.getEarth().getPlaces()) {
+			String localizedNamePT = null;
+			try {
+				localizedNamePT = metaData.getLocalizedName(PT);
+			} catch (MissingResourceException e) {
+			}
 
-            String localizedNameEN = null;
-            try {
-                localizedNameEN = metaData.getLocalizedName(EN);
-            } catch (MissingResourceException e) {
-            }
+			String localizedNameEN = null;
+			try {
+				localizedNameEN = metaData.getLocalizedName(EN);
+			} catch (MissingResourceException e) {
+			}
 
-            if (localizedNameEN == null && localizedNamePT == null) {
-                continue;
-            }
+			if (localizedNameEN == null && localizedNamePT == null) {
+				continue;
+			}
 
-            if (localizedNamePT == null) {
-                localizedNamePT = localizedNameEN;
-            }
+			if (localizedNamePT == null) {
+				localizedNamePT = localizedNameEN;
+			}
 
-            if (localizedNameEN == null) {
-                localizedNameEN = localizedNamePT;
-            }
-            String nationalityPT = null;
-            try {
-                nationalityPT = metaData.getNationality(PT);
-            } catch (MissingResourceException e) {
-            }
+			if (localizedNameEN == null) {
+				localizedNameEN = localizedNamePT;
+			}
+			String nationalityPT = null;
+			try {
+				nationalityPT = metaData.getNationality(PT);
+			} catch (MissingResourceException e) {
+			}
 
-            String nationalityEN = null;
-            try {
-                nationalityEN = metaData.getNationality(EN);
-            } catch (MissingResourceException e) {
-            }
+			String nationalityEN = null;
+			try {
+				nationalityEN = metaData.getNationality(EN);
+			} catch (MissingResourceException e) {
+			}
 
-            if (nationalityPT == null) {
-                if (nationalityEN == null) {
-                    nationalityPT = localizedNamePT;
-                } else {
-                    nationalityPT = nationalityEN;
-                }
-            }
+			if (nationalityPT == null) {
+				if (nationalityEN == null) {
+					nationalityPT = localizedNamePT;
+				} else {
+					nationalityPT = nationalityEN;
+				}
+			}
 
-            if (nationalityEN == null) {
-                if (nationalityPT == null) {
-                    nationalityEN = localizedNameEN;
-                } else {
-                    nationalityEN = nationalityPT;
-                }
-            }
+			if (nationalityEN == null) {
+				if (nationalityPT == null) {
+					nationalityEN = localizedNameEN;
+				} else {
+					nationalityEN = nationalityPT;
+				}
+			}
 
-            final LocalizedString countryName = new LocalizedString(PT, localizedNamePT);
-            countryName.append(new LocalizedString(EN, localizedNameEN));
+			final LocalizedString countryName = new LocalizedString(PT, localizedNamePT);
+			countryName.append(new LocalizedString(EN, localizedNameEN));
 
-            final String code = metaData.alpha2;
-            final String threeLetterCode = metaData.alpha3;
+			final String code = metaData.alpha2;
+			final String threeLetterCode = metaData.alpha3;
 
-            final Country country = new Country(countryName,
-                    new LocalizedString(PT, nationalityPT).append(new LocalizedString(EN, nationalityEN)), code, threeLetterCode);
-            if (StringUtils.equals(threeLetterCode, schoolSection.getCountryCode().toUpperCase())) {
-                defaultCountry = country;
-            }
-        }
+			final Country country = new Country(countryName,
+					new LocalizedString(PT, nationalityPT).append(new LocalizedString(EN, nationalityEN)), code,
+					threeLetterCode);
+			if (StringUtils.equals(threeLetterCode, schoolSection.getCountryCode().toUpperCase())) {
+				defaultCountry = country;
+			}
+		}
 
-        defaultCountry.setDefaultCountry(Boolean.TRUE);
-        return defaultCountry;
-    }
+		defaultCountry.setDefaultCountry(Boolean.TRUE);
+		return defaultCountry;
+	}
 
-    private static void createDistrictAndDistrictSubdivision() {
+	private static void createDistrictAndDistrictSubdivision() {
 
-    }
+	}
 
-    static void createManagerUser(final AdminUserSection adminSection, final SchoolSetupSection schoolSetupSection) {
-        User adminUser = User.findByUsername(adminSection.getAdminUsername());
-        final Person person = new Person(adminUser.getProfile());
-        RoleType.grant(RoleType.SCIENTIFIC_COUNCIL, adminUser);
-        RoleType.grant(RoleType.SPACE_MANAGER, adminUser);
-        RoleType.grant(RoleType.SPACE_MANAGER_SUPER_USER, adminUser);
-        RoleType.grant(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE, adminUser);
-        RoleType.grant(RoleType.BOLONHA_MANAGER, adminUser);
-        person.setCountry(Country.readDefault());
-        person.setCountryOfBirth(Country.readDefault());
+	static void createManagerUser(final AdminUserSection adminSection, final SchoolSetupSection schoolSetupSection) {
+		User adminUser = User.findByUsername(adminSection.getAdminUsername());
+		final Person person = new Person(adminUser.getProfile());
+		RoleType.grant(RoleType.SCIENTIFIC_COUNCIL, adminUser);
+		RoleType.grant(RoleType.SPACE_MANAGER, adminUser);
+		RoleType.grant(RoleType.SPACE_MANAGER_SUPER_USER, adminUser);
+		RoleType.grant(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE, adminUser);
+		RoleType.grant(RoleType.BOLONHA_MANAGER, adminUser);
+		person.setCountry(Country.readDefault());
+		person.setCountryOfBirth(Country.readDefault());
 
-        EmailAddress.createEmailAddress(person, adminSection.getAdminUserEmail(), PartyContactType.PERSONAL, true, true, true,
-                true);
-        for (PartyContact partyContact : person.getPartyContactsSet()) {
-            partyContact.setValid();
-            partyContact.getPartyContactValidation().setState(PartyContactValidationState.VALID);
-        }
-        Authenticate.mock(adminUser, "TODO: CHANGE ME");
-        AcademicOperationType.MANAGE_AUTHORIZATIONS.grant(adminUser);
-        AcademicOperationType.MANAGE_ACADEMIC_CALENDARS.grant(adminUser);
-    }
+		EmailAddress.createEmailAddress(person, adminSection.getAdminUserEmail(), PartyContactType.PERSONAL, true, true,
+				true, true);
+		for (PartyContact partyContact : person.getPartyContactsSet()) {
+			partyContact.setValid();
+			partyContact.getPartyContactValidation().setState(PartyContactValidationState.VALID);
+		}
+		Authenticate.mock(adminUser, "TODO: CHANGE ME");
+		AcademicOperationType.MANAGE_AUTHORIZATIONS.grant(adminUser);
+//        AcademicOperationType.MANAGE_ACADEMIC_CALENDARS.grant(adminUser);
+	}
 
-    private static void createAcademicSpaceClassifications() {
-        LocalizedString.Builder campusNameBuilder = new LocalizedString.Builder();
-        CoreConfiguration.supportedLocales().stream().forEach(l -> campusNameBuilder.with(l, "Campus"));
-        new SpaceClassification("1", campusNameBuilder.build());
-    }
+	private static void createAcademicSpaceClassifications() {
+		LocalizedString.Builder campusNameBuilder = new LocalizedString.Builder();
+		CoreConfiguration.supportedLocales().stream().forEach(l -> campusNameBuilder.with(l, "Campus"));
+		new SpaceClassification("1", campusNameBuilder.build());
+	}
 
-    private static void createPartyTypeEnums() {
-        for (final PartyTypeEnum partyTypeEnum : PartyTypeEnum.values()) {
-            new PartyType(partyTypeEnum);
-        }
-    }
+	private static void createPartyTypeEnums() {
+		for (final PartyTypeEnum partyTypeEnum : PartyTypeEnum.values()) {
+			new PartyType(partyTypeEnum);
+		}
+	}
 
-    private static void createAccountabilityTypeEnums() {
-        for (final AccountabilityTypeEnum accountabilityTypeEnum : AccountabilityTypeEnum.values()) {
-            new AccountabilityType(accountabilityTypeEnum,
-                    new LocalizedString(Locale.getDefault(), accountabilityTypeEnum.getName()));
-        }
-    }
+	private static void createAccountabilityTypeEnums() {
+		for (final AccountabilityTypeEnum accountabilityTypeEnum : AccountabilityTypeEnum.values()) {
+			new AccountabilityType(accountabilityTypeEnum,
+					new LocalizedString(Locale.getDefault(), accountabilityTypeEnum.getName()));
+		}
+	}
 
-    private static void createOrganizationalStructure() {
-        final Bennu rootDomainObject = Bennu.getInstance();
-        final PlanetUnit planetUnit = PlanetUnit.createNewPlanetUnit(new LocalizedString(Locale.getDefault(), "Earth"), null,
-                null, "E", new YearMonthDay(), null, null, null, null, false, null);
-        rootDomainObject.setEarthUnit(planetUnit);
+	private static void createOrganizationalStructure() {
+		final Bennu rootDomainObject = Bennu.getInstance();
+		final PlanetUnit planetUnit = PlanetUnit.createNewPlanetUnit(new LocalizedString(Locale.getDefault(), "Earth"),
+				null, null, "E", new YearMonthDay(), null, null, null, null, false, null);
+		rootDomainObject.setEarthUnit(planetUnit);
 
-        createCountryUnits(rootDomainObject, planetUnit);
-    }
+		createCountryUnits(rootDomainObject, planetUnit);
+	}
 
-    private static void createCountryUnits(final Bennu rootDomainObject, final PlanetUnit planetUnit) {
-        for (final Country country : Country.readDistinctCountries()) {
-            CountryUnit.createNewCountryUnit(new LocalizedString(Locale.getDefault(), country.getName()), null, null,
-                    country.getCode(), new YearMonthDay(), null, planetUnit, null, null, false, null);
-        }
-    }
+	private static void createCountryUnits(final Bennu rootDomainObject, final PlanetUnit planetUnit) {
+		for (final Country country : Country.readDistinctCountries()) {
+			CountryUnit.createNewCountryUnit(new LocalizedString(Locale.getDefault(), country.getName()), null, null,
+					country.getCode(), new YearMonthDay(), null, planetUnit, null, null, false, null);
+		}
+	}
 
-    private static void createDefaultServiceRequestTypes() {
+	private static void createDefaultServiceRequestTypes() {
 
-        // By default create all legacy ServiceRequestTypes as Inactive and as Services -> Then configurate accordingly
+		// By default create all legacy ServiceRequestTypes as Inactive and as Services
+		// -> Then configurate accordingly
 
-        for (final AcademicServiceRequestType academicServiceRequestType : AcademicServiceRequestType.values()) {
-            if (academicServiceRequestType == AcademicServiceRequestType.DOCUMENT) {
-                continue;
-            } else if (academicServiceRequestType == AcademicServiceRequestType.DIPLOMA_REQUEST) {
-                ServiceRequestType.createLegacy(academicServiceRequestType.name(),
-                        new LocalizedString(new Locale("PT", "pt"), academicServiceRequestType.getLocalizedName()), false,
-                        academicServiceRequestType, DocumentRequestType.DIPLOMA_REQUEST, true, Boolean.FALSE, Boolean.FALSE,
-                        Boolean.FALSE, ServiceRequestCategory.SERVICES);
-                continue;
-            } else if (academicServiceRequestType == AcademicServiceRequestType.DIPLOMA_SUPPLEMENT_REQUEST) {
-                ServiceRequestType.createLegacy(academicServiceRequestType.name(),
-                        new LocalizedString(new Locale("PT", "pt"), academicServiceRequestType.getLocalizedName()), false,
-                        academicServiceRequestType, DocumentRequestType.DIPLOMA_SUPPLEMENT_REQUEST, true, Boolean.FALSE,
-                        Boolean.FALSE, Boolean.FALSE, ServiceRequestCategory.SERVICES);
-                continue;
-            } else if (academicServiceRequestType == AcademicServiceRequestType.REGISTRY_DIPLOMA_REQUEST) {
-                ServiceRequestType.createLegacy(academicServiceRequestType.name(),
-                        new LocalizedString(new Locale("PT", "pt"), academicServiceRequestType.getLocalizedName()), false,
-                        academicServiceRequestType, DocumentRequestType.REGISTRY_DIPLOMA_REQUEST, true, Boolean.FALSE,
-                        Boolean.FALSE, Boolean.FALSE, ServiceRequestCategory.SERVICES);
-                continue;
-            }
+		for (final AcademicServiceRequestType academicServiceRequestType : AcademicServiceRequestType.values()) {
+			if (academicServiceRequestType == AcademicServiceRequestType.DOCUMENT) {
+				continue;
+			} else if (academicServiceRequestType == AcademicServiceRequestType.DIPLOMA_REQUEST) {
+				ServiceRequestType.createLegacy(academicServiceRequestType.name(),
+						new LocalizedString(new Locale("PT", "pt"), academicServiceRequestType.getLocalizedName()),
+						false, academicServiceRequestType, DocumentRequestType.DIPLOMA_REQUEST, true, Boolean.FALSE,
+						Boolean.FALSE, Boolean.FALSE, ServiceRequestCategory.SERVICES);
+				continue;
+			} else if (academicServiceRequestType == AcademicServiceRequestType.DIPLOMA_SUPPLEMENT_REQUEST) {
+				ServiceRequestType.createLegacy(academicServiceRequestType.name(),
+						new LocalizedString(new Locale("PT", "pt"), academicServiceRequestType.getLocalizedName()),
+						false, academicServiceRequestType, DocumentRequestType.DIPLOMA_SUPPLEMENT_REQUEST, true,
+						Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, ServiceRequestCategory.SERVICES);
+				continue;
+			} else if (academicServiceRequestType == AcademicServiceRequestType.REGISTRY_DIPLOMA_REQUEST) {
+				ServiceRequestType.createLegacy(academicServiceRequestType.name(),
+						new LocalizedString(new Locale("PT", "pt"), academicServiceRequestType.getLocalizedName()),
+						false, academicServiceRequestType, DocumentRequestType.REGISTRY_DIPLOMA_REQUEST, true,
+						Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, ServiceRequestCategory.SERVICES);
+				continue;
+			}
 
-            ServiceRequestType.createLegacy(academicServiceRequestType.name(),
-                    new LocalizedString(new Locale("PT", "pt"), academicServiceRequestType.getLocalizedName()), false,
-                    academicServiceRequestType, null, true, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE,
-                    ServiceRequestCategory.SERVICES);
-        }
+			ServiceRequestType.createLegacy(academicServiceRequestType.name(),
+					new LocalizedString(new Locale("PT", "pt"), academicServiceRequestType.getLocalizedName()), false,
+					academicServiceRequestType, null, true, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE,
+					ServiceRequestCategory.SERVICES);
+		}
 
-        for (final DocumentRequestType documentRequestType : DocumentRequestType.values()) {
+		for (final DocumentRequestType documentRequestType : DocumentRequestType.values()) {
 
-            if (documentRequestType == DocumentRequestType.DIPLOMA_REQUEST) {
-                continue;
-            } else if (documentRequestType == DocumentRequestType.DIPLOMA_SUPPLEMENT_REQUEST) {
-                continue;
-            } else if (documentRequestType == DocumentRequestType.REGISTRY_DIPLOMA_REQUEST) {
-                continue;
-            }
+			if (documentRequestType == DocumentRequestType.DIPLOMA_REQUEST) {
+				continue;
+			} else if (documentRequestType == DocumentRequestType.DIPLOMA_SUPPLEMENT_REQUEST) {
+				continue;
+			} else if (documentRequestType == DocumentRequestType.REGISTRY_DIPLOMA_REQUEST) {
+				continue;
+			}
 
-            // By default create all legacy ServiceRequestTypes as Services -> Then configurate accordingly
-            ServiceRequestType.createLegacy(documentRequestType.name(),
-                    BundleUtil.getLocalizedString("resources.EnumerationResources",
-                            "DocumentRequestType." + documentRequestType.name()),
-                    false, AcademicServiceRequestType.DOCUMENT, documentRequestType, true, Boolean.FALSE, Boolean.FALSE,
-                    Boolean.FALSE, ServiceRequestCategory.SERVICES);
-        }
-    }
+			// By default create all legacy ServiceRequestTypes as Services -> Then
+			// configurate accordingly
+			ServiceRequestType.createLegacy(documentRequestType.name(),
+					BundleUtil.getLocalizedString("resources.EnumerationResources",
+							"DocumentRequestType." + documentRequestType.name()),
+					false, AcademicServiceRequestType.DOCUMENT, documentRequestType, true, Boolean.FALSE, Boolean.FALSE,
+					Boolean.FALSE, ServiceRequestCategory.SERVICES);
+		}
+	}
 
-    @Section(name = "bootstrapper.schoolSetup.name", description = "bootstrapper.schoolSetup.description",
-            bundle = Bundle.APPLICATION)
-    public static interface SchoolSetupSection {
+	@Section(name = "bootstrapper.schoolSetup.name", description = "bootstrapper.schoolSetup.description", bundle = Bundle.APPLICATION)
+	public static interface SchoolSetupSection {
 
-        @Field(name = "bootstrapper.schoolSetup.universityName", hint = "bootstrapper.schoolSetup.universityName.hint", order = 1)
-        public String getUniversityName();
+		@Field(name = "bootstrapper.schoolSetup.universityName", hint = "bootstrapper.schoolSetup.universityName.hint", order = 1)
+		public String getUniversityName();
 
-        @Field(name = "bootstrapper.schoolSetup.universityAcronym", hint = "bootstrapper.schoolSetup.universityAcronym.hint",
-                order = 2)
-        public String getUniversityAcronym();
+		@Field(name = "bootstrapper.schoolSetup.universityAcronym", hint = "bootstrapper.schoolSetup.universityAcronym.hint", order = 2)
+		public String getUniversityAcronym();
 
-        @Field(name = "bootstrapper.schoolSetup.schoolAcronym", hint = "bootstrapper.schoolSetup.schoolAcronym.hint", order = 3)
-        public String getSchoolAcronym();
+		@Field(name = "bootstrapper.schoolSetup.schoolAcronym", hint = "bootstrapper.schoolSetup.schoolAcronym.hint", order = 3)
+		public String getSchoolAcronym();
 
-        @Field(name = "bootstrapper.schoolSetup.country", hint = "bootstrapper.schoolSetup.country.hint", order = 4)
-        public String getCountryCode();
+		@Field(name = "bootstrapper.schoolSetup.country", hint = "bootstrapper.schoolSetup.country.hint", order = 4)
+		public String getCountryCode();
 
-        @Field(name = "bootstrapper.application.schoolDomain", hint = "bootstrapper.application.schoolDomain.hint", order = 5)
-        public String getSchoolDomain();
+		@Field(name = "bootstrapper.application.schoolDomain", hint = "bootstrapper.application.schoolDomain.hint", order = 5)
+		public String getSchoolDomain();
 
-        @Field(name = "bootstrapper.application.schoolUrl", hint = "bootstrapper.application.schoolUrl.hint", order = 6)
-        public String getSchoolURL();
+		@Field(name = "bootstrapper.application.schoolUrl", hint = "bootstrapper.application.schoolUrl.hint", order = 6)
+		public String getSchoolURL();
 
-        @Field(name = "bootstrapper.application.schoolEmailDomain", hint = "bootstrapper.application.schoolEmailDomain.hint",
-                order = 7)
-        public String getSchoolEmailDomain();
+		@Field(name = "bootstrapper.application.schoolEmailDomain", hint = "bootstrapper.application.schoolEmailDomain.hint", order = 7)
+		public String getSchoolEmailDomain();
 
-    }
+	}
 
 }

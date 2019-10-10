@@ -1697,12 +1697,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 				|| PermissionService.isMember("MANAGE_EQUIVALENCES", getDegree(), Authenticate.getUser());
 	}
 
-	public boolean isAllowedToManageAccountingEvents() {
-		return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_ACCOUNTING_EVENTS,
-				getDegree(), Authenticate.getUser())
-				|| PermissionService.isMember("MANAGE_ACCOUNTING_EVENTS", getDegree(), Authenticate.getUser());
-	}
-
 	public Stream<Enrolment> getEnrolmentStream() {
 		return getRoot().getCurriculumLineStream().filter(cl -> cl.isEnrolment()).map(cl -> (Enrolment) cl);
 	}

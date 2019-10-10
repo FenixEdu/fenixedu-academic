@@ -116,10 +116,14 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
 			Set<DegreeType> degreeTypesForOperation = AcademicAccessRule
 					.getDegreeTypesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
 					.collect(Collectors.toSet());
-			degreeTypesForOperation.addAll(PermissionService.getDegreeTypes("STUDENT_LISTINGS", Authenticate.getUser()))
-			bean = new SearchStudentsByDegreeParametersBean(degreeTypesForOperation, AcademicAccessRule
+			degreeTypesForOperation
+					.addAll(PermissionService.getDegreeTypes("STUDENT_LISTINGS", Authenticate.getUser()));
+
+			Set<Degree> degreesForOperation = AcademicAccessRule
 					.getDegreesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
-					.collect(Collectors.toSet()));
+					.collect(Collectors.toSet());
+			degreesForOperation.addAll(PermissionService.getDegrees("STUDENT_LISTINGS", Authenticate.getUser()));
+			bean = new SearchStudentsByDegreeParametersBean(degreeTypesForOperation, degreesForOperation);
 		}
 		return bean;
 	}

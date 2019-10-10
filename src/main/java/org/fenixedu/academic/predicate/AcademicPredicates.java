@@ -27,42 +27,50 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
+import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 public class AcademicPredicates {
 
-    public static final AccessControlPredicate<Object> MANAGE_DEGREE_CURRICULAR_PLANS = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(final Object degree) {
-            Set<Degree> allowedDegrees = new HashSet<Degree>();
-            allowedDegrees.addAll(AcademicAccessRule
-                    .getDegreesAccessibleToFunction(AcademicOperationType.MANAGE_DEGREE_CURRICULAR_PLANS, Authenticate.getUser())
-                    .collect(Collectors.toSet()));
-            return allowedDegrees.contains(degree);
-        };
-    };
+	public static final AccessControlPredicate<Object> MANAGE_DEGREE_CURRICULAR_PLANS = new AccessControlPredicate<Object>() {
+		@Override
+		public boolean evaluate(final Object degree) {
+			Set<Degree> allowedDegrees = new HashSet<Degree>();
+			allowedDegrees.addAll(AcademicAccessRule
+					.getDegreesAccessibleToFunction(AcademicOperationType.MANAGE_DEGREE_CURRICULAR_PLANS,
+							Authenticate.getUser())
+					.collect(Collectors.toSet()));
+			allowedDegrees
+					.addAll(PermissionService.getDegrees("MANAGE_DEGREE_CURRICULAR_PLANS", Authenticate.getUser()));
+			return allowedDegrees.contains(degree);
+		};
+	};
 
-    public static final AccessControlPredicate<Object> MANAGE_EXECUTION_COURSES = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(final Object program) {
-            return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_EXECUTION_COURSES,
-                    (AcademicProgram) program, Authenticate.getUser());
-        };
-    };
+	public static final AccessControlPredicate<Object> MANAGE_EXECUTION_COURSES = new AccessControlPredicate<Object>() {
+		@Override
+		public boolean evaluate(final Object program) {
+			return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_EXECUTION_COURSES,
+					(AcademicProgram) program, Authenticate.getUser())
+					|| PermissionService.isMember("MANAGE_EXECUTION_COURSES", (Degree) program, Authenticate.getUser());
+		};
+	};
 
-    public static final AccessControlPredicate<Object> MANAGE_EXECUTION_COURSES_ADV = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(final Object program) {
-            return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_EXECUTION_COURSES_ADV,
-                    (AcademicProgram) program, Authenticate.getUser());
-        };
-    };
+	public static final AccessControlPredicate<Object> MANAGE_EXECUTION_COURSES_ADV = new AccessControlPredicate<Object>() {
+		@Override
+		public boolean evaluate(final Object program) {
+			return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_EXECUTION_COURSES_ADV,
+					(AcademicProgram) program, Authenticate.getUser())
+					|| PermissionService.isMember("MANAGE_EXECUTION_COURSES_ADV", (Degree) program,
+							Authenticate.getUser());
+		};
+	};
 
-    public static final AccessControlPredicate<Object> VIEW_FULL_STUDENT_CURRICULUM = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(final Object unused) {
-            return AcademicAuthorizationGroup.get(AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM)
-                    .isMember(Authenticate.getUser());
-        };
-    };
+	public static final AccessControlPredicate<Object> VIEW_FULL_STUDENT_CURRICULUM = new AccessControlPredicate<Object>() {
+		@Override
+		public boolean evaluate(final Object unused) {
+			return AcademicAuthorizationGroup.get(AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM)
+					.isMember(Authenticate.getUser())
+					|| PermissionService.isMember("VIEW_FULL_STUDENT_CURRICULUM", Authenticate.getUser());
+		};
+	};
 }
