@@ -27,6 +27,7 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -34,23 +35,26 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DegreeCandidacyForGraduatedPersonDegreesProvider implements DataProvider {
 
-    @Override
-    public Object provide(Object source, Object currentValue) {
+	@Override
+	public Object provide(Object source, Object currentValue) {
 
-        final Set<AcademicProgram> programs =
-                AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES,
-                        Authenticate.getUser()).collect(Collectors.toSet());
+		final Set<AcademicProgram> programs = AcademicAccessRule
+				.getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES,
+						Authenticate.getUser())
+				.collect(Collectors.toSet());
+		programs.addAll(PermissionService.getDegrees("MANAGE_INDIVIDUAL_CANDIDACIES", Authenticate.getUser()));
 
-        return getDegrees(source).stream().filter(degree -> programs.contains(degree)).collect(Collectors.toList());
-    }
+		return getDegrees(source).stream().filter(degree -> programs.contains(degree)).collect(Collectors.toList());
+	}
 
-    private Collection<Degree> getDegrees(Object source) {
-        return Degree.readAllMatching(DegreeType.oneOf(DegreeType::isBolonhaDegree, DegreeType::isIntegratedMasterDegree));
-    }
+	private Collection<Degree> getDegrees(Object source) {
+		return Degree
+				.readAllMatching(DegreeType.oneOf(DegreeType::isBolonhaDegree, DegreeType::isIntegratedMasterDegree));
+	}
 
-    @Override
-    public Converter getConverter() {
-        return null;
-    }
+	@Override
+	public Converter getConverter() {
+		return null;
+	}
 
 }

@@ -40,6 +40,7 @@ import java.util.stream.Stream;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
+import org.fenixedu.academic.domain.AcademicProgram;
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
@@ -71,6 +72,7 @@ import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.domain.log.CurriculumLineLog;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.student.curriculum.ConclusionProcess;
@@ -106,6 +108,7 @@ import com.google.common.base.Strings;
 import pt.ist.fenixframework.Atomic;
 
 public class Registration extends Registration_Base {
+
     public static final String REGISTRATION_CREATE_SIGNAL = "academic.registration.create";
 
     private static final Logger logger = LoggerFactory.getLogger(Registration.class);
@@ -179,7 +182,7 @@ public class Registration extends Registration_Base {
         registration.setStudentCandidacyInformation(studentCandidacy);
 
         TreasuryBridgeAPIFactory.implementation().createCustomerIfMissing(registration.getStudent().getPerson());
-        
+
         return registration;
     }
 
@@ -237,7 +240,7 @@ public class Registration extends Registration_Base {
         studentCandidacy.getPrecedentDegreeInformation().setRegistration(result);
 
         TreasuryBridgeAPIFactory.implementation().createCustomerIfMissing(result.getStudent().getPerson());
-        
+
         return result;
     }
 
@@ -245,25 +248,27 @@ public class Registration extends Registration_Base {
     public static Registration create(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
             final StudentCandidacy studentCandidacy, final RegistrationProtocol protocol, final CycleType cycleType,
             final ExecutionYear executionYear) {
-        Registration registration = importRegistration(person, degreeCurricularPlan, studentCandidacy, protocol, cycleType, executionYear);
-        
+        Registration registration =
+                importRegistration(person, degreeCurricularPlan, studentCandidacy, protocol, cycleType, executionYear);
+
         TreasuryBridgeAPIFactory.implementation().createCustomerIfMissing(registration.getStudent().getPerson());
-        
+
         return registration;
     }
-    
+
     @Deprecated
     public static Registration importRegistration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
             final StudentCandidacy studentCandidacy, final RegistrationProtocol protocol, final CycleType cycleType,
             final ExecutionYear executionYear) {
-        final Registration registration = new Registration(person, null, degreeCurricularPlan != null ? degreeCurricularPlan.getDegree() : null, executionYear);
+        final Registration registration = new Registration(person, null,
+                degreeCurricularPlan != null ? degreeCurricularPlan.getDegree() : null, executionYear);
         registration.setRegistrationProtocol(protocol == null ? RegistrationProtocol.getDefault() : protocol);
         registration.createStudentCurricularPlan(degreeCurricularPlan, executionYear, cycleType);
         registration.setStudentCandidacyInformation(studentCandidacy);
 
         return registration;
     }
-    
+
     /**
      * @deprecated use {@link StudentCandidacy#getPrecedentDegreeInformation()}
      */
@@ -1255,8 +1260,9 @@ public class Registration extends Registration_Base {
 
     private void checkIfReachedAttendsLimit() {
         final User userView = Authenticate.getUser();
-        if (userView == null || !AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS,
-                getDegree(), userView.getPerson().getUser())) {
+        if (userView == null || !(AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS,
+                getDegree(), userView.getPerson().getUser())
+                || PermissionService.isMember("STUDENT_ENROLMENTS", getDegree(), userView.getPerson().getUser()))) {
             if (readAttendsInCurrentExecutionPeriod().size() >= MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD) {
                 throw new DomainException("error.student.reached.attends.limit",
                         String.valueOf(MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD));
@@ -1424,10 +1430,17 @@ public class Registration extends Registration_Base {
     final public boolean isAllowedToManageRegistration() {
         final Degree degree = getDegree();
         final User user = Authenticate.getUser();
-        return AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_REGISTRATIONS, user)
-                .anyMatch(ap -> ap == degree)
-                || AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM, user)
-                        .anyMatch(ap -> ap == degree);
+        Set<AcademicProgram> programsManageRegistration = AcademicAccessRule
+                .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_REGISTRATIONS, user).collect(Collectors.toSet());
+        programsManageRegistration.addAll(PermissionService.getDegrees("MANAGE_REGISTRATIONS", user));
+
+        Set<AcademicProgram> programsViewFullStudentCurriculum =
+                AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM, user)
+                        .collect(Collectors.toSet());
+        programsViewFullStudentCurriculum.addAll(PermissionService.getDegrees("VIEW_FULL_STUDENT_CURRICULUM", user));
+
+        return programsManageRegistration.stream().anyMatch(ap -> ap == degree)
+                || programsViewFullStudentCurriculum.stream().anyMatch(ap -> ap == degree);
     }
 
     public boolean isCurricularCourseApproved(final CurricularCourse curricularCourse) {
@@ -1801,7 +1814,7 @@ public class Registration extends Registration_Base {
 
     public boolean canRepeatConclusionProcess(final Person person) {
         return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.REPEAT_CONCLUSION_PROCESS, getDegree(),
-                person.getUser());
+                person.getUser()) || PermissionService.isMember("REPEAT_CONCLUSION_PROCESS", getDegree(), person.getUser());
     }
 
     public void conclude(final CurriculumGroup curriculumGroup) {

@@ -28,79 +28,82 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
+import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.LocalDate;
 
 public class StudentCurricularPlanEnrolmentPreConditions {
 
-    static public class EnrolmentPreConditionResult {
-        private boolean valid = false;
-        private String message;
-        private String[] args;
+	static public class EnrolmentPreConditionResult {
+		private boolean valid = false;
+		private String message;
+		private String[] args;
 
-        private EnrolmentPreConditionResult valid(final boolean value) {
-            this.valid = value;
-            return this;
-        }
+		private EnrolmentPreConditionResult valid(final boolean value) {
+			this.valid = value;
+			return this;
+		}
 
-        public boolean isValid() {
-            return valid;
-        }
+		public boolean isValid() {
+			return valid;
+		}
 
-        private EnrolmentPreConditionResult message(final String message, final String... args) {
-            this.message = message;
-            this.args = args;
-            return this;
-        }
+		private EnrolmentPreConditionResult message(final String message, final String... args) {
+			this.message = message;
+			this.args = args;
+			return this;
+		}
 
-        public String message() {
-            return this.message;
-        }
+		public String message() {
+			return this.message;
+		}
 
-        public String[] args() {
-            return this.args;
-        }
+		public String[] args() {
+			return this.args;
+		}
 
-        static public EnrolmentPreConditionResult createTrue() {
-            return new EnrolmentPreConditionResult().valid(true);
-        }
+		static public EnrolmentPreConditionResult createTrue() {
+			return new EnrolmentPreConditionResult().valid(true);
+		}
 
-        static public EnrolmentPreConditionResult createFalse(final String message, final String... args) {
-            return new EnrolmentPreConditionResult().valid(false).message(message, args);
-        }
-    }
+		static public EnrolmentPreConditionResult createFalse(final String message, final String... args) {
+			return new EnrolmentPreConditionResult().valid(false).message(message, args);
+		}
+	}
 
-    static public EnrolmentPreConditionResult checkPreConditionsToEnrol(StudentCurricularPlan scp, ExecutionInterval interval) {
-        return checkDebts(scp);
-    }
+	static public EnrolmentPreConditionResult checkPreConditionsToEnrol(StudentCurricularPlan scp,
+			ExecutionInterval interval) {
+		return checkDebts(scp);
+	}
 
-    /**
-     * 
-     * Check if student has any debts that prevent him to enrol in curricular
-     * courses
-     * 
-     * @param scp
-     * @return EnrolmentPreConditionResult
-     */
-    static EnrolmentPreConditionResult checkDebts(StudentCurricularPlan scp) {
-        final Person authenticatedPerson = Authenticate.getUser().getPerson();
-        final boolean hasAcademicalAuthorizationToEnrol =
-                AcademicAccessRule.isMember(Authenticate.getUser(), AcademicOperationType.STUDENT_ENROLMENTS,
-                        Collections.singleton(scp.getDegree()), Collections.singleton(scp.getAdministrativeOffice()));
+	/**
+	 * 
+	 * Check if student has any debts that prevent him to enrol in curricular
+	 * courses
+	 * 
+	 * @param scp
+	 * @return EnrolmentPreConditionResult
+	 */
+	static EnrolmentPreConditionResult checkDebts(StudentCurricularPlan scp) {
+		final Person authenticatedPerson = Authenticate.getUser().getPerson();
+		final boolean hasAcademicalAuthorizationToEnrol = AcademicAccessRule.isMember(Authenticate.getUser(),
+				AcademicOperationType.STUDENT_ENROLMENTS, Collections.singleton(scp.getDegree()),
+				Collections.singleton(scp.getAdministrativeOffice()))
+				|| PermissionService.isMember("STUDENT_ENROLMENTS", scp.getDegree(), Authenticate.getUser());
 
-        final boolean isStudentEnrolling = authenticatedPerson.getStudent() != null
-                && authenticatedPerson.getStudent() == scp.getRegistration().getStudent();
+		final boolean isStudentEnrolling = authenticatedPerson.getStudent() != null
+				&& authenticatedPerson.getStudent() == scp.getRegistration().getStudent();
 
-        if (hasAcademicalAuthorizationToEnrol && !isStudentEnrolling) {
-            return createTrue();
-        }
+		if (hasAcademicalAuthorizationToEnrol && !isStudentEnrolling) {
+			return createTrue();
+		}
 
-        if (TreasuryBridgeAPIFactory.implementation().isAcademicalActsBlocked(scp.getPerson(), new LocalDate())) {
-            return createFalse("error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
-        }
+		if (TreasuryBridgeAPIFactory.implementation().isAcademicalActsBlocked(scp.getPerson(), new LocalDate())) {
+			return createFalse("error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
+		}
 
-        return createTrue();
-    }
+		return createTrue();
+	}
 
 }

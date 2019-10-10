@@ -33,6 +33,7 @@ import org.fenixedu.academic.domain.accessControl.academicAdministration.Academi
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.degreeStructure.OptionalCurricularCourse;
+import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.dto.student.OptionalCurricularCoursesLocationBean.EnrolmentLocationBean;
@@ -44,56 +45,59 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class CurriculumGroupsProviderForEnrolmentsLocationManagement implements DataProvider {
 
-    @Override
-    public Object provide(Object source, Object currentValue) {
+	@Override
+	public Object provide(Object source, Object currentValue) {
 
-        final EnrolmentLocationBean bean = (EnrolmentLocationBean) source;
-        final Set<DegreeModule> result = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME);
+		final EnrolmentLocationBean bean = (EnrolmentLocationBean) source;
+		final Set<DegreeModule> result = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME);
 
-        final Set<AcademicProgram> programs = AcademicAccessRule
-                .getProgramsAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, Authenticate.getUser())
-                .collect(Collectors.toSet());
+		final Set<AcademicProgram> programs = AcademicAccessRule
+				.getProgramsAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, Authenticate.getUser())
+				.collect(Collectors.toSet());
+		programs.addAll(PermissionService.getDegrees("STUDENT_ENROLMENTS", Authenticate.getUser()));
 
-        for (final Registration registration : bean.getStudent().getRegistrationsSet()) {
+		for (final Registration registration : bean.getStudent().getRegistrationsSet()) {
 
-            if (!registration.isBolonha()) {
-                continue;
-            }
+			if (!registration.isBolonha()) {
+				continue;
+			}
 
-            if (!programs.contains(registration.getDegree())) {
-                continue;
-            }
+			if (!programs.contains(registration.getDegree())) {
+				continue;
+			}
 
-            final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
-            for (final CycleCurriculumGroup cycle : studentCurricularPlan.getCycleCurriculumGroups()) {
+			final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
+			for (final CycleCurriculumGroup cycle : studentCurricularPlan.getCycleCurriculumGroups()) {
 
-                if (cycle.getConclusionProcess() != null) {
-                    continue;
-                }
+				if (cycle.getConclusionProcess() != null) {
+					continue;
+				}
 
-                final DegreeCurricularPlan degreeCurricularPlan = cycle.getDegreeCurricularPlanOfDegreeModule();
-                final List<DegreeModule> modules = degreeCurricularPlan.getDcpDegreeModules(OptionalCurricularCourse.class,
-                        ExecutionYear.findCurrent(degreeCurricularPlan.getDegree().getCalendar()));
+				final DegreeCurricularPlan degreeCurricularPlan = cycle.getDegreeCurricularPlanOfDegreeModule();
+				final List<DegreeModule> modules = degreeCurricularPlan.getDcpDegreeModules(
+						OptionalCurricularCourse.class,
+						ExecutionYear.findCurrent(degreeCurricularPlan.getDegree().getCalendar()));
 
-                final Iterator<DegreeModule> degreeModulesIter = modules.iterator();
-                while (degreeModulesIter.hasNext()) {
-                    final CurricularCourse curricularCourse = (CurricularCourse) degreeModulesIter.next();
-                    if (studentCurricularPlan.isApproved(curricularCourse) || studentCurricularPlan
-                            .getCurricularCoursePossibleGroupsWithoutNoCourseGroupCurriculumGroups(curricularCourse).isEmpty()) {
-                        degreeModulesIter.remove();
-                    }
-                }
+				final Iterator<DegreeModule> degreeModulesIter = modules.iterator();
+				while (degreeModulesIter.hasNext()) {
+					final CurricularCourse curricularCourse = (CurricularCourse) degreeModulesIter.next();
+					if (studentCurricularPlan.isApproved(curricularCourse) || studentCurricularPlan
+							.getCurricularCoursePossibleGroupsWithoutNoCourseGroupCurriculumGroups(curricularCourse)
+							.isEmpty()) {
+						degreeModulesIter.remove();
+					}
+				}
 
-                result.addAll(modules);
-            }
-        }
+				result.addAll(modules);
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Override
-    public Converter getConverter() {
-        return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

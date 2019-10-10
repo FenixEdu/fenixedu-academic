@@ -25,56 +25,68 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import org.fenixedu.academic.domain.AcademicProgram;
+import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 public class AcademicGroupTagLib extends TagSupport {
 
-    private static final long serialVersionUID = -8050082985849930419L;
+	private static final long serialVersionUID = -8050082985849930419L;
 
-    private String operation;
+	private String operation;
 
-    private AcademicProgram program;
+	private AcademicProgram program;
 
-    private AdministrativeOffice office;
+	private AdministrativeOffice office;
 
-    @Override
-    public int doStartTag() throws JspException {
-        Set<AcademicProgram> programs =
-                program != null ? Collections.singleton(program) : Collections.<AcademicProgram> emptySet();
-        Set<AdministrativeOffice> offices =
-                office != null ? Collections.singleton(office) : Collections.<AdministrativeOffice> emptySet();
-        AcademicAuthorizationGroup group =
-                AcademicAuthorizationGroup.get(AcademicOperationType.valueOf(operation), programs, offices, null);
-        if (group.isMember(Authenticate.getUser())) {
-            return EVAL_BODY_INCLUDE;
-        }
-        return SKIP_BODY;
-    }
+	@Override
+	public int doStartTag() throws JspException {
+		Set<AcademicProgram> programs = program != null ? Collections.singleton(program)
+				: Collections.<AcademicProgram>emptySet();
+		Set<AdministrativeOffice> offices = office != null ? Collections.singleton(office)
+				: Collections.<AdministrativeOffice>emptySet();
+		AcademicAuthorizationGroup group = AcademicAuthorizationGroup.get(AcademicOperationType.valueOf(operation),
+				programs, offices, null);
 
-    public String getOperation() {
-        return operation;
-    }
+		if (program == null) {
+			if (group.isMember(Authenticate.getUser())
+					|| PermissionService.isMember(operation, Authenticate.getUser())) {
+				return EVAL_BODY_INCLUDE;
+			}
+		} else {
+			if (group.isMember(Authenticate.getUser())
+					|| PermissionService.isMember(operation, (Degree) program, Authenticate.getUser())) {
+				return EVAL_BODY_INCLUDE;
+			}
+		}
 
-    public void setOperation(String operation) {
-        this.operation = operation;
-    }
+		return SKIP_BODY;
+	}
 
-    public AcademicProgram getProgram() {
-        return program;
-    }
+	public String getOperation() {
+		return operation;
+	}
 
-    public void setProgram(AcademicProgram program) {
-        this.program = program;
-    }
+	public void setOperation(String operation) {
+		this.operation = operation;
+	}
 
-    public AdministrativeOffice getOffice() {
-        return office;
-    }
+	public AcademicProgram getProgram() {
+		return program;
+	}
 
-    public void setOffice(AdministrativeOffice office) {
-        this.office = office;
-    }
+	public void setProgram(AcademicProgram program) {
+		this.program = program;
+	}
+
+	public AdministrativeOffice getOffice() {
+		return office;
+	}
+
+	public void setOffice(AdministrativeOffice office) {
+		this.office = office;
+	}
 }

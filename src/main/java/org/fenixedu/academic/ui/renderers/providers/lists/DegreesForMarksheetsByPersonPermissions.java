@@ -27,6 +27,7 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
+import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.bennu.core.domain.Bennu;
 
@@ -36,25 +37,29 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DegreesForMarksheetsByPersonPermissions implements DataProvider {
 
-    @Override
-    public Object provide(Object source, Object currentValue) {
+	@Override
+	public Object provide(Object source, Object currentValue) {
 
-        Person person = AccessControl.getPerson();
-        List<Degree> degreesForOperation =
-                AcademicAccessRule.getDegreesAccessibleToFunction(AcademicOperationType.MANAGE_MARKSHEETS, person.getUser())
-                        .sorted(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID).collect(Collectors.toList());
-        if (!degreesForOperation.isEmpty()) {
-            return degreesForOperation;
-        }
+		Person person = AccessControl.getPerson();
+		List<Degree> degreesForOperation = AcademicAccessRule
+				.getDegreesAccessibleToFunction(AcademicOperationType.MANAGE_MARKSHEETS, person.getUser())
+				.collect(Collectors.toList());
+		degreesForOperation.addAll(PermissionService.getDegrees("MANAGE_MARKSHEETS", person.getUser()));
+		degreesForOperation.stream().sorted(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID)
+				.collect(Collectors.toList());
 
-        SortedSet<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-        result.addAll(Bennu.getInstance().getDegreesSet());
-        return result;
-    }
+		if (!degreesForOperation.isEmpty()) {
+			return degreesForOperation;
+		}
 
-    @Override
-    public Converter getConverter() {
-        return new DomainObjectKeyConverter();
-    }
+		SortedSet<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+		result.addAll(Bennu.getInstance().getDegreesSet());
+		return result;
+	}
+
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

@@ -25,6 +25,7 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
+import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.dto.administrativeOffice.ExecutionDegreeBean;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.security.Authenticate;
@@ -37,30 +38,33 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DegreesToCreateRegistration implements DataProvider {
 
-    @Override
-    public Object provide(final Object source, final Object currentValue) {
+	@Override
+	public Object provide(final Object source, final Object currentValue) {
 
-        final Set<Degree> allowed = AcademicAccessRule
-                .getDegreesAccessibleToFunction(AcademicOperationType.CREATE_REGISTRATION, Authenticate.getUser())
-                .collect(Collectors.toSet());
+		final Set<Degree> allowed = AcademicAccessRule
+				.getDegreesAccessibleToFunction(AcademicOperationType.CREATE_REGISTRATION, Authenticate.getUser())
+				.collect(Collectors.toSet());
+		allowed.addAll(PermissionService.getDegrees("CREATE_REGISTRATION", Authenticate.getUser()));
 
-        final Set<Degree> executed;
-        final ExecutionYear year =
-                source instanceof ExecutionDegreeBean ? ((ExecutionDegreeBean) source).getExecutionYear() : null;
-        if (year != null && !year.getExecutionDegreesSet().isEmpty()) {
-            executed = ((ExecutionDegreeBean) source).getExecutionYear().getExecutionDegreesSet().stream().map(i -> i.getDegree())
-                    .collect(Collectors.toSet());
-        } else {
-            executed = Bennu.getInstance().getExecutionDegreesSet().stream().map(i -> i.getDegree()).collect(Collectors.toSet());
-        }
+		final Set<Degree> executed;
+		final ExecutionYear year = source instanceof ExecutionDegreeBean
+				? ((ExecutionDegreeBean) source).getExecutionYear()
+				: null;
+		if (year != null && !year.getExecutionDegreesSet().isEmpty()) {
+			executed = ((ExecutionDegreeBean) source).getExecutionYear().getExecutionDegreesSet().stream()
+					.map(i -> i.getDegree()).collect(Collectors.toSet());
+		} else {
+			executed = Bennu.getInstance().getExecutionDegreesSet().stream().map(i -> i.getDegree())
+					.collect(Collectors.toSet());
+		}
 
-        return Sets.intersection(executed, allowed).stream().sorted(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID)
-                .collect(Collectors.toList());
-    }
+		return Sets.intersection(executed, allowed).stream().sorted(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID)
+				.collect(Collectors.toList());
+	}
 
-    @Override
-    public Converter getConverter() {
-        return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }
