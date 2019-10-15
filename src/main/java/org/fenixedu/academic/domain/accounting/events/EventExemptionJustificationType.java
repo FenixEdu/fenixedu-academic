@@ -51,6 +51,8 @@ public enum EventExemptionJustificationType {
 
     TRANSFERED_APPLICATION,
 
+    CUSTOM_PAYMENT_PLAN,
+
     CANCELLED;
 
     public String getName() {

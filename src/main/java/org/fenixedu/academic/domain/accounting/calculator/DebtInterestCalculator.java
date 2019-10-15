@@ -1,27 +1,20 @@
 package org.fenixedu.academic.domain.accounting.calculator;
 
-import static org.fenixedu.academic.domain.accounting.calculator.BigDecimalUtil.isPositive;
-import static org.fenixedu.academic.domain.accounting.calculator.BigDecimalUtil.sum;
-
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import org.fenixedu.academic.domain.accounting.events.EventExemptionJustificationType;
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.fenixedu.academic.domain.accounting.calculator.BigDecimalUtil.isPositive;
+import static org.fenixedu.academic.domain.accounting.calculator.BigDecimalUtil.sum;
 
 /**
  * Created by Sérgio Silva (hello@fenixedu.org).
@@ -54,6 +47,10 @@ public class DebtInterestCalculator {
         this.isToApplyInterest = isToApplyInterest;
         this.dueDateAmountFineMap.putAll(dueDateAmountFineMap);
         this.creditEntries.add(new PaymentPlaceholder(when));
+        exemptions.stream()
+                .filter(de -> EventExemptionJustificationType.CUSTOM_PAYMENT_PLAN.name().equals(de.getDescription()))
+                .map(e -> e.getCreated())
+                .forEach(c -> this.creditEntries.add(new PaymentPlaceholder(c.minusSeconds(1))));
         calculate();
     }
 
@@ -197,7 +194,10 @@ public class DebtInterestCalculator {
     }
 
     public BigDecimal getDebtAmount() {
-        return sum(getDebtStream(), Debt::getOriginalAmount);
+        final Stream<CreditEntry> credits = getCreditEntryStream()
+                .filter(ce -> EventExemptionJustificationType.CUSTOM_PAYMENT_PLAN.name().equals(ce.getDescription()));
+        final BigDecimal customPaymentPlanValue = sum(credits, CreditEntry::getAmount);
+        return sum(getDebtStream(), Debt::getOriginalAmount).subtract( customPaymentPlanValue );
     }
 
     private Stream<Debt> getDebtStream() {

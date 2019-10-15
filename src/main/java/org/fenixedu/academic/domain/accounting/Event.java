@@ -18,26 +18,6 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
@@ -70,9 +50,15 @@ import org.fenixedu.bennu.core.signals.Signal;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
-
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.core.AbstractDomainObject;
+
+import java.math.BigDecimal;
+import java.util.*;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public abstract class Event extends Event_Base {
 
@@ -503,10 +489,8 @@ public abstract class Event extends Event_Base {
      */
     @Override
     public final DueDateAmountMap getDueDateAmountMap() {
-        if (super.getDueDateAmountMap() == null) {
-            return new DueDateAmountMap(calculateDueDateAmountMap());
-        }
-        return super.getDueDateAmountMap();
+        final DueDateAmountMap map = super.getDueDateAmountMap();
+        return map == null ? new DueDateAmountMap(calculateDueDateAmountMap()) : map;
     }
 
     protected void persistDueDateAmountMap() {
@@ -576,8 +560,11 @@ public abstract class Event extends Event_Base {
 
         getDebtExemptions().forEach(e -> {
             if (!e.getWhenCreated().isAfter(when)) {
-                builder.debtExemption(e.getExternalId(),e.getWhenCreated(), e.getWhenCreated().toLocalDate(), e.getDescription
-                        ().toString(),e.getExemptionAmount(baseAmount).getAmount());
+                final EventExemptionJustificationType type = e.getExemptionJustification().getJustificationType();
+                final String description = type == EventExemptionJustificationType.CUSTOM_PAYMENT_PLAN ?
+                        EventExemptionJustificationType.CUSTOM_PAYMENT_PLAN.name() : e.getDescription().toString();
+                builder.debtExemption(e.getExternalId(),e.getWhenCreated(), e.getWhenCreated().toLocalDate(),
+                        description, e.getExemptionAmount(baseAmount).getAmount());
             }
         });
 
@@ -653,7 +640,7 @@ public abstract class Event extends Event_Base {
     }
 
     public Money getOriginalAmountToPay() {
-        return new Money(getDebtInterestCalculator(getWhenOccured().plusSeconds(1)).getDebtAmount());
+        return new Money(getDebtInterestCalculator(new DateTime()).getDebtAmount());
     }
 
     public List<EntryDTO> calculateEntries() {
