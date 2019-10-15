@@ -31,4 +31,12 @@ public class EventExemption extends EventExemption_Base {
         return getValue();
     }
 
+    @Override
+    public void delete() {
+        if (getExemptionJustification().getJustificationType() == EventExemptionJustificationType.CUSTOM_PAYMENT_PLAN) {
+            getEvent().deleteCustomPaymentPlan(getValue());
+        }
+        super.delete();
+    }
+
 }

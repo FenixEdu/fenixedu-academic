@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
+import org.apache.solr.common.util.Hash;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
@@ -46,6 +47,7 @@ import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.signals.Signal;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -1226,6 +1228,54 @@ public abstract class Event extends Event_Base {
 
     public boolean isRefundable() {
         return Event.canBeRefunded.test(this);
+    }
+
+    public void createCustomPaymentPlan(final DateTime exemptionDate, final Map<LocalDate, Money> map) {
+        final DateTime when = new DateTime().minusSeconds(2);
+        final DebtInterestCalculator debtInterestCalculator = getDebtInterestCalculator(when);
+        final Money dueAmount = new Money(debtInterestCalculator.getDueAmount());
+        if (dueAmount.isZero() || dueAmount.isNegative()) {
+            throw new DomainException("error.custom.payment.plan.cannot.be.created.for.event.without.debt");
+        }
+        final Money mapValue = map.values().stream().reduce(Money.ZERO, Money::add);
+        if (!dueAmount.equals(mapValue)) {
+            throw new DomainException("error.custom.payment.plan.value.does.not.match.current.debt.value");
+        }
+        final DueDateAmountMap currentMap = getDueDateAmountMap();
+        final LocalDate firstCustomDate = map.keySet().stream().min((d1, d2) -> d1.compareTo(d2)).orElse(null);
+        final LocalDate lastCurrentDate = currentMap.keySet().stream().max((d1, d2) -> d1.compareTo(d2)).orElse(null);
+        if (firstCustomDate.isBefore(lastCurrentDate)) {
+            throw new DomainException("error.custom.payment.plan.must.be.after.currentPlan");
+        }
+
+        currentMap.entrySet().forEach(e -> map.put(e.getKey(), e.getValue()));
+
+        final EventExemption eventExemption = new EventExemption(this, Authenticate.getUser().getPerson(),
+                dueAmount, EventExemptionJustificationType.CUSTOM_PAYMENT_PLAN, new DateTime(),
+                EventExemptionJustificationType.CUSTOM_PAYMENT_PLAN.getLocalizedName());
+        eventExemption.setWhenCreated(when);
+
+        setDueDateAmountMap(new DueDateAmountMap(map));
+    }
+
+    public void deleteCustomPaymentPlan(final Money value) {
+        final SortedMap<LocalDate, Money> map = new TreeMap<>(Collections.reverseOrder());
+        map.putAll(getDueDateAmountMap());
+        Money accumulatedValue = Money.ZERO;
+        final Map<LocalDate, Money> oldDueDateAmountMap = new HashMap<>();
+        for (final Map.Entry<LocalDate, Money> entry : map.entrySet()) {
+            if (accumulatedValue.equals(value)) {
+                oldDueDateAmountMap.put(entry.getKey(), entry.getValue());
+            } else if (accumulatedValue.lessThan(value)) {
+                accumulatedValue = accumulatedValue.add(entry.getValue());
+            } else {
+                throw new DomainException("error.custom.payment.plan.value.does.not.match.value.to.be.deleted");
+            }
+        }
+        if (oldDueDateAmountMap.isEmpty() || !accumulatedValue.equals(value)) {
+            throw new DomainException("error.custom.payment.plan.value.does.not.match.value.to.be.deleted");
+        }
+        setDueDateAmountMap(new DueDateAmountMap(oldDueDateAmountMap));
     }
 
 }
