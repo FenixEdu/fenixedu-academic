@@ -51,9 +51,18 @@ public enum EventExemptionJustificationType {
 
     TRANSFERED_APPLICATION,
 
-    CUSTOM_PAYMENT_PLAN,
+    CUSTOM_PAYMENT_PLAN(false),
 
     CANCELLED;
+
+    private boolean availableToUsers = true;
+
+    EventExemptionJustificationType() {
+    }
+
+    EventExemptionJustificationType(final boolean availableToUsers) {
+        this.availableToUsers = availableToUsers;
+    }
 
     public String getName() {
         return name();
@@ -65,6 +74,10 @@ public enum EventExemptionJustificationType {
 
     public String getLocalizedName() {
         return BundleUtil.getString(Bundle.ENUMERATION, getQualifiedName());
+    }
+
+    public boolean isAvailableToUsers() {
+        return availableToUsers;
     }
 
 }
