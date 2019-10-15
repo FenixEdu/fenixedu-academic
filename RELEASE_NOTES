@@ -1,3 +1,5 @@
+- Bug Fix: added missing error message for duplicated student curricular plan
+
 25.1.1 (26-09-2019)
 - Bug Fix: on view sent emails, filter inconsistent ExecutionCourseSenders
 
