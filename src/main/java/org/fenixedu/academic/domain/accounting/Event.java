@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
-import org.apache.solr.common.util.Hash;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
