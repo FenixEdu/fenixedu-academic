@@ -67,17 +67,24 @@ public class PhysicalAddress extends PhysicalAddress_Base {
         super();
         new PhysicalAddressValidation(this);
     }
-
+    
     protected PhysicalAddress(final Party party, final PartyContactType type, final boolean defaultContact,
             final PhysicalAddressData data) {
+        new PhysicalAddress(party, type, defaultContact, data, true);
+    }
+
+    protected PhysicalAddress(final Party party, final PartyContactType type, final boolean defaultContact,
+            final PhysicalAddressData data, final boolean hasCheckRules) {
         this();
         super.init(party, type, defaultContact);
         setVisibleToPublic(Boolean.FALSE);
         setVisibleToStudents(Boolean.FALSE);
         setVisibleToStaff(Boolean.FALSE);
-        edit(data);
+        edit(data, hasCheckRules);
 
-        checkRules();
+        if(hasCheckRules) {
+            checkRules();
+        }
     }
 
     // Called from renders with constructor clause.
@@ -91,6 +98,10 @@ public class PhysicalAddress extends PhysicalAddress_Base {
     }
 
     public void edit(final PhysicalAddressData data) {
+        edit(data, true);
+    }
+    
+    protected void edit(final PhysicalAddressData data, final boolean hasCheckRules) {
         if (data == null) {
             return;
         }
@@ -115,8 +126,12 @@ public class PhysicalAddress extends PhysicalAddress_Base {
             setLastModifiedDate(new DateTime());
         }
 
-        checkRules();
+        if(hasCheckRules) {
+            checkRules();
+        }
     }
+    
+    
 
     // Called from renders with edit clause.
     public void edit(final PartyContactType type, final Boolean defaultContact, final String address, final String areaCode,

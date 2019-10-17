@@ -1,3 +1,5 @@
+- Improvement: Allow migrate physical addresses without check rules
+
 25.1.2 (17-10-2019)
 - Bug Fix: added missing error message for duplicated student curricular plan
 - Improvement: removed possibility to manage professorships by course responsible teacher
