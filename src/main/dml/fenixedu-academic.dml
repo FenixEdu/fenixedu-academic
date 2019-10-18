@@ -637,6 +637,7 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         Partial attendedEnd;
         LocalDate whenCreated;
         boolean mainQualification;
+        String otherLevel;
     }
 
     class Formation extends Qualification {
