@@ -70,7 +70,7 @@ public class PhysicalAddress extends PhysicalAddress_Base {
     
     protected PhysicalAddress(final Party party, final PartyContactType type, final boolean defaultContact,
             final PhysicalAddressData data) {
-        new PhysicalAddress(party, type, defaultContact, data, true);
+        this(party, type, defaultContact, data, true);
     }
 
     protected PhysicalAddress(final Party party, final PartyContactType type, final boolean defaultContact,
