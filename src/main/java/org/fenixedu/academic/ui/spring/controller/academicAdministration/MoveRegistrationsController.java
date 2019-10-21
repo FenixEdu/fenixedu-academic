@@ -107,6 +107,7 @@ public class MoveRegistrationsController extends StrutsFunctionalityController {
         source.getRegistrationsSet().forEach(r -> r.setStudent(target));
         source.getStudentStatutesSet().forEach(s -> s.setStudent(target));
         source.getExtraCurricularActivitySet().forEach(s -> s.setStudent(target));
+        source.getPersonalIngressionsDataSet().forEach(s -> s.setStudent(target));
     }
 
     private void validateUsers(MoveRegistrationParameters bean) {
