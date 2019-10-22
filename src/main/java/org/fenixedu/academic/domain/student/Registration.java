@@ -85,6 +85,7 @@ import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
 import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.domain.studentCurriculum.StandaloneCurriculumGroup;
+import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -141,38 +142,6 @@ public class Registration extends Registration_Base {
         setRegistrationProtocol(RegistrationProtocol.getDefault());
     }
 
-    @Deprecated
-    public Registration(final Person person, final StudentCandidacy studentCandidacy) {
-        this(person, null, RegistrationProtocol.getDefault(), null, getDegreeFromCandidacy(studentCandidacy));
-        setStudentCandidacyInformation(studentCandidacy);
-    }
-
-    @Deprecated
-    public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
-            final StudentCandidacy studentCandidacy, final RegistrationProtocol protocol, final CycleType cycleType,
-            final ExecutionYear executionYear) {
-        this(person, degreeCurricularPlan, protocol, cycleType, executionYear);
-        setStudentCandidacyInformation(studentCandidacy);
-    }
-
-    @Deprecated
-    private Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
-            final RegistrationProtocol protocol, final CycleType cycleType, final ExecutionYear executionYear) {
-        this(person, null, protocol, executionYear, degreeCurricularPlan != null ? degreeCurricularPlan.getDegree() : null);
-        createStudentCurricularPlan(degreeCurricularPlan, executionYear, cycleType);
-    }
-
-    @Deprecated
-    private Registration(final Person person, final Integer registrationNumber, final RegistrationProtocol protocol,
-            final ExecutionYear executionYear, final Degree degree) {
-
-        this(person, registrationNumber, degree, executionYear);
-
-        setRequestedChangeDegree(false);
-        setRequestedChangeBranch(false);
-        setRegistrationProtocol(protocol == null ? RegistrationProtocol.getDefault() : protocol);
-    }
-
     private Registration(final Person person, final Integer registrationNumber, final Degree degree,
             final ExecutionYear executionYear) {
         this();
@@ -190,9 +159,6 @@ public class Registration extends Registration_Base {
         setRegistrationYear(executionYear);
         RegistrationState.createRegistrationState(this, AccessControl.getPerson(), now, RegistrationStateType.REGISTERED,
                 executionYear.getFirstExecutionPeriod());
-
-        //Emit the Signal
-        Signal.emit(REGISTRATION_CREATE_SIGNAL, new DomainObjectEvent<>(this));
     }
 
     @Deprecated
@@ -209,6 +175,8 @@ public class Registration extends Registration_Base {
         registration.createStudentCurricularPlan(degreeCurricularPlan, executionYear, cycleType);
         registration.setStudentCandidacyInformation(studentCandidacy);
 
+        TreasuryBridgeAPIFactory.implementation().createCustomerIfMissing(registration.getStudent().getPerson());
+        
         return registration;
     }
 
@@ -265,9 +233,34 @@ public class Registration extends Registration_Base {
 
         studentCandidacy.getPrecedentDegreeInformation().setRegistration(result);
 
+        TreasuryBridgeAPIFactory.implementation().createCustomerIfMissing(result.getStudent().getPerson());
+        
         return result;
     }
 
+    @Deprecated
+    public static Registration create(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
+            final StudentCandidacy studentCandidacy, final RegistrationProtocol protocol, final CycleType cycleType,
+            final ExecutionYear executionYear) {
+        Registration registration = importRegistration(person, degreeCurricularPlan, studentCandidacy, protocol, cycleType, executionYear);
+        
+        TreasuryBridgeAPIFactory.implementation().createCustomerIfMissing(registration.getStudent().getPerson());
+        
+        return registration;
+    }
+    
+    @Deprecated
+    public static Registration importRegistration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
+            final StudentCandidacy studentCandidacy, final RegistrationProtocol protocol, final CycleType cycleType,
+            final ExecutionYear executionYear) {
+        final Registration registration = new Registration(person, null, degreeCurricularPlan != null ? degreeCurricularPlan.getDegree() : null, executionYear);
+        registration.setRegistrationProtocol(protocol == null ? RegistrationProtocol.getDefault() : protocol);
+        registration.createStudentCurricularPlan(degreeCurricularPlan, executionYear, cycleType);
+        registration.setStudentCandidacyInformation(studentCandidacy);
+
+        return registration;
+    }
+    
     /**
      * @deprecated use {@link StudentCandidacy#getPrecedentDegreeInformation()}
      */

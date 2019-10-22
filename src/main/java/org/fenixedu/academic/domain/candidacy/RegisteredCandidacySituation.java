@@ -61,38 +61,10 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
         Person person = getCandidacy().getPerson();
         Registration registration = null;
 
-        if (getCandidacy() instanceof DFACandidacy) {
-            DFACandidacy dfaCandidacy = ((DFACandidacy) getCandidacy());
-            registration =
-                    new Registration(person, dfaCandidacy.getExecutionDegree().getDegreeCurricularPlan(), dfaCandidacy,
-                            registrationProtocol, cycleType, dfaCandidacy.getExecutionDegree().getExecutionYear());
-
-            //person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
-            dfaCandidacy.setRegistration(registration);
-            createQualification();
-
-        }
-
         if (person.getStudent() == null && studentNumber == null) {
             new Student(person);
         } else if (person.getStudent() == null && studentNumber != null) {
             Student.createStudentWithCustomNumber(person, studentNumber);
-        }
-    }
-
-    private void createQualification() {
-        DFACandidacy dfaCandidacy = (DFACandidacy) getCandidacy();
-        if (dfaCandidacy.getPrecedentDegreeInformation() != null) {
-            Qualification qualification = new Qualification();
-            qualification.setPerson(dfaCandidacy.getPerson());
-            qualification.setMark(dfaCandidacy.getPrecedentDegreeInformation().getConclusionGrade());
-            qualification.setSchool(dfaCandidacy.getPrecedentDegreeInformation().getInstitutionName());
-            qualification.setDegree(dfaCandidacy.getPrecedentDegreeInformation().getDegreeDesignation());
-            if (dfaCandidacy.getPrecedentDegreeInformation().getConclusionYear() != null) {
-                qualification.setDateYearMonthDay(new YearMonthDay(dfaCandidacy.getPrecedentDegreeInformation()
-                        .getConclusionYear(), 1, 1));
-            }
-            qualification.setCountry(dfaCandidacy.getPrecedentDegreeInformation().getCountry());
         }
     }
 

@@ -155,6 +155,8 @@ public interface ITreasuryBridgeAPI {
 
     public boolean updateCustomer(final Person person, final String fiscalAddressCountryCode, final String fiscalNumber);
     
+    public boolean createCustomerIfMissing(final Person person);
+
     public void saveFiscalAddressFieldsFromPersonInActiveCustomer(final Person person);
     
     public PhysicalAddress createSaftDefaultPhysicalAddress(final Person person);
