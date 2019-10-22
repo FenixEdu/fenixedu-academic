@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.domain.person;
 
+import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.DynamicGroup;
@@ -60,7 +61,7 @@ public enum RoleType implements IPresentableEnum {
 
     /**
      * @deprecated Use {@link org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup#get()} with
-     *      {@link org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType#MANAGE_DEGREE_CURRICULAR_PLANS }instead
+     *             {@link org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType#MANAGE_DEGREE_CURRICULAR_PLANS }instead
      */
     DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER("#degreeAdmOfficeSudo"),
 
@@ -146,7 +147,7 @@ public enum RoleType implements IPresentableEnum {
     }
 
     public boolean isMember(User user) {
-        return actualGroup.isMember(user);
+        return actualGroup.isMember(user) || PermissionService.isMember(actualGroup.getExpression().replace("#", ""), user);
     }
 
 }
