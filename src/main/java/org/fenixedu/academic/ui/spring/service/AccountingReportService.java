@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 import org.fenixedu.academic.domain.accounting.AccountingTransactionDetail;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.PaymentMethod;
+import org.fenixedu.academic.domain.accounting.accountingTransactions.detail.SibsTransactionDetail;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -35,6 +36,7 @@ import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
+import org.joda.time.YearMonthDay;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.HashBasedTable;
@@ -62,6 +64,11 @@ public class AccountingReportService {
 
             row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.whenProcessed"), atd.getWhenProcessed().toString(DATE_TIME_PATTERN));
             row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.whenRegistered"), atd.getWhenRegistered().toString(DATE_TIME_PATTERN));
+            YearMonthDay sibsDate = null;
+            if (atd instanceof SibsTransactionDetail) {
+                sibsDate = ((SibsTransactionDetail)atd).getSibsLine().getHeader().getWhenProcessedBySibs();
+            }
+            row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.sibsDate"), sibsDate != null ? sibsDate.toString(DATE_PATTERN) : "-");
             row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.client"), event.getParty().getPartyPresentationName());
             row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.event.id"), event.getExternalId());
             row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.event.description"), event.getDescription().toString());
