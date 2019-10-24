@@ -1252,7 +1252,7 @@ public abstract class Event extends Event_Base {
         final EventExemption eventExemption = new EventExemption(this, Authenticate.getUser().getPerson(),
                 dueAmount, EventExemptionJustificationType.CUSTOM_PAYMENT_PLAN, new DateTime(),
                 EventExemptionJustificationType.CUSTOM_PAYMENT_PLAN.getLocalizedName());
-        eventExemption.setWhenCreated(when);
+        eventExemption.setWhenCreated(exemptionDate);
 
         setDueDateAmountMap(new DueDateAmountMap(map));
     }
