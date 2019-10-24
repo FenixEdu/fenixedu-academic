@@ -83,7 +83,9 @@ ${portal.toolkit()}
                     <select class="form-control" name="justificationType" required>
                         <option value=""><spring:message code="label.org.fenixedu.academic.dto.accounting.CreateExemptionBean.justificationType.placeholder"/></option>
                         <c:forEach items="${eventExemptionJustificationTypes}" var="eventExemptionJustificationType">
-                            <option class="justificationTypeOption" value="${eventExemptionJustificationType}">${fr:message('resources.EnumerationResources', eventExemptionJustificationType.qualifiedName)}</option>
+                            <c:if test="${ eventExemptionJustificationType.isAvailableToUsers() }">
+                                <option class="justificationTypeOption" value="${eventExemptionJustificationType}">${fr:message('resources.EnumerationResources', eventExemptionJustificationType.qualifiedName)}</option>
+                            </c:if>
                         </c:forEach>
                     </select>
                 </div>
