@@ -18,24 +18,6 @@
  */
 package org.fenixedu.academic.domain;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.function.Function;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
@@ -45,28 +27,12 @@ import org.fenixedu.academic.domain.curricularRules.CurricularRule;
 import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
-import org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup;
-import org.fenixedu.academic.domain.degreeStructure.BranchType;
-import org.fenixedu.academic.domain.degreeStructure.Context;
-import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
-import org.fenixedu.academic.domain.degreeStructure.CurricularCourseFunctor;
-import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
-import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
-import org.fenixedu.academic.domain.degreeStructure.CycleType;
-import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
-import org.fenixedu.academic.domain.degreeStructure.OptionalCurricularCourse;
-import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
-import org.fenixedu.academic.domain.degreeStructure.RootCourseGroup;
+import org.fenixedu.academic.domain.degreeStructure.*;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.space.SpaceUtils;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.thesis.Thesis;
-import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry;
-import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
-import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
-import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
-import org.fenixedu.academic.domain.time.calendarStructure.AcademicYearCE;
-import org.fenixedu.academic.domain.time.calendarStructure.AcademicYears;
+import org.fenixedu.academic.domain.time.calendarStructure.*;
 import org.fenixedu.academic.dto.CurricularPeriodInfoDTO;
 import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.predicate.AccessControl;
@@ -80,8 +46,13 @@ import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
-
 import pt.ist.fenixframework.Atomic;
+
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
+
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
@@ -1942,6 +1913,12 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         if (!getDegreeStructure().getAcademicPeriod().equals(duration)) {
             setDegreeStructure(new CurricularPeriod(duration));
         }
+    }
+
+    public static Consumer<DegreeCurricularPlan> RESET_DEGREE_CURRICULAR_PLAN_FUNCTION = (dcp) -> {};
+    @Atomic
+    public void reset() {
+        RESET_DEGREE_CURRICULAR_PLAN_FUNCTION.accept(this);
     }
 
 }

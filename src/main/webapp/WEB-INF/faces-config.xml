@@ -1600,6 +1600,13 @@
 	
 	<!-- BEGIN: CurricularRules Navigation Rules -->
 	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/resetCurricularPlan.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
 		<from-view-id>/bolonhaManager/curricularPlans/setCurricularRules.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>buildCurricularPlan</from-outcome>
