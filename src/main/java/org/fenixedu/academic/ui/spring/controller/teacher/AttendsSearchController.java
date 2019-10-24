@@ -133,7 +133,7 @@ public class AttendsSearchController extends ExecutionCourseController {
     static private boolean hasEnrolmentAnnuled(final Registration registration, final ExecutionCourse course) {
         final Attends attends = registration == null ? null : registration.getAssociatedAttendsSet().stream()
                 .filter(a -> a.getExecutionCourse() == course).findAny().orElse(null);
-        return attends != null && attends.getEnrolment().isAnnulled();
+        return attends != null && attends.getEnrolment() != null && attends.getEnrolment().isAnnulled();
     }
 
     @RequestMapping(value = "/studentSpreadsheet", method = RequestMethod.POST)

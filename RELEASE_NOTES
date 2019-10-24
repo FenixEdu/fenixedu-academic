@@ -1,3 +1,5 @@
+- Bug Fix: Fixed students list in teacher portal, when exists attends without enrolment  
+
 25.2.0 (22-10-2019)
 - Refactor: Split Registration creation in two services, one to import Registration without the assurance of valid fiscal data, and other which assure fiscal data is valid and customer is created
 
