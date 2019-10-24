@@ -57,7 +57,17 @@
 			<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
 			<f:param name="action" value="#{CurricularCourseManagement.action}"/>
 		</h:outputLink>
-	<h:outputText value="</li>" escape="false"/>
+		<h:outputText value="</li>" escape="false"/>
+		<h:outputText value="<li>" escape="false"/>
+		<h:outputLink value="#{CurricularCourseManagement.request.contextPath}/bolonhaManager/curricularPlans/resetCurricularPlan.faces">
+			<h:outputText value="#{bolonhaBundle['reset.curricularPlan.structure']}" />
+			<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
+			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
+			<f:param name="showRules" value="#{CurricularCourseManagement.showRules}"/>
+			<f:param name="hideCourses" value="#{CurricularCourseManagement.hideCourses}"/>
+			<f:param name="action" value="#{CurricularCourseManagement.action}"/>
+		</h:outputLink>
+		<h:outputText value="</li>" escape="false"/>
 	</h:panelGroup>
 	
 	<h:outputText value="</ul>" escape="false"/>

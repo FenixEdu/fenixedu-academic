@@ -839,4 +839,15 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
                 .<ExecutionSemester> getDomainObject(getEndExecutionPeriodID());
     }
 
+    public String resetCurricularPlan() {
+        try {
+            final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(getDegreeCurricularPlanID());
+            degreeCurricularPlan.reset();
+            return "buildCurricularPlan";
+        } catch (DomainException e) {
+            addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getKey(), e.getArgs()));
+        }
+        return "";
+    }
+
 }
