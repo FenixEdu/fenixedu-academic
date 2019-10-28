@@ -147,7 +147,7 @@ public enum RoleType implements IPresentableEnum {
     }
 
     public boolean isMember(User user) {
-        return actualGroup.isMember(user) || PermissionService.isMember(actualGroup.getExpression().replace("#", ""), user);
+        return actualGroup.isMember(user) || PermissionService.hasAccess(actualGroup.getExpression().replace("#", ""), user);
     }
 
 }

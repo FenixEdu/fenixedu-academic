@@ -51,7 +51,7 @@ public class AcademicPredicates {
 		public boolean evaluate(final Object program) {
 			return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_EXECUTION_COURSES,
 					(AcademicProgram) program, Authenticate.getUser())
-					|| PermissionService.isMember("MANAGE_EXECUTION_COURSES", (Degree) program, Authenticate.getUser());
+					|| PermissionService.hasAccess("MANAGE_EXECUTION_COURSES", (Degree) program, Authenticate.getUser());
 		};
 	};
 
@@ -60,7 +60,7 @@ public class AcademicPredicates {
 		public boolean evaluate(final Object program) {
 			return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_EXECUTION_COURSES_ADV,
 					(AcademicProgram) program, Authenticate.getUser())
-					|| PermissionService.isMember("MANAGE_EXECUTION_COURSES_ADV", (Degree) program,
+					|| PermissionService.hasAccess("MANAGE_EXECUTION_COURSES_ADV", (Degree) program,
 							Authenticate.getUser());
 		};
 	};
@@ -70,7 +70,7 @@ public class AcademicPredicates {
 		public boolean evaluate(final Object unused) {
 			return AcademicAuthorizationGroup.get(AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM)
 					.isMember(Authenticate.getUser())
-					|| PermissionService.isMember("VIEW_FULL_STUDENT_CURRICULUM", Authenticate.getUser());
+					|| PermissionService.hasAccess("VIEW_FULL_STUDENT_CURRICULUM", Authenticate.getUser());
 		};
 	};
 }

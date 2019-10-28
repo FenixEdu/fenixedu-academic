@@ -53,12 +53,12 @@ public class AcademicGroupTagLib extends TagSupport {
 
 		if (program == null) {
 			if (group.isMember(Authenticate.getUser())
-					|| PermissionService.isMember(operation, Authenticate.getUser())) {
+					|| PermissionService.hasAccess(operation, Authenticate.getUser())) {
 				return EVAL_BODY_INCLUDE;
 			}
 		} else {
 			if (group.isMember(Authenticate.getUser())
-					|| PermissionService.isMember(operation, (Degree) program, Authenticate.getUser())) {
+					|| PermissionService.hasAccess(operation, (Degree) program, Authenticate.getUser())) {
 				return EVAL_BODY_INCLUDE;
 			}
 		}

@@ -181,7 +181,7 @@ abstract public class StudentCurricularPlanEnrolment {
 		if (isEnrolmentWithoutRules()
 				&& !(AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.ENROLMENT_WITHOUT_RULES,
 						getStudentCurricularPlan().getDegree(), getResponsiblePerson().getUser())
-						|| PermissionService.isMember("ENROLMENT_WITHOUT_RULES", getStudentCurricularPlan().getDegree(),
+						|| PermissionService.hasAccess("ENROLMENT_WITHOUT_RULES", getStudentCurricularPlan().getDegree(),
 								getResponsiblePerson().getUser()))
 				&& !isResponsibleInternationalRelationOffice()) {
 			throw new DomainException("error.permissions.cannot.enrol.without.rules");
@@ -192,7 +192,7 @@ abstract public class StudentCurricularPlanEnrolment {
 		if (!(AcademicAccessRule.isProgramAccessibleToFunction(
 				AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION, getStudentCurricularPlan().getDegree(),
 				getResponsiblePerson().getUser())
-				|| PermissionService.isMember("UPDATE_REGISTRATION_AFTER_CONCLUSION",
+				|| PermissionService.hasAccess("UPDATE_REGISTRATION_AFTER_CONCLUSION",
 						getStudentCurricularPlan().getDegree(), getResponsiblePerson().getUser()))) {
 			throw new DomainException("error.permissions.cannot.update.registration.after.conclusion.process");
 		}

@@ -90,7 +90,7 @@ public class StudentCurricularPlanEnrolmentPreConditions {
 		final boolean hasAcademicalAuthorizationToEnrol = AcademicAccessRule.isMember(Authenticate.getUser(),
 				AcademicOperationType.STUDENT_ENROLMENTS, Collections.singleton(scp.getDegree()),
 				Collections.singleton(scp.getAdministrativeOffice()))
-				|| PermissionService.isMember("STUDENT_ENROLMENTS", scp.getDegree(), Authenticate.getUser());
+				|| PermissionService.hasAccess("STUDENT_ENROLMENTS", scp.getDegree(), Authenticate.getUser());
 
 		final boolean isStudentEnrolling = authenticatedPerson.getStudent() != null
 				&& authenticatedPerson.getStudent() == scp.getRegistration().getStudent();

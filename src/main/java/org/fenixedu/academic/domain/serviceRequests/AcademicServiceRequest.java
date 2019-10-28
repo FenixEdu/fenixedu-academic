@@ -801,7 +801,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 		return isCancelledSituationAccepted() && (createdByStudent() && !isConcluded()
 				|| AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.SERVICE_REQUESTS,
 						this.getAcademicProgram(), Authenticate.getUser())
-				|| PermissionService.isMember("SERVICE_REQUESTS", (Degree) this.getAcademicProgram(),
+				|| PermissionService.hasAccess("SERVICE_REQUESTS", (Degree) this.getAcademicProgram(),
 						Authenticate.getUser()));
 	}
 

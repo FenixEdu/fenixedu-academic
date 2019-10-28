@@ -1262,7 +1262,7 @@ public class Registration extends Registration_Base {
         final User userView = Authenticate.getUser();
         if (userView == null || !(AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS,
                 getDegree(), userView.getPerson().getUser())
-                || PermissionService.isMember("STUDENT_ENROLMENTS", getDegree(), userView.getPerson().getUser()))) {
+                || PermissionService.hasAccess("STUDENT_ENROLMENTS", getDegree(), userView.getPerson().getUser()))) {
             if (readAttendsInCurrentExecutionPeriod().size() >= MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD) {
                 throw new DomainException("error.student.reached.attends.limit",
                         String.valueOf(MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD));
@@ -1814,7 +1814,7 @@ public class Registration extends Registration_Base {
 
     public boolean canRepeatConclusionProcess(final Person person) {
         return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.REPEAT_CONCLUSION_PROCESS, getDegree(),
-                person.getUser()) || PermissionService.isMember("REPEAT_CONCLUSION_PROCESS", getDegree(), person.getUser());
+                person.getUser()) || PermissionService.hasAccess("REPEAT_CONCLUSION_PROCESS", getDegree(), person.getUser());
     }
 
     public void conclude(final CurriculumGroup curriculumGroup) {
