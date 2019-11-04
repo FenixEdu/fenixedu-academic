@@ -140,6 +140,9 @@ public class Registration extends Registration_Base {
         super();
         setRootDomainObject(Bennu.getInstance());
         setRegistrationProtocol(RegistrationProtocol.getDefault());
+
+        //Emit the Signal
+        Signal.emit(REGISTRATION_CREATE_SIGNAL, new DomainObjectEvent<>(this));
     }
 
     private Registration(final Person person, final Integer registrationNumber, final Degree degree,

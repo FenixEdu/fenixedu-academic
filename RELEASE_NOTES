@@ -1,3 +1,5 @@
+- Bug Fix: Send Registration creation Bennu Signal
+
 25.2.1 (24-10-2019)
 - Bug Fix: Fixed students list in teacher portal, when exists attends without enrolment  
 
