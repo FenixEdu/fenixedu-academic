@@ -507,7 +507,8 @@ abstract public class DegreeModule extends DegreeModule_Base {
                     // TODO: remove this throw when curricular rule ensures
                     // that it can be only one active for execution period
                     // and replace by: return curricularRule
-                    throw new DomainException("error.degree.module.has.more.than.one.credits.limit.for.executionYear", getName());
+                    throw new DomainException("error.degree.module.has.more.than.one.credits.limit.for.executionYear", 
+                            getParentDegreeCurricularPlan().getDegree().getCode(), getParentDegreeCurricularPlan().getName(), getName());
                 }
                 result = curricularRule;
             }
