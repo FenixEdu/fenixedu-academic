@@ -93,7 +93,7 @@ ${portal.toolkit()}
             <div class="form-group">
                 <label class="control-label col-sm-1"><spring:message code="label.org.fenixedu.academic.dto.accounting.CreateExemptionBean.dispatchDate"/></label>
                 <div class="col-sm-4">
-                    <input name="dispatchDate" bennu-datetime requires-past>
+                    <input name="dispatchDate" bennu-datetime>
                 </div>
             </div>
             <div class="form-group">
