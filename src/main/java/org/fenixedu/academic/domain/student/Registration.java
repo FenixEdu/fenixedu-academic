@@ -148,8 +148,9 @@ public class Registration extends Registration_Base {
         Signal.emit(REGISTRATION_CREATE_SIGNAL, new DomainObjectEvent<>(this));
     }
 
-    private Registration(final Person person, final Integer registrationNumber, final Degree degree,
-            final ExecutionYear executionYear) {
+    private Registration(
+
+            final Person person, final Integer registrationNumber, final Degree degree, final ExecutionYear executionYear) {
         this();
 
         if (executionYear == null) {
@@ -182,7 +183,6 @@ public class Registration extends Registration_Base {
         registration.setStudentCandidacyInformation(studentCandidacy);
 
         TreasuryBridgeAPIFactory.implementation().createCustomerIfMissing(registration.getStudent().getPerson());
-
         return registration;
     }
 
@@ -1262,7 +1262,7 @@ public class Registration extends Registration_Base {
         final User userView = Authenticate.getUser();
         if (userView == null || !(AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS,
                 getDegree(), userView.getPerson().getUser())
-                || PermissionService.hasAccess("STUDENT_ENROLMENTS", getDegree(), userView.getPerson().getUser()))) {
+                || PermissionService.hasAccess("ADMIN_OFFICE_ENROLMENTS", getDegree(), userView.getPerson().getUser()))) {
             if (readAttendsInCurrentExecutionPeriod().size() >= MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD) {
                 throw new DomainException("error.student.reached.attends.limit",
                         String.valueOf(MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD));
@@ -1432,7 +1432,7 @@ public class Registration extends Registration_Base {
         final User user = Authenticate.getUser();
         Set<AcademicProgram> programsManageRegistration = AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_REGISTRATIONS, user).collect(Collectors.toSet());
-        programsManageRegistration.addAll(PermissionService.getDegrees("MANAGE_REGISTRATIONS", user));
+        programsManageRegistration.addAll(PermissionService.getDegrees("ADMIN_OFFICE_REGISTRATION_ACCESS", user));
 
         Set<AcademicProgram> programsViewFullStudentCurriculum =
                 AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM, user)
@@ -1601,6 +1601,7 @@ public class Registration extends Registration_Base {
 
     //TODO: change to execution interval
     //IMPORTANT: when executinInterval is executionYear (higher space) we must first ensure executionInterval is on same space (executionInterval.getExecutionYear) because we cannot compare intervals in different spaces
+
     public RegistrationState getLastRegistrationState(final ExecutionYear executionYear) {
         return getRegistrationStatesSet().stream().filter(s -> s.getExecutionYear().isBeforeOrEquals(executionYear))
                 .max(RegistrationState.EXECUTION_INTERVAL_AND_DATE_COMPARATOR).orElse(null);
@@ -1814,7 +1815,7 @@ public class Registration extends Registration_Base {
 
     public boolean canRepeatConclusionProcess(final Person person) {
         return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.REPEAT_CONCLUSION_PROCESS, getDegree(),
-                person.getUser()) || PermissionService.hasAccess("REPEAT_CONCLUSION_PROCESS", getDegree(), person.getUser());
+                person.getUser()) || PermissionService.hasAccess("ADMIN_OFFICE_CONCLUSION_REPEAT", getDegree(), person.getUser());
     }
 
     public void conclude(final CurriculumGroup curriculumGroup) {

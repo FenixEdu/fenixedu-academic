@@ -30,52 +30,52 @@ import org.fenixedu.academic.predicate.AccessControl;
 import org.joda.time.DateTime;
 
 /**
- * 
+ *
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- * 
+ *
  */
 public class ConcludedState extends ConcludedState_Base {
 
-	protected ConcludedState(Registration registration, Person person, DateTime dateTime) {
-		super();
+    protected ConcludedState(Registration registration, Person person, DateTime dateTime) {
+        super();
 
-		if (registration.isBolonha() && !registration.hasConcluded()) {
-			throw new DomainException("error.registration.is.not.concluded");
-		}
+        if (registration.isBolonha() && !registration.hasConcluded()) {
+            throw new DomainException("error.registration.is.not.concluded");
+        }
 
-		init(registration, person, dateTime);
-		registration.getPerson().getUser().openLoginPeriod();
-	}
+        init(registration, person, dateTime);
+        registration.getPerson().getUser().openLoginPeriod();
+    }
 
-	@Override
-	public void delete() {
-		checkRulesToDelete();
-		super.delete();
-	}
+    @Override
+    public void delete() {
+        checkRulesToDelete();
+        super.delete();
+    }
 
-	private void checkRulesToDelete() {
-		final Person person = AccessControl.getPerson();
-		if (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.REPEAT_CONCLUSION_PROCESS,
-				getRegistration().getDegree(), person.getUser())
-				|| PermissionService.hasAccess("REPEAT_CONCLUSION_PROCESS", getRegistration().getDegree(),
-						person.getUser())) {
-			return;
-		}
-	}
+    private void checkRulesToDelete() {
+        final Person person = AccessControl.getPerson();
+        if (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.REPEAT_CONCLUSION_PROCESS,
+                getRegistration().getDegree(), person.getUser())
+                || PermissionService.hasAccess("ADMIN_OFFICE_CONCLUSION_REPEAT", getRegistration().getDegree(),
+                        person.getUser())) {
+            return;
+        }
+    }
 
-	@Override
-	public void checkConditionsToForward(final StateBean bean) {
-		throw new DomainException("error.impossible.to.forward.from.concluded");
-	}
+    @Override
+    public void checkConditionsToForward(final StateBean bean) {
+        throw new DomainException("error.impossible.to.forward.from.concluded");
+    }
 
-	@Override
-	public IState nextState(final StateBean bean) {
-		throw new DomainException("error.impossible.to.forward.from.concluded");
-	}
+    @Override
+    public IState nextState(final StateBean bean) {
+        throw new DomainException("error.impossible.to.forward.from.concluded");
+    }
 
-	@Override
-	public RegistrationStateType getStateType() {
-		return RegistrationStateType.CONCLUDED;
-	}
+    @Override
+    public RegistrationStateType getStateType() {
+        return RegistrationStateType.CONCLUDED;
+    }
 
 }
