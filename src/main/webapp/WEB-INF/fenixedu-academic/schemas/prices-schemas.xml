@@ -970,7 +970,7 @@
 		<property name="eachSchema" value="ClassName.view.as.label"/>
 		<property name="eachLayout" value="values" />
 	</slot>
-	<slot name="startDate"/>
+	<slot name="startLocalDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="degreeCurricularPlans" layout="option-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.GraduationDegreeCurricularPlansProvider" />
 		<property name="format" value="${presentationName}" />
@@ -990,7 +990,7 @@
 		<property name="format" value="${year}" />
 		<property name="destination" value="changeExecutionYearPostback"/>
 	</slot>
-	<slot name="startDate" />
+	<slot name="startLocalDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="ectsForYear" />
 	<slot name="gratuityFactor" />
 	<slot name="ectsFactor" />
@@ -1016,7 +1016,7 @@
 <slot name="eventType">
 	<property name="includedValues" value="PARTIAL_REGIME_ENROLMENT_GRATUITY,STANDALONE_PER_ENROLMENT_GRATUITY"/>
 </slot>
-<slot name="startDate" />
+<slot name="startLocalDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 <slot name="amountPerEcts" />
 <slot name="numberOfDaysToStartApplyingInterest" />
 <slot name="forAliens" />
@@ -1039,7 +1039,7 @@
 	<property name="format" value="${year}" />
 	<property name="destination" value="changeExecutionYearPostback"/>
 </slot>
-<slot name="startDate" />
+<slot name="startLocalDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 <slot name="amount" />
 <slot name="numberOfDaysToStartApplyingInterest" />
 <slot name="forAliens" />

@@ -25,6 +25,7 @@ import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.accounting.ServiceAgreementTemplate;
 import org.fenixedu.academic.dto.accounting.PaymentsBean;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 abstract public class CreatePostingRuleBean implements Serializable, PaymentsBean {
 
@@ -33,6 +34,8 @@ abstract public class CreatePostingRuleBean implements Serializable, PaymentsBea
     private ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 
     private DateTime startDate;
+
+    private LocalDate startLocalDate;
 
     private ServiceAgreementTemplate serviceAgreementTemplate;
 
@@ -43,7 +46,6 @@ abstract public class CreatePostingRuleBean implements Serializable, PaymentsBea
     }
 
     public CreatePostingRuleBean(final DateTime startDate, final ServiceAgreementTemplate serviceAgreementTemplate) {
-        this();
         setStartDate(startDate);
         setServiceAgreementTemplate(serviceAgreementTemplate);
     }
@@ -57,16 +59,23 @@ abstract public class CreatePostingRuleBean implements Serializable, PaymentsBea
         this.executionYear = executionYear;
     }
 
-    protected CreatePostingRuleBean() {
-        this.startDate = new DateTime();
-    }
+    protected CreatePostingRuleBean() {}
 
     public DateTime getStartDate() {
         return startDate;
     }
 
+    public LocalDate getStartLocalDate() {
+        return startLocalDate;
+    }
+
     public void setStartDate(DateTime startDate) {
         this.startDate = startDate;
+    }
+
+    public void setStartLocalDate(LocalDate startLocalDate) {
+        this.startLocalDate = startLocalDate;
+        this.setStartDate(startLocalDate.toDateTimeAtStartOfDay());
     }
 
     public ServiceAgreementTemplate getServiceAgreementTemplate() {

@@ -55,6 +55,10 @@ public class PostingRulesManager {
 
     @Atomic
     static public void createGraduationGratuityPostingRule(final CreateGratuityPostingRuleBean bean) {
+        if(bean.getStartDate().toLocalDate().isBefore(new LocalDate()) || bean.getStartDate().toLocalDate().isEqual(new LocalDate())) {
+            throw new DomainException("createPostingRule.startDate.cannot.be.before.tomorrow");
+        }
+
         if (bean.getRule() == GratuityWithPaymentPlanPR.class) {
 
             for (final DegreeCurricularPlan dcp : bean.getDegreeCurricularPlans()) {
@@ -84,6 +88,10 @@ public class PostingRulesManager {
 
     @Atomic
     static public void createEnrolmentGratuityPR(final CreateEnrolmentGratuityPRBean bean) {
+        if(bean.getStartDate().toLocalDate().isBefore(new LocalDate()) || bean.getStartDate().toLocalDate().isEqual(new LocalDate())) {
+            throw new DomainException("createPostingRule.startDate.cannot.be.before.tomorrow");
+        }
+
         if (bean.getRule() == EnrolmentGratuityPR.class) {
             for (final DegreeCurricularPlan degreeCurricularPlan : bean.getDegreeCurricularPlans()) {
                 final ServiceAgreementTemplate serviceAgreementTemplate = degreeCurricularPlan.getServiceAgreementTemplate();
@@ -99,6 +107,9 @@ public class PostingRulesManager {
 
     @Atomic
     static public void createEnrolmentGratuityPR(final CreateStandaloneEnrolmentGratuityPRBean bean) {
+        if(bean.getStartDate().toLocalDate().isBefore(new LocalDate()) || bean.getStartDate().toLocalDate().isEqual(new LocalDate())) {
+            throw new DomainException("createPostingRule.startDate.cannot.be.before.tomorrow");
+        }
 
         if (bean.getRule() == StandaloneEnrolmentGratuityPR.class) {
             for (final DegreeCurricularPlan degreeCurricularPlan : bean.getDegreeCurricularPlans()) {
@@ -232,6 +243,10 @@ public class PostingRulesManager {
 
     @Atomic
     public static void createPartialRegimePR(CreatePartialRegimePRBean bean) {
+        if(bean.getStartDate().toLocalDate().isBefore(new LocalDate()) || bean.getStartDate().toLocalDate().isEqual(new LocalDate())) {
+            throw new DomainException("createPostingRule.startDate.cannot.be.before.tomorrow");
+        }
+
         if (bean.getRule() == PartialRegimePR.class) {
             for (final DegreeCurricularPlan degreeCurricularPlan : bean.getDegreeCurricularPlans()) {
                 final ServiceAgreementTemplate serviceAgreementTemplate = degreeCurricularPlan.getServiceAgreementTemplate();
