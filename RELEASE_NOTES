@@ -1,3 +1,5 @@
+- Refactor: Added methods for find ExecutionInterval childs
+
 25.2.2 (04-11-2019)
 - Bug Fix: Send Registration creation Bennu Signal
 

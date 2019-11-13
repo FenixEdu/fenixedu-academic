@@ -18,9 +18,9 @@
  */
 package org.fenixedu.academic.domain;
 
-import java.util.Collections;
+import java.util.Collection;
 import java.util.Comparator;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
@@ -200,5 +200,15 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base implement
     public abstract ExecutionInterval getNext();
 
     public abstract ExecutionInterval getPrevious();
+
+    public static Collection<ExecutionInterval> findActiveChilds() {
+        return findAllChilds().stream().filter(ei -> ei.getState() == PeriodState.OPEN || ei.getState() == PeriodState.CURRENT)
+                .collect(Collectors.toSet());
+    }
+
+    public static Collection<ExecutionInterval> findAllChilds() {
+        return Bennu.getInstance().getExecutionIntervalsSet().stream().filter(ei -> !(ei instanceof ExecutionYear))
+                .collect(Collectors.toSet());
+    }
 
 }
