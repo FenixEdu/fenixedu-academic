@@ -117,7 +117,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             Set<DegreeType> degreeTypesForOperation = AcademicAccessRule
                     .getDegreeTypesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
                     .collect(Collectors.toSet());
-            degreeTypesForOperation.addAll(PermissionService.getDegreeTypes("ADMIN_OFFICE_REPORTS", Authenticate.getUser()));
+            degreeTypesForOperation.addAll(PermissionService.getDegreeTypes("ACADEMIC_OFFICE_REPORTS", Authenticate.getUser()));
 
             Set<Degree> degreesForOperation = AcademicAccessRule
                     .getDegreesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
@@ -652,7 +652,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
         Set<DegreeType> programs = AcademicAccessRule
                 .getDegreeTypesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
                 .collect(Collectors.toSet());
-        programs.addAll(PermissionService.getDegreeTypes("ADMIN_OFFICE_REPORTS", Authenticate.getUser()));
+        programs.addAll(PermissionService.getDegreeTypes("ACADEMIC_OFFICE_REPORTS", Authenticate.getUser()));
         for (DegreeType degreeType : programs) {
             cycles.addAll(degreeType.getCycleTypes());
         }

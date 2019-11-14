@@ -54,7 +54,7 @@ public class CurriculumGroupsProviderForEnrolmentsLocationManagement implements 
         final Set<AcademicProgram> programs = AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, Authenticate.getUser())
                 .collect(Collectors.toSet());
-        programs.addAll(PermissionService.getDegrees("ADMIN_OFFICE_ENROLMENTS", Authenticate.getUser()));
+        programs.addAll(PermissionService.getDegrees("ACADEMIC_OFFICE_ENROLMENTS", Authenticate.getUser()));
 
         for (final Registration registration : bean.getStudent().getRegistrationsSet()) {
 

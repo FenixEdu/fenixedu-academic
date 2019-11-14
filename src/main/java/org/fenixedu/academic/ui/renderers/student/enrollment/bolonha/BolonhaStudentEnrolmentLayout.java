@@ -786,7 +786,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         Set<AcademicProgram> programs = AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, Authenticate.getUser())
                 .collect(Collectors.toSet());
-        programs.addAll(PermissionService.getDegrees("ADMIN_OFFICE_ENROLMENTS", Authenticate.getUser()));
+        programs.addAll(PermissionService.getDegrees("ACADEMIC_OFFICE_ENROLMENTS", Authenticate.getUser()));
         this.canPerformStudentEnrolments = programs.contains(bolonhaStudentEnrollmentBean.getStudentCurricularPlan().getDegree());
     }
 

@@ -1650,13 +1650,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public boolean isAllowedToManageEnrolments() {
         return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, getDegree(),
                 Authenticate.getUser())
-                || PermissionService.hasAccess("ADMIN_OFFICE_ENROLMENTS", getDegree(), Authenticate.getUser());
+                || PermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS", getDegree(), Authenticate.getUser());
     }
 
     public boolean isAllowedToManageEquivalencies() {
         return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_EQUIVALENCES, getDegree(),
                 Authenticate.getUser())
-                || PermissionService.hasAccess("ADMIN_OFFICE_CREDITS_TRANSFER", getDegree(), Authenticate.getUser());
+                || PermissionService.hasAccess("ACADEMIC_OFFICE_CREDITS_TRANSFER", getDegree(), Authenticate.getUser());
     }
 
     public Stream<Enrolment> getEnrolmentStream() {

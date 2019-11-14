@@ -61,7 +61,7 @@ public class ClassEnrollmentAuthorizationFilter {
 
         if (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, registration.getDegree(),
                 person.getUser())
-                || PermissionService.hasAccess("ADMIN_OFFICE_ENROLMENTS", registration.getDegree(), person.getUser())) {
+                || PermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS", registration.getDegree(), person.getUser())) {
             return;
         }
 
@@ -87,7 +87,7 @@ public class ClassEnrollmentAuthorizationFilter {
 
         if (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, registration.getDegree(),
                 person.getUser())
-                || PermissionService.hasAccess("ADMIN_OFFICE_ENROLMENTS", registration.getDegree(), person.getUser())) {
+                || PermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS", registration.getDegree(), person.getUser())) {
             return;
         }
 

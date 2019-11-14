@@ -59,7 +59,7 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
 
         if (!(AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.ENROLMENT_WITHOUT_RULES,
                 getStudentCurricularPlan().getDegree(), getResponsiblePerson().getUser())
-                || PermissionService.hasAccess("ADMIN_OFFICE_ENROLMENTS_ADMIN", getStudentCurricularPlan().getDegree(),
+                || PermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS_ADMIN", getStudentCurricularPlan().getDegree(),
                         getResponsiblePerson().getUser()))) {
             checkRegistrationRegime();
         }

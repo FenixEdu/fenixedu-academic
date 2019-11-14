@@ -1241,7 +1241,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             if (registration != null && programConclusion != null) {
                 boolean canManageConclusion = AcademicAuthorizationGroup
                         .get(AcademicOperationType.MANAGE_CONCLUSION, registration.getDegree()).isMember(Authenticate.getUser())
-                        || PermissionService.hasAccess("ADMIN_OFFICE_CONCLUSION", registration.getDegree(),
+                        || PermissionService.hasAccess("ACADEMIC_OFFICE_CONCLUSION", registration.getDegree(),
                                 Authenticate.getUser());
                 if (canManageConclusion) {
                     final HtmlLink result = new HtmlLink();

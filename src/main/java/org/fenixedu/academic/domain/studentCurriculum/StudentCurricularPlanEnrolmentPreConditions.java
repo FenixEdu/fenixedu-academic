@@ -77,10 +77,10 @@ public class StudentCurricularPlanEnrolmentPreConditions {
     }
 
     /**
-     * 
+     *
      * Check if student has any debts that prevent him to enrol in curricular
      * courses
-     * 
+     *
      * @param scp
      * @return EnrolmentPreConditionResult
      */
@@ -89,7 +89,7 @@ public class StudentCurricularPlanEnrolmentPreConditions {
         final boolean hasAcademicalAuthorizationToEnrol =
                 AcademicAccessRule.isMember(Authenticate.getUser(), AcademicOperationType.STUDENT_ENROLMENTS,
                         Collections.singleton(scp.getDegree()), Collections.singleton(scp.getAdministrativeOffice()))
-                        || PermissionService.hasAccess("ADMIN_OFFICE_ENROLMENTS", scp.getDegree(), Authenticate.getUser());
+                        || PermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS", scp.getDegree(), Authenticate.getUser());
 
         final boolean isStudentEnrolling = authenticatedPerson.getStudent() != null
                 && authenticatedPerson.getStudent() == scp.getRegistration().getStudent();

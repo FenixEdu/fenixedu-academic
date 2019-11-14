@@ -234,7 +234,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
         Set<AcademicProgram> programs = AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_STUDENT_PAYMENTS, Authenticate.getUser())
                 .collect(Collectors.toSet());
-        programs.addAll(PermissionService.getDegrees("MANAGE_STUDENT_PAYMENTS", Authenticate.getUser()));
+        programs.addAll(PermissionService.getDegrees("TREASURY", Authenticate.getUser()));
         return programs.contains(getAcademicProgram())
                 && TreasuryBridgeAPIFactory.implementation().academicTreasuryEventForAcademicServiceRequest(this) != null;
     }
@@ -254,7 +254,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
         Set<AcademicProgram> programs = AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_REGISTRATIONS, Authenticate.getUser())
                 .collect(Collectors.toSet());
-        programs.addAll(PermissionService.getDegrees("ADMIN_OFFICE_REGISTRATION_ACCESS", Authenticate.getUser()));
+        programs.addAll(PermissionService.getDegrees("ACADEMIC_OFFICE_REGISTRATION_ACCESS", Authenticate.getUser()));
         return programs.stream().anyMatch(p -> p == program);
     }
 
@@ -786,7 +786,8 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
         return isCancelledSituationAccepted() && (createdByStudent() && !isConcluded()
                 || AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.SERVICE_REQUESTS,
                         this.getAcademicProgram(), Authenticate.getUser())
-                || PermissionService.hasAccess("SERVICE_REQUESTS", (Degree) this.getAcademicProgram(), Authenticate.getUser()));
+                || PermissionService.hasAccess("ACADEMIC_REQUISITIONS", (Degree) this.getAcademicProgram(),
+                        Authenticate.getUser()));
     }
 
     final public DateTime getCreationDate() {

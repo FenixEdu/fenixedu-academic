@@ -48,8 +48,8 @@ public class EnrolmentToBeApprovedByCoordinatorExecutor extends CurricularRuleEx
         final Person responsiblePerson = enrolmentContext.getResponsiblePerson();
         if (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS,
                 enrolmentContext.getStudentCurricularPlan().getDegree(), responsiblePerson.getUser())
-                || PermissionService.hasAccess("ADMIN_OFFICE_ENROLMENTS", enrolmentContext.getStudentCurricularPlan().getDegree(),
-                        responsiblePerson.getUser())) {
+                || PermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS",
+                        enrolmentContext.getStudentCurricularPlan().getDegree(), responsiblePerson.getUser())) {
             return RuleResult.createWarning(sourceDegreeModuleToEvaluate.getDegreeModule(),
                     "curricularRules.ruleExecutors.EnrolmentToBeApprovedByCoordinatorExecutor.degree.module.needs.aproval.by.coordinator",
                     sourceDegreeModuleToEvaluate.getName());

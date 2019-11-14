@@ -106,9 +106,9 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
         SearchStudentsByCurricularCourseParametersBean bean = getRenderedObject("searchBean");
         if (bean == null) {
             Set<Degree> degrees = AcademicAccessRule
-                    .getDegreesAccessibleToFunction(AcademicOperationType.ADMIN_OFFICE_REPORTS, Authenticate.getUser())
+                    .getDegreesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
                     .collect(Collectors.toSet());
-            degrees.addAll(PermissionService.getDegrees("ADMIN_OFFICE_REPORTS", Authenticate.getUser()));
+            degrees.addAll(PermissionService.getDegrees("ACADEMIC_OFFICE_REPORTS", Authenticate.getUser()));
             bean = new SearchStudentsByCurricularCourseParametersBean(degrees);
         }
         return bean;
@@ -285,7 +285,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
         Set<Degree> degreesToInclude =
                 AcademicAccessRule.getDegreesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
                         .collect(Collectors.toSet());
-        degreesToInclude.addAll(PermissionService.getDegrees("ADMIN_OFFICE_REPORTS", Authenticate.getUser()));
+        degreesToInclude.addAll(PermissionService.getDegrees("ACADEMIC_OFFICE_REPORTS", Authenticate.getUser()));
 
         final String filename = getResourceMessage("label.statistics") + "_" + executionYear.getName().replace('/', '-');
         final Spreadsheet spreadsheet = new Spreadsheet(filename);
@@ -357,7 +357,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
         Set<DegreeType> programs = AcademicAccessRule
                 .getDegreeTypesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
                 .collect(Collectors.toSet());
-        programs.addAll(PermissionService.getDegreeTypes("ADMIN_OFFICE_REPORTS", Authenticate.getUser()));
+        programs.addAll(PermissionService.getDegreeTypes("ACADEMIC_OFFICE_REPORTS", Authenticate.getUser()));
         return programs;
     }
 }

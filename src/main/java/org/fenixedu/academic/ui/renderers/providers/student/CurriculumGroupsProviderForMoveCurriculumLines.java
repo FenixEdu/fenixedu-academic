@@ -86,7 +86,7 @@ public class CurriculumGroupsProviderForMoveCurriculumLines implements DataProvi
         final Set<AcademicProgram> programs = AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, Authenticate.getUser())
                 .collect(Collectors.toSet());
-        programs.addAll(PermissionService.getDegrees("ADMIN_OFFICE_ENROLMENTS", Authenticate.getUser()));
+        programs.addAll(PermissionService.getDegrees("ACADEMIC_OFFICE_ENROLMENTS", Authenticate.getUser()));
 
         return result.stream().filter(i -> programs.contains(i.getDegreeCurricularPlanOfStudent().getDegree()))
                 .collect(Collectors.toSet());

@@ -170,7 +170,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
                 final User userView = Authenticate.getUser();
                 if (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS,
                         getRegistration().getDegree(), userView.getPerson().getUser())
-                        || PermissionService.hasAccess("ADMIN_OFFICE_ENROLMENTS", getRegistration().getDegree(),
+                        || PermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS", getRegistration().getDegree(),
                                 userView.getPerson().getUser())
                         || Group.managers().isMember(userView.getPerson().getUser())) {
                     return;
@@ -197,9 +197,9 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     }
 
     /**
-     * 
+     *
      * Cycle can have only one branch by type
-     * 
+     *
      * @param branchType
      */
     public BranchCurriculumGroup getBranchCurriculumGroup(final BranchType branchType) {

@@ -49,7 +49,7 @@ public class AcademicPredicates {
         public boolean evaluate(final Object program) {
             return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_EXECUTION_COURSES,
                     (AcademicProgram) program, Authenticate.getUser())
-                    || PermissionService.hasAccess("MANAGE_EXECUTION_COURSES", (Degree) program, Authenticate.getUser());
+                    || PermissionService.hasAccess("ACADEMIC_PLANNING_EXECUTIONS", (Degree) program, Authenticate.getUser());
         };
     };
 

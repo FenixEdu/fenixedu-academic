@@ -716,7 +716,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
             final boolean isServices =
                     AcademicAuthorizationGroup.get(AcademicOperationType.STUDENT_ENROLMENTS).isMember(Authenticate.getUser())
-                            || PermissionService.hasAccess("ADMIN_OFFICE_ENROLMENTS", Authenticate.getUser());
+                            || PermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS", Authenticate.getUser());
             return considerThisEnrolmentNormalEnrolments(enrolment)
                     || considerThisEnrolmentPropaedeuticEnrolments(enrolment, isServices)
                     || considerThisEnrolmentExtraCurricularEnrolments(enrolment, isServices)

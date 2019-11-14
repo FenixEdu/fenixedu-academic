@@ -182,7 +182,7 @@ abstract public class StudentCurricularPlanEnrolment {
         if (isEnrolmentWithoutRules()
                 && !(AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.ENROLMENT_WITHOUT_RULES,
                         getStudentCurricularPlan().getDegree(), getResponsiblePerson().getUser())
-                        || PermissionService.hasAccess("ADMIN_OFFICE_ENROLMENTS_ADMIN", getStudentCurricularPlan().getDegree(),
+                        || PermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS_ADMIN", getStudentCurricularPlan().getDegree(),
                                 getResponsiblePerson().getUser()))
                 && !isResponsibleInternationalRelationOffice()) {
             throw new DomainException("error.permissions.cannot.enrol.without.rules");
@@ -352,7 +352,7 @@ abstract public class StudentCurricularPlanEnrolment {
         Set<AcademicProgram> programs = AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, getResponsiblePerson().getUser())
                 .collect(Collectors.toSet());
-        programs.addAll(PermissionService.getDegrees("ADMIN_OFFICE_ENROLMENTS", getResponsiblePerson().getUser()));
+        programs.addAll(PermissionService.getDegrees("ACADEMIC_OFFICE_ENROLMENTS", getResponsiblePerson().getUser()));
         return programs.stream().anyMatch(p -> p == degree);
     }
 

@@ -57,7 +57,7 @@ public class ConcludedState extends ConcludedState_Base {
         final Person person = AccessControl.getPerson();
         if (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.REPEAT_CONCLUSION_PROCESS,
                 getRegistration().getDegree(), person.getUser())
-                || PermissionService.hasAccess("ADMIN_OFFICE_CONCLUSION_REPEAT", getRegistration().getDegree(),
+                || PermissionService.hasAccess("ACADEMIC_OFFICE_CONCLUSION_REPEAT", getRegistration().getDegree(),
                         person.getUser())) {
             return;
         }
