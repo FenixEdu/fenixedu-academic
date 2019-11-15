@@ -113,7 +113,7 @@
 		</td>
 		
 		<td style="vertical-align: top; padding-top: 1em;">
-			<academic:allowed operation="MANAGE_REGISTRATIONS" program="<%= registration.getDegree() %>">
+			<academic:allowed operation="MANAGE_REGISTRATIONS" permission="ACADEMIC_OFFICE_REGISTRATION_ACCESS" program="<%= registration.getDegree() %>">
 			<p class="mtop0 pleft1 asd">
 				<span class="dblock pbottom03">
 					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
@@ -139,7 +139,7 @@
 						<bean:message key="link.student.manageRegistrationStartDates" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 					</html:link>
 				</span>		
-				<academic:allowed operation="MANAGE_CONCLUSION" program="<%= registration.getDegree() %>">
+				<academic:allowed operation="MANAGE_CONCLUSION" permission="ACADEMIC_OFFICE_CONCLUSION" program="<%= registration.getDegree() %>">
 					<logic:equal name="registration" property="qualifiedToRegistrationConclusionProcess" value="true">
 						<span class="dblock pbottom03">	
 							<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
@@ -185,7 +185,7 @@
 	
 	<%-- Curricular Plans --%>
 	
-	<academic:allowed operation="MANAGE_REGISTRATIONS" program="<%= registration.getDegree() %>">
+	<academic:allowed operation="MANAGE_REGISTRATIONS" permission="ACADEMIC_OFFICE_REGISTRATION_ACCESS" program="<%= registration.getDegree() %>">
 	<h3 class="mbottom05 mtop25 separator2"><bean:message key="label.studentCurricularPlans" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	
 	<fr:view name="registration" property="sortedStudentCurricularPlans" schema="student.studentCurricularPlans" >
@@ -266,8 +266,8 @@
 	
 	</academic:allowed>
 	
-	<academic:notAllowed operation="MANAGE_REGISTRATIONS" program="<%= registration.getDegree() %>">
-		<academic:allowed operation="VIEW_FULL_STUDENT_CURRICULUM">
+	<academic:notAllowed operation="MANAGE_REGISTRATIONS" permission="ACADEMIC_OFFICE_REGISTRATION_ACCESS" program="<%= registration.getDegree() %>">
+		<academic:allowed operation="VIEW_FULL_STUDENT_CURRICULUM" permission="ACADEMIC_OFFICE_REGISTRATION_ACCESS">
 			<h3 class="mbottom05 mtop25 separator2"><bean:message key="label.studentCurricularPlans" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 			
 			<fr:view name="registration" property="sortedStudentCurricularPlans" schema="student.studentCurricularPlans" >
@@ -303,7 +303,7 @@
 	
 	<%-- Academic Services --%>
 	
-	<academic:allowed operation="SERVICE_REQUESTS">
+	<academic:allowed operation="SERVICE_REQUESTS" permission="ACADEMIC_REQUISITIONS">
 	<h3 class="mtop25 mbottom05 separator2"><bean:message key="academic.services" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	<bean:define id="registration" name="registration" scope="request" type="org.fenixedu.academic.domain.student.Registration"/>
 	<p>

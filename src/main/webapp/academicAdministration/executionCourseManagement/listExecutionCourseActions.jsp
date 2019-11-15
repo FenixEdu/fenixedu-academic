@@ -140,7 +140,7 @@
 
 		<logic:present name="sessionBean" property="executionDegree">
 			<bean:define id="degree" name="sessionBean" property="executionDegree.degree"/>
-			<academic:allowed operation="MANAGE_EXECUTION_COURSES_ADV" program="<%= (AcademicProgram) degree %>">
+			<academic:allowed operation="MANAGE_EXECUTION_COURSES_ADV" permission="ACADEMIC_PLANNING_EXECUTIONS" program="<%= (AcademicProgram) degree %>">
 		<fr:property name="linkFormat(delete)"
 					 value="<%="/editExecutionCourse.do?method=deleteExecutionCourse"
 					 		+ "&amp;executionCourseId=${externalId}"
@@ -155,7 +155,7 @@
 			</academic:allowed>
 		</logic:present>
 		<logic:notPresent name="sessionBean" property="executionDegree">
-			<academic:allowed operation="MANAGE_EXECUTION_COURSES_ADV" program="<%= null %>">
+			<academic:allowed operation="MANAGE_EXECUTION_COURSES_ADV" permission="ACADEMIC_PLANNING_EXECUTIONS" program="<%= null %>">
 		<fr:property name="linkFormat(delete)"
 					 value="<%="/editExecutionCourse.do?method=deleteExecutionCourse"
 					 		+ "&amp;executionCourseId=${externalId}"

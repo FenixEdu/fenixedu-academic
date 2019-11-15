@@ -38,7 +38,7 @@
 
 <bean:define id="registration" name="registration" type="org.fenixedu.academic.domain.student.Registration"/>
 
-<academic:allowed operation="VIEW_FULL_STUDENT_CURRICULUM" program="<%= registration.getDegree() %>">
+<academic:allowed operation="VIEW_FULL_STUDENT_CURRICULUM" permission="ACADEMIC_OFFICE_REGISTRATION_ACCESS" program="<%= registration.getDegree() %>">
 	<p class="printhidden">
 		<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="externalId">
 			<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>

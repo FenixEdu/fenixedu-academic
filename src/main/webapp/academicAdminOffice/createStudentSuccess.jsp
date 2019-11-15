@@ -56,7 +56,7 @@
 	</li>
 --%>
 <bean:define id="program" name="registration" property="degree" type="org.fenixedu.academic.domain.AcademicProgram"/>
-<academic:allowed operation="SERVICE_REQUESTS" program="<%= program %>">
+<academic:allowed operation="SERVICE_REQUESTS" permission="ACADEMIC_REQUISITIONS" program="<%= program %>">
 	<li>
 		<html:link action="/documentRequestsManagement.do?method=prepareCreateDocumentRequest&schema=DocumentRequestCreateBean.chooseDocumentRequestQuickType" paramId="registrationId" paramName="registration" paramProperty="externalId">
 			<bean:message key="link.student.createSchoolRegistrationDeclarationRequest" bundle="ACADEMIC_OFFICE_RESOURCES"/>

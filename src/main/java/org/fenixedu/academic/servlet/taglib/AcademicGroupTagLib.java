@@ -34,59 +34,68 @@ import org.fenixedu.bennu.core.security.Authenticate;
 
 public class AcademicGroupTagLib extends TagSupport {
 
-	private static final long serialVersionUID = -8050082985849930419L;
+    private static final long serialVersionUID = -8050082985849930419L;
 
-	private String operation;
+    private String operation;
 
-	private AcademicProgram program;
+    private String permission;
 
-	private AdministrativeOffice office;
+    private AcademicProgram program;
 
-	@Override
-	public int doStartTag() throws JspException {
-		Set<AcademicProgram> programs = program != null ? Collections.singleton(program)
-				: Collections.<AcademicProgram>emptySet();
-		Set<AdministrativeOffice> offices = office != null ? Collections.singleton(office)
-				: Collections.<AdministrativeOffice>emptySet();
-		AcademicAuthorizationGroup group = AcademicAuthorizationGroup.get(AcademicOperationType.valueOf(operation),
-				programs, offices, null);
+    private AdministrativeOffice office;
 
-		if (program == null) {
-			if (group.isMember(Authenticate.getUser())
-					|| PermissionService.hasAccess(operation, Authenticate.getUser())) {
-				return EVAL_BODY_INCLUDE;
-			}
-		} else {
-			if (group.isMember(Authenticate.getUser())
-					|| PermissionService.hasAccess(operation, (Degree) program, Authenticate.getUser())) {
-				return EVAL_BODY_INCLUDE;
-			}
-		}
+    @Override
+    public int doStartTag() throws JspException {
+        Set<AcademicProgram> programs =
+                program != null ? Collections.singleton(program) : Collections.<AcademicProgram> emptySet();
+        Set<AdministrativeOffice> offices =
+                office != null ? Collections.singleton(office) : Collections.<AdministrativeOffice> emptySet();
+        AcademicAuthorizationGroup group =
+                AcademicAuthorizationGroup.get(AcademicOperationType.valueOf(operation), programs, offices, null);
 
-		return SKIP_BODY;
-	}
+        if (program == null) {
+            if (group.isMember(Authenticate.getUser()) || PermissionService.hasAccess(permission, Authenticate.getUser())) {
+                return EVAL_BODY_INCLUDE;
+            }
+        } else {
+            if (group.isMember(Authenticate.getUser())
+                    || PermissionService.hasAccess(permission, (Degree) program, Authenticate.getUser())) {
+                return EVAL_BODY_INCLUDE;
+            }
+        }
 
-	public String getOperation() {
-		return operation;
-	}
+        return SKIP_BODY;
+    }
 
-	public void setOperation(String operation) {
-		this.operation = operation;
-	}
+    public String getOperation() {
+        return operation;
+    }
 
-	public AcademicProgram getProgram() {
-		return program;
-	}
+    public void setOperation(String operation) {
+        this.operation = operation;
+    }
 
-	public void setProgram(AcademicProgram program) {
-		this.program = program;
-	}
+    public String getPermission() {
+        return permission;
+    }
 
-	public AdministrativeOffice getOffice() {
-		return office;
-	}
+    public void setPermission(String permission) {
+        this.permission = permission;
+    }
 
-	public void setOffice(AdministrativeOffice office) {
-		this.office = office;
-	}
+    public AcademicProgram getProgram() {
+        return program;
+    }
+
+    public void setProgram(AcademicProgram program) {
+        this.program = program;
+    }
+
+    public AdministrativeOffice getOffice() {
+        return office;
+    }
+
+    public void setOffice(AdministrativeOffice office) {
+        this.office = office;
+    }
 }

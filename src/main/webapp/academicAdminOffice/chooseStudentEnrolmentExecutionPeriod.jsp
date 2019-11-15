@@ -55,7 +55,7 @@
 				type="org.fenixedu.academic.domain.AcademicProgram"/>
 
 	<ul class="mvert1">
-		<academic:allowed operation="ENROLMENT_WITHOUT_RULES" program="<%= degree %>">
+		<academic:allowed operation="ENROLMENT_WITHOUT_RULES" permission="ACADEMIC_OFFICE_ENROLMENTS_ADMIN" program="<%= degree %>">
 			<li>
 				<bean:define id="url1">/bolonhaStudentEnrollment.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.externalId"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.externalId"/>&amp;withRules=false</bean:define>
 				<html:link action='<%= url1 %>'><bean:message key="label.course.enrolmentWithoutRules" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
@@ -88,7 +88,7 @@
 			<html:link action='<%= url4 %>'><bean:message key="label.course.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message key="STANDALONE" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 		</li>
 		<br />
-		<academic:allowed operation="MOVE_CURRICULUM_LINES_WITHOUT_RULES" program="<%= degree %>">
+		<academic:allowed operation="MOVE_CURRICULUM_LINES_WITHOUT_RULES" permission="ACADEMIC_OFFICE_CURRICULUM_MOVE_LINES_ADMIN" program="<%= degree %>">
 			<li>
 				<bean:define id="url5">/curriculumLinesLocationManagement.do?method=prepareWithoutRules&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.externalId"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.externalId"/></bean:define>
 				<html:link action='<%= url5 %>'><bean:message key="label.course.moveEnrolments.without.rules" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>

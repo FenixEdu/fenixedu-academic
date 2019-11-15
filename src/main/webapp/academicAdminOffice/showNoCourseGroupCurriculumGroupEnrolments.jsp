@@ -91,7 +91,7 @@
 			If necessary can be moved to superclass
 		--%>
 		<logic:equal name="enrolmentBean" property="groupType" value="STANDALONE">
-			<academic:allowed operation="ENROLMENT_WITHOUT_RULES" program="<%= bean.getStudentCurricularPlan().getDegree() %>">
+			<academic:allowed operation="ENROLMENT_WITHOUT_RULES" permission="ACADEMIC_OFFICE_CURRICULUM_MOVE_LINES_ADMIN" program="<%= bean.getStudentCurricularPlan().getDegree() %>">
 				<html:submit onclick="this.form.method.value='chooseCurricularWithoutRules'; return true;"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.enrol.without.rules"/></html:submit>
 			</academic:allowed>
 		</logic:equal>

@@ -40,6 +40,10 @@
 			<required>true</required>
 		</attribute>
 		<attribute>
+			<name>permission</name>
+			<required>true</required>
+		</attribute>
+		<attribute>
 			<name>program</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -56,6 +60,10 @@
 		<description>Renders content if logged user is not allowed to execute a given academic operation</description>
 		<attribute>
 			<name>operation</name>
+			<required>true</required>
+		</attribute>
+		<attribute>
+			<name>permission</name>
 			<required>true</required>
 		</attribute>
 		<attribute>
