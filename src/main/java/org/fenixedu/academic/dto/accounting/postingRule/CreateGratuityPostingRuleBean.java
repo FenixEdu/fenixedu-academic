@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.joda.time.LocalDate;
 
 public class CreateGratuityPostingRuleBean extends CreatePostingRuleBean {
 
@@ -30,7 +31,6 @@ public class CreateGratuityPostingRuleBean extends CreatePostingRuleBean {
     private List<DegreeCurricularPlan> degreeCurricularPlans;
 
     public CreateGratuityPostingRuleBean() {
-        super();
         this.degreeCurricularPlans = new ArrayList<DegreeCurricularPlan>();
     }
 
