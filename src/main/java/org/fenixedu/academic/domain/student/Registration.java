@@ -1437,7 +1437,7 @@ public class Registration extends Registration_Base {
         Set<AcademicProgram> programsViewFullStudentCurriculum =
                 AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM, user)
                         .collect(Collectors.toSet());
-        programsViewFullStudentCurriculum.addAll(PermissionService.getDegrees("VIEW_FULL_STUDENT_CURRICULUM", user));
+        programsViewFullStudentCurriculum.addAll(PermissionService.getDegrees("ACADEMIC_OFFICE_REGISTRATION_ACCESS", user));
 
         return programsManageRegistration.stream().anyMatch(ap -> ap == degree)
                 || programsViewFullStudentCurriculum.stream().anyMatch(ap -> ap == degree);

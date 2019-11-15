@@ -192,7 +192,7 @@ abstract public class StudentCurricularPlanEnrolment {
     protected void checkUpdateRegistrationAfterConclusion() {
         if (!(AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION,
                 getStudentCurricularPlan().getDegree(), getResponsiblePerson().getUser())
-                || PermissionService.hasAccess("UPDATE_REGISTRATION_AFTER_CONCLUSION", getStudentCurricularPlan().getDegree(),
+                || PermissionService.hasAccess("ACADEMIC_OFFICE_CONCLUSION", getStudentCurricularPlan().getDegree(),
                         getResponsiblePerson().getUser()))) {
             throw new DomainException("error.permissions.cannot.update.registration.after.conclusion.process");
         }

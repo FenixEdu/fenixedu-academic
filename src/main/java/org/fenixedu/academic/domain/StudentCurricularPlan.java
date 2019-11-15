@@ -1229,7 +1229,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         final boolean hasUpdateRegistrationAfterConclusionProcessPermission =
                 AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION,
                         getDegree(), person.getUser())
-                        || PermissionService.hasAccess("UPDATE_REGISTRATION_AFTER_CONCLUSION", getDegree(), person.getUser());
+                        || PermissionService.hasAccess("ACADEMIC_OFFICE_CONCLUSION", getDegree(), person.getUser());
 
         if (courseGroup != null) {
             final CurriculumGroup group = findCurriculumGroupFor(courseGroup);
@@ -1366,9 +1366,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     private void checkPermission(final Person responsiblePerson, final CurriculumLineLocationBean bean) {
 
-        final boolean hasUpdateRegistrationAfterConclusionPermission = AcademicAccessRule.isProgramAccessibleToFunction(
-                AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION, getDegree(), responsiblePerson.getUser())
-                || PermissionService.hasAccess("UPDATE_REGISTRATION_AFTER_CONCLUSION", getDegree(), responsiblePerson.getUser());
+        final boolean hasUpdateRegistrationAfterConclusionPermission =
+                AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION,
+                        getDegree(), responsiblePerson.getUser())
+                        || PermissionService.hasAccess("ACADEMIC_OFFICE_CONCLUSION", getDegree(), responsiblePerson.getUser());
 
         if (bean.getCurriculumGroup().getParentCycleCurriculumGroup() != null
                 && bean.getCurriculumGroup().getParentCycleCurriculumGroup().isConclusionProcessed()
@@ -1509,7 +1510,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         if (enrolment.getParentCycleCurriculumGroup() != null && enrolment.getParentCycleCurriculumGroup().isConclusionProcessed()
                 && !(AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION,
                         getDegree(), person.getUser())
-                        || PermissionService.hasAccess("UPDATE_REGISTRATION_AFTER_CONCLUSION", getDegree(), person.getUser()))) {
+                        || PermissionService.hasAccess("ACADEMIC_OFFICE_CONCLUSION", getDegree(), person.getUser()))) {
             throw new DomainException("error.StudentCurricularPlan.cannot.move.is.not.authorized");
         }
 
@@ -1550,7 +1551,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         if (enrolment.getParentCycleCurriculumGroup() != null && enrolment.getParentCycleCurriculumGroup().isConclusionProcessed()
                 && !(AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION,
                         getDegree(), person.getUser())
-                        || PermissionService.hasAccess("UPDATE_REGISTRATION_AFTER_CONCLUSION", getDegree(), person.getUser()))) {
+                        || PermissionService.hasAccess("ACADEMIC_OFFICE_CONCLUSION", getDegree(), person.getUser()))) {
             throw new DomainException("error.StudentCurricularPlan.cannot.move.is.not.authorized");
         }
 
