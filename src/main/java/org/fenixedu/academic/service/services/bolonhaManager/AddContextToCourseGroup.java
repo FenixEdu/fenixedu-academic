@@ -40,7 +40,7 @@ public class AddContextToCourseGroup {
         if (courseGroup.isRoot()) {
             throw new FenixServiceException("error.cannotAddContextToRoot");
         }
-        parentCourseGroup.addContext(courseGroup, null, getBeginExecutionPeriod(beginExecutionPeriodID),
+        parentCourseGroup.addContext(courseGroup, null, null, getBeginExecutionPeriod(beginExecutionPeriodID),
                 getEndExecutionPeriod(endExecutionPeriodID));
     }
 

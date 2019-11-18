@@ -33,7 +33,7 @@ public class EditContextFromCurricularCourse {
 
     @Atomic
     public static void run(CurricularCourse curricularCourse, Context context, CourseGroup courseGroup, Integer year,
-            Integer semester, String beginExecutionPeriodID, String endExecutionPeriodID) {
+            Integer semester, Integer term, String beginExecutionPeriodID, String endExecutionPeriodID) {
 
         final CurricularPeriod degreeCurricularPeriod =
                 context.getParentCourseGroup().getParentDegreeCurricularPlan().getDegreeStructure();
@@ -66,7 +66,7 @@ public class EditContextFromCurricularCourse {
 
         // ********************************************************
 
-        context.edit(courseGroup, curricularPeriod, getBeginExecutionPeriod(beginExecutionPeriodID),
+        context.edit(courseGroup, curricularPeriod, term, getBeginExecutionPeriod(beginExecutionPeriodID),
                 getEndExecutionPeriod(endExecutionPeriodID));
     }
 

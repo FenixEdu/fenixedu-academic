@@ -93,7 +93,7 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.startElement("tr", this);
 
         encodeName(true);
-        encodeContext(previousContext.getCurricularPeriod());
+        encodeContext(previousContext.getCurricularPeriod(), previousContext.getTerm());
         encodeRegime();
         encodeLoadsAndCredits(previousContext.getCurricularPeriod());
 
@@ -148,12 +148,12 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.writeAttribute("href", href.toString(), null);
     }
 
-    private void encodeContext(CurricularPeriod curricularPeriod) throws IOException {
+    private void encodeContext(CurricularPeriod curricularPeriod, Integer term) throws IOException {
         writer.startElement("td", this);
         writer.writeAttribute("class", "smalltxt", null);
         if (!byYears) {
             writer.writeAttribute("align", "center", null);
-            writer.append(CurricularPeriodLabelFormatter.getFullLabel(curricularPeriod, true));
+            writer.append(CurricularPeriodLabelFormatter.getFullLabel(curricularPeriod, term,true));
         } else {
             writer.append(previousContext.getParentCourseGroup().getName());
         }

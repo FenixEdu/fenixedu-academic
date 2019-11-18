@@ -1051,7 +1051,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public CurricularCourse createCurricularCourse(Double weight, String prerequisites, String prerequisitesEn,
             CurricularStage curricularStage, CompetenceCourse competenceCourse, CourseGroup parentCourseGroup,
-            CurricularPeriod curricularPeriod, ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
+            CurricularPeriod curricularPeriod, Integer term, ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
 
         if (competenceCourse.getCurricularCourse(this) != null) {
             throw new DomainException("competenceCourse.already.has.a.curricular.course.in.degree.curricular.plan");
@@ -1059,14 +1059,14 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         checkIfAnualBeginsInFirstPeriod(competenceCourse, curricularPeriod);
 
         return new CurricularCourse(weight, prerequisites, prerequisitesEn, curricularStage, competenceCourse, parentCourseGroup,
-                curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
+                curricularPeriod, term, beginExecutionPeriod, endExecutionPeriod);
     }
 
     public CurricularCourse createOptionalCurricularCourse(CourseGroup parentCourseGroup, String name, String nameEn,
-            CurricularStage curricularStage, CurricularPeriod curricularPeriod, ExecutionSemester beginExecutionPeriod,
+            CurricularStage curricularStage, CurricularPeriod curricularPeriod, Integer term, ExecutionSemester beginExecutionPeriod,
             ExecutionSemester endExecutionPeriod) {
 
-        return new OptionalCurricularCourse(parentCourseGroup, name, nameEn, curricularStage, curricularPeriod,
+        return new OptionalCurricularCourse(parentCourseGroup, name, nameEn, curricularStage, curricularPeriod, term,
                 beginExecutionPeriod, endExecutionPeriod);
     }
 

@@ -2457,6 +2457,7 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
 
     class degreeStructure.Context  {
         Integer childOrder;
+        Integer term;
     }
 
     class degreeStructure.DegreeModule  {

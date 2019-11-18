@@ -134,7 +134,13 @@
 		<fc:selectOneMenu value="#{CurricularCourseManagement.curricularSemesterID}">
 			<f:selectItems value="#{CurricularCourseManagement.curricularSemesters}" />
 		</fc:selectOneMenu>
-		<h:outputText value="</p></fieldset></div>" escape="false"/>		
+		<h:outputText value="</p>" escape="false"/>
+
+		<h:outputText value="<p><label>#{bolonhaBundle['term']}:</label>" escape="false"/>
+		<fc:selectOneMenu value="#{CurricularCourseManagement.term}">
+			<f:selectItems value="#{CurricularCourseManagement.terms}" />
+		</fc:selectOneMenu>
+		<h:outputText value="</p></fieldset></div>" escape="false"/>
 
 		<h:commandButton alt="#{htmlAltBundle['commandButton.create']}" styleClass="inputbutton" value="#{bolonhaBundle['create']}"
 			action="#{CurricularCourseManagement.createCurricularCourse}"/>

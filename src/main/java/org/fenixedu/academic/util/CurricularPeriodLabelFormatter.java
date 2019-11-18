@@ -33,12 +33,13 @@ import org.fenixedu.commons.i18n.I18N;
  */
 public class CurricularPeriodLabelFormatter {
 
-    public static String getFullLabelI18N(CurricularPeriod curricularPeriod, boolean abbreviated, Locale locale) {
+    public static String getFullLabelI18N(CurricularPeriod curricularPeriod, Integer term, boolean abbreviated, Locale locale) {
         StringBuilder result = new StringBuilder();
         while (curricularPeriod.getParent() != null) {
-            buildLabel(curricularPeriod, result, abbreviated, locale);
+            buildLabel(curricularPeriod, term, result, abbreviated, locale);
 
             curricularPeriod = curricularPeriod.getParent();
+            term = null;
             if (curricularPeriod.getParent() != null) {
                 result.insert(0, ", ");
             }
@@ -46,17 +47,21 @@ public class CurricularPeriodLabelFormatter {
         return result.toString();
     }
 
-    public static String getLabel(CurricularPeriod curricularPeriod, boolean abbreviated) {
+    public static String getLabel(CurricularPeriod curricularPeriod, Integer term, boolean abbreviated) {
         StringBuilder result = new StringBuilder();
-        buildLabel(curricularPeriod, result, abbreviated, I18N.getLocale());
+        buildLabel(curricularPeriod, term, result, abbreviated, I18N.getLocale());
         return result.toString();
     }
 
-    public static String getFullLabel(CurricularPeriod curricularPeriod, boolean abbreviated) {
-        return getFullLabelI18N(curricularPeriod, abbreviated, I18N.getLocale());
+    public static String getFullLabel(CurricularPeriod curricularPeriod, Integer term, boolean abbreviated) {
+        return getFullLabelI18N(curricularPeriod, term, abbreviated, I18N.getLocale());
     }
 
-    private static void buildLabel(CurricularPeriod curricularPeriod, StringBuilder result, boolean abbreviated, Locale locale) {
+    private static void buildLabel(CurricularPeriod curricularPeriod, Integer term, StringBuilder result, boolean abbreviated, Locale locale) {
+        if (term != null) {
+            result.insert(0, term.toString());
+            result.insert(0, " Q");
+        }
         result.insert(0, BundleUtil.getString(Bundle.ENUMERATION, (abbreviated) ? curricularPeriod.getAcademicPeriod()
                 .getAbbreviatedName() : curricularPeriod.getAcademicPeriod().getName()));
         result.insert(0, " ");

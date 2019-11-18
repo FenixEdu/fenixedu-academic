@@ -175,15 +175,15 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
     }
 
     public String getLabel() {
-        return CurricularPeriodLabelFormatter.getLabel(this, false);
+        return CurricularPeriodLabelFormatter.getLabel(this,  null,false);
     }
 
     public String getFullLabel() {
-        return CurricularPeriodLabelFormatter.getFullLabel(this, false);
+        return CurricularPeriodLabelFormatter.getFullLabel(this, null, false);
     }
 
     public String getFullLabel(final Locale locale) {
-        return CurricularPeriodLabelFormatter.getFullLabelI18N(this, false, locale);
+        return CurricularPeriodLabelFormatter.getFullLabelI18N(this, null, false, locale);
     }
 
     @Override
