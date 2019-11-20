@@ -1091,6 +1091,7 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
 
         class degreeStructure.CourseGroup extends degreeStructure.DegreeModule {
         	boolean isOptional;
+        	LocalizedString conclusionTitle;
         }
 
         	class degreeStructure.BranchCourseGroup extends degreeStructure.CourseGroup {
