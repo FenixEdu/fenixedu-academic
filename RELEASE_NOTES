@@ -1,3 +1,4 @@
+25.2.3 (20-11-2019)
 - Improvement: Add conclusionTitle field in CourseGroup
 - Refactor: Added methods for find ExecutionInterval childs
 
