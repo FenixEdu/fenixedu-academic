@@ -1,3 +1,4 @@
+- Bug Fix: Fixed access to CompetenceCourse details functionality 
 - Refactor: Included new access control Permissions to existing AcademicAuthorizations
 
 25.2.3 (20-11-2019)
