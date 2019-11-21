@@ -24,117 +24,70 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.StrutsApplication;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
-@StrutsApplication(bundle = "AcademicAdminOffice", path = "academic-administration", titleKey = "portal.academicAdministration",
-        hint = "Academic Administration", accessGroup = "academic(scope=ADMINISTRATION)")
+@StrutsApplication(bundle = "AcademicAdminOffice", path = "academic-administration", titleKey = "portal.academicAdministration", hint = "Academic Administration", accessGroup = "academic(scope=ADMINISTRATION)")
 @Mapping(path = "/index", module = "academicAdministration", parameter = "/academicAdministration/indexAdmin.jsp")
 public class AcademicAdministrationApplication extends ForwardAction {
 
-    private static final String BUNDLE = "AcademicAdminOffice";
-    private static final String HINT = "Academic Administration";
+	private static final String BUNDLE = "AcademicAdminOffice";
+	private static final String HINT = "Academic Administration";
 
-    @StrutsApplication(bundle = BUNDLE, path = "academic-admin-office", titleKey = "label.academicAdminOffice", hint = HINT,
-            accessGroup = "academic(scope=OFFICE)")
-    @Mapping(path = "/indexOffice", module = "academicAdministration", parameter = "/academicAdministration/indexOffice.jsp")
-    public static class AcademicAdminOfficeApp extends ForwardAction {
-    }
+	@StrutsApplication(bundle = BUNDLE, path = "academic-admin-office", titleKey = "label.academicAdminOffice", hint = HINT, accessGroup = "academic(scope=OFFICE)")
+	@Mapping(path = "/indexOffice", module = "academicAdministration", parameter = "/academicAdministration/indexOffice.jsp")
+	public static class AcademicAdminOfficeApp extends ForwardAction {
+	}
 
-    @StrutsApplication(bundle = BUNDLE, path = "student-listings", titleKey = "label.lists", hint = HINT,
-            accessGroup = "academic(STUDENT_LISTINGS)")
-    public static class AcademicAdminListingsApp {
-    }
+	@StrutsApplication(bundle = BUNDLE, path = "student-listings", titleKey = "label.lists", hint = HINT, accessGroup = "academic(STUDENT_LISTINGS)")
+	public static class AcademicAdminListingsApp {
+	}
 
-    @StrutsApplication(bundle = "ManagerResources", path = "manage-degree-curricular-plans",
-            titleKey = "title.teaching.structure", hint = HINT, accessGroup = "academic(MANAGE_DEGREE_CURRICULAR_PLANS)")
-    public static class AcademicAdminDCPApp {
-    }
+	@StrutsApplication(bundle = "ManagerResources", path = "manage-degree-curricular-plans", titleKey = "title.teaching.structure", hint = HINT, accessGroup = "academic(MANAGE_DEGREE_CURRICULAR_PLANS)")
+	public static class AcademicAdminDCPApp {
+	}
 
-    @StrutsApplication(bundle = BUNDLE, path = "prices", titleKey = "label.pricesManagement", hint = HINT,
-            accessGroup = "academic(MANAGE_PRICES)")
-    public static class AcademicAdminPricesApp {
-    }
+	@StrutsApplication(bundle = BUNDLE, path = "prices", titleKey = "label.pricesManagement", hint = HINT, accessGroup = "#managers")
+	public static class AcademicAdminPricesApp {
+	}
 
-    @StrutsApplication(bundle = BUNDLE, path = "extra-curricular-activities", titleKey = "label.extraCurricularActivities",
-            hint = HINT, accessGroup = "academic(MANAGE_EXTRA_CURRICULAR_ACTIVITIES)")
-    public static class AcademicAdminExtraCurricularApp {
-    }
+	@StrutsApplication(bundle = BUNDLE, path = "extra-curricular-activities", titleKey = "label.extraCurricularActivities", hint = HINT, accessGroup = "academic(MANAGE_EXTRA_CURRICULAR_ACTIVITIES)")
+	public static class AcademicAdminExtraCurricularApp {
+	}
 
-    @StrutsApplication(bundle = BUNDLE, path = "scholarships", titleKey = "label.scolarships", hint = HINT,
-            accessGroup = "academic(REPORT_STUDENTS_UTL_CANDIDATES)")
-    public static class AcademicAdminScholarshipsApp {
-    }
+	@StrutsApplication(bundle = BUNDLE, path = "students", titleKey = "link.studentOperations", hint = HINT, accessGroup = "academic(CREATE_REGISTRATION) | academic(scope=OFFICE)")
+	public static class AcademicAdminStudentsApp {
+	}
 
-    @StrutsApplication(bundle = BUNDLE, path = "students", titleKey = "link.studentOperations", hint = HINT,
-            accessGroup = "academic(CREATE_REGISTRATION) | academic(scope=OFFICE)")
-    public static class AcademicAdminStudentsApp {
-    }
+	@StrutsApplication(bundle = BUNDLE, path = "academic-services", titleKey = "academic.services", hint = HINT, accessGroup = "academic(SERVICE_REQUESTS)")
+	public static class AcademicAdminServicesApp {
+	}
 
-    @StrutsApplication(bundle = BUNDLE, path = "academic-services", titleKey = "academic.services", hint = HINT,
-            accessGroup = "(academic(SERVICE_REQUESTS) | academic(SERVICE_REQUESTS_RECTORAL_SENDING))")
-    public static class AcademicAdminServicesApp {
-    }
+	@StrutsApplication(bundle = BUNDLE, path = "documents", titleKey = "label.documents", hint = HINT, accessGroup = "#managers")
+	public static class AcademicAdminDocumentsApp {
+	}
 
-    @StrutsApplication(bundle = BUNDLE, path = "documents", titleKey = "label.documents", hint = HINT,
-            accessGroup = "academic(MANAGE_DOCUMENTS)")
-    public static class AcademicAdminDocumentsApp {
-    }
+	@StrutsApplication(bundle = "ManagerResources", path = "executions", titleKey = "title.executions", hint = HINT, accessGroup = "academic(MANAGE_EXECUTION_COURSES)")
+	public static class AcademicAdminExecutionsApp {
+	}
 
-    @StrutsApplication(
-            bundle = BUNDLE,
-            path = "candidacies",
-            titleKey = "label.candidacy.count",
-            hint = HINT,
-            accessGroup = "((academic(MANAGE_CANDIDACY_PROCESSES) | academic(MANAGE_INDIVIDUAL_CANDIDACIES)) | academic(MANAGE_MOBILITY_OUTBOUND))")
-    public static class AcademicAdminCandidaciesApp {
-    }
+	@StrutsApplication(bundle = BUNDLE, path = "institutions", titleKey = "label.institutions", hint = HINT, accessGroup = "academic(MANAGE_EXTERNAL_UNITS)")
+	public static class AcademicAdminInstitutionsApp {
+	}
 
-    @StrutsApplication(bundle = "PhdResources", path = "phd", titleKey = "label.phds", hint = HINT,
-            accessGroup = "(academic(MANAGE_PHD_ENROLMENT_PERIODS) | academic(MANAGE_PHD_PROCESSES))")
-    public static class AcademicAdminPhdApp {
-    }
+	@StrutsApplication(bundle = BUNDLE, path = "academic-calendars", titleKey = "label.academic.calendars", hint = HINT, accessGroup = "#managers")
+	public static class AcademicAdminCalendarsApp {
+	}
 
-    @StrutsApplication(
-            bundle = "ManagerResources",
-            path = "executions",
-            titleKey = "title.executions",
-            hint = HINT,
-            accessGroup = "(academic(VIEW_SCHEDULING_OVERSIGHT) | (academic(MANAGE_ENROLMENT_PERIODS) | academic(MANAGE_EXECUTION_COURSES)))")
-    public static class AcademicAdminExecutionsApp {
-    }
+	@StrutsApplication(bundle = BUNDLE, path = "equivalences", titleKey = "label.studentDismissal.equivalences", hint = HINT, accessGroup = "academic(MANAGE_EQUIVALENCES)")
+	public static class AcademicAdminEquivalencesApp {
+	}
 
-    @StrutsApplication(bundle = BUNDLE, path = "marksheets", titleKey = "label.navheader.marksSheet", hint = HINT,
-            accessGroup = "academic(MANAGE_MARKSHEETS)")
-    public static class AcademicAdminMarksheetApp {
-    }
+	@StrutsApplication(bundle = BUNDLE, path = "payments", hint = HINT, titleKey = "label.payments.management", accessGroup = "academic(MANAGE_STUDENT_PAYMENTS_ADV)")
+	public static class AcademicAdminPaymentsApp {
+	}
 
-    @StrutsApplication(bundle = BUNDLE, path = "institutions", titleKey = "label.institutions", hint = HINT,
-            accessGroup = "academic(MANAGE_EXTERNAL_UNITS)")
-    public static class AcademicAdminInstitutionsApp {
-    }
+	// Faces Entry Points
 
-    @StrutsApplication(bundle = BUNDLE, path = "academic-calendars", titleKey = "label.academic.calendars", hint = HINT,
-            accessGroup = "academic(MANAGE_ACADEMIC_CALENDARS)")
-    public static class AcademicAdminCalendarsApp {
-    }
-
-    @StrutsApplication(bundle = BUNDLE, path = "equivalences", titleKey = "label.studentDismissal.equivalences", hint = HINT,
-            accessGroup = "academic(MANAGE_EQUIVALENCES)")
-    public static class AcademicAdminEquivalencesApp {
-    }
-
-    @StrutsApplication(
-            bundle = BUNDLE,
-            path = "payments",
-            hint = HINT,
-            titleKey = "label.payments.management",
-            accessGroup = "(academic(CREATE_SIBS_PAYMENTS_REPORT) | (academic(MANAGE_EVENT_REPORTS) | academic(MANAGE_STUDENT_PAYMENTS_ADV)))")
-    public static class AcademicAdminPaymentsApp {
-    }
-
-    // Faces Entry Points
-
-    @StrutsFunctionality(app = AcademicAdminDCPApp.class, path = "curricular-plans-management",
-            titleKey = "label.manager.course.structure", accessGroup = "academic(MANAGE_DEGREE_CURRICULAR_PLANS)")
-    @Mapping(path = "/bolonha/curricularPlans/curricularPlansManagement", module = "academicAdministration")
-    public static class CurricularPlansManagement extends FacesEntryPoint {
-    }
+	@StrutsFunctionality(app = AcademicAdminDCPApp.class, path = "curricular-plans-management", titleKey = "label.manager.course.structure", accessGroup = "academic(MANAGE_DEGREE_CURRICULAR_PLANS)")
+	@Mapping(path = "/bolonha/curricularPlans/curricularPlansManagement", module = "academicAdministration")
+	public static class CurricularPlansManagement extends FacesEntryPoint {
+	}
 }

@@ -37,6 +37,7 @@ import org.fenixedu.academic.domain.curriculum.EnrollmentCondition;
 import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.domain.treasury.ITreasuryBridgeAPI;
 import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.bennu.core.signals.DomainObjectEvent;
@@ -56,8 +57,10 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
             throw new DomainException("error.StudentCurricularPlan.cannot.enrol.in.propaeudeutics");
         }
 
-        if (!AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.ENROLMENT_WITHOUT_RULES,
-                getStudentCurricularPlan().getDegree(), getResponsiblePerson().getUser())) {
+        if (!(AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.ENROLMENT_WITHOUT_RULES,
+                getStudentCurricularPlan().getDegree(), getResponsiblePerson().getUser())
+                || PermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS_ADMIN", getStudentCurricularPlan().getDegree(),
+                        getResponsiblePerson().getUser()))) {
             checkRegistrationRegime();
         }
 
@@ -187,7 +190,8 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
             if (curriculumModule.isLeaf()) {
                 TreasuryBridgeAPIFactory.implementation().standaloneUnenrolment((Enrolment) curriculumModule);
 
-                //Signal.emit(ITreasuryBridgeAPI.STANDALONE_UNENROLMENT, new DomainObjectEvent<Enrolment>((Enrolment) curriculumModule));
+                // Signal.emit(ITreasuryBridgeAPI.STANDALONE_UNENROLMENT, new
+                // DomainObjectEvent<Enrolment>((Enrolment) curriculumModule));
                 curriculumModule.delete();
             }
         }

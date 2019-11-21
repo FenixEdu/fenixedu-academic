@@ -107,7 +107,7 @@
 </logic:notEmpty>
 
 <p class="mvert05">
-	<academic:allowed operation="EDIT_STUDENT_PERSONAL_DATA">
+	<academic:allowed operation="EDIT_STUDENT_PERSONAL_DATA" permission="ACADEMIC_OFFICE_PERSONAL_DATA">
 		<span class="pleft05">
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 			<html:link page="/manageRegistrationState.do?method=viewRegistrationStateLog" paramId="registrationId" paramName="registration" paramProperty="externalId">

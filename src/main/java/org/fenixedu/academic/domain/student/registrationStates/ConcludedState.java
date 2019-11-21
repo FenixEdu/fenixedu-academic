@@ -22,6 +22,7 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.util.workflow.IState;
 import org.fenixedu.academic.domain.util.workflow.StateBean;
@@ -29,9 +30,9 @@ import org.fenixedu.academic.predicate.AccessControl;
 import org.joda.time.DateTime;
 
 /**
- * 
+ *
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- * 
+ *
  */
 public class ConcludedState extends ConcludedState_Base {
 
@@ -55,7 +56,9 @@ public class ConcludedState extends ConcludedState_Base {
     private void checkRulesToDelete() {
         final Person person = AccessControl.getPerson();
         if (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.REPEAT_CONCLUSION_PROCESS,
-                getRegistration().getDegree(), person.getUser())) {
+                getRegistration().getDegree(), person.getUser())
+                || PermissionService.hasAccess("ACADEMIC_OFFICE_CONCLUSION_REPEAT", getRegistration().getDegree(),
+                        person.getUser())) {
             return;
         }
     }

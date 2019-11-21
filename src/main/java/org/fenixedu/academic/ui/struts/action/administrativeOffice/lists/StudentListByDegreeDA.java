@@ -54,6 +54,7 @@ import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
+import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
@@ -116,10 +117,13 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             Set<DegreeType> degreeTypesForOperation = AcademicAccessRule
                     .getDegreeTypesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
                     .collect(Collectors.toSet());
-            bean = new SearchStudentsByDegreeParametersBean(degreeTypesForOperation,
-                    AcademicAccessRule
-                            .getDegreesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
-                            .collect(Collectors.toSet()));
+            degreeTypesForOperation.addAll(PermissionService.getDegreeTypes("ACADEMIC_OFFICE_REPORTS", Authenticate.getUser()));
+
+            Set<Degree> degreesForOperation = AcademicAccessRule
+                    .getDegreesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
+                    .collect(Collectors.toSet());
+            degreesForOperation.addAll(PermissionService.getDegrees("ADMIN_OFFICE_REPORTS", Authenticate.getUser()));
+            bean = new SearchStudentsByDegreeParametersBean(degreeTypesForOperation, degreesForOperation);
         }
         return bean;
     }
@@ -156,8 +160,8 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
         }
 
         stream = stream.filter(
-                dcp -> (!dcp.getDegreeType().isEmpty() && searchbean.getAdministratedDegreeTypes().contains(dcp.getDegreeType()))
-                        || (dcp.getDegreeType().isEmpty() && searchbean.getAdministratedDegrees().contains(dcp.getDegree())));
+                dcp -> !dcp.getDegreeType().isEmpty() && searchbean.getAdministratedDegreeTypes().contains(dcp.getDegreeType())
+                        || dcp.getDegreeType().isEmpty() && searchbean.getAdministratedDegrees().contains(dcp.getDegree()));
 
         stream.forEach(dcp -> {
             dcp.getRegistrations(executionYear, registrations);
@@ -361,8 +365,8 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             spreadsheet.newRow();
 
             final Degree degree = registration.getDegree();
-            spreadsheet.addCell(!(StringUtils.isEmpty(degree.getSigla())) ? degree.getSigla() : degree.getNameFor(executionYear)
-                    .getContent());
+            spreadsheet.addCell(
+                    !StringUtils.isEmpty(degree.getSigla()) ? degree.getSigla() : degree.getNameFor(executionYear).getContent());
             spreadsheet.addCell(degree.getNameFor(executionYear));
             spreadsheet.addCell(registration.getNumber().toString());
 
@@ -539,7 +543,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
 
     private void fillSpreadSheetBolonhaInfo(StyledExcelSpreadsheet spreadsheet, Registration registration,
             CycleCurriculumGroup cycle) {
-        if ((cycle != null) && (!cycle.isExternal())) {
+        if (cycle != null && !cycle.isExternal()) {
             RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration, cycle);
             fillSpreadSheetRegistrationInfo(spreadsheet, registrationConclusionBean, registrationConclusionBean.isConcluded());
         } else {
@@ -645,9 +649,11 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
 
     protected Set<CycleType> getAdministratedCycleTypes() {
         Set<CycleType> cycles = new HashSet<CycleType>();
-        for (DegreeType degreeType : AcademicAccessRule
+        Set<DegreeType> programs = AcademicAccessRule
                 .getDegreeTypesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
-                .collect(Collectors.toSet())) {
+                .collect(Collectors.toSet());
+        programs.addAll(PermissionService.getDegreeTypes("ACADEMIC_OFFICE_REPORTS", Authenticate.getUser()));
+        for (DegreeType degreeType : programs) {
             cycles.addAll(degreeType.getCycleTypes());
         }
         return cycles;

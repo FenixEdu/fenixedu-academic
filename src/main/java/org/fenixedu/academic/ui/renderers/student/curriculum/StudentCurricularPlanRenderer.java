@@ -25,9 +25,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.fenixedu.academic.domain.AcademicProgram;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
@@ -49,6 +51,7 @@ import org.fenixedu.academic.domain.accessControl.academicAdministration.Academi
 import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleType;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
+import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.curriculum.ConclusionProcess;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
@@ -935,12 +938,9 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
         /**
          * List the enrollment evaluations bounded to an enrollment
          *
-         * @param mainTable
-         *            - Main HTML Table
-         * @param evaluation
-         *            - List of enrollment evaluations
-         * @param level
-         *            - The level of the evaluation rows
+         * @param mainTable - Main HTML Table
+         * @param evaluation - List of enrollment evaluations
+         * @param level - The level of the evaluation rows
          */
 
         protected void generateEnrolmentEvaluationRows(HtmlTable mainTable, EnrolmentEvaluation evaluation, int level) {
@@ -1240,7 +1240,9 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
             if (registration != null && programConclusion != null) {
                 boolean canManageConclusion = AcademicAuthorizationGroup
-                        .get(AcademicOperationType.MANAGE_CONCLUSION, registration.getDegree()).isMember(Authenticate.getUser());
+                        .get(AcademicOperationType.MANAGE_CONCLUSION, registration.getDegree()).isMember(Authenticate.getUser())
+                        || PermissionService.hasAccess("ACADEMIC_OFFICE_CONCLUSION", registration.getDegree(),
+                                Authenticate.getUser());
                 if (canManageConclusion) {
                     final HtmlLink result = new HtmlLink();
                     result.setText(text);
@@ -1351,9 +1353,11 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
     public static boolean isViewerAllowedToViewFullStudentCurriculum(final StudentCurricularPlan studentCurricularPlan) {
         final Person person = AccessControl.getPerson();
         final Degree degree = studentCurricularPlan.getDegree();
-        return AcademicAccessRule
+        Set<AcademicProgram> programs = AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM, person.getUser())
-                .anyMatch(p -> p == degree);
+                .collect(Collectors.toSet());
+        programs.addAll(PermissionService.getDegrees("ACADEMIC_OFFICE_REGISTRATION_ACCESS", person.getUser()));
+        return programs.stream().anyMatch(p -> p == degree);
     }
 
 }

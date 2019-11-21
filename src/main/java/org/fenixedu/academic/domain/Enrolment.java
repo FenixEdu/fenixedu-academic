@@ -47,6 +47,7 @@ import org.fenixedu.academic.domain.enrolment.EnroledEnrolmentWrapper;
 import org.fenixedu.academic.domain.enrolment.ExternalDegreeEnrolmentWrapper;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.domain.log.EnrolmentLog;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.student.Registration;
@@ -511,7 +512,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
         temporaryImprovement.delete();
 
-        // improvement may be on the same semester, in which case we don't want to remove the Attends
+        // improvement may be on the same semester, in which case we don't want to
+        // remove the Attends
         if (getExecutionInterval() != improvementInterval) {
             final Attends attends = getAttendsFor(improvementInterval);
             if (attends != null) {
@@ -627,7 +629,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     public static boolean isOneYearAfter(final ExecutionInterval improvementInterval, final ExecutionInterval enrolmentInterval) {
         final ExecutionInterval nextExecutionPeriod = enrolmentInterval.getNext();
-        return (nextExecutionPeriod == null) ? false : improvementInterval == nextExecutionPeriod.getNext();
+        return nextExecutionPeriod == null ? false : improvementInterval == nextExecutionPeriod.getNext();
     }
 
     static abstract public class EnrolmentPredicate implements java.util.function.Predicate<Enrolment> {
@@ -713,7 +715,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
             }
 
             final boolean isServices =
-                    AcademicAuthorizationGroup.get(AcademicOperationType.STUDENT_ENROLMENTS).isMember(Authenticate.getUser());
+                    AcademicAuthorizationGroup.get(AcademicOperationType.STUDENT_ENROLMENTS).isMember(Authenticate.getUser())
+                            || PermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS", Authenticate.getUser());
             return considerThisEnrolmentNormalEnrolments(enrolment)
                     || considerThisEnrolmentPropaedeuticEnrolments(enrolment, isServices)
                     || considerThisEnrolmentExtraCurricularEnrolments(enrolment, isServices)
@@ -810,7 +813,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     /**
-     * @deprecated Please use Enrolment.hasImprovementFor(ExecutionSemester) where possible
+     * @deprecated Please use Enrolment.hasImprovementFor(ExecutionSemester) where
+     *             possible
      */
     @Deprecated
     final public boolean hasImprovement() {
@@ -1252,8 +1256,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
      * CourseLoadRequests, ExamDateCertificateRequests)
      *
      * @param optionalEnrolment
-     * @param curriculumGroup
-     *            : new CurriculumGroup for Enrolment
+     * @param curriculumGroup : new CurriculumGroup for Enrolment
      * @return Enrolment
      */
     static Enrolment createBasedOn(final OptionalEnrolment optionalEnrolment, final CurriculumGroup curriculumGroup) {
@@ -1355,6 +1358,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return getExecutionInterval();
     }
 
+    @Override
     public ExecutionInterval getExecutionInterval() {
         return super.getExecutionPeriod();
     }

@@ -27,6 +27,7 @@ import org.fenixedu.academic.domain.AcademicProgram;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
+import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.dto.student.OptionalCurricularCoursesLocationBean.OptionalEnrolmentLocationBean;
@@ -45,9 +46,10 @@ public class CurriculumGroupsProviderForOptionalEnrolmentsLocationManagement imp
         final Collection<CurriculumGroup> result =
                 new TreeSet<CurriculumGroup>(CurriculumGroup.COMPARATOR_BY_FULL_PATH_NAME_AND_ID);
 
-        final Set<AcademicProgram> programs =
-                AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS,
-                        Authenticate.getUser()).collect(Collectors.toSet());
+        final Set<AcademicProgram> programs = AcademicAccessRule
+                .getProgramsAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, Authenticate.getUser())
+                .collect(Collectors.toSet());
+        programs.addAll(PermissionService.getDegrees("ACADEMIC_OFFICE_ENROLMENTS", Authenticate.getUser()));
 
         for (final Registration registration : bean.getStudent().getRegistrationsSet()) {
 

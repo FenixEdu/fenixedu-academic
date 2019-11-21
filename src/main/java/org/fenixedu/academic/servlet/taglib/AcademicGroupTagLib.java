@@ -25,9 +25,11 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import org.fenixedu.academic.domain.AcademicProgram;
+import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 public class AcademicGroupTagLib extends TagSupport {
@@ -35,6 +37,8 @@ public class AcademicGroupTagLib extends TagSupport {
     private static final long serialVersionUID = -8050082985849930419L;
 
     private String operation;
+
+    private String permission;
 
     private AcademicProgram program;
 
@@ -48,9 +52,18 @@ public class AcademicGroupTagLib extends TagSupport {
                 office != null ? Collections.singleton(office) : Collections.<AdministrativeOffice> emptySet();
         AcademicAuthorizationGroup group =
                 AcademicAuthorizationGroup.get(AcademicOperationType.valueOf(operation), programs, offices, null);
-        if (group.isMember(Authenticate.getUser())) {
-            return EVAL_BODY_INCLUDE;
+
+        if (program == null) {
+            if (group.isMember(Authenticate.getUser()) || PermissionService.hasAccess(permission, Authenticate.getUser())) {
+                return EVAL_BODY_INCLUDE;
+            }
+        } else {
+            if (group.isMember(Authenticate.getUser())
+                    || PermissionService.hasAccess(permission, (Degree) program, Authenticate.getUser())) {
+                return EVAL_BODY_INCLUDE;
+            }
         }
+
         return SKIP_BODY;
     }
 
@@ -60,6 +73,14 @@ public class AcademicGroupTagLib extends TagSupport {
 
     public void setOperation(String operation) {
         this.operation = operation;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
     }
 
     public AcademicProgram getProgram() {

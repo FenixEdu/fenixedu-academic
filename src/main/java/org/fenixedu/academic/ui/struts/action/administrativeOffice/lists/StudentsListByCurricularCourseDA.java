@@ -17,7 +17,7 @@
  * along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * 
+ *
  */
 package org.fenixedu.academic.ui.struts.action.administrativeOffice.lists;
 
@@ -50,6 +50,7 @@ import org.fenixedu.academic.domain.accessControl.academicAdministration.Academi
 import org.fenixedu.academic.domain.contacts.PartyContact;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.Context;
+import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
 import org.fenixedu.academic.dto.academicAdministration.SearchStudentsByCurricularCourseParametersBean;
@@ -74,7 +75,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 /**
  * @author - Angela Almeida (argelina@ist.utl.pt)
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- * 
+ *
  */
 @StrutsFunctionality(app = AcademicAdminListingsApp.class, path = "students-by-curricular-course",
         titleKey = "link.studentsListByCurricularCourse", accessGroup = "academic(STUDENT_LISTINGS)")
@@ -104,9 +105,11 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
     private SearchStudentsByCurricularCourseParametersBean getOrCreateSearchBean() {
         SearchStudentsByCurricularCourseParametersBean bean = getRenderedObject("searchBean");
         if (bean == null) {
-            bean = new SearchStudentsByCurricularCourseParametersBean(AcademicAccessRule
+            Set<Degree> degrees = AcademicAccessRule
                     .getDegreesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
-                    .collect(Collectors.toSet()));
+                    .collect(Collectors.toSet());
+            degrees.addAll(PermissionService.getDegrees("ACADEMIC_OFFICE_REPORTS", Authenticate.getUser()));
+            bean = new SearchStudentsByCurricularCourseParametersBean(degrees);
         }
         return bean;
     }
@@ -235,8 +238,8 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
             spreadsheet.addCell(registration.getPerson().getName());
             spreadsheet.addCell(registration.getRegistrationProtocol().getCode());
             Degree degree = registration.getDegree();
-            spreadsheet.addCell(!(StringUtils.isEmpty(degree.getSigla())) ? degree.getSigla() : degree.getNameFor(executionYear)
-                    .getContent());
+            spreadsheet.addCell(
+                    !StringUtils.isEmpty(degree.getSigla()) ? degree.getSigla() : degree.getNameFor(executionYear).getContent());
             spreadsheet.addCell(registrationWithStateForExecutionYearBean.getEnrollmentState().getDescription());
             spreadsheet.addCell(registrationWithStateForExecutionYearBean.getEvaluationSeason().getName().getContent());
             if (detailed) {
@@ -282,6 +285,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
         Set<Degree> degreesToInclude =
                 AcademicAccessRule.getDegreesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
                         .collect(Collectors.toSet());
+        degreesToInclude.addAll(PermissionService.getDegrees("ACADEMIC_OFFICE_REPORTS", Authenticate.getUser()));
 
         final String filename = getResourceMessage("label.statistics") + "_" + executionYear.getName().replace('/', '-');
         final Spreadsheet spreadsheet = new Spreadsheet(filename);
@@ -350,8 +354,10 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
     }
 
     protected Set<DegreeType> getAdministratedDegreeTypes() {
-        return AcademicAccessRule
+        Set<DegreeType> programs = AcademicAccessRule
                 .getDegreeTypesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
                 .collect(Collectors.toSet());
+        programs.addAll(PermissionService.getDegreeTypes("ACADEMIC_OFFICE_REPORTS", Authenticate.getUser()));
+        return programs;
     }
 }

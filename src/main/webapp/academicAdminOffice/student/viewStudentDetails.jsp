@@ -67,7 +67,7 @@
         <bean:message key="link.student.viewPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
     </html:link>
 
-    <academic:allowed operation="EDIT_STUDENT_PERSONAL_DATA">
+    <academic:allowed operation="EDIT_STUDENT_PERSONAL_DATA" permission="ACADEMIC_OFFICE_PERSONAL_DATA">
         <span class="pleft05">
             <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
             <html:link page="/student.do?method=prepareEditPersonalData" paramId="studentID" paramName="student" paramProperty="externalId">
@@ -83,7 +83,7 @@
     </academic:allowed>
 </p>
 
-<academic:allowed operation="MANAGE_REGISTRATIONS">
+<academic:allowed operation="MANAGE_REGISTRATIONS" permission="ACADEMIC_OFFICE_REGISTRATION_ACCESS">
 <h3 class="mtop15 mbottom025"><bean:message key="label.studentRegistrations" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:view name="student" property="registrations">
     <fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="<%= Registration.class.getName() %>">
@@ -124,8 +124,8 @@
 </fr:view>
 </academic:allowed>
 
-<academic:notAllowed operation="MANAGE_REGISTRATIONS">
-    <academic:allowed operation="VIEW_FULL_STUDENT_CURRICULUM">
+<academic:notAllowed operation="MANAGE_REGISTRATIONS" permission="ACADEMIC_OFFICE_REGISTRATION_ACCESS">
+    <academic:allowed operation="VIEW_FULL_STUDENT_CURRICULUM" permission="ACADEMIC_OFFICE_REGISTRATION_ACCESS">
         <h3 class="mtop15 mbottom025">
             <bean:message key="label.studentRegistrations" bundle="ACADEMIC_OFFICE_RESOURCES"/>
         </h3>
@@ -150,7 +150,7 @@
 <!-- Student Status -->
 <h3 class="mbottom025"><bean:message key="label.statutes" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 
-<academic:allowed operation="MANAGE_STATUTES">
+<academic:allowed operation="MANAGE_STATUTES" permission="ACADEMIC_OFFICE_STATUTES">
 <p class="mvert05">
     <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
     <html:link action="/studentStatutes.do?method=prepare" paramName="student" paramProperty="externalId" paramId="studentId">
@@ -183,7 +183,7 @@
 </fr:view>
 
 <!-- Extra Curricular Activities -->
-<academic:allowed operation="MANAGE_EXTRA_CURRICULAR_ACTIVITIES">
+<academic:allowed operation="MANAGE_EXTRA_CURRICULAR_ACTIVITIES" permission="ACADEMIC_OFFICE_ENROLMENTS">
 <h3 class="mbottom025"><bean:message key="label.extraCurricularActivities" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <p class="mvert05">
     <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
@@ -196,7 +196,7 @@
 <!-- Payments -->
 <bean:define id="student" name="student" type="org.fenixedu.academic.domain.student.Student" />
 
-<academic:allowed operation="MANAGE_STUDENT_PAYMENTS">
+<academic:allowed operation="MANAGE_STUDENT_PAYMENTS" permission="TREASURY">
 <% if(TreasuryBridgeAPIFactory.implementation().isPersonAccountTreasuryManagementAvailable(student.getPerson())) { %>
 <h3 class="mbottom025"><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <p class="mtop05 mbottom15">

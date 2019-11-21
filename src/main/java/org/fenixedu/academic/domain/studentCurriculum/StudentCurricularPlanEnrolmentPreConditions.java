@@ -28,6 +28,7 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
+import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.LocalDate;
@@ -76,10 +77,10 @@ public class StudentCurricularPlanEnrolmentPreConditions {
     }
 
     /**
-     * 
+     *
      * Check if student has any debts that prevent him to enrol in curricular
      * courses
-     * 
+     *
      * @param scp
      * @return EnrolmentPreConditionResult
      */
@@ -87,7 +88,8 @@ public class StudentCurricularPlanEnrolmentPreConditions {
         final Person authenticatedPerson = Authenticate.getUser().getPerson();
         final boolean hasAcademicalAuthorizationToEnrol =
                 AcademicAccessRule.isMember(Authenticate.getUser(), AcademicOperationType.STUDENT_ENROLMENTS,
-                        Collections.singleton(scp.getDegree()), Collections.singleton(scp.getAdministrativeOffice()));
+                        Collections.singleton(scp.getDegree()), Collections.singleton(scp.getAdministrativeOffice()))
+                        || PermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS", scp.getDegree(), Authenticate.getUser());
 
         final boolean isStudentEnrolling = authenticatedPerson.getStudent() != null
                 && authenticatedPerson.getStudent() == scp.getRegistration().getStudent();

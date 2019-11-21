@@ -7,8 +7,7 @@ import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
-@StrutsFunctionality(app = AcademicAdminCalendarsApp.class, path = "manage-holidays", titleKey = "label.manage.holidays",
-        accessGroup = "academic(MANAGE_ACADEMIC_CALENDARS)")
+@StrutsFunctionality(app = AcademicAdminCalendarsApp.class, path = "manage-holidays", titleKey = "label.manage.holidays", accessGroup = "#managers")
 @Mapping(module = "academicAdministration", path = "/manageHolidays")
 @Forwards(@Forward(name = "showHolidays", path = "/manager/showHolidays.jsp"))
 public class AcademicHolidaysManagementDA extends ManageHolidaysDA {

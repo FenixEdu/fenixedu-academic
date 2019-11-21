@@ -115,7 +115,7 @@
 			<logic:equal name="<%=PresentationConstants.EXECUTION_COURSE%>" property="executionCourse.splittable" value="true" >
 			<logic:present name="sessionBean" property="executionDegree">
 			<bean:define id="degree" name="sessionBean" property="executionDegree.degree"/>
-			<academic:allowed operation="MANAGE_EXECUTION_COURSES_ADV" program="<%= (AcademicProgram) degree %>">
+			<academic:allowed operation="MANAGE_EXECUTION_COURSES_ADV" permission="ACADEMIC_PLANNING_EXECUTIONS" program="<%= (AcademicProgram) degree %>">
 			|
 			<html:link module="/academicAdministration"
 					   page="<%="/seperateExecutionCourse.do?method=prepareTransfer" 
@@ -154,7 +154,7 @@
 								<logic:equal name="<%=PresentationConstants.EXECUTION_COURSE%>" property="canRemoveCurricularCourses" value="true">
 								<logic:present name="sessionBean" property="executionDegree">
 								<bean:define id="degree" name="sessionBean" property="executionDegree.degree"/>
-								<academic:allowed operation="MANAGE_EXECUTION_COURSES_ADV" program="<%= (AcademicProgram) degree %>">
+								<academic:allowed operation="MANAGE_EXECUTION_COURSES_ADV" permission="ACADEMIC_PLANNING_EXECUTIONS" program="<%= (AcademicProgram) degree %>">
 								<th class="listClasses-header">
 									&nbsp;
 								</th>
@@ -178,7 +178,7 @@
 									<logic:equal name="<%=PresentationConstants.EXECUTION_COURSE%>" property="canRemoveCurricularCourses" value="true">
 									<logic:present name="sessionBean" property="executionDegree">
 									<bean:define id="degree" name="sessionBean" property="executionDegree.degree"/>
-									<academic:allowed operation="MANAGE_EXECUTION_COURSES_ADV" program="<%= (AcademicProgram) degree %>">
+									<academic:allowed operation="MANAGE_EXECUTION_COURSES_ADV" permission="ACADEMIC_PLANNING_EXECUTIONS" program="<%= (AcademicProgram) degree %>">
 									<td class="listClasses">
 										&nbsp;
 										<bean:define id="dissociateConfirm">

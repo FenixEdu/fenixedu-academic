@@ -27,7 +27,9 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
+import org.fenixedu.academic.domain.AcademicProgram;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionInterval;
@@ -44,6 +46,7 @@ import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.EnrollmentDomainException;
+import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
@@ -177,16 +180,20 @@ abstract public class StudentCurricularPlanEnrolment {
 
     protected void checkEnrolmentWithoutRules() {
         if (isEnrolmentWithoutRules()
-                && !AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.ENROLMENT_WITHOUT_RULES,
+                && !(AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.ENROLMENT_WITHOUT_RULES,
                         getStudentCurricularPlan().getDegree(), getResponsiblePerson().getUser())
+                        || PermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS_ADMIN", getStudentCurricularPlan().getDegree(),
+                                getResponsiblePerson().getUser()))
                 && !isResponsibleInternationalRelationOffice()) {
             throw new DomainException("error.permissions.cannot.enrol.without.rules");
         }
     }
 
     protected void checkUpdateRegistrationAfterConclusion() {
-        if (!AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION,
-                getStudentCurricularPlan().getDegree(), getResponsiblePerson().getUser())) {
+        if (!(AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION,
+                getStudentCurricularPlan().getDegree(), getResponsiblePerson().getUser())
+                || PermissionService.hasAccess("ACADEMIC_OFFICE_CONCLUSION", getStudentCurricularPlan().getDegree(),
+                        getResponsiblePerson().getUser()))) {
             throw new DomainException("error.permissions.cannot.update.registration.after.conclusion.process");
         }
     }
@@ -342,9 +349,11 @@ abstract public class StudentCurricularPlanEnrolment {
     // Old AcademicAdminOffice role check
     protected boolean isResponsiblePersonAllowedToEnrolStudents() {
         final Degree degree = getStudentCurricularPlan().getDegree();
-        return AcademicAccessRule
+        Set<AcademicProgram> programs = AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, getResponsiblePerson().getUser())
-                .anyMatch(p -> p == degree);
+                .collect(Collectors.toSet());
+        programs.addAll(PermissionService.getDegrees("ACADEMIC_OFFICE_ENROLMENTS", getResponsiblePerson().getUser()));
+        return programs.stream().anyMatch(p -> p == degree);
     }
 
     protected boolean isResponsibleInternationalRelationOffice() {
@@ -385,6 +394,7 @@ abstract public class StudentCurricularPlanEnrolment {
 
     static private Supplier<EnrolmentManagerFactory> ENROLMENT_MANAGER_FACTORY = () -> new EnrolmentManagerFactory() {
 
+        @Override
         public StudentCurricularPlanEnrolment createManager(final EnrolmentContext enrolmentContext) {
 
             if (enrolmentContext.isNormal()) {

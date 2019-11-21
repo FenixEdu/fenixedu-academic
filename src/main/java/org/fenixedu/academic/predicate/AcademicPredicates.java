@@ -27,6 +27,7 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
+import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 public class AcademicPredicates {
@@ -38,6 +39,7 @@ public class AcademicPredicates {
             allowedDegrees.addAll(AcademicAccessRule
                     .getDegreesAccessibleToFunction(AcademicOperationType.MANAGE_DEGREE_CURRICULAR_PLANS, Authenticate.getUser())
                     .collect(Collectors.toSet()));
+            allowedDegrees.addAll(PermissionService.getDegrees("CURRICULAR_MANAGEMENT_DEGREES", Authenticate.getUser()));
             return allowedDegrees.contains(degree);
         };
     };
@@ -46,7 +48,8 @@ public class AcademicPredicates {
         @Override
         public boolean evaluate(final Object program) {
             return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_EXECUTION_COURSES,
-                    (AcademicProgram) program, Authenticate.getUser());
+                    (AcademicProgram) program, Authenticate.getUser())
+                    || PermissionService.hasAccess("ACADEMIC_PLANNING_EXECUTIONS", (Degree) program, Authenticate.getUser());
         };
     };
 
@@ -54,7 +57,8 @@ public class AcademicPredicates {
         @Override
         public boolean evaluate(final Object program) {
             return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_EXECUTION_COURSES_ADV,
-                    (AcademicProgram) program, Authenticate.getUser());
+                    (AcademicProgram) program, Authenticate.getUser())
+                    || PermissionService.hasAccess("ACADEMIC_PLANNING_EXECUTIONS", (Degree) program, Authenticate.getUser());
         };
     };
 
@@ -62,7 +66,8 @@ public class AcademicPredicates {
         @Override
         public boolean evaluate(final Object unused) {
             return AcademicAuthorizationGroup.get(AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM)
-                    .isMember(Authenticate.getUser());
+                    .isMember(Authenticate.getUser())
+                    || PermissionService.hasAccess("ACADEMIC_OFFICE_REGISTRATION_ACCESS", Authenticate.getUser());
         };
     };
 }

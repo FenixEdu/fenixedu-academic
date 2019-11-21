@@ -53,6 +53,7 @@ import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.domain.studentCurriculum.BranchCurriculumGroup;
@@ -676,7 +677,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
         for (final CurriculumLine curriculumLine : this.getAllCurriculumLines()) {
             final ExecutionInterval executionInterval = curriculumLine.getExecutionInterval();
-            if (result == null || (executionInterval != null && result.isBefore(executionInterval.getExecutionYear()))) {
+            if (result == null || executionInterval != null && result.isBefore(executionInterval.getExecutionYear())) {
                 result = executionInterval.getExecutionYear();
             }
         }
@@ -860,7 +861,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     private boolean isThisCurricularCoursesInTheList(final CurricularCourse curricularCourse,
             List<CurricularCourse> curricularCourses) {
         for (CurricularCourse otherCourse : curricularCourses) {
-            if ((curricularCourse == otherCourse) || haveSameCompetence(curricularCourse, otherCourse)) {
+            if (curricularCourse == otherCourse || haveSameCompetence(curricularCourse, otherCourse)) {
                 return true;
             }
         }
@@ -870,7 +871,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     private boolean haveSameCompetence(CurricularCourse course1, CurricularCourse course2) {
         CompetenceCourse comp1 = course1.getCompetenceCourse();
         CompetenceCourse comp2 = course2.getCompetenceCourse();
-        return (comp1 != null) && (comp1 == comp2);
+        return comp1 != null && comp1 == comp2;
     }
 
     // -------------------------------------------------------------
@@ -911,9 +912,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     /**
      * Has special season in given semester if is enroled in special season in
      * previous semester
-     * 
+     *
      * @param executionInterval
-     * 
+     *
      */
     public boolean hasSpecialSeasonFor(final ExecutionInterval executionInterval) {
         final ExecutionInterval interval = executionInterval.getPrevious();
@@ -1133,7 +1134,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     /**
      * Note that this method must not use the ExtraCurriculumGroup due to the
      * pre-Bolonha SCPs
-     * 
+     *
      * @return get propaedeutic enrolments
      */
     final public Collection<Enrolment> getPropaedeuticEnrolments() {
@@ -1225,8 +1226,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
         final Person person = AccessControl.getPerson();
 
-        final boolean hasUpdateRegistrationAfterConclusionProcessPermission = AcademicAccessRule.isProgramAccessibleToFunction(
-                AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION, getDegree(), person.getUser());
+        final boolean hasUpdateRegistrationAfterConclusionProcessPermission =
+                AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION,
+                        getDegree(), person.getUser())
+                        || PermissionService.hasAccess("ACADEMIC_OFFICE_CONCLUSION", getDegree(), person.getUser());
 
         if (courseGroup != null) {
             final CurriculumGroup group = findCurriculumGroupFor(courseGroup);
@@ -1281,7 +1284,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     final public Double getCreditsConcludedForCourseGroup(final CourseGroup courseGroup) {
         final CurriculumGroup curriculumGroup = findCurriculumGroupFor(courseGroup);
-        return (curriculumGroup == null) ? Double.valueOf(0d) : curriculumGroup.getCreditsConcluded();
+        return curriculumGroup == null ? Double.valueOf(0d) : curriculumGroup.getCreditsConcluded();
     }
 
     public boolean isLastStudentCurricularPlanFromRegistration() {
@@ -1363,8 +1366,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     private void checkPermission(final Person responsiblePerson, final CurriculumLineLocationBean bean) {
 
-        final boolean hasUpdateRegistrationAfterConclusionPermission = AcademicAccessRule.isProgramAccessibleToFunction(
-                AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION, getDegree(), responsiblePerson.getUser());
+        final boolean hasUpdateRegistrationAfterConclusionPermission =
+                AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION,
+                        getDegree(), responsiblePerson.getUser())
+                        || PermissionService.hasAccess("ACADEMIC_OFFICE_CONCLUSION", getDegree(), responsiblePerson.getUser());
 
         if (bean.getCurriculumGroup().getParentCycleCurriculumGroup() != null
                 && bean.getCurriculumGroup().getParentCycleCurriculumGroup().isConclusionProcessed()
@@ -1503,8 +1508,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         final Person person = AccessControl.getPerson();
 
         if (enrolment.getParentCycleCurriculumGroup() != null && enrolment.getParentCycleCurriculumGroup().isConclusionProcessed()
-                && !AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION,
-                        getDegree(), person.getUser())) {
+                && !(AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION,
+                        getDegree(), person.getUser())
+                        || PermissionService.hasAccess("ACADEMIC_OFFICE_CONCLUSION", getDegree(), person.getUser()))) {
             throw new DomainException("error.StudentCurricularPlan.cannot.move.is.not.authorized");
         }
 
@@ -1543,8 +1549,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         final Person person = AccessControl.getPerson();
 
         if (enrolment.getParentCycleCurriculumGroup() != null && enrolment.getParentCycleCurriculumGroup().isConclusionProcessed()
-                && !AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION,
-                        getDegree(), person.getUser())) {
+                && !(AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION,
+                        getDegree(), person.getUser())
+                        || PermissionService.hasAccess("ACADEMIC_OFFICE_CONCLUSION", getDegree(), person.getUser()))) {
             throw new DomainException("error.StudentCurricularPlan.cannot.move.is.not.authorized");
         }
 
@@ -1609,7 +1616,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     @Deprecated
     public java.util.Date getStartDate() {
         org.joda.time.YearMonthDay ymd = getStartDateYearMonthDay();
-        return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+        return ymd == null ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
     }
 
     @Deprecated
@@ -1624,7 +1631,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     @Deprecated
     public java.util.Date getWhen() {
         org.joda.time.DateTime dt = getWhenDateTime();
-        return (dt == null) ? null : new java.util.Date(dt.getMillis());
+        return dt == null ? null : new java.util.Date(dt.getMillis());
     }
 
     @Deprecated
@@ -1643,17 +1650,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public boolean isAllowedToManageEnrolments() {
         return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, getDegree(),
-                Authenticate.getUser());
+                Authenticate.getUser())
+                || PermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS", getDegree(), Authenticate.getUser());
     }
 
     public boolean isAllowedToManageEquivalencies() {
         return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_EQUIVALENCES, getDegree(),
-                Authenticate.getUser());
-    }
-
-    public boolean isAllowedToManageAccountingEvents() {
-        return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.MANAGE_ACCOUNTING_EVENTS, getDegree(),
-                Authenticate.getUser());
+                Authenticate.getUser())
+                || PermissionService.hasAccess("ACADEMIC_OFFICE_CREDITS_TRANSFER", getDegree(), Authenticate.getUser());
     }
 
     public Stream<Enrolment> getEnrolmentStream() {

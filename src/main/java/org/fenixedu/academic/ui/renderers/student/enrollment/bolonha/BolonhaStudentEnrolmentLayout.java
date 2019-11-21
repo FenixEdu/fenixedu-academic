@@ -21,9 +21,11 @@ package org.fenixedu.academic.ui.renderers.student.enrollment.bolonha;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.AcademicProgram;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionInterval;
@@ -45,6 +47,7 @@ import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.enrolment.DegreeModuleToEnrol;
 import org.fenixedu.academic.domain.enrolment.EnroledCurriculumModuleWrapper;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
+import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.dto.student.enrollment.bolonha.BolonhaStudentEnrollmentBean;
@@ -131,7 +134,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         return container;
     }
 
-    //TODO - review all calls to this method
+    // TODO - review all calls to this method
     protected void generateGroup(final HtmlBlockContainer blockContainer,
             final List<IDegreeModuleToEvaluate> degreeModulesToSelect, final StudentCurricularPlan studentCurricularPlan,
             final StudentCurriculumGroupBean studentCurriculumGroupBean, final ExecutionSemester executionSemester,
@@ -345,7 +348,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         return coursesTable;
     }
 
-    //TODO - review all calls to this method
+    // TODO - review all calls to this method
     protected void generateCurricularCoursesToEnrol(final HtmlTable groupTable,
             final StudentCurriculumGroupBean studentCurriculumGroupBean,
             final List<IDegreeModuleToEvaluate> degreeModulesToSelect, final ExecutionSemester executionSemester) {
@@ -424,7 +427,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
                     actionLink.setOnClick(
                             "$(this).closest('form').find('input[name=\\'method\\']').attr('value', 'prepareChooseOptionalCurricularCourseToEnrol');");
                 }
-                //actionLink.setOnClick("document.forms[2].method.value='prepareChooseOptionalCurricularCourseToEnrol';");
+                // actionLink.setOnClick("document.forms[2].method.value='prepareChooseOptionalCurricularCourseToEnrol';");
                 actionLink.setName("optionalCurricularCourseLink" + degreeModuleToEvaluate.getCurriculumGroup().getExternalId()
                         + "_" + degreeModuleToEvaluate.getContext().getExternalId());
                 linkTableCell.setBody(actionLink);
@@ -648,7 +651,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         return result;
     }
 
-    //TODO - review all calls to this method
+    // TODO - review all calls to this method
     protected void generateGroups(final HtmlBlockContainer container, final List<IDegreeModuleToEvaluate> degreeModulesToSelect,
             final StudentCurriculumGroupBean bean, final StudentCurricularPlan plan, final ExecutionSemester executionSemester,
             final int depth) {
@@ -780,9 +783,11 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 
     public void setBolonhaStudentEnrollmentBean(final BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean) {
         this.bolonhaStudentEnrollmentBean = bolonhaStudentEnrollmentBean;
-        this.canPerformStudentEnrolments = AcademicAccessRule
+        Set<AcademicProgram> programs = AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, Authenticate.getUser())
-                .collect(Collectors.toSet()).contains(bolonhaStudentEnrollmentBean.getStudentCurricularPlan().getDegree());
+                .collect(Collectors.toSet());
+        programs.addAll(PermissionService.getDegrees("ACADEMIC_OFFICE_ENROLMENTS", Authenticate.getUser()));
+        this.canPerformStudentEnrolments = programs.contains(bolonhaStudentEnrollmentBean.getStudentCurricularPlan().getDegree());
     }
 
     public BolonhaStudentEnrollmentBean getBolonhaStudentEnrollmentBean() {

@@ -34,14 +34,15 @@ import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 /**
- * 
+ *
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- * 
+ *
  */
 public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 
@@ -169,6 +170,8 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
                 final User userView = Authenticate.getUser();
                 if (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS,
                         getRegistration().getDegree(), userView.getPerson().getUser())
+                        || PermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS", getRegistration().getDegree(),
+                                userView.getPerson().getUser())
                         || Group.managers().isMember(userView.getPerson().getUser())) {
                     return;
                 }
@@ -194,9 +197,9 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     }
 
     /**
-     * 
+     *
      * Cycle can have only one branch by type
-     * 
+     *
      * @param branchType
      */
     public BranchCurriculumGroup getBranchCurriculumGroup(final BranchType branchType) {
