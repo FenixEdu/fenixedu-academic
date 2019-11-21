@@ -48,8 +48,8 @@
 	
 	<h:outputText value="<ul class='nobullet padding1 indent0 mtop15'>" escape="false"/>
 	<h:outputText value="<li><strong>#{scouncilBundle['label.start.period']}: </strong>" escape="false"/>
-	<h:outputText rendered="#{!empty CompetenceCourseManagement.competenceCourse.startExecutionSemester}" value="<span class='highlight4'>#{CompetenceCourseManagement.competenceCourse.startExecutionSemester.qualifiedName}<span></li>" escape="false"/>	
-	<h:outputText rendered="#{empty CompetenceCourseManagement.competenceCourse.startExecutionSemester}" value="-</li>" escape="false"/>
+	<h:outputText rendered="#{!empty CompetenceCourseManagement.competenceCourse.startExecutionInterval}" value="<span class='highlight4'>#{CompetenceCourseManagement.competenceCourse.startExecutionInterval.qualifiedName}<span></li>" escape="false"/>	
+	<h:outputText rendered="#{empty CompetenceCourseManagement.competenceCourse.startExecutionInterval}" value="-</li>" escape="false"/>
 	<h:outputText value="<li><strong>#{scouncilBundle['department']}: </strong>" escape="false"/>
 	<h:outputText value="#{CompetenceCourseManagement.departmentRealName}</li>" escape="false"/>
 	<h:outputText value="<li><strong>#{scouncilBundle['area']}: </strong>" escape="false"/>

@@ -48,8 +48,8 @@
 
 	<h:outputText value="<ul class='nobullet padding1 indent0 mtop2'>" escape="false"/>
 	<h:outputText value="<li><strong>#{bolonhaBundle['label.start.period']}: </strong>" escape="false"/>
-	<h:outputText rendered="#{!empty CompetenceCourseManagement.competenceCourse.startExecutionSemester}" value="<span class='highlight4'>#{CompetenceCourseManagement.competenceCourse.startExecutionSemester.qualifiedName}<span></li>" escape="false"/>
-	<h:outputText rendered="#{empty CompetenceCourseManagement.competenceCourse.startExecutionSemester}" value="-</li>" escape="false"/>
+	<h:outputText rendered="#{!empty CompetenceCourseManagement.competenceCourse.startExecutionInterval}" value="<span class='highlight4'>#{CompetenceCourseManagement.competenceCourse.startExecutionInterval.qualifiedName}<span></li>" escape="false"/>
+	<h:outputText rendered="#{empty CompetenceCourseManagement.competenceCourse.startExecutionInterval}" value="-</li>" escape="false"/>
 	<h:outputText value="<li><strong>#{bolonhaBundle['department']}: </strong>" escape="false"/>
 	<h:outputText value="#{CompetenceCourseManagement.departmentRealName}</li>" escape="false"/>
 	<h:outputText value="<li><strong>#{bolonhaBundle['area']}: </strong>" escape="false"/>
