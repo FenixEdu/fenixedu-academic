@@ -18,12 +18,8 @@
  */
 package org.fenixedu.academic.domain.time.calendarStructure;
 
-import java.util.List;
-
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.time.chronologies.AcademicChronology;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 
@@ -37,40 +33,18 @@ public class AcademicSemesterCE extends AcademicSemesterCE_Base {
         createNewExecutionPeriod();
     }
 
-    private AcademicSemesterCE(AcademicCalendarEntry parentEntry, AcademicSemesterCE academicSemesterCE) {
-        super();
-        super.initVirtualEntry(parentEntry, academicSemesterCE);
-    }
-
     @Override
     public void delete(AcademicCalendarRootEntry rootEntry) {
-        if (!isVirtual()) {
-            ExecutionSemester executionSemester = ExecutionSemester.getExecutionPeriod(this);
-            if (executionSemester != null) {
-                executionSemester.delete();
-            }
+        ExecutionSemester executionSemester = ExecutionSemester.getExecutionPeriod(this);
+        if (executionSemester != null) {
+            executionSemester.delete();
         }
         super.delete(rootEntry);
     }
 
     @Override
-    protected void beforeRedefineEntry() {
-        throw new DomainException("error.unsupported.operation");
-    }
-
-    @Override
-    protected void afterRedefineEntry() {
-        throw new DomainException("error.unsupported.operation");
-    }
-
-    @Override
-    public boolean isOfType(AcademicPeriod period) {
-        return period.equals(AcademicPeriod.SEMESTER);
-    }
-
-    @Override
-    public boolean isAcademicSemester() {
-        return true;
+    public AcademicPeriod getAcademicPeriod() {
+        return super.getAcademicPeriod() != null ? super.getAcademicPeriod() : AcademicPeriod.SEMESTER;
     }
 
     @Override
@@ -80,25 +54,7 @@ public class AcademicSemesterCE extends AcademicSemesterCE_Base {
 
     @Override
     protected boolean exceededNumberOfChildEntries(AcademicCalendarEntry childEntry) {
-        if (childEntry.isAcademicTrimester()) {
-            return getChildEntriesWithTemplateEntries(childEntry.getClass()).size() >= 2;
-        }
-        return false;
-    }
-
-    @Override
-    protected boolean areIntersectionsPossible(AcademicCalendarEntry entryToAdd) {
-        return false;
-    }
-
-    @Override
-    protected boolean isPossibleToChangeTimeInterval() {
         return true;
-    }
-
-    @Override
-    protected AcademicCalendarEntry createVirtualEntry(AcademicCalendarEntry parentEntry) {
-        return new AcademicSemesterCE(parentEntry, this);
     }
 
     private void createNewExecutionPeriod() {
@@ -106,18 +62,13 @@ public class AcademicSemesterCE extends AcademicSemesterCE_Base {
         new ExecutionSemester(executionYear, new AcademicInterval(this, getRootEntry()), getTitle().getContent());
     }
 
-    @Override
-    public int getAcademicSemesterOfAcademicYear(final AcademicChronology academicChronology) {
-        final AcademicYearCE academicYearCE = (AcademicYearCE) academicChronology.findSameEntry(getParentEntry());
-        List<AcademicCalendarEntry> list =
-                academicYearCE.getChildEntriesWithTemplateEntries(academicYearCE.getBegin(), getBegin().minusDays(1), getClass());
-        return list.size() + 1;
-    }
-
-    @Override
-    protected boolean associatedWithDomainEntities() {
-        return true;
-    }
+//    @Override
+//    public int getAcademicSemesterOfAcademicYear(final AcademicChronology academicChronology) {
+//        final AcademicYearCE academicYearCE = (AcademicYearCE) academicChronology.findSameEntry(getParentEntry());
+//        List<AcademicCalendarEntry> list =
+//                academicYearCE.getChildEntries(academicYearCE.getBegin(), getBegin().minusDays(1), getClass());
+//        return list.size() + 1;
+//    }
 
     @Override
     public String getPresentationName() {

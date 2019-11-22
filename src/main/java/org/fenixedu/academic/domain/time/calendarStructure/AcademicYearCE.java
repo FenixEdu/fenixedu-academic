@@ -26,43 +26,26 @@ import org.joda.time.DateTime;
 
 public class AcademicYearCE extends AcademicYearCE_Base {
 
-    public AcademicYearCE(AcademicCalendarEntry parentEntry, LocalizedString title, LocalizedString description,
-            DateTime begin, DateTime end, AcademicCalendarRootEntry rootEntry) {
+    public AcademicYearCE(AcademicCalendarEntry parentEntry, LocalizedString title, LocalizedString description, DateTime begin,
+            DateTime end, AcademicCalendarRootEntry rootEntry) {
 
         super();
         super.initEntry(parentEntry, title, description, begin, end, rootEntry);
         createExecutionYear();
     }
 
-    private AcademicYearCE(AcademicCalendarEntry parentEntry, AcademicYearCE academicYearCE) {
-        super();
-        super.initVirtualEntry(parentEntry, academicYearCE);
-    }
-
     @Override
     public void delete(AcademicCalendarRootEntry rootEntry) {
-        if (!isVirtual()) {
-            ExecutionYear executionYear = ExecutionYear.getExecutionYear(this);
-            if (executionYear != null) {
-                executionYear.delete();
-            }
+        ExecutionYear executionYear = ExecutionYear.getExecutionYear(this);
+        if (executionYear != null) {
+            executionYear.delete();
         }
         super.delete(rootEntry);
     }
 
     @Override
-    protected void beforeRedefineEntry() {
-        throw new DomainException("error.unsupported.operation");
-    }
-
-    @Override
-    protected void afterRedefineEntry() {
-        throw new DomainException("error.unsupported.operation");
-    }
-
-    @Override
-    public boolean isOfType(AcademicPeriod period) {
-        return period.equals(AcademicPeriod.YEAR);
+    public AcademicPeriod getAcademicPeriod() {
+        return AcademicPeriod.YEAR;
     }
 
     @Override
@@ -77,31 +60,20 @@ public class AcademicYearCE extends AcademicYearCE_Base {
 
     @Override
     protected boolean exceededNumberOfChildEntries(AcademicCalendarEntry childEntry) {
-        if (childEntry.isAcademicSemester()) {
-            return getChildEntriesWithTemplateEntries(childEntry.getClass()).size() >= 2;
+        final AcademicPeriod childAcademicPeriod = childEntry.getAcademicPeriod();
+        if (childAcademicPeriod != null) {
+            Float currentChildsWeightsSum = getChildEntries(childEntry.getAcademicPeriod()).stream()
+                    .map(e -> e.getAcademicPeriod().getWeight()).reduce(0f, Float::sum);
+
+            return currentChildsWeightsSum + childAcademicPeriod.getWeight() > 1f;
         }
-        if (childEntry.isAcademicTrimester()) {
-            return getChildEntriesWithTemplateEntries(childEntry.getClass()).size() >= 4;
-        }
+//        if (childEntry.isAcademicSemester()) {
+//            return getChildEntries(childEntry.getClass()).size() >= 2;
+//        }
+//        if (childEntry.isAcademicTrimester()) {
+//            return getChildEntries(childEntry.getClass()).size() >= 4;
+//        }
         return false;
-    }
-
-    @Override
-    protected boolean areIntersectionsPossible(AcademicCalendarEntry entryToAdd) {
-        if (entryToAdd.isAcademicSemester()) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    protected boolean isPossibleToChangeTimeInterval() {
-        return true;
-    }
-
-    @Override
-    protected AcademicCalendarEntry createVirtualEntry(AcademicCalendarEntry parentEntry) {
-        return new AcademicYearCE(parentEntry, this);
     }
 
     private void createExecutionYear() {
@@ -111,13 +83,9 @@ public class AcademicYearCE extends AcademicYearCE_Base {
         }
     }
 
-    @Override
-    public int getAcademicSemesterOfAcademicYear(AcademicChronology academicChronology) {
-        throw new DomainException("error.unsupported.operation");
-    }
+//    @Override
+//    public int getAcademicSemesterOfAcademicYear(AcademicChronology academicChronology) {
+//        throw new DomainException("error.unsupported.operation");
+//    }
 
-    @Override
-    protected boolean associatedWithDomainEntities() {
-        return true;
-    }
 }

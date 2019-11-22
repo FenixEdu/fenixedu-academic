@@ -187,40 +187,31 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 
     // Operations for get periods.
 
-    public int getAcademicSemesterOfAcademicYear() {
-        return getAcademicCalendarEntry().getAcademicSemesterOfAcademicYear(getAcademicChronology());
-    }
+//    public int getAcademicSemesterOfAcademicYear() {
+//        return getAcademicCalendarEntry().getAcademicSemesterOfAcademicYear(getAcademicChronology());
+//    }
 
-    public AcademicSemesterCE plusSemester(int amount) {
-        int index = getStart().get(AcademicSemesterDateTimeFieldType.academicSemester());
-        return getAcademicChronology().getAcademicSemesterIn(index + amount);
-    }
+//    public AcademicSemesterCE plusSemester(int amount) {
+//        int index = getStart().get(AcademicSemesterDateTimeFieldType.academicSemester());
+//        return getAcademicChronology().getAcademicSemesterIn(index + amount);
+//    }
+//
+//    public AcademicSemesterCE minusSemester(int amount) {
+//        int index = getStart().get(AcademicSemesterDateTimeFieldType.academicSemester());
+//        return getAcademicChronology().getAcademicSemesterIn(index - amount);
+//    }
 
-    public AcademicSemesterCE minusSemester(int amount) {
-        int index = getStart().get(AcademicSemesterDateTimeFieldType.academicSemester());
-        return getAcademicChronology().getAcademicSemesterIn(index - amount);
-    }
-
-    public AcademicYearCE plusYear(int amount) {
-        int index = getStart().get(AcademicYearDateTimeFieldType.academicYear());
-        return getAcademicChronology().getAcademicYearIn(index + amount);
-    }
-
-    public AcademicYearCE minusYear(int amount) {
-        int index = getStart().get(AcademicYearDateTimeFieldType.academicYear());
-        return getAcademicChronology().getAcademicYearIn(index - amount);
-    }
+//    public AcademicYearCE plusYear(int amount) {
+//        int index = getStart().get(AcademicYearDateTimeFieldType.academicYear());
+//        return getAcademicChronology().getAcademicYearIn(index + amount);
+//    }
+//
+//    public AcademicYearCE minusYear(int amount) {
+//        int index = getStart().get(AcademicYearDateTimeFieldType.academicYear());
+//        return getAcademicChronology().getAcademicYearIn(index - amount);
+//    }
 
     // ///////
-
-    public AcademicInterval getChildAcademicInterval(AcademicPeriod period, int cardinal) {
-        AcademicCalendarEntry entry = getAcademicCalendarEntry().getChildAcademicCalendarEntry(period, cardinal);
-        return new AcademicInterval(entry, entry.getRootEntry());
-    }
-
-    public static int getCardinalityOfAcademicInterval(AcademicInterval child) {
-        return child.getAcademicCalendarEntry().getParentEntry().getCardinalityOfCalendarEntry(child.getAcademicCalendarEntry());
-    }
 
     public static AcademicInterval getDefaultAcademicInterval(List<AcademicInterval> academicIntervals) {
         DateTime now = new DateTime();

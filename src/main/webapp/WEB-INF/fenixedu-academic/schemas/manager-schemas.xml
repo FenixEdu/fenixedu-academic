@@ -259,11 +259,6 @@
 	<slot name="title" key="label.academicCalendar.title" />
 	<slot name="type" key="label.type" />
 	<slot name="description" key="label.academicCalendar.description"/>
-	<slot name="templateEntry" layout="null-as-label" key="label.entry.templateEntry">
-		<property name="label" value="--"/>
-		<property name="subSchema" value="EntryIdentificationSchema" />
-		<property name="subLayout" value="values" />
-	</slot>	
 </schema>
 
 <schema name="AcademicCalendarEntryInfo" type="org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry" bundle="MANAGER_RESOURCES">
@@ -273,21 +268,6 @@
 	<slot name="begin" key="label.begin"/>
 	<slot name="end" key="label.end"/>
 	<slot name="rootEntry.title" key="label.entry.academicCalendar"/>
-	<slot name="entryState" key="label.entry.state">
-		<property name="classes" value="highlight1" />
-	</slot>	
-	<slot name="templateEntry" layout="null-as-label" key="label.entry.templateEntry">
-		<property name="label" value="--"/>
-		<property name="subSchema" value="TemplateEntryFullPathSchema" />
-		<property name="subLayout" value="values" />
-	</slot>	
-</schema>
-
-<schema name="TemplateEntryFullPathSchema" type="org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry" bundle="MANAGER_RESOURCES" >
-	<slot name="entryFullPath" layout="separator-list">		
-		<property name="eachSchema" value="EntryIdentificationSchema" />	
-		<property name="eachLayout" value="values" />			
-	</slot>	
 </schema>
 
 <schema name="EntryIdentificationSchema" type="org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry" bundle="MANAGER_RESOURCES" >
@@ -332,11 +312,6 @@
 <schema name="CreateAcademicCalendarRootEntryCalendarEntryType" type="org.fenixedu.academic.dto.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" >
 	<slot name="title" key="label.academicCalendar.title" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator"/>
 	<slot name="description" key="label.academicCalendar.description"/>
-	<slot name="templateEntry" layout="menu-select" key="label.template.academic.calendar">				
-		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.manager.TemplateAcademicCalendarProvider"/>
-		<property name="eachSchema" value="AcademicCalendarTitleSchema"/>
-		<property name="eachLayout" value="values"/>	
-    </slot>        		
 </schema>
 
 <schema name="AcademicCalendarTitleSchema" type="org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry" bundle="MANAGER_RESOURCES">
@@ -381,11 +356,6 @@
 <schema name="EditAcademicCalendarRootEntryCalendarEntryType" type="org.fenixedu.academic.dto.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES">
 	<slot name="title" key="label.academicCalendar.title" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator"/>
 	<slot name="description" key="label.academicCalendar.description"/>
-	<slot name="templateEntry" layout="menu-select" key="label.template.academic.calendar">				
-		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.manager.TemplateAcademicCalendarProvider"/>
-		<property name="eachSchema" value="AcademicCalendarTitleSchema"/>
-		<property name="eachLayout" value="values"/>	
-    </slot>     	
 </schema>
 
 <schema name="EditAcademicCalendarEntryType" type="org.fenixedu.academic.dto.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES">	

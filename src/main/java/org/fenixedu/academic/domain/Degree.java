@@ -444,8 +444,9 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             for (final CurricularCourse course : degreeCurricularPlan.getCurricularCoursesSet()) {
                 for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCoursesSet()) {
                     if (academicInterval.isEqualOrEquivalent(executionCourse.getAcademicInterval())) {
-                        if (course.getParentContextsSet().stream().anyMatch(ctx -> ctx.isValid(academicInterval) && ctx
-                                .getCurricularPeriod().getChildOrder() == academicInterval.getAcademicSemesterOfAcademicYear())) {
+                        if (course.getParentContextsSet().stream()
+                                .anyMatch(ctx -> ctx.isValid(academicInterval) && ctx.getCurricularPeriod()
+                                        .getChildOrder() == academicInterval.getAcademicCalendarEntry().getCardinality())) {
                             result.add(executionCourse);
                         }
                     }

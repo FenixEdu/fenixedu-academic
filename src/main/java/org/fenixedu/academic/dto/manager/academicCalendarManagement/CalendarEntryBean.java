@@ -82,7 +82,6 @@ public class CalendarEntryBean implements Serializable {
         bean.setBeginDateToDisplay(begin);
         bean.setEndDateToDisplay(end);
 
-        bean.setTemplateEntry(entry.getTemplateEntry());
         bean.setType(entry.getClass());
         bean.setTitle(entry.getTitle());
         bean.setDescription(entry.getDescription());

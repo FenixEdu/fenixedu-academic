@@ -21,15 +21,12 @@ package org.fenixedu.academic.domain.time.chronologies;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicSemesterCE;
-import org.fenixedu.academic.domain.time.calendarStructure.AcademicTrimesterCE;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicYearCE;
 import org.fenixedu.academic.domain.time.chronologies.dateTimeFields.AcademicSemesterDateTimeField;
 import org.fenixedu.academic.domain.time.chronologies.dateTimeFields.AcademicSemesterOfAcademicYearDateTimeField;
-import org.fenixedu.academic.domain.time.chronologies.dateTimeFields.AcademicTrimesterDateTimeField;
 import org.fenixedu.academic.domain.time.chronologies.dateTimeFields.AcademicYearDateTimeField;
 import org.fenixedu.academic.domain.time.chronologies.dateTimeFields.DayOfAcademicSemesterDateTimeField;
 import org.fenixedu.academic.domain.time.chronologies.durationFields.AcademicSemestersDurationField;
-import org.fenixedu.academic.domain.time.chronologies.durationFields.AcademicTrimesterDurationField;
 import org.fenixedu.academic.domain.time.chronologies.durationFields.AcademicYearsDurationField;
 import org.joda.time.Chronology;
 import org.joda.time.DateTime;
@@ -77,9 +74,6 @@ public class AcademicChronology extends AssembledChronology {
         if (acAcademicYearsField == null) {
             acAcademicYearsField = new AcademicYearsDurationField(this);
             acAcademicYear = new AcademicYearDateTimeField(this);
-
-            acAcademicTrimester = new AcademicTrimesterDateTimeField(this);
-            acAcademicTrimestersField = new AcademicTrimesterDurationField(this);
 
             acAcademicSemester = new AcademicSemesterDateTimeField(this);
             acAcademicSemestersField = new AcademicSemestersDurationField(this);
@@ -154,15 +148,6 @@ public class AcademicChronology extends AssembledChronology {
         return (AcademicYearCE) academicCalendar.getEntryByIndex(index, AcademicYearCE.class, AcademicCalendarRootEntry.class);
     }
 
-    public int getAcademicTrimester(long instant) {
-        Integer entryValueByInstant =
-                academicCalendar.getEntryIndexByInstant(instant, AcademicTrimesterCE.class, AcademicSemesterCE.class);
-        if (entryValueByInstant != null) {
-            return entryValueByInstant;
-        }
-        return 0;
-    }
-
     public int getAcademicSemester(long instant) {
         Integer entryValueByInstant =
                 academicCalendar.getEntryIndexByInstant(instant, AcademicSemesterCE.class, AcademicYearCE.class);
@@ -198,7 +183,8 @@ public class AcademicChronology extends AssembledChronology {
     public int getAcademicSemesterOfAcademicYear(long instant) {
         AcademicSemesterCE entryByInstant =
                 (AcademicSemesterCE) academicCalendar.getEntryByInstant(instant, AcademicSemesterCE.class, AcademicYearCE.class);
-        return entryByInstant.getAcademicSemesterOfAcademicYear(this);
+//        return entryByInstant.getAcademicSemesterOfAcademicYear(this);
+        return entryByInstant.getCardinality();
     }
 
     public int getMaximumValueForAcademicSemesterOfAcademicYear(long instant) {

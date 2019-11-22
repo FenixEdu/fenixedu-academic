@@ -1674,7 +1674,8 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         LocalizedString title;
         LocalizedString description;        
         DateTime begin;
-        DateTime end;        
+        DateTime end;
+        AcademicPeriod academicPeriod;
     }
 
         class time.calendarStructure.AcademicCalendarRootEntry extends time.calendarStructure.AcademicCalendarEntry {           
@@ -1683,33 +1684,9 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         class time.calendarStructure.AcademicSemesterCE extends time.calendarStructure.AcademicCalendarEntry {
         }
 
-        class time.calendarStructure.AcademicTrimesterCE extends time.calendarStructure.AcademicCalendarEntry {
-        }
-
         class time.calendarStructure.AcademicYearCE extends time.calendarStructure.AcademicCalendarEntry {
         }
 
-        class time.calendarStructure.EnrolmentsPeriodCE extends time.calendarStructure.AcademicCalendarEntry {
-        }
-
-        class time.calendarStructure.ExamsPeriodCE extends time.calendarStructure.AcademicCalendarEntry {
-        }       
-            class time.calendarStructure.ExamsPeriodInNormalSeasonCE extends time.calendarStructure.ExamsPeriodCE {         
-            }
-            
-            class time.calendarStructure.ExamsPeriodInSpecialSeasonCE extends time.calendarStructure.ExamsPeriodCE {            
-        }
-
-        class time.calendarStructure.LessonsPeriodCE extends time.calendarStructure.AcademicCalendarEntry {
-        }
-
-        class time.calendarStructure.GradeSubmissionCE extends time.calendarStructure.AcademicCalendarEntry {
-        }
-            class time.calendarStructure.GradeSubmissionInNormalSeasonCE extends time.calendarStructure.GradeSubmissionCE {         
-            }
-            
-            class time.calendarStructure.GradeSubmissionInSpecialSeasonCE extends time.calendarStructure.GradeSubmissionCE {            
-            }
         
     class util.Email  {
         EmailAddressList bccAddresses;
@@ -2143,13 +2120,6 @@ relation RootDomainObjectDefaultCampus {
 relation AcademicCalendarEntryAcademicCalendarEntry {
     time.calendarStructure.AcademicCalendarEntry playsRole parentEntry;
     time.calendarStructure.AcademicCalendarEntry playsRole childEntries {
-        multiplicity *;
-    }
-}
-
-relation AcademicCalendarEntryBasedAcademicCalendarEntry {  
-    time.calendarStructure.AcademicCalendarEntry playsRole templateEntry;
-    time.calendarStructure.AcademicCalendarEntry playsRole basedEntries {
         multiplicity *;
     }
 }

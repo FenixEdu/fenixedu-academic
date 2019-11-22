@@ -25,30 +25,27 @@ import java.util.List;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.chronologies.AcademicChronology;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 
 public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
 
     private transient volatile AcademicChronology academicChronology;
 
-    public AcademicCalendarRootEntry(LocalizedString title, LocalizedString description,
-            AcademicCalendarEntry templateCalendar) {
+    public AcademicCalendarRootEntry(LocalizedString title, LocalizedString description) {
         super();
         setRootDomainObjectForRootEntries(Bennu.getInstance());
         setTitle(title);
         setDescription(description);
-        setTemplateEntry(templateCalendar);
     }
 
     @Override
     public AcademicCalendarEntry edit(LocalizedString title, LocalizedString description, DateTime begin, DateTime end,
-            AcademicCalendarRootEntry rootEntryDestination, AcademicCalendarEntry templateEntry) {
+            AcademicCalendarRootEntry rootEntryDestination) {
 
         setTitle(title);
         setDescription(description);
-        setTemplateEntry(templateEntry);
         return this;
     }
 
@@ -71,15 +68,6 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     }
 
     @Override
-    public void setTemplateEntry(AcademicCalendarEntry templateEntry) {
-        if (templateEntry != null && !getChildEntriesSet().isEmpty()
-                && (getTemplateEntry() == null || !getTemplateEntry().equals(templateEntry))) {
-            throw new DomainException("error.RootEntry.invalid.templateEntry");
-        }
-        super.setTemplateEntry(templateEntry);
-    }
-
-    @Override
     public void setRootDomainObjectForRootEntries(Bennu rootDomainObjectForRootEntries) {
         if (rootDomainObjectForRootEntries == null) {
             throw new DomainException("error.RootEntry.empty.rootDomainObject.to.academic.calendars");
@@ -91,13 +79,7 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     public DateTime getBegin() {
 
         DateTime begin = null;
-        Collection<AcademicCalendarEntry> result = null;
-
-        if (getTemplateEntry() == null) {
-            result = getChildEntriesSet();
-        } else {
-            result = getChildEntriesWithTemplateEntries();
-        }
+        Collection<AcademicCalendarEntry> result = getChildEntriesSet();
 
         for (AcademicCalendarEntry entry : result) {
             if (begin == null || entry.getBegin().isBefore(begin)) {
@@ -111,7 +93,7 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     public AcademicCalendarEntry getEntryByInstant(long instant, Class<? extends AcademicCalendarEntry> entryClass,
             Class<? extends AcademicCalendarEntry> parentEntryClass) {
         AcademicCalendarEntry entryResult = null;
-        for (AcademicCalendarEntry entry : getChildEntriesWithTemplateEntries(Long.valueOf(instant), entryClass, parentEntryClass)) {
+        for (AcademicCalendarEntry entry : getChildEntries(Long.valueOf(instant), entryClass, parentEntryClass)) {
             entryResult = (entryResult == null || entry.getBegin().isAfter(entryResult.getBegin())) ? entry : entryResult;
         }
         return entryResult;
@@ -120,7 +102,7 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     public Integer getEntryIndexByInstant(long instant, Class<? extends AcademicCalendarEntry> entryClass,
             Class<? extends AcademicCalendarEntry> parentEntryClass) {
         Integer counter = null;
-        for (AcademicCalendarEntry entry : getChildEntriesWithTemplateEntries(entryClass, parentEntryClass)) {
+        for (AcademicCalendarEntry entry : getChildEntries(entryClass, parentEntryClass)) {
             if (entry.containsInstant(instant) || entry.getEnd().isBefore(instant)) {
                 counter = counter == null ? 1 : counter.intValue() + 1;
             }
@@ -130,7 +112,7 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
 
     public AcademicCalendarEntry getEntryByIndex(int index, Class<? extends AcademicCalendarEntry> entryClass,
             Class<? extends AcademicCalendarEntry> parentEntryClass) {
-        List<AcademicCalendarEntry> allChildEntries = getChildEntriesWithTemplateEntries(entryClass, parentEntryClass);
+        List<AcademicCalendarEntry> allChildEntries = getChildEntries(entryClass, parentEntryClass);
         Collections.sort(allChildEntries, COMPARATOR_BY_BEGIN_DATE);
         return index > 0 && index <= allChildEntries.size() ? allChildEntries.get(index - 1) : null;
     }
@@ -144,18 +126,18 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
         return null;
     }
 
-    public List<AcademicCalendarEntry> getChildEntriesWithTemplateEntries(Class<? extends AcademicCalendarEntry> subEntryClass,
+    private List<AcademicCalendarEntry> getChildEntries(Class<? extends AcademicCalendarEntry> subEntryClass,
             Class<? extends AcademicCalendarEntry> parentEntryClass) {
-        return getChildEntriesWithTemplateEntries(null, subEntryClass, parentEntryClass);
+        return getChildEntries(null, subEntryClass, parentEntryClass);
     }
 
-    public List<AcademicCalendarEntry> getChildEntriesWithTemplateEntries(Long instant,
-            Class<? extends AcademicCalendarEntry> subEntryClass, Class<? extends AcademicCalendarEntry> parentEntryClass) {
+    private List<AcademicCalendarEntry> getChildEntries(Long instant, Class<? extends AcademicCalendarEntry> subEntryClass,
+            Class<? extends AcademicCalendarEntry> parentEntryClass) {
         if (subEntryClass == null || parentEntryClass == null) {
             return Collections.emptyList();
         }
         List<AcademicCalendarEntry> allChildEntries = new ArrayList<AcademicCalendarEntry>();
-        getFirstChildEntriesWithTemplateEntries(instant, subEntryClass, parentEntryClass, allChildEntries);
+        getFirstChildEntries(instant, subEntryClass, parentEntryClass, allChildEntries);
         return allChildEntries;
     }
 
@@ -177,21 +159,6 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     @Override
     public void setParentEntry(AcademicCalendarEntry parentEntry) {
         throw new DomainException("error.unsupported.operation");
-    }
-
-    @Override
-    protected AcademicCalendarEntry createVirtualEntry(AcademicCalendarEntry parentEntry) {
-        throw new DomainException("error.unsupported.operation");
-    }
-
-    @Override
-    protected boolean areIntersectionsPossible(AcademicCalendarEntry entryToAdd) {
-        return entryToAdd.isAcademicYear();
-    }
-
-    @Override
-    protected boolean isPossibleToChangeTimeInterval() {
-        return false;
     }
 
     @Override
@@ -217,11 +184,6 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     @Override
     public boolean containsInstant(final long instant) {
         return true;
-    }
-
-    @Override
-    protected boolean associatedWithDomainEntities() {
-        return false;
     }
 
 }

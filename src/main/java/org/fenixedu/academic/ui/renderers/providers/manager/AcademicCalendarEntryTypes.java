@@ -23,14 +23,7 @@ import java.util.List;
 
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicSemesterCE;
-import org.fenixedu.academic.domain.time.calendarStructure.AcademicTrimesterCE;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicYearCE;
-import org.fenixedu.academic.domain.time.calendarStructure.EnrolmentsPeriodCE;
-import org.fenixedu.academic.domain.time.calendarStructure.ExamsPeriodInNormalSeasonCE;
-import org.fenixedu.academic.domain.time.calendarStructure.ExamsPeriodInSpecialSeasonCE;
-import org.fenixedu.academic.domain.time.calendarStructure.GradeSubmissionInNormalSeasonCE;
-import org.fenixedu.academic.domain.time.calendarStructure.GradeSubmissionInSpecialSeasonCE;
-import org.fenixedu.academic.domain.time.calendarStructure.LessonsPeriodCE;
 import org.fenixedu.academic.dto.manager.academicCalendarManagement.CalendarEntryBean;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -48,18 +41,18 @@ public class AcademicCalendarEntryTypes implements DataProvider {
 
             result.add(AcademicYearCE.class);
             result.add(AcademicSemesterCE.class);
-            result.add(AcademicTrimesterCE.class);
+//            result.add(AcademicTrimesterCE.class);
 
         } else if (bean.getEntry() != null) {
 
             result.add(AcademicSemesterCE.class);
-            result.add(AcademicTrimesterCE.class);
-            result.add(LessonsPeriodCE.class);
-            result.add(EnrolmentsPeriodCE.class);
-            result.add(ExamsPeriodInNormalSeasonCE.class);
-            result.add(ExamsPeriodInSpecialSeasonCE.class);
-            result.add(GradeSubmissionInNormalSeasonCE.class);
-            result.add(GradeSubmissionInSpecialSeasonCE.class);
+//            result.add(AcademicTrimesterCE.class);
+//            result.add(LessonsPeriodCE.class);
+//            result.add(EnrolmentsPeriodCE.class);
+//            result.add(ExamsPeriodInNormalSeasonCE.class);
+//            result.add(ExamsPeriodInSpecialSeasonCE.class);
+//            result.add(GradeSubmissionInNormalSeasonCE.class);
+//            result.add(GradeSubmissionInSpecialSeasonCE.class);
         }
 
         return result;
