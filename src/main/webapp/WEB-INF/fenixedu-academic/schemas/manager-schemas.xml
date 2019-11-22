@@ -466,7 +466,6 @@
 <schema name="EditExecutionPeriodSchema" type="org.fenixedu.academic.domain.ExecutionSemester" bundle="MANAGER_RESOURCES">
 	<slot name="beginDateYearMonthDay" key="label.executionPeriod.beginDate" />
 	<slot name="endDateYearMonthDay" key="label.executionPeriod.endDate" />
-	<setter signature="editPeriod(beginDateYearMonthDay, endDateYearMonthDay)" />	
 </schema>
 
 <schema name="curriculumLineLog.search" type="org.fenixedu.academic.dto.curriculumLineLog.SearchCurriculumLineLog" bundle="MANAGER_RESOURCES">

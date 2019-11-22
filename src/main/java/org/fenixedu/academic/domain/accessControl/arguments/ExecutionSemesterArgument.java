@@ -34,7 +34,7 @@ public class ExecutionSemesterArgument implements ArgumentParser<ExecutionSemest
 
     @Override
     public String serialize(ExecutionSemester argument) {
-        return argument.getSemester().toString() + ":" + argument.getYear();
+        return argument.getChildOrder().toString() + ":" + argument.getExecutionYear().getYear();
     }
 
     @Override

@@ -238,4 +238,15 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base implement
                 .collect(Collectors.toSet());
     }
 
+    public void delete() {
+        if (!getAssociatedExecutionCoursesSet().isEmpty()) {
+            throw new Error("cannot.delete.execution.period.because.execution.courses.exist");
+        }
+        if (!getEnrolmentsSet().isEmpty()) {
+            throw new Error("cannot.delete.execution.period.because.enrolments.exist");
+        }
+        setRootDomainObject(null);
+        deleteDomainObject();
+    }    
+
 }

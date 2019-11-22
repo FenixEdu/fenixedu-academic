@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.domain.time.calendarStructure;
 
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.commons.i18n.LocalizedString;
@@ -35,9 +36,9 @@ public class AcademicSemesterCE extends AcademicSemesterCE_Base {
 
     @Override
     public void delete(AcademicCalendarRootEntry rootEntry) {
-        ExecutionSemester executionSemester = ExecutionSemester.getExecutionPeriod(this);
-        if (executionSemester != null) {
-            executionSemester.delete();
+        ExecutionInterval executionInterval = ExecutionInterval.getExecutionInterval(this);
+        if (executionInterval != null) {
+            executionInterval.delete();
         }
         super.delete(rootEntry);
     }

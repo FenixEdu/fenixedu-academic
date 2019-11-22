@@ -147,13 +147,8 @@ public class ExecutionYear extends ExecutionYear_Base {
         return super.compareTo(executionYear) <= 0;
     }
 
-    public ExecutionSemester getExecutionSemesterFor(final Integer semester) {
-        for (final ExecutionSemester executionSemester : getExecutionPeriodsSet()) {
-            if (executionSemester.isFor(semester)) {
-                return executionSemester;
-            }
-        }
-        return null;
+    public ExecutionSemester getExecutionSemesterFor(final Integer order) {
+        return getExecutionPeriodsSet().stream().filter(ei -> ei.getChildOrder().equals(order)).findAny().orElse(null);
     }
 
     public ExecutionSemester getFirstExecutionPeriod() {
@@ -235,12 +230,13 @@ public class ExecutionYear extends ExecutionYear_Base {
 
     @Deprecated
     static public ExecutionYear readCurrentExecutionYear() {
-        ExecutionSemester semester = ExecutionSemester.readActualExecutionSemester();
-        if (semester != null) {
-            return semester.getExecutionYear();
-        } else {
-            return null;
-        }
+        return ExecutionYear.findCurrents().stream().findAny().orElse(null);
+//        ExecutionSemester semester = ExecutionSemester.readActualExecutionSemester();
+//        if (semester != null) {
+//            return semester.getExecutionYear();
+//        } else {
+//            return null;
+//        }
     }
 
     public static Collection<ExecutionYear> findCurrents() {

@@ -72,29 +72,29 @@ public class ExecutionSemester extends ExecutionSemester_Base {
         setName(name);
     }
 
-    public void editPeriod(YearMonthDay begin, YearMonthDay end) throws DomainException {
-        if (begin == null || end == null || end.isBefore(begin)) {
-            throw new DomainException("error.ExecutionPeriod.invalid.dates");
-        }
-        checkDatesIntersection(begin.toLocalDate(), end.toLocalDate());
-        setBeginDateYearMonthDay(begin);
-        setEndDateYearMonthDay(end);
-    }
-
-    private void checkDatesIntersection(final LocalDate begin, final LocalDate end) {
-
-        final List<ExecutionSemester> executionIntervals = Bennu.getInstance().getExecutionPeriodsSet().stream()
-                .sorted(COMPARATOR_BY_SEMESTER_AND_YEAR).collect(Collectors.toList());
-        for (ExecutionSemester interval : executionIntervals) {
-            final LocalDate beginDate = interval.getBeginLocalDate();
-            final LocalDate endDate = interval.getEndLocalDate();
-            if (begin.isAfter(endDate) || end.isBefore(beginDate) || interval.equals(this)) {
-                continue;
-            } else {
-                throw new DomainException("error.ExecutionPeriod.intersection.dates");
-            }
-        }
-    }
+//    public void editPeriod(YearMonthDay begin, YearMonthDay end) throws DomainException {
+//        if (begin == null || end == null || end.isBefore(begin)) {
+//            throw new DomainException("error.ExecutionPeriod.invalid.dates");
+//        }
+//        checkDatesIntersection(begin.toLocalDate(), end.toLocalDate());
+//        setBeginDateYearMonthDay(begin);
+//        setEndDateYearMonthDay(end);
+//    }
+//
+//    private void checkDatesIntersection(final LocalDate begin, final LocalDate end) {
+//
+//        final List<ExecutionSemester> executionIntervals = Bennu.getInstance().getExecutionPeriodsSet().stream()
+//                .sorted(COMPARATOR_BY_SEMESTER_AND_YEAR).collect(Collectors.toList());
+//        for (ExecutionSemester interval : executionIntervals) {
+//            final LocalDate beginDate = interval.getBeginLocalDate();
+//            final LocalDate endDate = interval.getEndLocalDate();
+//            if (begin.isAfter(endDate) || end.isBefore(beginDate) || interval.equals(this)) {
+//                continue;
+//            } else {
+//                throw new DomainException("error.ExecutionPeriod.intersection.dates");
+//            }
+//        }
+//    }
 
     @Override
     public void setExecutionYear(ExecutionYear executionYear) {
@@ -130,10 +130,10 @@ public class ExecutionSemester extends ExecutionSemester_Base {
     }
 
 //    @Override
-    @Deprecated
-    public int compareTo(ExecutionSemester object) {
-        return super.compareTo(object);
-    }
+//    @Deprecated
+//    public int compareTo(ExecutionSemester object) {
+//        return super.compareTo(object);
+//    }
 
 //    @Override
 //    public String getQualifiedName() {
@@ -143,82 +143,72 @@ public class ExecutionSemester extends ExecutionSemester_Base {
 //        return new StringBuilder().append(semesterName).append(" ").append(this.getExecutionYear().getYear()).toString();
 //    }
 
-    public boolean containsDay(final YearMonthDay date) {
-        return !getBeginDateYearMonthDay().isAfter(date) && !getEndDateYearMonthDay().isBefore(date);
-    }
+//    public boolean containsDay(final YearMonthDay date) {
+//        return !getBeginDateYearMonthDay().isAfter(date) && !getEndDateYearMonthDay().isBefore(date);
+//    }
 
-    @Deprecated
-    public boolean isAfter(ExecutionSemester executionSemester) {
-        return super.compareTo(executionSemester) > 0;
-    }
-
-    @Deprecated
-    public boolean isAfterOrEquals(ExecutionSemester executionSemester) {
-        return super.compareTo(executionSemester) >= 0;
-    }
-
-    @Deprecated
-    public boolean isBefore(ExecutionSemester executionSemester) {
-        return super.compareTo(executionSemester) < 0;
-    }
-
-    @Deprecated
-    public boolean isBeforeOrEquals(ExecutionSemester executionSemester) {
-        return super.compareTo(executionSemester) <= 0;
-    }
+//    @Deprecated
+//    public boolean isAfter(ExecutionSemester executionSemester) {
+//        return super.compareTo(executionSemester) > 0;
+//    }
+//
+//    @Deprecated
+//    public boolean isAfterOrEquals(ExecutionSemester executionSemester) {
+//        return super.compareTo(executionSemester) >= 0;
+//    }
+//
+//    @Deprecated
+//    public boolean isBefore(ExecutionSemester executionSemester) {
+//        return super.compareTo(executionSemester) < 0;
+//    }
+//
+//    @Deprecated
+//    public boolean isBeforeOrEquals(ExecutionSemester executionSemester) {
+//        return super.compareTo(executionSemester) <= 0;
+//    }
 
 //    @Override
 //    public boolean isCurrent() {
 //        return getState().equals(PeriodState.CURRENT);
 //    }
 
-    public boolean isClosed() {
-        return getState().equals(PeriodState.CLOSED);
-    }
+//    public boolean isClosed() {
+//        return getState().equals(PeriodState.CLOSED);
+//    }
 
-    public boolean isNotOpen() {
-        return getState().equals(PeriodState.NOT_OPEN);
-    }
+//    public boolean isNotOpen() {
+//        return getState().equals(PeriodState.NOT_OPEN);
+//    }
 
-    public boolean isFor(final Integer semester) {
-        return getSemester().equals(semester);
-    }
+//    public boolean isFirstOfYear() {
+//        return getExecutionYear().getFirstExecutionPeriod() == this;
+//    }
 
-    public boolean isFirstOfYear() {
-        return getExecutionYear().getFirstExecutionPeriod() == this;
-    }
+//    public String getYear() {
+//        return getExecutionYear().getYear();
+//    }
 
-    public String getYear() {
-        return getExecutionYear().getYear();
-    }
-
+    @Override
     public void delete() {
-        if (!getAssociatedExecutionCoursesSet().isEmpty()) {
-            throw new Error("cannot.delete.execution.period.because.execution.courses.exist");
-        }
-        if (!getEnrolmentsSet().isEmpty()) {
-            throw new Error("cannot.delete.execution.period.because.enrolments.exist");
-        }
         super.setExecutionYear(null);
         setRootDomainObjectForExecutionPeriod(null);
-        setRootDomainObject(null);
-        deleteDomainObject();
+        super.delete();
     }
 
     // -------------------------------------------------------------
     // read static methods
     // -------------------------------------------------------------
 
-    public static ExecutionSemester getExecutionPeriod(AcademicCalendarEntry entry) {
-        if (entry != null) {
-            for (final ExecutionSemester executionSemester : Bennu.getInstance().getExecutionPeriodsSet()) {
-                if (executionSemester.getAcademicInterval().getAcademicCalendarEntry().equals(entry)) {
-                    return executionSemester;
-                }
-            }
-        }
-        return null;
-    }
+//    public static ExecutionSemester getExecutionPeriod(AcademicCalendarEntry entry) {
+//        if (entry != null) {
+//            for (final ExecutionSemester executionSemester : Bennu.getInstance().getExecutionPeriodsSet()) {
+//                if (executionSemester.getAcademicInterval().getAcademicCalendarEntry().equals(entry)) {
+//                    return executionSemester;
+//                }
+//            }
+//        }
+//        return null;
+//    }
 
     private static transient ExecutionSemester currentExecutionPeriod = null;
 
@@ -268,22 +258,22 @@ public class ExecutionSemester extends ExecutionSemester_Base {
     public static List<ExecutionSemester> readNotClosedExecutionPeriods() {
         final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
         for (final ExecutionSemester executionSemester : Bennu.getInstance().getExecutionPeriodsSet()) {
-            if (!executionSemester.isClosed()) {
+            if (!executionSemester.getState().equals(PeriodState.CLOSED)) {
                 result.add(executionSemester);
             }
         }
         return result;
     }
 
-    public static ExecutionSemester readByDateTime(final DateTime dateTime) {
-        final YearMonthDay yearMonthDay = dateTime.toYearMonthDay();
-        for (final ExecutionSemester executionSemester : Bennu.getInstance().getExecutionPeriodsSet()) {
-            if (executionSemester.containsDay(yearMonthDay)) {
-                return executionSemester;
-            }
-        }
-        return null;
-    }
+//    public static ExecutionSemester readByDateTime(final DateTime dateTime) {
+//        final YearMonthDay yearMonthDay = dateTime.toYearMonthDay();
+//        for (final ExecutionSemester executionSemester : Bennu.getInstance().getExecutionPeriodsSet()) {
+//            if (executionSemester.containsDay(yearMonthDay)) {
+//                return executionSemester;
+//            }
+//        }
+//        return null;
+//    }
 
     @Override
     @SuppressWarnings("unchecked")
