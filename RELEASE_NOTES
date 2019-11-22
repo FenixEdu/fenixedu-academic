@@ -1,3 +1,4 @@
+25.4.0 (22-11-2019)
 - New Feature: School Time option for Party Contact Type
 - Improvement: added new AcademicPeriods: Months, Weeks and Days
 - Refactor: preparation for making AcademicCalendarEntry support variable periods, without need of subclasses
