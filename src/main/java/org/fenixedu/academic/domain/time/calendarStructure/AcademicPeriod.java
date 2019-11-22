@@ -37,6 +37,9 @@ public abstract class AcademicPeriod extends BaseSingleFieldPeriod {
     public static AcademicPeriod FIVE_YEAR = new AcademicYears(5, "FIVE_YEAR");
     public static AcademicPeriod SIX_YEAR = new AcademicYears(6, "SIX_YEAR");
     public static AcademicPeriod TRIMESTER = new AcademicTrimesters(1, "TRIMESTER");
+    public static AcademicPeriod MONTH = new AcademicMonths(1, "MONTH");
+    public static AcademicPeriod WEEK = new AcademicWeeks(1, "WEEK");
+    public static AcademicPeriod DAY = new AcademicDays(1, "DAY");
 
     private static Map<String, AcademicPeriod> academicPeriods = new HashMap<String, AcademicPeriod>();
 
@@ -49,6 +52,9 @@ public abstract class AcademicPeriod extends BaseSingleFieldPeriod {
         academicPeriods.put(FIVE_YEAR.getRepresentationInStringFormat(), FIVE_YEAR);
         academicPeriods.put(SIX_YEAR.getRepresentationInStringFormat(), SIX_YEAR);
         academicPeriods.put(TRIMESTER.getRepresentationInStringFormat(), TRIMESTER);
+        academicPeriods.put(MONTH.getRepresentationInStringFormat(), MONTH);
+        academicPeriods.put(WEEK.getRepresentationInStringFormat(), WEEK);
+        academicPeriods.put(DAY.getRepresentationInStringFormat(), DAY);
     }
 
     private final String name;

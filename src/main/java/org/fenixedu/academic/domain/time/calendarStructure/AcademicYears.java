@@ -62,6 +62,9 @@ public class AcademicYears extends AcademicPeriod {
         } else {
             result.add(AcademicPeriod.SEMESTER);
             result.add(AcademicPeriod.TRIMESTER);
+            result.add(AcademicPeriod.MONTH);
+            result.add(AcademicPeriod.WEEK);
+            result.add(AcademicPeriod.DAY);
         }
 
         return result;
