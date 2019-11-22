@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -106,8 +107,9 @@ public class ExecutionYear extends ExecutionYear_Base {
      */
     @Deprecated
     public ExecutionYear getNextExecutionYear() {
-        AcademicYearCE year = getAcademicInterval().plusYear(1);
-        return getExecutionYear(year);
+        return Optional.ofNullable(super.getNext()).map(ei -> ei.convert(ExecutionYear.class)).orElse(null);
+//        AcademicYearCE year = getAcademicInterval().plusYear(1);
+//        return getExecutionYear(year);
     }
 
     /**
@@ -115,8 +117,9 @@ public class ExecutionYear extends ExecutionYear_Base {
      */
     @Deprecated
     public ExecutionYear getPreviousExecutionYear() {
-        AcademicYearCE year = getAcademicInterval().minusYear(1);
-        return getExecutionYear(year);
+        return Optional.ofNullable(super.getPrevious()).map(ei -> ei.convert(ExecutionYear.class)).orElse(null);
+//        AcademicYearCE year = getAcademicInterval().minusYear(1);
+//        return getExecutionYear(year);
     }
 
     @Deprecated
@@ -167,10 +170,10 @@ public class ExecutionYear extends ExecutionYear_Base {
         return new Interval(begin, end).contains(dateTime);
     }
 
-    @Override
-    public boolean isCurrent() {
-        return this.getState().equals(PeriodState.CURRENT);
-    }
+//    @Override
+//    public boolean isCurrent() {
+//        return this.getState().equals(PeriodState.CURRENT);
+//    }
 
     public boolean isOpen() {
         return getState().equals(PeriodState.OPEN);
@@ -221,7 +224,6 @@ public class ExecutionYear extends ExecutionYear_Base {
 
     public static ExecutionYear getExecutionYear(AcademicYearCE entry) {
         if (entry != null) {
-            entry = (AcademicYearCE) entry.getOriginalTemplateEntry();
             for (final ExecutionYear executionYear : Bennu.getInstance().getExecutionYearsSet()) {
                 if (executionYear.getAcademicInterval().getAcademicCalendarEntry().equals(entry)) {
                     return executionYear;
@@ -423,14 +425,14 @@ public class ExecutionYear extends ExecutionYear_Base {
         return getExecutionPeriodsSet().stream().collect(Collectors.toSet());
     }
 
-    @Override
-    public ExecutionInterval getNext() {
-        return getNextExecutionYear();
-    }
-
-    @Override
-    public ExecutionInterval getPrevious() {
-        return getPreviousExecutionYear();
-    }
+//    @Override
+//    public ExecutionInterval getNext() {
+//        return getNextExecutionYear();
+//    }
+//
+//    @Override
+//    public ExecutionInterval getPrevious() {
+//        return getPreviousExecutionYear();
+//    }
 
 }

@@ -23,14 +23,14 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
-import org.fenixedu.academic.domain.time.calendarStructure.AcademicSemesterCE;
 import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
@@ -105,7 +105,8 @@ public class ExecutionSemester extends ExecutionSemester_Base {
     }
 
     public Integer getSemester() {
-        return getAcademicInterval().getAcademicSemesterOfAcademicYear();
+        return super.getChildOrder();
+//        return getAcademicInterval().getAcademicSemesterOfAcademicYear();
     }
 
     /**
@@ -113,8 +114,9 @@ public class ExecutionSemester extends ExecutionSemester_Base {
      */
     @Deprecated
     public ExecutionSemester getNextExecutionPeriod() {
-        AcademicSemesterCE semester = getAcademicInterval().plusSemester(1);
-        return semester != null ? ExecutionSemester.getExecutionPeriod(semester) : null;
+        return Optional.ofNullable(super.getNext()).map(ei -> ei.convert(ExecutionSemester.class)).orElse(null);
+//        AcademicSemesterCE semester = getAcademicInterval().plusSemester(1);
+//        return semester != null ? ExecutionSemester.getExecutionPeriod(semester) : null;
     }
 
     /**
@@ -122,8 +124,9 @@ public class ExecutionSemester extends ExecutionSemester_Base {
      */
     @Deprecated
     public ExecutionSemester getPreviousExecutionPeriod() {
-        AcademicSemesterCE semester = getAcademicInterval().minusSemester(1);
-        return semester != null ? ExecutionSemester.getExecutionPeriod(semester) : null;
+        return Optional.ofNullable(super.getPrevious()).map(ei -> ei.convert(ExecutionSemester.class)).orElse(null);
+//        AcademicSemesterCE semester = getAcademicInterval().minusSemester(1);
+//        return semester != null ? ExecutionSemester.getExecutionPeriod(semester) : null;
     }
 
 //    @Override
@@ -132,13 +135,13 @@ public class ExecutionSemester extends ExecutionSemester_Base {
         return super.compareTo(object);
     }
 
-    @Override
-    public String getQualifiedName() {
-        final String localizedName = getAcademicInterval().getAcademicCalendarEntry().getTitle().getContent();
-        final String semesterName = StringUtils.isNotBlank(localizedName) ? localizedName : getName();
-
-        return new StringBuilder().append(semesterName).append(" ").append(this.getExecutionYear().getYear()).toString();
-    }
+//    @Override
+//    public String getQualifiedName() {
+//        final String localizedName = getAcademicInterval().getAcademicCalendarEntry().getTitle().getContent();
+//        final String semesterName = StringUtils.isNotBlank(localizedName) ? localizedName : getName();
+//
+//        return new StringBuilder().append(semesterName).append(" ").append(this.getExecutionYear().getYear()).toString();
+//    }
 
     public boolean containsDay(final YearMonthDay date) {
         return !getBeginDateYearMonthDay().isAfter(date) && !getEndDateYearMonthDay().isBefore(date);
@@ -164,10 +167,10 @@ public class ExecutionSemester extends ExecutionSemester_Base {
         return super.compareTo(executionSemester) <= 0;
     }
 
-    @Override
-    public boolean isCurrent() {
-        return getState().equals(PeriodState.CURRENT);
-    }
+//    @Override
+//    public boolean isCurrent() {
+//        return getState().equals(PeriodState.CURRENT);
+//    }
 
     public boolean isClosed() {
         return getState().equals(PeriodState.CLOSED);
@@ -206,9 +209,8 @@ public class ExecutionSemester extends ExecutionSemester_Base {
     // read static methods
     // -------------------------------------------------------------
 
-    public static ExecutionSemester getExecutionPeriod(AcademicSemesterCE entry) {
+    public static ExecutionSemester getExecutionPeriod(AcademicCalendarEntry entry) {
         if (entry != null) {
-            entry = (AcademicSemesterCE) entry.getOriginalTemplateEntry();
             for (final ExecutionSemester executionSemester : Bennu.getInstance().getExecutionPeriodsSet()) {
                 if (executionSemester.getAcademicInterval().getAcademicCalendarEntry().equals(entry)) {
                     return executionSemester;
@@ -297,19 +299,19 @@ public class ExecutionSemester extends ExecutionSemester_Base {
         return result;
     }
 
-    @Override
-    public Integer getChildOrder() {
-        return getSemester();
-    }
-
-    @Override
-    public ExecutionInterval getNext() {
-        return getNextExecutionPeriod();
-    }
-
-    @Override
-    public ExecutionInterval getPrevious() {
-        return getPreviousExecutionPeriod();
-    }
+//    @Override
+//    public Integer getChildOrder() {
+//        return getSemester();
+//    }
+//
+//    @Override
+//    public ExecutionInterval getNext() {
+//        return getNextExecutionPeriod();
+//    }
+//
+//    @Override
+//    public ExecutionInterval getPrevious() {
+//        return getPreviousExecutionPeriod();
+//    }
 
 }

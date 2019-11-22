@@ -22,7 +22,9 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -67,9 +69,18 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base implement
                 && getBeginDateYearMonthDay().isBefore(getEndDateYearMonthDay());
     }
 
-    abstract public String getQualifiedName();
+//    abstract public String getQualifiedName();
+    public String getQualifiedName() {
+        final String localizedName = getAcademicInterval().getAcademicCalendarEntry().getTitle().getContent();
+        final String name = StringUtils.isNotBlank(localizedName) ? localizedName : getName();
 
-    abstract public boolean isCurrent();
+        return new StringBuilder().append(name).append(" ").append(this.getExecutionYear().getName()).toString();
+    }
+
+//    abstract public boolean isCurrent();
+    public boolean isCurrent() {
+        return getState().equals(PeriodState.CURRENT);
+    }
 
     public static ExecutionInterval getExecutionInterval(String qualifiedName) {
         for (ExecutionInterval interval : Bennu.getInstance().getExecutionIntervalsSet()) {
@@ -87,6 +98,11 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base implement
             }
         }
         return null;
+    }
+
+    public static ExecutionInterval getExecutionInterval(AcademicCalendarEntry entry) {
+        return entry != null ? Bennu.getInstance().getExecutionIntervalsSet().stream()
+                .filter(ei -> ei.getAcademicInterval().getAcademicCalendarEntry().equals(entry)).findAny().orElse(null) : null;
     }
 
     public boolean isAfter(ExecutionInterval input) {
@@ -195,11 +211,22 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base implement
 
     public abstract ExecutionYear getExecutionYear();
 
-    public abstract Integer getChildOrder();
+//    public abstract Integer getChildOrder();
+    public Integer getChildOrder() {
+        return getAcademicInterval().getAcademicCalendarEntry().getCardinality();
+    }
 
-    public abstract ExecutionInterval getNext();
+//    public abstract ExecutionInterval getNext();
+    public ExecutionInterval getNext() {
+        final AcademicCalendarEntry entry = getAcademicInterval().getAcademicCalendarEntry().getNextAcademicCalendarEntry();
+        return entry != null ? getExecutionInterval(entry) : null;
+    }
 
-    public abstract ExecutionInterval getPrevious();
+//    public abstract ExecutionInterval getPrevious();
+    public ExecutionInterval getPrevious() {
+        final AcademicCalendarEntry entry = getAcademicInterval().getAcademicCalendarEntry().getPreviousAcademicCalendarEntry();
+        return entry != null ? getExecutionInterval(entry) : null;
+    }
 
     public static Collection<ExecutionInterval> findActiveChilds() {
         return findAllChilds().stream().filter(ei -> ei.getState() == PeriodState.OPEN || ei.getState() == PeriodState.CURRENT)

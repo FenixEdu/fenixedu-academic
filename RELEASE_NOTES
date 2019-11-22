@@ -1,4 +1,5 @@
 - Refactor: preparation for making AcademicCalendarEntry support variable periods, without need of subclasses
+- Refactor: added implementations of ExecutionInterval former abstract methods: getChildOrder(), getNext(), getPrevious(), getQualifiedName() and isCurrent()
 
 25.3.0 (21-11-2019)
 - Bug Fix: Fixed access to CompetenceCourse details functionality 
