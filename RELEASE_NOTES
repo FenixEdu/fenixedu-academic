@@ -1,3 +1,4 @@
+- New Fixture: School Time option for Party Contact Type
 - Refactor: preparation for making AcademicCalendarEntry support variable periods, without need of subclasses
 - Refactor: added implementations of ExecutionInterval former abstract methods: getChildOrder(), getNext(), getPrevious(), getQualifiedName() and isCurrent()
 

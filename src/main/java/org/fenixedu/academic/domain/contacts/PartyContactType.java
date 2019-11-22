@@ -24,7 +24,9 @@ public enum PartyContactType {
 
     WORK,
 
-    INSTITUTIONAL;
+    INSTITUTIONAL,
+    
+    SCHOOLTIME;
 
     public String getName() {
         return name();

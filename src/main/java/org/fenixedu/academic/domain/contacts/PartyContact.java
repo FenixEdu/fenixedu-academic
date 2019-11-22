@@ -214,10 +214,12 @@ public abstract class PartyContact extends PartyContact_Base {
         return getType() == PartyContactType.INSTITUTIONAL;
     }
 
+    @Deprecated
     public boolean isWorkType() {
         return getType() == PartyContactType.WORK;
     }
 
+    @Deprecated
     public boolean isPersonalType() {
         return getType() == PartyContactType.PERSONAL;
     }
