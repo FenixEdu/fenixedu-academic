@@ -18,19 +18,7 @@
  */
 package org.fenixedu.academic.domain.degreeStructure;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
-import java.text.Collator;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Set;
-
-import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.DegreeModuleScope;
-import org.fenixedu.academic.domain.DomainObjectUtil;
-import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.*;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
@@ -38,8 +26,14 @@ import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.predicate.ContextPredicates;
 import org.fenixedu.bennu.core.domain.Bennu;
-
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
+
+import java.text.Collator;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Set;
+
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 public class Context extends Context_Base implements Comparable<Context> {
 
@@ -122,7 +116,7 @@ public class Context extends Context_Base implements Comparable<Context> {
     }
 
     public Context(final CourseGroup courseGroup, final DegreeModule degreeModule, final CurricularPeriod curricularPeriod,
-            final ExecutionSemester begin, final ExecutionSemester end) {
+            final Integer term, final ExecutionSemester begin, final ExecutionSemester end) {
 
         this();
 
@@ -134,6 +128,7 @@ public class Context extends Context_Base implements Comparable<Context> {
         super.setParentCourseGroup(courseGroup);
         super.setChildDegreeModule(degreeModule);
         super.setCurricularPeriod(curricularPeriod);
+        super.setTerm(term == null || term.intValue() < 1 ? null : term);
         super.setBeginExecutionPeriod(begin);
         super.setEndExecutionPeriod(end);
     }
@@ -177,10 +172,11 @@ public class Context extends Context_Base implements Comparable<Context> {
         }
     }
 
-    public void edit(final CourseGroup parent, final CurricularPeriod curricularPeriod, final ExecutionSemester begin,
+    public void edit(final CourseGroup parent, final CurricularPeriod curricularPeriod, final Integer term, final ExecutionSemester begin,
             final ExecutionSemester end) {
         setParentCourseGroup(parent);
         setCurricularPeriod(curricularPeriod);
+        setTerm(term == null || term.intValue() < 1 ? null : term);
         edit(begin, end);
     }
 

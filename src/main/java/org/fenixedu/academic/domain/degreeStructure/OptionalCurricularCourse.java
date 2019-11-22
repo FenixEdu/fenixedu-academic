@@ -39,14 +39,14 @@ public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
      * will represent any curricular course accordding to a rule
      */
     public OptionalCurricularCourse(CourseGroup parentCourseGroup, String name, String nameEn, CurricularStage curricularStage,
-            CurricularPeriod curricularPeriod, ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
+            CurricularPeriod curricularPeriod, Integer term, ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
 
         this();
         setName(name);
         setNameEn(nameEn);
         setCurricularStage(curricularStage);
         setType(CurricularCourseType.OPTIONAL_COURSE);
-        new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
+        new Context(parentCourseGroup, this, curricularPeriod, term, beginExecutionPeriod, endExecutionPeriod);
     }
 
     @Override

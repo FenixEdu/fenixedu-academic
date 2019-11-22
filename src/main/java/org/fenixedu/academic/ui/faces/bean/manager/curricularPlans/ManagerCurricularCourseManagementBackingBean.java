@@ -224,7 +224,7 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
             CreateOldCurricularCourse.run(getDegreeCurricularPlanID(), getCourseGroupID(), getName(), getNameEn(), getCode(),
                     getAcronym(), getMinimumValueForAcumulatedEnrollments(), getMaximumValueForAcumulatedEnrollments(),
                     getWeight(), getEnrollmentWeigth(), getCredits(), getEctsCredits(), getCurricularYearID(),
-                    getCurricularSemesterID(), getBeginExecutionPeriodID(), getEndExecutionPeriodID(), getGradeScale());
+                    getCurricularSemesterID(), getTerm(), getBeginExecutionPeriodID(), getEndExecutionPeriodID(), getGradeScale());
         } catch (FenixActionException e) {
             this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
             return "";

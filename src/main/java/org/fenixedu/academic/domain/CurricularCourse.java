@@ -137,7 +137,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public CurricularCourse(Double weight, String prerequisites, String prerequisitesEn, CurricularStage curricularStage,
             CompetenceCourse competenceCourse, CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod,
-            ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
+            Integer term,  ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
 
         this();
         setWeigth(weight);
@@ -146,7 +146,7 @@ public class CurricularCourse extends CurricularCourse_Base {
         setCurricularStage(curricularStage);
         setCompetenceCourse(competenceCourse);
         setType(CurricularCourseType.NORMAL_COURSE);
-        new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
+        new Context(parentCourseGroup, this, curricularPeriod, term, beginExecutionPeriod, endExecutionPeriod);
     }
 
     public GradeScale getGradeScaleChain() {

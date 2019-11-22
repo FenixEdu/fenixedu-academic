@@ -109,12 +109,12 @@ public class DegreeCurricularPlanGroupsLayout extends DegreeCurricularPlanLayout
         final CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
         if (curricularCourse.isOptionalCurricularCourse()) {
             drawCurricularCourseName(curricularCourse, row, false, level);
-            drawContextInformation(context.getCurricularPeriod(), row);
+            drawContextInformation(context.getCurricularPeriod(), context.getTerm(), row);
             drawOptionalCellInformation(row);
 
         } else if (curricularCourse.isSemestrial(getExecutionInterval())) {
             drawCurricularCourseName(curricularCourse, row, isCurricularCourseLinkable(), level);
-            drawContextInformation(context.getCurricularPeriod(), row);
+            drawContextInformation(context.getCurricularPeriod(), context.getTerm(), row);
             drawRegime(curricularCourse, row);
             drawCourseLoad(curricularCourse, context.getCurricularPeriod(), row);
             drawEctsCredits(curricularCourse, context.getCurricularPeriod(), row);
@@ -133,7 +133,7 @@ public class DegreeCurricularPlanGroupsLayout extends DegreeCurricularPlanLayout
 
             if (curricularCourse.getCompetenceCourse().hasOneCourseLoad(getExecutionInterval())) {
                 drawCurricularCourseName(curricularCourse, row, isCurricularCourseLinkable(), level);
-                drawContextInformation(context.getCurricularPeriod(), row);
+                drawContextInformation(context.getCurricularPeriod(), context.getTerm(), row);
                 drawRegime(curricularCourse, row);
                 drawCourseLoad(curricularCourse, context.getCurricularPeriod(), row);
                 drawEctsCredits(curricularCourse, context.getCurricularPeriod(), row);
@@ -143,7 +143,7 @@ public class DegreeCurricularPlanGroupsLayout extends DegreeCurricularPlanLayout
                 final ExecutionSemester firstES = getExecutionInterval().getExecutionSemesterFor(firstCP.getChildOrder());
 
                 drawCurricularCourseName(curricularCourse, row, isCurricularCourseLinkable(), level);
-                drawContextInformation(firstCP, row);
+                drawContextInformation(firstCP, context.getTerm(), row);
                 drawRegime(curricularCourse, row);
                 drawCourseLoad(curricularCourse, firstCP, firstES, row);
                 drawEctsCredits(curricularCourse, firstCP, firstES, row);
@@ -152,7 +152,7 @@ public class DegreeCurricularPlanGroupsLayout extends DegreeCurricularPlanLayout
                 final ExecutionSemester secondES = getExecutionInterval().getExecutionSemesterFor(secondCP.getChildOrder());
 
                 drawCurricularCourseName(curricularCourse, row, false, level);
-                drawContextInformation(secondCP, row);
+                drawContextInformation(secondCP, context.getTerm(), row);
                 drawRegime(curricularCourse, row);
                 drawCourseLoad(curricularCourse, secondCP, secondES, row);
                 drawEctsCredits(curricularCourse, secondCP, secondES, row);
@@ -160,17 +160,17 @@ public class DegreeCurricularPlanGroupsLayout extends DegreeCurricularPlanLayout
 
         } else {
             drawCurricularCourseName(curricularCourse, row, isCurricularCourseLinkable(), level);
-            drawContextInformation(context.getCurricularPeriod(), row);
+            drawContextInformation(context.getCurricularPeriod(), context.getTerm(), row);
             drawRegime(curricularCourse, row);
             drawCourseLoad(curricularCourse, context.getCurricularPeriod(), row);
             drawEctsCredits(curricularCourse, context.getCurricularPeriod(), row);
         }
     }
 
-    private void drawContextInformation(final CurricularPeriod period, final HtmlTableRow row) {
+    private void drawContextInformation(final CurricularPeriod period, final Integer term, final HtmlTableRow row) {
         final HtmlTableCell cell = row.createCell();
         cell.setClasses(getCurricularPeriodCellClass());
-        cell.setText(CurricularPeriodLabelFormatter.getFullLabel(period, true));
+        cell.setText(CurricularPeriodLabelFormatter.getFullLabel(period, term,true));
     }
 
     private void drawCourseLoad(final CurricularCourse course, final CurricularPeriod period, final ExecutionSemester interval,

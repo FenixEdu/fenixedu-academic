@@ -38,7 +38,7 @@ public class CreateOldCurricularCourse {
     public static void run(final String dcpId, final String cgId, final String name, final String nameEn, final String code,
             final String acronym, final Integer minimumValueForAcumulatedEnrollments,
             final Integer maximumValueForAcumulatedEnrollments, final Double weigth, final Integer enrolmentWeigth,
-            final Double credits, final Double ectsCredits, final Integer year, final Integer semester,
+            final Double credits, final Double ectsCredits, final Integer year, final Integer semester, final Integer term,
             final String beginExecutionPeriodId, final String endExecutionPeriodId, final GradeScale gradeScale)
             throws FenixServiceException {
 
@@ -71,7 +71,7 @@ public class CreateOldCurricularCourse {
         final ExecutionSemester beginExecutionPeriod = FenixFramework.getDomainObject(beginExecutionPeriodId);
         final ExecutionSemester endExecutionPeriod = FenixFramework.getDomainObject(endExecutionPeriodId);
 
-        courseGroup.addContext(curricularCourse, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
+        courseGroup.addContext(curricularCourse, curricularPeriod, term, beginExecutionPeriod, endExecutionPeriod);
     }
 
     private static CurricularPeriod getCurricularPeriod(final DegreeCurricularPlan degreeCurricularPlan, final Integer year,

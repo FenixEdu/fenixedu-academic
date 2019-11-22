@@ -102,7 +102,7 @@ public class CourseGroup extends CourseGroup_Base {
             throw new DomainException("error.degreeStructure.CourseGroup.parentCourseGroup.cannot.be.null");
         }
         parentCourseGroup.checkDuplicateChildNames(name, nameEn);
-        new Context(parentCourseGroup, this, null, begin, end);
+        new Context(parentCourseGroup, this, null, null, begin, end);
         setProgramConclusion(programConclusion);
     }
 
@@ -652,18 +652,18 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public Context addCurricularCourse(final CurricularCourse curricularCourse, final CurricularPeriod curricularPeriod,
-            final ExecutionSemester begin, final ExecutionSemester end) {
-        return addContext(curricularCourse, curricularPeriod, begin, end);
+            final Integer term, final ExecutionSemester begin, final ExecutionSemester end) {
+        return addContext(curricularCourse, curricularPeriod, term, begin, end);
     }
 
-    public Context addContext(final DegreeModule degreeModule, final CurricularPeriod curricularPeriod,
+    public Context addContext(final DegreeModule degreeModule, final CurricularPeriod curricularPeriod, final Integer term,
             final ExecutionSemester begin, final ExecutionSemester end) {
 
         if (!allowChildWith(begin)) {
             throw new DomainException("degreeModule.cannot.add.context.with.begin.execution.period", getName(), begin.getName(),
                     begin.getExecutionYear().getYear());
         }
-        return new Context(this, degreeModule, curricularPeriod, begin, end);
+        return new Context(this, degreeModule, curricularPeriod, term, begin, end);
     }
 
     @Override
@@ -888,10 +888,10 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public Context createContext(final ExecutionInterval begin, final ExecutionInterval end, final DegreeModule degreeModule,
-            final CurricularPeriod curricularPeriod) {
+            final CurricularPeriod curricularPeriod, final Integer term) {
 
         final Context context =
-                new Context(this, degreeModule, curricularPeriod, ExecutionInterval.assertExecutionIntervalType(
+                new Context(this, degreeModule, curricularPeriod, term, ExecutionInterval.assertExecutionIntervalType(
                         ExecutionSemester.class, begin), ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class,
                         end));
 

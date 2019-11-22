@@ -61,10 +61,16 @@
 			<f:selectItems value="#{CurricularCourseManagement.curricularYears}" />
 		</h:selectOneMenu>
 		<h:outputText value="</p>" escape="false"/>
-		
+
 		<h:outputText value="<p><label>#{bolonhaBundle['semester']}:</label>" escape="false"/>
 		<h:selectOneMenu value="#{CurricularCourseManagement.curricularSemesterID}">
 			<f:selectItems value="#{CurricularCourseManagement.curricularSemesters}" />
+		</h:selectOneMenu>
+		<h:outputText value="</p>" escape="false"/>
+
+		<h:outputText value="<p><label>#{bolonhaBundle['term']}:</label>" escape="false"/>
+		<h:selectOneMenu value="#{CurricularCourseManagement.term}">
+			<f:selectItems value="#{CurricularCourseManagement.terms}" />
 		</h:selectOneMenu>
 		<h:outputText value="</p></fieldset></div>" escape="false"/>
 	

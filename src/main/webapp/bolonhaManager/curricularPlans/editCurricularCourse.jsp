@@ -134,7 +134,13 @@
 				<f:selectItems value="#{CurricularCourseManagement.curricularSemesters}" />
 			</fc:selectOneMenu>
 			<h:outputText value="</p>" escape="false"/>
-			
+
+			<h:outputText value="<p><label>#{bolonhaBundle['term']}:</label>" escape="false"/>
+			<fc:selectOneMenu value="#{CurricularCourseManagement.term}">
+				<f:selectItems value="#{CurricularCourseManagement.terms}" />
+			</fc:selectOneMenu>
+			<h:outputText value="</p>" escape="false"/>
+
 			<h:outputText value="<p class='mtop05'><label class='lempty'>.</label>" escape="false"/>
 			<h:commandButton alt="#{htmlAltBundle['commandButton.add']}" styleClass="inputbutton" value="#{bolonhaBundle['add']}"
 				action="" actionListener="#{CurricularCourseManagement.addContext}"/>
@@ -155,7 +161,10 @@
 					
 					<h:outputText value="<p><label>#{bolonhaBundle['curricularPeriod']}:</label>" escape="false"/>
 					<h:outputText value="#{context.curricularPeriod.fullLabel}</p>" escape="false"/>
-					
+
+					<h:outputText value="<p><label>#{bolonhaBundle['term']}:</label>" escape="false"/>
+					<h:outputText value="#{context.term}</p>" escape="false"/>
+
 					<h:outputText value="<p class='mtop05'><label class='lempty'>.</label>" escape="false"/>
 					<h:outputLink value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/curricularPlans/editCurricularCourse.faces">
 						<h:outputText value="#{bolonhaBundle['edit']}" />
@@ -193,7 +202,13 @@
 						<f:selectItems value="#{CurricularCourseManagement.curricularSemesters}" />
 					</fc:selectOneMenu>
 					<h:outputText value="</p>" escape="false"/>
-					
+
+					<h:outputText value="<p><label>#{bolonhaBundle['term']}:</label>" escape="false"/>
+					<fc:selectOneMenu value="#{CurricularCourseManagement.term}">
+						<f:selectItems value="#{CurricularCourseManagement.terms}" />
+					</fc:selectOneMenu>
+					<h:outputText value="</p>" escape="false"/>
+
 					<h:outputText value="<p class='mtop05'><label class='lempty'>.</label>" escape="false"/>
 					<h:outputText escape="false" value="<input alt='input.contextID' id='contextID' name='contextID' type='hidden' value='#{context.externalId}'/>"/>
 					<h:commandButton alt="#{htmlAltBundle['commandButton.update']}" styleClass="inputbutton" value="#{bolonhaBundle['update']}"

@@ -321,13 +321,13 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     @Override
     public CurricularCourse createCurricularCourse(Double weight, String prerequisites, String prerequisitesEn,
             CurricularStage curricularStage, CompetenceCourse competenceCourse, CourseGroup parentCourseGroup,
-            CurricularPeriod curricularPeriod, ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
+            CurricularPeriod curricularPeriod, Integer term, ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
         throw new DomainException("EmptyDegreeCurricularPlan.not.available");
     }
 
     @Override
     public CurricularCourse createOptionalCurricularCourse(CourseGroup parentCourseGroup, String name, String nameEn,
-            CurricularStage curricularStage, CurricularPeriod curricularPeriod, ExecutionSemester beginExecutionPeriod,
+            CurricularStage curricularStage, CurricularPeriod curricularPeriod, Integer term, ExecutionSemester beginExecutionPeriod,
             ExecutionSemester endExecutionPeriod) {
         throw new DomainException("EmptyDegreeCurricularPlan.not.available");
     }

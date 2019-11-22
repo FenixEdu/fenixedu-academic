@@ -57,7 +57,7 @@ public class CreateCurricularCourse {
 
         degreeCurricularPlan.createCurricularCourse(curricularCourseArgs.getWeight(), curricularCourseArgs.getPrerequisites(),
                 curricularCourseArgs.getPrerequisitesEn(), CurricularStage.DRAFT, competenceCourse, parentCourseGroup,
-                curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
+                curricularPeriod, curricularCourseArgs.getTerm(), beginExecutionPeriod, endExecutionPeriod);
     }
 
     /**
@@ -76,8 +76,8 @@ public class CreateCurricularCourse {
         ExecutionSemester endExecutionPeriod = readEndExecutionPeriod(curricularCourseArgs);
 
         degreeCurricularPlan.createOptionalCurricularCourse(parentCourseGroup, curricularCourseArgs.getName(),
-                curricularCourseArgs.getNameEn(), CurricularStage.DRAFT, curricularPeriod, beginExecutionPeriod,
-                endExecutionPeriod);
+                curricularCourseArgs.getNameEn(), CurricularStage.DRAFT, curricularPeriod, curricularCourseArgs.getTerm(),
+                beginExecutionPeriod, endExecutionPeriod);
     }
 
     private static DegreeCurricularPlan readDegreeCurricularPlan(CurricularCourseArgs curricularCourseArgs)
@@ -136,7 +136,7 @@ public class CreateCurricularCourse {
     private abstract static class CurricularCourseArgs {
         private String degreeCurricularPlanID, parentCourseGroupID;
 
-        private Integer year, semester;
+        private Integer year, semester, term;
 
         private String beginExecutionPeriodID, endExecutionPeriodID;
 
@@ -187,6 +187,14 @@ public class CreateCurricularCourse {
         public void setYear(Integer year) {
             this.year = year;
         }
+
+        public void setTerm(Integer term) {
+            this.term = term;
+        }
+
+        public Integer getTerm() {
+            return term;
+        }
     }
 
     public static class CreateCurricularCourseArgs extends CurricularCourseArgs {
@@ -197,7 +205,7 @@ public class CreateCurricularCourse {
         private String competenceCourseID;
 
         public CreateCurricularCourseArgs(Double weight, String prerequisites, String prerequisitesEn, String competenceCourseID,
-                String parentCourseGroupID, Integer year, Integer semester, String degreeCurricularPlanID,
+                String parentCourseGroupID, Integer year, Integer semester, Integer term, String degreeCurricularPlanID,
                 String beginExecutionPeriodID, String endExecutionPeriodID) {
 
             setWeight(weight);
@@ -207,6 +215,7 @@ public class CreateCurricularCourse {
             setParentCourseGroupID(parentCourseGroupID);
             setYear(year);
             setSemester(semester);
+            setTerm(term);
             setDegreeCurricularPlanID(degreeCurricularPlanID);
             setBeginExecutionPeriodID(beginExecutionPeriodID);
             setEndExecutionPeriodID(endExecutionPeriodID);

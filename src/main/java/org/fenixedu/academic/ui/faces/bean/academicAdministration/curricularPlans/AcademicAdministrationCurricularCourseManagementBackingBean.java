@@ -232,7 +232,7 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
             CreateOldCurricularCourse.run(getDegreeCurricularPlanID(), getCourseGroupID(), getName(), getNameEn(), getCode(),
                     getAcronym(), getMinimumValueForAcumulatedEnrollments(), getMaximumValueForAcumulatedEnrollments(),
                     getWeight(), getEnrollmentWeigth(), getCredits(), getEctsCredits(), getCurricularYearID(),
-                    getCurricularSemesterID(), getBeginExecutionPeriodID(), getEndExecutionPeriodID(), getGradeScale());
+                    getCurricularSemesterID(), getTerm(), getBeginExecutionPeriodID(), getEndExecutionPeriodID(), getGradeScale());
         } catch (FenixActionException e) {
             this.addErrorMessage(BundleUtil.getString(Bundle.BOLONHA, e.getMessage()));
             return "";
@@ -382,7 +382,7 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
             checkCurricularCourse();
             checkCurricularSemesterAndYear();
             AddContextToCurricularCourse.run(getCurricularCourse(), getCourseGroup(), getBeginExecutionPeriodID(),
-                    getFinalEndExecutionPeriodID(), getCurricularYearID(), getCurricularSemesterID());
+                    getFinalEndExecutionPeriodID(), getCurricularYearID(), getCurricularSemesterID(), getTerm());
             addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "addedNewContextToCurricularCourse"));
             setToAddNewContext(false);
             setContextID(null);

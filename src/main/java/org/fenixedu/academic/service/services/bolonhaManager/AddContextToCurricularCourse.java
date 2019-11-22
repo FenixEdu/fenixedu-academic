@@ -36,7 +36,7 @@ public class AddContextToCurricularCourse {
 
     @Atomic
     public static void run(CurricularCourse curricularCourse, CourseGroup courseGroup, String beginExecutionPeriodID,
-            String endExecutionPeriodID, Integer year, Integer semester) throws FenixServiceException {
+            String endExecutionPeriodID, Integer year, Integer semester, Integer term) throws FenixServiceException {
 
         CurricularPeriod degreeCurricularPeriod = courseGroup.getParentDegreeCurricularPlan().getDegreeStructure();
 
@@ -71,7 +71,7 @@ public class AddContextToCurricularCourse {
         final ExecutionSemester beginExecutionPeriod = getBeginExecutionPeriod(beginExecutionPeriodID);
         final ExecutionSemester endExecutionPeriod = getEndExecutionPeriod(endExecutionPeriodID);
 
-        courseGroup.addContext(curricularCourse, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
+        courseGroup.addContext(curricularCourse, curricularPeriod, term, beginExecutionPeriod, endExecutionPeriod);
     }
 
     private static ExecutionSemester getBeginExecutionPeriod(final String beginExecutionPeriodID) {
