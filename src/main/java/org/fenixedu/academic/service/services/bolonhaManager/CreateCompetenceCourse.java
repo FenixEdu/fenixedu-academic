@@ -48,8 +48,8 @@ public class CreateCompetenceCourse {
             throw new FenixServiceException("error.invalidUnit");
         }
         checkIfCanCreateCompetenceCourse(name.trim(), nameEn.trim(), code);
-        final CompetenceCourse competenceCourse = new CompetenceCourse(name, nameEn, basic, regimeType, competenceCourseLevel,
-                type, CurricularStage.DRAFT, unit, startSemester);
+        final CompetenceCourse competenceCourse = new CompetenceCourse(name, nameEn, basic, regimeType.convertToAcademicPeriod(),
+                competenceCourseLevel, type, CurricularStage.DRAFT, unit, startSemester);
         competenceCourse.setCode(code);
 
         return competenceCourse;

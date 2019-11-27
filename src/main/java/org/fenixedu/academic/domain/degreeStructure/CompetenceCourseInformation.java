@@ -21,11 +21,11 @@ package org.fenixedu.academic.domain.degreeStructure;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CompetenceCourse;
@@ -87,7 +87,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 
     public CompetenceCourseInformation(final CompetenceCourseInformation existingInformation) {
         this(existingInformation.getName(), existingInformation.getNameEn(), existingInformation.getBasic(),
-                existingInformation.getRegime(), existingInformation.getCompetenceCourseLevel(),
+                existingInformation.getAcademicPeriod(), existingInformation.getCompetenceCourseLevel(),
                 existingInformation.getExecutionInterval(), existingInformation.getCompetenceCourseGroupUnit());
         setCompetenceCourse(existingInformation.getCompetenceCourse());
         for (CompetenceCourseLoad load : existingInformation.getCompetenceCourseLoadsSet()) {
@@ -104,16 +104,16 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setProgramEn(existingInformation.getProgramEn());
     }
 
-    public CompetenceCourseInformation(final String name, final String nameEn, final Boolean basic, final RegimeType regimeType,
-            final CompetenceCourseLevel competenceCourseLevel, final ExecutionInterval interval,
-            final CompetenceCourseGroupUnit unit) {
+    public CompetenceCourseInformation(final String name, final String nameEn, final Boolean basic,
+            final AcademicPeriod academicPeriod, final CompetenceCourseLevel competenceCourseLevel,
+            final ExecutionInterval interval, final CompetenceCourseGroupUnit unit) {
 
         this();
-        checkParameters(name, nameEn, basic, regimeType, competenceCourseLevel, unit);
+        checkParameters(name, nameEn, basic, academicPeriod, competenceCourseLevel, unit);
         setName(name);
         setNameEn(nameEn);
         setBasic(basic);
-        setRegime(regimeType);
+        setAcademicPeriod(academicPeriod);
         setCompetenceCourseLevel(competenceCourseLevel);
         setBibliographicReferences(new BibliographicReferences());
         setExecutionInterval(interval);
@@ -128,10 +128,10 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         return getCompetenceCourseGroupUnit().getAssociatedDepartmentUnit();
     }
 
-    private void checkParameters(final String name, final String nameEn, final Boolean basic, final RegimeType regimeType,
+    private void checkParameters(final String name, final String nameEn, final Boolean basic, final AcademicPeriod academicPeriod,
             CompetenceCourseLevel competenceCourseLevel) {
 
-        if (name == null || nameEn == null || basic == null || regimeType == null) {
+        if (name == null || nameEn == null || basic == null || academicPeriod == null) {
             throw new DomainException("competence.course.information.invalid.parameters");
         }
         if (competenceCourseLevel == null) {
@@ -139,10 +139,10 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         }
     }
 
-    private void checkParameters(final String name, final String nameEn, final Boolean basic, final RegimeType regimeType,
+    private void checkParameters(final String name, final String nameEn, final Boolean basic, final AcademicPeriod academicPeriod,
             final CompetenceCourseLevel competenceCourseLevel, final CompetenceCourseGroupUnit unit) {
 
-        checkParameters(name, nameEn, basic, regimeType, competenceCourseLevel);
+        checkParameters(name, nameEn, basic, academicPeriod, competenceCourseLevel);
         if (unit == null || !unit.isCompetenceCourseGroupUnit()) {
             throw new DomainException("competence.course.information.invalid.group.unit");
         }
@@ -150,7 +150,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 
     public void edit(final String name, final String nameEn, final Boolean basic,
             final CompetenceCourseLevel competenceCourseLevel, final CompetenceCourseGroupUnit unit) {
-        checkParameters(name, nameEn, basic, getRegime(), competenceCourseLevel, unit);
+        checkParameters(name, nameEn, basic, getAcademicPeriod(), competenceCourseLevel, unit);
         setName(name);
         setNameEn(nameEn);
         setBasic(basic);
@@ -160,7 +160,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 
     public void edit(final String name, final String nameEn, final Boolean basic,
             final CompetenceCourseLevel competenceCourseLevel) {
-        checkParameters(name, nameEn, basic, getRegime(), competenceCourseLevel);
+        checkParameters(name, nameEn, basic, getAcademicPeriod(), competenceCourseLevel);
         setName(name);
         setNameEn(nameEn);
         setBasic(basic);
@@ -190,6 +190,10 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     }
 
     public AcademicPeriod getAcademicPeriod() {
+        if (super.getAcademicPeriod() != null) {
+            return super.getAcademicPeriod();
+        }
+
         AcademicPeriod result = null;
         final RegimeType regime = getRegime();
         if (regime.equals(RegimeType.SEMESTRIAL)) {
@@ -207,10 +211,14 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
             throw new DomainException("error.CompetenceCourseInformation.required.AcademicPeriod");
         }
 
-        if (!input.equals(AcademicPeriod.SEMESTER) && !input.equals(AcademicPeriod.YEAR)) {
+        if (input.getWeight() > 1f) {
             throw new DomainException("error.CompetenceCourseInformation.unsupported.AcademicPeriod");
         }
-        setRegime(input.equals(AcademicPeriod.SEMESTER) ? RegimeType.SEMESTRIAL : RegimeType.ANUAL);
+
+        super.setAcademicPeriod(input);
+
+        // for backward compatibility
+        setRegime(input.equals(AcademicPeriod.YEAR) ? RegimeType.ANUAL : RegimeType.SEMESTRIAL);
     }
 
     public LocalizedString getNameI18N() {
@@ -442,10 +450,6 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 
     private List<CompetenceCourseLoadBean> getCompetenceCourseLoadBeans(final Integer order) {
 
-        if (isSemestrial()) {
-            return Collections.singletonList(new CompetenceCourseLoadBean(getCompetenceCourseLoadsSet().iterator().next()));
-        }
-
         if (isAnual()) {
             final List<CompetenceCourseLoadBean> result = new ArrayList<>();
 
@@ -470,16 +474,17 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
             return result;
         }
 
-        return Collections.emptyList();
+        return getCompetenceCourseLoadsSet().stream().limit(1).map(ccl -> new CompetenceCourseLoadBean(ccl))
+                .collect(Collectors.toList());
     }
 
     public boolean isAnual() {
-        return getRegime() == RegimeType.ANUAL;
+        return AcademicPeriod.YEAR.equals(getAcademicPeriod());
     }
 
-    public boolean isSemestrial() {
-        return getRegime() == RegimeType.SEMESTRIAL;
-    }
+//    public boolean isSemestrial() {
+//        return getRegime() == RegimeType.SEMESTRIAL;
+//    }
 
     public List<CompetenceCourseInformationChangeRequest> getCompetenceCourseInformationChangeRequest() {
         final List<CompetenceCourseInformationChangeRequest> requests = new ArrayList<>();
@@ -507,6 +512,24 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 
     public ExecutionYear getExecutionYear() {
         return getExecutionPeriod().getExecutionYear();
+    }
+
+    /**
+     * TEMP method, for refactor purpose only
+     */
+    public boolean populateAcademicPeriod() {
+        if (super.getAcademicPeriod() == null) {
+            super.setAcademicPeriod(getAcademicPeriod());
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * TEMP method, for refactor purpose only
+     */
+    public AcademicPeriod getPersistentAcademicPeriod() {
+        return super.getAcademicPeriod() != null ? super.getAcademicPeriod() : null;
     }
 
 }

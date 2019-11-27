@@ -589,16 +589,19 @@ public class CurricularCourse extends CurricularCourse_Base {
                 .with(org.fenixedu.academic.util.LocaleUtils.EN, getPrerequisitesEn());
     }
 
+    @Deprecated
     public RegimeType getRegime(final ExecutionInterval interval) {
         final CompetenceCourse competenceCourse = getCompetenceCourse();
         return competenceCourse == null ? null : competenceCourse.getRegime(interval);
     }
 
+    @Deprecated
     public RegimeType getRegime(final ExecutionYear executionYear) {
         final CompetenceCourse competenceCourse = getCompetenceCourse();
         return competenceCourse == null ? null : competenceCourse.getRegime(executionYear);
     }
 
+    @Deprecated
     public RegimeType getRegime() {
         if (getCompetenceCourse() != null) {
             return getCompetenceCourse().getRegime();
@@ -606,10 +609,12 @@ public class CurricularCourse extends CurricularCourse_Base {
         return isOptionalCurricularCourse() ? RegimeType.SEMESTRIAL : null;
     }
 
+    @Deprecated
     public boolean hasRegime() {
         return getRegime() != null;
     }
 
+    @Deprecated
     public boolean hasRegime(final ExecutionYear executionYear) {
         return getRegime(executionYear) != null;
     }
@@ -632,8 +637,9 @@ public class CurricularCourse extends CurricularCourse_Base {
         return getCompetenceCourse() != null && getCompetenceCourse().isAnual(executionYear);
     }
 
+    @Deprecated
     public boolean isSemestrial(final ExecutionYear executionYear) {
-        return getCompetenceCourse() != null && getCompetenceCourse().isSemestrial(executionYear);
+        return getCompetenceCourse() != null && !getCompetenceCourse().isAnual(executionYear);
     }
 
     public boolean isEquivalent(CurricularCourse oldCurricularCourse) {

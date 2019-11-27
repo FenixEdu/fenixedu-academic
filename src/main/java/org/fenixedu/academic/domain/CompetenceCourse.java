@@ -71,7 +71,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         setRootDomainObject(Bennu.getInstance());
     }
 
-    public CompetenceCourse(String name, String nameEn, Boolean basic, RegimeType regimeType,
+    public CompetenceCourse(String name, String nameEn, Boolean basic, AcademicPeriod academicPeriod,
             CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, CurricularStage curricularStage,
             CompetenceCourseGroupUnit unit, ExecutionInterval startInterval) {
 
@@ -80,7 +80,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         setType(type);
 
         CompetenceCourseInformation competenceCourseInformation = new CompetenceCourseInformation(name.trim(), nameEn.trim(),
-                basic, regimeType, competenceCourseLevel, startInterval, unit);
+                basic, academicPeriod, competenceCourseLevel, startInterval, unit);
         super.addCompetenceCourseInformations(competenceCourseInformation);
 
         // unique acronym creation
@@ -359,8 +359,9 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return getRegime(null);
     }
 
+    @Deprecated
     public void setRegime(RegimeType regimeType) {
-        findInformationMostRecentUntil(null).setRegime(regimeType);
+        findInformationMostRecentUntil(null).setAcademicPeriod(regimeType.convertToAcademicPeriod());
     }
 
     public CompetenceCourseLevel getCompetenceCourseLevel(final ExecutionInterval interval) {
@@ -696,16 +697,17 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public boolean isAnual() {
-        return getRegime() == RegimeType.ANUAL;
+        return isAnual(null);
     }
 
-    public boolean isAnual(final ExecutionYear executionYear) {
-        return getRegime(executionYear) == RegimeType.ANUAL;
-    }
+//    public boolean isAnual(final ExecutionYear executionYear) {
+//        final CompetenceCourseInformation information = findInformationMostRecentUntil(executionYear);
+//        return information != null ? information.isAnual() : null;
+//    }
 
-    public boolean isSemestrial(final ExecutionYear executionYear) {
-        return getRegime(executionYear) == RegimeType.SEMESTRIAL;
-    }
+//    public boolean isSemestrial(final ExecutionYear executionYear) {
+//        return getRegime(executionYear) == RegimeType.SEMESTRIAL;
+//    }
 
     public boolean isApproved() {
         return getCurricularStage() == CurricularStage.APPROVED;
@@ -939,7 +941,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public boolean isAnual(final ExecutionInterval input) {
-        return getAcademicPeriod(input) == AcademicPeriod.YEAR;
+        final CompetenceCourseInformation information = findInformationMostRecentUntil(input);
+        return information != null ? information.isAnual() : null;
     }
 
     public AcademicPeriod getAcademicPeriod(final ExecutionInterval input) {

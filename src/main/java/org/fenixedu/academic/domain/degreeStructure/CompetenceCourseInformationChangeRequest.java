@@ -206,7 +206,7 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
         if (information != null) {
             information.edit(getName(), getNameEn(), information.getBasic(), getCompetenceCourseLevel(),
                     getCompetenceCourseGroupUnit());
-            information.setRegime(getRegime());
+            information.setAcademicPeriod(getRegime().convertToAcademicPeriod());
             information.edit(getObjectives(), getProgram(), getEvaluationMethod(), getObjectivesEn(), getProgramEn(),
                     getEvaluationMethodEn());
 
@@ -219,8 +219,9 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
             createLoads(information);
 
         } else {
-            information = new CompetenceCourseInformation(getName(), getNameEn(), course.isBasic(), getRegime(),
-                    getCompetenceCourseLevel(), getExecutionInterval(), getCompetenceCourseGroupUnit());
+            information = new CompetenceCourseInformation(getName(), getNameEn(), course.isBasic(),
+                    getRegime().convertToAcademicPeriod(), getCompetenceCourseLevel(), getExecutionInterval(),
+                    getCompetenceCourseGroupUnit());
             information.edit(getObjectives(), getProgram(), getEvaluationMethod(), getObjectivesEn(), getProgramEn(),
                     getEvaluationMethodEn());
             information.setAcronym(course.getAcronym());

@@ -289,7 +289,8 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
             row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getName());
             row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getAcronym());
 
-            row.setCell(BundleUtil.getString(Bundle.ENUMERATION, curricularCourse.getCompetenceCourse().getRegime().toString()));
+            row.setCell(BundleUtil.getString(Bundle.ENUMERATION,
+                    curricularCourse.getCompetenceCourse().getAcademicPeriod().getName()));
             row.setCell(curricularPeriod.getParent().getChildOrder() == null ? "" : curricularPeriod.getParent().getChildOrder()
                     .toString());
             row.setCell(curricularPeriod.getChildOrder().toString());

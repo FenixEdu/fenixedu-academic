@@ -23,6 +23,7 @@ package org.fenixedu.academic.domain.degreeStructure;
 
 import java.util.Locale;
 
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
@@ -51,5 +52,9 @@ public enum RegimeType {
 
     private String getAcronym(final Locale locale) {
         return BundleUtil.getString(Bundle.ENUMERATION, locale, getName() + ".ACRONYM");
+    }
+
+    public AcademicPeriod convertToAcademicPeriod() {
+        return this == RegimeType.ANUAL ? AcademicPeriod.YEAR : AcademicPeriod.SEMESTER;
     }
 }

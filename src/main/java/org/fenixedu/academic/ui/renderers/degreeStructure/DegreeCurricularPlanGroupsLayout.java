@@ -112,15 +112,14 @@ public class DegreeCurricularPlanGroupsLayout extends DegreeCurricularPlanLayout
             drawContextInformation(context.getCurricularPeriod(), row);
             drawOptionalCellInformation(row);
 
-        } else if (curricularCourse.isSemestrial(getExecutionInterval())) {
+        } else if (curricularCourse.isAnual(getExecutionInterval())) {
+            drawAnualCurricularCourseRow(context, row, level);
+        } else {
             drawCurricularCourseName(curricularCourse, row, isCurricularCourseLinkable(), level);
             drawContextInformation(context.getCurricularPeriod(), row);
             drawRegime(curricularCourse, row);
             drawCourseLoad(curricularCourse, context.getCurricularPeriod(), row);
             drawEctsCredits(curricularCourse, context.getCurricularPeriod(), row);
-
-        } else {
-            drawAnualCurricularCourseRow(context, row, level);
         }
 
         drawCurricularRulesRows(curricularCourse, context, main, level);

@@ -993,6 +993,7 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         String program;
         String programEn;
         degreeStructure.RegimeType regime;
+        AcademicPeriod academicPeriod;
     }
 
     class degreeStructure.CompetenceCourseInformationChangeRequest  {
