@@ -43,6 +43,7 @@ import org.fenixedu.academic.domain.curriculum.EnrollmentCondition;
 import org.fenixedu.academic.domain.curriculum.EnrollmentState;
 import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationContext;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
+import org.fenixedu.academic.domain.degreeStructure.OptionalCurricularCourse;
 import org.fenixedu.academic.domain.enrolment.EnroledEnrolmentWrapper;
 import org.fenixedu.academic.domain.enrolment.ExternalDegreeEnrolmentWrapper;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
@@ -1361,5 +1362,14 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     @Override
     public ExecutionInterval getExecutionInterval() {
         return super.getExecutionPeriod();
+    }
+
+    @Override
+    public void setDegreeModule(DegreeModule degreeModule) {
+        if (degreeModule instanceof OptionalCurricularCourse) {
+            throw new DomainException("error.Enrolment.optional.curricular.course.cannot.be.set.as.degree.module");
+        }
+
+        super.setDegreeModule(degreeModule);
     }
 }
