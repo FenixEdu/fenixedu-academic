@@ -31,26 +31,12 @@ public class EnrolmentEvaluationState implements Serializable {
 
     public static final int TEMPORARY = 2;
 
-    @Deprecated
-    public static final int RECTIFIED = 5;
-
-    @Deprecated
-    public static final int RECTIFICATION = 3;
-
     public static final int ANNULED = 4;
 
     public static final EnrolmentEvaluationState FINAL_OBJ = new EnrolmentEvaluationState(EnrolmentEvaluationState.FINAL, 2);
 
     public static final EnrolmentEvaluationState TEMPORARY_OBJ = new EnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY,
             1);
-
-    @Deprecated
-    public static final EnrolmentEvaluationState RECTIFIED_OBJ = new EnrolmentEvaluationState(EnrolmentEvaluationState.RECTIFIED,
-            3);
-
-    @Deprecated
-    public static final EnrolmentEvaluationState RECTIFICATION_OBJ = new EnrolmentEvaluationState(
-            EnrolmentEvaluationState.RECTIFICATION, 4);
 
     public static final EnrolmentEvaluationState ANNULED_OBJ = new EnrolmentEvaluationState(EnrolmentEvaluationState.ANNULED, 0);
 
@@ -69,10 +55,6 @@ public class EnrolmentEvaluationState implements Serializable {
             return FINAL_OBJ;
         case TEMPORARY:
             return TEMPORARY_OBJ;
-        case RECTIFIED:
-            return RECTIFIED_OBJ;
-        case RECTIFICATION:
-            return RECTIFICATION_OBJ;
         case ANNULED:
             return ANNULED_OBJ;
         default:
@@ -116,12 +98,6 @@ public class EnrolmentEvaluationState implements Serializable {
             break;
         case FINAL:
             valueS = "FINAL";
-            break;
-        case RECTIFIED:
-            valueS = "RECTIFIED";
-            break;
-        case RECTIFICATION:
-            valueS = "RECTIFICATION";
             break;
         case ANNULED:
             valueS = "ANNULED";

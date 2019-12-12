@@ -51,7 +51,7 @@ public class GradeRenderer extends OutputRenderer {
                 gradeValue.setClasses(getGradeClasses());
                 container.addChild(gradeValue);
                 if (isShowGradeScale()) {
-                    HtmlText gradeScale = new HtmlText("(" + RenderUtils.getEnumString(grade.getGradeScale()) + ")");
+                    HtmlText gradeScale = new HtmlText("(" + grade.getGradeScale().getName().getContent() + ")");
                     gradeScale.setClasses(getGradeScaleClasses());
                     container.addChild(gradeScale);
                 }

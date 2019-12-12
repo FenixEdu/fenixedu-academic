@@ -19,7 +19,7 @@
 package org.fenixedu.academic.ui.renderers;
 
 import org.fenixedu.academic.domain.Grade;
-import org.fenixedu.academic.domain.GradeScaleEnum;
+import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
@@ -68,13 +68,14 @@ public class GradeInputRenderer extends InputRenderer {
                 menu.setName(slot.getKey().toString() + "_scale");
 
                 menu.createDefaultOption(BundleUtil.getString(Bundle.RENDERER, "renderers.menu.default.title"));
-                for (GradeScaleEnum scale : GradeScaleEnum.values()) {
-                    menu.createOption(RenderUtils.getEnumString(scale)).setValue(scale.getName());
-                }
+                GradeScale.findAll().sorted(GradeScale.COMPARE_BY_NAME).forEach(scale -> {
+                    menu.createOption(scale.getName().getContent()).setValue(scale.getCode());
+                    
+                });
 
                 if (grade != null && !grade.isEmpty()) {
                     value.setValue(grade.getValue());
-                    menu.setValue(grade.getGradeScale().getName());
+                    menu.setValue(grade.getGradeScale().getCode());
                 }
 
                 menu.setController(new HtmlController() {
@@ -98,11 +99,11 @@ public class GradeInputRenderer extends InputRenderer {
 
     private static class GradeConverter extends Converter {
 
-        private GradeScaleEnum gradeScale;
+        private GradeScale gradeScale;
 
-        public GradeConverter(String gradeScaleName) {
-            if (gradeScaleName != null && gradeScaleName.length() > 0) {
-                gradeScale = GradeScaleEnum.valueOf(gradeScaleName);
+        public GradeConverter(String gradeScaleCode) {
+            if (gradeScaleCode != null && gradeScaleCode.length() > 0) {
+                gradeScale = GradeScale.findUniqueByCode(gradeScaleCode).get();
             }
         }
 
@@ -116,7 +117,7 @@ public class GradeInputRenderer extends InputRenderer {
             }
         }
 
-        public GradeScaleEnum getGradeScale() {
+        public GradeScale getGradeScale() {
             return gradeScale;
         }
 
@@ -167,7 +168,7 @@ public class GradeInputRenderer extends InputRenderer {
 
                 HtmlGradeTextInput htmlGradeTextInput = (HtmlGradeTextInput) getComponent();
                 GradeConverter gradeConverter = (GradeConverter) htmlGradeTextInput.getConverter();
-                GradeScaleEnum gradeScale = gradeConverter.getGradeScale();
+                GradeScale gradeScale = gradeConverter.getGradeScale();
 
                 String value = getComponent().getValue().trim();
                 if (value != null && value.length() > 0) {
@@ -178,7 +179,7 @@ public class GradeInputRenderer extends InputRenderer {
                         if (!gradeScale.belongsTo(value)) {
                             setValid(false);
                             setMessage("renderers.validator.grade.invalid.grade.value");
-                            setArguments(value, RenderUtils.getEnumString(gradeScale));
+                            setArguments(value, gradeScale.getName().getContent());
                         }
                     }
                 }

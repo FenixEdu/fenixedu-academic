@@ -1,21 +1,17 @@
 package org.fenixedu.academic.domain.curriculum.grade;
 
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.GradeScaleEnum;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.LocalizedString;
-
-import pt.ist.fenixframework.Atomic;
 
 public class GradeScaleEntry extends GradeScaleEntry_Base {
 
@@ -35,7 +31,7 @@ public class GradeScaleEntry extends GradeScaleEntry_Base {
             final boolean allowsApproval) {
         this();
         
-        setGradeScaleInstance(gradeScaleInstance);
+        setGradeScale(gradeScaleInstance);
         setValue(value);
         setDescription(description);
         setAllowsApproval(allowsApproval);
@@ -72,7 +68,7 @@ public class GradeScaleEntry extends GradeScaleEntry_Base {
     }
     
     private void checkRules() {
-        if (getGradeScaleInstance() == null) {
+        if (getGradeScale() == null) {
             throw new DomainException("error.GradeScaleEntry.gradeScale.is.required");
         }
 
@@ -84,7 +80,7 @@ public class GradeScaleEntry extends GradeScaleEntry_Base {
             throw new DomainException("error.GradeScaleEntry.description.is.required");
         }
         
-        if(find(getGradeScaleInstance(), getValue()).count() >= 2) {
+        if(find(getGradeScale(), getValue()).count() >= 2) {
             throw new DomainException("error.GradeScaleEntry.already.registered.in.scale");
         }
         
@@ -108,7 +104,7 @@ public class GradeScaleEntry extends GradeScaleEntry_Base {
     }
 
     private List<GradeScaleEntry> getHigherGradeEntries() {
-        final List<GradeScaleEntry> gradeEntriesList = new ArrayList<>(getGradeScaleInstance().getGradeScaleEntriesSet());
+        final List<GradeScaleEntry> gradeEntriesList = new ArrayList<>(getGradeScale().getGradeScaleEntriesSet());
         gradeEntriesList.sort(COMPARE_BY_GRADE_ORDER);
 
         int indexOf = gradeEntriesList.indexOf(this);
@@ -117,12 +113,12 @@ public class GradeScaleEntry extends GradeScaleEntry_Base {
     }
     
     public boolean isLast() {
-        final List<GradeScaleEntry> orderedGradeScaleEntries = getGradeScaleInstance().getOrderedGradeScaleEntriesList();
-        return getGradeScaleInstance().getOrderedGradeScaleEntriesList().indexOf(this) == orderedGradeScaleEntries.size() - 1;
+        final List<GradeScaleEntry> orderedGradeScaleEntries = getGradeScale().getOrderedGradeScaleEntriesList();
+        return getGradeScale().getOrderedGradeScaleEntriesList().indexOf(this) == orderedGradeScaleEntries.size() - 1;
     }
     
     public boolean isFirst() {
-        final List<GradeScaleEntry> orderedGradeScaleEntries = getGradeScaleInstance().getOrderedGradeScaleEntriesList();
+        final List<GradeScaleEntry> orderedGradeScaleEntries = getGradeScale().getOrderedGradeScaleEntriesList();
         return orderedGradeScaleEntries.indexOf(this) == 0;
     }
 

@@ -35,7 +35,7 @@ public enum EnrollmentState {
 
     ANNULED,
 
-    NOT_EVALUATED;
+    @Deprecated NOT_EVALUATED;
 
     public String getName() {
         return name();

@@ -25,7 +25,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.DegreeInfo;
-import org.fenixedu.academic.domain.GradeScaleEnum;
+import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.commons.i18n.I18N;
 
@@ -103,8 +103,8 @@ public class InfoDegree extends InfoObject implements Comparable {
         return infoDegreeInfos;
     }
 
-    public GradeScaleEnum getGradeScale() {
-        return getDegree().getGradeScale();
+    public GradeScale getGradeScale() {
+        return getDegree().getNumericGradeScale();
     }
 
     public static InfoDegree newInfoFromDomain(final Degree degree) {

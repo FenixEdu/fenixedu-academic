@@ -22,18 +22,18 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.CharacterConverter;
 
-import org.fenixedu.academic.domain.GradeScaleEnum;
+import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 
 public class GradeScaleConverter extends CharacterConverter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        return GradeScaleEnum.valueOf(value);
+        return GradeScale.findUniqueByCode(value).get();
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        return ((GradeScaleEnum) value).name();
+        return ((GradeScale) value).getCode();
     }
 
 }

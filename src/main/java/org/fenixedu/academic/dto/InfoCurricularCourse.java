@@ -30,9 +30,9 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.GradeScaleEnum;
 import org.fenixedu.academic.domain.ShiftType;
 import org.fenixedu.academic.domain.curriculum.CurricularCourseType;
+import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 import org.fenixedu.academic.domain.degreeStructure.RegimeType;
 import org.fenixedu.academic.util.CurricularCourseExecutionScope;
 import org.fenixedu.commons.i18n.I18N;

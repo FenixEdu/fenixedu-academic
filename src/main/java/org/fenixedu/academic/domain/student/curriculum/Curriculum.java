@@ -30,9 +30,9 @@ import java.util.function.Supplier;
 
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
-import org.fenixedu.academic.domain.GradeScaleEnum;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
@@ -223,7 +223,7 @@ public class Curriculum implements Serializable, ICurriculum {
         private Grade finalGrade;
 
         private void doCalculus(final Curriculum curriculum) {
-            GradeScaleEnum gradeScale = curriculum.getStudentCurricularPlan().getRegistration().getDegree().getGradeScale();
+            GradeScale gradeScale = curriculum.getStudentCurricularPlan().getRegistration().getDegree().getNumericGradeScale();
             
             sumPiCi = BigDecimal.ZERO;
             sumPi = BigDecimal.ZERO;

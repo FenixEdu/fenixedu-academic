@@ -22,7 +22,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import org.fenixedu.academic.domain.Grade;
-import org.fenixedu.academic.domain.GradeScaleEnum;
+import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
@@ -51,7 +51,7 @@ public class RegistrationConclusionProcess {
 
         if (conclusionBean.hasEnteredConclusionDate() || conclusionBean.hasEnteredFinalAverageGrade()
                 || conclusionBean.hasEnteredAverageGrade() || conclusionBean.hasEnteredDescriptiveGrade()) {
-            GradeScaleEnum gradeScale = registration.getDegree().getGradeScale();
+            GradeScale gradeScale = registration.getDegree().getNumericGradeScale();
             YearMonthDay conclusionDate = conclusionBean.getConclusionDate();
             Grade finalGrade = curriculumGroup.getFinalGrade();
             Grade rawGrade = curriculumGroup.getRawGrade();
@@ -75,8 +75,7 @@ public class RegistrationConclusionProcess {
             }
 
             if (conclusionBean.hasEnteredDescriptiveGrade()) {
-                GradeScaleEnum qualitativeGradeScale =
-                        GradeScaleEnum.valueOf(registration.getDegree().getQualitativeGradeScale().getCode());
+                GradeScale qualitativeGradeScale = registration.getDegree().getQualitativeGradeScale();
                 checkGrade(conclusionBean.getEnteredDescriptiveGrade(), qualitativeGradeScale);
                 descriptiveGrade = Grade.createGrade(conclusionBean.getEnteredDescriptiveGrade(), qualitativeGradeScale);
             }
@@ -86,10 +85,10 @@ public class RegistrationConclusionProcess {
         }
     }
 
-    private static void checkGrade(String value, GradeScaleEnum gradeScale) {
+    private static void checkGrade(String value, GradeScale gradeScale) {
         if (!gradeScale.belongsTo(value)) {
             throw new DomainException("error.RegistrationConclusionProcess.final.average.is.invalid", value,
-                    BundleUtil.getLocalizedString(Bundle.ENUMERATION, gradeScale.name()).getContent());
+                    gradeScale.getName().getContent());
         }
     }
 

@@ -276,7 +276,7 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
 		}
 	
 	class curriculum.grade.GradeScaleEntry {
-		GradeScaleEnum gradeScale;
+		GradeScaleEnum gradeScaleEnum;
 		String value (REQUIRED);
 		LocalizedString description (REQUIRED);
 		/* if true this grade is an approval */
@@ -295,7 +295,7 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
 		}
 		
 		relation GradeScaleGradeScaleEntry {
-			curriculum.grade.GradeScale playsRole gradeScaleInstance {
+			curriculum.grade.GradeScale playsRole gradeScale {
 				multiplicity 0..1;
 			}
 			
@@ -326,15 +326,15 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         CurricularStage curricularStage;
         String name;
         CompetenceCourseType type;
-        GradeScaleEnum gradeScale;
+        GradeScaleEnum gradeScaleEnum;
     }
     
     	relation CompetenceCourseGradeScale {
-    		curriculum.grade.GradeScale playsRole gradeScaleInstance {
+    		curriculum.grade.GradeScale playsRole gradeScale {
     			multiplicity 0..1;
     		}
     	
-    		CompetenceCourse playsRole {
+    		CompetenceCourse playsRole compentenceCourses {
     			multiplicity *;
     		}
     	}
@@ -379,7 +379,7 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
 
     class Degree extends AcademicProgram {
         Double ectsCredits;
-        GradeScaleEnum gradeScale (REQUIRED);
+        GradeScaleEnum gradeScaleEnum;
         String nameEn;
         String nome;
         String prevailingScientificArea;
@@ -405,7 +405,7 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
     			multiplicity 0..1;
     		}
     		
-    		Degree playsRole {
+    		Degree playsRole degrees {
     			multiplicity *;
     		}
     	}
@@ -546,15 +546,15 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
 
     class Evaluation  {
         String publishmentMessage;
-        GradeScaleEnum gradeScale;
+        GradeScaleEnum gradeScaleEnum;
     }
 
     	relation GradeScaleEvaluation {
-    		curriculum.grade.GradeScale playsRole gradeScaleInstance {
+    		curriculum.grade.GradeScale playsRole gradeScale {
     			multiplicity 0..1;
     		}
     		
-    		Evaluation playsRole {
+    		Evaluation playsRole evaluations {
     			multiplicity *;
     		}
     	}

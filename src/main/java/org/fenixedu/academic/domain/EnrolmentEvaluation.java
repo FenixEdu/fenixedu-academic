@@ -18,8 +18,8 @@
  */
 package org.fenixedu.academic.domain;
 
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
@@ -27,6 +27,7 @@ import java.util.List;
 
 import org.fenixedu.academic.domain.curriculum.EnrollmentState;
 import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationContext;
+import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.EnrolmentNotPayedException;
 import org.fenixedu.academic.domain.student.Registration;
@@ -165,26 +166,12 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         return isFinal() && getEnrollmentStateByGrade() == EnrollmentState.APROVED;
     }
 
-//    public void edit(Person responsibleFor, Date evaluationDate) {
-//        if (responsibleFor == null) {
-//            throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
-//        }
-//        setPersonResponsibleForGrade(responsibleFor);
-//        setExamDate(evaluationDate);
-//        generateCheckSum();
-//    }
-
     public void edit(Person responsibleFor, Grade grade, Date availableDate, Date examDate) {
         if (responsibleFor == null) {
             throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
         }
 
         if (examDate != null) {
-
-            if (!grade.isNotEvaluated()) {
-                checkRegistrationState();
-            }
-
             setExamDateYearMonthDay(YearMonthDay.fromDateFields(examDate));
 
         } else if (grade.isEmpty()) {
@@ -201,84 +188,33 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         generateCheckSum();
     }
 
-    private void checkRegistrationState() {
-
-        if (getRegistration().hasAnyActiveState(getExecutionYear())
-                || (getRegistration().isConcluded() && getEvaluationSeason().isImprovement())) {
-
-            return;
-        }
-
-        throw new DomainException("error.EnrolmentEvaluation.registration.with.invalid.state",
-                getRegistration().getNumber().toString());
-    }
-
     private ExecutionYear getExecutionYear() {
         return getExecutionInterval().getExecutionYear();
     }
 
     public void confirmSubmission(Person person, String observation) {
-        confirmSubmission(EnrolmentEvaluationState.FINAL_OBJ, person, observation);
-    }
-
-    public void confirmSubmission(EnrolmentEvaluationState enrolmentEvaluationState, Person person, String observation) {
-
         if (!isTemporary()) {
             throw new DomainException("EnrolmentEvaluation.cannot.submit.not.temporary",
                     getEnrolment().getStudent().getPerson().getUsername());
         }
-
+        
         if (!hasGrade()) {
             throw new DomainException("EnrolmentEvaluation.cannot.submit.with.empty.grade");
         }
-
-        /*
-         * 
-         * Due to curriculum validation the exam date is not required
-         * 
-         * if (!hasExamDateYearMonthDay()) { throw new
-         * DomainException("EnrolmentEvaluation.cannot.submit.without.exam.date"
-         * ); }
-         */
-
+        
         if (isPayable() && !isPayed()) {
             throw new EnrolmentNotPayedException("EnrolmentEvaluation.cannot.set.grade.on.not.payed.enrolment.evaluation",
                     getEnrolment());
         }
-
-        if (enrolmentEvaluationState == EnrolmentEvaluationState.RECTIFICATION_OBJ && getRectified() != null) {
-            getRectified().setEnrolmentEvaluationState(EnrolmentEvaluationState.RECTIFIED_OBJ);
-        }
-
-        setEnrolmentEvaluationState(enrolmentEvaluationState);
+        
+        setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
         setPerson(person);
         setObservation(observation);
         setWhenDateTime(new DateTime());
-
-        EnrollmentState newEnrolmentState = EnrollmentState.APROVED;
-        if (!this.getEvaluationSeason().isImprovement()) {
-            if (getRepMarks().contains(getGradeValue())) {
-                newEnrolmentState = EnrollmentState.NOT_APROVED;
-            } else if (getNaMarks().contains(getGradeValue())) {
-                newEnrolmentState = EnrollmentState.NOT_EVALUATED;
-            }
-        }
-
-        this.getEnrolment().setEnrollmentState(newEnrolmentState);
+        
+        this.getEnrolment().setEnrollmentState(getEnrolment().getGrade().getEnrolmentState());
     }
 
-    private Collection<String> getRepMarks() {
-        List<String> repMarks = new ArrayList<>();
-        repMarks.add(GradeScaleEnum.RE);
-        return repMarks;
-    }
-
-    private Collection<String> getNaMarks() {
-        List<String> naMarks = new ArrayList<>();
-        naMarks.add(GradeScaleEnum.NA);
-        return naMarks;
-    }
-    
     @Override
     protected void checkForDeletionBlockers(Collection<String> blockers) {
         super.checkForDeletionBlockers(blockers);
@@ -293,15 +229,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
     }
 
     public boolean isFinal() {
-        return EnrolmentEvaluationState.FINAL_OBJ.equals(getEnrolmentEvaluationState()) || isRectification();
-    }
-
-    public boolean isRectification() {
-        return EnrolmentEvaluationState.RECTIFICATION_OBJ.equals(getEnrolmentEvaluationState());
-    }
-
-    public boolean isRectified() {
-        return EnrolmentEvaluationState.RECTIFIED_OBJ.equals(getEnrolmentEvaluationState());
+        return EnrolmentEvaluationState.FINAL_OBJ.equals(getEnrolmentEvaluationState());
     }
 
     public boolean isAnnuled() {

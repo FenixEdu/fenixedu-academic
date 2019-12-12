@@ -36,14 +36,14 @@ public class Grade implements Serializable, Comparable<Grade> {
 
     private final String value;
 
-    private final GradeScaleEnum gradeScale;
+    private final GradeScale gradeScale;
     
     protected Grade() {
         value = null;
         gradeScale = null;
     }
 
-    protected Grade(String value, GradeScaleEnum gradeScale) {
+    protected Grade(String value, GradeScale gradeScale) {
         if (EmptyGrade.qualifiesAsEmpty(value)) {
             throw new DomainException("error.grade.invalid.argument");
         }
@@ -73,11 +73,11 @@ public class Grade implements Serializable, Comparable<Grade> {
         return isNumeric() ? Integer.valueOf(getValue()) : null;
     }
 
-    public GradeScaleEnum getGradeScale() {
+    public GradeScale getGradeScale() {
         return gradeScale;
     }
 
-    public static Grade createGrade(String value, GradeScaleEnum gradeScale) {
+    public static Grade createGrade(String value, GradeScale gradeScale) {
         if (EmptyGrade.qualifiesAsEmpty(value)) {
             return createEmptyGrade();
         }
@@ -100,7 +100,7 @@ public class Grade implements Serializable, Comparable<Grade> {
         }
 
         String[] tokens = string.split(":");
-        return createGrade(tokens[1], GradeScaleEnum.valueOf(tokens[0]));
+        return createGrade(tokens[1], GradeScale.findUniqueByCode(tokens[0]).get());
     }
 
     @Override
@@ -112,9 +112,9 @@ public class Grade implements Serializable, Comparable<Grade> {
         return exportAsString(getGradeScale(), getValue());
     }
 
-    private static String exportAsString(GradeScaleEnum gradeScale, String value) {
+    private static String exportAsString(GradeScale gradeScale, String value) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(gradeScale);
+        stringBuilder.append(gradeScale.getCode());
         stringBuilder.append(":");
         stringBuilder.append(value.trim().toUpperCase());
 
@@ -169,24 +169,12 @@ public class Grade implements Serializable, Comparable<Grade> {
         return getGradeScale().isNotApproved(this);
     }
 
-    public boolean isNotEvaluated() {
-        return getGradeScale().isNotEvaluated(this);
-    }
-
     public LocalizedString getExtendedValue() {
         return gradeScale.getExtendedValue(this);
     }
 
     public EnrollmentState getEnrolmentState() {
-        if (isNotEvaluated()) {
-            return EnrollmentState.NOT_EVALUATED;
-        } else if (isNotApproved()) {
-            return EnrollmentState.NOT_APROVED;
-        } else if (isApproved()) {
-            return EnrollmentState.APROVED;
-        } else {
-            return EnrollmentState.NOT_APROVED;
-        }
+        return isApproved() ? EnrollmentState.APROVED : EnrollmentState.NOT_APROVED;
     }
 
 }

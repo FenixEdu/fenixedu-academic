@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.ui.faces.bean.academicAdministration.curricularPlans;
 
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -30,7 +31,7 @@ import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.GradeScaleEnum;
+import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.dto.commons.CurricularCourseByExecutionSemesterBean;
@@ -274,15 +275,6 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
             result.add(new SelectItem(semester.getExternalId(), semester.getQualifiedName()));
         }
         return result;
-    }
-
-    public List<SelectItem> getGradeScales() {
-        List<SelectItem> res = new ArrayList<SelectItem>();
-        res.add(new SelectItem(this.NO_SELECTION_STRING, BundleUtil.getString(Bundle.BOLONHA, "choose")));
-        for (GradeScaleEnum gradeScale : GradeScaleEnum.values()) {
-            res.add(new SelectItem(gradeScale.getName(), BundleUtil.getString(Bundle.ENUMERATION, gradeScale.getName())));
-        }
-        return res;
     }
 
     public boolean isToAddNewContext() {

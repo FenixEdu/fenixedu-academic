@@ -19,8 +19,8 @@
 package org.fenixedu.academic.service.services.scientificCouncil.curricularPlans;
 
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.GradeScaleEnum;
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;

@@ -62,6 +62,8 @@ import org.fenixedu.spaces.domain.Space;
 
 import com.google.common.base.Strings;
 
+import pt.ist.fenixframework.Atomic;
+
 public class Degree extends Degree_Base implements Comparable<Degree> {
     public static final String CREATED_SIGNAL = "academic.degree.create";
 
@@ -140,7 +142,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public Degree(final String name, final String nameEn, final String code, final DegreeType degreeType,
-            final GradeScaleEnum numericGradeScale, final GradeScale qualitativeGradeScale, final ExecutionYear executionYear) {
+            final GradeScale numericGradeScale, final GradeScale qualitativeGradeScale, final ExecutionYear executionYear) {
         this();
         commonFieldsChange(name, nameEn, code, numericGradeScale, qualitativeGradeScale, executionYear);
 
@@ -151,7 +153,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public Degree(final String name, final String nameEn, final String acronym, final DegreeType degreeType,
-            final Double ectsCredits, final GradeScaleEnum numericGradeScale, final GradeScale qualitativeGradeScale,
+            final Double ectsCredits, final GradeScale numericGradeScale, final GradeScale qualitativeGradeScale,
             final String prevailingScientificArea, final AdministrativeOffice administrativeOffice) {
         this();
         commonFieldsChange(name, nameEn, acronym, numericGradeScale, qualitativeGradeScale,
@@ -160,7 +162,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         setAdministrativeOffice(administrativeOffice);
     }
 
-    private void commonFieldsChange(final String name, final String nameEn, final String code, final GradeScaleEnum gradeScale,
+    private void commonFieldsChange(final String name, final String nameEn, final String code, final GradeScale gradeScale,
             final GradeScale qualitativeGradeScale, final ExecutionYear executionYear) {
         if (name == null) {
             throw new DomainException("degree.name.not.null");
@@ -180,8 +182,16 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         this.setNome(name);
         this.setNameEn(nameEn);
         this.setSigla(code.trim());
-        this.setGradeScale(gradeScale);
+        this.setNumericGradeScale(gradeScale);
         this.setQualitativeGradeScale(qualitativeGradeScale);
+        
+        if(this.getNumericGradeScale() == null) {
+            throw new DomainException("error.Degree.numericGradeScale.required");
+        }
+
+        if(this.getQualitativeGradeScale() == null) {
+            throw new DomainException("error.Degree.qualitativeGradeScale.required");
+        }
     }
 
     private void newStructureFieldsChange(final DegreeType degreeType, final Double ectsCredits,
@@ -198,7 +208,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public void edit(final String name, final String nameEn, final String code, final DegreeType degreeType,
-            final GradeScaleEnum numericGradeScale, final GradeScale qualitativeGradeScale, final ExecutionYear executionYear) {
+            final GradeScale numericGradeScale, final GradeScale qualitativeGradeScale, final ExecutionYear executionYear) {
         commonFieldsChange(name, nameEn, code, numericGradeScale, qualitativeGradeScale, executionYear);
 
         if (degreeType == null) {
@@ -208,7 +218,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public void edit(final String name, final String nameEn, final String acronym, final DegreeType degreeType,
-            final Double ectsCredits, final GradeScaleEnum numericGradeScale, final GradeScale qualitativeGradeScale,
+            final Double ectsCredits, final GradeScale numericGradeScale, final GradeScale qualitativeGradeScale,
             final String prevailingScientificArea, final ExecutionYear executionYear) {
         checkIfCanEdit(degreeType);
         commonFieldsChange(name, nameEn, acronym, numericGradeScale, qualitativeGradeScale, executionYear);
@@ -277,6 +287,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             setSender(null);
         }
 
+        setNumericGradeScale(null);
         setCalendar(null);
         setUnit(null);
         setDegreeType(null);

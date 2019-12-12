@@ -49,8 +49,7 @@ public class EnrolmentEvaluationLog extends EnrolmentEvaluationLog_Base {
         setGradeValue(enrolmentEvaluation.getGradeValue());
 
         final Grade grade = enrolmentEvaluation.getGrade();
-        setGradeScale(grade != null && grade.getGradeScale() != null ? grade.getGradeScale().getName() : "");
-
+        setGradeScale(grade != null && grade.getGradeScale() != null ? grade.getGradeScale().getCode() : "");
         setEvaluationSeason(enrolmentEvaluation.getEvaluationSeason().getName().getContent(Locale.getDefault()));
         setEnrolmentEvaluationState(enrolmentEvaluation.getEnrolmentEvaluationState() != null ? enrolmentEvaluation
                 .getEnrolmentEvaluationState().getState().toString() : "");

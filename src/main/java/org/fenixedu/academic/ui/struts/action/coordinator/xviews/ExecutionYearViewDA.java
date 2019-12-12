@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.ui.struts.action.coordinator.xviews;
 
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -41,7 +42,6 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
-import org.fenixedu.academic.domain.GradeScaleEnum;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.coordinator.DegreeCoordinatorIndex;
@@ -122,6 +122,9 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
         }
         return enrolments;
     }
+    
+    @Deprecated
+    private static final String NA = "NA";
 
     private static class CurricularCourseGradeEntry {
 
@@ -151,7 +154,7 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
                     sum = sum.add(grade.getNumericValue());
                     quantity++;
                 }
-            } else if (grade.isNotEvaluated()) {
+            } else if (NA.equals(grade.getValue())) {
                 notEvaluated++;
             } else if (grade.isNotApproved()) {
                 flunked++;
@@ -199,7 +202,7 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
                     sum = sum.add(grade.getNumericValue());
                     quantity++;
                 }
-            } else if (grade.isNotEvaluated()) {
+            } else if (NA.equals(grade.getValue())) {
                 notEvaluated++;
             } else if (grade.isNotApproved()) {
                 flunked++;
@@ -314,7 +317,7 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
                         JsonObject enrolmentJson = new JsonObject();
                         if (grade != null && grade.isApproved()) {
                             enrolmentJson.addProperty("grade", grade.getIntegerValue());
-                        } else if (grade.isNotEvaluated()) {
+                        } else if (NA.equals(grade.getValue())) {
                             enrolmentJson.addProperty("grade", "NA");
                         } else if (grade.isNotApproved()) {
                             enrolmentJson.addProperty("grade", "RE");

@@ -15,8 +15,8 @@ import java.util.stream.Stream;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.fenixedu.academic.domain.Grade;
-import org.fenixedu.academic.domain.GradeScaleEnum;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.FenixFramework;
@@ -121,6 +121,23 @@ public class GradeScale extends GradeScale_Base {
         }
 
         super.setDefaultGradeScale(true);
+    }
+
+    public void edit(final LocalizedString name, final BigDecimal minimumReprovedGrade, final BigDecimal maximumReprovedGrade,
+            final BigDecimal minimumApprovedGrade, final BigDecimal maximumApprovedGrade, final boolean activeGradeScale,
+            boolean internalGradeScale) {
+
+        setName(name);
+        setMinimumReprovedGrade(minimumReprovedGrade);
+        setMaximumReprovedGrade(maximumReprovedGrade);
+        setMinimumApprovedGrade(minimumApprovedGrade);
+        setMaximumApprovedGrade(maximumApprovedGrade);
+        setInternalGradeScale(internalGradeScale);
+        setActive(activeGradeScale);
+
+        checkRules();
+        
+        invalidateCache();
     }
 
     public boolean belongsTo(final String value) {
@@ -303,7 +320,7 @@ public class GradeScale extends GradeScale_Base {
     }
 
     public boolean hasRestrictedGrades() {
-        return getMinimumApprovedGrade() != null || getMinimumReprovedGrade() != null;
+        return !(getMinimumApprovedGrade() != null || getMinimumReprovedGrade() != null);
     }
 
     public void invalidateCache() {
@@ -323,7 +340,8 @@ public class GradeScale extends GradeScale_Base {
             return entry.get().getDescription();
         }
 
-        throw new DomainException("error.GradeScale.getExtendedValue.grade.entry.not.found");
+        return CoreConfiguration.supportedLocales().stream().map(l -> new LocalizedString(l, grade.getValue()))
+                .reduce((a, c) -> c.append(a)).orElse(new LocalizedString());
     }
 
     private Optional<GradeScaleEntry> findGradeScaleEntry(final String value) {
@@ -428,26 +446,6 @@ public class GradeScale extends GradeScale_Base {
         }
 
         return GRADE_SCALE_CACHE.get(code);
-    }
-
-    public static GradeScale TYPE20() {
-        return findUniqueByCode(GradeScaleEnum.TYPE20.name()).get();
-    }
-
-    public static GradeScale TYPE5() {
-        return findUniqueByCode(GradeScaleEnum.TYPE5.name()).get();
-    }
-
-    public static GradeScale TYPEAP() {
-        return findUniqueByCode(GradeScaleEnum.TYPEAP.name()).get();
-    }
-
-    public static GradeScale TYPEAPT() {
-        return findUniqueByCode(GradeScaleEnum.TYPEAPT.name()).get();
-    }
-
-    public static GradeScale TYPEQUALITATIVE() {
-        return findUniqueByCode(GradeScaleEnum.TYPEQUALITATIVE.name()).get();
     }
 
     public static boolean isNumeric(final String value) {

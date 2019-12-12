@@ -21,7 +21,8 @@
  */
 package org.fenixedu.academic.ui.renderers.validators;
 
-import org.fenixedu.academic.domain.GradeScaleEnum;
+
+import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
@@ -45,30 +46,23 @@ public class GradeValidator extends HtmlValidator {
 
     @Override
     public void performValidation() {
-        String grade = getComponent().getValue();
+        final String grade = getComponent().getValue();
 
         if (isRequired() && (grade == null || grade.length() == 0)) {
             setValid(false);
             setKey(true);
             setMessage("renderers.validator.required");
         } else {
-            if (grade == null || grade.length() == 0 || grade.equalsIgnoreCase(GradeScaleEnum.NA)
-                    || grade.equalsIgnoreCase(GradeScaleEnum.RE) || grade.equalsIgnoreCase(GradeScaleEnum.AP)
-                    || grade.equalsIgnoreCase(GradeScaleEnum.APT)) {
+            if (grade == null || grade.length() == 0) {
                 setValid(true);
             } else {
-                try {
-                    Integer integer = Integer.valueOf(grade);
-
-                    if (!(integer >= 10 && integer <= 20)) {
-                        setValid(false);
-                    } else {
+                setValid(false);
+                
+                GradeScale.findAll().forEach(e -> {
+                    if(e.belongsTo(grade)) {
                         setValid(true);
                     }
-
-                } catch (NumberFormatException e) {
-                    setValid(false);
-                }
+                });
             }
         }
     }

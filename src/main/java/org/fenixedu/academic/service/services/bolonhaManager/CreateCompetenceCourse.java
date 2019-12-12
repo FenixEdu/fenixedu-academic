@@ -49,7 +49,7 @@ public class CreateCompetenceCourse {
         }
         checkIfCanCreateCompetenceCourse(name.trim(), nameEn.trim(), code);
         final CompetenceCourse competenceCourse = new CompetenceCourse(name, nameEn, basic, regimeType.convertToAcademicPeriod(),
-                competenceCourseLevel, type, CurricularStage.DRAFT, unit, startInterval);
+                competenceCourseLevel, type, CurricularStage.DRAFT, unit, startInterval, null);
         competenceCourse.setCode(code);
 
         return competenceCourse;

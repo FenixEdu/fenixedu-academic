@@ -106,15 +106,6 @@ public class EvaluationConfiguration extends EvaluationConfiguration_Base {
             } else if (isInCurriculumValidationContextAndIsFinal(o1) && isInCurriculumValidationContextAndIsFinal(o2)) {
                 return compareMyWhenAlteredDateToAnotherWhenAlteredDate(o1.getWhen(), o2.getWhen());
             } else if (o1.getEvaluationSeason().equals(o2.getEvaluationSeason())) {
-                if ((o1.isRectification() && o2.isRectification()) || (o1.isRectified() && o2.isRectified())) {
-                    return compareMyWhenAlteredDateToAnotherWhenAlteredDate(o1.getWhen(), o2.getWhen());
-                }
-                if (o1.isRectification()) {
-                    return 1;
-                }
-                if (o2.isRectification()) {
-                    return -1;
-                }
                 return compareByGrade(o1, o1.getGrade(), o2.getGrade());
 
             } else {
@@ -125,28 +116,17 @@ public class EvaluationConfiguration extends EvaluationConfiguration_Base {
         private int compareByGrade(EnrolmentEvaluation enrolmentEvaluation, final Grade grade, final Grade otherGrade) {
             EnrollmentState gradeEnrolmentState = enrolmentEvaluation.getEnrollmentStateByGrade();
             EnrollmentState otherGradeEnrolmentState = otherGrade.getEnrolmentState();
-            if (gradeEnrolmentState == EnrollmentState.APROVED && otherGradeEnrolmentState == EnrollmentState.APROVED) {
-                return grade.compareTo(otherGrade);
+            if (gradeEnrolmentState != otherGradeEnrolmentState) {
+                if (gradeEnrolmentState == EnrollmentState.APROVED) {
+                    return 1;
+                }
+
+                if (otherGradeEnrolmentState == EnrollmentState.APROVED) {
+                    return -1;
+                }
             }
 
-            return compareByGradeState(gradeEnrolmentState, otherGradeEnrolmentState);
-        }
-
-        private int compareByGradeState(EnrollmentState gradeEnrolmentState, EnrollmentState otherGradeEnrolmentState) {
-            if (gradeEnrolmentState == EnrollmentState.APROVED) {
-                return 1;
-            }
-            if (otherGradeEnrolmentState == EnrollmentState.APROVED) {
-                return -1;
-            }
-            if (gradeEnrolmentState == EnrollmentState.NOT_APROVED && otherGradeEnrolmentState == EnrollmentState.NOT_EVALUATED) {
-                return 1;
-            }
-            if (gradeEnrolmentState == EnrollmentState.NOT_EVALUATED && otherGradeEnrolmentState == EnrollmentState.NOT_APROVED) {
-                return -1;
-            }
-
-            return 0;
+            return grade.compareTo(otherGrade);
         }
 
         private int compareMyWhenAlteredDateToAnotherWhenAlteredDate(Date when1, Date whenAltered) {

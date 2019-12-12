@@ -80,12 +80,23 @@
 		<h:outputText value="</tr>" escape="false"/>
 
 		<h:outputText value="<tr>" escape="false"/>
-		<h:outputText value="<th><span class='required'>*</span> #{appBundle['label.gradeScale']}:</th><td>" escape="false"/>
+		<h:outputText value="<th><span class='required'>*</span> #{appBundle['label.numericGradeScale']}:</th><td>" escape="false"/>
 		<h:panelGroup>
-			<h:selectOneMenu id="gradeScale" value="#{DegreeManagement.gradeScale}">
+			<h:selectOneMenu id="numericGradeScale" value="#{DegreeManagement.numericGradeScale}">
 				<f:selectItems value="#{DegreeManagement.gradeScales}" />
 			</h:selectOneMenu>
-			<h:message for="gradeScale" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
+			<h:message for="numericGradeScale" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
+		</h:panelGroup>
+		<h:outputText value="</td>" escape="false"/>
+		<h:outputText value="</tr>" escape="false"/>
+
+		<h:outputText value="<tr>" escape="false"/>
+		<h:outputText value="<th><span class='required'>*</span> #{appBundle['label.qualitativeGradeScale']}:</th><td>" escape="false"/>
+		<h:panelGroup>
+			<h:selectOneMenu id="qualitativeGradeScale" value="#{DegreeManagement.qualitativeGradeScale}">
+				<f:selectItems value="#{DegreeManagement.gradeScales}" />
+			</h:selectOneMenu>
+			<h:message for="qualitativeGradeScale" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
 		</h:panelGroup>
 		<h:outputText value="</td>" escape="false"/>
 		<h:outputText value="</tr>" escape="false"/>

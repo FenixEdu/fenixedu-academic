@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 import org.fenixedu.academic.domain.curriculum.grade.StandardType20AbsoluteGradeScaleLogic;
 import org.fenixedu.academic.domain.curriculum.grade.StandardType20GradeScaleLogic;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -32,6 +33,7 @@ import org.fenixedu.academic.util.EvaluationType;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.LocalizedString;
 
+@Deprecated
 public enum GradeScaleEnum {
 
     TYPE20(true, new StandardType20GradeScaleLogic()),
@@ -74,9 +76,6 @@ public enum GradeScaleEnum {
 
         @Override
         public String qualify(final Grade grade) {
-            if (grade.getGradeScale() != GradeScaleEnum.TYPE5) {
-                return StringUtils.EMPTY;
-            }
 
             try {
                 final int intValue = Integer.parseInt(grade.getValue());
@@ -158,9 +157,6 @@ public enum GradeScaleEnum {
 
         @Override
         public String qualify(final Grade grade) {
-            if (grade.getGradeScale() != GradeScaleEnum.TYPEAP) {
-                return StringUtils.EMPTY;
-            }
 
             final String value = grade.getValue();
             if (value.equals(AP)) {
@@ -213,9 +209,6 @@ public enum GradeScaleEnum {
 
         @Override
         public String qualify(final Grade grade) {
-            if (grade.getGradeScale() != GradeScaleEnum.TYPEAPT) {
-                return StringUtils.EMPTY;
-            }
 
             final String value = grade.getValue();
             if (value.equals(APT)) {
@@ -435,7 +428,7 @@ public enum GradeScaleEnum {
     @Deprecated
     public boolean isValid(final String value, final EvaluationType evaluationType) {
         try {
-            final Grade grade = Grade.createGrade(value, this);
+            final Grade grade = Grade.createGrade(value, GradeScale.findUniqueByCode(this.name()).get());
             if (grade.isEmpty()) {
                 return false;
             }
@@ -483,7 +476,7 @@ public enum GradeScaleEnum {
 
     @Deprecated
     final public String getQualifiedName(final String value) {
-        final Grade grade = Grade.createGrade(value, this);
+        final Grade grade = Grade.createGrade(value, GradeScale.findUniqueByCode(this.name()).get());
 
         if (logic.isApproved(grade)) {
             return logic.qualify(grade);

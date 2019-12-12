@@ -3,6 +3,7 @@ package org.fenixedu.academic.domain.curriculum.grade;
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.GradeScaleEnum.GradeScaleLogic;
 
+@Deprecated
 public class StandardType20AbsoluteGradeScaleLogic extends StandardType20GradeScaleLogic implements GradeScaleLogic {
 
     @Override

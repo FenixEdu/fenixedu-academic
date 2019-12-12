@@ -30,6 +30,7 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
@@ -72,11 +73,17 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public CompetenceCourse(String name, String nameEn, Boolean basic, AcademicPeriod academicPeriod,
             CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, CurricularStage curricularStage,
-            CompetenceCourseGroupUnit unit, ExecutionInterval startInterval) {
+            CompetenceCourseGroupUnit unit, ExecutionInterval startInterval, final GradeScale gradeScale) {
 
         this();
         super.setCurricularStage(curricularStage);
         setType(type);
+        
+        if(gradeScale != null) {
+            super.setGradeScale(gradeScale);
+        } else {
+            super.setGradeScale(GradeScale.findUniqueDefault().orElse(null));
+        }
 
         CompetenceCourseInformation competenceCourseInformation = new CompetenceCourseInformation(name.trim(), nameEn.trim(),
                 basic, academicPeriod, competenceCourseLevel, startInterval, unit);
@@ -225,6 +232,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public void delete() {
+        setGradeScale(null);
         if (!getAssociatedCurricularCoursesSet().isEmpty()) {
             throw new DomainException("mustDeleteCurricularCoursesFirst");
         } else if (this.getCurricularStage().equals(CurricularStage.APPROVED)) {

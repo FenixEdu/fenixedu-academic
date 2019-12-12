@@ -22,7 +22,6 @@ import java.util.List;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.GradeScaleEnum;
 import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
@@ -36,7 +35,7 @@ public class EditDegree {
 
     @Atomic
     public static void run(String externalId, String name, String nameEn, String acronym, DegreeType degreeType,
-            Double ectsCredits, GradeScaleEnum numericGradeScale, GradeScale qualitativeGradeScale,
+            Double ectsCredits, GradeScale numericGradeScale, GradeScale qualitativeGradeScale,
             String prevailingScientificArea, ExecutionYear executionYear, String code, String ministryCode)
             throws FenixServiceException {
 

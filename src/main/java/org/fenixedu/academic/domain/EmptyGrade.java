@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 
 public class EmptyGrade extends Grade {
 
@@ -41,7 +42,7 @@ public class EmptyGrade extends Grade {
     }
 
     @Override
-    public GradeScaleEnum getGradeScale() {
+    public GradeScale getGradeScale() {
         return null;
     }
 
@@ -74,11 +75,6 @@ public class EmptyGrade extends Grade {
 
     @Override
     public boolean isNotApproved() {
-        return true;
-    }
-
-    @Override
-    public boolean isNotEvaluated() {
         return true;
     }
 
