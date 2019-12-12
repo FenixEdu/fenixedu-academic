@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.fenixedu.academic.domain.GradeScale;
+import org.fenixedu.academic.domain.GradeScaleEnum;
 
 /**
  * 
@@ -31,6 +31,7 @@ import org.fenixedu.academic.domain.GradeScale;
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
+@Deprecated
 public class MarkType extends FenixUtil {
 
     public static final int TYPE20 = 20;
@@ -41,11 +42,11 @@ public class MarkType extends FenixUtil {
 
     public static final MarkType TYPE5_OBJ = new MarkType(5);
 
-    public static final Object[] REP_MARKS = { GradeScale.RE };
+    public static final Object[] REP_MARKS = { GradeScaleEnum.RE };
 
-    public static final Object[] NA_MARKS = { GradeScale.NA };
+    public static final Object[] NA_MARKS = { GradeScaleEnum.NA };
 
-    public static final Object[] OTHER_MARKS = { GradeScale.RE, GradeScale.NA, GradeScale.AP };
+    public static final Object[] OTHER_MARKS = { GradeScaleEnum.RE, GradeScaleEnum.NA, GradeScaleEnum.AP };
 
     public static final Object[] TYPE20_MARKS = { "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" };
 
@@ -53,7 +54,7 @@ public class MarkType extends FenixUtil {
 
     public static final Object[] TYPE5_MARKS = { "3", "4", "5" };
 
-    public static final Object[] AP_MARKS = { GradeScale.AP };
+    public static final Object[] AP_MARKS = { GradeScaleEnum.AP };
 
     private final Integer type;
 

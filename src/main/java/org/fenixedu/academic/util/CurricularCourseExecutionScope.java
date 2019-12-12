@@ -18,12 +18,14 @@
  */
 package org.fenixedu.academic.util;
 
+import java.io.Serializable;
+
 /**
  * @author dcs-rjao
  * 
  *         25/Mar/2003
  */
-public class CurricularCourseExecutionScope extends FenixUtil {
+public class CurricularCourseExecutionScope implements Serializable {
 
     public static final int SEMESTRIAL = 1;
 

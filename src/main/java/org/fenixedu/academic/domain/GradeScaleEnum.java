@@ -24,195 +24,24 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.curriculum.grade.StandardType20AbsoluteGradeScaleLogic;
+import org.fenixedu.academic.domain.curriculum.grade.StandardType20GradeScaleLogic;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.EvaluationType;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.LocalizedString;
 
-public enum GradeScale {
+public enum GradeScaleEnum {
 
-    TYPE20(true, new GradeScaleLogic() {
-        @Override
-        public boolean checkFinal(final Grade grade) {
-            final String value = grade.getValue();
-            if (value.equals(NA) || value.equals(RE)) {
-                return true;
-            }
-
-            try {
-                final int intValue = Integer.parseInt(value);
-                return intValue >= 10 && intValue <= 20;
-            } catch (NumberFormatException e) {
-                return false;
-            }
-        }
-
-        @Override
-        public boolean checkNotFinal(final Grade grade) {
-            final String value = grade.getValue();
-            if (value.equals(NA) || value.equals(RE)) {
-                return true;
-            }
-
-            try {
-                final double doubleValue = Double.parseDouble(value);
-                return doubleValue >= 0 && doubleValue <= 20;
-            } catch (NumberFormatException e) {
-                return false;
-            }
-        }
-
-        @Override
-        public String qualify(final Grade grade) {
-            if (grade.getGradeScale() != GradeScale.TYPE20) {
-                return StringUtils.EMPTY;
-            }
-
-            try {
-                final int intValue = Integer.parseInt(grade.getValue());
-
-                if (18 <= intValue && intValue <= 20) {
-                    return BundleUtil.getString(Bundle.APPLICATION, "label.grade.a");
-                } else if (16 <= intValue && intValue <= 17) {
-                    return BundleUtil.getString(Bundle.APPLICATION, "label.grade.b");
-                } else if (14 <= intValue && intValue <= 15) {
-                    return BundleUtil.getString(Bundle.APPLICATION, "label.grade.c");
-                } else if (10 <= intValue && intValue <= 13) {
-                    return BundleUtil.getString(Bundle.APPLICATION, "label.grade.d");
-                } else {
-                    throw new DomainException("GradeScale.unable.to.qualify.given.grade");
-                }
-            } catch (NumberFormatException e) {
-                throw new DomainException("GradeScale.unable.to.qualify.given.grade");
-            }
-        }
-
-        @Override
-        public boolean isNotEvaluated(final Grade grade) {
-            final String value = grade.getValue();
-            return grade.isEmpty() || value.equals(GradeScale.NA);
-        }
-
-        @Override
-        public boolean isNotApproved(final Grade grade) {
-            final String value = grade.getValue();
-            if (value.equals(GradeScale.RE) || isNotEvaluated(grade)) {
-                return true;
-            }
-
-            try {
-                return Integer.parseInt(value) < 10;
-            } catch (NumberFormatException e) {
-                return false;
-            }
-        }
-
-        @Override
-        public boolean isApproved(final Grade grade) {
-            final String value = grade.getValue();
-            if (value.equals(GradeScale.AP)) {
-                return true;
-            }
-
-            try {
-                final int intValue = Integer.parseInt(value);
-                return 10 <= intValue && intValue <= 20;
-            } catch (NumberFormatException e) {
-                return false;
-            }
-        }
-
-        @Override
-        public boolean belongsTo(final String value) {
-            if (value.equals(NA) || value.equals(RE)) {
-                return true;
-            }
-
-            try {
-                final double doubleValue = Double.parseDouble(value);
-                return doubleValue >= 0 && doubleValue <= 20;
-            } catch (NumberFormatException e) {
-                return false;
-            }
-        }
-
-    }),
+    TYPE20(true, new StandardType20GradeScaleLogic()),
 
     /**
      * Scale in which all numeric values are approvals
      */
-    TYPE20_ABSOLUTE(true, new GradeScaleLogic() {
+    TYPE20_ABSOLUTE(true, new StandardType20AbsoluteGradeScaleLogic() ),
 
-        @Override
-        public boolean checkFinal(final Grade grade) {
-            return belongsTo(grade.getValue());
-        }
-
-        @Override
-        public boolean checkNotFinal(final Grade grade) {
-            return belongsTo(grade.getValue());
-        }
-
-        @Override
-        public String qualify(final Grade grade) {
-            throw new DomainException("GradeScale.unable.to.qualify.given.grade.use.qualitative.scale");
-        }
-
-        @Override
-        public boolean isNotEvaluated(final Grade grade) {
-            final String value = grade.getValue();
-            return grade.isEmpty() || value.equals(GradeScale.NA);
-        }
-
-        @Override
-        public boolean isNotApproved(final Grade grade) {
-            final String value = grade.getValue();
-
-            if (value.equals(GradeScale.RE) || isNotEvaluated(grade)) {
-                return true;
-            }
-
-            try {
-                return Integer.parseInt(value) < 0;
-            } catch (NumberFormatException e) {
-                return false;
-            }
-        }
-
-        @Override
-        public boolean isApproved(final Grade grade) {
-            final String value = grade.getValue();
-
-            if (value.equals(GradeScale.AP)) {
-                return true;
-            }
-
-            try {
-                final int intValue = Integer.parseInt(value);
-                return 0 <= intValue && intValue <= 20;
-            } catch (NumberFormatException e) {
-                return false;
-            }
-        }
-
-        @Override
-        public boolean belongsTo(final String value) {
-            if (value.equals(NA) || value.equals(RE)) {
-                return true;
-            }
-
-            try {
-                final double doubleValue = Double.parseDouble(value);
-                return doubleValue >= 0 && doubleValue <= 20;
-            } catch (NumberFormatException e) {
-                return false;
-            }
-        }
-
-    }),
-
-    TYPE5(true, new GradeScaleLogic() {
+    @Deprecated TYPE5(true, new GradeScaleLogic() {
         @Override
         public boolean checkFinal(final Grade grade) {
             final String value = grade.getValue();
@@ -245,7 +74,7 @@ public enum GradeScale {
 
         @Override
         public String qualify(final Grade grade) {
-            if (grade.getGradeScale() != GradeScale.TYPE5) {
+            if (grade.getGradeScale() != GradeScaleEnum.TYPE5) {
                 return StringUtils.EMPTY;
             }
 
@@ -272,13 +101,13 @@ public enum GradeScale {
                 return true;
             }
 
-            return grade.getValue().equals(GradeScale.NA);
+            return grade.getValue().equals(GradeScaleEnum.NA);
         }
 
         @Override
         public boolean isNotApproved(final Grade grade) {
             final String value = grade.getValue();
-            if (value.equals(GradeScale.RE) || isNotEvaluated(grade)) {
+            if (value.equals(GradeScaleEnum.RE) || isNotEvaluated(grade)) {
                 return true;
             }
 
@@ -314,7 +143,7 @@ public enum GradeScale {
         }
     }),
 
-    TYPEAP(true, new GradeScaleLogic() {
+    @Deprecated TYPEAP(true, new GradeScaleLogic() {
         @Override
         public boolean checkFinal(final Grade grade) {
             final String value = grade.getValue();
@@ -329,7 +158,7 @@ public enum GradeScale {
 
         @Override
         public String qualify(final Grade grade) {
-            if (grade.getGradeScale() != GradeScale.TYPEAP) {
+            if (grade.getGradeScale() != GradeScaleEnum.TYPEAP) {
                 return StringUtils.EMPTY;
             }
 
@@ -348,19 +177,19 @@ public enum GradeScale {
         @Override
         public boolean isNotEvaluated(final Grade grade) {
             final String value = grade.getValue();
-            return grade.isEmpty() || value.equals(GradeScale.NA);
+            return grade.isEmpty() || value.equals(GradeScaleEnum.NA);
         }
 
         @Override
         public boolean isNotApproved(final Grade grade) {
             final String value = grade.getValue();
-            return value.equals(GradeScale.RE) || isNotEvaluated(grade);
+            return value.equals(GradeScaleEnum.RE) || isNotEvaluated(grade);
         }
 
         @Override
         public boolean isApproved(final Grade grade) {
             final String value = grade.getValue();
-            return value.equals(GradeScale.AP);
+            return value.equals(GradeScaleEnum.AP);
         }
 
         @Override
@@ -369,7 +198,7 @@ public enum GradeScale {
         }
     }),
 
-    TYPEAPT(false, new GradeScaleLogic() {
+    @Deprecated TYPEAPT(false, new GradeScaleLogic() {
         @Override
         public boolean checkFinal(final Grade grade) {
             final String value = grade.getValue();
@@ -384,7 +213,7 @@ public enum GradeScale {
 
         @Override
         public String qualify(final Grade grade) {
-            if (grade.getGradeScale() != GradeScale.TYPEAPT) {
+            if (grade.getGradeScale() != GradeScaleEnum.TYPEAPT) {
                 return StringUtils.EMPTY;
             }
 
@@ -403,19 +232,19 @@ public enum GradeScale {
         @Override
         public boolean isNotEvaluated(final Grade grade) {
             final String value = grade.getValue();
-            return grade.isEmpty() || value.equals(GradeScale.NA);
+            return grade.isEmpty() || value.equals(GradeScaleEnum.NA);
         }
 
         @Override
         public boolean isNotApproved(final Grade grade) {
             final String value = grade.getValue();
-            return value.equals(GradeScale.RE) || isNotEvaluated(grade);
+            return value.equals(GradeScaleEnum.RE) || isNotEvaluated(grade);
         }
 
         @Override
         public boolean isApproved(final Grade grade) {
             final String value = grade.getValue();
-            return value.equals(GradeScale.APT);
+            return value.equals(GradeScaleEnum.APT);
         }
 
         @Override
@@ -527,7 +356,7 @@ public enum GradeScale {
         }
 
         default LocalizedString getExtendedValue(Grade grade) {
-            return BundleUtil.getLocalizedString(Bundle.ENUMERATION, GradeScale.class.getSimpleName() + "." + grade.getValue());
+            return BundleUtil.getLocalizedString(Bundle.ENUMERATION, GradeScaleEnum.class.getSimpleName() + "." + grade.getValue());
         }
 
         default int compareGrades(Grade grade1, Grade grade2) {
@@ -537,18 +366,18 @@ public enum GradeScale {
             final boolean isApproved1 = isApproved(grade1);
             final boolean isApproved2 = isApproved(grade2);
             if (isApproved1 && isApproved2) {
-                if (grade1.getValue().equals(GradeScale.AP)) {
+                if (grade1.getValue().equals(GradeScaleEnum.AP)) {
                     return 1;
-                } else if (grade2.getValue().equals(GradeScale.AP)) {
+                } else if (grade2.getValue().equals(GradeScaleEnum.AP)) {
                     return -1;
                 } else if (grade1.getGradeScale().equals(grade2.getGradeScale())) {
                     return grade1.getValue().compareTo(grade2.getValue());
                 } else {
                     throw new DomainException("Grade.unsupported.comparassion.of.grades.of.different.scales");
                 }
-            } else if (isApproved1 || grade2.getValue().equals(GradeScale.NA) || grade2.getValue().equals(GradeScale.RE)) {
+            } else if (isApproved1 || grade2.getValue().equals(GradeScaleEnum.NA) || grade2.getValue().equals(GradeScaleEnum.RE)) {
                 return 1;
-            } else if (isApproved2 || grade1.getValue().equals(GradeScale.NA) || grade1.getValue().equals(GradeScale.RE)) {
+            } else if (isApproved2 || grade1.getValue().equals(GradeScaleEnum.NA) || grade1.getValue().equals(GradeScaleEnum.RE)) {
                 return -1;
             } else {
                 return grade1.getValue().compareTo(grade2.getValue());
@@ -567,8 +396,6 @@ public enum GradeScale {
     static final public String AP = "AP";
 
     static final public String APT = "APT";
-
-    static final public String I = "I";
 
     static final public String S = "S";
 
@@ -592,7 +419,7 @@ public enum GradeScale {
 
     static final public String AMB = "AMB";
 
-    private GradeScale(final boolean isPublic, GradeScaleLogic logic) {
+    private GradeScaleEnum(final boolean isPublic, GradeScaleLogic logic) {
         setPublic(isPublic);
         setLogic(logic);
     }
@@ -673,9 +500,9 @@ public enum GradeScale {
         this.isPublic = isPublic;
     }
 
-    static public List<GradeScale> getPublicGradeScales() {
-        List<GradeScale> publicGradeScales = new ArrayList<GradeScale>();
-        for (GradeScale gradeScale : values()) {
+    static public List<GradeScaleEnum> getPublicGradeScales() {
+        List<GradeScaleEnum> publicGradeScales = new ArrayList<GradeScaleEnum>();
+        for (GradeScaleEnum gradeScale : values()) {
             if (gradeScale.isPublic) {
                 publicGradeScales.add(gradeScale);
             }

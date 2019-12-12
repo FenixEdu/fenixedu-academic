@@ -18,7 +18,9 @@
  */
 package org.fenixedu.academic.util;
 
-public class StudentCurricularPlanIDDomainType extends FenixUtil {
+import java.io.Serializable;
+
+public class StudentCurricularPlanIDDomainType implements Serializable {
     public static final String ALL_TYPE = "-1";
 
     public static final String NEWEST_TYPE = "-2";

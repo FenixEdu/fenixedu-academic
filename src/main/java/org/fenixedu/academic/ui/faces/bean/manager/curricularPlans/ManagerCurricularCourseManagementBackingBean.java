@@ -31,8 +31,8 @@ import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.GradeScale;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.domain.GradeScaleEnum;
 import org.fenixedu.academic.dto.commons.CurricularCourseByExecutionSemesterBean;
 import org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularPlans.CurricularCourseManagementBackingBean;
 import org.fenixedu.academic.util.Bundle;
@@ -61,10 +61,6 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
     private Double praticalHours;
 
     private Double theoPratHours;
-
-    private String gradeScaleString;
-
-    private GradeScale gradeScale;
 
     private CurricularCourseByExecutionSemesterBean curricularCourseSemesterBean = null;
 
@@ -279,39 +275,6 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
             result.add(new SelectItem(semester.getExternalId(), semester.getQualifiedName()));
         }
         return result;
-    }
-
-    public List<SelectItem> getGradeScales() {
-        List<SelectItem> res = new ArrayList<SelectItem>();
-        res.add(new SelectItem(this.NO_SELECTION_STRING, BundleUtil.getString(Bundle.BOLONHA, "choose")));
-        for (GradeScale gradeScale : GradeScale.values()) {
-            res.add(new SelectItem(gradeScale.getName(), BundleUtil.getString(Bundle.ENUMERATION, gradeScale.getName())));
-        }
-        return res;
-    }
-
-    public String getGradeScaleString() {
-        if (this.gradeScaleString == null && getCurricularCourse() != null) {
-            this.gradeScaleString =
-                    getCurricularCourse().getGradeScale() != null ? getCurricularCourse().getGradeScale().name() : null;
-        }
-
-        return this.gradeScaleString;
-    }
-
-    public void setGradeScaleString(final String value) {
-        this.gradeScaleString = value;
-    }
-
-    private GradeScale getGradeScale() {
-        if (this.gradeScale == null && this.getGradeScaleString() != null
-                && !this.NO_SELECTION_STRING.equals(this.getGradeScaleString())) {
-            this.gradeScale = GradeScale.valueOf(getGradeScaleString());
-        } else if (this.gradeScale == null && this.getGradeScaleString() != null
-                && this.NO_SELECTION_STRING.equals(this.getGradeScaleString())) {
-            this.gradeScale = null;
-        }
-        return this.gradeScale;
     }
 
 }

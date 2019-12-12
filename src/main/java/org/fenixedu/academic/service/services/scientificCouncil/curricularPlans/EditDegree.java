@@ -22,7 +22,8 @@ import java.util.List;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.GradeScale;
+import org.fenixedu.academic.domain.GradeScaleEnum;
+import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
@@ -35,15 +36,17 @@ public class EditDegree {
 
     @Atomic
     public static void run(String externalId, String name, String nameEn, String acronym, DegreeType degreeType,
-            Double ectsCredits, GradeScale gradeScale, String prevailingScientificArea, ExecutionYear executionYear, String code,
-            String ministryCode) throws FenixServiceException {
+            Double ectsCredits, GradeScaleEnum numericGradeScale, GradeScale qualitativeGradeScale,
+            String prevailingScientificArea, ExecutionYear executionYear, String code, String ministryCode)
+            throws FenixServiceException {
 
         /*
          * #dsimoes @13JAN2016
          * Any AcademicOffice staff should be able to correct/update degree info data
          */
         //check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
-        if (externalId == null || name == null || nameEn == null || acronym == null || degreeType == null || ectsCredits == null) {
+        if (externalId == null || name == null || nameEn == null || acronym == null || degreeType == null
+                || ectsCredits == null) {
             throw new InvalidArgumentsServiceException();
         }
 
@@ -51,8 +54,8 @@ public class EditDegree {
 
         if (degreeToEdit == null) {
             throw new NonExistingServiceException();
-        } else if (!degreeToEdit.getSigla().equalsIgnoreCase(acronym)
-                || !degreeToEdit.getNameFor(executionYear).getContent(org.fenixedu.academic.util.LocaleUtils.PT).equalsIgnoreCase(name)
+        } else if (!degreeToEdit.getSigla().equalsIgnoreCase(acronym) || !degreeToEdit.getNameFor(executionYear)
+                .getContent(org.fenixedu.academic.util.LocaleUtils.PT).equalsIgnoreCase(name)
                 || !degreeToEdit.getDegreeType().equals(degreeType)) {
 
             final List<Degree> degrees = Degree.readNotEmptyDegrees();
@@ -63,8 +66,10 @@ public class EditDegree {
                     if (degree.getSigla().equalsIgnoreCase(acronym)) {
                         throw new FenixServiceException("error.existing.degree.acronym");
                     }
-                    if ((degree.getNameFor(executionYear).getContent(org.fenixedu.academic.util.LocaleUtils.PT).equalsIgnoreCase(name) || degree
-                            .getNameFor(executionYear).getContent(org.fenixedu.academic.util.LocaleUtils.EN).equalsIgnoreCase(nameEn))
+                    if ((degree.getNameFor(executionYear).getContent(org.fenixedu.academic.util.LocaleUtils.PT)
+                            .equalsIgnoreCase(name)
+                            || degree.getNameFor(executionYear).getContent(org.fenixedu.academic.util.LocaleUtils.EN)
+                                    .equalsIgnoreCase(nameEn))
                             && degree.getDegreeType().equals(degreeType)) {
                         throw new FenixServiceException("error.existing.degree.name.and.type");
                     }
@@ -72,7 +77,8 @@ public class EditDegree {
             }
         }
 
-        degreeToEdit.edit(name, nameEn, acronym, degreeType, ectsCredits, gradeScale, prevailingScientificArea, executionYear);
+        degreeToEdit.edit(name, nameEn, acronym, degreeType, ectsCredits, numericGradeScale, qualitativeGradeScale,
+                prevailingScientificArea, executionYear);
         degreeToEdit.setCode(code);
         degreeToEdit.setMinistryCode(ministryCode);
     }

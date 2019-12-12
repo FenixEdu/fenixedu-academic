@@ -62,7 +62,6 @@ import org.fenixedu.academic.domain.time.calendarStructure.AcademicYears;
 import org.fenixedu.academic.dto.CurricularPeriodInfoDTO;
 import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.util.MarkType;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.commons.i18n.I18N;
@@ -132,7 +131,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         super.setCurricularRuleValidationType(CurricularRuleValidationType.SEMESTER);
     }
 
-    private DegreeCurricularPlan(final Degree degree, final String name, final GradeScale gradeScale) {
+    private DegreeCurricularPlan(final Degree degree, final String name) {
         this();
         if (degree == null) {
             throw new DomainException("degreeCurricularPlan.degree.not.null");
@@ -142,25 +141,23 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         super.setDegree(degree);
         super.setName(name);
-        super.setGradeScale(gradeScale);
     }
 
     protected DegreeCurricularPlan(final Degree degree, final String name, final DegreeCurricularPlanState state,
             final Date inicialDate, final Date endDate, final Integer degreeDuration, final Integer minimalYearForOptionalCourses,
-            final Double neededCredits, final MarkType markType, final Integer numerusClausus, final String annotation,
-            final GradeScale gradeScale) {
+            final Double neededCredits, final Integer numerusClausus, final String annotation) {
 
-        this(degree, name, gradeScale);
+        this(degree, name);
         super.setCurricularStage(CurricularStage.DRAFT);
         super.setState(state);
 
-        oldStructureFieldsChange(inicialDate, endDate, degreeDuration, minimalYearForOptionalCourses, neededCredits, markType,
+        oldStructureFieldsChange(inicialDate, endDate, degreeDuration, minimalYearForOptionalCourses, neededCredits,
                 numerusClausus, annotation);
     }
 
     private void oldStructureFieldsChange(final Date inicialDate, final Date endDate, final Integer degreeDuration,
-            final Integer minimalYearForOptionalCourses, final Double neededCredits, final MarkType markType,
-            final Integer numerusClausus, final String annotation) {
+            final Integer minimalYearForOptionalCourses, final Double neededCredits, final Integer numerusClausus,
+            final String annotation) {
 
         if (inicialDate == null) {
             throw new DomainException("degreeCurricularPlan.inicialDate.not.null");
@@ -175,14 +172,12 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         this.setDegreeDuration(degreeDuration);
         this.setMinimalYearForOptionalCourses(minimalYearForOptionalCourses);
         this.setNeededCredits(neededCredits);
-        this.setMarkType(markType);
         this.setNumerusClausus(numerusClausus);
         this.setAnotation(annotation);
     }
 
-    DegreeCurricularPlan(final Degree degree, final String name, final GradeScale gradeScale, final Person creator,
-            final CurricularPeriod curricularPeriod) {
-        this(degree, name, gradeScale);
+    DegreeCurricularPlan(final Degree degree, final String name, final Person creator, final CurricularPeriod curricularPeriod) {
+        this(degree, name);
 
         if (creator == null) {
             throw new DomainException("degreeCurricularPlan.creator.not.null");
@@ -217,7 +212,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
     }
 
-    private void commonFieldsChange(final String name, final GradeScale gradeScale) {
+    private void commonFieldsChange(final String name) {
         if (name == null) {
             throw new DomainException("degreeCurricularPlan.name.not.null");
         }
@@ -229,23 +224,21 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             }
         }
         this.setName(name);
-
-        this.setGradeScale(gradeScale);
     }
 
     public void edit(final String name, final DegreeCurricularPlanState state, final Date inicialDate, final Date endDate,
             final Integer degreeDuration, final Integer minimalYearForOptionalCourses, final Double neededCredits,
-            final MarkType markType, final Integer numerusClausus, final String annotation, final GradeScale gradeScale) {
+            final Integer numerusClausus, final String annotation) {
 
-        commonFieldsChange(name, gradeScale);
-        oldStructureFieldsChange(inicialDate, endDate, degreeDuration, minimalYearForOptionalCourses, neededCredits, markType,
+        commonFieldsChange(name);
+        oldStructureFieldsChange(inicialDate, endDate, degreeDuration, minimalYearForOptionalCourses, neededCredits,
                 numerusClausus, annotation);
 
         this.setState(state);
     }
 
     public void edit(final String name, final CurricularStage stage, final DegreeCurricularPlanState state,
-            final GradeScale gradeScale, final ExecutionYear beginExecutionInterval) {
+            final ExecutionYear beginExecutionInterval) {
 
         /*
          * Allow degree curricular plans approved without program conclusion 
@@ -255,11 +248,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         */
 
-        if (isApproved()
-                && (name != null && !getName().equals(name) || gradeScale != null && !getGradeScale().equals(gradeScale))) {
+        if (isApproved() && (name != null && !getName().equals(name))) {
             throw new DomainException("error.degreeCurricularPlan.already.approved");
         } else {
-            commonFieldsChange(name, gradeScale);
+            commonFieldsChange(name);
         }
 
         newStructureFieldsChange(stage, beginExecutionInterval);
@@ -381,10 +373,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         this.getRoot().print(dcp, "", null);
 
         return dcp.toString();
-    }
-
-    public GradeScale getGradeScaleChain() {
-        return super.getGradeScale() != null ? super.getGradeScale() : getDegree().getGradeScaleChain();
     }
 
     @Deprecated

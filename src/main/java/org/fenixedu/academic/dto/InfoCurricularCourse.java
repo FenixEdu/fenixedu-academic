@@ -30,7 +30,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.GradeScale;
+import org.fenixedu.academic.domain.GradeScaleEnum;
 import org.fenixedu.academic.domain.ShiftType;
 import org.fenixedu.academic.domain.curriculum.CurricularCourseType;
 import org.fenixedu.academic.domain.degreeStructure.RegimeType;
@@ -262,10 +262,6 @@ public class InfoCurricularCourse extends InfoObject {
 
     public String getNameAndCode() {
         return getCode() + " - " + getName();
-    }
-
-    public GradeScale getGradeScale() {
-        return getCurricularCourse().getGradeScale();
     }
 
     @Override

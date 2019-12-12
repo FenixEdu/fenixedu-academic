@@ -19,9 +19,10 @@
 package org.fenixedu.academic.domain.curriculum;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.GradeScale;
+import org.fenixedu.academic.domain.GradeScaleEnum;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 
+@Deprecated
 class Grade implements IGrade {
     private Object gradeValue;
 
@@ -32,17 +33,17 @@ class Grade implements IGrade {
     }
 
     public Grade(String grade) {
-        if (grade == null || grade.equals("") || grade.equals(GradeScale.NA)) {
-            this.gradeValue = GradeScale.NA;
+        if (grade == null || grade.equals("") || grade.equals(GradeScaleEnum.NA)) {
+            this.gradeValue = GradeScaleEnum.NA;
             this.gradeType = GradeType.GRADENA;
         } else if (StringUtils.isNumeric(grade)) {
             Integer numericGrade = Integer.parseInt(grade);
             initNumeric(numericGrade);
-        } else if (grade.equals(GradeScale.AP)) {
+        } else if (grade.equals(GradeScaleEnum.AP)) {
             this.gradeValue = grade;
             this.gradeType = GradeType.GRADEAP;
         } else {
-            this.gradeValue = GradeScale.RE;
+            this.gradeValue = GradeScaleEnum.RE;
             this.gradeType = GradeType.GRADERE;
         }
     }
@@ -91,6 +92,7 @@ class Grade implements IGrade {
 
 }
 
+@Deprecated
 public class GradeFactory {
     private static GradeFactory instance = new GradeFactory();
 
@@ -99,9 +101,9 @@ public class GradeFactory {
     private GradeFactory() {
         flyWeight = new IGrade[24];
 
-        flyWeight[21] = new Grade(GradeScale.RE);
-        flyWeight[22] = new Grade(GradeScale.NA);
-        flyWeight[23] = new Grade(GradeScale.AP);
+        flyWeight[21] = new Grade(GradeScaleEnum.RE);
+        flyWeight[22] = new Grade(GradeScaleEnum.NA);
+        flyWeight[23] = new Grade(GradeScaleEnum.AP);
 
         for (int i = 0; i < 21; i++) {
             flyWeight[i] = new Grade(i);
@@ -117,15 +119,15 @@ public class GradeFactory {
     }
 
     private int getGradePosition(String key) {
-        if (key == null || key.equals("") || key.equals(GradeScale.NA)) {
+        if (key == null || key.equals("") || key.equals(GradeScaleEnum.NA)) {
             return 22;
         }
 
-        if (key.equals(GradeScale.RE)) {
+        if (key.equals(GradeScaleEnum.RE)) {
             return 21;
         }
 
-        if (key.equals(GradeScale.AP)) {
+        if (key.equals(GradeScaleEnum.AP)) {
             return 23;
         }
 

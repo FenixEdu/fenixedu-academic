@@ -21,8 +21,9 @@ package org.fenixedu.academic.domain.curriculum;
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.fenixedu.academic.domain.GradeScale;
+import org.fenixedu.academic.domain.GradeScaleEnum;
 
+@Deprecated
 public enum GradeType {
     GRADETWENTY {
         @Override
@@ -47,21 +48,21 @@ public enum GradeType {
     GRADEAP {
         @Override
         public IGrade average(List<IGrade> grades) {
-            return GradeFactory.getInstance().getGrade(GradeScale.AP);
+            return GradeFactory.getInstance().getGrade(GradeScaleEnum.AP);
         }
     },
 
     GRADERE {
         @Override
         public IGrade average(List<IGrade> grades) {
-            return GradeFactory.getInstance().getGrade(GradeScale.RE);
+            return GradeFactory.getInstance().getGrade(GradeScaleEnum.RE);
         }
     },
 
     GRADENA {
         @Override
         public IGrade average(List<IGrade> grades) {
-            return GradeFactory.getInstance().getGrade(GradeScale.NA);
+            return GradeFactory.getInstance().getGrade(GradeScaleEnum.NA);
         }
     };
 

@@ -18,14 +18,15 @@
  */
 package org.fenixedu.academic.domain;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 import org.fenixedu.academic.domain.curriculum.EnrollmentState;
 import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationContext;
-import org.fenixedu.academic.domain.curriculum.GradeFactory;
-import org.fenixedu.academic.domain.curriculum.IGrade;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.EnrolmentNotPayedException;
 import org.fenixedu.academic.domain.student.Registration;
@@ -35,7 +36,6 @@ import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.EnrolmentEvaluationState;
 import org.fenixedu.academic.util.FenixDigestUtils;
-import org.fenixedu.academic.util.MarkType;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
@@ -157,19 +157,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         return getGrade().getEnrolmentState();
     }
 
-    @Override
-    public GradeScale getGradeScale() {
-        return getGradeScaleChain();
-    }
-
-    public GradeScale getGradeScaleChain() {
-        return super.getGradeScale() != null ? super.getGradeScale() : getEnrolment().getGradeScaleChain();
-    }
-
-    public GradeScale getAssociatedGradeScale() {
-        return super.getGradeScale();
-    }
-
     public boolean isFlunked() {
         return isFinal() && !isApproved();
     }
@@ -178,25 +165,14 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         return isFinal() && getEnrollmentStateByGrade() == EnrollmentState.APROVED;
     }
 
-    public void edit(Person responsibleFor, Date evaluationDate) {
-        if (responsibleFor == null) {
-            throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
-        }
-        setPersonResponsibleForGrade(responsibleFor);
-        setExamDate(evaluationDate);
-        generateCheckSum();
-    }
-
-    public void edit(Person responsibleFor, String gradeValue, Date availableDate, Date examDate, String bookReference,
-            String page, String examReference) {
-        edit(responsibleFor, gradeValue, availableDate, examDate);
-        setBookReference(bookReference);
-        setPage(page);
-    }
-
-    public void edit(Person responsibleFor, String gradeValue, Date availableDate, Date examDate) {
-        edit(responsibleFor, Grade.createGrade(gradeValue, getGradeScale()), availableDate, examDate);
-    }
+//    public void edit(Person responsibleFor, Date evaluationDate) {
+//        if (responsibleFor == null) {
+//            throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
+//        }
+//        setPersonResponsibleForGrade(responsibleFor);
+//        setExamDate(evaluationDate);
+//        generateCheckSum();
+//    }
 
     public void edit(Person responsibleFor, Grade grade, Date availableDate, Date examDate) {
         if (responsibleFor == null) {
@@ -281,9 +257,9 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
 
         EnrollmentState newEnrolmentState = EnrollmentState.APROVED;
         if (!this.getEvaluationSeason().isImprovement()) {
-            if (MarkType.getRepMarks().contains(getGradeValue())) {
+            if (getRepMarks().contains(getGradeValue())) {
                 newEnrolmentState = EnrollmentState.NOT_APROVED;
-            } else if (MarkType.getNaMarks().contains(getGradeValue())) {
+            } else if (getNaMarks().contains(getGradeValue())) {
                 newEnrolmentState = EnrollmentState.NOT_EVALUATED;
             }
         }
@@ -291,6 +267,18 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         this.getEnrolment().setEnrollmentState(newEnrolmentState);
     }
 
+    private Collection<String> getRepMarks() {
+        List<String> repMarks = new ArrayList<>();
+        repMarks.add(GradeScaleEnum.RE);
+        return repMarks;
+    }
+
+    private Collection<String> getNaMarks() {
+        List<String> naMarks = new ArrayList<>();
+        naMarks.add(GradeScaleEnum.NA);
+        return naMarks;
+    }
+    
     @Override
     protected void checkForDeletionBlockers(Collection<String> blockers) {
         super.checkForDeletionBlockers(blockers);
@@ -346,23 +334,9 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         setCheckSum(FenixDigestUtils.createDigest(stringBuilder.toString()));
     }
 
-    public IGrade getGradeWrapper() {
-        return GradeFactory.getInstance().getGrade(getGradeValue());
-    }
-
     @Override
     public String getGradeValue() {
         return getGrade().getValue();
-    }
-
-    @Override
-    @Deprecated
-    public void setGradeValue(final String grade) {
-        setGrade(grade);
-    }
-
-    public void setGrade(final String grade) {
-        setGrade(Grade.createGrade(grade, getGradeScale()));
     }
 
     @Override

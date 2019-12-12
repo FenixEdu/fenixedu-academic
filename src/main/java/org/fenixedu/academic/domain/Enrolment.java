@@ -930,14 +930,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return getGrade().getIntegerValue();
     }
 
-    public GradeScale getGradeScaleChain() {
-        return getCurricularCourse().getGradeScaleChain();
-    }
-
-    public GradeScale getGradeScale() {
-        return this.getGradeScaleChain();
-    }
-
     @Override
     final public boolean isEnroled() {
         return this.getEnrollmentState() == EnrollmentState.ENROLLED;

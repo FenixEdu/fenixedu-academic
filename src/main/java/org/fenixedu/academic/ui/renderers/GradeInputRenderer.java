@@ -19,7 +19,7 @@
 package org.fenixedu.academic.ui.renderers;
 
 import org.fenixedu.academic.domain.Grade;
-import org.fenixedu.academic.domain.GradeScale;
+import org.fenixedu.academic.domain.GradeScaleEnum;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
@@ -68,7 +68,7 @@ public class GradeInputRenderer extends InputRenderer {
                 menu.setName(slot.getKey().toString() + "_scale");
 
                 menu.createDefaultOption(BundleUtil.getString(Bundle.RENDERER, "renderers.menu.default.title"));
-                for (GradeScale scale : GradeScale.values()) {
+                for (GradeScaleEnum scale : GradeScaleEnum.values()) {
                     menu.createOption(RenderUtils.getEnumString(scale)).setValue(scale.getName());
                 }
 
@@ -98,11 +98,11 @@ public class GradeInputRenderer extends InputRenderer {
 
     private static class GradeConverter extends Converter {
 
-        private GradeScale gradeScale;
+        private GradeScaleEnum gradeScale;
 
         public GradeConverter(String gradeScaleName) {
             if (gradeScaleName != null && gradeScaleName.length() > 0) {
-                gradeScale = GradeScale.valueOf(gradeScaleName);
+                gradeScale = GradeScaleEnum.valueOf(gradeScaleName);
             }
         }
 
@@ -116,7 +116,7 @@ public class GradeInputRenderer extends InputRenderer {
             }
         }
 
-        public GradeScale getGradeScale() {
+        public GradeScaleEnum getGradeScale() {
             return gradeScale;
         }
 
@@ -167,7 +167,7 @@ public class GradeInputRenderer extends InputRenderer {
 
                 HtmlGradeTextInput htmlGradeTextInput = (HtmlGradeTextInput) getComponent();
                 GradeConverter gradeConverter = (GradeConverter) htmlGradeTextInput.getConverter();
-                GradeScale gradeScale = gradeConverter.getGradeScale();
+                GradeScaleEnum gradeScale = gradeConverter.getGradeScale();
 
                 String value = getComponent().getValue().trim();
                 if (value != null && value.length() > 0) {

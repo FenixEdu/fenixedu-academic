@@ -92,6 +92,14 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         } catch (Exception e) {
             throw new DomainException("competence.course.unable.to.create.acronym");
         }
+        
+        checkRules();
+    }
+
+    private void checkRules() {
+        if(getGradeScale() == null) {
+            throw new DomainException("error.CompetenceCourse.gradeScale.required");
+        }
     }
 
     public void addCompetenceCourseLoad(Double theoreticalHours, Double problemsHours, Double laboratorialHours,

@@ -21,7 +21,7 @@
  */
 package org.fenixedu.academic.ui.renderers.validators;
 
-import org.fenixedu.academic.domain.GradeScale;
+import org.fenixedu.academic.domain.GradeScaleEnum;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
@@ -52,9 +52,9 @@ public class GradeValidator extends HtmlValidator {
             setKey(true);
             setMessage("renderers.validator.required");
         } else {
-            if (grade == null || grade.length() == 0 || grade.equalsIgnoreCase(GradeScale.NA)
-                    || grade.equalsIgnoreCase(GradeScale.RE) || grade.equalsIgnoreCase(GradeScale.AP)
-                    || grade.equalsIgnoreCase(GradeScale.APT)) {
+            if (grade == null || grade.length() == 0 || grade.equalsIgnoreCase(GradeScaleEnum.NA)
+                    || grade.equalsIgnoreCase(GradeScaleEnum.RE) || grade.equalsIgnoreCase(GradeScaleEnum.AP)
+                    || grade.equalsIgnoreCase(GradeScaleEnum.APT)) {
                 setValid(true);
             } else {
                 try {

@@ -41,6 +41,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
+import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
@@ -139,9 +140,9 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public Degree(final String name, final String nameEn, final String code, final DegreeType degreeType,
-            final GradeScale gradeScale, final ExecutionYear executionYear) {
+            final GradeScaleEnum numericGradeScale, final GradeScale qualitativeGradeScale, final ExecutionYear executionYear) {
         this();
-        commonFieldsChange(name, nameEn, code, gradeScale, executionYear);
+        commonFieldsChange(name, nameEn, code, numericGradeScale, qualitativeGradeScale, executionYear);
 
         if (degreeType == null) {
             throw new DomainException("degree.degree.type.not.null");
@@ -150,16 +151,17 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public Degree(final String name, final String nameEn, final String acronym, final DegreeType degreeType,
-            final Double ectsCredits, final GradeScale gradeScale, final String prevailingScientificArea,
-            final AdministrativeOffice administrativeOffice) {
+            final Double ectsCredits, final GradeScaleEnum numericGradeScale, final GradeScale qualitativeGradeScale,
+            final String prevailingScientificArea, final AdministrativeOffice administrativeOffice) {
         this();
-        commonFieldsChange(name, nameEn, acronym, gradeScale, ExecutionYear.findCurrent(getCalendar()));
+        commonFieldsChange(name, nameEn, acronym, numericGradeScale, qualitativeGradeScale,
+                ExecutionYear.findCurrent(getCalendar()));
         newStructureFieldsChange(degreeType, ectsCredits, prevailingScientificArea);
         setAdministrativeOffice(administrativeOffice);
     }
 
-    private void commonFieldsChange(final String name, final String nameEn, final String code, final GradeScale gradeScale,
-            final ExecutionYear executionYear) {
+    private void commonFieldsChange(final String name, final String nameEn, final String code, final GradeScaleEnum gradeScale,
+            final GradeScale qualitativeGradeScale, final ExecutionYear executionYear) {
         if (name == null) {
             throw new DomainException("degree.name.not.null");
         } else if (nameEn == null) {
@@ -179,6 +181,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         this.setNameEn(nameEn);
         this.setSigla(code.trim());
         this.setGradeScale(gradeScale);
+        this.setQualitativeGradeScale(qualitativeGradeScale);
     }
 
     private void newStructureFieldsChange(final DegreeType degreeType, final Double ectsCredits,
@@ -195,8 +198,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public void edit(final String name, final String nameEn, final String code, final DegreeType degreeType,
-            final GradeScale gradeScale, final ExecutionYear executionYear) {
-        commonFieldsChange(name, nameEn, code, gradeScale, executionYear);
+            final GradeScaleEnum numericGradeScale, final GradeScale qualitativeGradeScale, final ExecutionYear executionYear) {
+        commonFieldsChange(name, nameEn, code, numericGradeScale, qualitativeGradeScale, executionYear);
 
         if (degreeType == null) {
             throw new DomainException("degree.degree.type.not.null");
@@ -205,10 +208,10 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public void edit(final String name, final String nameEn, final String acronym, final DegreeType degreeType,
-            final Double ectsCredits, final GradeScale gradeScale, final String prevailingScientificArea,
-            final ExecutionYear executionYear) {
+            final Double ectsCredits, final GradeScaleEnum numericGradeScale, final GradeScale qualitativeGradeScale,
+            final String prevailingScientificArea, final ExecutionYear executionYear) {
         checkIfCanEdit(degreeType);
-        commonFieldsChange(name, nameEn, acronym, gradeScale, executionYear);
+        commonFieldsChange(name, nameEn, acronym, numericGradeScale, qualitativeGradeScale, executionYear);
         newStructureFieldsChange(degreeType, ectsCredits, prevailingScientificArea);
     }
 
@@ -260,7 +263,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         Iterator<DegreeInfo> degreeInfosIterator = getDegreeInfosSet().iterator();
         while (degreeInfosIterator.hasNext()) {
             DegreeInfo degreeInfo = degreeInfosIterator.next();
-            degreeInfosIterator.remove();
+            degreeInfosIterator.remove();        
             degreeInfo.delete();
         }
 
@@ -278,11 +281,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         setUnit(null);
         setDegreeType(null);
         setRootDomainObject(null);
+        setQualitativeGradeScale(null);
         super.disconnect();
-    }
-
-    public GradeScale getGradeScaleChain() {
-        return super.getGradeScale();
     }
 
     public TreeSet<DegreeInfo> getDegreeInfosSorted() {
@@ -291,7 +291,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return result;
     }
 
-    public DegreeCurricularPlan createDegreeCurricularPlan(final String name, final GradeScale gradeScale, final Person creator,
+    public DegreeCurricularPlan createDegreeCurricularPlan(final String name, final Person creator,
             final AcademicPeriod duration) {
         if (name == null) {
             throw new DomainException("DEGREE.degree.curricular.plan.name.cannot.be.null");
@@ -311,7 +311,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
         CurricularPeriod curricularPeriod = new CurricularPeriod(duration);
 
-        return new DegreeCurricularPlan(this, name, gradeScale, creator, curricularPeriod);
+        return new DegreeCurricularPlan(this, name, creator, curricularPeriod);
     }
 
     public DegreeCurricularPlan findDegreeCurricularPlan(final LocalizedString name) {
@@ -941,5 +941,5 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
         super.setCode(code);
     }
-
+    
 }

@@ -29,7 +29,7 @@ import org.fenixedu.academic.domain.AcademicProgram;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.GradeScale;
+import org.fenixedu.academic.domain.GradeScaleEnum;
 import org.fenixedu.academic.domain.OptionalEnrolment;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
@@ -367,15 +367,6 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
                 if (!StringUtils.isEmpty(degreeModuleToEvaluate.getDegreeModule().getCode())) {
                     degreeModuleName = degreeModuleToEvaluate.getDegreeModule().getCode() + " - " + degreeModuleName;
                 }
-
-                if (canPerformStudentEnrolments) {
-                    final CurricularCourse curricularCourse = (CurricularCourse) degreeModuleToEvaluate.getDegreeModule();
-                    final GradeScale gradeScaleChain = curricularCourse.getGradeScaleChain();
-                    if (gradeScaleChain != GradeScale.TYPE20) {
-                        degreeModuleName += " (" + BundleUtil.getString(Bundle.STUDENT, "label.grade.scale") + " - "
-                                + gradeScaleChain.getDescription() + ")";
-                    }
-                }
             }
 
             cellName.setBody(new HtmlText(degreeModuleName));
@@ -633,18 +624,6 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         } else {
 
             result = code + enrolment.getName().getContent();
-        }
-
-        if (enrolment.getDegreeModule().isLeaf() && !enrolment.isOptional()) {
-
-            if (canPerformStudentEnrolments) {
-                final CurricularCourse curricularCourse = (CurricularCourse) enrolment.getDegreeModule();
-                final GradeScale gradeScaleChain = curricularCourse.getGradeScaleChain();
-                if (gradeScaleChain != GradeScale.TYPE20) {
-                    result += " (" + BundleUtil.getString(Bundle.STUDENT, "label.grade.scale") + " - "
-                            + gradeScaleChain.getDescription() + ")";
-                }
-            }
         }
 
         return result;

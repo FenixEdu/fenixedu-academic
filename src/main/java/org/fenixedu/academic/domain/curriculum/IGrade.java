@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.domain.curriculum;
 
+@Deprecated
 public interface IGrade extends Comparable<IGrade> {
 
     public Object getGradeValue();

@@ -18,12 +18,14 @@
  */
 package org.fenixedu.academic.util;
 
+import java.io.Serializable;
+
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class EvaluationType extends FenixUtil {
+public class EvaluationType implements Serializable {
 
     public static final int EXAM = 1;
 

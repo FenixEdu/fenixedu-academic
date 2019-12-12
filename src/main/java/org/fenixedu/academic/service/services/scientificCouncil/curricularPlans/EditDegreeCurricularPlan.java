@@ -20,7 +20,7 @@ package org.fenixedu.academic.service.services.scientificCouncil.curricularPlans
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.GradeScale;
+import org.fenixedu.academic.domain.GradeScaleEnum;
 import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
@@ -31,7 +31,7 @@ public class EditDegreeCurricularPlan {
 
     @Atomic
     public static void run(final DegreeCurricularPlan degreeCurricularPlan, final String name, final CurricularStage stage,
-            final DegreeCurricularPlanState state, final GradeScale gradeScale, final ExecutionYear executionInterval,
+            final DegreeCurricularPlanState state, final ExecutionYear executionInterval,
             final AcademicPeriod duration, final Boolean applyPreviousYearsEnrolmentRule) {
 
 
@@ -39,7 +39,7 @@ public class EditDegreeCurricularPlan {
             throw new IllegalArgumentException("error.degreeCurricularPlan.no.existing.degreeCurricularPlan");
         }
 
-        degreeCurricularPlan.edit(name, stage, state, gradeScale, executionInterval);
+        degreeCurricularPlan.edit(name, stage, state, executionInterval);
         degreeCurricularPlan.editDuration(duration);
         degreeCurricularPlan.editApplyPreviousYearsEnrolment(applyPreviousYearsEnrolmentRule);
     }

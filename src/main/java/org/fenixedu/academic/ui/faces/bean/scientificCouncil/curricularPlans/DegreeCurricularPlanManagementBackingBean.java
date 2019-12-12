@@ -32,7 +32,7 @@ import javax.faces.model.SelectItem;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.GradeScale;
+import org.fenixedu.academic.domain.GradeScaleEnum;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleValidationType;
 import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
@@ -66,7 +66,6 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     private DegreeCurricularPlan dcp;
     private String name;
     private Boolean applyPreviousYearsEnrolmentRule;
-    private String gradeScale;
     private String[] selectedGroupMembersToDelete;
     private String newGroupMember;
     private String durationTypeName;
@@ -246,31 +245,9 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
         getViewState().setAttribute("state", state);
     }
 
-    public String getGradeScale() {
-        return (gradeScale == null && getDcp() != null) ? (gradeScale = getDcp().getGradeScale().getName()) : gradeScale;
-    }
-
-    public void setGradeScale(String gradeScale) {
-        this.gradeScale = gradeScale;
-    }
-
-    public List<SelectItem> getGradeScales() {
-        List<SelectItem> result = new ArrayList<SelectItem>();
-
-        result.add(new SelectItem(this.NO_SELECTION, BundleUtil.getString(Bundle.SCIENTIFIC, "choose")));
-        result.add(new SelectItem(GradeScale.TYPE20.name(), BundleUtil.getString(Bundle.ENUMERATION, GradeScale.TYPE20.name())));
-        result.add(new SelectItem(GradeScale.TYPE5.name(), BundleUtil.getString(Bundle.ENUMERATION, GradeScale.TYPE5.name())));
-
-        return result;
-    }
-
     public String createCurricularPlan() {
-        // valueOf
-        // (this.
-        // gradeScale)
-        // };
         try {
-            CreateDegreeCurricularPlan.run(this.getDegreeId(), this.name, null, getDuration());
+            CreateDegreeCurricularPlan.run(this.getDegreeId(), this.name, getDuration());
         } catch (IllegalDataAccessException e) {
             this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.notAuthorized"));
             return "curricularPlansManagement";
@@ -387,7 +364,7 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     @Atomic
     protected void editCurricularPlanService() throws FenixServiceException {
         EditDegreeCurricularPlan.run(getDcp(), getName(), CurricularStage.valueOf(getCurricularStage()),
-                DegreeCurricularPlanState.valueOf(getState()), (GradeScale) null, getExecutionYear(), getDuration(),
+                DegreeCurricularPlanState.valueOf(getState()), getExecutionYear(), getDuration(),
                 getApplyPreviousYearsEnrolmentRule());
         final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(getDcpId());
         degreeCurricularPlan.setCurricularRuleValidationType(getCurricularRuleValidationType());

@@ -22,8 +22,9 @@ import java.util.List;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.GradeScale;
+import org.fenixedu.academic.domain.GradeScaleEnum;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
@@ -36,8 +37,8 @@ public class CreateDegree {
 
     @Atomic
     public static void run(String name, String nameEn, String acronym, DegreeType degreeType, Double ectsCredits,
-            GradeScale gradeScale, String prevailingScientificArea, AdministrativeOffice administrativeOffice)
-            throws FenixServiceException {
+            GradeScaleEnum numericGradeScale, GradeScale qualitativeGradeScale, String prevailingScientificArea,
+            AdministrativeOffice administrativeOffice) throws FenixServiceException {
 
         if (name == null || nameEn == null || acronym == null || degreeType == null || ectsCredits == null) {
             throw new InvalidArgumentsServiceException();
@@ -60,8 +61,8 @@ public class CreateDegree {
             }
         }
 
-        Degree degree = new Degree(name, nameEn, acronym, degreeType, ectsCredits, gradeScale, prevailingScientificArea,
-                administrativeOffice);
+        Degree degree = new Degree(name, nameEn, acronym, degreeType, ectsCredits, numericGradeScale, qualitativeGradeScale,
+                prevailingScientificArea, administrativeOffice);
         Signal.emit(Degree.CREATED_SIGNAL, new DomainObjectEvent<Degree>(degree));
     }
 

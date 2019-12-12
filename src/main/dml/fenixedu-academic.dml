@@ -27,7 +27,7 @@ enum org.fenixedu.academic.domain.ContractType                                  
 enum org.fenixedu.academic.domain.ExecutionCourseBoardPermittedGroupType                                               as ExecutionCourseBoardPermittedGroupType;
 enum org.fenixedu.academic.domain.FormationType                                                                        as FormationType;
 enum org.fenixedu.academic.domain.FrequencyType                                                                        as FrequencyType;
-enum org.fenixedu.academic.domain.GradeScale                                                                           as GradeScale;
+enum org.fenixedu.academic.domain.GradeScaleEnum                                                                       as GradeScaleEnum;
 enum org.fenixedu.academic.domain.GrantOwnerType                                                                       as GrantOwnerType;
 enum org.fenixedu.academic.domain.JobApplicationType                                                                   as JobApplicationType;
 enum org.fenixedu.academic.domain.OccupationPeriodType                                                                 as OccupationPeriodType;
@@ -188,12 +188,6 @@ valueType org.fenixedu.academic.util.HourMinuteSecond as HourMinuteSecond {
     internalizeWith fromLocalTime();
 }
 
-valueType org.fenixedu.academic.util.MarkType as MarkType {
-    externalizeWith {
-        Integer getType();
-    }
-}
-
 valueType org.fenixedu.academic.util.PeriodState as PeriodState {
     externalizeWith {
         String getStateCode();
@@ -259,6 +253,57 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
 *
 */
 
+	class curriculum.grade.GradeScale {
+		String code;
+		LocalizedString name;
+		BigDecimal minimumApprovedGrade;
+		BigDecimal maximumApprovedGrade;
+		BigDecimal minimumReprovedGrade;
+		BigDecimal maximumReprovedGrade;
+		boolean active;
+		boolean internalGradeScale;
+		boolean defaultGradeScale;
+	}
+
+		relation GradeScaleDomainRoot {
+			.pt.ist.fenixframework.DomainRoot playsRole domainRoot {
+				multiplicity 1..1;
+			}
+		
+			curriculum.grade.GradeScale playsRole gradeScales {
+				multiplicity *;
+			}
+		}
+	
+	class curriculum.grade.GradeScaleEntry {
+		GradeScaleEnum gradeScale;
+		String value (REQUIRED);
+		LocalizedString description (REQUIRED);
+		/* if true this grade is an approval */
+		boolean allowsApproval;
+		int gradeOrder;
+	}
+	
+		relation GradeScaleEntryBennu {
+			.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
+				multiplicity 1..1;
+			}
+		
+			curriculum.grade.GradeScaleEntry playsRole gradeScaleEntries {
+				multiplicity *;
+			}
+		}
+		
+		relation GradeScaleGradeScaleEntry {
+			curriculum.grade.GradeScale playsRole gradeScaleInstance {
+				multiplicity 0..1;
+			}
+			
+			curriculum.grade.GradeScaleEntry playsRole gradeScaleEntries {
+				multiplicity *;
+			}
+		}
+
     class Alumni  {
     }
 
@@ -281,8 +326,18 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         CurricularStage curricularStage;
         String name;
         CompetenceCourseType type;
-        GradeScale gradeScale;
+        GradeScaleEnum gradeScale;
     }
+    
+    	relation CompetenceCourseGradeScale {
+    		curriculum.grade.GradeScale playsRole gradeScaleInstance {
+    			multiplicity 0..1;
+    		}
+    	
+    		CompetenceCourse playsRole {
+    			multiplicity *;
+    		}
+    	}
 
     class Coordinator  {
         Boolean responsible;
@@ -324,7 +379,7 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
 
     class Degree extends AcademicProgram {
         Double ectsCredits;
-        GradeScale gradeScale (REQUIRED);
+        GradeScaleEnum gradeScale (REQUIRED);
         String nameEn;
         String nome;
         String prevailingScientificArea;
@@ -334,6 +389,26 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         String siteUrl;
         String code;
     }
+    
+    	relation DegreeNumericGradeScale {
+    		curriculum.grade.GradeScale playsRole numericGradeScale {
+    			multiplicity 0..1;
+    		}
+    		
+    		Degree playsRole {
+    			multiplicity *;
+    		}
+    	}
+    	
+    	relation DegreeQualitativeGradeScale {
+    		curriculum.grade.GradeScale playsRole qualitativeGradeScale {
+    			multiplicity 0..1;
+    		}
+    		
+    		Degree playsRole {
+    			multiplicity *;
+    		}
+    	}
     
     class DegreeOfficialPublication  {
        LocalDate publication (REQUIRED);
@@ -353,9 +428,7 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         String description;
         String descriptionEn;
         YearMonthDay endDateYearMonthDay;
-        GradeScale gradeScale;
         YearMonthDay initialDateYearMonthDay;
-        MarkType markType;
         Integer minimalYearForOptionalCourses;
         String name;
         Double neededCredits;
@@ -460,10 +533,9 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         String bookReference;
         String page;
         EnrolmentEvaluationContext context;
-        GradeScale gradeScale;
         Grade normalizedEctsGrade;
     }
-
+    
 	/* The field 'tempInstructions' is to be removed on next major version
 	 * 		TODO: Replace String with LocalizedString
 	 */
@@ -474,8 +546,18 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
 
     class Evaluation  {
         String publishmentMessage;
-        GradeScale gradeScale;
+        GradeScaleEnum gradeScale;
     }
+
+    	relation GradeScaleEvaluation {
+    		curriculum.grade.GradeScale playsRole gradeScaleInstance {
+    			multiplicity 0..1;
+    		}
+    		
+    		Evaluation playsRole {
+    			multiplicity *;
+    		}
+    	}
 
     class ExecutionCourse  {
         Boolean availableGradeSubmission;
@@ -1051,7 +1133,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
             Double ectsCredits;
             Boolean enrollmentAllowed;
             Integer enrollmentWeigth;
-            GradeScale gradeScale;
             Double labHours;
             Boolean mandatory;
             Boolean mandatoryEnrollment;

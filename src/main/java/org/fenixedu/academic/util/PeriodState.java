@@ -22,10 +22,12 @@
  */
 package org.fenixedu.academic.util;
 
+import java.io.Serializable;
+
 /**
  * @author jpvl
  */
-public class PeriodState extends FenixUtil {
+public class PeriodState implements Serializable {
 
     public static final PeriodState CLOSED = new PeriodState(PeriodState.CLOSED_CODE);
     public static final PeriodState OPEN = new PeriodState(PeriodState.OPEN_CODE);

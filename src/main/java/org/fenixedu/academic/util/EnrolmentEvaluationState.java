@@ -18,12 +18,14 @@
  */
 package org.fenixedu.academic.util;
 
+import java.io.Serializable;
+
 /**
  * @author dcs-rjao
  * 
  *         2/Abr/2003
  */
-public class EnrolmentEvaluationState extends FenixUtil {
+public class EnrolmentEvaluationState implements Serializable {
 
     public static final int FINAL = 1;
 

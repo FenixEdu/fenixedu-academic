@@ -53,7 +53,7 @@ public class Mark extends Mark_Base {
     }
 
     private boolean validateMark(String mark) {
-        GradeScale gradeScale = getEvaluation().getGradeScale();
+        GradeScaleEnum gradeScale = getEvaluation().getGradeScale();
         return gradeScale.isValid(mark, getEvaluation().getEvaluationType());
     }
 

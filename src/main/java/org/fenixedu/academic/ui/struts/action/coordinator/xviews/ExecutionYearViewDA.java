@@ -41,7 +41,7 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
-import org.fenixedu.academic.domain.GradeScale;
+import org.fenixedu.academic.domain.GradeScaleEnum;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.coordinator.DegreeCoordinatorIndex;
@@ -147,7 +147,7 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
                 attending++;
             } else if (grade.isApproved()) {
                 approved++;
-                if (grade.getGradeScale() == GradeScale.TYPE20 && grade.isNumeric()) {
+                if (grade.isNumeric()) {
                     sum = sum.add(grade.getNumericValue());
                     quantity++;
                 }
@@ -195,7 +195,7 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
                 attending++;
             } else if (grade.isApproved()) {
                 approved++;
-                if (grade.getGradeScale() == GradeScale.TYPE20 && grade.isNumeric()) {
+                if (grade.isNumeric()) {
                     sum = sum.add(grade.getNumericValue());
                     quantity++;
                 }

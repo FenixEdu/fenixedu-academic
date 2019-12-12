@@ -121,10 +121,6 @@ public class CurricularCourse extends CurricularCourse_Base {
         new Context(parentCourseGroup, this, curricularPeriod, begin, end);
     }
 
-    public GradeScale getGradeScaleChain() {
-        return super.getGradeScale() != null ? super.getGradeScale() : getDegreeCurricularPlan().getGradeScaleChain();
-    }
-
     @Override
     public void print(StringBuilder dcp, String tabs, Context previousContext) {
         String tab = tabs + "\t";

@@ -36,8 +36,9 @@ import org.fenixedu.academic.domain.DegreeInfo;
 import org.fenixedu.academic.domain.DegreeOfficialPublication;
 import org.fenixedu.academic.domain.DegreeSpecializationArea;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.GradeScale;
+import org.fenixedu.academic.domain.GradeScaleEnum;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -77,7 +78,9 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
     private String bolonhaDegreeType;
 
-    private String gradeScale;
+    private String numericGradeScale;
+    
+    private String qualitativeGradeScale;
 
     private Double ectsCredits;
 
@@ -199,13 +202,22 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         this.bolonhaDegreeType = bolonhaDegreeType;
     }
 
-    public String getGradeScale() {
-        return (gradeScale == null && getDegree() != null) ? (gradeScale =
-                (getDegree().getGradeScale() != null ? getDegree().getGradeScale().getName() : null)) : gradeScale;
+    public String getNumericGradeScale() {
+        return (numericGradeScale == null && getDegree() != null) ? (numericGradeScale =
+                (getDegree().getGradeScale() != null ? getDegree().getGradeScale().getName() : null)) : numericGradeScale;
     }
 
-    public void setGradeScale(String gradeScale) {
-        this.gradeScale = gradeScale;
+    public void setNumericGradeScale(String gradeScale) {
+        this.numericGradeScale = gradeScale;
+    }
+    
+    public String getQualitativeGradeScale() {
+        return (this.qualitativeGradeScale == null && getDegree() != null) ? (this.qualitativeGradeScale =
+                (getDegree().getGradeScale() != null ? getDegree().getQualitativeGradeScale().getCode() : null)) : this.qualitativeGradeScale;
+    }
+    
+    public void setQualitativeGradeScale(String gradeScale) {
+        this.qualitativeGradeScale = gradeScale;
     }
 
     public String getCode() {
@@ -279,8 +291,8 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         List<SelectItem> result = new ArrayList<SelectItem>();
 
         result.add(new SelectItem(this.NO_SELECTION, BundleUtil.getString(Bundle.SCIENTIFIC, "choose")));
-        result.add(new SelectItem(GradeScale.TYPE20.name(), BundleUtil.getString(Bundle.ENUMERATION, GradeScale.TYPE20.name())));
-        result.add(new SelectItem(GradeScale.TYPE5.name(), BundleUtil.getString(Bundle.ENUMERATION, GradeScale.TYPE5.name())));
+        result.add(new SelectItem(GradeScaleEnum.TYPE20.name(), BundleUtil.getString(Bundle.ENUMERATION, GradeScaleEnum.TYPE20.name())));
+        result.add(new SelectItem(GradeScaleEnum.TYPE5.name(), BundleUtil.getString(Bundle.ENUMERATION, GradeScaleEnum.TYPE5.name())));
 
         return result;
     }
@@ -296,7 +308,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         }
 
         if (this.name == null || this.name.length() == 0 || this.nameEn == null || this.nameEn.length() == 0
-                || this.acronym == null || this.acronym.length() == 0 || this.gradeScale.equals(this.NO_SELECTION)) {
+                || this.acronym == null || this.acronym.length() == 0 || this.numericGradeScale.equals(this.NO_SELECTION)) {
             this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "please.fill.mandatory.fields"));
             return "";
         }
@@ -304,7 +316,9 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         try {
             AdministrativeOffice administrativeOffice = FenixFramework.getDomainObject(getAcademicAdminOfficeId());
             CreateDegree.run(this.name, this.nameEn, this.acronym, FenixFramework.getDomainObject(this.bolonhaDegreeType),
-                    this.getEctsCredits(), GradeScale.valueOf(gradeScale), this.prevailingScientificArea, administrativeOffice);
+                    this.getEctsCredits(), GradeScaleEnum.valueOf(numericGradeScale), 
+                    GradeScale.findUniqueByCode(this.qualitativeGradeScale).get(),
+                    this.prevailingScientificArea, administrativeOffice);
         } catch (IllegalDataAccessException e) {
             this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.notAuthorized"));
             return "curricularPlansManagement";
@@ -322,7 +336,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
     public String editDegree() {
         if (this.bolonhaDegreeType != null && this.bolonhaDegreeType.equals(this.NO_SELECTION)
-                || this.gradeScale.equals(this.NO_SELECTION)) {
+                || this.numericGradeScale.equals(this.NO_SELECTION)) {
             this.setErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "choose.request"));
             return "";
         }
@@ -337,7 +351,9 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
         try {
             EditDegree.run(this.getDegreeId(), name, nameEn, this.acronym, FenixFramework.getDomainObject(getBolonhaDegreeType()),
-                    this.getEctsCredits(), GradeScale.valueOf(gradeScale), this.prevailingScientificArea,
+                    this.getEctsCredits(), GradeScaleEnum.valueOf(numericGradeScale), 
+                    GradeScale.findUniqueByCode(this.qualitativeGradeScale).get(),
+                    this.prevailingScientificArea,
                     getSelectedExecutionYear(), getCode(), getMinistryCode());
         } catch (IllegalDataAccessException e) {
             this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.notAuthorized"));

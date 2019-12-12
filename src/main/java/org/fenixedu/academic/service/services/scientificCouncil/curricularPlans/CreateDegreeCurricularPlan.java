@@ -19,7 +19,7 @@
 package org.fenixedu.academic.service.services.scientificCouncil.curricularPlans;
 
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.GradeScale;
+import org.fenixedu.academic.domain.GradeScaleEnum;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.predicate.AccessControl;
@@ -32,7 +32,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class CreateDegreeCurricularPlan {
 
     @Atomic
-    public static void run(String degreeId, String name, GradeScale gradeScale, AcademicPeriod duration)
+    public static void run(String degreeId, String name, AcademicPeriod duration)
             throws FenixServiceException {
 
         if (degreeId == null || name == null) {
@@ -49,7 +49,7 @@ public class CreateDegreeCurricularPlan {
             throw new FenixServiceException("error.degreeCurricularPlan.non.existing.degree");
         }
 
-        degree.createDegreeCurricularPlan(name, gradeScale, creator, duration);
+        degree.createDegreeCurricularPlan(name, creator, duration);
     }
 
 }

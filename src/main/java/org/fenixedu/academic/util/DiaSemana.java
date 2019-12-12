@@ -24,6 +24,8 @@
 
 package org.fenixedu.academic.util;
 
+import java.io.Serializable;
+
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -32,7 +34,7 @@ import org.joda.time.YearMonthDay;
  * 
  * @author tfc130
  */
-public class DiaSemana extends FenixUtil {
+public class DiaSemana implements Serializable {
 
     public static final int DOMINGO = 1;
 

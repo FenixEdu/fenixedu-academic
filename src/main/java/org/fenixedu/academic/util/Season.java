@@ -27,7 +27,9 @@
  */
 package org.fenixedu.academic.util;
 
-public class Season extends FenixUtil {
+import java.io.Serializable;
+
+public class Season implements Serializable {
 
     public static final int SEASON1 = 1;
     public static final int SEASON2 = 2;

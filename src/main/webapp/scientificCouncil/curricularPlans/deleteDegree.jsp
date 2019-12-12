@@ -63,11 +63,6 @@
 			<h:outputText id="ectsCredits" value="#{DegreeManagement.ectsCredits}</p>" escape="false"/>
 			<h:outputText value="</div>" escape="false"/>
 
-<%--
- 			<h:outputText value="#{scouncilBundle['gradeTypes']}: " escape="false"/>
-			<h:outputText id="gradeType" value="#{enumerationBundle[DegreeManagement.gradeType]}" escape="false"/>
---%>
-
 		<h:outputText value="<p class='mtop2'>" escape="false"/>
 		<h:commandButton alt="#{htmlAltBundle['commandButton.confirm']}" styleClass="inputbutton" value="#{scouncilBundle['confirm']}"
 			action="#{DegreeManagement.deleteDegree}" onclick="return confirm('#{scouncilBundle['confirm.delete.degree']}')"/>

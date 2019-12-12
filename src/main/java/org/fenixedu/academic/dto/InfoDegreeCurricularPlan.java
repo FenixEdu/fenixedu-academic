@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.dto;
 
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,10 +26,9 @@ import java.util.List;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionDegree;
-import org.fenixedu.academic.domain.GradeScale;
+import org.fenixedu.academic.domain.GradeScaleEnum;
 import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import org.fenixedu.academic.util.DateFormatUtil;
-import org.fenixedu.academic.util.MarkType;
 import org.fenixedu.commons.i18n.I18N;
 
 /**
@@ -123,10 +123,6 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
         return getDegreeCurricularPlan().getMinimalYearForOptionalCourses();
     }
 
-    public MarkType getMarkType() {
-        return getDegreeCurricularPlan().getMarkType();
-    }
-
     /**
      * @return
      */
@@ -185,10 +181,6 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
             infoExeutionDegrees.add(InfoExecutionDegree.newInfoFromDomain(executionDegree));
         }
         return infoExeutionDegrees;
-    }
-
-    public GradeScale getGradeScale() {
-        return getDegreeCurricularPlan().getGradeScale();
     }
 
     @Override

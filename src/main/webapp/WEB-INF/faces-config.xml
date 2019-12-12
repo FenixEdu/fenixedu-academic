@@ -41,7 +41,7 @@
 	</converter>
 
 	<converter>
-		<converter-for-class>org.fenixedu.academic.domain.GradeScale</converter-for-class>
+		<converter-for-class>org.fenixedu.academic.domain.GradeScaleEnum</converter-for-class>
 		<converter-class>org.fenixedu.academic.ui.faces.converter.GradeScaleConverter</converter-class>
 	</converter>
 

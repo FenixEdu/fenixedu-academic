@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.fenixedu.academic.domain.curriculum.EnrollmentState;
+import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.commons.i18n.LocalizedString;
 
@@ -35,14 +36,14 @@ public class Grade implements Serializable, Comparable<Grade> {
 
     private final String value;
 
-    private final GradeScale gradeScale;
-
+    private final GradeScaleEnum gradeScale;
+    
     protected Grade() {
         value = null;
         gradeScale = null;
     }
 
-    protected Grade(String value, GradeScale gradeScale) {
+    protected Grade(String value, GradeScaleEnum gradeScale) {
         if (EmptyGrade.qualifiesAsEmpty(value)) {
             throw new DomainException("error.grade.invalid.argument");
         }
@@ -72,11 +73,11 @@ public class Grade implements Serializable, Comparable<Grade> {
         return isNumeric() ? Integer.valueOf(getValue()) : null;
     }
 
-    public GradeScale getGradeScale() {
+    public GradeScaleEnum getGradeScale() {
         return gradeScale;
     }
 
-    public static Grade createGrade(String value, GradeScale gradeScale) {
+    public static Grade createGrade(String value, GradeScaleEnum gradeScale) {
         if (EmptyGrade.qualifiesAsEmpty(value)) {
             return createEmptyGrade();
         }
@@ -99,7 +100,7 @@ public class Grade implements Serializable, Comparable<Grade> {
         }
 
         String[] tokens = string.split(":");
-        return createGrade(tokens[1], GradeScale.valueOf(tokens[0]));
+        return createGrade(tokens[1], GradeScaleEnum.valueOf(tokens[0]));
     }
 
     @Override
@@ -111,7 +112,7 @@ public class Grade implements Serializable, Comparable<Grade> {
         return exportAsString(getGradeScale(), getValue());
     }
 
-    private static String exportAsString(GradeScale gradeScale, String value) {
+    private static String exportAsString(GradeScaleEnum gradeScale, String value) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(gradeScale);
         stringBuilder.append(":");

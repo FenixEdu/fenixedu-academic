@@ -26,6 +26,7 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
+@Deprecated
 public class TestGradeRenderer extends OutputRenderer {
 
     @Override

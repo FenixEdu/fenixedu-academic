@@ -41,7 +41,7 @@ public class EmptyGrade extends Grade {
     }
 
     @Override
-    public GradeScale getGradeScale() {
+    public GradeScaleEnum getGradeScale() {
         return null;
     }
 

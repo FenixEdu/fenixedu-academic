@@ -30,7 +30,7 @@ import java.util.function.Supplier;
 
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
-import org.fenixedu.academic.domain.GradeScale;
+import org.fenixedu.academic.domain.GradeScaleEnum;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
@@ -223,13 +223,15 @@ public class Curriculum implements Serializable, ICurriculum {
         private Grade finalGrade;
 
         private void doCalculus(final Curriculum curriculum) {
+            GradeScaleEnum gradeScale = curriculum.getStudentCurricularPlan().getRegistration().getDegree().getGradeScale();
+            
             sumPiCi = BigDecimal.ZERO;
             sumPi = BigDecimal.ZERO;
             countAverage(curriculum.averageEnrolmentRelatedEntries);
             countAverage(curriculum.averageDismissalRelatedEntries);
             BigDecimal avg = calculateAverage();
-            rawGrade = Grade.createGrade(avg.setScale(2, RoundingMode.HALF_UP).toString(), GradeScale.TYPE20);
-            finalGrade = Grade.createGrade(avg.setScale(0, RoundingMode.HALF_UP).toString(), GradeScale.TYPE20);
+            rawGrade = Grade.createGrade(avg.setScale(2, RoundingMode.HALF_UP).toString(), gradeScale);
+            finalGrade = Grade.createGrade(avg.setScale(0, RoundingMode.HALF_UP).toString(), gradeScale);
         }
 
         private void countAverage(final Set<ICurriculumEntry> entries) {
