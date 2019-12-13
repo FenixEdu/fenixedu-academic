@@ -1,3 +1,4 @@
+25.6.0 (13-12-2019)
 - Bug Fix: OptionalCurricularCourse should never be associated to Enrolment
 - Refactor: Added new methods for finding ExecutionInterval childs
 
