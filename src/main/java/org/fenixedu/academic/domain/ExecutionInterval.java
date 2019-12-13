@@ -20,12 +20,15 @@ package org.fenixedu.academic.domain;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.LocalDate;
@@ -238,6 +241,58 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base implement
                 .collect(Collectors.toSet());
     }
 
+    /**
+     * Returns current ExecutionInterval for provided AcademicPeriod type and calendar.
+     * If provided calendar is null, use default academic calendar
+     * 
+     * @param type the AcademicPeriod type of interval
+     * @param calendar the calendar to search in
+     * @return the current ExecutionInterval
+     */
+    public static ExecutionInterval findCurrentChild(final AcademicPeriod type, final AcademicCalendarRootEntry calendar) {
+        final AcademicCalendarRootEntry calendarToCheck =
+                calendar != null ? calendar : Bennu.getInstance().getDefaultAcademicCalendar();
+
+        return findCurrentsChilds().stream().filter(ey -> ey.getAcademicInterval().getAcademicCalendar() == calendarToCheck)
+                .filter(ei -> type != null && type.equals(ei.getAcademicPeriod())).findFirst().orElse(null);
+    }
+
+    public static Collection<ExecutionInterval> findCurrentsChilds() {
+        return findAllChilds().stream().filter(ei -> ei.isCurrent()).collect(Collectors.toSet());
+    }
+
+    public static ExecutionInterval findFirstCurrentChild(final AcademicCalendarRootEntry calendar) {
+        return findCurrentChilds(calendar).stream().min(Comparator.naturalOrder()).orElse(null);
+    }
+
+    /**
+     * Returns current ExecutionIntervals for provided calendar.
+     * If provided calendar is null, use default academic calendar
+     * 
+     * @param calendar the calendar to search in
+     * @return the current ExecutionInterval
+     */
+    private static Collection<ExecutionInterval> findCurrentChilds(final AcademicCalendarRootEntry calendar) {
+        final AcademicCalendarRootEntry calendarToCheck =
+                calendar != null ? calendar : Bennu.getInstance().getDefaultAcademicCalendar();
+
+        return findCurrentsChilds().stream().filter(ey -> ey.getAcademicInterval().getAcademicCalendar() == calendarToCheck)
+                .collect(Collectors.toSet());
+    }
+
+    public static ExecutionInterval findFirstChild() {
+        return findAllChilds().stream().min(Comparator.naturalOrder()).orElse(null);
+    }
+
+    public static ExecutionInterval findLastChild() {
+        return findAllChilds().stream().max(Comparator.naturalOrder()).orElse(null);
+    }
+
+    public AcademicPeriod getAcademicPeriod() {
+        return Optional.ofNullable(getAcademicInterval()).map(ai -> ai.getAcademicCalendarEntry())
+                .map(ace -> ace.getAcademicPeriod()).orElse(null);
+    }
+
     public void delete() {
         if (!getAssociatedExecutionCoursesSet().isEmpty()) {
             throw new Error("cannot.delete.execution.period.because.execution.courses.exist");
@@ -247,6 +302,6 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base implement
         }
         setRootDomainObject(null);
         deleteDomainObject();
-    }    
+    }
 
 }

@@ -1,4 +1,5 @@
 - Bug Fix: OptionalCurricularCourse should never be associated to Enrolment
+- Refactor: Added new methods for finding ExecutionInterval childs
 
 25.5.0 (27-11-2019)
 - Refactor: CompetenceCourse duration by AcademicPeriod, instead of RegimeType 
