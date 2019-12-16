@@ -18,26 +18,18 @@
  */
 package org.fenixedu.academic.domain.reports;
 
-import java.util.Set;
-
-import org.fenixedu.academic.domain.Attends;
-import org.fenixedu.academic.domain.CompetenceCourse;
-import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.Enrolment;
-import org.fenixedu.academic.domain.EnrolmentEvaluation;
-import org.fenixedu.academic.domain.EvaluationConfiguration;
-import org.fenixedu.academic.domain.EvaluationSeason;
-import org.fenixedu.academic.domain.ExecutionCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.*;
 import org.fenixedu.academic.domain.curriculum.EnrollmentState;
+import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
+import org.fenixedu.academic.domain.degreeStructure.RootCourseGroup;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
+
+import java.util.Set;
 
 public class EtiReportFile extends EtiReportFile_Base {
 
@@ -63,6 +55,7 @@ public class EtiReportFile extends EtiReportFile_Base {
         setDegreeHeaders(spreadsheet, "aluno");
         spreadsheet.setHeader("semestre");
         spreadsheet.setHeader("ano lectivo");
+        spreadsheet.setHeader("grupo Disciplina");
         spreadsheet.setHeader("nome Disciplina");
         setDegreeHeaders(spreadsheet, "disciplina");
         spreadsheet.setHeader("creditos");
@@ -126,6 +119,7 @@ public class EtiReportFile extends EtiReportFile_Base {
         setDegreeCells(row, registration.getDegree());
         row.setCell(executionSemester.getSemester().toString());
         row.setCell(executionSemester.getExecutionYear().getYear());
+        row.setCell(curricularGroupChain(enrolment));
         row.setCell(curricularCourse.getName());
         setDegreeCells(row, degree);
         row.setCell(enrolment.getEctsCredits().toString().replace('.', ','));
@@ -158,6 +152,24 @@ public class EtiReportFile extends EtiReportFile_Base {
             final ExecutionCourse executionCourse = attends.getExecutionCourse();
             row.setCell(GepReportFile.getExecutionCourseCode(executionCourse));
         }
+    }
+
+    private String curricularGroupChain(final Enrolment enrolment) {
+        final StringBuilder builder = new StringBuilder();
+        final CurriculumGroup curriculumGroup = enrolment.getCurriculumGroup();
+        curricularGroupChain(builder, curriculumGroup);
+        return builder.toString();
+    }
+
+    private void curricularGroupChain(final StringBuilder builder, final CurriculumGroup curriculumGroup) {
+        final CurriculumGroup parent = curriculumGroup.getCurriculumGroup();
+        if (parent != null && !parent.isRoot()) {
+            curricularGroupChain(builder, parent);
+        }
+        if (builder.length() > 0) {
+            builder.append(" > ");
+        }
+        builder.append(curriculumGroup.getPresentationName().getContent());
     }
 
     private String countAllPreviousEnrolments(final CompetenceCourse competenceCourse, final ExecutionSemester executionPeriod,
