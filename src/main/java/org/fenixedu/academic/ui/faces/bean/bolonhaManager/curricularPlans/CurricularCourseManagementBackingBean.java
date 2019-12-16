@@ -576,7 +576,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
             checkCurricularCourseNameAndNameEn();
             CreateCurricularCourse.run(new CreateCurricularCourse.CreateOptionalCurricularCourseArgs(getDegreeCurricularPlanID(),
-                    getCourseGroupID(), getName(), getNameEn(), getCurricularYearID(), getCurricularSemesterID(),
+                    getCourseGroupID(), getName(), getNameEn(), getCurricularYearID(), getCurricularSemesterID(), getTerm(),
                     getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID()));
 
         }

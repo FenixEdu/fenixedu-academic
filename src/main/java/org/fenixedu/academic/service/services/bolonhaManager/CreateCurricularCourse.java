@@ -258,7 +258,7 @@ public class CreateCurricularCourse {
         private String name, nameEn;
 
         public CreateOptionalCurricularCourseArgs(String degreeCurricularPlanID, String parentCourseGroupID, String name,
-                String nameEn, Integer year, Integer semester, String beginExecutionPeriodID, String endExecutionPeriodID) {
+                String nameEn, Integer year, Integer semester, Integer term, String beginExecutionPeriodID, String endExecutionPeriodID) {
 
             setDegreeCurricularPlanID(degreeCurricularPlanID);
             setParentCourseGroupID(parentCourseGroupID);
@@ -266,6 +266,7 @@ public class CreateCurricularCourse {
             setNameEn(nameEn);
             setYear(year);
             setSemester(semester);
+            setTerm(term);
             setBeginExecutionPeriodID(beginExecutionPeriodID);
             setEndExecutionPeriodID(endExecutionPeriodID);
         }
