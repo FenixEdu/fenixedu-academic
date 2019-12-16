@@ -42,19 +42,6 @@
             <bean:message key="link.thesis.operation" bundle="STUDENT_RESOURCES"/>
       	</html:link>
      </li>
-    <!--  Following code is commented due to RT ticket #336485 -->
-    <%--<logic:notEmpty name="thesis">
-  	<bean:define id="thesis" name="thesis" type="org.fenixedu.academic.domain.thesis.Thesis"/>
-	        <% if(ThesisPresentationState.areDocumentsSubmitted(thesis)) {
-		    %>
-		        <li>
-			        <html:link page="/thesisSubmission.do?method=downloadJuryReportSheet"
-					        paramId="thesisId" paramName="thesis" paramProperty="externalId">
-			            <bean:message key="link.student.thesis.juryreport.download"/>
-			        </html:link>
-		    	</li>
-		    <% } %>
-    </logic:notEmpty>  --%>
 </ul>
 
 <div class="infoop2">

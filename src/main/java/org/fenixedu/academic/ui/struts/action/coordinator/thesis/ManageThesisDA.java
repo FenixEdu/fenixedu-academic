@@ -44,7 +44,6 @@ import org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant;
 import org.fenixedu.academic.domain.thesis.ThesisParticipationType;
 import org.fenixedu.academic.report.thesis.ApproveJuryDocument;
 import org.fenixedu.academic.report.thesis.StudentThesisIdentificationDocument;
-import org.fenixedu.academic.report.thesis.ThesisJuryReportDocument;
 import org.fenixedu.academic.service.services.scientificCouncil.thesis.ApproveThesisProposal;
 import org.fenixedu.academic.service.services.thesis.CancelSubmitThesis;
 import org.fenixedu.academic.service.services.thesis.ChangeThesisPerson;
@@ -756,27 +755,6 @@ public class ManageThesisDA extends AbstractManageThesisDA {
         } catch (Exception e) {
             addActionMessage("error", request, "student.thesis.generate.identification.failed");
             e.printStackTrace();//FIXME remove
-            return listThesis(mapping, actionForm, request, response);
-        }
-    }
-
-    public ActionForward downloadJuryReportSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        Thesis thesis = getThesis(request);
-
-        try {
-            ThesisJuryReportDocument document = new ThesisJuryReportDocument(thesis);
-            byte[] data = ReportsUtils.generateReport(document).getData();
-
-            response.setContentLength(data.length);
-            response.setContentType("application/pdf");
-            response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", document.getReportFileName()));
-
-            response.getOutputStream().write(data);
-
-            return null;
-        } catch (Exception e) {
-            addActionMessage("error", request, "student.thesis.generate.juryreport.failed");
             return listThesis(mapping, actionForm, request, response);
         }
     }
