@@ -58,14 +58,16 @@ public class CurricularPeriodLabelFormatter {
     }
 
     private static void buildLabel(CurricularPeriod curricularPeriod, Integer term, StringBuilder result, boolean abbreviated, Locale locale) {
-        if (term != null) {
-            result.insert(0, term.toString());
-            result.insert(0, " Q");
+        if (term == null) {
+            result.insert(0, curricularPeriod.getChildOrder());
+            result.insert(0, " ");
+            result.insert(0, BundleUtil.getString(Bundle.ENUMERATION, (abbreviated) ? curricularPeriod.getAcademicPeriod()
+                    .getAbbreviatedName() : curricularPeriod.getAcademicPeriod().getName()));
+        } else {
+            final Integer semester = curricularPeriod.getChildOrder();
+            result.insert(0, (semester == 1 ? term : Integer.valueOf(term + 2)).toString());
+            result.insert(0, "P ");
         }
-        result.insert(0, BundleUtil.getString(Bundle.ENUMERATION, (abbreviated) ? curricularPeriod.getAcademicPeriod()
-                .getAbbreviatedName() : curricularPeriod.getAcademicPeriod().getName()));
-        result.insert(0, " ");
-        result.insert(0, curricularPeriod.getChildOrder());
     }
 
 }

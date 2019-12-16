@@ -160,10 +160,12 @@
 					<h:outputText value="#{context.parentCourseGroup.oneFullName}</p>" escape="false"/>
 					
 					<h:outputText value="<p><label>#{bolonhaBundle['curricularPeriod']}:</label>" escape="false"/>
-					<h:outputText value="#{context.curricularPeriod.fullLabel}</p>" escape="false"/>
-
-					<h:outputText value="<p><label>#{bolonhaBundle['term']}:</label>" escape="false"/>
-					<h:outputText value="#{context.term}</p>" escape="false"/>
+					<h:outputText value="#{context.curricularPeriod.fullLabel}" escape="false"/>
+					<h:panelGroup rendered="#{not empty context.fakeTerm}">
+						<h:outputText value=", #{bolonhaBundle['term']} " escape="false"/>
+						<h:outputText value="#{context.term}" escape="false"/>
+					</h:panelGroup>
+					<h:outputText value="</p>" escape="false"/>
 
 					<h:outputText value="<p class='mtop05'><label class='lempty'>.</label>" escape="false"/>
 					<h:outputLink value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/curricularPlans/editCurricularCourse.faces">

@@ -236,7 +236,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public List<SelectItem> getCurricularSemesters() {
-        final List<SelectItem> result = new ArrayList<SelectItem>(2);
+        final List<SelectItem> result = new ArrayList<SelectItem>(3);
 
         result.add(new SelectItem(this.NO_SELECTION_INTEGER, BundleUtil.getString(Bundle.BOLONHA, "choose")));
         result.add(new SelectItem(Integer.valueOf(1), String.valueOf(1)
@@ -247,7 +247,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public List<SelectItem> getTerms() {
-        final List<SelectItem> result = new ArrayList<SelectItem>(2);
+        final List<SelectItem> result = new ArrayList<SelectItem>(5);
 
         result.add(new SelectItem(this.NO_SELECTION_INTEGER, BundleUtil.getString(Bundle.BOLONHA, "choose")));
         result.add(new SelectItem(Integer.valueOf(1), String.valueOf(1)
@@ -854,7 +854,11 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             degreeCurricularPlan.reset();
             return "buildCurricularPlan";
         } catch (DomainException e) {
+            e.printStackTrace();
             addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getKey(), e.getArgs()));
+        } catch (Throwable t) {
+            t.printStackTrace();
+            throw new Error(t);
         }
         return "";
     }
