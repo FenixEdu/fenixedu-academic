@@ -500,4 +500,9 @@ public class Context extends Context_Base implements Comparable<Context> {
         }
     }
 
+    public Integer getFakeTerm() {
+        final Integer term = getTerm();
+        return term == null ? null : getChildOrder().intValue() == 1 ? term : term + 2;
+    }
+
 }
