@@ -324,7 +324,6 @@ public class Registration extends Registration_Base {
         }
     }
 
-    @Deprecated
     public void delete() {
 
         checkRulesToDelete();
@@ -357,6 +356,11 @@ public class Registration extends Registration_Base {
         for (; !getRegistrationStateLogsSet().isEmpty(); getRegistrationStateLogsSet().iterator().next().delete()) {
             ;
         }
+        getPrecedentDegreesInformationsSet().forEach(pdi -> pdi.delete());
+        getRegistrationStateLogSet().forEach(rsl -> {
+            rsl.setRegistration(null);
+            rsl.delete();
+        });
 
         if (getRegistrationNumber() != null) {
             getRegistrationNumber().delete();
@@ -376,7 +380,8 @@ public class Registration extends Registration_Base {
         setRegistrationYear(null);
         setDegree(null);
         setStudent(null);
-        setRegistrationProtocol(null);
+        super.setRegistrationProtocol(null);
+        super.setIngressionType(null);
         setRootDomainObject(null);
 
         getDestinyRegistrationsSet().clear();
