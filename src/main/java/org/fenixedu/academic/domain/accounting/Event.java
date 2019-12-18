@@ -1229,22 +1229,23 @@ public abstract class Event extends Event_Base {
         return Event.canBeRefunded.test(this);
     }
 
+    @Atomic
     public void createCustomPaymentPlan(final DateTime exemptionDate, final Map<LocalDate, Money> map) {
         final DateTime when = new DateTime().minusSeconds(2);
         final DebtInterestCalculator debtInterestCalculator = getDebtInterestCalculator(when);
         final Money dueAmount = new Money(debtInterestCalculator.getDueAmount());
         if (dueAmount.isZero() || dueAmount.isNegative()) {
-            throw new DomainException("error.custom.payment.plan.cannot.be.created.for.event.without.debt");
+            throw new DomainException(Optional.of(Bundle.ACCOUNTING), "error.custom.payment.plan.cannot.be.created.for.event.without.debt");
         }
         final Money mapValue = map.values().stream().reduce(Money.ZERO, Money::add);
         if (!dueAmount.equals(mapValue)) {
-            throw new DomainException("error.custom.payment.plan.value.does.not.match.current.debt.value");
+            throw new DomainException(Optional.of(Bundle.ACCOUNTING), "error.custom.payment.plan.value.does.not.match.current.debt.value");
         }
         final DueDateAmountMap currentMap = getDueDateAmountMap();
         final LocalDate firstCustomDate = map.keySet().stream().min((d1, d2) -> d1.compareTo(d2)).orElse(null);
         final LocalDate lastCurrentDate = currentMap.keySet().stream().max((d1, d2) -> d1.compareTo(d2)).orElse(null);
         if (firstCustomDate.isBefore(lastCurrentDate)) {
-            throw new DomainException("error.custom.payment.plan.must.be.after.currentPlan");
+            throw new DomainException(Optional.of(Bundle.ACCOUNTING), "error.custom.payment.plan.must.be.after.currentPlan");
         }
 
         currentMap.entrySet().forEach(e -> map.put(e.getKey(), e.getValue()));
@@ -1257,6 +1258,7 @@ public abstract class Event extends Event_Base {
         setDueDateAmountMap(new DueDateAmountMap(map));
     }
 
+    @Atomic
     public void deleteCustomPaymentPlan(final Money value) {
         final SortedMap<LocalDate, Money> map = new TreeMap<>(Collections.reverseOrder());
         map.putAll(getDueDateAmountMap());
@@ -1268,11 +1270,11 @@ public abstract class Event extends Event_Base {
             } else if (accumulatedValue.lessThan(value)) {
                 accumulatedValue = accumulatedValue.add(entry.getValue());
             } else {
-                throw new DomainException("error.custom.payment.plan.value.does.not.match.value.to.be.deleted");
+                throw new DomainException(Optional.of(Bundle.ACCOUNTING), "error.custom.payment.plan.value.does.not.match.value.to.be.deleted");
             }
         }
         if (oldDueDateAmountMap.isEmpty() || !accumulatedValue.equals(value)) {
-            throw new DomainException("error.custom.payment.plan.value.does.not.match.value.to.be.deleted");
+            throw new DomainException(Optional.of(Bundle.ACCOUNTING), "error.custom.payment.plan.value.does.not.match.value.to.be.deleted");
         }
         setDueDateAmountMap(new DueDateAmountMap(oldDueDateAmountMap));
     }

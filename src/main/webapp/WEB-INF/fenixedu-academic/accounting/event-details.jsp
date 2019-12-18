@@ -36,6 +36,10 @@
     <spring:param name="event" value="${eventId}"/>
 </spring:url>
 
+<spring:url var="customPaymentPlanUrl" value="../{event}/customPaymentPlan/create">
+    <spring:param name="event" value="${eventId}"/>
+</spring:url>
+
 <spring:url var="refundUrl" value="../{event}/refund">
     <spring:param name="event" value="${eventId}"/>
 </spring:url>
@@ -103,10 +107,11 @@
                     <modular:arg key="isPaymentManager" value="${isPaymentManager}"/>
                 </modular:intersect>
         </div>
-        <div class="col-md-2 col-md-push-1">
+        <div class="col-md-4">
             <br/>
                 <c:if test="${isPaymentManager}">
                         <a class="btn btn-default btn-block" href="${depositUrl}"><spring:message code="accounting.event.action.deposit" text="Deposit"/></a>
+                        <a class="btn btn-default btn-block" href="${customPaymentPlanUrl}"><spring:message code="accounting.event.action.create.custom.payment.plan" text="Create"/></a>
                 </c:if>
                 <c:if test="${event.currentEventState != 'CANCELLED'}">
                     <c:if test="${eventTotalAmountToPay > 0 && isEventOwner}">
