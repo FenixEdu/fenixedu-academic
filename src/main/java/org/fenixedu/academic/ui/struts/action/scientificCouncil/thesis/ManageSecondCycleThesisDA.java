@@ -45,7 +45,6 @@ import org.fenixedu.academic.domain.thesis.ThesisFile;
 import org.fenixedu.academic.domain.thesis.ThesisParticipationType;
 import org.fenixedu.academic.domain.thesis.ThesisVisibilityType;
 import org.fenixedu.academic.report.thesis.StudentThesisIdentificationDocument;
-import org.fenixedu.academic.report.thesis.ThesisJuryReportDocument;
 import org.fenixedu.academic.service.services.scientificCouncil.thesis.ApproveThesisDiscussion;
 import org.fenixedu.academic.service.services.scientificCouncil.thesis.ApproveThesisProposal;
 import org.fenixedu.academic.service.services.thesis.ChangeThesisPerson;
@@ -424,27 +423,6 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
             return null;
         } catch (final Exception e) {
             addActionMessage("error", request, "student.thesis.generate.identification.failed");
-            return showThesisDetails(mapping, request, thesis);
-        }
-    }
-
-    public ActionForward downloadJuryReportSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        final Thesis thesis = getDomainObject(request, "thesisOid");
-
-        try {
-            ThesisJuryReportDocument document = new ThesisJuryReportDocument(thesis);
-            byte[] data = ReportsUtils.generateReport(document).getData();
-
-            response.setContentLength(data.length);
-            response.setContentType("application/pdf");
-            response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", document.getReportFileName()));
-
-            response.getOutputStream().write(data);
-
-            return null;
-        } catch (final Exception e) {
-            addActionMessage("error", request, "student.thesis.generate.juryreport.failed");
             return showThesisDetails(mapping, request, thesis);
         }
     }
