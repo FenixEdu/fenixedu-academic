@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.fenixedu.academic.domain.ExecutionDegree;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.dto.InfoExecutionDegree;
 import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.predicate.AccessControlPredicate;
@@ -58,10 +58,10 @@ public class ReadExecutionDegreesByExecutionPeriodId {
         if (executionPeriodId == null) {
             throw new FenixServiceException("executionPeriodId.should.not.be.null");
         }
-        ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodId);
+        ExecutionInterval executionInterval = FenixFramework.getDomainObject(executionPeriodId);
 
         List<InfoExecutionDegree> infoExecutionDegreeList = new ArrayList<InfoExecutionDegree>();
-        for (final ExecutionDegree executionDegree : executionSemester.getExecutionYear().getExecutionDegreesSet()) {
+        for (final ExecutionDegree executionDegree : executionInterval.getExecutionYear().getExecutionDegreesSet()) {
             if (permission != null) {
                 if (!permission.evaluate(executionDegree.getDegree())) {
                     continue;

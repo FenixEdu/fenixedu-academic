@@ -18,7 +18,7 @@
  */
 package org.fenixedu.academic.ui.renderers;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
@@ -27,6 +27,8 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 
+//TODO: DELETE
+@Deprecated
 public class ExecutionPeriodRenderer extends OutputRenderer {
 
     @Override
@@ -35,10 +37,10 @@ public class ExecutionPeriodRenderer extends OutputRenderer {
 
             @Override
             public HtmlComponent createComponent(Object object, Class type) {
-                ExecutionSemester executionSemester = (ExecutionSemester) object;
+                ExecutionInterval executionSemester = (ExecutionInterval) object;
                 StringBuilder text = new StringBuilder();
                 text.append(executionSemester.getExecutionYear().getYear()).append(", ");
-                text.append(executionSemester.getSemester())
+                text.append(executionSemester.getChildOrder())
                         .append(BundleUtil.getString(Bundle.RENDERER, "label.semester.short"));
                 return new HtmlText(text.toString());
             }

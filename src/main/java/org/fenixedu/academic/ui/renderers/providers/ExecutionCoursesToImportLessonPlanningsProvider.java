@@ -27,7 +27,6 @@ import org.fenixedu.academic.domain.CurricularYear;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.dto.teacher.executionCourse.ImportContentBean;
 
@@ -40,12 +39,12 @@ public class ExecutionCoursesToImportLessonPlanningsProvider implements DataProv
     @Override
     public Object provide(Object source, Object currentValue) {
         ImportContentBean bean = (ImportContentBean) source;
-        ExecutionSemester executionSemester = bean.getExecutionPeriod();
+        ExecutionInterval executionSemester = bean.getExecutionPeriod();
         CurricularYear curricularYear = bean.getCurricularYear();
         DegreeCurricularPlan degreeCurricularPlan = bean.getExecutionDegree().getDegreeCurricularPlan();
         if (degreeCurricularPlan != null && executionSemester != null && curricularYear != null) {
             List<ExecutionCourse> executionCourses = getExecutionCoursesByExecutionPeriodAndSemesterAndYear(degreeCurricularPlan,
-                    executionSemester, curricularYear.getYear(), executionSemester.getSemester());
+                    executionSemester, curricularYear.getYear(), executionSemester.getChildOrder());
             Collections.sort(executionCourses, ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
             return executionCourses;
         }

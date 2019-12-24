@@ -27,7 +27,7 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.curricularRules.CurricularRule;
 import org.fenixedu.academic.domain.degreeStructure.Context;
@@ -46,7 +46,7 @@ public class UIDegreeModule extends UIInput {
     protected DegreeModule degreeModule;
     protected Context previousContext;
     protected ExecutionYear executionYear;
-    protected ExecutionSemester lastExecutionPeriod;
+    protected ExecutionInterval lastExecutionPeriod;
     protected Boolean toEdit;
     protected Boolean showRules = Boolean.FALSE;
     protected int depth;

@@ -24,7 +24,7 @@ import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionDegree;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 
@@ -45,7 +45,7 @@ public class ExecutionDegreeListBean implements Serializable {
 
     private CurricularCourse curricularCourse;
 
-    private ExecutionSemester executionSemester;
+    private ExecutionInterval executionInterval;
 
     private AcademicInterval academicInterval;
 
@@ -121,13 +121,13 @@ public class ExecutionDegreeListBean implements Serializable {
     }
 
     @Deprecated
-    public ExecutionSemester getExecutionPeriod() {
-        return executionSemester;
+    public ExecutionInterval getExecutionPeriod() {
+        return executionInterval;
     }
 
     @Deprecated
-    public void setExecutionPeriod(ExecutionSemester executionSemester) {
-        this.executionSemester = executionSemester;
+    public void setExecutionPeriod(ExecutionInterval executionInterval) {
+        this.executionInterval = executionInterval;
     }
 
     public AcademicInterval getAcademicInterval() {

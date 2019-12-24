@@ -21,7 +21,7 @@ package org.fenixedu.academic.service.services.commons;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.dto.InfoExecutionPeriod;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 
@@ -32,8 +32,8 @@ public class ReadNotClosedExecutionPeriods {
     @Atomic
     public static List<InfoExecutionPeriod> run() throws FenixServiceException {
         final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();
-        for (final ExecutionSemester executionSemester : ExecutionSemester.readNotClosedExecutionPeriods()) {
-            result.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
+        for (final ExecutionInterval executionInterval : ExecutionInterval.findActiveChilds()) {
+            result.add(InfoExecutionPeriod.newInfoFromDomain(executionInterval));
         }
         return result;
     }

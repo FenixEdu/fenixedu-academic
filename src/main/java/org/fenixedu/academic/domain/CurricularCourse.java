@@ -315,7 +315,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     final public double getAutonomousWorkHours() {
-        return getAutonomousWorkHours((CurricularPeriod) null, (ExecutionSemester) null);
+        return getAutonomousWorkHours((CurricularPeriod) null, (ExecutionInterval) null);
     }
 
     final public double getAutonomousWorkHours(final ExecutionInterval executionInterval) {
@@ -341,7 +341,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     final public double getTotalLoad() {
-        return getTotalLoad((CurricularPeriod) null, (ExecutionSemester) null);
+        return getTotalLoad((CurricularPeriod) null, (ExecutionInterval) null);
     }
 
     final public double getTotalLoad(final ExecutionInterval executionInterval) {

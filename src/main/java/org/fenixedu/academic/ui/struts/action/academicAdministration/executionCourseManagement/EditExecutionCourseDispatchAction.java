@@ -35,7 +35,7 @@ import org.fenixedu.academic.domain.CurricularYear;
 import org.fenixedu.academic.domain.EntryPhase;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionDegree;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.InfoExecutionCourse;
 import org.fenixedu.academic.dto.InfoExecutionCourseEditor;
@@ -203,7 +203,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         if (!org.apache.commons.lang.StringUtils.isEmpty(executionCourseId)) {
             executionCourse = FenixFramework.getDomainObject(executionCourseId);
         }
-        ExecutionSemester executionPeriod = FenixFramework.getDomainObject(executionPeriodId);
+        ExecutionInterval executionPeriod = FenixFramework.getDomainObject(executionPeriodId);
 
         ExecutionCourseBean sessionBean = new ExecutionCourseBean();
 

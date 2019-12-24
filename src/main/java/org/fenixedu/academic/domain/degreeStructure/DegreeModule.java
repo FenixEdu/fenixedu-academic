@@ -25,7 +25,6 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Locale;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -37,7 +36,6 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
 import org.fenixedu.academic.domain.curricularRules.CurricularRule;
@@ -59,8 +57,8 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
         private final ExecutionInterval executionInterval;
 
-        public ComparatorByMinEcts(final ExecutionInterval executionSemester) {
-            this.executionInterval = executionSemester;
+        public ComparatorByMinEcts(final ExecutionInterval executionInterval) {
+            this.executionInterval = executionInterval;
 
         }
 
@@ -124,47 +122,50 @@ abstract public class DegreeModule extends DegreeModule_Base {
         return getOneFullName(null);
     }
 
-    public String getOneFullNameI18N(final Locale language) {
-        return getOneFullNameI18N(null, language);
-    }
+    //TODO: DELETE
+//    public String getOneFullNameI18N(final Locale language) {
+//        return getOneFullNameI18N(null, language);
+//    }
 
-    public String getOneFullNameI18N(final ExecutionSemester executionSemester, Locale language) {
-        final StringBuilder result = new StringBuilder();
-        getOneFullNameI18N(result, executionSemester, language);
-        return result.toString();
-    }
+    //TODO: DELETE
+//    public String getOneFullNameI18N(final ExecutionSemester executionSemester, Locale language) {
+//        final StringBuilder result = new StringBuilder();
+//        getOneFullNameI18N(result, executionSemester, language);
+//        return result.toString();
+//    }
 
-    protected void getOneFullNameI18N(final StringBuilder result, final ExecutionSemester executionSemester,
-            final Locale language) {
-        final String selfName = getNameI18N(executionSemester).getContent(language);
+    //TODO: DELETE
+//    protected void getOneFullNameI18N(final StringBuilder result, final ExecutionSemester executionSemester,
+//            final Locale language) {
+//        final String selfName = getNameI18N(executionSemester).getContent(language);
+//
+//        if (isRoot()) {
+//            result.append(selfName);
+//        } else {
+//            Collection<Context> parentContextsByExecutionPeriod = getParentContextsByExecutionSemester(executionSemester);
+//            if (parentContextsByExecutionPeriod.isEmpty()) {
+//                // if not existing, just return all (as previous implementation
+//                // of method
+//                parentContextsByExecutionPeriod = getParentContextsSet();
+//            }
+//
+//            final CourseGroup parentCourseGroup = parentContextsByExecutionPeriod.iterator().next().getParentCourseGroup();
+//
+//            parentCourseGroup.getOneFullNameI18N(result, executionSemester, language);
+//            result.append(FULL_NAME_SEPARATOR);
+//            result.append(selfName);
+//        }
+//    }
 
-        if (isRoot()) {
-            result.append(selfName);
-        } else {
-            Collection<Context> parentContextsByExecutionPeriod = getParentContextsByExecutionSemester(executionSemester);
-            if (parentContextsByExecutionPeriod.isEmpty()) {
-                // if not existing, just return all (as previous implementation
-                // of method
-                parentContextsByExecutionPeriod = getParentContextsSet();
-            }
-
-            final CourseGroup parentCourseGroup = parentContextsByExecutionPeriod.iterator().next().getParentCourseGroup();
-
-            parentCourseGroup.getOneFullNameI18N(result, executionSemester, language);
-            result.append(FULL_NAME_SEPARATOR);
-            result.append(selfName);
-        }
-    }
-
-    private LocalizedString getNameI18N(final ExecutionSemester executionSemester) {
+    public LocalizedString getNameI18N(final ExecutionInterval executionInterval) {
         LocalizedString LocalizedString = new LocalizedString();
 
-        String name = getName(executionSemester);
+        String name = getName(executionInterval);
         if (name != null && name.length() > 0) {
             LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.PT, name);
         }
 
-        String nameEn = getNameEn(executionSemester);
+        String nameEn = getNameEn(executionInterval);
         if (nameEn != null && nameEn.length() > 0) {
             LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.EN, nameEn);
         }
@@ -172,12 +173,13 @@ abstract public class DegreeModule extends DegreeModule_Base {
         return LocalizedString;
     }
 
-    private LocalizedString getNameI18N(final ExecutionYear executionYear) {
-        return getNameI18N((executionYear == null) ? null : executionYear.getLastExecutionPeriod());
-    }
+    //TODO: DELETE
+//    private LocalizedString getNameI18N(final ExecutionYear executionYear) {
+//        return getNameI18N((executionYear == null) ? null : executionYear.getLastExecutionPeriod());
+//    }
 
     public LocalizedString getNameI18N() {
-        return getNameI18N((ExecutionSemester) null);
+        return getNameI18N(null);
     }
 
     protected String getName(final ExecutionInterval executionInterval) {
@@ -188,21 +190,22 @@ abstract public class DegreeModule extends DegreeModule_Base {
         return getNameEn();
     }
 
-    public LocalizedString getNameI18N(ExecutionInterval executionInterval) {
-        if (executionInterval instanceof ExecutionSemester) {
-            return getNameI18N((ExecutionSemester) executionInterval);
-        }
-        if (executionInterval instanceof ExecutionYear) {
-            return getNameI18N((ExecutionYear) executionInterval);
-        }
-
-        if (executionInterval == null) {
-            return getNameI18N((ExecutionSemester) null);
-        }
-
-        throw new DomainException("error.DegreeModule.getNameI18N.does.not.support.provided.executionInterval.type",
-                executionInterval.getClass().getName());
-    }
+    //TODO: DELETE
+//    public LocalizedString getNameI18N(ExecutionInterval executionInterval) {
+//        if (executionInterval instanceof ExecutionSemester) {
+//            return getNameI18N((ExecutionSemester) executionInterval);
+//        }
+//        if (executionInterval instanceof ExecutionYear) {
+//            return getNameI18N((ExecutionYear) executionInterval);
+//        }
+//
+//        if (executionInterval == null) {
+//            return getNameI18N((ExecutionSemester) null);
+//        }
+//
+//        throw new DomainException("error.DegreeModule.getNameI18N.does.not.support.provided.executionInterval.type",
+//                executionInterval.getClass().getName());
+//    }
 
     public void delete() {
         if (getCanBeDeleted()) {
@@ -507,8 +510,9 @@ abstract public class DegreeModule extends DegreeModule_Base {
                     // TODO: remove this throw when curricular rule ensures
                     // that it can be only one active for execution period
                     // and replace by: return curricularRule
-                    throw new DomainException("error.degree.module.has.more.than.one.credits.limit.for.executionYear", 
-                            getParentDegreeCurricularPlan().getDegree().getCode(), getParentDegreeCurricularPlan().getName(), getName());
+                    throw new DomainException("error.degree.module.has.more.than.one.credits.limit.for.executionYear",
+                            getParentDegreeCurricularPlan().getDegree().getCode(), getParentDegreeCurricularPlan().getName(),
+                            getName());
                 }
                 result = curricularRule;
             }
@@ -545,11 +549,11 @@ abstract public class DegreeModule extends DegreeModule_Base {
     }
 
     public Double getMaxEctsCredits() {
-        return getMaxEctsCredits(ExecutionSemester.findCurrent(getDegree().getCalendar()));
+        return getMaxEctsCredits(ExecutionInterval.findFirstCurrentChild(getDegree().getCalendar()));
     }
 
     public Double getMinEctsCredits() {
-        return getMinEctsCredits(ExecutionSemester.findCurrent(getDegree().getCalendar()));
+        return getMinEctsCredits(ExecutionInterval.findFirstCurrentChild(getDegree().getCalendar()));
     }
 
     public boolean hasDegreeModule(final DegreeModule degreeModule) {
@@ -558,20 +562,19 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
     public ExecutionInterval getMinimumExecutionPeriod() {
         if (isRoot()) {
-            return isBolonhaDegree() ? ExecutionSemester
-                    .readFirstExecutionSemester() : getFirstExecutionPeriodOfFirstExecutionDegree();
+            return isBolonhaDegree() ? ExecutionInterval.findFirstChild() : getFirstExecutionPeriodOfFirstExecutionDegree();
         }
         final SortedSet<ExecutionInterval> executionIntervals = new TreeSet<ExecutionInterval>();
         for (final Context context : getParentContextsSet()) {
             executionIntervals.add(context.getBeginExecutionInterval());
         }
-        return executionIntervals.first().convert(ExecutionSemester.class);
+        return executionIntervals.first();
     }
 
     private ExecutionInterval getFirstExecutionPeriodOfFirstExecutionDegree() {
         final ExecutionDegree executionDegree = getParentDegreeCurricularPlan().getFirstExecutionDegree();
-        return executionDegree != null ? executionDegree.getExecutionYear().getFirstExecutionPeriod() : ExecutionSemester
-                .readFirstExecutionSemester();
+        return executionDegree != null ? executionDegree.getExecutionYear().getFirstExecutionPeriod() : ExecutionInterval
+                .findFirstChild();
     }
 
     public DegreeModulesSelectionLimit getDegreeModulesSelectionLimitRule(final ExecutionInterval executionInterval) {

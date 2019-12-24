@@ -33,7 +33,6 @@ import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.exceptions.DomainException;

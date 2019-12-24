@@ -23,7 +23,7 @@ package org.fenixedu.academic.service.services.bolonhaManager;
 
 import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
@@ -41,8 +41,8 @@ public class CreateCurricularCourse {
         DegreeCurricularPlan degreeCurricularPlan = readDegreeCurricularPlan(curricularCourseArgs);
         CourseGroup parentCourseGroup = readParentCourseGroup(curricularCourseArgs);
         CurricularPeriod curricularPeriod = readCurricularPeriod(curricularCourseArgs, degreeCurricularPlan);
-        ExecutionSemester beginExecutionPeriod = readBeginExecutionPeriod(curricularCourseArgs);
-        ExecutionSemester endExecutionPeriod = readEndExecutionPeriod(curricularCourseArgs);
+        ExecutionInterval beginExecutionPeriod = readBeginExecutionPeriod(curricularCourseArgs);
+        ExecutionInterval endExecutionPeriod = readEndExecutionPeriod(curricularCourseArgs);
 
         final CompetenceCourse competenceCourse = FenixFramework.getDomainObject(curricularCourseArgs.getCompetenceCourseID());
         if (competenceCourse == null) {
@@ -73,8 +73,8 @@ public class CreateCurricularCourse {
         DegreeCurricularPlan degreeCurricularPlan = readDegreeCurricularPlan(curricularCourseArgs);
         CourseGroup parentCourseGroup = readParentCourseGroup(curricularCourseArgs);
         CurricularPeriod curricularPeriod = readCurricularPeriod(curricularCourseArgs, degreeCurricularPlan);
-        ExecutionSemester beginExecutionPeriod = readBeginExecutionPeriod(curricularCourseArgs);
-        ExecutionSemester endExecutionPeriod = readEndExecutionPeriod(curricularCourseArgs);
+        ExecutionInterval beginExecutionPeriod = readBeginExecutionPeriod(curricularCourseArgs);
+        ExecutionInterval endExecutionPeriod = readEndExecutionPeriod(curricularCourseArgs);
 
         degreeCurricularPlan.createOptionalCurricularCourse(parentCourseGroup, curricularCourseArgs.getName(),
                 curricularCourseArgs.getNameEn(), CurricularStage.DRAFT, curricularPeriod, beginExecutionPeriod,
@@ -113,7 +113,7 @@ public class CreateCurricularCourse {
         return curricularPeriod;
     }
 
-    private static ExecutionSemester readBeginExecutionPeriod(CurricularCourseArgs curricularCourseArgs) {
+    private static ExecutionInterval readBeginExecutionPeriod(CurricularCourseArgs curricularCourseArgs) {
         if (curricularCourseArgs.getBeginExecutionPeriodID() == null) {
             throw new DomainException("error.CreateCurricularCourse.beginExecutionPeriod.required");
         }
@@ -121,8 +121,8 @@ public class CreateCurricularCourse {
         return FenixFramework.getDomainObject(curricularCourseArgs.getBeginExecutionPeriodID());
     }
 
-    private static ExecutionSemester readEndExecutionPeriod(CurricularCourseArgs curricularCourseArgs) {
-        ExecutionSemester endExecutionPeriod;
+    private static ExecutionInterval readEndExecutionPeriod(CurricularCourseArgs curricularCourseArgs) {
+        ExecutionInterval endExecutionPeriod;
         if (curricularCourseArgs.getEndExecutionPeriodID() == null) {
             endExecutionPeriod = null;
         } else {

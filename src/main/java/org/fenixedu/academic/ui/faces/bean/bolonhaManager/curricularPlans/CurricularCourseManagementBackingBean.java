@@ -40,7 +40,6 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Teacher;
@@ -505,11 +504,11 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     protected List<SelectItem> readExecutionPeriodItems() {
 
         final ExecutionInterval minimumExecutionPeriod = getMinimumExecutionPeriod();
-        final List<ExecutionSemester> notClosedExecutionPeriods = ExecutionSemester.readNotClosedExecutionPeriods();
+        final List<ExecutionInterval> notClosedExecutionPeriods = new ArrayList<>(ExecutionInterval.findActiveChilds());
         Collections.sort(notClosedExecutionPeriods);
 
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        for (final ExecutionSemester notClosedExecutionPeriod : notClosedExecutionPeriods) {
+        for (final ExecutionInterval notClosedExecutionPeriod : notClosedExecutionPeriods) {
             if (minimumExecutionPeriod == null || notClosedExecutionPeriod.isAfterOrEquals(minimumExecutionPeriod)) {
                 result.add(new SelectItem(notClosedExecutionPeriod.getExternalId(),
                         notClosedExecutionPeriod.getName() + " " + notClosedExecutionPeriod.getExecutionYear().getYear()));
@@ -825,13 +824,13 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return getDegreeCurricularPlan().getCompetenceCourses(getExecutionYear());
     }
 
-    public ExecutionSemester getBeginExecutionPeriod() {
+    public ExecutionInterval getBeginExecutionPeriod() {
         return FenixFramework.getDomainObject(getBeginExecutionPeriodID());
     }
 
-    public ExecutionSemester getEndExecutionPeriod() {
+    public ExecutionInterval getEndExecutionPeriod() {
         return getEndExecutionPeriodID() == null ? null : FenixFramework
-                .<ExecutionSemester> getDomainObject(getEndExecutionPeriodID());
+                .<ExecutionInterval> getDomainObject(getEndExecutionPeriodID());
     }
 
 }

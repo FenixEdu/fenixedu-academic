@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.EnrolmentEvaluation;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curriculum.EnrollmentCondition;
 import org.fenixedu.academic.domain.curriculum.EnrollmentState;
 
@@ -66,7 +65,7 @@ public class InfoEnrolment extends InfoObject {
     }
 
     public InfoExecutionPeriod getInfoExecutionPeriod() {
-        return InfoExecutionPeriod.newInfoFromDomain(enrolment.getExecutionPeriod().convert(ExecutionSemester.class));
+        return InfoExecutionPeriod.newInfoFromDomain(enrolment.getExecutionInterval());
     }
 
     public InfoStudentCurricularPlan getInfoStudentCurricularPlan() {

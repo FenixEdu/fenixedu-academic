@@ -22,7 +22,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -79,34 +78,34 @@ public class StudentStatute extends StudentStatute_Base {
 
     }
 
-    /*
-     * Validation at Student Level
-     */
+    //TODO: DELETE
+//    public boolean isValidInExecutionPeriod(final ExecutionSemester executionSemester) {
+//        if (getBeginExecutionInterval() != null && getBeginExecutionInterval().isAfter(executionSemester)) {
+//            return false;
+//        }
+//
+//        if (getEndExecutionInterval() != null && getEndExecutionInterval().isBefore(executionSemester)) {
+//            return false;
+//        }
+//
+//        return true;
+//    }
 
-    /*
-     * Validation at Registration Level
-     */
+    public boolean isValidInExecutionInterval(final ExecutionInterval interval) {
+        if (interval instanceof ExecutionYear) {
+            return isValidOn(ExecutionInterval.assertExecutionIntervalType(ExecutionYear.class, interval));
+        }
 
-    public boolean isValidInExecutionPeriod(final ExecutionSemester executionSemester) {
-        if (getBeginExecutionInterval() != null && getBeginExecutionInterval().isAfter(executionSemester)) {
+        if (getBeginExecutionInterval() != null && getBeginExecutionInterval().isAfter(interval)) {
             return false;
         }
 
-        if (getEndExecutionInterval() != null && getEndExecutionInterval().isBefore(executionSemester)) {
+        if (getEndExecutionInterval() != null && getEndExecutionInterval().isBefore(interval)) {
             return false;
         }
 
         return true;
-    }
 
-    public boolean isValidInExecutionInterval(final ExecutionInterval interval) {
-        if (interval instanceof ExecutionSemester) {
-            return isValidInExecutionPeriod(ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class, interval));
-        } else if (interval instanceof ExecutionYear) {
-            return isValidOn(ExecutionInterval.assertExecutionIntervalType(ExecutionYear.class, interval));
-        }
-
-        throw new DomainException("error.StudentStatute.cannot.check.period");
     }
 
     public boolean isValidOn(final ExecutionYear executionYear) {
@@ -185,9 +184,9 @@ public class StudentStatute extends StudentStatute_Base {
             return false;
         }
         ExecutionInterval statuteBegin = statute.getBeginExecutionInterval() != null ? statute
-                .getBeginExecutionInterval() : ExecutionSemester.readFirstExecutionSemester();
-        ExecutionInterval statuteEnd = statute.getEndExecutionInterval() != null ? statute
-                .getEndExecutionInterval() : ExecutionSemester.readLastExecutionSemester();
+                .getBeginExecutionInterval() : ExecutionInterval.findFirstChild();
+        ExecutionInterval statuteEnd =
+                statute.getEndExecutionInterval() != null ? statute.getEndExecutionInterval() : ExecutionInterval.findLastChild();
 
         return overlapsWith(statute.getType(), statuteBegin, statuteEnd, statute.getRegistration());
 
@@ -204,10 +203,10 @@ public class StudentStatute extends StudentStatute_Base {
             return false;
         }
 
-        ExecutionInterval thisStatuteBegin = getBeginExecutionInterval() != null ? getBeginExecutionInterval() : ExecutionSemester
-                .readFirstExecutionSemester();
+        ExecutionInterval thisStatuteBegin =
+                getBeginExecutionInterval() != null ? getBeginExecutionInterval() : ExecutionInterval.findFirstChild();
         ExecutionInterval thisStatuteEnd =
-                getEndExecutionInterval() != null ? getEndExecutionInterval() : ExecutionSemester.readLastExecutionSemester();
+                getEndExecutionInterval() != null ? getEndExecutionInterval() : ExecutionInterval.findLastChild();
 
         return statuteBegin.isAfterOrEquals(thisStatuteBegin) && statuteBegin.isBeforeOrEquals(thisStatuteEnd)
                 || statuteEnd.isAfterOrEquals(thisStatuteBegin) && statuteEnd.isBeforeOrEquals(thisStatuteEnd);

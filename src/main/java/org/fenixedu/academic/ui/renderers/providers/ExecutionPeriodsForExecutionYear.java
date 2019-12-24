@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.beanutils.MethodUtils;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
@@ -41,7 +41,7 @@ public class ExecutionPeriodsForExecutionYear implements DataProvider {
             throw new RuntimeException(e);
         }
 
-        List<ExecutionSemester> periods = new ArrayList<ExecutionSemester>();
+        List<ExecutionInterval> periods = new ArrayList<>();
         if (executionYear != null) {
             periods.addAll(executionYear.getExecutionPeriodsSet());
         }

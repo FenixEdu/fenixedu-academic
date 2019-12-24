@@ -38,7 +38,6 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Teacher;
@@ -141,7 +140,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
             bean = (CompetenceCourseInformationRequestBean) viewState.getMetaObject().getObject();
             ExecutionInterval beanPeriod = bean.getExecutionPeriod();
             if (beanPeriod == null) {
-                beanPeriod = ExecutionSemester.findCurrent(null);
+                beanPeriod = ExecutionInterval.findFirstCurrentChild(null);
                 bean.setExecutionPeriod(beanPeriod);
             }
             information = bean.getCompetenceCourse().findInformationMostRecentUntil(beanPeriod);

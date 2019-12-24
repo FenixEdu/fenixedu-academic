@@ -20,12 +20,12 @@ package org.fenixedu.academic.dto.curriculumLineLog;
 
 import java.io.Serializable;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 
 public class SearchCurriculumLineLog implements Serializable {
 
     private Integer studentNumber;
-    private ExecutionSemester executionSemester;
+    private ExecutionInterval executionInterval;
 
     public Integer getStudentNumber() {
         return studentNumber;
@@ -35,12 +35,12 @@ public class SearchCurriculumLineLog implements Serializable {
         this.studentNumber = studentNumber;
     }
 
-    public ExecutionSemester getExecutionPeriod() {
-        return this.executionSemester;
+    public ExecutionInterval getExecutionPeriod() {
+        return this.executionInterval;
     }
 
-    public void setExecutionPeriod(ExecutionSemester executionSemester) {
-        this.executionSemester = executionSemester;
+    public void setExecutionPeriod(ExecutionInterval executionInterval) {
+        this.executionInterval = executionInterval;
     }
 
 }

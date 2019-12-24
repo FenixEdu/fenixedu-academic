@@ -42,7 +42,6 @@ import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
@@ -157,8 +156,8 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
             final Integer semester) {
         final List<Enrolment> result = new ArrayList<Enrolment>();
 
-        final ExecutionSemester executionSemester = executionYear.getExecutionSemesterFor(semester);
-        for (final Enrolment enrolment : curricularCourse.getEnrolmentsByExecutionPeriod(executionSemester)) {
+        final ExecutionInterval executionInterval = executionYear.getExecutionSemesterFor(semester);
+        for (final Enrolment enrolment : curricularCourse.getEnrolmentsByExecutionPeriod(executionInterval)) {
             result.add(enrolment);
         }
         Collections.sort(result, new BeanComparator("studentCurricularPlan.registration.number"));

@@ -18,7 +18,7 @@
  */
 package org.fenixedu.academic.service.services.commons;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.dto.InfoExecutionPeriod;
 
 import pt.ist.fenixframework.Atomic;
@@ -28,9 +28,9 @@ public class ReadExecutionPeriodByOID {
 
     @Atomic
     public static InfoExecutionPeriod run(final String executionPeriodID) {
-        final ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodID);
+        final ExecutionInterval executionInterval = FenixFramework.getDomainObject(executionPeriodID);
 
-        return InfoExecutionPeriod.newInfoFromDomain(executionSemester);
+        return InfoExecutionPeriod.newInfoFromDomain(executionInterval);
     }
 
 }

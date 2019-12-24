@@ -30,7 +30,7 @@ import org.apache.struts.util.MessageResources;
 import org.fenixedu.academic.domain.Coordinator;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ExecutionDegree;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 
 public class InfoExecutionDegree extends InfoObject {
 
@@ -70,7 +70,7 @@ public class InfoExecutionDegree extends InfoObject {
         return InfoDegreeCurricularPlan.newInfoFromDomain(getExecutionDegree().getDegreeCurricularPlan());
     }
 
-    public boolean isPublishedExam(ExecutionSemester executionSemester) {
+    public boolean isPublishedExam(ExecutionInterval executionInterval) {
         return true;
     }
 

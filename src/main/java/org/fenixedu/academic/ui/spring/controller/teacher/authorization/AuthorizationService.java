@@ -30,7 +30,7 @@ import java.util.stream.Stream;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.academic.domain.TeacherAuthorization;
 import org.fenixedu.academic.domain.TeacherCategory;
@@ -106,7 +106,7 @@ public class AuthorizationService {
      */
     public List<ExecutionInterval> getExecutionPeriods() {
         return Bennu.getInstance().getExecutionPeriodsSet().stream().distinct()
-                .sorted(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR.reversed()).collect(Collectors.toList());
+                .sorted(ExecutionInterval.COMPARATOR_BY_BEGIN_DATE.reversed()).collect(Collectors.toList());
     }
 
     /***
@@ -125,8 +125,8 @@ public class AuthorizationService {
      * 
      * @return
      */
-    public ExecutionSemester getCurrentPeriod() {
-        return ExecutionSemester.findCurrent(null);
+    public ExecutionInterval getCurrentPeriod() {
+        return ExecutionYear.findFirstCurrentChild(null);
     }
 
     /***
@@ -210,9 +210,9 @@ public class AuthorizationService {
     }
 
     /**
-     * Get all valid teacher authorizations for the specific {@link Department} and {@link ExecutionSemester}
+     * Get all valid teacher authorizations for the specific {@link Department} and {@link ExecutionInterval}
      * 
-     * @param search {@link Department} and {@link ExecutionSemester} filter
+     * @param search {@link Department} and {@link ExecutionInterval} filter
      * @return
      */
     public List<TeacherAuthorization> searchAuthorizations(final SearchBean search) {
@@ -325,7 +325,7 @@ public class AuthorizationService {
      * @param partFile the CSV file
      * @return
      */
-    public List<TeacherAuthorization> importCSV(ExecutionSemester period, MultipartFile partFile) {
+    public List<TeacherAuthorization> importCSV(ExecutionInterval period, MultipartFile partFile) {
         try {
             return importAuthorizations(period,
                     csvService.readCsvFile(partFile.getInputStream(), ",", Charsets.UTF_8.toString()));
@@ -338,13 +338,13 @@ public class AuthorizationService {
      * Batch import of teacher authorizations
      * Ignores empty lines.
      * 
-     * @param period the {@link ExecutionSemester} where to import
+     * @param period the {@link ExecutionInterval} where to import
      * @param authorizationEntries list where each element is a map of the column and the value
      * @throws RuntimeException if can't convert a specified value for a specific element
      * @return the list of {@link TeacherAuthorization} created objects
      */
     @Atomic(mode = TxMode.WRITE)
-    private List<TeacherAuthorization> importAuthorizations(ExecutionSemester period,
+    private List<TeacherAuthorization> importAuthorizations(ExecutionInterval period,
             List<Map<String, String>> authorizationEntries) {
         return authorizationEntries.stream().map(auth -> {
             String username = auth.get(message("teacher.authorizations.csv.column.1.username"));

@@ -20,17 +20,19 @@ package org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.sing
 
 import java.util.ArrayList;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
+//TODO: DELETE
+@Deprecated
 public class ExecutionSemesterProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        return new ArrayList(ExecutionSemester.readNotClosedExecutionPeriods());
+        return new ArrayList(ExecutionInterval.findActiveChilds());
     }
 
     @Override

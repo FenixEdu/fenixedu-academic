@@ -63,8 +63,8 @@ public class Professorship extends Professorship_Base {
      * @deprecated Use {@link #belongsToExecutionInterval(ExecutionInterval)
      */
     @Deprecated
-    public boolean belongsToExecutionPeriod(ExecutionSemester executionSemester) {
-        return this.getExecutionCourse().getExecutionInterval().equals(executionSemester);
+    public boolean belongsToExecutionPeriod(ExecutionInterval executionInterval) {
+        return this.getExecutionCourse().getExecutionInterval().equals(executionInterval);
     }
 
     @Atomic

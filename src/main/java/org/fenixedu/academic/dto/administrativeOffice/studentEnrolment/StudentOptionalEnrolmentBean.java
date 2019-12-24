@@ -23,7 +23,7 @@ import java.io.Serializable;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import org.fenixedu.academic.domain.degree.DegreeType;
@@ -35,7 +35,7 @@ public class StudentOptionalEnrolmentBean implements Serializable {
     static private final long serialVersionUID = 1L;
 
     private StudentCurricularPlan studentCurricularPlan;
-    private ExecutionSemester executionSemester;
+    private ExecutionInterval executionInterval;
     private CurriculumGroup curriculumGroup;
     private Context context;
     private DegreeType degreeType;
@@ -47,10 +47,10 @@ public class StudentOptionalEnrolmentBean implements Serializable {
     public StudentOptionalEnrolmentBean() {
     }
 
-    public StudentOptionalEnrolmentBean(StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester,
+    public StudentOptionalEnrolmentBean(StudentCurricularPlan studentCurricularPlan, ExecutionInterval executionInterval,
             CurriculumGroup curriculumGroup, Context context) {
         setStudentCurricularPlan(studentCurricularPlan);
-        setExecutionPeriod(executionSemester);
+        setExecutionPeriod(executionInterval);
         setCurriculumGroup(curriculumGroup);
         setContext(context);
     }
@@ -63,12 +63,12 @@ public class StudentOptionalEnrolmentBean implements Serializable {
         this.studentCurricularPlan = studentCurricularPlan;
     }
 
-    public ExecutionSemester getExecutionPeriod() {
-        return this.executionSemester;
+    public ExecutionInterval getExecutionPeriod() {
+        return this.executionInterval;
     }
 
-    public void setExecutionPeriod(ExecutionSemester executionSemester) {
-        this.executionSemester = executionSemester;
+    public void setExecutionPeriod(ExecutionInterval executionInterval) {
+        this.executionInterval = executionInterval;
     }
 
     public CurriculumGroup getCurriculumGroup() {

@@ -18,12 +18,14 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<schema name="org.fenixedu.academic.domain.ExecutionSemester.edit" type="org.fenixedu.academic.domain.ExecutionSemester">
-	<slot name="name"/>
-	<slot name="semester" bundle="MANAGER_RESOURCES" key="label.semester"/>
-	<slot name="beginDateYearMonthDay" bundle="MANAGER_RESOURCES" key="label.date.begin"/>
-	<slot name="endDateYearMonthDay" bundle="MANAGER_RESOURCES" key="label.date.end"/>
-</schema>
+<!-- TODO: DELETE -->
+<!-- <schema name="org.fenixedu.academic.domain.ExecutionSemester.edit" type="org.fenixedu.academic.domain.ExecutionInterval"> -->
+<!-- 	<slot name="name"/> -->
+<!-- 	<slot name="semester" bundle="MANAGER_RESOURCES" key="label.semester"/> -->
+<!-- 	<slot name="beginDateYearMonthDay" bundle="MANAGER_RESOURCES" key="label.date.begin"/> -->
+<!-- 	<slot name="endDateYearMonthDay" bundle="MANAGER_RESOURCES" key="label.date.end"/> -->
+<!-- </schema> -->
+
 <schema name="org.fenixedu.academic.domain.ExecutionYear.view" type="org.fenixedu.academic.domain.ExecutionYear">
 	<slot name="year" key="executionYear"/>
 </schema>

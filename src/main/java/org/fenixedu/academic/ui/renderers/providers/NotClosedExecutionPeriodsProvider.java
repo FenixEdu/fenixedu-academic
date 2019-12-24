@@ -18,7 +18,7 @@
  */
 package org.fenixedu.academic.ui.renderers.providers;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -28,7 +28,7 @@ public class NotClosedExecutionPeriodsProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        return ExecutionSemester.readNotClosedExecutionPeriods();
+        return ExecutionInterval.findActiveChilds();
     }
 
     @Override

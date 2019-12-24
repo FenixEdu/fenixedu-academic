@@ -212,7 +212,7 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base implement
 
     public abstract <E extends ExecutionInterval> E convert(final Class<E> concreteExecution);
 
-    public abstract ExecutionYear getExecutionYear();
+//    public abstract ExecutionYear getExecutionYear();
 
 //    public abstract Integer getChildOrder();
     public Integer getChildOrder() {

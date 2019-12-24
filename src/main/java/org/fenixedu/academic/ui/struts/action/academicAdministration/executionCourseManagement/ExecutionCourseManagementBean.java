@@ -27,14 +27,14 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.EntryPhase;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionDegree;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.interfaces.HasExecutionDegree;
 
 public class ExecutionCourseManagementBean implements java.io.Serializable, HasExecutionDegree {
 
     private static final long serialVersionUID = 1L;
 
-    private ExecutionSemester semester;
+    private ExecutionInterval semester;
     private String acronym;
     private String name;
     private EntryPhase entryPhase;
@@ -48,12 +48,12 @@ public class ExecutionCourseManagementBean implements java.io.Serializable, HasE
 
     private CurricularYear curricularYear;
 
-    public ExecutionCourseManagementBean(ExecutionSemester semester) {
+    public ExecutionCourseManagementBean(ExecutionInterval semester) {
         setSemester(semester);
         setCurricularCourseList(new ArrayList<CurricularCourse>());
     }
 
-    public ExecutionCourseManagementBean(final ExecutionSemester semester, final CurricularCourse curricularCourse) {
+    public ExecutionCourseManagementBean(final ExecutionInterval semester, final CurricularCourse curricularCourse) {
         setSemester(semester);
         setCurricularCourseList(new ArrayList<CurricularCourse>());
         getCurricularCourseList().add(curricularCourse);
@@ -112,11 +112,11 @@ public class ExecutionCourseManagementBean implements java.io.Serializable, HasE
         this.executionCourse = executionCourse;
     }
 
-    public ExecutionSemester getSemester() {
+    public ExecutionInterval getSemester() {
         return semester;
     }
 
-    public void setSemester(ExecutionSemester semester) {
+    public void setSemester(ExecutionInterval semester) {
         this.semester = semester;
     }
 

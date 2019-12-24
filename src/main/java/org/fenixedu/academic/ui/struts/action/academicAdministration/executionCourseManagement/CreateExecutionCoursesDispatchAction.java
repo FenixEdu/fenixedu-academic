@@ -32,7 +32,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.InfoDegreeCurricularPlan;
 import org.fenixedu.academic.dto.InfoExecutionPeriod;
@@ -117,7 +117,7 @@ public class CreateExecutionCoursesDispatchAction extends FenixDispatchAction {
                             executionPeriodID);
 
             // avmc (ist150958): success messages: 1 line for each DCP
-            final ExecutionSemester executionPeriod = FenixFramework.getDomainObject(executionPeriodID);
+            final ExecutionInterval executionPeriod = FenixFramework.getDomainObject(executionPeriodID);
             addActionMessage("successHead", request,
                     "message.executionCourseManagement.createExecutionCoursesForDegreeCurricularPlan.successHead",
                     executionPeriod.getName() + " " + executionPeriod.getExecutionYear().getYear());

@@ -29,7 +29,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.predicate.AccessControl;
@@ -57,7 +56,7 @@ public class ShowProfessorshipsDA extends FenixAction {
 
         final ExecutionInterval selectedExecutionPeriod;
         if (executionPeriodIDString == null) {
-            selectedExecutionPeriod = ExecutionSemester.findCurrent(null);
+            selectedExecutionPeriod = ExecutionInterval.findFirstCurrentChild(null);
         } else if (executionPeriodIDString.isEmpty()) {
             selectedExecutionPeriod = null;
         } else {
@@ -83,7 +82,7 @@ public class ShowProfessorshipsDA extends FenixAction {
                 }
             }
         }
-        executionIntervals.add(ExecutionSemester.findCurrent(null));
+        executionIntervals.add(ExecutionInterval.findFirstCurrentChild(null));
 
         request.setAttribute("semesters", executionIntervals);
 

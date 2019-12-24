@@ -27,8 +27,6 @@ import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.chronologies.AcademicChronology;
-import org.fenixedu.academic.domain.time.chronologies.dateTimeFields.AcademicSemesterDateTimeFieldType;
-import org.fenixedu.academic.domain.time.chronologies.dateTimeFields.AcademicYearDateTimeFieldType;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Chronology;
 import org.joda.time.DateTime;

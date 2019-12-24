@@ -293,10 +293,10 @@ public class Teacher extends Teacher_Base {
         deleteDomainObject();
     }
 
-    public Collection<? extends Forum> getForuns(final ExecutionSemester executionSemester) {
+    public Collection<? extends Forum> getForuns(final ExecutionInterval executionInterval) {
         final Collection<Forum> res = new HashSet<Forum>();
         for (Professorship professorship : getProfessorshipsSet()) {
-            if (professorship.getExecutionCourse().getExecutionInterval() == executionSemester) {
+            if (professorship.getExecutionCourse().getExecutionInterval() == executionInterval) {
                 res.addAll(professorship.getExecutionCourse().getForuns());
             }
         }

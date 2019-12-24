@@ -25,7 +25,7 @@ import java.util.Objects;
 
 import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.CompetenceCourseType;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevel;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.degreeStructure.RegimeType;
@@ -42,14 +42,14 @@ public class CreateCompetenceCourse {
     @Atomic
     public static CompetenceCourse run(String name, String nameEn, String acronym, Boolean basic, RegimeType regimeType,
             CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, String unitID,
-            ExecutionSemester startSemester, String code) throws FenixServiceException {
+            ExecutionInterval startInterval, String code) throws FenixServiceException {
         final CompetenceCourseGroupUnit unit = (CompetenceCourseGroupUnit) FenixFramework.getDomainObject(unitID);
         if (unit == null) {
             throw new FenixServiceException("error.invalidUnit");
         }
         checkIfCanCreateCompetenceCourse(name.trim(), nameEn.trim(), code);
         final CompetenceCourse competenceCourse = new CompetenceCourse(name, nameEn, basic, regimeType.convertToAcademicPeriod(),
-                competenceCourseLevel, type, CurricularStage.DRAFT, unit, startSemester);
+                competenceCourseLevel, type, CurricularStage.DRAFT, unit, startInterval);
         competenceCourse.setCode(code);
 
         return competenceCourse;

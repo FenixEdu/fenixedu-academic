@@ -31,7 +31,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.ExecutionCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Lesson;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Shift;
@@ -71,7 +72,7 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
     public List<EventBean> getClasses(User user) {
 
         List<EventBean> allEvents = new ArrayList<EventBean>();
-        ExecutionSemester currentExecutionSemester = ExecutionSemester.findCurrent(null);
+        ExecutionInterval currentExecutionInterval = ExecutionInterval.findFirstCurrentChild(null);
 
         if (user.getPerson().getStudent() != null) {
 
@@ -82,7 +83,7 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
                     }
                 }
 
-                for (Shift shift : registration.getShiftsFor(currentExecutionSemester.getPrevious())) {
+                for (Shift shift : registration.getShiftsFor(currentExecutionInterval.getPrevious())) {
                     for (Lesson lesson : shift.getAssociatedLessonsSet()) {
                         allEvents.addAll(lesson.getAllLessonsEvents());
                     }

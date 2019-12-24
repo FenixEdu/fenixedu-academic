@@ -3,7 +3,7 @@ package org.fenixedu.academic.domain.treasury;
 import java.util.Map;
 
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.student.Registration;
@@ -22,7 +22,7 @@ public interface IAcademicTreasuryTarget extends DomainObject {
     // Optional, may return null
     public Registration getAcademicTreasuryTargetRegistration();
     public ExecutionYear getAcademicTreasuryTargetExecutionYear();
-    public ExecutionSemester getAcademicTreasuryTargetExecutionSemester();
+    public ExecutionInterval getAcademicTreasuryTargetExecutionSemester();
     public Degree getAcademicTreasuryTargetDegree();
     
     public Map<String, String> getAcademicTreasuryTargetPropertiesMap();

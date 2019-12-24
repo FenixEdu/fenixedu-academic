@@ -9,7 +9,6 @@ import java.util.function.Predicate;
 import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
@@ -117,7 +116,7 @@ public class CompetenceCourseManagementAccessControl {
         if (!RoleType.BOLONHA_MANAGER.isMember(person.getUser())) {
             return false;
         }
-        return competenceCourse.getDepartmentUnit(executionInterval.convert(ExecutionSemester.class)).getDepartment()
+        return competenceCourse.getDepartmentUnit(executionInterval).getDepartment()
                 .isUserMemberOfCompetenceCourseMembersGroup(person);
     }
 

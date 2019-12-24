@@ -24,7 +24,7 @@ import java.util.List;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
@@ -151,12 +151,10 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
             htmlTableRow.setClasses(getGroupRowClasses());
             htmlTableRow.createCell().setBody(new HtmlText(courseGroup.getName()));
 
-            final List<Context> childCourseGroupContexts =
-                    courseGroup.getValidChildContexts(CourseGroup.class,
-                            bolonhaStudentOptionalEnrollmentBean.getExecutionPeriod());
-            final List<Context> childCurricularCourseContexts =
-                    courseGroup.getValidChildContexts(CurricularCourse.class,
-                            bolonhaStudentOptionalEnrollmentBean.getExecutionPeriod());
+            final List<Context> childCourseGroupContexts = courseGroup.getValidChildContexts(CourseGroup.class,
+                    bolonhaStudentOptionalEnrollmentBean.getExecutionPeriod());
+            final List<Context> childCurricularCourseContexts = courseGroup.getValidChildContexts(CurricularCourse.class,
+                    bolonhaStudentOptionalEnrollmentBean.getExecutionPeriod());
 
             Collections.sort(childCourseGroupContexts, new BeanComparator("childOrder"));
             Collections.sort(childCurricularCourseContexts, new BeanComparator("childOrder"));
@@ -164,8 +162,8 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
             generateCurricularCourses(blockContainer, childCurricularCourseContexts, depth + getWidthDecreasePerLevel());
 
             for (final Context context : childCourseGroupContexts) {
-                generateCourseGroup(blockContainer, (CourseGroup) context.getChildDegreeModule(), depth
-                        + getWidthDecreasePerLevel());
+                generateCourseGroup(blockContainer, (CourseGroup) context.getChildDegreeModule(),
+                        depth + getWidthDecreasePerLevel());
             }
         }
 
@@ -208,8 +206,8 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
                     actionLink.setText(BundleUtil.getString(Bundle.STUDENT, "label.enroll"));
                     actionLink.setName("optionalCurricularCourseEnrolLink" + curricularCourse.getExternalId() + "_"
                             + context.getExternalId());
-                    actionLink
-                            .setOnClick("$(this).closest('form').find('input[name=\\'method\\']').attr('value', 'enrolInOptionalCurricularCourse');");
+                    actionLink.setOnClick(
+                            "$(this).closest('form').find('input[name=\\'method\\']').attr('value', 'enrolInOptionalCurricularCourse');");
                     //actionLink.setOnClick("document.forms[2].method.value='enrolInOptionalCurricularCourse';");
                     actionLink.setController(new UpdateSelectedOptionalCurricularCourseController(curricularCourse));
                     linkTableCell.setBody(actionLink);
@@ -220,11 +218,11 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
     }
 
     static public HtmlBlockContainer generateCurricularCourseNameComponent(final CurricularCourse curricularCourse,
-            final ExecutionSemester executionSemester) {
+            final ExecutionInterval executionInterval) {
 
         final HtmlBlockContainer container = new HtmlBlockContainer();
-        container.addChild(new HtmlText(curricularCourse.getCode() + " - "
-                + curricularCourse.getNameI18N(executionSemester).getContent()));
+        container.addChild(
+                new HtmlText(curricularCourse.getCode() + " - " + curricularCourse.getNameI18N(executionInterval).getContent()));
 
         if (curricularCourse.getCompetenceCourse() != null) {
 

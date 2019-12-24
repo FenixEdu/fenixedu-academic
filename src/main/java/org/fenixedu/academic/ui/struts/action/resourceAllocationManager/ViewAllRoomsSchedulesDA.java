@@ -41,7 +41,6 @@ import org.fenixedu.academic.domain.CourseLoad;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Lesson;
 import org.fenixedu.academic.domain.LessonInstance;
@@ -71,9 +70,9 @@ import org.fenixedu.spaces.domain.Space;
 import org.fenixedu.spaces.domain.SpaceClassification;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-
 import com.google.common.collect.Ordering;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 /**
  * @author Luis Cruz e Sara Ribeiro
@@ -246,13 +245,13 @@ public class ViewAllRoomsSchedulesDA extends FenixDispatchAction {
 
     public ActionForward downloadRoomLessonOccupationInfo(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws IOException {
-        final ExecutionSemester executionSemester = getExecutionSemester(request);
+        final ExecutionInterval executionSemester = getExecutionSemester(request);
 
         final ExecutionYear executionYear = executionSemester.getExecutionYear();
 
         response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-disposition", "attachment; filename=occupationMap"
-                + executionYear.getYear().replace('/', '_') + "_" + executionSemester.getSemester() + ".xls");
+        response.setHeader("Content-disposition", "attachment; filename=occupationMap" + executionYear.getYear().replace('/', '_')
+                + "_" + executionSemester.getChildOrder() + ".xls");
 
         final RoomMap occupationMap = new RoomMap();
 
@@ -337,10 +336,10 @@ public class ViewAllRoomsSchedulesDA extends FenixDispatchAction {
         return null;
     }
 
-    private ExecutionSemester getExecutionSemester(HttpServletRequest request) {
+    private ExecutionInterval getExecutionSemester(HttpServletRequest request) {
         String academicIntervalString = (String) getFromRequest(request, "academicIntervalString");
         AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromString(academicIntervalString);
-        final ExecutionSemester executionSemester = (ExecutionSemester) ExecutionInterval.getExecutionInterval(academicInterval);
+        final ExecutionInterval executionSemester = (ExecutionInterval) ExecutionInterval.getExecutionInterval(academicInterval);
         return executionSemester;
     }
 
@@ -348,8 +347,8 @@ public class ViewAllRoomsSchedulesDA extends FenixDispatchAction {
         if (space == null) {
             return null;
         }
-        return space.getBlueprintNumber().isPresent() ? space.getBlueprintNumber().get() : findClosestBlueprintNumber(space
-                .getParent());
+        return space.getBlueprintNumber().isPresent() ? space.getBlueprintNumber()
+                .get() : findClosestBlueprintNumber(space.getParent());
     }
 
     private Space findSurroundingRoom(final Space space) {
@@ -359,8 +358,8 @@ public class ViewAllRoomsSchedulesDA extends FenixDispatchAction {
 
     public ActionForward downloadScheduleList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws IOException {
-        final ExecutionSemester executionSemester = getExecutionSemester(request);
-        final Integer semester = executionSemester.getSemester();
+        final ExecutionInterval executionSemester = getExecutionSemester(request);
+        final Integer semester = executionSemester.getChildOrder();
         final String executionYear = executionSemester.getExecutionYear().getYear();
 
         final Spreadsheet spreadsheet = new Spreadsheet("ScheduleMap");
@@ -422,7 +421,7 @@ public class ViewAllRoomsSchedulesDA extends FenixDispatchAction {
 
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-disposition", "attachment; filename=scheduleMap" + executionYear.replace('/', '_') + "_"
-                + executionSemester.getSemester() + ".xls");
+                + executionSemester.getChildOrder() + ".xls");
 
         final ServletOutputStream writer = response.getOutputStream();
         spreadsheet.exportToXLSSheet(writer);
@@ -433,7 +432,7 @@ public class ViewAllRoomsSchedulesDA extends FenixDispatchAction {
 
     public ActionForward downloadShiftAttendence(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws IOException {
-        final ExecutionSemester executionSemester = getExecutionSemester(request);
+        final ExecutionInterval executionSemester = getExecutionSemester(request);
         final String executionYear = executionSemester.getExecutionYear().getYear();
 
         final Spreadsheet spreadsheet = new Spreadsheet("ShiftAttendenceMap");
@@ -495,7 +494,7 @@ public class ViewAllRoomsSchedulesDA extends FenixDispatchAction {
 
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-disposition", "attachment; filename=shiftAttendenceMap" + executionYear.replace('/', '_')
-                + "_" + executionSemester.getSemester() + ".xls");
+                + "_" + executionSemester.getChildOrder() + ".xls");
 
         final ServletOutputStream writer = response.getOutputStream();
         spreadsheet.exportToXLSSheet(writer);

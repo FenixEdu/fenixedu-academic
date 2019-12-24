@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.dto.administrativeOffice.studentEnrolment.StudentOptionalEnrolmentBean;
@@ -174,7 +174,7 @@ public class DegreeCurricularPlanOptionalEnrolmentsRenderer extends InputRendere
             }
         }
 
-        private ExecutionSemester getExecutionSemester() {
+        private ExecutionInterval getExecutionSemester() {
             return studentOptionalEnrolmentBean.getExecutionPeriod();
         }
 

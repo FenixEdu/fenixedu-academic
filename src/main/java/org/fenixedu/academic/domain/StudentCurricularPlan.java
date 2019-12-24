@@ -193,7 +193,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             throw new DomainException("error.registrationAlreadyHasSCPWithGivenStartIntervalAndDates");
         }
 
-        setStartExecutionInterval(startInterval.convert(ExecutionSemester.class));
+        setStartExecutionInterval(startInterval);
         setStartDate(startDate);
     }
 
@@ -639,8 +639,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return getStartExecutionInterval().convert(ExecutionYear.class);
     }
 
-    public ExecutionSemester getStartExecutionPeriod() {
-        return getStartExecutionInterval().convert(ExecutionSemester.class);
+    public ExecutionInterval getStartExecutionPeriod() {
+        return getStartExecutionInterval();
     }
 
     public YearMonthDay getEndDate() {
@@ -1331,8 +1331,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         runRules &= isBolonhaDegree();
 
         if (runRules) {
-            final ExecutionInterval executionInterval = ExecutionSemester.findCurrent(getDegree().getCalendar());
-            checkEnrolmentRules(moveCurriculumLinesBean.getIDegreeModulesToEvaluate(executionInterval), executionInterval);
+            ExecutionYear.findCurrent(getDegree().getCalendar()).getChildIntervals().stream()
+                    .filter(interval -> interval.isCurrent())
+                    .forEach(interval -> checkEnrolmentRules(moveCurriculumLinesBean.getIDegreeModulesToEvaluate(interval),
+                            interval));
+
         }
     }
 

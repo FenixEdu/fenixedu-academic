@@ -38,7 +38,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 import org.fenixedu.academic.domain.EntryPhase;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.InfoExecutionCourseEditor;
 import org.fenixedu.academic.dto.InfoExecutionPeriod;
@@ -169,7 +169,7 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
         String executionPeriodId = (String) dynaForm.get("executionPeriodId");
         InfoExecutionPeriod infoExecutionPeriod = null;
         if (!StringUtils.isEmpty(executionPeriodId) && StringUtils.isNumeric(executionPeriodId)) {
-            infoExecutionPeriod = new InfoExecutionPeriod((ExecutionSemester) FenixFramework.getDomainObject(executionPeriodId));
+            infoExecutionPeriod = new InfoExecutionPeriod((ExecutionInterval) FenixFramework.getDomainObject(executionPeriodId));
         }
 
         infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);

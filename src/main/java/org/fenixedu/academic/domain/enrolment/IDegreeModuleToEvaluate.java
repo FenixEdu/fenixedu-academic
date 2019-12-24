@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.curricularRules.CurricularRule;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;

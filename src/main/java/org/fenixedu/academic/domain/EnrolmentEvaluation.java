@@ -150,7 +150,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         if (executionInterval == null) {
             throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
         }
-        setExecutionPeriod(executionInterval.convert(ExecutionSemester.class));
+        setExecutionPeriod(executionInterval);
     }
 
     public EnrollmentState getEnrollmentStateByGrade() {

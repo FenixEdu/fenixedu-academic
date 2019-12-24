@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.fenixedu.academic.domain.ExecutionDegree;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.dto.teacher.executionCourse.ImportContentBean;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
@@ -35,10 +35,10 @@ public class ExecutionDegreesToImportLessonPlanningsProvider implements DataProv
     @Override
     public Object provide(Object source, Object currentValue) {
         ImportContentBean bean = (ImportContentBean) source;
-        ExecutionSemester executionSemester = bean.getExecutionPeriod();
-        if (executionSemester != null) {
+        ExecutionInterval executionInterval = bean.getExecutionPeriod();
+        if (executionInterval != null) {
             List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
-            executionDegrees.addAll(executionSemester.getExecutionYear().getExecutionDegreesSet());
+            executionDegrees.addAll(executionInterval.getExecutionYear().getExecutionDegreesSet());
             Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
             return executionDegrees;
         }

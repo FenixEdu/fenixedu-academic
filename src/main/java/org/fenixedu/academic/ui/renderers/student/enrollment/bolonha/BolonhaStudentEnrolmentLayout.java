@@ -29,7 +29,6 @@ import org.fenixedu.academic.domain.AcademicProgram;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.GradeScale;
 import org.fenixedu.academic.domain.OptionalEnrolment;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
@@ -137,7 +136,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
     // TODO - review all calls to this method
     protected void generateGroup(final HtmlBlockContainer blockContainer,
             final List<IDegreeModuleToEvaluate> degreeModulesToSelect, final StudentCurricularPlan studentCurricularPlan,
-            final StudentCurriculumGroupBean studentCurriculumGroupBean, final ExecutionSemester executionSemester,
+            final StudentCurriculumGroupBean studentCurriculumGroupBean, final ExecutionInterval executionInterval,
             final int depth) {
 
         if (isCycleExternal(studentCurriculumGroupBean)) {
@@ -149,7 +148,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         }
 
         final HtmlTable groupTable = createGroupTable(blockContainer, depth);
-        addGroupHeaderRow(groupTable, studentCurriculumGroupBean, executionSemester);
+        addGroupHeaderRow(groupTable, studentCurriculumGroupBean, executionInterval);
 
         if (canPerformStudentEnrolments || !groupIsConcluded(studentCurriculumGroupBean)) {
 
@@ -159,14 +158,14 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 
             final HtmlTable coursesTable = createCoursesTable(blockContainer, depth);
             generateEnrolments(studentCurriculumGroupBean, coursesTable);
-            generateCurricularCoursesToEnrol(coursesTable, studentCurriculumGroupBean, degreeModulesToSelect, executionSemester);
+            generateCurricularCoursesToEnrol(coursesTable, studentCurriculumGroupBean, degreeModulesToSelect, executionInterval);
 
             generateGroups(blockContainer, degreeModulesToSelect, studentCurriculumGroupBean, studentCurricularPlan,
-                    executionSemester, depth);
+                    executionInterval, depth);
         }
 
         if (studentCurriculumGroupBean.isRoot()) {
-            generateCycleCourseGroupsToEnrol(blockContainer, executionSemester, studentCurricularPlan, depth);
+            generateCycleCourseGroupsToEnrol(blockContainer, executionInterval, studentCurricularPlan, depth);
         }
     }
 
@@ -191,7 +190,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         }
     }
 
-    protected Context getDegreeModuleContext(final CurriculumGroup curriculumGroup, final ExecutionSemester executionSemester) {
+    protected Context getDegreeModuleContext(final CurriculumGroup curriculumGroup, final ExecutionInterval executionInterval) {
         final DegreeModule degreeModule = curriculumGroup.getDegreeModule();
 
         if (curriculumGroup.isRoot()) {
@@ -199,7 +198,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         }
 
         final CurriculumGroup parentCurriculumGroup = curriculumGroup.getCurriculumGroup();
-        for (final Context context : parentCurriculumGroup.getDegreeModule().getValidChildContexts(executionSemester)) {
+        for (final Context context : parentCurriculumGroup.getDegreeModule().getValidChildContexts(executionInterval)) {
             if (context.getChildDegreeModule() == degreeModule) {
                 return context;
             }
@@ -218,7 +217,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
     }
 
     protected void addGroupHeaderRow(final HtmlTable groupTable, final StudentCurriculumGroupBean studentCurriculumGroupBean,
-            final ExecutionSemester executionSemester) {
+            final ExecutionInterval executionInterval) {
 
         final HtmlTableRow groupHeaderRow = groupTable.createRow();
         groupHeaderRow.setClasses(getRenderer().getGroupRowClasses());
@@ -227,11 +226,11 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         if (studentCurriculumGroupBean.getCurriculumModule().isRoot()) {
             titleCell.setBody(createDegreeCurricularPlanLink(studentCurriculumGroupBean));
         } else if (studentCurriculumGroupBean.getCurriculumModule().isCycleCurriculumGroup()) {
-            setTitleCellInformation(groupHeaderRow, titleCell, studentCurriculumGroupBean, executionSemester);
+            setTitleCellInformation(groupHeaderRow, titleCell, studentCurriculumGroupBean, executionInterval);
 
         } else {
             titleCell.setBody(new HtmlText(
-                    buildCurriculumGroupLabel(studentCurriculumGroupBean.getCurriculumModule(), executionSemester), false));
+                    buildCurriculumGroupLabel(studentCurriculumGroupBean.getCurriculumModule(), executionInterval), false));
         }
 
         final HtmlTableCell checkBoxCell = groupHeaderRow.createCell();
@@ -262,12 +261,12 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
     }
 
     protected void setTitleCellInformation(final HtmlTableRow groupHeaderRow, final HtmlTableCell titleCell,
-            final StudentCurriculumGroupBean studentCurriculumGroupBean, final ExecutionSemester executionSemester) {
+            final StudentCurriculumGroupBean studentCurriculumGroupBean, final ExecutionInterval executionInterval) {
 
         final CycleCurriculumGroup group = (CycleCurriculumGroup) studentCurriculumGroupBean.getCurriculumModule();
         final boolean concluded = group.isConcluded();
 
-        titleCell.setBody(new HtmlText(buildCycleCurriculumGroupLabel(group, concluded, executionSemester), false));
+        titleCell.setBody(new HtmlText(buildCycleCurriculumGroupLabel(group, concluded, executionInterval), false));
 
         if (concluded) {
             groupHeaderRow.setClasses(getRenderer().getConcludedGroupRowClasses());
@@ -275,9 +274,9 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
     }
 
     protected String buildCycleCurriculumGroupLabel(final CycleCurriculumGroup curriculumGroup, final boolean concluded,
-            final ExecutionSemester executionSemester) {
+            final ExecutionInterval executionInterval) {
 
-        String label = buildCurriculumGroupLabel(curriculumGroup, executionSemester);
+        String label = buildCurriculumGroupLabel(curriculumGroup, executionInterval);
         if (concluded) {
             label = label.concat(" - ").concat(BundleUtil.getString(Bundle.APPLICATION, "label.curriculum.cycle.concluded"));
         }
@@ -285,7 +284,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         return label;
     }
 
-    protected String buildCurriculumGroupLabel(final CurriculumGroup curriculumGroup, final ExecutionSemester executionSemester) {
+    protected String buildCurriculumGroupLabel(final CurriculumGroup curriculumGroup, final ExecutionInterval executionInterval) {
         if (curriculumGroup.isNoCourseGroupCurriculumGroup()) {
             return curriculumGroup.getName().getContent();
         }
@@ -296,11 +295,11 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
             result.append(" <span title=\"");
             result.append(BundleUtil.getString(Bundle.APPLICATION, "label.curriculum.credits.legend.creditsConcluded"));
             result.append(" \"> c(");
-            result.append(curriculumGroup.getCreditsConcluded(executionSemester.getExecutionYear()));
+            result.append(curriculumGroup.getCreditsConcluded(executionInterval.getExecutionYear()));
             result.append(")</span>");
         } else {
             final CreditsLimit creditsLimit = (CreditsLimit) curriculumGroup
-                    .getMostRecentActiveCurricularRule(CurricularRuleType.CREDITS_LIMIT, executionSemester);
+                    .getMostRecentActiveCurricularRule(CurricularRuleType.CREDITS_LIMIT, executionInterval);
 
             if (creditsLimit != null) {
                 result.append(" <span title=\"");
@@ -313,7 +312,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
             result.append(" <span title=\"");
             result.append(BundleUtil.getString(Bundle.APPLICATION, "label.curriculum.credits.legend.creditsConcluded"));
             result.append(" \"> c(");
-            result.append(curriculumGroup.getCreditsConcluded(executionSemester.getExecutionYear()));
+            result.append(curriculumGroup.getCreditsConcluded(executionInterval.getExecutionYear()));
             result.append(")</span>");
 
             if (creditsLimit != null) {
@@ -351,7 +350,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
     // TODO - review all calls to this method
     protected void generateCurricularCoursesToEnrol(final HtmlTable groupTable,
             final StudentCurriculumGroupBean studentCurriculumGroupBean,
-            final List<IDegreeModuleToEvaluate> degreeModulesToSelect, final ExecutionSemester executionSemester) {
+            final List<IDegreeModuleToEvaluate> degreeModulesToSelect, final ExecutionInterval executionInterval) {
 
         final List<IDegreeModuleToEvaluate> coursesToEvaluate = studentCurriculumGroupBean.getSortedDegreeModulesToEvaluate();
 
@@ -361,7 +360,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
             HtmlTableCell cellName = htmlTableRow.createCell();
             cellName.setClasses(getRenderer().getCurricularCourseToEnrolNameClasses());
 
-            String degreeModuleName = degreeModuleToEvaluate.getDegreeModule().getNameI18N(executionSemester).getContent();
+            String degreeModuleName = degreeModuleToEvaluate.getDegreeModule().getNameI18N(executionInterval).getContent();
 
             if (degreeModuleToEvaluate.getDegreeModule().isLeaf() && !degreeModuleToEvaluate.isOptionalCurricularCourse()) {
 
@@ -464,7 +463,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
                 final CourseGroup parentCourseGroup = input.getCurriculumGroup().getDegreeModule();
 
                 // check self rules
-                final ExecutionSemester executionInterval = this.bolonhaStudentEnrollmentBean.getExecutionPeriod();
+                final ExecutionInterval executionInterval = this.bolonhaStudentEnrollmentBean.getExecutionPeriod();
                 List<? extends ICurricularRule> rules =
                         input.getDegreeModule().getCurricularRules(curricularRuleType, parentCourseGroup, executionInterval);
 
@@ -493,7 +492,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
                 final CourseGroup parentCourseGroup = parentCurriculumGroup.getDegreeModule();
 
                 // check self rules
-                final ExecutionSemester executionInterval = this.bolonhaStudentEnrollmentBean.getExecutionPeriod();
+                final ExecutionInterval executionInterval = this.bolonhaStudentEnrollmentBean.getExecutionPeriod();
                 List<? extends ICurricularRule> rules =
                         input.getDegreeModule().getCurricularRules(curricularRuleType, parentCourseGroup, executionInterval);
 
@@ -653,12 +652,12 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 
     // TODO - review all calls to this method
     protected void generateGroups(final HtmlBlockContainer container, final List<IDegreeModuleToEvaluate> degreeModulesToSelect,
-            final StudentCurriculumGroupBean bean, final StudentCurricularPlan plan, final ExecutionSemester executionSemester,
+            final StudentCurriculumGroupBean bean, final StudentCurricularPlan plan, final ExecutionInterval executionInterval,
             final int depth) {
 
         // first enroled
-        for (final StudentCurriculumGroupBean iter : bean.getEnrolledCurriculumGroupsSortedByOrder(executionSemester)) {
-            generateGroup(container, degreeModulesToSelect, plan, iter, executionSemester,
+        for (final StudentCurriculumGroupBean iter : bean.getEnrolledCurriculumGroupsSortedByOrder(executionInterval)) {
+            generateGroup(container, degreeModulesToSelect, plan, iter, executionInterval,
                     depth + getRenderer().getWidthDecreasePerLevel());
         }
 
@@ -711,13 +710,13 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         return Authenticate.getUser().getPerson() == studentCurricularPlan.getPerson();
     }
 
-    protected void generateCycleCourseGroupsToEnrol(final HtmlBlockContainer container, final ExecutionSemester executionSemester,
+    protected void generateCycleCourseGroupsToEnrol(final HtmlBlockContainer container, final ExecutionInterval executionInterval,
             final StudentCurricularPlan studentCurricularPlan, final int depth) {
 
         if (canPerformStudentEnrolments) {
             for (final CycleType cycleType : getAllCycleTypesToEnrolPreviousToFirstExistingCycle(studentCurricularPlan)) {
                 generateCourseGroupToEnroll(container,
-                        buildDegreeModuleToEnrolForCycle(studentCurricularPlan, cycleType, executionSemester),
+                        buildDegreeModuleToEnrolForCycle(studentCurricularPlan, cycleType, executionInterval),
                         depth + getRenderer().getWidthDecreasePerLevel());
 
             }
@@ -734,10 +733,10 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
     }
 
     protected IDegreeModuleToEvaluate buildDegreeModuleToEnrolForCycle(final StudentCurricularPlan scp, final CycleType cycleType,
-            final ExecutionSemester semester) {
+            final ExecutionInterval executionInterval) {
         final CycleCourseGroup cycleCourseGroup = scp.getCycleCourseGroup(cycleType);
-        final Context context = cycleCourseGroup.getParentContextsByExecutionSemester(semester).iterator().next();
-        return new DegreeModuleToEnrol(scp.getRoot(), context, semester);
+        final Context context = cycleCourseGroup.getParentContextsByExecutionSemester(executionInterval).iterator().next();
+        return new DegreeModuleToEnrol(scp.getRoot(), context, executionInterval);
     }
 
     protected List<CycleType> getAllCycleTypesToEnrolPreviousToFirstExistingCycle(final StudentCurricularPlan scp) {

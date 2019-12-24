@@ -24,7 +24,7 @@ package org.fenixedu.academic.ui.renderers.converters;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.enrolment.EnroledCurriculumModuleWrapper;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
 
@@ -50,8 +50,8 @@ public class CurriculumModuleEnroledWrapperConverter extends Converter {
             }
 
             final CurriculumModule curriculumModule = (CurriculumModule) converter.convert(type, parts[0]);
-            final ExecutionSemester executionSemester = (ExecutionSemester) converter.convert(type, parts[1]);
-            result.add(new EnroledCurriculumModuleWrapper(curriculumModule, executionSemester));
+            final ExecutionInterval executionInterval = (ExecutionInterval) converter.convert(type, parts[1]);
+            result.add(new EnroledCurriculumModuleWrapper(curriculumModule, executionInterval));
         }
 
         return result;

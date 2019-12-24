@@ -23,8 +23,8 @@ package org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularRules;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -38,7 +38,6 @@ import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.AnyCurricularCourse;
 import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
 import org.fenixedu.academic.domain.curricularRules.CurricularRule;
@@ -686,12 +685,12 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 
         final DegreeModule degreeModule = getDegreeModule();
         final ExecutionInterval currentExecutionPeriod =
-                degreeModule != null ? degreeModule.getMinimumExecutionPeriod() : ExecutionSemester.findCurrent(null);
+                degreeModule != null ? degreeModule.getMinimumExecutionPeriod() : ExecutionInterval.findFirstCurrentChild(null);
 
-        final List<ExecutionSemester> notClosedExecutionPeriods = ExecutionSemester.readNotClosedExecutionPeriods();
+        final List<ExecutionInterval> notClosedExecutionPeriods = new ArrayList<>(ExecutionInterval.findActiveChilds());
         Collections.sort(notClosedExecutionPeriods);
 
-        for (final ExecutionSemester notClosedExecutionPeriod : notClosedExecutionPeriods) {
+        for (final ExecutionInterval notClosedExecutionPeriod : notClosedExecutionPeriods) {
             if (notClosedExecutionPeriod.isAfterOrEquals(currentExecutionPeriod)) {
                 result.add(new SelectItem(notClosedExecutionPeriod.getExternalId(),
                         notClosedExecutionPeriod.getName() + " " + notClosedExecutionPeriod.getExecutionYear().getYear()));

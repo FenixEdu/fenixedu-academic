@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.fenixedu.academic.domain.Department;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 
 public class DepartmentSummaryElement implements Serializable {
 
@@ -32,13 +32,13 @@ public class DepartmentSummaryElement implements Serializable {
         BETWEEN_0_20, BETWEEN_20_40, BETWEEN_40_60, BETWEEN_60_80, BETWEEN_80_100;
     }
 
-    public DepartmentSummaryElement(Department department, ExecutionSemester executionSemester) {
+    public DepartmentSummaryElement(Department department, ExecutionInterval executionSemester) {
         setDepartment(department);
         setExecutionSemester(executionSemester);
     }
 
     private Department department;
-    private ExecutionSemester executionSemester;
+    private ExecutionInterval executionSemester;
     private SummaryControlCategory summaryControlCategory;
 
     private Map<SummaryControlCategory, List<ExecutionCourseSummaryElement>> executionCoursesResume;
@@ -130,15 +130,16 @@ public class DepartmentSummaryElement implements Serializable {
         return executionCoursesResume;
     }
 
-    public void setExecutionCoursesResume(Map<SummaryControlCategory, List<ExecutionCourseSummaryElement>> executionCoursesResume) {
+    public void setExecutionCoursesResume(
+            Map<SummaryControlCategory, List<ExecutionCourseSummaryElement>> executionCoursesResume) {
         this.executionCoursesResume = executionCoursesResume;
     }
 
-    public ExecutionSemester getExecutionSemester() {
+    public ExecutionInterval getExecutionSemester() {
         return executionSemester;
     }
 
-    public void setExecutionSemester(ExecutionSemester executionSemester) {
+    public void setExecutionSemester(ExecutionInterval executionSemester) {
         this.executionSemester = executionSemester;
     }
 

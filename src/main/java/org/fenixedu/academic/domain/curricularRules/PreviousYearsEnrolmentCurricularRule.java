@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.dto.GenericPair;
@@ -61,12 +60,12 @@ public class PreviousYearsEnrolmentCurricularRule extends CurricularRuleNotPersi
     }
 
     @Override
-    public ExecutionSemester getBegin() {
-        return ExecutionSemester.findCurrent(courseGroup.getDegree().getCalendar());
+    public ExecutionInterval getBegin() {
+        return ExecutionInterval.findFirstCurrentChild(courseGroup.getDegree().getCalendar());
     }
 
     @Override
-    public ExecutionSemester getEnd() {
+    public ExecutionInterval getEnd() {
         return null;
     }
 

@@ -37,7 +37,7 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
         this();
         setTeacher(teacher);
         setDepartment(department);
-        setExecutionSemester(executionInterval.convert(ExecutionSemester.class));
+        setExecutionSemester(executionInterval);
         setTeacherCategory(teacherCategory);
         setContracted(contracted);
         setLessonHours(lessonHours);

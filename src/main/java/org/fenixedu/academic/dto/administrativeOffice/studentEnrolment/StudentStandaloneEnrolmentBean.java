@@ -18,7 +18,7 @@
  */
 package org.fenixedu.academic.dto.administrativeOffice.studentEnrolment;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import org.fenixedu.academic.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
@@ -29,9 +29,9 @@ public class StudentStandaloneEnrolmentBean extends StudentOptionalEnrolmentBean
     static private final long serialVersionUID = 1L;
 
     public StudentStandaloneEnrolmentBean(final StudentCurricularPlan studentCurricularPlan,
-            final ExecutionSemester executionSemester) {
+            final ExecutionInterval executionInterval) {
         setStudentCurricularPlan(studentCurricularPlan);
-        setExecutionPeriod(executionSemester);
+        setExecutionPeriod(executionInterval);
     }
 
     @Override

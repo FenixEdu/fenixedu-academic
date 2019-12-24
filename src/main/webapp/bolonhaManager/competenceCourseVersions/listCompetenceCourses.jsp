@@ -25,7 +25,6 @@
 
 
 <%@page import="org.fenixedu.academic.ui.struts.action.BolonhaManager.CompetenceCourseInformationRequestBean"%><html:xhtml/>
-<%@page import="org.fenixedu.academic.domain.ExecutionSemester"%><html:xhtml/>
 
 <em><bean:message key="bolonhaManager" bundle="BOLONHA_MANAGER_RESOURCES"/></em>
 <h2><bean:message key="label.manage.versions" bundle="BOLONHA_MANAGER_RESOURCES"/></h2>

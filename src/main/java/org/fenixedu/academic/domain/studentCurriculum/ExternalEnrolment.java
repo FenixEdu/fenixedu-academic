@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.ExternalCurricularCourse;
 import org.fenixedu.academic.domain.Grade;
@@ -87,7 +86,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
         setRegistration(registration);
         setExternalCurricularCourse(externalCurricularCourse);
         setGrade(grade);
-        setExecutionPeriod(executionInterval.convert(ExecutionSemester.class));
+        setExecutionPeriod(executionInterval);
         setEvaluationDate(evaluationDate);
         setEctsCredits(ectsCredits);
     }
@@ -133,7 +132,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 
         setRegistration(registration);
         setGrade(grade);
-        setExecutionPeriod(executionInterval.convert(ExecutionSemester.class));
+        setExecutionPeriod(executionInterval);
         setEvaluationDate(evaluationDate);
         setEctsCredits(ectsCredits);
     }

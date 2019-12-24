@@ -18,7 +18,7 @@
  */
 package org.fenixedu.academic.ui.renderers.student.enrollment.bolonha;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
@@ -28,7 +28,7 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 public class BolonhaStudentSpecialSeasonEnrolmentLayout extends BolonhaStudentEnrolmentLayout {
 
     @Override
-    protected void generateCycleCourseGroupsToEnrol(final HtmlBlockContainer container, final ExecutionSemester executionSemester,
+    protected void generateCycleCourseGroupsToEnrol(final HtmlBlockContainer container, final ExecutionInterval executionInterval,
             final StudentCurricularPlan studentCurricularPlan, int depth) {
 
         if (hasConcludedAnyInternalCycle(studentCurricularPlan)
@@ -39,7 +39,7 @@ public class BolonhaStudentSpecialSeasonEnrolmentLayout extends BolonhaStudentEn
         if (canPerformStudentEnrolments) {
             for (final CycleType cycleType : getAllCycleTypesToEnrolPreviousToFirstExistingCycle(studentCurricularPlan)) {
                 generateCourseGroupToEnroll(container,
-                        buildDegreeModuleToEnrolForCycle(studentCurricularPlan, cycleType, executionSemester),
+                        buildDegreeModuleToEnrolForCycle(studentCurricularPlan, cycleType, executionInterval),
                         depth + getRenderer().getWidthDecreasePerLevel());
 
             }

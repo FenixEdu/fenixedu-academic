@@ -98,13 +98,32 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
         return !hasCurricularPeriodOrder() || hasCurricularPeriodOrderFor(context);
     }
 
+    /**
+     * @deprecated
+     *             Replaced by {@link CurricularRule#getCurricularPeriod()}
+     */
+    @Deprecated
     private boolean hasCurricularPeriodOrderFor(final Context context) {
-        return context != null && context.containsSemester(getCurricularPeriodOrder())
-                && context.getCurricularPeriod().getAcademicPeriod().equals(AcademicPeriod.SEMESTER);
+        return context != null && context.getCurricularPeriod().getAcademicPeriod().equals(AcademicPeriod.SEMESTER)
+                && getCurricularPeriodOrder().intValue() == context.getCurricularPeriod().getChildOrder().intValue();
     }
 
+    /**
+     * @deprecated
+     *             Replaced by {@link CurricularRule#getCurricularPeriod()}
+     */
+    @Deprecated
     private boolean hasCurricularPeriodOrder() {
         return getCurricularPeriodOrder() != null && getCurricularPeriodOrder().intValue() != 0;
+    }
+
+    /**
+     * @deprecated
+     *             Replaced by {@link CurricularRule#getCurricularPeriod()}
+     */
+    @Override
+    public Integer getCurricularPeriodOrder() {
+        return super.getCurricularPeriodOrder();
     }
 
     private boolean hasYearsLimit() {

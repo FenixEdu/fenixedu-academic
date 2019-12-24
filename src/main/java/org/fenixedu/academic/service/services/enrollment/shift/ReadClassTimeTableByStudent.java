@@ -18,85 +18,69 @@
  */
 package org.fenixedu.academic.service.services.enrollment.shift;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.fenixedu.academic.domain.ExecutionCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.SchoolClass;
-import org.fenixedu.academic.domain.Shift;
-import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.dto.InfoLessonInstanceAggregation;
-import org.fenixedu.academic.dto.InfoShowOccupation;
-import org.fenixedu.academic.service.filter.enrollment.ClassEnrollmentAuthorizationFilter;
-import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
-import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
-
-import pt.ist.fenixframework.Atomic;
-
+//TODO: DELETE
+@Deprecated
 public class ReadClassTimeTableByStudent {
 
-    public List<InfoShowOccupation> run(final Registration registration, final SchoolClass schoolClass,
-            final ExecutionCourse executionCourse) throws FenixServiceException {
-
-        final List<InfoShowOccupation> result = getOccupations(registration, schoolClass, executionCourse, null);
-        return result;
-    }
-
-    public List<InfoShowOccupation> run(final Registration registration, final SchoolClass schoolClass,
-            final ExecutionCourse executionCourse, ExecutionSemester executionSemester) throws FenixServiceException {
-
-        final List<InfoShowOccupation> result = getOccupations(registration, schoolClass, executionCourse, executionSemester);
-        return result;
-    }
-
-    private List<InfoShowOccupation> getOccupations(final Registration registration, final SchoolClass schoolClass,
-            final ExecutionCourse executionCourse, ExecutionSemester executionSemester) throws FenixServiceException {
-        if (registration == null) {
-            throw new FenixServiceException("error.readClassTimeTableByStudent.noStudent");
-        }
-
-        if (schoolClass == null) {
-            throw new FenixServiceException("error.readClassTimeTableByStudent.noSchoolClass");
-        }
-
-        Set<ExecutionCourse> attendingExecutionCourses = null;
-        if (executionSemester != null) {
-            attendingExecutionCourses = new HashSet<ExecutionCourse>();
-            attendingExecutionCourses.addAll(registration.getAttendingExecutionCoursesFor(executionSemester));
-        } else {
-            attendingExecutionCourses = registration.getAttendingExecutionCoursesForCurrentExecutionPeriod();
-        }
-
-        final List<InfoShowOccupation> result = new ArrayList<InfoShowOccupation>();
-        for (final Shift shift : schoolClass.getAssociatedShiftsSet()) {
-            if ((executionCourse == null || executionCourse == shift.getDisciplinaExecucao())
-                    && attendingExecutionCourses.contains(shift.getDisciplinaExecucao())) {
-                result.addAll(InfoLessonInstanceAggregation.getAggregations(shift));
-            }
-        }
-        return result;
-    }
-
-    // Service Invokers migrated from Berserk
-
-    private static final ReadClassTimeTableByStudent serviceInstance = new ReadClassTimeTableByStudent();
-
-    @Atomic
-    public static List<InfoShowOccupation> runReadClassTimeTableByStudent(Registration registration, SchoolClass schoolClass,
-            ExecutionCourse executionCourse) throws FenixServiceException, NotAuthorizedException {
-        ClassEnrollmentAuthorizationFilter.instance.execute(registration);
-        return serviceInstance.run(registration, schoolClass, executionCourse);
-    }
-
-    @Atomic
-    public static List<InfoShowOccupation> runReadClassTimeTableByStudent(Registration registration, SchoolClass schoolClass,
-            ExecutionCourse executionCourse, ExecutionSemester executionSemester) throws FenixServiceException,
-            NotAuthorizedException {
-        ClassEnrollmentAuthorizationFilter.instance.execute(registration, executionSemester);
-        return serviceInstance.run(registration, schoolClass, executionCourse, executionSemester);
-    }
+//    public List<InfoShowOccupation> run(final Registration registration, final SchoolClass schoolClass,
+//            final ExecutionCourse executionCourse) throws FenixServiceException {
+//
+//        final List<InfoShowOccupation> result = getOccupations(registration, schoolClass, executionCourse, null);
+//        return result;
+//    }
+//
+//    public List<InfoShowOccupation> run(final Registration registration, final SchoolClass schoolClass,
+//            final ExecutionCourse executionCourse, ExecutionInterval executionInterval) throws FenixServiceException {
+//
+//        final List<InfoShowOccupation> result = getOccupations(registration, schoolClass, executionCourse, executionInterval);
+//        return result;
+//    }
+//
+//    private List<InfoShowOccupation> getOccupations(final Registration registration, final SchoolClass schoolClass,
+//            final ExecutionCourse executionCourse, ExecutionInterval executionInterval) throws FenixServiceException {
+//        if (registration == null) {
+//            throw new FenixServiceException("error.readClassTimeTableByStudent.noStudent");
+//        }
+//
+//        if (schoolClass == null) {
+//            throw new FenixServiceException("error.readClassTimeTableByStudent.noSchoolClass");
+//        }
+//
+//        Set<ExecutionCourse> attendingExecutionCourses = null;
+//        if (executionInterval != null) {
+//            attendingExecutionCourses = new HashSet<ExecutionCourse>();
+//            attendingExecutionCourses.addAll(registration.getAttendingExecutionCoursesFor(executionInterval));
+//        } else {
+//            attendingExecutionCourses = registration.getAttendingExecutionCoursesForCurrentExecutionPeriod();
+//        }
+//
+//        final List<InfoShowOccupation> result = new ArrayList<InfoShowOccupation>();
+//        for (final Shift shift : schoolClass.getAssociatedShiftsSet()) {
+//            if ((executionCourse == null || executionCourse == shift.getDisciplinaExecucao())
+//                    && attendingExecutionCourses.contains(shift.getDisciplinaExecucao())) {
+//                result.addAll(InfoLessonInstanceAggregation.getAggregations(shift));
+//            }
+//        }
+//        return result;
+//    }
+//
+//    // Service Invokers migrated from Berserk
+//
+//    private static final ReadClassTimeTableByStudent serviceInstance = new ReadClassTimeTableByStudent();
+//
+//    @Atomic
+//    public static List<InfoShowOccupation> runReadClassTimeTableByStudent(Registration registration, SchoolClass schoolClass,
+//            ExecutionCourse executionCourse) throws FenixServiceException, NotAuthorizedException {
+//        ClassEnrollmentAuthorizationFilter.instance.execute(registration);
+//        return serviceInstance.run(registration, schoolClass, executionCourse);
+//    }
+//
+//    @Atomic
+//    public static List<InfoShowOccupation> runReadClassTimeTableByStudent(Registration registration, SchoolClass schoolClass,
+//            ExecutionCourse executionCourse, ExecutionInterval executionInterval) throws FenixServiceException,
+//            NotAuthorizedException {
+//        ClassEnrollmentAuthorizationFilter.instance.execute(registration, executionInterval);
+//        return serviceInstance.run(registration, schoolClass, executionCourse, executionInterval);
+//    }
 
 }

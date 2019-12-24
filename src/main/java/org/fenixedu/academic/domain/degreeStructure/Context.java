@@ -27,7 +27,6 @@ import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -238,12 +237,13 @@ public class Context extends Context_Base implements Comparable<Context> {
         }
     }
 
-    private boolean isValid(final ExecutionSemester executionSemester) {
-        if (isOpen(executionSemester)) {
+    public boolean isValid(final ExecutionInterval executionInterval) {
+        if (isOpen(executionInterval)) {
             if (getChildDegreeModule().isCurricularCourse()) {
                 CurricularCourse curricularCourse = (CurricularCourse) getChildDegreeModule();
-                if (!curricularCourse.isAnual(executionSemester.getExecutionYear())) {
-                    return containsSemester(executionSemester.getSemester());
+                if (!curricularCourse.isAnual(executionInterval.getExecutionYear())) {
+                    return executionInterval.getAcademicPeriod().equals(getCurricularPeriod().getAcademicPeriod())
+                            && executionInterval.getChildOrder().intValue() == getCurricularPeriod().getChildOrder().intValue();
                 }
             }
             return true;
@@ -251,23 +251,13 @@ public class Context extends Context_Base implements Comparable<Context> {
         return false;
     }
 
-    private boolean isValid(final ExecutionYear executionYear) {
+    public boolean isValid(final ExecutionYear executionYear) {
         for (final ExecutionInterval executionInterval : executionYear.getExecutionPeriodsSet()) {
             if (isValid(executionInterval)) {
                 return true;
             }
         }
         return false;
-    }
-
-    public boolean isValid(ExecutionInterval interval) {
-        if (interval instanceof ExecutionSemester) {
-            return isValid((ExecutionSemester) interval);
-        }
-        if (interval instanceof ExecutionYear) {
-            return isValid((ExecutionYear) interval);
-        }
-        throw new UnsupportedOperationException("Unknown Interval Type: " + interval);
     }
 
     public boolean isValid(AcademicInterval academicInterval) {
@@ -299,7 +289,7 @@ public class Context extends Context_Base implements Comparable<Context> {
 
     public boolean isOpen() {
         final Degree degree = getParentCourseGroup().getDegree();
-        return isOpen(ExecutionSemester.findCurrent(degree.getCalendar()));
+        return isOpen(ExecutionYear.findCurrent(degree.getCalendar()));
     }
 
     public boolean intersects(final ExecutionInterval begin, final ExecutionInterval end) {
@@ -343,18 +333,23 @@ public class Context extends Context_Base implements Comparable<Context> {
         super.setChildOrder(order);
     }
 
-    public boolean containsCurricularYear(final Integer curricularYear) {
-        final CurricularPeriod firstCurricularPeriod = getCurricularPeriod().getParent();
-        final int firstCurricularPeriodOrder = firstCurricularPeriod.getAbsoluteOrderOfChild();
-        return curricularYear.intValue() == firstCurricularPeriodOrder;
-    }
+    //TODO: DELETE
+//    @Deprecated
+//    public boolean containsCurricularYear(final Integer curricularYear) {
+//        final CurricularPeriod firstCurricularPeriod = getCurricularPeriod().getParent();
+//        final int firstCurricularPeriodOrder = firstCurricularPeriod.getAbsoluteOrderOfChild();
+//        return curricularYear.intValue() == firstCurricularPeriodOrder;
+//    }
 
-    public boolean containsSemester(final Integer semester) {
-        final CurricularPeriod firstCurricularPeriod = getCurricularPeriod();
-        final int firstCurricularPeriodOrder = firstCurricularPeriod.getChildOrder();
-        return semester.intValue() == firstCurricularPeriodOrder;
-    }
+    //TODO: DELETE
+//    @Deprecated
+//    public boolean containsSemester(final Integer semester) {
+//        final CurricularPeriod firstCurricularPeriod = getCurricularPeriod();
+//        final int firstCurricularPeriodOrder = firstCurricularPeriod.getChildOrder();
+//        return semester.intValue() == firstCurricularPeriodOrder;
+//    }
 
+    @Deprecated
     public boolean containsSemesterAndCurricularYear(final Integer semester, final Integer curricularYear,
             final RegimeType regimeType) {
 

@@ -21,7 +21,7 @@
  */
 package org.fenixedu.academic.service.services.bolonhaManager;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
@@ -45,14 +45,14 @@ public class AddContextToCourseGroup {
                 getEndExecutionPeriod(endExecutionPeriodID));
     }
 
-    private static ExecutionSemester getBeginExecutionPeriod(final String beginExecutionPeriodID) {
+    private static ExecutionInterval getBeginExecutionPeriod(final String beginExecutionPeriodID) {
         if (beginExecutionPeriodID == null) {
             throw new DomainException("error.AddContextToCourseGroup.beginExecutionPeriod.required");
         }
         return FenixFramework.getDomainObject(beginExecutionPeriodID);
     }
 
-    private static ExecutionSemester getEndExecutionPeriod(String endExecutionPeriodID) {
+    private static ExecutionInterval getEndExecutionPeriod(String endExecutionPeriodID) {
         return FenixFramework.getDomainObject(endExecutionPeriodID);
     }
 }

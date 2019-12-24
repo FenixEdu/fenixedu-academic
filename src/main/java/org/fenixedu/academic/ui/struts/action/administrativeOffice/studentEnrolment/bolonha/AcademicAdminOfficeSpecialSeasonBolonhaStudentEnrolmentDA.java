@@ -31,7 +31,6 @@ import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.EnrolmentEvaluation;
 import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleValidationType;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
@@ -118,40 +117,41 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
     @Override
     @Deprecated
     protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
+            HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionInterval executionInterval) {
         throw new RuntimeException("not to be used");
     }
 
     protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester,
+            HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionInterval executionInterval,
             final EvaluationSeason evaluationSeason) {
         request.setAttribute("bolonhaStudentEnrollmentBean",
-                new SpecialSeasonBolonhaStudentEnrolmentBean(studentCurricularPlan, executionSemester, evaluationSeason));
+                new SpecialSeasonBolonhaStudentEnrolmentBean(studentCurricularPlan, executionInterval, evaluationSeason));
         request.setAttribute("evaluationSeason", evaluationSeason.getName().getContent());
-        request.setAttribute("enroledEctsCredits", getEnroledEctsCredits(studentCurricularPlan, executionSemester));
+        request.setAttribute("enroledEctsCredits", getEnroledEctsCredits(studentCurricularPlan, executionInterval));
         request.setAttribute("enroledExtraEctsCredits",
-                getEnroledSpecialSeasonEctsCredits(studentCurricularPlan, executionSemester));
+                getEnroledSpecialSeasonEctsCredits(studentCurricularPlan, executionInterval));
         request.setAttribute("label.ects.extra", BundleUtil.getString(Bundle.ACADEMIC, "label.ects.special.season"));
 
         return mapping.findForward("showDegreeModulesToEnrol");
     }
 
-    static private Double getEnroledEctsCredits(final StudentCurricularPlan plan, final ExecutionSemester semester) {
-        return isEnrolmentByYear(plan) ? plan.getRoot().getEnroledEctsCredits(semester.getExecutionYear()) : plan.getRoot()
-                .getEnroledEctsCredits(semester);
+    static private Double getEnroledEctsCredits(final StudentCurricularPlan plan, final ExecutionInterval executionInterval) {
+        return isEnrolmentByYear(plan) ? plan.getRoot().getEnroledEctsCredits(executionInterval.getExecutionYear()) : plan
+                .getRoot().getEnroledEctsCredits(executionInterval);
     }
 
-    static private Double getEnroledSpecialSeasonEctsCredits(final StudentCurricularPlan plan, final ExecutionSemester semester) {
+    static private Double getEnroledSpecialSeasonEctsCredits(final StudentCurricularPlan plan,
+            final ExecutionInterval executionInterval) {
 
         Double result = 0d;
 
         final Set<EnrolmentEvaluation> toInspect = Sets.newHashSet();
         if (isEnrolmentByYear(plan)) {
-            for (final ExecutionInterval iter : semester.getExecutionYear().getChildIntervals()) {
+            for (final ExecutionInterval iter : executionInterval.getExecutionYear().getChildIntervals()) {
                 toInspect.addAll(plan.getEnroledSpecialSeasons(iter));
             }
         } else {
-            toInspect.addAll(plan.getEnroledSpecialSeasons(semester));
+            toInspect.addAll(plan.getEnroledSpecialSeasons(executionInterval));
         }
 
         for (final EnrolmentEvaluation enrolmentEvaluation : toInspect) {

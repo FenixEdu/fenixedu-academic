@@ -30,8 +30,6 @@ import java.util.Set;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.SchoolClass;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.dto.InfoClass;

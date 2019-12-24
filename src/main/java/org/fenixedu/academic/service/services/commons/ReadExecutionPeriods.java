@@ -21,7 +21,7 @@ package org.fenixedu.academic.service.services.commons;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.dto.InfoExecutionPeriod;
 import org.fenixedu.bennu.core.domain.Bennu;
 
@@ -32,8 +32,8 @@ public class ReadExecutionPeriods {
     @Atomic
     public static List run() {
         final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();
-        for (final ExecutionSemester executionSemester : Bennu.getInstance().getExecutionPeriodsSet()) {
-            result.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
+        for (final ExecutionInterval executionIntervals : Bennu.getInstance().getExecutionPeriodsSet()) {
+            result.add(InfoExecutionPeriod.newInfoFromDomain(executionIntervals));
         }
         return result;
     }

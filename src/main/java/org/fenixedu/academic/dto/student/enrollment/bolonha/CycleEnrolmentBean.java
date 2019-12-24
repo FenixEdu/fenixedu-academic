@@ -25,7 +25,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
@@ -39,7 +39,7 @@ public class CycleEnrolmentBean implements Serializable {
 
     private StudentCurricularPlan studentCurricularPlan;
 
-    private ExecutionSemester executionSemester;
+    private ExecutionInterval executionInterval;
 
     private CycleCourseGroup cycleCourseGroupToEnrol;
 
@@ -47,17 +47,17 @@ public class CycleEnrolmentBean implements Serializable {
 
     private CycleType cycleTypeToEnrol;
 
-    public CycleEnrolmentBean(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
+    public CycleEnrolmentBean(final StudentCurricularPlan studentCurricularPlan, final ExecutionInterval executionInterval,
             final CycleType sourceCycleAffinity, final CycleType cycleTypeToEnrol) {
         setStudentCurricularPlan(studentCurricularPlan);
-        setExecutionPeriod(executionSemester);
+        setExecutionPeriod(executionInterval);
         setSourceCycleAffinity(sourceCycleAffinity);
         setCycleTypeToEnrol(cycleTypeToEnrol);
     }
 
-    public CycleEnrolmentBean(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
+    public CycleEnrolmentBean(final StudentCurricularPlan studentCurricularPlan, final ExecutionInterval executionInterval,
             final CycleCourseGroup cycleCourseGroup) {
-        this(studentCurricularPlan, executionSemester, CycleType.FIRST_CYCLE, cycleCourseGroup.getCycleType());
+        this(studentCurricularPlan, executionInterval, CycleType.FIRST_CYCLE, cycleCourseGroup.getCycleType());
         setCycleCourseGroupToEnrol(cycleCourseGroup);
     }
 
@@ -69,12 +69,12 @@ public class CycleEnrolmentBean implements Serializable {
         this.studentCurricularPlan = studentCurricularPlan;
     }
 
-    public ExecutionSemester getExecutionPeriod() {
-        return this.executionSemester;
+    public ExecutionInterval getExecutionPeriod() {
+        return this.executionInterval;
     }
 
-    public void setExecutionPeriod(ExecutionSemester executionSemester) {
-        this.executionSemester = executionSemester;
+    public void setExecutionPeriod(ExecutionInterval executionInterval) {
+        this.executionInterval = executionInterval;
     }
 
     public CycleCourseGroup getCycleCourseGroupToEnrol() {

@@ -20,7 +20,7 @@ package org.fenixedu.academic.ui.renderers.degreeStructure;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
@@ -139,7 +139,7 @@ public class DegreeCurricularPlanGroupsLayout extends DegreeCurricularPlanLayout
             } else {
 
                 final CurricularPeriod firstCP = context.getCurricularPeriod();
-                final ExecutionSemester firstES = getExecutionInterval().getExecutionSemesterFor(firstCP.getChildOrder());
+                final ExecutionInterval firstES = getExecutionInterval().getExecutionSemesterFor(firstCP.getChildOrder());
 
                 drawCurricularCourseName(curricularCourse, row, isCurricularCourseLinkable(), level);
                 drawContextInformation(firstCP, row);
@@ -148,7 +148,7 @@ public class DegreeCurricularPlanGroupsLayout extends DegreeCurricularPlanLayout
                 drawEctsCredits(curricularCourse, firstCP, firstES, row);
 
                 final CurricularPeriod secondCP = context.getCurricularPeriod().getNext();
-                final ExecutionSemester secondES = getExecutionInterval().getExecutionSemesterFor(secondCP.getChildOrder());
+                final ExecutionInterval secondES = getExecutionInterval().getExecutionSemesterFor(secondCP.getChildOrder());
 
                 drawCurricularCourseName(curricularCourse, row, false, level);
                 drawContextInformation(secondCP, row);
@@ -172,7 +172,7 @@ public class DegreeCurricularPlanGroupsLayout extends DegreeCurricularPlanLayout
         cell.setText(CurricularPeriodLabelFormatter.getFullLabel(period, true));
     }
 
-    private void drawCourseLoad(final CurricularCourse course, final CurricularPeriod period, final ExecutionSemester interval,
+    private void drawCourseLoad(final CurricularCourse course, final CurricularPeriod period, final ExecutionInterval interval,
             final HtmlTableRow row) {
 
         final HtmlTableCell cell = row.createCell();
@@ -198,7 +198,7 @@ public class DegreeCurricularPlanGroupsLayout extends DegreeCurricularPlanLayout
         cell.setTitle(getLabel("label.degreeCurricularPlan.renderer.title.course.load"));
     }
 
-    private void drawEctsCredits(final CurricularCourse course, final CurricularPeriod period, final ExecutionSemester interval,
+    private void drawEctsCredits(final CurricularCourse course, final CurricularPeriod period, final ExecutionInterval interval,
             final HtmlTableRow row) {
         final HtmlTableCell cell = row.createCell();
         cell.setClasses(getEctsCreditsCellClass());

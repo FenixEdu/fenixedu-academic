@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.CurricularRule;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
@@ -70,10 +70,10 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 
     protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response, final StudentCurricularPlan studentCurricularPlan,
-            final ExecutionSemester executionSemester) {
+            final ExecutionInterval executionInterval) {
 
         BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean =
-                createStudentEnrolmentBean(form, studentCurricularPlan, executionSemester);
+                createStudentEnrolmentBean(form, studentCurricularPlan, executionInterval);
 
         preProcess(bolonhaStudentEnrollmentBean);
 
@@ -86,10 +86,10 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
     }
 
     protected BolonhaStudentEnrollmentBean createStudentEnrolmentBean(ActionForm form,
-            final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
+            final StudentCurricularPlan studentCurricularPlan, final ExecutionInterval executionInterval) {
 
-        return new BolonhaStudentEnrollmentBean(studentCurricularPlan, executionSemester,
-                getCurricularYearForCurricularCourses(), getCurricularRuleLevel(form));
+        return new BolonhaStudentEnrollmentBean(studentCurricularPlan, executionInterval, getCurricularYearForCurricularCourses(),
+                getCurricularRuleLevel(form));
     }
 
     protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -106,12 +106,10 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 
         final BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean = getBolonhaStudentEnrollmentBeanFromViewState();
         try {
-            final RuleResult ruleResults =
-                    EnrolBolonhaStudent.run(bolonhaStudentEnrollmentBean.getStudentCurricularPlan(),
-                            bolonhaStudentEnrollmentBean.getExecutionPeriod(),
-                            bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate(),
-                            bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove(),
-                            bolonhaStudentEnrollmentBean.getCurricularRuleLevel());
+            final RuleResult ruleResults = EnrolBolonhaStudent.run(bolonhaStudentEnrollmentBean.getStudentCurricularPlan(),
+                    bolonhaStudentEnrollmentBean.getExecutionPeriod(), bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate(),
+                    bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove(),
+                    bolonhaStudentEnrollmentBean.getCurricularRuleLevel());
 
             if (!bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate().isEmpty()
                     || !bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove().isEmpty()) {
@@ -134,7 +132,7 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
             return prepareShowDegreeModulesToEnrol(mapping, form, request, response, bolonhaStudentEnrollmentBean);
 
         } catch (RuntimeException re) {
-            if(re.getCause() instanceof  DomainException) {
+            if (re.getCause() instanceof DomainException) {
                 addActionMessage("error", request, re.getCause().getLocalizedMessage(), false);
                 return prepareShowDegreeModulesToEnrol(mapping, form, request, response, bolonhaStudentEnrollmentBean);
             } else {
@@ -152,10 +150,8 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
     }
 
     private StudentCurricularPlan getActiveRegistration(final StudentCurricularPlan scp) {
-        return scp.getRegistration().isActive() ? scp :
-            scp.getRegistration().getStudent().getActiveRegistrationStream()
-                .map(r -> r.getLastStudentCurricularPlan())
-                .findAny().orElse(scp);
+        return scp.getRegistration().isActive() ? scp : scp.getRegistration().getStudent().getActiveRegistrationStream()
+                .map(r -> r.getLastStudentCurricularPlan()).findAny().orElse(scp);
     }
 
     protected void enroledWithSuccess(HttpServletRequest request, BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean) {
@@ -173,8 +169,8 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
         request.setAttribute("optionalEnrolmentBean", new BolonhaStudentOptionalEnrollmentBean(bean.getStudentCurricularPlan(),
                 bean.getExecutionPeriod(), bean.getOptionalDegreeModuleToEnrol()));
 
-        request.setAttribute("curricularRuleLabels", getLabels(bean.getOptionalDegreeModuleToEnrol().getDegreeModule()
-                .getCurricularRules(bean.getExecutionPeriod())));
+        request.setAttribute("curricularRuleLabels",
+                getLabels(bean.getOptionalDegreeModuleToEnrol().getDegreeModule().getCurricularRules(bean.getExecutionPeriod())));
 
         return mapping.findForward("chooseOptionalCurricularCourseToEnrol");
     }
@@ -193,11 +189,10 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
         final BolonhaStudentOptionalEnrollmentBean optionalStudentEnrollmentBean =
                 getBolonhaStudentOptionalEnrollmentBeanFromViewState();
         try {
-            final RuleResult ruleResults =
-                    EnrolBolonhaStudent.run(optionalStudentEnrollmentBean.getStudentCurricularPlan(),
-                            optionalStudentEnrollmentBean.getExecutionPeriod(),
-                            buildOptionalDegreeModuleToEnrolList(optionalStudentEnrollmentBean),
-                            Collections.<CurriculumModule> emptyList(), getCurricularRuleLevel(form));
+            final RuleResult ruleResults = EnrolBolonhaStudent.run(optionalStudentEnrollmentBean.getStudentCurricularPlan(),
+                    optionalStudentEnrollmentBean.getExecutionPeriod(),
+                    buildOptionalDegreeModuleToEnrolList(optionalStudentEnrollmentBean),
+                    Collections.<CurriculumModule> emptyList(), getCurricularRuleLevel(form));
 
             if (ruleResults.isWarning()) {
                 addRuleResultMessagesToActionMessages("warning", request, ruleResults);
@@ -268,21 +263,20 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 
         final BolonhaStudentEnrollmentBean studentEnrollmentBean = getBolonhaStudentEnrollmentBeanFromViewState();
 
-        final CycleEnrolmentBean cycleEnrolmentBean =
-                new CycleEnrolmentBean(studentEnrollmentBean.getStudentCurricularPlan(),
-                        studentEnrollmentBean.getExecutionPeriod(), studentEnrollmentBean.getCycleTypeToEnrol()
-                                .getSourceCycleAffinity(), studentEnrollmentBean.getCycleTypeToEnrol());
+        final CycleEnrolmentBean cycleEnrolmentBean = new CycleEnrolmentBean(studentEnrollmentBean.getStudentCurricularPlan(),
+                studentEnrollmentBean.getExecutionPeriod(), studentEnrollmentBean.getCycleTypeToEnrol().getSourceCycleAffinity(),
+                studentEnrollmentBean.getCycleTypeToEnrol());
         request.setAttribute("cycleEnrolmentBean", cycleEnrolmentBean);
 
         return mapping.findForward("chooseCycleCourseGroupToEnrol");
     }
 
     protected ActionForward prepareChooseCycleCourseGroupToEnrol(final ActionMapping mapping, final HttpServletRequest request,
-            final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
+            final StudentCurricularPlan studentCurricularPlan, final ExecutionInterval executionInterval,
             final CycleType sourceCycle, final CycleType cycleToEnrol) {
 
-        request.setAttribute("cycleEnrolmentBean", new CycleEnrolmentBean(studentCurricularPlan, executionSemester, sourceCycle,
-                cycleToEnrol));
+        request.setAttribute("cycleEnrolmentBean",
+                new CycleEnrolmentBean(studentCurricularPlan, executionInterval, sourceCycle, cycleToEnrol));
         return mapping.findForward("chooseCycleCourseGroupToEnrol");
     }
 

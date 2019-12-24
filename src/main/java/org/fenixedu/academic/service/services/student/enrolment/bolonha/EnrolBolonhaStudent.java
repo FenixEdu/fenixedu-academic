@@ -21,7 +21,7 @@ package org.fenixedu.academic.service.services.student.enrolment.bolonha;
 import java.util.HashSet;
 import java.util.List;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
@@ -33,10 +33,10 @@ import pt.ist.fenixframework.Atomic;
 public class EnrolBolonhaStudent {
 
     @Atomic
-    public static RuleResult run(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
+    public static RuleResult run(final StudentCurricularPlan studentCurricularPlan, final ExecutionInterval executionInterval,
             final List<IDegreeModuleToEvaluate> degreeModulesToEnrol, final List<CurriculumModule> curriculumModulesToRemove,
             final CurricularRuleLevel curricularRuleLevel) {
-        return studentCurricularPlan.enrol(executionSemester, new HashSet<IDegreeModuleToEvaluate>(degreeModulesToEnrol),
+        return studentCurricularPlan.enrol(executionInterval, new HashSet<IDegreeModuleToEvaluate>(degreeModulesToEnrol),
                 curriculumModulesToRemove, curricularRuleLevel);
     }
 }

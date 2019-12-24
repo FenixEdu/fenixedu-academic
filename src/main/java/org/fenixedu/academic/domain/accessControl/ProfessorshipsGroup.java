@@ -25,7 +25,6 @@ import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
@@ -87,23 +86,22 @@ public class ProfessorshipsGroup extends FenixGroup {
         Set<User> users = new HashSet<>();
         //TODO: select active 'when'
         ExecutionInterval interval = ExecutionInterval.getExecutionInterval(AcademicInterval.readDefaultAcademicInterval(period));
-        if (interval instanceof ExecutionSemester) {
-            ExecutionSemester semester = (ExecutionSemester) interval;
-            fillMembers(users, semester);
-        } else if (interval instanceof ExecutionYear) {
-            for (ExecutionSemester semester : ((ExecutionYear) interval).getExecutionPeriodsSet()) {
-                fillMembers(users, semester);
+        if (interval instanceof ExecutionYear) {
+            for (ExecutionInterval childInterval : ((ExecutionYear) interval).getExecutionPeriodsSet()) {
+                fillMembers(users, childInterval);
             }
+        } else  {
+            fillMembers(users, interval);
         }
         return users.stream();
     }
 
-    private void fillMembers(Set<User> users, ExecutionSemester semester) {
+    private void fillMembers(Set<User> users, ExecutionInterval interval) {
         if (externalAuthorizations) {
-            users.addAll(semester.getTeacherAuthorizationSet().stream().filter(a -> !a.isContracted())
+            users.addAll(interval.getTeacherAuthorizationSet().stream().filter(a -> !a.isContracted())
                     .map(a -> a.getTeacher().getPerson().getUser()).collect(Collectors.toSet()));
         } else {
-            for (final ExecutionCourse executionCourse : semester.getAssociatedExecutionCoursesSet()) {
+            for (final ExecutionCourse executionCourse : interval.getAssociatedExecutionCoursesSet()) {
                 for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
                     User user = professorship.getPerson().getUser();
                     if (user != null) {

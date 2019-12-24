@@ -19,7 +19,7 @@
 package org.fenixedu.academic.dto.student.enrollment.bolonha;
 
 import org.fenixedu.academic.domain.EvaluationSeason;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import org.fenixedu.academic.ui.renderers.converters.CurriculumModuleEnroledWrapperConverter;
@@ -34,15 +34,15 @@ public class ImprovementBolonhaStudentEnrolmentBean extends BolonhaStudentEnroll
     private EvaluationSeason evaluationSeason;
 
     public ImprovementBolonhaStudentEnrolmentBean(final StudentCurricularPlan studentCurricularPlan,
-            final ExecutionSemester executionSemester, final EvaluationSeason evaluationSeason) {
+            final ExecutionInterval executionSemester, final EvaluationSeason evaluationSeason) {
         super(studentCurricularPlan, executionSemester, createBean(studentCurricularPlan, executionSemester, evaluationSeason),
                 CurricularRuleLevel.IMPROVEMENT_ENROLMENT);
         setEvaluationSeason(evaluationSeason);
     }
 
-    private static StudentCurriculumGroupBean createBean(final StudentCurricularPlan scp, final ExecutionSemester semester,
+    private static StudentCurriculumGroupBean createBean(final StudentCurricularPlan scp, final ExecutionInterval interval,
             final EvaluationSeason evaluationSeason) {
-        return ImprovementStudentCurriculumGroupBean.create(scp.getRoot(), semester, evaluationSeason);
+        return ImprovementStudentCurriculumGroupBean.create(scp.getRoot(), interval, evaluationSeason);
     }
 
     @Override

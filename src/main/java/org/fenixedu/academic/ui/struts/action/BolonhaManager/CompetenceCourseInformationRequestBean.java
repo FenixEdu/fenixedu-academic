@@ -22,7 +22,6 @@ import java.io.Serializable;
 
 import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
@@ -93,7 +92,7 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
         setNameEn(information.getNameEn());
     }
 
-    public CompetenceCourseInformationRequestBean(CompetenceCourse course, ExecutionSemester period) {
+    public CompetenceCourseInformationRequestBean(CompetenceCourse course, ExecutionInterval period) {
         setExecutionPeriod(period);
         setCompetenceCourse(course);
     }

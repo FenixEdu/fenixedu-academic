@@ -25,7 +25,7 @@ package org.fenixedu.academic.service.filter.enrollment;
 import java.util.SortedSet;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
@@ -82,7 +82,7 @@ public class ClassEnrollmentAuthorizationFilter {
 
     }
 
-    public void execute(Registration registration, ExecutionSemester executionSemester) throws FenixServiceException {
+    public void execute(Registration registration, ExecutionInterval executionInterval) throws FenixServiceException {
         Person person = Authenticate.getUser().getPerson();
 
         if (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, registration.getDegree(),

@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.ui.renderers.providers.AbstractDomainObjectProvider;
 
 public class CurricularCoursesProvider extends AbstractDomainObjectProvider {
@@ -40,7 +40,7 @@ public class CurricularCoursesProvider extends AbstractDomainObjectProvider {
         }
 
         DegreeCurricularPlan degreeCurricularPlan = bean.getDegreeCurricularPlan();
-        ExecutionSemester semester = bean.getSemester();
+        ExecutionInterval semester = bean.getSemester();
 
         return degreeCurricularPlan.getActiveCurricularCourses(semester);
     }

@@ -2882,7 +2882,7 @@ relation ExecutionPeriodExecutionCourse {
 }
 
 relation ExecutionPeriodExecutionYear {
-    ExecutionSemester playsRole executionPeriods {
+    ExecutionInterval playsRole executionPeriods {
         multiplicity *;
     }
     ExecutionYear playsRole executionYear;

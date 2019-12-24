@@ -26,7 +26,7 @@ import java.util.Set;
 
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.EvaluationSeason;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationContext;
 import org.fenixedu.academic.domain.enrolment.EnroledCurriculumModuleWrapper;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
@@ -43,25 +43,25 @@ public class SpecialSeasonStudentCurriculumGroupBean implements Serializable {
         setEvaluationSeason(evaluationSeason);
     }
 
-    public StudentCurriculumGroupBean create(final CurriculumGroup curriculumGroup, final ExecutionSemester executionSemester) {
-        return new StudentCurriculumGroupBean(curriculumGroup, executionSemester, null) {
+    public StudentCurriculumGroupBean create(final CurriculumGroup curriculumGroup, final ExecutionInterval executionInterval) {
+        return new StudentCurriculumGroupBean(curriculumGroup, executionInterval, null) {
 
             @Override
             protected List<IDegreeModuleToEvaluate> buildCourseGroupsToEnrol(CurriculumGroup group,
-                    ExecutionSemester executionSemester) {
+                    ExecutionInterval executionInterval) {
                 return Collections.emptyList();
             }
 
             @Override
             protected List<StudentCurriculumEnrolmentBean> buildCurricularCoursesEnroled(CurriculumGroup group,
-                    ExecutionSemester executionSemester) {
+                    ExecutionInterval executionInterval) {
 
                 List<StudentCurriculumEnrolmentBean> result = new ArrayList<StudentCurriculumEnrolmentBean>();
                 for (CurriculumModule curriculumModule : group.getCurriculumModulesSet()) {
                     if (curriculumModule.isEnrolment()) {
                         Enrolment enrolment = (Enrolment) curriculumModule;
 
-                        if (enrolment.isEnroledInSeason(getEvaluationSeason(), executionSemester)) {
+                        if (enrolment.isEnroledInSeason(getEvaluationSeason(), executionInterval)) {
                             result.add(new StudentCurriculumEnrolmentBean(enrolment));
                         }
                     }
@@ -72,7 +72,7 @@ public class SpecialSeasonStudentCurriculumGroupBean implements Serializable {
 
             @Override
             protected List<IDegreeModuleToEvaluate> buildCurricularCoursesToEnrol(CurriculumGroup group,
-                    ExecutionSemester executionSemester) {
+                    ExecutionInterval executionInterval) {
 
                 final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>();
 
@@ -81,7 +81,7 @@ public class SpecialSeasonStudentCurriculumGroupBean implements Serializable {
                         final Enrolment enrolment = (Enrolment) curriculumModule;
 
                         if (Enrolment.getPredicateSpecialSeason()
-                                .fill(getEvaluationSeason(), executionSemester, EnrolmentEvaluationContext.MARK_SHEET_EVALUATION)
+                                .fill(getEvaluationSeason(), executionInterval, EnrolmentEvaluationContext.MARK_SHEET_EVALUATION)
                                 .testExceptionless(enrolment)) {
 
                             if (enrolment.parentCurriculumGroupIsNoCourseGroupCurriculumGroup()) {
@@ -99,7 +99,7 @@ public class SpecialSeasonStudentCurriculumGroupBean implements Serializable {
 
             @Override
             protected List<StudentCurriculumGroupBean> buildCurriculumGroupsEnroled(CurriculumGroup parentGroup,
-                    ExecutionSemester executionSemester, int[] curricularYears) {
+                    ExecutionInterval executionInterval, int[] curricularYears) {
 
                 final List<StudentCurriculumGroupBean> result = new ArrayList<StudentCurriculumGroupBean>();
 
@@ -114,7 +114,7 @@ public class SpecialSeasonStudentCurriculumGroupBean implements Serializable {
                 }
 
                 for (final CurriculumGroup curriculumGroup : curriculumGroupsToEnrolmentProcess) {
-                    result.add(create(curriculumGroup, executionSemester));
+                    result.add(create(curriculumGroup, executionInterval));
                 }
 
                 return result;
@@ -136,8 +136,8 @@ public class SpecialSeasonStudentCurriculumGroupBean implements Serializable {
     }
 
     public static StudentCurriculumGroupBean create(final CurriculumGroup curriculumGroup,
-            final ExecutionSemester executionSemester, final EvaluationSeason evaluationSeason) {
-        return new SpecialSeasonStudentCurriculumGroupBean(evaluationSeason).create(curriculumGroup, executionSemester);
+            final ExecutionInterval executionInterval, final EvaluationSeason evaluationSeason) {
+        return new SpecialSeasonStudentCurriculumGroupBean(evaluationSeason).create(curriculumGroup, executionInterval);
     }
 
     public EvaluationSeason getEvaluationSeason() {

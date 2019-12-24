@@ -30,7 +30,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.dto.InfoLessonInstanceAggregation;
@@ -69,7 +69,7 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
         if (registrations.size() == 1) {
             final Registration registration = registrations.get(0);
             return forwardToShowTimeTable(registration, mapping, request,
-                    ExecutionSemester.findCurrent(registration.getDegree().getCalendar()));
+                    ExecutionInterval.findFirstCurrentChild(registration.getDegree().getCalendar()));
         } else {
             request.setAttribute("registrations", registrations);
             return mapping.findForward("chooseRegistration");
@@ -80,15 +80,15 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
         final Registration registration = getRegistration(actionForm, request);
-        ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterID");
+        ExecutionInterval executionSemester = getDomainObject(request, "executionSemesterID");
         if (executionSemester == null) {
-            executionSemester = ExecutionSemester.findCurrent(registration.getDegree().getCalendar());
+            executionSemester = ExecutionInterval.findFirstCurrentChild(registration.getDegree().getCalendar());
         }
         return forwardToShowTimeTable(registration, mapping, request, executionSemester);
     }
 
     private ActionForward forwardToShowTimeTable(Registration registration, ActionMapping mapping, HttpServletRequest request,
-            ExecutionSemester executionSemester) throws FenixActionException, FenixServiceException {
+            ExecutionInterval executionSemester) throws FenixActionException, FenixServiceException {
 
         final List<InfoShowOccupation> infoLessons = new ArrayList<InfoShowOccupation>();
         for (final Shift shift : registration.getShiftsFor(executionSemester)) {

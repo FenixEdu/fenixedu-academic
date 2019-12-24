@@ -18,7 +18,7 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="org.fenixedu.academic.domain.ExecutionSemester"%>
+
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>

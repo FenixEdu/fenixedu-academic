@@ -25,7 +25,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.Enrolment;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.administrativeOffice.studentEnrolment.StudentEnrolmentBean;
@@ -51,7 +51,7 @@ public class StudentEnrolmentsDA extends FenixDispatchAction {
         StudentEnrolmentBean studentEnrolmentBean = new StudentEnrolmentBean();
         if (plan != null) {
             studentEnrolmentBean.setStudentCurricularPlan(plan);
-            studentEnrolmentBean.setExecutionPeriod(ExecutionSemester.findCurrent(plan.getDegree().getCalendar()));
+            studentEnrolmentBean.setExecutionPeriod(ExecutionInterval.findFirstCurrentChild(plan.getDegree().getCalendar()));
             return showExecutionPeriodEnrolments(studentEnrolmentBean, mapping, actionForm, request, response);
         } else {
             throw new FenixActionException();
@@ -67,7 +67,7 @@ public class StudentEnrolmentsDA extends FenixDispatchAction {
     public ActionForward prepareFromStudentEnrollmentWithRules(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         final StudentEnrolmentBean studentEnrolmentBean = new StudentEnrolmentBean();
-        studentEnrolmentBean.setExecutionPeriod((ExecutionSemester) request.getAttribute("executionPeriod"));
+        studentEnrolmentBean.setExecutionPeriod((ExecutionInterval) request.getAttribute("executionPeriod"));
         studentEnrolmentBean.setStudentCurricularPlan((StudentCurricularPlan) request.getAttribute("studentCurricularPlan"));
         return showExecutionPeriodEnrolments(studentEnrolmentBean, mapping, form, request, response);
     }

@@ -70,8 +70,8 @@ public class Department extends Department_Base {
     }
 
     public List<Teacher> getAllCurrentTeachers() {
-        return ExecutionSemester.findCurrents().stream().flatMap(es -> getAllTeachers(es).stream()).distinct()
-                .collect(Collectors.toList());
+        return getTeacherAuthorizationStream().filter(a -> a.getExecutionInterval().isCurrent())
+                .map(TeacherAuthorization::getTeacher).distinct().collect(Collectors.toList());
     }
 
     public List<Teacher> getAllTeachers(AcademicInterval interval) {

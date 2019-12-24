@@ -24,7 +24,6 @@ import java.util.List;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
@@ -79,12 +78,12 @@ public class ImprovementOfApprovedEnrolment extends CurricularRuleNotPersistent 
     }
 
     @Override
-    public ExecutionSemester getBegin() {
-        return ExecutionSemester.findCurrent(toApply.getDegreeCurricularPlanOfStudent().getDegree().getCalendar());
+    public ExecutionInterval getBegin() {
+        return ExecutionInterval.findFirstCurrentChild(toApply.getDegreeCurricularPlanOfStudent().getDegree().getCalendar());
     }
 
     @Override
-    public ExecutionSemester getEnd() {
+    public ExecutionInterval getEnd() {
         return null;
     }
 

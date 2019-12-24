@@ -20,88 +20,73 @@
  * Created on Oct 20, 2005
  *  by jdnf
  */
-package org.fenixedu.academic.service.services.coordinator;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.CurricularYear;
-import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.ExecutionCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.service.filter.ResourceAllocationManagerAuthorizationFilter;
-import org.fenixedu.academic.service.filter.coordinator.DegreeCurricularPlanAuthorizationFilter;
-import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
-import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
-
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.FenixFramework;
-
+//TODO: DELETE
+@Deprecated
 public class ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear {
 
-    public List<ExecutionCourse> run(String degreeCurricularPlanID, String executionPeriodID, String curricularYearID)
-            throws FenixServiceException {
-
-        final ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodID);
-        if (executionSemester == null) {
-            throw new FenixServiceException("error.no.executionPeriod");
-        }
-
-        final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
-        if (degreeCurricularPlan == null) {
-            throw new FenixServiceException("error.coordinator.noDegreeCurricularPlan");
-        }
-
-        CurricularYear curricularYear = null;
-        if (curricularYearID != null) {
-            curricularYear = FenixFramework.getDomainObject(curricularYearID);
-            if (curricularYear == null) {
-                throw new FenixServiceException("error.no.curYear");
-            }
-        }
-
-        final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
-        for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
-            if (belongToDegreeCurricularPlanAndCurricularYear(executionCourse, degreeCurricularPlan, curricularYear)) {
-                result.add(executionCourse);
-            }
-        }
-        return result;
-    }
-
-    private boolean belongToDegreeCurricularPlanAndCurricularYear(final ExecutionCourse executionCourse,
-            final DegreeCurricularPlan degreeCurricularPlan, final CurricularYear curricularYear) {
-
-        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
-            if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear, degreeCurricularPlan,
-                    executionCourse.getExecutionInterval())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    // Service Invokers migrated from Berserk
-
-    private static final ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear serviceInstance =
-            new ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear();
-
-    @Atomic
-    public static List<ExecutionCourse> runReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear(
-            String degreeCurricularPlanID, String executionPeriodID, String curricularYearID)
-            throws FenixServiceException, NotAuthorizedException {
-        try {
-            DegreeCurricularPlanAuthorizationFilter.instance.execute(degreeCurricularPlanID);
-            return serviceInstance.run(degreeCurricularPlanID, executionPeriodID, curricularYearID);
-        } catch (NotAuthorizedException ex1) {
-            try {
-                ResourceAllocationManagerAuthorizationFilter.instance.execute();
-                return serviceInstance.run(degreeCurricularPlanID, executionPeriodID, curricularYearID);
-            } catch (NotAuthorizedException ex2) {
-                throw ex2;
-            }
-        }
-    }
+//    public List<ExecutionCourse> run(String degreeCurricularPlanID, String executionPeriodID, String curricularYearID)
+//            throws FenixServiceException {
+//
+//        final ExecutionInterval executionSemester = FenixFramework.getDomainObject(executionPeriodID);
+//        if (executionSemester == null) {
+//            throw new FenixServiceException("error.no.executionPeriod");
+//        }
+//
+//        final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
+//        if (degreeCurricularPlan == null) {
+//            throw new FenixServiceException("error.coordinator.noDegreeCurricularPlan");
+//        }
+//
+//        CurricularYear curricularYear = null;
+//        if (curricularYearID != null) {
+//            curricularYear = FenixFramework.getDomainObject(curricularYearID);
+//            if (curricularYear == null) {
+//                throw new FenixServiceException("error.no.curYear");
+//            }
+//        }
+//
+//        final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+//        for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
+//            if (belongToDegreeCurricularPlanAndCurricularYear(executionCourse, degreeCurricularPlan, curricularYear)) {
+//                result.add(executionCourse);
+//            }
+//        }
+//        return result;
+//    }
+//
+//    private boolean belongToDegreeCurricularPlanAndCurricularYear(final ExecutionCourse executionCourse,
+//            final DegreeCurricularPlan degreeCurricularPlan, final CurricularYear curricularYear) {
+//
+//        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
+//            if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear, degreeCurricularPlan,
+//                    executionCourse.getExecutionInterval())) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+//
+//    // Service Invokers migrated from Berserk
+//
+//    private static final ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear serviceInstance =
+//            new ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear();
+//
+//    @Atomic
+//    public static List<ExecutionCourse> runReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear(
+//            String degreeCurricularPlanID, String executionPeriodID, String curricularYearID)
+//            throws FenixServiceException, NotAuthorizedException {
+//        try {
+//            DegreeCurricularPlanAuthorizationFilter.instance.execute(degreeCurricularPlanID);
+//            return serviceInstance.run(degreeCurricularPlanID, executionPeriodID, curricularYearID);
+//        } catch (NotAuthorizedException ex1) {
+//            try {
+//                ResourceAllocationManagerAuthorizationFilter.instance.execute();
+//                return serviceInstance.run(degreeCurricularPlanID, executionPeriodID, curricularYearID);
+//            } catch (NotAuthorizedException ex2) {
+//                throw ex2;
+//            }
+//        }
+//    }
 
 }

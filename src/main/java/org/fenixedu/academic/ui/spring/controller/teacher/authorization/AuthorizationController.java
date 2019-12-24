@@ -27,7 +27,7 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.TeacherAuthorization;
 import org.fenixedu.academic.domain.TeacherCategory;
 import org.fenixedu.academic.ui.spring.controller.AcademicAdministrationSpringApplication;
@@ -237,7 +237,7 @@ public class AuthorizationController {
 	 * @return
 	 */
 	@RequestMapping(method = POST, value = "upload")
-	public String upload(Model model, @RequestParam ExecutionSemester period, @RequestParam MultipartFile csv) {
+	public String upload(Model model, @RequestParam ExecutionInterval period, @RequestParam MultipartFile csv) {
 		try {
 			List<TeacherAuthorization> imported = service.importCSV(period, csv);
 			model.addAttribute("authorizations", imported);

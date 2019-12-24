@@ -23,19 +23,21 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
+//TODO: DELETE
+@Deprecated
 public class AllExecutionPeriodsProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        List<ExecutionSemester> executionSemesters =
-                new ArrayList<ExecutionSemester>(Bennu.getInstance().getExecutionPeriodsSet());
+        List<ExecutionInterval> executionSemesters =
+                new ArrayList<ExecutionInterval>(Bennu.getInstance().getExecutionPeriodsSet());
         Collections.sort(executionSemesters, new ReverseComparator());
         return executionSemesters;
     }

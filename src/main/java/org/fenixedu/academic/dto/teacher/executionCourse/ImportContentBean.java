@@ -23,12 +23,12 @@ import java.io.Serializable;
 import org.fenixedu.academic.domain.CurricularYear;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionDegree;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.interfaces.HasExecutionDegree;
 
 public class ImportContentBean implements Serializable, HasExecutionDegree {
 
-    private ExecutionSemester executionPeriodReference;
+    private ExecutionInterval executionPeriodReference;
 
     private ExecutionDegree executionDegreeReference;
 
@@ -51,12 +51,12 @@ public class ImportContentBean implements Serializable, HasExecutionDegree {
         this.executionCourseReference = executionCourse;
     }
 
-    public ExecutionSemester getExecutionPeriod() {
+    public ExecutionInterval getExecutionPeriod() {
         return this.executionPeriodReference;
     }
 
-    public void setExecutionPeriod(ExecutionSemester executionSemester) {
-        this.executionPeriodReference = executionSemester;
+    public void setExecutionPeriod(ExecutionInterval executionInterval) {
+        this.executionPeriodReference = executionInterval;
     }
 
     @Override

@@ -22,7 +22,6 @@ import java.util.Comparator;
 import java.util.Date;
 
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.util.PeriodState;
 
 import pt.ist.fenixframework.DomainObject;
@@ -153,8 +152,8 @@ public class InfoExecutionPeriod extends InfoObject implements Comparable {
         return executionPeriodDomainReference;
     }
 
-    public void setExecutionPeriod(ExecutionSemester executionSemester) {
-        executionPeriodDomainReference = executionSemester;
+    public void setExecutionPeriod(ExecutionInterval executionInterval) {
+        executionPeriodDomainReference = executionInterval;
     }
 
 }

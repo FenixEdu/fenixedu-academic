@@ -26,7 +26,7 @@ import java.util.List;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
@@ -181,10 +181,8 @@ public class StudentDismissalRenderer extends InputRenderer {
             dismissalBean = (DismissalBean) object;
 
             HtmlBlockContainer container = new HtmlBlockContainer();
-            if (dismissalBean == null
-                    || dismissalBean.getExecutionPeriod() == null
-                    || dismissalBean.getStudentCurricularPlan().getStartExecutionPeriod()
-                            .isAfter(dismissalBean.getExecutionPeriod())) {
+            if (dismissalBean == null || dismissalBean.getExecutionPeriod() == null || dismissalBean.getStudentCurricularPlan()
+                    .getStartExecutionPeriod().isAfter(dismissalBean.getExecutionPeriod())) {
                 return new HtmlText();
             }
 
@@ -199,7 +197,8 @@ public class StudentDismissalRenderer extends InputRenderer {
 
                 radioButtonGroup.setConverter(new DomainObjectKeyConverter());
                 container.addChild(radioButtonGroup);
-                generateCourseGroupCycles(container, dismissalBean.getStudentCurricularPlan(), dismissalBean.getExecutionPeriod());
+                generateCourseGroupCycles(container, dismissalBean.getStudentCurricularPlan(),
+                        dismissalBean.getExecutionPeriod());
 
             } else if (dismissalTypeValue == DismissalType.CURRICULAR_COURSE_CREDITS) {
                 final HtmlMultipleHiddenField hiddenCurricularCourses = new HtmlMultipleHiddenField();
@@ -220,7 +219,8 @@ public class StudentDismissalRenderer extends InputRenderer {
                 hiddenOptionalCurricularCourses.setController(optionalCurricularCoursesController);
                 container.addChild(hiddenOptionalCurricularCourses);
 
-                generateCurricularCourses(container, dismissalBean.getStudentCurricularPlan(), dismissalBean.getExecutionPeriod());
+                generateCurricularCourses(container, dismissalBean.getStudentCurricularPlan(),
+                        dismissalBean.getExecutionPeriod());
             } else {
                 radioButtonGroup = new HtmlRadioButtonGroup();
 
@@ -260,8 +260,8 @@ public class StudentDismissalRenderer extends InputRenderer {
 
             final HtmlTableCell radioButtonCell = htmlTableRow.createCell();
             final HtmlRadioButton radioButton = radioButtonGroup.createRadioButton();
-            radioButton.setUserValue(MetaObjectFactory.createObject(curriculumGroup, new Schema(CurriculumGroup.class)).getKey()
-                    .toString());
+            radioButton.setUserValue(
+                    MetaObjectFactory.createObject(curriculumGroup, new Schema(CurriculumGroup.class)).getKey().toString());
             radioButton.setChecked(curriculumGroup == dismissalBean.getCurriculumGroup());
             radioButtonCell.setBody(radioButton);
             radioButtonCell.setClasses(getGroupRadioClasses());
@@ -270,17 +270,17 @@ public class StudentDismissalRenderer extends InputRenderer {
         }
 
         protected void generateCourseGroupCycles(final HtmlBlockContainer blockContainer,
-                final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
+                final StudentCurricularPlan studentCurricularPlan, final ExecutionInterval executionInterval) {
             if (studentCurricularPlan.isBolonhaDegree()) {
                 for (final CycleType cycleType : studentCurricularPlan.getDegreeType().getSupportedCyclesToEnrol()) {
                     final CourseGroup courseGroup = getCourseGroupWithCycleType(studentCurricularPlan, cycleType);
                     if (courseGroup != null) {
-                        generateCourseGroups(blockContainer, studentCurricularPlan, courseGroup, executionSemester, 0);
+                        generateCourseGroups(blockContainer, studentCurricularPlan, courseGroup, executionInterval, 0);
                     }
                 }
             } else {
                 generateCourseGroups(blockContainer, studentCurricularPlan, studentCurricularPlan.getRoot().getDegreeModule(),
-                        executionSemester, 0);
+                        executionInterval, 0);
             }
         }
 
@@ -292,7 +292,7 @@ public class StudentDismissalRenderer extends InputRenderer {
         }
 
         protected void generateCurricularCourses(final HtmlBlockContainer blockContainer,
-                final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
+                final StudentCurricularPlan studentCurricularPlan, final ExecutionInterval executionInterval) {
             final HtmlTable groupTable = new HtmlTable();
             blockContainer.addChild(groupTable);
             groupTable.setClasses(getTablesClasses());
@@ -309,10 +309,9 @@ public class StudentDismissalRenderer extends InputRenderer {
                 final HtmlTableCell nameCell = htmlTableRow.createCell();
 
                 final String code = curricularCourse.getCode();
-                final String oneFullName = curricularCourse.getOneFullName(executionSemester);
-                final String name =
-                        " <span class='bold'>" + curricularCourse.getName(dismissalBean.getExecutionPeriod()) + "</span> ("
-                                + oneFullName.substring(0, oneFullName.lastIndexOf(">")) + ")";
+                final String oneFullName = curricularCourse.getOneFullName(executionInterval);
+                final String name = " <span class='bold'>" + curricularCourse.getName(dismissalBean.getExecutionPeriod())
+                        + "</span> (" + oneFullName.substring(0, oneFullName.lastIndexOf(">")) + ")";
                 final String codeAndname = StringUtils.isEmpty(code) ? name : code + " - " + name;
                 nameCell.setBody(new HtmlText(codeAndname, false));
 
@@ -326,13 +325,14 @@ public class StudentDismissalRenderer extends InputRenderer {
                 checkBox.setName("curricularCourseCheckBox" + curricularCourse.getExternalId());
                 if (curricularCourse.isOptionalCurricularCourse()) {
                     final OptionalCurricularCourse optionalCurricularCourse = (OptionalCurricularCourse) curricularCourse;
-                    checkBox.setUserValue(new DismissalBean.SelectedOptionalCurricularCourse(optionalCurricularCourse,
-                            studentCurricularPlan).getKey());
+                    checkBox.setUserValue(
+                            new DismissalBean.SelectedOptionalCurricularCourse(optionalCurricularCourse, studentCurricularPlan)
+                                    .getKey());
                     checkBoxCell.setBody(checkBox);
                     optionalCurricularCoursesController.addCheckBox(checkBox);
                 } else {
-                    checkBox.setUserValue(new DismissalBean.SelectedCurricularCourse(curricularCourse, studentCurricularPlan)
-                            .getKey());
+                    checkBox.setUserValue(
+                            new DismissalBean.SelectedCurricularCourse(curricularCourse, studentCurricularPlan).getKey());
                     checkBoxCell.setBody(checkBox);
                     curricularCoursesController.addCheckBox(checkBox);
                 }
@@ -341,7 +341,7 @@ public class StudentDismissalRenderer extends InputRenderer {
 
         protected void generateCourseGroups(final HtmlBlockContainer blockContainer,
                 final StudentCurricularPlan studentCurricularPlan, final CourseGroup courseGroup,
-                final ExecutionSemester executionSemester, int depth) {
+                final ExecutionInterval executionInterval, int depth) {
             final HtmlTable groupTable = new HtmlTable();
             blockContainer.addChild(groupTable);
             groupTable.setClasses(getTablesClasses());
@@ -366,27 +366,27 @@ public class StudentDismissalRenderer extends InputRenderer {
             currentCreditsCell.setStyle("width: 6em;");
 
             final HtmlTableCell creditsMinCell = htmlTableRow.createCell();
-            creditsMinCell.setBody(new HtmlText("Min: " + courseGroup.getMinEctsCredits(executionSemester)));
+            creditsMinCell.setBody(new HtmlText("Min: " + courseGroup.getMinEctsCredits(executionInterval)));
             creditsMinCell.setClasses("smalltxt");
             creditsMinCell.setStyle("width: 6em;");
 
             final HtmlTableCell creditsMaxCell = htmlTableRow.createCell();
-            creditsMaxCell.setBody(new HtmlText("Max: " + courseGroup.getMaxEctsCredits(executionSemester)));
+            creditsMaxCell.setBody(new HtmlText("Max: " + courseGroup.getMaxEctsCredits(executionInterval)));
             creditsMaxCell.setClasses("smalltxt");
             creditsMaxCell.setStyle("width: 6em;");
 
             final HtmlTableCell radioButtonCell = htmlTableRow.createCell();
             final HtmlRadioButton radioButton = radioButtonGroup.createRadioButton();
-            radioButton.setUserValue(MetaObjectFactory.createObject(courseGroup, new Schema(CourseGroup.class)).getKey()
-                    .toString());
+            radioButton
+                    .setUserValue(MetaObjectFactory.createObject(courseGroup, new Schema(CourseGroup.class)).getKey().toString());
             radioButton.setChecked(courseGroup == dismissalBean.getCourseGroup());
             radioButtonCell.setBody(radioButton);
             radioButtonCell.setClasses(getGroupRadioClasses());
             radioButtonCell.setStyle("width: 2em;");
 
-            for (final Context context : courseGroup.getSortedOpenChildContextsWithCourseGroups(executionSemester)) {
+            for (final Context context : courseGroup.getSortedOpenChildContextsWithCourseGroups(executionInterval)) {
                 generateCourseGroups(blockContainer, studentCurricularPlan, (CourseGroup) context.getChildDegreeModule(),
-                        executionSemester, depth + getWidthDecreasePerLevel());
+                        executionInterval, depth + getWidthDecreasePerLevel());
             }
         }
     }

@@ -26,7 +26,7 @@ import org.fenixedu.academic.domain.CurricularYear;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionDegree;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.dto.InfoExecutionCourse;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
@@ -38,6 +38,7 @@ import pt.ist.fenixframework.FenixFramework;
  * 
  * @author Fernanda Quitério 22/Dez/2003
  */
+//TODO: check usage
 public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear {
 
     @Atomic
@@ -48,18 +49,18 @@ public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYe
             throw new FenixServiceException("nullExecutionPeriodId");
         }
 
-        final ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodId);
+        final ExecutionInterval executionInterval = FenixFramework.getDomainObject(executionPeriodId);
 
         final List<ExecutionCourse> executionCourseList;
         if (executionDegreeId == null && curricularYearInt == null) {
-            executionCourseList = executionSemester.getAssociatedExecutionCoursesSet().stream()
+            executionCourseList = executionInterval.getAssociatedExecutionCoursesSet().stream()
                     .filter(ec -> ec.getAssociatedCurricularCoursesSet().isEmpty()).collect(Collectors.toList());
         } else {
-            final ExecutionDegree executionDegree = findExecutionDegreeByID(executionSemester, executionDegreeId);
+            final ExecutionDegree executionDegree = findExecutionDegreeByID(executionInterval, executionDegreeId);
             final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
             final CurricularYear curricularYear = CurricularYear.readByYear(curricularYearInt);
             executionCourseList = ExecutionCourse.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
-                    executionSemester, degreeCurricularPlan, curricularYear, "%");
+                    executionInterval, degreeCurricularPlan, curricularYear, "%");
         }
 
         final List infoExecutionCourseList = new ArrayList(executionCourseList.size());
@@ -70,9 +71,9 @@ public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYe
         return infoExecutionCourseList;
     }
 
-    private static ExecutionDegree findExecutionDegreeByID(final ExecutionSemester executionSemester,
+    private static ExecutionDegree findExecutionDegreeByID(final ExecutionInterval executionInterval,
             final String executionDegreeId) {
-        final ExecutionYear executionYear = executionSemester.getExecutionYear();
+        final ExecutionYear executionYear = executionInterval.getExecutionYear();
         for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
             if (executionDegree.getExternalId().equals(executionDegreeId)) {
                 return executionDegree;

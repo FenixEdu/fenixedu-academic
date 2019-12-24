@@ -18,7 +18,7 @@
  */
 package org.fenixedu.academic.service.services.enrollment.shift;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
@@ -97,8 +97,8 @@ public class EnrollStudentInShifts {
 
     @Atomic
     public static ShiftEnrollmentErrorReport runEnrollStudentInShifts(Registration registration, String shiftId,
-            ExecutionSemester executionSemester) throws FenixServiceException, NotAuthorizedException {
-        ClassEnrollmentAuthorizationFilter.instance.execute(registration, executionSemester);
+            ExecutionInterval executionInterval) throws FenixServiceException, NotAuthorizedException {
+        ClassEnrollmentAuthorizationFilter.instance.execute(registration, executionInterval);
         return serviceInstance.run(registration, shiftId);
     }
 

@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.dto.student.IStudentCurricularPlanBean;
@@ -36,14 +36,14 @@ public class ExecutionPeriodsForDismissalsStudentCurricularPlanProvider implemen
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
+        final List<ExecutionInterval> result = new ArrayList<>();
         final StudentCurricularPlan studentCurricularPlan = ((IStudentCurricularPlanBean) source).getStudentCurricularPlan();
-        ExecutionSemester scpSemester = studentCurricularPlan.getStartExecutionPeriod();
-        ExecutionSemester lastExecutionSemester =
+        ExecutionInterval scpSemester = studentCurricularPlan.getStartExecutionPeriod();
+        ExecutionInterval lastExecutionSemester =
                 ExecutionYear.findCurrent(studentCurricularPlan.getDegree().getCalendar()).getLastExecutionPeriod();
         while (scpSemester != null && scpSemester != lastExecutionSemester) {
             result.add(scpSemester);
-            scpSemester = scpSemester.getNextExecutionPeriod();
+            scpSemester = scpSemester.getNext();
         }
         result.add(lastExecutionSemester);
         Collections.sort(result, new ReverseComparator());

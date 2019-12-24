@@ -34,6 +34,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicYearCE;
 import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -45,8 +46,6 @@ import org.joda.time.LocalDate;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-
 /**
  * Created on 11/Fev/2003
  * 
@@ -55,9 +54,9 @@ import pt.ist.fenixframework.dml.runtime.RelationAdapter;
  */
 public class ExecutionYear extends ExecutionYear_Base {
 
-    static {
-        getRelationExecutionPeriodExecutionYear().addListener(new ExecutionPeriodExecutionYearListener());
-    }
+//    static {
+//        getRelationExecutionPeriodExecutionYear().addListener(new ExecutionPeriodExecutionYearListener());
+//    }
 
     static final public Comparator<ExecutionYear> COMPARATOR_BY_YEAR = new Comparator<ExecutionYear>() {
         @Override
@@ -147,16 +146,24 @@ public class ExecutionYear extends ExecutionYear_Base {
         return super.compareTo(executionYear) <= 0;
     }
 
-    public ExecutionSemester getExecutionSemesterFor(final Integer order) {
-        return getExecutionPeriodsSet().stream().filter(ei -> ei.getChildOrder().equals(order)).findAny().orElse(null);
+    @Deprecated
+    public ExecutionInterval getExecutionSemesterFor(final Integer order) {
+        return getChildInterval(order, AcademicPeriod.SEMESTER);
     }
 
-    public ExecutionSemester getFirstExecutionPeriod() {
-        return this.getExecutionPeriodsSet().stream().min(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR).orElse(null);
+    public ExecutionInterval getChildInterval(final Integer order, final AcademicPeriod type) {
+        return getExecutionPeriodsSet().stream()
+                .filter(ei -> ei.getChildOrder().equals(order)
+                        && ei.getAcademicInterval().getAcademicCalendarEntry().getAcademicPeriod().equals(type))
+                .findAny().orElse(null);
     }
 
-    public ExecutionSemester getLastExecutionPeriod() {
-        return this.getExecutionPeriodsSet().stream().max(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR).orElse(null);
+    public ExecutionInterval getFirstExecutionPeriod() {
+        return this.getExecutionPeriodsSet().stream().min(Comparator.naturalOrder()).orElse(null);
+    }
+
+    public ExecutionInterval getLastExecutionPeriod() {
+        return this.getExecutionPeriodsSet().stream().max(Comparator.naturalOrder()).orElse(null);
     }
 
     public boolean containsDate(final DateTime dateTime) {
@@ -204,14 +211,14 @@ public class ExecutionYear extends ExecutionYear_Base {
         deleteDomainObject();
     }
 
-    private static class ExecutionPeriodExecutionYearListener extends RelationAdapter<ExecutionYear, ExecutionSemester> {
-        @Override
-        public void beforeAdd(ExecutionYear executionYear, ExecutionSemester executionSemester) {
-            if (executionYear != null && executionSemester != null && executionYear.getExecutionPeriodsSet().size() == 2) {
-                throw new DomainException("error.ExecutionYear.exceeded.number.of.executionPeriods", executionYear.getYear());
-            }
-        }
-    }
+//    private static class ExecutionPeriodExecutionYearListener extends RelationAdapter<ExecutionYear, ExecutionSemester> {
+//        @Override
+//        public void beforeAdd(ExecutionYear executionYear, ExecutionSemester executionSemester) {
+//            if (executionYear != null && executionSemester != null && executionYear.getExecutionPeriodsSet().size() == 2) {
+//                throw new DomainException("error.ExecutionYear.exceeded.number.of.executionPeriods", executionYear.getYear());
+//            }
+//        }
+//    }
 
     // -------------------------------------------------------------
     // read static methods

@@ -21,7 +21,6 @@ package org.fenixedu.academic.dto.administrativeOffice.externalUnits;
 import java.io.Serializable;
 
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExternalCurricularCourse;
 import org.fenixedu.academic.domain.Grade;
 import org.joda.time.YearMonthDay;

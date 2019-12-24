@@ -22,7 +22,7 @@
 package org.fenixedu.academic.service.services.bolonhaManager;
 
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -69,13 +69,13 @@ public class AddContextToCurricularCourse {
 
         // ********************************************************
 
-        final ExecutionSemester beginExecutionPeriod = getBeginExecutionPeriod(beginExecutionPeriodID);
-        final ExecutionSemester endExecutionPeriod = getEndExecutionPeriod(endExecutionPeriodID);
+        final ExecutionInterval beginExecutionPeriod = getBeginExecutionPeriod(beginExecutionPeriodID);
+        final ExecutionInterval endExecutionPeriod = getEndExecutionPeriod(endExecutionPeriodID);
 
         courseGroup.addContext(curricularCourse, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }
 
-    private static ExecutionSemester getBeginExecutionPeriod(final String beginExecutionPeriodID) {
+    private static ExecutionInterval getBeginExecutionPeriod(final String beginExecutionPeriodID) {
         if (beginExecutionPeriodID == null) {
             throw new DomainException("error.AddContextToCurricularCourse.beginExecutionPeriod.required");
         }
@@ -83,9 +83,9 @@ public class AddContextToCurricularCourse {
         return FenixFramework.getDomainObject(beginExecutionPeriodID);
     }
 
-    private static ExecutionSemester getEndExecutionPeriod(String endExecutionPeriodID) {
-        final ExecutionSemester endExecutionPeriod =
-                (endExecutionPeriodID == null) ? null : FenixFramework.<ExecutionSemester> getDomainObject(endExecutionPeriodID);
+    private static ExecutionInterval getEndExecutionPeriod(String endExecutionPeriodID) {
+        final ExecutionInterval endExecutionPeriod =
+                (endExecutionPeriodID == null) ? null : FenixFramework.<ExecutionInterval> getDomainObject(endExecutionPeriodID);
         return endExecutionPeriod;
     }
 }

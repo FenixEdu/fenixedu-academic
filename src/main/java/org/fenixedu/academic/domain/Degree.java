@@ -466,8 +466,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     @Deprecated
-    public LocalizedString getNameFor(final ExecutionSemester executionSemester) {
-        return getNameFor(executionSemester != null ? executionSemester.getExecutionYear() : null);
+    public LocalizedString getNameFor(final ExecutionInterval executionInterval) {
+        return getNameFor(executionInterval != null ? executionInterval.getExecutionYear() : null);
     }
 
     public LocalizedString getNameFor(final AcademicInterval academicInterval) {

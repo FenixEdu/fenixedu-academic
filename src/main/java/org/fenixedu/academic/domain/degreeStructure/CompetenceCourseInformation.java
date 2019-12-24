@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -186,7 +185,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
             throw new DomainException("error.CompetenceCourseInformation.required.ExecutionInterval");
         }
 
-        super.setExecutionPeriod(input.convert(ExecutionSemester.class));
+        super.setExecutionPeriod(input);
     }
 
     public AcademicPeriod getAcademicPeriod() {

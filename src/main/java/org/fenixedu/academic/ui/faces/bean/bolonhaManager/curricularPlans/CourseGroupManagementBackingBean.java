@@ -31,7 +31,6 @@ import javax.faces.model.SelectItem;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.CurricularRule;
 import org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.Context;
@@ -52,9 +51,9 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 
-import pt.ist.fenixframework.FenixFramework;
-
 import com.google.common.base.Strings;
+
+import pt.ist.fenixframework.FenixFramework;
 
 public class CourseGroupManagementBackingBean extends CurricularCourseManagementBackingBean {
 

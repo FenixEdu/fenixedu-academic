@@ -22,13 +22,13 @@ import java.io.Serializable;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 
 public class ExecutionCourseSearchBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private ExecutionSemester semester;
+    private ExecutionInterval semester;
     private DegreeCurricularPlan degreeCurricularPlan;
     private CurricularCourse curricularCourse;
 
@@ -36,11 +36,11 @@ public class ExecutionCourseSearchBean implements Serializable {
 
     }
 
-    public ExecutionSemester getSemester() {
+    public ExecutionInterval getSemester() {
         return semester;
     }
 
-    public void setSemester(ExecutionSemester semester) {
+    public void setSemester(ExecutionInterval semester) {
         this.semester = semester;
     }
 

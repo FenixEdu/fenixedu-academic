@@ -40,7 +40,6 @@ import org.fenixedu.academic.domain.CompetenceCourseType;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
@@ -563,7 +562,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         this.competenceCourse = competenceCourse;
     }
 
-    public ExecutionSemester getAssociatedExecutionPeriod() {
+    public ExecutionInterval getAssociatedExecutionPeriod() {
         return getExecutionSemester();
     }
 
@@ -1181,7 +1180,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         this.getViewState().setAttribute("transferToCompetenceCourseGroupUnitID", transferToCompetenceCourseGroupUnitID);
     }
 
-    private ExecutionSemester getExecutionSemester() {
+    private ExecutionInterval getExecutionSemester() {
         return FenixFramework.getDomainObject(getExecutionSemesterID());
     }
 
@@ -1189,7 +1188,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         if (executionSemesterID == null) {
             executionSemesterID = (String) getViewState().getAttribute("executionSemesterID");
         }
-        ExecutionSemester currentSemester = ExecutionSemester.findCurrent(null);
+        ExecutionInterval currentSemester = ExecutionInterval.findFirstCurrentChild(null);
         if ((executionSemesterID == null) && (getCompetenceCourse() != null)) {
             if (getCompetenceCourse().getCompetenceCourseInformationsSet().size() == 1) {
                 executionSemesterID = getCompetenceCourse().getCompetenceCourseInformationsSet().iterator().next()
@@ -1260,10 +1259,10 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     private List<SelectItem> readFutureExecutionSemesterLabels() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        ExecutionSemester semester = ExecutionSemester.findCurrent(null);
+        ExecutionInterval semester = ExecutionYear.findFirstCurrentChild(null);
         while (semester != null) {
             result.add(new SelectItem(semester.getExternalId(), semester.getQualifiedName()));
-            semester = semester.getNextExecutionPeriod();
+            semester = semester.getNext();
         }
         return result;
     }

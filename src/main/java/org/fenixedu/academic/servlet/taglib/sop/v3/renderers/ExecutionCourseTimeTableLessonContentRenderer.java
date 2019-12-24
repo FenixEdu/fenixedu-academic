@@ -20,7 +20,6 @@ package org.fenixedu.academic.servlet.taglib.sop.v3.renderers;
 
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.FrequencyType;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.dto.InfoLesson;

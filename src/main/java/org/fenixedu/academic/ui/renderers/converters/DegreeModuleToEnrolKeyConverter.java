@@ -24,7 +24,7 @@ package org.fenixedu.academic.ui.renderers.converters;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.enrolment.DegreeModuleToEnrol;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
@@ -52,8 +52,8 @@ public class DegreeModuleToEnrolKeyConverter extends Converter {
 
             final Context context = (Context) converter.convert(type, parts[0]);
             final CurriculumGroup curriculumGroup = (CurriculumGroup) converter.convert(type, parts[1]);
-            final ExecutionSemester executionSemester = (ExecutionSemester) converter.convert(type, parts[2]);
-            result.add(new DegreeModuleToEnrol(curriculumGroup, context, executionSemester));
+            final ExecutionInterval executionInterval = (ExecutionInterval) converter.convert(type, parts[2]);
+            result.add(new DegreeModuleToEnrol(curriculumGroup, context, executionInterval));
         }
 
         return result;

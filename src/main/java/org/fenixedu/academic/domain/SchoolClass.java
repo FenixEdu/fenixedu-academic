@@ -61,7 +61,7 @@ public class SchoolClass extends SchoolClass_Base {
 //        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageSchoolClass);
         super();
 
-        ExecutionSemester executionInterval = (ExecutionSemester) ExecutionInterval.getExecutionInterval(academicInterval);
+        ExecutionInterval executionInterval = ExecutionInterval.getExecutionInterval(academicInterval);
         checkIfExistsSchoolClassWithSameName(executionDegree, executionInterval, curricularYear, name);
 
         setRootDomainObject(Bennu.getInstance());

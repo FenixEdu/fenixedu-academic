@@ -23,7 +23,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleLevel;
@@ -74,17 +73,17 @@ public abstract class CompositeRule extends CompositeRule_Base {
         }
     }
 
-    private ExecutionSemester getEndExecutionPeriod(CurricularRule[] curricularRules) {
-        ExecutionSemester executionSemester = null;
+    private ExecutionInterval getEndExecutionPeriod(CurricularRule[] curricularRules) {
+        ExecutionInterval executionInterval = null;
         for (CurricularRule rule : curricularRules) {
             if (rule.getEndInterval() == null) {
                 return null;
             }
-            if (executionSemester == null || rule.getEndInterval().isAfter(executionSemester)) {
-                executionSemester = rule.getEndInterval().convert(ExecutionSemester.class);
+            if (executionInterval == null || rule.getEndInterval().isAfter(executionInterval)) {
+                executionInterval = rule.getEndInterval();
             }
         }
-        return executionSemester;
+        return executionInterval;
     }
 
     private ExecutionInterval getBeginExecutionPeriod(CurricularRule... curricularRules) {

@@ -34,7 +34,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.Enrolment;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
@@ -162,7 +162,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
         dismissalBean.setDismissalType(DismissalType.CURRICULAR_COURSE_CREDITS);
 
         final DegreeCurricularPlan dcp = dismissalBean.getStudentCurricularPlan().getDegreeCurricularPlan();
-        final ExecutionSemester actualEP = ExecutionSemester.findCurrent(dcp.getDegree().getCalendar());
+        final ExecutionInterval actualEP = ExecutionInterval.findFirstCurrentChild(dcp.getDegree().getCalendar());
 
         dismissalBean.setExecutionPeriod(dcp.hasExecutionDegreeFor(actualEP.getExecutionYear()) ? actualEP : dcp
                 .getMostRecentExecutionYear().getFirstExecutionPeriod());

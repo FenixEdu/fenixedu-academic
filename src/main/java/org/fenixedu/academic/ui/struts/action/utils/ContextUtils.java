@@ -34,7 +34,7 @@ import org.fenixedu.academic.domain.CurricularYear;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionDegree;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
@@ -88,7 +88,7 @@ public class ContextUtils {
         if (executionPeriodOID != null) {
             infoExecutionPeriod = ReadExecutionPeriodByOID.run(executionPeriodOID);
         } else {
-            infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(ExecutionSemester.findCurrent(null));
+            infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(ExecutionInterval.findFirstCurrentChild(null));
         }
         if (infoExecutionPeriod != null) {
             // Place it in request
@@ -293,11 +293,11 @@ public class ContextUtils {
         Collections.sort(infoExecutionDegrees, InfoExecutionDegree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME);
         request.setAttribute("executionDegrees", infoExecutionDegrees);
 
-        final List<ExecutionSemester> executionSemesters = ExecutionSemester.readNotClosedExecutionPeriods();
+        final List<ExecutionInterval> executionSemesters = new ArrayList<>(ExecutionInterval.findActiveChilds());
         Collections.sort(executionSemesters);
         final List<InfoExecutionPeriod> infoExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
         final List<LabelValueBean> executionPeriodLabelValueBeans = new ArrayList<LabelValueBean>();
-        for (final ExecutionSemester executionSemester : executionSemesters) {
+        for (final ExecutionInterval executionSemester : executionSemesters) {
             infoExecutionPeriods.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
             final String name = executionSemester.getName() + " - " + executionSemester.getExecutionYear().getYear();
             final LabelValueBean labelValueBean = new LabelValueBean(name, executionSemester.getExternalId().toString());

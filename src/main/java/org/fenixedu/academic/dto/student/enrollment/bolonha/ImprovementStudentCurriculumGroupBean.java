@@ -26,7 +26,7 @@ import java.util.Set;
 
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.EvaluationSeason;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationContext;
 import org.fenixedu.academic.domain.enrolment.EnroledCurriculumModuleWrapper;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
@@ -42,18 +42,18 @@ public class ImprovementStudentCurriculumGroupBean implements Serializable {
         setEvaluationSeason(evaluationSeason);
     }
 
-    public StudentCurriculumGroupBean create(final CurriculumGroup curriculumGroup, final ExecutionSemester executionSemester) {
-        return new StudentCurriculumGroupBean(curriculumGroup, executionSemester, null) {
+    public StudentCurriculumGroupBean create(final CurriculumGroup curriculumGroup, final ExecutionInterval executionInterval) {
+        return new StudentCurriculumGroupBean(curriculumGroup, executionInterval, null) {
 
             @Override
             protected List<IDegreeModuleToEvaluate> buildCourseGroupsToEnrol(CurriculumGroup group,
-                    ExecutionSemester executionSemester) {
+                    ExecutionInterval executionSemester) {
                 return Collections.emptyList();
             }
 
             @Override
             protected List<StudentCurriculumEnrolmentBean> buildCurricularCoursesEnroled(CurriculumGroup group,
-                    ExecutionSemester executionSemester) {
+                    ExecutionInterval executionSemester) {
 
                 List<StudentCurriculumEnrolmentBean> result = new ArrayList<StudentCurriculumEnrolmentBean>();
                 for (CurriculumModule curriculumModule : group.getCurriculumModulesSet()) {
@@ -71,7 +71,7 @@ public class ImprovementStudentCurriculumGroupBean implements Serializable {
 
             @Override
             protected List<IDegreeModuleToEvaluate> buildCurricularCoursesToEnrol(CurriculumGroup group,
-                    ExecutionSemester executionSemester) {
+                    ExecutionInterval executionSemester) {
 
                 final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>();
 
@@ -93,13 +93,13 @@ public class ImprovementStudentCurriculumGroupBean implements Serializable {
 
             @Override
             protected List<StudentCurriculumGroupBean> buildCurriculumGroupsEnroled(CurriculumGroup parentGroup,
-                    ExecutionSemester executionSemester, int[] curricularYears) {
+                    ExecutionInterval executionInterval, int[] curricularYears) {
 
                 final List<StudentCurriculumGroupBean> result = new ArrayList<StudentCurriculumGroupBean>();
 
                 Set<CurriculumGroup> curriculumGroupsToEnrolmentProcess = parentGroup.getCurriculumGroupsToEnrolmentProcess();
                 for (final CurriculumGroup curriculumGroup : curriculumGroupsToEnrolmentProcess) {
-                    result.add(create(curriculumGroup, executionSemester));
+                    result.add(create(curriculumGroup, executionInterval));
                 }
 
                 return result;
@@ -121,8 +121,8 @@ public class ImprovementStudentCurriculumGroupBean implements Serializable {
     }
 
     public static StudentCurriculumGroupBean create(final CurriculumGroup curriculumGroup,
-            final ExecutionSemester executionSemester, final EvaluationSeason evaluationSeason) {
-        return new ImprovementStudentCurriculumGroupBean(evaluationSeason).create(curriculumGroup, executionSemester);
+            final ExecutionInterval executionInterval, final EvaluationSeason evaluationSeason) {
+        return new ImprovementStudentCurriculumGroupBean(evaluationSeason).create(curriculumGroup, executionInterval);
     }
 
     public EvaluationSeason getEvaluationSeason() {

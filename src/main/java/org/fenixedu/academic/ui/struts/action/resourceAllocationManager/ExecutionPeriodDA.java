@@ -37,7 +37,6 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.SchoolClass;
 import org.fenixedu.academic.domain.Shift;
@@ -102,8 +101,8 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
                 ExecutionDegree.filterByAcademicInterval(contextSelectionBean.getAcademicInterval()));
         Collections.sort(executionDegrees, executionDegreeComparator);
         request.setAttribute("executionDegrees", executionDegrees);
-        ExecutionSemester executionSemester =
-                (ExecutionSemester) ExecutionInterval.getExecutionInterval(contextSelectionBean.getAcademicInterval());
+        ExecutionInterval executionSemester =
+                (ExecutionInterval) ExecutionInterval.getExecutionInterval(contextSelectionBean.getAcademicInterval());
         request.setAttribute("executionSemester", executionSemester);
 
         AcademicCalendarEntry academicCalendarEntry = contextSelectionBean.getAcademicInterval().getAcademicCalendarEntry();
@@ -162,7 +161,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
     @Atomic
     private Map<ExecutionDegree, Integer> setFirstYearShiftsCapacity(Boolean toBlock, ExecutionYear executionYear) {
 
-        final ExecutionSemester executionSemester = executionYear.getFirstExecutionPeriod();
+        final ExecutionInterval executionInterval = executionYear.getFirstExecutionPeriod();
 
         final Map<Shift, Set<ExecutionDegree>> shiftsDegrees = new HashMap<Shift, Set<ExecutionDegree>>();
         final Set<Shift> shifts = new HashSet<Shift>();
@@ -172,12 +171,12 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
                 .readAllMatching(DegreeType.oneOf(DegreeType::isBolonhaDegree, DegreeType::isIntegratedMasterDegree))) {
             for (final DegreeCurricularPlan degreeCurricularPlan : degree.getActiveDegreeCurricularPlans()) {
                 final ExecutionDegree executionDegree = degreeCurricularPlan
-                        .getExecutionDegreeByAcademicInterval(executionSemester.getExecutionYear().getAcademicInterval());
+                        .getExecutionDegreeByAcademicInterval(executionInterval.getExecutionYear().getAcademicInterval());
 
                 if (executionDegree != null) {
                     for (final SchoolClass schoolClass : executionDegree.getSchoolClassesSet()) {
                         if (schoolClass.getAnoCurricular().equals(FIRST_CURRICULAR_YEAR)
-                                && schoolClass.getExecutionInterval() == executionSemester) {
+                                && schoolClass.getExecutionInterval() == executionInterval) {
                             for (final Shift shift : schoolClass.getAssociatedShiftsSet()) {
                                 Set<ExecutionDegree> executionDegrees = shiftsDegrees.get(shift);
                                 if (executionDegrees == null) {

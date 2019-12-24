@@ -24,7 +24,7 @@ import java.util.Collection;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
@@ -40,7 +40,7 @@ public class DismissalBean implements Serializable, IStudentCurricularPlanBean {
     static private final long serialVersionUID = 1L;
 
     private StudentCurricularPlan studentCurricularPlan;
-    private ExecutionSemester executionSemester;
+    private ExecutionInterval executionInterval;
     private Collection<SelectedCurricularCourse> dismissals;
     private Collection<SelectedOptionalCurricularCourse> optionalDismissals;
     private CourseGroup courseGroup;
@@ -145,12 +145,12 @@ public class DismissalBean implements Serializable, IStudentCurricularPlanBean {
         this.studentCurricularPlan = studentCurricularPlan;
     }
 
-    public ExecutionSemester getExecutionPeriod() {
-        return this.executionSemester;
+    public ExecutionInterval getExecutionPeriod() {
+        return this.executionInterval;
     }
 
-    public void setExecutionPeriod(ExecutionSemester executionSemester) {
-        this.executionSemester = executionSemester;
+    public void setExecutionPeriod(ExecutionInterval executionInterval) {
+        this.executionInterval = executionInterval;
     }
 
     public DismissalType getDismissalType() {
@@ -216,7 +216,7 @@ public class DismissalBean implements Serializable, IStudentCurricularPlanBean {
     }
 
     public Collection<? extends CurricularCourse> getAllCurricularCoursesToDismissal() {
-        return studentCurricularPlan.getAllCurricularCoursesToDismissal(executionSemester);
+        return studentCurricularPlan.getAllCurricularCoursesToDismissal(executionInterval);
     }
 
     public static class SelectedCurricularCourse implements Serializable {

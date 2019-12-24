@@ -26,7 +26,6 @@ import java.util.Set;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Grade;
 import org.fenixedu.academic.domain.IEnrolment;
@@ -74,7 +73,7 @@ public class Credits extends Credits_Base {
         if (executionInterval == null) {
             throw new DomainException("error.credits.wrong.arguments");
         }
-        setExecutionPeriod(executionInterval.convert(ExecutionSemester.class));
+        setExecutionPeriod(executionInterval);
     }
 
     protected void init(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, Collection<IEnrolment> enrolments,

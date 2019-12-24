@@ -37,7 +37,6 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
 import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
@@ -861,9 +860,7 @@ public class CourseGroup extends CourseGroup_Base {
     public Context createContext(final ExecutionInterval begin, final ExecutionInterval end, final DegreeModule degreeModule,
             final CurricularPeriod curricularPeriod) {
 
-        final Context context = new Context(this, degreeModule, curricularPeriod,
-                ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class, begin),
-                ExecutionInterval.assertExecutionIntervalType(ExecutionSemester.class, end));
+        final Context context = new Context(this, degreeModule, curricularPeriod, begin, end);
 
         /**
          * Degree module requires a context first to answer about

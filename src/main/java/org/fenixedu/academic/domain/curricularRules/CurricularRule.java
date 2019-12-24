@@ -21,7 +21,6 @@ package org.fenixedu.academic.domain.curricularRules;
 import java.util.List;
 
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleExecutorFactory;
@@ -67,8 +66,8 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
         checkExecutionPeriods(begin, end);
         setDegreeModuleToApplyRule(degreeModuleToApplyRule);
         setContextCourseGroup(contextCourseGroup);
-        setBegin(begin.convert(ExecutionSemester.class));
-        setEnd(end == null ? null : end.convert(ExecutionSemester.class));
+        setBegin(begin);
+        setEnd(end);
     }
 
     protected void checkParameters(final DegreeModule degreeModuleToApplyRule, final ExecutionInterval begin) {
@@ -79,8 +78,8 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
 
     protected void edit(ExecutionInterval beginExecutionPeriod, ExecutionInterval endExecutionPeriod) {
         checkExecutionPeriods(beginExecutionPeriod, endExecutionPeriod);
-        setBegin(beginExecutionPeriod.convert(ExecutionSemester.class));
-        setEnd(endExecutionPeriod == null ? null : endExecutionPeriod.convert(ExecutionSemester.class));
+        setBegin(beginExecutionPeriod);
+        setEnd(endExecutionPeriod);
     }
 
     public void delete() {

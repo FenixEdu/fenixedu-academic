@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
@@ -35,8 +35,8 @@ public class ExecutionSemestersProvider implements DataProvider {
     @Override
     public Object provide(Object source, Object currentValue) {
 
-        final List<ExecutionSemester> executionSemesters =
-                new ArrayList<ExecutionSemester>(Bennu.getInstance().getExecutionPeriodsSet());
+        final List<ExecutionInterval> executionSemesters =
+                new ArrayList<ExecutionInterval>(Bennu.getInstance().getExecutionPeriodsSet());
 
         Collections.sort(executionSemesters, new ReverseComparator());
 

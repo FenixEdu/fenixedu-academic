@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
@@ -44,7 +44,7 @@ public class BolonhaStudentEnrollmentBean implements Serializable, IStudentCurri
 
     private StudentCurricularPlan studentCurricularPlan;
 
-    private ExecutionSemester executionSemester;
+    private ExecutionInterval executionInterval;
 
     private StudentCurriculumGroupBean rootStudentCurriculumGroupBean;
 
@@ -76,19 +76,20 @@ public class BolonhaStudentEnrollmentBean implements Serializable, IStudentCurri
     }
 
     public BolonhaStudentEnrollmentBean(final StudentCurricularPlan studentCurricularPlan,
-            final ExecutionSemester executionSemester, final int[] curricularYears, CurricularRuleLevel curricularRuleLevel) {
-        this(studentCurricularPlan, executionSemester, new StudentCurriculumGroupBean(studentCurricularPlan.getRoot(),
-                executionSemester, curricularYears), curricularRuleLevel);
+            final ExecutionInterval executionInterval, final int[] curricularYears, CurricularRuleLevel curricularRuleLevel) {
+        this(studentCurricularPlan, executionInterval,
+                new StudentCurriculumGroupBean(studentCurricularPlan.getRoot(), executionInterval, curricularYears),
+                curricularRuleLevel);
 
         setEndStageDate(studentCurricularPlan.getEndStageDate());
     }
 
     protected BolonhaStudentEnrollmentBean(final StudentCurricularPlan studentCurricularPlan,
-            final ExecutionSemester executionSemester, final StudentCurriculumGroupBean rootStudentCurriculumGroupBean,
+            final ExecutionInterval executionInterval, final StudentCurriculumGroupBean rootStudentCurriculumGroupBean,
             CurricularRuleLevel curricularRuleLevel) {
         super();
         setStudentCurricularPlan(studentCurricularPlan);
-        setExecutionPeriod(executionSemester);
+        setExecutionPeriod(executionInterval);
         setRootStudentCurriculumGroupBean(rootStudentCurriculumGroupBean);
 
         setDegreeModulesToEvaluate(new ArrayList<IDegreeModuleToEvaluate>());
@@ -105,12 +106,12 @@ public class BolonhaStudentEnrollmentBean implements Serializable, IStudentCurri
         this.studentCurricularPlan = studentCurricularPlan;
     }
 
-    public ExecutionSemester getExecutionPeriod() {
-        return this.executionSemester;
+    public ExecutionInterval getExecutionPeriod() {
+        return this.executionInterval;
     }
 
-    public void setExecutionPeriod(ExecutionSemester executionSemester) {
-        this.executionSemester = executionSemester;
+    public void setExecutionPeriod(ExecutionInterval executionInterval) {
+        this.executionInterval = executionInterval;
     }
 
     public StudentCurriculumGroupBean getRootStudentCurriculumGroupBean() {

@@ -25,7 +25,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import org.fenixedu.academic.domain.student.Student;
@@ -45,22 +45,23 @@ import org.joda.time.LocalDate;
 public class AcademicAdminOfficeBolonhaStudentEnrollmentDA extends AbstractBolonhaStudentEnrollmentDA {
 
     @Override
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
         return prepareShowDegreeModulesToEnrol(mapping, form, request, response, getStudentCurricularPlan(request),
                 getExecutionPeriod(request));
     }
 
     @Override
     protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
+            HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionInterval executionInterval) {
 
         request.setAttribute("action", getAction());
-        addDebtsWarningMessages(studentCurricularPlan.getRegistration().getStudent(), executionSemester, request);
+        addDebtsWarningMessages(studentCurricularPlan.getRegistration().getStudent(), executionInterval, request);
 
-        return super.prepareShowDegreeModulesToEnrol(mapping, form, request, response, studentCurricularPlan, executionSemester);
+        return super.prepareShowDegreeModulesToEnrol(mapping, form, request, response, studentCurricularPlan, executionInterval);
     }
 
-    protected void addDebtsWarningMessages(final Student student, final ExecutionSemester executionSemester,
+    protected void addDebtsWarningMessages(final Student student, final ExecutionInterval executionInterval,
             final HttpServletRequest request) {
         if (TreasuryBridgeAPIFactory.implementation().isAcademicalActsBlocked(student.getPerson(), new LocalDate())) {
             addActionMessage("warning", request, "label.student.events.in.debt.unpayed.warning");
@@ -71,7 +72,7 @@ public class AcademicAdminOfficeBolonhaStudentEnrollmentDA extends AbstractBolon
         return getDomainObject(request, "scpID");
     }
 
-    protected ExecutionSemester getExecutionPeriod(final HttpServletRequest request) {
+    protected ExecutionInterval getExecutionPeriod(final HttpServletRequest request) {
         return getDomainObject(request, "executionPeriodID");
     }
 

@@ -18,14 +18,16 @@
  */
 package org.fenixedu.academic.dto.administrativeOffice.studentEnrolment;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
 
+//TODO: DELETE
+@Deprecated
 public class MobilityExtraEnrolmentBean extends StudentExtraEnrolmentBean {
 
-    public MobilityExtraEnrolmentBean(StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
-        super(studentCurricularPlan, executionSemester);
+    public MobilityExtraEnrolmentBean(StudentCurricularPlan studentCurricularPlan, ExecutionInterval executionInterval) {
+        super(studentCurricularPlan, executionInterval);
     }
 
     @Override

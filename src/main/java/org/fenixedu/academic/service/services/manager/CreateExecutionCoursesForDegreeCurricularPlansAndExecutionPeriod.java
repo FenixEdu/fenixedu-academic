@@ -30,7 +30,7 @@ import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Pair;
 
@@ -45,11 +45,11 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod {
 
     @Atomic
     public static HashMap<String, Pair<Integer, String>> run(String[] degreeCurricularPlansIDs, String executionPeriodID) {
-        final ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodID);
-        if (executionSemester == null) {
+        final ExecutionInterval executionInterval = FenixFramework.getDomainObject(executionPeriodID);
+        if (executionInterval == null) {
             throw new DomainException("error.selection.noPeriod");
         }
-        final Set<String> existentsExecutionCoursesSiglas = readExistingExecutionCoursesSiglas(executionSemester);
+        final Set<String> existentsExecutionCoursesSiglas = readExistingExecutionCoursesSiglas(executionInterval);
 
         if (degreeCurricularPlansIDs.length == 0) {
             throw new DomainException("error.selection.noDegree");
@@ -63,15 +63,15 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod {
             final Collection<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCoursesSet();
             for (final CurricularCourse curricularCourse : curricularCourses) {
 
-                if (curricularCourse.isOptionalCurricularCourse() || !curricularCourse.hasAnyActiveContext(executionSemester)) {
+                if (curricularCourse.isOptionalCurricularCourse() || !curricularCourse.hasAnyActiveContext(executionInterval)) {
                     continue;
                 }
-                if (curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester).isEmpty()) {
+                if (curricularCourse.getExecutionCoursesByExecutionPeriod(executionInterval).isEmpty()) {
                     final String originalCode = getCodeForCurricularCourse(curricularCourse);
                     if (originalCode != null) {
                         final String sigla = getUniqueSigla(existentsExecutionCoursesSiglas, originalCode);
                         final ExecutionCourse executionCourse =
-                                new ExecutionCourse(curricularCourse.getName(), sigla, executionSemester, null);
+                                new ExecutionCourse(curricularCourse.getName(), sigla, executionInterval, null);
                         curricularCourse.addAssociatedExecutionCourses(executionCourse);
                         numberExecutionCourses++;
                         curricularCodes.append(curricularCourse.getAcronym() + ", ");
@@ -115,9 +115,9 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod {
         return sigla;
     }
 
-    private static Set<String> readExistingExecutionCoursesSiglas(final ExecutionSemester executionSemester) {
+    private static Set<String> readExistingExecutionCoursesSiglas(final ExecutionInterval executionInterval) {
         final Set<String> existingExecutionCoursesSiglas = new HashSet<String>();
-        for (ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
+        for (ExecutionCourse executionCourse : executionInterval.getAssociatedExecutionCoursesSet()) {
             existingExecutionCoursesSiglas.add(executionCourse.getSigla().toUpperCase());
         }
         return existingExecutionCoursesSiglas;

@@ -32,11 +32,11 @@ import java.util.stream.StreamSupport;
 import org.fenixedu.academic.domain.CurricularYearList;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.OccupationPeriod;
 import org.fenixedu.academic.domain.OccupationPeriodReference;
 import org.fenixedu.academic.domain.OccupationPeriodType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.date.IntervalTools;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -82,7 +82,7 @@ public class OccupationPeriodBean implements Serializable, Comparable<Occupation
 
         this.id = id;
 
-        this.semester = ExecutionSemester.findCurrent(null).getSemester();
+        this.semester = ExecutionInterval.findCurrentChild(AcademicPeriod.SEMESTER, null).getChildOrder();
 
         this.occupationPeriodType = OccupationPeriodType.LESSONS;
 

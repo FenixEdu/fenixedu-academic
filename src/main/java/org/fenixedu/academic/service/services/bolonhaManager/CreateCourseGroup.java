@@ -19,7 +19,7 @@
 package org.fenixedu.academic.service.services.bolonhaManager;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
@@ -49,10 +49,10 @@ public class CreateCourseGroup {
             throw new FenixServiceException("error.CreateCourseGroup.beginExecutionPeriod.required");
         }
 
-        final ExecutionSemester beginExecutionPeriod = FenixFramework.getDomainObject(beginExecutionPeriodID);
+        final ExecutionInterval beginExecutionPeriod = FenixFramework.getDomainObject(beginExecutionPeriodID);
 
-        final ExecutionSemester endExecutionPeriod =
-                (endExecutionPeriodID == null) ? null : FenixFramework.<ExecutionSemester> getDomainObject(endExecutionPeriodID);
+        final ExecutionInterval endExecutionPeriod =
+                (endExecutionPeriodID == null) ? null : FenixFramework.<ExecutionInterval> getDomainObject(endExecutionPeriodID);
 
         ProgramConclusion programConclusion = null;
         if (!Strings.isNullOrEmpty(programConclusionID)) {

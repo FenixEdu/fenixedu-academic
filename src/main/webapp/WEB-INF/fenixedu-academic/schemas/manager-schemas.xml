@@ -463,7 +463,7 @@
 	<slot name="degreeCurricularPlan.name" key="label.curricularPlan" />
 </schema>
 
-<schema name="EditExecutionPeriodSchema" type="org.fenixedu.academic.domain.ExecutionSemester" bundle="MANAGER_RESOURCES">
+<schema name="EditExecutionPeriodSchema" type="org.fenixedu.academic.domain.ExecutionInterval" bundle="MANAGER_RESOURCES">
 	<slot name="beginDateYearMonthDay" key="label.executionPeriod.beginDate" />
 	<slot name="endDateYearMonthDay" key="label.executionPeriod.endDate" />
 </schema>

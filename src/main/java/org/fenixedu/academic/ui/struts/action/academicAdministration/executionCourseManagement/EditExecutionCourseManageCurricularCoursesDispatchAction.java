@@ -41,7 +41,6 @@ import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.InfoCurricularCourse;
@@ -160,7 +159,7 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
         }
         RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
         RequestUtils.getAndSetStringToRequest(request, "executionCourseName");
-        ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodId);
+        ExecutionInterval executionSemester = FenixFramework.getDomainObject(executionPeriodId);
         request.setAttribute("executionPeriodName", executionSemester.getQualifiedName());
         return mapping.findForward("prepareAssociateCurricularCourseChooseDegreeCurricularPlan");
     }
@@ -180,7 +179,7 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
             request.setAttribute("originExecutionDegreeName", executionDegree.getPresentationName());
         }
         String executionPeriodId = RequestUtils.getAndSetStringToRequest(request, "executionPeriodId");
-        ExecutionSemester executionPeriod = FenixFramework.getDomainObject(executionPeriodId);
+        ExecutionInterval executionPeriod = FenixFramework.getDomainObject(executionPeriodId);
         request.setAttribute("executionPeriodName", executionPeriod.getQualifiedName());
         RequestUtils.getAndSetStringToRequest(request, "executionCourseName");
 

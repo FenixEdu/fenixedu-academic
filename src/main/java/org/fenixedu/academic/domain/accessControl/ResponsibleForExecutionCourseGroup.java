@@ -23,7 +23,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.ExecutionCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
@@ -53,8 +53,8 @@ public class ResponsibleForExecutionCourseGroup extends FenixGroup {
         Set<User> users = new HashSet<>();
         for (final ExecutionYear executionYear : Bennu.getInstance().getExecutionYearsSet()) {
             if (executionYear.isCurrent()) {
-                for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
-                    for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
+                for (final ExecutionInterval executionInterval : executionYear.getExecutionPeriodsSet()) {
+                    for (final ExecutionCourse executionCourse : executionInterval.getAssociatedExecutionCoursesSet()) {
                         for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
                             if (professorship.getResponsibleFor().booleanValue()) {
                                 User user = professorship.getPerson().getUser();

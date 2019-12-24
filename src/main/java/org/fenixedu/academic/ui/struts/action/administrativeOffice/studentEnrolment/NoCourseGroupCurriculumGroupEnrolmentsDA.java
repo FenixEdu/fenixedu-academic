@@ -27,7 +27,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.Enrolment;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -56,7 +56,7 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         final NoCourseGroupEnrolmentBean bean =
-                createNoCourseGroupEnrolmentBean(getStudentCurricularPlan(request), getExecutionSemester(request));
+                createNoCourseGroupEnrolmentBean(getStudentCurricularPlan(request), getExecutionInterval(request));
         return showExtraEnrolments(bean, mapping, actionForm, request, response);
     }
 
@@ -64,7 +64,7 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
         return FenixFramework.getDomainObject(request.getParameter("scpID"));
     }
 
-    protected ExecutionSemester getExecutionSemester(final HttpServletRequest request) {
+    protected ExecutionInterval getExecutionInterval(final HttpServletRequest request) {
         return FenixFramework.getDomainObject(request.getParameter("executionPeriodID"));
     }
 
@@ -85,7 +85,7 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
     }
 
     abstract protected NoCourseGroupEnrolmentBean createNoCourseGroupEnrolmentBean(
-            final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester);
+            final StudentCurricularPlan studentCurricularPlan, final ExecutionInterval executionInterval);
 
     public ActionForward postBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
@@ -139,11 +139,11 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
 
         final Enrolment enrolment = getEnrolment(request);
         final StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(request);
-        final ExecutionSemester executionSemester = getExecutionSemester(request);
+        final ExecutionInterval executionInterval = getExecutionInterval(request);
 
         try {
             studentCurricularPlan.removeCurriculumModulesFromNoCourseGroupCurriculumGroup(
-                    Collections.<CurriculumModule> singletonList(enrolment), executionSemester, getGroupType());
+                    Collections.<CurriculumModule> singletonList(enrolment), executionInterval, getGroupType());
 
         } catch (final IllegalDataAccessException e) {
             addActionMessage("error", request, "error.notAuthorized");
@@ -155,7 +155,7 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
             addActionMessage("error", request, e.getMessage());
         }
 
-        return showExtraEnrolments(createNoCourseGroupEnrolmentBean(studentCurricularPlan, executionSemester), mapping,
+        return showExtraEnrolments(createNoCourseGroupEnrolmentBean(studentCurricularPlan, executionInterval), mapping,
                 actionForm, request, response);
     }
 

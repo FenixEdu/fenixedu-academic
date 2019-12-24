@@ -28,9 +28,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ExecutionCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.manager.MergeExecutionCourses;
 import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication.AcademicAdminExecutionsApp;
@@ -75,7 +76,7 @@ public class MergeExecutionCourseDA extends FenixDispatchAction {
         RenderUtils.invalidateViewState();
 
         AcademicInterval choosedSemester = degreeBean.getAcademicInterval();
-        AcademicInterval actualSemester = ExecutionSemester.findCurrent(null).getAcademicInterval();
+        AcademicInterval actualSemester = ExecutionInterval.findCurrentChild(AcademicPeriod.SEMESTER, null).getAcademicInterval();
 
         previousOrEqualSemester = choosedSemester.isBefore(actualSemester) || choosedSemester.isEqualOrEquivalent(actualSemester);
 

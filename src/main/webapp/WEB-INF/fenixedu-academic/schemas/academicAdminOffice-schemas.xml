@@ -811,7 +811,7 @@
 	<slot name="executionPeriod" layout="menu-select-postback" key="label.executionPeriod" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionPeriodsForDismissalsStudentCurricularPlanProvider" />
 		<property name="destination" value="dismissalTypePostBack"/>
-		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
+		<property name="format" value="${qualifiedName}" />
 	</slot>		
 	<slot name="dismissalType" layout="radio-postback" key="label.dismissalType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="bundle" value="ACADEMIC_OFFICE_RESOURCES"/>

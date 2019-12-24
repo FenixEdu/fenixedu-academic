@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.log.CurriculumLineLog;
 import org.fenixedu.academic.domain.log.EnrolmentLog;
 import org.fenixedu.academic.domain.student.Registration;
@@ -74,7 +74,7 @@ public class CurriculumLineLogsDA extends FenixDispatchAction {
     }
 
     private Collection<CurriculumLineLog> getCurriculumLineLogs(final Student student,
-            final ExecutionSemester executionSemester) {
+            final ExecutionInterval executionSemester) {
         final Collection<CurriculumLineLog> res = new HashSet<>();
         for (final Registration registration : student.getRegistrationsSet()) {
             res.addAll(registration.getCurriculumLineLogs(executionSemester));
@@ -90,7 +90,7 @@ public class CurriculumLineLogsDA extends FenixDispatchAction {
         final int[] enrolments;
         final int[] unenrolments;
 
-        public CurriculumLineLogStatisticsCalculator(final ExecutionSemester executionSemester) {
+        public CurriculumLineLogStatisticsCalculator(final ExecutionInterval executionSemester) {
             enrolmentPeriod = findEnrolmentPeriod(executionSemester);
             final long start = enrolmentPeriod.getStart().getMillis();
             final long durationMillis = enrolmentPeriod.toDurationMillis();
@@ -128,7 +128,7 @@ public class CurriculumLineLogsDA extends FenixDispatchAction {
             return unenrolments;
         }
 
-        private Interval findEnrolmentPeriod(final ExecutionSemester executionSemester) {
+        private Interval findEnrolmentPeriod(final ExecutionInterval executionSemester) {
             return null;
         }
 
@@ -137,7 +137,7 @@ public class CurriculumLineLogsDA extends FenixDispatchAction {
     public ActionForward viewCurriculumLineLogStatistics(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        final ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterId");
+        final ExecutionInterval executionSemester = getDomainObject(request, "executionSemesterId");
 
         if (executionSemester != null) {
             request.setAttribute("executionSemester", executionSemester);

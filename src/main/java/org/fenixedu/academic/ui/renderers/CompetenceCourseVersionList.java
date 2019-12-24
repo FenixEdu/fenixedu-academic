@@ -27,7 +27,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.Department;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
@@ -603,11 +603,11 @@ public class CompetenceCourseVersionList extends OutputRenderer {
                 container.addChild(new HtmlText(" ("));
                 container.addChild(getFutureTransferMessage(course));
                 container.addChild(new HtmlText(") "));
-            } else if (course.getDepartmentUnit(ExecutionSemester.readLastExecutionSemester()) != department) {
+            } else if (course.getDepartmentUnit(ExecutionInterval.findLastChild()) != department) {
                 container.addChild(new HtmlText(" ("));
                 container.addChild(getFutureDepartmentMessage(course));
                 container.addChild(new HtmlText(") "));
-            } else if (course.getCompetenceCourseGroupUnit(ExecutionSemester.readLastExecutionSemester()) != group) {
+            } else if (course.getCompetenceCourseGroupUnit(ExecutionInterval.findLastChild()) != group) {
                 container.addChild(new HtmlText(" ("));
                 container.addChild(getFutureGroupMessage(course));
                 container.addChild(new HtmlText(") "));
@@ -618,18 +618,16 @@ public class CompetenceCourseVersionList extends OutputRenderer {
 
         private HtmlComponent getFutureDepartmentMessage(CompetenceCourse course) {
             setFutureDepartmentMessageShown(true);
-            HtmlText text =
-                    new HtmlText(BundleUtil.getString(Bundle.BOLONHA, "future.department") + ": "
-                            + course.getDepartmentUnit(ExecutionSemester.readLastExecutionSemester()).getAcronym());
+            HtmlText text = new HtmlText(BundleUtil.getString(Bundle.BOLONHA, "future.department") + ": "
+                    + course.getDepartmentUnit(ExecutionInterval.findLastChild()).getAcronym());
             text.setClasses(getMessageClass());
             return text;
         }
 
         private HtmlComponent getFutureGroupMessage(CompetenceCourse course) {
             setFutureGroupMessageShown(true);
-            HtmlText text =
-                    new HtmlText(BundleUtil.getString(Bundle.BOLONHA, "future.group") + ": "
-                            + course.getCompetenceCourseGroupUnit(ExecutionSemester.readLastExecutionSemester()).getName());
+            HtmlText text = new HtmlText(BundleUtil.getString(Bundle.BOLONHA, "future.group") + ": "
+                    + course.getCompetenceCourseGroupUnit(ExecutionInterval.findLastChild()).getName());
             text.setClasses(getMessageClass());
             return text;
         }
@@ -661,9 +659,8 @@ public class CompetenceCourseVersionList extends OutputRenderer {
 
         private HtmlComponent getOldDepartmentMessage(CompetenceCourse course) {
             setOldDepartmentMessageShown(true);
-            HtmlText text =
-                    new HtmlText(BundleUtil.getString(Bundle.BOLONHA, "current.department") + ": "
-                            + course.getDepartmentUnit().getAcronym());
+            HtmlText text = new HtmlText(
+                    BundleUtil.getString(Bundle.BOLONHA, "current.department") + ": " + course.getDepartmentUnit().getAcronym());
             text.setClasses(getMessageClass());
             return text;
         }

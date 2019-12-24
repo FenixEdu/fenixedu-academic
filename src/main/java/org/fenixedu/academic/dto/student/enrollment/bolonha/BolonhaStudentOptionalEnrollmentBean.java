@@ -23,7 +23,7 @@ import java.io.Serializable;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degree.DegreeType;
@@ -40,7 +40,7 @@ public class BolonhaStudentOptionalEnrollmentBean implements Serializable {
 
     private DegreeCurricularPlan degreeCurricularPlan;
 
-    private ExecutionSemester executionSemester;
+    private ExecutionInterval executionInterval;
 
     private CurricularCourse selectedOptionalCurricularCourse;
 
@@ -49,10 +49,10 @@ public class BolonhaStudentOptionalEnrollmentBean implements Serializable {
     private IDegreeModuleToEvaluate selectedDegreeModuleToEnrol;
 
     public BolonhaStudentOptionalEnrollmentBean(final StudentCurricularPlan studentCurricularPlan,
-            final ExecutionSemester executionSemester, final IDegreeModuleToEvaluate degreeModuleToEnrol) {
+            final ExecutionInterval executionInterval, final IDegreeModuleToEvaluate degreeModuleToEnrol) {
         super();
 
-        setExecutionPeriod(executionSemester);
+        setExecutionPeriod(executionInterval);
         setSelectedDegreeModuleToEnrol(degreeModuleToEnrol);
         setStudentCurricularPlan(studentCurricularPlan);
 
@@ -90,12 +90,12 @@ public class BolonhaStudentOptionalEnrollmentBean implements Serializable {
         this.degreeCurricularPlan = degreeCurricularPlan;
     }
 
-    public ExecutionSemester getExecutionPeriod() {
-        return this.executionSemester;
+    public ExecutionInterval getExecutionPeriod() {
+        return this.executionInterval;
     }
 
-    public void setExecutionPeriod(ExecutionSemester executionSemester) {
-        this.executionSemester = executionSemester;
+    public void setExecutionPeriod(ExecutionInterval executionInterval) {
+        this.executionInterval = executionInterval;
     }
 
     public ExecutionYear getExecutionYear() {

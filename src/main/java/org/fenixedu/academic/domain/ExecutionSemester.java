@@ -28,14 +28,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
-import org.joda.time.YearMonthDay;
 
 /**
  * Created on 11/Fev/2003

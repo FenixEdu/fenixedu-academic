@@ -26,7 +26,7 @@ import java.util.Map;
 import javax.faces.context.FacesContext;
 
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation;
@@ -140,8 +140,8 @@ public class UICurricularCourse extends UIDegreeModule {
 
         final Map<String, String> requestParameterMap = this.facesContext.getExternalContext().getRequestParameterMap();
         if (this.executionYear != null) {
-            final ExecutionSemester executionSemester = this.executionYear.getLastExecutionPeriod();
-            href.append("&executionPeriodOID=").append(executionSemester.getExternalId());
+            final ExecutionInterval executionInterval = this.executionYear.getLastExecutionPeriod();
+            href.append("&executionPeriodOID=").append(executionInterval.getExternalId());
         } else if (requestParameterMap.get("executionPeriodOID") != null) {
             href.append("&executionPeriodOID=").append(requestParameterMap.get("executionPeriodOID"));
         }

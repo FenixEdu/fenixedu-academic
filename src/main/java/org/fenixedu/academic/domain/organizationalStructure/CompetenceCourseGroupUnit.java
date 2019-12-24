@@ -29,7 +29,7 @@ import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Department;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -138,7 +138,7 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
                 result.add(competenceInformation.getCompetenceCourse());
             }
             if (competenceInformation.getCompetenceCourse()
-                    .getCompetenceCourseGroupUnit(ExecutionSemester.readLastExecutionSemester()) == this) {
+                    .getCompetenceCourseGroupUnit(ExecutionInterval.findLastChild()) == this) {
                 result.add(competenceInformation.getCompetenceCourse());
             }
         }

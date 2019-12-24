@@ -26,11 +26,13 @@ import java.util.List;
 import javax.faces.model.SelectItem;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.ExecutionDegree;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.GradeScale;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.dto.commons.CurricularCourseByExecutionSemesterBean;
 import org.fenixedu.academic.service.services.bolonhaManager.AddContextToCurricularCourse;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
@@ -255,11 +257,24 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
     }
 
     private List<SelectItem> readPreBolonhaExecutionPeriodItems() {
-        final List<ExecutionSemester> semesters = new ArrayList<ExecutionSemester>(rootDomainObject.getExecutionPeriodsSet());
-        Collections.sort(semesters, new ReverseComparator(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
+
+        final Comparator<ExecutionInterval> comparator = new Comparator<ExecutionInterval>() {
+
+            @Override
+            public int compare(final ExecutionInterval o1, final ExecutionInterval o2) {
+                final AcademicInterval ai1 = o1.getAcademicInterval();
+                final AcademicInterval ai2 = o2.getAcademicInterval();
+                final int c = ai1.getStartDateTimeWithoutChronology().compareTo(ai2.getStartDateTimeWithoutChronology());
+                return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
+            }
+
+        };
+
+        final List<ExecutionInterval> semesters = new ArrayList<ExecutionInterval>(rootDomainObject.getExecutionPeriodsSet());
+        Collections.sort(semesters, new ReverseComparator(comparator));
 
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        for (final ExecutionSemester semester : semesters) {
+        for (final ExecutionInterval semester : semesters) {
             result.add(new SelectItem(semester.getExternalId(), semester.getQualifiedName()));
         }
         return result;

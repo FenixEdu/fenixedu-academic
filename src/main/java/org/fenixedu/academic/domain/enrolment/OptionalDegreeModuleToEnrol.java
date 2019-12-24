@@ -20,7 +20,6 @@ package org.fenixedu.academic.domain.enrolment;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
@@ -31,9 +30,9 @@ public class OptionalDegreeModuleToEnrol extends DegreeModuleToEnrol {
 
     private CurricularCourse curricularCourse;
 
-    public OptionalDegreeModuleToEnrol(CurriculumGroup curriculumGroup, Context context, ExecutionSemester executionSemester,
+    public OptionalDegreeModuleToEnrol(CurriculumGroup curriculumGroup, Context context, ExecutionInterval executionInterval,
             CurricularCourse curricularCourse) {
-        super(curriculumGroup, context, executionSemester);
+        super(curriculumGroup, context, executionInterval);
         setCurricularCourse(curricularCourse);
 
     }

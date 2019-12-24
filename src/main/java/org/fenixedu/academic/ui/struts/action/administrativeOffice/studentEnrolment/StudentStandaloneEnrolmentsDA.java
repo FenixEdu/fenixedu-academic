@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import org.fenixedu.academic.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
@@ -37,8 +37,7 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 @Mapping(path = "/studentStandaloneEnrolments", module = "academicAdministration", functionality = SearchForStudentsDA.class)
-@Forwards({
-        @Forward(name = "showExtraEnrolments", path = "/academicAdminOffice/showNoCourseGroupCurriculumGroupEnrolments.jsp"),
+@Forwards({ @Forward(name = "showExtraEnrolments", path = "/academicAdminOffice/showNoCourseGroupCurriculumGroupEnrolments.jsp"),
         @Forward(name = "chooseExtraEnrolment", path = "/academicAdminOffice/chooseNoCourseGroupCurriculumGroupEnrolment.jsp"),
         @Forward(name = "showDegreeModulesToEnrol",
                 path = "/academicAdministration/studentEnrolments.do?method=prepareFromExtraEnrolment") })
@@ -46,8 +45,8 @@ public class StudentStandaloneEnrolmentsDA extends NoCourseGroupCurriculumGroupE
 
     @Override
     protected StudentStandaloneEnrolmentBean createNoCourseGroupEnrolmentBean(final StudentCurricularPlan studentCurricularPlan,
-            final ExecutionSemester executionSemester) {
-        return new StudentStandaloneEnrolmentBean(studentCurricularPlan, executionSemester);
+            final ExecutionInterval executionInterval) {
+        return new StudentStandaloneEnrolmentBean(studentCurricularPlan, executionInterval);
     }
 
     @Override
@@ -63,9 +62,9 @@ public class StudentStandaloneEnrolmentsDA extends NoCourseGroupCurriculumGroupE
     @Override
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        final ExecutionSemester semester = getExecutionSemester(request);
-        if (isStudentInPartialRegime(request, semester)) {
-            addActionMessage("error", request, "error.Student.has.partial.regime", semester.getQualifiedName());
+        final ExecutionInterval executionInterval = getExecutionInterval(request);
+        if (isStudentInPartialRegime(request, executionInterval)) {
+            addActionMessage("error", request, "error.Student.has.partial.regime", executionInterval.getQualifiedName());
         }
         return super.prepare(mapping, actionForm, request, response);
     }
@@ -92,8 +91,8 @@ public class StudentStandaloneEnrolmentsDA extends NoCourseGroupCurriculumGroupE
         return mapping.findForward("chooseExtraEnrolment");
     }
 
-    private boolean isStudentInPartialRegime(final HttpServletRequest request, final ExecutionSemester semester) {
-        return getStudentCurricularPlan(request).getRegistration().isPartialRegime(semester.getExecutionYear());
+    private boolean isStudentInPartialRegime(final HttpServletRequest request, final ExecutionInterval interval) {
+        return getStudentCurricularPlan(request).getRegistration().isPartialRegime(interval.getExecutionYear());
     }
 
 }

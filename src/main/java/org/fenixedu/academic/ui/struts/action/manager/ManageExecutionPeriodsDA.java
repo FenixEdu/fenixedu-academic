@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
 import org.fenixedu.academic.service.services.manager.AlterExecutionPeriodState;
@@ -61,7 +61,7 @@ public class ManageExecutionPeriodsDA extends FenixDispatchAction {
     @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        List<ExecutionSemester> periods = new ArrayList<>(Bennu.getInstance().getExecutionPeriodsSet());
+        List<ExecutionInterval> periods = new ArrayList<>(Bennu.getInstance().getExecutionPeriodsSet());
         Collections.sort(periods);
         request.setAttribute("periods", periods);
         return mapping.findForward("Manage");
@@ -88,7 +88,7 @@ public class ManageExecutionPeriodsDA extends FenixDispatchAction {
 
         final String externalId = request.getParameter("executionPeriodID");
         try {
-            ExecutionSemester executionSemester = (ExecutionSemester) FenixFramework.getDomainObject(externalId);
+            ExecutionInterval executionSemester = (ExecutionInterval) FenixFramework.getDomainObject(externalId);
             request.setAttribute("executionPeriod", executionSemester);
         } catch (DomainException e) {
             addActionMessage("error", request, e.getMessage());

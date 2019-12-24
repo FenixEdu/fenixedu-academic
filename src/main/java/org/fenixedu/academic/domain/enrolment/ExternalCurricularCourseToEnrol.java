@@ -24,7 +24,6 @@ import java.util.Set;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.curricularRules.CurricularRule;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
@@ -37,8 +36,8 @@ public class ExternalCurricularCourseToEnrol extends DegreeModuleToEnrol {
     private CurricularCourse curricularCourse;
 
     public ExternalCurricularCourseToEnrol(final CurriculumGroup curriculumGroup, final CurricularCourse curricularCourse,
-            final ExecutionSemester executionSemester) {
-        super(curriculumGroup, null, executionSemester);
+            final ExecutionInterval executionInterval) {
+        super(curriculumGroup, null, executionInterval);
         this.curricularCourse = curricularCourse;
     }
 

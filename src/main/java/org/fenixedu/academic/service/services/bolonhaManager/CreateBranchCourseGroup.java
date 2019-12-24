@@ -19,7 +19,7 @@
 package org.fenixedu.academic.service.services.bolonhaManager;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.degreeStructure.BranchType;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
@@ -43,11 +43,11 @@ public class CreateBranchCourseGroup {
             throw new FenixServiceException("error.noCourseGroup");
         }
 
-        final ExecutionSemester beginExecutionPeriod = beginExecutionPeriodID == null ? ExecutionSemester.findCurrent(
+        final ExecutionInterval beginExecutionPeriod = beginExecutionPeriodID == null ? ExecutionInterval.findFirstCurrentChild(
                 degreeCurricularPlan.getDegree().getCalendar()) : FenixFramework.getDomainObject(beginExecutionPeriodID);
 
-        final ExecutionSemester endExecutionPeriod =
-                (endExecutionPeriodID == null) ? null : FenixFramework.<ExecutionSemester> getDomainObject(endExecutionPeriodID);
+        final ExecutionInterval endExecutionPeriod =
+                (endExecutionPeriodID == null) ? null : FenixFramework.<ExecutionInterval> getDomainObject(endExecutionPeriodID);
 
         degreeCurricularPlan.createBranchCourseGroup(parentCourseGroup, name, nameEn, branchType, beginExecutionPeriod,
                 endExecutionPeriod);

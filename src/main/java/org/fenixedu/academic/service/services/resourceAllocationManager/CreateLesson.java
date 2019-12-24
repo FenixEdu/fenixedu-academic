@@ -24,7 +24,7 @@ package org.fenixedu.academic.service.services.resourceAllocationManager;
 
 import java.util.Calendar;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.FrequencyType;
 import org.fenixedu.academic.domain.Lesson;
 import org.fenixedu.academic.domain.Shift;
@@ -46,7 +46,7 @@ public class CreateLesson {
             InfoRoomOccupationEditor infoRoomOccupation, InfoShift infoShift, YearMonthDay beginDate, YearMonthDay endDate)
             throws FenixServiceException {
 
-        final ExecutionSemester executionSemester =
+        final ExecutionInterval executionInterval =
                 FenixFramework.getDomainObject(infoShift.getInfoDisciplinaExecucao().getInfoExecutionPeriod().getExternalId());
 
         final Shift shift = FenixFramework.getDomainObject(infoShift.getExternalId());
@@ -58,6 +58,6 @@ public class CreateLesson {
                             .findAllocatableSpaceForEducationByName(infoRoomOccupation.getInfoRoom().getNome()) : null;
         }
 
-        return new Lesson(weekDay, begin, end, shift, frequency, executionSemester, beginDate, endDate, room);
+        return new Lesson(weekDay, begin, end, shift, frequency, executionInterval, beginDate, endDate, room);
     }
 }

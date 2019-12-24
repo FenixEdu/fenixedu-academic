@@ -21,7 +21,7 @@ package org.fenixedu.academic.dto.administrativeOffice.studentEnrolment;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import org.fenixedu.academic.domain.degree.DegreeType;
@@ -38,9 +38,9 @@ public interface NoCourseGroupEnrolmentBean {
 
     public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan);
 
-    public ExecutionSemester getExecutionPeriod();
+    public ExecutionInterval getExecutionPeriod();
 
-    public void setExecutionPeriod(ExecutionSemester executionSemester);
+    public void setExecutionPeriod(ExecutionInterval executionInterval);
 
     public CurriculumGroup getCurriculumGroup();
 

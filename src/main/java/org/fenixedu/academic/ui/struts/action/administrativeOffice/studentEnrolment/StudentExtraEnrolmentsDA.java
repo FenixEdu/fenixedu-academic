@@ -18,7 +18,7 @@
  */
 package org.fenixedu.academic.ui.struts.action.administrativeOffice.studentEnrolment;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
 import org.fenixedu.academic.dto.administrativeOffice.studentEnrolment.StudentExtraEnrolmentBean;
@@ -28,8 +28,7 @@ import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
 @Mapping(path = "/studentExtraEnrolments", module = "academicAdministration", functionality = SearchForStudentsDA.class)
-@Forwards({
-        @Forward(name = "showExtraEnrolments", path = "/academicAdminOffice/showNoCourseGroupCurriculumGroupEnrolments.jsp"),
+@Forwards({ @Forward(name = "showExtraEnrolments", path = "/academicAdminOffice/showNoCourseGroupCurriculumGroupEnrolments.jsp"),
         @Forward(name = "chooseExtraEnrolment", path = "/academicAdminOffice/chooseNoCourseGroupCurriculumGroupEnrolment.jsp"),
         @Forward(name = "showDegreeModulesToEnrol",
                 path = "/academicAdministration/studentEnrolments.do?method=prepareFromExtraEnrolment") })
@@ -37,8 +36,8 @@ public class StudentExtraEnrolmentsDA extends NoCourseGroupCurriculumGroupEnrolm
 
     @Override
     protected StudentExtraEnrolmentBean createNoCourseGroupEnrolmentBean(final StudentCurricularPlan studentCurricularPlan,
-            final ExecutionSemester executionSemester) {
-        return new StudentExtraEnrolmentBean(studentCurricularPlan, executionSemester);
+            final ExecutionInterval executionInterval) {
+        return new StudentExtraEnrolmentBean(studentCurricularPlan, executionInterval);
     }
 
     @Override

@@ -25,7 +25,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -262,12 +261,14 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public CompetenceCourseInformation findInformationMostRecentUntil(final ExecutionInterval interval) {
 
-        // special case: if interval is year, normally is intended to check the info of its last period 
-        final ExecutionInterval intervalNormalized =
-                interval instanceof ExecutionYear ? ((ExecutionYear) interval).getLastExecutionPeriod() : interval;
+        if (interval == null) {
+            return getCompetenceCourseInformationsSet().stream()
+                    .max(CompetenceCourseInformation.COMPARATORY_BY_EXECUTION_INTERVAL).orElse(null);
+        }
 
-        final ExecutionInterval intervalNullSafe =
-                Optional.ofNullable(intervalNormalized).orElseGet(() -> ExecutionSemester.findCurrent(null));
+        // special case: if interval is year, normally is intended to check the info of its last period 
+        final ExecutionInterval childInterval =
+                interval instanceof ExecutionYear ? ((ExecutionYear) interval).getLastExecutionPeriod() : interval;
 
         CompetenceCourseInformation result = null;
 
@@ -275,7 +276,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
                 .sorted(CompetenceCourseInformation.COMPARATORY_BY_EXECUTION_INTERVAL).collect(Collectors.toList());
 
         for (CompetenceCourseInformation information : orderedInformations) {
-            if (information.getExecutionInterval().isAfter(intervalNullSafe)) {
+            if (information.getExecutionInterval().isAfter(childInterval)) {
                 if (result != null) { // only return if there is an previous information already found
                     return result;
                 }
@@ -285,7 +286,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         }
 
         // if no result found and no explicit interval specified, return first information to attempt more null safety
-        if (result == null && interval == null && !orderedInformations.isEmpty()) {
+        if (result == null && !orderedInformations.isEmpty()) {
             return orderedInformations.get(0);
         }
 
@@ -297,8 +298,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
      */
     @Deprecated
     public CompetenceCourseInformation findCompetenceCourseInformationForExecutionPeriod(
-            final ExecutionSemester executionSemester) {
-        return findInformationMostRecentUntil(executionSemester);
+            final ExecutionInterval executionInterval) {
+        return findInformationMostRecentUntil(executionInterval);
     }
 
     /**

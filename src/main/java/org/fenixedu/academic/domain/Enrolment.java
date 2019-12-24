@@ -231,7 +231,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         setWeigth(studentCurricularPlan.isBolonhaDegree() ? curricularCourse.getEctsCredits(executionInterval) : curricularCourse
                 .getWeigth());
         setEnrollmentState(EnrollmentState.ENROLLED);
-        setExecutionPeriod(executionInterval.convert(ExecutionSemester.class));
+        setExecutionPeriod(executionInterval);
         setEvaluationSeason(EvaluationConfiguration.getInstance().getDefaultEvaluationSeason());
         setCreatedBy(createdBy);
         setCreationDateDateTime(new DateTime());
@@ -351,7 +351,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
                 return false;
             }
 
-            if (evaluation.getEvaluationSeason().isImprovement() && evaluation.getExecutionInterval() != interval) {
+            if (evaluation.getExecutionInterval() != interval) {
                 return false;
             }
 

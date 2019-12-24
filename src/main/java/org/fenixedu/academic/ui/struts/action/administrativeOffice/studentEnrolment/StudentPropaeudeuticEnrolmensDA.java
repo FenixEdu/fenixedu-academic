@@ -18,7 +18,7 @@
  */
 package org.fenixedu.academic.ui.struts.action.administrativeOffice.studentEnrolment;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
 import org.fenixedu.academic.dto.administrativeOffice.studentEnrolment.StudentPropaeudeuticEnrolmentsBean;
@@ -37,8 +37,8 @@ public class StudentPropaeudeuticEnrolmensDA extends NoCourseGroupCurriculumGrou
 
     @Override
     protected StudentPropaeudeuticEnrolmentsBean createNoCourseGroupEnrolmentBean(StudentCurricularPlan studentCurricularPlan,
-            ExecutionSemester executionSemester) {
-        return new StudentPropaeudeuticEnrolmentsBean(studentCurricularPlan, executionSemester);
+            ExecutionInterval executionInterval) {
+        return new StudentPropaeudeuticEnrolmentsBean(studentCurricularPlan, executionInterval);
     }
 
     @Override
