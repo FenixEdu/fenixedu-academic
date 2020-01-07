@@ -36,6 +36,7 @@ import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.CurricularRuleLabelFormatter;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.commons.i18n.I18N;
 
 public class UIDegreeModule extends UIInput {
@@ -243,7 +244,8 @@ public class UIDegreeModule extends UIInput {
     }
 
     protected Boolean loggedPersonCanManageDegreeCurricularPlans() {
-        return AcademicPredicates.MANAGE_DEGREE_CURRICULAR_PLANS.evaluate(degreeModule.getDegree());
+        return AcademicPredicates.MANAGE_DEGREE_CURRICULAR_PLANS.evaluate(degreeModule.getDegree())
+                || (degreeModule.getParentDegreeCurricularPlan().isDraft() && degreeModule.getParentDegreeCurricularPlan().getCurricularPlanMembersGroup().isMember(Authenticate.getUser()));
     }
 
 }

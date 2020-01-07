@@ -37,6 +37,7 @@ import org.fenixedu.academic.domain.degreeStructure.RegimeType;
 import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 public class UIDegreeCurricularPlan extends UIInput {
     public static final String COMPONENT_TYPE =
@@ -412,7 +413,8 @@ public class UIDegreeCurricularPlan extends UIInput {
     }
 
     private Boolean loggedPersonCanManageDegreeCurricularPlans(DegreeCurricularPlan degreeCurricularPlan) {
-        return AcademicPredicates.MANAGE_DEGREE_CURRICULAR_PLANS.evaluate(degreeCurricularPlan.getDegree());
+        return AcademicPredicates.MANAGE_DEGREE_CURRICULAR_PLANS.evaluate(degreeCurricularPlan.getDegree())
+                || (degreeCurricularPlan.isDraft() && degreeCurricularPlan.getCurricularPlanMembersGroup().isMember(Authenticate.getUser()));
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlanAttribute() {
