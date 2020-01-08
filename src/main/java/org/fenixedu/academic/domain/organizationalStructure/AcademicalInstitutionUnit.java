@@ -72,17 +72,17 @@ public abstract class AcademicalInstitutionUnit extends AcademicalInstitutionUni
         return officialUnits;
     }
 
-    public static List<AcademicalInstitutionUnit> readOfficialParentUnitsByType(AcademicalInstitutionType type) {
-        final List<AcademicalInstitutionUnit> parentUnits = new ArrayList<AcademicalInstitutionUnit>();
-
-        Unit countryUnit = CountryUnit.getDefault();
-        for (final AcademicalInstitutionUnit unit : readOfficialUnits()) {
-            if (unit.hasParentUnit(countryUnit) && unit.isOfficialAndIsType(type)) {
-                parentUnits.add(unit);
-            }
-        }
-        return parentUnits;
-    }
+//    public static List<AcademicalInstitutionUnit> readOfficialParentUnitsByType(AcademicalInstitutionType type) {
+//        final List<AcademicalInstitutionUnit> parentUnits = new ArrayList<AcademicalInstitutionUnit>();
+//
+//        Unit countryUnit = CountryUnit.getDefault();
+//        for (final AcademicalInstitutionUnit unit : readOfficialUnits()) {
+//            if (unit.hasParentUnit(countryUnit) && unit.isOfficialAndIsType(type)) {
+//                parentUnits.add(unit);
+//            }
+//        }
+//        return parentUnits;
+//    }
 
     public static List<Unit> readOfficialChildUnits(AcademicalInstitutionUnit parentUnit) {
         final List<Unit> childUnits = new ArrayList<Unit>();

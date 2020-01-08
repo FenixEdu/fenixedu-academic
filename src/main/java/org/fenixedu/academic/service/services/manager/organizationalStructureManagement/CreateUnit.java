@@ -27,13 +27,10 @@ import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGrou
 import org.fenixedu.academic.domain.organizationalStructure.CountryUnit;
 import org.fenixedu.academic.domain.organizationalStructure.DegreeUnit;
 import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
-import org.fenixedu.academic.domain.organizationalStructure.ManagementCouncilUnit;
 import org.fenixedu.academic.domain.organizationalStructure.PartyTypeEnum;
 import org.fenixedu.academic.domain.organizationalStructure.PlanetUnit;
 import org.fenixedu.academic.domain.organizationalStructure.SchoolUnit;
 import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
-import org.fenixedu.academic.domain.organizationalStructure.ScientificCouncilUnit;
-import org.fenixedu.academic.domain.organizationalStructure.SectionUnit;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UnitClassification;
 import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
@@ -49,8 +46,8 @@ import pt.ist.fenixframework.FenixFramework;
 public class CreateUnit {
 
     @Atomic
-    public static Unit run(Unit parentUnit, LocalizedString unitName, String unitNameCard, String unitCostCenter,
-            String acronym, YearMonthDay begin, YearMonthDay end, PartyTypeEnum type, String departmentID, String degreeID,
+    public static Unit run(Unit parentUnit, LocalizedString unitName, String unitNameCard, String unitCostCenter, String acronym,
+            YearMonthDay begin, YearMonthDay end, PartyTypeEnum type, String departmentID, String degreeID,
             String administrativeOfficeID, AccountabilityType accountabilityType, String webAddress,
             UnitClassification classification, Boolean canBeResponsibleOfSpaces, String campusID) throws FenixServiceException {
 
@@ -67,9 +64,8 @@ public class CreateUnit {
 
             case DEPARTMENT:
                 Department department = FenixFramework.getDomainObject(departmentID);
-                return DepartmentUnit.createNewInternalDepartmentUnit(unitName, unitNameCard, costCenterCode, acronym, begin,
-                        end, parentUnit, accountabilityType, webAddress, department, classification, canBeResponsibleOfSpaces,
-                        campus);
+                return DepartmentUnit.createNewInternalDepartmentUnit(unitName, unitNameCard, costCenterCode, acronym, begin, end,
+                        parentUnit, accountabilityType, webAddress, department, classification, canBeResponsibleOfSpaces, campus);
 
             case DEGREE_UNIT:
                 Degree degree = FenixFramework.getDomainObject(degreeID);
@@ -94,9 +90,8 @@ public class CreateUnit {
 
             case ADMINISTRATIVE_OFFICE_UNIT:
                 AdministrativeOffice office = FenixFramework.getDomainObject(administrativeOfficeID);
-                Unit unit =
-                        Unit.createNewUnit(unitName, unitNameCard, costCenterCode, acronym, begin, end, parentUnit,
-                                accountabilityType, webAddress, classification, office, canBeResponsibleOfSpaces, campus);
+                Unit unit = Unit.createNewUnit(unitName, unitNameCard, costCenterCode, acronym, begin, end, parentUnit,
+                        accountabilityType, webAddress, classification, office, canBeResponsibleOfSpaces, campus);
                 unit.setType(type);
                 return unit;
             case AGGREGATE_UNIT:
@@ -112,29 +107,31 @@ public class CreateUnit {
                 return ScientificAreaUnit.createNewInternalScientificArea(unitName, unitNameCard, costCenterCode, acronym, begin,
                         end, parentUnit, accountabilityType, webAddress, classification, canBeResponsibleOfSpaces, campus);
 
-            case SECTION:
-                return SectionUnit.createNewSectionUnit(unitName, unitNameCard, costCenterCode, acronym, begin, end, parentUnit,
-                        accountabilityType, webAddress, classification, canBeResponsibleOfSpaces, campus);
+//            case SECTION:
+//                return SectionUnit.createNewSectionUnit(unitName, unitNameCard, costCenterCode, acronym, begin, end, parentUnit,
+//                        accountabilityType, webAddress, classification, canBeResponsibleOfSpaces, campus);
 //
 //            case RESEARCH_UNIT:
 //                return ResearchUnit.createNewResearchUnit(unitName, unitNameCard, costCenterCode, acronym, begin, end,
 //                        parentUnit, accountabilityType, webAddress, classification, canBeResponsibleOfSpaces, campus);
 
-            case MANAGEMENT_COUNCIL:
-                return ManagementCouncilUnit.createManagementCouncilUnit(unitName, unitNameCard, costCenterCode, acronym, begin,
-                        end, parentUnit, accountabilityType, webAddress, classification, canBeResponsibleOfSpaces, campus);
+//            case MANAGEMENT_COUNCIL:
+//                return ManagementCouncilUnit.createManagementCouncilUnit(unitName, unitNameCard, costCenterCode, acronym, begin,
+//                        end, parentUnit, accountabilityType, webAddress, classification, canBeResponsibleOfSpaces, campus);
 
-            case SCIENTIFIC_COUNCIL:
-                return ScientificCouncilUnit.createScientificCouncilUnit(unitName, unitNameCard, costCenterCode, acronym, begin,
-                        end, parentUnit, accountabilityType, webAddress, classification, canBeResponsibleOfSpaces, campus);
+//            case SCIENTIFIC_COUNCIL:
+//                return ScientificCouncilUnit.createScientificCouncilUnit(unitName, unitNameCard, costCenterCode, acronym, begin,
+//                        end, parentUnit, accountabilityType, webAddress, classification, canBeResponsibleOfSpaces, campus);
+            default:
+                return Unit.createNewUnit(unitName, unitNameCard, costCenterCode, acronym, begin, end, parentUnit,
+                        accountabilityType, webAddress, classification, null, canBeResponsibleOfSpaces, campus);
             }
 
         } else {
-            return Unit.createNewUnit(unitName, unitNameCard, costCenterCode, acronym, begin, end, parentUnit,
-                    accountabilityType, webAddress, classification, null, canBeResponsibleOfSpaces, campus);
+            return Unit.createNewUnit(unitName, unitNameCard, costCenterCode, acronym, begin, end, parentUnit, accountabilityType,
+                    webAddress, classification, null, canBeResponsibleOfSpaces, campus);
         }
 
-        throw new FenixServiceException("createUnit.service.empty.unit.type");
     }
 
     private static Integer getCostCenterCode(String unitCostCenter) {

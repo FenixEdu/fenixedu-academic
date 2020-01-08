@@ -1,3 +1,4 @@
+- Refactor: Removed unused Units sub-classes
 - Fix: CurricularPeriod comparator should also compare its type
 
 25.7.0 (24-12-2019)

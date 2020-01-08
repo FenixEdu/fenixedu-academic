@@ -658,27 +658,27 @@ public class Unit extends Unit_Base {
         return allUnits;
     }
 
-    /**
-     * This method should be used only for Unit types where acronyms are unique.
-     */
-    public static Unit readUnitByAcronymAndType(String acronym, PartyTypeEnum partyTypeEnum) {
-        if (acronym != null && !acronym.equals("") && partyTypeEnum != null
-                && (partyTypeEnum.equals(PartyTypeEnum.DEGREE_UNIT) || partyTypeEnum.equals(PartyTypeEnum.DEPARTMENT)
-                        || partyTypeEnum.equals(PartyTypeEnum.PLANET) || partyTypeEnum.equals(PartyTypeEnum.COUNTRY)
-                        || partyTypeEnum.equals(PartyTypeEnum.DEPARTMENT) || partyTypeEnum.equals(PartyTypeEnum.UNIVERSITY)
-                        || partyTypeEnum.equals(PartyTypeEnum.SCHOOL) || partyTypeEnum.equals(PartyTypeEnum.RESEARCH_UNIT))) {
-
-            UnitAcronym unitAcronymByAcronym = UnitAcronym.readUnitAcronymByAcronym(acronym);
-            if (unitAcronymByAcronym != null) {
-                for (Unit unit : unitAcronymByAcronym.getUnitsSet()) {
-                    if (unit.getType() != null && unit.getType().equals(partyTypeEnum)) {
-                        return unit;
-                    }
-                }
-            }
-        }
-        return null;
-    }
+//    /**
+//     * This method should be used only for Unit types where acronyms are unique.
+//     */
+//    public static Unit readUnitByAcronymAndType(String acronym, PartyTypeEnum partyTypeEnum) {
+//        if (acronym != null && !acronym.equals("") && partyTypeEnum != null
+//                && (partyTypeEnum.equals(PartyTypeEnum.DEGREE_UNIT) || partyTypeEnum.equals(PartyTypeEnum.DEPARTMENT)
+//                        || partyTypeEnum.equals(PartyTypeEnum.PLANET) || partyTypeEnum.equals(PartyTypeEnum.COUNTRY)
+//                        || partyTypeEnum.equals(PartyTypeEnum.DEPARTMENT) || partyTypeEnum.equals(PartyTypeEnum.UNIVERSITY)
+//                        || partyTypeEnum.equals(PartyTypeEnum.SCHOOL) || partyTypeEnum.equals(PartyTypeEnum.RESEARCH_UNIT))) {
+//
+//            UnitAcronym unitAcronymByAcronym = UnitAcronym.readUnitAcronymByAcronym(acronym);
+//            if (unitAcronymByAcronym != null) {
+//                for (Unit unit : unitAcronymByAcronym.getUnitsSet()) {
+//                    if (unit.getType() != null && unit.getType().equals(partyTypeEnum)) {
+//                        return unit;
+//                    }
+//                }
+//            }
+//        }
+//        return null;
+//    }
 
     public static List<Unit> readUnitsByAcronym(String acronym, boolean shouldNormalize) {
         List<Unit> result = new ArrayList<Unit>();

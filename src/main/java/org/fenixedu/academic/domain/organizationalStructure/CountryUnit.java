@@ -131,17 +131,17 @@ public class CountryUnit extends CountryUnit_Base {
         }
     }
 
-    transient static private CountryUnit defaultCountry;
+//    transient static private CountryUnit defaultCountry;
 
-    public static CountryUnit getDefault() {
-        if (defaultCountry != null && defaultCountry.getRootDomainObject() == Bennu.getInstance()) {
-            return defaultCountry;
-        }
-        defaultCountry =
-                (CountryUnit) Unit.readUnitByAcronymAndType(BundleUtil.getString(Bundle.GLOBAL, "default.country.code"),
-                        PartyTypeEnum.COUNTRY);
-        return defaultCountry;
-    }
+//    public static CountryUnit getDefault() {
+//        if (defaultCountry != null && defaultCountry.getRootDomainObject() == Bennu.getInstance()) {
+//            return defaultCountry;
+//        }
+//        defaultCountry =
+//                (CountryUnit) Unit.readUnitByAcronymAndType(BundleUtil.getString(Bundle.GLOBAL, "default.country.code"),
+//                        PartyTypeEnum.COUNTRY);
+//        return defaultCountry;
+//    }
 
     public static Set<CountryUnit> readAllCountryUnits() {
         final PartyType partyType = PartyType.readPartyTypeByType(PartyTypeEnum.COUNTRY);

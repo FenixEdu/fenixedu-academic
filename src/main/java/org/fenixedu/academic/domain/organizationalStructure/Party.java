@@ -486,10 +486,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return PartyTypeEnum.COUNTRY == getType();
     }
 
-    public boolean isSectionUnit() {
-        return PartyTypeEnum.SECTION == getType();
-    }
-
     public boolean isAggregateUnit() {
         return PartyTypeEnum.AGGREGATE_UNIT == getType();
     }
@@ -986,14 +982,12 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     public List<PhysicalAddress> getPendingOrValidPhysicalAddresses() {
         return (List<PhysicalAddress>) getPendingOrValidPartyContacts(PhysicalAddress.class);
     }
-    
+
     public List<PhysicalAddress> getValidAddressesForFiscalData() {
-        return getPendingOrValidPartyContacts(PhysicalAddress.class).stream()
-            .map(PhysicalAddress.class::cast)
-            .filter(pa -> pa.isActiveAndValid())
-            .filter(pa -> pa.getCountryOfResidence() != null)
-            .filter(pa -> pa.getCurrentPartyContact() == null || !pa.getCurrentPartyContact().isToBeValidated())
-            .collect(Collectors.toList());
+        return getPendingOrValidPartyContacts(PhysicalAddress.class).stream().map(PhysicalAddress.class::cast)
+                .filter(pa -> pa.isActiveAndValid()).filter(pa -> pa.getCountryOfResidence() != null)
+                .filter(pa -> pa.getCurrentPartyContact() == null || !pa.getCurrentPartyContact().isToBeValidated())
+                .collect(Collectors.toList());
     }
 
     public boolean hasDefaultPhysicalAddress() {
@@ -1094,30 +1088,28 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     public void setCountryOfResidence(Country countryOfResidence) {
         PhysicalAddress defaultPhysicalAddress = getOrCreateDefaultPhysicalAddress();
 
-        if(defaultPhysicalAddress.isFiscalAddress() && defaultPhysicalAddress.getCountryOfResidence() != countryOfResidence) {
+        if (defaultPhysicalAddress.isFiscalAddress() && defaultPhysicalAddress.getCountryOfResidence() != countryOfResidence) {
             throw new DomainException("error.PhysicalAddress.cannot.change.countryOfResidence.in.fiscal.address");
         }
-        
+
         defaultPhysicalAddress.setCountryOfResidence(countryOfResidence);
     }
-    
+
     public PhysicalAddress getFiscalAddress() {
-        return getAllPartyContacts(PhysicalAddress.class).stream()
-                .map(PhysicalAddress.class::cast)
-                .filter(address -> address.isActiveAndValid())
-                .filter(address -> address.isFiscalAddress())
-                .findFirst().orElse(null);
+        return getAllPartyContacts(PhysicalAddress.class).stream().map(PhysicalAddress.class::cast)
+                .filter(address -> address.isActiveAndValid()).filter(address -> address.isFiscalAddress()).findFirst()
+                .orElse(null);
     }
-    
+
     public void markAsFiscalAddress(final PhysicalAddress fiscalAddress) {
-        if(!fiscalAddress.isActiveAndValid()) {
+        if (!fiscalAddress.isActiveAndValid()) {
             throw new DomainException("error.Party.markAsFiscalAddress.fiscalAddress.must.be.active.and.valid");
         }
-        
+
         getAllPartyContacts(PhysicalAddress.class).stream().forEach(address -> {
             ((PhysicalAddress) address).setFiscalAddress(false);
         });
-        
+
         fiscalAddress.setFiscalAddress(true);
     }
 
