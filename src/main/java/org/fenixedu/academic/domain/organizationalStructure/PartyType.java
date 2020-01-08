@@ -83,4 +83,16 @@ public class PartyType extends PartyType_Base {
         return partyType == null ? Collections.EMPTY_SET : partyType.getPartiesSet();
     }
 
+    public void delete() {
+        if (!getPartiesSet().isEmpty()) {
+            throw new DomainException("error.PartyType.cannotDelete.hasAssociatedParties");
+        }
+        
+        setRootDomainObject(null);
+        getAllowedChildConnectionRulesSet().forEach(cr -> cr.delete());
+        getAllowedParentConnectionRulesSet().forEach(cr -> cr.delete());
+        
+        super.deleteDomainObject();
+    }
+
 }
