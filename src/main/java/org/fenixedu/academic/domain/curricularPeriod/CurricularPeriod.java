@@ -27,6 +27,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -188,7 +190,14 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
 
     @Override
     public int compareTo(CurricularPeriod o) {
-        return this.getFullWeight().compareTo(o.getFullWeight());
+        if (Objects.equals(this.getAcademicPeriod(), o.getAcademicPeriod())) {
+            return this.getFullWeight().compareTo(o.getFullWeight());
+        }
+
+        Float thisPeriodWeight = Optional.ofNullable(this.getAcademicPeriod()).map(ap -> ap.getWeight()).orElse(0f);
+        Float otherPeriodWeight = Optional.ofNullable(o.getAcademicPeriod()).map(ap -> ap.getWeight()).orElse(0f);
+
+        return thisPeriodWeight.compareTo(otherPeriodWeight);
     }
 
     private Float getWeight() {
