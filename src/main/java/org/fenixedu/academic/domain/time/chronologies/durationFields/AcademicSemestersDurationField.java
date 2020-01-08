@@ -18,7 +18,7 @@
  */
 package org.fenixedu.academic.domain.time.chronologies.durationFields;
 
-import org.fenixedu.academic.domain.time.calendarStructure.AcademicSemesterCE;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry;
 import org.fenixedu.academic.domain.time.chronologies.AcademicChronology;
 import org.joda.time.Duration;
 import org.joda.time.DurationFieldType;
@@ -35,19 +35,19 @@ public class AcademicSemestersDurationField extends BaseDurationField {
     }
 
     private UnsupportedOperationException unsupported() {
-        return new UnsupportedOperationException(AcademicSemestersDurationFieldType.academicSemesters() + " field is unsupported");
+        return new UnsupportedOperationException(
+                AcademicSemestersDurationFieldType.academicSemesters() + " field is unsupported");
     }
 
     @Override
     public long add(long instant, int value) {
         int academicSemester = chronology.getAcademicSemester(instant);
         if (academicSemester != 0) {
-            AcademicSemesterCE academicSemesterCE = chronology.getAcademicSemesterIn(academicSemester);
-            AcademicSemesterCE academicSemesterCEAfter = chronology.getAcademicSemesterIn(academicSemester + value);
+            AcademicCalendarEntry academicSemesterCE = chronology.getAcademicSemesterIn(academicSemester);
+            AcademicCalendarEntry academicSemesterCEAfter = chronology.getAcademicSemesterIn(academicSemester + value);
             if (academicSemesterCEAfter != null) {
-                long result =
-                        academicSemesterCEAfter.getBegin().getMillis()
-                                + new Duration(academicSemesterCE.getBegin().getMillis(), instant).getMillis();
+                long result = academicSemesterCEAfter.getBegin().getMillis()
+                        + new Duration(academicSemesterCE.getBegin().getMillis(), instant).getMillis();
                 return result < academicSemesterCE.getEnd().getMillis() ? result : academicSemesterCE.getEnd().getMillis();
             }
         }
@@ -73,14 +73,13 @@ public class AcademicSemestersDurationField extends BaseDurationField {
     public long getMillis(int value, long instant) {
         int academicSemester = chronology.getAcademicSemester(instant);
         if (academicSemester != 0) {
-            AcademicSemesterCE academicSemesterCE = chronology.getAcademicSemesterIn(academicSemester);
-            AcademicSemesterCE academicSemesterCEAfter = chronology.getAcademicSemesterIn(academicSemester + value);
+            AcademicCalendarEntry academicSemesterCE = chronology.getAcademicSemesterIn(academicSemester);
+            AcademicCalendarEntry academicSemesterCEAfter = chronology.getAcademicSemesterIn(academicSemester + value);
             if (academicSemesterCEAfter != null) {
-                long result =
-                        academicSemesterCEAfter.getBegin().getMillis()
-                                + new Duration(academicSemesterCE.getBegin().getMillis(), instant).getMillis();
-                return result < academicSemesterCE.getEnd().getMillis() ? result - instant : academicSemesterCE.getEnd()
-                        .getMillis() - instant;
+                long result = academicSemesterCEAfter.getBegin().getMillis()
+                        + new Duration(academicSemesterCE.getBegin().getMillis(), instant).getMillis();
+                return result < academicSemesterCE.getEnd().getMillis() ? result
+                        - instant : academicSemesterCE.getEnd().getMillis() - instant;
             }
         }
         throw unsupported();

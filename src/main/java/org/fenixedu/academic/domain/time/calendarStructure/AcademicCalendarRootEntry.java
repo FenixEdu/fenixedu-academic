@@ -90,19 +90,28 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
         return begin;
     }
 
-    public AcademicCalendarEntry getEntryByInstant(long instant, Class<? extends AcademicCalendarEntry> entryClass,
-            Class<? extends AcademicCalendarEntry> parentEntryClass) {
+//    public AcademicCalendarEntry getEntryByInstant(long instant, Class<? extends AcademicCalendarEntry> entryClass,
+//            Class<? extends AcademicCalendarEntry> parentEntryClass) {
+//        AcademicCalendarEntry entryResult = null;
+//        for (AcademicCalendarEntry entry : getChildEntries(Long.valueOf(instant), entryClass, parentEntryClass)) {
+//            entryResult = (entryResult == null || entry.getBegin().isAfter(entryResult.getBegin())) ? entry : entryResult;
+//        }
+//        return entryResult;
+//    }
+    
+    public AcademicCalendarEntry getEntryByInstant(long instant, AcademicPeriod academicPeriod) {
         AcademicCalendarEntry entryResult = null;
-        for (AcademicCalendarEntry entry : getChildEntries(Long.valueOf(instant), entryClass, parentEntryClass)) {
-            entryResult = (entryResult == null || entry.getBegin().isAfter(entryResult.getBegin())) ? entry : entryResult;
+        for (AcademicCalendarEntry entry : getAllChildEntries(academicPeriod)) {
+            if (entry.containsInstant(instant)) {
+                entryResult = (entryResult == null || entry.getBegin().isAfter(entryResult.getBegin())) ? entry : entryResult;
+            }
         }
         return entryResult;
     }
 
-    public Integer getEntryIndexByInstant(long instant, Class<? extends AcademicCalendarEntry> entryClass,
-            Class<? extends AcademicCalendarEntry> parentEntryClass) {
+    public Integer getEntryIndexByInstant(long instant, AcademicPeriod academicPeriod) {
         Integer counter = null;
-        for (AcademicCalendarEntry entry : getChildEntries(entryClass, parentEntryClass)) {
+        for (AcademicCalendarEntry entry : getAllChildEntries(academicPeriod)) {
             if (entry.containsInstant(instant) || entry.getEnd().isBefore(instant)) {
                 counter = counter == null ? 1 : counter.intValue() + 1;
             }
@@ -110,9 +119,8 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
         return counter;
     }
 
-    public AcademicCalendarEntry getEntryByIndex(int index, Class<? extends AcademicCalendarEntry> entryClass,
-            Class<? extends AcademicCalendarEntry> parentEntryClass) {
-        List<AcademicCalendarEntry> allChildEntries = getChildEntries(entryClass, parentEntryClass);
+    public AcademicCalendarEntry getEntryByIndex(int index, AcademicPeriod academicPeriod) {
+        List<AcademicCalendarEntry> allChildEntries = getAllChildEntries(academicPeriod);
         Collections.sort(allChildEntries, COMPARATOR_BY_BEGIN_DATE);
         return index > 0 && index <= allChildEntries.size() ? allChildEntries.get(index - 1) : null;
     }
@@ -126,20 +134,15 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
         return null;
     }
 
-    private List<AcademicCalendarEntry> getChildEntries(Class<? extends AcademicCalendarEntry> subEntryClass,
-            Class<? extends AcademicCalendarEntry> parentEntryClass) {
-        return getChildEntries(null, subEntryClass, parentEntryClass);
-    }
-
-    private List<AcademicCalendarEntry> getChildEntries(Long instant, Class<? extends AcademicCalendarEntry> subEntryClass,
-            Class<? extends AcademicCalendarEntry> parentEntryClass) {
-        if (subEntryClass == null || parentEntryClass == null) {
-            return Collections.emptyList();
-        }
-        List<AcademicCalendarEntry> allChildEntries = new ArrayList<AcademicCalendarEntry>();
-        getFirstChildEntries(instant, subEntryClass, parentEntryClass, allChildEntries);
-        return allChildEntries;
-    }
+//    private List<AcademicCalendarEntry> getChildEntries(Long instant, Class<? extends AcademicCalendarEntry> subEntryClass,
+//            Class<? extends AcademicCalendarEntry> parentEntryClass) {
+//        if (subEntryClass == null || parentEntryClass == null) {
+//            return Collections.emptyList();
+//        }
+//        List<AcademicCalendarEntry> allChildEntries = new ArrayList<AcademicCalendarEntry>();
+//        getFirstChildEntries(instant, subEntryClass, parentEntryClass, allChildEntries);
+//        return allChildEntries;
+//    }
 
     @Override
     public DateTime getEnd() {

@@ -26,11 +26,12 @@ import org.joda.time.DateTime;
 
 public class AcademicSemesterCE extends AcademicSemesterCE_Base {
 
-    public AcademicSemesterCE(AcademicCalendarEntry parentEntry, LocalizedString title, LocalizedString description,
-            DateTime begin, DateTime end, AcademicCalendarRootEntry rootEntry) {
+    public AcademicSemesterCE(AcademicPeriod academicPeriod, AcademicCalendarEntry parentEntry, LocalizedString title,
+            LocalizedString description, DateTime begin, DateTime end, AcademicCalendarRootEntry rootEntry) {
 
         super();
         super.initEntry(parentEntry, title, description, begin, end, rootEntry);
+        setAcademicPeriod(academicPeriod);
         createNewExecutionPeriod();
     }
 

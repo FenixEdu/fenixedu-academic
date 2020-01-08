@@ -1,4 +1,5 @@
 - Improvement: Don't allow multiple ExecutionYears with same name
+- Refactor: Replace AcademicSemesterCE references by AcademicPeriod
 - Refactor: Removed unused Units sub-classes
 - Fix: CurricularPeriod comparator should also compare its type
 

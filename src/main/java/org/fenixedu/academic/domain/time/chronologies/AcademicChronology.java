@@ -20,7 +20,7 @@ package org.fenixedu.academic.domain.time.chronologies;
 
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
-import org.fenixedu.academic.domain.time.calendarStructure.AcademicSemesterCE;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicYearCE;
 import org.fenixedu.academic.domain.time.chronologies.dateTimeFields.AcademicSemesterDateTimeField;
 import org.fenixedu.academic.domain.time.chronologies.dateTimeFields.AcademicSemesterOfAcademicYearDateTimeField;
@@ -140,17 +140,16 @@ public class AcademicChronology extends AssembledChronology {
 
     // Auxiliar Methods
 
-    public AcademicSemesterCE getAcademicSemesterIn(int index) {
-        return (AcademicSemesterCE) academicCalendar.getEntryByIndex(index, AcademicSemesterCE.class, AcademicYearCE.class);
+    public AcademicCalendarEntry getAcademicSemesterIn(int index) {
+        return academicCalendar.getEntryByIndex(index, AcademicPeriod.SEMESTER);
     }
 
     public AcademicYearCE getAcademicYearIn(int index) {
-        return (AcademicYearCE) academicCalendar.getEntryByIndex(index, AcademicYearCE.class, AcademicCalendarRootEntry.class);
+        return (AcademicYearCE) academicCalendar.getEntryByIndex(index, AcademicPeriod.YEAR);
     }
 
     public int getAcademicSemester(long instant) {
-        Integer entryValueByInstant =
-                academicCalendar.getEntryIndexByInstant(instant, AcademicSemesterCE.class, AcademicYearCE.class);
+        Integer entryValueByInstant = academicCalendar.getEntryIndexByInstant(instant, AcademicPeriod.SEMESTER);
         if (entryValueByInstant != null) {
             return entryValueByInstant;
         }
@@ -158,8 +157,7 @@ public class AcademicChronology extends AssembledChronology {
     }
 
     public int getAcademicYear(long instant) {
-        Integer entryValueByInstant =
-                academicCalendar.getEntryIndexByInstant(instant, AcademicYearCE.class, AcademicCalendarRootEntry.class);
+        Integer entryValueByInstant = academicCalendar.getEntryIndexByInstant(instant, AcademicPeriod.YEAR);
         if (entryValueByInstant != null) {
             return entryValueByInstant;
         }
@@ -167,8 +165,7 @@ public class AcademicChronology extends AssembledChronology {
     }
 
     public int getDayOfAcademicSemester(long instant) {
-        AcademicCalendarEntry entryByInstant =
-                academicCalendar.getEntryByInstant(instant, AcademicSemesterCE.class, AcademicYearCE.class);
+        AcademicCalendarEntry entryByInstant = academicCalendar.getEntryByInstant(instant, AcademicPeriod.SEMESTER);
         if (entryByInstant != null) {
             DateTime instantDateTime = new DateTime(instant);
             Interval interval = new Interval(entryByInstant.getBegin(), instantDateTime);
@@ -181,8 +178,7 @@ public class AcademicChronology extends AssembledChronology {
     }
 
     public int getAcademicSemesterOfAcademicYear(long instant) {
-        AcademicSemesterCE entryByInstant =
-                (AcademicSemesterCE) academicCalendar.getEntryByInstant(instant, AcademicSemesterCE.class, AcademicYearCE.class);
+        AcademicCalendarEntry entryByInstant = academicCalendar.getEntryByInstant(instant, AcademicPeriod.SEMESTER);
 //        return entryByInstant.getAcademicSemesterOfAcademicYear(this);
         return entryByInstant.getCardinality();
     }
@@ -199,7 +195,7 @@ public class AcademicChronology extends AssembledChronology {
         return 2;
     }
 
-    public AcademicCalendarEntry findSameEntry(final AcademicCalendarEntry entry) {
-        return entry.getEntryForCalendar(academicCalendar);
-    }
+//    public AcademicCalendarEntry findSameEntry(final AcademicCalendarEntry entry) {
+//        return entry.getEntryForCalendar(academicCalendar);
+//    }
 }

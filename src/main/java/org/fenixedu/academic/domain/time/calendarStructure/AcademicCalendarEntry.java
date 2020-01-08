@@ -319,39 +319,39 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 //        return result;
 //    }
 
-    private List<AcademicCalendarEntry> getChildEntries(Long instant, List<AcademicCalendarEntry> result,
-            Class<? extends AcademicCalendarEntry> subEntryClass) {
-
-        for (AcademicCalendarEntry subEntry : getChildEntriesSet()) {
-            if ((subEntryClass == null || subEntry.getClass().equals(subEntryClass))
-                    && (instant == null || subEntry.containsInstant(instant))) {
-
-                result.add(subEntry);
-            }
-        }
-
-        return result;
-    }
+//    private List<AcademicCalendarEntry> getChildEntries(Long instant, List<AcademicCalendarEntry> result,
+//            Class<? extends AcademicCalendarEntry> subEntryClass) {
+//
+//        for (AcademicCalendarEntry subEntry : getChildEntriesSet()) {
+//            if ((subEntryClass == null || subEntry.getClass().equals(subEntryClass))
+//                    && (instant == null || subEntry.containsInstant(instant))) {
+//
+//                result.add(subEntry);
+//            }
+//        }
+//
+//        return result;
+//    }
 
     // renamed from getFirstChildEntriesWithTemplateEntries    
-    protected void getFirstChildEntries(Long instant, Class<? extends AcademicCalendarEntry> subEntryClass,
-            Class<? extends AcademicCalendarEntry> parentEntryClass, List<AcademicCalendarEntry> childrenEntriesList) {
+//    protected void getFirstChildEntries(Long instant, Class<? extends AcademicCalendarEntry> subEntryClass,
+//            Class<? extends AcademicCalendarEntry> parentEntryClass, List<AcademicCalendarEntry> childrenEntriesList) {
+//
+//        if (getClass().equals(parentEntryClass)) {
+//            getChildEntries(instant, childrenEntriesList, subEntryClass);
+//
+//        } else {
+//            for (AcademicCalendarEntry subEntry : getChildEntriesSet()) {
+//                if (instant == null || subEntry.containsInstant(instant)) {
+//                    subEntry.getFirstChildEntries(instant, subEntryClass, parentEntryClass, childrenEntriesList);
+//                }
+//            }
+//        }
+//    }
 
-        if (getClass().equals(parentEntryClass)) {
-            getChildEntries(instant, childrenEntriesList, subEntryClass);
-
-        } else {
-            for (AcademicCalendarEntry subEntry : getChildEntriesSet()) {
-                if (instant == null || subEntry.containsInstant(instant)) {
-                    subEntry.getFirstChildEntries(instant, subEntryClass, parentEntryClass, childrenEntriesList);
-                }
-            }
-        }
-    }
-
-    public AcademicCalendarEntry getEntryForCalendar(final AcademicCalendarRootEntry academicCalendar) {
-        return getRootEntry().equals(academicCalendar) ? this : null;
-    }
+//    public AcademicCalendarEntry getEntryForCalendar(final AcademicCalendarRootEntry academicCalendar) {
+//        return getRootEntry().equals(academicCalendar) ? this : null;
+//    }
 
 //    public int getAcademicSemesterOfAcademicYear(final AcademicChronology academicChronology) {
 //        return getBegin().withChronology(academicChronology)

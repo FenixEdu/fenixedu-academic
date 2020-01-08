@@ -121,9 +121,9 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
         return result;
     }
 
-    public AcademicCalendarEntry getAcademicCalendarEntryInIntervalChronology() {
-        return getAcademicChronology().findSameEntry(getAcademicCalendarEntry());
-    }
+//    public AcademicCalendarEntry getAcademicCalendarEntryInIntervalChronology() {
+//        return getAcademicChronology().findSameEntry(getAcademicCalendarEntry());
+//    }
 
     public AcademicCalendarRootEntry getAcademicCalendar() {
         return academicCalendarRootEntry;

@@ -31,6 +31,7 @@ public class AcademicYearCE extends AcademicYearCE_Base {
 
         super();
         super.initEntry(parentEntry, title, description, begin, end, rootEntry);
+        setAcademicPeriod(AcademicPeriod.YEAR);
         createExecutionYear();
     }
 

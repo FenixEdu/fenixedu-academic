@@ -20,6 +20,7 @@ package org.fenixedu.academic.service.services.manager.academicCalendarManagemen
 
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicSemesterCE;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicYearCE;
 import org.fenixedu.academic.dto.manager.academicCalendarManagement.CalendarEntryBean;
@@ -43,8 +44,8 @@ public class CreateAcademicCalendarEntry {
                         bean.getRootEntry());
 
             } else if (type.equals(AcademicSemesterCE.class)) {
-                return new AcademicSemesterCE(bean.getEntry(), bean.getTitle(), bean.getDescription(), bean.getBegin(),
-                        bean.getEnd(), bean.getRootEntry());
+                return new AcademicSemesterCE(AcademicPeriod.SEMESTER, bean.getEntry(), bean.getTitle(), bean.getDescription(),
+                        bean.getBegin(), bean.getEnd(), bean.getRootEntry());
             }
 
         } else {
