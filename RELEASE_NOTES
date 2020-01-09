@@ -1,3 +1,4 @@
+25.8.0 (09-01-2020)
 - Improvement: Don't allow multiple ExecutionYears with same name
 - Refactor: Replace AcademicSemesterCE references by AcademicPeriod
 - Refactor: Removed unused Units sub-classes
