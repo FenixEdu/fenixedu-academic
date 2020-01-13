@@ -29,7 +29,7 @@
 	<slot name="executionPeriod" layout="menu-select-postback">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionSemestersProvider"/>
 		<property name="format" value="${name} ${executionYear.year}"/>
-		<property name="sortBy" value="executionYear.year=desc, semester=desc"/>
+		<property name="sortBy" value="executionYear.year=desc, childOrder=desc"/>
 	</slot>
 	<slot name="regime" layout="menu-select-postback">	
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.choiceType.replacement.single.RegimeTypeProvider"/>
@@ -53,7 +53,7 @@
 	<slot name="executionPeriod" layout="menu-select-postback">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionSemestersProvider"/>
 		<property name="format" value="${name} ${executionYear.year}"/>
-		<property name="sortBy" value="executionYear.year=desc, semester=desc"/>
+		<property name="sortBy" value="executionYear.year=desc, childOrder=desc"/>
 	</slot>
 </schema>
 
@@ -97,7 +97,7 @@
 	<slot name="name" key="label.proposedName"/>
 	<slot name="nameEn" key="label.proposedNameEn"/>
 	<slot name="executionPeriod" layout="format">
-		<property name="format" value="${semester} - ${executionYear.year}"/>
+		<property name="format" value="${childOrder} - ${executionYear.year}"/>
 	</slot>
 	<slot name="regime"/>	
 	<slot name="competenceCourseLevel"/>

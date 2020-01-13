@@ -70,7 +70,7 @@
 	<slot name="executionPeriod" key="label.executionPeriod" layout="menu-select-postback" 
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.NotClosedExecutionPeriodsProvider" />				
-		<property name="format"	value="${executionYear.year} - ${semester}º Sem" />
+		<property name="format"	value="${executionYear.year} - ${childOrder}º Sem" />
 		<property name="destination" value="postBack"/>
 	</slot>	
 	<slot name="executionDegree" key="label.degree.name" layout="menu-select-postback"

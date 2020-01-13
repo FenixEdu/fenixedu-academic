@@ -13,7 +13,7 @@ public class FirstExecutionSemestersProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        return Bennu.getInstance().getExecutionPeriodsSet().stream().filter(es -> es.getSemester() == 1)
+        return Bennu.getInstance().getExecutionPeriodsSet().stream().filter(es -> es.getChildOrder() == 1)
                 .sorted(Comparator.reverseOrder()).collect(Collectors.toList());
     }
 

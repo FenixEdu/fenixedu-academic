@@ -112,7 +112,7 @@
 				<fr:slot name="executionPeriod" layout="menu-select-postback">
 					<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.FirstExecutionSemestersProvider"/>
 					<fr:property name="format" value="\${executionYear.year}"/>
-					<fr:property name="sortBy" value="executionYear.year=desc, semester=desc"/>
+					<fr:property name="sortBy" value="executionYear.year=desc, childOrder=desc"/>
 				</fr:slot>				
 			</logic:equal>			
 			<fr:slot name="regime" layout="menu-select-postback" readOnly="true">	

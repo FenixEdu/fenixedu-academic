@@ -128,7 +128,7 @@
 
 <schema name="student.statistics.table" type="org.fenixedu.academic.dto.student.ExecutionPeriodStatisticsBean" bundle="APPLICATION_RESOURCES">
 	<slot name="executionPeriod" key="label.student.statistics.executionYear-semester">
-		<property name="format" value="${executionYear.year} - ${semester}"/>
+		<property name="format" value="${executionYear.year} - ${childOrder}"/>
 	</slot>
 	<slot name="totalEnrolmentsNumber" key="label.student.statistics.enrolmentsNumber"/>
 	<slot name="approvedEnrolmentsNumber" key="label.student.statistics.approvedEnrolmentsNumber"/>

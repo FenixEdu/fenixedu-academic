@@ -53,7 +53,7 @@
 				<fr:schema bundle="PEDAGOGICAL_COUNCIL_RESOURCES" type="org.fenixedu.academic.dto.directiveCouncil.DepartmentSummaryElement">
 					<fr:slot name="executionSemester" layout="menu-select-postback" key="label.curricular.course.semester" bundle="APPLICATION_RESOURCES">
 						<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.NotClosedExecutionPeriodsProvider"/>
-						<fr:property name="format" value="${executionYear.year} - ${semester} Semestre" />
+						<fr:property name="format" value="${executionYear.year} - ${childOrder} Semestre" />
 					</fr:slot>
 				</fr:schema>
 			</fr:edit>											
@@ -142,7 +142,7 @@
 				<fr:schema bundle="PEDAGOGICAL_COUNCIL_RESOURCES" type="org.fenixedu.academic.dto.directiveCouncil.DepartmentSummaryElement">
 					<fr:slot name="executionSemester" layout="menu-select-postback" key="label.curricular.course.semester" bundle="APPLICATION_RESOURCES">
 						<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.NotClosedExecutionPeriodsProvider"/>
-						<fr:property name="format" value="${executionYear.year} - ${semester}º Semestre" />
+						<fr:property name="format" value="${executionYear.year} - ${childOrder}º Semestre" />
 					</fr:slot>									
 				</fr:schema>
 			</fr:edit>
@@ -314,7 +314,7 @@ padding-right: 3px;
 		<h3 class="mtop1 mbottom1">				 
 			<fr:view name="executionCourse" property="executionPeriod">
 				<fr:layout>
-					<fr:property name="format" value="${executionYear.year} - ${semester}º Sem" />
+					<fr:property name="format" value="${executionYear.year} - ${childOrder}º Sem" />
 				</fr:layout>
 			</fr:view> - 
 			<fr:view name="executionCourse" property="nome"/>
@@ -370,7 +370,7 @@ padding-right: 3px;
 			<p class="mtop15 mbottom05">				 
 				<fr:view name="executionSemester">
 					<fr:layout>
-						<fr:property name="format" value="${executionYear.year} - ${semester}º Sem" />
+						<fr:property name="format" value="${executionYear.year} - ${childOrder}º Sem" />
 					</fr:layout>
 				</fr:view>
 			</p>

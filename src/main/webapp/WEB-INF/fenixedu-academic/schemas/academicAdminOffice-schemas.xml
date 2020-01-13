@@ -578,7 +578,7 @@
 	<slot name="name" key="label.name" />
 	<slot name="degreeModule.degreeCurricularPlan.name" key="label.degreeCurricularPlan" />	
 	<slot name="executionPeriod" layout="format" key="label.semester" >
-		<property name="format" value="${semester}º Sem ${executionYear.year}"/>
+		<property name="format" value="${childOrder}º Sem ${executionYear.year}"/>
 	</slot>
 	<slot name="ectsCreditsForCurriculum" key="label.ects.credits"/>
 </schema>
@@ -596,7 +596,7 @@
 <schema name="student.statutes.current" bundle="ACADEMIC_OFFICE_RESOURCES" 
 	type="org.fenixedu.academic.dto.student.StudentStatuteBean">
 	<slot name="executionPeriod" key="label.executionPeriod" >
-		<property name="format" value="${semester}º Sem - ${executionYear.year}" />
+		<property name="format" value="${childOrder}º Sem - ${executionYear.year}" />
 	</slot>
 	<slot name="statuteType" key="label.statuteType">
 		<property name="format" value="${name.content}" />
@@ -626,11 +626,11 @@
 	</slot>
 	<slot name="beginExecutionPeriod" layout="menu-select" key="label.beginExecutionPeriod" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.StudentExecutionPeriodsProvider" />
-		<property name="format" value="${semester}º Sem - ${executionYear.year}" />
+		<property name="format" value="${childOrder}º Sem - ${executionYear.year}" />
 	</slot>
 	<slot name="endExecutionPeriod" layout="menu-select"  key="label.endExecutionPeriod" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.StudentExecutionPeriodsProvider" />
-		<property name="format" value="${semester}º Sem - ${executionYear.year}" />
+		<property name="format" value="${childOrder}º Sem - ${executionYear.year}" />
 	</slot>
 	<slot name="beginDate" key="label.beginDate">
 		<property name="size" value="12"/>
@@ -661,11 +661,11 @@
 	</slot>
 	<slot name="beginExecutionPeriod" layout="menu-select" key="label.beginExecutionPeriod" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.StudentExecutionPeriodsProvider" />
-		<property name="format" value="${semester}º Sem - ${executionYear.year}" />
+		<property name="format" value="${childOrder}º Sem - ${executionYear.year}" />
 	</slot>
 	<slot name="endExecutionPeriod" layout="menu-select"  key="label.endExecutionPeriod" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.StudentExecutionPeriodsProvider" />
-		<property name="format" value="${semester}º Sem - ${executionYear.year}" />
+		<property name="format" value="${childOrder}º Sem - ${executionYear.year}" />
 	</slot>
 	<slot name="beginDate" key="label.beginDate">
 		<property name="size" value="12"/>
@@ -826,7 +826,7 @@
 	<slot name="enrolment.code" key="label.code" read-only="true" layout="null-as-label"/>
 	<slot name="enrolment.name" key="label.name" read-only="true"/>
 	<slot name="enrolment.executionPeriod" layout="format" key="lable.year.semester" read-only="true">
-		<property name="format" value="${executionYear.year} ${semester}º Sem"/>
+		<property name="format" value="${executionYear.year} ${childOrder}º Sem"/>
 	</slot>	
 	<slot name="enrolment.gradeValue" key="label.studentDismissal.grade" read-only="true"/>	
 </schema>
@@ -841,7 +841,7 @@
 	type="org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean$SelectedExternalEnrolment">
 	<slot name="externalEnrolment.fullPathName" key="label.name" read-only="true"/>	
 	<slot name="externalEnrolment.executionPeriod" layout="format" key="lable.year.semester" read-only="true">
-		<property name="format" value="${executionYear.year} ${semester}º Sem"/>
+		<property name="format" value="${executionYear.year} ${childOrder}º Sem"/>
 	</slot>	
 	<slot name="externalEnrolment.grade" key="label.studentDismissal.grade" read-only="true"/>	
 </schema>
@@ -915,7 +915,7 @@
 	<slot name="givenCredits" key="label.ects"/>
 	<slot name="grade" key="label.studentDismissal.grade"/>
 	<slot name="executionPeriod" key="label.executionPeriod" layout="format">
-		<property name="format" value="${semester}º semestre - ${executionYear.year}" />
+		<property name="format" value="${childOrder}º semestre - ${executionYear.year}" />
 	</slot>
 	<slot name="officialDate"  key="label.studentDismissal.officialDate" />
 </schema>
@@ -978,7 +978,7 @@
 	<slot name="externalCurricularCourseResultBean.fullName" key="label.name" read-only="true"/>
 	<slot name="executionPeriod" layout="menu-select" key="label.executionPeriod">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
-		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
+		<property name="format" value="${childOrder} º semestre - ${executionYear.year}" />
 	</slot>
 	<slot name="evaluationDate" key="label.studentDismissal.evaluationDate">
 		<property name="size" value="10" />
@@ -1130,7 +1130,7 @@
 	<slot name="externalEnrolmentBean.ectsCredits" key="label.ects.credits" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="externalEnrolmentBean.executionPeriod" layout="menu-select" key="label.executionPeriod" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
-		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
+		<property name="format" value="${childOrder} º semestre - ${executionYear.year}" />
 	</slot>
 	<slot name="externalEnrolmentBean.evaluationDate" key="label.studentDismissal.evaluationDate"/>
 </schema>
@@ -1161,7 +1161,7 @@
 	</slot>
 	<slot name="executionPeriod" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
-		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
+		<property name="format" value="${childOrder} º semestre - ${executionYear.year}" />
 	</slot>
 	<slot name="evaluationDate" key="label.studentDismissal.evaluationDate">
 		<property name="size" value="10" />
@@ -1182,7 +1182,7 @@
 	<slot name="ectsCredits" key="label.ects.credits" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="executionPeriod" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionPeriodsReverseOrderProvider" />
-		<property name="format" value="${semester} º semestre - ${executionYear.year}" />
+		<property name="format" value="${childOrder} º semestre - ${executionYear.year}" />
 	</slot>
 	<slot name="evaluationDate" key="label.studentDismissal.evaluationDate"/>
 </schema>
@@ -1196,7 +1196,7 @@
 	<slot name="grade" key="label.studentDismissal.grade" read-only="true"/>
 	<slot name="ectsCredits" key="label.ects.credits" read-only="true"/>
 	<slot name="executionPeriod" key="label.executionPeriod" layout="format" read-only="true">
-		<property name="format" value="${semester}º semestre - ${executionYear.year}" />
+		<property name="format" value="${childOrder}º semestre - ${executionYear.year}" />
 	</slot>
 	<slot name="evaluationDate" key="label.studentDismissal.evaluationDate" layout="null-as-label"/>
 </schema>
@@ -1209,7 +1209,7 @@
 	<slot name="grade" key="label.studentDismissal.grade" read-only="true"/>
 	<slot name="ectsCredits" key="label.ects.credits" read-only="true"/>
 	<slot name="executionPeriod" key="label.executionPeriod" layout="format" read-only="true">
-		<property name="format" value="${semester}º semestre - ${executionYear.year}" />
+		<property name="format" value="${childOrder}º semestre - ${executionYear.year}" />
 	</slot>
 	<slot name="evaluationDate" key="label.studentDismissal.evaluationDate" layout="null-as-label"/>
 </schema>

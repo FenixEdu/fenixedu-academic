@@ -1,4 +1,5 @@
 - Fix: Possible ExecutionIntervals of Dismissals must be childs
+- Refactor: Replace usage of ExecutionSemester.getSemester() to ExecutionSemester.getChildOrder()
 
 25.9.0 (13-01-2020)
 - Refactor: Domain entity AcademicSemesterCE renamed to AcademicIntervalCE
