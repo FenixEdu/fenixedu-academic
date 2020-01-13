@@ -133,13 +133,19 @@
 			<f:selectItems value="#{AcademicAdministrationCurricularCourseManagement.curricularYears}" />
 		</fc:selectOneMenu>
 		<h:outputText value="</p>" escape="false"/>
-			
+
 		<h:outputText value="<p><label>#{bolonhaBundle['semester']}:</label>" escape="false"/>
 		<fc:selectOneMenu value="#{AcademicAdministrationCurricularCourseManagement.curricularSemesterID}">
 			<f:selectItems value="#{AcademicAdministrationCurricularCourseManagement.curricularSemesters}" />
 		</fc:selectOneMenu>
 		<h:outputText value="</p>" escape="false"/>
-		
+
+		<h:outputText value="<p><label>#{bolonhaBundle['term']}:</label>" escape="false"/>
+		<fc:selectOneMenu value="#{CurricularCourseManagement.term}">
+			<f:selectItems value="#{CurricularCourseManagement.terms}" />
+		</fc:selectOneMenu>
+		<h:outputText value="</p>" escape="false"/>
+
 		<h:outputText value="<p><label>#{bolonhaBundle['beginExecutionPeriod.validity']}:</label> " escape="false"/>
 		<fc:selectOneMenu value="#{AcademicAdministrationCurricularCourseManagement.beginExecutionPeriodID}">
 			<f:selectItems value="#{AcademicAdministrationCurricularCourseManagement.beginExecutionPeriodItems}" />

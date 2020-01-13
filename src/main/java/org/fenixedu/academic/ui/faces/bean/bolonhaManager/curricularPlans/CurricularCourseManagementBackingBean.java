@@ -518,6 +518,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         final ExecutionSemester minimumExecutionPeriod = getMinimumExecutionPeriod();
         final List<ExecutionSemester> notClosedExecutionPeriods = ExecutionSemester.readNotClosedExecutionPeriods();
         Collections.sort(notClosedExecutionPeriods);
+        Collections.reverse(notClosedExecutionPeriods);
 
         final List<SelectItem> result = new ArrayList<SelectItem>();
         for (final ExecutionSemester notClosedExecutionPeriod : notClosedExecutionPeriods) {

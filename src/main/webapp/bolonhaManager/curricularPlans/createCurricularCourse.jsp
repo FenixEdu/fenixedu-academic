@@ -140,6 +140,18 @@
 		<fc:selectOneMenu value="#{CurricularCourseManagement.term}">
 			<f:selectItems value="#{CurricularCourseManagement.terms}" />
 		</fc:selectOneMenu>
+		<h:outputText value="</p>" escape="false"/>
+
+		<h:outputText value="<p><label>#{bolonhaBundle['beginExecutionPeriod.validity']}:</label> " escape="false"/>
+		<fc:selectOneMenu value="#{CurricularCourseManagement.beginExecutionPeriodID}">
+			<f:selectItems value="#{CurricularCourseManagement.beginExecutionPeriodItems}" />
+		</fc:selectOneMenu>
+		<h:outputText value="</p>" escape="false"/>
+
+		<h:outputText value="<p><label>#{bolonhaBundle['endExecutionPeriod.validity']}:</label> " escape="false"/>
+		<fc:selectOneMenu value="#{CurricularCourseManagement.endExecutionPeriodID}">
+			<f:selectItems value="#{CurricularCourseManagement.endExecutionPeriodItems}" />
+		</fc:selectOneMenu>
 		<h:outputText value="</p></fieldset></div>" escape="false"/>
 
 		<h:commandButton alt="#{htmlAltBundle['commandButton.create']}" styleClass="inputbutton" value="#{bolonhaBundle['create']}"
