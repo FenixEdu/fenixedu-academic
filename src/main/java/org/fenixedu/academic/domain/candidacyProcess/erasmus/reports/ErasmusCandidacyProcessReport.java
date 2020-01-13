@@ -78,7 +78,7 @@ public class ErasmusCandidacyProcessReport extends ErasmusCandidacyProcessReport
         spreadsheet.setHeaders("N.º Processo", "IST ID", "Nome", "Genero", "Data Nascimento", "Nacionalidade", "Universidade",
                 "País da Universidade", "Programa", "Email", "Curso", "Data de chegada", "Data de partida", "Estado",
                 "Documentação Entregue Completa", "Foto", "Fotocópia do Passaporte ou do Cartão de Identificação", "Acordo", "CV",
-                "Registo Académico", "Nível Inglês");
+                "Registo Académico", "Nível Inglês","N Identificaçaõ");
 
         for (IndividualCandidacyProcess individualCandidacyProcess : getMobilityApplicationProcess().getChildProcessesSet()) {
             photo = false;
@@ -127,6 +127,7 @@ public class ErasmusCandidacyProcessReport extends ErasmusCandidacyProcessReport
             row.setCell(12, erasmusIndividualCandidacyProcess.getCandidacy().getMobilityStudentData().getDateOfDeparture()
                     .toString("dd/MM/yyyy"));
             row.setCell(13, erasmusIndividualCandidacyProcess.getErasmusCandidacyStateDescription());
+            row.setCell(21,erasmusIndividualCandidacyProcess.getPersonalDetails().getDocumentIdNumber());
             if (erasmusIndividualCandidacyProcess.getPhoto() != null) {
                 row.setCell(15, "Sim");
                 photo = true;
