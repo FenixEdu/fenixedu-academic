@@ -21,6 +21,7 @@ package org.fenixedu.academic.ui.renderers.providers;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.fenixedu.academic.domain.ExecutionInterval;
@@ -38,7 +39,8 @@ public class ExecutionPeriodsForDismissalsStudentCurricularPlanProvider implemen
     public Object provide(Object source, Object currentValue) {
         final List<ExecutionInterval> result = new ArrayList<>();
         final StudentCurricularPlan studentCurricularPlan = ((IStudentCurricularPlanBean) source).getStudentCurricularPlan();
-        ExecutionInterval scpSemester = studentCurricularPlan.getStartExecutionPeriod();
+        ExecutionInterval scpSemester = Optional.ofNullable(studentCurricularPlan.getStartExecutionYear())
+                .map(ey -> ey.getFirstExecutionPeriod()).orElse(null);
         ExecutionInterval lastExecutionSemester =
                 ExecutionYear.findCurrent(studentCurricularPlan.getDegree().getCalendar()).getLastExecutionPeriod();
         while (scpSemester != null && scpSemester != lastExecutionSemester) {
