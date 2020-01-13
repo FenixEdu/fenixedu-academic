@@ -1,3 +1,4 @@
+25.9.1 (13-01-2020)
 - Fix: Possible ExecutionIntervals of Dismissals must be childs
 - Refactor: Replace usage of ExecutionSemester.getSemester() to ExecutionSemester.getChildOrder()
 
