@@ -1682,9 +1682,9 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         class time.calendarStructure.AcademicCalendarRootEntry extends time.calendarStructure.AcademicCalendarEntry {           
         }
         
-        class time.calendarStructure.AcademicSemesterCE extends time.calendarStructure.AcademicCalendarEntry {
-        }
-
+        class time.calendarStructure.AcademicIntervalCE extends time.calendarStructure.AcademicCalendarEntry {
+        }        
+        
         class time.calendarStructure.AcademicYearCE extends time.calendarStructure.AcademicCalendarEntry {
         }
 

@@ -24,14 +24,14 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 
-public class AcademicSemesterCE extends AcademicSemesterCE_Base {
+public class AcademicIntervalCE extends AcademicIntervalCE_Base {
 
-    public AcademicSemesterCE(AcademicPeriod academicPeriod, AcademicCalendarEntry parentEntry, LocalizedString title,
+    public AcademicIntervalCE(AcademicPeriod academicPeriod, AcademicCalendarEntry parentEntry, LocalizedString title,
             LocalizedString description, DateTime begin, DateTime end, AcademicCalendarRootEntry rootEntry) {
 
         super();
-        super.initEntry(parentEntry, title, description, begin, end, rootEntry);
         setAcademicPeriod(academicPeriod);
+        super.initEntry(parentEntry, title, description, begin, end, rootEntry);
         createNewExecutionPeriod();
     }
 

@@ -274,7 +274,7 @@
 	<slot name="title"/>
 </schema>
 
-<schema name="AcademicSemesterCEEntryInfo" type="org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry" bundle="MANAGER_RESOURCES" extends="AcademicCalendarEntryInfo">
+<schema name="AcademicIntervalCEEntryInfo" type="org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry" bundle="MANAGER_RESOURCES" extends="AcademicCalendarEntryInfo">
 </schema>
 
 <schema name="AcademicYearCEEntryInfo" type="org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry" bundle="MANAGER_RESOURCES" extends="AcademicCalendarEntryInfo">
@@ -325,7 +325,7 @@
 	<slot name="end" key="label.end" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	    				
 </schema>
 
-<schema name="CreateAcademicSemesterCECalendarEntryType" type="org.fenixedu.academic.dto.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="CreateAcademicCalendarEntryType" >
+<schema name="CreateAcademicIntervalCECalendarEntryType" type="org.fenixedu.academic.dto.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="CreateAcademicCalendarEntryType" >
 </schema>
 
 <schema name="CreateAcademicYearCECalendarEntryType" type="org.fenixedu.academic.dto.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="CreateAcademicCalendarEntryType" >
@@ -365,7 +365,7 @@
 	<slot name="end" key="label.end" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	
 </schema>
 
-<schema name="EditAcademicSemesterCECalendarEntryType" type="org.fenixedu.academic.dto.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="EditAcademicCalendarEntryType">
+<schema name="EditAcademicIntervalCECalendarEntryType" type="org.fenixedu.academic.dto.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="EditAcademicCalendarEntryType">
 </schema>
 
 <schema name="EditAcademicYearCECalendarEntryType" type="org.fenixedu.academic.dto.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" extends="EditAcademicCalendarEntryType">

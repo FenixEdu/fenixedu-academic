@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry;
-import org.fenixedu.academic.domain.time.calendarStructure.AcademicSemesterCE;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicIntervalCE;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicYearCE;
 import org.fenixedu.academic.dto.manager.academicCalendarManagement.CalendarEntryBean;
 
@@ -40,12 +40,12 @@ public class AcademicCalendarEntryTypes implements DataProvider {
         if (bean.getEntry() != null && bean.getEntry().isRoot()) {
 
             result.add(AcademicYearCE.class);
-            result.add(AcademicSemesterCE.class);
+            result.add(AcademicIntervalCE.class);
 //            result.add(AcademicTrimesterCE.class);
 
         } else if (bean.getEntry() != null) {
 
-            result.add(AcademicSemesterCE.class);
+            result.add(AcademicIntervalCE.class);
 //            result.add(AcademicTrimesterCE.class);
 //            result.add(LessonsPeriodCE.class);
 //            result.add(EnrolmentsPeriodCE.class);
