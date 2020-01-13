@@ -153,6 +153,13 @@
 			<fc:selectOneMenu value="#{AcademicAdministrationCurricularCourseManagement.curricularSemesterID}">
 				<f:selectItems value="#{AcademicAdministrationCurricularCourseManagement.curricularSemesters}" />
 			</fc:selectOneMenu>
+			<h:outputText value="</p>" escape="false"/>
+
+			<h:outputText value="<p><label>#{bolonhaBundle['term']}:</label>" escape="false"/>
+			<fc:selectOneMenu value="#{AcademicAdministrationCurricularCourseManagement.term}">
+				<f:selectItems value="#{AcademicAdministrationCurricularCourseManagement.terms}" />
+			</fc:selectOneMenu>
+			<h:outputText value="</p>" escape="false"/>
 
 			<h:outputText value="<p><label>#{bolonhaBundle['beginExecutionPeriod.validity']}:</label> " escape="false"/>
 			<fc:selectOneMenu value="#{AcademicAdministrationCurricularCourseManagement.beginExecutionPeriodID}">
@@ -189,7 +196,12 @@
 					<h:outputText value="#{context.parentCourseGroup.oneFullName}</p>" escape="false"/>
 					
 					<h:outputText value="<p><label>#{bolonhaBundle['curricularPeriod']}:</label>" escape="false"/>
-					<h:outputText value="#{context.curricularPeriod.fullLabel}</p>" escape="false"/>
+					<h:outputText value="#{context.curricularPeriod.fullLabel}" escape="false"/>
+					<h:panelGroup rendered="#{not empty context.fakeTerm}">
+						<h:outputText value=", #{bolonhaBundle['term']} " escape="false"/>
+						<h:outputText value="#{context.term}" escape="false"/>
+					</h:panelGroup>
+					<h:outputText value="</p>" escape="false"/>
 
 					<h:outputText value="<p><label>#{bolonhaBundle['beginExecutionPeriod.validity']}:</label> " escape="false"/>
 					<h:outputText value="#{context.beginExecutionPeriod.qualifiedName}</p>" escape="false"/>
@@ -239,6 +251,13 @@
 					<fc:selectOneMenu value="#{AcademicAdministrationCurricularCourseManagement.curricularSemesterID}">
 						<f:selectItems value="#{AcademicAdministrationCurricularCourseManagement.curricularSemesters}" />
 					</fc:selectOneMenu>
+					<h:outputText value="</p>" escape="false"/>
+
+					<h:outputText value="<p><label>#{bolonhaBundle['term']}:</label>" escape="false"/>
+					<fc:selectOneMenu value="#{AcademicAdministrationCurricularCourseManagement.term}">
+						<f:selectItems value="#{AcademicAdministrationCurricularCourseManagement.terms}" />
+					</fc:selectOneMenu>
+					<h:outputText value="</p>" escape="false"/>
 
 					<h:outputText value="<p><label>#{bolonhaBundle['beginExecutionPeriod.validity']}:</label> " escape="false"/>
 					<fc:selectOneMenu value="#{AcademicAdministrationCurricularCourseManagement.beginExecutionPeriodID}">

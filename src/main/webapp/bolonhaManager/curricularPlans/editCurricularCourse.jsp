@@ -109,6 +109,7 @@
 		<h:outputLink value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/curricularPlans/editCurricularCourse.faces">
 			<h:outputText value="#{bolonhaBundle['newContext']}" />
 			<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}" />
+			<f:param name="executionYearID" value="#{CurricularCourseManagement.executionYearID}" />
 			<f:param name="curricularCourseID" value="#{CurricularCourseManagement.curricularCourseID}" />
 			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}" />
 		</h:outputLink>
@@ -141,6 +142,17 @@
 			</fc:selectOneMenu>
 			<h:outputText value="</p>" escape="false"/>
 
+			<h:outputText value="<p><label>#{bolonhaBundle['beginExecutionPeriod.validity']}:</label> " escape="false"/>
+			<fc:selectOneMenu value="#{CurricularCourseManagement.beginExecutionPeriodID}">
+				<f:selectItems value="#{CurricularCourseManagement.beginExecutionPeriodItems}" />
+			</fc:selectOneMenu>
+			<h:outputText value="</p>" escape="false"/>
+
+			<h:outputText value="<p><label>#{bolonhaBundle['endExecutionPeriod.validity']}:</label> " escape="false"/>
+			<fc:selectOneMenu value="#{CurricularCourseManagement.endExecutionPeriodID}">
+				<f:selectItems value="#{CurricularCourseManagement.endExecutionPeriodItems}" />
+			</fc:selectOneMenu>
+
 			<h:outputText value="<p class='mtop05'><label class='lempty'>.</label>" escape="false"/>
 			<h:commandButton alt="#{htmlAltBundle['commandButton.add']}" styleClass="inputbutton" value="#{bolonhaBundle['add']}"
 				action="" actionListener="#{CurricularCourseManagement.addContext}"/>
@@ -167,10 +179,18 @@
 					</h:panelGroup>
 					<h:outputText value="</p>" escape="false"/>
 
+					<h:outputText value="<p><label>#{bolonhaBundle['beginExecutionPeriod.validity']}:</label> " escape="false"/>
+					<h:outputText value="#{context.beginExecutionPeriod.qualifiedName}</p>" escape="false"/>
+
+					<h:outputText value="<p><label>#{bolonhaBundle['endExecutionPeriod.validity']}:</label> " escape="false"/>
+					<h:outputText value="#{context.endExecutionPeriod.qualifiedName}</p>" escape="false" rendered="#{!empty context.endExecutionPeriod}"/>
+					<h:outputText value="#{bolonhaBundle['opened']}</p>" escape="false" rendered="#{empty context.endExecutionPeriod}"/>
+
 					<h:outputText value="<p class='mtop05'><label class='lempty'>.</label>" escape="false"/>
 					<h:outputLink value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/curricularPlans/editCurricularCourse.faces">
 						<h:outputText value="#{bolonhaBundle['edit']}" />
 						<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}" />
+						<f:param name="executionYearID" value="#{CurricularCourseManagement.executionYearID}" />
 						<f:param name="courseGroupID" value="#{context.parentCourseGroup.externalId}" />
 						<f:param name="contextID" value="#{context.externalId}" />
 						<f:param name="curricularCourseID" value="#{CurricularCourseManagement.curricularCourseID}" />
@@ -210,6 +230,17 @@
 						<f:selectItems value="#{CurricularCourseManagement.terms}" />
 					</fc:selectOneMenu>
 					<h:outputText value="</p>" escape="false"/>
+
+					<h:outputText value="<p><label>#{bolonhaBundle['beginExecutionPeriod.validity']}:</label> " escape="false"/>
+					<fc:selectOneMenu value="#{CurricularCourseManagement.beginExecutionPeriodID}">
+						<f:selectItems value="#{CurricularCourseManagement.beginExecutionPeriodItems}" />
+					</fc:selectOneMenu>
+					<h:outputText value="</p>" escape="false"/>
+
+					<h:outputText value="<p><label>#{bolonhaBundle['endExecutionPeriod.validity']}:</label> " escape="false"/>
+					<fc:selectOneMenu value="#{CurricularCourseManagement.endExecutionPeriodID}">
+						<f:selectItems value="#{CurricularCourseManagement.endExecutionPeriodItems}" />
+					</fc:selectOneMenu>
 
 					<h:outputText value="<p class='mtop05'><label class='lempty'>.</label>" escape="false"/>
 					<h:outputText escape="false" value="<input alt='input.contextID' id='contextID' name='contextID' type='hidden' value='#{context.externalId}'/>"/>
