@@ -1471,9 +1471,10 @@ public class Registration extends Registration_Base {
     }
 
     public RegistrationState getActiveState() {
-        return getRegistrationStatesSet().stream().filter(
-                s -> s.getExecutionInterval() != null && (s.getExecutionInterval().getAcademicInterval().getStart().isBeforeNow()
-                        || s.getExecutionInterval().isCurrent()))
+        return getRegistrationStatesSet().stream()
+                .filter(s -> s.getExecutionInterval() != null
+                        && (s.getExecutionInterval().getExecutionYear().getAcademicInterval().getStart().isBeforeNow()
+                                || s.getExecutionInterval().isCurrent()))
                 .max(RegistrationState.EXECUTION_INTERVAL_AND_DATE_COMPARATOR).orElseGet(() -> getLastState());
     }
 
