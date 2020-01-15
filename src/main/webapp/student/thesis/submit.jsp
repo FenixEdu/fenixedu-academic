@@ -51,12 +51,6 @@
     </div>
 </logic:notEmpty>
 
-<logic:empty name="todo">
-	<div class="infoop2">
-		<p class="mvert0"><bean:message key="message.thesis.process.instructions"/></p>
-	</div>
-</logic:empty>
-
 <h3 class="mtop15 mbottom05"><bean:message key="title.student.thesis.submit.details"/></h3>
 
 <logic:notPresent name="changeDetails">
