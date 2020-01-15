@@ -152,7 +152,13 @@ public class AttendsSearchController extends ExecutionCourseController {
                         addCell(getLabel("label.email"), attends.getRegistration().getPerson().getDefaultEmailAddressValue());
                         executionCourse.getGroupings().forEach(
                                 gr -> addCell(getLabel("label.projectGroup") + " " + gr.getName(), attends.getStudentGroupsSet()
-                                        .stream().filter(sg -> sg.getGrouping().equals(gr)).map(StudentGroup::getGroupNumber)
+                                        .stream().filter(sg -> sg.getGrouping().equals(gr)).map(sg -> {
+                                            if (sg.getShift() != null) {
+                                                return sg.getGroupNumber() + " - " + sg.getShift().getNome();
+                                            }  else {
+                                                return sg.getGroupNumber();
+                                            }
+                                        })
                                         .map(Object::toString).findAny().orElse("")));
                         executionCourse.getShiftTypes().forEach(
                                 shiftType -> addCell(
