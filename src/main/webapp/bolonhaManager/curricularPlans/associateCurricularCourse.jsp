@@ -72,8 +72,20 @@
 		<h:selectOneMenu value="#{CurricularCourseManagement.term}">
 			<f:selectItems value="#{CurricularCourseManagement.terms}" />
 		</h:selectOneMenu>
+		<h:outputText value="</p>" escape="false"/>
+
+		<h:outputText value="<p><label>#{bolonhaBundle['beginExecutionPeriod.validity']}:</label> " escape="false"/>
+		<h:selectOneMenu value="#{CurricularCourseManagement.beginExecutionPeriodID}">
+			<f:selectItems value="#{CurricularCourseManagement.beginExecutionPeriodItems}" />
+		</h:selectOneMenu>
+		<h:outputText value="</p>" escape="false"/>
+
+		<h:outputText value="<p><label>#{bolonhaBundle['endExecutionPeriod.validity']}:</label> " escape="false"/>
+		<h:selectOneMenu value="#{CurricularCourseManagement.endExecutionPeriodID}">
+			<f:selectItems value="#{CurricularCourseManagement.endExecutionPeriodItems}" />
+		</h:selectOneMenu>
 		<h:outputText value="</p></fieldset></div>" escape="false"/>
-	
+
 		<h:commandButton alt="#{htmlAltBundle['commandButton.associate']}" styleClass="inputbutton" value="#{bolonhaBundle['associate']}"
 			action="#{CurricularCourseManagement.addContext}"/>	
 		<h:commandButton alt="#{htmlAltBundle['commandButton.back']}" immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['back']}"
