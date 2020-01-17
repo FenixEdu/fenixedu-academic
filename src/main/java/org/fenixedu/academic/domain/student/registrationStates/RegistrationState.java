@@ -175,7 +175,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     }
 
     private void checkCurriculumLinesForStateDate(final StateBean bean) {
-        final ExecutionYear year = ((RegistrationStateBean) bean).getExecutionInterval().convert(ExecutionYear.class);
+        final ExecutionYear year = ((RegistrationStateBean) bean).getExecutionInterval().getExecutionYear();
         final RegistrationStateType nextStateType = RegistrationStateType.valueOf(bean.getNextState());
 
         if (nextStateType.canHaveCurriculumLinesOnCreation()) {
@@ -196,7 +196,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     public abstract RegistrationStateType getStateType();
 
     public ExecutionYear getExecutionYear() {
-        return getExecutionInterval().convert(ExecutionYear.class);
+        return getExecutionInterval().getExecutionYear();
     }
 
     public void delete() {
