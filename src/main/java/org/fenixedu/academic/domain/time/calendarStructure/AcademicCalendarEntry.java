@@ -490,22 +490,4 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 //        return count;
 //    }
 
-    /**
-     * TEMP method, for refactor purpose only
-     */
-    public boolean populateAcademicPeriod() {
-        if (!isRoot() && super.getAcademicPeriod() == null) {
-            super.setAcademicPeriod(getAcademicPeriod());
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * TEMP method, for refactor purpose only
-     */
-    public AcademicPeriod getPersistentAcademicPeriod() {
-        return super.getAcademicPeriod() != null ? super.getAcademicPeriod() : null;
-    }
-
 }

@@ -513,22 +513,4 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         return getExecutionPeriod().getExecutionYear();
     }
 
-    /**
-     * TEMP method, for refactor purpose only
-     */
-    public boolean populateAcademicPeriod() {
-        if (super.getAcademicPeriod() == null) {
-            super.setAcademicPeriod(getAcademicPeriod());
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * TEMP method, for refactor purpose only
-     */
-    public AcademicPeriod getPersistentAcademicPeriod() {
-        return super.getAcademicPeriod() != null ? super.getAcademicPeriod() : null;
-    }
-
 }

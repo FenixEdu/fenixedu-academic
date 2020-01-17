@@ -161,27 +161,10 @@ public class OccupationPeriodReference extends OccupationPeriodReference_Base {
         return returnStr.toString();
     }
 
-    @Override
-    public ExecutionInterval getExecutionInterval() {
-        return super.getExecutionInterval() != null ? super.getExecutionInterval() : getExecutionDegree().getExecutionYear()
-                .getExecutionSemesterFor(getSemester());
-    }
-
     @Deprecated
     @Override
     public Integer getSemester() {
         return super.getExecutionInterval() != null ? super.getExecutionInterval().getChildOrder() : super.getSemester();
-    }
-
-    public boolean migrateExecutionInterval() {
-        if (super.getExecutionInterval() == null) {
-            final ExecutionInterval interval = getExecutionDegree().getExecutionYear().getExecutionSemesterFor(getSemester());
-            if (interval != null) {
-                setExecutionInterval(interval);
-                return true;
-            }
-        }
-        return false;
     }
 
 }

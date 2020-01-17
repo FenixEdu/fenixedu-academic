@@ -19,9 +19,6 @@
 package org.fenixedu.academic.servlet;
 
 import java.util.Properties;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -32,14 +29,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.Installation;
-import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation;
 import org.fenixedu.academic.domain.organizationalStructure.UnitNamePart;
-import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry;
 import org.fenixedu.academic.service.StudentWarningsDefaultCheckers;
 import org.fenixedu.academic.service.StudentWarningsService;
 import org.fenixedu.academic.ui.struts.action.externalServices.PhoneValidationUtils;
 import org.fenixedu.bennu.core.api.SystemResource;
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.rest.Healthcheck;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,9 +54,6 @@ public class FenixInitializer implements ServletContextListener {
     @Atomic(mode = TxMode.READ)
     public void contextInitialized(ServletContextEvent event) {
 
-        setEmptyAcademicPeriodsCompetenceCourses();
-        setEmptyAcademicPeriodsCalendarEntries();
-
         Installation.ensureInstallation();
         loadUnitNames();
         startContactValidationServices();
@@ -72,55 +63,6 @@ public class FenixInitializer implements ServletContextListener {
         registerHealthchecks();
         registerDefaultStudentWarningCheckers();
 
-    }
-
-    @Atomic
-    private void setEmptyAcademicPeriodsCompetenceCourses() {
-        final Set<CompetenceCourseInformation> courseInformations = Bennu.getInstance().getCompetenceCourseInformationsSet();
-        Set<CompetenceCourseInformation> courseInformationswithoutPeriods =
-                courseInformations.stream().filter(cci -> cci.getPersistentAcademicPeriod() == null).collect(Collectors.toSet());
-        int withoutPeriodBefore = courseInformationswithoutPeriods.size();
-        if (withoutPeriodBefore > 0) {
-            final AtomicInteger counter = new AtomicInteger();
-            courseInformationswithoutPeriods.stream().forEach(cci -> {
-                boolean success = cci.populateAcademicPeriod();
-                if (success) {
-                    counter.incrementAndGet();
-                }
-            });
-            long withoutPeriodAfter =
-                    courseInformations.stream().filter(cci -> cci.getPersistentAcademicPeriod() == null).count();
-
-            logger.info("START setting Academic Periods @ CCI");
-            logger.info(withoutPeriodBefore + " CCI without AcademicPeriod (before)");
-            logger.info(counter.intValue() + " CCI changed");
-            logger.info(withoutPeriodAfter + " CCI without AcademicPeriod (after)");
-            logger.info("END setting Academic Periods @ CCI");
-        }
-    }
-
-    @Atomic
-    private void setEmptyAcademicPeriodsCalendarEntries() {
-        final Set<AcademicCalendarEntry> calendarEntries = Bennu.getInstance().getAcademicCalendarEntriesSet();
-        Set<AcademicCalendarEntry> calendarEntriesWithoutPeriods =
-                calendarEntries.stream().filter(ace -> ace.getPersistentAcademicPeriod() == null).collect(Collectors.toSet());
-        int withoutPeriodBefore = calendarEntriesWithoutPeriods.size();
-        if (withoutPeriodBefore > 0) {
-            final AtomicInteger counter = new AtomicInteger();
-            calendarEntriesWithoutPeriods.stream().forEach(ace -> {
-                boolean success = ace.populateAcademicPeriod();
-                if (success) {
-                    counter.incrementAndGet();
-                }
-            });
-            long withoutPeriodAfter = calendarEntries.stream().filter(ace -> ace.getPersistentAcademicPeriod() == null).count();
-
-            logger.info("START setting Academic Periods @ Calendar Entries");
-            logger.info(withoutPeriodBefore + " Calendar Entries without AcademicPeriod (before)");
-            logger.info(counter.intValue() + " Calendar Entries changed");
-            logger.info(withoutPeriodAfter + " Calendar Entries without AcademicPeriod (after)");
-            logger.info("END setting Academic Periods @ Calendar Entries");
-        }
     }
 
     private void registerDefaultStudentWarningCheckers() {
