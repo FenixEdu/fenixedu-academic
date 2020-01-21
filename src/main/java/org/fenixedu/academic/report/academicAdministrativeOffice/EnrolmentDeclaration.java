@@ -134,7 +134,7 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
     }
 
     @Override
-    protected DocumentRequest getDocumentRequest() {
+    public DocumentRequest getDocumentRequest() {
         return (DocumentRequest) super.getDocumentRequest();
     }
 

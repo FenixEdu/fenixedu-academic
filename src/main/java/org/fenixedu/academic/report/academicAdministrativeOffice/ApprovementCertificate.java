@@ -55,7 +55,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
     }
 
     @Override
-    protected ApprovementCertificateRequest getDocumentRequest() {
+    public ApprovementCertificateRequest getDocumentRequest() {
         return (ApprovementCertificateRequest) super.getDocumentRequest();
     }
 

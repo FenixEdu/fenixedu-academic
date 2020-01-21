@@ -37,7 +37,7 @@ public class Under23TransportsDeclarationDocument extends AdministrativeOfficeDo
     }
 
     @Override
-    protected Under23TransportsDeclarationRequest getDocumentRequest() {
+    public Under23TransportsDeclarationRequest getDocumentRequest() {
         return (Under23TransportsDeclarationRequest) super.getDocumentRequest();
     }
 

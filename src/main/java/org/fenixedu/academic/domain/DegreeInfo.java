@@ -307,4 +307,13 @@ public class DegreeInfo extends DegreeInfo_Base {
     public AcademicInterval getAcademicInterval() {
         return getExecutionYear().getAcademicInterval();
     }
+
+    @Override
+    public LocalizedString getAssociatedInstitutions() {
+        LocalizedString associatedInstitutions = super.getAssociatedInstitutions();
+        if (associatedInstitutions == null) {
+            return new LocalizedString();
+        }
+        return associatedInstitutions;
+    }
 }

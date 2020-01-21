@@ -1579,12 +1579,11 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isFirstCycleAtributionIngression() {
-        return getIngressionType().isFirstCycleAttribution();
-
+        return getIngressionType() != null && getIngressionType().isFirstCycleAttribution();
     }
 
     public boolean isSecondCycleInternalCandidacyIngression() {
-        return getIngressionType() != null ? getIngressionType().isInternal2ndCycleAccess() : false;
+        return getIngressionType() != null && getIngressionType().isInternal2ndCycleAccess();
     }
 
     @Override
@@ -1705,6 +1704,7 @@ public class Registration extends Registration_Base {
 
         if (!isEmptyDegree() && !degreeType.isEmpty()) {
             res.append(degreeType.getPrefix(locale));
+            res.append(" ");
             if (programConclusion != null && !Strings.isNullOrEmpty(programConclusion.getDescription().getContent(locale))) {
                 res.append(programConclusion.getDescription().getContent(locale).toUpperCase());
                 res.append(" ").append(BundleUtil.getString(Bundle.ACADEMIC, locale, "label.in")).append(" ");

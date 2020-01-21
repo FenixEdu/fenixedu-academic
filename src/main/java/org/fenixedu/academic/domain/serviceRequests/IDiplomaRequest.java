@@ -22,17 +22,15 @@ import org.joda.time.LocalDate;
 
 public interface IDiplomaRequest extends IProgramConclusionRequest {
     @Override
-    public boolean hasRegistryCode();
+    boolean hasRegistryCode();
 
     @Override
-    public RegistryCode getRegistryCode();
+    RegistryCode getRegistryCode();
 
-    public LocalDate getConclusionDate();
+    LocalDate getConclusionDate();
 
-    public Integer getFinalAverage();
+    Integer getFinalAverage();
 
-    public String getFinalAverageQualified();
-
-    public String getDissertationThesisTitle();
+    String getDissertationThesisTitle();
 
 }

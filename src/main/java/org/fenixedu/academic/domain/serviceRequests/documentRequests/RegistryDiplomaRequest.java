@@ -277,4 +277,9 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
     public String getDegreeName(ExecutionYear year) {
         return getDegree().getFilteredName(year, Locale.getDefault());
     }
+
+    @Override
+    public String getThesisTitle(Locale locale) {
+        return null;
+    }
 }

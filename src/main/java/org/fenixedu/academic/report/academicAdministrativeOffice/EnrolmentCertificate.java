@@ -75,7 +75,7 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
     }
 
     @Override
-    protected EnrolmentCertificateRequest getDocumentRequest() {
+    public EnrolmentCertificateRequest getDocumentRequest() {
         return (EnrolmentCertificateRequest) super.getDocumentRequest();
     }
 

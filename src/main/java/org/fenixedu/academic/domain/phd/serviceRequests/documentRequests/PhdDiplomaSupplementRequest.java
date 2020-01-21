@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain.phd.serviceRequests.documentRequests;
 
 import java.util.Locale;
 
+import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeOfficialPublication;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accounting.EventType;
@@ -200,6 +201,20 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
         }
 
         return information.getMaxStudyPlanEctsCredits().add(information.getMaxThesisEctsCredits()).doubleValue();
+    }
+
+    @Override
+    public Degree getDegree() {
+        /**
+         * TODO: phd-refactor
+         * all individual processes must have a registration therefore degree comes always from registration
+         */
+
+        if (getPhdIndividualProgramProcess().getRegistration() != null) {
+            return getPhdIndividualProgramProcess().getRegistration().getDegree();
+        }
+
+        return getPhdIndividualProgramProcess().getPhdProgram().getDegree();
     }
 
     @Override

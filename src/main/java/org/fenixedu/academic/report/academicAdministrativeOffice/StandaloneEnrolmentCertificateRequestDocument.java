@@ -43,7 +43,7 @@ public class StandaloneEnrolmentCertificateRequestDocument extends Administrativ
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected StandaloneEnrolmentCertificateRequest getDocumentRequest() {
+    public StandaloneEnrolmentCertificateRequest getDocumentRequest() {
         return (StandaloneEnrolmentCertificateRequest) super.getDocumentRequest();
     }
 

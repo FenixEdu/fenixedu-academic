@@ -28,10 +28,10 @@ import org.fenixedu.academic.domain.phd.exceptions.PhdDomainOperationException;
 import org.fenixedu.academic.domain.phd.serviceRequests.PhdDocumentRequestCreateBean;
 import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
 import org.fenixedu.academic.domain.serviceRequests.RectorateSubmissionBatch;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DefaultDocumentGenerator;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.academic.report.academicAdministrativeOffice.AdministrativeOfficeDocument;
-import org.fenixedu.academic.util.report.ReportsUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -127,8 +127,7 @@ public class PhdFinalizationCertificateRequest extends PhdFinalizationCertificat
             final List<AdministrativeOfficeDocument> documents =
                     AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(this);
 
-            final AdministrativeOfficeDocument[] array = {};
-            byte[] data = ReportsUtils.generateReport(documents.toArray(array)).getData();
+            byte[] data = DefaultDocumentGenerator.getGenerator().generateReport(documents);
 
             DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", data);
             return data;

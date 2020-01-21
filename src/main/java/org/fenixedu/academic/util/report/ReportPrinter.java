@@ -23,9 +23,9 @@ import java.util.Map;
 
 public interface ReportPrinter {
 
-    public ReportResult printReports(ReportDescription... reports) throws Exception;
+    ReportResult printReports(ReportDescription... reports) throws Exception;
 
-    public default ReportResult printReport(String key, Map<String, Object> parameters, Collection<?> dataSource)
+    default ReportResult printReport(String key, Map<String, Object> parameters, Collection<?> dataSource)
             throws Exception {
         return printReports(new ReportDescription() {
 
@@ -43,20 +43,20 @@ public interface ReportPrinter {
             public Collection<?> getDataSource() {
                 return dataSource;
             }
+
         });
     }
 
-    public static interface ReportDescription {
+    interface ReportDescription {
 
-        public String getKey();
+        String getKey();
 
-        public Map<String, Object> getParameters();
+        Map<String, Object> getParameters();
 
-        public Collection<?> getDataSource();
-
+        Collection<?> getDataSource();
     }
 
-    public static class ReportResult {
+    class ReportResult {
 
         private final byte[] data;
         private final String contentType;

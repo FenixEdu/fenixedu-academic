@@ -38,6 +38,9 @@
 			</fr:slot>
 			<fr:slot name="freeProcessed" />
 			<fr:slot name="requestDate" required="true" />
+			<fr:slot name="language" layout="null-as-label">
+				<fr:property name="label" value="-"/>
+			</fr:slot>
 		</fr:schema>
 		
 		<fr:layout name="tabular">

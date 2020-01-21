@@ -46,7 +46,7 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
     }
 
     @Override
-    protected PhdFinalizationCertificateRequest getDocumentRequest() {
+    public PhdFinalizationCertificateRequest getDocumentRequest() {
         return (PhdFinalizationCertificateRequest) super.getDocumentRequest();
     }
 

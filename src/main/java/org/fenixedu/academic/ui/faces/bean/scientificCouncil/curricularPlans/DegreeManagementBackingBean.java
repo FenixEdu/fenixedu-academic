@@ -22,7 +22,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import javax.faces.component.html.HtmlInputText;
@@ -52,10 +55,15 @@ import org.fenixedu.academic.service.services.scientificCouncil.curricularPlans.
 import org.fenixedu.academic.service.services.scientificCouncil.curricularPlans.EditDegree;
 import org.fenixedu.academic.ui.faces.bean.base.FenixBackingBean;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LocaleUtils;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.LocalizedString;
+import org.fenixedu.commons.i18n.LocalizedString.Builder;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Strings;
 
 import pt.ist.fenixframework.FenixFramework;
 
@@ -72,6 +80,10 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     private String name;
 
     private String nameEn;
+
+    private String associatedInstitutions;
+
+    private String associatedInstitutionsEn;
 
     private String acronym;
 
@@ -94,6 +106,10 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     private HtmlInputText nameInputComponent;
 
     private HtmlInputText nameEnInputComponent;
+
+    private HtmlInputText associatedInstitutionsInputComponent;
+
+    private HtmlInputText associatedInstitutionsEnInputComponent;
 
     private final List<OfficialPubBeanPrint> officialPublicationsBeanPrettyPrints =
             new ArrayList<DegreeManagementBackingBean.OfficialPubBeanPrint>();
@@ -160,9 +176,51 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         return (degree == null) ? (degree = FenixFramework.getDomainObject(getDegreeId())) : degree;
     }
 
+    private LocalizedString getNameLocalizedString() {
+        return new LocalizedString.Builder().with(LocaleUtils.PT, name).with(LocaleUtils.EN, nameEn).build();
+    }
+
+    private String getAssociatedInstitutionsContent(Locale locale, Supplier<String> getter, Consumer<String> setter) {
+        if (getter.get() == null && getDegree() != null) {
+            ExecutionYear selectedExecutionYear = getSelectedExecutionYear() == null ? ExecutionYear.readCurrentExecutionYear() : getSelectedExecutionYear();
+            DegreeInfo degreeInfoFor = getDegreeInfo(selectedExecutionYear);
+            String content = degreeInfoFor.getAssociatedInstitutions().getContent(locale);
+            setter.accept(content);
+            return content;
+        }
+        return getter.get();
+    }
+
+    private LocalizedString getAssociatedInstitutionsLocalizedString() {
+        final Builder builder = new LocalizedString.Builder();
+        if (!Strings.isNullOrEmpty(getAssociatedInstitutions())) {
+            builder.with(LocaleUtils.PT, getAssociatedInstitutions());
+        }
+        if (!Strings.isNullOrEmpty(getAssociatedInstitutionsEn())) {
+            builder.with(LocaleUtils.EN, getAssociatedInstitutionsEn());
+        }
+        return builder.build();
+    }
+
+    public String getAssociatedInstitutions() {
+        return getAssociatedInstitutionsContent(LocaleUtils.PT, () -> associatedInstitutions, (val) -> associatedInstitutions = val);
+    }
+
+    public void setAssociatedInstitutions(String associatedInstitutions) {
+        this.associatedInstitutions = associatedInstitutions;
+    }
+
+    public String getAssociatedInstitutionsEn() {
+        return getAssociatedInstitutionsContent(LocaleUtils.EN, () -> associatedInstitutionsEn, (val) -> associatedInstitutionsEn = val);
+    }
+
+    public void setAssociatedInstitutionsEn(String associatedInstitutionsEn) {
+        this.associatedInstitutionsEn = associatedInstitutionsEn;
+    }
+
     public String getName() {
         return (name == null && getDegree() != null) ? (name =
-                getDegree().getNameFor(getSelectedExecutionYear()).getContent(org.fenixedu.academic.util.LocaleUtils.PT)) : name;
+                                                            getDegree().getNameFor(getSelectedExecutionYear()).getContent(org.fenixedu.academic.util.LocaleUtils.PT)) : name;
     }
 
     public void setName(String name) {
@@ -171,7 +229,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
     public String getNameEn() {
         return (nameEn == null && getDegree() != null) ? (nameEn =
-                getDegree().getNameFor(getSelectedExecutionYear()).getContent(org.fenixedu.academic.util.LocaleUtils.EN)) : nameEn;
+                                                              getDegree().getNameFor(getSelectedExecutionYear()).getContent(org.fenixedu.academic.util.LocaleUtils.EN)) : nameEn;
     }
 
     public void setNameEn(String nameEn) {
@@ -303,8 +361,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
         try {
             AdministrativeOffice administrativeOffice = FenixFramework.getDomainObject(getAcademicAdminOfficeId());
-            CreateDegree.run(this.name, this.nameEn, this.acronym, FenixFramework.getDomainObject(this.bolonhaDegreeType),
-                    this.getEctsCredits(), GradeScale.valueOf(gradeScale), this.prevailingScientificArea, administrativeOffice);
+            CreateDegree.run(getNameLocalizedString(), this.acronym, getAssociatedInstitutionsLocalizedString(), FenixFramework.getDomainObject(this.bolonhaDegreeType), this.getEctsCredits(), GradeScale.valueOf(gradeScale), this.prevailingScientificArea, administrativeOffice);
         } catch (IllegalDataAccessException e) {
             this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.notAuthorized"));
             return "curricularPlansManagement";
@@ -327,8 +384,10 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
             return "";
         }
 
-        String name = (String) getNameInputComponent().getValue();
-        String nameEn = (String) getNameEnInputComponent().getValue();
+        name = (String) getNameInputComponent().getValue();
+        nameEn = (String) getNameEnInputComponent().getValue();
+        associatedInstitutions = (String) getAssociatedInstitutionsInputComponent().getValue();
+        associatedInstitutionsEn = (String) getAssociatedInstitutionsEnInputComponent().getValue();
 
         if (StringUtils.isEmpty(name) || StringUtils.isEmpty(nameEn) || StringUtils.isEmpty(this.acronym)) {
             this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "please.fill.mandatory.fields"));
@@ -336,7 +395,31 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         }
 
         try {
-            EditDegree.run(this.getDegreeId(), name, nameEn, this.acronym,
+            EditDegree.run(this.getDegreeId(), getNameLocalizedString(),  this.acronym, getAssociatedInstitutionsLocalizedString(),
+                    FenixFramework.getDomainObject(getBolonhaDegreeType()), this.getEctsCredits(),
+                    GradeScale.valueOf(gradeScale), this.prevailingScientificArea, getSelectedExecutionYear(), getCode(),
+                    getMinistryCode());
+        } catch (IllegalDataAccessException e) {
+            this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.notAuthorized"));
+            return "curricularPlansManagement";
+        } catch (DomainException e) {
+            this.addErrorMessage(BundleUtil.getString(Bundle.DOMAIN_EXCEPTION, e.getMessage()));
+            return "";
+        } catch (Exception e) {
+            this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.editingDegree"));
+            return "curricularPlansManagement";
+        }
+
+        this.addInfoMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "degree.edited"));
+        return "curricularPlansManagement";
+    }
+
+    public String editAssociatedInstitutions() {
+        associatedInstitutions = (String) getAssociatedInstitutionsInputComponent().getValue();
+        associatedInstitutionsEn = (String) getAssociatedInstitutionsEnInputComponent().getValue();
+
+        try {
+            EditDegree.run(this.getDegreeId(), getNameLocalizedString(),  this.acronym, getAssociatedInstitutionsLocalizedString(),
                     FenixFramework.getDomainObject(getBolonhaDegreeType()), this.getEctsCredits(),
                     GradeScale.valueOf(gradeScale), this.prevailingScientificArea, getSelectedExecutionYear(), getCode(),
                     getMinistryCode());
@@ -390,10 +473,14 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
             }
 
             if (degreeInfo != null) {
-                this.name = degreeInfo.getName().getContent(org.fenixedu.academic.util.LocaleUtils.PT);
-                this.nameEn = degreeInfo.getName().getContent(org.fenixedu.academic.util.LocaleUtils.EN);
-                this.nameInputComponent.setValue(degreeInfo.getName().getContent(org.fenixedu.academic.util.LocaleUtils.PT));
-                this.nameEnInputComponent.setValue(degreeInfo.getName().getContent(org.fenixedu.academic.util.LocaleUtils.EN));
+                this.name = degreeInfo.getName().getContent(LocaleUtils.PT);
+                this.nameEn = degreeInfo.getName().getContent(LocaleUtils.EN);
+                this.nameInputComponent.setValue(this.name);
+                this.nameEnInputComponent.setValue(this.nameEn);
+                this.associatedInstitutions = degreeInfo.getAssociatedInstitutions().getContent(LocaleUtils.PT);
+                this.associatedInstitutionsEn = degreeInfo.getAssociatedInstitutions().getContent(LocaleUtils.EN);
+                this.associatedInstitutionsInputComponent.setValue(this.associatedInstitutions);
+                this.associatedInstitutionsEnInputComponent.setValue(this.associatedInstitutionsEn);
             }
         }
     }
@@ -420,6 +507,10 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         return selectItems;
     }
 
+    public String getExistentDegreeInfoYears () {
+        return getDegree().getDegreeInfosSet().stream().sorted(DegreeInfo.COMPARATOR_BY_EXECUTION_YEAR).map(di -> di.getExecutionYear().getName()).collect(Collectors.joining(", "));
+    }
+
     public HtmlInputText getNameInputComponent() {
         if (this.nameInputComponent == null) {
             this.nameInputComponent = new HtmlInputText();
@@ -441,7 +532,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         if (this.nameEnInputComponent == null) {
             this.nameEnInputComponent = new HtmlInputText();
             ExecutionYear executionYear =
-                    (getSelectedExecutionYear() != null) ? getSelectedExecutionYear() : ExecutionYear.readCurrentExecutionYear();
+                (getSelectedExecutionYear() != null) ? getSelectedExecutionYear() : ExecutionYear.readCurrentExecutionYear();
             final DegreeInfo degreeInfo = getDegreeInfo(executionYear);
             this.nameEnInputComponent.setValue(degreeInfo.getName().getContent(org.fenixedu.academic.util.LocaleUtils.EN));
         }
@@ -449,8 +540,32 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         return this.nameEnInputComponent;
     }
 
-    public void setNameEnInputComponent(HtmlInputText nameEnInputComponent) {
-        this.nameEnInputComponent = nameEnInputComponent;
+    public void setNameEnInputComponent(HtmlInputText nameEnInputComponent) { this.nameEnInputComponent = nameEnInputComponent;}
+
+    public HtmlInputText getAssociatedInstitutionsInputComponent() {
+        if (this.associatedInstitutionsInputComponent == null) {
+            this.associatedInstitutionsInputComponent = new HtmlInputText();
+            this.associatedInstitutionsInputComponent.setValue(getAssociatedInstitutions());
+        }
+
+        return this.associatedInstitutionsInputComponent;
+    }
+
+    public void setAssociatedInstitutionsInputComponent(HtmlInputText associatedInstitutionsInputComponent) {
+        this.associatedInstitutionsInputComponent = associatedInstitutionsInputComponent;
+    }
+
+    public HtmlInputText getAssociatedInstitutionsEnInputComponent() {
+        if (this.associatedInstitutionsEnInputComponent == null) {
+            this.associatedInstitutionsEnInputComponent = new HtmlInputText();
+            this.associatedInstitutionsEnInputComponent.setValue(getAssociatedInstitutionsEn());
+        }
+
+        return this.associatedInstitutionsEnInputComponent;
+    }
+
+    public void setAssociatedInstitutionsEnInputComponent(HtmlInputText associatedInstitutionsEnInputComponent) {
+        this.associatedInstitutionsEnInputComponent = associatedInstitutionsEnInputComponent;
     }
 
     private DegreeInfo getDegreeInfo(final ExecutionYear executionYear) {

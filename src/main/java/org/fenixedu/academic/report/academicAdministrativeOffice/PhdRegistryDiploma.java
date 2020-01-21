@@ -18,29 +18,20 @@
  */
 package org.fenixedu.academic.report.academicAdministrativeOffice;
 
-import java.text.MessageFormat;
-
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
-import org.fenixedu.academic.domain.serviceRequests.IRegistryDiplomaRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
-import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.commons.i18n.LocalizedString;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
-import org.joda.time.DateTime;
 
 public class PhdRegistryDiploma extends RegistryDiploma {
 
     private static final long serialVersionUID = 1L;
 
-    protected PhdRegistryDiploma(IDocumentRequest documentRequest) {
+    PhdRegistryDiploma(IDocumentRequest documentRequest) {
         super(documentRequest);
     }
 
     @Override
-    protected PhdRegistryDiplomaRequest getDocumentRequest() {
+    public PhdRegistryDiplomaRequest getDocumentRequest() {
         return (PhdRegistryDiplomaRequest) super.getDocumentRequest();
     }
 
@@ -48,82 +39,19 @@ public class PhdRegistryDiploma extends RegistryDiploma {
     protected void fillReport() {
         super.fillReport();
 
-        IRegistryDiplomaRequest request = getDocumentRequest();
-        Person person = request.getPerson();
+        final PhdRegistryDiplomaRequest request = getDocumentRequest();
 
-        setHeader();
-
-        addParameter("institution", getInstitutionName());
-
-        setFirstParagraph(request);
-        setSecondParagraph(person, request);
-
-        addParameter("thirdParagraph",
-                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.phdThirdParagraph"));
-
-        String dateWord[] = getDateByWords(request.getConclusionDate());
-
-        String fourthParagraph =
-                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.phdfourthParagraph");
-
-        addParameter("fourthParagraph", MessageFormat.format(fourthParagraph, dateWord[0], dateWord[1], dateWord[2]));
-
-        String fifthParagraph;
-        if (getUniversity(new DateTime()) != getUniversity(getDocumentRequest().getConclusionDate().toDateTimeAtCurrentTime())) {
-            fifthParagraph =
-                    BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.phdFifthParagraph.UTL");
-            addParameter("by", BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.by.university"));
-        } else {
-            fifthParagraph = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.phdFifthParagraph");
-            addParameter("university", "");
-            addParameter("by", "");
-        }
-
-        addParameter("fifthParagraph", MessageFormat.format(fifthParagraph, getDocumentRequest().getFinalAverage(getLocale())));
-        setFooter();
+        getPayload().addProperty("isPHD", true);
+        getPayload().addProperty("thesisTitle", request.getThesisTitle(getLocale()));
+        getPayload().addProperty("graduateTitle", request.getGraduateTitle(getLocale()));
     }
 
     @Override
-    protected void setHeader() {
-        addParameter("thesisTitle", getThesisTitleI18N().getContent(getLanguage()));
-        super.setHeader();
-    }
+    protected String getConclusion() {
+        final ExecutionYear ingressionYear = getDocumentRequest().getPhdIndividualProgramProcess().getExecutionYear();
 
-    private LocalizedString getThesisTitleI18N() {
-        return new LocalizedString(org.fenixedu.academic.util.LocaleUtils.PT, getDocumentRequest().getPhdIndividualProgramProcess()
-                .getThesisTitle()).with(org.fenixedu.academic.util.LocaleUtils.EN, getDocumentRequest().getPhdIndividualProgramProcess()
-                .getThesisTitleEn());
-    }
-
-    @Override
-    void setSecondParagraph(Person person, IRegistryDiplomaRequest request) {
-
-        String studentGender;
-        if (person.isMale()) {
-            studentGender = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.studentHolderMale");
-        } else {
-            studentGender = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.studentHolderFemale");
-        }
-
-        String country;
-        String countryUpperCase;
-        if (person.getCountry() != null) {
-            country = person.getCountry().getCountryNationality().getContent(getLanguage()).toLowerCase();
-        } else {
-            throw new DomainException("error.personWithoutParishOfBirth");
-        }
-
-        PhdRegistryDiplomaRequest phdRequest = getDocumentRequest();
-
-        final ExecutionYear executionYear = phdRequest.getPhdIndividualProgramProcess().getExecutionYear();
-        String secondParagraph =
-                BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.phd.registryDiploma.phdSecondParagraph");
-        addParameter(
-                "secondParagraph",
-                MessageFormat.format(secondParagraph, studentGender,
-                        BundleUtil.getString(Bundle.ENUMERATION, getLocale(), person.getIdDocumentType().getName()),
-                        person.getDocumentIdNumber(), country, phdRequest.getPhdIndividualProgramProcess().getPhdProgram()
-                            .getName(executionYear).getContent(getLanguage())));
+        return getDocumentRequest().getPhdIndividualProgramProcess().getPhdProgram().getName(ingressionYear)
+                .getContent(getLanguage());
     }
 
     @Override

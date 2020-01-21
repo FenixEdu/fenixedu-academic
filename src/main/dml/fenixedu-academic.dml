@@ -629,6 +629,7 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
         LocalizedString links;
         LocalizedString operationalRegime;
         LocalizedString schoolCalendar;
+        LocalizedString associatedInstitutions;
     }
 
     class DegreeInfoCandidacy  {
@@ -2869,8 +2870,6 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
                         String branch;
                         YearMonthDay exceptionalConclusionDate;
                         MobilityProgram mobilityProgram;
-                        Boolean ignoreExternalEntries;
-                        Boolean ignoreCurriculumInAdvance;
                     }
     
                     class serviceRequests.documentRequests.EnrolmentCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {

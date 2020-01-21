@@ -24,15 +24,17 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.joda.time.LocalDate;
 
 public interface IRegistryDiplomaRequest extends IProgramConclusionRequest {
-    public LocalDate getConclusionDate();
+    LocalDate getConclusionDate();
 
-    public ExecutionYear getConclusionYear();
+    ExecutionYear getConclusionYear();
 
-    public String getFinalAverage(final Locale locale);
+    String getFinalAverage(final Locale locale);
 
-    public String getQualifiedAverageGrade(final Locale locale);
+    String getQualifiedAverageGrade(final Locale locale);
 
-    public IDiplomaSupplementRequest getDiplomaSupplement();
+    IDiplomaSupplementRequest getDiplomaSupplement();
 
-    public String getDegreeName(final ExecutionYear year);
+    String getDegreeName(final ExecutionYear year);
+
+    String getThesisTitle(final Locale locale);
 }

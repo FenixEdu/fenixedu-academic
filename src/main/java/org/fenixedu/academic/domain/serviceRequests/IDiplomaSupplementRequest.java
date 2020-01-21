@@ -26,30 +26,30 @@ import org.fenixedu.academic.domain.degreeStructure.EctsGraduationGradeConversio
 import org.fenixedu.academic.domain.student.Registration;
 
 public interface IDiplomaSupplementRequest extends IProgramConclusionRequest {
-    public Integer getRegistrationNumber();
+    Integer getRegistrationNumber();
 
-    public String getPrevailingScientificArea(final Locale locale);
+    String getPrevailingScientificArea(final Locale locale);
 
-    public double getEctsCredits();
+    double getEctsCredits();
 
-    public DegreeOfficialPublication getDegreeOfficialPublication();
+    DegreeOfficialPublication getDegreeOfficialPublication();
 
-    public Integer getFinalAverage();
+    Integer getFinalAverage();
 
-    public String getFinalAverageQualified(final Locale locale);
+    String getFinalAverageQualified(final Locale locale);
 
-    public ExecutionYear getConclusionYear();
+    ExecutionYear getConclusionYear();
 
-    public EctsGraduationGradeConversionTable getGraduationConversionTable();
+    EctsGraduationGradeConversionTable getGraduationConversionTable();
 
-    public Integer getNumberOfCurricularYears();
+    Integer getNumberOfCurricularYears();
 
-    public Integer getNumberOfCurricularSemesters();
+    Integer getNumberOfCurricularSemesters();
 
-    public Boolean isExemptedFromStudy();
+    Boolean isExemptedFromStudy();
 
-    public Registration getRegistration();
+    Registration getRegistration();
 
-    public boolean hasRegistration();
+    boolean hasRegistration();
 
 }
