@@ -52,7 +52,7 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
     }
 
     @Override
-    protected ProgramCertificateRequest getDocumentRequest() {
+    public ProgramCertificateRequest getDocumentRequest() {
         return (ProgramCertificateRequest) super.getDocumentRequest();
     }
 

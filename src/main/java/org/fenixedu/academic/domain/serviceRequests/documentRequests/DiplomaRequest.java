@@ -350,11 +350,6 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
     }
 
     @Override
-    public String getFinalAverageQualified() {
-        return getRegistration().getDegree().getGradeScale().getQualifiedName(getFinalAverage().toString());
-    }
-
-    @Override
     public String getDissertationThesisTitle() {
         return getRegistration().getDissertationThesisTitle();
     }

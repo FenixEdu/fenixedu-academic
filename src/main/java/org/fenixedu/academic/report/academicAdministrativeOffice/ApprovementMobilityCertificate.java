@@ -73,7 +73,7 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
     }
 
     @Override
-    protected ApprovementMobilityCertificateRequest getDocumentRequest() {
+    public ApprovementMobilityCertificateRequest getDocumentRequest() {
         return (ApprovementMobilityCertificateRequest) super.getDocumentRequest();
     }
 

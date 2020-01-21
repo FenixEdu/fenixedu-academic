@@ -46,7 +46,7 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
     }
 
     @Override
-    protected CourseLoadRequest getDocumentRequest() {
+    public CourseLoadRequest getDocumentRequest() {
         return (CourseLoadRequest) super.getDocumentRequest();
     }
 

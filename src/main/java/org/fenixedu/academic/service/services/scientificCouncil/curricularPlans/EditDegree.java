@@ -23,6 +23,7 @@ import static org.fenixedu.academic.predicate.AccessControl.check;
 import java.util.List;
 
 import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.DegreeInfo;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.GradeScale;
 import org.fenixedu.academic.domain.degree.DegreeType;
@@ -30,6 +31,8 @@ import org.fenixedu.academic.predicate.RolePredicates;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
 import org.fenixedu.academic.service.services.exceptions.NonExistingServiceException;
+import org.fenixedu.academic.util.LocaleUtils;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -37,12 +40,13 @@ import pt.ist.fenixframework.FenixFramework;
 public class EditDegree {
 
     @Atomic
-    public static void run(String externalId, String name, String nameEn, String acronym, DegreeType degreeType,
-            Double ectsCredits, GradeScale gradeScale, String prevailingScientificArea, ExecutionYear executionYear, String code,
-            String ministryCode) throws FenixServiceException {
+    public static void run(String externalId, LocalizedString name, String acronym, LocalizedString associatedInstitutions,
+                              DegreeType degreeType, Double ectsCredits, GradeScale gradeScale, String prevailingScientificArea,
+                              ExecutionYear executionYear, String code, String ministryCode) throws FenixServiceException {
 
         check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
-        if (externalId == null || name == null || nameEn == null || acronym == null || degreeType == null || ectsCredits == null) {
+        if (externalId == null || name == null || name.isEmpty() || acronym == null || degreeType == null
+                || ectsCredits == null) {
             throw new InvalidArgumentsServiceException();
         }
 
@@ -50,9 +54,8 @@ public class EditDegree {
 
         if (degreeToEdit == null) {
             throw new NonExistingServiceException();
-        } else if (!degreeToEdit.getSigla().equalsIgnoreCase(acronym)
-                || !degreeToEdit.getNameFor(executionYear).getContent(org.fenixedu.academic.util.LocaleUtils.PT).equalsIgnoreCase(name)
-                || !degreeToEdit.getDegreeType().equals(degreeType)) {
+        } else if (!degreeToEdit.getSigla().equalsIgnoreCase(acronym) || !LocaleUtils.equalInAnyLanguage(
+            degreeToEdit.getNameFor(executionYear), name)  || !degreeToEdit.getDegreeType().equals(degreeType)) {
 
             final List<Degree> degrees = Degree.readNotEmptyDegrees();
 
@@ -62,18 +65,37 @@ public class EditDegree {
                     if (degree.getSigla().equalsIgnoreCase(acronym)) {
                         throw new FenixServiceException("error.existing.degree.acronym");
                     }
-                    if ((degree.getNameFor(executionYear).getContent(org.fenixedu.academic.util.LocaleUtils.PT).equalsIgnoreCase(name) || degree
-                            .getNameFor(executionYear).getContent(org.fenixedu.academic.util.LocaleUtils.EN).equalsIgnoreCase(nameEn))
-                            && degree.getDegreeType().equals(degreeType)) {
+                    if (LocaleUtils.equalInAnyLanguage(degree.getNameFor(executionYear), name) && degree.getDegreeType().equals(degreeType)) {
                         throw new FenixServiceException("error.existing.degree.name.and.type");
                     }
                 }
             }
         }
 
-        degreeToEdit.edit(name, nameEn, acronym, degreeType, ectsCredits, gradeScale, prevailingScientificArea, executionYear);
+        degreeToEdit.edit(name, acronym, associatedInstitutions, degreeType, ectsCredits, gradeScale, prevailingScientificArea,
+            executionYear);
         degreeToEdit.setCode(code);
         degreeToEdit.setMinistryCode(ministryCode);
+    }
+
+    @Atomic
+    public static void editAssociatedInstitutions(String externalId, LocalizedString associatedInstitutions, ExecutionYear executionYear) throws FenixServiceException {
+
+        check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
+        if (externalId == null || associatedInstitutions == null) {
+            throw new InvalidArgumentsServiceException();
+        }
+
+        final Degree degreeToEdit = FenixFramework.getDomainObject(externalId);
+
+        if (degreeToEdit == null) {
+            throw new NonExistingServiceException();
+        }
+
+        DegreeInfo degreeInfoFor = degreeToEdit.getDegreeInfoFor(executionYear);
+        if (degreeInfoFor != null) {
+            degreeInfoFor.setAssociatedInstitutions(associatedInstitutions);
+        }
     }
 
 }

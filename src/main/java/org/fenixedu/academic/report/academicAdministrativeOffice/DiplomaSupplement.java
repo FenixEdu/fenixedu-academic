@@ -48,7 +48,6 @@ import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdDiplomaSupplementRequest;
 import org.fenixedu.academic.domain.serviceRequests.IDiplomaSupplementRequest;
-import org.fenixedu.academic.domain.serviceRequests.RegistrationAcademicServiceRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DiplomaSupplementRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
 import org.fenixedu.academic.domain.student.Registration;
@@ -72,6 +71,8 @@ import com.google.common.base.Strings;
 
 public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
+    private Optional<String> associatedInstitutions;
+
     protected DiplomaSupplement(final IDocumentRequest documentRequest, final Locale locale) {
         super(documentRequest, locale);
     }
@@ -82,7 +83,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
     }
 
     @Override
-    protected IDiplomaSupplementRequest getDocumentRequest() {
+    public IDiplomaSupplementRequest getDocumentRequest() {
         return (IDiplomaSupplementRequest) documentRequestDomainReference;
     }
 
@@ -90,6 +91,8 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
     protected void fillReport() {
         addParameter("bundle", ResourceBundle.getBundle(getBundle(), getLocale()));
         addParameter("name", StringFormatter.prettyPrint(getDocumentRequest().getPerson().getName().trim()));
+
+        associatedInstitutions = getDocumentRequest().getAssociatedInstitutionsContent();
 
         // Group 1
         fillGroup1();
@@ -196,19 +199,33 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
         final UniversityUnit institutionsUniversityUnit = getUniversity(getDocumentRequest().getRequestDate());
         String degreeDesignation = getDegreeDesignation(locale);
 
-        String graduateTitleNative = getDocumentRequest().getGraduateTitle(locale).split(" ")[0];
+        if (!Strings.isNullOrEmpty(getDocumentRequest().getGraduateTitle(locale))) {
+            addParameter("graduateTitle", degreeDesignation + "\n" + getDocumentRequest().getGraduateTitle(locale).split(" ")[0]);
+        } else {
+            addParameter("graduateTitle", degreeDesignation);
+        }
 
-        addParameter("graduateTitle", degreeDesignation + "\n" + graduateTitleNative);
         addParameter("universityName", institutionsUniversityUnit.getName());
         addParameter(
                 "universityStatus",
                 BundleUtil.getString(Bundle.ENUMERATION, locale, AcademicalInstitutionType.class.getSimpleName() + "."
                         + institutionsUniversityUnit.getInstitutionType().getName()));
         addParameter("institutionName", Bennu.getInstance().getInstitutionUnit().getName());
-        addParameter("institutionStatus",
-                BundleUtil.getString(Bundle.ENUMERATION, locale, Bennu.getInstance().getInstitutionUnit().getType().getName())
-                        + SINGLE_SPACE + BundleUtil.getString(Bundle.ACADEMIC, locale, "diploma.supplement.of") + SINGLE_SPACE
-                        + institutionsUniversityUnit.getName());
+
+
+        String institutionsWhereStudiesWereTaught = associatedInstitutions.orElseGet(() ->
+            new StringBuilder()
+                .append(Bennu.getInstance().getInstitutionUnit().getName())
+                .append(",")
+                .append(SINGLE_SPACE)
+                .append(BundleUtil.getString(Bundle.ENUMERATION, locale, Bennu.getInstance().getInstitutionUnit().getType().getName()))
+                .append(SINGLE_SPACE)
+                .append(BundleUtil.getString(Bundle.ACADEMIC, locale, "diploma.supplement.of"))
+                .append(SINGLE_SPACE)
+                .append(institutionsUniversityUnit.getName()).toString()
+        );
+
+        addParameter("institutionsWhereStudiesWereTaught", institutionsWhereStudiesWereTaught);
 
         addParameter("prevailingScientificArea", getDocumentRequest().getPrevailingScientificArea(getLocale()));
         if (CycleType.FIRST_CYCLE.equals(getDocumentRequest().getRequestedCycle())) {
@@ -575,7 +592,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
         protected IdentifiableEntry() {
 
         }
-        
+
         public IdentifiableEntry(String identifier, String name) {
             this.identifier = identifier;
             this.name = name;

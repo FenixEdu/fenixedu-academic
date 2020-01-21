@@ -88,14 +88,15 @@ public class EmptyDegree extends EmptyDegree_Base {
     }
 
     @Override
-    public void edit(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale,
-            ExecutionYear executionYear) {
+    public void edit(LocalizedString name, String acronym, LocalizedString associatedInstitutions, DegreeType degreeType, Double ectsCredits,
+                            GradeScale gradeScale, String prevailingScientificArea, ExecutionYear executionYear) {
         throw new DomainException("EmptyDegree.not.available");
     }
 
     @Override
-    public void edit(String name, String nameEn, String acronym, DegreeType degreeType, Double ectsCredits,
-            GradeScale gradeScale, String prevailingScientificArea, ExecutionYear executionYear) {
+    public void edit(LocalizedString name, String code, LocalizedString associatedInstitutions, DegreeType degreeType,
+                            GradeScale gradeScale,
+                            ExecutionYear executionYear) {
         throw new DomainException("EmptyDegree.not.available");
     }
 

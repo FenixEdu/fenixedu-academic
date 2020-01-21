@@ -66,6 +66,7 @@ import org.fenixedu.academic.report.FenixReport;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.FenixStringTools;
 import org.fenixedu.academic.util.HtmlToTextConverterUtil;
+import org.fenixedu.academic.util.LocaleUtils;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.academic.util.StringFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -178,7 +179,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
         fillReport();
     }
 
-    protected IDocumentRequest getDocumentRequest() {
+    public IDocumentRequest getDocumentRequest() {
         return documentRequestDomainReference;
     }
 
@@ -197,6 +198,46 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
     protected String getInstitutionName() {
         return Bennu.getInstance().getInstitutionUnit().getPartyName().getContent(getLanguage());
+    }
+
+    protected Person getPrincipal() {
+        return getUniversity(getDocumentRequest().getRequestDate()).getCurrentPrincipal();
+    }
+
+    protected Person getPresident() {
+        return getUniversity(getDocumentRequest().getRequestDate()).getCurrentPresident();
+    }
+
+    private String getDayOfMonthSuffixOfDate (int dayOfMonth) {
+        switch ( (dayOfMonth < 20) ? dayOfMonth : dayOfMonth % 10 ) {
+            case 1 : return "st";
+            case 2 : return "nd";
+            case 3 : return "rd";
+            default : return "th";
+        }
+    }
+
+    protected String getFormattedDate(LocalDate date) {
+        final int dayOfMonth = date.getDayOfMonth();
+        final String month = date.toString("MMMM", getLocale());
+        final int year = date.getYear();
+
+        return new StringBuilder()
+                .append(dayOfMonth)
+                .append( (getLocale().equals(LocaleUtils.PT) ? EMPTY_STR : getDayOfMonthSuffixOfDate(dayOfMonth)) )
+                .append(SINGLE_SPACE)
+                .append(BundleUtil.getString(Bundle.APPLICATION, getLocale(), "label.of"))
+                .append(SINGLE_SPACE)
+                .append( (getLocale().equals(LocaleUtils.PT)) ? month.toLowerCase() : month )
+                .append(SINGLE_SPACE)
+                .append(BundleUtil.getString(Bundle.APPLICATION, getLocale(), "label.of"))
+                .append(SINGLE_SPACE)
+                .append(year)
+                .toString();
+    }
+
+    protected String getFormattedCurrentDate() {
+        return getFormattedDate(new LocalDate());
     }
 
     @Override
@@ -478,11 +519,11 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
         final StringBuilder result = new StringBuilder();
         if (remainingCredits != BigDecimal.ZERO) {
-            result.append(LINE_BREAK);
+                result.append(LINE_BREAK);
 
-            final String remainingCreditsInfo =
+                final String remainingCreditsInfo =
                     BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "documents.remainingCreditsInfo");
-            result.append(FenixStringTools.multipleLineRightPadWithSuffix(remainingCreditsInfo + ":", LINE_LENGTH, END_CHAR,
+                result.append(FenixStringTools.multipleLineRightPadWithSuffix(remainingCreditsInfo + ":", LINE_LENGTH, END_CHAR,
                     remainingCredits + getCreditsDescription()));
 
             result.append(LINE_BREAK);
@@ -578,14 +619,19 @@ public class AdministrativeOfficeDocument extends FenixReport {
                 MessageFormat.format(departmentAndInstitute, getI18NText(getAdministrativeOffice().getName()), institutionName));
 
         addParameter("administrativeOfficeCoordinator", coordinator);
-        final Locality locality = getAdministrativeOffice().getCampus().getLocality();
-        String location = locality != null ? locality.getName() : null;
+        String location = getLocation();
         String dateDD = new LocalDate().toString("dd", getLocale());
         String dateMMMM = new LocalDate().toString("MMMM", getLocale());
         String dateYYYY = new LocalDate().toString("yyyy", getLocale());
+
         stringTemplate = BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.academicDocument.declaration.signerLocation");
         addParameter("signerLocation",
                 MessageFormat.format(stringTemplate, institutionName, location, dateDD, dateMMMM, dateYYYY));
+    }
+
+    protected String getLocation() {
+        final Locality locality = getAdministrativeOffice().getCampus().getLocality();
+        return locality != null ? locality.getName() : null;
     }
 
     protected String getCoordinatorGender(final Person coordinator) {

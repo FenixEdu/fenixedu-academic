@@ -37,7 +37,7 @@ public class ExternalCourseLoadRequestDocument extends AdministrativeOfficeDocum
     }
 
     @Override
-    protected ExternalCourseLoadRequest getDocumentRequest() {
+    public ExternalCourseLoadRequest getDocumentRequest() {
         return (ExternalCourseLoadRequest) super.getDocumentRequest();
     }
 

@@ -46,6 +46,8 @@
 
 		<h:outputText value="<p><strong>#{DegreeManagement.degree.nome}</strong></p>" escape="false"/>
 
+		<h:outputText value="<p><i>#{scouncilBundle['label.editDegree.infoAvailableForExecutionYears']} #{DegreeManagement.existentDegreeInfoYears}</i></p>" escape="false"/>
+
 		<h:outputText value="<table class='tstyle5 thlight thright'>" escape="false"/>
 
 
@@ -71,6 +73,24 @@
 		<h:panelGroup>
 			<h:inputText alt="#{htmlAltBundle['inputText.nameEn']}" id="nameEn" binding="#{DegreeManagement.nameEnInputComponent}" maxlength="100" size="60" disabled="#{DegreeManagement.ableToEditName == false}"/>
 			<h:message for="nameEn" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
+		</h:panelGroup>
+		<h:outputText value="</td>" escape="false"/>
+		<h:outputText value="</tr>" escape="false"/>
+		
+		<h:outputText value="<tr>" escape="false"/>
+		<h:outputText value="<th>#{scouncilBundle['associatedInstitutions']} (pt):</th><td>" escape="false"/>
+		<h:panelGroup>
+			<h:inputText alt="#{htmlAltBundle['inputText.associatedInstitutions']}" id="associatedInstitutions" binding="#{DegreeManagement.associatedInstitutionsInputComponent}" size="130" />
+			<h:message for="associatedInstitutions" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
+		</h:panelGroup>
+		<h:outputText value="</td>" escape="false"/>
+		<h:outputText value="</tr>" escape="false"/>
+		
+		<h:outputText value="<tr>" escape="false"/>
+		<h:outputText value="<th>#{scouncilBundle['associatedInstitutions']} (en):</th><td>" escape="false"/>
+		<h:panelGroup>
+			<h:inputText alt="#{htmlAltBundle['inputText.associatedInstitutions']}" id="associatedInstitutionsEn" binding="#{DegreeManagement.associatedInstitutionsEnInputComponent}" size="130" />
+			<h:message for="associatedInstitutionsEn" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
 		</h:panelGroup>
 		<h:outputText value="</td>" escape="false"/>
 		<h:outputText value="</tr>" escape="false"/>

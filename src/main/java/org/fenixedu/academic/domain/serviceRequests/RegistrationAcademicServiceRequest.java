@@ -34,16 +34,12 @@ import org.fenixedu.academic.dto.serviceRequests.RegistrationAcademicServiceRequ
 
 abstract public class RegistrationAcademicServiceRequest extends RegistrationAcademicServiceRequest_Base {
 
-    public static Comparator<RegistrationAcademicServiceRequest> COMPARATOR_BY_SERVICE_REQUEST_NUMBER_AND_ID =
-            new Comparator<RegistrationAcademicServiceRequest>() {
-                @Override
-                public int compare(RegistrationAcademicServiceRequest o1, RegistrationAcademicServiceRequest o2) {
-                    if (o1.getServiceRequestNumber().compareTo(o2.getServiceRequestNumber()) != 0) {
-                        return o1.getServiceRequestNumber().compareTo(o2.getServiceRequestNumber());
-                    }
-                    return DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2);
-                }
-            };
+    public static Comparator<RegistrationAcademicServiceRequest> COMPARATOR_BY_SERVICE_REQUEST_NUMBER_AND_ID = (o1, o2) -> {
+        if (o1.getServiceRequestNumber().compareTo(o2.getServiceRequestNumber()) != 0) {
+            return o1.getServiceRequestNumber().compareTo(o2.getServiceRequestNumber());
+        }
+        return DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2);
+    };
 
     protected RegistrationAcademicServiceRequest() {
         super();

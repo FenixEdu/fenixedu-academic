@@ -42,7 +42,7 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
     }
 
     @Override
-    protected DocumentRequest getDocumentRequest() {
+    public DocumentRequest getDocumentRequest() {
         return (DocumentRequest) super.getDocumentRequest();
     }
 

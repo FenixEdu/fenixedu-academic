@@ -37,7 +37,7 @@ public class ExternalProgramCertificateRequestDocument extends AdministrativeOff
     }
 
     @Override
-    protected ExternalProgramCertificateRequest getDocumentRequest() {
+    public ExternalProgramCertificateRequest getDocumentRequest() {
         return (ExternalProgramCertificateRequest) super.getDocumentRequest();
     }
 

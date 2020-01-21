@@ -40,7 +40,7 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
     }
 
     @Override
-    protected DocumentRequest getDocumentRequest() {
+    public DocumentRequest getDocumentRequest() {
         return (DocumentRequest) super.getDocumentRequest();
     }
 

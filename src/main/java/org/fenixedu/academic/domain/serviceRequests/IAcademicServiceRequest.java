@@ -23,17 +23,17 @@ import java.util.Locale;
 import org.fenixedu.academic.domain.Person;
 
 public interface IAcademicServiceRequest {
-    public String getDescription();
+    String getDescription();
 
-    public Locale getLanguage();
+    Locale getLanguage();
 
-    public Person getPerson();
+    Person getPerson();
 
-    public boolean isRequestForRegistration();
+    boolean isRequestForRegistration();
 
-    public boolean isRequestForPhd();
+    boolean isRequestForPhd();
 
-    public RegistryCode getRegistryCode();
+    RegistryCode getRegistryCode();
 
-    public boolean hasRegistryCode();
+    boolean hasRegistryCode();
 }

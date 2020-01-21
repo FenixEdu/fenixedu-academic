@@ -35,7 +35,7 @@ public class ExtraCurricularCertificateRequestDocument extends AdministrativeOff
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected ExtraCurricularCertificateRequest getDocumentRequest() {
+    public ExtraCurricularCertificateRequest getDocumentRequest() {
         return (ExtraCurricularCertificateRequest) super.getDocumentRequest();
     }
 

@@ -26,26 +26,26 @@ import org.fenixedu.academic.domain.serviceRequests.RegistryCode;
 import org.fenixedu.academic.domain.student.Student;
 
 public interface IRectorateSubmissionBatchDocumentEntry {
-    public RegistryCode getRegistryCode();
+    RegistryCode getRegistryCode();
 
-    public DocumentRequestType getDocumentRequestType();
+    DocumentRequestType getDocumentRequestType();
 
-    public CycleType getRequestedCycle();
+    CycleType getRequestedCycle();
 
-    public String getProgrammeTypeDescription();
+    String getProgrammeTypeDescription();
 
-    public Student getStudent();
+    Student getStudent();
 
-    public Person getPerson();
+    Person getPerson();
 
-    public AcademicServiceRequestSituationType getAcademicServiceRequestSituationType();
+    AcademicServiceRequestSituationType getAcademicServiceRequestSituationType();
 
-    public GeneratedDocument getLastGeneratedDocument();
+    GeneratedDocument getLastGeneratedDocument();
 
-    public String getViewStudentProgrammeLink();
+    String getViewStudentProgrammeLink();
 
-    public String getReceivedActionLink();
+    String getReceivedActionLink();
 
-    public boolean isProgrammeLinkVisible();
+    boolean isProgrammeLinkVisible();
 
 }
