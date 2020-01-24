@@ -1,4 +1,5 @@
-- Refactor: removed temp data migration code
+- Refactor: Removed ExecutionSemester entity
+- Refactor: Removed temp data migration code
 
 25.9.2 (16-01-2020)
 - Improvement: Registration active state takes into account the whole execution year

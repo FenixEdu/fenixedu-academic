@@ -34,7 +34,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-abstract public class ExecutionInterval extends ExecutionInterval_Base implements Comparable<ExecutionInterval> {
+public class ExecutionInterval extends ExecutionInterval_Base implements Comparable<ExecutionInterval> {
 
     public static final Comparator<ExecutionInterval> COMPARATOR_BY_BEGIN_DATE = new Comparator<ExecutionInterval>() {
 
@@ -48,6 +48,16 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base implement
         super();
         setRootDomainObject(Bennu.getInstance());
         setState(PeriodState.NOT_OPEN);
+    }
+
+    public ExecutionInterval(ExecutionYear executionYear, AcademicInterval academicInterval, String name) {
+        this();
+        setRootDomainObjectForExecutionPeriod(Bennu.getInstance());
+        setExecutionYear(executionYear);
+        setAcademicInterval(academicInterval);
+        setBeginDateYearMonthDay(academicInterval.getBeginYearMonthDayWithoutChronology());
+        setEndDateYearMonthDay(academicInterval.getEndYearMonthDayWithoutChronology());
+        setName(name);
     }
 
     @Override
@@ -210,7 +220,10 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base implement
         }
     }
 
-    public abstract <E extends ExecutionInterval> E convert(final Class<E> concreteExecution);
+    //public abstract <E extends ExecutionInterval> E convert(final Class<E> concreteExecution);
+    public <E extends ExecutionInterval> E convert(final Class<E> input) {
+        return ExecutionYear.class.equals(input) ? (E) getExecutionYear() : (E) this;
+    }
 
 //    public abstract ExecutionYear getExecutionYear();
 

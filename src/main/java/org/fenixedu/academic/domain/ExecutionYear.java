@@ -110,7 +110,7 @@ public class ExecutionYear extends ExecutionYear_Base {
      */
     @Deprecated
     public ExecutionYear getNextExecutionYear() {
-        return Optional.ofNullable(super.getNext()).map(ei -> ei.convert(ExecutionYear.class)).orElse(null);
+        return Optional.ofNullable(super.getNext()).map(ei -> (ExecutionYear) ei).orElse(null);
 //        AcademicYearCE year = getAcademicInterval().plusYear(1);
 //        return getExecutionYear(year);
     }
@@ -120,7 +120,7 @@ public class ExecutionYear extends ExecutionYear_Base {
      */
     @Deprecated
     public ExecutionYear getPreviousExecutionYear() {
-        return Optional.ofNullable(super.getPrevious()).map(ei -> ei.convert(ExecutionYear.class)).orElse(null);
+        return Optional.ofNullable(super.getPrevious()).map(ei -> (ExecutionYear) ei).orElse(null);
 //        AcademicYearCE year = getAcademicInterval().minusYear(1);
 //        return getExecutionYear(year);
     }
@@ -251,8 +251,10 @@ public class ExecutionYear extends ExecutionYear_Base {
     }
 
     public static Collection<ExecutionYear> findCurrents() {
-        return Stream.concat(Bennu.getInstance().getExecutionYearsSet().stream().filter(ey -> ey.isCurrent()),
-                ExecutionSemester.findCurrents().stream().map(es -> es.getExecutionYear())).collect(Collectors.toSet());
+        return Stream
+                .concat(Bennu.getInstance().getExecutionYearsSet().stream().filter(ey -> ey.isCurrent()),
+                        ExecutionInterval.findCurrentsChilds().stream().map(es -> es.getExecutionYear()))
+                .collect(Collectors.toSet());
     }
 
     /**
@@ -402,20 +404,6 @@ public class ExecutionYear extends ExecutionYear_Base {
             }
         }
         return null;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <E extends ExecutionInterval> E convert(final Class<E> input) {
-        E result = null;
-
-        if (ExecutionYear.class.equals(input)) {
-            result = (E) this;
-        } else if (ExecutionSemester.class.equals(input)) {
-            result = (E) getFirstExecutionPeriod();
-        }
-
-        return result;
     }
 
     @Override

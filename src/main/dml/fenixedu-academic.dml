@@ -534,9 +534,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         YearMonthDay endDateYearMonthDay;
     }
         
-    class ExecutionSemester extends ExecutionInterval {                                                                                                                 
-    }
-
     class ExecutionYear extends ExecutionInterval {                                         
     }
 
@@ -3787,7 +3784,7 @@ relation RootDomainObjectExecutionDegree {
 
 relation RootDomainObjectExecutionPeriod {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectForExecutionPeriod;
-    ExecutionSemester playsRole executionPeriods {
+    ExecutionInterval playsRole executionPeriods {
         multiplicity *;
     }
 }

@@ -19,8 +19,8 @@
 package org.fenixedu.academic.domain.time.calendarStructure;
 
 import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 
@@ -61,7 +61,8 @@ public class AcademicIntervalCE extends AcademicIntervalCE_Base {
 
     private void createNewExecutionPeriod() {
         ExecutionYear executionYear = ExecutionYear.getExecutionYear((AcademicYearCE) getParentEntry());
-        new ExecutionSemester(executionYear, new AcademicInterval(this, getRootEntry()), getTitle().getContent());
+        new ExecutionInterval(executionYear, new AcademicInterval(this, getRootEntry()), getTitle().getContent())
+                .setState(PeriodState.OPEN);
     }
 
 //    @Override

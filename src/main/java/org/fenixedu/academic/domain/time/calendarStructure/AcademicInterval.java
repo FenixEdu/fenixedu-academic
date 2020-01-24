@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.chronologies.AcademicChronology;
@@ -226,7 +226,7 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 
     public static AcademicInterval readDefaultAcademicInterval(AcademicPeriod academicPeriod) {
         if (academicPeriod.equals(AcademicPeriod.SEMESTER)) {
-            return ExecutionSemester.findCurrent(null).getAcademicInterval();
+            return ExecutionInterval.findCurrentChild(academicPeriod, null).getAcademicInterval();
         } else if (academicPeriod.equals(AcademicPeriod.YEAR)) {
             return ExecutionYear.findCurrent(null).getAcademicInterval();
         }
@@ -240,7 +240,7 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 
         if (academicPeriod.equals(AcademicPeriod.SEMESTER)) {
             List<AcademicInterval> result = new ArrayList<AcademicInterval>();
-            for (ExecutionSemester semester : rootDomainObject.getExecutionPeriodsSet()) {
+            for (ExecutionInterval semester : rootDomainObject.getExecutionPeriodsSet()) {
                 result.add(semester.getAcademicInterval());
             }
 
@@ -260,7 +260,7 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
     public static List<AcademicInterval> readActiveAcademicIntervals(AcademicPeriod academicPeriod) {
         if (academicPeriod.equals(AcademicPeriod.SEMESTER)) {
             List<AcademicInterval> result = new ArrayList<AcademicInterval>();
-            for (ExecutionSemester semester : ExecutionSemester.readNotClosedExecutionPeriods()) {
+            for (ExecutionInterval semester : ExecutionInterval.findActiveChilds()) {
                 result.add(semester.getAcademicInterval());
             }
 
