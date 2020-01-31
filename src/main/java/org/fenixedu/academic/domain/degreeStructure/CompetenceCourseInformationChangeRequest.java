@@ -44,21 +44,29 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
     public CompetenceCourseInformationChangeRequest(CompetenceCourseInformation information, String justification,
             Person requester) {
         this(information.getName(), information.getNameEn(), justification, information.getRegime(), information.getObjectives(),
-                information.getObjectivesEn(), information.getProgram(), information.getProgramEn(), information
-                        .getEvaluationMethod(), information.getEvaluationMethodEn(), information.getCompetenceCourse(),
-                information.getCompetenceCourseLevel(), information.getExecutionPeriod(), requester, information
-                        .getTheoreticalHours(1), information.getProblemsHours(1), information.getLaboratorialHours(1),
-                information.getSeminaryHours(1), information.getFieldWorkHours(1), information.getTrainingPeriodHours(1),
-                information.getTutorialOrientationHours(1), information.getAutonomousWorkHours(1), information.getEctsCredits(1),
-                information.getTheoreticalHours(2), information.getProblemsHours(2), information.getLaboratorialHours(2),
-                information.getSeminaryHours(2), information.getFieldWorkHours(2), information.getTrainingPeriodHours(2),
+                information.getObjectivesEn(), information.getProgram(), information.getProgramEn(),
+                information.getEvaluationMethod(), information.getEvaluationMethodEn(), information.getPrerequisites(),
+                information.getPrerequisitesEn(), information.getLaboratorialComponent(),
+                information.getLaboratorialComponentEn(), information.getProgrammingAndComputingComponent(),
+                information.getProgrammingAndComputingComponentEn(), information.getCrossCompetenceComponent(),
+                information.getCrossCompetenceComponentEn(), information.getEthicalPrinciples(),
+                information.getEthicalPrinciplesEn(), information.getCompetenceCourse(), information.getCompetenceCourseLevel(),
+                information.getExecutionPeriod(), requester, information.getTheoreticalHours(1), information.getProblemsHours(1),
+                information.getLaboratorialHours(1), information.getSeminaryHours(1), information.getFieldWorkHours(1),
+                information.getTrainingPeriodHours(1), information.getTutorialOrientationHours(1),
+                information.getAutonomousWorkHours(1), information.getEctsCredits(1), information.getTheoreticalHours(2),
+                information.getProblemsHours(2), information.getLaboratorialHours(2), information.getSeminaryHours(2),
+                information.getFieldWorkHours(2), information.getTrainingPeriodHours(2),
                 information.getTutorialOrientationHours(2), information.getAutonomousWorkHours(2), information.getEctsCredits(2),
                 information.getBibliographicReferences(), information.getCompetenceCourseGroupUnit());
     }
 
     public CompetenceCourseInformationChangeRequest(String name, String nameEn, String justification, RegimeType regime,
             String objectives, String objectivesEn, String program, String programEn, String evaluationMethod,
-            String evaluationMethodEn, CompetenceCourse course, CompetenceCourseLevel level, ExecutionSemester period,
+            String evaluationMethodEn, String prerequisites, String prerequisitesEn, String laboratorialComponent,
+            String laboratorialComponentEn, String programmingAndComputingComponent, String programmingAndComputingComponentEn,
+            String crossCompetenceComponent, String crossCompetenceComponentEn, String ethicalPrinciples,
+            String ethicalPrinciplesEn, CompetenceCourse course, CompetenceCourseLevel level, ExecutionSemester period,
             Person requester, Double theoreticalHours, Double problemsHours, Double laboratorialHours, Double seminaryHours,
             Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours, Double autonomousWorkHours,
             Double ectsCredits, Double secondTheoreticalHours, Double secondProblemsHours, Double secondLaboratorialHours,
@@ -75,15 +83,20 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
         setCompetenceCourse(course);
         setExecutionPeriod(period);
         edit(name, nameEn, justification, regime, objectives, objectivesEn, program, programEn, evaluationMethod,
-                evaluationMethodEn, level, requester, theoreticalHours, problemsHours, laboratorialHours, seminaryHours,
-                fieldWorkHours, trainingPeriodHours, tutorialOrientationHours, autonomousWorkHours, ectsCredits,
-                secondTheoreticalHours, secondProblemsHours, secondLaboratorialHours, secondSeminaryHours, secondFieldWorkHours,
-                secondTrainingPeriodHours, secondTutorialOrientationHours, secondAutonomousWorkHours, secondEctsCredits,
-                references, group);
+                evaluationMethodEn, prerequisites, prerequisitesEn, laboratorialComponent, laboratorialComponentEn,
+                programmingAndComputingComponent, programmingAndComputingComponentEn, crossCompetenceComponent,
+                crossCompetenceComponentEn, ethicalPrinciples, ethicalPrinciplesEn, level, requester, theoreticalHours,
+                problemsHours, laboratorialHours, seminaryHours, fieldWorkHours, trainingPeriodHours, tutorialOrientationHours,
+                autonomousWorkHours, ectsCredits, secondTheoreticalHours, secondProblemsHours, secondLaboratorialHours,
+                secondSeminaryHours, secondFieldWorkHours, secondTrainingPeriodHours, secondTutorialOrientationHours,
+                secondAutonomousWorkHours, secondEctsCredits, references, group);
     }
 
     public void edit(String name, String nameEn, String justification, RegimeType regime, String objectives, String objectivesEn,
-            String program, String programEn, String evaluationMethod, String evaluationMethodEn, CompetenceCourseLevel level,
+            String program, String programEn, String evaluationMethod, String evaluationMethodEn, String prerequisites,
+            String prerequisitesEn, String laboratorialComponent, String laboratorialComponentEn,
+            String programmingAndComputingComponent, String programmingAndComputingComponentEn, String crossCompetenceComponent,
+            String crossCompetenceComponentEn, String ethicalPrinciples, String ethicalPrinciplesEn, CompetenceCourseLevel level,
             Person requester, Double theoreticalHours, Double problemsHours, Double laboratorialHours, Double seminaryHours,
             Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours, Double autonomousWorkHours,
             Double ectsCredits, Double secondTheoreticalHours, Double secondProblemsHours, Double secondLaboratorialHours,
@@ -93,8 +106,12 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
 
         if (name == null || nameEn == null || justification == null || regime == null || objectives == null
                 || objectivesEn == null || program == null || programEn == null || evaluationMethod == null
-                || evaluationMethodEn == null || requester == null || theoreticalHours == null || problemsHours == null
-                || laboratorialHours == null || seminaryHours == null || fieldWorkHours == null || trainingPeriodHours == null
+                || evaluationMethodEn == null || prerequisites == null || prerequisitesEn == null || laboratorialComponent == null
+                || laboratorialComponentEn == null || programmingAndComputingComponent == null
+                || programmingAndComputingComponentEn == null || crossCompetenceComponent == null
+                || crossCompetenceComponentEn == null || ethicalPrinciples == null || ethicalPrinciplesEn == null
+                || requester == null || theoreticalHours == null || problemsHours == null || laboratorialHours == null
+                || seminaryHours == null || fieldWorkHours == null || trainingPeriodHours == null
                 || tutorialOrientationHours == null || autonomousWorkHours == null || ectsCredits == null) {
 
             throw new DomainException("error.fields.are.required");
@@ -114,6 +131,16 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
         setProgramEn(programEn);
         setEvaluationMethod(evaluationMethod);
         setEvaluationMethodEn(evaluationMethodEn);
+        setPrerequisites(prerequisites);
+        setPrerequisitesEn(prerequisitesEn);
+        setLaboratorialComponent(laboratorialComponent);
+        setLaboratorialComponentEn(laboratorialComponentEn);
+        setProgrammingAndComputingComponent(programmingAndComputingComponent);
+        setProgrammingAndComputingComponentEn(programmingAndComputingComponentEn);
+        setCrossCompetenceComponent(crossCompetenceComponent);
+        setCrossCompetenceComponentEn(crossCompetenceComponentEn);
+        setEthicalPrinciples(ethicalPrinciples);
+        setEthicalPrinciplesEn(ethicalPrinciplesEn);
         setRequester(requester);
         setApproved(null);
         setCompetenceCourseLevel(level);
@@ -201,8 +228,11 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
             information.edit(getName(), getNameEn(), information.getBasic(), getCompetenceCourseLevel(),
                     getCompetenceCourseGroupUnit());
             information.setRegime(getRegime());
-            information.edit(getObjectives(), getProgram(), getEvaluationMethod(), getObjectivesEn(), getProgramEn(),
-                    getEvaluationMethodEn());
+            information.edit(getObjectives(), getProgram(), getEvaluationMethod(), getPrerequisites(), getLaboratorialComponent(),
+                    getProgrammingAndComputingComponent(), getCrossCompetenceComponent(), getEthicalPrinciples(),
+                    getObjectivesEn(), getProgramEn(), getEvaluationMethodEn(), getPrerequisitesEn(),
+                    getLaboratorialComponentEn(), getProgrammingAndComputingComponentEn(), getCrossCompetenceComponentEn(),
+                    getEthicalPrinciplesEn());
 
             information.setBibliographicReferences(getBibliographicReferences());
 
@@ -213,11 +243,13 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
             createLoads(information);
 
         } else {
-            information =
-                    new CompetenceCourseInformation(getName(), getNameEn(), course.isBasic(), getRegime(),
-                            getCompetenceCourseLevel(), getExecutionPeriod(), getCompetenceCourseGroupUnit());
-            information.edit(getObjectives(), getProgram(), getEvaluationMethod(), getObjectivesEn(), getProgramEn(),
-                    getEvaluationMethodEn());
+            information = new CompetenceCourseInformation(getName(), getNameEn(), course.isBasic(), getRegime(),
+                    getCompetenceCourseLevel(), getExecutionPeriod(), getCompetenceCourseGroupUnit());
+            information.edit(getObjectives(), getProgram(), getEvaluationMethod(), getPrerequisites(), getLaboratorialComponent(),
+                    getProgrammingAndComputingComponent(), getCrossCompetenceComponent(), getEthicalPrinciples(),
+                    getObjectivesEn(), getProgramEn(), getEvaluationMethodEn(), getPrerequisitesEn(),
+                    getLaboratorialComponentEn(), getProgrammingAndComputingComponentEn(), getCrossCompetenceComponentEn(),
+                    getEthicalPrinciplesEn());
             information.setAcronym(course.getAcronym());
             information.setBibliographicReferences(getBibliographicReferences());
             course.addCompetenceCourseInformations(information);
@@ -227,20 +259,18 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
     }
 
     private void createLoads(CompetenceCourseInformation information) {
-        CompetenceCourseLoad courseLoad =
-                new CompetenceCourseLoad(getTheoreticalHours(), getProblemsHours(), getLaboratorialHours(), getSeminaryHours(),
-                        getFieldWorkHours(), getTrainingPeriodHours(), getTutorialOrientationHours(), getAutonomousWorkHours(),
-                        getEctsCredits(), Integer.valueOf(1),
-                        (getRegime() == RegimeType.SEMESTRIAL) ? AcademicPeriod.SEMESTER : AcademicPeriod.YEAR);
+        CompetenceCourseLoad courseLoad = new CompetenceCourseLoad(getTheoreticalHours(), getProblemsHours(),
+                getLaboratorialHours(), getSeminaryHours(), getFieldWorkHours(), getTrainingPeriodHours(),
+                getTutorialOrientationHours(), getAutonomousWorkHours(), getEctsCredits(), Integer.valueOf(1),
+                (getRegime() == RegimeType.SEMESTRIAL) ? AcademicPeriod.SEMESTER : AcademicPeriod.YEAR);
 
         information.addCompetenceCourseLoads(courseLoad);
 
         if (getRegime() == RegimeType.ANUAL) {
-            CompetenceCourseLoad secondCourseLoad =
-                    new CompetenceCourseLoad(getSecondTheoreticalHours(), getSecondProblemsHours(), getSecondLaboratorialHours(),
-                            getSecondSeminaryHours(), getSecondFieldWorkHours(), getSecondTrainingPeriodHours(),
-                            getSecondTutorialOrientationHours(), getSecondAutonomousWorkHours(), getSecondEctsCredits(),
-                            Integer.valueOf(2), AcademicPeriod.YEAR);
+            CompetenceCourseLoad secondCourseLoad = new CompetenceCourseLoad(getSecondTheoreticalHours(),
+                    getSecondProblemsHours(), getSecondLaboratorialHours(), getSecondSeminaryHours(), getSecondFieldWorkHours(),
+                    getSecondTrainingPeriodHours(), getSecondTutorialOrientationHours(), getSecondAutonomousWorkHours(),
+                    getSecondEctsCredits(), Integer.valueOf(2), AcademicPeriod.YEAR);
 
             information.addCompetenceCourseLoads(secondCourseLoad);
         }

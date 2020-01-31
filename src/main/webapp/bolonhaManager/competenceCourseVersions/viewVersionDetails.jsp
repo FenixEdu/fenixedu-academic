@@ -41,7 +41,7 @@
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thlight thright thtop mtop05"/>
 			<fr:property name="columnClasses" value="width150px,"/>
-			<fr:property name="rowClasses" value=",,,bold,,,,,,tdhl1,,,,,,,,,,,"/>
+			<fr:property name="rowClasses" value=",,,bold,,,,,,tdhl1,,,,,,,,,,,,,,,"/>
 		</fr:layout>
 	</fr:view>
 	

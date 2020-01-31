@@ -54,6 +54,17 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
 
     private String evaluationMethodEn;
 
+    private String prerequisites;
+    private String prerequisitesEn;
+    private String laboratorialComponent;
+    private String laboratorialComponentEn;
+    private String programmingAndComputingComponent;
+    private String programmingAndComputingComponentEn;
+    private String crossCompetenceComponent;
+    private String crossCompetenceComponentEn;
+    private String ethicalPrinciples;
+    private String ethicalPrinciplesEn;
+
     private CompetenceCourseLevel competenceCourseLevel;
 
     private BibliographicReferences references;
@@ -74,6 +85,16 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
         setReferences(request.getBibliographicReferences());
         setName(request.getName());
         setNameEn(request.getNameEn());
+        setPrerequisites(request.getPrerequisites());
+        setPrerequisitesEn(request.getPrerequisitesEn());
+        setLaboratorialComponent(request.getLaboratorialComponent());
+        setLaboratorialComponentEn(request.getLaboratorialComponentEn());
+        setProgrammingAndComputingComponent(request.getProgrammingAndComputingComponent());
+        setProgrammingAndComputingComponentEn(request.getProgrammingAndComputingComponentEn());
+        setCrossCompetenceComponent(request.getCrossCompetenceComponent());
+        setCrossCompetenceComponentEn(request.getCrossCompetenceComponentEn());
+        setEthicalPrinciples(request.getEthicalPrinciples());
+        setEthicalPrinciplesEn(request.getEthicalPrinciplesEn());
     }
 
     public CompetenceCourseInformationRequestBean(CompetenceCourseInformation information) {
@@ -90,6 +111,16 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
         setReferences(information.getBibliographicReferences());
         setName(information.getName());
         setNameEn(information.getNameEn());
+        setPrerequisites(information.getPrerequisites());
+        setPrerequisitesEn(information.getPrerequisitesEn());
+        setLaboratorialComponent(information.getLaboratorialComponent());
+        setLaboratorialComponentEn(information.getLaboratorialComponentEn());
+        setProgrammingAndComputingComponent(information.getProgrammingAndComputingComponent());
+        setProgrammingAndComputingComponentEn(information.getProgrammingAndComputingComponentEn());
+        setCrossCompetenceComponent(information.getCrossCompetenceComponent());
+        setCrossCompetenceComponentEn(information.getCrossCompetenceComponentEn());
+        setEthicalPrinciples(information.getEthicalPrinciples());
+        setEthicalPrinciplesEn(information.getEthicalPrinciplesEn());
     }
 
     public CompetenceCourseInformationRequestBean(CompetenceCourse course, ExecutionSemester period) {
@@ -221,6 +252,16 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
         setReferences(information.getBibliographicReferences());
         setName(information.getName());
         setNameEn(information.getNameEn());
+        setPrerequisites(information.getPrerequisites());
+        setPrerequisitesEn(information.getPrerequisitesEn());
+        setLaboratorialComponent(information.getLaboratorialComponent());
+        setLaboratorialComponentEn(information.getLaboratorialComponentEn());
+        setProgrammingAndComputingComponent(information.getProgrammingAndComputingComponent());
+        setProgrammingAndComputingComponentEn(information.getProgrammingAndComputingComponentEn());
+        setCrossCompetenceComponent(information.getCrossCompetenceComponent());
+        setCrossCompetenceComponentEn(information.getCrossCompetenceComponentEn());
+        setEthicalPrinciples(information.getEthicalPrinciples());
+        setEthicalPrinciplesEn(information.getEthicalPrinciplesEn());
     }
 
     public void reset() {
@@ -234,6 +275,16 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
         setReferences(null);
         setName(null);
         setNameEn(null);
+        setPrerequisites(null);
+        setPrerequisitesEn(null);
+        setLaboratorialComponent(null);
+        setLaboratorialComponentEn(null);
+        setProgrammingAndComputingComponent(null);
+        setProgrammingAndComputingComponentEn(null);
+        setCrossCompetenceComponent(null);
+        setCrossCompetenceComponentEn(null);
+        setEthicalPrinciples(null);
+        setEthicalPrinciplesEn(null);
     }
 
     public BibliographicReferences getReferences() {
@@ -274,4 +325,93 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
     public boolean getIsShowOldCompetenceCourses() {
         return isShowOldCompetenceCourses();
     }
+
+    public ExecutionSemester getExecutionSemester() {
+        return executionSemester;
+    }
+
+    public void setExecutionSemester(ExecutionSemester executionSemester) {
+        this.executionSemester = executionSemester;
+    }
+
+    public String getPrerequisites() {
+        return prerequisites;
+    }
+
+    public void setPrerequisites(String prerequisites) {
+        this.prerequisites = prerequisites;
+    }
+
+    public String getPrerequisitesEn() {
+        return prerequisitesEn;
+    }
+
+    public void setPrerequisitesEn(String prerequisitesEn) {
+        this.prerequisitesEn = prerequisitesEn;
+    }
+
+    public String getLaboratorialComponent() {
+        return laboratorialComponent;
+    }
+
+    public void setLaboratorialComponent(String laboratorialComponent) {
+        this.laboratorialComponent = laboratorialComponent;
+    }
+
+    public String getLaboratorialComponentEn() {
+        return laboratorialComponentEn;
+    }
+
+    public void setLaboratorialComponentEn(String laboratorialComponentEn) {
+        this.laboratorialComponentEn = laboratorialComponentEn;
+    }
+
+    public String getProgrammingAndComputingComponent() {
+        return programmingAndComputingComponent;
+    }
+
+    public void setProgrammingAndComputingComponent(String programmingAndComputingComponent) {
+        this.programmingAndComputingComponent = programmingAndComputingComponent;
+    }
+
+    public String getProgrammingAndComputingComponentEn() {
+        return programmingAndComputingComponentEn;
+    }
+
+    public void setProgrammingAndComputingComponentEn(String programmingAndComputingComponentEn) {
+        this.programmingAndComputingComponentEn = programmingAndComputingComponentEn;
+    }
+
+    public String getCrossCompetenceComponent() {
+        return crossCompetenceComponent;
+    }
+
+    public void setCrossCompetenceComponent(String crossCompetenceComponent) {
+        this.crossCompetenceComponent = crossCompetenceComponent;
+    }
+
+    public String getCrossCompetenceComponentEn() {
+        return crossCompetenceComponentEn;
+    }
+
+    public void setCrossCompetenceComponentEn(String crossCompetenceComponentEn) {
+        this.crossCompetenceComponentEn = crossCompetenceComponentEn;
+    }
+
+    public String getEthicalPrinciples() {
+        return ethicalPrinciples;
+    }
+
+    public void setEthicalPrinciples(String ethicalPrinciples) {
+        this.ethicalPrinciples = ethicalPrinciples;
+    }
+
+    public String getEthicalPrinciplesEn() {
+        return ethicalPrinciplesEn;
+    }
+
+    public void setEthicalPrinciplesEn(String ethicalPrinciplesEn) {
+        this.ethicalPrinciplesEn = ethicalPrinciplesEn;
+    }
+
 }

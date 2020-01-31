@@ -257,10 +257,15 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         }
     }
 
-    public void edit(String objectives, String program, String evaluationMethod, String objectivesEn, String programEn,
-            String evaluationMethodEn) {
-        getMostRecentCompetenceCourseInformation().edit(objectives, program, evaluationMethod, objectivesEn, programEn,
-                evaluationMethodEn);
+    public void edit(String objectives, String program, String evaluationMethod, String prerequisites,
+            String laboratorialComponent, String programmingAndComputingComponent, String crossCompetenceComponent,
+            String ethicalPrinciples, String objectivesEn, String programEn, String evaluationMethodEn, String prerequisitesEn,
+            String laboratorialComponentEn, String programmingAndComputingComponentEn, String crossCompetenceComponentEn,
+            String ethicalPrinciplesEn) {
+        getMostRecentCompetenceCourseInformation().edit(objectives, program, evaluationMethod, prerequisites,
+                laboratorialComponent, programmingAndComputingComponent, crossCompetenceComponent, ethicalPrinciples,
+                objectivesEn, programEn, evaluationMethodEn, prerequisitesEn, laboratorialComponentEn,
+                programmingAndComputingComponentEn, crossCompetenceComponentEn, ethicalPrinciplesEn);
     }
 
     public void delete() {

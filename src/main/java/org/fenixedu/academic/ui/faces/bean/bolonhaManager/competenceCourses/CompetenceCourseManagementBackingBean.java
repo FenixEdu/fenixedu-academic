@@ -98,9 +98,20 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private String objectives;
     private String program;
     private String evaluationMethod;
+    private String prerequisites;
+    private String laboratorialComponent;
+    private String programmingAndComputingComponent;
+    private String crossCompetenceComponent;
+    private String ethicalPrinciples;
     private String objectivesEn;
     private String programEn;
     private String evaluationMethodEn;
+    private String prerequisitesEn;
+    private String laboratorialComponentEn;
+    private String programmingAndComputingComponentEn;
+    private String crossCompetenceComponentEn;
+    private String ethicalPrinciplesEn;
+
     private String stage;
     // BibliographicReferences
     private Integer bibliographicReferenceID;
@@ -168,8 +179,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     public Boolean getCanView() {
         DepartmentUnit selectedDepartmentUnit = getSelectedDepartmentUnit();
         if (selectedDepartmentUnit == null) {
-            return (this.getPersonDepartment() != null && this.getPersonDepartment().getCompetenceCourseMembersGroup() != null) ? this
-                    .getPersonDepartment().getCompetenceCourseMembersGroup().isMember(this.getUserView()) : false;
+            return (this.getPersonDepartment() != null
+                    && this.getPersonDepartment().getCompetenceCourseMembersGroup() != null) ? this.getPersonDepartment()
+                            .getCompetenceCourseMembersGroup().isMember(this.getUserView()) : false;
         } else {
             return selectedDepartmentUnit.getDepartment().getCompetenceCourseMembersGroup() != null ? selectedDepartmentUnit
                     .getDepartment().getCompetenceCourseMembersGroup().isMember(getUserView()) : false;
@@ -247,9 +259,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         Group competenceCoursesManagementGroup = getSelectedDepartmentUnit().getDepartment().getCompetenceCourseMembersGroup();
 
         if (competenceCoursesManagementGroup != null) {
-            competenceCoursesManagementGroup.getMembers().forEach(
-                    user -> result.add(new SelectItem(user.getExternalId(), user.getPerson().getName() + " ("
-                            + user.getUsername() + ")")));
+            competenceCoursesManagementGroup.getMembers().forEach(user -> result
+                    .add(new SelectItem(user.getExternalId(), user.getPerson().getName() + " (" + user.getUsername() + ")")));
         }
 
         return result;
@@ -390,8 +401,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         if (StringUtils.isEmpty((String) getViewState().getAttribute("competenceCourseLevel"))) {
             if (getCompetenceCourse() != null) {
                 if (getCompetenceCourse().getCompetenceCourseLevel(getAssociatedExecutionPeriod()) != null) {
-                    setCompetenceCourseLevel(getCompetenceCourse().getCompetenceCourseLevel(getAssociatedExecutionPeriod())
-                            .getName());
+                    setCompetenceCourseLevel(
+                            getCompetenceCourse().getCompetenceCourseLevel(getAssociatedExecutionPeriod()).getName());
                 }
             }
         }
@@ -546,7 +557,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public String getCompetenceCourseID() {
-        return (competenceCourseID == null) ? (competenceCourseID = getAndHoldStringParameter("competenceCourseID")) : competenceCourseID;
+        return (competenceCourseID == null) ? (competenceCourseID =
+                getAndHoldStringParameter("competenceCourseID")) : competenceCourseID;
     }
 
     public void setCompetenceCourseID(String competenceCourseID) {
@@ -632,6 +644,86 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public void setEvaluationMethodEn(String evaluationMethodEn) {
         this.evaluationMethodEn = evaluationMethodEn;
+    }
+
+    public String getPrerequisites() {
+        return prerequisites;
+    }
+
+    public void setPrerequisites(String prerequisites) {
+        this.prerequisites = prerequisites;
+    }
+
+    public String getLaboratorialComponent() {
+        return laboratorialComponent;
+    }
+
+    public void setLaboratorialComponent(String laboratorialComponent) {
+        this.laboratorialComponent = laboratorialComponent;
+    }
+
+    public String getProgrammingAndComputingComponent() {
+        return programmingAndComputingComponent;
+    }
+
+    public void setProgrammingAndComputingComponent(String programmingAndComputingComponent) {
+        this.programmingAndComputingComponent = programmingAndComputingComponent;
+    }
+
+    public String getCrossCompetenceComponent() {
+        return crossCompetenceComponent;
+    }
+
+    public void setCrossCompetenceComponent(String crossCompetenceComponent) {
+        this.crossCompetenceComponent = crossCompetenceComponent;
+    }
+
+    public String getEthicalPrinciples() {
+        return ethicalPrinciples;
+    }
+
+    public void setEthicalPrinciples(String ethicalPrinciples) {
+        this.ethicalPrinciples = ethicalPrinciples;
+    }
+
+    public String getPrerequisitesEn() {
+        return prerequisitesEn;
+    }
+
+    public void setPrerequisitesEn(String prerequisitesEn) {
+        this.prerequisitesEn = prerequisitesEn;
+    }
+
+    public String getLaboratorialComponentEn() {
+        return laboratorialComponentEn;
+    }
+
+    public void setLaboratorialComponentEn(String laboratorialComponentEn) {
+        this.laboratorialComponentEn = laboratorialComponentEn;
+    }
+
+    public String getProgrammingAndComputingComponentEn() {
+        return programmingAndComputingComponentEn;
+    }
+
+    public void setProgrammingAndComputingComponentEn(String programmingAndComputingComponentEn) {
+        this.programmingAndComputingComponentEn = programmingAndComputingComponentEn;
+    }
+
+    public String getCrossCompetenceComponentEn() {
+        return crossCompetenceComponentEn;
+    }
+
+    public void setCrossCompetenceComponentEn(String crossCompetenceComponentEn) {
+        this.crossCompetenceComponentEn = crossCompetenceComponentEn;
+    }
+
+    public String getEthicalPrinciplesEn() {
+        return ethicalPrinciplesEn;
+    }
+
+    public void setEthicalPrinciplesEn(String ethicalPrinciplesEn) {
+        this.ethicalPrinciplesEn = ethicalPrinciplesEn;
     }
 
     public String getStage() {
@@ -751,8 +843,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     private List<BibliographicReference> getBibliographicReferences() {
-        return (getCompetenceCourse().getBibliographicReferences(getAssociatedExecutionPeriod()) == null) ? null : getCompetenceCourse()
-                .getBibliographicReferences(getAssociatedExecutionPeriod()).getBibliographicReferencesList();
+        return (getCompetenceCourse()
+                .getBibliographicReferences(getAssociatedExecutionPeriod()) == null) ? null : getCompetenceCourse()
+                        .getBibliographicReferences(getAssociatedExecutionPeriod()).getBibliographicReferencesList();
     }
 
     public int getBibliographicReferencesCount() {
@@ -802,10 +895,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
             if (valid) {
 
-                final CompetenceCourse competenceCourse =
-                        CreateCompetenceCourse.run(getName(), getNameEn(), null, getBasic(), RegimeType.SEMESTRIAL,
-                                getEnumCompetenceCourseLevel(), getEnumCompetenceCourseType(), getCompetenceCourseGroupUnitID(),
-                                getExecutionSemester(), getCode());
+                final CompetenceCourse competenceCourse = CreateCompetenceCourse.run(getName(), getNameEn(), null, getBasic(),
+                        RegimeType.SEMESTRIAL, getEnumCompetenceCourseLevel(), getEnumCompetenceCourseType(),
+                        getCompetenceCourseGroupUnitID(), getExecutionSemester(), getCode());
                 setCompetenceCourse(competenceCourse);
                 return "setCompetenceCourseLoad";
             }
@@ -898,7 +990,10 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     private void setCompetenceCourseAdditionalInformation() throws FenixServiceException {
         EditCompetenceCourse.runEditCompetenceCourse(getCompetenceCourseID(), getObjectives(), getProgram(),
-                getEvaluationMethod(), getObjectivesEn(), getProgramEn(), getEvaluationMethodEn());
+                getEvaluationMethod(), getPrerequisites(), getLaboratorialComponent(), getProgrammingAndComputingComponent(),
+                getCrossCompetenceComponent(), getEthicalPrinciples(), getObjectivesEn(), getProgramEn(), getEvaluationMethodEn(),
+                getPrerequisitesEn(), getLaboratorialComponentEn(), getProgrammingAndComputingComponentEn(),
+                getCrossCompetenceComponentEn(), getEthicalPrinciplesEn());
     }
 
     public String deleteCompetenceCourse() {
@@ -992,8 +1087,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public String changeCompetenceCourseState() {
         try {
-            CurricularStage changed =
-                    (getCompetenceCourse().getCurricularStage().equals(CurricularStage.PUBLISHED) ? CurricularStage.APPROVED : CurricularStage.PUBLISHED);
+            CurricularStage changed = (getCompetenceCourse().getCurricularStage()
+                    .equals(CurricularStage.PUBLISHED) ? CurricularStage.APPROVED : CurricularStage.PUBLISHED);
             EditCompetenceCourse.runEditCompetenceCourse(getCompetenceCourseID(), changed);
             return "";
         } catch (NotAuthorizedException e) {
@@ -1193,9 +1288,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         ExecutionSemester currentSemester = ExecutionSemester.readActualExecutionSemester();
         if ((executionSemesterID == null) && (getCompetenceCourse() != null)) {
             if (getCompetenceCourse().getCompetenceCourseInformationsSet().size() == 1) {
-                executionSemesterID =
-                        getCompetenceCourse().getCompetenceCourseInformationsSet().iterator().next().getExecutionPeriod()
-                                .getExternalId();
+                executionSemesterID = getCompetenceCourse().getCompetenceCourseInformationsSet().iterator().next()
+                        .getExecutionPeriod().getExternalId();
             }
         }
         if (executionSemesterID == null) {

@@ -82,9 +82,9 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     }
 
     public CompetenceCourseInformation(CompetenceCourseInformation existingInformation) {
-        this(existingInformation.getName(), existingInformation.getNameEn(), existingInformation.getBasic(), existingInformation
-                .getRegime(), existingInformation.getCompetenceCourseLevel(), existingInformation.getExecutionPeriod(),
-                existingInformation.getCompetenceCourseGroupUnit());
+        this(existingInformation.getName(), existingInformation.getNameEn(), existingInformation.getBasic(),
+                existingInformation.getRegime(), existingInformation.getCompetenceCourseLevel(),
+                existingInformation.getExecutionPeriod(), existingInformation.getCompetenceCourseGroupUnit());
         setCompetenceCourse(existingInformation.getCompetenceCourse());
         for (CompetenceCourseLoad load : existingInformation.getCompetenceCourseLoadsSet()) {
             CompetenceCourseLoad newLoad = new CompetenceCourseLoad(load);
@@ -98,6 +98,16 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setObjectivesEn(existingInformation.getObjectivesEn());
         setProgram(existingInformation.getProgram());
         setProgramEn(existingInformation.getProgramEn());
+        setPrerequisites(existingInformation.getPrerequisites());
+        setPrerequisitesEn(existingInformation.getPrerequisitesEn());
+        setLaboratorialComponent(existingInformation.getLaboratorialComponent());
+        setLaboratorialComponentEn(existingInformation.getLaboratorialComponentEn());
+        setProgrammingAndComputingComponent(existingInformation.getProgrammingAndComputingComponent());
+        setProgrammingAndComputingComponentEn(existingInformation.getProgrammingAndComputingComponentEn());
+        setCrossCompetenceComponent(existingInformation.getCrossCompetenceComponent());
+        setCrossCompetenceComponentEn(existingInformation.getCrossCompetenceComponentEn());
+        setEthicalPrinciples(existingInformation.getEthicalPrinciples());
+        setEthicalPrinciplesEn(existingInformation.getEthicalPrinciplesEn());
     }
 
     public CompetenceCourseInformation(String name, String nameEn, Boolean basic, RegimeType regimeType,
@@ -161,14 +171,28 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setCompetenceCourseLevel(competenceCourseLevel);
     }
 
-    public void edit(String objectives, String program, String evaluationMethod, String objectivesEn, String programEn,
-            String evaluationMethodEn) {
+    public void edit(String objectives, String program, String evaluationMethod, String prerequisites,
+            String laboratorialComponent, String programmingAndComputingComponent, String crossCompetenceComponent,
+            String ethicalPrinciples, String objectivesEn, String programEn, String evaluationMethodEn, String prerequisitesEn,
+            String laboratorialComponentEn, String programmingAndComputingComponentEn, String crossCompetenceComponentEn,
+            String ethicalPrinciplesEn) {
         setObjectives(objectives);
         setProgram(program);
         setEvaluationMethod(evaluationMethod);
+        setPrerequisites(prerequisites);
+        setLaboratorialComponent(laboratorialComponent);
+        setProgrammingAndComputingComponent(programmingAndComputingComponent);
+        setCrossCompetenceComponent(crossCompetenceComponent);
+        setEthicalPrinciples(ethicalPrinciples);
         setObjectivesEn(objectivesEn);
         setProgramEn(programEn);
         setEvaluationMethodEn(evaluationMethodEn);
+        setPrerequisitesEn(prerequisitesEn);
+        setLaboratorialComponentEn(laboratorialComponentEn);
+        setProgrammingAndComputingComponentEn(programmingAndComputingComponentEn);
+        setCrossCompetenceComponentEn(crossCompetenceComponentEn);
+        setEthicalPrinciplesEn(ethicalPrinciplesEn);
+
     }
 
     public void delete() {
