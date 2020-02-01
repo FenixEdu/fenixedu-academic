@@ -54,7 +54,7 @@ width: 100%
 									<strong><h:outputText value="#{(!empty branch.name) ? branch.name : bundle['label.commonBranch']} "/></strong>
 									<h:dataTable value="#{branch.semesters}" var="semester" styleClass="solidBorderClass" >
 										<h:column>
-											<strong><h:outputText value="#{bundle['label.semester']}" /></strong><h:outputText value=": " /><h:outputText value="#{semester.semester}" />
+											<strong><h:outputText value="#{bundle['label.semester']}" /></strong><h:outputText value=": " /><h:outputText value="#{semester.childOrder}" />
 											<h:dataTable value="#{semester.scopes}" var="scope" rowClasses="bgwhite, bluecell" columnClasses=",,,,,,centerClass" styleClass="greyBorderClass" headerClass="grey">
 												<h:column>
 													<f:facet name="header"><h:outputText value="#{bundle['label.curricularCourse']}" /></f:facet>

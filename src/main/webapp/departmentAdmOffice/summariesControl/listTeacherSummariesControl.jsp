@@ -322,7 +322,7 @@ padding-right: 3px;
 
 		<bean:define id="year" name="executionCourse" property="executionPeriod.executionYear.year" type="java.lang.String"/>
 		<% year = year.replace('/','-'); %>
-		<bean:define id="semester" name="executionCourse" property="executionPeriod.semester"/>
+		<bean:define id="semester" name="executionCourse" property="executionPeriod.childOrder"/>
 		<bean:define id="sigla" name="executionCourse" property="sigla"/>
 		<bean:define id="urlContext" value="<%= request.getContextPath() + "/disciplinas/"+ sigla +"/"+ year + "/" + semester + "-semestre/sumarios" %>"/>		
 		

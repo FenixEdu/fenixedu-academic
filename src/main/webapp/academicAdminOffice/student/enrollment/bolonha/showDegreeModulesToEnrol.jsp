@@ -28,7 +28,7 @@
 	<bean:write name="bolonhaStudentEnrollmentBean"  property="funcionalityTitle" />
 </h2>
 
-<bean:define id="periodSemester" name="bolonhaStudentEnrollmentBean" property="executionPeriod.semester" />
+<bean:define id="periodSemester" name="bolonhaStudentEnrollmentBean" property="executionPeriod.childOrder" />
 <bean:define id="executionYearName" name="bolonhaStudentEnrollmentBean" property="executionPeriod.executionYear.year" />
 
 

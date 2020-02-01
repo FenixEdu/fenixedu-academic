@@ -141,7 +141,7 @@
 							<bean:write name="enrolment" property="executionPeriod.executionYear.year"/>
 						</td>
 						<td class="listClasses">
-							<bean:write name="enrolment" property="executionPeriod.semester"/>
+							<bean:write name="enrolment" property="executionPeriod.childOrder"/>
 						</td>
 						<td class="listClasses">
 							<bean:write name="enrolment" property="curricularCourse.degreeCurricularPlan.degree.sigla"/>
