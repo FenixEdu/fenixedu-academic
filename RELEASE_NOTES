@@ -1,3 +1,4 @@
+26.0.0 (01-02-2020)
 - Refactor: Removed ExecutionSemester entity
 - Refactor: Removed temp data migration code
 - Refactor: Replaced semester references by childOrder
