@@ -2360,6 +2360,16 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
         String objectivesEn;
         String program;
         String programEn;
+        String prerequisites;
+        String prerequisitesEn;
+        String laboratorialComponent;
+        String laboratorialComponentEn;
+        String programmingAndComputingComponent;
+        String programmingAndComputingComponentEn;
+        String crossCompetenceComponent;
+        String crossCompetenceComponentEn;
+        String ethicalPrinciples;
+        String ethicalPrinciplesEn;
         degreeStructure.RegimeType regime;
     }
 
@@ -2377,6 +2387,16 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
         String programEn;
         String evaluationMethod;
         String evaluationMethodEn;
+        String prerequisites;
+        String prerequisitesEn;
+        String laboratorialComponent;
+        String laboratorialComponentEn;
+        String programmingAndComputingComponent;
+        String programmingAndComputingComponentEn;
+        String crossCompetenceComponent;
+        String crossCompetenceComponentEn;
+        String ethicalPrinciples;
+        String ethicalPrinciplesEn;
         CompetenceCourseLevel competenceCourseLevel;
         
         Double theoreticalHours;

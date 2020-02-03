@@ -71,6 +71,26 @@
 		<property name="rows" value="7"/>
 		<property name="columns" value="70"/>
 	</slot>
+	<slot name="prerequisites" layout="longText">
+		<property name="rows" value="7"/>
+		<property name="columns" value="70"/>
+	</slot>
+	<slot name="laboratorialComponent" layout="longText">
+		<property name="rows" value="7"/>
+		<property name="columns" value="70"/>
+	</slot>
+	<slot name="programmingAndComputingComponent" layout="longText">
+		<property name="rows" value="7"/>
+		<property name="columns" value="70"/>
+	</slot>
+	<slot name="crossCompetenceComponent" layout="longText">
+		<property name="rows" value="7"/>
+		<property name="columns" value="70"/>
+	</slot>
+	<slot name="ethicalPrinciples" layout="longText">
+		<property name="rows" value="7"/>
+		<property name="columns" value="70"/>
+	</slot>
 </schema>
 
 <schema name="editCompetenceCourseInformation.en" type="org.fenixedu.academic.ui.struts.action.BolonhaManager.CompetenceCourseInformationRequestBean" bundle="BOLONHA_MANAGER_RESOURCES">
@@ -85,7 +105,27 @@
 	<slot name="evaluationMethodEn" layout="longText">
 		<property name="rows" value="7"/>
 		<property name="columns" value="70"/>
-	</slot>	
+	</slot>
+	<slot name="prerequisitesEn" layout="longText">
+		<property name="rows" value="7"/>
+		<property name="columns" value="70"/>
+	</slot>
+	<slot name="laboratorialComponentEn" layout="longText">
+		<property name="rows" value="7"/>
+		<property name="columns" value="70"/>
+	</slot>
+	<slot name="programmingAndComputingComponentEn" layout="longText">
+		<property name="rows" value="7"/>
+		<property name="columns" value="70"/>
+	</slot>
+	<slot name="crossCompetenceComponentEn" layout="longText">
+		<property name="rows" value="7"/>
+		<property name="columns" value="70"/>
+	</slot>
+	<slot name="ethicalPrinciplesEn" layout="longText">
+		<property name="rows" value="7"/>
+		<property name="columns" value="70"/>
+	</slot>
 </schema>
 
 
@@ -105,9 +145,19 @@
 	<slot name="objectives"/>
 	<slot name="program"/>
 	<slot name="evaluationMethod"/>
+	<slot name="prerequisites"/>
+	<slot name="laboratorialComponent"/>
+	<slot name="programmingAndComputingComponent"/>
+	<slot name="crossCompetenceComponent"/>
+	<slot name="ethicalPrinciples"/>
 	<slot name="objectivesEn"/>
 	<slot name="programEn"/>
 	<slot name="evaluationMethodEn"/>
+	<slot name="prerequisitesEn"/>
+	<slot name="laboratorialComponentEn"/>
+	<slot name="programmingAndComputingComponentEn"/>
+	<slot name="crossCompetenceComponentEn"/>
+	<slot name="ethicalPrinciplesEn"/>
 </schema>
 
 <schema name="editCompetenceCourseLoad.semestrial" type="org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLoadBean" bundle="BOLONHA_MANAGER_RESOURCES">
@@ -286,7 +336,17 @@
 	<slot name="objectives"/>
 	<slot name="program"/>
 	<slot name="evaluationMethod"/>
+	<slot name="prerequisites"/>
+	<slot name="laboratorialComponent"/>
+	<slot name="programmingAndComputingComponent"/>
+	<slot name="crossCompetenceComponent"/>
+	<slot name="ethicalPrinciples"/>
 	<slot name="objectivesEn"/>
 	<slot name="programEn"/>
 	<slot name="evaluationMethodEn"/>
+	<slot name="prerequisitesEn"/>
+	<slot name="laboratorialComponentEn"/>
+	<slot name="programmingAndComputingComponentEn"/>
+	<slot name="crossCompetenceComponentEn"/>
+	<slot name="ethicalPrinciplesEn"/>
 </schema>

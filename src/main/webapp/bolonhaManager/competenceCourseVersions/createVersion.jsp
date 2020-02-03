@@ -117,7 +117,7 @@
 					</fr:layout>
 				</fr:edit>
 		
-				<p class="mtop2 mbottom1 bold">3) Objectivos, Programa e Metodologia de Avaliação em <b>Inglês</b></p>
+				<p class="mtop2 mbottom1 bold">3) Informação da disciplina competência em <b>Inglês</b></p>
 				<fr:edit id="en-part" name="bean"
 					schema="editCompetenceCourseInformation.en">
 					<fr:layout name="tabular">
@@ -165,7 +165,7 @@
 		<logic:equal name="proposal" value="true">
 			<logic:equal name="bean" property="competenceCourseDefinedForExecutionPeriod" value="true">
 				
-				<p class="mtop2 mbottom1 bold">2) Objectivos, Programa e Metodologia de Avaliação em <b>Português</b></p>
+				<p class="mtop2 mbottom1 bold">2) Informação da disciplina competência em <b>Português</b></p>
 	
 				<fr:edit id="pt-part" name="bean"
 					schema="editCompetenceCourseInformation.pt">
@@ -176,7 +176,7 @@
 				</fr:edit>
 	
 	
-				<p class="mtop2 mbottom1 bold">3) Objectivos, Programa e Metodologia de Avaliação em <b>Inglês</b></p>
+				<p class="mtop2 mbottom1 bold">3) Informação da disciplina competência em <b>Inglês</b></p>
 				<fr:edit id="en-part" name="bean"
 					schema="editCompetenceCourseInformation.en">
 					<fr:layout name="tabular">
@@ -218,61 +218,63 @@
 					</html:submit>
 				</p>
 			</logic:equal>
-			<logic:equal name="bean" property="requestDraftAvailable" value="true">
-				
-				<p class="mtop2 mbottom1 bold">2) Objectivos, Programa e Metodologia de Avaliação em <b>Português</b></p>
-	
-				<fr:edit id="pt-part" name="bean"
-					schema="editCompetenceCourseInformation.pt">
-					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
-						<fr:property name="columnClasses" value="width12em,,tderror1 tdclear" />
-					</fr:layout>
-				</fr:edit>
-	
-	
-				<p class="mtop2 mbottom1 bold">3) Objectivos, Programa e Metodologia de Avaliação em <b>Inglês</b></p>
-				<fr:edit id="en-part" name="bean"
-					schema="editCompetenceCourseInformation.en">
-					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
-						<fr:property name="columnClasses" value="width12em,,tderror1 tdclear" />
-					</fr:layout>
-				</fr:edit>
-	
-	
-				<p class="mtop2 mbottom1 bold bold">4) Carga Horária</p>
-				<fr:edit id="editVersionLoad" name="beanLoad" visible="false" />
-				<fr:edit id="versionLoad" name="beanLoad" schema="<%= loadSchema  %>">
-					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
-						<fr:property name="columnClasses" value="width12em,,tderror1 tdclear" />
-					</fr:layout>
-					<fr:destination name="loadInformationPostBack"
-						path="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competenceCourseID + "&method=prepareCreateVersion" + (request.getParameter("proposal") != null ? "&proposal=y" : "") %>" />
-				</fr:edit>
-				<logic:equal name="beanLoad" property="sameInformationForBothPeriods"
-					value="false">
-					<logic:equal name="bean" property="regime" value="ANUAL">
-									
-						<fr:edit id="versionLoad2" name="beanLoad"
-							schema="editCompetenceCourseLoad.anual.diferent.info">
-							<fr:layout name="tabular">
-								<fr:property name="classes" value="tstyle5 thlight thright" />
-								<fr:property name="columnClasses" value="width12em,,tderror1 tdclear" />
-							</fr:layout>
-						</fr:edit>
+			<logic:notEqual name="bean" property="competenceCourseDefinedForExecutionPeriod" value="true">
+				<logic:equal name="bean" property="requestDraftAvailable" value="true">
+					
+					<p class="mtop2 mbottom1 bold">2) Informação da disciplina competência em <b>Português</b></p>
+		
+					<fr:edit id="pt-part" name="bean"
+						schema="editCompetenceCourseInformation.pt">
+						<fr:layout name="tabular">
+							<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+							<fr:property name="columnClasses" value="width12em,,tderror1 tdclear" />
+						</fr:layout>
+					</fr:edit>
+		
+		
+					<p class="mtop2 mbottom1 bold">3) Informação da disciplina competência em <b>Inglês</b></p>
+					<fr:edit id="en-part" name="bean"
+						schema="editCompetenceCourseInformation.en">
+						<fr:layout name="tabular">
+							<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+							<fr:property name="columnClasses" value="width12em,,tderror1 tdclear" />
+						</fr:layout>
+					</fr:edit>
+		
+		
+					<p class="mtop2 mbottom1 bold bold">4) Carga Horária</p>
+					<fr:edit id="editVersionLoad" name="beanLoad" visible="false" />
+					<fr:edit id="versionLoad" name="beanLoad" schema="<%= loadSchema  %>">
+						<fr:layout name="tabular">
+							<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+							<fr:property name="columnClasses" value="width12em,,tderror1 tdclear" />
+						</fr:layout>
+						<fr:destination name="loadInformationPostBack"
+							path="<%= "/competenceCourses/manageVersions.do?competenceCourseID=" + competenceCourseID + "&method=prepareCreateVersion" + (request.getParameter("proposal") != null ? "&proposal=y" : "") %>" />
+					</fr:edit>
+					<logic:equal name="beanLoad" property="sameInformationForBothPeriods"
+						value="false">
+						<logic:equal name="bean" property="regime" value="ANUAL">
+										
+							<fr:edit id="versionLoad2" name="beanLoad"
+								schema="editCompetenceCourseLoad.anual.diferent.info">
+								<fr:layout name="tabular">
+									<fr:property name="classes" value="tstyle5 thlight thright" />
+									<fr:property name="columnClasses" value="width12em,,tderror1 tdclear" />
+								</fr:layout>
+							</fr:edit>
+						</logic:equal>
 					</logic:equal>
+		
+					<br/>
+		
+					<p class="dinline">
+						<html:submit>
+							<bean:message key="label.submit" bundle="APPLICATION_RESOURCES" />
+						</html:submit>
+					</p>
 				</logic:equal>
-	
-				<br/>
-	
-				<p class="dinline">
-					<html:submit>
-						<bean:message key="label.submit" bundle="APPLICATION_RESOURCES" />
-					</html:submit>
-				</p>
-			</logic:equal>
+			</logic:notEqual>
 		</logic:equal>
 	</logic:equal>
 </fr:form>

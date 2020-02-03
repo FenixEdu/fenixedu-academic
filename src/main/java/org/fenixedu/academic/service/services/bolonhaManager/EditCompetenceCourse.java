@@ -39,9 +39,16 @@ import pt.ist.fenixframework.FenixFramework;
 public class EditCompetenceCourse {
 
     protected void run(String competenceCourseID, String objectives, String program, String evaluationMethod,
-            String objectivesEn, String programEn, String evaluationMethodEn) throws FenixServiceException {
+            String prerequisites, String laboratorialComponent, String programmingAndComputingComponent,
+            String crossCompetenceComponent, String ethicalPrinciples, String objectivesEn, String programEn,
+            String evaluationMethodEn, String prerequisitesEn, String laboratorialComponentEn,
+            String programmingAndComputingComponentEn, String crossCompetenceComponentEn, String ethicalPrinciplesEn)
+            throws FenixServiceException {
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
-        competenceCourse.edit(objectives, program, evaluationMethod, objectivesEn, programEn, evaluationMethodEn);
+        competenceCourse.edit(objectives, program, evaluationMethod, prerequisites, laboratorialComponent,
+                programmingAndComputingComponent, crossCompetenceComponent, ethicalPrinciples, objectivesEn, programEn,
+                evaluationMethodEn, prerequisitesEn, laboratorialComponentEn, programmingAndComputingComponentEn,
+                crossCompetenceComponentEn, ethicalPrinciplesEn);
     }
 
     protected void run(String competenceCourseID, String name, String nameEn, Boolean basic,
@@ -129,17 +136,24 @@ public class EditCompetenceCourse {
 
     @Atomic
     public static void runEditCompetenceCourse(String competenceCourseID, String objectives, String program,
-            String evaluationMethod, String objectivesEn, String programEn, String evaluationMethodEn)
+            String evaluationMethod, String prerequisites, String laboratorialComponent, String programmingAndComputingComponent,
+            String crossCompetenceComponent, String ethicalPrinciples, String objectivesEn, String programEn,
+            String evaluationMethodEn, String prerequisitesEn, String laboratorialComponentEn,
+            String programmingAndComputingComponentEn, String crossCompetenceComponentEn, String ethicalPrinciplesEn)
             throws FenixServiceException, NotAuthorizedException {
         try {
             BolonhaManagerAuthorizationFilter.instance.execute();
-            serviceInstance.run(competenceCourseID, objectives, program, evaluationMethod, objectivesEn, programEn,
-                    evaluationMethodEn);
+            serviceInstance.run(competenceCourseID, objectives, program, evaluationMethod, prerequisites, laboratorialComponent,
+                    programmingAndComputingComponent, crossCompetenceComponent, ethicalPrinciples, objectivesEn, programEn,
+                    evaluationMethodEn, prerequisitesEn, laboratorialComponentEn, programmingAndComputingComponentEn,
+                    crossCompetenceComponentEn, ethicalPrinciplesEn);
         } catch (NotAuthorizedException ex1) {
             try {
                 ScientificCouncilAuthorizationFilter.instance.execute();
-                serviceInstance.run(competenceCourseID, objectives, program, evaluationMethod, objectivesEn, programEn,
-                        evaluationMethodEn);
+                serviceInstance.run(competenceCourseID, objectives, program, evaluationMethod, prerequisites,
+                        laboratorialComponent, programmingAndComputingComponent, crossCompetenceComponent, ethicalPrinciples,
+                        objectivesEn, programEn, evaluationMethodEn, prerequisitesEn, laboratorialComponentEn,
+                        programmingAndComputingComponentEn, crossCompetenceComponentEn, ethicalPrinciplesEn);
             } catch (NotAuthorizedException ex2) {
                 throw ex2;
             }
@@ -163,8 +177,8 @@ public class EditCompetenceCourse {
     }
 
     @Atomic
-    public static void runEditCompetenceCourse(String competenceCourseID, String acronym) throws FenixServiceException,
-            NotAuthorizedException {
+    public static void runEditCompetenceCourse(String competenceCourseID, String acronym)
+            throws FenixServiceException, NotAuthorizedException {
         try {
             BolonhaManagerAuthorizationFilter.instance.execute();
             serviceInstance.run(competenceCourseID, acronym);
