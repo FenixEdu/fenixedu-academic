@@ -18,12 +18,12 @@
  */
 package org.fenixedu.academic.report.academicAdministrativeOffice;
 
-import java.util.ArrayList;
-import java.util.Optional;
-
+import com.google.common.base.Joiner;
 import org.apache.commons.lang.WordUtils;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
@@ -36,8 +36,8 @@ import org.fenixedu.academic.util.StringFormatter;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
-import com.google.common.base.Joiner;
-import org.joda.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Optional;
 
 public class RegistryDiploma extends AdministrativeOfficeDocument {
     private static final long serialVersionUID = 7788392282506503345L;
@@ -53,7 +53,24 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 
     @Override
     public String getReportTemplateKey() {
-        return RegistryDiplomaRequest.class.getName();
+        final StringBuilder builder = new StringBuilder();
+        builder.append(RegistryDiplomaRequest.class.getName());
+        final CycleType cycleType = getDocumentRequest().getRequestedCycle();
+        if (cycleType != null) {
+            builder.append(".");
+            builder.append(cycleType.name());
+        }
+        final DegreeType degreeType = getDocumentRequest().getDegree().getDegreeType();
+        if (degreeType.isPreBolonhaDegree()) {
+            builder.append(".PRE_BOLONHA");
+        }
+        if (degreeType.isIntegratedMasterDegree()) {
+            builder.append(".INTEGRATED_MASTER");
+        }
+        if (degreeType.isAdvancedFormationDiploma()) {
+            builder.append(".DEA");
+        }
+        return builder.toString();
     }
 
     @Override
@@ -69,6 +86,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
         getPayload().addProperty("principalGender", principal.getGender().toLocalizedString(LocaleUtils.EN).toLowerCase());
         getPayload().addProperty("presidentGender", president.getGender().toLocalizedString(LocaleUtils.EN).toLowerCase());
         getPayload().addProperty("principalName", principal.getValidatedName());
+        getPayload().addProperty("presidentName", president.getValidatedName());
         getPayload().addProperty("registryCode",
                 getDocumentRequest().hasRegistryCode() ? getDocumentRequest().getRegistryCode().getCode() : null);
         getPayload().addProperty("studentName", StringFormatter.prettyPrint(student.getName()));
@@ -83,7 +101,6 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
         }
 
         getPayload().addProperty("conclusion", getConclusion());
-        getPayload().addProperty("presidentName", president.getValidatedName());
         getPayload().addProperty("institutionName", getInstitutionName());
 
         if (hasAssociatedInstitutions()) {
@@ -101,6 +118,12 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 
         getPayload().addProperty("grade", getGrade());
         getPayload().addProperty("date", getFormattedCurrentDate());
+
+        final CycleType cycleType = getDocumentRequest().getRequestedCycle();
+        if (cycleType != null) {
+            getPayload().addProperty("cycleType", cycleType.name());
+            getPayload().addProperty("cycleCredits", cycleType.getEctsCredits());
+        }
     }
 
     protected String getConclusion() {
