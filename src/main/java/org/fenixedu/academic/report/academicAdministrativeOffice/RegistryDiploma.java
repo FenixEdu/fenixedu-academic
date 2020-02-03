@@ -124,6 +124,11 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
             getPayload().addProperty("cycleType", cycleType.name());
             getPayload().addProperty("cycleCredits", cycleType.getEctsCredits());
         }
+
+        final ProgramConclusion programConclusion = getDocumentRequest().getProgramConclusion();
+        getPayload().addProperty("programConclusionName", programConclusion.getName().getContent(getLocale()));
+        getPayload().addProperty("programConclusionDescription", programConclusion.getDescription().getContent(getLocale()));
+        getPayload().addProperty("degreeName", getDocumentRequest().getDegreeName(getExecutionYear()));
     }
 
     protected String getConclusion() {
