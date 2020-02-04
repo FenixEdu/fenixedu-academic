@@ -93,9 +93,38 @@
 			<h:outputText value="(#{bolonhaBundle['max']} 500 #{bolonhaBundle['characters']})" />
 			<h:message for="evaluationMethod" styleClass="error0"/>
 		</h:panelGrid>
+		<h:outputText value="</p>" escape="false"/>
+		<h:outputText value="<p><label>#{bolonhaBundle['prerequisites']}: </label>" escape="false"/>
+		<h:panelGrid columns="2">
+			<h:inputTextarea id="prerequisites" value="#{CompetenceCourseManagement.prerequisites}" cols="60" rows="10"/>
+			<h:message for="prerequisites" styleClass="error0"/>
+		</h:panelGrid>
+		<h:outputText value="</p>" escape="false"/>
+		<h:outputText value="<p><label>#{bolonhaBundle['laboratorialComponent']}: </label>" escape="false"/>
+		<h:panelGrid columns="2">
+			<h:inputTextarea id="laboratorialComponent" value="#{CompetenceCourseManagement.laboratorialComponent}" cols="60" rows="10"/>
+			<h:message for="laboratorialComponent" styleClass="error0"/>
+		</h:panelGrid>
+		<h:outputText value="</p>" escape="false"/>
+		<h:outputText value="<p><label>#{bolonhaBundle['programmingAndComputingComponent']}: </label>" escape="false"/>
+		<h:panelGrid columns="2">
+			<h:inputTextarea id="programmingAndComputingComponent" value="#{CompetenceCourseManagement.programmingAndComputingComponent}" cols="60" rows="10"/>
+			<h:message for="programmingAndComputingComponent" styleClass="error0"/>
+		</h:panelGrid>
+		<h:outputText value="</p>" escape="false"/>
+		<h:outputText value="<p><label>#{bolonhaBundle['crossCompetenceComponent']}: </label>" escape="false"/>
+		<h:panelGrid columns="2">
+			<h:inputTextarea id="crossCompetenceComponent" value="#{CompetenceCourseManagement.crossCompetenceComponent}" cols="60" rows="10"/>
+			<h:message for="crossCompetenceComponent" styleClass="error0"/>
+		</h:panelGrid>
+		<h:outputText value="</p>" escape="false"/>
+		<h:outputText value="<p><label>#{bolonhaBundle['ethicalPrinciples']}: </label>" escape="false"/>
+		<h:panelGrid columns="2">
+			<h:inputTextarea id="ethicalPrinciples" value="#{CompetenceCourseManagement.ethicalPrinciples}" cols="60" rows="10"/>
+			<h:message for="ethicalPrinciples" styleClass="error0"/>
+		</h:panelGrid>	
 		<h:outputText value="</p></fieldset></div>" escape="false"/>
-	
-	
+		
 		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
 		<h:outputText value="<h3 id='english' class='first mbottom1'>#{bolonhaBundle['english']}</h3><fieldset class='lfloat'>" escape="false"/>	
 		<h:outputText value="<p><label>#{bolonhaBundle['objectivesEn']}: </a></label>" escape="false"/>
@@ -120,6 +149,36 @@
 			</h:inputTextarea>			
 			<h:outputText value="(#{bolonhaBundle['max']} 500 #{bolonhaBundle['characters']})" />
 			<h:message for="evaluationMethodEn" styleClass="error0"/>
+		</h:panelGrid>
+		<h:outputText value="</p>" escape="false"/>
+		<h:outputText value="<p><label>#{bolonhaBundle['prerequisitesEn']}: </label>" escape="false"/>
+		<h:panelGrid columns="2">
+			<h:inputTextarea id="prerequisitesEn" value="#{CompetenceCourseManagement.prerequisitesEn}" cols="60" rows="10"/>
+			<h:message for="prerequisitesEn" styleClass="error0"/>
+		</h:panelGrid>
+		<h:outputText value="</p>" escape="false"/>
+		<h:outputText value="<p><label>#{bolonhaBundle['laboratorialComponentEn']}: </label>" escape="false"/>
+		<h:panelGrid columns="2">
+			<h:inputTextarea id="laboratorialComponentEn" value="#{CompetenceCourseManagement.laboratorialComponentEn}" cols="60" rows="10"/>
+			<h:message for="laboratorialComponentEn" styleClass="error0"/>
+		</h:panelGrid>
+		<h:outputText value="</p>" escape="false"/>
+		<h:outputText value="<p><label>#{bolonhaBundle['programmingAndComputingComponentEn']}: </label>" escape="false"/>
+		<h:panelGrid columns="2">
+			<h:inputTextarea id="programmingAndComputingComponentEn" value="#{CompetenceCourseManagement.programmingAndComputingComponentEn}" cols="60" rows="10"/>
+			<h:message for="programmingAndComputingComponentEn" styleClass="error0"/>
+		</h:panelGrid>
+		<h:outputText value="</p>" escape="false"/>
+		<h:outputText value="<p><label>#{bolonhaBundle['crossCompetenceComponentEn']}: </label>" escape="false"/>
+		<h:panelGrid columns="2">
+			<h:inputTextarea id="crossCompetenceComponentEn" value="#{CompetenceCourseManagement.crossCompetenceComponentEn}" cols="60" rows="10"/>
+			<h:message for="crossCompetenceComponentEn" styleClass="error0"/>
+		</h:panelGrid>
+		<h:outputText value="</p>" escape="false"/>
+		<h:outputText value="<p><label>#{bolonhaBundle['ethicalPrinciplesEn']}: </label>" escape="false"/>
+		<h:panelGrid columns="2">
+			<h:inputTextarea id="ethicalPrinciplesEn" value="#{CompetenceCourseManagement.ethicalPrinciplesEn}" cols="60" rows="10"/>
+			<h:message for="ethicalPrinciplesEn" styleClass="error0"/>
 		</h:panelGrid>
 		<h:outputText value="</p></fieldset></div>" escape="false"/>
 		
