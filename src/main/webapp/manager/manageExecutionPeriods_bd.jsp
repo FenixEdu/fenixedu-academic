@@ -103,7 +103,7 @@
 		</thead>
 		<logic:iterate id="infoExecutionPeriod"	name="periods">
 			<bean:define id="year" name="infoExecutionPeriod" property="executionYear.year" />
-			<bean:define id="semester" name="infoExecutionPeriod" property="semester" />
+			<bean:define id="semester" name="infoExecutionPeriod" property="childOrder" />
 			<bean:define id="periodState" name="infoExecutionPeriod" property="state.stateCode" />
 			<tr>
 				<td><bean:write name="infoExecutionPeriod" property="name" /></td>
