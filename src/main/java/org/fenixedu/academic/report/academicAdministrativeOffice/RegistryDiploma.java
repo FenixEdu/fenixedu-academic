@@ -34,9 +34,13 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LocaleUtils;
 import org.fenixedu.academic.util.StringFormatter;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.fenixedu.bennu.portal.domain.PortalConfiguration;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Optional;
 
 public class RegistryDiploma extends AdministrativeOfficeDocument {
@@ -108,7 +112,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
         }
 
         getPayload().addProperty("conclusionDate", getFormattedDate(getDocumentRequest().getConclusionDate()));
-        getPayload().addProperty("graduateTitle", getDocumentRequest().getGraduateTitle(getLocale()));
+        getPayload().addProperty("graduateTitle", getDocumentRequest().getGraduateTitle(Locale.getDefault()));
         getPayload().addProperty("isUTL", isUTL());
 
         if (!(getDocumentRequest() instanceof PhdRegistryDiplomaRequest)) {
