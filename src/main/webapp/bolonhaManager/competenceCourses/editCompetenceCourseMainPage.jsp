@@ -173,6 +173,36 @@
 	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.evaluationMethod}" linebreak="true"/>
 	<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.evaluationMethod}"/>
 	<h:outputText value="</td></tr>" escape="false"/>
+	
+	<h:outputText value="<tr><th class='aleft'>#{bolonhaBundle['prerequisites']}: </th>" escape="false"/>
+	<h:outputText value="<td>" escape="false"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.prerequisites}" linebreak="true"/>
+	<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.prerequisites}"/>
+	<h:outputText value="</td></tr>" escape="false"/>
+	
+	<h:outputText value="<tr><th class='aleft'>#{bolonhaBundle['laboratorialComponent']}: </th>" escape="false"/>
+	<h:outputText value="<td>" escape="false"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.laboratorialComponent}" linebreak="true"/>
+	<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.laboratorialComponent}"/>
+	<h:outputText value="</td></tr>" escape="false"/>
+	
+	<h:outputText value="<tr><th class='aleft'>#{bolonhaBundle['programmingAndComputingComponent']}: </th>" escape="false"/>
+	<h:outputText value="<td>" escape="false"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.programmingAndComputingComponent}" linebreak="true"/>
+	<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.programmingAndComputingComponent}"/>
+	<h:outputText value="</td></tr>" escape="false"/>
+	
+	<h:outputText value="<tr><th class='aleft'>#{bolonhaBundle['crossCompetenceComponent']}: </th>" escape="false"/>
+	<h:outputText value="<td>" escape="false"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.crossCompetenceComponent}" linebreak="true"/>
+	<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.crossCompetenceComponent}"/>
+	<h:outputText value="</td></tr>" escape="false"/>
+	
+	<h:outputText value="<tr><th class='aleft'>#{bolonhaBundle['ethicalPrinciples']}: </th>" escape="false"/>
+	<h:outputText value="<td>" escape="false"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.ethicalPrinciples}" linebreak="true"/>
+	<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.ethicalPrinciples}"/>
+	<h:outputText value="</td></tr>" escape="false"/>
 
 	<h:outputText value="</table><p class='mtop1'>" escape="false"/>
 	<h:outputLink value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/competenceCourses/setCompetenceCourseAdditionalInformation.faces?competenceCourseID=#{CompetenceCourseManagement.competenceCourse.externalId}&action=edit#portuguese">
@@ -202,7 +232,37 @@
 	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.evaluationMethodEn}" linebreak="true"/>	
 	<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.evaluationMethodEn}"/>
 	<h:outputText value="</td></tr>" escape="false"/>
-
+	
+	<h:outputText value="<tr><th class='aleft'>#{bolonhaBundle['prerequisitesEn']}: </th>" escape="false"/>
+	<h:outputText value="<td>" escape="false"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.prerequisitesEn}" linebreak="true"/>	
+	<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.prerequisitesEn}"/>
+	<h:outputText value="</td></tr>" escape="false"/>
+	
+	<h:outputText value="<tr><th class='aleft'>#{bolonhaBundle['laboratorialComponentEn']}: </th>" escape="false"/>
+	<h:outputText value="<td>" escape="false"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.laboratorialComponentEn}" linebreak="true"/>	
+	<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.laboratorialComponentEn}"/>
+	<h:outputText value="</td></tr>" escape="false"/>
+	
+	<h:outputText value="<tr><th class='aleft'>#{bolonhaBundle['programmingAndComputingComponentEn']}: </th>" escape="false"/>
+	<h:outputText value="<td>" escape="false"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.programmingAndComputingComponentEn}" linebreak="true"/>	
+	<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.programmingAndComputingComponentEn}"/>
+	<h:outputText value="</td></tr>" escape="false"/>
+	
+	<h:outputText value="<tr><th class='aleft'>#{bolonhaBundle['crossCompetenceComponentEn']}: </th>" escape="false"/>
+	<h:outputText value="<td>" escape="false"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.crossCompetenceComponentEn}" linebreak="true"/>	
+	<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.crossCompetenceComponentEn}"/>
+	<h:outputText value="</td></tr>" escape="false"/>
+	
+	<h:outputText value="<tr><th class='aleft'>#{bolonhaBundle['ethicalPrinciplesEn']}: </th>" escape="false"/>
+	<h:outputText value="<td>" escape="false"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.ethicalPrinciplesEn}" linebreak="true"/>	
+	<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.ethicalPrinciplesEn}"/>
+	<h:outputText value="</td></tr>" escape="false"/>
+	
 	<h:outputText value="</table><p class='mtop1'>" escape="false"/>
 	<h:outputLink value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/competenceCourses/setCompetenceCourseAdditionalInformation.faces?competenceCourseID=#{CompetenceCourseManagement.competenceCourse.externalId}&action=edit#english">
 		<h:outputText value="#{bolonhaBundle['edit']}"/>

@@ -647,6 +647,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public String getPrerequisites() {
+        if (prerequisites == null && getCompetenceCourse() != null) {
+            prerequisites = getCompetenceCourse().getPrerequisites(getAssociatedExecutionPeriod());
+        }
         return prerequisites;
     }
 
@@ -655,6 +658,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public String getLaboratorialComponent() {
+        if (laboratorialComponent == null && getCompetenceCourse() != null) {
+            laboratorialComponent = getCompetenceCourse().getLaboratorialComponent(getAssociatedExecutionPeriod());
+        }
         return laboratorialComponent;
     }
 
@@ -663,6 +669,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public String getProgrammingAndComputingComponent() {
+        if (programmingAndComputingComponent == null && getCompetenceCourse() != null) {
+            programmingAndComputingComponent = getCompetenceCourse().getProgrammingAndComputingComponent(getAssociatedExecutionPeriod());
+        }
         return programmingAndComputingComponent;
     }
 
@@ -671,6 +680,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public String getCrossCompetenceComponent() {
+        if (crossCompetenceComponent == null && getCompetenceCourse() != null) {
+            crossCompetenceComponent = getCompetenceCourse().getCrossCompetenceComponent(getAssociatedExecutionPeriod());
+        }
         return crossCompetenceComponent;
     }
 
@@ -679,6 +691,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public String getEthicalPrinciples() {
+        if (ethicalPrinciples == null && getCompetenceCourse() != null) {
+            ethicalPrinciples = getCompetenceCourse().getEthicalPrinciples(getAssociatedExecutionPeriod());
+        }
         return ethicalPrinciples;
     }
 
@@ -687,6 +702,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public String getPrerequisitesEn() {
+        if (prerequisitesEn == null && getCompetenceCourse() != null) {
+            prerequisitesEn = getCompetenceCourse().getPrerequisitesEn(getAssociatedExecutionPeriod());
+        }
         return prerequisitesEn;
     }
 
@@ -695,6 +713,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public String getLaboratorialComponentEn() {
+        if (laboratorialComponentEn == null && getCompetenceCourse() != null) {
+            laboratorialComponentEn = getCompetenceCourse().getLaboratorialComponentEn(getAssociatedExecutionPeriod());
+        }
         return laboratorialComponentEn;
     }
 
@@ -703,6 +724,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public String getProgrammingAndComputingComponentEn() {
+        if (programmingAndComputingComponentEn == null && getCompetenceCourse() != null) {
+            programmingAndComputingComponentEn = getCompetenceCourse().getProgrammingAndComputingComponentEn(getAssociatedExecutionPeriod());
+        }
         return programmingAndComputingComponentEn;
     }
 
@@ -711,6 +735,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public String getCrossCompetenceComponentEn() {
+        if (crossCompetenceComponentEn == null && getCompetenceCourse() != null) {
+            crossCompetenceComponentEn = getCompetenceCourse().getCrossCompetenceComponentEn(getAssociatedExecutionPeriod());
+        }
         return crossCompetenceComponentEn;
     }
 
@@ -719,6 +746,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public String getEthicalPrinciplesEn() {
+        if (ethicalPrinciplesEn == null && getCompetenceCourse() != null) {
+            ethicalPrinciplesEn = getCompetenceCourse().getEthicalPrinciplesEn(getAssociatedExecutionPeriod());
+        }
         return ethicalPrinciplesEn;
     }
 
