@@ -1,4 +1,5 @@
 - Refactor: Replaced semester references by childOrder
+- Refactor: Added domain relation between ExecutionInterval and AcademicCalendarEntry
 
 26.0.0 (01-02-2020)
 - Refactor: Removed ExecutionSemester entity

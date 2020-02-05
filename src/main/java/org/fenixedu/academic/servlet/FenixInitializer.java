@@ -19,6 +19,8 @@
 package org.fenixedu.academic.servlet;
 
 import java.util.Properties;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -28,12 +30,14 @@ import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpServletRequest;
 
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.Installation;
 import org.fenixedu.academic.domain.organizationalStructure.UnitNamePart;
 import org.fenixedu.academic.service.StudentWarningsDefaultCheckers;
 import org.fenixedu.academic.service.StudentWarningsService;
 import org.fenixedu.academic.ui.struts.action.externalServices.PhoneValidationUtils;
 import org.fenixedu.bennu.core.api.SystemResource;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.rest.Healthcheck;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,6 +58,8 @@ public class FenixInitializer implements ServletContextListener {
     @Atomic(mode = TxMode.READ)
     public void contextInitialized(ServletContextEvent event) {
 
+        populateExecutionIntervalAcademicCalendarEntries();
+
         Installation.ensureInstallation();
         loadUnitNames();
         startContactValidationServices();
@@ -63,6 +69,25 @@ public class FenixInitializer implements ServletContextListener {
         registerHealthchecks();
         registerDefaultStudentWarningCheckers();
 
+    }
+
+    @Atomic
+    private void populateExecutionIntervalAcademicCalendarEntries() {
+        final Set<ExecutionInterval> executionIntervalsToPopulate = Bennu.getInstance().getExecutionIntervalsSet().stream()
+                .filter(ei -> ei.getAcademicCalendarEntry() == null).collect(Collectors.toSet());
+        if (!executionIntervalsToPopulate.isEmpty()) {
+            logger.info("START setting Academic Calendar Entry @ Execution Interval");
+            logger.info(executionIntervalsToPopulate.size() + " ExecutionInterval without AcademicCalendarEntry (before)");
+
+            long changed = executionIntervalsToPopulate.stream().filter(ei -> ei.populateAcademicCalendarEntry()).count();
+
+            long withoutEntryAfter = Bennu.getInstance().getExecutionIntervalsSet().stream()
+                    .filter(ei -> ei.getAcademicCalendarEntry() == null).count();
+
+            logger.info(changed + " ExecutionInterval changed");
+            logger.info(withoutEntryAfter + " ExecutionInterval without AcademicCalendarEntry (after)");
+            logger.info("END setting Academic Calendar Entry @ Execution Interval");
+        }
     }
 
     private void registerDefaultStudentWarningCheckers() {

@@ -2885,6 +2885,11 @@ relation ExecutionPeriodExecutionYear {
     ExecutionYear playsRole executionYear;
 }
 
+relation ExecutionIntervalAcademicCalendarEntry {
+    ExecutionInterval playsRole executionInterval;
+    time.calendarStructure.AcademicCalendarEntry playsRole academicCalendarEntry;
+}
+
 relation ExecutionPeriodSchoolClass {
     ExecutionInterval playsRole executionPeriod;
     SchoolClass playsRole schoolClasses {

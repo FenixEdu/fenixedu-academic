@@ -80,6 +80,7 @@ public class ExecutionYear extends ExecutionYear_Base {
     public ExecutionYear(AcademicInterval academicInterval, String year) {
         this();
         setAcademicInterval(academicInterval);
+        setAcademicCalendarEntry(academicInterval.getAcademicCalendarEntry());
         setBeginDateYearMonthDay(academicInterval.getBeginYearMonthDayWithoutChronology());
         setEndDateYearMonthDay(academicInterval.getEndYearMonthDayWithoutChronology());
         setYear(year);
