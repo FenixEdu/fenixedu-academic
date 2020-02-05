@@ -1,5 +1,6 @@
 - Refactor: Replaced semester references by childOrder
 - Refactor: Added domain relation between ExecutionInterval and AcademicCalendarEntry
+- Refactor: Removed unecessary overriden method CompetenceCourseInformation.getAcademicPeriod()
 
 26.0.0 (01-02-2020)
 - Refactor: Removed ExecutionSemester entity

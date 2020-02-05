@@ -188,22 +188,22 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         super.setExecutionPeriod(input);
     }
 
-    public AcademicPeriod getAcademicPeriod() {
-        if (super.getAcademicPeriod() != null) {
-            return super.getAcademicPeriod();
-        }
-
-        AcademicPeriod result = null;
-        final RegimeType regime = getRegime();
-        if (regime.equals(RegimeType.SEMESTRIAL)) {
-            result = AcademicPeriod.SEMESTER;
-        } else if (regime.equals(RegimeType.ANUAL)) {
-            result = AcademicPeriod.YEAR;
-        } else {
-            throw new DomainException("error.CompetenceCourseInformation.unsupported.AcademicPeriod");
-        }
-        return result;
-    }
+//    public AcademicPeriod getAcademicPeriod() {
+//        if (super.getAcademicPeriod() != null) {
+//            return super.getAcademicPeriod();
+//        }
+//
+//        AcademicPeriod result = null;
+//        final RegimeType regime = getRegime();
+//        if (regime.equals(RegimeType.SEMESTRIAL)) {
+//            result = AcademicPeriod.SEMESTER;
+//        } else if (regime.equals(RegimeType.ANUAL)) {
+//            result = AcademicPeriod.YEAR;
+//        } else {
+//            throw new DomainException("error.CompetenceCourseInformation.unsupported.AcademicPeriod");
+//        }
+//        return result;
+//    }
 
     public void setAcademicPeriod(final AcademicPeriod input) {
         if (input == null) {
