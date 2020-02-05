@@ -543,6 +543,51 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     public String getEvaluationMethod() {
         return getEvaluationMethod(null);
     }
+    
+    public String getPrerequisites(final ExecutionSemester period) {
+        final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+        return information != null ? information.getPrerequisites() : null;
+    }
+
+    public String getPrerequisites() {
+        return getPrerequisites(null);
+    }
+    
+    public String getLaboratorialComponent(final ExecutionSemester period) {
+        final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+        return information != null ? information.getLaboratorialComponent() : null;
+    }
+
+    public String getLaboratorialComponent() {
+        return getLaboratorialComponent(null);
+    }
+    
+    public String getProgrammingAndComputingComponent(final ExecutionSemester period) {
+        final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+        return information != null ? information.getProgrammingAndComputingComponent() : null;
+    }
+
+    public String getProgrammingAndComputingComponent() {
+        return getProgrammingAndComputingComponent(null);
+    }
+    
+    public String getCrossCompetenceComponent(final ExecutionSemester period) {
+        final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+        return information != null ? information.getCrossCompetenceComponent() : null;
+    }
+
+    public String getCrossCompetenceComponent() {
+        return getCrossCompetenceComponent(null);
+    }
+    
+    public String getEthicalPrinciples(final ExecutionSemester period) {
+        final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+        return information != null ? information.getEthicalPrinciples() : null;
+    }
+
+    public String getEthicalPrinciples() {
+        return getEthicalPrinciples(null);
+    }
 
     public String getObjectivesEn(final ExecutionSemester period) {
         final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
@@ -570,7 +615,52 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     public String getEvaluationMethodEn() {
         return getEvaluationMethodEn(null);
     }
+    
+    public String getPrerequisitesEn(final ExecutionSemester period) {
+        final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+        return information != null ? information.getPrerequisitesEn() : null;
+    }
 
+    public String getPrerequisitesEn() {
+        return getPrerequisitesEn(null);
+    }
+
+    public String getLaboratorialComponentEn(final ExecutionSemester period) {
+        final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+        return information != null ? information.getLaboratorialComponentEn() : null;
+    }
+
+    public String getLaboratorialComponentEn() {
+        return getLaboratorialComponentEn(null);
+    }
+
+    public String getProgrammingAndComputingComponentEn(final ExecutionSemester period) {
+        final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+        return information != null ? information.getProgrammingAndComputingComponentEn() : null;
+    }
+
+    public String getProgrammingAndComputingComponentEn() {
+        return getProgrammingAndComputingComponentEn(null);
+    }
+
+    public String getCrossCompetenceComponentEn(final ExecutionSemester period) {
+        final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+        return information != null ? information.getCrossCompetenceComponentEn(): null;
+    }
+
+    public String getCrossCompetenceComponentEn() {
+        return getCrossCompetenceComponentEn(null);
+    }
+
+    public String getEthicalPrinciplesEn(final ExecutionSemester period) {
+        final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
+        return information != null ? information.getEthicalPrinciplesEn() : null;
+    }
+
+    public String getEthicalPrinciplesEn() {
+        return getEthicalPrinciplesEn(null);
+    }
+    
     public double getTheoreticalHours() {
         return getTheoreticalHours((Integer) null, (ExecutionSemester) null);
     }
