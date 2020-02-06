@@ -18,9 +18,10 @@
  */
 package org.fenixedu.academic.domain.serviceRequests.documentRequests;
 
-import java.util.Locale;
-import java.util.Set;
-
+import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
+import com.google.common.collect.Sets.SetView;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.events.serviceRequests.RegistryDiplomaRequestEvent;
@@ -34,10 +35,8 @@ import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.DocumentRequestCreateBean;
 import org.joda.time.LocalDate;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
-import com.google.common.collect.Sets.SetView;
+import java.util.Locale;
+import java.util.Set;
 
 public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implements IRegistryDiplomaRequest,
         IRectorateSubmissionBatchDocumentEntry {
@@ -225,7 +224,7 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
     @Override
     public String getGraduateTitle(Locale locale) {
         return getProgramConclusion().groupFor(getRegistration())
-                .map(cg -> cg.getDegreeModule().getGraduateTitle(getConclusionYear(), getLanguage())).orElse(null);
+                .map(cg -> cg.getDegreeModule().getGraduateTitle(getConclusionYear(), locale)).orElse(null);
     }
 
     @Override
@@ -274,8 +273,8 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
     }
 
     @Override
-    public String getDegreeName(ExecutionYear year) {
-        return getDegree().getFilteredName(year);
+    public String getDegreeName(final Locale locale, ExecutionYear year) {
+        return getDegree().getFilteredName(year, locale);
     }
 
     @Override

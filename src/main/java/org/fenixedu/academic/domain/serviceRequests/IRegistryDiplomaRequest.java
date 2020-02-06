@@ -34,7 +34,7 @@ public interface IRegistryDiplomaRequest extends IProgramConclusionRequest {
 
     IDiplomaSupplementRequest getDiplomaSupplement();
 
-    String getDegreeName(final ExecutionYear year);
+    String getDegreeName(final Locale locale, final ExecutionYear year);
 
     String getThesisTitle(final Locale locale);
 }

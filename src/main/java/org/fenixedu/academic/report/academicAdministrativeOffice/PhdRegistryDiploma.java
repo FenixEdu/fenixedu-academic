@@ -56,7 +56,7 @@ public class PhdRegistryDiploma extends RegistryDiploma {
 
     @Override
     protected String getDegreeDescription() {
-        return getDocumentRequest().getDegreeName(getDocumentRequest().getConclusionYear());
+        return getDocumentRequest().getDegreeName(getLocale(), getDocumentRequest().getConclusionYear());
     }
 
 }
