@@ -176,8 +176,6 @@ public class Registration extends Registration_Base {
 
         final Degree degree = degreeCurricularPlan == null ? null : degreeCurricularPlan.getDegree();
         Registration registration = new Registration(person, studentNumber, degree, executionYear);
-        registration.setRequestedChangeDegree(false);
-        registration.setRequestedChangeBranch(false);
         registration.setRegistrationProtocol(protocol == null ? RegistrationProtocol.getDefault() : protocol);
         registration.createStudentCurricularPlan(degreeCurricularPlan, executionYear, cycleType);
         registration.setStudentCandidacyInformation(studentCandidacy);
@@ -224,10 +222,6 @@ public class Registration extends Registration_Base {
         new RegisteredCandidacySituation(studentCandidacy, protocol, (CycleType) null, ingressionType, (EntryPhase) null,
                 (Integer) null);
         result.setStudentCandidacyInformation(studentCandidacy);
-
-        //TODO: remove this attributes from registration
-        result.setRequestedChangeDegree(false);
-        result.setRequestedChangeBranch(false);
 
         //TODO: clean personal ingression data
         final PersonalIngressionData ingressionData = result.getStudent().getPersonalIngressionDataByExecutionYear(executionYear);

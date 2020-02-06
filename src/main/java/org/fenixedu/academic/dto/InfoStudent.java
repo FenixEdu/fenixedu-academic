@@ -75,10 +75,6 @@ public class InfoStudent extends InfoObject {
         return getRegistration().getFlunked();
     }
 
-    public Boolean getRequestedChangeDegree() {
-        return getRegistration().getRequestedChangeDegree();
-    }
-
     public Boolean getInterruptedStudies() {
         return getRegistration().getInterruptedStudies();
     }

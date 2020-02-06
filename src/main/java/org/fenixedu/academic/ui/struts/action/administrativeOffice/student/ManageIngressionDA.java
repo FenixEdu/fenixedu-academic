@@ -65,7 +65,6 @@ public class ManageIngressionDA extends FenixDispatchAction {
         final Registration registration = getRegistration(request);
         final IngressionInformationBean bean = new IngressionInformationBean(registration);
         bean.setRegistrationProtocol(registration.getRegistrationProtocol());
-        bean.setAgreementInformation(registration.getAgreementInformation());
         bean.setIngressionType(registration.getIngressionType());
         bean.setEntryPhase(registration.getEntryPhase());
 
@@ -107,7 +106,6 @@ public class ManageIngressionDA extends FenixDispatchAction {
     private void editIngressionService(IngressionInformationBean bean) {
         final Registration registration = bean.getRegistration();
         registration.setRegistrationProtocol(bean.getRegistrationProtocol());
-        registration.setAgreementInformation(bean.getAgreementInformation());
         registration.setIngressionType(bean.getIngressionType());
         registration.setEntryPhase(bean.getEntryPhase());
     }
