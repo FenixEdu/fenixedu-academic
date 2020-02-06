@@ -31,8 +31,9 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 public class MDCandidacy extends MDCandidacy_Base {
 
     public MDCandidacy(Person person, ExecutionDegree executionDegree) {
-        super();
-        init(person, executionDegree);
+//        super();
+//        init(person, executionDegree);
+        throw new RuntimeException("Student Candidacy subclasses not supported anymore!");
     }
 
     @Override

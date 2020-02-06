@@ -32,8 +32,9 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 public class DegreeCandidacy extends DegreeCandidacy_Base {
 
     public DegreeCandidacy(final Person person, final ExecutionDegree executionDegree) {
-        super();
-        init(person, executionDegree);
+//        super();
+//        init(person, executionDegree);
+        throw new RuntimeException("Student Candidacy subclasses not supported anymore!");
     }
 
     public DegreeCandidacy(final Person person, final ExecutionDegree executionDegree, final Person creator,
@@ -92,8 +93,8 @@ public class DegreeCandidacy extends DegreeCandidacy_Base {
 
     @Override
     public boolean isConcluded() {
-        return (getActiveCandidacySituation().getCandidacySituationType() == CandidacySituationType.REGISTERED || getActiveCandidacySituation()
-                .getCandidacySituationType() == CandidacySituationType.CANCELLED);
+        return (getActiveCandidacySituation().getCandidacySituationType() == CandidacySituationType.REGISTERED
+                || getActiveCandidacySituation().getCandidacySituationType() == CandidacySituationType.CANCELLED);
     }
 
     @Override

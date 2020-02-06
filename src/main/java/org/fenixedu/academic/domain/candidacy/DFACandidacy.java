@@ -88,15 +88,17 @@ public class DFACandidacy extends DFACandidacy_Base {
     }
 
     public DFACandidacy(Person person, ExecutionDegree executionDegree) {
-        super();
-        init(person, executionDegree);
-
-        new PreCandidacySituation(this);
-
-        addCandidacyDocuments(new CandidacyDocument("curriculum.vitae"));
-        addCandidacyDocuments(new CandidacyDocument("habilitation.certificate"));
-        addCandidacyDocuments(new CandidacyDocument("second.habilitation.certificate"));
-        addCandidacyDocuments(new CandidacyDocument("interest.letter"));
+//        super();
+//        init(person, executionDegree);
+//
+//        new PreCandidacySituation(this);
+//
+//        addCandidacyDocuments(new CandidacyDocument("curriculum.vitae"));
+//        addCandidacyDocuments(new CandidacyDocument("habilitation.certificate"));
+//        addCandidacyDocuments(new CandidacyDocument("second.habilitation.certificate"));
+//        addCandidacyDocuments(new CandidacyDocument("interest.letter"));
+        
+        throw new RuntimeException("Student Candidacy subclasses not supported anymore!");
     }
 
     public DFACandidacy(Person person, ExecutionDegree executionDegree, YearMonthDay startDate) {

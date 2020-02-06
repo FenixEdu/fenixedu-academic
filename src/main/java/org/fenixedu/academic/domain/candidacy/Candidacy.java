@@ -48,7 +48,7 @@ public abstract class Candidacy extends Candidacy_Base {
         this.addCandidacySituations(candidacySituation);
     }
 
-    public final Integer createCandidacyNumber() {
+    public Integer createCandidacyNumber() {
         int max = 1;
         for (final Candidacy candidacy : Bennu.getInstance().getCandidaciesSet()) {
             final int n = candidacy.getNumber().intValue();

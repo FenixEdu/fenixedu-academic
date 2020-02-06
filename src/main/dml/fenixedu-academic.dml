@@ -84,6 +84,7 @@ enum org.fenixedu.academic.domain.candidacy.FirstTimeCandidacyStage													
 enum org.fenixedu.academic.domain.contacts.PartyContactValidationState 									              as PartyContactValidationState;
 enum org.fenixedu.academic.domain.SchoolPeriodDuration																  as SchoolPeriodDuration;
 enum org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType                                     as RegistrationStateType;
+enum org.fenixedu.academic.domain.candidacy.CandidacySituationType                                                     as CandidacySituationType;
 
 
 /*
@@ -754,6 +755,8 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         }
 
         class candidacy.StudentCandidacy extends candidacy.Candidacy {
+        	CandidacySituationType state;
+        	DateTime stateDate;
             String contigent;
             Double entryGrade;
             EntryPhase entryPhase;

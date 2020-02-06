@@ -21,6 +21,8 @@ package org.fenixedu.academic.domain.candidacy;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
@@ -30,13 +32,21 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
+import org.fenixedu.academic.domain.util.workflow.Operation;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
-public abstract class StudentCandidacy extends StudentCandidacy_Base {
+public class StudentCandidacy extends StudentCandidacy_Base {
 
-    public StudentCandidacy() {
+    protected StudentCandidacy() {
         super();
+    }
+
+    public StudentCandidacy(final Person person, final ExecutionDegree executionDegree) {
+        this();
+        init(person, executionDegree);
     }
 
     protected void init(Person person, ExecutionDegree executionDegree) {
@@ -229,4 +239,77 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
     public boolean isFirstCycleCandidacy() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return BundleUtil.getString(Bundle.CANDIDATE, "label.degreeCandidacy") + " - "
+                + getExecutionDegree().getDegreeCurricularPlan().getName() + " - "
+                + getExecutionDegree().getExecutionYear().getYear();
+    }
+
+    @Override
+    protected Set<Operation> getOperations(CandidacySituation candidacySituation) {
+        return Collections.emptySet();
+    }
+
+    @Override
+    protected void moveToNextState(CandidacyOperationType candidacyOperationType, Person person) {
+    }
+
+    @Override
+    public Map<String, Set<String>> getStateMapping() {
+        return null;
+    }
+
+    @Override
+    public String getDefaultState() {
+        return null;
+    }
+
+    @Override
+    public void setState(CandidacySituationType state) {
+        super.setState(state);
+        setStateDate(new DateTime());
+    }
+
+    @Override
+    public Integer createCandidacyNumber() {
+        return new Random().nextInt(); // temp override, for migration
+    }
+
+    public static StudentCandidacy convertStudentCandidacy(final StudentCandidacy oldCandidacy) {
+        if (oldCandidacy.getClass().equals(StudentCandidacy.class)) {
+            // already converted
+            return null;
+        }
+
+        final StudentCandidacy result = new StudentCandidacy();
+        result.setPerson(oldCandidacy.getPerson());
+        result.setExecutionDegree(oldCandidacy.getExecutionDegree());
+        result.setRegistration(oldCandidacy.getRegistration());
+        result.setIngressionType(oldCandidacy.getIngressionType());
+        result.setSummaryFile(oldCandidacy.getSummaryFile());
+        result.setPrecedentDegreeInformation(oldCandidacy.getPrecedentDegreeInformation());
+
+        final CandidacySituation activeCandidacySituation = oldCandidacy.getActiveCandidacySituation();
+        if (activeCandidacySituation != null) {
+            result.setState(activeCandidacySituation.getCandidacySituationType());
+            result.setStateDate(activeCandidacySituation.getSituationDate());
+        }
+
+        result.setNumber(oldCandidacy.getNumber());
+        result.setStartDate(oldCandidacy.getStartDate());
+
+        result.setContigent(oldCandidacy.getContigent());
+        result.setEntryGrade(oldCandidacy.getEntryGrade());
+        result.setEntryPhase(oldCandidacy.getEntryPhase());
+        result.setPlacingOption(oldCandidacy.getPlacingOption());
+        result.setNumberOfCandidaciesToHigherSchool(oldCandidacy.getNumberOfCandidaciesToHigherSchool());
+        result.setFirstTimeCandidacy(oldCandidacy.getFirstTimeCandidacy());
+
+        oldCandidacy.delete();
+
+        return result;
+    }
+
 }

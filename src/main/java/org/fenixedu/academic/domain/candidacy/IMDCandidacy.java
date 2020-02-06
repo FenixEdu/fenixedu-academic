@@ -32,8 +32,9 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 public class IMDCandidacy extends IMDCandidacy_Base {
 
     public IMDCandidacy(Person person, ExecutionDegree executionDegree) {
-        super();
-        init(person, executionDegree);
+//        super();
+//        init(person, executionDegree);
+        throw new RuntimeException("Student Candidacy subclasses not supported anymore!");
     }
 
     public IMDCandidacy(final Person person, final ExecutionDegree executionDegree, final Person creator,

@@ -1,5 +1,6 @@
 - Refactor: Removed deprecated Registration slots
-- Refactor: Removed deprecated StudentCandidacy slots  
+- Refactor: Removed deprecated StudentCandidacy slots
+- Refactor: StudentCandidacy is now a concrete class
 
 26.1.0 (05-02-2020)
 - Refactor: Replaced semester references by childOrder

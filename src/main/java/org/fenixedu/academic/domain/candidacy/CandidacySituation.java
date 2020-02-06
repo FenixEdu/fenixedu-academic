@@ -52,9 +52,10 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
     };
 
     protected CandidacySituation() {
-        super();
-        setRootDomainObject(Bennu.getInstance());
-        setSituationDate(new DateTime());
+//        super();
+//        setRootDomainObject(Bennu.getInstance());
+//        setSituationDate(new DateTime());
+        throw new RuntimeException("CandidacySituation instances not supported anymore!");
     }
 
     protected final void init(final Candidacy candidacy, final Person person) {
