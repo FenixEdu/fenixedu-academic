@@ -1,3 +1,4 @@
+- Refactor: ExecutionInterval methos optimized due to relation with AcademicCalendarEntry
 - Refactor: Removed deprecated Registration slots
 - Refactor: Removed deprecated StudentCandidacy slots
 - Refactor: StudentCandidacy is now a concrete class

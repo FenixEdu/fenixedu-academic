@@ -106,28 +106,12 @@ public class ExecutionInterval extends ExecutionInterval_Base implements Compara
     }
 
     public static ExecutionInterval getExecutionInterval(AcademicInterval academicInterval) {
-        for (ExecutionInterval interval : Bennu.getInstance().getExecutionIntervalsSet()) {
-            if (interval.getAcademicInterval().equals(academicInterval)) {
-                return interval;
-            }
-        }
-        return null;
+        return academicInterval.getAcademicCalendarEntry().getExecutionInterval();
     }
-
-    // TODO: activate after EI - ACE relation populated
-//    public static ExecutionInterval getExecutionInterval(AcademicInterval academicInterval) {
-//        return academicInterval.getAcademicCalendarEntry().getExecutionInterval();
-//    }
 
     public static ExecutionInterval getExecutionInterval(AcademicCalendarEntry entry) {
-        return entry != null ? Bennu.getInstance().getExecutionIntervalsSet().stream()
-                .filter(ei -> ei.getAcademicInterval().getAcademicCalendarEntry().equals(entry)).findAny().orElse(null) : null;
+        return entry != null ? entry.getExecutionInterval() : null;
     }
-
-    // TODO: activate after EI - ACE relation populated
-//    public static ExecutionInterval getExecutionInterval(AcademicCalendarEntry entry) {
-//        return entry != null ? entry.getExecutionInterval() : null;
-//    }
 
     public boolean isAfter(ExecutionInterval input) {
         return this.compareTo(input) > 0;
@@ -243,29 +227,15 @@ public class ExecutionInterval extends ExecutionInterval_Base implements Compara
         return getAcademicInterval().getAcademicCalendarEntry().getCardinality();
     }
 
-//    public abstract ExecutionInterval getNext();
     public ExecutionInterval getNext() {
-        final AcademicCalendarEntry entry = getAcademicInterval().getAcademicCalendarEntry().getNextAcademicCalendarEntry();
-        return entry != null ? getExecutionInterval(entry) : null;
+        return Optional.ofNullable(getAcademicCalendarEntry()).map(ace -> ace.getNextAcademicCalendarEntry())
+                .map(nace -> nace.getExecutionInterval()).orElse(null);
     }
 
-    // TODO: activate after EI - ACE relation populated
-//    public ExecutionInterval getNext() {
-//        return Optional.ofNullable(getAcademicCalendarEntry()).map(ace -> ace.getNextAcademicCalendarEntry())
-//                .map(nace -> nace.getExecutionInterval()).orElse(null);
-//    }
-
-//    public abstract ExecutionInterval getPrevious();
     public ExecutionInterval getPrevious() {
-        final AcademicCalendarEntry entry = getAcademicInterval().getAcademicCalendarEntry().getPreviousAcademicCalendarEntry();
-        return entry != null ? getExecutionInterval(entry) : null;
+        return Optional.ofNullable(getAcademicCalendarEntry()).map(ace -> ace.getPreviousAcademicCalendarEntry())
+                .map(pace -> pace.getExecutionInterval()).orElse(null);
     }
-
-    // TODO: activate after EI - ACE relation populated
-//    public ExecutionInterval getPrevious() {
-//        return Optional.ofNullable(getAcademicCalendarEntry()).map(ace -> ace.getPreviousAcademicCalendarEntry())
-//                .map(pace -> pace.getExecutionInterval()).orElse(null);
-//    }
 
     public static Collection<ExecutionInterval> findActiveChilds() {
         return findAllChilds().stream().filter(ei -> ei.getState() == PeriodState.OPEN || ei.getState() == PeriodState.CURRENT)

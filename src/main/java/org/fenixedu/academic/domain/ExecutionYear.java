@@ -158,9 +158,7 @@ public class ExecutionYear extends ExecutionYear_Base {
 
     public ExecutionInterval getChildInterval(final Integer order, final AcademicPeriod type) {
         return getExecutionPeriodsSet().stream()
-                .filter(ei -> ei.getChildOrder().equals(order)
-                        && ei.getAcademicInterval().getAcademicCalendarEntry().getAcademicPeriod().equals(type))
-                .findAny().orElse(null);
+                .filter(ei -> ei.getChildOrder().equals(order) && ei.getAcademicPeriod().equals(type)).findAny().orElse(null);
     }
 
     public ExecutionInterval getFirstExecutionPeriod() {
@@ -230,14 +228,7 @@ public class ExecutionYear extends ExecutionYear_Base {
     // -------------------------------------------------------------
 
     public static ExecutionYear getExecutionYear(AcademicYearCE entry) {
-        if (entry != null) {
-            for (final ExecutionYear executionYear : Bennu.getInstance().getExecutionYearsSet()) {
-                if (executionYear.getAcademicInterval().getAcademicCalendarEntry().equals(entry)) {
-                    return executionYear;
-                }
-            }
-        }
-        return null;
+        return entry != null ? (ExecutionYear) entry.getExecutionInterval() : null;
     }
 
     @Deprecated
