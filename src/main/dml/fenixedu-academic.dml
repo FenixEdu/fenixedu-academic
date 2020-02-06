@@ -757,28 +757,8 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
             String contigent;
             Double entryGrade;
             EntryPhase entryPhase;
-            Boolean applyForResidence;
-            String notesAboutResidenceAppliance;
-            
-            Boolean dislocatedFromPermanentResidence;
             Integer placingOption;
-            GrantOwnerType grantOwnerType;
             Integer numberOfCandidaciesToHigherSchool;
-            Integer numberOfFlunksOnHighSchool;
-            AcademicalInstitutionType highSchoolType;
-            MaritalStatus maritalStatus;
-            ProfessionType professionType;
-            ProfessionalSituationConditionType professionalCondition;
-            SchoolLevelType motherSchoolLevel;
-            ProfessionType motherProfessionType;
-            ProfessionalSituationConditionType motherProfessionalCondition;
-            SchoolLevelType fatherSchoolLevel;
-            ProfessionType fatherProfessionType;
-            ProfessionalSituationConditionType fatherProfessionalCondition;
-            SchoolLevelType spouseSchoolLevel;
-            ProfessionType spouseProfessionType;
-            ProfessionalSituationConditionType spouseProfessionalCondition;
-            
             Boolean firstTimeCandidacy;
         }
 
@@ -1175,14 +1155,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
 		String book;
 		String page;
 		String actionDate;
-	}
-	
-	class log.FirstTimeCandidacyLog  {
-	}
-	
-	class log.FirstTimeCandidacyLogEntry  {
-		FirstTimeCandidacyStage stage;
-		DateTime entryDate;
 	}
 	
     class organizationalStructure.AccountabilityType  {     
@@ -4576,38 +4548,6 @@ relation FormationCountryUnit {
     organizationalStructure.CountryUnit playsRole countryUnit;
 }
 
-relation StudentCandidacyCountryOfResidence {   
-    candidacy.StudentCandidacy playsRole associatedResidentPersonsCandidacies {
-        multiplicity *;
-    }
-    
-    Country playsRole countryOfResidence;
-}
-
-relation StudentCandidacyGrantOwnerProvider {
-    candidacy.StudentCandidacy playsRole studentCandidacies {
-        multiplicity *;
-    }
-    organizationalStructure.Unit playsRole grantOwnerProvider;
-}
-
-relation StudentCandidacyDistrictSubdivisionOfResidence {
-    candidacy.StudentCandidacy playsRole studentCandidacies {
-        multiplicity *;
-    }
-    
-    DistrictSubdivision playsRole districtSubdivisionOfResidence;
-}
-
-relation StudentCandidacySchoolTimeDistrictSubdivisionOfResidence {
-    candidacy.StudentCandidacy playsRole schoolTimeStudentCandidacies {
-        multiplicity *;
-    }
-    
-    DistrictSubdivision playsRole schoolTimeDistrictSubDivisionOfResidence;
-}
-
-
 relation RootDomainObjectUtilEmailMessage {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     util.email.Message playsRole utilEmailMessages {
@@ -4931,22 +4871,6 @@ relation RegistrationIngressionType{
 		multiplicity 0..1;
 	}
 } 
-
-relation StudentCandidacyFirstTimeCandidacyLog { 
-	candidacy.StudentCandidacy playsRole studentCandidacy;
-	log.FirstTimeCandidacyLog playsRole firstTimeCandidacyLog {
-		multiplicity 0..1;
-	}
-}
-
-relation FirstTimeCandidacyLogFirstTimeCandidacyLogEntry {
-	log.FirstTimeCandidacyLog playsRole firstTimeCandidacyLog {
-		multiplicity 0..1;
-	}
-	log.FirstTimeCandidacyLogEntry playsRole firstTimeCandidacyLogEntry {
-		multiplicity *;
-	}
-}
 
 relation ProfessorshipPremissionsProfessorship {
 	Professorship playsRole professorship;

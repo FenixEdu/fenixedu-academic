@@ -191,13 +191,6 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
         setRegistration(null);
         setIngressionType(null);
         setExecutionDegree(null);
-        setSchoolTimeDistrictSubDivisionOfResidence(null);
-        setCountryOfResidence(null);
-        setDistrictSubdivisionOfResidence(null);
-
-        if (getGrantOwnerProvider() != null) {
-            setGrantOwnerProvider(null);
-        }
 
         if (getPrecedentDegreeInformation() != null && getPrecedentDegreeInformation().getStudent() == null) {
             getPrecedentDegreeInformation().delete();
@@ -227,10 +220,6 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 
     public boolean hasEntryPhase() {
         return getEntryPhase() != null;
-    }
-
-    public boolean hasApplyForResidence() {
-        return getApplyForResidence() != null;
     }
 
     public ExecutionYear getExecutionYear() {
