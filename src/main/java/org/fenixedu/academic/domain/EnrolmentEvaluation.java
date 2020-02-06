@@ -431,11 +431,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
             return super.getExecutionPeriod();
         }
 
-        if (getEnrolment() != null) {
-            return getEnrolment().getExecutionInterval();
-        }
-
-        return null;
+        return getEnrolment().getExecutionInterval();
     }
 
     @Deprecated

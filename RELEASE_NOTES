@@ -1,3 +1,5 @@
+- Bug Fix: Enrolment evaluation should always return execution interval
+
 26.2.0 (06-02-2020)
 - Refactor: ExecutionInterval methos optimized due to relation with AcademicCalendarEntry
 - Refactor: Removed deprecated Registration slots
