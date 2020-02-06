@@ -21,19 +21,6 @@
  */
 package org.fenixedu.academic.ui.faces.bean.bolonhaManager.competenceCourses;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
-
-import javax.faces.component.UISelectItems;
-import javax.faces.event.ActionEvent;
-import javax.faces.event.ValueChangeEvent;
-import javax.faces.model.SelectItem;
-
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
@@ -54,7 +41,6 @@ import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGrou
 import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
 import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.dto.bolonhaManager.CourseLoad;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.predicate.IllegalDataAccessException;
@@ -70,12 +56,24 @@ import org.fenixedu.academic.ui.faces.bean.base.FenixBackingBean;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.DynamicGroup;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
-
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
+
+import javax.faces.component.UISelectItems;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
+import javax.faces.model.SelectItem;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private final Integer NO_SELECTION = 0;
@@ -279,7 +277,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     private void removeRoleIfNecessary(User user) {
         if (!isUserMemberOfAnyCurricularPlanGroup(user) && !isUserMemberOfAnyDepartmentCompetenceCourseGroup(user)) {
-            RoleType.revoke(RoleType.BOLONHA_MANAGER, user);
+            DynamicGroup dynaGroup = DynamicGroup.get("bolonhaManager");
+            dynaGroup.mutator().changeGroup(dynaGroup.underlyingGroup().revoke(user));
         }
     }
 
@@ -290,7 +289,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             if (user != null) {
                 Group group = getSelectedDepartmentUnit().getDepartment().getCompetenceCourseMembersGroup();
                 getSelectedDepartmentUnit().getDepartment().setCompetenceCourseMembersGroup(group.grant(user));
-                RoleType.grant(RoleType.BOLONHA_MANAGER, user);
+                DynamicGroup dynaGroup = DynamicGroup.get("bolonhaManager");
+                dynaGroup.mutator().changeGroup(dynaGroup.underlyingGroup().grant(user));
             }
         }
     }
