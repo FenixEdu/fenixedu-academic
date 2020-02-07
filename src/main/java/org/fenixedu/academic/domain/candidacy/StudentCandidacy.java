@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
@@ -273,13 +272,13 @@ public class StudentCandidacy extends StudentCandidacy_Base {
     }
 
     @Override
-    public Integer createCandidacyNumber() {
-        return new Random().nextInt(); // temp override, for migration
-    }
-    
-    @Override
     public CandidacySituationType getActiveCandidacySituationType() {
         return getState();
+    }
+
+    @Override
+    public Boolean getFirstTimeCandidacy() {
+        return Boolean.TRUE.equals(super.getFirstTimeCandidacy());
     }
 
     public static StudentCandidacy convertStudentCandidacy(final StudentCandidacy oldCandidacy) {
