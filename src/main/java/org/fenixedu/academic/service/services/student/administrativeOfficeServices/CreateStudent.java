@@ -24,18 +24,15 @@ package org.fenixedu.academic.service.services.student.administrativeOfficeServi
 import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Qualification;
-import org.fenixedu.academic.domain.candidacy.RegisteredCandidacySituation;
+import org.fenixedu.academic.domain.candidacy.CandidacySituationType;
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
-import org.fenixedu.academic.domain.contacts.EmailAddress;
-import org.fenixedu.academic.domain.contacts.MobilePhone;
 import org.fenixedu.academic.domain.contacts.PartyContactType;
-import org.fenixedu.academic.domain.contacts.Phone;
 import org.fenixedu.academic.domain.contacts.PhysicalAddress;
 import org.fenixedu.academic.domain.contacts.PhysicalAddressData;
-import org.fenixedu.academic.domain.contacts.WebAddress;
 import org.fenixedu.academic.domain.student.PersonalIngressionData;
 import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
 import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.dto.administrativeOffice.ExecutionDegreeBean;
 import org.fenixedu.academic.dto.candidacy.IngressionInformationBean;
 import org.fenixedu.academic.dto.candidacy.OriginInformationBean;
@@ -73,7 +70,8 @@ public class CreateStudent {
 
         } else if (!createNewPerson && personBean.isUsePhysicalAddress()) {
 
-            person.editSocialSecurityNumber(personBean.getSocialSecurityNumber(), personBean.getFiscalAddressInCreateRegistrationBean().getPhysicalAddress());
+            person.editSocialSecurityNumber(personBean.getSocialSecurityNumber(),
+                    personBean.getFiscalAddressInCreateRegistrationBean().getPhysicalAddress());
 
         } else if (!personBean.isUsePhysicalAddress()) {
 
@@ -109,12 +107,12 @@ public class CreateStudent {
         }
 
         // create candidacy
-        StudentCandidacy studentCandidacy =
-                StudentCandidacy.createStudentCandidacy(executionDegreeBean.getExecutionDegree(), person);
+        StudentCandidacy studentCandidacy = new StudentCandidacy(person, executionDegreeBean.getExecutionDegree());
+        studentCandidacy.setState(CandidacySituationType.REGISTERED);
+        studentCandidacy.setIngressionType(ingressionInformationBean.getIngressionType());
+        studentCandidacy.setEntryPhase(ingressionInformationBean.getEntryPhase());
 
-        new RegisteredCandidacySituation(studentCandidacy, ingressionInformationBean.getRegistrationProtocol(),
-                executionDegreeBean.getCycleType(), ingressionInformationBean.getIngressionType(),
-                ingressionInformationBean.getEntryPhase(), personBean.getStudentNumber());
+        createStudentIfNeeded(person, personBean.getStudentNumber());
 
         // create registration
         Registration registration = studentCandidacy.getRegistration();
@@ -158,6 +156,15 @@ public class CreateStudent {
             person = new Person(personBean);
         }
         return person;
+    }
+
+    // code from legacy RegisteredCandidacySituation
+    private static void createStudentIfNeeded(final Person person, Integer studentNumber) {
+        if (person.getStudent() == null && studentNumber == null) {
+            new Student(person);
+        } else if (person.getStudent() == null && studentNumber != null) {
+            Student.createStudentWithCustomNumber(person, studentNumber);
+        }
     }
 
 }

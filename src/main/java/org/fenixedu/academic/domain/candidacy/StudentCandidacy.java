@@ -276,6 +276,11 @@ public class StudentCandidacy extends StudentCandidacy_Base {
     public Integer createCandidacyNumber() {
         return new Random().nextInt(); // temp override, for migration
     }
+    
+    @Override
+    public CandidacySituationType getActiveCandidacySituationType() {
+        return getState();
+    }
 
     public static StudentCandidacy convertStudentCandidacy(final StudentCandidacy oldCandidacy) {
         if (oldCandidacy.getClass().equals(StudentCandidacy.class)) {

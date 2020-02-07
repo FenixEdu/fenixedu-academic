@@ -63,6 +63,7 @@ import org.fenixedu.academic.domain.accessControl.academicAdministration.Academi
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOfficeType;
+import org.fenixedu.academic.domain.candidacy.CandidacySituationType;
 import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacy.PersonalInformationBean;
 import org.fenixedu.academic.domain.candidacy.RegisteredCandidacySituation;
@@ -216,11 +217,9 @@ public class Registration extends Registration_Base {
 
         result.createStudentCurricularPlan(degreeCurricularPlan, executionYear, (CycleType) null);
 
-        final StudentCandidacy studentCandidacy = StudentCandidacy.createStudentCandidacy(executionDegree, student.getPerson());
-
-        //TODO: remove DFACandidacy behavior from RegisteredCandidacySituation (and remove unnecessary arguments)
-        new RegisteredCandidacySituation(studentCandidacy, protocol, (CycleType) null, ingressionType, (EntryPhase) null,
-                (Integer) null);
+        final StudentCandidacy studentCandidacy = new StudentCandidacy(student.getPerson(), executionDegree);
+        studentCandidacy.setState(CandidacySituationType.REGISTERED);
+        studentCandidacy.setIngressionType(ingressionType);
         result.setStudentCandidacyInformation(studentCandidacy);
 
         //TODO: clean personal ingression data
