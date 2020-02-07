@@ -234,7 +234,7 @@
 	<slot name="secondLaboratorialHours"  key="laboratorialLesson">
 			<property name="size" value="2"/>
 	</slot>
-    <slot name="secondSeminaryHours"  key="laboratorialLesson">
+    <slot name="secondSeminaryHours"  key="seminary">
 			<property name="size" value="2"/>
 	</slot>
     <slot name="secondFieldWorkHours" key="fieldWork">
