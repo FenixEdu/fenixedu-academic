@@ -18,9 +18,6 @@
  */
 package org.fenixedu.academic.domain.phd.serviceRequests.documentRequests;
 
-import java.util.List;
-import java.util.Locale;
-
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accounting.EventType;
@@ -47,6 +44,9 @@ import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
+import java.util.Locale;
 
 public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base implements IRegistryDiplomaRequest,
         IRectorateSubmissionBatchDocumentEntry {
@@ -316,7 +316,7 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
     }
 
     @Override
-    public String getDegreeName(ExecutionYear year) {
-        return getDegree().getNameI18N(year).getContent(getLanguage());
+    public String getDegreeName(final Locale locale, ExecutionYear year) {
+        return getDegree().getNameI18N(year).getContent(locale);
     }
 }

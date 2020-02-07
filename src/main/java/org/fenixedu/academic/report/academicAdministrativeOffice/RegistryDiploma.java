@@ -132,7 +132,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
         final ProgramConclusion programConclusion = getDocumentRequest().getProgramConclusion();
         getPayload().addProperty("programConclusionName", programConclusion.getName().getContent(getLocale()));
         getPayload().addProperty("programConclusionDescription", programConclusion.getDescription().getContent(getLocale()));
-        getPayload().addProperty("degreeName", getDocumentRequest().getDegreeName(getExecutionYear()));
+        getPayload().addProperty("degreeName", getDocumentRequest().getDegreeName(getLocale(), getExecutionYear()));
     }
 
     protected String getConclusion() {
@@ -148,7 +148,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
         }
 
         result.add(BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "label.in"));
-        result.add(getDocumentRequest().getDegreeName(year));
+        result.add(getDocumentRequest().getDegreeName(getLocale(), year));
 
         return Joiner.on(" ").join(result);
     }
