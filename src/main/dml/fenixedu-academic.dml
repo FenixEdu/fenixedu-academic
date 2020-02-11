@@ -2360,6 +2360,10 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
         String objectivesEn;
         String program;
         String programEn;
+        degreeStructure.RegimeType regime;
+    }
+    
+    class degreeStructure.CompetenceCourseExtraInformation  {
         String prerequisites;
         String prerequisitesEn;
         String laboratorialComponent;
@@ -2370,7 +2374,6 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
         String crossCompetenceComponentEn;
         String ethicalPrinciples;
         String ethicalPrinciplesEn;
-        degreeStructure.RegimeType regime;
     }
 
     class degreeStructure.CompetenceCourseInformationChangeRequest  {
@@ -2387,16 +2390,6 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
         String programEn;
         String evaluationMethod;
         String evaluationMethodEn;
-        String prerequisites;
-        String prerequisitesEn;
-        String laboratorialComponent;
-        String laboratorialComponentEn;
-        String programmingAndComputingComponent;
-        String programmingAndComputingComponentEn;
-        String crossCompetenceComponent;
-        String crossCompetenceComponentEn;
-        String ethicalPrinciples;
-        String ethicalPrinciplesEn;
         CompetenceCourseLevel competenceCourseLevel;
         
         Double theoreticalHours;
@@ -2420,6 +2413,19 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
         Double secondEctsCredits;
         
         BibliographicReferences bibliographicReferences;
+    }
+    
+    class degreeStructure.CompetenceCourseExtraInformationChangeRequest  {
+        String prerequisites;
+        String prerequisitesEn;
+        String laboratorialComponent;
+        String laboratorialComponentEn;
+        String programmingAndComputingComponent;
+        String programmingAndComputingComponentEn;
+        String crossCompetenceComponent;
+        String crossCompetenceComponentEn;
+        String ethicalPrinciples;
+        String ethicalPrinciplesEn;
     }
 
     class degreeStructure.CompetenceCourseLoad  {
@@ -10316,6 +10322,16 @@ relation CompetenceCourseInformationChangeRequestRootDomainObject {
     degreeStructure.CompetenceCourseInformationChangeRequest playsRole competenceCourseInformationChangeRequests {
         multiplicity *;
     }
+}
+
+relation ExtraInformationCompetenceCourseInformationChangeRequest {
+    degreeStructure.CompetenceCourseInformationChangeRequest playsRole competenceCourseInformationChangeRequest;
+    degreeStructure.CompetenceCourseExtraInformationChangeRequest playsRole competenceCourseExtraInformationChangeRequest;
+}
+
+relation ExtraInformationCompetenceCourseInformation {
+    degreeStructure.CompetenceCourseInformation playsRole competenceCourseInformation;
+    degreeStructure.CompetenceCourseExtraInformation playsRole competenceCourseExtraInformation;
 }
 
 relation CompetenceCourseInformationExecutionPeriod {
