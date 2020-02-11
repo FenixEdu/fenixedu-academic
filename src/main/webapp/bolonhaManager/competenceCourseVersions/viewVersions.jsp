@@ -125,8 +125,11 @@
 				<bean:define id="isAllowedToEdit" value="<%= changeRequest.isLoggedPersonAllowedToEdit() ? "true" : "false" %>" />
 				<logic:notPresent name="changeRequest" property="approved">
 				<logic:equal name="isAllowedToEdit" value="true">
+				<bean:define id="deleteConfirm">
+					return confirm('<bean:message bundle="BOLONHA_MANAGER_RESOURCES" key="confirmDeleteMessage"/>')
+				</bean:define>	
 					,
-					<html:link page="<%="/competenceCourses/manageVersions.do?method=revokeVersion&competenceCourseID=" + competenceCourseID + "&changeRequestID=" + changeRequestID %>">
+					<html:link page="<%="/competenceCourses/manageVersions.do?method=revokeVersion&competenceCourseID=" + competenceCourseID + "&changeRequestID=" + changeRequestID %>" onclick="<%= deleteConfirm %>">
 						<bean:message key="label.revoke.proposal" bundle="BOLONHA_MANAGER_RESOURCES"/>
 					</html:link>
 					,
@@ -141,6 +144,7 @@
 	</logic:iterate>
 	</table>
 </logic:notEmpty>
+
 
 <logic:empty name="competenceCourse" property="competenceCourseInformationChangeRequests">
 	<p class="mtop05"><em><bean:message key="label.no.versions.proposed"/></em></p>

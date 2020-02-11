@@ -189,6 +189,9 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
     }
 
     public void delete() {
+        if (getCompetenceCourseExtraInformationChangeRequest() != null) {
+            getCompetenceCourseExtraInformationChangeRequest().delete();
+        }
         setCompetenceCourse(null);
         setAnalizedBy(null);
         setRequester(null);

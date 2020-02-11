@@ -29,4 +29,9 @@ public class CompetenceCourseExtraInformationChangeRequest extends CompetenceCou
         setEthicalPrinciplesEn(ethicalPrinciplesEn);
     }
 
+    public void delete() {
+        setCompetenceCourseInformationChangeRequest(null);
+        super.deleteDomainObject();
+    }
+
 }

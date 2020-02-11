@@ -28,4 +28,8 @@ public class CompetenceCourseExtraInformation extends CompetenceCourseExtraInfor
         setEthicalPrinciplesEn(ethicalPrinciplesEn);
     }
 
+    public void delete() {
+        setCompetenceCourseInformation(null);
+        super.deleteDomainObject();
+    }
 }
