@@ -131,16 +131,6 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
         setProgramEn(programEn);
         setEvaluationMethod(evaluationMethod);
         setEvaluationMethodEn(evaluationMethodEn);
-        setPrerequisites(prerequisites);
-        setPrerequisitesEn(prerequisitesEn);
-        setLaboratorialComponent(laboratorialComponent);
-        setLaboratorialComponentEn(laboratorialComponentEn);
-        setProgrammingAndComputingComponent(programmingAndComputingComponent);
-        setProgrammingAndComputingComponentEn(programmingAndComputingComponentEn);
-        setCrossCompetenceComponent(crossCompetenceComponent);
-        setCrossCompetenceComponentEn(crossCompetenceComponentEn);
-        setEthicalPrinciples(ethicalPrinciples);
-        setEthicalPrinciplesEn(ethicalPrinciplesEn);
         setRequester(requester);
         setApproved(null);
         setCompetenceCourseLevel(level);
@@ -168,6 +158,18 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
         setBibliographicReferences(references);
 
         setCompetenceCourseGroupUnit(group == null ? getCompetenceCourse().getCompetenceCourseGroupUnit() : group);
+        
+        CompetenceCourseExtraInformationChangeRequest extraInformationChangeRequest = getCompetenceCourseExtraInformationChangeRequest();
+        if(extraInformationChangeRequest==null) {
+            new CompetenceCourseExtraInformationChangeRequest(this, prerequisites, prerequisitesEn, laboratorialComponent, laboratorialComponentEn,
+                    programmingAndComputingComponent, programmingAndComputingComponentEn, crossCompetenceComponent,
+                    crossCompetenceComponentEn, ethicalPrinciples, ethicalPrinciplesEn);
+        }else {
+            extraInformationChangeRequest.edit(prerequisites, prerequisitesEn, laboratorialComponent, laboratorialComponentEn,
+                    programmingAndComputingComponent, programmingAndComputingComponentEn, crossCompetenceComponent,
+                    crossCompetenceComponentEn, ethicalPrinciples, ethicalPrinciplesEn);
+        }
+        
     }
 
     public RequestStatus getStatus() {
@@ -286,6 +288,67 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
         }
         return getCompetenceCourse().getDepartmentUnit(getExecutionPeriod()).getDepartment()
                 .isUserMemberOfCompetenceCourseMembersGroup(person);
+    }
+    
+    public String getPrerequisites() {
+        CompetenceCourseExtraInformationChangeRequest extraInformationChangeRequest =
+                getCompetenceCourseExtraInformationChangeRequest();
+        return extraInformationChangeRequest == null ? null : extraInformationChangeRequest.getPrerequisites();
+    }
+
+    public String getLaboratorialComponent() {
+        CompetenceCourseExtraInformationChangeRequest extraInformationChangeRequest =
+                getCompetenceCourseExtraInformationChangeRequest();
+        return extraInformationChangeRequest == null ? null : extraInformationChangeRequest.getLaboratorialComponent();
+    }
+
+    public String getProgrammingAndComputingComponent() {
+        CompetenceCourseExtraInformationChangeRequest extraInformationChangeRequest =
+                getCompetenceCourseExtraInformationChangeRequest();
+        return extraInformationChangeRequest == null ? null : extraInformationChangeRequest.getProgrammingAndComputingComponent();
+    }
+
+    public String getCrossCompetenceComponent() {
+        CompetenceCourseExtraInformationChangeRequest extraInformationChangeRequest =
+                getCompetenceCourseExtraInformationChangeRequest();
+        return extraInformationChangeRequest == null ? null : extraInformationChangeRequest.getCrossCompetenceComponent();
+    }
+
+    public String getEthicalPrinciples() {
+        CompetenceCourseExtraInformationChangeRequest extraInformationChangeRequest =
+                getCompetenceCourseExtraInformationChangeRequest();
+        return extraInformationChangeRequest == null ? null : extraInformationChangeRequest.getEthicalPrinciples();
+    }
+
+    public String getPrerequisitesEn() {
+        CompetenceCourseExtraInformationChangeRequest extraInformationChangeRequest =
+                getCompetenceCourseExtraInformationChangeRequest();
+        return extraInformationChangeRequest == null ? null : extraInformationChangeRequest.getPrerequisitesEn();
+    }
+
+    public String getLaboratorialComponentEn() {
+        CompetenceCourseExtraInformationChangeRequest extraInformationChangeRequest =
+                getCompetenceCourseExtraInformationChangeRequest();
+        return extraInformationChangeRequest == null ? null : extraInformationChangeRequest.getLaboratorialComponentEn();
+    }
+
+    public String getProgrammingAndComputingComponentEn() {
+        CompetenceCourseExtraInformationChangeRequest extraInformationChangeRequest =
+                getCompetenceCourseExtraInformationChangeRequest();
+        return extraInformationChangeRequest == null ? null : extraInformationChangeRequest
+                .getProgrammingAndComputingComponentEn();
+    }
+
+    public String getCrossCompetenceComponentEn() {
+        CompetenceCourseExtraInformationChangeRequest extraInformationChangeRequest =
+                getCompetenceCourseExtraInformationChangeRequest();
+        return extraInformationChangeRequest == null ? null : extraInformationChangeRequest.getCrossCompetenceComponentEn();
+    }
+
+    public String getEthicalPrinciplesEn() {
+        CompetenceCourseExtraInformationChangeRequest extraInformationChangeRequest =
+                getCompetenceCourseExtraInformationChangeRequest();
+        return extraInformationChangeRequest == null ? null : extraInformationChangeRequest.getEthicalPrinciplesEn();
     }
 
 }

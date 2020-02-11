@@ -98,16 +98,12 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setObjectivesEn(existingInformation.getObjectivesEn());
         setProgram(existingInformation.getProgram());
         setProgramEn(existingInformation.getProgramEn());
-        setPrerequisites(existingInformation.getPrerequisites());
-        setPrerequisitesEn(existingInformation.getPrerequisitesEn());
-        setLaboratorialComponent(existingInformation.getLaboratorialComponent());
-        setLaboratorialComponentEn(existingInformation.getLaboratorialComponentEn());
-        setProgrammingAndComputingComponent(existingInformation.getProgrammingAndComputingComponent());
-        setProgrammingAndComputingComponentEn(existingInformation.getProgrammingAndComputingComponentEn());
-        setCrossCompetenceComponent(existingInformation.getCrossCompetenceComponent());
-        setCrossCompetenceComponentEn(existingInformation.getCrossCompetenceComponentEn());
-        setEthicalPrinciples(existingInformation.getEthicalPrinciples());
-        setEthicalPrinciplesEn(existingInformation.getEthicalPrinciplesEn());
+        new CompetenceCourseExtraInformation(this, existingInformation.getPrerequisites(),
+                existingInformation.getPrerequisitesEn(), existingInformation.getLaboratorialComponent(),
+                existingInformation.getLaboratorialComponentEn(), existingInformation.getProgrammingAndComputingComponent(),
+                existingInformation.getProgrammingAndComputingComponentEn(), existingInformation.getCrossCompetenceComponent(),
+                existingInformation.getCrossCompetenceComponentEn(), existingInformation.getEthicalPrinciples(),
+                existingInformation.getEthicalPrinciplesEn());
     }
 
     public CompetenceCourseInformation(String name, String nameEn, Boolean basic, RegimeType regimeType,
@@ -179,20 +175,20 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setObjectives(objectives);
         setProgram(program);
         setEvaluationMethod(evaluationMethod);
-        setPrerequisites(prerequisites);
-        setLaboratorialComponent(laboratorialComponent);
-        setProgrammingAndComputingComponent(programmingAndComputingComponent);
-        setCrossCompetenceComponent(crossCompetenceComponent);
-        setEthicalPrinciples(ethicalPrinciples);
         setObjectivesEn(objectivesEn);
         setProgramEn(programEn);
         setEvaluationMethodEn(evaluationMethodEn);
-        setPrerequisitesEn(prerequisitesEn);
-        setLaboratorialComponentEn(laboratorialComponentEn);
-        setProgrammingAndComputingComponentEn(programmingAndComputingComponentEn);
-        setCrossCompetenceComponentEn(crossCompetenceComponentEn);
-        setEthicalPrinciplesEn(ethicalPrinciplesEn);
 
+        CompetenceCourseExtraInformation extraInformation = getCompetenceCourseExtraInformation();
+        if (extraInformation == null) {
+            new CompetenceCourseExtraInformation(this, prerequisites, prerequisitesEn, laboratorialComponent,
+                    laboratorialComponentEn, programmingAndComputingComponent, programmingAndComputingComponentEn,
+                    crossCompetenceComponent, crossCompetenceComponentEn, ethicalPrinciples, ethicalPrinciplesEn);
+        } else {
+            extraInformation.edit(prerequisites, prerequisitesEn, laboratorialComponent, laboratorialComponentEn,
+                    programmingAndComputingComponent, programmingAndComputingComponentEn, crossCompetenceComponent,
+                    crossCompetenceComponentEn, ethicalPrinciples, ethicalPrinciplesEn);
+        }
     }
 
     public void delete() {
@@ -399,6 +395,56 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
             throw new DomainException("error.CompetenceCourseInformation.unsupported.AcademicPeriod");
         }
         return result;
+    }
+
+    public String getPrerequisites() {
+        CompetenceCourseExtraInformation extraInformation = getCompetenceCourseExtraInformation();
+        return extraInformation == null ? null : extraInformation.getPrerequisites();
+    }
+
+    public String getLaboratorialComponent() {
+        CompetenceCourseExtraInformation extraInformation = getCompetenceCourseExtraInformation();
+        return extraInformation == null ? null : extraInformation.getLaboratorialComponent();
+    }
+
+    public String getProgrammingAndComputingComponent() {
+        CompetenceCourseExtraInformation extraInformation = getCompetenceCourseExtraInformation();
+        return extraInformation == null ? null : extraInformation.getProgrammingAndComputingComponent();
+    }
+
+    public String getCrossCompetenceComponent() {
+        CompetenceCourseExtraInformation extraInformation = getCompetenceCourseExtraInformation();
+        return extraInformation == null ? null : extraInformation.getCrossCompetenceComponent();
+    }
+
+    public String getEthicalPrinciples() {
+        CompetenceCourseExtraInformation extraInformation = getCompetenceCourseExtraInformation();
+        return extraInformation == null ? null : extraInformation.getEthicalPrinciples();
+    }
+
+    public String getPrerequisitesEn() {
+        CompetenceCourseExtraInformation extraInformation = getCompetenceCourseExtraInformation();
+        return extraInformation == null ? null : extraInformation.getPrerequisitesEn();
+    }
+
+    public String getLaboratorialComponentEn() {
+        CompetenceCourseExtraInformation extraInformation = getCompetenceCourseExtraInformation();
+        return extraInformation == null ? null : extraInformation.getLaboratorialComponentEn();
+    }
+
+    public String getProgrammingAndComputingComponentEn() {
+        CompetenceCourseExtraInformation extraInformation = getCompetenceCourseExtraInformation();
+        return extraInformation == null ? null : extraInformation.getProgrammingAndComputingComponentEn();
+    }
+
+    public String getCrossCompetenceComponentEn() {
+        CompetenceCourseExtraInformation extraInformation = getCompetenceCourseExtraInformation();
+        return extraInformation == null ? null : extraInformation.getCrossCompetenceComponentEn();
+    }
+
+    public String getEthicalPrinciplesEn() {
+        CompetenceCourseExtraInformation extraInformation = getCompetenceCourseExtraInformation();
+        return extraInformation == null ? null : extraInformation.getEthicalPrinciplesEn();
     }
 
 }
