@@ -164,7 +164,7 @@
     <slot name="secondTheoreticalHours" key="theoreticalLesson" />
     <slot name="secondProblemsHours" key="problemsLesson" />
     <slot name="secondLaboratorialHours" key="laboratorialLesson" />
-    <slot name="secondSeminaryHours" key="laboratorialLesson" />
+    <slot name="secondSeminaryHours" key="seminary" />
     <slot name="secondFieldWorkHours" key="fieldWork" />
     <slot name="secondTrainingPeriodHours" key="trainingPeriod" />
     <slot name="secondTutorialOrientationHours" key="tutorialOrientation" />
