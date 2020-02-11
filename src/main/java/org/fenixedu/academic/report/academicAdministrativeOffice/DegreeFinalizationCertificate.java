@@ -133,7 +133,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
         result.append(BundleUtil.getString(Bundle.ACADEMIC, language, "documents.DegreeFinalizationCertificate.graduateTitleInfo"));
         result.append(SINGLE_SPACE);
-        result.append(req.getGraduateTitle(language));
+        result.append(req.getGraduateTitle(Locale.getDefault()));
         result.append(SINGLE_SPACE);
         final String labelOfMale = BundleUtil.getString(Bundle.ACADEMIC, language, "documents.DegreeFinalizationCertificate.label.of.male");
         if (!Strings.isNullOrEmpty(labelOfMale)) {

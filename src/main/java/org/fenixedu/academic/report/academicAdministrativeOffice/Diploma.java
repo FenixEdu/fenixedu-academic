@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.report.academicAdministrativeOffice;
 
+import java.util.Locale;
 import java.util.Optional;
 
 import org.apache.commons.lang.StringUtils;
@@ -65,7 +66,7 @@ public class Diploma extends AdministrativeOfficeDocument {
         getPayload()
                 .addProperty("conclusionDate", getFormattedDate(getDocumentRequest().getConclusionDate()));
         getPayload().addProperty("date", getFormattedCurrentDate());
-        getPayload().addProperty("graduateTitle", getDocumentRequest().getGraduateTitle(getLocale()));
+        getPayload().addProperty("graduateTitle", getDocumentRequest().getGraduateTitle(Locale.getDefault()));
         getPayload().addProperty("qualification", getQualification());
         getPayload().addProperty("conclusion", getConclusion());
         getPayload().addProperty("degreeAcronym", getDocumentRequest().getDegree().getSigla());

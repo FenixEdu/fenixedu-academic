@@ -200,7 +200,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
         String degreeDesignation = getDegreeDesignation(locale);
 
         if (!Strings.isNullOrEmpty(getDocumentRequest().getGraduateTitle(locale))) {
-            addParameter("graduateTitle", degreeDesignation + "\n" + getDocumentRequest().getGraduateTitle(locale).split(" ")[0]);
+            addParameter("graduateTitle", degreeDesignation + "\n" + getDocumentRequest().getGraduateTitle(Locale.getDefault()).split(" ")[0]);
         } else {
             addParameter("graduateTitle", degreeDesignation);
         }
