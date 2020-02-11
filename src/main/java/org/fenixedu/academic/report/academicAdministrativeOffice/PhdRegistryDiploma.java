@@ -22,6 +22,8 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
 
+import java.util.Locale;
+
 public class PhdRegistryDiploma extends RegistryDiploma {
 
     private static final long serialVersionUID = 1L;
@@ -43,7 +45,7 @@ public class PhdRegistryDiploma extends RegistryDiploma {
 
         getPayload().addProperty("isPHD", true);
         getPayload().addProperty("thesisTitle", request.getThesisTitle(getLocale()));
-        getPayload().addProperty("graduateTitle", request.getGraduateTitle(getLocale()));
+        getPayload().addProperty("graduateTitle", request.getGraduateTitle(Locale.getDefault()));
     }
 
     @Override
