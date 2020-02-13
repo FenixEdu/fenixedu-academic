@@ -168,7 +168,6 @@ public class StudentStatute extends StudentStatute_Base {
     }
 
     public void delete() {
-        checkRulesToDelete();
         setBeginExecutionPeriod(null);
         setEndExecutionPeriod(null);
         setStudent(null);
@@ -236,32 +235,7 @@ public class StudentStatute extends StudentStatute_Base {
                 + (getEndExecutionInterval() != null ? getEndExecutionInterval().getQualifiedName() : " - ");
     }
 
-    public void checkRulesToDelete() {
-        if (hasSpecialSeasonEnrolments()) {
-            throw new DomainException("error.student.StudentStatute.has.special.season.enrolment");
-        }
-    }
-
-    public boolean hasSpecialSeasonEnrolments() {
-
-        ExecutionInterval lastSemester = getEndExecutionInterval();
-
-        Set<Registration> registrations = getStudent().getRegistrationsSet();
-        for (Registration registration : registrations) {
-            Set<StudentCurricularPlan> plans = registration.getStudentCurricularPlansSet();
-            for (StudentCurricularPlan scp : plans) {
-                ExecutionInterval interval = getBeginExecutionInterval();
-                while (interval != null && interval.isBeforeOrEquals(lastSemester)) {
-                    if (scp.isEnroledInSpecialSeason(interval)) {
-                        return true;
-                    }
-                    interval = interval.getNext();
-                }
-            }
-        }
-        return false;
-    }
-
+    
     public boolean hasSeniorStatuteForRegistration(final Registration registration) {
         return false;
     }
