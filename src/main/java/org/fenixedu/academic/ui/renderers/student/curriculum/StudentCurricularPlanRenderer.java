@@ -407,8 +407,6 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
         protected ExecutionYear executionYearContext;
 
-        protected ExecutionSemester executionPeriodContext;
-
         protected StudentCurricularPlanRenderer renderer;
 
         public StudentCurricularPlanLayout(StudentCurricularPlanRenderer renderer) {
@@ -432,7 +430,6 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             }
 
             this.executionYearContext = initializeExecutionYear();
-            this.executionPeriodContext = executionYearContext.getLastExecutionPeriod();
 
             final HtmlTable mainTable = new HtmlTable();
             container.addChild(mainTable);
@@ -524,8 +521,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             final HtmlComponent body;
             if (curriculumGroup != null && curriculumGroup.isRoot()) {
                 body =
-                        createDegreeCurricularPlanNameLink(curriculumGroup.getDegreeCurricularPlanOfDegreeModule(),
-                                executionPeriodContext);
+                        createDegreeCurricularPlanNameLink(curriculumGroup.getDegreeCurricularPlanOfDegreeModule());
             } else {
                 body = new HtmlText(createGroupName(text, curriculumGroup).toString(), false);
             }
@@ -550,9 +546,13 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             final StringBuilder groupName = new StringBuilder(text);
             if (curriculumGroup != null && curriculumGroup.getDegreeModule() != null) {
 
+                ExecutionYear lastApprovedCurriculumLineExecutionYear = curriculumGroup.getApprovedCurriculumLinesLastExecutionYear();
+                if (lastApprovedCurriculumLineExecutionYear == null) {
+                    lastApprovedCurriculumLineExecutionYear = executionYearContext;
+                }
                 final CreditsLimit creditsLimit =
                         (CreditsLimit) curriculumGroup.getMostRecentActiveCurricularRule(CurricularRuleType.CREDITS_LIMIT,
-                                executionYearContext);
+                                lastApprovedCurriculumLineExecutionYear);
 
                 if (creditsLimit != null) {
                     groupName.append(" <span title=\"");
@@ -565,7 +565,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
                 groupName.append(" <span title=\"");
                 groupName.append(BundleUtil.getString(Bundle.APPLICATION, "label.curriculum.credits.legend.creditsConcluded"));
                 groupName.append(" \"> c(");
-                groupName.append(curriculumGroup.getCreditsConcluded(executionYearContext));
+                groupName.append(curriculumGroup.getCreditsConcluded(lastApprovedCurriculumLineExecutionYear));
                 groupName.append(")</span>");
 
                 if (isViewerAllowedToViewFullStudentCurriculum(studentCurricularPlan)) {
@@ -587,7 +587,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
                 if (isViewerAllowedToViewFullStudentCurriculum(studentCurricularPlan) && studentCurricularPlan.isBolonhaDegree()
                         && creditsLimit != null) {
 
-                    final ConclusionValue value = curriculumGroup.isConcluded(executionYearContext);
+                    final ConclusionValue value = curriculumGroup.isConcluded(lastApprovedCurriculumLineExecutionYear);
                     groupName.append("<em style=\"background-color:" + getBackgroundColor(value) + "; color:" + getColor(value)
                             + "\"");
                     groupName.append("> ");
@@ -1175,14 +1175,12 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             } else {
                 final HtmlTableCell cell = enrolmentRow.createCell();
                 cell.setClasses(renderer.getDegreeCurricularPlanCellClass());
-                cell.setBody(createDegreeCurricularPlanNameLink(enrolment.getDegreeCurricularPlanOfDegreeModule(),
-                        enrolment.getExecutionPeriod()));
+                cell.setBody(createDegreeCurricularPlanNameLink(enrolment.getDegreeCurricularPlanOfDegreeModule()));
             }
 
         }
 
-        protected HtmlComponent createDegreeCurricularPlanNameLink(final DegreeCurricularPlan degreeCurricularPlan,
-                ExecutionSemester executionSemester) {
+        protected HtmlComponent createDegreeCurricularPlanNameLink(final DegreeCurricularPlan degreeCurricularPlan) {
             if (degreeCurricularPlan.isPast() || degreeCurricularPlan.isEmpty()) {
                 return new HtmlText(degreeCurricularPlan.getName());
             }
