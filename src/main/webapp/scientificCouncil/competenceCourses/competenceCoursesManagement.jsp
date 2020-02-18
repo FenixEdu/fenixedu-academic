@@ -126,8 +126,15 @@ ${portal.toolkit()}
 			</h:outputLink>
 			<h:outputText value="</li>" escape="false"/>
 		</h:panelGroup>
-		
-		<h:outputText value="</ul>" escape="false"/>
+
+				<h:outputText value="<li>" escape="false"/>
+					<h:outputLink value="#{facesContext.externalContext.requestContextPath}/competence-management/department/#{CompetenceCourseManagement.selectedDepartmentUnitID}/downloadCompetenceCourseInformation">
+						<h:outputText value="#{scouncilBundle['downloadCompetenceCourseInformation']}" escape="false"/>
+					</h:outputLink>
+				<h:outputText value="</li>" escape="false"/>
+
+
+			<h:outputText value="</ul>" escape="false"/>
 		</h:panelGroup>
 		
 

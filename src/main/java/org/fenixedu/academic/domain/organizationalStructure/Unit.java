@@ -22,23 +22,8 @@
  */
 package org.fenixedu.academic.domain.organizationalStructure;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.Country;
-import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.Department;
-import org.fenixedu.academic.domain.ExternalCurricularCourse;
-import org.fenixedu.academic.domain.Installation;
-import org.fenixedu.academic.domain.NonAffiliatedTeacher;
+import org.fenixedu.academic.domain.*;
 import org.fenixedu.academic.domain.accessControl.UnitGroup;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -52,8 +37,10 @@ import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.messaging.core.domain.Sender;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
-
 import pt.ist.fenixframework.Atomic;
+
+import java.util.*;
+import java.util.stream.Stream;
 
 public class Unit extends Unit_Base {
 
@@ -465,6 +452,13 @@ public class Unit extends Unit_Base {
     @Override
     public Collection<Unit> getParentUnits(List<AccountabilityTypeEnum> accountabilityTypeEnums) {
         return (Collection<Unit>) getParentParties(accountabilityTypeEnums, Unit.class);
+    }
+
+    public Stream<Unit> getSubUnitStream() {
+        return getChildsSet().stream()
+                .map(a -> a.getChildParty())
+                .filter(p -> Unit.class.isAssignableFrom(p.getClass()))
+                .map(p -> (Unit) p);
     }
 
     @Override
