@@ -1,4 +1,7 @@
 26.2.4 (13-02-2020)
+- Fix: removed the check rules when a student statute is deleted
+- Improvement: added more information to user when a degree module has more than one credits limit for executionYear
+
 26.2.3 (07-02-2020)
 - Fix: Added  null slot check for first time candidacies
 
