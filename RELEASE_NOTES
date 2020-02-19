@@ -1,4 +1,5 @@
 - Refactor: Added methods for find ExecutionInterval chids, aggregators and calendars
+- New Fixture: Model for grade scales as domain entities
 
 26.2.4 (13-02-2020)
 - Fix: Removed the check rules when a student statute is deleted
