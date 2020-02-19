@@ -96,6 +96,10 @@ public class ExecutionInterval extends ExecutionInterval_Base implements Compara
         return getState().equals(PeriodState.CURRENT);
     }
 
+    public boolean isActive() {
+        return getState().equals(PeriodState.CURRENT) || getState().equals(PeriodState.OPEN);
+    }
+
     public static ExecutionInterval getExecutionInterval(String qualifiedName) {
         for (ExecutionInterval interval : Bennu.getInstance().getExecutionIntervalsSet()) {
             if (interval.getQualifiedName().equals(qualifiedName)) {
@@ -237,9 +241,58 @@ public class ExecutionInterval extends ExecutionInterval_Base implements Compara
                 .map(pace -> pace.getExecutionInterval()).orElse(null);
     }
 
-    public static Collection<ExecutionInterval> findActiveChilds() {
-        return findAllChilds().stream().filter(ei -> ei.getState() == PeriodState.OPEN || ei.getState() == PeriodState.CURRENT)
+    /**
+     * Returns active ExecutionInterval aggregators (ExecutionYear).
+     * 
+     * @return collection of ExecutionIntervals
+     */
+    public static Collection<ExecutionInterval> findActiveAggregators() {
+        return Bennu.getInstance().getExecutionIntervalsSet().stream().filter(ei -> ei instanceof ExecutionYear)
+                .filter(ExecutionInterval::isActive).collect(Collectors.toSet());
+    }
+
+    /**
+     * Returns active ExecutionInterval aggregators (ExecutionYear) for provided calendar.
+     * If provided calendar is null, use default academic calendar
+     * 
+     * @param calendar the calendar to search in
+     * @return collection of ExecutionIntervals
+     */
+    public static Collection<ExecutionInterval> findActiveAggregators(final AcademicCalendarRootEntry calendar) {
+        final AcademicCalendarEntry calendarToCheck = calendar != null ? calendar : AcademicCalendarEntry.findDefaultCalendar();
+        return Bennu.getInstance().getExecutionIntervalsSet().stream().filter(ei -> ei instanceof ExecutionYear)
+                .filter(ExecutionInterval::isActive).filter(ei -> ei.getAcademicCalendar() == calendarToCheck)
                 .collect(Collectors.toSet());
+    }
+
+    /**
+     * Returns current ExecutionInterval aggregator (ExecutionYear) for provided calendar.
+     * If provided calendar is null, use default academic calendar
+     * 
+     * @param calendar the calendar to search in
+     * @return the current ExecutionInterval aggregator
+     */
+    public static ExecutionInterval findCurrentAggregator(final AcademicCalendarRootEntry calendar) {
+        final AcademicCalendarEntry calendarToCheck = calendar != null ? calendar : AcademicCalendarEntry.findDefaultCalendar();
+        return ExecutionYear.findCurrents().stream().filter(ey -> ey.getAcademicCalendar() == calendarToCheck).findFirst()
+                .orElse(null);
+    }
+
+    public static Collection<ExecutionInterval> findActiveChilds() {
+        return findAllChilds().stream().filter(ExecutionInterval::isActive).collect(Collectors.toSet());
+    }
+
+    /**
+     * Returns active ExecutionInterval childs for provided calendar.
+     * If provided calendar is null, use default academic calendar
+     * 
+     * @param calendar the calendar to search in
+     * @return collection of ExecutionIntervals
+     */
+    public static Collection<ExecutionInterval> findActiveChilds(final AcademicCalendarRootEntry calendar) {
+        final AcademicCalendarEntry calendarToCheck = calendar != null ? calendar : AcademicCalendarEntry.findDefaultCalendar();
+        return findAllChilds().stream().filter(ExecutionInterval::isActive)
+                .filter(ei -> ei.getAcademicCalendar() == calendarToCheck).collect(Collectors.toSet());
     }
 
     public static Collection<ExecutionInterval> findAllChilds() {
@@ -256,10 +309,8 @@ public class ExecutionInterval extends ExecutionInterval_Base implements Compara
      * @return the current ExecutionInterval
      */
     public static ExecutionInterval findCurrentChild(final AcademicPeriod type, final AcademicCalendarRootEntry calendar) {
-        final AcademicCalendarRootEntry calendarToCheck =
-                calendar != null ? calendar : Bennu.getInstance().getDefaultAcademicCalendar();
-
-        return findCurrentsChilds().stream().filter(ey -> ey.getAcademicInterval().getAcademicCalendar() == calendarToCheck)
+        final AcademicCalendarEntry calendarToCheck = calendar != null ? calendar : AcademicCalendarEntry.findDefaultCalendar();
+        return findCurrentsChilds().stream().filter(ey -> ey.getAcademicCalendar() == calendarToCheck)
                 .filter(ei -> type != null && type.equals(ei.getAcademicPeriod())).findFirst().orElse(null);
     }
 
@@ -279,9 +330,7 @@ public class ExecutionInterval extends ExecutionInterval_Base implements Compara
      * @return the current ExecutionInterval
      */
     private static Collection<ExecutionInterval> findCurrentChilds(final AcademicCalendarRootEntry calendar) {
-        final AcademicCalendarRootEntry calendarToCheck =
-                calendar != null ? calendar : Bennu.getInstance().getDefaultAcademicCalendar();
-
+        final AcademicCalendarEntry calendarToCheck = calendar != null ? calendar : AcademicCalendarEntry.findDefaultCalendar();
         return findCurrentsChilds().stream().filter(ey -> ey.getAcademicInterval().getAcademicCalendar() == calendarToCheck)
                 .collect(Collectors.toSet());
     }
@@ -295,13 +344,19 @@ public class ExecutionInterval extends ExecutionInterval_Base implements Compara
     }
 
     public AcademicPeriod getAcademicPeriod() {
-        return Optional.ofNullable(getAcademicInterval()).map(ai -> ai.getAcademicCalendarEntry())
-                .map(ace -> ace.getAcademicPeriod()).orElse(null);
+        return Optional.ofNullable(getAcademicCalendarEntry()).map(ace -> ace.getAcademicPeriod()).orElse(null);
     }
 
+    // TODO: after ensuring that there aren't anymore ExecutionInterval instances without AcademicCalendarEntry, remove null safety checks 
     public AcademicInterval getAcademicInterval() {
         return Optional.ofNullable(getAcademicCalendarEntry()).map(ace -> new AcademicInterval(ace, ace.getRootEntry()))
                 .orElseGet(() -> super.getAcademicInterval());
+    }
+
+    // TODO: after ensuring that there aren't anymore ExecutionInterval instances without AcademicCalendarEntry, remove null safety checks
+    public AcademicCalendarEntry getAcademicCalendar() {
+        return Optional.ofNullable(getAcademicCalendarEntry()).map(ace -> ace.getAcademicCalendar())
+                .orElseGet(() -> super.getAcademicInterval().getAcademicCalendar());
     }
 
     public boolean populateAcademicCalendarEntry() {

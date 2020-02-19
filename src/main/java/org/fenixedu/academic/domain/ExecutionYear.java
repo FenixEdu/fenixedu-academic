@@ -32,6 +32,7 @@ import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
@@ -257,8 +258,7 @@ public class ExecutionYear extends ExecutionYear_Base {
      * @return the current ExecutionYear
      */
     public static ExecutionYear findCurrent(final AcademicCalendarRootEntry calendar) {
-        final AcademicCalendarRootEntry calendarToCheck =
-                calendar != null ? calendar : Bennu.getInstance().getDefaultAcademicCalendar();
+        final AcademicCalendarEntry calendarToCheck = calendar != null ? calendar : AcademicCalendarEntry.findDefaultCalendar();
         return findCurrents().stream().filter(ey -> ey.getAcademicInterval().getAcademicCalendar() == calendarToCheck).findFirst()
                 .orElse(null);
     }

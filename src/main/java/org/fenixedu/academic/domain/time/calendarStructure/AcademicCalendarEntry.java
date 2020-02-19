@@ -490,4 +490,8 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 //        return count;
 //    }
 
+    public static AcademicCalendarEntry findDefaultCalendar() {
+        return Bennu.getInstance().getDefaultAcademicCalendar();
+    }
+
 }

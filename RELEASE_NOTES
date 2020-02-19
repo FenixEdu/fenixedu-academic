@@ -1,12 +1,14 @@
+- Refactor: Added methods for find ExecutionInterval chids, aggregators and calendars
+
 26.2.4 (13-02-2020)
-- Fix: removed the check rules when a student statute is deleted
-- Improvement: added more information to user when a degree module has more than one credits limit for executionYear
+- Fix: Removed the check rules when a student statute is deleted
+- Improvement: Added more information to user when a degree module has more than one credits limit for executionYear
 
 26.2.3 (07-02-2020)
 - Fix: Added  null slot check for first time candidacies
 
 26.2.2 (07-02-2020)
-- Refactor: new Registrations should create StudentCandidacy instances
+- Refactor: New Registrations should create StudentCandidacy instances
 
 26.2.1 (06-02-2020)
 - Bug Fix: Enrolment evaluation should always return execution interval
