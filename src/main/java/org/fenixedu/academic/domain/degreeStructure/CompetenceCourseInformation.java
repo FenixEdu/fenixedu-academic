@@ -192,6 +192,9 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     }
 
     public void delete() {
+        if (getCompetenceCourseExtraInformation() != null) {
+            getCompetenceCourseExtraInformation().delete();
+        }
         setExecutionPeriod(null);
         setCompetenceCourse(null);
         setCompetenceCourseGroupUnit(null);
