@@ -18,31 +18,21 @@
  */
 package org.fenixedu.academic.domain.organizationalStructure;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.CompetenceCourse;
-import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.Department;
-import org.fenixedu.academic.domain.ExecutionCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.*;
 import org.fenixedu.academic.domain.accessControl.StudentGroup;
 import org.fenixedu.academic.domain.accessControl.TeacherGroup;
 import org.fenixedu.academic.domain.accessControl.UnitGroup;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
+
+import java.util.*;
+import java.util.stream.Stream;
 
 public class DepartmentUnit extends DepartmentUnit_Base {
 
@@ -103,6 +93,17 @@ public class DepartmentUnit extends DepartmentUnit_Base {
         }
 
         checkIfAlreadyExistsOneDepartmentUnitWithSameAcronymAndName(this);
+    }
+
+    public Stream<CompetenceCourse> getCompetenceCourseStream() {
+        return getSubUnitStream().filter(u -> u.isScientificAreaUnit())
+                .map(u -> (ScientificAreaUnit) u)
+                .flatMap(u -> u.getSubUnitStream())
+                .filter(u -> u.isCompetenceCourseGroupUnit())
+                .map(u -> (CompetenceCourseGroupUnit) u)
+                .flatMap(u -> u.getCompetenceCourseInformationsSet().stream()
+                                .filter(i -> i.getCompetenceCourse().getCompetenceCourseGroupUnit() == u))
+                .map(i -> i.getCompetenceCourse());
     }
 
     public List<CompetenceCourse> getCompetenceCourses() {

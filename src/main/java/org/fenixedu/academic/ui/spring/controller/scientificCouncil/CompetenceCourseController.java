@@ -1,11 +1,7 @@
 package org.fenixedu.academic.ui.spring.controller.scientificCouncil;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
@@ -20,21 +16,23 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.DynamicGroup;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.spring.portal.SpringFunctionality;
+import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
 import pt.ist.fenixframework.FenixFramework;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Comparator;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by Sérgio Silva (hello@fenixedu.org).
@@ -166,6 +164,19 @@ public class CompetenceCourseController {
         member.addProperty("username", user.getUsername());
         member.addProperty("displayName", user.getDisplayName());
         return member;
+    }
+
+    @RequestMapping(value = "department/{department}/downloadCompetenceCourseInformation", method = RequestMethod.GET)
+    public void downloadCompetenceCourseInformation(@PathVariable(required = false) DepartmentUnit department,
+                                                    final HttpServletResponse response) throws Exception {
+        final String name = "CompetenceCourseInformation_" + department.getAcronym();
+        response.setHeader("Content-Disposition", "filename=" + name + ".xls");
+        final User loggedUser = Authenticate.getUser();
+        if (isScientificCouncilMember(loggedUser) || isBolonhaManager(loggedUser)) {
+            final Spreadsheet spreadsheet = DumpCompetenceCourseInformation.dumpInformation(department);
+            spreadsheet.exportToXLSSheet(response.getOutputStream());
+        }
+        response.flushBuffer();
     }
 
 }
