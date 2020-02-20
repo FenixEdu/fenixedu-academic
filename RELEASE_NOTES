@@ -1,3 +1,5 @@
+- Refactor: Rename GradeScale relations to refer GradeScale entity instead of GradeScaleEnum
+
 26.3.0 (19-02-2020)
 - Refactor: Added methods for find ExecutionInterval chids, aggregators and calendars
 - New Fixture: Model for grade scales as domain entities
