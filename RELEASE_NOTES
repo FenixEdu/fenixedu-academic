@@ -1,3 +1,4 @@
+27.0.0 (20-02-2020)
 - Refactor: Rename GradeScale relations to refer GradeScale entity instead of GradeScaleEnum
 
 26.3.0 (19-02-2020)
