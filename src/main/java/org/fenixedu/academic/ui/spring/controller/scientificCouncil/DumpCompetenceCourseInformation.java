@@ -1,7 +1,7 @@
 package org.fenixedu.academic.ui.spring.controller.scientificCouncil;
 
-import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences;
+import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevel;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLoad;
 import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
@@ -33,7 +33,7 @@ public class DumpCompetenceCourseInformation {
                     row.setCell("executionPeriod", info.getExecutionPeriod().getQualifiedName());
                     row.setCell("acronym", info.getAcronym());
                     row.setCell("basic", info.getBasic().toString());
-                    row.setCell("competenceCourseLevel", info.getCompetenceCourseLevel().getLocalizedName());
+                    row.setCell("competenceCourseLevel", print(info.getCompetenceCourseLevel()));
                     row.setCell("evaluationMethod", info.getEvaluationMethod());
                     row.setCell("evaluationMethodEn", info.getEvaluationMethodEn());
                     row.setCell("name", info.getName());
@@ -159,6 +159,10 @@ public class DumpCompetenceCourseInformation {
                     }
                 });
         return spreadsheet;
+    }
+
+    private static String print(final CompetenceCourseLevel level) {
+        return level == null ? "" : level.getLocalizedName();
     }
 
     private static String print(final Boolean b) {
