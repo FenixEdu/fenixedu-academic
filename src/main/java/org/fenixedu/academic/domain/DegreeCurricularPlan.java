@@ -358,7 +358,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             if (getDegreeStructure() != null) {
                 getDegreeStructure().delete();
             }
-            setShift(null);
             setMembersGroup(null);
             setRootDomainObject(null);
             deleteDomainObject();
@@ -932,6 +931,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return result;
     }
 
+    @Deprecated
     public Set<Registration> getRegistrations() {
         final Set<Registration> registrations = new HashSet<>();
 

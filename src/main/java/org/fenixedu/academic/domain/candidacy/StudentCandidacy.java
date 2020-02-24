@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Comparator;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.EntryPhase;
@@ -31,21 +32,28 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
-import org.fenixedu.academic.domain.util.workflow.Operation;
-import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 public class StudentCandidacy extends StudentCandidacy_Base {
 
     protected StudentCandidacy() {
         super();
+        setNumber(createCandidacyNumber());
+        setRootDomainObject(Bennu.getInstance());
+        setStartDate(new YearMonthDay());
     }
 
     public StudentCandidacy(final Person person, final ExecutionDegree executionDegree) {
         this();
         init(person, executionDegree);
+    }
+
+    public Integer createCandidacyNumber() {
+        Integer max = Bennu.getInstance().getCandidaciesSet().stream().map(sc -> sc.getNumber()).max(Comparator.naturalOrder())
+                .orElse(0);
+        return max + 1;
     }
 
     protected void init(Person person, ExecutionDegree executionDegree) {
@@ -58,8 +66,9 @@ public class StudentCandidacy extends StudentCandidacy_Base {
             throw new DomainException("person cannot be null", args1);
         }
 
-        if (person.hasStudentCandidacyForExecutionDegree(executionDegree)) {
-            StudentCandidacy existentCandidacy = person.getStudentCandidacyForExecutionDegree(executionDegree);
+        final StudentCandidacy existentCandidacy = person.getCandidaciesSet().stream()
+                .filter(c -> c.isActive() && c.getExecutionDegree() == executionDegree).findFirst().orElse(null);
+        if (existentCandidacy != null) {
             if (existentCandidacy.getRegistration() == null
                     || existentCandidacy.getRegistration().getActiveStateType().isActive()) {
                 throw new DomainException("error.candidacy.already.created");
@@ -89,7 +98,7 @@ public class StudentCandidacy extends StudentCandidacy_Base {
             throw new DomainException("error.candidacy.DegreeCandidacy.person.cannot.be.null");
         }
 
-        if (person.getCandidaciesSet().stream().filter(DegreeCandidacy.class::isInstance).map(DegreeCandidacy.class::cast)
+        if (person.getCandidaciesSet().stream()
                 .filter(degreeCandidacy -> degreeCandidacy.isActive() && degreeCandidacy.getRegistration().isActive())
                 .anyMatch(degreeCandidacy -> degreeCandidacy.getExecutionDegree() == executionDegree)) {
             throw new DomainException("error.candidacy.DegreeCandidacy.candidacy.already.created");
@@ -118,85 +127,73 @@ public class StudentCandidacy extends StudentCandidacy_Base {
         super.setPlacingOption(placingOption);
     }
 
-    public DateTime getCandidacyDate() {
-        return Collections.min(getCandidacySituationsSet(), CandidacySituation.DATE_COMPARATOR).getSituationDate();
+    /**
+     * @deprecated use {@link #getState()}
+     */
+    @Deprecated
+    public CandidacySituationType getActiveCandidacySituationType() {
+        return getState();
     }
 
-    public static StudentCandidacy createStudentCandidacy(ExecutionDegree executionDegree, Person studentPerson) {
-        if (executionDegree.getDegree().getDegreeType().isEmpty()) {
-            return new DegreeCandidacy(studentPerson, executionDegree);
-        }
-        if (executionDegree.getDegree().getDegreeType().isSpecializationDegree()) {
-            return new SDCandidacy(studentPerson, executionDegree);
-        }
-        if (executionDegree.getDegree().getDegreeType().isAdvancedFormationDiploma()) {
-            return new DFACandidacy(studentPerson, executionDegree);
-        }
-
-        if (executionDegree.getDegree().getDegreeType().isDegree()) {
-            return new DegreeCandidacy(studentPerson, executionDegree);
-        }
-
-        if (executionDegree.getDegree().getDegreeType().isBolonhaMasterDegree()) {
-            return new MDCandidacy(studentPerson, executionDegree);
-        }
-
-        if (executionDegree.getDegree().getDegreeType().isIntegratedMasterDegree()) {
-            return new IMDCandidacy(studentPerson, executionDegree);
-        }
-
-        // Fallback, if the Degree Type is not recognized
-        return new DegreeCandidacy(studentPerson, executionDegree);
+    public boolean isActive() {
+        final CandidacySituationType situationType = getState();
+        return situationType != null && situationType.isActive();
     }
 
-    public static Set<StudentCandidacy> readByIds(final List<String> studentCandidacyIds) {
-        final Set<StudentCandidacy> result = new HashSet<StudentCandidacy>();
+//    public DateTime getCandidacyDate() {
+//        return getStartDate();
+//    }
 
-        for (final Candidacy candidacy : Bennu.getInstance().getCandidaciesSet()) {
-            if (candidacy instanceof StudentCandidacy) {
-                if (studentCandidacyIds.contains(candidacy.getExternalId())) {
-                    result.add((StudentCandidacy) candidacy);
-                }
-            }
-        }
+//    public static Set<StudentCandidacy> readByIds(final List<String> studentCandidacyIds) {
+//        final Set<StudentCandidacy> result = new HashSet<StudentCandidacy>();
+//
+//        for (final Candidacy candidacy : Bennu.getInstance().getCandidaciesSet()) {
+//            if (candidacy instanceof StudentCandidacy) {
+//                if (studentCandidacyIds.contains(candidacy.getExternalId())) {
+//                    result.add((StudentCandidacy) candidacy);
+//                }
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    public static Set<StudentCandidacy> readByExecutionYear(final ExecutionYear executionYear) {
+//        final Set<StudentCandidacy> result = new HashSet<StudentCandidacy>();
+//        for (final Candidacy candidacy : Bennu.getInstance().getCandidaciesSet()) {
+//            if (candidacy instanceof StudentCandidacy) {
+//                final StudentCandidacy studentCandidacy = (StudentCandidacy) candidacy;
+//                if (studentCandidacy.getExecutionDegree().getExecutionYear() == executionYear) {
+//                    result.add(studentCandidacy);
+//                }
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    public static Set<StudentCandidacy> readNotConcludedBy(final ExecutionDegree executionDegree,
+//            final ExecutionYear executionYear, final EntryPhase entryPhase) {
+//        final Set<StudentCandidacy> result = new HashSet<StudentCandidacy>();
+//        for (final Candidacy candidacy : Bennu.getInstance().getCandidaciesSet()) {
+//            if (candidacy instanceof StudentCandidacy) {
+//                final StudentCandidacy studentCandidacy = (StudentCandidacy) candidacy;
+//                if (!studentCandidacy.getCandidacySituationsSet().isEmpty() && !studentCandidacy.isConcluded()
+//                        && studentCandidacy.getExecutionDegree() == executionDegree
+//                        && studentCandidacy.getExecutionDegree().getExecutionYear() == executionYear
+//                        && studentCandidacy.getEntryPhase() != null && studentCandidacy.getEntryPhase().equals(entryPhase)) {
+//                    result.add(studentCandidacy);
+//                }
+//            }
+//        }
+//
+//        return result;
+//    }
 
-        return result;
-    }
-
-    public static Set<StudentCandidacy> readByExecutionYear(final ExecutionYear executionYear) {
-        final Set<StudentCandidacy> result = new HashSet<StudentCandidacy>();
-        for (final Candidacy candidacy : Bennu.getInstance().getCandidaciesSet()) {
-            if (candidacy instanceof StudentCandidacy) {
-                final StudentCandidacy studentCandidacy = (StudentCandidacy) candidacy;
-                if (studentCandidacy.getExecutionDegree().getExecutionYear() == executionYear) {
-                    result.add(studentCandidacy);
-                }
-            }
-        }
-
-        return result;
-    }
-
-    public static Set<StudentCandidacy> readNotConcludedBy(final ExecutionDegree executionDegree,
-            final ExecutionYear executionYear, final EntryPhase entryPhase) {
-        final Set<StudentCandidacy> result = new HashSet<StudentCandidacy>();
-        for (final Candidacy candidacy : Bennu.getInstance().getCandidaciesSet()) {
-            if (candidacy instanceof StudentCandidacy) {
-                final StudentCandidacy studentCandidacy = (StudentCandidacy) candidacy;
-                if (!studentCandidacy.getCandidacySituationsSet().isEmpty() && !studentCandidacy.isConcluded()
-                        && studentCandidacy.getExecutionDegree() == executionDegree
-                        && studentCandidacy.getExecutionDegree().getExecutionYear() == executionYear
-                        && studentCandidacy.getEntryPhase() != null && studentCandidacy.getEntryPhase().equals(entryPhase)) {
-                    result.add(studentCandidacy);
-                }
-            }
-        }
-
-        return result;
-    }
-
-    @Override
     public void delete() {
+        setPerson(null);
+
+        setRootDomainObject(null);
         setRegistration(null);
         setIngressionType(null);
         setExecutionDegree(null);
@@ -205,65 +202,65 @@ public class StudentCandidacy extends StudentCandidacy_Base {
             getPrecedentDegreeInformation().delete();
         }
 
-        super.delete();
+        deleteDomainObject();
     }
 
-    @Override
-    public boolean isConcluded() {
-        final CandidacySituation activeSituation = getActiveCandidacySituation();
-        return activeSituation != null && (activeSituation.getCandidacySituationType() == CandidacySituationType.REGISTERED
-                || getActiveCandidacySituation().getCandidacySituationType() == CandidacySituationType.CANCELLED);
-    }
-
-    public boolean cancelCandidacy() {
-        if (!isConcluded()) {
-            new CancelledCandidacySituation(this, this.getPerson());
-            return true;
-        }
-        return false;
-    }
+//    @Override
+//    public boolean isConcluded() {
+//        final CandidacySituation activeSituation = getActiveCandidacySituation();
+//        return activeSituation != null && (activeSituation.getCandidacySituationType() == CandidacySituationType.REGISTERED
+//                || getActiveCandidacySituation().getCandidacySituationType() == CandidacySituationType.CANCELLED);
+//    }
+//
+//    public boolean cancelCandidacy() {
+//        if (!isConcluded()) {
+//            new CancelledCandidacySituation(this, this.getPerson());
+//            return true;
+//        }
+//        return false;
+//    }
 
     public DegreeCurricularPlan getDegreeCurricularPlan() {
         return getExecutionDegree().getDegreeCurricularPlan();
     }
 
-    public boolean hasEntryPhase() {
-        return getEntryPhase() != null;
-    }
+//    public boolean hasEntryPhase() {
+//        return getEntryPhase() != null;
+//    }
 
     public ExecutionYear getExecutionYear() {
         return getExecutionDegree().getExecutionYear();
     }
 
-    public boolean isFirstCycleCandidacy() {
-        return false;
-    }
+//    public boolean isFirstCycleCandidacy() {
+//        return false;
+//    }
 
-    @Override
-    public String getDescription() {
-        return BundleUtil.getString(Bundle.CANDIDATE, "label.degreeCandidacy") + " - "
-                + getExecutionDegree().getDegreeCurricularPlan().getName() + " - "
-                + getExecutionDegree().getExecutionYear().getYear();
-    }
+//    @Override
+//    public String getDescription() {
+//        return BundleUtil.getString(Bundle.CANDIDATE, "label.degreeCandidacy") + " - "
+//                + getExecutionDegree().getDegreeCurricularPlan().getName() + " - "
+//                + getExecutionDegree().getExecutionYear().getYear();
+//    }
 
-    @Override
-    protected Set<Operation> getOperations(CandidacySituation candidacySituation) {
-        return Collections.emptySet();
-    }
-
-    @Override
-    protected void moveToNextState(CandidacyOperationType candidacyOperationType, Person person) {
-    }
-
-    @Override
-    public Map<String, Set<String>> getStateMapping() {
-        return null;
-    }
-
-    @Override
-    public String getDefaultState() {
-        return null;
-    }
+//    @Override
+//    protected Set<Operation> getOperations(CandidacySituation candidacySituation) {
+//        return Collections.emptySet();
+//    }
+//
+//    @Override
+//    protected void moveToNextState(CandidacyOperationType candidacyOperationType, Person person) {
+//    }
+//
+//    @Override
+//    public Map<String, Set<String>> getStateMapping() {
+//        return null;
+//    }
+//
+//    @Override
+//    public String getDefaultState() {
+//        return null;
+//    }
 
     @Override
     public void setState(CandidacySituationType state) {
@@ -272,48 +269,8 @@ public class StudentCandidacy extends StudentCandidacy_Base {
     }
 
     @Override
-    public CandidacySituationType getActiveCandidacySituationType() {
-        return getState();
-    }
-
-    @Override
     public Boolean getFirstTimeCandidacy() {
         return Boolean.TRUE.equals(super.getFirstTimeCandidacy());
-    }
-
-    public static StudentCandidacy convertStudentCandidacy(final StudentCandidacy oldCandidacy) {
-        if (oldCandidacy.getClass().equals(StudentCandidacy.class)) {
-            // already converted
-            return null;
-        }
-
-        final StudentCandidacy result = new StudentCandidacy();
-        result.setPerson(oldCandidacy.getPerson());
-        result.setExecutionDegree(oldCandidacy.getExecutionDegree());
-        result.setRegistration(oldCandidacy.getRegistration());
-        result.setIngressionType(oldCandidacy.getIngressionType());
-        result.setSummaryFile(oldCandidacy.getSummaryFile());
-        result.setPrecedentDegreeInformation(oldCandidacy.getPrecedentDegreeInformation());
-
-        final CandidacySituation activeCandidacySituation = oldCandidacy.getActiveCandidacySituation();
-        if (activeCandidacySituation != null) {
-            result.setState(activeCandidacySituation.getCandidacySituationType());
-            result.setStateDate(activeCandidacySituation.getSituationDate());
-        }
-
-        result.setNumber(oldCandidacy.getNumber());
-        result.setStartDate(oldCandidacy.getStartDate());
-
-        result.setContigent(oldCandidacy.getContigent());
-        result.setEntryGrade(oldCandidacy.getEntryGrade());
-        result.setEntryPhase(oldCandidacy.getEntryPhase());
-        result.setPlacingOption(oldCandidacy.getPlacingOption());
-        result.setNumberOfCandidaciesToHigherSchool(oldCandidacy.getNumberOfCandidaciesToHigherSchool());
-        result.setFirstTimeCandidacy(oldCandidacy.getFirstTimeCandidacy());
-
-        oldCandidacy.delete();
-
-        return result;
     }
 
 }

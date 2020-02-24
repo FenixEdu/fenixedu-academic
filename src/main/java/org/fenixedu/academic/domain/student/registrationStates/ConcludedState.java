@@ -24,8 +24,6 @@ import org.fenixedu.academic.domain.accessControl.academicAdministration.Academi
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.domain.util.workflow.IState;
-import org.fenixedu.academic.domain.util.workflow.StateBean;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.joda.time.DateTime;
 
@@ -61,16 +59,6 @@ public class ConcludedState extends ConcludedState_Base {
                         person.getUser())) {
             return;
         }
-    }
-
-    @Override
-    public void checkConditionsToForward(final StateBean bean) {
-        throw new DomainException("error.impossible.to.forward.from.concluded");
-    }
-
-    @Override
-    public IState nextState(final StateBean bean) {
-        throw new DomainException("error.impossible.to.forward.from.concluded");
     }
 
     @Override

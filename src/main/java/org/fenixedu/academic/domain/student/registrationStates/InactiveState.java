@@ -18,9 +18,6 @@
  */
 package org.fenixedu.academic.domain.student.registrationStates;
 
-import java.util.Collections;
-import java.util.Set;
-
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.student.Registration;
 import org.joda.time.DateTime;
@@ -30,11 +27,6 @@ public class InactiveState extends InactiveState_Base {
     protected InactiveState(Registration registration, Person person, DateTime dateTime) {
         super();
         init(registration, person, dateTime);
-    }
-
-    @Override
-    public Set<String> getValidNextStates() {
-        return Collections.singleton(RegistrationStateType.REGISTERED.name());
     }
 
     @Override

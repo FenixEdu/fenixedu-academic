@@ -20,8 +20,6 @@ package org.fenixedu.academic.domain.student;
 
 import java.util.Comparator;
 
-import jvstm.cps.ConsistencyPredicate;
-
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.GrantOwnerType;
 import org.fenixedu.academic.domain.candidacy.PersonalInformationBean;
@@ -30,6 +28,8 @@ import org.fenixedu.academic.dto.candidacy.OriginInformationBean;
 import org.fenixedu.academic.dto.person.PersonBean;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
+
+import jvstm.cps.ConsistencyPredicate;
 
 public class PersonalIngressionData extends PersonalIngressionData_Base {
 

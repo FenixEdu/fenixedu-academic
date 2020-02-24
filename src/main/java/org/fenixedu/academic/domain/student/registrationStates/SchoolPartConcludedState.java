@@ -18,9 +18,6 @@
  */
 package org.fenixedu.academic.domain.student.registrationStates;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.student.Registration;
 import org.joda.time.DateTime;
@@ -40,24 +37,6 @@ public class SchoolPartConcludedState extends SchoolPartConcludedState_Base {
     @Override
     public RegistrationStateType getStateType() {
         return RegistrationStateType.SCHOOLPARTCONCLUDED;
-    }
-
-    @Override
-    public Set<String> getValidNextStates() {
-        Set<String> states = new HashSet<String>();
-        states.add(RegistrationStateType.CONCLUDED.name());
-        states.add(RegistrationStateType.STUDYPLANCONCLUDED.name());
-        states.add(RegistrationStateType.CANCELED.name());
-        states.add(RegistrationStateType.INTERNAL_ABANDON.name());
-        states.add(RegistrationStateType.EXTERNAL_ABANDON.name());
-        states.add(RegistrationStateType.MOBILITY.name());
-        states.add(RegistrationStateType.INTERRUPTED.name());
-        return states;
-    }
-
-    @Override
-    protected RegistrationStateType defaultNextStateType() {
-        return RegistrationStateType.CONCLUDED;
     }
 
 }

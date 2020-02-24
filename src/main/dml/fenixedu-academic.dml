@@ -80,7 +80,6 @@ enum org.fenixedu.academic.util.WeekDay                                         
 enum org.fenixedu.academic.domain.EntryPhase                                                                           as EntryPhase;
 enum org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationContext                                                as EnrolmentEvaluationContext;
 enum org.fenixedu.academic.domain.OperationType																		  as OperationType;
-enum org.fenixedu.academic.domain.candidacy.FirstTimeCandidacyStage													  as FirstTimeCandidacyStage;
 enum org.fenixedu.academic.domain.contacts.PartyContactValidationState 									              as PartyContactValidationState;
 enum org.fenixedu.academic.domain.SchoolPeriodDuration																  as SchoolPeriodDuration;
 enum org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType                                     as RegistrationStateType;
@@ -643,9 +642,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
     class photograph.PictureOriginal extends photograph.Picture {
     }
 
-        class candidacy.CandidacyDocumentFile extends .org.fenixedu.bennu.io.domain.GenericFile {
-        }
-        
         class candidacy.CandidacySummaryFile extends .org.fenixedu.bennu.io.domain.GenericFile {
         }
 
@@ -794,74 +790,18 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         AdministrativeOfficeType administrativeOfficeType;
     }
 
-    class candidacy.Candidacy  {
+    class candidacy.StudentCandidacy{
         Integer number;
         YearMonthDay startDate;
+    	CandidacySituationType state;
+    	DateTime stateDate;
+        String contigent;
+        Double entryGrade;
+        EntryPhase entryPhase;
+        Integer placingOption;
+        Integer numberOfCandidaciesToHigherSchool;
+        Boolean firstTimeCandidacy;
     }
-
-    class candidacy.CandidacyDocument  {
-        String documentDescription;
-    }
-
-    class candidacy.CandidacySituation  {
-        String remarks;
-        DateTime situationDate;
-    }
-
-        class candidacy.AdmittedCandidacySituation extends candidacy.CandidacySituation {
-        }
-
-        class candidacy.CancelledCandidacySituation extends candidacy.CandidacySituation {
-        }
-
-        class candidacy.NotAdmittedCandidacySituation extends candidacy.CandidacySituation {
-        }
-
-        class candidacy.PreCandidacySituation extends candidacy.CandidacySituation {
-        }
-
-        class candidacy.RegisteredCandidacySituation extends candidacy.CandidacySituation {
-        }
-
-        class candidacy.StandByCandidacySituation extends candidacy.CandidacySituation {
-        }
-
-        class candidacy.StandByConfirmedDataCandidacySituation extends candidacy.CandidacySituation {
-        }
-
-        class candidacy.StandByFilledDataCandidacySituation extends candidacy.CandidacySituation {
-        }
-
-        class candidacy.SubstituteCandidacySituation extends candidacy.CandidacySituation {
-            Integer candidacyOrder;
-        }
-
-        class candidacy.StudentCandidacy extends candidacy.Candidacy {
-        	CandidacySituationType state;
-        	DateTime stateDate;
-            String contigent;
-            Double entryGrade;
-            EntryPhase entryPhase;
-            Integer placingOption;
-            Integer numberOfCandidaciesToHigherSchool;
-            Boolean firstTimeCandidacy;
-        }
-
-            class candidacy.DFACandidacy extends candidacy.StudentCandidacy {
-            }
-
-            class candidacy.DegreeCandidacy extends candidacy.StudentCandidacy {
-            }
-
-            class candidacy.IMDCandidacy extends candidacy.StudentCandidacy {
-            }
-
-            class candidacy.MDCandidacy extends candidacy.StudentCandidacy {
-            }
-
-            class candidacy.SDCandidacy extends candidacy.StudentCandidacy {
-            }
-
 
 	class candidacy.IngressionType{
 		String code (REQUIRED);
@@ -1838,22 +1778,6 @@ public class accessControl.rules.AccessRule {
 public class accessControl.academicAdministration.AcademicAccessRule extends accessControl.rules.AccessRule {
 }
 
-class candidacy.MeasurementTest  {
-    EntryPhase entryPhase;
-    
-}
-
-class candidacy.MeasurementTestShift  {
-    String name;
-    DateTime date;
-}
-
-class candidacy.MeasurementTestRoom  {
-    String name;
-    Integer capacity;
-    Integer roomOrder;
-}
-
 class CoordinatorLog  {
 	DateTime date;
 	OperationType operation;
@@ -1977,10 +1901,6 @@ public class log.StudentRegistrationTransferLog {
 }
 
 
-class candidacy.FirstTimeDocumentsConfiguration {
-	protected JsonElement configurationProperties (REQUIRED);	
-}
-
 /*
  * Relations definitions
  * 
@@ -2089,74 +2009,6 @@ relation PersonViewedPersonInformationLog {
 		multiplicity *;
 	}
 }
-
-relation RootDomainObjectMeasurementTest {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    candidacy.MeasurementTest playsRole measurementTests {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectMeasurementTestShift {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    candidacy.MeasurementTestShift playsRole measurementTestShifts {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectMeasurementTestRoom {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    candidacy.MeasurementTestRoom playsRole measurementTestRooms {
-        multiplicity *;
-    }
-}
-
-relation RegistrationMeasurementTestRoom {
-    candidacy.MeasurementTestRoom playsRole measurementTestRoom;
-    student.Registration playsRole registrations {
-        multiplicity *;
-    }
-}
-
-relation MeasurementTestShiftDegreeCurricularPlan {
-	candidacy.MeasurementTestShift playsRole shift;
-	DegreeCurricularPlan playsRole forDegreeCurricularPlan {
-		multiplicity *;
-	}
-}
-
-relation MeasurementTestShiftMeasurementTestRoom {
-    candidacy.MeasurementTestShift playsRole shift;
-    
-    candidacy.MeasurementTestRoom playsRole rooms {
-        multiplicity *;
-    }
-}
-
-relation MeasurementTestShiftMeasurementTest {
-    candidacy.MeasurementTest playsRole test;
-    
-    candidacy.MeasurementTestShift playsRole shifts {
-        multiplicity *;
-    }
-}
-
-relation MeasurementTestExecutionYear {
-    ExecutionYear playsRole executionYear;
-    
-    candidacy.MeasurementTest playsRole measurementTests {
-        multiplicity *;
-    }
-}
-
-relation MeasurementTestCampus {
-    .org.fenixedu.spaces.domain.Space playsRole campus;
-    
-    candidacy.MeasurementTest playsRole measurementTests {
-        multiplicity *;
-    }
-}
-
 
 relation RootDomainObjectDefaultCampus {
 	.org.fenixedu.spaces.domain.Space playsRole defaultCampus;
@@ -2328,35 +2180,9 @@ relation AttendsStudent {
     student.Registration playsRole aluno;
 }
 
-relation CandidacyCandidacyDocument {
-    candidacy.Candidacy playsRole candidacy;
-    candidacy.CandidacyDocument playsRole candidacyDocuments {
-        multiplicity *;
-    }
-}
-
-relation CandidacyDocumentCandidacyDocumentFile {
-    candidacy.CandidacyDocument playsRole candidacyDocument;
-    candidacy.CandidacyDocumentFile playsRole file;
-}
-
 relation CandidacyRootDomainObject {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    candidacy.Candidacy playsRole candidacies {
-        multiplicity *;
-    }
-}
-
-relation CandidacySituationCandidacy {
-    candidacy.Candidacy playsRole candidacy;
-    candidacy.CandidacySituation playsRole candidacySituations {
-        multiplicity *;
-    }
-}
-
-relation CandidacySituationPerson {
-    Person playsRole person;
-    candidacy.CandidacySituation playsRole candidacySituations {
+    candidacy.StudentCandidacy playsRole candidacies {
         multiplicity *;
     }
 }
@@ -3280,7 +3106,7 @@ relation AcademicAccessRuleOffices {
 
 relation PersonCandidacy {
     Person playsRole person;
-    candidacy.Candidacy playsRole candidacies {
+    candidacy.StudentCandidacy playsRole candidacies {
         multiplicity *;
     }
 }
@@ -3616,20 +3442,6 @@ relation RootDomainObjectAttends {
 relation RootDomainObjectBibliographicReference {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     BibliographicReference playsRole bibliographicReferences {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectCandidacyDocument {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    candidacy.CandidacyDocument playsRole candidacyDocument {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectCandidacySituation {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    candidacy.CandidacySituation playsRole candidacySituations {
         multiplicity *;
     }
 }
@@ -5441,15 +5253,6 @@ relation StudentRegistrationTransferLogTarget {
     protected student.Student playsRole target {
         multiplicity 1..1;
     }
-}
-
-relation BennuFirstTimeDocumentsConfiguration {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
-		multiplicity 1..1;
-	}
-	candidacy.FirstTimeDocumentsConfiguration playsRole firstTimeDocumentsConfiguration {
-		multiplicity 0..1;
-	}
 }
 
 /* ServiceRequestType */

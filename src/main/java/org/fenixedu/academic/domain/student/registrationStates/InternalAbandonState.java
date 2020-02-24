@@ -38,11 +38,6 @@ public class InternalAbandonState extends InternalAbandonState_Base {
     }
 
     @Override
-    public Set<String> getValidNextStates() {
-        return Collections.singleton(RegistrationStateType.REGISTERED.name());
-    }
-
-    @Override
     public RegistrationStateType getStateType() {
         return RegistrationStateType.INTERNAL_ABANDON;
     }

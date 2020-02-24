@@ -66,7 +66,6 @@ import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOfficeTyp
 import org.fenixedu.academic.domain.candidacy.CandidacySituationType;
 import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacy.PersonalInformationBean;
-import org.fenixedu.academic.domain.candidacy.RegisteredCandidacySituation;
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
@@ -1925,10 +1924,6 @@ public class Registration extends Registration_Base {
 
         if (super.getStartDate() != null) {
             return super.getStartDate();
-        }
-
-        if (getStudentCandidacy() != null) {
-            return getStudentCandidacy().getActiveCandidacySituation().getSituationDate().toYearMonthDay();
         }
 
         if (getRegistrationYear() != null) {

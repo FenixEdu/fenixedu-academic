@@ -19,9 +19,7 @@
 package org.fenixedu.academic.domain.student.registrationStates;
 
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.domain.util.workflow.StateBean;
 import org.joda.time.DateTime;
 
 public class StudyPlanConcludedState extends StudyPlanConcludedState_Base {
@@ -35,11 +33,6 @@ public class StudyPlanConcludedState extends StudyPlanConcludedState_Base {
     @Override
     public RegistrationStateType getStateType() {
         return RegistrationStateType.STUDYPLANCONCLUDED;
-    }
-
-    @Override
-    public void checkConditionsToForward(final StateBean bean) {
-        throw new DomainException("error.impossible.to.forward.from.studyPlanConcluded");
     }
 
 }

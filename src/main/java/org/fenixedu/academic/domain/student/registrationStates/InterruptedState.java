@@ -18,9 +18,6 @@
  */
 package org.fenixedu.academic.domain.student.registrationStates;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.student.Registration;
 import org.joda.time.DateTime;
@@ -40,18 +37,6 @@ public class InterruptedState extends InterruptedState_Base {
     @Override
     public RegistrationStateType getStateType() {
         return RegistrationStateType.INTERRUPTED;
-    }
-
-    @Override
-    public Set<String> getValidNextStates() {
-        Set<String> states = new HashSet<String>();
-        states.add(RegistrationStateType.CANCELED.name());
-        states.add(RegistrationStateType.REGISTERED.name());
-        states.add(RegistrationStateType.INTERNAL_ABANDON.name());
-        states.add(RegistrationStateType.EXTERNAL_ABANDON.name());
-        states.add(RegistrationStateType.MOBILITY.name());
-        states.add(RegistrationStateType.SCHOOLPARTCONCLUDED.name());
-        return states;
     }
 
 }

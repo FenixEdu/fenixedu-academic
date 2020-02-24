@@ -34,8 +34,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.candidacy.Candidacy;
-import org.fenixedu.academic.domain.candidacy.DegreeCandidacy;
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.domain.contacts.EmailAddress;
 import org.fenixedu.academic.domain.contacts.MobilePhone;
@@ -489,33 +487,33 @@ public class Person extends Person_Base {
         getProfile().setEmail(getEmailForSendingEmails());
     }
 
-    public boolean hasDegreeCandidacyForExecutionDegree(final ExecutionDegree executionDegree) {
-        for (final Candidacy candidacy : this.getCandidaciesSet()) {
-            if (candidacy instanceof DegreeCandidacy && candidacy.isActive()) {
-                final DegreeCandidacy degreeCandidacy = (DegreeCandidacy) candidacy;
-                if (degreeCandidacy.getExecutionDegree().equals(executionDegree)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+//    public boolean hasDegreeCandidacyForExecutionDegree(final ExecutionDegree executionDegree) {
+//        for (final Candidacy candidacy : this.getCandidaciesSet()) {
+//            if (candidacy instanceof DegreeCandidacy && candidacy.isActive()) {
+//                final DegreeCandidacy degreeCandidacy = (DegreeCandidacy) candidacy;
+//                if (degreeCandidacy.getExecutionDegree().equals(executionDegree)) {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
 
-    public StudentCandidacy getStudentCandidacyForExecutionDegree(final ExecutionDegree executionDegree) {
-        for (final Candidacy candidacy : this.getCandidaciesSet()) {
-            if (candidacy instanceof StudentCandidacy && candidacy.isActive()) {
-                final StudentCandidacy studentCandidacy = (StudentCandidacy) candidacy;
-                if (studentCandidacy.getExecutionDegree().equals(executionDegree)) {
-                    return studentCandidacy;
-                }
-            }
-        }
-        return null;
-    }
+//    public StudentCandidacy getStudentCandidacyForExecutionDegree(final ExecutionDegree executionDegree) {
+//        for (final Candidacy candidacy : this.getCandidaciesSet()) {
+//            if (candidacy instanceof StudentCandidacy && candidacy.isActive()) {
+//                final StudentCandidacy studentCandidacy = (StudentCandidacy) candidacy;
+//                if (studentCandidacy.getExecutionDegree().equals(executionDegree)) {
+//                    return studentCandidacy;
+//                }
+//            }
+//        }
+//        return null;
+//    }
 
-    public boolean hasStudentCandidacyForExecutionDegree(final ExecutionDegree executionDegree) {
-        return getStudentCandidacyForExecutionDegree(executionDegree) != null;
-    }
+//    public boolean hasStudentCandidacyForExecutionDegree(final ExecutionDegree executionDegree) {
+//        return getStudentCandidacyForExecutionDegree(executionDegree) != null;
+//    }
 
     public static Person readPersonByUsername(final String username) {
         final User user = User.findByUsername(username);

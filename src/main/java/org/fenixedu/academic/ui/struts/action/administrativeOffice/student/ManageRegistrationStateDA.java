@@ -78,7 +78,10 @@ public class ManageRegistrationStateDA extends FenixDispatchAction {
 
         @Override
         public Object execute() {
-            return RegistrationState.createRegistrationState(this);
+            final RegistrationState registrationState = RegistrationState.createRegistrationState(getRegistration(),
+                    getResponsible(), getStateDateTime(), getStateType(), getExecutionInterval());
+            registrationState.setRemarks(getRemarks());
+            return registrationState;
         }
     }
 

@@ -24,21 +24,44 @@ package org.fenixedu.academic.dto.student;
 import java.io.Serializable;
 
 import org.fenixedu.academic.domain.ExecutionInterval;
+import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
-import org.fenixedu.academic.domain.util.workflow.StateBean;
+import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class RegistrationStateBean extends StateBean implements Serializable {
+public class RegistrationStateBean implements Serializable {
+
+    private String nextState;
+
+    private Person responsible;
+
+    private DateTime stateDateTime;
 
     Registration registration;
 
     String remarks;
 
     ExecutionInterval executionInterval;
+
+    public RegistrationStateBean() {
+        super();
+        this.stateDateTime = null;
+    }
+
+    public RegistrationStateBean(final String nextState) {
+        this();
+        this.nextState = nextState;
+    }
+
+    public RegistrationStateBean(final String nextState, final YearMonthDay stateDate) {
+        this(nextState);
+        setStateDate(stateDate);
+    }
 
     public RegistrationStateBean(Registration registration) {
         super();
@@ -48,7 +71,48 @@ public class RegistrationStateBean extends StateBean implements Serializable {
     }
 
     public RegistrationStateBean(final RegistrationStateType type) {
-        super(type.name());
+        this(type.name());
+    }
+
+    public Person getResponsible() {
+        return responsible;
+    }
+
+    public void setResponsible(final Person responsible) {
+        this.responsible = responsible;
+    }
+
+    public String getNextState() {
+        return nextState;
+    }
+
+    public void setNextState(final String nextState) {
+        this.nextState = nextState;
+    }
+
+    public DateTime getStateDateTime() {
+        return stateDateTime;
+    }
+
+    public void setStateDateTime(final DateTime dateTime) {
+        this.stateDateTime = dateTime;
+    }
+
+    /**
+     * For presentation usage only.
+     * 
+     */
+    public YearMonthDay getStateDate() {
+        return stateDateTime == null ? null : stateDateTime.toYearMonthDay();
+    }
+
+    public void setStateDate(final YearMonthDay ymd) {
+        if (ymd == null) {
+            setStateDateTime(null);
+            return;
+        }
+
+        setStateDateTime(new YearMonthDay().equals(ymd) ? ymd.toDateTimeAtCurrentTime() : ymd.toDateTimeAtMidnight());
     }
 
     public Registration getRegistration() {

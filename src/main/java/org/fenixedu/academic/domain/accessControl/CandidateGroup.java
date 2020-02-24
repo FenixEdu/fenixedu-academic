@@ -21,9 +21,8 @@ package org.fenixedu.academic.domain.accessControl;
 import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.candidacy.Candidacy;
 import org.fenixedu.academic.domain.candidacy.CandidacySituationType;
-import org.fenixedu.academic.domain.candidacy.DFACandidacy;
+import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -57,7 +56,7 @@ public class CandidateGroup extends GroupStrategy {
     }
 
     private boolean hasActiveCandidacies(Person person) {
-        for (Candidacy candidacy : person.getCandidaciesSet()) {
+        for (StudentCandidacy candidacy : person.getCandidaciesSet()) {
             if (isActive(candidacy)) {
                 return true;
             }
@@ -65,14 +64,13 @@ public class CandidateGroup extends GroupStrategy {
         return false;
     }
 
-    private boolean isActive(Candidacy candidacy) {
+    private boolean isActive(StudentCandidacy candidacy) {
         CandidacySituationType situation = candidacy.getActiveCandidacySituationType();
         // Filter out legacy, inactive and registered candidacies...
         if (situation == null || !situation.isActive() || situation.equals(CandidacySituationType.REGISTERED)) {
             return false;
         }
-        // ... and also DFA Candidacies in the admitted state (as this seems to be one of the last possible outcomes).
-        return !(candidacy instanceof DFACandidacy && situation.equals(CandidacySituationType.ADMITTED));
+        return true;
     }
 
     @Override

@@ -106,22 +106,19 @@ public class CreateStudent {
             person.editSocialSecurityNumber(personBean.getSocialSecurityNumber(), fiscalAddress);
         }
 
+        createStudentIfNeeded(person, personBean.getStudentNumber());
+
         // create candidacy
         StudentCandidacy studentCandidacy = new StudentCandidacy(person, executionDegreeBean.getExecutionDegree());
         studentCandidacy.setState(CandidacySituationType.REGISTERED);
         studentCandidacy.setIngressionType(ingressionInformationBean.getIngressionType());
         studentCandidacy.setEntryPhase(ingressionInformationBean.getEntryPhase());
 
-        createStudentIfNeeded(person, personBean.getStudentNumber());
-
         // create registration
-        Registration registration = studentCandidacy.getRegistration();
-        if (registration == null) {
-            registration = Registration.createRegistrationWithCustomStudentNumber(person,
-                    executionDegreeBean.getDegreeCurricularPlan(), studentCandidacy,
-                    ingressionInformationBean.getRegistrationProtocol(), executionDegreeBean.getCycleType(),
-                    executionDegreeBean.getExecutionYear(), personBean.getStudentNumber());
-        }
+        Registration registration =
+                Registration.createRegistrationWithCustomStudentNumber(person, executionDegreeBean.getDegreeCurricularPlan(),
+                        studentCandidacy, ingressionInformationBean.getRegistrationProtocol(), executionDegreeBean.getCycleType(),
+                        executionDegreeBean.getExecutionYear(), personBean.getStudentNumber());
         registration.setHomologationDate(ingressionInformationBean.getHomologationDate());
         registration.setStudiesStartDate(ingressionInformationBean.getStudiesStartDate());
 
