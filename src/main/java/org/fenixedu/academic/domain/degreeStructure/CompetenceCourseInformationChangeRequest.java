@@ -31,6 +31,7 @@ import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.predicate.RolePredicates;
+import org.fenixedu.academic.util.StringFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.Atomic;
@@ -116,6 +117,7 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
 
             throw new DomainException("error.fields.are.required");
         }
+        checkNames(name, nameEn);
 
         if (level == null) {
             level = CompetenceCourseLevel.UNKNOWN;
@@ -170,6 +172,27 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
                     crossCompetenceComponentEn, ethicalPrinciples, ethicalPrinciplesEn);
         }
         
+    }
+    
+    private void checkNames(final String name, final String nameEn) {
+        final String normalizedName = StringFormatter.normalize(name);
+        final String normalizedNameEn = StringFormatter.normalize(nameEn);
+        for (final CompetenceCourse competenceCourse : CompetenceCourse.readBolonhaCompetenceCourses()) {
+            if (!getCompetenceCourse().equals(competenceCourse)) {
+                if (StringFormatter.normalize(competenceCourse.getName()) != null) {
+                    if (StringFormatter.normalize(competenceCourse.getName()).equals(normalizedName)) {
+                        throw new DomainException("error.existingCompetenceCourseWithSameName",
+                                competenceCourse.getDepartmentUnit().getName());
+                    }
+                }
+                if (StringFormatter.normalize(competenceCourse.getNameEn()) != null) {
+                    if (StringFormatter.normalize(competenceCourse.getNameEn()).equals(normalizedNameEn)) {
+                        throw new DomainException("error.existingCompetenceCourseWithSameNameEn",
+                                competenceCourse.getDepartmentUnit().getName());
+                    }
+                }
+            }
+        }
     }
 
     public RequestStatus getStatus() {
