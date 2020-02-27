@@ -171,6 +171,7 @@ public class CompetenceCourseController {
                                                     final HttpServletResponse response) throws Exception {
         final String name = "CompetenceCourseInformation_" + department.getAcronym();
         response.setHeader("Content-Disposition", "filename=" + name + ".xls");
+        response.setContentType("application/vnd.ms-excel");
         final User loggedUser = Authenticate.getUser();
         if (isScientificCouncilMember(loggedUser) || isBolonhaManager(loggedUser)) {
             final Spreadsheet spreadsheet = DumpCompetenceCourseInformation.dumpInformation(department);
