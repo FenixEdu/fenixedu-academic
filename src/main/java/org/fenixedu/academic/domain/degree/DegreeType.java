@@ -29,6 +29,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.TreeSet;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
@@ -233,6 +234,11 @@ public class DegreeType extends DegreeType_Base implements Comparable<DegreeType
     
     public static Stream<DegreeType> allActive() {
         return Bennu.getInstance().getDegreeTypeSet().stream().filter(dt -> dt.isActive());
+    }
+    
+    public static Collection<DegreeType> allWithDegrees() {
+        return Bennu.getInstance().getDegreeTypeSet().stream().filter(dt -> !dt.getDegreeSet().isEmpty())
+                .collect(Collectors.toSet());
     }
 
 }

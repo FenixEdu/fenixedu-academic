@@ -85,7 +85,6 @@ public class PersonalInformationBean implements Serializable {
     private ProfessionalSituationConditionType fatherProfessionalCondition;
     private String conclusionGrade;
     private Integer conclusionYear;
-    private Integer numberOfEnroledCurricularCourses;
     private Unit institution;
     private String institutionName;
     private String degreeDesignation;
@@ -132,7 +131,6 @@ public class PersonalInformationBean implements Serializable {
         setPrecedentSchoolLevel(degreeInfo.getPrecedentSchoolLevel());
         setOtherPrecedentSchoolLevel(degreeInfo.getOtherPrecedentSchoolLevel());
         setNumberOfPreviousYearEnrolmentsInPrecedentDegree(degreeInfo.getNumberOfEnrolmentsInPreviousDegrees());
-        setNumberOfEnroledCurricularCourses(degreeInfo.getNumberOfEnroledCurricularCourses());
         setMobilityProgramDuration(degreeInfo.getMobilityProgramDuration());
         if (getPrecedentDegreeDesignation() != null || getPrecedentInstitution() != null || getPrecedentSchoolLevel() != null
                 || getNumberOfPreviousYearEnrolmentsInPrecedentDegree() != null) {
@@ -175,14 +173,6 @@ public class PersonalInformationBean implements Serializable {
 
     public LocalDate getLimitDate() {
         return limitDate;
-    }
-
-    public Integer getNumberOfEnroledCurricularCourses() {
-        return numberOfEnroledCurricularCourses;
-    }
-
-    public void setNumberOfEnroledCurricularCourses(Integer numberOfEnroledCurricularCourses) {
-        this.numberOfEnroledCurricularCourses = numberOfEnroledCurricularCourses;
     }
 
     public Registration getRegistration() {

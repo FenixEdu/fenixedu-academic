@@ -68,7 +68,6 @@ import jvstm.cps.ConsistencyPredicate;
  * - otherSchoolLevel
  * - country
  * - institution
- * - sourceInstitution
  * - numberOfEnrolmentsInPreviousDegrees
  * - conclusionGrade
  * 
@@ -84,13 +83,8 @@ import jvstm.cps.ConsistencyPredicate;
  * 
  * - precedentDegreeDesignation
  * - precedentSchoolLevel
- * - numberOfEnroledCurricularCourses
- * - numberOfApprovedCurricularCourses
  * - precedentInstitution
  * - precedentCountry
- * - gradeSum
- * - approvedEcts
- * - enroledEcts
  * 
  * 
  * </pre>
@@ -250,9 +244,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
         setCountry(null);
         setCountryHighSchool(null);
         setInstitution(null);
-        setSourceInstitution(null);
 
-        setStudent(null);
         setRegistration(null);
 
         setStudentCandidacy(null);
@@ -319,24 +311,6 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 
     private boolean hasAtLeastOneCandidacy() {
         return getStudentCandidacy() != null;
-    }
-
-    public boolean isCandidacyInternal() {
-        return getCandidacyInternal() != null && getCandidacyInternal();
-    }
-
-    public boolean isCandidacyExternal() {
-        return !isCandidacyInternal();
-    }
-
-    @Override
-    public org.fenixedu.academic.domain.organizationalStructure.Unit getPrecedentInstitution() {
-        if (isCandidacyInternal()) {
-            return Bennu.getInstance().getInstitutionUnit();
-        }
-
-        return super.getPrecedentInstitution();
-
     }
 
 }

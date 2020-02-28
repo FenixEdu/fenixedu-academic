@@ -18,11 +18,6 @@
  */
 package org.fenixedu.academic.domain.candidacy;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.Comparator;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
@@ -198,7 +193,7 @@ public class StudentCandidacy extends StudentCandidacy_Base {
         setIngressionType(null);
         setExecutionDegree(null);
 
-        if (getPrecedentDegreeInformation() != null && getPrecedentDegreeInformation().getStudent() == null) {
+        if (getPrecedentDegreeInformation() != null && getPrecedentDegreeInformation().getRegistration() == null) {
             getPrecedentDegreeInformation().delete();
         }
 

@@ -1415,20 +1415,14 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         String degreeDesignation;
         SchoolLevelType schoolLevel;
         String otherSchoolLevel;
-        String precedentDegreeDesignation;
-        SchoolLevelType precedentSchoolLevel;
-        String otherPrecedentSchoolLevel;
         Integer numberOfEnrolmentsInPreviousDegrees;
         SchoolPeriodDuration mobilityProgramDuration;
         DateTime lastModifiedDate;
         CycleType cycleType;
-        LocalDate conclusionDate;
-        Integer numberOfEnroledCurricularCourses;
-        Integer numberOfApprovedCurricularCourses;        
-        BigDecimal gradeSum;
-        BigDecimal approvedEcts;
-        BigDecimal enroledEcts;
-        Boolean candidacyInternal;
+        
+        String precedentDegreeDesignation;
+        SchoolLevelType precedentSchoolLevel;
+        String otherPrecedentSchoolLevel;
     }
 
     class student.Registration  {
@@ -3158,13 +3152,6 @@ relation PrecedentDegreeInformationInstitution {
     organizationalStructure.Unit playsRole institution;
 }
 
-relation PrecedentDegreeInformationSourceInstitution {
-    student.PrecedentDegreeInformation playsRole destinationPrecedentDegreeInformations {
-        multiplicity *;
-    }
-    organizationalStructure.Unit playsRole sourceInstitution;
-}
-
 relation PrecedentDegreeInformationPrecedentInstitution {
     student.PrecedentDegreeInformation playsRole transitionPrecedentDegreeInformations {
         multiplicity *;
@@ -3172,21 +3159,9 @@ relation PrecedentDegreeInformationPrecedentInstitution {
     organizationalStructure.Unit playsRole precedentInstitution;
 }
 
-relation PrecedentDegreeInformationStudent {
-    student.PrecedentDegreeInformation playsRole precedentDegreeInformation;
-    student.Registration playsRole student;
-}
-
 relation PrecedentDegreeInformationStudentCandidacy {
     student.PrecedentDegreeInformation playsRole precedentDegreeInformation;
     candidacy.StudentCandidacy playsRole studentCandidacy;
-}
-
-relation PrecedentDegreeInformationStudentCurricularPlan {
-    StudentCurricularPlan playsRole studentCurricularPlan;
-    student.PrecedentDegreeInformation playsRole precedentDegreeInformations {
-        multiplicity *;
-    }
 }
 
 relation ProfessorshipShiftProfessorship {

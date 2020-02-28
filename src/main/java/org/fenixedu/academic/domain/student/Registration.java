@@ -47,7 +47,6 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Enrolment;
-import org.fenixedu.academic.domain.EntryPhase;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionInterval;
@@ -266,24 +265,6 @@ public class Registration extends Registration_Base {
      */
     @Deprecated
     @Override
-    public PrecedentDegreeInformation getPrecedentDegreeInformation() {
-        return super.getPrecedentDegreeInformation();
-    }
-
-    /**
-     * @deprecated use {@link StudentCandidacy#setPrecedentDegreeInformation()}
-     */
-    @Deprecated
-    @Override
-    public void setPrecedentDegreeInformation(PrecedentDegreeInformation precedentDegreeInformation) {
-        super.setPrecedentDegreeInformation(precedentDegreeInformation);
-    }
-
-    /**
-     * @deprecated use {@link StudentCandidacy#getPrecedentDegreeInformation()}
-     */
-    @Deprecated
-    @Override
     public Set<PrecedentDegreeInformation> getPrecedentDegreesInformationsSet() {
         return super.getPrecedentDegreesInformationsSet();
     }
@@ -295,10 +276,6 @@ public class Registration extends Registration_Base {
     @Override
     public void addPrecedentDegreesInformations(PrecedentDegreeInformation precedentDegreesInformations) {
         super.addPrecedentDegreesInformations(precedentDegreesInformations);
-    }
-
-    private static Degree getDegreeFromCandidacy(final StudentCandidacy studentCandidacy) {
-        return studentCandidacy == null ? null : studentCandidacy.getExecutionDegree().getDegree();
     }
 
     private void setStudentCandidacyInformation(final StudentCandidacy studentCandidacy) {

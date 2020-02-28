@@ -1,3 +1,5 @@
+- Refactor: Unused PrecedentDegreeInformation slots cleanup
+
 28.0.0 (24-02-2020)
 - Refactor: Deprecated fixed state machines workflow cleanup (candidacies and registration states)
 
