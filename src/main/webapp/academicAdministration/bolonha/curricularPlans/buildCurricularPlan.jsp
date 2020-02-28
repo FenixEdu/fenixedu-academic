@@ -87,7 +87,7 @@
 		<h:outputText value="<li>" escape="false"/>
 		<h:outputLink value="#{AcademicAdministrationCurricularCourseManagement.request.contextPath}/academic-transitions/select">
 			<h:outputText value="#{bolonhaBundle['transition.plans']}" />
-			<f:param name="destinationCurricularPlanId" value="#{degreeCurricularPlan.externalId}"/>
+			<f:param name="destinationCurricularPlanId" value="#{AcademicAdministrationCurricularCourseManagement.degreeCurricularPlanID}"/>
 		</h:outputLink>
 		<h:outputText value="</li>" escape="false"/>
 
