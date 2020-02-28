@@ -283,6 +283,12 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
         request.setAttribute("beanLoad", load);
 
         if (areBeansValid(bean, load)) {
+            try {
+                bean.checkCompetenceCourseName();
+            } catch (DomainException e) {
+                addActionMessage(request, e.getMessage(), e.getArgs());
+                return mapping.findForward("createVersions");
+            }
             request.setAttribute("referenceBean", new CreateReferenceBean());
             return mapping.findForward("editBiblio");
         } else {
@@ -320,7 +326,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
         try {
             createCompetenceCourseInformationChangeRequest(bean, load, getLoggedPerson(request));
         } catch (DomainException e) {
-            addActionMessage(request, e.getMessage());
+            addActionMessage(request, e.getMessage(), e.getArgs());
             return prepareCreateVersion(mapping, form, request, response);
         }
         return showVersions(mapping, form, request, response);
