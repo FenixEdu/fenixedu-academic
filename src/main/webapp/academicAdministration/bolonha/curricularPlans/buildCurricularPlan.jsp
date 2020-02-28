@@ -71,7 +71,26 @@
 			</h:outputLink>
 		<h:outputText value="</li>" escape="false"/>
 		</h:panelGroup>
-		
+
+		<h:outputText value="<li>" escape="false"/>
+		<h:outputLink value="#{AcademicAdministrationCurricularCourseManagement.request.contextPath}/bolonhaManager/curricularPlans/resetCurricularPlan.faces">
+			<h:outputText value="#{bolonhaBundle['reset.curricularPlan.structure']}" />
+			<f:param name="degreeCurricularPlanID" value="#{AcademicAdministrationCurricularCourseManagement.degreeCurricularPlanID}"/>
+			<f:param name="executionYearID" value="#{AcademicAdministrationCurricularCourseManagement.executionYearID}"/>
+			<f:param name="organizeBy" value="#{AcademicAdministrationCurricularCourseManagement.organizeBy}"/>
+			<f:param name="showRules" value="#{AcademicAdministrationCurricularCourseManagement.showRules}"/>
+			<f:param name="hideCourses" value="#{AcademicAdministrationCurricularCourseManagement.hideCourses}"/>
+			<f:param name="action" value="#{AcademicAdministrationCurricularCourseManagement.action}"/>
+		</h:outputLink>
+		<h:outputText value="</li>" escape="false"/>
+
+		<h:outputText value="<li>" escape="false"/>
+		<h:outputLink value="#{AcademicAdministrationCurricularCourseManagement.request.contextPath}/academic-transitions/select">
+			<h:outputText value="#{bolonhaBundle['transition.plans']}" />
+			<f:param name="destinationCurricularPlanId" value="#{degreeCurricularPlan.externalId}"/>
+		</h:outputLink>
+		<h:outputText value="</li>" escape="false"/>
+
 		<h:outputText value="</ul>" escape="false"/>
 		
 		<h:panelGroup rendered="#{!empty AcademicAdministrationCurricularCourseManagement.degreeCurricularPlan.degreeStructure.childs}">
