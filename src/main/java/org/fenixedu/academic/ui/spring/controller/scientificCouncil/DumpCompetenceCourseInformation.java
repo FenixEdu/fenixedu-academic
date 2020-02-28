@@ -3,7 +3,9 @@ package org.fenixedu.academic.ui.spring.controller.scientificCouncil;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevel;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLoad;
+import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
+import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.joda.time.YearMonthDay;
 
@@ -14,6 +16,10 @@ public class DumpCompetenceCourseInformation {
         final Spreadsheet spreadsheet = new Spreadsheet(name);
         departmentUnit.getCompetenceCourseStream()
                 .forEach(cc -> {
+                    final CompetenceCourseGroupUnit groupUnit = cc.getCompetenceCourseGroupUnit();
+                    final ScientificAreaUnit scientificAreaUnit = groupUnit.getScientificAreaUnit();
+                    final DepartmentUnit departmentUnit1 = scientificAreaUnit.getDepartmentUnit();
+
                     final Spreadsheet.Row row = spreadsheet.addRow();
                     row.setCell("CompetenceCoursesId", cc.getExternalId());
                     row.setCell("code", cc.getCode());
@@ -22,6 +28,9 @@ public class DumpCompetenceCourseInformation {
                     row.setCell("curricularStage", cc.getCurricularStage().getLocalizedName());
                     row.setCell("name", cc.getName());
                     row.setCell("type", cc.getType().name());
+                    row.setCell("groupUnit", groupUnit.getPresentationName());
+                    row.setCell("scientificAreaUnit", scientificAreaUnit.getPresentationName());
+                    row.setCell("departmentUnit", departmentUnit1.getPresentationName());
                 });
         final Spreadsheet information = spreadsheet.addSpreadsheet("Information");
         departmentUnit.getCompetenceCourseStream()
