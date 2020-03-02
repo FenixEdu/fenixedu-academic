@@ -1419,6 +1419,7 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         SchoolPeriodDuration mobilityProgramDuration;
         DateTime lastModifiedDate;
         CycleType cycleType;
+        AcademicalInstitutionType institutionType;
         
         String precedentDegreeDesignation;
         SchoolLevelType precedentSchoolLevel;

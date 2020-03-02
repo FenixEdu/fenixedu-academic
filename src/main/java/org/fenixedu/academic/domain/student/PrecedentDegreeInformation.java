@@ -128,6 +128,8 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
         setSchoolLevel(precedentDegreeInformationBean.getSchoolLevel());
         setOtherSchoolLevel(precedentDegreeInformationBean.getOtherSchoolLevel());
 
+        setInstitutionType(personalIngressionData.getHighSchoolType());
+
         checkAndUpdatePrecedentInformation(precedentDegreeInformationBean);
         setLastModifiedDate(new DateTime());
     }

@@ -24,6 +24,7 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.GrantOwnerType;
 import org.fenixedu.academic.domain.candidacy.PersonalInformationBean;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.AcademicalInstitutionType;
 import org.fenixedu.academic.dto.candidacy.OriginInformationBean;
 import org.fenixedu.academic.dto.person.PersonBean;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -191,6 +192,16 @@ public class PersonalIngressionData extends PersonalIngressionData_Base {
     @ConsistencyPredicate
     public boolean checkMultiplicityOfPrecedentDegreesInformations() {
         return getPrecedentDegreesInformationsSet().size() > 0;
+    }
+
+    @Override
+    public void setHighSchoolType(AcademicalInstitutionType highSchoolType) {
+        super.setHighSchoolType(highSchoolType);
+        getPrecedentDegreesInformationsSet().forEach(pdi -> pdi.setInstitutionType(highSchoolType));
+    }
+
+    public void migrateHighSchoolType2PDI() {
+        getPrecedentDegreesInformationsSet().forEach(pdi -> pdi.setInstitutionType(super.getHighSchoolType()));
     }
 
 }
