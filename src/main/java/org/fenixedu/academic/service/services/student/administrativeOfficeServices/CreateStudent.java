@@ -132,7 +132,8 @@ public class CreateStudent {
             personalIngressionData.edit(originInformationBean, personBean);
         }
         PrecedentDegreeInformation precedentDegreeInformation = studentCandidacy.getPrecedentDegreeInformation();
-        precedentDegreeInformation.edit(personalIngressionData, registration, precedentDegreeInformationBean, studentCandidacy);
+        precedentDegreeInformation.edit(/*personalIngressionData, */registration, precedentDegreeInformationBean, studentCandidacy);
+        precedentDegreeInformation.setInstitutionType(personalIngressionData.getHighSchoolType());
 
         // create qualification
         new Qualification(person, precedentDegreeInformation);

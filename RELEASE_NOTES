@@ -1,3 +1,5 @@
+- Refactor: Removed deprecated relation between PrecedentDegreeInformation and PersonalIngressionData
+
 28.1.0 (02-03-2020)
 - Refactor: Unused PrecedentDegreeInformation slots cleanup
 - Improvement: Added AcademicalInstitutionType to PrecedentDegreeInformation

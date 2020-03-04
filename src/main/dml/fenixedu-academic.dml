@@ -4952,13 +4952,6 @@ relation PersonalIngressionDataSchoolTimeDistrictSubdivisionOfResidence {
     DistrictSubdivision playsRole schoolTimeDistrictSubDivisionOfResidence;
 }
 
-relation PersonalIngressionDataPrecedentDegreeInformation {   
-    student.PersonalIngressionData playsRole personalIngressionData;     
-    student.PrecedentDegreeInformation playsRole precedentDegreesInformations {
-        multiplicity *;
-    }
-}
-
 relation PersonalIngressionDataExecutionYear {   
     student.PersonalIngressionData playsRole personalIngressionsData {
     	multiplicity *;

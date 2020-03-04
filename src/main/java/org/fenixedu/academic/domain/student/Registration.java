@@ -223,9 +223,9 @@ public class Registration extends Registration_Base {
         //TODO: clean personal ingression data
         final PersonalIngressionData ingressionData = result.getStudent().getPersonalIngressionDataByExecutionYear(executionYear);
         if (ingressionData == null) {
-            new PersonalIngressionData(result.getStudent(), executionYear, studentCandidacy.getPrecedentDegreeInformation());
-        } else {
-            studentCandidacy.getPrecedentDegreeInformation().setPersonalIngressionData(ingressionData);
+            new PersonalIngressionData(result.getStudent(), executionYear/*, studentCandidacy.getPrecedentDegreeInformation()*/);
+//        } else {
+//            studentCandidacy.getPrecedentDegreeInformation().setPersonalIngressionData(ingressionData);
         }
 
         studentCandidacy.getPrecedentDegreeInformation().setRegistration(result);
@@ -2134,14 +2134,14 @@ public class Registration extends Registration_Base {
         }
     }
 
-    public boolean hasMissingPersonalInformationForAcademicService(final ExecutionYear executionYear) {
-        if (getPrecedentDegreeInformation(executionYear) != null
-                && !getPersonalInformationBean(executionYear).isEditableByAcademicService()) {
-            return false;
-        }
-
-        return true;
-    }
+//    public boolean hasMissingPersonalInformationForAcademicService(final ExecutionYear executionYear) {
+//        if (getPrecedentDegreeInformation(executionYear) != null
+//                && !getPersonalInformationBean(executionYear).isEditableByAcademicService()) {
+//            return false;
+//        }
+//
+//        return true;
+//    }
 
     @Atomic
     public void createReingression(final ExecutionYear executionYear, final LocalDate reingressionDate) {
@@ -2180,43 +2180,43 @@ public class Registration extends Registration_Base {
         dataByExecutionYear.deleteReingression();
     }
 
-    public PersonalInformationBean getPersonalInformationBean(final ExecutionYear executionYear) {
-        PrecedentDegreeInformation precedentInformation = getPrecedentDegreeInformation(executionYear);
+//    public PersonalInformationBean getPersonalInformationBean(final ExecutionYear executionYear) {
+//        PrecedentDegreeInformation precedentInformation = getPrecedentDegreeInformation(executionYear);
+//
+//        if (precedentInformation == null) {
+//            precedentInformation = getLatestPrecedentDegreeInformation();
+//        }
+//        if (precedentInformation == null) {
+//            return new PersonalInformationBean(this);
+//        }
+//
+//        return new PersonalInformationBean(precedentInformation);
+//    }
 
-        if (precedentInformation == null) {
-            precedentInformation = getLatestPrecedentDegreeInformation();
-        }
-        if (precedentInformation == null) {
-            return new PersonalInformationBean(this);
-        }
+//    public PrecedentDegreeInformation getPrecedentDegreeInformation(final ExecutionYear executionYear) {
+//        for (PrecedentDegreeInformation precedentDegreeInfo : getPrecedentDegreesInformationsSet()) {
+//            if (precedentDegreeInfo.getPersonalIngressionData().getExecutionYear().equals(executionYear)) {
+//                return precedentDegreeInfo;
+//            }
+//        }
+//        return null;
+//    }
 
-        return new PersonalInformationBean(precedentInformation);
-    }
-
-    public PrecedentDegreeInformation getPrecedentDegreeInformation(final ExecutionYear executionYear) {
-        for (PrecedentDegreeInformation precedentDegreeInfo : getPrecedentDegreesInformationsSet()) {
-            if (precedentDegreeInfo.getPersonalIngressionData().getExecutionYear().equals(executionYear)) {
-                return precedentDegreeInfo;
-            }
-        }
-        return null;
-    }
-
-    public PrecedentDegreeInformation getLatestPrecedentDegreeInformation() {
-        TreeSet<PrecedentDegreeInformation> degreeInformations =
-                new TreeSet<>(Collections.reverseOrder(PrecedentDegreeInformation.COMPARATOR_BY_EXECUTION_YEAR));
-        ExecutionYear currentExecutionYear = ExecutionYear.findCurrent(getDegree().getCalendar());
-        for (PrecedentDegreeInformation pdi : getPrecedentDegreesInformationsSet()) {
-            if (!pdi.getExecutionYear().isAfter(currentExecutionYear)) {
-                degreeInformations.add(pdi);
-            }
-        }
-
-        if (degreeInformations.isEmpty()) {
-            return null;
-        }
-        return degreeInformations.iterator().next();
-    }
+//    public PrecedentDegreeInformation getLatestPrecedentDegreeInformation() {
+//        TreeSet<PrecedentDegreeInformation> degreeInformations =
+//                new TreeSet<>(Collections.reverseOrder(PrecedentDegreeInformation.COMPARATOR_BY_EXECUTION_YEAR));
+//        ExecutionYear currentExecutionYear = ExecutionYear.findCurrent(getDegree().getCalendar());
+//        for (PrecedentDegreeInformation pdi : getPrecedentDegreesInformationsSet()) {
+//            if (!pdi.getExecutionYear().isAfter(currentExecutionYear)) {
+//                degreeInformations.add(pdi);
+//            }
+//        }
+//
+//        if (degreeInformations.isEmpty()) {
+//            return null;
+//        }
+//        return degreeInformations.iterator().next();
+//    }
 
     public int getNumberEnroledCurricularCoursesInCurrentYear() {
         final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();

@@ -93,13 +93,13 @@ import jvstm.cps.ConsistencyPredicate;
 
 public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base {
 
-    public static Comparator<PrecedentDegreeInformation> COMPARATOR_BY_EXECUTION_YEAR =
-            new Comparator<PrecedentDegreeInformation>() {
-                @Override
-                public int compare(PrecedentDegreeInformation info1, PrecedentDegreeInformation info2) {
-                    return info1.getExecutionYear().getYear().compareTo(info2.getExecutionYear().getYear());
-                }
-            };
+//    public static Comparator<PrecedentDegreeInformation> COMPARATOR_BY_EXECUTION_YEAR =
+//            new Comparator<PrecedentDegreeInformation>() {
+//                @Override
+//                public int compare(PrecedentDegreeInformation info1, PrecedentDegreeInformation info2) {
+//                    return info1.getExecutionYear().getYear().compareTo(info2.getExecutionYear().getYear());
+//                }
+//            };
 
     public PrecedentDegreeInformation() {
         super();
@@ -107,9 +107,9 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
         setLastModifiedDate(new DateTime());
     }
 
-    public void edit(PersonalIngressionData personalIngressionData, Registration registration,
+    public void edit(/*PersonalIngressionData personalIngressionData, */Registration registration,
             PrecedentDegreeInformationBean precedentDegreeInformationBean, StudentCandidacy studentCandidacy) {
-        setPersonalIngressionData(personalIngressionData);
+//        setPersonalIngressionData(personalIngressionData);
         setRegistration(registration);
         setStudentCandidacy(studentCandidacy);
         Unit institution = precedentDegreeInformationBean.getInstitution();
@@ -128,7 +128,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
         setSchoolLevel(precedentDegreeInformationBean.getSchoolLevel());
         setOtherSchoolLevel(precedentDegreeInformationBean.getOtherSchoolLevel());
 
-        setInstitutionType(personalIngressionData.getHighSchoolType());
+//        setInstitutionType(personalIngressionData.getHighSchoolType());
 
         checkAndUpdatePrecedentInformation(precedentDegreeInformationBean);
         setLastModifiedDate(new DateTime());
@@ -160,9 +160,9 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
         return getInstitution() != null ? getInstitution().getName() : null;
     }
 
-    public ExecutionYear getExecutionYear() {
-        return getPersonalIngressionData().getExecutionYear();
-    }
+//    public ExecutionYear getExecutionYear() {
+//        return getPersonalIngressionData().getExecutionYear();
+//    }
 
     public void edit(final PersonalInformationBean bean, boolean isStudentEditing) {
         setConclusionGrade(bean.getConclusionGrade());
@@ -254,65 +254,65 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
         setPrecedentCountry(null);
         setPrecedentInstitution(null);
 
-        final PersonalIngressionData ingressionData = getPersonalIngressionData();
-        setPersonalIngressionData(null);
-        if (ingressionData != null && ingressionData.getPrecedentDegreesInformationsSet().isEmpty()) {
-            ingressionData.delete();
-        }
+//        final PersonalIngressionData ingressionData = getPersonalIngressionData();
+//        setPersonalIngressionData(null);
+//        if (ingressionData != null && ingressionData.getPrecedentDegreesInformationsSet().isEmpty()) {
+//            ingressionData.delete();
+//        }
 
         setRootDomainObject(null);
         deleteDomainObject();
     }
 
-    @Override
-    public void setPersonalIngressionData(PersonalIngressionData personalIngressionData) {
-        super.setPersonalIngressionData(personalIngressionData);
+//    @Override
+//    public void setPersonalIngressionData(PersonalIngressionData personalIngressionData) {
+//        super.setPersonalIngressionData(personalIngressionData);
+//
+//        if (personalIngressionData != null && getRegistration() != null
+//                && registrationHasRepeatedPDI(getRegistration(), personalIngressionData.getExecutionYear())) {
+//            throw new DomainException("A Registration cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
+//        }
+//    }
 
-        if (personalIngressionData != null && getRegistration() != null
-                && registrationHasRepeatedPDI(getRegistration(), personalIngressionData.getExecutionYear())) {
-            throw new DomainException("A Registration cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
-        }
-    }
+//    @Override
+//    public void setRegistration(Registration registration) {
+//        super.setRegistration(registration);
+//
+//        if (registration != null && getPersonalIngressionData() != null
+//                && registrationHasRepeatedPDI(registration, getPersonalIngressionData().getExecutionYear())) {
+//            throw new DomainException("A Registration cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
+//        }
+//    }
+//
+//    private static boolean registrationHasRepeatedPDI(Registration registration, ExecutionYear executionYear) {
+//        PrecedentDegreeInformation existingPdi = null;
+//        for (PrecedentDegreeInformation pdi : registration.getPrecedentDegreesInformationsSet()) {
+//            if (pdi.getExecutionYear().equals(executionYear)) {
+//                if (existingPdi == null) {
+//                    existingPdi = pdi;
+//                } else {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
 
-    @Override
-    public void setRegistration(Registration registration) {
-        super.setRegistration(registration);
+//    @ConsistencyPredicate
+//    public boolean checkHasAllRegistrationOrPhdInformation() {
+//        return hasAllRegistrationInformation() || (hasNoPersonalInformation() && hasAtLeastOneCandidacy());
+//    }
+//
+//    private boolean hasAllRegistrationInformation() {
+//        return getPersonalIngressionData() != null && getRegistration() != null;
+//    }
+//
+//    private boolean hasNoPersonalInformation() {
+//        return getPersonalIngressionData() == null && getRegistration() == null;
+//    }
 
-        if (registration != null && getPersonalIngressionData() != null
-                && registrationHasRepeatedPDI(registration, getPersonalIngressionData().getExecutionYear())) {
-            throw new DomainException("A Registration cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
-        }
-    }
-
-    private static boolean registrationHasRepeatedPDI(Registration registration, ExecutionYear executionYear) {
-        PrecedentDegreeInformation existingPdi = null;
-        for (PrecedentDegreeInformation pdi : registration.getPrecedentDegreesInformationsSet()) {
-            if (pdi.getExecutionYear().equals(executionYear)) {
-                if (existingPdi == null) {
-                    existingPdi = pdi;
-                } else {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    @ConsistencyPredicate
-    public boolean checkHasAllRegistrationOrPhdInformation() {
-        return hasAllRegistrationInformation() || (hasNoPersonalInformation() && hasAtLeastOneCandidacy());
-    }
-
-    private boolean hasAllRegistrationInformation() {
-        return getPersonalIngressionData() != null && getRegistration() != null;
-    }
-
-    private boolean hasNoPersonalInformation() {
-        return getPersonalIngressionData() == null && getRegistration() == null;
-    }
-
-    private boolean hasAtLeastOneCandidacy() {
-        return getStudentCandidacy() != null;
-    }
+//    private boolean hasAtLeastOneCandidacy() {
+//        return getStudentCandidacy() != null;
+//    }
 
 }

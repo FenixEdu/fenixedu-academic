@@ -46,16 +46,15 @@ public class PersonalIngressionData extends PersonalIngressionData_Base {
         setRootDomainObject(Bennu.getInstance());
         setLastModifiedDate(new DateTime());
     }
-
-    public PersonalIngressionData(ExecutionYear executionYear, PrecedentDegreeInformation precedentDegreeInformation) {
+    
+    public PersonalIngressionData(ExecutionYear executionYear) {
         this();
         setExecutionYear(executionYear);
-        addPrecedentDegreesInformations(precedentDegreeInformation);
-    }
+    }    
 
-    public PersonalIngressionData(Student student, ExecutionYear executionYear,
-            PrecedentDegreeInformation precedentDegreeInformation) {
-        this(executionYear, precedentDegreeInformation);
+
+    public PersonalIngressionData(Student student, ExecutionYear executionYear) {
+        this(executionYear);
         setStudent(student);
     }
 
@@ -170,7 +169,6 @@ public class PersonalIngressionData extends PersonalIngressionData_Base {
         // TODO: Make this method safe.	
         setStudent(null);
         setExecutionYear(null);
-        getPrecedentDegreesInformationsSet().clear();
         setRootDomainObject(null);
         setCountryOfResidence(null);
         setGrantOwnerProvider(null);
@@ -189,19 +187,19 @@ public class PersonalIngressionData extends PersonalIngressionData_Base {
         return getStudent() != null;
     }
 
-    @ConsistencyPredicate
-    public boolean checkMultiplicityOfPrecedentDegreesInformations() {
-        return getPrecedentDegreesInformationsSet().size() > 0;
-    }
+//    @ConsistencyPredicate
+//    public boolean checkMultiplicityOfPrecedentDegreesInformations() {
+//        return getPrecedentDegreesInformationsSet().size() > 0;
+//    }
 
     @Override
     public void setHighSchoolType(AcademicalInstitutionType highSchoolType) {
         super.setHighSchoolType(highSchoolType);
-        getPrecedentDegreesInformationsSet().forEach(pdi -> pdi.setInstitutionType(highSchoolType));
+//        getPrecedentDegreesInformationsSet().forEach(pdi -> pdi.setInstitutionType(highSchoolType));
     }
 
-    public void migrateHighSchoolType2PDI() {
-        getPrecedentDegreesInformationsSet().forEach(pdi -> pdi.setInstitutionType(super.getHighSchoolType()));
-    }
+//    public void migrateHighSchoolType2PDI() {
+//        getPrecedentDegreesInformationsSet().forEach(pdi -> pdi.setInstitutionType(super.getHighSchoolType()));
+//    }
 
 }

@@ -797,36 +797,36 @@ public class PersonalInformationBean implements Serializable {
         this.mobilityProgramDuration = mobilityProgramDuration;
     }
 
-    private PrecedentDegreeInformation getPrecedentDegreeInformation() {
-        final ExecutionYear currentExecutionYear = ExecutionYear.findCurrent(getRegistration().getDegree().getCalendar());
-        return getRegistration().getPrecedentDegreeInformation(currentExecutionYear);
-    }
+//    private PrecedentDegreeInformation getPrecedentDegreeInformation() {
+//        final ExecutionYear currentExecutionYear = ExecutionYear.findCurrent(getRegistration().getDegree().getCalendar());
+//        return getRegistration().getPrecedentDegreeInformation(currentExecutionYear);
+//    }
 
     public Student getStudent() {
         return getRegistration().getStudent();
     }
 
-    @Atomic
-    public void updatePersonalInformation(boolean isStudentEditing) {
-        PrecedentDegreeInformation precedentInfo = getPrecedentDegreeInformation();
-        PersonalIngressionData personalData;
-
-        if (precedentInfo == null) {
-            precedentInfo = new PrecedentDegreeInformation();
-            precedentInfo.setRegistration(getRegistration());
-
-            final ExecutionYear currentExecutionYear = ExecutionYear.findCurrent(getRegistration().getDegree().getCalendar());
-            personalData = getStudent().getPersonalIngressionDataByExecutionYear(currentExecutionYear);
-            if (personalData == null) {
-                personalData = new PersonalIngressionData(getStudent(), currentExecutionYear, precedentInfo);
-            } else {
-                personalData.addPrecedentDegreesInformations(precedentInfo);
-            }
-        } else {
-            personalData = precedentInfo.getPersonalIngressionData();
-        }
-
-        precedentInfo.edit(this, isStudentEditing);
-        personalData.edit(this);
-    }
+//    @Atomic
+//    public void updatePersonalInformation(boolean isStudentEditing) {
+//        PrecedentDegreeInformation precedentInfo = getPrecedentDegreeInformation();
+//        PersonalIngressionData personalData;
+//
+//        if (precedentInfo == null) {
+//            precedentInfo = new PrecedentDegreeInformation();
+//            precedentInfo.setRegistration(getRegistration());
+//
+//            final ExecutionYear currentExecutionYear = ExecutionYear.findCurrent(getRegistration().getDegree().getCalendar());
+//            personalData = getStudent().getPersonalIngressionDataByExecutionYear(currentExecutionYear);
+//            if (personalData == null) {
+//                personalData = new PersonalIngressionData(getStudent(), currentExecutionYear, precedentInfo);
+//            } else {
+//                personalData.addPrecedentDegreesInformations(precedentInfo);
+//            }
+//        } else {
+//            personalData = precedentInfo.getPersonalIngressionData();
+//        }
+//
+//        precedentInfo.edit(this, isStudentEditing);
+//        personalData.edit(this);
+//    }
 }

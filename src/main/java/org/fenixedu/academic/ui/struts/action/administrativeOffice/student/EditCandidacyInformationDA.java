@@ -67,7 +67,7 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
         if (chooseRegistrationOrPhd.getPhdRegistrationWrapper().isRegistration()) {
             final Registration registration = chooseRegistrationOrPhd.getPhdRegistrationWrapper().getRegistration();
             ExecutionYear currentExecutionYear = ExecutionYear.findCurrent(registration.getDegree().getCalendar());
-            return registration.getPersonalInformationBean(currentExecutionYear);
+//            return registration.getPersonalInformationBean(currentExecutionYear);
         }
         return null;
     }
@@ -131,7 +131,7 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
         }
 
         try {
-            personalInformationBean.updatePersonalInformation(false);
+//            personalInformationBean.updatePersonalInformation(false);
         } catch (DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
 
