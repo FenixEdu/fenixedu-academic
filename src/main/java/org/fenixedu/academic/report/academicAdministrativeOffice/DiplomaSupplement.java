@@ -63,6 +63,7 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.StringFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -71,7 +72,7 @@ import com.google.common.base.Strings;
 
 public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
-    private Optional<String> associatedInstitutions;
+    private Optional<LocalizedString> associatedInstitutions;
 
     protected DiplomaSupplement(final IDocumentRequest documentRequest, final Locale locale) {
         super(documentRequest, locale);
@@ -92,7 +93,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
         addParameter("bundle", ResourceBundle.getBundle(getBundle(), getLocale()));
         addParameter("name", StringFormatter.prettyPrint(getDocumentRequest().getPerson().getName().trim()));
 
-        associatedInstitutions = getDocumentRequest().getAssociatedInstitutionsContent();
+        associatedInstitutions = getDocumentRequest().getAssociatedInstitutions();
 
         // Group 1
         fillGroup1();
@@ -213,19 +214,27 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
         addParameter("institutionName", Bennu.getInstance().getInstitutionUnit().getName());
 
 
-        String institutionsWhereStudiesWereTaught = associatedInstitutions.orElseGet(() ->
-            new StringBuilder()
-                .append(Bennu.getInstance().getInstitutionUnit().getName())
-                .append(",")
-                .append(SINGLE_SPACE)
-                .append(BundleUtil.getString(Bundle.ENUMERATION, locale, Bennu.getInstance().getInstitutionUnit().getType().getName()))
-                .append(SINGLE_SPACE)
-                .append(BundleUtil.getString(Bundle.ACADEMIC, locale, "diploma.supplement.of"))
-                .append(SINGLE_SPACE)
-                .append(institutionsUniversityUnit.getName()).toString()
-        );
+        LocalizedString institutionsWhereStudiesWereTaught = associatedInstitutions.orElseGet(() ->
+                new LocalizedString(locale,  new StringBuilder()
+                        .append(Bennu.getInstance().getInstitutionUnit().getName())
+                        .append(",")
+                        .append(SINGLE_SPACE)
+                        .append(BundleUtil.getString(Bundle.ENUMERATION, locale, Bennu.getInstance().getInstitutionUnit().getType().getName()))
+                        .append(SINGLE_SPACE)
+                        .append(BundleUtil.getString(Bundle.ACADEMIC, locale, "diploma.supplement.of"))
+                        .append(SINGLE_SPACE)
+                        .append(institutionsUniversityUnit.getName()).toString())
+                .with(new Locale("en"), new StringBuilder()
+                        .append(Bennu.getInstance().getInstitutionUnit().getName())
+                        .append(",")
+                        .append(SINGLE_SPACE)
+                        .append(BundleUtil.getString(Bundle.ENUMERATION, locale, Bennu.getInstance().getInstitutionUnit().getType().getName()))
+                        .append(SINGLE_SPACE)
+                        .append(BundleUtil.getString(Bundle.ACADEMIC, locale, "diploma.supplement.of"))
+                        .append(SINGLE_SPACE)
+                        .append(institutionsUniversityUnit.getName()).toString()));
 
-        addParameter("institutionsWhereStudiesWereTaught", institutionsWhereStudiesWereTaught);
+        addParameter("institutionsWhereStudiesWereTaught", institutionsWhereStudiesWereTaught.getContent(getLocale()));
 
         addParameter("prevailingScientificArea", getDocumentRequest().getPrevailingScientificArea(getLocale()));
         if (CycleType.FIRST_CYCLE.equals(getDocumentRequest().getRequestedCycle())) {

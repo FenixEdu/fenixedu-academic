@@ -437,8 +437,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
         if (getDocumentRequest().isRequestForRegistration()) {
             return ((RegistrationAcademicServiceRequest) getDocumentRequest()).getDegreeType().getCreditsDescription();
         }
-
-        return null;
+        return " Créd.";
     }
 
     final protected String generateEndLine() {
