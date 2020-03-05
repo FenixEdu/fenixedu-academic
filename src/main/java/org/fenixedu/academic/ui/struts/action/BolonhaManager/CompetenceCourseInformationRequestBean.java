@@ -419,18 +419,20 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
     public void checkCompetenceCourseName() {
         final String normalizedName = StringFormatter.normalize(getName());
         final String normalizedNameEn = StringFormatter.normalize(getNameEn());
-        for (final CompetenceCourse competenceCourse : CompetenceCourse.readBolonhaCompetenceCourses()) {
-            if (!getCompetenceCourse().equals(competenceCourse)) {
-                if (StringFormatter.normalize(competenceCourse.getName()) != null) {
-                    if (StringFormatter.normalize(competenceCourse.getName()).equals(normalizedName)) {
-                        throw new DomainException("error.existingCompetenceCourseWithSameName",
-                                competenceCourse.getDepartmentUnit().getName());
+        if (!getName().equals(getCompetenceCourse().getName()) || !getNameEn().equals(getCompetenceCourse().getNameEn())) {
+            for (final CompetenceCourse competenceCourse : CompetenceCourse.readBolonhaCompetenceCourses()) {
+                if (!getCompetenceCourse().equals(competenceCourse)) {
+                    if (StringFormatter.normalize(competenceCourse.getName()) != null) {
+                        if (StringFormatter.normalize(competenceCourse.getName()).equals(normalizedName)) {
+                            throw new DomainException("error.existingCompetenceCourseWithSameName",
+                                    competenceCourse.getDepartmentUnit().getName());
+                        }
                     }
-                }
-                if (StringFormatter.normalize(competenceCourse.getNameEn()) != null) {
-                    if (StringFormatter.normalize(competenceCourse.getNameEn()).equals(normalizedNameEn)) {
-                        throw new DomainException("error.existingCompetenceCourseWithSameNameEn",
-                                competenceCourse.getDepartmentUnit().getName());
+                    if (StringFormatter.normalize(competenceCourse.getNameEn()) != null) {
+                        if (StringFormatter.normalize(competenceCourse.getNameEn()).equals(normalizedNameEn)) {
+                            throw new DomainException("error.existingCompetenceCourseWithSameNameEn",
+                                    competenceCourse.getDepartmentUnit().getName());
+                        }
                     }
                 }
             }
