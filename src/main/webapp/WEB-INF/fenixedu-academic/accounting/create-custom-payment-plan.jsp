@@ -32,7 +32,7 @@ ${portal.toolkit()}
     <spring:param name="event" value="${event.externalId}"/>
 </spring:url>
 
-<link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/accounting.css"/>
+<script type="text/javascript" src="${pageContext.request.contextPath}/bennu-toolkit/js/libs/moment.js"></script>
 
 <script type="text/javascript">
 
@@ -40,12 +40,14 @@ ${portal.toolkit()}
         let exemptionDateInput = $("#exemptionDate");
         let dueDateInput = $("#dueDate");
         let installmentInput = $("#installment");
+        let numberOfInstallmentInput = $("#numberOfInstallment");
         let addInstallmentButton = $("#add");
         let table = $("#table");
         let tbody = $("#table > tbody");
         let submitForm = $("#submitForm");
         let errorDueDate = $("#errorDueDate");
         let errorInstallment = $("#errorInstallment");
+        let errorNumberOfInstallment = $("#errorNumberOfInstallment");
         let errorDomain = $("#errorDomain");
         let currentAmountSpan = $("#currentAmount");
         let totalAmountSpan = $("#totalAmount");
@@ -186,7 +188,7 @@ ${portal.toolkit()}
             tbody.length > 0 ? tbody.append(tds) : table.append(tds);
         }
 
-        function addNewInstallment(dueDate, installment) {
+        function addNewInstallment(dueDate, installment, numberOfInstallment) {
             errorDueDate.text("");
             errorInstallment.text("");
 
@@ -200,6 +202,10 @@ ${portal.toolkit()}
                 errorInstallment.text("<spring:message code="accounting.event.custom.payment.plan.creation.installment.required" text="Installment required"/>");
                 error = true;
             }
+            if(numberOfInstallment === "") {
+                errorNumberOfInstallment.text("<spring:message code="accounting.event.custom.payment.plan.creation.numberOfInstallment.required" text="Number of Installments required"/>");
+                error = true;
+            }
             if(dueDate !== "" && isDuplicateDate(dueDate)) {
                 errorDueDate.text("<spring:message code="accounting.event.custom.payment.plan.creation.duplicate.due.date" text="Duplicate due date"/>");
                 error = true;
@@ -211,8 +217,18 @@ ${portal.toolkit()}
 
             if(error) return;
 
-            addToData(dueDate, installment);
+            var n;
+            for (n = 0; n < numberOfInstallment; n++) {
+                addToData(moment(dueDate, 'YYYY-MM-DD', true).add(n, 'month').format("YYYY-MM-DD"), installment);
+            }
             tbody.empty();
+
+            updateCurrentAmount();
+
+            if (currentAmount < totalAmount) {
+                var diffValue = totalAmount - currentAmount;
+                addToData(moment(dueDate, 'YYYY-MM-DD', true).add(n, 'month').format("YYYY-MM-DD"), formatNumberToCurrency("" + diffValue));
+            }
 
             updateCurrentAmount();
 
@@ -253,7 +269,7 @@ ${portal.toolkit()}
         addInstallmentButton.click(function(e) {
             e.preventDefault();
             e.stopPropagation();
-            addNewInstallment(dueDateInput.val(), installmentInput.val());
+            addNewInstallment(dueDateInput.val(), installmentInput.val(), numberOfInstallmentInput.val());
         });
 
         $(document).on("click", ".delete-installment", function(e) {
@@ -340,7 +356,12 @@ ${portal.toolkit()}
                             <input type="text" id="installment" name="installment" pattern="^€\d{1,3}(\.\d{3})*(,\d+)?$" value="" data-type="currency" placeholder="<spring:message code="accounting.event.custom.payment.plan.creation.placeholder" text="e.g."/> €1.234,56">
                             <span id="errorInstallment" class="error"></span>
                         </div>
-                        <div class="col-sm-offset-8">
+                        <label for="numberOfInstallment" class="control-label col-sm-1"><spring:message code="accounting.event.custom.payment.plan.numberOfInstallment" text="Number of Installment"/></label>
+                        <div class="col-sm-2">
+                            <input type="text" id="numberOfInstallment" name="numberOfInstallment" pattern="^\d+$" value="" data-type="integer" placeholder="<spring:message code="accounting.event.custom.payment.plan.creation.placeholder" text="e.g."/> 12">
+                            <span id="errorNumberOfInstallment" class="error"></span>
+                        </div>
+                        <div class="col-sm-offset-6">
                             <a id="add" class="btn btn-primary" type="button" href=""><spring:message code="accounting.event.custom.payment.plan.creation.add.installment" text="Add Installment"/></a>
                         </div>
                     </div>
