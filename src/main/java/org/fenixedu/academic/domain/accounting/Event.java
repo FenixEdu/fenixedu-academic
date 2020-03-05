@@ -1243,17 +1243,22 @@ public abstract class Event extends Event_Base {
         }
         final DueDateAmountMap currentMap = getDueDateAmountMap();
         final LocalDate firstCustomDate = map.keySet().stream().min((d1, d2) -> d1.compareTo(d2)).orElse(null);
+        final LocalDate firstCurrentDate = currentMap.keySet().stream().min((d1, d2) -> d1.compareTo(d2)).orElse(null);
         final LocalDate lastCurrentDate = currentMap.keySet().stream().max((d1, d2) -> d1.compareTo(d2)).orElse(null);
-        if (firstCustomDate.isBefore(lastCurrentDate)) {
-            throw new DomainException(Optional.of(Bundle.ACCOUNTING), "error.custom.payment.plan.must.be.after.currentPlan");
+        if (exemptionDate.toLocalDate().isBefore(firstCurrentDate) && getAccountingTransactionsSet().isEmpty()) {
+            // do nothing...
+        } else {
+            if (firstCustomDate.isBefore(lastCurrentDate)) {
+                throw new DomainException(Optional.of(Bundle.ACCOUNTING), "error.custom.payment.plan.must.be.after.currentPlan");
+            }
+
+            currentMap.entrySet().forEach(e -> map.put(e.getKey(), e.getValue()));
+
+            final EventExemption eventExemption = new EventExemption(this, Authenticate.getUser().getPerson(),
+                    dueAmount, EventExemptionJustificationType.CUSTOM_PAYMENT_PLAN, new DateTime(),
+                    EventExemptionJustificationType.CUSTOM_PAYMENT_PLAN.getLocalizedName());
+            eventExemption.setWhenCreated(exemptionDate);
         }
-
-        currentMap.entrySet().forEach(e -> map.put(e.getKey(), e.getValue()));
-
-        final EventExemption eventExemption = new EventExemption(this, Authenticate.getUser().getPerson(),
-                dueAmount, EventExemptionJustificationType.CUSTOM_PAYMENT_PLAN, new DateTime(),
-                EventExemptionJustificationType.CUSTOM_PAYMENT_PLAN.getLocalizedName());
-        eventExemption.setWhenCreated(exemptionDate);
 
         setDueDateAmountMap(new DueDateAmountMap(map));
     }
