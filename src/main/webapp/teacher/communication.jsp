@@ -33,7 +33,7 @@
             ${fr:message('resources.ApplicationResources', 'email')}
         </label>
         <div class="col-md-10">
-            <input id="email" type="email" required class="form-control" name="email" placeholder="Email" value="${executionCourse.email}">
+            <input id="email" type="email" class="form-control" name="email" placeholder="Email" value="${executionCourse.email}">
         </div>
     </div>
 
