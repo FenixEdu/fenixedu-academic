@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>fenixedu-academic</artifactId>
-    <version>22.17.0</version>
+    <version>22.18.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>FenixEdu Academic</name>
@@ -79,7 +79,7 @@
         <connection>scm:git:git@github.com:fenixedu/fenixedu-academic.git</connection>
         <developerConnection>scm:git:git@github.com:fenixedu/fenixedu-academic.git</developerConnection>
         <url>http://fenixedu.org</url>
-        <tag>v22.17.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <build>
