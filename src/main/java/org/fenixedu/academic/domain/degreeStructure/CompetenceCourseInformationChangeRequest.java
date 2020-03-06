@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.degreeStructure;
 import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import org.fenixedu.academic.domain.CompetenceCourse;
+import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -178,18 +179,23 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
         final String normalizedName = StringFormatter.normalize(name);
         final String normalizedNameEn = StringFormatter.normalize(nameEn);
         if (!name.equals(getCompetenceCourse().getName()) || !nameEn.equals(getCompetenceCourse().getNameEn())) {
+            Department thisDepartment = getCompetenceCourse().getDepartmentUnit().getDepartment();
             for (final CompetenceCourse competenceCourse : CompetenceCourse.readBolonhaCompetenceCourses()) {
-                if (!getCompetenceCourse().equals(competenceCourse)) {
-                    if (StringFormatter.normalize(competenceCourse.getName()) != null) {
-                        if (StringFormatter.normalize(competenceCourse.getName()).equals(normalizedName)) {
-                            throw new DomainException("error.existingCompetenceCourseWithSameName",
-                                    competenceCourse.getDepartmentUnit().getName());
+                Department otherDepartment = competenceCourse.getDepartmentUnit().getDepartment();
+                if ((!thisDepartment.getIgnoreNameValidation() && !otherDepartment.getIgnoreNameValidation())
+                        || (thisDepartment.getIgnoreNameValidation() && thisDepartment.equals(otherDepartment))) {
+                    if (!getCompetenceCourse().equals(competenceCourse)) {
+                        if (StringFormatter.normalize(competenceCourse.getName()) != null) {
+                            if (StringFormatter.normalize(competenceCourse.getName()).equals(normalizedName)) {
+                                throw new DomainException("error.existingCompetenceCourseWithSameName",
+                                        competenceCourse.getDepartmentUnit().getName());
+                            }
                         }
-                    }
-                    if (StringFormatter.normalize(competenceCourse.getNameEn()) != null) {
-                        if (StringFormatter.normalize(competenceCourse.getNameEn()).equals(normalizedNameEn)) {
-                            throw new DomainException("error.existingCompetenceCourseWithSameNameEn",
-                                    competenceCourse.getDepartmentUnit().getName());
+                        if (StringFormatter.normalize(competenceCourse.getNameEn()) != null) {
+                            if (StringFormatter.normalize(competenceCourse.getNameEn()).equals(normalizedNameEn)) {
+                                throw new DomainException("error.existingCompetenceCourseWithSameNameEn",
+                                        competenceCourse.getDepartmentUnit().getName());
+                            }
                         }
                     }
                 }
