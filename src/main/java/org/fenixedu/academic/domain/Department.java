@@ -250,4 +250,8 @@ public class Department extends Department_Base {
 //        return departments;
     }
 
+    @Override
+    public Boolean getIgnoreNameValidation() {
+        return super.getIgnoreNameValidation() == null ? false : super.getIgnoreNameValidation();
+    }
 }

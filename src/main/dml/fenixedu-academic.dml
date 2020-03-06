@@ -656,6 +656,7 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
         String realName;
         String realNameEn;
         Boolean active;
+        Boolean ignoreNameValidation;
     }
 
     class District  {
