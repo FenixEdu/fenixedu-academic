@@ -19,10 +19,13 @@
 package org.fenixedu.academic.ui.faces.components.degreeStructure;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
@@ -112,8 +115,7 @@ public class UICourseGroup extends UIDegreeModule {
                 }
                 writer.endElement("table");
 
-                if (!this.hideCourses
-                        && this.courseGroup.getSortedOpenChildContextsWithCurricularCourses(executionYear).size() > 0) {
+                if (!this.hideCourses && getSortedOpenChildContextsWithCurricularCourses().size() > 0) {
                     encodeChildCurricularCourses(70, (this.depth + 1) * 3);
                     // encodeSumsFooter(sums);
                 }
@@ -134,8 +136,14 @@ public class UICourseGroup extends UIDegreeModule {
         }
     }
 
+    private List<Context> getSortedOpenChildContextsWithCurricularCourses() {
+        return this.courseGroup.getOpenChildContextsForExecutionAggregation(CurricularCourse.class, executionYear).stream()
+                .sorted().collect(Collectors.toList());
+    }
+
     private void encodeChildCourseGroups() throws IOException {
-        for (Context context : this.courseGroup.getSortedOpenChildContextsWithCourseGroups(this.executionYear)) {
+        for (Context context : this.courseGroup.getOpenChildContextsForExecutionAggregation(CourseGroup.class, this.executionYear)
+                .stream().sorted().collect(Collectors.toList())) {
             new UICourseGroup(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth + 1,
                     this.tabs + "\t", this.onlyStructure, this.toOrder, this.hideCourses, this.reportsAvailable,
                     this.executionYear, this.module, this.currentPage, this.expandable).encodeBegin(facesContext);
@@ -164,7 +172,7 @@ public class UICourseGroup extends UIDegreeModule {
             writer.endElement("table");
             writer.endElement("div");
 
-            if (!this.hideCourses && this.courseGroup.getSortedOpenChildContextsWithCurricularCourses(executionYear).size() > 0) {
+            if (!this.hideCourses && getSortedOpenChildContextsWithCurricularCourses().size() > 0) {
                 encodeChildCurricularCourses(width, courseGroupIndent);
                 // encodeSumsFooter(sums);
             } else {
@@ -297,8 +305,7 @@ public class UICourseGroup extends UIDegreeModule {
         writer.writeAttribute("colspan", 3, null);
 
         boolean expandOptionAvailable = false;
-        if (expandable && !isToRenderExpanded()
-                && !this.courseGroup.getSortedOpenChildContextsWithCurricularCourses(executionYear).isEmpty()) {
+        if (expandable && !isToRenderExpanded() && !getSortedOpenChildContextsWithCurricularCourses().isEmpty()) {
             encodeLink(module + "/" + currentPage, "&" + EXPAND_GROUP_ID_PARAM + "=" + this.courseGroup.getExternalId(), false,
                     "label.expand");
             expandOptionAvailable = true;
@@ -335,7 +342,7 @@ public class UICourseGroup extends UIDegreeModule {
         writer.writeAttribute("style", "width: " + (width - (this.depth * 3) - 3) + "em;", null);
 
         if (!expandable || isToRenderExpanded()) {
-            for (Context context : this.courseGroup.getSortedOpenChildContextsWithCurricularCourses(executionYear)) {
+            for (Context context : getSortedOpenChildContextsWithCurricularCourses()) {
                 new UICurricularCourse(context.getChildDegreeModule(), context, this.toEdit, this.showRules, this.depth,
                         this.tabs + "\t", this.executionYear, this.module, null, false).encodeBegin(facesContext);
             }

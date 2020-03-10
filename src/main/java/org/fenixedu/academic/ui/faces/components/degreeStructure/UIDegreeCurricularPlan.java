@@ -111,8 +111,8 @@ public class UIDegreeCurricularPlan extends UIInput {
         final Boolean toOrder =
                 (this.getBooleanAttribute(TO_ORDER) != null) ? (Boolean) this.getBooleanAttribute(TO_ORDER) : Boolean.FALSE;
         final Boolean hideCourses = getHideCourseAttribute();
-        final Boolean reportsAvailable =
-                (this.getBooleanAttribute(REPORTS_AVAILABLE) != null) ? (Boolean) this.getBooleanAttribute(REPORTS_AVAILABLE) : Boolean.FALSE;
+        final Boolean reportsAvailable = (this.getBooleanAttribute(REPORTS_AVAILABLE) != null) ? (Boolean) this
+                .getBooleanAttribute(REPORTS_AVAILABLE) : Boolean.FALSE;
         if (this.getAttributes().get(EXECUTION_YEAR) != null) {
             executionYear = (ExecutionYear) this.getAttributes().get(EXECUTION_YEAR);
         }
@@ -144,14 +144,14 @@ public class UIDegreeCurricularPlan extends UIInput {
     }
 
     protected Boolean getHideCourseAttribute() {
-        final Boolean hideCourses =
-                (this.getBooleanAttribute(HIDE_COURSES) != null) ? (Boolean) this.getBooleanAttribute(HIDE_COURSES) : Boolean.FALSE;
+        final Boolean hideCourses = (this.getBooleanAttribute(HIDE_COURSES) != null) ? (Boolean) this
+                .getBooleanAttribute(HIDE_COURSES) : Boolean.FALSE;
         return hideCourses;
     }
 
     protected Boolean getOnlyStructureAttribute() {
-        final Boolean onlyStructure =
-                (this.getBooleanAttribute(ONLY_STRUCTURE) != null) ? (Boolean) this.getBooleanAttribute(ONLY_STRUCTURE) : Boolean.FALSE;
+        final Boolean onlyStructure = (this.getBooleanAttribute(ONLY_STRUCTURE) != null) ? (Boolean) this
+                .getBooleanAttribute(ONLY_STRUCTURE) : Boolean.FALSE;
         return onlyStructure;
     }
 
@@ -273,7 +273,8 @@ public class UIDegreeCurricularPlan extends UIInput {
         boolean anyCurricularCourseEncoded = false;
 
         for (Context context : curricularPeriod.getContextsSet()) {
-            if (context.getChildDegreeModule().isLeaf() && (executionYear == null || context.isValid(executionYear))) {
+            if (context.getChildDegreeModule().isLeaf()
+                    && (executionYear == null || context.isValidForExecutionAggregation(executionYear))) {
                 anyCurricularCourseEncoded = true;
 
                 CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
@@ -381,8 +382,8 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.writeAttribute("class", "nobullet mtop05 mbottom2", null);
         writer.writeAttribute("style", "padding-left: 0pt; font-style: italic;", null);
 
-        encodeSubtitleElement(Bundle.ENUMERATION, RegimeType.SEMESTRIAL.toString() + ".ACRONYM",
-                RegimeType.SEMESTRIAL.toString(), null);
+        encodeSubtitleElement(Bundle.ENUMERATION, RegimeType.SEMESTRIAL.toString() + ".ACRONYM", RegimeType.SEMESTRIAL.toString(),
+                null);
         encodeSubtitleElement(Bundle.ENUMERATION, RegimeType.ANUAL.toString() + ".ACRONYM", RegimeType.ANUAL.toString(), null);
 
         encodeSubtitleElement(Bundle.BOLONHA, "contactLessonHoursAcronym", "contactLessonHours", null);

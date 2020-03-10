@@ -100,7 +100,7 @@ public class DegreeModulesSelectionLimitExecutor extends CurricularRuleExecutor 
     }
 
     private List<Context> getValidChildContexts(final EnrolmentContext enrolmentContext, final CourseGroup courseGroup) {
-        return enrolmentContext.isToEvaluateRulesByYear() ? courseGroup.getValidChildContexts(
+        return enrolmentContext.isToEvaluateRulesByYear() ? courseGroup.getValidChildContextsForExecutionAggregation(
                 enrolmentContext.getExecutionYear()) : courseGroup.getValidChildContexts(enrolmentContext.getExecutionPeriod());
     }
 

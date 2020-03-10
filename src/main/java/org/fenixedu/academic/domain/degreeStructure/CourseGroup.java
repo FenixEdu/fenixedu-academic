@@ -30,6 +30,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections.Predicate;
@@ -153,10 +154,10 @@ public class CourseGroup extends CourseGroup_Base {
         dcp.append(tab);
         dcp.append("[CG ").append(this.getExternalId()).append("] ").append(this.getName()).append("\n");
 
-        for (Context context : this.getSortedChildContextsWithCurricularCourses()) {
+        for (Context context : this.getChildContexts(CurricularCourse.class).stream().sorted().collect(Collectors.toList())) {
             context.getChildDegreeModule().print(dcp, tab, context);
         }
-        for (Context context : this.getSortedChildContextsWithCourseGroups()) {
+        for (Context context : this.getChildContexts(CourseGroup.class).stream().sorted().collect(Collectors.toList())) {
             context.getChildDegreeModule().print(dcp, tab, context);
         }
     }
@@ -173,11 +174,11 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public List<Context> getChildContexts(Class<? extends DegreeModule> clazz) {
-        return getValidChildContexts(clazz, (ExecutionYear) null);
+        return getValidChildContextsForExecutionAggregation(clazz, (ExecutionYear) null);
     }
 
-    public List<Context> getValidChildContexts(final ExecutionYear executionYear) {
-        return getValidChildContexts(null, executionYear);
+    public List<Context> getValidChildContextsForExecutionAggregation(final ExecutionYear executionYear) {
+        return getValidChildContextsForExecutionAggregation(null, executionYear);
     }
 
     public List<Context> getValidChildContexts(final ExecutionInterval executionInterval) {
@@ -188,10 +189,12 @@ public class CourseGroup extends CourseGroup_Base {
     // CurricularCourse
     // the context must have same semester of any ExecutionPeriod of
     // ExecutionYear
-    public List<Context> getValidChildContexts(final Class<? extends DegreeModule> clazz, final ExecutionYear executionYear) {
+    public List<Context> getValidChildContextsForExecutionAggregation(final Class<? extends DegreeModule> clazz,
+            final ExecutionYear executionYear) {
         final List<Context> result = new ArrayList<Context>();
         for (final Context context : this.getChildContextsSet()) {
-            if (hasClass(clazz, context.getChildDegreeModule()) && ((executionYear == null || context.isValid(executionYear)))) {
+            if (hasClass(clazz, context.getChildDegreeModule())
+                    && ((executionYear == null || context.isValidForExecutionAggregation(executionYear)))) {
                 result.add(context);
             }
         }
@@ -214,23 +217,23 @@ public class CourseGroup extends CourseGroup_Base {
         return result;
     }
 
-    public List<Context> getSortedOpenChildContextsWithCurricularCourses(final ExecutionYear executionYear) {
-        final List<Context> result = getOpenChildContexts(CurricularCourse.class, executionYear);
-        Collections.sort(result);
-        return result;
-    }
+//    public List<Context> getSortedOpenChildContextsWithCurricularCourses(final ExecutionYear executionYear) {
+//        final List<Context> result = getOpenChildContextsForExecutionAggregation(CurricularCourse.class, executionYear);
+//        Collections.sort(result);
+//        return result;
+//    }
 
-    public List<Context> getSortedOpenChildContextsWithCourseGroups(final ExecutionYear executionYear) {
-        final List<Context> result = this.getOpenChildContexts(CourseGroup.class, executionYear);
-        Collections.sort(result);
-        return result;
-    }
+//    public List<Context> getSortedOpenChildContextsWithCourseGroups(final ExecutionYear executionYear) {
+//        final List<Context> result = this.getOpenChildContextsForExecutionAggregation(CourseGroup.class, executionYear);
+//        Collections.sort(result);
+//        return result;
+//    }
 
-    public List<Context> getSortedOpenChildContextsWithCourseGroups(final ExecutionInterval executionInterval) {
-        final List<Context> result = this.getOpenChildContexts(CourseGroup.class, executionInterval);
-        Collections.sort(result);
-        return result;
-    }
+//    public List<Context> getSortedOpenChildContextsWithCourseGroups(final ExecutionInterval executionInterval) {
+//        final List<Context> result = this.getOpenChildContexts(CourseGroup.class, executionInterval);
+//        Collections.sort(result);
+//        return result;
+//    }
 
     public List<Context> getOpenChildContexts(final Class<? extends DegreeModule> clazz,
             final ExecutionInterval executionInterval) {
@@ -244,7 +247,8 @@ public class CourseGroup extends CourseGroup_Base {
         return result;
     }
 
-    public List<Context> getOpenChildContexts(final Class<? extends DegreeModule> clazz, final ExecutionYear executionYear) {
+    public List<Context> getOpenChildContextsForExecutionAggregation(final Class<? extends DegreeModule> clazz,
+            final ExecutionYear executionYear) {
         final List<Context> result = new ArrayList<Context>();
         for (final Context context : getChildContextsSet()) {
             if (hasClass(clazz, context.getChildDegreeModule()) && ((executionYear == null || context.isOpen(executionYear)))) {
@@ -258,29 +262,29 @@ public class CourseGroup extends CourseGroup_Base {
         return clazz == null || clazz.isAssignableFrom(degreeModule.getClass());
     }
 
-    public List<Context> getSortedChildContextsWithCurricularCourses() {
-        List<Context> result = this.getChildContexts(CurricularCourse.class);
-        Collections.sort(result);
-        return result;
-    }
+//    public List<Context> getSortedChildContextsWithCurricularCourses() {
+//        List<Context> result = this.getChildContexts(CurricularCourse.class);
+//        Collections.sort(result);
+//        return result;
+//    }
 
-    public List<Context> getSortedChildContextsWithCurricularCoursesByExecutionYear(ExecutionYear executionYear) {
-        List<Context> result = this.getValidChildContexts(CurricularCourse.class, executionYear);
-        Collections.sort(result);
-        return result;
-    }
+//    public List<Context> getSortedChildContextsWithCurricularCoursesByExecutionYear(ExecutionYear executionYear) {
+//        List<Context> result = this.getValidChildContextsForExecutionAggregation(CurricularCourse.class, executionYear);
+//        Collections.sort(result);
+//        return result;
+//    }
 
-    public List<Context> getSortedChildContextsWithCourseGroups() {
-        List<Context> result = new ArrayList<Context>(this.getChildContexts(CourseGroup.class));
-        Collections.sort(result);
-        return result;
-    }
+//    public List<Context> getSortedChildContextsWithCourseGroups() {
+//        List<Context> result = new ArrayList<Context>(this.getChildContexts(CourseGroup.class));
+//        Collections.sort(result);
+//        return result;
+//    }
 
-    public List<Context> getSortedChildContextsWithCourseGroupsByExecutionYear(ExecutionYear executionYear) {
-        List<Context> result = this.getValidChildContexts(CourseGroup.class, executionYear);
-        Collections.sort(result);
-        return result;
-    }
+//    public List<Context> getSortedChildContextsWithCourseGroupsByExecutionYear(ExecutionYear executionYear) {
+//        List<Context> result = this.getValidChildContexts(CourseGroup.class, executionYear);
+//        Collections.sort(result);
+//        return result;
+//    }
 
     @Override
     public List<CurricularRule> getParticipatingCurricularRules() {
@@ -351,9 +355,9 @@ public class CourseGroup extends CourseGroup_Base {
     public void orderChild(Context contextToOrder, int position) {
         List<Context> newSort = null;
         if (contextToOrder.getChildDegreeModule() instanceof CurricularCourse) {
-            newSort = this.getSortedChildContextsWithCurricularCourses();
+            newSort = this.getChildContexts(CurricularCourse.class).stream().sorted().collect(Collectors.toList());
         } else {
-            newSort = this.getSortedChildContextsWithCourseGroups();
+            newSort = this.getChildContexts(CourseGroup.class).stream().sorted().collect(Collectors.toList());
         }
 
         if (newSort.size() <= 1 || position < 0 || position > newSort.size()) {
@@ -376,7 +380,7 @@ public class CourseGroup extends CourseGroup_Base {
     public Set<DegreeModule> collectAllChildDegreeModules(final Class<? extends DegreeModule> clazz,
             final ExecutionYear executionYear) {
         final Set<DegreeModule> result = new HashSet<DegreeModule>();
-        for (final Context context : this.getValidChildContexts(executionYear)) {
+        for (final Context context : this.getValidChildContextsForExecutionAggregation(executionYear)) {
             final DegreeModule degreeModule = context.getChildDegreeModule();
             if (clazz.isAssignableFrom(degreeModule.getClass())) {
                 result.add(degreeModule);
@@ -389,26 +393,26 @@ public class CourseGroup extends CourseGroup_Base {
         return result;
     }
 
-    public Set<DegreeModule> collectAllChildDegreeModules(final Class<? extends DegreeModule> clazz,
-            final ExecutionInterval executionInterval) {
-        final Set<DegreeModule> result = new HashSet<DegreeModule>();
-        for (final Context context : getValidChildContexts(executionInterval)) {
-            final DegreeModule degreeModule = context.getChildDegreeModule();
-            if (clazz.isAssignableFrom(degreeModule.getClass())) {
-                result.add(degreeModule);
-            }
-            if (!degreeModule.isLeaf()) {
-                final CourseGroup courseGroup = (CourseGroup) degreeModule;
-                result.addAll(courseGroup.collectAllChildDegreeModules(clazz, executionInterval));
-            }
-        }
-        return result;
-    }
+//    public Set<DegreeModule> collectAllChildDegreeModules(final Class<? extends DegreeModule> clazz,
+//            final ExecutionInterval executionInterval) {
+//        final Set<DegreeModule> result = new HashSet<DegreeModule>();
+//        for (final Context context : getValidChildContexts(executionInterval)) {
+//            final DegreeModule degreeModule = context.getChildDegreeModule();
+//            if (clazz.isAssignableFrom(degreeModule.getClass())) {
+//                result.add(degreeModule);
+//            }
+//            if (!degreeModule.isLeaf()) {
+//                final CourseGroup courseGroup = (CourseGroup) degreeModule;
+//                result.addAll(courseGroup.collectAllChildDegreeModules(clazz, executionInterval));
+//            }
+//        }
+//        return result;
+//    }
 
     public void collectChildDegreeModulesIncludingFullPath(Class<? extends DegreeModule> clazz, List<List<DegreeModule>> result,
             List<DegreeModule> previousDegreeModulesPath, ExecutionYear executionYear) {
         final List<DegreeModule> currentDegreeModulesPath = previousDegreeModulesPath;
-        for (final Context context : this.getValidChildContexts(executionYear)) {
+        for (final Context context : this.getValidChildContextsForExecutionAggregation(executionYear)) {
             List<DegreeModule> newDegreeModulesPath = null;
             if (clazz.isAssignableFrom(context.getChildDegreeModule().getClass())) {
                 newDegreeModulesPath =
@@ -691,9 +695,9 @@ public class CourseGroup extends CourseGroup_Base {
         return result;
     }
 
-    public Set<DegreeModule> getChildDegreeModulesValidOn(final ExecutionYear executionYear) {
+    public Set<DegreeModule> getChildDegreeModulesValidOnExecutionAggregation(final ExecutionYear executionYear) {
         final Set<DegreeModule> result = new HashSet<DegreeModule>();
-        for (final Context context : getValidChildContexts(executionYear)) {
+        for (final Context context : getValidChildContextsForExecutionAggregation(executionYear)) {
             result.add(context.getChildDegreeModule());
         }
 
@@ -756,17 +760,6 @@ public class CourseGroup extends CourseGroup_Base {
         for (final Context context : getValidChildContexts(executionInterval)) {
             if (context.getChildDegreeModule().isCurricularCourse()) {
                 result.add((CurricularCourse) context.getChildDegreeModule());
-            }
-        }
-
-        return result;
-    }
-
-    public List<Context> getChildContextsForCurricularCourses(final ExecutionInterval executionInterval) {
-        final List<Context> result = new ArrayList<Context>();
-        for (final Context context : getChildContexts(CurricularCourse.class)) {
-            if (context.isValid(executionInterval)) {
-                result.add(context);
             }
         }
 
@@ -850,7 +843,7 @@ public class CourseGroup extends CourseGroup_Base {
     @Override
     public void applyToCurricularCourses(final ExecutionYear executionYear, final Predicate predicate) {
         for (final Context context : getChildContextsSet()) {
-            if (executionYear == null || context.isValid(executionYear)) {
+            if (executionYear == null || context.isValidForExecutionAggregation(executionYear)) {
                 final DegreeModule childDegreeModule = context.getChildDegreeModule();
                 childDegreeModule.applyToCurricularCourses(executionYear, predicate);
             }

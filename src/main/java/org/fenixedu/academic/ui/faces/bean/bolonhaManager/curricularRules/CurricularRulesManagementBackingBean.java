@@ -446,46 +446,6 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         this.courseGroupItems = courseGroupItems;
     }
 
-    public Integer getMinimumYear() {
-        if (getViewState().getAttribute("minimumYear") == null) {
-            if (getCurricularRule() != null && getCurricularRule() instanceof AnyCurricularCourse) {
-                AnyCurricularCourse anyCurricularCourse = (AnyCurricularCourse) getCurricularRule();
-                if (anyCurricularCourse.getMinimumYear() != null) {
-                    setMinimumYear(anyCurricularCourse.getMinimumYear());
-                }
-            }
-        }
-        return (Integer) getViewState().getAttribute("minimumYear");
-    }
-
-    public void setMinimumYear(Integer minimumYear) {
-        if (minimumYear == null) {
-            getViewState().removeAttribute("minimumYear");
-        } else {
-            getViewState().setAttribute("minimumYear", minimumYear);
-        }
-    }
-
-    public Integer getMaximumYear() {
-        if (getViewState().getAttribute("maximumYear") == null) {
-            if (getCurricularRule() != null && getCurricularRule() instanceof AnyCurricularCourse) {
-                AnyCurricularCourse anyCurricularCourse = (AnyCurricularCourse) getCurricularRule();
-                if (anyCurricularCourse.getMaximumYear() != null) {
-                    setMaximumYear(anyCurricularCourse.getMaximumYear());
-                }
-            }
-        }
-        return (Integer) getViewState().getAttribute("maximumYear");
-    }
-
-    public void setMaximumYear(Integer maximumYear) {
-        if (maximumYear == null) {
-            getViewState().removeAttribute("maximumYear");
-        } else {
-            getViewState().setAttribute("maximumYear", maximumYear);
-        }
-    }
-
     public Double getCredits() {
         if (getViewState().getAttribute("credits") == null) {
             if (getCurricularRule() != null && getCurricularRule() instanceof AnyCurricularCourse) {
@@ -846,8 +806,6 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
                 || getSelectedDepartmentUnitID().equals(NO_SELECTION_STRING)) ? null : getSelectedDepartmentUnitID());
         parametersDTO.setDegreeType(getDegreeType(getSelectedDegreeType()));
         // must get these values like this to prevent override values
-        parametersDTO.setMinimumYear((Integer) getViewState().getAttribute("minimumYear"));
-        parametersDTO.setMaximumYear((Integer) getViewState().getAttribute("maximumYear"));
         parametersDTO.setCredits((Double) getViewState().getAttribute("credits"));
         parametersDTO.setEven(Boolean.valueOf(getSelectedEven()));
         parametersDTO.setOptionalsConfiguration(getSelectedOptionalsConfiguration() == null || getSelectedOptionalsConfiguration()

@@ -100,7 +100,7 @@ class DegreeCurricularPlanYearsLayout extends DegreeCurricularPlanLayout {
 
     private void drawContexts(CurricularPeriod child, HtmlTable mainTable, int level) {
         for (final Context context : getSortedContextsByCurricularCourseName(child)) {
-            if (!hasExecutionInterval() || context.isValid(getExecutionInterval())) {
+            if (!hasExecutionInterval() || context.isValidForExecutionAggregation(getExecutionInterval())) {
                 drawContext(context, mainTable, level);
             }
         }

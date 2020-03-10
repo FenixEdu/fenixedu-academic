@@ -131,13 +131,6 @@
 			</h:panelGroup>			
 	 
 			<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'ANY_CURRICULAR_COURSE'}">
-				<h:outputText value="<p><label>#{bolonhaBundle['years']}:</label>" escape="false"/>
-				<h:outputText value="#{bolonhaBundle['minimum']}: " escape="false"/>
-				<h:inputText alt="#{htmlAltBundle['inputText.minimumYear']}" id="minimumYear" maxlength="8" size="4" value="#{CurricularRulesManagement.minimumYear}"/>
-				<h:outputText value=" " escape="false"/>
-				<h:outputText value="#{bolonhaBundle['maximum']}: " escape="false"/>
-				<h:inputText alt="#{htmlAltBundle['inputText.maximumYear']}" id="maximumYear" maxlength="8" size="4" value="#{CurricularRulesManagement.maximumYear}"/>
-				<h:outputText value="</p>" escape="false"/>
 				<h:outputText value="<p><label>#{bolonhaBundle['apply.in']} #{bolonhaBundle['semester']}:</label>" escape="false"/>
 				<fc:selectOneMenu value="#{CurricularRulesManagement.selectedSemester}">
 					<f:selectItem itemLabel="#{bolonhaBundle['both']}" itemValue="0"/>

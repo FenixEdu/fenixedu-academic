@@ -18,6 +18,8 @@
  */
 package org.fenixedu.academic.ui.renderers.degreeStructure;
 
+import java.util.stream.Collectors;
+
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionInterval;
@@ -50,7 +52,9 @@ public class DegreeCurricularPlanGroupsLayout extends DegreeCurricularPlanLayout
     }
 
     private void drawCourseGroupRows(final CourseGroup courseGroup, final HtmlTable main, int level) {
-        for (final Context context : courseGroup.getSortedOpenChildContextsWithCourseGroups(getExecutionInterval())) {
+        for (final Context context : courseGroup
+                .getOpenChildContextsForExecutionAggregation(CourseGroup.class, getExecutionInterval()).stream().sorted()
+                .collect(Collectors.toList())) {
             drawCourseGroupRow((CourseGroup) context.getChildDegreeModule(), context, main, level);
         }
     }
@@ -95,7 +99,9 @@ public class DegreeCurricularPlanGroupsLayout extends DegreeCurricularPlanLayout
 
     private void drawCurricularCourseRows(final CourseGroup courseGroup, final HtmlTable main, int level) {
         if (showCourses()) {
-            for (final Context context : courseGroup.getSortedOpenChildContextsWithCurricularCourses(getExecutionInterval())) {
+            for (final Context context : courseGroup
+                    .getOpenChildContextsForExecutionAggregation(CurricularCourse.class, getExecutionInterval()).stream().sorted()
+                    .collect(Collectors.toList())) {
                 drawCurricularCourseRow(context, main, level);
             }
         }

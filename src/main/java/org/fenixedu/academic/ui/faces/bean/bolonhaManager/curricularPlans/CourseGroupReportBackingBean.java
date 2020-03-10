@@ -27,6 +27,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletOutputStream;
 
@@ -131,13 +132,15 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
 
     private void collectChildDegreeModules(final List<Context> result, CourseGroup courseGroup, String previousPath)
             throws FenixServiceException {
-        for (final Context context : courseGroup.getSortedChildContextsWithCurricularCourses()) {
+        for (final Context context : courseGroup.getChildContexts(CurricularCourse.class).stream().sorted()
+                .collect(Collectors.toList())) {
             result.add(context);
             getContextPaths().put(context, previousPath);
         }
-        for (final Context context : courseGroup.getSortedChildContextsWithCourseGroups()) {
-            collectChildDegreeModules(result, (CourseGroup) context.getChildDegreeModule(), previousPath + " > "
-                    + context.getChildDegreeModule().getName());
+        for (final Context context : courseGroup.getChildContexts(CourseGroup.class).stream().sorted()
+                .collect(Collectors.toList())) {
+            collectChildDegreeModules(result, (CourseGroup) context.getChildDegreeModule(),
+                    previousPath + " > " + context.getChildDegreeModule().getName());
         }
     }
 
@@ -191,7 +194,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
 
     private List<Object> getCurricularStructureHeader() {
         final List<Object> headers = new ArrayList<Object>();
-        if (rootWasClicked && !this.getCourseGroup().getSortedChildContextsWithCourseGroups().isEmpty()) {
+        if (rootWasClicked && !this.getCourseGroup().getChildContexts(CourseGroup.class).isEmpty()) {
             headers.add("Grupo");
         }
         headers.add("Área Científica");
@@ -212,7 +215,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
                     && !scientificAreaUnits.contains(curricularCourse.getCompetenceCourse().getScientificAreaUnit())) {
                 final Row row = spreadsheet.addRow();
 
-                if (rootWasClicked && !this.getCourseGroup().getSortedChildContextsWithCourseGroups().isEmpty()) {
+                if (rootWasClicked && !this.getCourseGroup().getChildContexts(CourseGroup.class).isEmpty()) {
                     row.setCell(courseGroupBeingReported);
                 }
                 row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getName());

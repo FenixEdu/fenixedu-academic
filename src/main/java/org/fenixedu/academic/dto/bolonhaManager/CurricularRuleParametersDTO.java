@@ -37,8 +37,6 @@ public class CurricularRuleParametersDTO extends DataTranferObject {
     private Double maximumCredits;
     private Integer minimumLimit;
     private Integer maximumLimit;
-    private Integer minimumYear;
-    private Integer maximumYear;
     private Double credits;
     private DegreeType degreeType;
     private Boolean even;
@@ -117,22 +115,6 @@ public class CurricularRuleParametersDTO extends DataTranferObject {
 
     public void setSelectedDepartmentUnitID(String departmentUnitID) {
         this.selectedDepartmentUnitID = departmentUnitID;
-    }
-
-    public Integer getMaximumYear() {
-        return maximumYear;
-    }
-
-    public void setMaximumYear(Integer maximumYear) {
-        this.maximumYear = maximumYear;
-    }
-
-    public Integer getMinimumYear() {
-        return minimumYear;
-    }
-
-    public void setMinimumYear(Integer minimumYear) {
-        this.minimumYear = minimumYear;
     }
 
     public Double getCredits() {

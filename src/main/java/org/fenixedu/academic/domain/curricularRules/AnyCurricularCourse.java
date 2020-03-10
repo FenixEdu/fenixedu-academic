@@ -31,8 +31,6 @@ import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.OptionalCurricularCourse;
-import org.fenixedu.academic.domain.degreeStructure.RegimeType;
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
@@ -42,8 +40,8 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 
     public AnyCurricularCourse(final OptionalCurricularCourse toApplyRule, final CourseGroup contextCourseGroup,
             final ExecutionInterval begin, final ExecutionInterval end, final Double minimumCredits, Double maximumCredits,
-            final Integer curricularPeriodOrder, final Integer minimumYear, final Integer maximumYear,
-            final DegreeType degreeType, final Degree degree, final DepartmentUnit departmentUnit) {
+            final Integer curricularPeriodOrder, final DegreeType degreeType, final Degree degree,
+            final DepartmentUnit departmentUnit) {
 
         super();
 
@@ -51,37 +49,23 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 
         init(toApplyRule, contextCourseGroup, begin, end, CurricularRuleType.ANY_CURRICULAR_COURSE);
 
-        checkYears(minimumYear, maximumYear);
-
         setMinimumCredits(minimumCredits);
         setMaximumCredits(maximumCredits);
         setCurricularPeriodOrder(curricularPeriodOrder);
-        setMinimumYear(minimumYear);
-        setMaximumYear(maximumYear);
         setBolonhaDegreeType(degreeType);
         setDegree(degree);
         setDepartmentUnit(departmentUnit);
     }
 
     protected void edit(final CourseGroup contextCourseGroup, final Double credits, final Integer curricularPeriodOrder,
-            final Integer minimumYear, final Integer maximumYear, final DegreeType degreeType, final Degree degree,
-            final DepartmentUnit departmentUnit) {
+            final DegreeType degreeType, final Degree degree, final DepartmentUnit departmentUnit) {
 
-        checkYears(minimumYear, maximumYear);
         setContextCourseGroup(contextCourseGroup);
         setCredits(credits);
         setCurricularPeriodOrder(curricularPeriodOrder);
-        setMinimumYear(minimumYear);
-        setMaximumYear(maximumYear);
         setBolonhaDegreeType(degreeType);
         setDegree(degree);
         setDepartmentUnit(departmentUnit);
-    }
-
-    private void checkYears(Integer minimumYear, Integer maximumYear) throws DomainException {
-        if (minimumYear != null && maximumYear != null && minimumYear.intValue() > maximumYear.intValue()) {
-            throw new DomainException("error.minimum.greater.than.maximum");
-        }
     }
 
     @Override
@@ -91,7 +75,7 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 
     @Override
     public boolean appliesToContext(final Context context) {
-        return super.appliesToContext(context) && appliesToPeriod(context) && appliesToYears(context);
+        return super.appliesToContext(context) && appliesToPeriod(context);
     }
 
     private boolean appliesToPeriod(final Context context) {
@@ -124,35 +108,6 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
     @Override
     public Integer getCurricularPeriodOrder() {
         return super.getCurricularPeriodOrder();
-    }
-
-    private boolean hasYearsLimit() {
-        return getMinimumYear() != null && getMinimumYear().intValue() != 0 && getMaximumYear() != null
-                && getMaximumYear().intValue() != 0;
-    }
-
-    private boolean appliesToYears(final Context context) {
-        if (!hasYearsLimit()) {
-            return true;
-        }
-
-        if (hasCurricularPeriodOrder()) {
-            for (int year = getMinimumYear().intValue(); year <= getMaximumYear().intValue(); year++) {
-                if (context.containsSemesterAndCurricularYear(getCurricularPeriodOrder(), Integer.valueOf(year),
-                        RegimeType.SEMESTRIAL)) {
-                    return true;
-                }
-            }
-        } else {
-            for (int year = getMinimumYear().intValue(); year <= getMaximumYear().intValue(); year++) {
-                if (context.containsSemesterAndCurricularYear(Integer.valueOf(1), Integer.valueOf(year), RegimeType.SEMESTRIAL)
-                        || context.containsSemesterAndCurricularYear(Integer.valueOf(2), Integer.valueOf(year),
-                                RegimeType.SEMESTRIAL)) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     @Override
@@ -198,27 +153,6 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
             labelList.add(new GenericPair<Object, Boolean>(getCurricularPeriodOrder(), false));
             labelList.add(new GenericPair<Object, Boolean>("º ", false));
             labelList.add(new GenericPair<Object, Boolean>("SEMESTER", true));
-        }
-        if (hasYearsLimit()) {
-            if (getMinimumYear().compareTo(getMaximumYear()) == 0) {
-                labelList.add(new GenericPair<Object, Boolean>(", ", false));
-                labelList.add(new GenericPair<Object, Boolean>("label.of", true));
-                labelList.add(new GenericPair<Object, Boolean>("º ", false));
-                labelList.add(new GenericPair<Object, Boolean>(getMinimumYear(), false));
-                labelList.add(new GenericPair<Object, Boolean>(" ", false));
-                labelList.add(new GenericPair<Object, Boolean>("label.year", true));
-            } else {
-                labelList.add(new GenericPair<Object, Boolean>(", ", false));
-                labelList.add(new GenericPair<Object, Boolean>("label.of", true));
-                labelList.add(new GenericPair<Object, Boolean>(" ", false));
-                labelList.add(new GenericPair<Object, Boolean>(getMinimumYear(), false));
-                labelList.add(new GenericPair<Object, Boolean>("º ", false));
-                labelList.add(new GenericPair<Object, Boolean>("label.to1", true));
-                labelList.add(new GenericPair<Object, Boolean>(" ", false));
-                labelList.add(new GenericPair<Object, Boolean>(getMaximumYear(), false));
-                labelList.add(new GenericPair<Object, Boolean>("º ", false));
-                labelList.add(new GenericPair<Object, Boolean>("label.year", true));
-            }
         }
 
         labelList.add(new GenericPair<Object, Boolean>(", ", false));

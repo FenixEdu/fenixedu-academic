@@ -919,8 +919,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
             class curricularRules.AnyCurricularCourse extends curricularRules.Rule {
                 Double credits;
                 Integer curricularPeriodOrder;
-                Integer maximumYear;
-                Integer minimumYear;
                 Double minimumCredits;
                 Double maximumCredits;
             }

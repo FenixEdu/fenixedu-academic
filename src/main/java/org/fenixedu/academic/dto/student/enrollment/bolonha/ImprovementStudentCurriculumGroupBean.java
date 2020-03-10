@@ -43,7 +43,7 @@ public class ImprovementStudentCurriculumGroupBean implements Serializable {
     }
 
     public StudentCurriculumGroupBean create(final CurriculumGroup curriculumGroup, final ExecutionInterval executionInterval) {
-        return new StudentCurriculumGroupBean(curriculumGroup, executionInterval, null) {
+        return new StudentCurriculumGroupBean(curriculumGroup, executionInterval) {
 
             @Override
             protected List<IDegreeModuleToEvaluate> buildCourseGroupsToEnrol(CurriculumGroup group,
@@ -93,7 +93,7 @@ public class ImprovementStudentCurriculumGroupBean implements Serializable {
 
             @Override
             protected List<StudentCurriculumGroupBean> buildCurriculumGroupsEnroled(CurriculumGroup parentGroup,
-                    ExecutionInterval executionInterval, int[] curricularYears) {
+                    ExecutionInterval executionInterval) {
 
                 final List<StudentCurriculumGroupBean> result = new ArrayList<StudentCurriculumGroupBean>();
 

@@ -173,7 +173,7 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
             final CourseGroup courseGroup, final EnrolmentContext enrolmentContext,
             final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final boolean withTemporaryEnrolments) {
         for (final DegreeModule childDegreeModule : courseGroup
-                .getChildDegreeModulesValidOn(enrolmentContext.getExecutionYear())) {
+                .getChildDegreeModulesValidOnExecutionAggregation(enrolmentContext.getExecutionYear())) {
             if (childDegreeModule.isCourseGroup()) {
                 collectCourseGroupCurricularCoursesToEnrol(result, (CourseGroup) childDegreeModule, enrolmentContext,
                         sourceDegreeModuleToEvaluate, withTemporaryEnrolments);
@@ -185,7 +185,7 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
             final EnrolmentContext enrolmentContext) {
         final Set<DegreeModule> result = new HashSet<DegreeModule>();
 
-        for (final DegreeModule degreeModule : courseGroup.getChildDegreeModulesValidOn(enrolmentContext.getExecutionYear())) {
+        for (final DegreeModule degreeModule : courseGroup.getChildDegreeModulesValidOnExecutionAggregation(enrolmentContext.getExecutionYear())) {
             final StudentCurricularPlan studentCurricularPlan = enrolmentContext.getStudentCurricularPlan();
             if (!degreeModule.isLeaf()) {
                 if (studentCurricularPlan.hasDegreeModule(degreeModule)) {
@@ -238,7 +238,7 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
         if (creditsLimit != null) {
             final SortedSet<DegreeModule> sortedChilds =
                     new TreeSet<DegreeModule>(new DegreeModule.ComparatorByMinEcts(executionYear.getFirstExecutionPeriod()));
-            sortedChilds.addAll(courseGroup.getChildDegreeModulesValidOn(executionYear));
+            sortedChilds.addAll(courseGroup.getChildDegreeModulesValidOnExecutionAggregation(executionYear));
             int counter = 0;
             double total = 0d;
             for (final DegreeModule degreeModule : sortedChilds) {
@@ -253,7 +253,7 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
             return counter;
         }
 
-        return courseGroup.getChildDegreeModulesValidOn(executionYear).size();
+        return courseGroup.getChildDegreeModulesValidOnExecutionAggregation(executionYear).size();
     }
 
     private int getMaxModules(final CourseGroup courseGroup, final ExecutionYear executionYear) {
@@ -267,7 +267,7 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
         if (creditsLimit != null) {
             final SortedSet<DegreeModule> sortedChilds =
                     new TreeSet<DegreeModule>(new DegreeModule.ComparatorByMinEcts(executionYear.getFirstExecutionPeriod()));
-            sortedChilds.addAll(courseGroup.getChildDegreeModulesValidOn(executionYear));
+            sortedChilds.addAll(courseGroup.getChildDegreeModulesValidOnExecutionAggregation(executionYear));
             int counter = 0;
             double total = 0d;
             for (final DegreeModule degreeModule : sortedChilds) {
@@ -283,7 +283,7 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
 
         }
 
-        return courseGroup.getChildDegreeModulesValidOn(executionYear).size();
+        return courseGroup.getChildDegreeModulesValidOnExecutionAggregation(executionYear).size();
     }
 
     private boolean isToCollectCurricularCourses(CourseGroup courseGroup, EnrolmentContext enrolmentContext,
@@ -436,7 +436,7 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
     private void addValidCurricularCourses(final Map<Integer, Set<CurricularCourse>> result,
             final Set<Context> curricularCoursesContexts, final CourseGroup courseGroup, final ExecutionYear executionYear) {
         for (final Context context : curricularCoursesContexts) {
-            if (context.isValid(executionYear)) {
+            if (context.isValidForExecutionAggregation(executionYear)) {
                 addCurricularCourse(result, context.getCurricularYear(), (CurricularCourse) context.getChildDegreeModule());
             }
         }

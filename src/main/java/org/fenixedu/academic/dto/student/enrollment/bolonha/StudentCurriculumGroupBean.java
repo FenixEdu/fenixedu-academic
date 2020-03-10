@@ -23,7 +23,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.degreeStructure.Context;
@@ -63,35 +62,30 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
 
     private List<IDegreeModuleToEvaluate> curricularCoursesToEnrol;
 
-    public StudentCurriculumGroupBean(final CurriculumGroup curriculumGroup, final ExecutionInterval executionInterval,
-            int[] curricularYears) {
+    public StudentCurriculumGroupBean(final CurriculumGroup curriculumGroup, final ExecutionInterval executionInterval) {
         super(curriculumGroup);
 
         setCourseGroupsToEnrol(buildCourseGroupsToEnrol(curriculumGroup, executionInterval));
 
-        if (curricularYears != null) {
-            setCurricularCoursesToEnrol(buildCurricularCoursesToEnrol(curriculumGroup, executionInterval, curricularYears));
-        } else {
-            setCurricularCoursesToEnrol(buildCurricularCoursesToEnrol(curriculumGroup, executionInterval));
-        }
+        setCurricularCoursesToEnrol(buildCurricularCoursesToEnrol(curriculumGroup, executionInterval));
 
-        setEnrolledCurriculumGroups(buildCurriculumGroupsEnroled(curriculumGroup, executionInterval, curricularYears));
+        setEnrolledCurriculumGroups(buildCurriculumGroupsEnroled(curriculumGroup, executionInterval));
         setEnrolledCurriculumCourses(buildCurricularCoursesEnroled(curriculumGroup, executionInterval));
     }
 
     protected List<StudentCurriculumGroupBean> buildCurriculumGroupsEnroled(CurriculumGroup parentGroup,
-            ExecutionInterval executionInterval, int[] curricularYears) {
+            ExecutionInterval executionInterval) {
         final List<StudentCurriculumGroupBean> result = new ArrayList<StudentCurriculumGroupBean>();
         for (final CurriculumGroup curriculumGroup : parentGroup.getCurriculumGroupsToEnrolmentProcess()) {
-            result.add(createEnroledCurriculumGroupBean(executionInterval, curricularYears, curriculumGroup));
+            result.add(createEnroledCurriculumGroupBean(executionInterval, curriculumGroup));
         }
 
         return result;
     }
 
     protected StudentCurriculumGroupBean createEnroledCurriculumGroupBean(ExecutionInterval executionInterval,
-            int[] curricularYears, final CurriculumGroup curriculumGroup) {
-        return new StudentCurriculumGroupBean(curriculumGroup, executionInterval, curricularYears);
+            final CurriculumGroup curriculumGroup) {
+        return new StudentCurriculumGroupBean(curriculumGroup, executionInterval);
     }
 
     protected List<IDegreeModuleToEvaluate> buildCourseGroupsToEnrol(CurriculumGroup group, ExecutionInterval executionInterval) {
@@ -101,26 +95,6 @@ public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
         for (final Context context : courseGroupContextsToEnrol) {
             result.add(new DegreeModuleToEnrol(group, context, executionInterval));
 
-        }
-
-        return result;
-    }
-
-    protected List<IDegreeModuleToEvaluate> buildCurricularCoursesToEnrol(CurriculumGroup group,
-            ExecutionInterval executionInterval, int[] curricularYears) {
-        final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>();
-        final List<Context> curricularCoursesToEnrol = group.getCurricularCourseContextsToEnrol(executionInterval);
-
-        for (final Context context : curricularCoursesToEnrol) {
-            // NOTE: Temporary solution until first degree completes
-            final CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
-            for (final int curricularYear : curricularYears) {
-                if (context.containsSemesterAndCurricularYear(executionInterval.getChildOrder(), curricularYear,
-                        curricularCourse.getRegime())) {
-                    result.add(new DegreeModuleToEnrol(group, context, executionInterval));
-                    break;
-                }
-            }
         }
 
         return result;

@@ -88,8 +88,7 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
     protected BolonhaStudentEnrollmentBean createStudentEnrolmentBean(ActionForm form,
             final StudentCurricularPlan studentCurricularPlan, final ExecutionInterval executionInterval) {
 
-        return new BolonhaStudentEnrollmentBean(studentCurricularPlan, executionInterval, getCurricularYearForCurricularCourses(),
-                getCurricularRuleLevel(form));
+        return new BolonhaStudentEnrollmentBean(studentCurricularPlan, executionInterval, getCurricularRuleLevel(form));
     }
 
     protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -323,8 +322,6 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 
     abstract public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response);
-
-    abstract protected int[] getCurricularYearForCurricularCourses();
 
     abstract protected CurricularRuleLevel getCurricularRuleLevel(final ActionForm form);
 

@@ -251,7 +251,7 @@ public class Context extends Context_Base implements Comparable<Context> {
         return false;
     }
 
-    public boolean isValid(final ExecutionYear executionYear) {
+    public boolean isValidForExecutionAggregation(final ExecutionYear executionYear) {
         for (final ExecutionInterval executionInterval : executionYear.getExecutionPeriodsSet()) {
             if (isValid(executionInterval)) {
                 return true;
@@ -349,24 +349,24 @@ public class Context extends Context_Base implements Comparable<Context> {
 //        return semester.intValue() == firstCurricularPeriodOrder;
 //    }
 
-    @Deprecated
-    public boolean containsSemesterAndCurricularYear(final Integer semester, final Integer curricularYear,
-            final RegimeType regimeType) {
-
-        final int argumentOrder = (curricularYear - 1) * 2 + semester.intValue();
-        final CurricularPeriod firstCurricularPeriod = getCurricularPeriod();
-        final int firstCurricularPeriodOrder = firstCurricularPeriod.getAbsoluteOrderOfChild();
-        final int duration;
-        if (regimeType == RegimeType.ANUAL) {
-            duration = 2;
-        } else if (regimeType == RegimeType.SEMESTRIAL) {
-            duration = 1;
-        } else {
-            throw new IllegalArgumentException("Unknown regimeType: " + regimeType);
-        }
-        final int lastCurricularPeriodOrder = firstCurricularPeriodOrder + duration - 1;
-        return firstCurricularPeriodOrder <= argumentOrder && argumentOrder <= lastCurricularPeriodOrder;
-    }
+//    @Deprecated
+//    public boolean containsSemesterAndCurricularYear(final Integer semester, final Integer curricularYear,
+//            final RegimeType regimeType) {
+//
+//        final int argumentOrder = (curricularYear - 1) * 2 + semester.intValue();
+//        final CurricularPeriod firstCurricularPeriod = getCurricularPeriod();
+//        final int firstCurricularPeriodOrder = firstCurricularPeriod.getAbsoluteOrderOfChild();
+//        final int duration;
+//        if (regimeType == RegimeType.ANUAL) {
+//            duration = 2;
+//        } else if (regimeType == RegimeType.SEMESTRIAL) {
+//            duration = 1;
+//        } else {
+//            throw new IllegalArgumentException("Unknown regimeType: " + regimeType);
+//        }
+//        final int lastCurricularPeriodOrder = firstCurricularPeriodOrder + duration - 1;
+//        return firstCurricularPeriodOrder <= argumentOrder && argumentOrder <= lastCurricularPeriodOrder;
+//    }
 
     @Override
     public void setBeginExecutionPeriod(ExecutionInterval beginExecutionPeriod) {

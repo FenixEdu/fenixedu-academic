@@ -22,6 +22,7 @@ import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -384,7 +385,8 @@ public class StudentDismissalRenderer extends InputRenderer {
             radioButtonCell.setClasses(getGroupRadioClasses());
             radioButtonCell.setStyle("width: 2em;");
 
-            for (final Context context : courseGroup.getSortedOpenChildContextsWithCourseGroups(executionInterval)) {
+            for (final Context context : courseGroup.getOpenChildContexts(CourseGroup.class, executionInterval).stream().sorted()
+                    .collect(Collectors.toList())) {
                 generateCourseGroups(blockContainer, studentCurricularPlan, (CourseGroup) context.getChildDegreeModule(),
                         executionInterval, depth + getWidthDecreasePerLevel());
             }

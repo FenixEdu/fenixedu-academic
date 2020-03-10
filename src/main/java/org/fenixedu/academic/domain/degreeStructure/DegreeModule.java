@@ -332,7 +332,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
     public List<Context> getParentContextsByExecutionYear(final ExecutionYear executionYear) {
         final List<Context> result = new ArrayList<Context>();
         for (final Context context : getParentContextsSet()) {
-            if (executionYear == null || context.isValid(executionYear)) {
+            if (executionYear == null || context.isValidForExecutionAggregation(executionYear)) {
                 result.add(context);
             }
         }
@@ -511,9 +511,9 @@ abstract public class DegreeModule extends DegreeModule_Base {
                     // that it can be only one active for execution period
                     // and replace by: return curricularRule
 
-                    throw new DomainException("error.degree.module.has.more.than.one.credits.limit.for.executionYear", 
-                            getParentDegreeCurricularPlan().getDegree().getCode(), getParentDegreeCurricularPlan().getName(), getName(),
-                            curricularRule.getBegin().getQualifiedName());
+                    throw new DomainException("error.degree.module.has.more.than.one.credits.limit.for.executionYear",
+                            getParentDegreeCurricularPlan().getDegree().getCode(), getParentDegreeCurricularPlan().getName(),
+                            getName(), curricularRule.getBegin().getQualifiedName());
                 }
                 result = curricularRule;
             }

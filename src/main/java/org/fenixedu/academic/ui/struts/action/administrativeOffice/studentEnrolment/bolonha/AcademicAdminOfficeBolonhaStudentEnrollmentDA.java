@@ -92,11 +92,6 @@ public class AcademicAdminOfficeBolonhaStudentEnrollmentDA extends AbstractBolon
     }
 
     @Override
-    protected int[] getCurricularYearForCurricularCourses() {
-        return null;
-    }
-
-    @Override
     protected CurricularRuleLevel getCurricularRuleLevel(final ActionForm form) {
         return getWithRules(form) ? CurricularRuleLevel.ENROLMENT_WITH_RULES : CurricularRuleLevel.ENROLMENT_NO_RULES;
     }

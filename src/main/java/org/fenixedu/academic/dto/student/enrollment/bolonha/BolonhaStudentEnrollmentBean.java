@@ -76,10 +76,9 @@ public class BolonhaStudentEnrollmentBean implements Serializable, IStudentCurri
     }
 
     public BolonhaStudentEnrollmentBean(final StudentCurricularPlan studentCurricularPlan,
-            final ExecutionInterval executionInterval, final int[] curricularYears, CurricularRuleLevel curricularRuleLevel) {
+            final ExecutionInterval executionInterval, CurricularRuleLevel curricularRuleLevel) {
         this(studentCurricularPlan, executionInterval,
-                new StudentCurriculumGroupBean(studentCurricularPlan.getRoot(), executionInterval, curricularYears),
-                curricularRuleLevel);
+                new StudentCurriculumGroupBean(studentCurricularPlan.getRoot(), executionInterval), curricularRuleLevel);
 
         setEndStageDate(studentCurricularPlan.getEndStageDate());
     }
