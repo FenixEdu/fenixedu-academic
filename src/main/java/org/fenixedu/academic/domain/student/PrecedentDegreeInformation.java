@@ -110,7 +110,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
     public void edit(/*PersonalIngressionData personalIngressionData, */Registration registration,
             PrecedentDegreeInformationBean precedentDegreeInformationBean, StudentCandidacy studentCandidacy) {
 //        setPersonalIngressionData(personalIngressionData);
-        setRegistration(registration);
+//        setRegistration(registration);
         setStudentCandidacy(studentCandidacy);
         Unit institution = precedentDegreeInformationBean.getInstitution();
         if (institution == null && !StringUtils.isEmpty(precedentDegreeInformationBean.getInstitutionName())) {
@@ -202,6 +202,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
             setPrecedentInstitution(precedentInstitution);
             setPrecedentDegreeDesignation(precedentDegreeInformationBean.getPrecedentDegreeDesignation());
             setPrecedentSchoolLevel(precedentDegreeInformationBean.getPrecedentSchoolLevel());
+            setOtherPrecedentSchoolLevel(precedentDegreeInformationBean.getOtherPrecedentSchoolLevel());
             setNumberOfEnrolmentsInPreviousDegrees(
                     precedentDegreeInformationBean.getNumberOfPreviousYearEnrolmentsInPrecedentDegree());
             setMobilityProgramDuration(precedentDegreeInformationBean.getMobilityProgramDuration());
@@ -247,7 +248,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
         setCountryHighSchool(null);
         setInstitution(null);
 
-        setRegistration(null);
+//        setRegistration(null);
 
         setStudentCandidacy(null);
 

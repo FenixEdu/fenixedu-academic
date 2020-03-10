@@ -228,7 +228,7 @@ public class Registration extends Registration_Base {
 //            studentCandidacy.getPrecedentDegreeInformation().setPersonalIngressionData(ingressionData);
         }
 
-        studentCandidacy.getPrecedentDegreeInformation().setRegistration(result);
+//        studentCandidacy.getPrecedentDegreeInformation().setRegistration(result);
 
         TreasuryBridgeAPIFactory.implementation().createCustomerIfMissing(result.getStudent().getPerson());
 
@@ -258,24 +258,6 @@ public class Registration extends Registration_Base {
         registration.setStudentCandidacyInformation(studentCandidacy);
 
         return registration;
-    }
-
-    /**
-     * @deprecated use {@link StudentCandidacy#getPrecedentDegreeInformation()}
-     */
-    @Deprecated
-    @Override
-    public Set<PrecedentDegreeInformation> getPrecedentDegreesInformationsSet() {
-        return super.getPrecedentDegreesInformationsSet();
-    }
-
-    /**
-     * @deprecated use {@link StudentCandidacy#getPrecedentDegreeInformation()}
-     */
-    @Deprecated
-    @Override
-    public void addPrecedentDegreesInformations(PrecedentDegreeInformation precedentDegreesInformations) {
-        super.addPrecedentDegreesInformations(precedentDegreesInformations);
     }
 
     private void setStudentCandidacyInformation(final StudentCandidacy studentCandidacy) {
@@ -349,7 +331,7 @@ public class Registration extends Registration_Base {
             ;
         }
 
-        getPrecedentDegreesInformationsSet().forEach(pd -> pd.delete());
+//        getPrecedentDegreesInformationsSet().forEach(pd -> pd.delete());
 
         if (getRegistrationNumber() != null) {
             getRegistrationNumber().delete();

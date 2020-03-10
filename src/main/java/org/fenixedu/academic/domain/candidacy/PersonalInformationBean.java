@@ -112,7 +112,7 @@ public class PersonalInformationBean implements Serializable {
     }
 
     public PersonalInformationBean(PrecedentDegreeInformation degreeInfo) {
-        setRegistration(degreeInfo.getRegistration());
+        setRegistration(degreeInfo.getStudentCandidacy().getRegistration());
         setSchoolLevel(degreeInfo.getSchoolLevel());
         setOtherSchoolLevel(degreeInfo.getOtherSchoolLevel());
         setConclusionGrade(degreeInfo.getConclusionGrade());

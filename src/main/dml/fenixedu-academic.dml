@@ -1412,9 +1412,11 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
     class student.PrecedentDegreeInformation  {
         String conclusionGrade;
         Integer conclusionYear;
+        
         String degreeDesignation;
         SchoolLevelType schoolLevel;
         String otherSchoolLevel;
+        
         Integer numberOfEnrolmentsInPreviousDegrees;
         SchoolPeriodDuration mobilityProgramDuration;
         DateTime lastModifiedDate;
@@ -4957,13 +4959,6 @@ relation PersonalIngressionDataExecutionYear {
     	multiplicity *;
     }     
     ExecutionYear playsRole executionYear;
-}
-
-relation PrecedentDegreeInformationRegistration {      
-    student.PrecedentDegreeInformation playsRole precedentDegreesInformations {
-        multiplicity *;
-    }
-    student.Registration playsRole registration;
 }
 
 relation StudentPrecedentDegreeInformation {      

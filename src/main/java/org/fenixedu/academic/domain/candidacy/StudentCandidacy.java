@@ -193,7 +193,7 @@ public class StudentCandidacy extends StudentCandidacy_Base {
         setIngressionType(null);
         setExecutionDegree(null);
 
-        if (getPrecedentDegreeInformation() != null && getPrecedentDegreeInformation().getRegistration() == null) {
+        if (getPrecedentDegreeInformation() != null) {
             getPrecedentDegreeInformation().delete();
         }
 
