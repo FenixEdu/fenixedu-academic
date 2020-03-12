@@ -35,7 +35,6 @@
         <version.javax.faces.jsf-api>1.1_01</version.javax.faces.jsf-api>
         <version.javax.faces.jsf-impl>1.1</version.javax.faces.jsf-impl>
         <version.javax.servlet.jsp.jsp-api>2.1</version.javax.servlet.jsp.jsp-api>
-        <version.javax.ws.rs.javax.ws.rs.api>2.0</version.javax.ws.rs.javax.ws.rs.api>
         <version.joda.time.joda.time>2.9.7</version.joda.time.joda.time>
         <version.net.sourceforge.htmlcleaner.htmlcleaner>2.18</version.net.sourceforge.htmlcleaner.htmlcleaner>
         <version.org.apache.poi.poi>3.11</version.org.apache.poi.poi>
@@ -185,11 +184,6 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>${version.com.google.code.gson.gson}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>javax.ws.rs-api</artifactId>
-            <version>${version.javax.ws.rs.javax.ws.rs.api}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.poi</groupId>
