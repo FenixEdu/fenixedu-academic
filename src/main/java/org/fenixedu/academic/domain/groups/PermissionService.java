@@ -6,6 +6,7 @@ import java.util.function.BiFunction;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
@@ -15,6 +16,7 @@ public class PermissionService {
 
     private static BiFunction<AccessControlPermission, User, Set<DegreeType>> degreeTypeProvider;
     private static BiFunction<AccessControlPermission, User, Set<Degree>> degreeProvider;
+    private static BiFunction<AccessControlPermission, User, Set<Unit>> unitProvider;
     private static BiFunction<AccessControlPermission, User, Boolean> memberProvider;
 
     public static Set<DegreeType> getDegreeTypes(AccessControlPermission permission, User user) {
@@ -52,6 +54,24 @@ public class PermissionService {
         PermissionService.degreeProvider = degreeProvider;
     }
 
+    public static Set<Unit> getUnits(AccessControlPermission permission, User user) {
+        Set<Unit> units = new HashSet<>();
+        units.addAll(unitProvider.apply(permission, user));
+        return units;
+    }
+
+    public static Set<Unit> getUnits(String permission, User user) {
+        AccessControlPermission accessControlPermission = AccessControlPermission.findByCode(permission);
+        if (accessControlPermission == null) {
+            return new HashSet<>();
+        }
+        return getUnits(accessControlPermission, user);
+    }
+
+    public static void registerUnitProvider(BiFunction<AccessControlPermission, User, Set<Unit>> unitProvider) {
+        PermissionService.unitProvider = unitProvider;
+    }
+
     public static boolean hasAccess(AccessControlPermission permission, User user) {
         return memberProvider.apply(permission, user);
     }
@@ -66,6 +86,14 @@ public class PermissionService {
 
     public static boolean hasAccess(AccessControlPermission permission, Degree degree) {
         return hasAccess(permission, degree, Authenticate.getUser());
+    }
+
+    public static boolean hasAccess(AccessControlPermission permission, Unit unit, User user) {
+        return getUnits(permission, user).contains(unit);
+    }
+
+    public static boolean hasAccess(AccessControlPermission permission, Unit unit) {
+        return hasAccess(permission, unit, Authenticate.getUser());
     }
 
     public static boolean hasAccess(String permission, User user) {
@@ -90,6 +118,18 @@ public class PermissionService {
 
     public static boolean hasAccess(String permission, Degree degree) {
         return hasAccess(permission, degree, Authenticate.getUser());
+    }
+
+    public static boolean hasAccess(String permission, Unit unit, User user) {
+        AccessControlPermission accessControlPermission = AccessControlPermission.findByCode(permission);
+        if (accessControlPermission == null) {
+            return false;
+        }
+        return hasAccess(accessControlPermission, unit, user);
+    }
+
+    public static boolean hasAccess(String permission, Unit unit) {
+        return hasAccess(permission, unit, Authenticate.getUser());
     }
 
     public static void registerMemberProvider(BiFunction<AccessControlPermission, User, Boolean> isMemberProvider) {
