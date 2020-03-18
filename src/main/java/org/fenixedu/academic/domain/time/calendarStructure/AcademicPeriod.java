@@ -40,6 +40,7 @@ public abstract class AcademicPeriod extends BaseSingleFieldPeriod {
     public static AcademicPeriod MONTH = new AcademicMonths(1, "MONTH");
     public static AcademicPeriod WEEK = new AcademicWeeks(1, "WEEK");
     public static AcademicPeriod DAY = new AcademicDays(1, "DAY");
+    public static AcademicPeriod OTHER = new AcademicOtherPeriod(1, "OTHER");
 
     private static Map<String, AcademicPeriod> academicPeriods = new HashMap<String, AcademicPeriod>();
 
@@ -55,6 +56,7 @@ public abstract class AcademicPeriod extends BaseSingleFieldPeriod {
         academicPeriods.put(MONTH.getRepresentationInStringFormat(), MONTH);
         academicPeriods.put(WEEK.getRepresentationInStringFormat(), WEEK);
         academicPeriods.put(DAY.getRepresentationInStringFormat(), DAY);
+        academicPeriods.put(OTHER.getRepresentationInStringFormat(), OTHER);
     }
 
     private final String name;

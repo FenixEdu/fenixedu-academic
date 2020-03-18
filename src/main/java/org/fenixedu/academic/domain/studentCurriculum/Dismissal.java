@@ -74,6 +74,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
             throw new DomainException("error.dismissal.wrong.arguments");
         }
         checkCurriculumGroupCurricularCourse(credits, curriculumGroup, curricularCourse);
+        checkIfAcademicPeriodOfExecutionIntervalIsValid(credits, curriculumGroup, curricularCourse);
         init(credits, curriculumGroup);
         setCurricularCourse(curricularCourse);
     }
@@ -87,6 +88,20 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
                         credits.getExecutionPeriod().getQualifiedName());
             }
         }
+    }
+
+    private void checkIfAcademicPeriodOfExecutionIntervalIsValid(Credits credits, CurriculumGroup curriculumGroup,
+            CurricularCourse curricularCourse) {
+        if (!curricularCourse.getParentContextsByExecutionYear(credits.getExecutionInterval().getExecutionYear()).stream()
+                .filter(ctx -> curriculumGroup.isNoCourseGroupCurriculumGroup()
+                        || ctx.getParentCourseGroup() == curriculumGroup.getDegreeModule())
+                .anyMatch(ctx -> ctx.getCurricularPeriod().getAcademicPeriod()
+                        .equals(credits.getExecutionInterval().getAcademicPeriod()))) {
+            throw new DomainException(
+                    "error.dismissal.execution.interval.academic.period.does.not.match.context.curricular.period",
+                    (curricularCourse.getCode() != null ? curricularCourse.getCode() + " - " : "") + curricularCourse.getName());
+        }
+
     }
 
     static protected Dismissal createNewDismissal(final Credits credits, final StudentCurricularPlan studentCurricularPlan,

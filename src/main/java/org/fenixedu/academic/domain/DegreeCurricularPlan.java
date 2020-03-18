@@ -31,13 +31,13 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
-import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
 import org.fenixedu.academic.domain.curricularRules.CurricularRule;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleValidationType;
-import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup;
@@ -602,9 +602,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return result;
     }
 
-    public void applyToCurricularCourses(final ExecutionYear executionYear, final Predicate predicate) {
-        getRoot().applyToCurricularCourses(executionYear, predicate);
-    }
+//    public void applyToCurricularCourses(final ExecutionYear executionYear, final Predicate predicate) {
+//        getRoot().applyToCurricularCourses(executionYear, predicate);
+//    }
 
     /**
      * Method to get an unfiltered list of a bolonha dcp's competence courses
@@ -887,11 +887,16 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return new ExecutionDegree(this, executionYear, campus, publishedExamMap);
     }
 
+    /**
+     * @deprecated use {@link #getCurricularPeriodFor(int, int, AcademicPeriod)}
+     */
+    @Deprecated
     public CurricularPeriod getCurricularPeriodFor(final int year, final int semester) {
         final CurricularPeriodInfoDTO[] curricularPeriodInfos = buildCurricularPeriodInfoDTOsFor(year, semester);
         return getDegreeStructure().getCurricularPeriod(curricularPeriodInfos);
     }
 
+    @Deprecated
     private CurricularPeriodInfoDTO[] buildCurricularPeriodInfoDTOsFor(final int year, final int semester) {
         final CurricularPeriodInfoDTO[] curricularPeriodInfos;
         if (getDurationInYears() > 1) {
@@ -906,10 +911,36 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return curricularPeriodInfos;
     }
 
+    /**
+     * @deprecated curricular period structure should be managed according to academic period type
+     * 
+     */
+    @Deprecated
     public CurricularPeriod createCurricularPeriodFor(final int year, final int semester) {
         final CurricularPeriodInfoDTO[] curricularPeriodInfos = buildCurricularPeriodInfoDTOsFor(year, semester);
 
         return getDegreeStructure().addCurricularPeriod(curricularPeriodInfos);
+    }
+
+    public CurricularPeriod getCurricularPeriodFor(final int year, final int childOrder,
+            final AcademicPeriod childAcademicPeriod) {
+
+        final Predicate<CurricularPeriod> isYearDuration = cp -> cp.getParent() == getDegreeStructure() /*root*/ && year == 1
+                && cp.getParent().getAcademicPeriod().equals(AcademicPeriod.YEAR);
+        final Predicate<CurricularPeriod> matchesYear =
+                cp -> cp.getParent().getAcademicPeriod().equals(AcademicPeriod.YEAR) && year == cp.getParentOrder().intValue();
+        final Predicate<CurricularPeriod> matchesChild =
+                cp -> cp.getAcademicPeriod().equals(childAcademicPeriod) && childOrder == cp.getChildOrder().intValue();
+
+        return getAllCurricularPeriodChilds(getDegreeStructure()).stream().filter(isYearDuration.or(matchesYear))
+                .filter(matchesChild).findFirst().orElse(null);
+    }
+
+    private List<CurricularPeriod> getAllCurricularPeriodChilds(final CurricularPeriod curricularPeriod) {
+        final List<CurricularPeriod> result = curricularPeriod.getChildsSet().stream().collect(Collectors.toList());
+        result.addAll(curricularPeriod.getChildsSet().stream().flatMap(cp -> getAllCurricularPeriodChilds(cp).stream())
+                .collect(Collectors.toList()));
+        return result;
     }
 
     @Override
