@@ -19,8 +19,6 @@
 package org.fenixedu.academic.domain.time.calendarStructure;
 
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.time.chronologies.AcademicChronology;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 
@@ -33,15 +31,6 @@ public class AcademicYearCE extends AcademicYearCE_Base {
         super.initEntry(parentEntry, title, description, begin, end, rootEntry);
         setAcademicPeriod(AcademicPeriod.YEAR);
         createExecutionYear();
-    }
-
-    @Override
-    public void delete(AcademicCalendarRootEntry rootEntry) {
-        ExecutionYear executionYear = ExecutionYear.getExecutionYear(this);
-        if (executionYear != null) {
-            executionYear.delete();
-        }
-        super.delete(rootEntry);
     }
 
     @Override

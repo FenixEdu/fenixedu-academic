@@ -210,9 +210,9 @@ public class ExecutionYear extends ExecutionYear_Base {
             ;
         }
 
-        setRootDomainObject(null);
         setRootDomainObjectForExecutionYear(null);
-        deleteDomainObject();
+        
+        super.delete();
     }
 
 //    private static class ExecutionPeriodExecutionYearListener extends RelationAdapter<ExecutionYear, ExecutionSemester> {

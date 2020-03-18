@@ -36,15 +36,6 @@ public class AcademicIntervalCE extends AcademicIntervalCE_Base {
     }
 
     @Override
-    public void delete(AcademicCalendarRootEntry rootEntry) {
-        ExecutionInterval executionInterval = ExecutionInterval.getExecutionInterval(this);
-        if (executionInterval != null) {
-            executionInterval.delete();
-        }
-        super.delete(rootEntry);
-    }
-
-    @Override
     public AcademicPeriod getAcademicPeriod() {
         return super.getAcademicPeriod() != null ? super.getAcademicPeriod() : AcademicPeriod.SEMESTER;
     }

@@ -27,6 +27,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.DomainObjectUtil;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.time.chronologies.AcademicChronology;
 import org.fenixedu.academic.dto.GenericPair;
@@ -91,6 +92,12 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
         if (!canBeDeleted(rootEntry)) {
             throw new DomainException("error.now.its.impossible.delete.entry.but.in.the.future.will.be.possible");
         }
+        
+        ExecutionInterval executionInterval = getExecutionInterval();
+        if (executionInterval != null) {
+            executionInterval.delete();
+        }        
+        
         super.setParentEntry(null);
         setRootDomainObject(null);
         deleteDomainObject();

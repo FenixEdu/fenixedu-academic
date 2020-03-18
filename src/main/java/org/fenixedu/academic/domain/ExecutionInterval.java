@@ -374,6 +374,9 @@ public class ExecutionInterval extends ExecutionInterval_Base implements Compara
         if (!getEnrolmentsSet().isEmpty()) {
             throw new Error("cannot.delete.execution.period.because.enrolments.exist");
         }
+        setAcademicCalendarEntry(null);
+        setExecutionYear(null);
+        setRootDomainObjectForExecutionPeriod(null);
         setRootDomainObject(null);
         deleteDomainObject();
     }
