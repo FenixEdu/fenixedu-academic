@@ -19,6 +19,8 @@
 package org.fenixedu.academic.servlet;
 
 import java.util.Properties;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -29,11 +31,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.Installation;
+import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.domain.organizationalStructure.UnitNamePart;
 import org.fenixedu.academic.service.StudentWarningsDefaultCheckers;
 import org.fenixedu.academic.service.StudentWarningsService;
 import org.fenixedu.academic.ui.struts.action.externalServices.PhoneValidationUtils;
 import org.fenixedu.bennu.core.api.SystemResource;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.rest.Healthcheck;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,6 +58,8 @@ public class FenixInitializer implements ServletContextListener {
     @Atomic(mode = TxMode.READ)
     public void contextInitialized(ServletContextEvent event) {
 
+        populateStudentCandidacyNewPrecedentDegreeInformations();
+
         Installation.ensureInstallation();
         loadUnitNames();
         startContactValidationServices();
@@ -63,6 +69,24 @@ public class FenixInitializer implements ServletContextListener {
         registerHealthchecks();
         registerDefaultStudentWarningCheckers();
 
+    }
+
+    @Atomic
+    private void populateStudentCandidacyNewPrecedentDegreeInformations() {
+        final Set<StudentCandidacy> candidacies = Bennu.getInstance().getCandidaciesSet();
+        logger.info("START migration StudentCandidacy PDIs");
+        logger.info(candidacies.size() + " StudentCandidacies (total)");
+
+        final AtomicInteger counter = new AtomicInteger();
+
+        candidacies.forEach(sc -> {
+            if (sc.migratePDI(false)) {
+                counter.incrementAndGet();
+            }
+        });
+
+        logger.info(counter.get() + " StudentCandidacies (migrated)");
+        logger.info("END migration StudentCandidacy PDIs");
     }
 
     private void registerDefaultStudentWarningCheckers() {

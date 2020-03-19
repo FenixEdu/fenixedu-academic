@@ -1408,22 +1408,24 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
     }
 
     class student.PrecedentDegreeInformation  {
-        String conclusionGrade;
-        Integer conclusionYear;
-        
         String degreeDesignation;
         SchoolLevelType schoolLevel;
         String otherSchoolLevel;
         
-        Integer numberOfEnrolmentsInPreviousDegrees;
-        SchoolPeriodDuration mobilityProgramDuration;
-        DateTime lastModifiedDate;
-        CycleType cycleType;
-        AcademicalInstitutionType institutionType;
+        String conclusionGrade; // completed
+        Integer conclusionYear; // completed
+        AcademicalInstitutionType institutionType; // completed (for now)
         
-        String precedentDegreeDesignation;
-        SchoolLevelType precedentSchoolLevel;
-        String otherPrecedentSchoolLevel;
+        CycleType cycleType; // deprecated?
+        
+        protected String precedentDegreeDesignation; // deprecated
+        protected SchoolLevelType precedentSchoolLevel; // deprecated
+        protected String otherPrecedentSchoolLevel; // deprecated
+        
+        Integer numberOfEnrolmentsInPreviousDegrees; // previous
+        SchoolPeriodDuration mobilityProgramDuration; // previous
+        
+        DateTime lastModifiedDate;
     }
 
     class student.Registration  {
@@ -3140,10 +3142,10 @@ relation PrecedentDegreeInformationCountryHighSchool {
 }
 
 relation PrecedentDegreeInformationPrecedentCountry {
-    student.PrecedentDegreeInformation playsRole originPrecedentDegreeInformations {
+    protected student.PrecedentDegreeInformation playsRole originPrecedentDegreeInformations {
         multiplicity *;
     }
-    Country playsRole precedentCountry;
+    protected Country playsRole precedentCountry;
 }
 
 relation PrecedentDegreeInformationInstitution {
@@ -3154,15 +3156,35 @@ relation PrecedentDegreeInformationInstitution {
 }
 
 relation PrecedentDegreeInformationPrecedentInstitution {
-    student.PrecedentDegreeInformation playsRole transitionPrecedentDegreeInformations {
+    protected student.PrecedentDegreeInformation playsRole transitionPrecedentDegreeInformations {
         multiplicity *;
     }
-    organizationalStructure.Unit playsRole precedentInstitution;
+    protected organizationalStructure.Unit playsRole precedentInstitution;
 }
 
 relation PrecedentDegreeInformationStudentCandidacy {
-    student.PrecedentDegreeInformation playsRole precedentDegreeInformation;
-    candidacy.StudentCandidacy playsRole studentCandidacy;
+    protected student.PrecedentDegreeInformation playsRole precedentDegreeInformation;
+    protected candidacy.StudentCandidacy playsRole studentCandidacy;
+}
+
+relation CompletedPrecedentDegreeInformationStudentCandidacy {
+    student.PrecedentDegreeInformation playsRole completedDegreeInformation;
+    candidacy.StudentCandidacy playsRole completedStudentCandidacy;
+}
+
+relation PreviousPrecedentDegreeInformationStudentCandidacy {
+    student.PrecedentDegreeInformation playsRole previousDegreeInformation;
+    candidacy.StudentCandidacy playsRole previousStudentCandidacy;
+}
+
+relation PrecedentDegreeInformationDistrict{
+	.org.fenixedu.academic.domain.student.PrecedentDegreeInformation playsRole precedentDegreeInformation;
+	.org.fenixedu.academic.domain.District playsRole district;
+}
+
+relation PrecedentDegreeInformationDistrictSubdivision{
+	.org.fenixedu.academic.domain.student.PrecedentDegreeInformation playsRole precedentDegreeInformation;
+	.org.fenixedu.academic.domain.DistrictSubdivision playsRole districtSubdivision;
 }
 
 relation ProfessorshipShiftProfessorship {

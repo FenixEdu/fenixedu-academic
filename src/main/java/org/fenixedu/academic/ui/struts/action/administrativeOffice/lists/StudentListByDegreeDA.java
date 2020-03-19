@@ -381,8 +381,8 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             spreadsheet.addCell(registration.getRegistrationProtocol().getCode());
 
             if (extendedInfo) {
-                spreadsheet.addCell(getAlmaMater(person, registration));
-                spreadsheet.addCell(getAlmaMaterCountry(person, registration));
+//                spreadsheet.addCell(getAlmaMater(person, registration));
+//                spreadsheet.addCell(getAlmaMaterCountry(person, registration));
                 spreadsheet.addCell(person.getDefaultEmailAddress() == null ? EMPTY : person.getDefaultEmailAddress().getValue());
                 spreadsheet.addCell(person.getCountry() == null ? EMPTY : person.getCountry().getName());
                 spreadsheet.addCell(getFullAddress(person));
@@ -433,52 +433,52 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
         return count;
     }
 
-    private String getAlmaMater(final Person person, final Registration registration) {
+//    private String getAlmaMater(final Person person, final Registration registration) {
+//
+//        if (registration.getRegistrationProtocol().attemptAlmaMatterFromPrecedent()) {
+//
+//            if (registration.getStudentCandidacy() == null) {
+//                return EMPTY;
+//            }
+//
+//            StudentCandidacy studentCandidacy = registration.getStudentCandidacy();
+//            if (studentCandidacy.getPrecedentDegreeInformation() == null) {
+//                return EMPTY;
+//            }
+//
+//            PrecedentDegreeInformation precedentDegreeInformation = studentCandidacy.getPrecedentDegreeInformation();
+//            if (precedentDegreeInformation.getPrecedentInstitution() == null) {
+//                return EMPTY;
+//            }
+//
+//            return precedentDegreeInformation.getPrecedentInstitution().getNameI18n().getContent();
+//        }
+//
+//        return EMPTY;
+//    }
 
-        if (registration.getRegistrationProtocol().attemptAlmaMatterFromPrecedent()) {
-
-            if (registration.getStudentCandidacy() == null) {
-                return EMPTY;
-            }
-
-            StudentCandidacy studentCandidacy = registration.getStudentCandidacy();
-            if (studentCandidacy.getPrecedentDegreeInformation() == null) {
-                return EMPTY;
-            }
-
-            PrecedentDegreeInformation precedentDegreeInformation = studentCandidacy.getPrecedentDegreeInformation();
-            if (precedentDegreeInformation.getPrecedentInstitution() == null) {
-                return EMPTY;
-            }
-
-            return precedentDegreeInformation.getPrecedentInstitution().getNameI18n().getContent();
-        }
-
-        return EMPTY;
-    }
-
-    private String getAlmaMaterCountry(final Person person, final Registration registration) {
-        if (registration.getRegistrationProtocol().attemptAlmaMatterFromPrecedent()) {
-
-            if (registration.getStudentCandidacy() == null) {
-                return EMPTY;
-            }
-
-            StudentCandidacy studentCandidacy = registration.getStudentCandidacy();
-            if (studentCandidacy.getPrecedentDegreeInformation() == null) {
-                return EMPTY;
-            }
-
-            PrecedentDegreeInformation precedentDegreeInformation = studentCandidacy.getPrecedentDegreeInformation();
-            if (precedentDegreeInformation.getPrecedentCountry() == null) {
-                return EMPTY;
-            }
-
-            return precedentDegreeInformation.getPrecedentCountry().getLocalizedName().getContent();
-        }
-
-        return EMPTY;
-    }
+//    private String getAlmaMaterCountry(final Person person, final Registration registration) {
+//        if (registration.getRegistrationProtocol().attemptAlmaMatterFromPrecedent()) {
+//
+//            if (registration.getStudentCandidacy() == null) {
+//                return EMPTY;
+//            }
+//
+//            StudentCandidacy studentCandidacy = registration.getStudentCandidacy();
+//            if (studentCandidacy.getPrecedentDegreeInformation() == null) {
+//                return EMPTY;
+//            }
+//
+//            PrecedentDegreeInformation precedentDegreeInformation = studentCandidacy.getPrecedentDegreeInformation();
+//            if (precedentDegreeInformation.getPrecedentCountry() == null) {
+//                return EMPTY;
+//            }
+//
+//            return precedentDegreeInformation.getPrecedentCountry().getLocalizedName().getContent();
+//        }
+//
+//        return EMPTY;
+//    }
 
     private String getFullAddress(final Person person) {
         if (person.hasDefaultPhysicalAddress()) {
@@ -590,8 +590,8 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
         spreadsheet.addHeader(getResourceMessage("label.registration.state.start.date"));
         spreadsheet.addHeader(getResourceMessage("label.registrationAgreement"));
         if (extendedInfo) {
-            spreadsheet.addHeader(getResourceMessage("label.almamater"));
-            spreadsheet.addHeader(getResourceMessage("label.almamater.country"));
+//            spreadsheet.addHeader(getResourceMessage("label.almamater"));
+//            spreadsheet.addHeader(getResourceMessage("label.almamater.country"));
             spreadsheet.addHeader(getResourceMessage("label.email"));
             spreadsheet.addHeader(getResourceMessage("label.nationality"));
             spreadsheet.addHeader(getResourceMessage("label.person.title.addressInfo"));

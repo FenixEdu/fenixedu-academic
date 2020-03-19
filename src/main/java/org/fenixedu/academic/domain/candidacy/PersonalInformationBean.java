@@ -111,37 +111,37 @@ public class PersonalInformationBean implements Serializable {
         initFromLatestPersonalIngressionData();
     }
 
-    public PersonalInformationBean(PrecedentDegreeInformation degreeInfo) {
-        setRegistration(degreeInfo.getStudentCandidacy().getRegistration());
-        setSchoolLevel(degreeInfo.getSchoolLevel());
-        setOtherSchoolLevel(degreeInfo.getOtherSchoolLevel());
-        setConclusionGrade(degreeInfo.getConclusionGrade());
-        setConclusionYear(degreeInfo.getConclusionYear());
-        setCountryWhereFinishedPreviousCompleteDegree(degreeInfo.getCountry());
-        setCountryWhereFinishedHighSchoolLevel(degreeInfo.getCountryHighSchool());
-
-        Unit institution = degreeInfo.getInstitution();
-        if (!isUnitFromRaidesListMandatory() || (institution != null && !StringUtils.isEmpty(institution.getCode()))) {
-            setInstitution(institution);
-            setDegreeDesignation(degreeInfo.getDegreeDesignation());
-        }
-
-        setPrecedentDegreeDesignation(degreeInfo.getPrecedentDegreeDesignation());
-        setPrecedentInstitution(degreeInfo.getPrecedentInstitution());
-        setPrecedentSchoolLevel(degreeInfo.getPrecedentSchoolLevel());
-        setOtherPrecedentSchoolLevel(degreeInfo.getOtherPrecedentSchoolLevel());
-        setNumberOfPreviousYearEnrolmentsInPrecedentDegree(degreeInfo.getNumberOfEnrolmentsInPreviousDegrees());
-        setMobilityProgramDuration(degreeInfo.getMobilityProgramDuration());
-        if (getPrecedentDegreeDesignation() != null || getPrecedentInstitution() != null || getPrecedentSchoolLevel() != null
-                || getNumberOfPreviousYearEnrolmentsInPrecedentDegree() != null) {
-            setDegreeChangeOrTransferOrErasmusStudent(true);
-        }
-        if (isUnitFromRaidesListMandatory()) {
-            setRaidesDegreeDesignation(DegreeDesignation.readByNameAndSchoolLevel(degreeDesignation, schoolLevel));
-        }
-
-        initFromLatestPersonalIngressionData();
-    }
+//    public PersonalInformationBean(PrecedentDegreeInformation degreeInfo) {
+//        setRegistration(degreeInfo.getStudentCandidacy().getRegistration());
+//        setSchoolLevel(degreeInfo.getSchoolLevel());
+//        setOtherSchoolLevel(degreeInfo.getOtherSchoolLevel());
+//        setConclusionGrade(degreeInfo.getConclusionGrade());
+//        setConclusionYear(degreeInfo.getConclusionYear());
+//        setCountryWhereFinishedPreviousCompleteDegree(degreeInfo.getCountry());
+//        setCountryWhereFinishedHighSchoolLevel(degreeInfo.getCountryHighSchool());
+//
+//        Unit institution = degreeInfo.getInstitution();
+//        if (!isUnitFromRaidesListMandatory() || (institution != null && !StringUtils.isEmpty(institution.getCode()))) {
+//            setInstitution(institution);
+//            setDegreeDesignation(degreeInfo.getDegreeDesignation());
+//        }
+//
+//        setPrecedentDegreeDesignation(degreeInfo.getPrecedentDegreeDesignation());
+//        setPrecedentInstitution(degreeInfo.getPrecedentInstitution());
+//        setPrecedentSchoolLevel(degreeInfo.getPrecedentSchoolLevel());
+//        setOtherPrecedentSchoolLevel(degreeInfo.getOtherPrecedentSchoolLevel());
+//        setNumberOfPreviousYearEnrolmentsInPrecedentDegree(degreeInfo.getNumberOfEnrolmentsInPreviousDegrees());
+//        setMobilityProgramDuration(degreeInfo.getMobilityProgramDuration());
+//        if (getPrecedentDegreeDesignation() != null || getPrecedentInstitution() != null || getPrecedentSchoolLevel() != null
+//                || getNumberOfPreviousYearEnrolmentsInPrecedentDegree() != null) {
+//            setDegreeChangeOrTransferOrErasmusStudent(true);
+//        }
+//        if (isUnitFromRaidesListMandatory()) {
+//            setRaidesDegreeDesignation(DegreeDesignation.readByNameAndSchoolLevel(degreeDesignation, schoolLevel));
+//        }
+//
+//        initFromLatestPersonalIngressionData();
+//    }
 
     public PersonalInformationBean() {
     }

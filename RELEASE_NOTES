@@ -1,4 +1,5 @@
-- Fix: Deletion of AcademicCalendarEntries connected to ExecutionIntervals  
+- Refactor: PrecedentDegreeInformation split into 'completed' and 'previous'  
+- Fix: Deletion of AcademicCalendarEntries connected to ExecutionIntervals
 
 28.6.0 (18-03-2020)
 - Improvement: added support for AcademicPeriod type Other

@@ -439,7 +439,7 @@
 	
 	<logic:present name="registration" property="studentCandidacy">
 		<h3 class="mtop2 mbottom05 separator2"><bean:message key="label.person.title.precedenceDegreeInfo" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-		<fr:view name="registration" property="studentCandidacy.precedentDegreeInformation" schema="student.precedentDegreeInformation" >
+		<fr:view name="registration" property="studentCandidacy.completedDegreeInformation" schema="student.precedentDegreeInformation" >
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thright thlight mtop05"/>
 			</fr:layout>
