@@ -400,6 +400,6 @@
 </fr:view>
 </logic:notEmpty>
 
-<div class="mtop15"><bean:message key="message.nape.contacts" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" arg1="<%=Installation.getInstance().getAcademicEmailAddress() %>" bundle="CANDIDATE_RESOURCES"/></div>
+<div class="mtop15"><bean:message key="message.nape.contacts" bundle="CANDIDATE_RESOURCES"/></div>
 
 

@@ -62,4 +62,4 @@
 	<bean:message key="message.any.question.application.submission" bundle="CANDIDATE_RESOURCES"/>.
 </p>
 
-<div class="mtop15" id="contacts"><bean:message key="message.nape.contacts" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" arg1="<%= org.fenixedu.academic.domain.Installation.getInstance().getAcademicEmailAddress() %>" bundle="CANDIDATE_RESOURCES"/></div>
+<div class="mtop15" id="contacts"><bean:message key="message.nape.contacts" bundle="CANDIDATE_RESOURCES"/></div>

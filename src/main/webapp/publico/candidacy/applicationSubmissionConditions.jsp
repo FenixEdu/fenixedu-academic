@@ -73,20 +73,12 @@
 	}
 %>
 
-	<% 
-		if(locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
-	%>
-		<p><bean:message key="message.payment.details" bundle="CANDIDATE_RESOURCES"/></p>
-		<p><em><bean:message key="message.bank.transfer.preferred.name.observation.fields" bundle="CANDIDATE_RESOURCES"/></em></p>
-	<% } %>
-
 <p class="mtop15">
 	<bean:message key="message.ist.conditions.note" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/>
-	<bean:message key="message.any.question.application.submission" bundle="CANDIDATE_RESOURCES"/>.
 </p>
 
 
-<div class="mtop15" id="contacts"><bean:message key="message.nape.contacts" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" arg1="<%= Installation.getInstance().getAcademicEmailAddress() %>" bundle="CANDIDATE_RESOURCES"/></div>
+<div class="mtop15" id="contacts"><bean:message key="message.nape.contacts" bundle="CANDIDATE_RESOURCES"/></div>
 
 <bean:define id="hash" name="hash"/> 
 <fr:form action='<%= mappingPath + ".do?method=prepareCandidacyCreation&hash=" + hash %>'>
