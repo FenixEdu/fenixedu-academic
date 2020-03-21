@@ -121,6 +121,7 @@
 	%>
 
 	<p><bean:message key="message.ist.conditions.note" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></p>
+
 </div>
 </logic:equal>
 
@@ -130,5 +131,5 @@
 <p><em><bean:message key="message.national.candidates.must.send.vat.number.document" bundle="CANDIDATE_RESOURCES"/></em></p>
 <% 	} %>
 
-<div class="mtop15"><bean:message key="message.nape.contacts" arg0="<%=org.fenixedu.academic.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" arg1="<%=Installation.getInstance().getAcademicEmailAddress() %>" bundle="CANDIDATE_RESOURCES"/></div>
+<div class="mtop15"><bean:message key="message.nape.contacts" bundle="CANDIDATE_RESOURCES"/></div>
 
