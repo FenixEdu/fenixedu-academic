@@ -79,7 +79,7 @@ public class EnrolmentInSpecialSeasonEvaluation extends CurricularRuleNotPersist
 
     @Override
     public ExecutionInterval getBegin() {
-        return ExecutionInterval.findFirstCurrentChild(toApply.getDegreeCurricularPlanOfStudent().getDegree().getCalendar());
+        return ExecutionInterval.findFirstCurrentChild(toApply.getDegreeCurricularPlanOfStudent().getDegree().getCalendar()).getExecutionYear();
     }
 
     @Override

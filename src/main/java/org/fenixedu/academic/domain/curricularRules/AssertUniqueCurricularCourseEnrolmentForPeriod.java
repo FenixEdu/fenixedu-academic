@@ -53,7 +53,7 @@ public class AssertUniqueCurricularCourseEnrolmentForPeriod extends CurricularRu
 
     @Override
     public ExecutionInterval getBegin() {
-        return ExecutionInterval.findFirstCurrentChild(toApply.getDegree().getCalendar());
+        return ExecutionInterval.findFirstCurrentChild(toApply.getDegree().getCalendar()).getExecutionYear();
     }
 
     @Override

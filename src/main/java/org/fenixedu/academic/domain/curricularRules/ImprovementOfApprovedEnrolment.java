@@ -79,7 +79,8 @@ public class ImprovementOfApprovedEnrolment extends CurricularRuleNotPersistent 
 
     @Override
     public ExecutionInterval getBegin() {
-        return ExecutionInterval.findFirstCurrentChild(toApply.getDegreeCurricularPlanOfStudent().getDegree().getCalendar());
+        return ExecutionInterval.findFirstCurrentChild(toApply.getDegreeCurricularPlanOfStudent().getDegree().getCalendar())
+                .getExecutionYear();
     }
 
     @Override

@@ -125,11 +125,13 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
     @Deprecated
     @Override
     public ExecutionInterval getBegin() {
-        return belongsToCompositeRule() ? getParentCompositeRule().getBegin() : super.getBegin();
+        return belongsToCompositeRule() ? getParentCompositeRule().getBegin().getExecutionYear() : super.getBegin()
+                .getExecutionYear();
     }
 
     public ExecutionInterval getBeginInterval() {
-        return belongsToCompositeRule() ? getParentCompositeRule().getBeginInterval() : super.getBegin();
+        return belongsToCompositeRule() ? getParentCompositeRule().getBeginInterval().getExecutionYear() : super.getBegin()
+                .getExecutionYear();
     }
 
     /**
@@ -138,11 +140,13 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
     @Deprecated
     @Override
     public ExecutionInterval getEnd() {
-        return belongsToCompositeRule() ? getParentCompositeRule().getEnd() : super.getEnd();
+        final ExecutionInterval result = belongsToCompositeRule() ? getParentCompositeRule().getEnd() : super.getEnd();
+        return result != null ? result.getExecutionYear() : null;
     }
 
     public ExecutionInterval getEndInterval() {
-        return belongsToCompositeRule() ? getParentCompositeRule().getEndInterval() : super.getEnd();
+        final ExecutionInterval result = belongsToCompositeRule() ? getParentCompositeRule().getEndInterval() : super.getEnd();
+        return result != null ? result.getExecutionYear() : null;
     }
 
     @Override
@@ -167,8 +171,8 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
 
     @Override
     public boolean isValid(ExecutionInterval executionInterval) {
-        return (getBeginInterval().isBeforeOrEquals(executionInterval)
-                && (getEndInterval() == null || getEndInterval().isAfterOrEquals(executionInterval)));
+        return (getBeginInterval().isBeforeOrEquals(executionInterval.getExecutionYear())
+                && (getEndInterval() == null || getEndInterval().isAfterOrEquals(executionInterval.getExecutionYear())));
     }
 
     @Override

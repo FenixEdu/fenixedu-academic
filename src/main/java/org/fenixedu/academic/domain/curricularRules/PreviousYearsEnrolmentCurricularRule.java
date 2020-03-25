@@ -61,7 +61,7 @@ public class PreviousYearsEnrolmentCurricularRule extends CurricularRuleNotPersi
 
     @Override
     public ExecutionInterval getBegin() {
-        return ExecutionInterval.findFirstCurrentChild(courseGroup.getDegree().getCalendar());
+        return ExecutionInterval.findFirstCurrentChild(courseGroup.getDegree().getCalendar()).getExecutionYear();
     }
 
     @Override

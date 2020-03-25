@@ -274,8 +274,9 @@ public class Context extends Context_Base implements Comparable<Context> {
     }
 
     public boolean isOpen(final ExecutionInterval executionInterval) {
-        return getBeginExecutionInterval().isBeforeOrEquals(executionInterval)
-                && (getEndExecutionInterval() == null || getEndExecutionInterval().isAfterOrEquals(executionInterval));
+        return getBeginExecutionInterval().isBeforeOrEquals(executionInterval.getExecutionYear())
+                && (getEndExecutionInterval() == null
+                        || getEndExecutionInterval().isAfterOrEquals(executionInterval.getExecutionYear()));
     }
 
     public boolean isOpen(final ExecutionYear executionYear) {
@@ -407,11 +408,11 @@ public class Context extends Context_Base implements Comparable<Context> {
     }
 
     public ExecutionInterval getBeginExecutionInterval() {
-        return super.getBeginExecutionPeriod();
+        return super.getBeginExecutionPeriod().getExecutionYear();
     }
 
     public ExecutionInterval getEndExecutionInterval() {
-        return super.getEndExecutionPeriod();
+        return super.getEndExecutionPeriod() != null ? super.getEndExecutionPeriod().getExecutionYear() : null;
     }
 
 }
