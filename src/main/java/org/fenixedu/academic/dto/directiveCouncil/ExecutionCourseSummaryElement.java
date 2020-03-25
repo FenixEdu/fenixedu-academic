@@ -36,16 +36,21 @@ public class ExecutionCourseSummaryElement implements Serializable {
     private BigDecimal percentageOfLessonsWithSummary;
     private BigDecimal numberOfLessonInstancesWithNotTaughtSummary;
     private BigDecimal percentageOfLessonsWithNotTaughtSummary;
+    private BigDecimal percentageOfOnlineLessons;
+    private BigDecimal numberOfOnlineLessons;
 
     public ExecutionCourseSummaryElement(ExecutionCourse executionCourse, BigDecimal numberOfLessonInstance,
             BigDecimal numberOfLessonInstanceWithSummary, BigDecimal percentageOfLessonsWithSummary,
-            BigDecimal numberOfLessonInstancesWithNotTaughtSummary, BigDecimal percentageOfLessonsWithNotTaughtSummary) {
+            BigDecimal numberOfLessonInstancesWithNotTaughtSummary, BigDecimal percentageOfLessonsWithNotTaughtSummary,
+            BigDecimal numberOfOnlineLessons, BigDecimal percentageOfOnlineLessons) {
         setExecutionCourse(executionCourse);
         setNumberOfLessonInstances(numberOfLessonInstance);
         setNumberOfLessonInstancesWithSummary(numberOfLessonInstanceWithSummary);
         setPercentageOfLessonsWithSummary(percentageOfLessonsWithSummary);
         setNumberOfLessonInstancesWithNotTaughtSummary(numberOfLessonInstancesWithNotTaughtSummary);
         setPercentageOfLessonsWithNotTaughtSummary(percentageOfLessonsWithNotTaughtSummary);
+        setPercentageOfOnlineLessons(percentageOfOnlineLessons);
+        setNumberOfOnlineLessons(numberOfOnlineLessons);
     }
 
     public Set<Person> getPersons() {
@@ -103,4 +108,20 @@ public class ExecutionCourseSummaryElement implements Serializable {
     public BigDecimal getPercentageOfLessonsWithNotTaughtSummary() {
         return percentageOfLessonsWithNotTaughtSummary.setScale(2);
     }
+
+	public BigDecimal getPercentageOfOnlineLessons() {
+		return percentageOfOnlineLessons;
+	}
+
+	public void setPercentageOfOnlineLessons(BigDecimal percentageOfOnlineLessons) {
+		this.percentageOfOnlineLessons = percentageOfOnlineLessons;
+	}
+
+	public BigDecimal getNumberOfOnlineLessons() {
+		return numberOfOnlineLessons;
+	}
+
+	public void setNumberOfOnlineLessons(BigDecimal numberOfOnlineLessons) {
+		this.numberOfOnlineLessons = numberOfOnlineLessons;
+	}
 }

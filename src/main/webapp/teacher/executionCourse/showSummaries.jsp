@@ -146,6 +146,11 @@
 					
 					 - 															 
 				
+					<%-- Online Lesson --%>
+					<logic:equal name="summary" property="onlineLesson" value="true">
+						<bean:message key="label.summaries.online.class"/> - 
+					</logic:equal>
+				
 					<%-- Students Number --%>
 					<logic:present name="summary" property="studentsNumber">			
 						<logic:notEmpty name="summary" property="studentsNumber">			

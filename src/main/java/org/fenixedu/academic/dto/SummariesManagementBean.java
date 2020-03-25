@@ -75,6 +75,8 @@ public class SummariesManagementBean implements Serializable {
     private Professorship professorshipLoggedReference;
 
     private Boolean taught;
+    
+    private Boolean onlineLesson;
 
     private List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleSummaryLessonsAndDatesBean;
 
@@ -94,7 +96,7 @@ public class SummariesManagementBean implements Serializable {
     public SummariesManagementBean(LocalizedString title, LocalizedString summaryText, Integer studentsNumber,
             SummaryType summaryType, Professorship professorship, String teacherName, Teacher teacher, Shift shift,
             Lesson lesson, YearMonthDay summaryDate, Space summaryRoom, Partial summaryTime, Summary summary,
-            Professorship professorshipLogged, ShiftType lessonType, Boolean taught) {
+            Professorship professorshipLogged, ShiftType lessonType, Boolean taught, Boolean onlineLesson) {
 
         setTitle(title);
         setSummaryText(summaryText);
@@ -113,6 +115,7 @@ public class SummariesManagementBean implements Serializable {
         setProfessorshipLogged(professorshipLogged);
         setLessonType(lessonType);
         setTaught(taught);
+        setOnlineLesson(onlineLesson);
     }
 
     public String getTeacherName() {
@@ -297,4 +300,12 @@ public class SummariesManagementBean implements Serializable {
     public Boolean getTaught() {
         return taught;
     }
+
+	public Boolean getOnlineLesson() {
+		return onlineLesson;
+	}
+
+	public void setOnlineLesson(Boolean onlineLesson) {
+		this.onlineLesson = onlineLesson;
+	}
 }

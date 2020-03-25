@@ -79,12 +79,12 @@ public class Summary extends Summary_Base {
 
     public Summary(LocalizedString title, LocalizedString summaryText, Integer studentsNumber, Boolean isExtraLesson,
             Professorship professorship, String teacherName, Teacher teacher, Shift shift, Lesson lesson, YearMonthDay date,
-            Space room, Partial hour, ShiftType type, Boolean taught) {
+            Space room, Partial hour, ShiftType type, Boolean taught, Boolean onlineLesson) {
 
         super();
         setRootDomainObject(Bennu.getInstance());
         fillSummaryWithInfo(title, summaryText, studentsNumber, isExtraLesson, professorship, teacherName, teacher, shift,
-                lesson, date, room, hour, type, taught);
+                lesson, date, room, hour, type, taught, onlineLesson);
 
         ContentManagementLog.createLog(shift.getExecutionCourse(), Bundle.MESSAGING, "log.executionCourse.content.summary.added",
                 title.getContent(), shift.getPresentationName(), shift.getExecutionCourse().getNome(), shift.getExecutionCourse()
@@ -93,10 +93,10 @@ public class Summary extends Summary_Base {
 
     public void edit(LocalizedString title, LocalizedString summaryText, Integer studentsNumber, Boolean isExtraLesson,
             Professorship professorship, String teacherName, Teacher teacher, Shift shift, Lesson lesson, YearMonthDay date,
-            Space room, Partial hour, ShiftType type, Boolean taught) {
+            Space room, Partial hour, ShiftType type, Boolean taught, Boolean onlineLesson) {
 
         fillSummaryWithInfo(title, summaryText, studentsNumber, isExtraLesson, professorship, teacherName, teacher, shift,
-                lesson, date, room, hour, type, taught);
+                lesson, date, room, hour, type, taught, onlineLesson);
 
         ContentManagementLog.createLog(shift.getExecutionCourse(), Bundle.MESSAGING,
                 "log.executionCourse.content.summary.edited", title.getContent(), shift.getPresentationName(), shift
@@ -107,7 +107,7 @@ public class Summary extends Summary_Base {
 
     private void fillSummaryWithInfo(LocalizedString title, LocalizedString summaryText, Integer studentsNumber,
             Boolean isExtraLesson, Professorship professorship, String teacherName, Teacher teacher, Shift shift, Lesson lesson,
-            YearMonthDay day, Space room, Partial hour, ShiftType type, Boolean taught) {
+            YearMonthDay day, Space room, Partial hour, ShiftType type, Boolean taught, Boolean onlineLesson) {
 
         setShift(shift);
         setSummaryDateYearMonthDay(day);
@@ -127,6 +127,7 @@ public class Summary extends Summary_Base {
         setLastModifiedDateDateTime(new DateTime());
         setSummaryType(type);
         setTaught(taught);
+        setOnlineLesson(onlineLesson);
 
         if (isExtraLesson) {
             super.setLessonInstance(null);

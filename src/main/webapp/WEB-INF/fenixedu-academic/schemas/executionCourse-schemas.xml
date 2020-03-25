@@ -239,6 +239,7 @@
 	<slot name="taught" key="label.taught.class" layout="option-select-postback">
 		<property name="destination" value="changeSummaryType"/>
 	</slot>
+	<slot name="onlineLesson" key="label.summaries.online.class"/>
 	<slot name="title" key="label.lessonPlanning.title" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredLocalizedStringValidator">
 		<property name="size" value="50"/>	
 	</slot>
@@ -264,6 +265,7 @@
 	<slot name="taught" key="label.taught.class" layout="option-select-postback">
 		<property name="destination" value="changeSummaryType"/>
 	</slot>
+	<slot name="onlineLesson" key="label.summaries.online.class"/>
 	<slot name="studentsNumber" key="property.number.students.attending.course">
 		<property name="size" value="4"/>	
 	</slot>	

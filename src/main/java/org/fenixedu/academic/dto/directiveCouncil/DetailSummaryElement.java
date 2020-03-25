@@ -38,12 +38,14 @@ public class DetailSummaryElement implements Serializable {
     BigDecimal givenSummariesPercentage;
     BigDecimal givenNotTaughtSummaries;
     BigDecimal givenNotTaughtSummariesPercentage;
+    BigDecimal givenOnlineLessonSummaries;
+    BigDecimal givenOnlineLessonSummariesPercentage;
     String teacherId;
     String teacherEmail;
 
     public DetailSummaryElement(String teacherName, String executionCourseName, String teacherId, String teacherEmail,
-            String categoryName, BigDecimal givenSummaries, BigDecimal givenNotTaughtSummaries, String siglas,
-            BigDecimal givenLessons, BigDecimal givenSummariesPercentage, BigDecimal givenNotTaughtSummariesPercentage) {
+            String categoryName, BigDecimal givenSummaries, BigDecimal givenNotTaughtSummaries, BigDecimal onlineLessons, String siglas,
+            BigDecimal givenLessons, BigDecimal givenSummariesPercentage, BigDecimal givenNotTaughtSummariesPercentage, BigDecimal onlineLessonsPercentage) {
 
         setExecutionCourseName(executionCourseName);
         setTeacherName(teacherName);
@@ -56,6 +58,8 @@ public class DetailSummaryElement implements Serializable {
         setGivenSummariesPercentage(givenSummariesPercentage);
         setGivenNotTaughtSummaries(givenNotTaughtSummaries);
         setGivenNotTaughtSummariesPercentage(givenNotTaughtSummariesPercentage);
+        setGivenOnlineLessonSummaries(onlineLessons);
+        setGivenOnlineLessonSummariesPercentage(onlineLessonsPercentage);
     }
 
     public String getTeacherEmail() {
@@ -161,5 +165,21 @@ public class DetailSummaryElement implements Serializable {
     public void setTeacherId(String teacherId) {
         this.teacherId = teacherId;
     }
+
+	public BigDecimal getGivenOnlineLessonSummaries() {
+		return givenOnlineLessonSummaries;
+	}
+
+	public void setGivenOnlineLessonSummaries(BigDecimal givenOnlineLessonSummaries) {
+		this.givenOnlineLessonSummaries = givenOnlineLessonSummaries;
+	}
+
+	public BigDecimal getGivenOnlineLessonSummariesPercentage() {
+		return givenOnlineLessonSummariesPercentage;
+	}
+
+	public void setGivenOnlineLessonSummariesPercentage(BigDecimal givenOnlineLessonSummariesPercentage) {
+		this.givenOnlineLessonSummariesPercentage = givenOnlineLessonSummariesPercentage;
+	}
 
 }
