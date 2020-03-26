@@ -34,7 +34,6 @@ import org.apache.commons.collections.Predicate;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
@@ -563,19 +562,14 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
     public ExecutionInterval getMinimumExecutionPeriod() {
         if (isRoot()) {
-            return isBolonhaDegree() ? ExecutionInterval.findFirstChild() : getFirstExecutionPeriodOfFirstExecutionDegree();
+            return ExecutionInterval.findActiveAggregators(getDegree().getCalendar()).stream().min(Comparator.naturalOrder())
+                    .orElse(null);
         }
         final SortedSet<ExecutionInterval> executionIntervals = new TreeSet<ExecutionInterval>();
         for (final Context context : getParentContextsSet()) {
             executionIntervals.add(context.getBeginExecutionInterval());
         }
         return executionIntervals.first();
-    }
-
-    private ExecutionInterval getFirstExecutionPeriodOfFirstExecutionDegree() {
-        final ExecutionDegree executionDegree = getParentDegreeCurricularPlan().getFirstExecutionDegree();
-        return executionDegree != null ? executionDegree.getExecutionYear().getFirstExecutionPeriod() : ExecutionInterval
-                .findFirstChild();
     }
 
     public DegreeModulesSelectionLimit getDegreeModulesSelectionLimitRule(final ExecutionInterval executionInterval) {

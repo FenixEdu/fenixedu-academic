@@ -369,6 +369,10 @@ public class Context extends Context_Base implements Comparable<Context> {
 //        return firstCurricularPeriodOrder <= argumentOrder && argumentOrder <= lastCurricularPeriodOrder;
 //    }
 
+    /**
+     * @deprecated use {@code #setBeginExecutionInterval(ExecutionInterval)}
+     */
+    @Deprecated
     @Override
     public void setBeginExecutionPeriod(ExecutionInterval beginExecutionPeriod) {
         if (beginExecutionPeriod == null) {
@@ -411,8 +415,46 @@ public class Context extends Context_Base implements Comparable<Context> {
         return super.getBeginExecutionPeriod().getExecutionYear();
     }
 
+    public void setBeginExecutionInterval(ExecutionInterval executionInterval) {
+        if (executionInterval == null) {
+            throw new DomainException("context.begin.execution.interval.cannot.be.null");
+        }
+        super.setBeginExecutionPeriod(executionInterval);
+    }
+
     public ExecutionInterval getEndExecutionInterval() {
         return super.getEndExecutionPeriod() != null ? super.getEndExecutionPeriod().getExecutionYear() : null;
+    }
+
+    public void setEndExecutionInterval(ExecutionInterval executionInterval) {
+        super.setEndExecutionPeriod(executionInterval);
+    }
+
+    /**
+     * @deprecated use {@code #getBeginExecutionInterval()}
+     */
+    @Deprecated
+    @Override
+    public ExecutionInterval getBeginExecutionPeriod() {
+        return super.getBeginExecutionPeriod().getExecutionYear();
+    }
+
+    /**
+     * @deprecated use {@code #getEndExecutionInterval()}
+     */
+    @Deprecated
+    @Override
+    public ExecutionInterval getEndExecutionPeriod() {
+        return super.getEndExecutionPeriod() != null ? super.getEndExecutionPeriod().getExecutionYear() : null;
+    }
+
+    /**
+     * @deprecated use {@code #setEndExecutionInterval(ExecutionInterval)}
+     */
+    @Deprecated
+    @Override
+    public void setEndExecutionPeriod(ExecutionInterval endExecutionPeriod) {
+        super.setEndExecutionPeriod(endExecutionPeriod);
     }
 
 }

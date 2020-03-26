@@ -504,14 +504,14 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     protected List<SelectItem> readExecutionPeriodItems() {
 
         final ExecutionInterval minimumExecutionPeriod = getMinimumExecutionPeriod();
-        final List<ExecutionInterval> notClosedExecutionPeriods = new ArrayList<>(ExecutionInterval.findActiveChilds());
+        final List<ExecutionInterval> notClosedExecutionPeriods =
+                new ArrayList<>(ExecutionInterval.findActiveAggregators(getDegree().getCalendar()));
         Collections.sort(notClosedExecutionPeriods);
 
         final List<SelectItem> result = new ArrayList<SelectItem>();
         for (final ExecutionInterval notClosedExecutionPeriod : notClosedExecutionPeriods) {
             if (minimumExecutionPeriod == null || notClosedExecutionPeriod.isAfterOrEquals(minimumExecutionPeriod)) {
-                result.add(new SelectItem(notClosedExecutionPeriod.getExternalId(),
-                        notClosedExecutionPeriod.getName() + " " + notClosedExecutionPeriod.getExecutionYear().getYear()));
+                result.add(new SelectItem(notClosedExecutionPeriod.getExternalId(), notClosedExecutionPeriod.getQualifiedName()));
             }
         }
         return result;

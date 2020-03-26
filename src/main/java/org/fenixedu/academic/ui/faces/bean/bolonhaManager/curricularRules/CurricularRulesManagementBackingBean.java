@@ -23,6 +23,7 @@ package org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularRules;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -54,6 +55,7 @@ import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UnitUtils;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.dto.CurricularPeriodInfoDTO;
 import org.fenixedu.academic.dto.bolonhaManager.CurricularRuleParametersDTO;
@@ -643,17 +645,20 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         }
         final List<SelectItem> result = new ArrayList<SelectItem>();
 
+        final AcademicCalendarRootEntry calendar = getDegreeCurricularPlan().getDegree().getCalendar();
+
         final DegreeModule degreeModule = getDegreeModule();
         final ExecutionInterval currentExecutionPeriod =
-                degreeModule != null ? degreeModule.getMinimumExecutionPeriod() : ExecutionInterval.findFirstCurrentChild(null);
+                degreeModule != null ? degreeModule.getMinimumExecutionPeriod() : ExecutionInterval
+                        .findActiveAggregators(calendar).stream().min(Comparator.naturalOrder()).orElse(null);
 
-        final List<ExecutionInterval> notClosedExecutionPeriods = new ArrayList<>(ExecutionInterval.findActiveChilds());
+        final List<ExecutionInterval> notClosedExecutionPeriods =
+                new ArrayList<>(ExecutionInterval.findActiveAggregators(calendar));
         Collections.sort(notClosedExecutionPeriods);
 
         for (final ExecutionInterval notClosedExecutionPeriod : notClosedExecutionPeriods) {
             if (notClosedExecutionPeriod.isAfterOrEquals(currentExecutionPeriod)) {
-                result.add(new SelectItem(notClosedExecutionPeriod.getExternalId(),
-                        notClosedExecutionPeriod.getName() + " " + notClosedExecutionPeriod.getExecutionYear().getYear()));
+                result.add(new SelectItem(notClosedExecutionPeriod.getExternalId(), notClosedExecutionPeriod.getQualifiedName()));
             }
         }
         return (executionPeriodItems = result);
