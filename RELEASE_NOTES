@@ -1,4 +1,5 @@
 - Refactor: Prepare code to allow mixing of different academic period types on same degree curricular plan (contexts and curricular rules validity are now always evaluated for execution year)
+- Fix: Added responsibleFor setter with primitive boolean param
 
 28.7.0 (19-03-2020)
 - Refactor: PrecedentDegreeInformation split into 'completed' and 'previous'  

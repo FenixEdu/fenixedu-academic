@@ -129,10 +129,6 @@ public class Professorship extends Professorship_Base {
         return getDeletionBlockers().isEmpty();
     }
 
-    public boolean isResponsibleFor() {
-        return getResponsibleFor().booleanValue();
-    }
-
     public static List<Professorship> readByDegreeCurricularPlanAndExecutionYear(DegreeCurricularPlan degreeCurricularPlan,
             ExecutionYear executionYear) {
 
@@ -220,6 +216,14 @@ public class Professorship extends Professorship_Base {
 
     public void setTeacher(Teacher teacher) {
         setPerson(teacher.getPerson());
+    }
+
+    public boolean isResponsibleFor() {
+        return getResponsibleFor().booleanValue();
+    }
+
+    public void setResponsibleFor(boolean responsibleFor) {
+        super.setResponsibleFor(responsibleFor);
     }
 
     @Override
