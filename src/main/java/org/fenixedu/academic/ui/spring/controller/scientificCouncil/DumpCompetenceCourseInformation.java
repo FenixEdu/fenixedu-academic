@@ -35,6 +35,7 @@ public class DumpCompetenceCourseInformation {
         final Spreadsheet information = spreadsheet.addSpreadsheet("Information");
         departmentUnit.getCompetenceCourseStream()
                 .flatMap(cc -> cc.getCompetenceCourseInformationsSet().stream())
+                .distinct()
                 .forEach(info -> {
                     final Spreadsheet.Row row = information.addRow();
                     row.setCell("CompetenceCoursesId", info.getCompetenceCourse().getExternalId());
@@ -66,6 +67,7 @@ public class DumpCompetenceCourseInformation {
         final Spreadsheet bibliography = information.addSpreadsheet("Bibliography");
         departmentUnit.getCompetenceCourseStream()
                 .flatMap(cc -> cc.getCompetenceCourseInformationsSet().stream())
+                .distinct()
                 .forEach(info -> {
                     for (final BibliographicReferences.BibliographicReference reference : info.getBibliographicReferences().getBibliographicReferencesList()) {
                         final Spreadsheet.Row row = bibliography.addRow();
@@ -83,6 +85,7 @@ public class DumpCompetenceCourseInformation {
         final Spreadsheet loads = bibliography.addSpreadsheet("CourseLoads");
         departmentUnit.getCompetenceCourseStream()
                 .flatMap(cc -> cc.getCompetenceCourseInformationsSet().stream())
+                .distinct()
                 .forEach(info -> {
                     for (final CompetenceCourseLoad courseLoad : info.getCompetenceCourseLoadsSet()) {
                         final Spreadsheet.Row row = loads.addRow();
@@ -104,6 +107,7 @@ public class DumpCompetenceCourseInformation {
         final Spreadsheet changeRequest = loads.addSpreadsheet("ChangeRequest");
         departmentUnit.getCompetenceCourseStream()
                 .flatMap(cc -> cc.getCompetenceCourseInformationChangeRequestsSet().stream())
+                .distinct()
                 .forEach(request -> {
                     final Spreadsheet.Row row = changeRequest.addRow();
                     row.setCell("CompetenceCoursesId", request.getCompetenceCourse().getExternalId());
@@ -153,6 +157,7 @@ public class DumpCompetenceCourseInformation {
         final Spreadsheet bibliographyChanges = changeRequest.addSpreadsheet("Bibliography Changes");
         departmentUnit.getCompetenceCourseStream()
                 .flatMap(cc -> cc.getCompetenceCourseInformationChangeRequestsSet().stream())
+                .distinct()
                 .forEach(request -> {
                     for (final BibliographicReferences.BibliographicReference reference : request.getBibliographicReferences().getBibliographicReferencesList()) {
                         final Spreadsheet.Row row = bibliographyChanges.addRow();
