@@ -91,7 +91,8 @@ public class PartialRegimeEvent extends PartialRegimeEvent_Base {
         }
 
         PartialRegimePR partialRegimePR =
-                postingRules.stream().map(PartialRegimePR.class::cast).filter(p -> p.isForAliens() == forAliens).findAny()
+                postingRules.stream().map(PartialRegimePR.class::cast).filter(p -> p.isForAliens() == forAliens)
+                		.sorted(PostingRule.COMPARATOR_BY_START_DATE.reversed()).findFirst()
                         .orElseThrow(PartialRegimeEvent::cantCreateEvent);
 
         try {

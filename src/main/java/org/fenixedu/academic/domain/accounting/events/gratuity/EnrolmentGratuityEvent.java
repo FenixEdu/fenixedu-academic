@@ -104,7 +104,8 @@ public class EnrolmentGratuityEvent extends EnrolmentGratuityEvent_Base {
         }
 
         EnrolmentGratuityPR enrolmentGratuityPR =
-                postingRules.stream().map(EnrolmentGratuityPR.class::cast).filter(p -> p.isForAliens() == forAliens).findAny()
+                postingRules.stream().map(EnrolmentGratuityPR.class::cast).filter(p -> p.isForAliens() == forAliens)
+                		.sorted(PostingRule.COMPARATOR_BY_START_DATE.reversed()).findFirst()
                         .orElseThrow(() -> cantCreateEvent(enrolment));
 
         try {
