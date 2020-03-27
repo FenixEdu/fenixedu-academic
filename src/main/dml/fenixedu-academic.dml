@@ -1235,6 +1235,7 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
         String teacherName;
         LocalizedString title;    
         Boolean taught;
+        Boolean onlineLesson;
         }
 
     class Teacher  {
