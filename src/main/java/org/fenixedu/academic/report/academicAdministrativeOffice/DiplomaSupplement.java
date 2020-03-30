@@ -18,27 +18,10 @@
  */
 package org.fenixedu.academic.report.academicAdministrativeOffice;
 
-import java.math.BigDecimal;
-import java.text.Collator;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Optional;
-import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-
+import com.google.common.base.Joiner;
+import com.google.common.base.Strings;
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.DegreeOfficialPublication;
-import org.fenixedu.academic.domain.DegreeSpecializationArea;
-import org.fenixedu.academic.domain.Grade;
-import org.fenixedu.academic.domain.IEnrolment;
-import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.*;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.EctsGraduationGradeConversionTable;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -67,8 +50,11 @@ import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Strings;
+import java.math.BigDecimal;
+import java.text.Collator;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
@@ -214,25 +200,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
         addParameter("institutionName", Bennu.getInstance().getInstitutionUnit().getName());
 
 
-        LocalizedString institutionsWhereStudiesWereTaught = associatedInstitutions.orElseGet(() ->
-                new LocalizedString(locale,  new StringBuilder()
-                        .append(Bennu.getInstance().getInstitutionUnit().getName())
-                        .append(",")
-                        .append(SINGLE_SPACE)
-                        .append(BundleUtil.getString(Bundle.ENUMERATION, locale, Bennu.getInstance().getInstitutionUnit().getType().getName()))
-                        .append(SINGLE_SPACE)
-                        .append(BundleUtil.getString(Bundle.ACADEMIC, locale, "diploma.supplement.of"))
-                        .append(SINGLE_SPACE)
-                        .append(institutionsUniversityUnit.getName()).toString())
-                .with(new Locale("en"), new StringBuilder()
-                        .append(Bennu.getInstance().getInstitutionUnit().getName())
-                        .append(",")
-                        .append(SINGLE_SPACE)
-                        .append(BundleUtil.getString(Bundle.ENUMERATION, locale, Bennu.getInstance().getInstitutionUnit().getType().getName()))
-                        .append(SINGLE_SPACE)
-                        .append(BundleUtil.getString(Bundle.ACADEMIC, locale, "diploma.supplement.of"))
-                        .append(SINGLE_SPACE)
-                        .append(institutionsUniversityUnit.getName()).toString()));
+        LocalizedString institutionsWhereStudiesWereTaught = hasContent(associatedInstitutions) ? associatedInstitutions.get() : getAssociatedInstitutions(locale, institutionsUniversityUnit);
 
         addParameter("institutionsWhereStudiesWereTaught", institutionsWhereStudiesWereTaught.getContent(getLocale()));
 
@@ -247,6 +215,34 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
                             + BundleUtil.getString(Bundle.ENUMERATION, getLocale(), "en"));
         }
         return degreeDesignation;
+    }
+
+    private boolean hasContent(Optional<LocalizedString> associatedInstitutions) {
+        return associatedInstitutions.isPresent()
+                && associatedInstitutions.get().getContent(new Locale("pt")) != null
+                && associatedInstitutions.get().getContent(new Locale("en")) != null;
+    }
+
+    private LocalizedString getAssociatedInstitutions(Locale locale, UniversityUnit institutionsUniversityUnit) {
+        return
+                new LocalizedString(locale,  new StringBuilder()
+                        .append(Bennu.getInstance().getInstitutionUnit().getName())
+                        .append(",")
+                        .append(SINGLE_SPACE)
+                        .append(BundleUtil.getString(Bundle.ENUMERATION, locale, Bennu.getInstance().getInstitutionUnit().getType().getName()))
+                        .append(SINGLE_SPACE)
+                        .append(BundleUtil.getString(Bundle.ACADEMIC, locale, "diploma.supplement.of"))
+                        .append(SINGLE_SPACE)
+                        .append(institutionsUniversityUnit.getName()).toString())
+                        .with(new Locale("en"), new StringBuilder()
+                                .append(Bennu.getInstance().getInstitutionUnit().getName())
+                                .append(",")
+                                .append(SINGLE_SPACE)
+                                .append(BundleUtil.getString(Bundle.ENUMERATION, locale, Bennu.getInstance().getInstitutionUnit().getType().getName()))
+                                .append(SINGLE_SPACE)
+                                .append(BundleUtil.getString(Bundle.ACADEMIC, locale, "diploma.supplement.of"))
+                                .append(SINGLE_SPACE)
+                                .append(institutionsUniversityUnit.getName()).toString());
     }
 
     protected void fillGroup1() {

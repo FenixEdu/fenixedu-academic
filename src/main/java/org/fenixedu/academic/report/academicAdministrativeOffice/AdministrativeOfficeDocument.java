@@ -18,23 +18,9 @@
  */
 package org.fenixedu.academic.report.academicAdministrativeOffice;
 
-import java.math.BigDecimal;
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.ResourceBundle;
-import java.util.Set;
-
+import com.google.common.base.Strings;
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.Locality;
-import org.fenixedu.academic.domain.OptionalEnrolment;
-import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.*;
 import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
 import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
@@ -44,31 +30,20 @@ import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
+import org.fenixedu.academic.domain.phd.PhdProgram;
 import org.fenixedu.academic.domain.phd.serviceRequests.documentRequests.PhdDocumentRequest;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequestSituationType;
 import org.fenixedu.academic.domain.serviceRequests.RegistrationAcademicServiceRequest;
 import org.fenixedu.academic.domain.serviceRequests.Under23TransportsDeclarationRequest;
-import org.fenixedu.academic.domain.serviceRequests.documentRequests.CertificateRequest;
-import org.fenixedu.academic.domain.serviceRequests.documentRequests.CourseLoadRequest;
-import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequest;
-import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequestType;
-import org.fenixedu.academic.domain.serviceRequests.documentRequests.ExternalCourseLoadRequest;
-import org.fenixedu.academic.domain.serviceRequests.documentRequests.ExternalProgramCertificateRequest;
-import org.fenixedu.academic.domain.serviceRequests.documentRequests.IDocumentRequest;
-import org.fenixedu.academic.domain.serviceRequests.documentRequests.ProgramCertificateRequest;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.*;
 import org.fenixedu.academic.domain.student.MobilityProgram;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
 import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.report.FenixReport;
-import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.FenixStringTools;
-import org.fenixedu.academic.util.HtmlToTextConverterUtil;
-import org.fenixedu.academic.util.LocaleUtils;
-import org.fenixedu.academic.util.Money;
-import org.fenixedu.academic.util.StringFormatter;
+import org.fenixedu.academic.util.*;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
@@ -76,7 +51,10 @@ import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import com.google.common.base.Strings;
+import java.math.BigDecimal;
+import java.text.MessageFormat;
+import java.util.*;
+import java.util.Map.Entry;
 
 public class AdministrativeOfficeDocument extends FenixReport {
 
@@ -436,6 +414,15 @@ public class AdministrativeOfficeDocument extends FenixReport {
     final protected String getCreditsDescription() {
         if (getDocumentRequest().isRequestForRegistration()) {
             return ((RegistrationAcademicServiceRequest) getDocumentRequest()).getDegreeType().getCreditsDescription();
+        }
+        if (getDocumentRequest().isRequestForPhd()) {
+            final AcademicProgram phdProgram = ((PhdDocumentRequest) getDocumentRequest()).getAcademicProgram();
+            if (phdProgram != null && phdProgram instanceof PhdProgram) {
+                final DegreeType degreeType = ((PhdProgram) phdProgram).getDegreeType();
+                if (degreeType != null) {
+                    return degreeType.getCreditsDescription();
+                }
+            }
         }
         return " Créd.";
     }
