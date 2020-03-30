@@ -422,6 +422,10 @@ public class AdministrativeOfficeDocument extends FenixReport {
                 if (degreeType != null) {
                     return degreeType.getCreditsDescription();
                 }
+                final Degree degree = ((PhdProgram) phdProgram).getDegree();
+                if (degree != null) {
+                    return degree.getDegreeType().getCreditsDescription();
+                }
             }
         }
         return " Créd.";
