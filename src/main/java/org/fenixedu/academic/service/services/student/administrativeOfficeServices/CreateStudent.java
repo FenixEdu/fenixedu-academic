@@ -133,9 +133,9 @@ public class CreateStudent {
         }
 //        PrecedentDegreeInformation precedentDegreeInformation = studentCandidacy.getPrecedentDegreeInformation();
         PrecedentDegreeInformation precedentDegreeInformation = studentCandidacy.getCompletedDegreeInformation();
-        precedentDegreeInformation.edit(/*personalIngressionData, */registration, precedentDegreeInformationBean, studentCandidacy);
+        precedentDegreeInformation.edit(precedentDegreeInformationBean);
         precedentDegreeInformation.setInstitutionType(personalIngressionData.getHighSchoolType());
-        
+
         PrecedentDegreeInformation previousDegreeInformation = studentCandidacy.getPreviousDegreeInformation();
         previousDegreeInformation.editPreviousPrecedentInformation(precedentDegreeInformationBean);
 

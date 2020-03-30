@@ -1418,10 +1418,6 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         
         CycleType cycleType; // deprecated?
         
-        protected String precedentDegreeDesignation; // deprecated
-        protected SchoolLevelType precedentSchoolLevel; // deprecated
-        protected String otherPrecedentSchoolLevel; // deprecated
-        
         Integer numberOfEnrolmentsInPreviousDegrees; // previous
         SchoolPeriodDuration mobilityProgramDuration; // previous
         
@@ -3141,30 +3137,11 @@ relation PrecedentDegreeInformationCountryHighSchool {
     Country playsRole countryHighSchool;
 }
 
-relation PrecedentDegreeInformationPrecedentCountry {
-    protected student.PrecedentDegreeInformation playsRole originPrecedentDegreeInformations {
-        multiplicity *;
-    }
-    protected Country playsRole precedentCountry;
-}
-
 relation PrecedentDegreeInformationInstitution {
     student.PrecedentDegreeInformation playsRole precedentDegreeInformations {
         multiplicity *;
     }
     organizationalStructure.Unit playsRole institution;
-}
-
-relation PrecedentDegreeInformationPrecedentInstitution {
-    protected student.PrecedentDegreeInformation playsRole transitionPrecedentDegreeInformations {
-        multiplicity *;
-    }
-    protected organizationalStructure.Unit playsRole precedentInstitution;
-}
-
-relation PrecedentDegreeInformationStudentCandidacy {
-    protected student.PrecedentDegreeInformation playsRole precedentDegreeInformation;
-    protected candidacy.StudentCandidacy playsRole studentCandidacy;
 }
 
 relation CompletedPrecedentDegreeInformationStudentCandidacy {
