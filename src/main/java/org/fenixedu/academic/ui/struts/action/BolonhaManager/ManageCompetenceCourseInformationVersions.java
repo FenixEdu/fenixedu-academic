@@ -463,7 +463,8 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
     public List<CompetenceCourse> getDepartmentCompetenceCourses() {
         DepartmentUnit selectedDepartmentUnit = getPersonDepartment().getDepartmentUnit();
         if (selectedDepartmentUnit != null) {
-            return selectedDepartmentUnit.getCompetenceCourses(CurricularStage.APPROVED);
+            return CompetenceCourse.findByUnit(selectedDepartmentUnit, true)
+                    .filter(cc -> CurricularStage.APPROVED.equals(cc.getCurricularStage())).collect(Collectors.toList());
         }
         return new ArrayList<CompetenceCourse>();
     }

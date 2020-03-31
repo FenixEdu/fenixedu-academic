@@ -119,9 +119,9 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setCompetenceCourseGroupUnit(unit);
     }
 
-    public ScientificAreaUnit getScientificAreaUnit() {
-        return getCompetenceCourseGroupUnit().getScientificAreaUnit();
-    }
+//    public ScientificAreaUnit getScientificAreaUnit() {
+//        return getCompetenceCourseGroupUnit().getScientificAreaUnit();
+//    }
 
     public DepartmentUnit getDepartmentUnit() {
         return getCompetenceCourseGroupUnit().getAssociatedDepartmentUnit();

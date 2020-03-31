@@ -18,6 +18,8 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+<%@page import="java.util.Collection"%>
+<%@page import="java.util.stream.Collectors"%>
 <%@page import="org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformationChangeRequest"%>
 <%@page import="org.fenixedu.academic.service.services.bolonhaManager.CompetenceCourseManagementAccessControl"%>
 <%@page import="org.fenixedu.academic.domain.CompetenceCourse"%>
@@ -42,7 +44,8 @@
         int draftChangeRequestsCount = 0;
     	int changeRequestsCount = 0;
     	if(department.getDepartmentUnit() != null){
-	        for (CompetenceCourse course : department.getDepartmentUnit().getCompetenceCourses()) {
+    	    final Collection<CompetenceCourse> courses = CompetenceCourse.findByUnit(department.getDepartmentUnit(), true).collect(Collectors.toSet());
+	        for (CompetenceCourse course : courses) {
 	            for (CompetenceCourseInformationChangeRequest changeRequest : course.getCompetenceCourseInformationChangeRequestsSet()) {
 	                if (changeRequest.getApproved() == null && CompetenceCourseManagementAccessControl.isLoggedPersonAllowedToApproveChangeRequestsPredicate(changeRequest)) {
 	                    draftChangeRequestsCount++;

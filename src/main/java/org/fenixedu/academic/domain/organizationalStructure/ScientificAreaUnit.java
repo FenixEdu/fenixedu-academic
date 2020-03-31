@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.organizationalStructure;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -50,8 +51,8 @@ public class ScientificAreaUnit extends ScientificAreaUnit_Base {
             Boolean canBeResponsibleOfSpaces, Space campus) {
 
         ScientificAreaUnit scientificAreaUnit = new ScientificAreaUnit();
-        scientificAreaUnit.init(name, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
-                null, canBeResponsibleOfSpaces, campus);
+        scientificAreaUnit.init(name, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification, null,
+                canBeResponsibleOfSpaces, campus);
         scientificAreaUnit.addParentUnit(parentUnit, accountabilityType);
 
         checkIfAlreadyExistsOneScientificAreaUnitWithSameAcronymAndName(scientificAreaUnit);
@@ -97,56 +98,64 @@ public class ScientificAreaUnit extends ScientificAreaUnit_Base {
         return true;
     }
 
+    /**
+     * Method override to return list in order to be compliance with usage in JSF dataTable tag (competenceCoursesManagement.jsp),
+     * wich doesn't support HashSets as provided value
+     */
     @Override
-    public boolean hasCompetenceCourses(final CompetenceCourse competenceCourse) {
-        for (Unit subUnit : getSubUnits()) {
-            if (subUnit.hasCompetenceCourses(competenceCourse)) {
-                return true;
-            }
-        }
-        return false;
+    public Collection<Unit> getSubUnits() {
+        return new ArrayList<>(super.getSubUnits());
     }
 
-    public List<CompetenceCourseGroupUnit> getCompetenceCourseGroupUnits() {
-        final SortedSet<CompetenceCourseGroupUnit> result =
-                new TreeSet<CompetenceCourseGroupUnit>(CompetenceCourseGroupUnit.COMPARATOR_BY_NAME_AND_ID);
-        for (Unit unit : getSubUnits()) {
-            if (unit.isCompetenceCourseGroupUnit()) {
-                result.add((CompetenceCourseGroupUnit) unit);
-            }
-        }
-        return new ArrayList<CompetenceCourseGroupUnit>(result);
-    }
+//    @Override
+//    public boolean hasCompetenceCourses(final CompetenceCourse competenceCourse) {
+//        for (Unit subUnit : getSubUnits()) {
+//            if (subUnit.hasCompetenceCourses(competenceCourse)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
-    public Double getScientificAreaUnitEctsCredits() {
-        double result = 0.0;
-        for (CompetenceCourseGroupUnit competenceCourseGroupUnit : getCompetenceCourseGroupUnits()) {
-            for (CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
-                result += competenceCourse.getEctsCredits();
-            }
-        }
-        return result;
-    }
+//    public List<CompetenceCourseGroupUnit> getCompetenceCourseGroupUnits() {
+//        final SortedSet<CompetenceCourseGroupUnit> result =
+//                new TreeSet<CompetenceCourseGroupUnit>(CompetenceCourseGroupUnit.COMPARATOR_BY_NAME_AND_ID);
+//        for (Unit unit : getSubUnits()) {
+//            if (unit.isCompetenceCourseGroupUnit()) {
+//                result.add((CompetenceCourseGroupUnit) unit);
+//            }
+//        }
+//        return new ArrayList<CompetenceCourseGroupUnit>(result);
+//    }
 
-    public Double getScientificAreaUnitEctsCredits(List<Context> contexts) {
-        double result = 0.0;
-        for (Context context : contexts) {
-            if (context.getChildDegreeModule().isLeaf()) {
-                CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
-                if (!curricularCourse.isOptionalCurricularCourse() && curricularCourse.getCompetenceCourse().getScientificAreaUnit().equals(this)) {
-                    result += curricularCourse.getCompetenceCourse().getEctsCredits();
-                }
-            }
-        }
-        return result;
-    }
+//    public Double getScientificAreaUnitEctsCredits() {
+//        double result = 0.0;
+//        for (CompetenceCourseGroupUnit competenceCourseGroupUnit : getCompetenceCourseGroupUnits()) {
+//            for (CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
+//                result += competenceCourse.getEctsCredits();
+//            }
+//        }
+//        return result;
+//    }
+
+//    public Double getScientificAreaUnitEctsCredits(List<Context> contexts) {
+//        double result = 0.0;
+//        for (Context context : contexts) {
+//            if (context.getChildDegreeModule().isLeaf()) {
+//                CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
+//                if (!curricularCourse.isOptionalCurricularCourse() && curricularCourse.getCompetenceCourse().getScientificAreaUnit().equals(this)) {
+//                    result += curricularCourse.getCompetenceCourse().getEctsCredits();
+//                }
+//            }
+//        }
+//        return result;
+//    }
 
     private static void checkIfAlreadyExistsOneScientificAreaUnitWithSameAcronymAndName(ScientificAreaUnit scientificAreaUnit) {
         for (Unit parentUnit : scientificAreaUnit.getParentUnits()) {
             for (Unit unit : parentUnit.getAllSubUnits()) {
-                if (!unit.equals(scientificAreaUnit)
-                        && (scientificAreaUnit.getName().equalsIgnoreCase(unit.getName()) || scientificAreaUnit.getAcronym()
-                                .equalsIgnoreCase(unit.getAcronym()))) {
+                if (!unit.equals(scientificAreaUnit) && (scientificAreaUnit.getName().equalsIgnoreCase(unit.getName())
+                        || scientificAreaUnit.getAcronym().equalsIgnoreCase(unit.getAcronym()))) {
                     throw new DomainException("error.unit.already.exists.unit.with.same.name.or.acronym");
                 }
             }

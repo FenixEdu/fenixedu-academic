@@ -754,20 +754,14 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         final DepartmentUnit departmentUnit = getDepartmentUnit();
         if (departmentUnit != null) {
-            for (final ScientificAreaUnit scientificAreaUnit : departmentUnit.getScientificAreaUnits()) {
-                for (final CompetenceCourseGroupUnit competenceCourseGroupUnit : scientificAreaUnit
-                        .getCompetenceCourseGroupUnits()) {
-                    for (final CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
-                        if (competenceCourse.getCurricularStage() != CurricularStage.DRAFT) {
-                            final String code = !StringUtils.isEmpty(competenceCourse.getCode()) ? " ["
-                                    + competenceCourse.getCode() + "]" : "";
-                            result.add(new SelectItem(competenceCourse.getExternalId(), competenceCourse.getName() + " ("
-                                    + BundleUtil.getString(Bundle.ENUMERATION, competenceCourse.getCurricularStage().getName())
-                                    + ")" + code));
-                        }
-                    }
-                }
-            }
+            CompetenceCourse.findByUnit(departmentUnit, true).filter(cc -> cc.getCurricularStage() != CurricularStage.DRAFT)
+                    .forEach(competenceCourse -> {
+                        final String code =
+                                !StringUtils.isEmpty(competenceCourse.getCode()) ? " [" + competenceCourse.getCode() + "]" : "";
+                        result.add(new SelectItem(competenceCourse.getExternalId(), competenceCourse.getName() + " ("
+                                + BundleUtil.getString(Bundle.ENUMERATION, competenceCourse.getCurricularStage().getName()) + ")"
+                                + code));
+                    });
             Collections.sort(result, new BeanComparator("label"));
         }
         result.add(0, new SelectItem(this.NO_SELECTION_STRING, BundleUtil.getString(Bundle.BOLONHA, "choose")));

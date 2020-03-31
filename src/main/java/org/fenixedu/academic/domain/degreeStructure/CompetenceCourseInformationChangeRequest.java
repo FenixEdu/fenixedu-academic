@@ -25,8 +25,7 @@ import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGroupUnit;
-import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
-import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.service.services.bolonhaManager.CompetenceCourseManagementAccessControl;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -154,12 +153,14 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
         }
     }
 
-    public ScientificAreaUnit getScientificAreaUnit() {
-        return getCompetenceCourseGroupUnit().getScientificAreaUnit();
+    public Unit getScientificAreaUnit() {
+        return getCompetenceCourseGroupUnit().getAllParentUnits().stream().filter(u -> u.isScientificAreaUnit()).findFirst()
+                .orElse(null);
     }
 
-    public DepartmentUnit getDepartmentUnit() {
-        return getCompetenceCourseGroupUnit().getAssociatedDepartmentUnit();
+    public Unit getDepartmentUnit() {
+        return getCompetenceCourseGroupUnit().getAllParentUnits().stream().filter(u -> u.isDepartmentUnit()).findFirst()
+                .orElse(null);
     }
 
     public void delete() {

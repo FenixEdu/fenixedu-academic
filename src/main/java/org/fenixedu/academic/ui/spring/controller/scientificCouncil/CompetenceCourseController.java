@@ -11,6 +11,7 @@ import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.service.services.bolonhaManager.EditCompetenceCourse;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.spring.controller.AcademicAdministrationSpringApplication;
@@ -42,14 +43,13 @@ import pt.ist.fenixframework.FenixFramework;
 @SpringFunctionality(app = AcademicAdministrationSpringApplication.class, title = "competence.course.management.title")
 @RequestMapping("/competence-management")
 public class CompetenceCourseController {
-    
+
     @RequestMapping(method = RequestMethod.GET)
-    public String home(@RequestParam(required = false) CurricularStage curricularStage, @RequestParam(required = false)
-            DepartmentUnit 
-            departmentUnit, Model model, User user) {
+    public String home(@RequestParam(required = false) CurricularStage curricularStage,
+            @RequestParam(required = false) DepartmentUnit departmentUnit, Model model, User user) {
         boolean isBolonhaManager = isBolonhaManager(user);
         boolean isScientificCouncilMember = isScientificCouncilMember(user);
-        
+
         List<DepartmentUnit> departmentUnits = getDepartmentUnits(user, isBolonhaManager, isScientificCouncilMember);
         model.addAttribute("departmentUnits", departmentUnits);
         model.addAttribute("isBolonhaManager", isBolonhaManager);
@@ -59,26 +59,26 @@ public class CompetenceCourseController {
         if (departmentUnit == null) {
             departmentUnit = departmentUnits.stream().findAny().orElse(null);
         }
-        
+
         if (departmentUnit != null) {
             Group competenceCoursesManagementGroup = departmentUnit.getDepartment().getCompetenceCourseMembersGroup();
             if (competenceCoursesManagementGroup != null) {
                 model.addAttribute("groupMembers", competenceCoursesManagementGroup.getMembers().collect(Collectors.toSet()));
             }
-            model.addAttribute("scientificAreaUnits", departmentUnit.getScientificAreaUnits());
+            model.addAttribute("scientificAreaUnits", departmentUnit.getSubUnits().stream().filter(u -> u.isScientificAreaUnit())
+                    .sorted(Party.COMPARATOR_BY_NAME_AND_ID).collect(Collectors.toList()));
         }
-        
+
         model.addAttribute("departmentUnit", departmentUnit);
         return resolveView("home");
     }
 
     @RequestMapping(value = "toggle", method = RequestMethod.GET)
-    public String toggle(@RequestParam DepartmentUnit departmentUnit, @RequestParam CompetenceCourse
-            competenceCourse, RedirectAttributes redirectAttributes) {
+    public String toggle(@RequestParam DepartmentUnit departmentUnit, @RequestParam CompetenceCourse competenceCourse,
+            RedirectAttributes redirectAttributes) {
         try {
-            CurricularStage changed =
-                    (competenceCourse.getCurricularStage().equals(CurricularStage.PUBLISHED) ? CurricularStage.APPROVED : CurricularStage
-                            .PUBLISHED);
+            CurricularStage changed = (competenceCourse.getCurricularStage()
+                    .equals(CurricularStage.PUBLISHED) ? CurricularStage.APPROVED : CurricularStage.PUBLISHED);
             EditCompetenceCourse.runEditCompetenceCourse(competenceCourse.getExternalId(), changed);
         } catch (FenixServiceException e) {
             redirectAttributes.addFlashAttribute("error", (BundleUtil.getString(Bundle.BOLONHA, e.getMessage())));
@@ -115,12 +115,11 @@ public class CompetenceCourseController {
     @RequestMapping(value = "department/{department}/{userToGrant}", method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity grantUser(@PathVariable Department department, @PathVariable User userToGrant, User loggedUser) {
-        return manageDepartmentGroup(department, userToGrant, loggedUser, department.getCompetenceCourseMembersGroup()
-                ::grant);
+        return manageDepartmentGroup(department, userToGrant, loggedUser, department.getCompetenceCourseMembersGroup()::grant);
     }
 
-    private ResponseEntity manageDepartmentGroup(Department department, User user, User loggedUser, Function<User, Group>
-            supplier) {
+    private ResponseEntity manageDepartmentGroup(Department department, User user, User loggedUser,
+            Function<User, Group> supplier) {
         if (isScientificCouncilMember(loggedUser)) {
             FenixFramework.atomic(() -> {
                 department.setCompetenceCourseMembersGroup(supplier.apply(user));
@@ -133,13 +132,12 @@ public class CompetenceCourseController {
     private List<DepartmentUnit> getDepartmentUnits(User user, boolean isBolonhaManager, boolean isScientificCouncilMember) {
         Stream<DepartmentUnit> departmentUnitStream = Stream.empty();
         if (isBolonhaManager || isScientificCouncilMember) {
-            departmentUnitStream =
-                    Bennu.getInstance().getDepartmentsSet().stream().sorted(Comparator.comparing(Department::getName))
-                            .map(Department::getDepartmentUnit);
+            departmentUnitStream = Bennu.getInstance().getDepartmentsSet().stream()
+                    .sorted(Comparator.comparing(Department::getName)).map(Department::getDepartmentUnit);
 
             if (!isScientificCouncilMember) {
-                departmentUnitStream = departmentUnitStream.filter(du -> du.getDepartment().getCompetenceCourseMembersGroup()
-                        .isMember(user));
+                departmentUnitStream =
+                        departmentUnitStream.filter(du -> du.getDepartment().getCompetenceCourseMembersGroup().isMember(user));
             }
         }
         return departmentUnitStream.collect(Collectors.toList());

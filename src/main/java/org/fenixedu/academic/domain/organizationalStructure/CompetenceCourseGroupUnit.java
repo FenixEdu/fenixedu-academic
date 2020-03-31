@@ -18,20 +18,14 @@
  */
 package org.fenixedu.academic.domain.organizationalStructure;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.CompetenceCourse;
-import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Department;
-import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
-import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -86,10 +80,10 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
         return true;
     }
 
-    @Override
-    public boolean hasCompetenceCourses(CompetenceCourse competenceCourse) {
-        return competenceCourse.getCompetenceCourseGroupUnit().equals(this);
-    }
+//    @Override
+//    public boolean hasCompetenceCourses(CompetenceCourse competenceCourse) {
+//        return competenceCourse.getCompetenceCourseGroupUnit().equals(this);
+//    }
 
     @Deprecated
     public ScientificAreaUnit getScientificAreaUnit() {
@@ -115,34 +109,24 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
         return null;
     }
 
-    public Set<CompetenceCourse> getCompetenceCoursesSet() {
-        final SortedSet<CompetenceCourse> result =
-                new TreeSet<CompetenceCourse>(CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);
-        for (CompetenceCourseInformation competenceInformation : getCompetenceCourseInformationsSet()) {
-            if (competenceInformation.getCompetenceCourse().getCompetenceCourseGroupUnit() == this) {
-                result.add(competenceInformation.getCompetenceCourse());
-            }
-        }
-        return result;
-    }
-
+//    public Set<CompetenceCourse> getCompetenceCoursesSet() {
+//        final SortedSet<CompetenceCourse> result =
+//                new TreeSet<CompetenceCourse>(CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);
+//        for (CompetenceCourseInformation competenceInformation : getCompetenceCourseInformationsSet()) {
+//            if (competenceInformation.getCompetenceCourse().getCompetenceCourseGroupUnit() == this) {
+//                result.add(competenceInformation.getCompetenceCourse());
+//            }
+//        }
+//        return result;
+//    }
+//
+    /**
+     * @deprecated method cannot be removed yet because it's used in JSF pages (competenceCoursesManagement.jsp)
+     */
+    @Deprecated
     public List<CompetenceCourse> getCompetenceCourses() {
-        return new ArrayList<CompetenceCourse>(getCompetenceCoursesSet());
-    }
-
-    public List<CompetenceCourse> getCurrentOrFutureCompetenceCourses() {
-        final SortedSet<CompetenceCourse> result =
-                new TreeSet<CompetenceCourse>(CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);
-        for (CompetenceCourseInformation competenceInformation : getCompetenceCourseInformationsSet()) {
-            if (competenceInformation.getCompetenceCourse().getCompetenceCourseGroupUnit() == this) {
-                result.add(competenceInformation.getCompetenceCourse());
-            }
-            if (competenceInformation.getCompetenceCourse()
-                    .getCompetenceCourseGroupUnit(ExecutionInterval.findLastChild()) == this) {
-                result.add(competenceInformation.getCompetenceCourse());
-            }
-        }
-        return new ArrayList<CompetenceCourse>(result);
+        return CompetenceCourse.findByUnit(this, false).sorted(CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -150,16 +134,16 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
         throw new DomainException("unit.impossible.set.type");
     }
 
-    public List<CurricularCourse> getCurricularCourses() {
-        List<CompetenceCourse> competenceCourses = getCompetenceCourses();
-        List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
-
-        for (CompetenceCourse competenceCourse : competenceCourses) {
-            curricularCourses.addAll(competenceCourse.getAssociatedCurricularCoursesSet());
-        }
-
-        return curricularCourses;
-    }
+//    public List<CurricularCourse> getCurricularCourses() {
+//        List<CompetenceCourse> competenceCourses = getCompetenceCourses();
+//        List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
+//
+//        for (CompetenceCourse competenceCourse : competenceCourses) {
+//            curricularCourses.addAll(competenceCourse.getAssociatedCurricularCoursesSet());
+//        }
+//
+//        return curricularCourses;
+//    }
 
     @Override
     protected void checkForDeletionBlockers(Collection<String> blockers) {

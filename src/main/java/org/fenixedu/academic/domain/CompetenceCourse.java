@@ -27,7 +27,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
@@ -45,6 +47,7 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
 import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.service.services.bolonhaManager.CompetenceCourseManagementAccessControl;
@@ -78,8 +81,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         this();
         super.setCurricularStage(curricularStage);
         setType(type);
-        
-        if(gradeScale != null) {
+
+        if (gradeScale != null) {
             super.setGradeScale(gradeScale);
         } else {
             super.setGradeScale(GradeScale.findUniqueDefault().orElse(null));
@@ -99,12 +102,12 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         } catch (Exception e) {
             throw new DomainException("competence.course.unable.to.create.acronym");
         }
-        
+
         checkRules();
     }
 
     private void checkRules() {
-        if(getGradeScale() == null) {
+        if (getGradeScale() == null) {
             throw new DomainException("error.CompetenceCourse.gradeScale.required");
         }
     }
@@ -639,7 +642,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     /**
      * @see #getDepartmentUnit(ExecutionYear)
      */
-    public DepartmentUnit getDepartmentUnit() {
+    public Unit getDepartmentUnit() {
         return getDepartmentUnit(null);
     }
 
@@ -662,8 +665,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
      * @param semester semester of the competence course to be searched for
      * @return Department unit for the given semester
      */
-    public DepartmentUnit getDepartmentUnit(ExecutionInterval interval) {
-        return findInformationMostRecentUntil(interval).getDepartmentUnit();
+    public Unit getDepartmentUnit(ExecutionInterval interval) {
+        return getParentUnits(u -> u.isDepartmentUnit(), interval).findFirst().orElse(null);
     }
 
     /**
@@ -703,14 +706,21 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         super.setCurricularStage(curricularStage);
     }
 
-    public ScientificAreaUnit getScientificAreaUnit() {
-        return getScientificAreaUnit(null);
-    }
+//    public ScientificAreaUnit getScientificAreaUnit() {
+//        return getScientificAreaUnit(null);
+//    }
 
-    public ScientificAreaUnit getScientificAreaUnit(ExecutionInterval interval) {
-        CompetenceCourseInformation mostRecentCompetenceCourseInformationUntil = findInformationMostRecentUntil(interval);
+//    public ScientificAreaUnit getScientificAreaUnit(ExecutionInterval interval) {
+//        CompetenceCourseInformation mostRecentCompetenceCourseInformationUntil = findInformationMostRecentUntil(interval);
+//        return mostRecentCompetenceCourseInformationUntil != null ? mostRecentCompetenceCourseInformationUntil
+//                .getScientificAreaUnit() : null;
+//    }
+
+    public Stream<Unit> getParentUnits(final Predicate<Unit> predicate, ExecutionInterval interval) {
+        final Predicate<Unit> nullSafePredicate = predicate != null ? predicate : u -> true;
+        final CompetenceCourseInformation mostRecentCompetenceCourseInformationUntil = findInformationMostRecentUntil(interval);
         return mostRecentCompetenceCourseInformationUntil != null ? mostRecentCompetenceCourseInformationUntil
-                .getScientificAreaUnit() : null;
+                .getCompetenceCourseGroupUnit().getAllParentUnits().stream().filter(nullSafePredicate) : Stream.empty();
     }
 
     public boolean isAnual() {
@@ -969,6 +979,15 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public AcademicPeriod getAcademicPeriod() {
         return getAcademicPeriod(null);
+    }
+
+    public static Stream<CompetenceCourse> findByUnit(final Unit unit, final boolean includeSubUnits) {
+        final Collection<Unit> units = includeSubUnits ? unit.getAllSubUnits() : new HashSet<>();
+        units.add(unit);
+        return units.stream().filter(u -> u instanceof CompetenceCourseGroupUnit).map(CompetenceCourseGroupUnit.class::cast)
+                .flatMap(ccgu -> ccgu.getCompetenceCourseInformationsSet().stream()
+                        .filter(cci -> cci.getCompetenceCourse().getCompetenceCourseGroupUnit() == ccgu)) // ensure that active information is from unit
+                .map(cci -> cci.getCompetenceCourse()).distinct();
     }
 
 }

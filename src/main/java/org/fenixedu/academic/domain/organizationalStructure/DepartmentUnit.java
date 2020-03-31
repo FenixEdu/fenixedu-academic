@@ -102,34 +102,34 @@ public class DepartmentUnit extends DepartmentUnit_Base {
         checkIfAlreadyExistsOneDepartmentUnitWithSameAcronymAndName(this);
     }
 
-    public List<CompetenceCourse> getCompetenceCourses() {
-        return getCompetenceCourses(null);
-    }
+//    public List<CompetenceCourse> getCompetenceCourses() {
+//        return getCompetenceCourses(null);
+//    }
 
-    public List<CompetenceCourse> getCompetenceCourses(CurricularStage curricularStage) {
-        List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
-        for (ScientificAreaUnit scientificAreaUnit : getScientificAreaUnits()) {
-            for (CompetenceCourseGroupUnit competenceCourseGroupUnit : scientificAreaUnit.getCompetenceCourseGroupUnits()) {
-                for (CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
-                    if (curricularStage == null || competenceCourse.getCurricularStage().equals(curricularStage)) {
-                        result.add(competenceCourse);
-                    }
-                }
-            }
-        }
-        return result;
-    }
+//    public List<CompetenceCourse> getCompetenceCourses(CurricularStage curricularStage) {
+//        List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
+//        for (ScientificAreaUnit scientificAreaUnit : getScientificAreaUnits()) {
+//            for (CompetenceCourseGroupUnit competenceCourseGroupUnit : scientificAreaUnit.getCompetenceCourseGroupUnits()) {
+//                for (CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
+//                    if (curricularStage == null || competenceCourse.getCurricularStage().equals(curricularStage)) {
+//                        result.add(competenceCourse);
+//                    }
+//                }
+//            }
+//        }
+//        return result;
+//    }
 
-    public List<ScientificAreaUnit> getScientificAreaUnits() {
-        final SortedSet<ScientificAreaUnit> result =
-                new TreeSet<ScientificAreaUnit>(ScientificAreaUnit.COMPARATOR_BY_NAME_AND_ID);
-        for (Unit unit : getSubUnits()) {
-            if (unit.isScientificAreaUnit()) {
-                result.add((ScientificAreaUnit) unit);
-            }
-        }
-        return new ArrayList<ScientificAreaUnit>(result);
-    }
+//    public List<ScientificAreaUnit> getScientificAreaUnits() {
+//        final SortedSet<ScientificAreaUnit> result =
+//                new TreeSet<ScientificAreaUnit>(ScientificAreaUnit.COMPARATOR_BY_NAME_AND_ID);
+//        for (Unit unit : getSubUnits()) {
+//            if (unit.isScientificAreaUnit()) {
+//                result.add((ScientificAreaUnit) unit);
+//            }
+//        }
+//        return new ArrayList<ScientificAreaUnit>(result);
+//    }
 
     @Override
     public Accountability addParentUnit(Unit parentUnit, AccountabilityType accountabilityType) {
@@ -172,15 +172,15 @@ public class DepartmentUnit extends DepartmentUnit_Base {
         return true;
     }
 
-    @Override
-    public boolean hasCompetenceCourses(final CompetenceCourse competenceCourse) {
-        for (Unit subUnit : getSubUnits()) {
-            if (subUnit.hasCompetenceCourses(competenceCourse)) {
-                return true;
-            }
-        }
-        return false;
-    }
+//    @Override
+//    public boolean hasCompetenceCourses(final CompetenceCourse competenceCourse) {
+//        for (Unit subUnit : getSubUnits()) {
+//            if (subUnit.hasCompetenceCourses(competenceCourse)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     @Override
     public void delete() {

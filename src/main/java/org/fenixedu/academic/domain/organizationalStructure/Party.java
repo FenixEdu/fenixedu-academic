@@ -490,9 +490,9 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return PartyTypeEnum.AGGREGATE_UNIT == getType();
     }
 
-    public boolean hasCompetenceCourses(final CompetenceCourse competenceCourse) {
-        return false;
-    }
+//    public boolean hasCompetenceCourses(final CompetenceCourse competenceCourse) {
+//        return false;
+//    }
 
     public boolean hasDepartment() {
         return false;

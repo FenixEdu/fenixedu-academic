@@ -121,16 +121,16 @@ public class Department extends Department_Base {
         return StringUtils.isNotBlank(getCode()) ? getCode() : WordUtils.initials(getName()).replaceAll("[a-z]", "");
     }
 
-    public List<CompetenceCourse> getBolonhaCompetenceCourses() {
-        DepartmentUnit departmentUnit = this.getDepartmentUnit();
-        List<CompetenceCourse> courses = new ArrayList<CompetenceCourse>();
-        for (ScientificAreaUnit areaUnit : departmentUnit.getScientificAreaUnits()) {
-            for (CompetenceCourseGroupUnit competenceCourseGroupUnit : areaUnit.getCompetenceCourseGroupUnits()) {
-                courses.addAll(competenceCourseGroupUnit.getCompetenceCourses());
-            }
-        }
-        return courses;
-    }
+//    public List<CompetenceCourse> getBolonhaCompetenceCourses() {
+//        DepartmentUnit departmentUnit = this.getDepartmentUnit();
+//        List<CompetenceCourse> courses = new ArrayList<CompetenceCourse>();
+//        for (ScientificAreaUnit areaUnit : departmentUnit.getScientificAreaUnits()) {
+//            for (CompetenceCourseGroupUnit competenceCourseGroupUnit : areaUnit.getCompetenceCourseGroupUnits()) {
+//                courses.addAll(competenceCourseGroupUnit.getCompetenceCourses());
+//            }
+//        }
+//        return courses;
+//    }
 
     // -------------------------------------------------------------
     // read static methods
@@ -169,7 +169,7 @@ public class Department extends Department_Base {
 
     public Integer getCompetenceCourseInformationChangeRequestsCount() {
         int count = 0;
-        for (CompetenceCourse course : getDepartmentUnit().getCompetenceCourses()) {
+        for (CompetenceCourse course : CompetenceCourse.findByUnit(getDepartmentUnit(), true).collect(Collectors.toSet())) {
             count += course.getCompetenceCourseInformationChangeRequestsSet().size();
         }
 
@@ -178,7 +178,7 @@ public class Department extends Department_Base {
 
     public Integer getDraftCompetenceCourseInformationChangeRequestsCount() {
         int count = 0;
-        for (CompetenceCourse course : getDepartmentUnit().getCompetenceCourses()) {
+        for (CompetenceCourse course : CompetenceCourse.findByUnit(getDepartmentUnit(), true).collect(Collectors.toSet())) {
             count += course.getDraftCompetenceCourseInformationChangeRequestsCount();
         }
 

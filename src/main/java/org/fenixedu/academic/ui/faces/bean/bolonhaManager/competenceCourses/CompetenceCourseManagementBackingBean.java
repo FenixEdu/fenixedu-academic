@@ -50,7 +50,7 @@ import org.fenixedu.academic.domain.degreeStructure.RegimeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
-import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.dto.bolonhaManager.CourseLoad;
@@ -196,20 +196,23 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         }
     }
 
-    public List<ScientificAreaUnit> getScientificAreaUnits() {
+    public List<Unit> getScientificAreaUnits() {
         DepartmentUnit departmentUnit = null;
         if (getSelectedDepartmentUnit() != null) {
             departmentUnit = getSelectedDepartmentUnit();
         } else if (getPersonDepartment() != null) {
             departmentUnit = getPersonDepartment().getDepartmentUnit();
         }
-        return (departmentUnit != null) ? departmentUnit.getScientificAreaUnits() : null;
+        return (departmentUnit != null) ? departmentUnit.getSubUnits().stream().filter(u -> u.isScientificAreaUnit())
+                .sorted(Party.COMPARATOR_BY_NAME_AND_ID).collect(Collectors.toList()) : null;
     }
 
     public List<CompetenceCourse> getDepartmentCompetenceCourses(CurricularStage curricularStage) {
         DepartmentUnit selectedDepartmentUnit = getSelectedDepartmentUnit();
         if (selectedDepartmentUnit != null) {
-            return selectedDepartmentUnit.getCompetenceCourses(curricularStage);
+            return CompetenceCourse.findByUnit(selectedDepartmentUnit, true)
+                    .filter(cc -> curricularStage == null || curricularStage.equals(cc.getCurricularStage()))
+                    .collect(Collectors.toList());
         }
         return new ArrayList<CompetenceCourse>();
     }
@@ -1010,7 +1013,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public String getScientificAreaUnitName() {
-        return getCompetenceCourse().getScientificAreaUnit(getExecutionSemester()).getName();
+        return getCompetenceCourse().getParentUnits(u -> u.isScientificAreaUnit(), getExecutionSemester()).findFirst()
+                .map(u -> u.getName()).orElse(null);
     }
 
     public String getCompetenceCourseGroupUnitName() {
@@ -1075,10 +1079,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private List<SelectItem> readScientificAreaUnitLabels(String transferToDepartmentUnitID) {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         if (transferToDepartmentUnitID != null) {
-            for (final ScientificAreaUnit unit : readDepartmentUnitToTransferTo(transferToDepartmentUnitID)
-                    .getScientificAreaUnits()) {
-                result.add(new SelectItem(unit.getExternalId(), unit.getName()));
-            }
+            final DepartmentUnit departmentUnit = readDepartmentUnitToTransferTo(transferToDepartmentUnitID);
+            departmentUnit.getSubUnits().stream().filter(u -> u.isScientificAreaUnit())
+                    .forEach(unit -> result.add(new SelectItem(unit.getExternalId(), unit.getName())));
         }
         Collections.sort(result, new BeanComparator("label"));
         result.add(0, new SelectItem(this.NO_SELECTION, BundleUtil.getString(Bundle.BOLONHA, "choose")));
@@ -1115,10 +1118,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private List<SelectItem> readCompetenceCourseGroupUnitLabels(String transferToScientificAreaUnitID) {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         if (transferToScientificAreaUnitID != null) {
-            for (final Unit unit : readScientificAreaUnitToTransferTo(transferToScientificAreaUnitID)
-                    .getCompetenceCourseGroupUnits()) {
-                result.add(new SelectItem(unit.getExternalId(), unit.getName()));
-            }
+            Unit scientificAreaUnit = readScientificAreaUnitToTransferTo(transferToScientificAreaUnitID);
+            scientificAreaUnit.getSubUnits().stream().filter(u -> u.isCompetenceCourseGroupUnit())
+                    .forEach(unit -> result.add(new SelectItem(unit.getExternalId(), unit.getName())));
         }
         Collections.sort(result, new BeanComparator("label"));
         result.add(0, new SelectItem(this.NO_SELECTION, BundleUtil.getString(Bundle.BOLONHA, "choose")));
@@ -1136,8 +1138,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         this.getViewState().setAttribute("transferToScientificAreaUnitID", transferToScientificAreaUnitID);
     }
 
-    private ScientificAreaUnit readScientificAreaUnitToTransferTo(String transferToScientificAreaUnitID) {
-        return (ScientificAreaUnit) FenixFramework.getDomainObject(transferToScientificAreaUnitID);
+    private Unit readScientificAreaUnitToTransferTo(String transferToScientificAreaUnitID) {
+        return FenixFramework.getDomainObject(transferToScientificAreaUnitID);
     }
 
     public String transferCompetenceCourse() {

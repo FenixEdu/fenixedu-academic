@@ -65,14 +65,14 @@
                     <fc:dataRepeater value="#{CompetenceCourseManagement.scientificAreaUnits}" var="scientificAreaUnit">
                         <h:outputText value="<p class='mtop2 mbottom0'><strong>#{scientificAreaUnit.name}</strong></p>"
                                       escape="false"/>
-                        <h:panelGroup rendered="#{empty scientificAreaUnit.competenceCourseGroupUnits}">
+                        <h:panelGroup rendered="#{empty scientificAreaUnit.subUnits}">
                             <h:outputText value="#{bolonhaBundle['noCompetenceCourseGroupUnits']}><br/>" escape="false"/>
                         </h:panelGroup>
 
 
-                        <h:panelGroup rendered="#{!empty scientificAreaUnit.competenceCourseGroupUnits}">
+                        <h:panelGroup rendered="#{!empty scientificAreaUnit.subUnits}">
                             <h:outputText value="<ul class='list3' style='padding-left: 2em;'>" escape="false"/>
-                            <fc:dataRepeater value="#{scientificAreaUnit.competenceCourseGroupUnits}"
+                            <fc:dataRepeater value="#{scientificAreaUnit.subUnits}"
                                              var="competenceCourseGroupUnit">
                                 <h:outputText value="<li class='tree_label' style='background-position: 0em 0.75em;'>"
                                               escape="false"/>

@@ -23,15 +23,20 @@ import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionInterval;
+import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
-import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Party;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
@@ -518,7 +523,12 @@ public class CompetenceCourseVersionList extends OutputRenderer {
             Department department = (Department) object;
             HtmlBlockContainer listContainer = new HtmlBlockContainer();
 
-            for (ScientificAreaUnit scientificArea : department.getDepartmentUnit().getScientificAreaUnits()) {
+//            final List<ScientificAreaUnit> scientificAreaUnits = department.getDepartmentUnit().getScientificAreaUnits();
+
+            final List<Unit> scientificAreaUnits = department.getDepartmentUnit().getSubUnits().stream()
+                    .filter(u -> u.isScientificAreaUnit()).sorted(Party.COMPARATOR_BY_NAME_AND_ID).collect(Collectors.toList());
+
+            for (Unit scientificArea : scientificAreaUnits) {
 
                 HtmlText areaName = new HtmlText(scientificArea.getNameI18n().getContent());
                 if (getScientificAreaNameClasses() != null) {
@@ -531,7 +541,13 @@ public class CompetenceCourseVersionList extends OutputRenderer {
                 if (getFilterBy() != null) {
                     stage = CurricularStage.valueOf(getFilterBy());
                 }
-                for (CompetenceCourseGroupUnit group : scientificArea.getCompetenceCourseGroupUnits()) {
+
+//                List<CompetenceCourseGroupUnit> competenceCourseGroupUnits = scientificArea.getCompetenceCourseGroupUnits();
+                final List<Unit> competenceCourseGroupUnits = scientificArea.getSubUnits().stream()
+                        .filter(u -> u.isCompetenceCourseGroupUnit()).filter(u -> u instanceof CompetenceCourseGroupUnit) // double check of instance to avoid class cast exceptions ahead
+                        .sorted(Party.COMPARATOR_BY_NAME_AND_ID).collect(Collectors.toList());
+
+                for (Unit group : competenceCourseGroupUnits) {
 
                     HtmlListItem item = list.createItem();
                     HtmlBlockContainer courseContainer = new HtmlBlockContainer();
@@ -541,7 +557,7 @@ public class CompetenceCourseVersionList extends OutputRenderer {
                     }
                     courseContainer.addChild(groupName);
                     HtmlTable table = new HtmlTable();
-                    for (CompetenceCourse course : group.getCurrentOrFutureCompetenceCourses()) {
+                    for (CompetenceCourse course : getCurrentOrFutureCompetenceCourses((CompetenceCourseGroupUnit) group)) {
                         if (course.getCurricularStage().equals(stage)) {
                             HtmlTableRow courseRow = table.createRow();
                             HtmlComponent coursePresentation =
@@ -572,6 +588,21 @@ public class CompetenceCourseVersionList extends OutputRenderer {
             return container;
         }
 
+        private List<CompetenceCourse> getCurrentOrFutureCompetenceCourses(final CompetenceCourseGroupUnit unit) {
+            final SortedSet<CompetenceCourse> result =
+                    new TreeSet<CompetenceCourse>(CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);
+            for (CompetenceCourseInformation competenceInformation : unit.getCompetenceCourseInformationsSet()) {
+                if (competenceInformation.getCompetenceCourse().getCompetenceCourseGroupUnit() == unit) {
+                    result.add(competenceInformation.getCompetenceCourse());
+                }
+                if (competenceInformation.getCompetenceCourse()
+                        .getCompetenceCourseGroupUnit(ExecutionInterval.findLastChild()) == unit) {
+                    result.add(competenceInformation.getCompetenceCourse());
+                }
+            }
+            return new ArrayList<CompetenceCourse>(result);
+        }
+
         protected HtmlComponent getLinks(CompetenceCourse course) {
             HtmlInlineContainer container = new HtmlInlineContainer();
             int total = sortedLinks.size();
@@ -587,7 +618,7 @@ public class CompetenceCourseVersionList extends OutputRenderer {
 
         }
 
-        private HtmlComponent getCurrentOrFutureCoursePresentation(CompetenceCourse course, CompetenceCourseGroupUnit group,
+        private HtmlComponent getCurrentOrFutureCoursePresentation(CompetenceCourse course, Unit group,
                 DepartmentUnit department) {
             HtmlInlineContainer container = new HtmlInlineContainer();
             if (!StringUtils.isEmpty(course.getCode())) {

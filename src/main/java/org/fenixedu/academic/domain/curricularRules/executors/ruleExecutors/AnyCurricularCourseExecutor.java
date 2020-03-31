@@ -30,6 +30,7 @@ import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.enrolment.OptionalDegreeModuleToEnrol;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.util.CurricularRuleLabelFormatter;
 
 public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
@@ -100,8 +101,7 @@ public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
                 .hasBolonhaDegreeType() ? degree.getDegreeType() == rule.getBolonhaDegreeType() : true;
 
         if (rule.getDepartmentUnit() != null) {
-            final DepartmentUnit departmentUnit =
-                    curricularCourseToEnrol.getCompetenceCourse().getDepartmentUnit(executionInterval);
+            final Unit departmentUnit = curricularCourseToEnrol.getCompetenceCourse().getDepartmentUnit(executionInterval);
             result &= departmentUnit != null && departmentUnit.equals(rule.getDepartmentUnit());
         }
 

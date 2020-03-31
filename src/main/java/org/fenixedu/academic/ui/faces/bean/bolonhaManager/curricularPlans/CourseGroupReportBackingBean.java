@@ -211,19 +211,22 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
         for (final Context contextWithCurricularCourse : contextsWithCurricularCourses) {
             CurricularCourse curricularCourse = (CurricularCourse) contextWithCurricularCourse.getChildDegreeModule();
 
-            if (!curricularCourse.isOptionalCurricularCourse()
-                    && !scientificAreaUnits.contains(curricularCourse.getCompetenceCourse().getScientificAreaUnit())) {
+//            ScientificAreaUnit scientificAreaUnit = curricularCourse.getCompetenceCourse().getScientificAreaUnit();
+            Unit scientificAreaUnit = curricularCourse.getCompetenceCourse().getParentUnits(u -> u.isScientificAreaUnit(), null)
+                    .findFirst().orElse(null);
+
+            if (!curricularCourse.isOptionalCurricularCourse() && !scientificAreaUnits.contains(scientificAreaUnit)) {
                 final Row row = spreadsheet.addRow();
 
                 if (rootWasClicked && !this.getCourseGroup().getChildContexts(CourseGroup.class).isEmpty()) {
                     row.setCell(courseGroupBeingReported);
                 }
-                row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getName());
-                row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getAcronym());
-                row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit()
-                        .getScientificAreaUnitEctsCredits(contextsWithCurricularCourses).toString());
+                row.setCell(scientificAreaUnit.getName());
+                row.setCell(scientificAreaUnit.getAcronym());
+//                row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit()
+//                        .getScientificAreaUnitEctsCredits(contextsWithCurricularCourses).toString());
 
-                scientificAreaUnits.add(curricularCourse.getCompetenceCourse().getScientificAreaUnit());
+                scientificAreaUnits.add(scientificAreaUnit);
             }
         }
     }
@@ -289,8 +292,10 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
             row.setCell(""); // ot
             row.setCell(""); // ta
         } else {
-            row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getName());
-            row.setCell(curricularCourse.getCompetenceCourse().getScientificAreaUnit().getAcronym());
+            Unit scientificAreaUnit = curricularCourse.getCompetenceCourse().getParentUnits(u -> u.isScientificAreaUnit(), null)
+                    .findFirst().orElse(null);
+            row.setCell(scientificAreaUnit.getName());
+            row.setCell(scientificAreaUnit.getAcronym());
 
             row.setCell(BundleUtil.getString(Bundle.ENUMERATION,
                     curricularCourse.getCompetenceCourse().getAcademicPeriod().getName()));

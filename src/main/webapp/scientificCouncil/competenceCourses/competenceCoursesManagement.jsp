@@ -136,13 +136,13 @@ ${portal.toolkit()}
 				rendered="#{!empty CompetenceCourseManagement.scientificAreaUnits}">
 			<h:column>
 				<h:outputText value="<p class='mtop2 mbottom0'><strong>#{scientificAreaUnit.name}</strong></p>" escape="false"/>
-				<h:panelGroup rendered="#{empty scientificAreaUnit.competenceCourseGroupUnits}">
+				<h:panelGroup rendered="#{empty scientificAreaUnit.subUnits}">
 					<h:outputText style="font-style:italic" value="#{scouncilBundle['noCompetenceCourseGroupUnits']}<br/>" escape="false"/>
 				</h:panelGroup>
 				
-				<h:panelGroup rendered="#{!empty scientificAreaUnit.competenceCourseGroupUnits}">
+				<h:panelGroup rendered="#{!empty scientificAreaUnit.subUnits}">
 					<h:outputText value="<ul class='list3'>" escape="false"/>
-					<h:dataTable value="#{scientificAreaUnit.competenceCourseGroupUnits}" var="competenceCourseGroupUnit" style="width: 100%">
+					<h:dataTable value="#{scientificAreaUnit.subUnits}" var="competenceCourseGroupUnit" style="width: 100%">
 							<h:column>
 								<h:outputText value="<li class='tree_label' style='background-position: 0em 0.5em;'>#{competenceCourseGroupUnit.name}" escape="false"/>
 								<h:dataTable value="#{competenceCourseGroupUnit.competenceCourses}" var="competenceCourse"

@@ -12,6 +12,7 @@ import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
+import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.bennu.core.security.Authenticate;
@@ -95,7 +96,12 @@ public class CompetenceCourseManagementAccessControl {
             return false;
         }
         for (CompetenceCourseInformation information : competenceCourse.getCompetenceCourseInformationsSet()) {
-            if (information.getDepartmentUnit().getDepartment().isUserMemberOfCompetenceCourseMembersGroup(person)) {
+            
+            final DepartmentUnit departmentUnit = information.getCompetenceCourseGroupUnit().getAllParentUnits()
+                    .stream().filter(u -> u.isDepartmentUnit()).filter(u -> u instanceof DepartmentUnit)
+                    .map(DepartmentUnit.class::cast).findFirst().orElse(null);            
+            
+            if (departmentUnit != null && departmentUnit.getDepartment().isUserMemberOfCompetenceCourseMembersGroup(person)) {
                 return true;
             }
         }
@@ -146,7 +152,10 @@ public class CompetenceCourseManagementAccessControl {
         if (!RoleType.BOLONHA_MANAGER.isMember(person.getUser())) {
             return false;
         }
-        return competenceCourseInformation.getDepartmentUnit().getDepartment().isUserMemberOfCompetenceCourseMembersGroup(person);
+        final DepartmentUnit departmentUnit = competenceCourseInformation.getCompetenceCourseGroupUnit().getAllParentUnits()
+                .stream().filter(u -> u.isDepartmentUnit()).filter(u -> u instanceof DepartmentUnit)
+                .map(DepartmentUnit.class::cast).findFirst().orElse(null);
+        return departmentUnit != null && departmentUnit.getDepartment().isUserMemberOfCompetenceCourseMembersGroup(person);
 
     }
 

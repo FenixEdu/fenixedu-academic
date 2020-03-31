@@ -28,6 +28,7 @@ import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.dto.student.enrollment.bolonha.BolonhaStudentOptionalEnrollmentBean;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -228,7 +229,7 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
 
             String description = "";
             if (curricularCourse.getCompetenceCourse() != null) {
-                final DepartmentUnit unit = curricularCourse.getCompetenceCourse().getDepartmentUnit();
+                final Unit unit = curricularCourse.getCompetenceCourse().getDepartmentUnit();
                 if (unit != null) {
                     description = unit.getName();
                 }

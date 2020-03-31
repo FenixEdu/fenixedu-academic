@@ -23,7 +23,7 @@ import java.io.Serializable;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 
 import pt.ist.fenixframework.FenixFramework;
 
@@ -86,7 +86,7 @@ public class CurricularCourseByExecutionSemesterBean
         return getCurricularCourse().getAcronym(getExecutionSemester());
     }
 
-    public DepartmentUnit getDepartmentUnit() {
+    public Unit getDepartmentUnit() {
         return getCurricularCourse().getCompetenceCourse() == null ? null : getCurricularCourse().getCompetenceCourse()
                 .getDepartmentUnit(getExecutionSemester());
     }
