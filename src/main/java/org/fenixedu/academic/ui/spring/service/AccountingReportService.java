@@ -19,6 +19,7 @@
 
 package org.fenixedu.academic.ui.spring.service;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -59,28 +60,44 @@ public class AccountingReportService {
 
     private void fill(Spreadsheet dateSheet, List<AccountingTransactionDetail> value) {
         value.stream().sorted(Comparator.comparing(AccountingTransactionDetail::getWhenRegistered)).forEach(atd -> {
-            Event event = atd.getEvent();
-            Spreadsheet.Row row = dateSheet.addRow();
-
-            row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.whenProcessed"), atd.getWhenProcessed().toString(DATE_TIME_PATTERN));
-            row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.whenRegistered"), atd.getWhenRegistered().toString(DATE_TIME_PATTERN));
-            YearMonthDay sibsDate = null;
-            if (atd instanceof SibsTransactionDetail) {
-                sibsDate = ((SibsTransactionDetail)atd).getSibsLine().getHeader().getWhenProcessedBySibs();
-            }
-            row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.sibsDate"), sibsDate != null ? sibsDate.toString(DATE_PATTERN) : "-");
-            row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.client"), event.getParty().getPartyPresentationName());
-            row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.event.id"), event.getExternalId());
-            row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.event.description"), event.getDescription().toString());
-            row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.event.type"), BundleUtil.getString(Bundle.ENUMERATION, event.getEventType().getQualifiedName()));
-            row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.payment.method"), atd.getPaymentMethod().getLocalizedName());
-            row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.payment.reference"), atd.getPaymentReference());
-            row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.value"), atd.getTransaction().getAmountWithAdjustment().toPlainString());
-            row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.creator"),atd.getTransaction().getResponsibleUser()==null? "-": 
-                    atd.getTransaction().getResponsibleUser().getDisplayName());
-            row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.creator.username"),atd.getTransaction().getResponsibleUser()==null? "-": 
-                    atd.getTransaction().getResponsibleUser().getUsername());
+            fillPayment(dateSheet, atd);
         });
+    }
+
+	private void fillPayment(Spreadsheet dateSheet, AccountingTransactionDetail atd) {
+		Event event = atd.getEvent();
+		Spreadsheet.Row row = dateSheet.addRow();
+
+		row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.whenProcessed"), atd.getWhenProcessed().toString(DATE_TIME_PATTERN));
+		row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.whenRegistered"), atd.getWhenRegistered().toString(DATE_TIME_PATTERN));
+		YearMonthDay sibsDate = null;
+		if (atd instanceof SibsTransactionDetail) {
+		    sibsDate = ((SibsTransactionDetail)atd).getSibsLine().getHeader().getWhenProcessedBySibs();
+		}
+		row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.sibsDate"), sibsDate != null ? sibsDate.toString(DATE_PATTERN) : "-");
+		row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.client"), event.getParty().getPartyPresentationName());
+		row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.event.id"), event.getExternalId());
+		row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.event.description"), event.getDescription().toString());
+		row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.event.type"), BundleUtil.getString(Bundle.ENUMERATION, event.getEventType().getQualifiedName()));
+		row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.payment.method"), atd.getPaymentMethod().getLocalizedName());
+		row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.payment.reference"), atd.getPaymentReference());
+		row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.value"), atd.getTransaction().getAmountWithAdjustment().toPlainString());
+		row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.creator"),atd.getTransaction().getResponsibleUser()==null? "-": 
+		        atd.getTransaction().getResponsibleUser().getDisplayName());
+		row.setCell(BundleUtil.getString(Bundle.ACCOUNTING,"label.transaction.report.creator.username"),atd.getTransaction().getResponsibleUser()==null? "-": 
+		        atd.getTransaction().getResponsibleUser().getUsername());
+	}
+    
+    public Spreadsheet reportList(LocalDate start, LocalDate end) {
+        DateTime startDateTime = start.toDateTimeAtStartOfDay();
+        DateTime endDateTime = end.toDateTimeAtStartOfDay();
+    	Spreadsheet payments = new Spreadsheet("Pagamentos detalhados");
+		Bennu.getInstance().getAccountingTransactionDetailsSet().stream()
+			.filter(atd -> !atd.getTransaction().isAdjustingTransaction())	
+			.filter(atd -> isFor(atd, startDateTime, endDateTime))
+        	.forEach(atd -> fillPayment(payments, atd));
+		
+		return payments;
     }
     
     public Spreadsheet report(LocalDate start, LocalDate end) {

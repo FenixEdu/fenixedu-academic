@@ -1,5 +1,5 @@
 /**
- * Copyright © 2018 Instituto Superior Técnico
+ * Copyright © 2020 Instituto Superior Técnico
  *
  * This file is part of FenixEdu Academic.
  *
@@ -40,42 +40,42 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
- * Created by Sérgio Silva (hello@fenixedu.org).
+ * Created by Ricardo Rodrigues (hello@fenixedu.org).
  */
 
 @Controller
-@SpringFunctionality(app = AcademicAdministrationSpringApplication.class, title = "label.accounting.management.report.daily.title",
+@SpringFunctionality(app = AcademicAdministrationSpringApplication.class, title = "label.accounting.management.report.title",
         accessGroup = "academic(CREATE_SIBS_PAYMENTS_REPORT)")
-@RequestMapping("/accounting-management/reports")
-public class AccountingReportController {
+@RequestMapping("/accounting-management/payment-report")
+public class AccountingListReportController {
 
     private final AccountingReportService accountingReportService;
 
     @Autowired
-    public AccountingReportController(AccountingReportService accountingReportService) {
+    public AccountingListReportController(AccountingReportService accountingReportService) {
         this.accountingReportService = accountingReportService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public String home(Model model) {
-        return "fenixedu-academic/accounting/transaction-report";
+        return "fenixedu-academic/accounting/transaction-report-list";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "transaction-report/generate")
+    @RequestMapping(method = RequestMethod.GET, value = "transaction-report-list/generate")
     public String report(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start, @RequestParam
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end, RedirectAttributes attrs, HttpServletResponse response) {
 
         if (end.isBefore(start)) {
             attrs.addFlashAttribute("message", BundleUtil.getString(Bundle.ACCOUNTING, "error.transaction.report.wrong.dates", start
                     .toString("dd/MM/yyyy"), end.toString("dd/MM/yyyy")));
-            return "redirect:/accounting-management/reports";
+            return "redirect:/accounting-management/payment-report";
         }
 
-        final String filename = BundleUtil.getString(Bundle.ACCOUNTING, "label.transaction.report.daily.filename", start.toString
+        final String filename = BundleUtil.getString(Bundle.ACCOUNTING, "label.transaction.report.filename", start.toString
                 ("dd_MM_yyyy"), end.toString("dd_MM_yyyy"), new DateTime().toString("dd_MM_yyyy-HH_mm_ss"));
 
         try {
-            final Spreadsheet report = accountingReportService.report(start, end);
+            final Spreadsheet report = accountingReportService.reportList(start, end);
             response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s.xlsx\"", filename));
             response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             report.exportToXLSXSheet(response.getOutputStream());

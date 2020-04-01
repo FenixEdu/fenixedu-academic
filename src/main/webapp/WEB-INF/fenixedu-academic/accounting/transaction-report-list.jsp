@@ -1,6 +1,6 @@
 <%--
 
-    Copyright © 2018 Instituto Superior Técnico
+    Copyright © 2020 Instituto Superior Técnico
 
     This file is part of FenixEdu Academic.
 
@@ -28,7 +28,7 @@ ${portal.toolkit()}
 <header>
 	<div class="row">
 		<div class="col-sm-12">
-			<h2><spring:message code="label.accounting.management.report.daily.title"/></h2>
+			<h2><spring:message code="label.accounting.management.report.title"/></h2>
 		</div>
 	</div>
 </header>
@@ -43,7 +43,7 @@ ${portal.toolkit()}
 	</div>
 </c:if>
 
-<spring:url value="/accounting-management/reports/transaction-report/generate" var="reportUrl"/>
+<spring:url value="/accounting-management/payment-report/transaction-report-list/generate" var="reportUrl"/>
 <form role="form" class="form-horizontal" action="${reportUrl}" method="GET">
 	<div class="form-group">
 		<label class="control-label col-sm-2"><spring:message code="label.accounting.management.report.start"/></label>
