@@ -37,7 +37,6 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Department;
-import org.fenixedu.academic.domain.ExternalCurricularCourse;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.util.email.UnitBasedSender;
@@ -904,9 +903,9 @@ public class Unit extends Unit_Base {
         return result;
     }
 
-    public List<ExternalCurricularCourse> getAllExternalCurricularCourses() {
-        return new ArrayList<ExternalCurricularCourse>(getExternalCurricularCoursesSet());
-    }
+//    public List<ExternalCurricularCourse> getAllExternalCurricularCourses() {
+//        return new ArrayList<ExternalCurricularCourse>(getExternalCurricularCoursesSet());
+//    }
 
     public LocalizedString getNameI18n() {
         return getPartyName();
@@ -1011,8 +1010,8 @@ public class Unit extends Unit_Base {
         }
     }
 
-    public Boolean isOfficial() {
-        return Boolean.FALSE;
+    public boolean isOfficial() {
+        return Boolean.TRUE.equals(getOfficial());
     }
 
     @Deprecated

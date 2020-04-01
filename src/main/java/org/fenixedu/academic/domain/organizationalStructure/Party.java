@@ -467,7 +467,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     public boolean isAcademicalUnit() {
-        return false;
+        return isSchoolUnit() || isUniversityUnit();
     }
 
     public boolean isSchoolUnit() {

@@ -102,16 +102,16 @@ public class CountryUnit extends CountryUnit_Base {
         throw new DomainException("unit.impossible.set.type");
     }
 
-    @Override
-    public List<ExternalCurricularCourse> getAllExternalCurricularCourses() {
-        final List<ExternalCurricularCourse> result = new ArrayList<ExternalCurricularCourse>(getExternalCurricularCoursesSet());
-        for (Unit subUnit : getSubUnits()) {
-            if (subUnit.isUniversityUnit() || subUnit.isSchoolUnit()) {
-                result.addAll(subUnit.getExternalCurricularCoursesSet());
-            }
-        }
-        return result;
-    }
+//    @Override
+//    public List<ExternalCurricularCourse> getAllExternalCurricularCourses() {
+//        final List<ExternalCurricularCourse> result = new ArrayList<ExternalCurricularCourse>(getExternalCurricularCoursesSet());
+//        for (Unit subUnit : getSubUnits()) {
+//            if (subUnit.isUniversityUnit() || subUnit.isSchoolUnit()) {
+//                result.addAll(subUnit.getExternalCurricularCoursesSet());
+//            }
+//        }
+//        return result;
+//    }
 
     @Override
     public boolean isCountryUnit() {

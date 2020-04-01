@@ -1245,10 +1245,11 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
             String acronym;
             String code;
             YearMonthDay beginDateYearMonthDay;
-            Boolean canBeResponsibleOfSpaces;
-            UnitClassification classification;
             YearMonthDay endDateYearMonthDay;
-            String identificationCardLabel;
+            Boolean canBeResponsibleOfSpaces; //deprecated
+            UnitClassification classification; //deprecated
+            String identificationCardLabel; //deprecated
+            Boolean official;                
         }
 
             class organizationalStructure.AdministrativeOfficeUnit extends organizationalStructure.Unit {
@@ -1288,8 +1289,7 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
             }
 
             class organizationalStructure.AcademicalInstitutionUnit extends organizationalStructure.Unit {
-                Boolean official;                
-                AcademicalInstitutionType institutionType;
+                // AcademicalInstitutionType institutionType;
             }
 
                 class organizationalStructure.SchoolUnit extends organizationalStructure.AcademicalInstitutionUnit {

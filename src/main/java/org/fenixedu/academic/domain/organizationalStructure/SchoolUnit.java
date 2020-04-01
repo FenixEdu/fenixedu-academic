@@ -51,7 +51,7 @@ public class SchoolUnit extends SchoolUnit_Base {
         schoolUnit.setIdentificationCardLabel(schoolNameCard);
         schoolUnit.setOfficial(official);
         schoolUnit.setCode(code);
-        schoolUnit.setInstitutionType(institutionType);
+//        schoolUnit.setInstitutionType(institutionType);
         schoolUnit.setBeginDateYearMonthDay(YearMonthDay.fromDateFields(new GregorianCalendar().getTime()));
         schoolUnit.setCanBeResponsibleOfSpaces(Boolean.FALSE);
         return createNewUnit(parentUnit, schoolUnit, Boolean.FALSE);
@@ -111,16 +111,16 @@ public class SchoolUnit extends SchoolUnit_Base {
         }
     }
 
-    @Override
-    public List<ExternalCurricularCourse> getAllExternalCurricularCourses() {
-        final List<ExternalCurricularCourse> result = new ArrayList<ExternalCurricularCourse>(getExternalCurricularCoursesSet());
-        for (Unit subUnit : getSubUnits()) {
-            if (subUnit.isDepartmentUnit()) {
-                result.addAll(subUnit.getExternalCurricularCoursesSet());
-            }
-        }
-        return result;
-    }
+//    @Override
+//    public List<ExternalCurricularCourse> getAllExternalCurricularCourses() {
+//        final List<ExternalCurricularCourse> result = new ArrayList<ExternalCurricularCourse>(getExternalCurricularCoursesSet());
+//        for (Unit subUnit : getSubUnits()) {
+//            if (subUnit.isDepartmentUnit()) {
+//                result.addAll(subUnit.getExternalCurricularCoursesSet());
+//            }
+//        }
+//        return result;
+//    }
 
     @Override
     public Accountability addParentUnit(Unit parentUnit, AccountabilityType accountabilityType) {
@@ -132,13 +132,13 @@ public class SchoolUnit extends SchoolUnit_Base {
         return super.addParentUnit(parentUnit, accountabilityType);
     }
 
-    @Override
-    public String getFullPresentationName() {
-        StringBuilder output = new StringBuilder();
-        output.append(getName().trim());
-        output.append(" da ");
-        List<Unit> parents = getParentUnitsPath();
-        output.append(parents.get(parents.size() - 1).getName());
-        return output.toString();
-    }
+//    @Override
+//    public String getFullPresentationName() {
+//        StringBuilder output = new StringBuilder();
+//        output.append(getName().trim());
+//        output.append(" da ");
+//        List<Unit> parents = getParentUnitsPath();
+//        output.append(parents.get(parents.size() - 1).getName());
+//        return output.toString();
+//    }
 }

@@ -122,15 +122,15 @@ public class DegreeUnit extends DegreeUnit_Base {
         }
     }
 
-    public SchoolUnit getSchoolUnit() {
-        Unit current = this;
-        while (current != null) {
-            if (current.getType().equals(PartyTypeEnum.SCHOOL)) {
-                return (SchoolUnit) current;
-            }
-            Collection<Unit> parentUnits = current.getParentUnits(AccountabilityTypeEnum.ACADEMIC_STRUCTURE);
-            current = parentUnits.size() > 0 ? parentUnits.iterator().next() : null;
-        }
-        return null;
-    }
+//    public SchoolUnit getSchoolUnit() {
+//        Unit current = this;
+//        while (current != null) {
+//            if (current.getType().equals(PartyTypeEnum.SCHOOL)) {
+//                return (SchoolUnit) current;
+//            }
+//            Collection<Unit> parentUnits = current.getParentUnits(AccountabilityTypeEnum.ACADEMIC_STRUCTURE);
+//            current = parentUnits.size() > 0 ? parentUnits.iterator().next() : null;
+//        }
+//        return null;
+//    }
 }

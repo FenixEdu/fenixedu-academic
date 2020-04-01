@@ -35,7 +35,6 @@ import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.academic.domain.ExternalCurricularCourse;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
-import org.fenixedu.academic.domain.organizationalStructure.UnitUtils;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.dto.administrativeOffice.externalUnits.EditExternalEnrolmentBean;
@@ -67,7 +66,8 @@ import pt.ist.fenixframework.FenixFramework;
                 path = "/academicAdminOffice/student/enrollment/bolonha/chooseExternalCurricularCourses.jsp"),
         @Forward(name = "createExternalEnrolments",
                 path = "/academicAdminOffice/student/enrollment/bolonha/createExternalEnrolments.jsp"),
-        @Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp") })
+        @Forward(name = "viewRegistrationDetails",
+                path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp") })
 public class StudentExternalEnrolmentsDA extends FenixDispatchAction {
 
     @Override
@@ -90,18 +90,18 @@ public class StudentExternalEnrolmentsDA extends FenixDispatchAction {
             HttpServletResponse response) {
 
         request.setAttribute("registration", getRegistration(request, actionForm));
-        
+
         final String unitId = (String) getFromRequest(request, "unitId");
         if (StringUtils.isNotBlank(unitId)) {
             request.setAttribute("unit", FenixFramework.getDomainObject(unitId));
         }
         //request.setAttribute("unit", UnitUtils.readEarthUnit());
-        
+
         return mapping.findForward("chooseExternalUnit");
     }
 
-    public ActionForward chooseExternalCurricularCourses(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward chooseExternalCurricularCourses(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
         final Unit externalUnit = getExternalUnit(request, actionForm);
 
@@ -115,14 +115,14 @@ public class StudentExternalEnrolmentsDA extends FenixDispatchAction {
     private Set<ExternalCurricularCourseResultBean> buildExternalCurricularCourseResultBeans(final Unit unit) {
         final Set<ExternalCurricularCourseResultBean> result =
                 new TreeSet<ExternalCurricularCourseResultBean>(new BeanComparator("fullName"));
-        for (final ExternalCurricularCourse externalCurricularCourse : unit.getAllExternalCurricularCourses()) {
-            result.add(new ExternalCurricularCourseResultBean(externalCurricularCourse));
-        }
+
+        ExternalCurricularCourse.readAllExternalCurricularCourses(unit)
+                .forEach(ecc -> result.add(new ExternalCurricularCourseResultBean(ecc)));
         return result;
     }
 
-    public ActionForward prepareCreateExternalEnrolments(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareCreateExternalEnrolments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
         final String[] externalCurricularCourseIDs =
                 ((DynaActionForm) actionForm).getStrings("selectedExternalCurricularCourses");
@@ -149,8 +149,8 @@ public class StudentExternalEnrolmentsDA extends FenixDispatchAction {
         return result;
     }
 
-    public ActionForward createExternalEnrolmentsInvalid(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward createExternalEnrolmentsInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
 
         request.setAttribute("externalCurricularCourseEnrolmentBeans", getRenderedObject());
         request.setAttribute("registration", getRegistration(request, actionForm));
@@ -257,8 +257,8 @@ public class StudentExternalEnrolmentsDA extends FenixDispatchAction {
     }
 
     protected ExternalEnrolment getExternalEnrolment(final HttpServletRequest request, ActionForm actionForm) {
-        return FenixFramework.getDomainObject(getStringFromRequestOrForm(request, (DynaActionForm) actionForm,
-                "externalEnrolmentId"));
+        return FenixFramework
+                .getDomainObject(getStringFromRequestOrForm(request, (DynaActionForm) actionForm, "externalEnrolmentId"));
     }
 
     protected String getStringFromRequestOrForm(final HttpServletRequest request, final DynaActionForm form, final String name) {

@@ -26,8 +26,8 @@ import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -44,14 +44,14 @@ public class UniversityUnit extends UniversityUnit_Base {
         return true;
     }
 
-    public static UniversityUnit createNewUniversityUnit(LocalizedString name, Unit parentUnit, Boolean official,
-            String code, AcademicalInstitutionType institutionType) {
+    public static UniversityUnit createNewUniversityUnit(LocalizedString name, Unit parentUnit, Boolean official, String code,
+            AcademicalInstitutionType institutionType) {
 
         UniversityUnit universityUnit = new UniversityUnit();
         universityUnit.setPartyName(name);
         universityUnit.setOfficial(official);
         universityUnit.setCode(code);
-        universityUnit.setInstitutionType(institutionType);
+//        universityUnit.setInstitutionType(institutionType);
         universityUnit.setBeginDateYearMonthDay(YearMonthDay.fromDateFields(new GregorianCalendar().getTime()));
         universityUnit.setCanBeResponsibleOfSpaces(Boolean.FALSE);
         return createNewUnit(parentUnit, universityUnit);
@@ -62,8 +62,8 @@ public class UniversityUnit extends UniversityUnit_Base {
             String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Space campus) {
 
         UniversityUnit universityUnit = new UniversityUnit();
-        universityUnit.init(universityName, universityNameCard, costCenterCode, universityAcronym, beginDate, endDate,
-                webAddress, classification, null, canBeResponsibleOfSpaces, campus);
+        universityUnit.init(universityName, universityNameCard, costCenterCode, universityAcronym, beginDate, endDate, webAddress,
+                classification, null, canBeResponsibleOfSpaces, campus);
         return createNewUnit(parentUnit, universityUnit);
     }
 
@@ -91,13 +91,13 @@ public class UniversityUnit extends UniversityUnit_Base {
         checkIfAlreadyExistsOneUniversityWithSameAcronymAndName(this);
     }
 
-    protected static void checkIfAlreadyExistsOneUniversityWithSameAcronymAndName(AcademicalInstitutionUnit universityUnit) {
+    protected static void checkIfAlreadyExistsOneUniversityWithSameAcronymAndName(Unit universityUnit) {
         for (Unit parentUnit : universityUnit.getParentUnits()) {
             for (Unit unit : parentUnit.getAllSubUnits()) {
-                if (!unit.equals(universityUnit)
-                        && unit.isUniversityUnit()
-                        && ((universityUnit.getAcronym() != null && universityUnit.getAcronym().equalsIgnoreCase(
-                                unit.getAcronym())) || universityUnit.getName().equalsIgnoreCase(unit.getName()))) {
+                if (!unit.equals(universityUnit) && unit.isUniversityUnit()
+                        && ((universityUnit.getAcronym() != null
+                                && universityUnit.getAcronym().equalsIgnoreCase(unit.getAcronym()))
+                                || universityUnit.getName().equalsIgnoreCase(unit.getName()))) {
                     throw new DomainException("error.unit.already.exists.unit.with.same.name.or.acronym");
                 }
             }
@@ -110,7 +110,7 @@ public class UniversityUnit extends UniversityUnit_Base {
         final Collection<UniversityUnit> parentUniversityUnits =
                 (Collection<UniversityUnit>) institutionUnit.getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE,
                         UniversityUnit.class);
-
+        
         if (parentUniversityUnits.size() != 1) {
             throw new DomainException("UniversityUnit.unable.to.determine.single.university.unit.for.institution.unit");
         }*/
@@ -122,9 +122,8 @@ public class UniversityUnit extends UniversityUnit_Base {
     @SuppressWarnings("unchecked")
     final static public UniversityUnit getInstitutionsUniversityUnitByDate(DateTime dateTime) {
         final Unit institutionUnit = Bennu.getInstance().getInstitutionUnit();
-        final Collection<UniversityUnit> parentUniversityUnits =
-                (Collection<UniversityUnit>) institutionUnit.getParentPartiesByDates(
-                        AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, UniversityUnit.class, dateTime);
+        final Collection<UniversityUnit> parentUniversityUnits = (Collection<UniversityUnit>) institutionUnit
+                .getParentPartiesByDates(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, UniversityUnit.class, dateTime);
 
         /*for (Object element : parentUniversityUnits) {
             UniversityUnit universityUnit = (UniversityUnit) element;
@@ -139,7 +138,7 @@ public class UniversityUnit extends UniversityUnit_Base {
                     return universityUnit;
                 }
             }
-
+        
         }*/
 
         if (parentUniversityUnits.size() != 1) {
@@ -175,9 +174,9 @@ public class UniversityUnit extends UniversityUnit_Base {
         return super.addParentUnit(parentUnit, accountabilityType);
     }
 
-    @Override
-    public String getFullPresentationName() {
-        return getName();
-    }
+//    @Override
+//    public String getFullPresentationName() {
+//        return getName();
+//    }
 
 }

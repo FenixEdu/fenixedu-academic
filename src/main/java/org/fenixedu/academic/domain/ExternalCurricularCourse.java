@@ -23,6 +23,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -129,6 +131,11 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
         }
 
         return (schoolUnit != null) ? schoolUnit : universityUnit;
+    }
+
+    static public Collection<ExternalCurricularCourse> readAllExternalCurricularCourses(Unit unit) {
+        return Stream.concat(Stream.of(unit), unit.getAllSubUnits().stream())
+                .flatMap(u -> u.getExternalCurricularCoursesSet().stream()).collect(Collectors.toSet());
     }
 
     static public ExternalCurricularCourse readExternalCurricularCourse(Unit unit, String name, String code) {
