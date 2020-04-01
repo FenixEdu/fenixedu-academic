@@ -791,6 +791,11 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
             defaultPhone.edit(number);
         } else {
             defaultPhone = Phone.createPhone(this, number, PartyContactType.PERSONAL, true);
+            for (final PartyContact contact : getPartyContactsSet()) {
+                if (contact != defaultPhone && contact.isPhone() && !contact.isActiveAndValid()) {
+                    contact.delete();
+                }
+            }
         }
 
         if (valid) {
@@ -884,6 +889,11 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
             mobilePhone.edit(number);
         } else {
             mobilePhone = MobilePhone.createMobilePhone(this, number, PartyContactType.PERSONAL, true);
+            for (final PartyContact contact : getPartyContactsSet()) {
+                if (contact != mobilePhone && contact.isMobile() && !contact.isActiveAndValid()) {
+                    contact.delete();
+                }
+            }
         }
 
         if (valid) {
@@ -970,6 +980,11 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
                 emailAddress.edit(email);
             } else {
                 emailAddress = EmailAddress.createEmailAddress(this, email, PartyContactType.PERSONAL, true);
+                for (final PartyContact contact : getPartyContactsSet()) {
+                    if (contact != emailAddress && contact.isEmailAddress() && !contact.isActiveAndValid()) {
+                        contact.delete();
+                    }
+                }
             }
             emailAddress.setVisibleToPublic(visibleToPublic);
             if (valid) {
@@ -1046,6 +1061,11 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
             defaultPhysicalAddress.edit(data);
         } else {
             defaultPhysicalAddress = PhysicalAddress.createPhysicalAddress(this, data, PartyContactType.PERSONAL, true);
+            for (final PartyContact contact : getPartyContactsSet()) {
+                if (contact != defaultPhysicalAddress && contact.isPhysicalAddress() && !contact.isActiveAndValid()) {
+                    contact.delete();
+                }
+            }
         }
         if (valid) {
             defaultPhysicalAddress.setValid();
