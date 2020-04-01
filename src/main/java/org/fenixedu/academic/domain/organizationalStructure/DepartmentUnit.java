@@ -18,14 +18,11 @@
  */
 package org.fenixedu.academic.domain.organizationalStructure;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -33,9 +30,7 @@ import org.fenixedu.academic.domain.accessControl.StudentGroup;
 import org.fenixedu.academic.domain.accessControl.TeacherGroup;
 import org.fenixedu.academic.domain.accessControl.UnitGroup;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
-import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.util.email.UnitBasedSender;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
@@ -48,35 +43,15 @@ public class DepartmentUnit extends DepartmentUnit_Base {
         super.setType(PartyTypeEnum.DEPARTMENT);
     }
 
-    public static DepartmentUnit createNewInternalDepartmentUnit(LocalizedString departmentName, String departmentNameCard,
+    public static DepartmentUnit createNewDepartmentUnit(LocalizedString departmentName, String departmentNameCard,
             Integer costCenterCode, String departmentAcronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
-            AccountabilityType accountabilityType, String webAddress, Department department, UnitClassification classification,
+            AccountabilityType accountabilityType, String webAddress, UnitClassification classification,
             Boolean canBeResponsibleOfSpaces, Space campus) {
 
         DepartmentUnit departmentUnit = new DepartmentUnit();
         departmentUnit.init(departmentName, departmentNameCard, costCenterCode, departmentAcronym, beginDate, endDate, webAddress,
                 classification, null, canBeResponsibleOfSpaces, campus);
-        departmentUnit.setDepartment(department);
         departmentUnit.addParentUnit(parentUnit, accountabilityType);
-
-        checkIfAlreadyExistsOneDepartmentUnitWithSameAcronymAndName(departmentUnit);
-
-        return departmentUnit;
-    }
-
-    public static DepartmentUnit createNewOfficialExternalDepartmentUnit(final String departmentName,
-            final String departmentAcronym, final Unit parentUnit) {
-
-        final DepartmentUnit departmentUnit = new DepartmentUnit();
-        departmentUnit.init(new LocalizedString(Locale.getDefault(), departmentName), null, null, departmentAcronym,
-                new YearMonthDay(), null, null, null, null, null, null);
-        if (parentUnit.isCountryUnit()) {
-            departmentUnit.addParentUnit(parentUnit, AccountabilityType.readByType(AccountabilityTypeEnum.GEOGRAPHIC));
-        } else {
-            departmentUnit.addParentUnit(parentUnit,
-                    AccountabilityType.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
-        }
-
         checkIfAlreadyExistsOneDepartmentUnitWithSameAcronymAndName(departmentUnit);
         return departmentUnit;
     }
@@ -131,20 +106,20 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 //        return new ArrayList<ScientificAreaUnit>(result);
 //    }
 
-    @Override
-    public Accountability addParentUnit(Unit parentUnit, AccountabilityType accountabilityType) {
-        if (getDepartment() == null) {
-            if (parentUnit != null && (!parentUnit.isOfficialExternal()
-                    || (!parentUnit.isCountryUnit() && !parentUnit.isSchoolUnit() && !parentUnit.isUniversityUnit()))) {
-                throw new DomainException("error.unit.invalid.parentUnit");
-            }
-        } else {
-            if (parentUnit != null && !parentUnit.isInternal()) {
-                throw new DomainException("error.unit.invalid.parentUnit");
-            }
-        }
-        return super.addParentUnit(parentUnit, accountabilityType);
-    }
+//    @Override
+//    public Accountability addParentUnit(Unit parentUnit, AccountabilityType accountabilityType) {
+//        if (getDepartment() == null) {
+//            if (parentUnit != null && (!parentUnit.isOfficialExternal()
+//                    || (!parentUnit.isCountryUnit() && !parentUnit.isSchoolUnit() && !parentUnit.isUniversityUnit()))) {
+//                throw new DomainException("error.unit.invalid.parentUnit");
+//            }
+//        } else {
+//            if (parentUnit != null && !parentUnit.isInternal()) {
+//                throw new DomainException("error.unit.invalid.parentUnit");
+//            }
+//        }
+//        return super.addParentUnit(parentUnit, accountabilityType);
+//    }
 
     @Override
     public void setAcronym(String acronym) {
@@ -193,7 +168,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
     }
 
     private static void checkIfAlreadyExistsOneDepartmentUnitWithSameAcronymAndName(DepartmentUnit departmentUnit) {
-        if (departmentUnit.getDepartment() == null) {
+        if (!departmentUnit.isInternal()) {
             for (Unit parentUnit : departmentUnit.getParentUnits()) {
                 for (Unit subUnit : parentUnit.getAllSubUnits()) {
                     if (!subUnit.equals(departmentUnit) && subUnit.isDepartmentUnit()
@@ -237,29 +212,29 @@ public class DepartmentUnit extends DepartmentUnit_Base {
         return groups;
     }
 
-    public static List<DepartmentUnit> readAllDepartmentUnits() {
-        List<Unit> units = readAllUnits();
-        List<DepartmentUnit> departments = new ArrayList<DepartmentUnit>();
-        for (Unit unit : units) {
-            if (unit instanceof DepartmentUnit && unit.getType().equals(PartyTypeEnum.DEPARTMENT)) {
-                departments.add((DepartmentUnit) unit);
-            }
-        }
-        return departments;
-    }
+//    public static List<DepartmentUnit> readAllDepartmentUnits() {
+//        List<Unit> units = readAllUnits();
+//        List<DepartmentUnit> departments = new ArrayList<DepartmentUnit>();
+//        for (Unit unit : units) {
+//            if (unit instanceof DepartmentUnit && unit.getType().equals(PartyTypeEnum.DEPARTMENT)) {
+//                departments.add((DepartmentUnit) unit);
+//            }
+//        }
+//        return departments;
+//    }
 
-    @Override
-    public UnitBasedSender getOneUnitBasedSender() {
-        if (!getUnitBasedSenderSet().isEmpty()) {
-            return getUnitBasedSenderSet().iterator().next();
-        } else {
-            return UnitBasedSender.newInstance(this);
-        }
-    }
+//    @Override
+//    public UnitBasedSender getOneUnitBasedSender() {
+//        if (!getUnitBasedSenderSet().isEmpty()) {
+//            return getUnitBasedSenderSet().iterator().next();
+//        } else {
+//            return UnitBasedSender.newInstance(this);
+//        }
+//    }
 
-    @Override
-    public boolean hasDepartment() {
-        return getDepartment() != null;
-    }
+//    @Override
+//    public boolean hasDepartment() {
+//        return getDepartment() != null;
+//    }
 
 }

@@ -20,6 +20,8 @@ package org.fenixedu.academic.service.services.administrativeOffice.externalUnit
 
 import java.util.Locale;
 
+import org.fenixedu.academic.domain.organizationalStructure.AccountabilityType;
+import org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum;
 import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
 import org.fenixedu.academic.domain.organizationalStructure.PartyTypeEnum;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
@@ -37,12 +39,23 @@ public class CreateExternalUnit {
     public static Unit run(final CreateExternalUnitBean externalUnitBean) throws FenixServiceException {
 
         if (externalUnitBean.getUnitType() == PartyTypeEnum.DEPARTMENT) {
-            return DepartmentUnit.createNewOfficialExternalDepartmentUnit(externalUnitBean.getUnitName(),
-                    externalUnitBean.getUnitCode(), externalUnitBean.getParentUnit());
+
+            final LocalizedString localizedName = new LocalizedString(Locale.getDefault(), externalUnitBean.getUnitName());
+
+            AccountabilityType accountabilityType = externalUnitBean.getParentUnit().isCountryUnit() ? AccountabilityType
+                    .readByType(AccountabilityTypeEnum.GEOGRAPHIC) : AccountabilityType
+                            .readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
+
+            return DepartmentUnit.createNewDepartmentUnit(localizedName, null, null, externalUnitBean.getUnitCode(),
+                    new YearMonthDay(), null, externalUnitBean.getParentUnit(), accountabilityType, null, null, null, null);
+
+//            return DepartmentUnit.createNewOfficialExternalDepartmentUnit(externalUnitBean.getUnitName(),
+//                    externalUnitBean.getUnitCode(), externalUnitBean.getParentUnit());
         } else {
-            return new CreateUnit().run(externalUnitBean.getParentUnit(), new LocalizedString(Locale.getDefault(),
-                    externalUnitBean.getUnitName()), null, null, externalUnitBean.getUnitCode(), new YearMonthDay(), null,
-                    externalUnitBean.getUnitType(), null, null, null, null, null, null, null, null);
+            return new CreateUnit().run(externalUnitBean.getParentUnit(),
+                    new LocalizedString(Locale.getDefault(), externalUnitBean.getUnitName()), null, null,
+                    externalUnitBean.getUnitCode(), new YearMonthDay(), null, externalUnitBean.getUnitType(), null, null, null,
+                    null, null, null, null, null);
         }
     }
 }

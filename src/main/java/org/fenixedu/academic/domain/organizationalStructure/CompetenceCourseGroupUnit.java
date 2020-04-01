@@ -85,29 +85,29 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
 //        return competenceCourse.getCompetenceCourseGroupUnit().equals(this);
 //    }
 
-    @Deprecated
-    public ScientificAreaUnit getScientificAreaUnit() {
-        for (final Unit parent : getParentUnits()) {
-            if (parent instanceof ScientificAreaUnit) {
-                return (ScientificAreaUnit) parent;
-            }
-        }
-        return null;
-    }
+//    @Deprecated
+//    public ScientificAreaUnit getScientificAreaUnit() {
+//        for (final Unit parent : getParentUnits()) {
+//            if (parent instanceof ScientificAreaUnit) {
+//                return (ScientificAreaUnit) parent;
+//            }
+//        }
+//        return null;
+//    }
 
-    @Deprecated
-    @Override
-    public DepartmentUnit getAssociatedDepartmentUnit() {
-        final ScientificAreaUnit area = getScientificAreaUnit();
-        if (area != null) {
-            for (final Unit parent : area.getParentUnits()) {
-                if (parent instanceof DepartmentUnit) {
-                    return (DepartmentUnit) parent;
-                }
-            }
-        }
-        return null;
-    }
+//    @Deprecated
+//    @Override
+//    public DepartmentUnit getAssociatedDepartmentUnit() {
+//        final ScientificAreaUnit area = getScientificAreaUnit();
+//        if (area != null) {
+//            for (final Unit parent : area.getParentUnits()) {
+//                if (parent instanceof DepartmentUnit) {
+//                    return (DepartmentUnit) parent;
+//                }
+//            }
+//        }
+//        return null;
+//    }
 
 //    public Set<CompetenceCourse> getCompetenceCoursesSet() {
 //        final SortedSet<CompetenceCourse> result =

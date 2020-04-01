@@ -123,9 +123,9 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 //        return getCompetenceCourseGroupUnit().getScientificAreaUnit();
 //    }
 
-    public DepartmentUnit getDepartmentUnit() {
-        return getCompetenceCourseGroupUnit().getAssociatedDepartmentUnit();
-    }
+//    public DepartmentUnit getDepartmentUnit() {
+//        return getCompetenceCourseGroupUnit().getAssociatedDepartmentUnit();
+//    }
 
     private void checkParameters(final String name, final String nameEn, final Boolean basic, final AcademicPeriod academicPeriod,
             CompetenceCourseLevel competenceCourseLevel) {

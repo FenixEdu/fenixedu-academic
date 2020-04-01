@@ -215,14 +215,14 @@ public class Department extends Department_Base {
                 return department;
             }
         }
-        if (StringUtils.isNumeric(departmentCode)) {
-            final Unit unit = Unit.readByCostCenterCode(new Integer(departmentCode));
-            if (unit != null) {
-                final org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit departmentUnit =
-                        unit.getAssociatedDepartmentUnit();
-                return departmentUnit == null ? null : departmentUnit.getDepartment();
-            }
-        }
+//        if (StringUtils.isNumeric(departmentCode)) {
+//            final Unit unit = Unit.readByCostCenterCode(new Integer(departmentCode));
+//            if (unit != null) {
+//                final org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit departmentUnit =
+//                        unit.getAssociatedDepartmentUnit();
+//                return departmentUnit == null ? null : departmentUnit.getDepartment();
+//            }
+//        }
         return null;
     }
 

@@ -277,25 +277,25 @@ public class Unit extends Unit_Base {
         return null;
     }
 
-    public DepartmentUnit getAssociatedDepartmentUnit() {
-        if (this.isDepartmentUnit()) {
-            return (DepartmentUnit) this;
-        } else {
-            for (Unit parentUnit : getParentUnits()) {
-                if (parentUnit.isDepartmentUnit()) {
-                    return (DepartmentUnit) parentUnit;
-                } else if (parentUnit.hasAnyParentUnits()) {
-                    Unit departmentUnit = parentUnit.getAssociatedDepartmentUnit();
-                    if (departmentUnit == null) {
-                        continue;
-                    } else {
-                        return (DepartmentUnit) departmentUnit;
-                    }
-                }
-            }
-        }
-        return null;
-    }
+//    public DepartmentUnit getAssociatedDepartmentUnit() {
+//        if (this.isDepartmentUnit()) {
+//            return (DepartmentUnit) this;
+//        } else {
+//            for (Unit parentUnit : getParentUnits()) {
+//                if (parentUnit.isDepartmentUnit()) {
+//                    return (DepartmentUnit) parentUnit;
+//                } else if (parentUnit.hasAnyParentUnits()) {
+//                    Unit departmentUnit = parentUnit.getAssociatedDepartmentUnit();
+//                    if (departmentUnit == null) {
+//                        continue;
+//                    } else {
+//                        return (DepartmentUnit) departmentUnit;
+//                    }
+//                }
+//            }
+//        }
+//        return null;
+//    }
 
     public List<Unit> getInactiveSubUnits(YearMonthDay currentDate) {
         return getSubUnitsByState(currentDate, false);

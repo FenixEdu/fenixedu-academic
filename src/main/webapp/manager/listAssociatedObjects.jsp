@@ -84,18 +84,23 @@
             <logic:present name="department" property="departmentUnit">
                 <bean:define id="depunit" name="department" property="departmentUnit"/>
                 <ul>
-                    <logic:iterate id="unit" name="depunit" property="scientificAreaUnits">
-                        <li><bean:write name="unit" property="name"></bean:write> - <html:link
-                                page="<%= "/manageAssociatedObjects.do?method=prepareCreateCompetenceCourseGroup&oid=" + ((DomainObject) unit)
-                .getExternalId()%>">Create Competence Course Group</html:link></li>
-
-                        <logic:present name="unit" property="competenceCourseGroupUnits">
-                            <ul>
-                                <logic:iterate id="ccg" name="unit" property="competenceCourseGroupUnits">
-                                    <li><bean:write name="ccg" property="name"/></li>
-                                </logic:iterate>
-                            </ul>
-                        </logic:present>
+                    <logic:iterate id="unit" name="depunit" property="subUnits">
+                    
+                    	<logic:equal name="unit" property="scientificAreaUnit" value="true">
+	                        <li><bean:write name="unit" property="name"></bean:write> - <html:link
+	                                page="<%= "/manageAssociatedObjects.do?method=prepareCreateCompetenceCourseGroup&oid=" + ((DomainObject) unit)
+	                .getExternalId()%>">Create Competence Course Group</html:link></li>
+	
+	                        <logic:present name="unit" property="subUnits">
+	                            <ul>
+	                                <logic:iterate id="ccg" name="unit" property="subUnits">
+	                                	<logic:equal name="ccg" property="competenceCourseGroupUnit" value="true">
+	                                    	<li><bean:write name="ccg" property="name"/></li>
+	                                	</logic:equal>
+	                                </logic:iterate>
+	                            </ul>
+	                        </logic:present>
+                    	</logic:equal>
 
                     </logic:iterate>
                 </ul>

@@ -462,10 +462,10 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         Unit departmentParent = Bennu.getInstance().getInstitutionUnit().getSubUnits().stream()
                 .filter(x -> x instanceof AggregateUnit).filter(x -> ((AggregateUnit) x).getName().equals("Departments"))
                 .findAny().orElse(Bennu.getInstance().getInstitutionUnit());
-        DepartmentUnit.createNewInternalDepartmentUnit(department.getNameI18n(), null, null, department.getCode(),
-                new YearMonthDay(), null, departmentParent,
-                AccountabilityType.readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, department, null, false, null);
-
+        DepartmentUnit departmentUnit = DepartmentUnit.createNewDepartmentUnit(department.getNameI18n(), null, null,
+                department.getCode(), new YearMonthDay(), null, departmentParent,
+                AccountabilityType.readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, null, false, null);
+        departmentUnit.setDepartment(department);
     }
 
     public ActionForward prepareAcademicOffice(ActionMapping mapping, ActionForm form, HttpServletRequest request,

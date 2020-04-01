@@ -494,9 +494,9 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 //        return false;
 //    }
 
-    public boolean hasDepartment() {
-        return false;
-    }
+//    public boolean hasDepartment() {
+//        return false;
+//    }
 
     public boolean verifyNameEquality(String[] nameWords) {
         if (nameWords == null) {

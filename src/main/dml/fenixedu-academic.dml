@@ -2180,15 +2180,6 @@ relation CandidacyRootDomainObject {
     }
 }
 
-relation CompetenceCourseDepartment {
-    CompetenceCourse playsRole competenceCourses {
-        multiplicity *;
-    }
-    Department playsRole departments {
-        multiplicity *;
-    }
-}
-
 relation CompetenceCourseInformationCompetenceCourse {
     degreeStructure.CompetenceCourseInformation playsRole competenceCourseInformations {
         multiplicity *;

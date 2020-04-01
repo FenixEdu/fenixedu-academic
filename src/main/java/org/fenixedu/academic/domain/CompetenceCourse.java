@@ -241,7 +241,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         } else if (this.getCurricularStage().equals(CurricularStage.APPROVED)) {
             throw new DomainException("competenceCourse.approved");
         }
-        getDepartmentsSet().clear();
         for (; !getCompetenceCourseInformationsSet().isEmpty(); getCompetenceCourseInformationsSet().iterator().next().delete()) {
             ;
         }
