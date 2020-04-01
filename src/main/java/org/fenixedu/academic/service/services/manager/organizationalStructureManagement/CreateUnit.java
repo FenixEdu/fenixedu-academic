@@ -64,8 +64,11 @@ public class CreateUnit {
 
             case DEPARTMENT:
                 Department department = FenixFramework.getDomainObject(departmentID);
-                return DepartmentUnit.createNewInternalDepartmentUnit(unitName, unitNameCard, costCenterCode, acronym, begin, end,
-                        parentUnit, accountabilityType, webAddress, department, classification, canBeResponsibleOfSpaces, campus);
+                DepartmentUnit departmentUnit =
+                        DepartmentUnit.createNewDepartmentUnit(unitName, unitNameCard, costCenterCode, acronym, begin, end,
+                                parentUnit, accountabilityType, webAddress, classification, canBeResponsibleOfSpaces, campus);
+                departmentUnit.setDepartment(department);
+                return departmentUnit;
 
             case DEGREE_UNIT:
                 Degree degree = FenixFramework.getDomainObject(degreeID);
