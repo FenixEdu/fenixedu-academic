@@ -503,6 +503,14 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
     }
 
+    public void removeEnrolmentPeriod() {
+    	getWrittenEvaluationEnrolmentsSet().forEach(we -> we.delete());
+    	setEnrollmentBeginDayDateYearMonthDay(null);
+        setEnrollmentEndDayDateYearMonthDay(null);
+        setEnrollmentBeginTimeDateHourMinuteSecond(null);
+        setEnrollmentEndTimeDateHourMinuteSecond(null);        
+    }
+    
     private DateTime createDate(Date dateDay, Date dateTime) {
         final Calendar day = Calendar.getInstance();
         day.setTime(dateDay);

@@ -599,6 +599,22 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
         return this.getEvaluation().getClass().getSimpleName();
     }
+    
+    public String removeEvaluationEnrolmentPeriod() {
+        try {
+            EditWrittenEvaluationEnrolmentPeriod.removeEnrolmentPeriod(getExecutionCourseID(), getEvaluationID());
+        } catch (Exception e) {
+            addErrorMessage(e.getMessage());
+            String errorMessage = e.getMessage();
+            if (e instanceof NotAuthorizedException) {
+                errorMessage = "message.error.notAuthorized";
+            }
+            this.setErrorMessage(errorMessage);
+            return "";
+        }
+
+        return this.getEvaluation().getClass().getSimpleName();
+    }
 
     public String editMarks() throws FenixServiceException, IllegalDataAccessException {
         if (getEvaluationID() == null) {
@@ -653,6 +669,10 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         result.set(this.getYear(), this.getMonth() - 1, this.getDay(), this.getEndHour(), this.getEndMinute());
 
         return result;
+    }
+    
+    public boolean isEnrolmentPeriodDefined() {
+    	return ((WrittenEvaluation)getEvaluation()).getEnrollmentBeginDayDateYearMonthDay() != null;
     }
 
     public String createWrittenTest() {

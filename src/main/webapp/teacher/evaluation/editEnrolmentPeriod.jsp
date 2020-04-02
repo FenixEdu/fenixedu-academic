@@ -21,6 +21,7 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <f:view>
 
@@ -116,8 +117,14 @@
 		<h:commandButton alt="#{htmlAltBundle['commandButton.define']}" action="#{evaluationManagementBackingBean.editEvaluationEnrolmentPeriod}" value="#{bundle['button.define']}"/>
 		<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" action="#{evaluationManagementBackingBean.evaluation.class.getSimpleName}" value="#{bundle['button.cancel']}"/>
 		<h:outputText value="</p>" escape="false" />
+		
+		<c:if test="${evaluationManagementBackingBean.enrolmentPeriodDefined}">
+			<h:outputText value="<p><br/>" escape="false" />
+				<h:outputText value="#{bundle['message.evaluation.period.delete']}" escape="false"/>
+			<h:outputText value="</p>" escape="false" />
+			<h:outputText value="<p>" escape="false" />
+				<h:commandButton alt="#{htmlAltBundle['commandButton.remove']}" action="#{evaluationManagementBackingBean.removeEvaluationEnrolmentPeriod}" value="#{bundle['button.delete']}"/>
+			<h:outputText value="</p>" escape="false" />
+		</c:if>
 	</h:form>
 </f:view>
-
-</div>
-</div>
