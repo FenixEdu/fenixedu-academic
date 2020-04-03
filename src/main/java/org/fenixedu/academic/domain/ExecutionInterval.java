@@ -145,7 +145,7 @@ public class ExecutionInterval extends ExecutionInterval_Base implements Compara
         final Comparator<ExecutionInterval> comparatorByEnd = (ei1, ei2) -> ei1.getAcademicInterval()
                 .getEndDateTimeWithoutChronology().compareTo(ei2.getAcademicInterval().getEndDateTimeWithoutChronology());
 
-        return comparatorByStart.thenComparing(comparatorByEnd.reversed()).thenComparing(ExecutionInterval::getExternalId)
+        return comparatorByStart.thenComparing(comparatorByEnd.reversed()).thenComparing(ExecutionInterval::getExternalId) // end comparator is reversed in order to year be first than 1st semester (as it is first than 2nd semester)
                 .compare(this, anotherInterval);
     }
 
@@ -241,6 +241,10 @@ public class ExecutionInterval extends ExecutionInterval_Base implements Compara
                 .map(pace -> pace.getExecutionInterval()).orElse(null);
     }
 
+    public boolean isAggregator() {
+        return this instanceof ExecutionYear;
+    }
+
     /**
      * Returns active ExecutionInterval aggregators (ExecutionYear).
      * 
@@ -249,6 +253,16 @@ public class ExecutionInterval extends ExecutionInterval_Base implements Compara
     public static Collection<ExecutionInterval> findActiveAggregators() {
         return Bennu.getInstance().getExecutionIntervalsSet().stream().filter(ei -> ei instanceof ExecutionYear)
                 .filter(ExecutionInterval::isActive).collect(Collectors.toSet());
+    }
+
+    /**
+     * Returns all ExecutionInterval aggregators (ExecutionYear).
+     * 
+     * @return collection of ExecutionIntervals
+     */
+    public static Collection<ExecutionInterval> findAllAggregators() {
+        return Bennu.getInstance().getExecutionIntervalsSet().stream().filter(ei -> ei.isAggregator())
+                .collect(Collectors.toSet());
     }
 
     /**
@@ -263,6 +277,19 @@ public class ExecutionInterval extends ExecutionInterval_Base implements Compara
         return Bennu.getInstance().getExecutionIntervalsSet().stream().filter(ei -> ei instanceof ExecutionYear)
                 .filter(ExecutionInterval::isActive).filter(ei -> ei.getAcademicCalendar() == calendarToCheck)
                 .collect(Collectors.toSet());
+    }
+
+    /**
+     * Returns all ExecutionInterval aggregators (ExecutionYear) for provided calendar.
+     * If provided calendar is null, use default academic calendar
+     * 
+     * @param calendar the calendar to search in
+     * @return collection of ExecutionIntervals
+     */
+    public static Collection<ExecutionInterval> findAllAggregators(final AcademicCalendarRootEntry calendar) {
+        final AcademicCalendarEntry calendarToCheck = calendar != null ? calendar : AcademicCalendarEntry.findDefaultCalendar();
+        return Bennu.getInstance().getExecutionIntervalsSet().stream().filter(ei -> ei.isAggregator())
+                .filter(ei -> ei.getAcademicCalendar() == calendarToCheck).collect(Collectors.toSet());
     }
 
     /**
