@@ -22,14 +22,11 @@ import java.util.Locale;
 
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityType;
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum;
-import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
-import org.fenixedu.academic.domain.organizationalStructure.PartyTypeEnum;
+import org.fenixedu.academic.domain.organizationalStructure.PartyType;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.dto.administrativeOffice.externalUnits.CreateExternalUnitBean;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
-import org.fenixedu.academic.service.services.manager.organizationalStructureManagement.CreateUnit;
 import org.fenixedu.commons.i18n.LocalizedString;
-import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -38,24 +35,13 @@ public class CreateExternalUnit {
     @Atomic
     public static Unit run(final CreateExternalUnitBean externalUnitBean) throws FenixServiceException {
 
-        if (externalUnitBean.getUnitType() == PartyTypeEnum.DEPARTMENT) {
+        final LocalizedString localizedName = new LocalizedString(Locale.getDefault(), externalUnitBean.getUnitName());
 
-            final LocalizedString localizedName = new LocalizedString(Locale.getDefault(), externalUnitBean.getUnitName());
+        final AccountabilityType accountabilityType = externalUnitBean.getParentUnit().isCountryUnit() ? AccountabilityType
+                .readByType(AccountabilityTypeEnum.GEOGRAPHIC) : AccountabilityType
+                        .readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
 
-            AccountabilityType accountabilityType = externalUnitBean.getParentUnit().isCountryUnit() ? AccountabilityType
-                    .readByType(AccountabilityTypeEnum.GEOGRAPHIC) : AccountabilityType
-                            .readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE);
-
-            return DepartmentUnit.createNewDepartmentUnit(localizedName, null, null, externalUnitBean.getUnitCode(),
-                    new YearMonthDay(), null, externalUnitBean.getParentUnit(), accountabilityType, null, null, null, null);
-
-//            return DepartmentUnit.createNewOfficialExternalDepartmentUnit(externalUnitBean.getUnitName(),
-//                    externalUnitBean.getUnitCode(), externalUnitBean.getParentUnit());
-        } else {
-            return new CreateUnit().run(externalUnitBean.getParentUnit(),
-                    new LocalizedString(Locale.getDefault(), externalUnitBean.getUnitName()), null, null,
-                    externalUnitBean.getUnitCode(), new YearMonthDay(), null, externalUnitBean.getUnitType(), null, null, null,
-                    null, null, null, null, null);
-        }
+        return Unit.createNewUnit(PartyType.of(externalUnitBean.getUnitType()), localizedName, externalUnitBean.getUnitCode(),
+                externalUnitBean.getParentUnit(), accountabilityType);
     }
 }

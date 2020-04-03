@@ -40,12 +40,9 @@ import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityType;
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum;
-import org.fenixedu.academic.domain.organizationalStructure.AggregateUnit;
-import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGroupUnit;
-import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
-import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
+import org.fenixedu.academic.domain.organizationalStructure.PartyType;
+import org.fenixedu.academic.domain.organizationalStructure.PartyTypeEnum;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
-import org.fenixedu.academic.domain.organizationalStructure.UnitClassification;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.manager.ManagerApplications.ManagerSystemManagementApp;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -262,15 +259,15 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
             this.buildings = buildings;
         }
 
-        public ScientificAreaUnit getScientificAreaUnit() {
+        public Unit getScientificAreaUnit() {
             return scientificAreaUnit;
         }
 
-        public void setScientificAreaUnit(ScientificAreaUnit scientificAreaUnit) {
+        public void setScientificAreaUnit(Unit scientificAreaUnit) {
             this.scientificAreaUnit = scientificAreaUnit;
         }
 
-        public ScientificAreaUnit scientificAreaUnit;
+        public Unit scientificAreaUnit;
     }
 
     public static class DegreeTypeBean implements Serializable {
@@ -459,12 +456,10 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         department.setRealName(bean.getRealName());
         department.setRealNameEn(bean.getRealNameEn());
         department.setRootDomainObject(Bennu.getInstance());
-        Unit departmentParent = Bennu.getInstance().getInstitutionUnit().getSubUnits().stream()
-                .filter(x -> x instanceof AggregateUnit).filter(x -> ((AggregateUnit) x).getName().equals("Departments"))
-                .findAny().orElse(Bennu.getInstance().getInstitutionUnit());
-        DepartmentUnit departmentUnit = DepartmentUnit.createNewDepartmentUnit(department.getNameI18n(), null, null,
-                department.getCode(), new YearMonthDay(), null, departmentParent,
-                AccountabilityType.readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, null, false, null);
+        Unit departmentParent = Bennu.getInstance().getInstitutionUnit().getSubUnits().stream().filter(x -> x.isAggregateUnit())
+                .filter(x -> x.getName().equals("Departments")).findAny().orElse(Bennu.getInstance().getInstitutionUnit());
+        Unit departmentUnit = Unit.createNewUnit(PartyType.of(PartyTypeEnum.DEPARTMENT), department.getNameI18n(),
+                department.getCode(), departmentParent, AccountabilityType.readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE));
         departmentUnit.setDepartment(department);
     }
 
@@ -496,9 +491,8 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         office.setRootDomainObject(Bennu.getInstance());
         Unit servicesParent = Bennu.getInstance().getInstitutionUnit().getSubUnits().stream()
                 .filter(x -> x.getName().equals("Services")).findAny().orElse(Bennu.getInstance().getInstitutionUnit());
-        Unit.createNewUnit(office.getName(), null, null, null, new YearMonthDay(), null, servicesParent,
-                AccountabilityType.readByType(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE), null,
-                UnitClassification.CENTRAL_ORG, office, false, bean.getBuilding());
+        Unit.createNewUnit(PartyType.of(PartyTypeEnum.ADMINISTRATIVE_OFFICE_UNIT), office.getName(), null, servicesParent,
+                AccountabilityType.readByType(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE));
     }
 
     public ActionForward prepareAssociatePersonUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -556,9 +550,9 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
 
     @Atomic(mode = TxMode.WRITE)
     private void createScientificArea(AssociatedObjectsBean bean) {
-        ScientificAreaUnit.createNewInternalScientificArea(bean.getNameLS(), null, null, bean.getCode(), new YearMonthDay(), null,
+        Unit.createNewUnit(PartyType.of(PartyTypeEnum.SCIENTIFIC_AREA), bean.getNameLS(), bean.getCode(),
                 bean.getDepartment().getDepartmentUnit(),
-                AccountabilityType.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE), null, null, false, null);
+                AccountabilityType.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
     }
 
     public ActionForward prepareCreateCompetenceCourseGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -587,9 +581,8 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
 
     @Atomic(mode = TxMode.WRITE)
     private void createCompetenceCourseGroup(AssociatedObjectsBean bean) {
-        CompetenceCourseGroupUnit.createNewInternalCompetenceCourseGroupUnit(bean.getNameLS(), null, null, bean.getCode(),
-                new YearMonthDay(), null, bean.getScientificAreaUnit(),
-                AccountabilityType.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE), null, null, false, null);
+        Unit.createNewUnit(PartyType.of(PartyTypeEnum.COMPETENCE_COURSE_GROUP), bean.getNameLS(), bean.getCode(),
+                bean.getScientificAreaUnit(), AccountabilityType.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
     }
 
     public ActionForward prepareEditDepartment(ActionMapping mapping, ActionForm form, HttpServletRequest request,

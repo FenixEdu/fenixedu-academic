@@ -53,6 +53,7 @@ import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.PartyTypeEnum;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UnitUtils;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
@@ -668,7 +669,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         if (selectedCurricularRuleType != null
                 && selectedCurricularRuleType.equals(CurricularRuleType.ANY_CURRICULAR_COURSE.name())) {
-            for (final Unit unit : UnitUtils.readAllDepartmentUnits()) {
+            for (final Unit unit : UnitUtils.readAllActiveUnitsByType(PartyTypeEnum.DEPARTMENT)) {
                 result.add(new SelectItem(unit.getExternalId(), unit.getName()));
             }
             Collections.sort(result, new BeanComparator("label"));

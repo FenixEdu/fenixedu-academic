@@ -31,7 +31,6 @@ import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.OptionalCurricularCourse;
-import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.dto.GenericPair;
@@ -40,8 +39,7 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 
     public AnyCurricularCourse(final OptionalCurricularCourse toApplyRule, final CourseGroup contextCourseGroup,
             final ExecutionInterval begin, final ExecutionInterval end, final Double minimumCredits, Double maximumCredits,
-            final Integer curricularPeriodOrder, final DegreeType degreeType, final Degree degree,
-            final DepartmentUnit departmentUnit) {
+            final Integer curricularPeriodOrder, final DegreeType degreeType, final Degree degree, final Unit departmentUnit) {
 
         super();
 
@@ -58,7 +56,7 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
     }
 
     protected void edit(final CourseGroup contextCourseGroup, final Double credits, final Integer curricularPeriodOrder,
-            final DegreeType degreeType, final Degree degree, final DepartmentUnit departmentUnit) {
+            final DegreeType degreeType, final Degree degree, final Unit departmentUnit) {
 
         setContextCourseGroup(contextCourseGroup);
         setCredits(credits);

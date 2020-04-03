@@ -62,7 +62,6 @@ enum org.fenixedu.academic.domain.degreeStructure.RegimeType                    
 enum org.fenixedu.academic.domain.organizationalStructure.AcademicalInstitutionType                                    as AcademicalInstitutionType;
 enum org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum                                       as AccountabilityTypeEnum;
 enum org.fenixedu.academic.domain.organizationalStructure.PartyTypeEnum                                                as PartyTypeEnum;
-enum org.fenixedu.academic.domain.organizationalStructure.UnitClassification                                           as UnitClassification;
 enum org.fenixedu.academic.domain.person.Gender                                                                        as Gender;
 enum org.fenixedu.academic.domain.person.IDDocumentType                                                                as IDDocumentType;
 enum org.fenixedu.academic.domain.person.MaritalStatus                                                                 as MaritalStatus;
@@ -1246,61 +1245,8 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
             String code;
             YearMonthDay beginDateYearMonthDay;
             YearMonthDay endDateYearMonthDay;
-            Boolean canBeResponsibleOfSpaces; //deprecated
-            UnitClassification classification; //deprecated
-            String identificationCardLabel; //deprecated
             Boolean official;                
         }
-
-            class organizationalStructure.AdministrativeOfficeUnit extends organizationalStructure.Unit {
-            }
-
-            class organizationalStructure.AggregateUnit extends organizationalStructure.Unit {
-            }
-
-            class organizationalStructure.CompetenceCourseGroupUnit extends organizationalStructure.Unit {
-            }
-
-            class organizationalStructure.CountryUnit extends organizationalStructure.Unit {
-            }
-
-            class organizationalStructure.DegreeUnit extends organizationalStructure.Unit {
-            }
-
-            class organizationalStructure.DepartmentUnit extends organizationalStructure.Unit {
-            }
-
-            class organizationalStructure.PedagogicalCouncilUnit extends organizationalStructure.Unit {
-            }
-
-            class organizationalStructure.PlanetUnit extends organizationalStructure.Unit {
-            }
-
-            class organizationalStructure.ManagementCouncilUnit extends organizationalStructure.Unit {
-            }
-            
-            class organizationalStructure.ScientificAreaUnit extends organizationalStructure.Unit {
-            }
-
-            class organizationalStructure.ScientificCouncilUnit extends organizationalStructure.Unit {
-            }
-
-            class organizationalStructure.SectionUnit extends organizationalStructure.Unit {
-            }
-
-            class organizationalStructure.AcademicalInstitutionUnit extends organizationalStructure.Unit {
-                // AcademicalInstitutionType institutionType;
-            }
-
-                class organizationalStructure.SchoolUnit extends organizationalStructure.AcademicalInstitutionUnit {
-            }
-
-                class organizationalStructure.UniversityUnit extends organizationalStructure.AcademicalInstitutionUnit {
-            }
-
-    class organizationalStructure.UnitCostCenterCode  {
-        Integer costCenterCode;
-    }
 
     class organizationalStructure.UnitName  {
         Boolean isExternalUnit;
@@ -2156,7 +2102,7 @@ relation AnyCurricularCourseDepartmentUnit {
     curricularRules.AnyCurricularCourse playsRole participatingAnyCurricularCourseCurricularRules {
         multiplicity *;
     }
-    organizationalStructure.DepartmentUnit playsRole departmentUnit;
+    organizationalStructure.Unit playsRole departmentUnit;
 }
 
 relation AttendsEnrolment {
@@ -2198,7 +2144,7 @@ relation CompetenceCourseInformationUnit {
     degreeStructure.CompetenceCourseInformation playsRole competenceCourseInformations {
         multiplicity *;
     }
-    organizationalStructure.CompetenceCourseGroupUnit playsRole competenceCourseGroupUnit;
+    organizationalStructure.Unit playsRole competenceCourseGroupUnit;
 }
 
 relation ConclusionProcessConclusionProcessVersion {
@@ -2466,7 +2412,7 @@ relation DegreeModulePrecedenceRule {
 
 relation DegreeUnit {
     Degree playsRole degree;
-    organizationalStructure.DegreeUnit playsRole unit;
+    organizationalStructure.Unit playsRole unit;
 }
 
 relation DepartmentDegree {
@@ -2480,7 +2426,7 @@ relation DepartmentDegree {
 
 relation DepartmentUnit {
     Department playsRole department;
-    organizationalStructure.DepartmentUnit playsRole departmentUnit;
+    organizationalStructure.Unit playsRole departmentUnit;
 }
 
 relation DissertationEnrolmentConclusionProcess {
@@ -4251,7 +4197,7 @@ relation CompetenceCourseInformationChangeRequestCompetenceCourseGroupUnit {
     degreeStructure.CompetenceCourseInformationChangeRequest playsRole competenceCourseInformationChangeRequests {
         multiplicity *;
     }
-    organizationalStructure.CompetenceCourseGroupUnit playsRole competenceCourseGroupUnit;
+    organizationalStructure.Unit playsRole competenceCourseGroupUnit;
 }
 
 relation CompetenceCourseInformationChangeRequestRootDomainObject {
@@ -4407,7 +4353,7 @@ relation FormationCountryUnit {
     Formation playsRole associatedCountryUnitFormations {
         multiplicity *;
     }
-    organizationalStructure.CountryUnit playsRole countryUnit;
+    organizationalStructure.Unit playsRole countryUnit;
 }
 
 relation RootDomainObjectUtilEmailMessage {
@@ -4533,18 +4479,6 @@ relation RootDomainObjectPendingUtilEmailMessage {
     }
 }
 
-relation RootDomainObjectUnitCostCenterCode {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    organizationalStructure.UnitCostCenterCode playsRole unitCostCenterCodes {
-        multiplicity *;
-    }
-}
-
-relation UnitUnitCostCenterCode {
-    organizationalStructure.Unit playsRole unit;
-    organizationalStructure.UnitCostCenterCode playsRole unitCostCenterCode;
-}
-
 relation UnitUnitBasedSender {
     organizationalStructure.Unit playsRole unit;
     util.email.UnitBasedSender playsRole unitBasedSender {
@@ -4648,22 +4582,6 @@ relation ExecutionSemesterEnrolmentInstructions {
 	ExecutionInterval playsRole executionSemester;
 	EnrolmentInstructions playsRole enrolmentInstructions;
 }
-
-
-relation UniversityUnitPresident {
-    .org.fenixedu.bennu.core.domain.User playsRole president;
-    organizationalStructure.UniversityUnit playsRole universityUnitAsPresident {
-        multiplicity *;
-    }
-}
-
-relation UniversityUnitPrincipal {
-    .org.fenixedu.bennu.core.domain.User playsRole principal;
-    organizationalStructure.UniversityUnit playsRole universityUnitAsPrincipal {
-        multiplicity *;
-    }
-}
-
 
 relation RootDomainObjectEmailQueue {
 	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectFromEmailQueue;

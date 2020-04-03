@@ -24,7 +24,6 @@ package org.fenixedu.academic.domain.organizationalStructure;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -32,23 +31,21 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.Country;
-import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.Department;
-import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.util.email.UnitBasedSender;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LocaleUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.StringNormalizer;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
-import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
@@ -59,26 +56,57 @@ public class Unit extends Unit_Base {
         super();
     }
 
-    protected void init(LocalizedString name, String unitNameCard, Integer costCenterCode, String acronym, YearMonthDay beginDate,
-            YearMonthDay endDate, String webAddress, UnitClassification classification, AdministrativeOffice administrativeOffice,
-            Boolean canBeResponsibleOfSpaces, Space campus) {
+    public static Unit createNewUnit(Optional<PartyType> partyType, LocalizedString unitName, String acronym, Unit parentUnit,
+            AccountabilityType accountabilityType) {
 
-        setPartyName(name);
-        if (acronym != null) {
-            setAcronym(acronym);
+        final Unit unit = new Unit();
+        partyType.ifPresent(pt -> unit.setPartyType(pt));
+
+        if (parentUnit != null && accountabilityType != null) {
+            unit.addParentUnit(parentUnit, accountabilityType); // this must be before setName and setAcronym in order to validations to work
+        } else if (!unit.isPlanetUnit()) {
+            throw new DomainException("error.unit.create.noParentOrAccountabilityType");
         }
-        if (getCostCenterCode() == null || !getCostCenterCode().equals(costCenterCode)) {
-            setCostCenterCode(costCenterCode);
-        }
-        setIdentificationCardLabel(unitNameCard);
-        setBeginDateYearMonthDay(beginDate);
-        setEndDateYearMonthDay(endDate);
-        setClassification(classification);
-        setAdministrativeOffice(administrativeOffice);
-        setCanBeResponsibleOfSpaces(canBeResponsibleOfSpaces);
-        setCampus(campus);
-        setDefaultWebAddressUrl(webAddress);
+
+        unit.setPartyName(unitName);
+        unit.setAcronym(acronym);
+
+        unit.setBeginDateYearMonthDay(new YearMonthDay());
+
+        return unit;
     }
+
+    public static Unit createNewNoOfficialExternalInstitution(String unitName) {
+        final Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
+        return Unit.createNewUnit(Optional.empty(), new LocalizedString(Locale.getDefault(), unitName), null,
+                externalInstitutionUnit, AccountabilityType.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
+    }
+
+    public void edit(LocalizedString name, String acronym) {
+        setPartyName(name);
+        setAcronym(acronym);
+    }
+
+//    protected void init(LocalizedString name, String unitNameCard, Integer costCenterCode, String acronym, YearMonthDay beginDate,
+//            YearMonthDay endDate, String webAddress, UnitClassification classification, AdministrativeOffice administrativeOffice,
+//            Boolean canBeResponsibleOfSpaces, Space campus) {
+//
+//        setPartyName(name);
+//        if (acronym != null) {
+//            setAcronym(acronym);
+//        }
+//        if (getCostCenterCode() == null || !getCostCenterCode().equals(costCenterCode)) {
+//            setCostCenterCode(costCenterCode);
+//        }
+//        setIdentificationCardLabel(unitNameCard);
+//        setBeginDateYearMonthDay(beginDate);
+//        setEndDateYearMonthDay(endDate);
+//        setClassification(classification);
+//        setAdministrativeOffice(administrativeOffice);
+//        setCanBeResponsibleOfSpaces(canBeResponsibleOfSpaces);
+//        setCampus(campus);
+//        setDefaultWebAddressUrl(webAddress);
+//    }
 
     @Override
     public void setPartyName(LocalizedString partyName) {
@@ -86,7 +114,16 @@ public class Unit extends Unit_Base {
             throw new DomainException("error.Party.empty.partyName");
         }
         super.setPartyName(partyName);
+        checkUniqueNameInSiblingUnits();
+
         setName(LocaleUtils.getPreferedContent(partyName));
+    }
+
+    private void checkUniqueNameInSiblingUnits() {
+        final Predicate<Unit> predicate = u -> getName().equalsIgnoreCase(u.getName());
+        if (getParentUnits().stream().flatMap(pu -> pu.getSubUnits().stream()).filter(u -> u != this).anyMatch(predicate)) {
+            throw new DomainException("error.unit.already.exists.unit.with.same.name");
+        }
     }
 
     @Override
@@ -112,44 +149,57 @@ public class Unit extends Unit_Base {
         unitName.setName(name);
     }
 
-    public void edit(LocalizedString name, String acronym) {
-        setPartyName(name);
-        setAcronym(acronym);
-    }
-
-    public void edit(LocalizedString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
-            YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
-            Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
-            Space campus) {
-
-        init(unitName, unitNameCard, unitCostCenter, acronym, beginDate, endDate, webAddress, classification,
-                administrativeOffice, canBeResponsibleOfSpaces, campus);
-    }
-
     @Override
-    public void setCanBeResponsibleOfSpaces(Boolean canBeResponsibleOfSpaces) {
-        super.setCanBeResponsibleOfSpaces(canBeResponsibleOfSpaces != null ? canBeResponsibleOfSpaces : Boolean.FALSE);
+    public void setAcronym(String acronym) {
+        super.setAcronym(acronym);
+        checkUniqueAcronymInSiblingUnits();
+
+        setUnitAcronym(StringUtils.isBlank(acronym) ? null : UnitAcronym.readUnitAcronymByAcronym(acronym)
+                .orElseGet(() -> new UnitAcronym(acronym)));
     }
 
-    public void setCostCenterCode(Integer costCenterCode) {
-        final UnitCostCenterCode otherUnitCostCenterCode = UnitCostCenterCode.find(costCenterCode);
-        if (otherUnitCostCenterCode != null && otherUnitCostCenterCode.getUnit() != this) {
-            throw new DomainException("error.costCenter.alreadyExists");
-        }
-        final UnitCostCenterCode unitCostCenterCode = getUnitCostCenterCode();
-        if (unitCostCenterCode == null && costCenterCode != null) {
-            new UnitCostCenterCode(this, costCenterCode);
-        } else if (unitCostCenterCode != null && costCenterCode != null) {
-            unitCostCenterCode.setCostCenterCode(costCenterCode);
-        } else if (unitCostCenterCode != null && costCenterCode == null) {
-            unitCostCenterCode.delete();
+    private void checkUniqueAcronymInSiblingUnits() {
+        if (getAcronym() != null) {
+            final Predicate<Unit> predicate = u -> getAcronym().equalsIgnoreCase(u.getAcronym());
+            if (getParentUnits().stream().flatMap(pu -> pu.getSubUnits().stream()).filter(u -> u != this).anyMatch(predicate)) {
+                throw new DomainException("error.unit.already.exists.unit.with.same.acronym");
+            }
         }
     }
 
-    public Integer getCostCenterCode() {
-        final UnitCostCenterCode unitCostCenterCode = getUnitCostCenterCode();
-        return unitCostCenterCode == null ? null : unitCostCenterCode.getCostCenterCode();
-    }
+//    public void edit(LocalizedString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
+//            YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
+//            Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
+//            Space campus) {
+//
+//        init(unitName, unitNameCard, unitCostCenter, acronym, beginDate, endDate, webAddress, classification,
+//                administrativeOffice, canBeResponsibleOfSpaces, campus);
+//    }
+
+//    @Override
+//    public void setCanBeResponsibleOfSpaces(Boolean canBeResponsibleOfSpaces) {
+//        super.setCanBeResponsibleOfSpaces(canBeResponsibleOfSpaces != null ? canBeResponsibleOfSpaces : Boolean.FALSE);
+//    }
+
+//    public void setCostCenterCode(Integer costCenterCode) {
+//        final UnitCostCenterCode otherUnitCostCenterCode = UnitCostCenterCode.find(costCenterCode);
+//        if (otherUnitCostCenterCode != null && otherUnitCostCenterCode.getUnit() != this) {
+//            throw new DomainException("error.costCenter.alreadyExists");
+//        }
+//        final UnitCostCenterCode unitCostCenterCode = getUnitCostCenterCode();
+//        if (unitCostCenterCode == null && costCenterCode != null) {
+//            new UnitCostCenterCode(this, costCenterCode);
+//        } else if (unitCostCenterCode != null && costCenterCode != null) {
+//            unitCostCenterCode.setCostCenterCode(costCenterCode);
+//        } else if (unitCostCenterCode != null && costCenterCode == null) {
+//            unitCostCenterCode.delete();
+//        }
+//    }
+//
+//    public Integer getCostCenterCode() {
+//        final UnitCostCenterCode unitCostCenterCode = getUnitCostCenterCode();
+//        return unitCostCenterCode == null ? null : unitCostCenterCode.getCostCenterCode();
+//    }
 
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkDateInterval() {
@@ -163,7 +213,7 @@ public class Unit extends Unit_Base {
 
         DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
 
-        if (hasAnyParentUnits()) {
+        if (!getParentsSet().isEmpty()) {
             getParentsSet().iterator().next().delete();
         }
 
@@ -175,6 +225,11 @@ public class Unit extends Unit_Base {
         setCampus(null);
         setUnitAcronym(null);
         setAdministrativeOffice(null);
+
+        getParticipatingAnyCurricularCourseCurricularRulesSet().forEach(acc -> acc.delete()); // if department unit
+        super.setDepartment(null); // if department unit
+        super.setDegree(null); // if degree unit
+
         super.delete();
     }
 
@@ -188,6 +243,10 @@ public class Unit extends Unit_Base {
 
         if (!(getExternalCurricularCoursesSet().isEmpty() && getPrecedentDegreeInformationsSet().isEmpty()
                 && getUnitGroupSet().isEmpty())) {
+            blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.unit.cannot.be.deleted"));
+        }
+
+        if (!getCompetenceCourseInformationsSet().isEmpty()) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.unit.cannot.be.deleted"));
         }
     }
@@ -235,9 +294,9 @@ public class Unit extends Unit_Base {
         return false;
     }
 
-    public boolean isOfficialExternal() {
-        return !isInternal() && !isNoOfficialExternal();
-    }
+//    public boolean isOfficialExternal() {
+//        return !isInternal() && !isNoOfficialExternal();
+//    }
 
     public boolean isActive(YearMonthDay currentDate) {
         return (!this.getBeginDateYearMonthDay().isAfter(currentDate)
@@ -249,32 +308,32 @@ public class Unit extends Unit_Base {
         return true;
     }
 
-    public List<Unit> getTopUnits() {
-        Unit unit = this;
-        List<Unit> allTopUnits = new ArrayList<Unit>();
-        if (unit.hasAnyParentUnits()) {
-            for (Unit parentUnit : this.getParentUnits()) {
-                if (!parentUnit.hasAnyParentUnits() && !allTopUnits.contains(parentUnit)) {
-                    allTopUnits.add(parentUnit);
-                } else if (parentUnit.hasAnyParentUnits()) {
-                    for (Unit parentUnit2 : parentUnit.getTopUnits()) {
-                        if (!allTopUnits.contains(parentUnit2)) {
-                            allTopUnits.add(parentUnit2);
-                        }
-                    }
-                }
-            }
-        }
-        return allTopUnits;
-    }
+//    public List<Unit> getTopUnits() {
+//        Unit unit = this;
+//        List<Unit> allTopUnits = new ArrayList<Unit>();
+//        if (unit.hasAnyParentUnits()) {
+//            for (Unit parentUnit : this.getParentUnits()) {
+//                if (!parentUnit.hasAnyParentUnits() && !allTopUnits.contains(parentUnit)) {
+//                    allTopUnits.add(parentUnit);
+//                } else if (parentUnit.hasAnyParentUnits()) {
+//                    for (Unit parentUnit2 : parentUnit.getTopUnits()) {
+//                        if (!allTopUnits.contains(parentUnit2)) {
+//                            allTopUnits.add(parentUnit2);
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        return allTopUnits;
+//    }
 
-    public Department getDepartment() {
-        return null;
-    }
-
-    public Degree getDegree() {
-        return null;
-    }
+//    public Department getDepartment() {
+//        return null;
+//    }
+//
+//    public Degree getDegree() {
+//        return null;
+//    }
 
 //    public DepartmentUnit getAssociatedDepartmentUnit() {
 //        if (this.isDepartmentUnit()) {
@@ -296,11 +355,11 @@ public class Unit extends Unit_Base {
 //        return null;
 //    }
 
-    public List<Unit> getInactiveSubUnits(YearMonthDay currentDate) {
+    private List<Unit> getInactiveSubUnits(YearMonthDay currentDate) {
         return getSubUnitsByState(currentDate, false);
     }
 
-    public List<Unit> getActiveSubUnits(YearMonthDay currentDate) {
+    private List<Unit> getActiveSubUnits(YearMonthDay currentDate) {
         return getSubUnitsByState(currentDate, true);
     }
 
@@ -314,81 +373,81 @@ public class Unit extends Unit_Base {
         return allSubUnits;
     }
 
-    public List<Unit> getInactiveParentUnits(YearMonthDay currentDate) {
-        return getParentUnitsByState(currentDate, false);
-    }
+//    private List<Unit> getInactiveParentUnits(YearMonthDay currentDate) {
+//        return getParentUnitsByState(currentDate, false);
+//    }
 
-    public List<Unit> getActiveParentUnits(YearMonthDay currentDate) {
-        return getParentUnitsByState(currentDate, true);
-    }
+//    public List<Unit> getActiveParentUnits(YearMonthDay currentDate) {
+//        return getParentUnitsByState(currentDate, true);
+//    }
 
-    private List<Unit> getParentUnitsByState(YearMonthDay currentDate, boolean state) {
-        List<Unit> allParentUnits = new ArrayList<Unit>();
-        for (Unit subUnit : this.getParentUnits()) {
-            if (subUnit.isActive(currentDate) == state) {
-                allParentUnits.add(subUnit);
-            }
-        }
-        return allParentUnits;
-    }
+//    private List<Unit> getParentUnitsByState(YearMonthDay currentDate, boolean state) {
+//        List<Unit> allParentUnits = new ArrayList<Unit>();
+//        for (Unit subUnit : this.getParentUnits()) {
+//            if (subUnit.isActive(currentDate) == state) {
+//                allParentUnits.add(subUnit);
+//            }
+//        }
+//        return allParentUnits;
+//    }
 
-    public List<Unit> getInactiveSubUnits(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum) {
-        return getSubUnitsByState(currentDate, accountabilityTypeEnum, false);
-    }
+//    public List<Unit> getInactiveSubUnits(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum) {
+//        return getSubUnitsByState(currentDate, accountabilityTypeEnum, false);
+//    }
 
-    public List<Unit> getActiveSubUnits(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum) {
-        return getSubUnitsByState(currentDate, accountabilityTypeEnum, true);
-    }
+//    public List<Unit> getActiveSubUnits(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum) {
+//        return getSubUnitsByState(currentDate, accountabilityTypeEnum, true);
+//    }
 
-    private List<Unit> getSubUnitsByState(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum,
-            boolean state) {
-        List<Unit> allSubUnits = new ArrayList<Unit>();
-        for (Unit subUnit : getSubUnits(accountabilityTypeEnum)) {
-            if (subUnit.isActive(currentDate) == state) {
-                allSubUnits.add(subUnit);
-            }
-        }
-        return allSubUnits;
-    }
+//    private List<Unit> getSubUnitsByState(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum,
+//            boolean state) {
+//        List<Unit> allSubUnits = new ArrayList<Unit>();
+//        for (Unit subUnit : getSubUnits(accountabilityTypeEnum)) {
+//            if (subUnit.isActive(currentDate) == state) {
+//                allSubUnits.add(subUnit);
+//            }
+//        }
+//        return allSubUnits;
+//    }
 
-    public List<Unit> getActiveSubUnits(YearMonthDay currentDate, List<AccountabilityTypeEnum> accountabilityTypeEnums) {
-        return getSubUnitsByState(currentDate, accountabilityTypeEnums, true);
-    }
+//    public List<Unit> getActiveSubUnits(YearMonthDay currentDate, List<AccountabilityTypeEnum> accountabilityTypeEnums) {
+//        return getSubUnitsByState(currentDate, accountabilityTypeEnums, true);
+//    }
+//
+//    public List<Unit> getInactiveSubUnits(YearMonthDay currentDate, List<AccountabilityTypeEnum> accountabilityTypeEnums) {
+//        return getSubUnitsByState(currentDate, accountabilityTypeEnums, false);
+//    }
+//
+//    private List<Unit> getSubUnitsByState(YearMonthDay currentDate, List<AccountabilityTypeEnum> accountabilityTypeEnums,
+//            boolean state) {
+//        List<Unit> allSubUnits = new ArrayList<Unit>();
+//        for (Unit subUnit : this.getSubUnits(accountabilityTypeEnums)) {
+//            if (subUnit.isActive(currentDate) == state) {
+//                allSubUnits.add(subUnit);
+//            }
+//        }
+//        return allSubUnits;
+//    }
 
-    public List<Unit> getInactiveSubUnits(YearMonthDay currentDate, List<AccountabilityTypeEnum> accountabilityTypeEnums) {
-        return getSubUnitsByState(currentDate, accountabilityTypeEnums, false);
-    }
+//    public List<Unit> getAllInactiveParentUnits(YearMonthDay currentDate) {
+//        Set<Unit> allInactiveParentUnits = new HashSet<Unit>();
+//        allInactiveParentUnits.addAll(getInactiveParentUnits(currentDate));
+//        for (Unit subUnit : getParentUnits()) {
+//            allInactiveParentUnits.addAll(subUnit.getAllInactiveParentUnits(currentDate));
+//        }
+//        return new ArrayList<Unit>(allInactiveParentUnits);
+//    }
 
-    private List<Unit> getSubUnitsByState(YearMonthDay currentDate, List<AccountabilityTypeEnum> accountabilityTypeEnums,
-            boolean state) {
-        List<Unit> allSubUnits = new ArrayList<Unit>();
-        for (Unit subUnit : this.getSubUnits(accountabilityTypeEnums)) {
-            if (subUnit.isActive(currentDate) == state) {
-                allSubUnits.add(subUnit);
-            }
-        }
-        return allSubUnits;
-    }
+//    public List<Unit> getAllActiveParentUnits(YearMonthDay currentDate) {
+//        Set<Unit> allActiveParentUnits = new HashSet<Unit>();
+//        allActiveParentUnits.addAll(getActiveParentUnits(currentDate));
+//        for (Unit subUnit : getParentUnits()) {
+//            allActiveParentUnits.addAll(subUnit.getAllActiveParentUnits(currentDate));
+//        }
+//        return new ArrayList<Unit>(allActiveParentUnits);
+//    }
 
-    public List<Unit> getAllInactiveParentUnits(YearMonthDay currentDate) {
-        Set<Unit> allInactiveParentUnits = new HashSet<Unit>();
-        allInactiveParentUnits.addAll(getInactiveParentUnits(currentDate));
-        for (Unit subUnit : getParentUnits()) {
-            allInactiveParentUnits.addAll(subUnit.getAllInactiveParentUnits(currentDate));
-        }
-        return new ArrayList<Unit>(allInactiveParentUnits);
-    }
-
-    public List<Unit> getAllActiveParentUnits(YearMonthDay currentDate) {
-        Set<Unit> allActiveParentUnits = new HashSet<Unit>();
-        allActiveParentUnits.addAll(getActiveParentUnits(currentDate));
-        for (Unit subUnit : getParentUnits()) {
-            allActiveParentUnits.addAll(subUnit.getAllActiveParentUnits(currentDate));
-        }
-        return new ArrayList<Unit>(allActiveParentUnits);
-    }
-
-    public List<Unit> getAllInactiveSubUnits(YearMonthDay currentDate) {
+    private List<Unit> getAllInactiveSubUnits(YearMonthDay currentDate) {
         Set<Unit> allInactiveSubUnits = new HashSet<Unit>();
         allInactiveSubUnits.addAll(getInactiveSubUnits(currentDate));
         for (Unit subUnit : getSubUnits()) {
@@ -397,7 +456,7 @@ public class Unit extends Unit_Base {
         return new ArrayList<Unit>(allInactiveSubUnits);
     }
 
-    public List<Unit> getAllActiveSubUnits(YearMonthDay currentDate) {
+    private List<Unit> getAllActiveSubUnits(YearMonthDay currentDate) {
         Set<Unit> allActiveSubUnits = new HashSet<Unit>();
         allActiveSubUnits.addAll(getActiveSubUnits(currentDate));
         for (Unit subUnit : getSubUnits()) {
@@ -406,14 +465,14 @@ public class Unit extends Unit_Base {
         return new ArrayList<Unit>(allActiveSubUnits);
     }
 
-    public List<Unit> getAllActiveSubUnits(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum) {
-        Set<Unit> allActiveSubUnits = new HashSet<Unit>();
-        allActiveSubUnits.addAll(getActiveSubUnits(currentDate, accountabilityTypeEnum));
-        for (Unit subUnit : getSubUnits(accountabilityTypeEnum)) {
-            allActiveSubUnits.addAll(subUnit.getAllActiveSubUnits(currentDate));
-        }
-        return new ArrayList<Unit>(allActiveSubUnits);
-    }
+//    public List<Unit> getAllActiveSubUnits(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum) {
+//        Set<Unit> allActiveSubUnits = new HashSet<Unit>();
+//        allActiveSubUnits.addAll(getActiveSubUnits(currentDate, accountabilityTypeEnum));
+//        for (Unit subUnit : getSubUnits(accountabilityTypeEnum)) {
+//            allActiveSubUnits.addAll(subUnit.getAllActiveSubUnits(currentDate));
+//        }
+//        return new ArrayList<Unit>(allActiveSubUnits);
+//    }
 
     public List<Unit> getAllActiveSubUnitsWithAllowedChildParties(final YearMonthDay currentDate, final PartyType childType) {
         final Set<Unit> allActiveSubUnits = new HashSet<Unit>();
@@ -424,7 +483,7 @@ public class Unit extends Unit_Base {
         return new ArrayList<Unit>(allActiveSubUnits);
     }
 
-    protected List<Unit> getActiveSubUnitsWithAllowedChildParties(YearMonthDay currentDate, final PartyType childType) {
+    private List<Unit> getActiveSubUnitsWithAllowedChildParties(YearMonthDay currentDate, final PartyType childType) {
         final List<Unit> allSubUnits = new ArrayList<Unit>();
         for (Unit subUnit : this.getSubUnits()) {
             if (subUnit.isActive(currentDate) && subUnit.getAllowedChildPartyTypes(null).contains(childType)) {
@@ -434,53 +493,61 @@ public class Unit extends Unit_Base {
         return allSubUnits;
     }
 
-    protected Collection<AccountabilityType> getAllowedAccountabilityTypes(final PartyType partyType) {
-        return getPartyType().getAllowedAccountabilityTypesFor(partyType);
-    }
+//    private Collection<AccountabilityType> getAllowedAccountabilityTypes(final PartyType partyType) {
+//        if (isAggregateUnit()) {
+//            return getParentUnits().stream().flatMap(u -> u.getAllowedAccountabilityTypes(partyType).stream())
+//                    .collect(Collectors.toSet());
+//        }
+//        return getPartyType().getAllowedAccountabilityTypesFor(partyType);
+//    }
 
-    public AccountabilityType getAllowedAccountabilityType(final PartyType partyType) {
-        AccountabilityType result = null;
-        final Collection<AccountabilityType> allowed = getAllowedAccountabilityTypes(partyType);
-        if (allowed.size() == 1) {
-            result = allowed.iterator().next();
-        }
-        if (result == null) {
-            throw new DomainException("error.Unit.not.found.AccountabilityType.unique", getPartyType().getExternalId(),
-                    partyType.getExternalId());
-        }
-        return result;
-    }
+//    private AccountabilityType getAllowedAccountabilityType(final PartyType partyType) {
+//        AccountabilityType result = null;
+//        final Collection<AccountabilityType> allowed = getAllowedAccountabilityTypes(partyType);
+//        if (allowed.size() == 1) {
+//            result = allowed.iterator().next();
+//        }
+//        if (result == null) {
+//            throw new DomainException("error.Unit.not.found.AccountabilityType.unique", getPartyType().getExternalId(),
+//                    partyType.getExternalId());
+//        }
+//        return result;
+//    }
 
-    public AccountabilityType getAllowedAccountabilityType(final Unit unit) {
-        final PartyType partyType = unit.getPartyType();
-        return getAllowedAccountabilityType(partyType);
-    }
+//    private AccountabilityType getAllowedAccountabilityType(final Unit unit) {
+//        final PartyType partyType = unit.getPartyType();
+//        return getAllowedAccountabilityType(partyType);
+//    }
 
     public Collection<PartyType> getAllowedChildPartyTypes(final Boolean managedByUser) {
+        if (isAggregateUnit()) {
+            return getParentUnits().stream().flatMap(u -> u.getAllowedChildPartyTypes(managedByUser).stream())
+                    .collect(Collectors.toSet());
+        }
         return getPartyType().getAllowedChildPartyTypes(managedByUser);
     }
 
-    public Accountability getMostRecentParentUnitAccountability() {
-        return getParentUnitAccountabilities().isEmpty() ? null : Collections.max(getParentUnitAccountabilities(),
-                Accountability.getComparatorByBeginDate());
-    }
+//    public Accountability getMostRecentParentUnitAccountability() {
+//        return getParentUnitAccountabilities().isEmpty() ? null : Collections.max(getParentUnitAccountabilities(),
+//                Accountability.getComparatorByBeginDate());
+//    }
 
-    public Collection<? extends Accountability> getParentUnitAccountabilities() {
-        return getParentAccountabilitiesByParentClass(Unit.class);
-    }
+//    public Collection<? extends Accountability> getParentUnitAccountabilities() {
+//        return getParentAccountabilitiesByParentClass(Unit.class);
+//    }
 
-    public Collection<? extends Accountability> getChildUnitAccountabilities() {
-        return getChildAccountabilitiesByChildClass(Unit.class);
-    }
+//    public Collection<? extends Accountability> getChildUnitAccountabilities() {
+//        return getChildAccountabilitiesByChildClass(Unit.class);
+//    }
 
-    public List<Unit> getAllInactiveSubUnits(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum) {
-        Set<Unit> allInactiveSubUnits = new HashSet<Unit>();
-        allInactiveSubUnits.addAll(getInactiveSubUnits(currentDate, accountabilityTypeEnum));
-        for (Unit subUnit : getSubUnits(accountabilityTypeEnum)) {
-            allInactiveSubUnits.addAll(subUnit.getAllInactiveSubUnits(currentDate));
-        }
-        return new ArrayList<Unit>(allInactiveSubUnits);
-    }
+//    public List<Unit> getAllInactiveSubUnits(YearMonthDay currentDate, AccountabilityTypeEnum accountabilityTypeEnum) {
+//        Set<Unit> allInactiveSubUnits = new HashSet<Unit>();
+//        allInactiveSubUnits.addAll(getInactiveSubUnits(currentDate, accountabilityTypeEnum));
+//        for (Unit subUnit : getSubUnits(accountabilityTypeEnum)) {
+//            allInactiveSubUnits.addAll(subUnit.getAllInactiveSubUnits(currentDate));
+//        }
+//        return new ArrayList<Unit>(allInactiveSubUnits);
+//    }
 
     public Collection<Unit> getAllSubUnits() {
         Set<Unit> allSubUnits = new HashSet<Unit>();
@@ -502,45 +569,45 @@ public class Unit extends Unit_Base {
         return allParentUnits;
     }
 
-    @Override
-    public Collection<Unit> getParentUnits() {
-        return (Collection<Unit>) getParentParties(Unit.class);
-    }
+//    @Override
+//    public Collection<Unit> getParentUnits() {
+//        return (Collection<Unit>) getParentParties(Unit.class);
+//    }
 
-    @Override
-    public Collection<Unit> getParentUnits(String accountabilityTypeEnum) {
-        return (Collection<Unit>) getParentParties(AccountabilityTypeEnum.valueOf(accountabilityTypeEnum), Unit.class);
-    }
+//    @Override
+//    public Collection<Unit> getParentUnits(String accountabilityTypeEnum) {
+//        return (Collection<Unit>) getParentParties(AccountabilityTypeEnum.valueOf(accountabilityTypeEnum), Unit.class);
+//    }
 
-    @Override
-    public Collection<Unit> getParentUnits(AccountabilityTypeEnum accountabilityTypeEnum) {
-        return (Collection<Unit>) getParentParties(accountabilityTypeEnum, Unit.class);
-    }
+//    @Override
+//    public Collection<Unit> getParentUnits(AccountabilityTypeEnum accountabilityTypeEnum) {
+//        return (Collection<Unit>) getParentParties(accountabilityTypeEnum, Unit.class);
+//    }
 
-    @Override
-    public Collection<Unit> getParentUnits(List<AccountabilityTypeEnum> accountabilityTypeEnums) {
-        return (Collection<Unit>) getParentParties(accountabilityTypeEnums, Unit.class);
-    }
+//    @Override
+//    public Collection<Unit> getParentUnits(List<AccountabilityTypeEnum> accountabilityTypeEnums) {
+//        return (Collection<Unit>) getParentParties(accountabilityTypeEnums, Unit.class);
+//    }
 
-    @Override
-    public Collection<Unit> getSubUnits() {
-        return (Collection<Unit>) getChildParties(Unit.class);
-    }
+//    @Override
+//    public Collection<Unit> getSubUnits() {
+//        return (Collection<Unit>) getChildParties(Unit.class);
+//    }
 
-    public boolean hasSubUnit(final Unit unit) {
-        if (unit != null) {
-            for (final Unit child : getSubUnits()) {
-                if (child.equals(unit)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+//    public boolean hasSubUnit(final Unit unit) {
+//        if (unit != null) {
+//            for (final Unit child : getSubUnits()) {
+//                if (child.equals(unit)) {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
 
-    public Collection<Unit> getSubUnits(AccountabilityTypeEnum accountabilityTypeEnum) {
-        return (Collection<Unit>) getChildParties(accountabilityTypeEnum, Unit.class);
-    }
+//    public Collection<Unit> getSubUnits(AccountabilityTypeEnum accountabilityTypeEnum) {
+//        return (Collection<Unit>) getChildParties(accountabilityTypeEnum, Unit.class);
+//    }
 
     public Collection<Unit> getSubUnits(List<AccountabilityTypeEnum> accountabilityTypeEnums) {
         return (Collection<Unit>) getChildParties(accountabilityTypeEnums, Unit.class);
@@ -550,21 +617,21 @@ public class Unit extends Unit_Base {
         return (Collection<Unit>) getChildParties(type, Unit.class);
     }
 
-    public boolean hasAnyParentUnits() {
-        return !getParentUnits().isEmpty();
-    }
+//    private boolean hasAnyParentUnits() {
+//        return !getParentUnits().isEmpty();
+//    }
 
-    public boolean hasAnySubUnits() {
-        return !getSubUnits().isEmpty();
-    }
+//    public boolean hasAnySubUnits() {
+//        return !getSubUnits().isEmpty();
+//    }
 
-    public Collection<Unit> getCurrentParentByOrganizationalStructureAccountabilityType() {
-        return (Collection<Unit>) getCurrentParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, Unit.class);
-    }
-
-    public Collection<Unit> getParentUnitsByOrganizationalStructureAccountabilityType() {
-        return (Collection<Unit>) getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, Unit.class);
-    }
+//    public Collection<Unit> getCurrentParentByOrganizationalStructureAccountabilityType() {
+//        return (Collection<Unit>) getCurrentParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, Unit.class);
+//    }
+//
+//    public Collection<Unit> getParentUnitsByOrganizationalStructureAccountabilityType() {
+//        return (Collection<Unit>) getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, Unit.class);
+//    }
 
     @Atomic
     /*
@@ -578,47 +645,48 @@ public class Unit extends Unit_Base {
         }
     }
 
-    public int getUnitDepth() {
-        int depth = 0;
+//    public int getUnitDepth() {
+//        int depth = 0;
+//
+//        for (Unit unit : getParentUnits()) {
+//            depth = Math.max(depth, 1 + unit.getUnitDepth());
+//        }
+//
+//        return depth;
+//    }
 
-        for (Unit unit : getParentUnits()) {
-            depth = Math.max(depth, 1 + unit.getUnitDepth());
-        }
+//    public Accountability addParentUnit(final Unit parentUnit, final LocalDate begin, final LocalDate end) {
+//        final Accountability accountability =
+//                addParentUnit(parentUnit, parentUnit.getAllowedAccountabilityType(this.getPartyType()));
+//        accountability.setBeginLocalDate(begin);
+//        accountability.setEndLocalDate(end);
+//        return accountability;
+//    }
 
-        return depth;
-    }
-
-    public Accountability addParentUnit(final Unit parentUnit, final LocalDate begin, final LocalDate end) {
-        final Accountability accountability = addParentUnit(parentUnit, parentUnit.getAllowedAccountabilityType(this));
-        accountability.setBeginLocalDate(begin);
-        accountability.setEndLocalDate(end);
-        return accountability;
-    }
-
-    protected void updateParentUnits(final Collection<Unit> newParentUnits, final LocalDate begin, final LocalDate end) {
-
-        final Collection<Unit> currentParentUnits = getParentUnits();
-        final Collection<Accountability> currentParentsAccountabilitiesToRemove = new HashSet<Accountability>();
-
-        for (final Accountability currentParentAccountability : getParentsSet()) {
-            if (!newParentUnits.contains(currentParentAccountability.getParentParty())) {
-                currentParentsAccountabilitiesToRemove.add(currentParentAccountability);
-            } else {
-                currentParentAccountability.setBeginLocalDate(begin);
-                currentParentAccountability.setEndLocalDate(end);
-            }
-        }
-
-        for (final Unit parentUnit : newParentUnits) {
-            if (!currentParentUnits.contains(parentUnit)) {
-                addParentUnit(parentUnit, begin, end);
-            }
-        }
-
-        for (final Accountability accountability : currentParentsAccountabilitiesToRemove) {
-            accountability.delete();
-        }
-    }
+//    protected void updateParentUnits(final Collection<Unit> newParentUnits, final LocalDate begin, final LocalDate end) {
+//
+//        final Collection<Unit> currentParentUnits = getParentUnits();
+//        final Collection<Accountability> currentParentsAccountabilitiesToRemove = new HashSet<Accountability>();
+//
+//        for (final Accountability currentParentAccountability : getParentsSet()) {
+//            if (!newParentUnits.contains(currentParentAccountability.getParentParty())) {
+//                currentParentsAccountabilitiesToRemove.add(currentParentAccountability);
+//            } else {
+//                currentParentAccountability.setBeginLocalDate(begin);
+//                currentParentAccountability.setEndLocalDate(end);
+//            }
+//        }
+//
+//        for (final Unit parentUnit : newParentUnits) {
+//            if (!currentParentUnits.contains(parentUnit)) {
+//                addParentUnit(parentUnit, begin, end);
+//            }
+//        }
+//
+//        for (final Accountability accountability : currentParentsAccountabilitiesToRemove) {
+//            accountability.delete();
+//        }
+//    }
 
     public Accountability addParentUnit(Unit parentUnit, AccountabilityType accountabilityType) {
         if (this.equals(parentUnit)) {
@@ -679,81 +747,67 @@ public class Unit extends Unit_Base {
 //        return null;
 //    }
 
-    public static List<Unit> readUnitsByAcronym(String acronym, boolean shouldNormalize) {
-        List<Unit> result = new ArrayList<Unit>();
-        if (!StringUtils.isEmpty(acronym.trim())) {
-            UnitAcronym unitAcronymByAcronym = UnitAcronym.readUnitAcronymByAcronym(acronym, shouldNormalize);
-            if (unitAcronymByAcronym != null) {
-                result.addAll(unitAcronymByAcronym.getUnitsSet());
-            }
-        }
-        return result;
-    }
+//    public static List<Unit> readUnitsByAcronym(String acronym, boolean shouldNormalize) {
+//        List<Unit> result = new ArrayList<Unit>();
+//        if (!StringUtils.isEmpty(acronym.trim())) {
+//            UnitAcronym unitAcronymByAcronym = UnitAcronym.readUnitAcronymByAcronym(acronym, shouldNormalize);
+//            if (unitAcronymByAcronym != null) {
+//                result.addAll(unitAcronymByAcronym.getUnitsSet());
+//            }
+//        }
+//        return result;
+//    }
+//
+//    public static List<Unit> readUnitsByAcronym(String acronym) {
+//        return readUnitsByAcronym(acronym, false);
+//    }
 
-    public static List<Unit> readUnitsByAcronym(String acronym) {
-        return readUnitsByAcronym(acronym, false);
-    }
+//    public static Unit readByCostCenterCode(Integer costCenterCode) {
+//        final UnitCostCenterCode unitCostCenterCode = UnitCostCenterCode.find(costCenterCode);
+//        return unitCostCenterCode == null ? null : unitCostCenterCode.getUnit();
+//    }
 
-    public static Unit readByCostCenterCode(Integer costCenterCode) {
-        final UnitCostCenterCode unitCostCenterCode = UnitCostCenterCode.find(costCenterCode);
-        return unitCostCenterCode == null ? null : unitCostCenterCode.getUnit();
-    }
+//    @Deprecated
+//    public static Unit createNewUnit(LocalizedString unitName, String unitNameCard, Integer costCenterCode, String acronym,
+//            YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
+//            String webAddress, UnitClassification classification, AdministrativeOffice administrativeOffice,
+//            Boolean canBeResponsibleOfSpaces, Space campus) {
+//
+//        Unit unit = new Unit();
+//        unit.init(unitName, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
+//                administrativeOffice, canBeResponsibleOfSpaces, campus);
+//        if (parentUnit != null && accountabilityType != null) {
+//            unit.addParentUnit(parentUnit, accountabilityType);
+//        }
+//        return unit;
+//    }
 
-    public static Unit createNewUnit(LocalizedString unitName, String unitNameCard, Integer costCenterCode, String acronym,
-            YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
-            String webAddress, UnitClassification classification, AdministrativeOffice administrativeOffice,
-            Boolean canBeResponsibleOfSpaces, Space campus) {
+//    public static Unit findFirstExternalUnitByName(final String unitName) {
+//        if (unitName == null || unitName.length() == 0) {
+//            return null;
+//        }
+//        for (final Party party : Bennu.getInstance().getExternalInstitutionUnit().getSubUnits()) {
+//            if (!party.isPerson() && unitName.equalsIgnoreCase(party.getName())) {
+//                final Unit unit = (Unit) party;
+//                return unit;
+//            }
+//        }
+//        return null;
+//    }
 
-        Unit unit = new Unit();
-        unit.init(unitName, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
-                administrativeOffice, canBeResponsibleOfSpaces, campus);
-        if (parentUnit != null && accountabilityType != null) {
-            unit.addParentUnit(parentUnit, accountabilityType);
-        }
-        return unit;
-    }
-
-    public static Unit createNewNoOfficialExternalInstitution(String unitName) {
-        return createNewNoOfficialExternalInstitution(unitName, null);
-    }
-
-    public static Unit createNewNoOfficialExternalInstitution(String unitName, Country country) {
-        Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
-        Unit noOfficialExternalInstitutionUnit = new Unit();
-        noOfficialExternalInstitutionUnit.init(new LocalizedString(Locale.getDefault(), unitName), null, null, null,
-                new YearMonthDay(), null, null, null, null, null, null);
-        noOfficialExternalInstitutionUnit.addParentUnit(externalInstitutionUnit,
-                AccountabilityType.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
-        noOfficialExternalInstitutionUnit.setCountry(country);
-        return noOfficialExternalInstitutionUnit;
-    }
-
-    public static Unit findFirstExternalUnitByName(final String unitName) {
-        if (unitName == null || unitName.length() == 0) {
-            return null;
-        }
-        for (final Party party : Bennu.getInstance().getExternalInstitutionUnit().getSubUnits()) {
-            if (!party.isPerson() && unitName.equalsIgnoreCase(party.getName())) {
-                final Unit unit = (Unit) party;
-                return unit;
-            }
-        }
-        return null;
-    }
-
-    public static Unit findFirstUnitByName(final String unitNameString) {
-        if (StringUtils.isEmpty(unitNameString)) {
-            return null;
-        }
-        final Collection<UnitName> unitNames = UnitName.find(unitNameString, Integer.MAX_VALUE);
-        for (final UnitName unitName : unitNames) {
-            final Unit unit = unitName.getUnit();
-            if (StringNormalizer.normalize(unitNameString).equalsIgnoreCase(StringNormalizer.normalize(unit.getName()))) {
-                return unit;
-            }
-        }
-        return null;
-    }
+//    public static Unit findFirstUnitByName(final String unitNameString) {
+//        if (StringUtils.isEmpty(unitNameString)) {
+//            return null;
+//        }
+//        final Collection<UnitName> unitNames = UnitName.find(unitNameString, Integer.MAX_VALUE);
+//        for (final UnitName unitName : unitNames) {
+//            final Unit unit = unitName.getUnit();
+//            if (StringNormalizer.normalize(unitNameString).equalsIgnoreCase(StringNormalizer.normalize(unit.getName()))) {
+//                return unit;
+//            }
+//        }
+//        return null;
+//    }
 
     public String getNameWithAcronym() {
         String name = getName().trim();
@@ -762,12 +816,7 @@ public class Unit extends Unit_Base {
     }
 
     public String getPresentationName() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(getNameWithAcronym());
-        if (getCostCenterCode() != null) {
-            builder.append(" [c.c. ").append(getCostCenterCode()).append("]");
-        }
-        return builder.toString();
+        return getNameWithAcronym();
     }
 
     public String getPresentationNameWithParents() {
@@ -775,16 +824,16 @@ public class Unit extends Unit_Base {
         return (!StringUtils.isEmpty(parentUnits.trim())) ? parentUnits + " - " + getPresentationName() : getPresentationName();
     }
 
-    public String getPresentationNameWithParentsAndBreakLine() {
-        String parentUnits = getParentUnitsPresentationNameWithBreakLine();
-        return (!StringUtils.isEmpty(parentUnits.trim())) ? parentUnits
-                + BundleUtil.getString(Bundle.APPLICATION, "label.html.breakLine")
-                + getPresentationName() : getPresentationName();
-    }
+//    public String getPresentationNameWithParentsAndBreakLine() {
+//        String parentUnits = getParentUnitsPresentationNameWithBreakLine();
+//        return (!StringUtils.isEmpty(parentUnits.trim())) ? parentUnits
+//                + BundleUtil.getString(Bundle.APPLICATION, "label.html.breakLine")
+//                + getPresentationName() : getPresentationName();
+//    }
 
-    public String getParentUnitsPresentationNameWithBreakLine() {
-        return getParentUnitsPresentationName(BundleUtil.getString(Bundle.APPLICATION, "label.html.breakLine"));
-    }
+//    public String getParentUnitsPresentationNameWithBreakLine() {
+//        return getParentUnitsPresentationName(BundleUtil.getString(Bundle.APPLICATION, "label.html.breakLine"));
+//    }
 
     public String getParentUnitsPresentationName() {
         return getParentUnitsPresentationName(" - ");
@@ -809,36 +858,36 @@ public class Unit extends Unit_Base {
         return builder.toString();
     }
 
-    public String getUnitPath(String separator) {
-        return getUnitPath(separator, true);
-    }
+//    public String getUnitPath(String separator) {
+//        return getUnitPath(separator, true);
+//    }
 
-    public String getUnitPath(String separator, boolean addInstitutionalUnit) {
-        StringBuilder builder = new StringBuilder();
-        List<Unit> parentUnits = getParentUnitsPath(addInstitutionalUnit);
-        int index = 1;
-
-        for (Unit unit : parentUnits) {
-            if (!unit.isAggregateUnit()) {
-                if (index == 1) {
-                    builder.append(unit.getAcronym());
-                } else {
-                    builder.append(separator + unit.getAcronym());
-                }
-            }
-            index++;
-        }
-
-        builder.append("/");
-        builder.append(this.getAcronym());
-        return builder.toString();
-    }
+//    public String getUnitPath(String separator, boolean addInstitutionalUnit) {
+//        StringBuilder builder = new StringBuilder();
+//        List<Unit> parentUnits = getParentUnitsPath(addInstitutionalUnit);
+//        int index = 1;
+//
+//        for (Unit unit : parentUnits) {
+//            if (!unit.isAggregateUnit()) {
+//                if (index == 1) {
+//                    builder.append(unit.getAcronym());
+//                } else {
+//                    builder.append(separator + unit.getAcronym());
+//                }
+//            }
+//            index++;
+//        }
+//
+//        builder.append("/");
+//        builder.append(this.getAcronym());
+//        return builder.toString();
+//    }
 
     public List<Unit> getParentUnitsPath() {
         return getParentUnitsPath(true);
     }
 
-    public List<Unit> getParentUnitsPath(boolean addInstitutionalUnit) {
+    private List<Unit> getParentUnitsPath(boolean addInstitutionalUnit) {
 
         List<Unit> parentUnits = new ArrayList<Unit>();
         Unit searchedUnit = this;
@@ -871,28 +920,33 @@ public class Unit extends Unit_Base {
         return parentUnits;
     }
 
-    public String getDirectParentUnitsPresentationName() {
-        StringBuilder builder = new StringBuilder();
-        for (Unit unit : getParentUnits()) {
-            if (!unit.isAggregateUnit()) {
-                builder.append(unit.getNameWithAcronym());
-            }
-        }
-        return builder.toString();
-    }
+//    public String getDirectParentUnitsPresentationName() {
+//        StringBuilder builder = new StringBuilder();
+//        for (Unit unit : getParentUnits()) {
+//            if (!unit.isAggregateUnit()) {
+//                builder.append(unit.getNameWithAcronym());
+//            }
+//        }
+//        return builder.toString();
+//    }
 
-    public String getShortPresentationName() {
-        final StringBuilder stringBuilder = new StringBuilder();
-        for (final Unit unit : getParentUnits()) {
-            if (!unit.isAggregateUnit() && unit != Bennu.getInstance().getInstitutionUnit()) {
-                stringBuilder.append(unit.getName());
-                stringBuilder.append(" - ");
-            }
-        }
-        stringBuilder.append(getName());
-        return stringBuilder.toString();
-    }
+//    public String getShortPresentationName() {
+//        final StringBuilder stringBuilder = new StringBuilder();
+//        for (final Unit unit : getParentUnits()) {
+//            if (!unit.isAggregateUnit() && unit != Bennu.getInstance().getInstitutionUnit()) {
+//                stringBuilder.append(unit.getName());
+//                stringBuilder.append(" - ");
+//            }
+//        }
+//        stringBuilder.append(getName());
+//        return stringBuilder.toString();
+//    }
 
+    /**
+     * still used in: student/enrollment/bolonha/chooseExternalUnit.jsp
+     * after that usage, method should be removed
+     */
+    @Deprecated
     public SortedSet<Unit> getSortedExternalChilds() {
         final SortedSet<Unit> result = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);
         for (final Unit unit : getSubUnits()) {
@@ -911,29 +965,29 @@ public class Unit extends Unit_Base {
         return getPartyName();
     }
 
-    public boolean isEarth() {
-        return this.equals(Bennu.getInstance().getEarthUnit());
-    }
+//    public boolean isEarth() {
+//        return this.equals(Bennu.getInstance().getEarthUnit());
+//    }
 
     @Override
     public String getPartyPresentationName() {
         return getPresentationNameWithParents();
     }
 
-    /**
-     * Used by messaging system
-     * 
-     * @return Groups to used as recipients
-     */
-    public List<Group> getGroups() {
-        List<Group> groups = new ArrayList<Group>();
-        groups.addAll(getDefaultGroups());
-        return groups;
-    }
-
-    protected List<Group> getDefaultGroups() {
-        return new ArrayList<Group>();
-    }
+//    /**
+//     * Used by messaging system
+//     * 
+//     * @return Groups to used as recipients
+//     */
+//    public List<Group> getGroups() {
+//        List<Group> groups = new ArrayList<Group>();
+//        groups.addAll(getDefaultGroups());
+//        return groups;
+//    }
+//
+//    protected List<Group> getDefaultGroups() {
+//        return new ArrayList<Group>();
+//    }
 
     static public LocalizedString getInstitutionName() {
         return Optional.ofNullable(Bennu.getInstance().getInstitutionUnit()).map(Unit::getNameI18n)
@@ -959,94 +1013,63 @@ public class Unit extends Unit_Base {
         return null;
     }
 
-    @Override
-    public void setAcronym(String acronym) {
-        super.setAcronym(acronym);
-        UnitAcronym unitAcronym = UnitAcronym.readUnitAcronymByAcronym(acronym);
-        if (unitAcronym == null) {
-            unitAcronym = new UnitAcronym(acronym);
-        }
-        setUnitAcronym(unitAcronym);
-    }
+//    public Boolean hasParentUnit(Unit parentUnit) {
+//        for (Unit parent : getParentUnits()) {
+//            if (parent.equals(parentUnit)) {
+//                return Boolean.TRUE;
+//            }
+//        }
+//        return Boolean.FALSE;
+//    }
 
-    public Boolean hasParentUnit(Unit parentUnit) {
-        for (Unit parent : getParentUnits()) {
-            if (parent.equals(parentUnit)) {
-                return Boolean.TRUE;
-            }
-        }
-        return Boolean.FALSE;
-    }
+//    public static Unit getParentUnit(String unitNormalizedName, Class<? extends Unit> clazz) {
+//        if (StringUtils.isEmpty(unitNormalizedName)) {
+//            return null;
+//        }
+//
+//        for (final UnitName unitName : UnitName.find(unitNormalizedName, Integer.MAX_VALUE)) {
+//            final Unit unit = unitName.getUnit();
+//            if (unit.getClass().equals(clazz)) {
+//                return unit;
+//            }
+//        }
+//        return null;
+//    }
 
-    public static Unit getParentUnit(String unitNormalizedName, Class<? extends Unit> clazz) {
-        if (StringUtils.isEmpty(unitNormalizedName)) {
-            return null;
-        }
+//    public static Unit getParentUnitByNormalizedName(Unit childUnit, String parentNormalizedName) {
+//        for (Unit possibleParent : childUnit.getParentUnits()) {
+//            if (parentNormalizedName.equalsIgnoreCase(StringNormalizer.normalize(possibleParent.getName()))) {
+//                return possibleParent;
+//            }
+//        }
+//        return null;
+//    }
 
-        for (final UnitName unitName : UnitName.find(unitNormalizedName, Integer.MAX_VALUE)) {
-            final Unit unit = unitName.getUnit();
-            if (unit.getClass().equals(clazz)) {
-                return unit;
-            }
-        }
-        return null;
-    }
-
-    public static Unit getParentUnitByNormalizedName(Unit childUnit, String parentNormalizedName) {
-        for (Unit possibleParent : childUnit.getParentUnits()) {
-            if (parentNormalizedName.equalsIgnoreCase(StringNormalizer.normalize(possibleParent.getName()))) {
-                return possibleParent;
-            }
-        }
-        return null;
-    }
-
-    public void deleteParentUnitRelation(Unit parentUnit) {
-        for (Accountability relation : this.getParentsSet()) {
-            if (relation.getParentParty().equals(parentUnit)) {
-                relation.delete();
-                return;
-            }
-        }
-    }
+//    public void deleteParentUnitRelation(Unit parentUnit) {
+//        for (Accountability relation : this.getParentsSet()) {
+//            if (relation.getParentParty().equals(parentUnit)) {
+//                relation.delete();
+//                return;
+//            }
+//        }
+//    }
 
     public boolean isOfficial() {
         return Boolean.TRUE.equals(getOfficial());
     }
 
-    @Deprecated
-    public java.util.Date getBeginDate() {
-        org.joda.time.YearMonthDay ymd = getBeginDateYearMonthDay();
-        return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
-    }
-
-    @Deprecated
-    public void setBeginDate(java.util.Date date) {
-        if (date == null) {
-            setBeginDateYearMonthDay(null);
-        } else {
-            setBeginDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
-        }
-    }
-
-    @Deprecated
-    public java.util.Date getEndDate() {
-        org.joda.time.YearMonthDay ymd = getEndDateYearMonthDay();
-        return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
-    }
-
-    @Deprecated
-    public void setEndDate(java.util.Date date) {
-        if (date == null) {
-            setEndDateYearMonthDay(null);
-        } else {
-            setEndDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
-        }
-    }
-
     @Override
     public boolean isAdministrativeOfficeUnit() {
         return getAdministrativeOffice() != null;
+    }
+
+    /**
+     * @deprecated method cannot be removed yet because it's used in JSF pages (competenceCoursesManagement.jsp)
+     */
+    @Deprecated
+    public List<CompetenceCourse> getCompetenceCourses() {
+        return CompetenceCourse.findByUnit(this, false).sorted(CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME)
+                .collect(Collectors.toList());
     }
 
 }

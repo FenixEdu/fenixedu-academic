@@ -29,10 +29,8 @@ import java.util.stream.Stream;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum;
-import org.fenixedu.academic.domain.organizationalStructure.SchoolUnit;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UnitUtils;
-import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -120,13 +118,13 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
                 Arrays.asList(new AccountabilityTypeEnum[] { AccountabilityTypeEnum.GEOGRAPHIC,
                         AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, AccountabilityTypeEnum.ACADEMIC_STRUCTURE });
 
-        UniversityUnit universityUnit = null;
-        SchoolUnit schoolUnit = null;
+        Unit universityUnit = null;
+        Unit schoolUnit = null;
         for (final Unit unit : UnitUtils.getUnitFullPath(getUnit(), validAccountabilityTypes)) {
             if (unit.isUniversityUnit()) {
-                universityUnit = (UniversityUnit) unit;
+                universityUnit = unit;
             } else if (unit.isSchoolUnit()) {
-                schoolUnit = (SchoolUnit) unit;
+                schoolUnit = unit;
             }
         }
 

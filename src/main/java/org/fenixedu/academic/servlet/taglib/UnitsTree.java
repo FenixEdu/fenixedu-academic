@@ -122,19 +122,39 @@ public class UnitsTree extends TagSupport {
         accountabilityEnums.add(AccountabilityTypeEnum.GEOGRAPHIC);
 
         if (!StringUtils.isEmpty(this.getState()) && this.getState().equalsIgnoreCase("true")) {
-            return new ArrayList(parentUnit.getActiveSubUnits(currentDate, accountabilityEnums));
+            return new ArrayList(getActiveSubUnits(parentUnit, currentDate, accountabilityEnums));
         } else if (!StringUtils.isEmpty(this.getState()) && this.getState().equalsIgnoreCase("false")) {
-            return new ArrayList(parentUnit.getInactiveSubUnits(currentDate, accountabilityEnums));
+            return new ArrayList(getInactiveSubUnits(parentUnit, currentDate, accountabilityEnums));
         } else {
             return new ArrayList(parentUnit.getSubUnits(accountabilityEnums));
         }
     }
 
+    private static List<Unit> getActiveSubUnits(Unit unit, YearMonthDay currentDate,
+            List<AccountabilityTypeEnum> accountabilityTypeEnums) {
+        return getSubUnitsByState(unit, currentDate, accountabilityTypeEnums, true);
+    }
+
+    private static List<Unit> getInactiveSubUnits(Unit unit, YearMonthDay currentDate,
+            List<AccountabilityTypeEnum> accountabilityTypeEnums) {
+        return getSubUnitsByState(unit, currentDate, accountabilityTypeEnums, false);
+    }
+
+    private static List<Unit> getSubUnitsByState(Unit unit, YearMonthDay currentDate,
+            List<AccountabilityTypeEnum> accountabilityTypeEnums, boolean state) {
+        List<Unit> allSubUnits = new ArrayList<Unit>();
+        for (Unit subUnit : unit.getSubUnits(accountabilityTypeEnums)) {
+            if (subUnit.isActive(currentDate) == state) {
+                allSubUnits.add(subUnit);
+            }
+        }
+        return allSubUnits;
+    }
+
     private void putImage(Unit parentUnit, Unit parentUnitParent, StringBuilder buffer, HttpServletRequest request) {
-        buffer.append("<img ")
-                .append("src='")
-                .append(request.getContextPath())
-                .append((getExpanded() != null && Boolean.valueOf(getExpanded()) ? "/images/toggle_minus10.gif" : "/images/toggle_plus10.gif"))
+        buffer.append("<img ").append("src='").append(request.getContextPath())
+                .append((getExpanded() != null
+                        && Boolean.valueOf(getExpanded()) ? "/images/toggle_minus10.gif" : "/images/toggle_plus10.gif"))
                 .append("' id=\"").append(parentUnit.getExternalId())
                 .append((parentUnitParent != null) ? parentUnitParent.getExternalId() : "").append("\" ")
                 .append("indexed='true' onClick=\"").append("check(document.getElementById('").append("aa")

@@ -33,8 +33,6 @@ import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
-import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGroupUnit;
-import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.util.Bundle;
@@ -543,9 +541,9 @@ public class CompetenceCourseVersionList extends OutputRenderer {
                 }
 
 //                List<CompetenceCourseGroupUnit> competenceCourseGroupUnits = scientificArea.getCompetenceCourseGroupUnits();
-                final List<Unit> competenceCourseGroupUnits = scientificArea.getSubUnits().stream()
-                        .filter(u -> u.isCompetenceCourseGroupUnit()).filter(u -> u instanceof CompetenceCourseGroupUnit) // double check of instance to avoid class cast exceptions ahead
-                        .sorted(Party.COMPARATOR_BY_NAME_AND_ID).collect(Collectors.toList());
+                final List<Unit> competenceCourseGroupUnits =
+                        scientificArea.getSubUnits().stream().filter(u -> u.isCompetenceCourseGroupUnit())
+                                .sorted(Party.COMPARATOR_BY_NAME_AND_ID).collect(Collectors.toList());
 
                 for (Unit group : competenceCourseGroupUnits) {
 
@@ -557,7 +555,7 @@ public class CompetenceCourseVersionList extends OutputRenderer {
                     }
                     courseContainer.addChild(groupName);
                     HtmlTable table = new HtmlTable();
-                    for (CompetenceCourse course : getCurrentOrFutureCompetenceCourses((CompetenceCourseGroupUnit) group)) {
+                    for (CompetenceCourse course : getCurrentOrFutureCompetenceCourses((Unit) group)) {
                         if (course.getCurricularStage().equals(stage)) {
                             HtmlTableRow courseRow = table.createRow();
                             HtmlComponent coursePresentation =
@@ -588,7 +586,7 @@ public class CompetenceCourseVersionList extends OutputRenderer {
             return container;
         }
 
-        private List<CompetenceCourse> getCurrentOrFutureCompetenceCourses(final CompetenceCourseGroupUnit unit) {
+        private List<CompetenceCourse> getCurrentOrFutureCompetenceCourses(final Unit unit) {
             final SortedSet<CompetenceCourse> result =
                     new TreeSet<CompetenceCourse>(CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);
             for (CompetenceCourseInformation competenceInformation : unit.getCompetenceCourseInformationsSet()) {
@@ -618,8 +616,7 @@ public class CompetenceCourseVersionList extends OutputRenderer {
 
         }
 
-        private HtmlComponent getCurrentOrFutureCoursePresentation(CompetenceCourse course, Unit group,
-                DepartmentUnit department) {
+        private HtmlComponent getCurrentOrFutureCoursePresentation(CompetenceCourse course, Unit group, Unit department) {
             HtmlInlineContainer container = new HtmlInlineContainer();
             if (!StringUtils.isEmpty(course.getCode())) {
                 container.addChild(new HtmlText(course.getCode()));

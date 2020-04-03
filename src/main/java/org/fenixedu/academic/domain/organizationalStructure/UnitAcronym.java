@@ -18,6 +18,8 @@
  */
 package org.fenixedu.academic.domain.organizationalStructure;
 
+import java.util.Optional;
+
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.StringNormalizer;
 
@@ -56,8 +58,8 @@ public class UnitAcronym extends UnitAcronym_Base {
         deleteDomainObject();
     }
 
-    public static UnitAcronym readUnitAcronymByAcronym(final String acronym) {
-        return readUnitAcronymByAcronym(acronym, false);
+    public static Optional<UnitAcronym> readUnitAcronymByAcronym(final String acronym) {
+        return Optional.ofNullable(readUnitAcronymByAcronym(acronym, false));
     }
 
     public static UnitAcronym readUnitAcronymByAcronym(String acronym, boolean shouldNormalize) {

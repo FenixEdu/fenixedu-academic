@@ -12,7 +12,7 @@ import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
-import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.bennu.core.security.Authenticate;
@@ -96,11 +96,10 @@ public class CompetenceCourseManagementAccessControl {
             return false;
         }
         for (CompetenceCourseInformation information : competenceCourse.getCompetenceCourseInformationsSet()) {
-            
-            final DepartmentUnit departmentUnit = information.getCompetenceCourseGroupUnit().getAllParentUnits()
-                    .stream().filter(u -> u.isDepartmentUnit()).filter(u -> u instanceof DepartmentUnit)
-                    .map(DepartmentUnit.class::cast).findFirst().orElse(null);            
-            
+
+            final Unit departmentUnit = information.getCompetenceCourseGroupUnit().getAllParentUnits().stream()
+                    .filter(u -> u.isDepartmentUnit()).findFirst().orElse(null);
+
             if (departmentUnit != null && departmentUnit.getDepartment().isUserMemberOfCompetenceCourseMembersGroup(person)) {
                 return true;
             }
@@ -152,9 +151,8 @@ public class CompetenceCourseManagementAccessControl {
         if (!RoleType.BOLONHA_MANAGER.isMember(person.getUser())) {
             return false;
         }
-        final DepartmentUnit departmentUnit = competenceCourseInformation.getCompetenceCourseGroupUnit().getAllParentUnits()
-                .stream().filter(u -> u.isDepartmentUnit()).filter(u -> u instanceof DepartmentUnit)
-                .map(DepartmentUnit.class::cast).findFirst().orElse(null);
+        final Unit departmentUnit = competenceCourseInformation.getCompetenceCourseGroupUnit().getAllParentUnits().stream()
+                .filter(u -> u.isDepartmentUnit()).findFirst().orElse(null);
         return departmentUnit != null && departmentUnit.getDepartment().isUserMemberOfCompetenceCourseMembersGroup(person);
 
     }

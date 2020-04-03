@@ -21,8 +21,9 @@ package org.fenixedu.academic.ui.renderers.providers;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.fenixedu.academic.domain.organizationalStructure.CountryUnit;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
+import org.fenixedu.academic.domain.organizationalStructure.PartyType;
+import org.fenixedu.academic.domain.organizationalStructure.PartyTypeEnum;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -32,8 +33,9 @@ public class CountryUnitProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        final Set<CountryUnit> countryUnitSet = new TreeSet<CountryUnit>(Party.COMPARATOR_BY_NAME);
-        countryUnitSet.addAll(CountryUnit.readAllCountryUnits());
+        final PartyType partyType = PartyType.readPartyTypeByType(PartyTypeEnum.COUNTRY);
+        final Set<Party> countryUnitSet = new TreeSet<Party>(Party.COMPARATOR_BY_NAME);
+        countryUnitSet.addAll(partyType.getPartiesSet());
         return countryUnitSet;
     }
 

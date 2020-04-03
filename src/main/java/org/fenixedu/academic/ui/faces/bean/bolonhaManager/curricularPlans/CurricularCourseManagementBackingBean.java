@@ -50,9 +50,7 @@ import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGroupUnit;
-import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
-import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.dto.commons.CurricularCourseByExecutionSemesterBean;
 import org.fenixedu.academic.predicate.IllegalDataAccessException;
@@ -287,9 +285,9 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return (CourseGroup) FenixFramework.getDomainObject(cg);
     }
 
-    public DepartmentUnit getDepartmentUnit() {
+    public Unit getDepartmentUnit() {
         if (getDepartmentUnitID() != null && !getDepartmentUnitID().equals(NO_SELECTION_STRING)) {
-            return (DepartmentUnit) FenixFramework.getDomainObject(getDepartmentUnitID());
+            return FenixFramework.getDomainObject(getDepartmentUnitID());
         }
         return null;
     }
@@ -715,7 +713,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     private List<SelectItem> readDepartmentUnits() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         for (final Object departmentObject : Bennu.getInstance().getDepartmentsSet()) {
-            DepartmentUnit departmentUnit = ((Department) departmentObject).getDepartmentUnit();
+            Unit departmentUnit = ((Department) departmentObject).getDepartmentUnit();
             result.add(new SelectItem(departmentUnit.getExternalId(), departmentUnit.getName()));
         }
         Collections.sort(result, new BeanComparator("label"));
@@ -728,7 +726,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         for (final Department department : Bennu.getInstance().getDepartmentsSet()) {
             if (department.getCompetenceCourseMembersGroup() != null
                     && department.getCompetenceCourseMembersGroup().isMember(getUserView())) {
-                DepartmentUnit departmentUnit = department.getDepartmentUnit();
+                Unit departmentUnit = department.getDepartmentUnit();
                 result.add(new SelectItem(departmentUnit.getExternalId(), departmentUnit.getName()));
             }
         }
@@ -752,7 +750,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     private List<SelectItem> readCompetenceCourses() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        final DepartmentUnit departmentUnit = getDepartmentUnit();
+        final Unit departmentUnit = getDepartmentUnit();
         if (departmentUnit != null) {
             CompetenceCourse.findByUnit(departmentUnit, true).filter(cc -> cc.getCurricularStage() != CurricularStage.DRAFT)
                     .forEach(competenceCourse -> {

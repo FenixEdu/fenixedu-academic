@@ -26,7 +26,6 @@ import java.util.Map;
 import org.apache.commons.collections.Predicate;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.organizationalStructure.UnitName;
-import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
 import org.joda.time.YearMonthDay;
 
@@ -41,7 +40,7 @@ public class ExternalUniversityUnitAutoCompleteProvider implements AutoCompleteP
             public boolean evaluate(Object arg0) {
                 final UnitName unitName = (UnitName) arg0;
                 final Unit unit = unitName.getUnit();
-                return unit instanceof UniversityUnit && unit.isActive(today);
+                return unit.isUniversityUnit() && unit.isActive(today);
             }
         };
         for (final UnitName unitName : UnitName.findExternalUnit(value, maxCount, predicate)) {

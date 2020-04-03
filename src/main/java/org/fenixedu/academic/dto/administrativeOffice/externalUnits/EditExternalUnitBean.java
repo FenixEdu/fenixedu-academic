@@ -19,6 +19,7 @@
 package org.fenixedu.academic.dto.administrativeOffice.externalUnits;
 
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class EditExternalUnitBean extends CreateExternalUnitBean {
 
@@ -26,7 +27,7 @@ public class EditExternalUnitBean extends CreateExternalUnitBean {
 
     public EditExternalUnitBean(final Unit unit) {
         super();
-        setParentUnit(unit.isEarth() ? null : unit.getParentUnits().iterator().next());
+        setParentUnit(unit.equals(Bennu.getInstance().getEarthUnit()) ? null : unit.getParentUnits().iterator().next());
         setUnitType(unit.getPartyType().getType());
         setUnitName(unit.getName());
         setUnitCode(unit.getAcronym());

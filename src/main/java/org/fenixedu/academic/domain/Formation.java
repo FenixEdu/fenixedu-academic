@@ -24,7 +24,6 @@ import java.util.Comparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.AcademicalInstitutionType;
-import org.fenixedu.academic.domain.organizationalStructure.CountryUnit;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 
 public class Formation extends Formation_Base {
@@ -46,7 +45,7 @@ public class Formation extends Formation_Base {
 
     public Formation(Person person, FormationType formationType, QualificationType degree, EducationArea educationArea,
             String beginYear, String endYear, BigDecimal ectsCredits, Integer formationHours, Unit institution,
-            Unit baseInstitution, AcademicalInstitutionType institutionType, CountryUnit countryUnit) {
+            Unit baseInstitution, AcademicalInstitutionType institutionType, Unit countryUnit) {
         this();
 
         checkParameters(person, formationType, degree, educationArea, beginYear, endYear, ectsCredits, formationHours,

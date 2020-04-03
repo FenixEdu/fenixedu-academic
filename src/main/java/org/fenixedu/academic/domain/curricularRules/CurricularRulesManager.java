@@ -27,7 +27,7 @@ import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.degreeStructure.OptionalCurricularCourse;
-import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.util.LogicOperator;
 import org.fenixedu.academic.dto.bolonhaManager.CurricularRuleParametersDTO;
 
@@ -118,8 +118,7 @@ public class CurricularRulesManager {
         final CourseGroup contextCourseGroup =
                 (CourseGroup) FenixFramework.getDomainObject(parametersDTO.getContextCourseGroupID());
         final Degree degree = FenixFramework.getDomainObject(parametersDTO.getSelectedDegreeID());
-        final DepartmentUnit departmentUnit =
-                (DepartmentUnit) FenixFramework.getDomainObject(parametersDTO.getSelectedDepartmentUnitID());
+        final Unit departmentUnit = FenixFramework.getDomainObject(parametersDTO.getSelectedDepartmentUnitID());
 
         return new AnyCurricularCourse((OptionalCurricularCourse) toApplyRule, contextCourseGroup, begin, end,
                 parametersDTO.getMinimumCredits(), parametersDTO.getMaximumCredits(),

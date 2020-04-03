@@ -1,7 +1,5 @@
 - Refactor: Deprecated PrecedentDegreeInformation slots cleanup
-- Refactor: Uncouple CompetenceCourses from specific organizational Units subclasses
-- Refactor: Uncouple specific Department and DepartmentUnit code
-- Refactor: Uncouple specific AcademicalInstitutionUnit code
+- Refactor: Removal of organizational Units subclasses and unused methods
 
 28.8.0 (27-03-2020)
 - Refactor: Prepare code to allow mixing of different academic period types on same degree curricular plan (contexts and curricular rules validity are now always evaluated for execution year)

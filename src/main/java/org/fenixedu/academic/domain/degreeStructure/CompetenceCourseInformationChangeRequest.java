@@ -24,7 +24,6 @@ import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.service.services.bolonhaManager.CompetenceCourseManagementAccessControl;
@@ -62,8 +61,7 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
             Double autonomousWorkHours, Double ectsCredits, Double secondTheoreticalHours, Double secondProblemsHours,
             Double secondLaboratorialHours, Double secondSeminaryHours, Double secondFieldWorkHours,
             Double secondTrainingPeriodHours, Double secondTutorialOrientationHours, Double secondOtherHours,
-            Double secondAutonomousWorkHours, Double secondEctsCredits, BibliographicReferences references,
-            CompetenceCourseGroupUnit group) {
+            Double secondAutonomousWorkHours, Double secondEctsCredits, BibliographicReferences references, Unit group) {
         this();
         if (course.isRequestDraftAvailable(period)) {
             throw new DomainException("error.can.only.exist.one.request.draft.per.execution.period");
@@ -89,7 +87,7 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
             Double secondLaboratorialHours, Double secondSeminaryHours, Double secondFieldWorkHours,
             Double secondTrainingPeriodHours, Double secondTutorialOrientationHours, Double secondOtherHours,
             Double secondAutonomousWorkHours, Double secondEctsCredits, BibliographicReferences references,
-            CompetenceCourseGroupUnit group) {
+            Unit group) {
 
         if (name == null || nameEn == null || justification == null || regime == null || objectives == null
                 || objectivesEn == null || program == null || programEn == null || evaluationMethod == null

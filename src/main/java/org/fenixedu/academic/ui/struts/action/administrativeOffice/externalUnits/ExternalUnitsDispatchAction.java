@@ -18,6 +18,8 @@
  */
 package org.fenixedu.academic.ui.struts.action.administrativeOffice.externalUnits;
 
+import java.text.Normalizer;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,6 +35,7 @@ import org.fenixedu.academic.domain.ExternalCurricularCourse;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.PartyTypeEnum;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.organizationalStructure.UnitName;
 import org.fenixedu.academic.domain.organizationalStructure.UnitUtils;
 import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.dto.administrativeOffice.externalUnits.CreateExternalCurricularCourseBean;
@@ -55,6 +58,7 @@ import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
 import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication.AcademicAdminInstitutionsApp;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -66,8 +70,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 @StrutsFunctionality(app = AcademicAdminInstitutionsApp.class, path = "external-units", titleKey = "label.externalUnits",
         accessGroup = "academic(MANAGE_EXTERNAL_UNITS)")
 @Mapping(path = "/externalUnits", module = "academicAdministration", formBean = "externalUnitsForm")
-@Forwards({
-        @Forward(name = "searchExternalUnits", path = "/academicAdminOffice/externalUnits/searchExternalUnit.jsp"),
+@Forwards({ @Forward(name = "searchExternalUnits", path = "/academicAdminOffice/externalUnits/searchExternalUnit.jsp"),
         @Forward(name = "viewCountryUnit", path = "/academicAdminOffice/externalUnits/viewCountryUnit.jsp"),
         @Forward(name = "viewUniversityUnit", path = "/academicAdminOffice/externalUnits/viewUniversityUnit.jsp"),
         @Forward(name = "viewSchoolUnit", path = "/academicAdminOffice/externalUnits/viewSchoolUnit.jsp"),
@@ -120,10 +123,36 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     }
 
     private void searchUnits(final ExternalUnitsSearchBean searchBean) {
-        for (final Unit unit : UnitUtils.readExternalUnitsByNameAndTypesStartingAtEarth(
-                buildNameToSearch(searchBean.getUnitName()), getUnitTypes(searchBean))) {
+        for (final Unit unit : readExternalUnitsByNameAndTypesStartingAtEarth(buildNameToSearch(searchBean.getUnitName()),
+                getUnitTypes(searchBean))) {
             searchBean.add(new ExternalUnitResultBean(unit));
         }
+    }
+
+    /**
+     * moved from UnitUtils
+     */
+    private static List<Unit> readExternalUnitsByNameAndTypesStartingAtEarth(final String unitName,
+            final List<PartyTypeEnum> types) {
+        if (unitName == null) {
+            return Collections.emptyList();
+        }
+
+        final String nameToSearch = Normalizer.normalize(unitName.replaceAll("%", ".*").toLowerCase(), Normalizer.Form.NFD)
+                .replaceAll("\\s", " ").replaceAll("[^\\p{ASCII}]", "");
+
+        final List<Unit> result = new ArrayList<Unit>();
+        for (final UnitName name : Bennu.getInstance().getUnitNameSet()) {
+
+            final String current = Normalizer.normalize(name.getName().toLowerCase(), Normalizer.Form.NFD).replaceAll("\\s", " ")
+                    .replaceAll("[^\\p{ASCII}]", "");
+
+            if (current.matches(nameToSearch) && name.getIsExternalUnit() && types.contains(name.getUnit().getType())) {
+                result.add(name.getUnit());
+            }
+        }
+
+        return result;
     }
 
     private void searchExternalCurricularCourses(final ExternalUnitsSearchBean searchBean) {
@@ -134,8 +163,8 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     }
 
     private List<PartyTypeEnum> getUnitTypes(ExternalUnitsSearchBean searchBean) {
-        return (searchBean.getUnitType() == null) ? searchBean.getValidPartyTypes() : Collections.singletonList(searchBean
-                .getUnitType());
+        return (searchBean.getUnitType() == null) ? searchBean.getValidPartyTypes() : Collections
+                .singletonList(searchBean.getUnitType());
     }
 
     public ActionForward viewUnit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -238,9 +267,8 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
 
         try {
             final Unit unit = CreateExternalUnit.run(externalUnitBean);
-            final String oid =
-                    (!externalUnitBean.getParentUnit().isPlanetUnit()) ? externalUnitBean.getParentUnit().getExternalId() : unit
-                            .getExternalId();
+            final String oid = (!externalUnitBean.getParentUnit().isPlanetUnit()) ? externalUnitBean.getParentUnit()
+                    .getExternalId() : unit.getExternalId();
             request.setAttribute("oid", oid);
             return viewUnit(mapping, actionForm, request, response);
 
@@ -305,8 +333,8 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     public ActionForward prepareEditExternalCurricularCourse(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
 
-        request.setAttribute("editExternalCurricularCourseBean", new EditExternalCurricularCourseBean(
-                getExternalCurricularCourse(request)));
+        request.setAttribute("editExternalCurricularCourseBean",
+                new EditExternalCurricularCourseBean(getExternalCurricularCourse(request)));
         return mapping.findForward("prepareEditExternalCurricularCourse");
     }
 

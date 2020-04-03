@@ -33,9 +33,7 @@ import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGroupUnit;
-import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
-import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.service.services.bolonhaManager.CompetenceCourseManagementAccessControl;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -59,10 +57,9 @@ import org.fenixedu.commons.i18n.LocalizedString;
  * association with ExecutionSemester.
  *
  * A CompetenceCourseInformation (the version of the CompetenceCourse) belongs
- * to a CompetenceCourseGroupUnit which belongs to a DepartmentUnit.
+ * to a CompetenceCourseGroup Unit which may belong to a Department Unit.
  *
  * @see CompetenceCourse
- * @see CompetenceCourseGroupUnit
  *
  */
 public class CompetenceCourseInformation extends CompetenceCourseInformation_Base {
@@ -105,7 +102,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 
     public CompetenceCourseInformation(final String name, final String nameEn, final Boolean basic,
             final AcademicPeriod academicPeriod, final CompetenceCourseLevel competenceCourseLevel,
-            final ExecutionInterval interval, final CompetenceCourseGroupUnit unit) {
+            final ExecutionInterval interval, final Unit unit) {
 
         this();
         checkParameters(name, nameEn, basic, academicPeriod, competenceCourseLevel, unit);
@@ -139,7 +136,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     }
 
     private void checkParameters(final String name, final String nameEn, final Boolean basic, final AcademicPeriod academicPeriod,
-            final CompetenceCourseLevel competenceCourseLevel, final CompetenceCourseGroupUnit unit) {
+            final CompetenceCourseLevel competenceCourseLevel, final Unit unit) {
 
         checkParameters(name, nameEn, basic, academicPeriod, competenceCourseLevel);
         if (unit == null || !unit.isCompetenceCourseGroupUnit()) {
@@ -148,7 +145,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     }
 
     public void edit(final String name, final String nameEn, final Boolean basic,
-            final CompetenceCourseLevel competenceCourseLevel, final CompetenceCourseGroupUnit unit) {
+            final CompetenceCourseLevel competenceCourseLevel, final Unit unit) {
         checkParameters(name, nameEn, basic, getAcademicPeriod(), competenceCourseLevel, unit);
         setName(name);
         setNameEn(nameEn);

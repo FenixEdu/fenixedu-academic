@@ -62,6 +62,7 @@
                     <h:outputText value="<i>#{bolonhaBundle['noScientificAreaUnits']}<i><br/>" escape="false"/>
                 </h:panelGroup>
                 <h:panelGroup rendered="#{!empty CompetenceCourseManagement.scientificAreaUnits}">
+                
                     <fc:dataRepeater value="#{CompetenceCourseManagement.scientificAreaUnits}" var="scientificAreaUnit">
                         <h:outputText value="<p class='mtop2 mbottom0'><strong>#{scientificAreaUnit.name}</strong></p>"
                                       escape="false"/>
@@ -72,15 +73,12 @@
 
                         <h:panelGroup rendered="#{!empty scientificAreaUnit.subUnits}">
                             <h:outputText value="<ul class='list3' style='padding-left: 2em;'>" escape="false"/>
-                            <fc:dataRepeater value="#{scientificAreaUnit.subUnits}"
-                                             var="competenceCourseGroupUnit">
-                                <h:outputText value="<li class='tree_label' style='background-position: 0em 0.75em;'>"
-                                              escape="false"/>
+                            <fc:dataRepeater value="#{scientificAreaUnit.subUnits}" var="competenceCourseGroupUnit">
+                                <h:outputText value="<li class='tree_label' style='background-position: 0em 0.75em;'>" escape="false"/>
                                 <h:outputText value="<table style='width: 100%; background-color: #fff;'><tr>" escape="false"/>
                                 <h:outputText value="<td>#{competenceCourseGroupUnit.name}</td> " escape="false"/>
                                 <h:outputText value="<td class='aright'>" escape="false"/>
-                                <h:outputLink
-                                        value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/competenceCourses/createCompetenceCourse.faces">
+                                <h:outputLink value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/competenceCourses/createCompetenceCourse.faces">
                                     <h:outputFormat value="#{bolonhaBundle['create.param']}" escape="false">
                                         <f:param value=" #{bolonhaBundle['course']}"/>
                                     </h:outputFormat>

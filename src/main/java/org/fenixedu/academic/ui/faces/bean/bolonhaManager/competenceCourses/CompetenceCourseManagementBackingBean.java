@@ -48,8 +48,6 @@ import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLoad;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.degreeStructure.RegimeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGroupUnit;
-import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.person.RoleType;
@@ -163,7 +161,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public Boolean getCanView() {
-        DepartmentUnit selectedDepartmentUnit = getSelectedDepartmentUnit();
+        Unit selectedDepartmentUnit = getSelectedDepartmentUnit();
         if (selectedDepartmentUnit == null) {
             return (this.getPersonDepartment() != null
                     && this.getPersonDepartment().getCompetenceCourseMembersGroup() != null) ? this.getPersonDepartment()
@@ -188,16 +186,16 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         }
     }
 
-    public DepartmentUnit getSelectedDepartmentUnit() {
+    public Unit getSelectedDepartmentUnit() {
         if (this.getSelectedDepartmentUnitID() != null) {
-            return (DepartmentUnit) FenixFramework.getDomainObject(this.getSelectedDepartmentUnitID());
+            return (Unit) FenixFramework.getDomainObject(this.getSelectedDepartmentUnitID());
         } else {
             return null;
         }
     }
 
     public List<Unit> getScientificAreaUnits() {
-        DepartmentUnit departmentUnit = null;
+        Unit departmentUnit = null;
         if (getSelectedDepartmentUnit() != null) {
             departmentUnit = getSelectedDepartmentUnit();
         } else if (getPersonDepartment() != null) {
@@ -208,7 +206,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public List<CompetenceCourse> getDepartmentCompetenceCourses(CurricularStage curricularStage) {
-        DepartmentUnit selectedDepartmentUnit = getSelectedDepartmentUnit();
+        Unit selectedDepartmentUnit = getSelectedDepartmentUnit();
         if (selectedDepartmentUnit != null) {
             return CompetenceCourse.findByUnit(selectedDepartmentUnit, true)
                     .filter(cc -> curricularStage == null || curricularStage.equals(cc.getCurricularStage()))
@@ -1049,7 +1047,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private List<SelectItem> readDepartmentUnitLabels() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         for (final Department departmentObject : Bennu.getInstance().getDepartmentsSet()) {
-            DepartmentUnit departmentUnit = departmentObject.getDepartmentUnit();
+            Unit departmentUnit = departmentObject.getDepartmentUnit();
             if (departmentUnit.isActive(getExecutionSemester().getBeginDateYearMonthDay())) {
                 result.add(new SelectItem(departmentUnit.getExternalId(), departmentUnit.getName()));
             }
@@ -1079,7 +1077,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private List<SelectItem> readScientificAreaUnitLabels(String transferToDepartmentUnitID) {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         if (transferToDepartmentUnitID != null) {
-            final DepartmentUnit departmentUnit = readDepartmentUnitToTransferTo(transferToDepartmentUnitID);
+            final Unit departmentUnit = readDepartmentUnitToTransferTo(transferToDepartmentUnitID);
             departmentUnit.getSubUnits().stream().filter(u -> u.isScientificAreaUnit())
                     .forEach(unit -> result.add(new SelectItem(unit.getExternalId(), unit.getName())));
         }
@@ -1099,8 +1097,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         this.getViewState().setAttribute("transferToDepartmentUnitID", transferToDepartmentUnitID);
     }
 
-    private DepartmentUnit readDepartmentUnitToTransferTo(String transferToDepartmentUnitID) {
-        return (DepartmentUnit) FenixFramework.getDomainObject(transferToDepartmentUnitID);
+    private Unit readDepartmentUnitToTransferTo(String transferToDepartmentUnitID) {
+        return FenixFramework.getDomainObject(transferToDepartmentUnitID);
     }
 
     public UISelectItems getCompetenceCourseGroupUnitItems() {
@@ -1151,8 +1149,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             }
 
             FenixFramework.atomic(() -> {
-                getCompetenceCourse().transfer((CompetenceCourseGroupUnit) readCompetenceCourseGroupUnitToTransferTo(),
-                        getExecutionSemester(), BundleUtil.getString(Bundle.SCIENTIFIC, "transfer.done.by.scientific.council"),
+                getCompetenceCourse().transfer(readCompetenceCourseGroupUnitToTransferTo(), getExecutionSemester(),
+                        BundleUtil.getString(Bundle.SCIENTIFIC, "transfer.done.by.scientific.council"),
                         AccessControl.getPerson());
             });
 

@@ -29,7 +29,7 @@ import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevel;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.degreeStructure.RegimeType;
-import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGroupUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.service.services.exceptions.ExistingCompetenceCourseInformationException;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.util.StringFormatter;
@@ -43,7 +43,7 @@ public class CreateCompetenceCourse {
     public static CompetenceCourse run(String name, String nameEn, String acronym, Boolean basic, RegimeType regimeType,
             CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, String unitID,
             ExecutionInterval startInterval, String code) throws FenixServiceException {
-        final CompetenceCourseGroupUnit unit = (CompetenceCourseGroupUnit) FenixFramework.getDomainObject(unitID);
+        final Unit unit = FenixFramework.getDomainObject(unitID);
         if (unit == null) {
             throw new FenixServiceException("error.invalidUnit");
         }

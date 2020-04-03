@@ -130,70 +130,150 @@ ${portal.toolkit()}
 		<h:outputText value="</ul>" escape="false"/>
 		</h:panelGroup>
 		
+<!-- NEW START -->
+				<h:panelGroup rendered="#{!empty CompetenceCourseManagement.scientificAreaUnits}">
+                    <fc:dataRepeater value="#{CompetenceCourseManagement.scientificAreaUnits}" var="scientificAreaUnit">
+                        <h:outputText value="<p class='mtop2 mbottom0'><strong>#{scientificAreaUnit.name}</strong></p>"
+                                      escape="false"/>
+                        <h:panelGroup rendered="#{empty scientificAreaUnit.subUnits}">
+                            <h:outputText value="#{scouncilBundle['noCompetenceCourseGroupUnits']}><br/>" escape="false"/>
+                        </h:panelGroup>
 
 
-		<h:dataTable value="#{CompetenceCourseManagement.scientificAreaUnits}" var="scientificAreaUnit"
-				rendered="#{!empty CompetenceCourseManagement.scientificAreaUnits}">
-			<h:column>
-				<h:outputText value="<p class='mtop2 mbottom0'><strong>#{scientificAreaUnit.name}</strong></p>" escape="false"/>
-				<h:panelGroup rendered="#{empty scientificAreaUnit.subUnits}">
-					<h:outputText style="font-style:italic" value="#{scouncilBundle['noCompetenceCourseGroupUnits']}<br/>" escape="false"/>
-				</h:panelGroup>
-				
-				<h:panelGroup rendered="#{!empty scientificAreaUnit.subUnits}">
-					<h:outputText value="<ul class='list3'>" escape="false"/>
-					<h:dataTable value="#{scientificAreaUnit.subUnits}" var="competenceCourseGroupUnit" style="width: 100%">
-							<h:column>
-								<h:outputText value="<li class='tree_label' style='background-position: 0em 0.5em;'>#{competenceCourseGroupUnit.name}" escape="false"/>
-								<h:dataTable value="#{competenceCourseGroupUnit.competenceCourses}" var="competenceCourse"
-										styleClass="showinfo1 smallmargin mtop05" style="width: 100%;" rowClasses="color2" columnClasses=",aright nowrap" rendered="#{!empty competenceCourseGroupUnit.competenceCourses}">
-										
-										<h:column>
-											<h:outputText value="#{competenceCourse.code} - " rendered="#{!empty competenceCourse.code}"/><h:outputText value="#{competenceCourse.name} "/>
-											<h:outputText rendered="#{!empty competenceCourse.acronym}" value="(#{competenceCourse.acronym}) "/>
-											<h:outputText value="<span style='color: #aaa;'>" escape="false"/>
-											<h:outputText rendered="#{competenceCourse.curricularStage.name == 'DRAFT'}" value="<em style='color: #bb5;'>#{enumerationBundle[competenceCourse.curricularStage]}</em>" escape="false"/>
-											<h:outputText rendered="#{competenceCourse.curricularStage.name == 'PUBLISHED'}" value="<em style='color: #569;'>#{enumerationBundle[competenceCourse.curricularStage]}</em>" escape="false"/>
-											<h:outputText rendered="#{competenceCourse.curricularStage.name == 'APPROVED'}" value="<em style='color: #595;'>#{enumerationBundle[competenceCourse.curricularStage]}</em>" escape="false"/>
-											<h:outputText value="</span>" escape="false"/>
-										</h:column>
-									
-										<h:column>
-											<h:outputLink value="#{facesContext.externalContext.requestContextPath}/scientificCouncil/competenceCourses/showCompetenceCourse.faces">
-												<h:outputText value="#{scouncilBundle['show']}"/>
-												<f:param name="action" value="ccm"/>
+                        <h:panelGroup rendered="#{!empty scientificAreaUnit.subUnits}">
+                            <h:outputText value="<ul class='list3' style='padding-left: 2em;'>" escape="false"/>
+                            <fc:dataRepeater value="#{scientificAreaUnit.subUnits}" var="competenceCourseGroupUnit">
+                                <h:outputText value="<li class='tree_label' style='background-position: 0em 0.75em;'>" escape="false"/>
+                                <h:outputText value="<table style='width: 100%; background-color: #fff;'><tr>" escape="false"/>
+                                <h:outputText value="<td>#{competenceCourseGroupUnit.name}</td> " escape="false"/>
+                                <h:outputText value="<td class='aright'>" escape="false"/>
+                                <h:outputText value="</td></tr></table>" escape="false"/>
+
+
+                                <h:dataTable value="#{competenceCourseGroupUnit.competenceCourses}" var="competenceCourse"
+                                             styleClass="showinfo1 smallmargin mtop05" style="width: 100%;" rowClasses="color2"
+                                             columnClasses=",aright nowrap"
+                                             rendered="#{!empty competenceCourseGroupUnit.competenceCourses}">
+                                    <h:column>
+                                        <h:outputText value="#{competenceCourse.code} - " rendered="#{!empty competenceCourse.code}"/><h:outputText value="#{competenceCourse.name} "/>
+                                        <h:outputText rendered="#{!empty competenceCourse.acronym}"
+                                                      value="(#{competenceCourse.acronym}) "/>
+                                        <h:outputText value="<span style='color: #aaa;'>" escape="false"/>
+                                        <h:outputText rendered="#{competenceCourse.curricularStage.name == 'DRAFT'}"
+                                                      value="<em style='color: #bb5;'>#{enumerationBundle[competenceCourse.curricularStage]}</em>"
+                                                      escape="false"/>
+                                        <h:outputText rendered="#{competenceCourse.curricularStage.name == 'PUBLISHED'}"
+                                                      value="<em style='color: #569;'>#{enumerationBundle[competenceCourse.curricularStage]}</em>"
+                                                      escape="false"/>
+                                        <h:outputText rendered="#{competenceCourse.curricularStage.name == 'APPROVED'}"
+                                                      value="<em style='color: #595;'>#{enumerationBundle[competenceCourse.curricularStage]}</em>"
+                                                      escape="false"/>
+                                        <h:outputText value="</span>" escape="false"/>
+                                    </h:column>
+
+									<h:column>
+										<h:outputLink value="#{facesContext.externalContext.requestContextPath}/scientificCouncil/competenceCourses/showCompetenceCourse.faces">
+											<h:outputText value="#{scouncilBundle['show']}"/>
+											<f:param name="action" value="ccm"/>
+											<f:param name="competenceCourseID" value="#{competenceCourse.externalId}"/>
+											<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
+										</h:outputLink>
+										<logic:present role="(role(SCIENTIFIC_COUNCIL) | role(BOLONHA_MANAGER))">
+											<h:outputText value=" , "/>
+											<h:outputLink value="#{facesContext.externalContext.requestContextPath}/scientificCouncil/competenceCourses/transferCompetenceCourse.faces">
+												<h:outputText value="#{scouncilBundle['transfer']}"/>
 												<f:param name="competenceCourseID" value="#{competenceCourse.externalId}"/>
 												<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
 											</h:outputLink>
-											<logic:present role="(role(SCIENTIFIC_COUNCIL) | role(BOLONHA_MANAGER))">
+											<h:panelGroup rendered="#{competenceCourse.curricularStage.name != 'DRAFT'}">
 												<h:outputText value=" , "/>
-												<h:outputLink value="#{facesContext.externalContext.requestContextPath}/scientificCouncil/competenceCourses/transferCompetenceCourse.faces">
-													<h:outputText value="#{scouncilBundle['transfer']}"/>
+												<fc:commandLink rendered="#{competenceCourse.curricularStage.name == 'PUBLISHED'}" action="#{CompetenceCourseManagement.changeCompetenceCourseState}" value="#{scouncilBundle['approve']}">
 													<f:param name="competenceCourseID" value="#{competenceCourse.externalId}"/>
 													<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
-												</h:outputLink>
-												<h:panelGroup rendered="#{competenceCourse.curricularStage.name != 'DRAFT'}">
-													<h:outputText value=" , "/>
-													<fc:commandLink rendered="#{competenceCourse.curricularStage.name == 'PUBLISHED'}" action="#{CompetenceCourseManagement.changeCompetenceCourseState}" value="#{scouncilBundle['approve']}">
-														<f:param name="competenceCourseID" value="#{competenceCourse.externalId}"/>
-														<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
-													</fc:commandLink>	
-													<fc:commandLink rendered="#{competenceCourse.curricularStage.name == 'APPROVED'}" action="#{CompetenceCourseManagement.changeCompetenceCourseState}" value="#{scouncilBundle['disapprove']}">
-														<f:param name="competenceCourseID" value="#{competenceCourse.externalId}"/>
-														<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
-													</fc:commandLink>
-												</h:panelGroup>
-											</logic:present>												
-										</h:column>
-										
-								</h:dataTable>
-								<h:outputText value="</li>" escape="false"/>
-							</h:column>
-					</h:dataTable>
-					<h:outputText value="</ul>" escape="false"/>
+												</fc:commandLink>	
+												<fc:commandLink rendered="#{competenceCourse.curricularStage.name == 'APPROVED'}" action="#{CompetenceCourseManagement.changeCompetenceCourseState}" value="#{scouncilBundle['disapprove']}">
+													<f:param name="competenceCourseID" value="#{competenceCourse.externalId}"/>
+													<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
+												</fc:commandLink>
+											</h:panelGroup>
+										</logic:present>												
+									</h:column>
+                                    
+                                </h:dataTable>
+
+                                <h:outputText value="</li>" escape="false"/>
+                            </fc:dataRepeater>
+                            <h:outputText value="</ul>" escape="false"/>
+                        </h:panelGroup>
+                        
+                    </fc:dataRepeater>
 				</h:panelGroup>
-			</h:column>
-		</h:dataTable>
+<!-- NEW END -->
+
+<!-- OLD START -->
+<%-- 		<h:dataTable value="#{CompetenceCourseManagement.scientificAreaUnits}" var="scientificAreaUnit" rendered="#{!empty CompetenceCourseManagement.scientificAreaUnits}"> --%>
+<%-- 			<h:column> --%>
+<%-- 				<h:outputText value="<p class='mtop2 mbottom0'><strong>#{scientificAreaUnit.name}</strong></p>" escape="false"/> --%>
+<%-- 				<h:panelGroup rendered="#{empty scientificAreaUnit.subUnits}"> --%>
+<%-- 					<h:outputText style="font-style:italic" value="#{scouncilBundle['noCompetenceCourseGroupUnits']}<br/>" escape="false"/> --%>
+<%-- 				</h:panelGroup> --%>
+				
+<%-- 				<h:panelGroup rendered="#{!empty scientificAreaUnit.subUnits}"> --%>
+<%-- 					<h:outputText value="<ul class='list3'>" escape="false"/> --%>
+<%-- 					<h:dataTable value="#{scientificAreaUnit.subUnits}" var="competenceCourseGroupUnit" style="width: 100%"> --%>
+<%-- 							<h:column> --%>
+<%-- 								<h:outputText value="<li class='tree_label' style='background-position: 0em 0.5em;'>#{competenceCourseGroupUnit.name}" escape="false"/> --%>
+<%-- 								<h:dataTable value="#{competenceCourseGroupUnit.competenceCourses}" var="competenceCourse" --%>
+<%-- 										styleClass="showinfo1 smallmargin mtop05" style="width: 100%;" rowClasses="color2" columnClasses=",aright nowrap" rendered="#{!empty competenceCourseGroupUnit.competenceCourses}"> --%>
+										
+<%-- 										<h:column> --%>
+<%-- 											<h:outputText value="#{competenceCourse.code} - " rendered="#{!empty competenceCourse.code}"/><h:outputText value="#{competenceCourse.name} "/> --%>
+<%-- 											<h:outputText rendered="#{!empty competenceCourse.acronym}" value="(#{competenceCourse.acronym}) "/> --%>
+<%-- 											<h:outputText value="<span style='color: #aaa;'>" escape="false"/> --%>
+<%-- 											<h:outputText rendered="#{competenceCourse.curricularStage.name == 'DRAFT'}" value="<em style='color: #bb5;'>#{enumerationBundle[competenceCourse.curricularStage]}</em>" escape="false"/> --%>
+<%-- 											<h:outputText rendered="#{competenceCourse.curricularStage.name == 'PUBLISHED'}" value="<em style='color: #569;'>#{enumerationBundle[competenceCourse.curricularStage]}</em>" escape="false"/> --%>
+<%-- 											<h:outputText rendered="#{competenceCourse.curricularStage.name == 'APPROVED'}" value="<em style='color: #595;'>#{enumerationBundle[competenceCourse.curricularStage]}</em>" escape="false"/> --%>
+<%-- 											<h:outputText value="</span>" escape="false"/> --%>
+<%-- 										</h:column> --%>
+									
+<%-- 										<h:column> --%>
+<%-- 											<h:outputLink value="#{facesContext.externalContext.requestContextPath}/scientificCouncil/competenceCourses/showCompetenceCourse.faces"> --%>
+<%-- 												<h:outputText value="#{scouncilBundle['show']}"/> --%>
+<%-- 												<f:param name="action" value="ccm"/> --%>
+<%-- 												<f:param name="competenceCourseID" value="#{competenceCourse.externalId}"/> --%>
+<%-- 												<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/> --%>
+<%-- 											</h:outputLink> --%>
+<%-- 											<logic:present role="(role(SCIENTIFIC_COUNCIL) | role(BOLONHA_MANAGER))"> --%>
+<%-- 												<h:outputText value=" , "/> --%>
+<%-- 												<h:outputLink value="#{facesContext.externalContext.requestContextPath}/scientificCouncil/competenceCourses/transferCompetenceCourse.faces"> --%>
+<%-- 													<h:outputText value="#{scouncilBundle['transfer']}"/> --%>
+<%-- 													<f:param name="competenceCourseID" value="#{competenceCourse.externalId}"/> --%>
+<%-- 													<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/> --%>
+<%-- 												</h:outputLink> --%>
+<%-- 												<h:panelGroup rendered="#{competenceCourse.curricularStage.name != 'DRAFT'}"> --%>
+<%-- 													<h:outputText value=" , "/> --%>
+<%-- 													<fc:commandLink rendered="#{competenceCourse.curricularStage.name == 'PUBLISHED'}" action="#{CompetenceCourseManagement.changeCompetenceCourseState}" value="#{scouncilBundle['approve']}"> --%>
+<%-- 														<f:param name="competenceCourseID" value="#{competenceCourse.externalId}"/> --%>
+<%-- 														<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/> --%>
+<%-- 													</fc:commandLink>	 --%>
+<%-- 													<fc:commandLink rendered="#{competenceCourse.curricularStage.name == 'APPROVED'}" action="#{CompetenceCourseManagement.changeCompetenceCourseState}" value="#{scouncilBundle['disapprove']}"> --%>
+<%-- 														<f:param name="competenceCourseID" value="#{competenceCourse.externalId}"/> --%>
+<%-- 														<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/> --%>
+<%-- 													</fc:commandLink> --%>
+<%-- 												</h:panelGroup> --%>
+<%-- 											</logic:present>												 --%>
+<%-- 										</h:column> --%>
+										
+<%-- 								</h:dataTable> --%>
+<%-- 								<h:outputText value="</li>" escape="false"/> --%>
+<%-- 							</h:column> --%>
+<%-- 					</h:dataTable> --%>
+<%-- 					<h:outputText value="</ul>" escape="false"/> --%>
+<%-- 				</h:panelGroup> --%>
+<%-- 			</h:column> --%>
+<%-- 		</h:dataTable> --%>
+<!-- OLD END -->		
+		
 		<h:panelGroup rendered="#{empty CompetenceCourseManagement.scientificAreaUnits && !empty CompetenceCourseManagement.selectedDepartmentUnitID}">
 			<h:outputText  value="<i>#{scouncilBundle['noScientificAreaUnits']}<i><br/>" escape="false"/>
 		</h:panelGroup>

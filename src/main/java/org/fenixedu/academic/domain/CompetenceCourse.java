@@ -44,9 +44,6 @@ import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.degreeStructure.RegimeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.organizationalStructure.CompetenceCourseGroupUnit;
-import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
-import org.fenixedu.academic.domain.organizationalStructure.ScientificAreaUnit;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
@@ -75,8 +72,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public CompetenceCourse(String name, String nameEn, Boolean basic, AcademicPeriod academicPeriod,
-            CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, CurricularStage curricularStage,
-            CompetenceCourseGroupUnit unit, ExecutionInterval startInterval, final GradeScale gradeScale) {
+            CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, CurricularStage curricularStage, Unit unit,
+            ExecutionInterval startInterval, final GradeScale gradeScale) {
 
         this();
         super.setCurricularStage(curricularStage);
@@ -671,11 +668,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     /**
      * @see #getDepartmentUnit(ExecutionInterval)
      */
-    public CompetenceCourseGroupUnit getCompetenceCourseGroupUnit() {
+    public Unit getCompetenceCourseGroupUnit() {
         return getCompetenceCourseGroupUnit(null);
     }
 
-    public CompetenceCourseGroupUnit getCompetenceCourseGroupUnit(ExecutionInterval interval) {
+    public Unit getCompetenceCourseGroupUnit(ExecutionInterval interval) {
         return findInformationMostRecentUntil(interval).getCompetenceCourseGroupUnit();
     }
 
@@ -739,8 +736,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return getCurricularStage() == CurricularStage.APPROVED;
     }
 
-    public void transfer(CompetenceCourseGroupUnit competenceCourseGroupUnit, ExecutionInterval interval, String justification,
-            Person requester) {
+    public void transfer(Unit competenceCourseGroupUnit, ExecutionInterval interval, String justification, Person requester) {
 
         CompetenceCourseInformation information = null;
         for (CompetenceCourseInformation existingInformation : getCompetenceCourseInformationsSet()) {
@@ -983,9 +979,9 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     public static Stream<CompetenceCourse> findByUnit(final Unit unit, final boolean includeSubUnits) {
         final Collection<Unit> units = includeSubUnits ? unit.getAllSubUnits() : new HashSet<>();
         units.add(unit);
-        return units.stream().filter(u -> u instanceof CompetenceCourseGroupUnit).map(CompetenceCourseGroupUnit.class::cast)
-                .flatMap(ccgu -> ccgu.getCompetenceCourseInformationsSet().stream()
-                        .filter(cci -> cci.getCompetenceCourse().getCompetenceCourseGroupUnit() == ccgu)) // ensure that active information is from unit
+        return units.stream().filter(u -> u.isCompetenceCourseGroupUnit())
+                .flatMap(u -> u.getCompetenceCourseInformationsSet().stream()
+                        .filter(cci -> cci.getCompetenceCourse().getCompetenceCourseGroupUnit() == u)) // ensure that active information is from unit
                 .map(cci -> cci.getCompetenceCourse()).distinct();
     }
 

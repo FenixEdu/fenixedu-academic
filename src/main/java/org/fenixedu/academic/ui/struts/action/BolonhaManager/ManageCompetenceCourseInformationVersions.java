@@ -47,7 +47,7 @@ import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLoadBean;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.service.services.bolonhaManager.CompetenceCourseManagementAccessControl;
 import org.fenixedu.academic.service.services.bolonhaManager.DeleteCompetenceCourseInformationChangeRequest;
@@ -461,7 +461,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
     }
 
     public List<CompetenceCourse> getDepartmentCompetenceCourses() {
-        DepartmentUnit selectedDepartmentUnit = getPersonDepartment().getDepartmentUnit();
+        Unit selectedDepartmentUnit = getPersonDepartment().getDepartmentUnit();
         if (selectedDepartmentUnit != null) {
             return CompetenceCourse.findByUnit(selectedDepartmentUnit, true)
                     .filter(cc -> CurricularStage.APPROVED.equals(cc.getCurricularStage())).collect(Collectors.toList());

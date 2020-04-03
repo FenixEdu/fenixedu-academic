@@ -10,8 +10,8 @@ import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.organizationalStructure.DepartmentUnit;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.service.services.bolonhaManager.EditCompetenceCourse;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.spring.controller.AcademicAdministrationSpringApplication;
@@ -46,11 +46,11 @@ public class CompetenceCourseController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String home(@RequestParam(required = false) CurricularStage curricularStage,
-            @RequestParam(required = false) DepartmentUnit departmentUnit, Model model, User user) {
+            @RequestParam(required = false) Unit departmentUnit, Model model, User user) {
         boolean isBolonhaManager = isBolonhaManager(user);
         boolean isScientificCouncilMember = isScientificCouncilMember(user);
 
-        List<DepartmentUnit> departmentUnits = getDepartmentUnits(user, isBolonhaManager, isScientificCouncilMember);
+        List<Unit> departmentUnits = getDepartmentUnits(user, isBolonhaManager, isScientificCouncilMember);
         model.addAttribute("departmentUnits", departmentUnits);
         model.addAttribute("isBolonhaManager", isBolonhaManager);
         model.addAttribute("isScientificCouncilMember", isScientificCouncilMember);
@@ -74,7 +74,7 @@ public class CompetenceCourseController {
     }
 
     @RequestMapping(value = "toggle", method = RequestMethod.GET)
-    public String toggle(@RequestParam DepartmentUnit departmentUnit, @RequestParam CompetenceCourse competenceCourse,
+    public String toggle(@RequestParam Unit departmentUnit, @RequestParam CompetenceCourse competenceCourse,
             RedirectAttributes redirectAttributes) {
         try {
             CurricularStage changed = (competenceCourse.getCurricularStage()
@@ -129,8 +129,8 @@ public class CompetenceCourseController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    private List<DepartmentUnit> getDepartmentUnits(User user, boolean isBolonhaManager, boolean isScientificCouncilMember) {
-        Stream<DepartmentUnit> departmentUnitStream = Stream.empty();
+    private List<Unit> getDepartmentUnits(User user, boolean isBolonhaManager, boolean isScientificCouncilMember) {
+        Stream<Unit> departmentUnitStream = Stream.empty();
         if (isBolonhaManager || isScientificCouncilMember) {
             departmentUnitStream = Bennu.getInstance().getDepartmentsSet().stream()
                     .sorted(Comparator.comparing(Department::getName)).map(Department::getDepartmentUnit);

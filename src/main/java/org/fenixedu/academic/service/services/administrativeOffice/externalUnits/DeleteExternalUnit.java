@@ -27,7 +27,7 @@ public class DeleteExternalUnit {
 
     @Atomic
     public static void run(final Unit externalUnit) throws FenixServiceException {
-        if (externalUnit.isOfficialExternal()) {
+        if (!externalUnit.isInternal() && !externalUnit.isNoOfficialExternal()) {
             externalUnit.delete();
         } else {
             throw new FenixServiceException("error.DeleteExternalUnit.invalid.unit");

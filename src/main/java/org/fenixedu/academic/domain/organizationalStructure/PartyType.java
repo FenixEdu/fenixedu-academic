@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.organizationalStructure;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -69,6 +70,14 @@ public class PartyType extends PartyType_Base {
         return result;
     }
 
+    public static Optional<PartyType> of(final PartyTypeEnum partyTypeEnum) {
+        return Bennu.getInstance().getPartyTypesSet().stream().filter(pt -> pt.getType() == partyTypeEnum).findAny();
+    }
+
+    /**
+     * @deprecated use {@code #of(PartyTypeEnum)}
+     */
+    @Deprecated
     public static PartyType readPartyTypeByType(final PartyTypeEnum partyTypeEnum) {
         for (final PartyType partyType : Bennu.getInstance().getPartyTypesSet()) {
             if (partyType.getType() == partyTypeEnum) {
@@ -87,11 +96,11 @@ public class PartyType extends PartyType_Base {
         if (!getPartiesSet().isEmpty()) {
             throw new DomainException("error.PartyType.cannotDelete.hasAssociatedParties");
         }
-        
+
         setRootDomainObject(null);
         getAllowedChildConnectionRulesSet().forEach(cr -> cr.delete());
         getAllowedParentConnectionRulesSet().forEach(cr -> cr.delete());
-        
+
         super.deleteDomainObject();
     }
 
