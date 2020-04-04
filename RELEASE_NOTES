@@ -1,3 +1,4 @@
+29.0.0 (04-04-2020)
 - Refactor: Deprecated PrecedentDegreeInformation slots cleanup
 - Refactor: Removal of organizational Units subclasses and unused methods
 - Improvement: Add ExecutionInterval aggregators find methods
