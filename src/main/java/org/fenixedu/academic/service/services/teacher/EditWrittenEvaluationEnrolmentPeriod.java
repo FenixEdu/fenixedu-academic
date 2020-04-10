@@ -50,4 +50,18 @@ public class EditWrittenEvaluationEnrolmentPeriod {
         serviceInstance.run(executionCourseID, writtenEvaluationID, beginDate, endDate, beginTime, endTime);
     }
 
+    @Atomic
+    public static void removeEnrolmentPeriod(String executionCourseID, String writtenEvaluationID)
+    		throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
+        serviceInstance.removeEnrolmentPeriod(writtenEvaluationID);
+    }
+
+	private void removeEnrolmentPeriod(String writtenEvaluationID) throws FenixServiceException {
+		final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) FenixFramework.getDomainObject(writtenEvaluationID);
+        if (writtenEvaluation == null) {
+            throw new FenixServiceException("error.noWrittenEvaluation");
+        }
+        writtenEvaluation.removeEnrolmentPeriod();
+	}
 }
