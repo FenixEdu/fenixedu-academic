@@ -848,17 +848,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public String getDegreePresentationString() {
-        SortedSet<Degree> degrees = this.getDegreesSortedByDegreeName();
-        String result = "";
-        int i = 0;
-        for (Degree degree : degrees) {
-            if (i > 0) {
-                result += ", ";
-            }
-            result += degree.getSigla();
-            i++;
-        }
-        return result;
+        return getAssociatedCurricularCoursesSet().stream().map(cc -> cc.getDegree().getSigla()).distinct().sorted()
+                .collect(Collectors.joining(", "));
     }
 
     public ExecutionYear getExecutionYear() {
