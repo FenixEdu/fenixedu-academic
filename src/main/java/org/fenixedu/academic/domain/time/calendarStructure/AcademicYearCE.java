@@ -30,7 +30,9 @@ public class AcademicYearCE extends AcademicYearCE_Base {
         super();
         super.initEntry(parentEntry, title, description, begin, end, rootEntry);
         setAcademicPeriod(AcademicPeriod.YEAR);
-        createExecutionYear();
+
+        // create ExecutionYear
+        new ExecutionYear(new AcademicInterval(this, getRootEntry()), getTitle().getContent());
     }
 
     @Override
@@ -66,12 +68,12 @@ public class AcademicYearCE extends AcademicYearCE_Base {
         return false;
     }
 
-    private void createExecutionYear() {
-        ExecutionYear executionYear = ExecutionYear.readBy(getBegin().toYearMonthDay(), getEnd().toYearMonthDay());
-        if (executionYear == null) {
-            new ExecutionYear(new AcademicInterval(this, getRootEntry()), getTitle().getContent());
-        }
-    }
+//    private void createExecutionYear() {
+//        ExecutionYear executionYear = ExecutionYear.readBy(getBegin().toYearMonthDay(), getEnd().toYearMonthDay());
+//        if (executionYear == null) {
+//            new ExecutionYear(new AcademicInterval(this, getRootEntry()), getTitle().getContent());
+//        }
+//    }
 
 //    @Override
 //    public int getAcademicSemesterOfAcademicYear(AcademicChronology academicChronology) {
