@@ -29,9 +29,13 @@ import org.fenixedu.bennu.core.domain.Bennu;
 
 public class PartyType extends PartyType_Base {
 
-    public PartyType(final PartyTypeEnum partyTypeEnum) {
+    protected PartyType() {
         super();
         setRootDomainObject(Bennu.getInstance());
+    }
+
+    public PartyType(final PartyTypeEnum partyTypeEnum) {
+        this();
         setType(partyTypeEnum);
     }
 
@@ -41,6 +45,10 @@ public class PartyType extends PartyType_Base {
             throw new DomainException("error.PartyType.empty.type");
         }
         super.setType(type);
+    }
+
+    public String getName() {
+        return getType() != null ? getType().getLocalizedName() : super.getTypeName().getContent();
     }
 
     protected Collection<PartyType> getAllowedChildPartyTypes(final Boolean managedByUser) {

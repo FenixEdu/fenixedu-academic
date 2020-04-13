@@ -19,13 +19,10 @@
 package org.fenixedu.academic.domain.organizationalStructure;
 
 import java.util.Collection;
-import java.util.Locale;
 
-import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.LocaleUtils;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 public class AccountabilityType extends AccountabilityType_Base {
 
@@ -51,7 +48,7 @@ public class AccountabilityType extends AccountabilityType_Base {
     public static AccountabilityType readByType(AccountabilityTypeEnum typeEnum) {
         Collection<AccountabilityType> allAccountabilityTypes = Bennu.getInstance().getAccountabilityTypesSet();
         for (AccountabilityType accountabilityType : allAccountabilityTypes) {
-            if (accountabilityType.getType().equals(typeEnum)) {
+            if (accountabilityType.getType() != null && accountabilityType.getType().equals(typeEnum)) {
                 return accountabilityType;
             }
         }
@@ -68,7 +65,7 @@ public class AccountabilityType extends AccountabilityType_Base {
 
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
-        return getType() != null && getTypeName() != null && !getTypeName().isEmpty();
+        return getType() != null || (getTypeName() != null && !getTypeName().isEmpty());
     }
 
     public boolean isFunction() {
@@ -80,21 +77,24 @@ public class AccountabilityType extends AccountabilityType_Base {
     }
 
     public String getName() {
-        return LocaleUtils.getPreferedContent(getTypeName());
+        return getType() != null ? getType().getLocalizedName() : super.getTypeName().getContent();
     }
 
-    public void setName(String name) {
-
-        if (name == null || StringUtils.isEmpty(name.trim())) {
-            throw new DomainException("error.accountabilityType.empty.name");
-        }
-
-        LocalizedString typeName = getTypeName();
-        typeName =
-                typeName == null ? new LocalizedString(Locale.getDefault(), name) : typeName.with(Locale.getDefault(), name);
-
-        setTypeName(typeName);
-    }
+//    public String getName() {
+//        return LocaleUtils.getPreferedContent(getTypeName());
+//    }
+//
+//    public void setName(String name) {
+//
+//        if (name == null || StringUtils.isEmpty(name.trim())) {
+//            throw new DomainException("error.accountabilityType.empty.name");
+//        }
+//
+//        LocalizedString typeName = getTypeName();
+//        typeName = typeName == null ? new LocalizedString(Locale.getDefault(), name) : typeName.with(Locale.getDefault(), name);
+//
+//        setTypeName(typeName);
+//    }
 
     public boolean hasConnectionRuleFor(PartyType parentType, PartyType childType) {
         return getConnectionRuleFor(parentType, childType) != null;
@@ -125,6 +125,17 @@ public class AccountabilityType extends AccountabilityType_Base {
         }
 
         return false;
+    }
+
+    public void delete() {
+        if (!getAccountabilitiesSet().isEmpty()) {
+            throw new DomainException("error.AccountabilityType.cannotDelete.hasAssociatedAccountabilities");
+        }
+
+        getConnectionRulesSet().forEach(cr -> cr.delete());
+
+        setRootDomainObject(null);
+        super.deleteDomainObject();
     }
 
 }

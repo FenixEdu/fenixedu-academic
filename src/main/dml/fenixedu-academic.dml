@@ -1193,6 +1193,7 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
     }
 
     class organizationalStructure.PartyType  {
+    	LocalizedString typeName;
         PartyTypeEnum type;     
     }
     
