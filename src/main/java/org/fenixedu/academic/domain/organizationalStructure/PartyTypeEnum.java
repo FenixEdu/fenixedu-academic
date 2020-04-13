@@ -27,7 +27,7 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public enum PartyTypeEnum {
 
-    ADMINISTRATIVE_OFFICE_UNIT,
+    ADMINISTRATIVE_OFFICE_UNIT /*deprecated*/,
 
     SCIENTIFIC_AREA,
 
@@ -47,17 +47,17 @@ public enum PartyTypeEnum {
 
     DEGREE_UNIT,
 
-    SECTION,
+    SECTION /*deprecated*/,
 
-    RESEARCH_UNIT,
+    RESEARCH_UNIT /*deprecated*/,
 
-    PEDAGOGICAL_COUNCIL,
+    PEDAGOGICAL_COUNCIL /*deprecated*/,
 
-    SCIENTIFIC_COUNCIL,
+    SCIENTIFIC_COUNCIL /*deprecated*/,
 
-    MANAGEMENT_COUNCIL,
+    MANAGEMENT_COUNCIL /*deprecated*/,
 
-    PHD_PROGRAM_UNIT;
+    PHD_PROGRAM_UNIT /*deprecated*/;
 
     public String getName() {
         return name();

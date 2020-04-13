@@ -29,18 +29,18 @@ import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 
 public enum AccountabilityTypeEnum implements IPresentableEnum {
 
-    MANAGEMENT_FUNCTION,
+    MANAGEMENT_FUNCTION /*deprecated*/,
 
-    ORGANIZATIONAL_STRUCTURE, ACADEMIC_STRUCTURE, ADMINISTRATIVE_STRUCTURE,
+    ORGANIZATIONAL_STRUCTURE, ACADEMIC_STRUCTURE, ADMINISTRATIVE_STRUCTURE /*deprecated*/,
 
     GEOGRAPHIC,
 
     // Contracts
-    WORKING_CONTRACT, MAILING_CONTRACT, INVITATION,
+    WORKING_CONTRACT, MAILING_CONTRACT /*deprecated*/, INVITATION /*deprecated*/,
 
-    RESEARCH_CONTRACT,
+    RESEARCH_CONTRACT /*deprecated*/,
 
-    ASSIDUOUSNESS_STRUCTURE;
+    ASSIDUOUSNESS_STRUCTURE /*deprecated*/;
 
     public String getName() {
         return name();
