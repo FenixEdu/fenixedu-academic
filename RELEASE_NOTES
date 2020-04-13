@@ -1,3 +1,4 @@
+29.1.0 (13-04-2020)
 - Improvement: Rewrite of method ExecutionCourse.getDegreePresentationString() to improve performance 
 - Improvement: Support for custom names in PartyType and AccountabilityType 
 - Fix: Creation of AcademicYearCE should always create a correspondent ExecutionYear
