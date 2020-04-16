@@ -34,7 +34,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.domain.contacts.EmailAddress;
 import org.fenixedu.academic.domain.contacts.MobilePhone;
 import org.fenixedu.academic.domain.contacts.PartyContact;
@@ -48,6 +47,8 @@ import org.fenixedu.academic.domain.organizationalStructure.Accountability;
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityType;
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
+import org.fenixedu.academic.domain.organizationalStructure.PartyType;
+import org.fenixedu.academic.domain.organizationalStructure.PartyTypeEnum;
 import org.fenixedu.academic.domain.person.Gender;
 import org.fenixedu.academic.domain.person.IDDocumentType;
 import org.fenixedu.academic.domain.person.IdDocument;
@@ -283,10 +284,10 @@ public class Person extends Person_Base {
 
         setProperties(personBean);
 
-        if(personBean.isPhysicalAddressDataNotEmpty()) {
+        if (personBean.isPhysicalAddressDataNotEmpty()) {
             PhysicalAddress.createPhysicalAddress(this, personBean.getPhysicalAddressData(), PartyContactType.PERSONAL, true);
         }
-        
+
         Phone.createPhone(this, personBean.getPhone(), PartyContactType.PERSONAL, true);
         MobilePhone.createMobilePhone(this, personBean.getMobile(), PartyContactType.PERSONAL, true);
         final EmailAddress emailAddress =
@@ -1364,5 +1365,25 @@ public class Person extends Person_Base {
 
     public static Group convertToUserGroup(final Collection<Person> persons) {
         return Group.users(persons.stream().map(Person::getUser).filter(Objects::nonNull));
+    }
+
+    @Override
+    public PartyTypeEnum getType() {
+        return PartyTypeEnum.PERSON;
+    }
+
+    @Override
+    public void setType(PartyTypeEnum partyTypeEnum) {
+        throw new DomainException("error.person.partyType.cannotChange");
+    }
+
+    @Override
+    public PartyType getPartyType() {
+        return PartyType.of(getType()).orElse(null);
+    }
+
+    @Override
+    public void setPartyType(PartyType partyType) {
+        throw new DomainException("error.person.partyType.cannotChange");
     }
 }
