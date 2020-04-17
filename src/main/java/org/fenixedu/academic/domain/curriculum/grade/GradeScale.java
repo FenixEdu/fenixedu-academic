@@ -157,7 +157,7 @@ public class GradeScale extends GradeScale_Base {
         }
 
         if (!leftGrade.getGradeScale().equals(rightGrade.getGradeScale())) {
-            throw new DomainException("Grade.unsupported.comparison.of.grades.of.different.scales");
+            throw new DomainException("Grade.unsupported.comparison.of.grades.of.different.scales", leftGrade.toString(), rightGrade.toString());
         }
 
         {
