@@ -1,3 +1,5 @@
+- Bug Fix: Set party type as null by invoked the method of the base class
+
 29.2.0 (19-04-2020)
 - Improvement: Add type Person to PartyTypeEnum
 - Improvement: Improve error message of comparing grades of different scales, with the printing the different scales

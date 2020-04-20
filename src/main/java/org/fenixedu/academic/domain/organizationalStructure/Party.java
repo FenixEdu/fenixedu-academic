@@ -399,8 +399,8 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         }
 
         super.setNationality(null);
-        setPartyType(null);
-        setRootDomainObject(null);
+        super.setPartyType(null);
+        super.setRootDomainObject(null);
 
         deleteDomainObject();
     }
