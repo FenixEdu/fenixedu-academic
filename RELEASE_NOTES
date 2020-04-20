@@ -1,3 +1,4 @@
+29.2.1 (20-04-2020)
 - Bug Fix: Set party type as null by invoked the method of the base class
 
 29.2.0 (19-04-2020)
