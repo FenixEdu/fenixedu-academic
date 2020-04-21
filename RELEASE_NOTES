@@ -1,3 +1,5 @@
+- Bug Fix: Earth unit should have party type
+
 29.2.1 (20-04-2020)
 - Bug Fix: Set party type as null by invoked the method of the base class
 

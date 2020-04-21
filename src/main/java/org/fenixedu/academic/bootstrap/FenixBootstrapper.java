@@ -352,8 +352,8 @@ public class FenixBootstrapper {
     private static void createOrganizationalStructure() {
         final Bennu rootDomainObject = Bennu.getInstance();
 
-        final Unit planetUnit =
-                Unit.createNewUnit(Optional.empty(), new LocalizedString(Locale.getDefault(), "Earth"), "E", null, null);
+        final Unit planetUnit = Unit.createNewUnit(PartyType.of(PartyTypeEnum.PLANET),
+                new LocalizedString(Locale.getDefault(), "Earth"), "E", null, null);
 
         rootDomainObject.setEarthUnit(planetUnit);
 
