@@ -927,8 +927,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
         final Predicate<CurricularPeriod> isYearDuration = cp -> cp.getParent() == getDegreeStructure() /*root*/ && year == 1
                 && cp.getParent().getAcademicPeriod().equals(AcademicPeriod.YEAR);
-        final Predicate<CurricularPeriod> matchesYear =
-                cp -> cp.getParent().getAcademicPeriod().equals(AcademicPeriod.YEAR) && year == cp.getParentOrder().intValue();
+        final Predicate<CurricularPeriod> matchesYear = cp -> cp.getParent().getAcademicPeriod().equals(AcademicPeriod.YEAR)
+                && cp.getParentOrder() != null && year == cp.getParentOrder().intValue();
         final Predicate<CurricularPeriod> matchesChild =
                 cp -> cp.getAcademicPeriod().equals(childAcademicPeriod) && childOrder == cp.getChildOrder().intValue();
 

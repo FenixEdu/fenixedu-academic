@@ -1,3 +1,4 @@
+- Bug Fix: Avoid NPE searching for curricular period on degree curricular plan
 - Bug Fix: Earth unit should have party type
 
 29.2.1 (20-04-2020)
