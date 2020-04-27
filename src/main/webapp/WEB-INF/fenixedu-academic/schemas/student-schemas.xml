@@ -108,14 +108,15 @@
 <schema name="Student.view-with-number-and-name" type="org.fenixedu.academic.domain.student.Student" bundle="APPLICATION_RESOURCES">
 	<slot name="number"/>
 	<slot name="person.name"/>
-	<slot name="activeRegistrations" layout="null-as-label">
-		<property name="subLayout" value="values"/>
-		<property name="subSchema" value="Student.registration.viewDegreeName"/>
+	<slot name="activeRegistrations" layout="flowLayout">
+		<property name="eachSchema" value="Student.registration.viewDegreeName"/>
+		<property name="eachLayout" value="values-comma"/>
+		<property name="htmlSeparator" value="; "/>
 	</slot>
 </schema>
 
 <schema name="Student.registration.viewDegreeName" type="org.fenixedu.academic.domain.student.Registration" bundle="APPLICATION_RESOURCES">
-	<slot name="degreeName"/>
+	<slot name="degree.presentationName"/>
 </schema>
 
 <schema name="StudentNumberBean.edit" type="org.fenixedu.academic.dto.commons.student.StudentNumberBean" bundle="APPLICATION_RESOURCES">
