@@ -30,6 +30,7 @@ import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -64,7 +65,6 @@ import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOfficeType;
 import org.fenixedu.academic.domain.candidacy.CandidacySituationType;
 import org.fenixedu.academic.domain.candidacy.IngressionType;
-import org.fenixedu.academic.domain.candidacy.PersonalInformationBean;
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
@@ -2110,8 +2110,8 @@ public class Registration extends Registration_Base {
     public void changeShifts(final Attends attend, final Registration newRegistration) {
         for (final Shift shift : getShiftsSet()) {
             if (attend.isFor(shift)) {
-                shift.removeStudents(this);
-                shift.addStudents(newRegistration);
+                shift.unenrol(this);
+                shift.enrol(newRegistration);
             }
         }
     }
@@ -2250,6 +2250,10 @@ public class Registration extends Registration_Base {
 
             registrationData.edit(firstEnrolment.getCreationDateDateTime().toLocalDate());
         }
+    }
+
+    public Optional<SchoolClass> findSchoolClass(final ExecutionInterval interval) {
+        return super.getSchoolClassesSet().stream().filter(sc -> sc.getExecutionInterval() == interval).findAny();
     }
 
 }

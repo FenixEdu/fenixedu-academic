@@ -19,6 +19,7 @@
 package org.fenixedu.academic.json.adapters;
 
 import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.schedule.shiftCapacity.ShiftCapacity;
 import org.fenixedu.bennu.core.annotation.DefaultJsonAdapter;
 import org.fenixedu.bennu.core.json.JsonBuilder;
 import org.fenixedu.bennu.core.json.JsonViewer;
@@ -35,7 +36,7 @@ public class ShiftJsonAdapter implements JsonViewer<Shift> {
         object.addProperty("name", shift.getPresentationName());
         object.addProperty("externalId", shift.getExternalId());
         object.add("lessons", ctx.view(shift.getLessonsOrderedByWeekDayAndStartTime()));
-        object.addProperty("capacity", shift.getLotacao());
+        object.addProperty("capacity", ShiftCapacity.getTotalCapacity(shift));
         object.add("shiftTypes", ctx.view(shift.getTypes()));
 
         return object;

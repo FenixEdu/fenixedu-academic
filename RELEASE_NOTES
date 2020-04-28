@@ -1,3 +1,5 @@
+- New feature: Shifts capacity by type, and restricted to school classes or degree curricular plans
+
 29.2.3 (27-04-2020)
 - Bug Fix: Academic office student search should display degree type on active registrations 
 

@@ -24,6 +24,8 @@ package org.fenixedu.academic.service.services.resourceAllocationManager;
 
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.ShiftEnrolment;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.InfoShift;
 import org.fenixedu.academic.dto.InfoShiftEditor;
 
@@ -37,8 +39,14 @@ public class EditarTurno {
         final Shift shiftToEdit = FenixFramework.getDomainObject(infoShiftOld.getExternalId());
         final ExecutionCourse newExecutionCourse =
                 FenixFramework.getDomainObject(infoShiftNew.getInfoDisciplinaExecucao().getExternalId());
-        shiftToEdit.edit(infoShiftNew.getTipos(), infoShiftNew.getLotacao(), newExecutionCourse, infoShiftNew.getNome(),
-                infoShiftNew.getComment());
+
+        final Integer newCapacity = infoShiftNew.getLotacao();
+        if (newCapacity != null && ShiftEnrolment.getTotalEnrolments(shiftToEdit) > newCapacity.intValue()) {
+            throw new DomainException("errors.exception.invalid.finalAvailability");
+        }
+
+        shiftToEdit.edit(infoShiftNew.getTipos(), newExecutionCourse, infoShiftNew.getNome(), infoShiftNew.getComment());
+        shiftToEdit.setLotacao(newCapacity);
         return InfoShift.newInfoFromDomain(shiftToEdit);
     }
 }

@@ -19,7 +19,10 @@
 package org.fenixedu.academic.domain;
 
 import java.util.Comparator;
+import java.util.Optional;
 
+import org.fenixedu.academic.domain.schedule.shiftCapacity.ShiftCapacity;
+import org.fenixedu.academic.domain.schedule.shiftCapacity.ShiftCapacityType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
@@ -34,6 +37,7 @@ public class ShiftEnrolment extends ShiftEnrolment_Base {
         }
     };
 
+    @Deprecated
     public ShiftEnrolment(final Shift shift, final Registration registration) {
         super();
         setRootDomainObject(Bennu.getInstance());
@@ -42,15 +46,34 @@ public class ShiftEnrolment extends ShiftEnrolment_Base {
         setCreatedOn(new DateTime());
     }
 
+    public ShiftEnrolment(final ShiftCapacity shiftCapacity, final Registration registration) {
+        this(shiftCapacity.getShift(), registration);
+        setShiftCapacity(shiftCapacity);
+    }
+
     public void delete() {
         setShift(null);
+        setShiftCapacity(null);
         setRegistration(null);
         setRootDomainObject(null);
         deleteDomainObject();
     }
 
-    public boolean hasRegistration(final Registration registration) {
-        return getRegistration() == registration;
+    public static Optional<ShiftEnrolment> find(final Shift shift, final Registration registration) {
+        return shift.getShiftEnrolmentsSet().stream().filter(se -> se.getRegistration() == registration).findAny();
     }
+
+    public static int getTotalEnrolments(final Shift shift) {
+        return shift.getShiftCapacitiesSet().stream().mapToInt(sc -> sc.getShiftEnrolmentsSet().size()).sum();
+    }
+
+    public static int getTotalEnrolments(final Shift shift, final ShiftCapacityType type) {
+        return shift.getShiftCapacitiesSet().stream().filter(sc -> sc.getType() == type)
+                .mapToInt(sc -> sc.getShiftEnrolmentsSet().size()).sum();
+    }
+
+//    public boolean hasRegistration(final Registration registration) {
+//        return getRegistration() == registration;
+//    }
 
 }

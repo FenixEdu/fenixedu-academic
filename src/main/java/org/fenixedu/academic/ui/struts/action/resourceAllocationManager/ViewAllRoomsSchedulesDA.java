@@ -47,6 +47,7 @@ import org.fenixedu.academic.domain.LessonInstance;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.SchoolClass;
 import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.ShiftEnrolment;
 import org.fenixedu.academic.domain.space.LessonSpaceOccupation;
 import org.fenixedu.academic.domain.space.SpaceUtils;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
@@ -487,7 +488,7 @@ public class ViewAllRoomsSchedulesDA extends FenixDispatchAction {
                     row.setCell(executionDegreeBuilder.toString());
                     row.setCell(scheduleBuilder.toString().replace(';', '\n'));
                     row.setCell(roomBuilder.toString().replace(';', '\n'));
-                    row.setCell(shift.getStudentsSet().size());
+                    row.setCell(ShiftEnrolment.getTotalEnrolments(shift));
                 }
             }
         }

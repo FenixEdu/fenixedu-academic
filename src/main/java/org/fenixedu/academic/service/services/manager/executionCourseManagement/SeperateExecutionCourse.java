@@ -126,7 +126,7 @@ public class SeperateExecutionCourse {
         for (final Shift shift : executionCourse.getAssociatedShifts()) {
             for (Registration registration : shift.getStudentsSet()) {
                 if (!registration.attends(executionCourse)) {
-                    shift.removeStudents(registration);
+                    shift.unenrol(registration);
                 }
             }
         }

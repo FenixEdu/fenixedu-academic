@@ -38,6 +38,7 @@ import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Lesson;
 import org.fenixedu.academic.domain.SchoolClass;
 import org.fenixedu.academic.domain.Shift;
+import org.fenixedu.academic.domain.ShiftEnrolment;
 import org.fenixedu.academic.domain.ShiftType;
 import org.fenixedu.academic.util.DateFormatUtil;
 import org.fenixedu.academic.util.NumberUtils;
@@ -108,7 +109,7 @@ public class InfoShift extends InfoObject {
     }
 
     public Integer getOcupation() {
-        return getShift().getStudentsSet().size();
+        return ShiftEnrolment.getTotalEnrolments(getShift());
     }
 
     public Integer getGroupCapacity() {

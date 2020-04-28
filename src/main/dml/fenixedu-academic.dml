@@ -3284,6 +3284,11 @@ relation RegistrationProtocolRootDomainObject {
 	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 }
 
+relation RegistrationSchoolClass {
+    .org.fenixedu.academic.domain.SchoolClass playsRole schoolClasses { multiplicity *; }
+    .org.fenixedu.academic.domain.student.Registration playsRole registrations { multiplicity *; }
+}
+
 relation RoomSummary {
     Summary playsRole associatedSummaries {
         multiplicity *;
@@ -5223,3 +5228,58 @@ relation ProfileDegreeType {
         multiplicity *;
     }
 }
+
+/* Shifts Capacity */
+
+class schedule.shiftCapacity.ShiftCapacity {
+	Integer capacity (REQUIRED);
+}
+	relation ShiftCapacityRoot {
+	    schedule.shiftCapacity.ShiftCapacity playsRole shiftCapacities { multiplicity *; }
+	    .org.fenixedu.bennu.core.domain.Bennu playsRole root;
+	}
+	relation ShiftCapacityShift {
+		schedule.shiftCapacity.ShiftCapacity playsRole shiftCapacities { multiplicity *; }
+	 	Shift playsRole shift { multiplicity 1..1; }
+	}
+	relation ShiftCapacityDegreeCurricularPlan {
+		schedule.shiftCapacity.ShiftCapacity playsRole shiftCapacities { multiplicity *; }
+	 	DegreeCurricularPlan playsRole degreeCurricularPlans { multiplicity *; }
+	}
+	relation ShiftCapacitySchoolClass {
+		schedule.shiftCapacity.ShiftCapacity playsRole shiftCapacities { multiplicity *; }
+	 	SchoolClass playsRole schoolClasses { multiplicity *; }
+	}		
+	relation ShiftCapacityShiftEnrolment {
+		schedule.shiftCapacity.ShiftCapacity playsRole shiftCapacity;
+	 	ShiftEnrolment playsRole shiftEnrolments { multiplicity *; }
+	}
+
+class schedule.shiftCapacity.ShiftCapacityType {
+	LocalizedString name (REQUIRED);
+	boolean active;
+	boolean defaultType;
+	int evaluationPriority;
+}
+	relation ShiftCapacityTypeRoot {
+	    schedule.shiftCapacity.ShiftCapacityType playsRole shiftCapacityTypes { multiplicity *; }
+	    .org.fenixedu.bennu.core.domain.Bennu playsRole root;
+	}
+	relation ShiftCapacityTypeShiftCapacity {
+	    schedule.shiftCapacity.ShiftCapacityType playsRole type { multiplicity 1..1; }
+	    schedule.shiftCapacity.ShiftCapacity playsRole capacities { multiplicity *; }
+	}	
+
+class schedule.shiftCapacity.ShiftCapacityStrategy {
+	LocalizedString name;
+}
+	class schedule.shiftCapacity.AllStudentsShiftCapacityStrategy extends schedule.shiftCapacity.ShiftCapacityStrategy {
+	}	
+	relation ShiftCapacityStrategyRoot {
+	    schedule.shiftCapacity.ShiftCapacityStrategy playsRole shiftCapacityStrategies { multiplicity *; }
+	    .org.fenixedu.bennu.core.domain.Bennu playsRole root;
+	}
+	relation ShiftCapacityStrategyShiftCapacityType {
+	    schedule.shiftCapacity.ShiftCapacityStrategy playsRole strategy { multiplicity 1..1; } 
+	    schedule.shiftCapacity.ShiftCapacityType playsRole types { multiplicity *; }
+	}	
