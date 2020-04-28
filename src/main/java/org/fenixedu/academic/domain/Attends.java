@@ -47,6 +47,7 @@ public class Attends extends Attends_Base {
 
     public static enum StudentAttendsStateType {
         ENROLED, NOT_ENROLED, IMPROVEMENT, SPECIAL_SEASON;
+
         public String getQualifiedName() {
             return StudentAttendsStateType.class.getSimpleName() + "." + name();
         }
@@ -233,13 +234,13 @@ public class Attends extends Attends_Base {
         return getExecutionInterval().getExecutionYear();
     }
 
-    public void removeShifts() {
-        for (final Shift shift : getRegistration().getShiftsSet()) {
-            if (shift.getExecutionCourse() == getExecutionCourse()) {
-                getRegistration().removeShifts(shift);
-            }
-        }
-    }
+//    public void removeShifts() {
+//        for (final Shift shift : getRegistration().getShiftsSet()) {
+//            if (shift.getExecutionCourse() == getExecutionCourse()) {
+//                getRegistration().removeShifts(shift);
+//            }
+//        }
+//    }
 
     public StudentCurricularPlan getStudentCurricularPlanFromAttends() {
         final Enrolment enrolment = getEnrolment();
@@ -286,13 +287,13 @@ public class Attends extends Attends_Base {
         return !getExecutionInterval().isBefore(to.getStartExecutionInterval());
     }
 
-    @Atomic
-    public void deleteShiftEnrolments() {
-        final Registration registration = getRegistration();
-        final ExecutionCourse executionCourse = getExecutionCourse();
-        for (final Shift shift : executionCourse.getAssociatedShifts()) {
-            shift.removeStudents(registration);
-        }
-    }
+//    @Atomic
+//    public void deleteShiftEnrolments() {
+//        final Registration registration = getRegistration();
+//        final ExecutionCourse executionCourse = getExecutionCourse();
+//        for (final Shift shift : executionCourse.getAssociatedShifts()) {
+//            shift.removeStudents(registration);
+//        }
+//    }
 
 }

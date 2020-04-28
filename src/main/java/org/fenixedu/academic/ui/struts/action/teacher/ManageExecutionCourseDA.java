@@ -18,49 +18,34 @@
  */
 package org.fenixedu.academic.ui.struts.action.teacher;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedSet;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.LessonPlanning;
-import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.ShiftType;
-import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.domain.student.Student;
-import org.fenixedu.academic.dto.enrollment.shift.ShiftEnrollmentErrorReport;
-import org.fenixedu.academic.dto.person.PersonBean;
 import org.fenixedu.academic.dto.teacher.CreateLessonPlanningBean;
 import org.fenixedu.academic.dto.teacher.ImportLessonPlanningsBean;
 import org.fenixedu.academic.dto.teacher.ImportLessonPlanningsBean.ImportType;
 import org.fenixedu.academic.dto.teacher.executionCourse.ImportContentBean;
-import org.fenixedu.academic.service.services.enrollment.shift.EnrollStudentInShifts;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.teacher.CreateLessonPlanning;
 import org.fenixedu.academic.service.services.teacher.DeleteLessonPlanning;
 import org.fenixedu.academic.service.services.teacher.ImportBibliographicReferences;
 import org.fenixedu.academic.service.services.teacher.ImportLessonPlannings;
 import org.fenixedu.academic.service.services.teacher.MoveLessonPlanning;
-import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.academic.ui.struts.action.teacher.TeacherApplication.TeacherTeachingApp;
 import org.fenixedu.academic.ui.struts.action.teacher.executionCourse.ExecutionCourseBaseAction;
-import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -69,7 +54,6 @@ import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 @StrutsFunctionality(app = TeacherTeachingApp.class, path = "execution-course-management",
@@ -372,153 +356,153 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
         return (ExecutionCourse) request.getAttribute("executionCourse");
     }
 
-    public ActionForward manageShifts(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
+//    public ActionForward manageShifts(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+//            HttpServletResponse response) {
+//
+//        String executionCourseID = request.getParameter("executionCourseID");
+//
+//        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
+//        SortedSet<Shift> shifts = executionCourse.getShiftsOrderedByLessons();
+//
+//        request.setAttribute("shifts", shifts);
+//        request.setAttribute("executionCourseID", executionCourseID);
+//
+//        return mapping.findForward("manageShifts");
+//    }
 
-        String executionCourseID = request.getParameter("executionCourseID");
+//    public ActionForward editShift(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+//            HttpServletResponse response) {
+//
+//        String shiftID = request.getParameter("shiftID");
+//        String executionCourseID = request.getParameter("executionCourseID");
+//        String registrationID = request.getParameter("registrationID");
+//
+//        if (request.getParameter("showPhotos") == null) {
+//            request.setAttribute("showPhotos", "false");
+//        }
+//
+//        Shift shift = FenixFramework.getDomainObject(shiftID);
+//        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
+//
+//        if (registrationID != null) {
+//            Registration registration = FenixFramework.getDomainObject(registrationID);
+//            shift.removeAttendFromShift(registration, executionCourse);
+//            request.setAttribute("registration", registration);
+//        }
+//
+//        List<Registration> registrations = new ArrayList<Registration>();
+//        registrations.addAll(shift.getStudentsSet());
+//        Collections.sort(registrations, Registration.NUMBER_COMPARATOR);
+//
+//        request.setAttribute("registrations", registrations);
+//        request.setAttribute("shift", shift);
+//        request.setAttribute("executionCourseID", executionCourseID);
+//
+//        request.setAttribute("personBean", new PersonBean());
+//
+//        return mapping.findForward("editShift");
+//    }
 
-        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
-        SortedSet<Shift> shifts = executionCourse.getShiftsOrderedByLessons();
+//    @Atomic
+//    public ActionForward insertStudentInShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+//            HttpServletResponse response) throws FenixActionException {
+//        PersonBean bean = getRenderedObject("personBean");
+//        String id = bean.getUsername();
+//        Person person = null;
+//        final User user = User.findByUsername(id);
+//        if (user != null) {
+//            person = user.getPerson();
+//        } else {
+//            try {
+//                final Student student = Student.readStudentByNumber(Integer.valueOf(id));
+//                if (student != null) {
+//                    person = student.getPerson();
+//                }
+//            } catch (NumberFormatException e) {
+//            }
+//        }
+//        ExecutionCourse executionCourse = FenixFramework.getDomainObject(request.getParameter("executionCourseID"));
+//
+//        final ActionErrors actionErrors = new ActionErrors();
+//        if (person != null) {
+//            try {
+//                ShiftEnrollmentErrorReport errorReport = new EnrollStudentInShifts().run(getRegistration(executionCourse, person),
+//                        request.getParameter("shiftID"));
+//                if (errorReport.getUnAvailableShifts().size() > 0) {
+//                    actionErrors.add("error", new ActionMessage("error.exception.shift.full"));
+//                }
+//            } catch (FenixServiceException e) {
+//                if (e.getMessage() != null) {
+//                    actionErrors.add("error", new ActionMessage(e.getMessage()));
+//                } else {
+//                    actionErrors.add("error", new ActionMessage("label.invalid.student.number"));
+//                }
+//            }
+//        } else {
+//            actionErrors.add("error", new ActionMessage("label.invalid.student.number"));
+//        }
+//        saveErrors(request, actionErrors);
+//        return editShift(mapping, form, request, response);
+//    }
 
-        request.setAttribute("shifts", shifts);
-        request.setAttribute("executionCourseID", executionCourseID);
-
-        return mapping.findForward("manageShifts");
-    }
-
-    public ActionForward editShift(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
-
-        String shiftID = request.getParameter("shiftID");
-        String executionCourseID = request.getParameter("executionCourseID");
-        String registrationID = request.getParameter("registrationID");
-
-        if (request.getParameter("showPhotos") == null) {
-            request.setAttribute("showPhotos", "false");
-        }
-
-        Shift shift = FenixFramework.getDomainObject(shiftID);
-        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
-
-        if (registrationID != null) {
-            Registration registration = FenixFramework.getDomainObject(registrationID);
-            shift.removeAttendFromShift(registration, executionCourse);
-            request.setAttribute("registration", registration);
-        }
-
-        List<Registration> registrations = new ArrayList<Registration>();
-        registrations.addAll(shift.getStudentsSet());
-        Collections.sort(registrations, Registration.NUMBER_COMPARATOR);
-
-        request.setAttribute("registrations", registrations);
-        request.setAttribute("shift", shift);
-        request.setAttribute("executionCourseID", executionCourseID);
-
-        request.setAttribute("personBean", new PersonBean());
-
-        return mapping.findForward("editShift");
-    }
-
-    @Atomic
-    public ActionForward insertStudentInShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
-        PersonBean bean = getRenderedObject("personBean");
-        String id = bean.getUsername();
-        Person person = null;
-        final User user = User.findByUsername(id);
-        if (user != null) {
-            person = user.getPerson();
-        } else {
-            try {
-                final Student student = Student.readStudentByNumber(Integer.valueOf(id));
-                if (student != null) {
-                    person = student.getPerson();
-                }
-            } catch (NumberFormatException e) {
-            }
-        }
-        ExecutionCourse executionCourse = FenixFramework.getDomainObject(request.getParameter("executionCourseID"));
-
-        final ActionErrors actionErrors = new ActionErrors();
-        if (person != null) {
-            try {
-                ShiftEnrollmentErrorReport errorReport = new EnrollStudentInShifts().run(getRegistration(executionCourse, person),
-                        request.getParameter("shiftID"));
-                if (errorReport.getUnAvailableShifts().size() > 0) {
-                    actionErrors.add("error", new ActionMessage("error.exception.shift.full"));
-                }
-            } catch (FenixServiceException e) {
-                if (e.getMessage() != null) {
-                    actionErrors.add("error", new ActionMessage(e.getMessage()));
-                } else {
-                    actionErrors.add("error", new ActionMessage("label.invalid.student.number"));
-                }
-            }
-        } else {
-            actionErrors.add("error", new ActionMessage("label.invalid.student.number"));
-        }
-        saveErrors(request, actionErrors);
-        return editShift(mapping, form, request, response);
-    }
-
-    private static Registration getRegistration(ExecutionCourse executionCourse, Person person) {
-        for (Registration registration : person.getStudents()) {
-            for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
-                for (Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
-                    for (ExecutionCourse course : enrolment.getExecutionCourses()) {
-                        if (course.equals(executionCourse)) {
-                            return registration;
-                        }
-                    }
-                }
-            }
-        }
-
-        return null;
-    }
+//    private static Registration getRegistration(ExecutionCourse executionCourse, Person person) {
+//        for (Registration registration : person.getStudents()) {
+//            for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
+//                for (Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
+//                    for (ExecutionCourse course : enrolment.getExecutionCourses()) {
+//                        if (course.equals(executionCourse)) {
+//                            return registration;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        return null;
+//    }
     
 
-    public ActionForward removeAttendsFromShift(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
+//    public ActionForward removeAttendsFromShift(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+//            HttpServletResponse response) {
+//
+//        String shiftID = request.getParameter("shiftID");
+//        String registrationID = request.getParameter("registrationID");
+//        String executionCourseID = request.getParameter("executionCourseID");
+//        String removeAll = request.getParameter("removeAll");
+//
+//        Shift shift = FenixFramework.getDomainObject(shiftID);
+//
+//        if (removeAll != null) {
+//            request.setAttribute("removeAll", removeAll);
+//        } else {
+//            Registration registration = FenixFramework.getDomainObject(registrationID);
+//            request.setAttribute("registration", registration);
+//        }
+//
+//        request.setAttribute("shift", shift);
+//        request.setAttribute("executionCourseID", executionCourseID);
+//
+//        return mapping.findForward("removeAttendsFromShift");
+//    }
 
-        String shiftID = request.getParameter("shiftID");
-        String registrationID = request.getParameter("registrationID");
-        String executionCourseID = request.getParameter("executionCourseID");
-        String removeAll = request.getParameter("removeAll");
-
-        Shift shift = FenixFramework.getDomainObject(shiftID);
-
-        if (removeAll != null) {
-            request.setAttribute("removeAll", removeAll);
-        } else {
-            Registration registration = FenixFramework.getDomainObject(registrationID);
-            request.setAttribute("registration", registration);
-        }
-
-        request.setAttribute("shift", shift);
-        request.setAttribute("executionCourseID", executionCourseID);
-
-        return mapping.findForward("removeAttendsFromShift");
-    }
-
-    public ActionForward removeAllAttendsFromShift(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
-
-        String executionCourseID = request.getParameter("executionCourseID");
-        String shiftID = request.getParameter("shiftID");
-
-        Shift shift = FenixFramework.getDomainObject(shiftID);
-        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
-
-        for (Registration registration : shift.getStudentsSet()) {
-            shift.removeAttendFromShift(registration, executionCourse);
-        }
-
-        request.setAttribute("shift", shift);
-        request.setAttribute("executionCourseID", executionCourseID);
-        request.setAttribute("registrations", shift.getStudentsSet());
-        request.setAttribute("personBean", new PersonBean());
-
-        return mapping.findForward("editShift");
-    }
+//    public ActionForward removeAllAttendsFromShift(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+//            HttpServletResponse response) {
+//
+//        String executionCourseID = request.getParameter("executionCourseID");
+//        String shiftID = request.getParameter("shiftID");
+//
+//        Shift shift = FenixFramework.getDomainObject(shiftID);
+//        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
+//
+//        for (Registration registration : shift.getStudentsSet()) {
+//            shift.removeAttendFromShift(registration, executionCourse);
+//        }
+//
+//        request.setAttribute("shift", shift);
+//        request.setAttribute("executionCourseID", executionCourseID);
+//        request.setAttribute("registrations", shift.getStudentsSet());
+//        request.setAttribute("personBean", new PersonBean());
+//
+//        return mapping.findForward("editShift");
+//    }
 }
