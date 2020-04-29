@@ -11,16 +11,23 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 import com.qubit.terra.qubAccessControl.domain.AccessControlPermission;
+import com.qubit.terra.qubAccessControl.domain.AccessControlProfile;
 
 import pt.ist.fenixframework.DomainObject;
 
 public class PermissionService {
 
+    private static BiFunction<AccessControlPermission, User, Set<AccessControlProfile>> profileProvider;
     private static BiFunction<AccessControlPermission, User, Set<DegreeType>> degreeTypeProvider;
     private static BiFunction<AccessControlPermission, User, Set<Degree>> degreeProvider;
     private static BiFunction<AccessControlPermission, User, Set<Unit>> unitProvider;
     private static BiFunction<AccessControlPermission, User, Set<? extends DomainObject>> objectsProvider;
     private static BiFunction<AccessControlPermission, User, Boolean> memberProvider;
+
+    public static void registerProfileProvider(
+            BiFunction<AccessControlPermission, User, Set<AccessControlProfile>> profileProvider) {
+        PermissionService.profileProvider = profileProvider;
+    }
 
     public static Set<DegreeType> getDegreeTypes(AccessControlPermission permission, User user) {
         return degreeTypeProvider.apply(permission, user);
@@ -117,7 +124,7 @@ public class PermissionService {
     }
 
     public static <T extends DomainObject> boolean hasAccess(AccessControlPermission permission, T object, User user) {
-        return getObjects(permission, user).contains(object);
+        return profileProvider.apply(permission, user).stream().anyMatch(profile -> profile.containsObject(object));
     }
 
     public static <T extends DomainObject> boolean hasAccess(AccessControlPermission permission, T object) {
