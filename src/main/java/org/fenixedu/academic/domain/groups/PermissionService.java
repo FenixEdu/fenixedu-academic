@@ -12,11 +12,14 @@ import org.fenixedu.bennu.core.security.Authenticate;
 
 import com.qubit.terra.qubAccessControl.domain.AccessControlPermission;
 
+import pt.ist.fenixframework.DomainObject;
+
 public class PermissionService {
 
     private static BiFunction<AccessControlPermission, User, Set<DegreeType>> degreeTypeProvider;
     private static BiFunction<AccessControlPermission, User, Set<Degree>> degreeProvider;
     private static BiFunction<AccessControlPermission, User, Set<Unit>> unitProvider;
+    private static BiFunction<AccessControlPermission, User, Set<? extends DomainObject>> objectsProvider;
     private static BiFunction<AccessControlPermission, User, Boolean> memberProvider;
 
     public static Set<DegreeType> getDegreeTypes(AccessControlPermission permission, User user) {
@@ -72,6 +75,23 @@ public class PermissionService {
         PermissionService.unitProvider = unitProvider;
     }
 
+    public static Set<? extends DomainObject> getObjects(AccessControlPermission permission, User user) {
+        return objectsProvider.apply(permission, user);
+    }
+
+    public static Set<? extends DomainObject> getObjects(String permission, User user) {
+        AccessControlPermission accessControlPermission = AccessControlPermission.findByCode(permission);
+        if (accessControlPermission == null) {
+            return new HashSet<>();
+        }
+        return getObjects(accessControlPermission, user);
+    }
+
+    public static void registerObjectsProvider(
+            BiFunction<AccessControlPermission, User, Set<? extends DomainObject>> objectsProvider) {
+        PermissionService.objectsProvider = objectsProvider;
+    }
+
     public static boolean hasAccess(AccessControlPermission permission, User user) {
         return memberProvider.apply(permission, user);
     }
@@ -94,6 +114,14 @@ public class PermissionService {
 
     public static boolean hasAccess(AccessControlPermission permission, Unit unit) {
         return hasAccess(permission, unit, Authenticate.getUser());
+    }
+
+    public static <T extends DomainObject> boolean hasAccess(AccessControlPermission permission, T object, User user) {
+        return getObjects(permission, user).contains(object);
+    }
+
+    public static <T extends DomainObject> boolean hasAccess(AccessControlPermission permission, T object) {
+        return hasAccess(permission, object, Authenticate.getUser());
     }
 
     public static boolean hasAccess(String permission, User user) {
@@ -130,6 +158,18 @@ public class PermissionService {
 
     public static boolean hasAccess(String permission, Unit unit) {
         return hasAccess(permission, unit, Authenticate.getUser());
+    }
+
+    public static <T extends DomainObject> boolean hasAccess(String permission, T object, User user) {
+        AccessControlPermission accessControlPermission = AccessControlPermission.findByCode(permission);
+        if (accessControlPermission == null) {
+            return false;
+        }
+        return hasAccess(accessControlPermission, object, user);
+    }
+
+    public static <T extends DomainObject> boolean hasAccess(String permission, T object) {
+        return hasAccess(permission, object, Authenticate.getUser());
     }
 
     public static void registerMemberProvider(BiFunction<AccessControlPermission, User, Boolean> isMemberProvider) {
