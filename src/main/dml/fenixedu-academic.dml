@@ -1788,6 +1788,7 @@ class Installation {
 	// Support e-mail for academic troubleshooting
 	// Should be marked as required in future versions
 	String academicEmailAddress;
+	boolean forceSendingEmailsToInstituitionAddress;
 }
 
 class accessControl.PersistentRoleGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup {

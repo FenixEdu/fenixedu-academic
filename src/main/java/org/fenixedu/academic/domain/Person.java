@@ -27,6 +27,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -933,14 +934,16 @@ public class Person extends Person_Base {
         if (disableSendEmails != null && disableSendEmails.booleanValue()) {
             return null;
         }
-        final EmailAddress defaultEmailAddress = getDefaultEmailAddress();
-        if (defaultEmailAddress != null) {
-            return defaultEmailAddress;
+
+        boolean firstInstitutional = Installation.getInstance().getForceSendingEmailsToInstituitionAddress();
+
+        final EmailAddress emailAddress = firstInstitutional ? Optional.ofNullable(getInstitutionalEmailAddress())
+                .orElseGet(() -> getDefaultEmailAddress()) : Optional.ofNullable(getDefaultEmailAddress())
+                        .orElseGet(() -> getInstitutionalEmailAddress());
+        if (emailAddress != null) {
+            return emailAddress;
         }
-        final EmailAddress institutionalEmailAddress = getInstitutionalEmailAddress();
-        if (institutionalEmailAddress != null) {
-            return institutionalEmailAddress;
-        }
+
         for (final PartyContact partyContact : getPartyContactsSet()) {
             if (partyContact.isEmailAddress() && partyContact.isActiveAndValid() && partyContact.isValid()) {
                 final EmailAddress otherEmailAddress = (EmailAddress) partyContact;
