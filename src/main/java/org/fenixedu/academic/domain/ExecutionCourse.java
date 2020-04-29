@@ -27,6 +27,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -794,43 +795,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     @Override
     public String getNome() {
-        if (I18N.getLocale().getLanguage().equals("en") && !getAssociatedCurricularCoursesSet().isEmpty()) {
-            final StringBuilder stringBuilder = new StringBuilder();
-
-            final Set<String> names = new HashSet<String>();
-
-            for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-                if (curricularCourse.isActive(getExecutionInterval())) {
-                    final String name = curricularCourse.getNameEn();
-                    if (!names.contains(name)) {
-                        names.add(name);
-                        if (stringBuilder.length() > 0) {
-                            stringBuilder.append(" / ");
-                        }
-                        stringBuilder.append(name);
-                    }
-                }
-            }
-
-            if (stringBuilder.length() > 0) {
-                return stringBuilder.toString();
-            }
-
-            boolean unique = true;
-            final String nameEn = getAssociatedCurricularCoursesSet().iterator().next().getNameEn();
-
-            for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-                if (curricularCourse.getNameEn() == null || !curricularCourse.getNameEn().equals(nameEn)) {
-                    unique = false;
-                    break;
-                }
-            }
-
-            if (unique) {
-                return nameEn;
-            } else {
-                return super.getNome();
-            }
+        if (I18N.getLocale().getLanguage().equals(Locale.ENGLISH.getLanguage())) {
+            return getCompetenceCoursesInformations().stream().map(cci -> cci.getNameEn()).distinct()
+                    .collect(Collectors.joining(" / "));
         }
         return super.getNome();
     }
