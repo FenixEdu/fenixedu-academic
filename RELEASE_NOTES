@@ -1,3 +1,4 @@
+30.1.0 (02-05-2020)
 - New feature: Allow force sending emails to institution address
 - Improvement: Allow deletion of empty degree types
 - Refactor: Optimize execution course name getter when english locale selected
