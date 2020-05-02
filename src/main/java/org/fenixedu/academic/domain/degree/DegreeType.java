@@ -227,18 +227,26 @@ public class DegreeType extends DegreeType_Base implements Comparable<DegreeType
         }
         return nonNull.and(one);
     }
-    
+
     public boolean isActive() {
         return super.getActive() == null || super.getActive();
     }
-    
+
     public static Stream<DegreeType> allActive() {
         return Bennu.getInstance().getDegreeTypeSet().stream().filter(dt -> dt.isActive());
     }
-    
+
     public static Collection<DegreeType> allWithDegrees() {
         return Bennu.getInstance().getDegreeTypeSet().stream().filter(dt -> !dt.getDegreeSet().isEmpty())
                 .collect(Collectors.toSet());
+    }
+
+    public void delete() {
+        if (!getDegreeSet().isEmpty()) {
+            throw new DomainException("error.DegreeType.delete.hasDegrees");
+        }
+        setBennu(null);
+        super.deleteDomainObject();
     }
 
 }
