@@ -6,7 +6,7 @@
 	<meta http-equiv="refresh" content="0; url=${pageContext.request.contextPath}/login" />	
 <%
 	} else{
-	    final String redirectionPath = org.fenixedu.ulisboa.specifications.authentication.ULisboaAuthenticationRedirector.getRedirectionPath(request);
+	    final String redirectionPath = org.fenixedu.academic.servlet.AuthenticationRedirector.getRedirectionPath(request);
 	    request.setAttribute("path", redirectionPath != null ? redirectionPath : PortalConfiguration.getInstance().getMenu().getUserMenuStream().findFirst().get().getPath());
 %>
 	<meta http-equiv="refresh" content="0; url=${pageContext.request.contextPath}/${path}" />
