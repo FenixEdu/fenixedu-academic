@@ -1,3 +1,5 @@
+- Improvement: Moved AuthenticationRedirector to academic core
+
 30.1.0 (02-05-2020)
 - New feature: Allow force sending emails to institution address
 - Improvement: Allow deletion of empty degree types
