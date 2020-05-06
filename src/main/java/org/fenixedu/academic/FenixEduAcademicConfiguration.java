@@ -57,14 +57,6 @@ public class FenixEduAcademicConfiguration {
                 description = "Identifies the default social security number to be used in the country (e.g. for Portugal it is 999999990)")
         public String getDefaultSocialSecurityNumber();
 
-        @ConfigurationProperty(key = "generic.application.email.confirmation.link",
-                defaultValue = "http://localhost:8080/fenix/publico/genericApplications.do?method=confirmEmail&confirmationCode=")
-        public String getGenericApplicationEmailConfirmationLink();
-
-        @ConfigurationProperty(key = "generic.application.email.recommendation.link",
-                defaultValue = "http://localhost:8080/fenix/publico/genericApplications.do?method=uploadRecommendation&confirmationCode=")
-        public String getGenericApplicationEmailRecommendationLink();
-
         @ConfigurationProperty(key = "mailSender.max.recipients", defaultValue = "50")
         public String getMailSenderMaxRecipients();
 
@@ -77,20 +69,6 @@ public class FenixEduAcademicConfiguration {
         @ConfigurationProperty(key = "physicalAddress.requiresValidation")
         public Boolean getPhysicalAddressRequiresValidation();
 
-        @ConfigurationProperty(key = "raides.request.info", defaultValue = "false")
-        public Boolean getRaidesRequestInfo();
-
-        @ConfigurationProperty(key = "receipt.min.year.to.create", defaultValue = "2006")
-        public Integer getReceiptMinYearToCreate();
-
-        @ConfigurationProperty(key = "receipt.numberSeries.for.years", defaultValue = "")
-        public String getReceiptNumberSeriesForYears();
-
-        @ConfigurationProperty(key = "sibs.entityCode",
-                description = "institution entity code to be used in atm machines with reference to perform payments",
-                defaultValue = "1111")
-        public String getSibsEntityCode();
-
         @ConfigurationProperty(key = "twilio.from.number")
         public String getTwilioFromNumber();
 
@@ -99,15 +77,6 @@ public class FenixEduAcademicConfiguration {
 
         @ConfigurationProperty(key = "twilio.stoken")
         public String getTwilioStoken();
-
-        @ConfigurationProperty(key = "webServices.internationalRegistration.username")
-        public String getWebServicesInternationalRegistrationUsername();
-
-        @ConfigurationProperty(key = "webServices.internationalRegistration.password")
-        public String getWebServicesInternationalRegistrationPassword();
-
-        @ConfigurationProperty(key = "webServices.internationalRegistration.url")
-        public String getWebServicesInternationalRegistrationUrl();
 
         @ConfigurationProperty(key = "maximum.number.of.credits.for.enrolment", defaultValue = "40.5")
         public double getMaximumNumberOfCreditsForEnrolment();
