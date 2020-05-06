@@ -2002,7 +2002,7 @@ relation AdministrativeOfficeResponsible {
         multiplicity *;
     }
     public .org.fenixedu.bennu.core.domain.User playsRole coordinator {
-        multiplicity 1..1;
+        multiplicity 0..1;
     }
 }
 
