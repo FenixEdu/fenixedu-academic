@@ -287,14 +287,13 @@ public class FenixBootstrapper {
                 }
             }
 
-            final LocalizedString countryName = new LocalizedString(PT, localizedNamePT);
-            countryName.append(new LocalizedString(EN, localizedNameEN));
+            final LocalizedString countryName = new LocalizedString(PT, localizedNamePT).with(EN, localizedNameEN);
+            final LocalizedString nationality = new LocalizedString(PT, nationalityPT).with(EN, nationalityEN);
 
             final String code = metaData.alpha2;
             final String threeLetterCode = metaData.alpha3;
 
-            final Country country = new Country(countryName,
-                    new LocalizedString(PT, nationalityPT).append(new LocalizedString(EN, nationalityEN)), code, threeLetterCode);
+            final Country country = new Country(countryName, nationality, code, threeLetterCode);
             if (StringUtils.equals(threeLetterCode, schoolSection.getCountryCode().toUpperCase())) {
                 defaultCountry = country;
             }
@@ -363,8 +362,8 @@ public class FenixBootstrapper {
     private static void createCountryUnits(final Bennu rootDomainObject, final Unit planetUnit) {
         final AccountabilityType accountabilityType = AccountabilityType.readByType(AccountabilityTypeEnum.GEOGRAPHIC);
         for (final Country country : Country.readDistinctCountries()) {
-            Unit.createNewUnit(PartyType.of(PartyTypeEnum.COUNTRY), new LocalizedString(Locale.getDefault(), country.getName()),
-                    country.getCode(), planetUnit, accountabilityType);
+            Unit.createNewUnit(PartyType.of(PartyTypeEnum.COUNTRY), country.getLocalizedName(), country.getCode(), planetUnit,
+                    accountabilityType);
         }
     }
 
