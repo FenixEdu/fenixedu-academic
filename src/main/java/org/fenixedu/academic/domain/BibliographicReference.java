@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain;
 
 import java.util.Comparator;
 
+import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 public class BibliographicReference extends BibliographicReference_Base {
@@ -50,6 +51,14 @@ public class BibliographicReference extends BibliographicReference_Base {
 
     public boolean isOptional() {
         return getOptional() != null && getOptional();
+    }
+
+    public BibliographicReferenceType getType() {
+        return isOptional() ? BibliographicReferenceType.SECONDARY : BibliographicReferenceType.MAIN;
+    }
+
+    public void setType(BibliographicReferenceType type) {
+        setOptional(BibliographicReferenceType.SECONDARY.equals(type));
     }
 
     public void delete() {
