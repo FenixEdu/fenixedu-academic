@@ -1,6 +1,7 @@
 - Improvement: AdministrativeOffice coordinator not mandatory
 - Fix: Bootstrap countries with english names
 - Refactor: Clean unused configuration properties
+- Refactor: Remove initialization of default shift capacities
 
 30.2.0 (05-05-2020)
 - Improvement: Moved AuthenticationRedirector to academic core
