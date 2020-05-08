@@ -1,3 +1,4 @@
+30.3.0 (08-05-2020)
 - Improvement: AdministrativeOffice coordinator not mandatory
 - Fix: Bootstrap countries with english names
 - Refactor: Clean unused configuration properties
