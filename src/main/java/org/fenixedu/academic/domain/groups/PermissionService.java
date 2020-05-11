@@ -1,8 +1,11 @@
 package org.fenixedu.academic.domain.groups;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.degree.DegreeType;
@@ -181,5 +184,15 @@ public class PermissionService {
 
     public static void registerMemberProvider(BiFunction<AccessControlPermission, User, Boolean> isMemberProvider) {
         PermissionService.memberProvider = isMemberProvider;
+    }
+
+    public static <T extends DomainObject> Collection<T> filter(String permission, Collection<T> objects) {
+        User user = Authenticate.getUser();
+        return objects.stream().filter(o -> hasAccess(permission, o, user)).collect(Collectors.toList());
+    }
+
+    public static <T extends DomainObject> Stream<T> filter(String permission, Stream<T> objects) {
+        User user = Authenticate.getUser();
+        return objects.filter(o -> hasAccess(permission, o, user));
     }
 }
