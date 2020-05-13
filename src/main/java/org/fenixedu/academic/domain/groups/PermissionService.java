@@ -97,6 +97,19 @@ public class PermissionService {
         return getObjects(accessControlPermission, user);
     }
 
+    public static <T extends DomainObject> Set<T> getObjects(AccessControlPermission permission, Class<T> clazz, User user) {
+        return (Set<T>) profileProvider.apply(permission, user).stream().filter(p -> p.getFenixMemberSet().contains(user))
+                .flatMap(p -> p.provideObjects().stream()).collect(Collectors.toSet());
+    }
+
+    public static <T extends DomainObject> Set<T> getObjects(String permission, Class<T> clazz, User user) {
+        AccessControlPermission accessControlPermission = AccessControlPermission.findByCode(permission);
+        if (accessControlPermission == null) {
+            return new HashSet<>();
+        }
+        return getObjects(accessControlPermission, clazz, user);
+    }
+
     public static void registerObjectsProvider(
             BiFunction<AccessControlPermission, User, Set<? extends DomainObject>> objectsProvider) {
         PermissionService.objectsProvider = objectsProvider;
@@ -188,11 +201,18 @@ public class PermissionService {
 
     public static <T extends DomainObject> Collection<T> filter(String permission, Collection<T> objects) {
         User user = Authenticate.getUser();
-        return objects.stream().filter(o -> hasAccess(permission, o, user)).collect(Collectors.toList());
+        // Obtaining the class of the objects in the collection
+        // with objects.stream().findFirst().get().getClass()
+        // is a problem if the collection has more than one type
+        // of objects.
+        //
+        // Daniel Pires - 13 May 2020
+        //
+        objects.retainAll(getObjects(permission, objects.stream().findFirst().get().getClass(), user));
+        return objects;
     }
 
     public static <T extends DomainObject> Stream<T> filter(String permission, Stream<T> objects) {
-        User user = Authenticate.getUser();
-        return objects.filter(o -> hasAccess(permission, o, user));
+        return filter(permission, objects.collect(Collectors.toSet())).stream();
     }
 }
