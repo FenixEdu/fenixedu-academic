@@ -1,7 +1,7 @@
 package org.fenixedu.academic.domain.groups;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiFunction;
@@ -202,7 +202,7 @@ public class PermissionService {
 
     public static <T extends DomainObject> Collection<T> filter(String permission, Collection<T> objects) {
         User user = Authenticate.getUser();
-        Collection<T> result = Collections.emptySet();
+        Collection<T> result = new ArrayList<>();
         result.addAll(objects);
         // Obtaining the class of the objects in the collection
         // with objects.stream().findFirst().get().getClass()
