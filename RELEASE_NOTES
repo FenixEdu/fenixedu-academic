@@ -1,3 +1,5 @@
+- Fix: Context intervals intersection should be with execution aggregators
+
 30.3.1 (08-05-2020)
 - Improvement: Add type getter/setter to BibliographicReference
 

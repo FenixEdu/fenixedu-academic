@@ -298,10 +298,10 @@ public class Context extends Context_Base implements Comparable<Context> {
             throw new DomainException("context.begin.is.after.end.execution.period");
         }
 
-        if (begin.isAfterOrEquals(getBeginExecutionInterval())) {
-            return getEndExecutionInterval() == null || begin.isBeforeOrEquals(getEndExecutionInterval());
+        if (begin.getExecutionYear().isAfterOrEquals(getBeginExecutionInterval())) {
+            return getEndExecutionInterval() == null || begin.getExecutionYear().isBeforeOrEquals(getEndExecutionInterval());
         } else {
-            return end == null || end.isAfterOrEquals(getBeginExecutionInterval());
+            return end == null || end.getExecutionYear().isAfterOrEquals(getBeginExecutionInterval());
         }
     }
 
