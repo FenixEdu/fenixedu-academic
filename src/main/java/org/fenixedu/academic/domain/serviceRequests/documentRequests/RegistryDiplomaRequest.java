@@ -137,9 +137,6 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
             if (!getProgramConclusion().isConclusionProcessed(getRegistration())) {
                 throw new DomainException("error.registryDiploma.registrationNotSubmitedToConclusionProcess");
             }
-            if (!getFreeProcessed()) {
-                assertPayedEvents();
-            }
             if (isPayable() && !isPayed()) {
                 throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
             }

@@ -110,50 +110,6 @@ public abstract class DocumentRequest extends DocumentRequest_Base implements ID
     }
 
     @Override
-    protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
-        super.internalChangeState(academicServiceRequestBean);
-
-        if (academicServiceRequestBean.isToProcess()) {
-            if (!getFreeProcessed()) {
-                assertPayedEvents();
-            }
-        }
-    }
-
-    protected static BiPredicate<Event,DateTime> isOpenAndAfterDueDate = (event, when) -> !event.isCancelled() && event
-            .isOpenAndAfterDueDate(when);
-
-    protected static BiPredicate<Event,ExecutionYear> isFor = (event, executionYear) -> executionYear == null || ((event instanceof
-            AnnualEvent) && ((AnnualEvent) event).getExecutionYear() == executionYear);
-
-    protected void assertPayedEvents(ExecutionYear executionYear) {
-        final DateTime now = DateTime.now();
-
-        if (getRegistration().getStudentCurricularPlansSet().stream().flatMap(scp -> scp.getGratuityEventsSet().stream())
-                .anyMatch(e -> isFor.test(e, executionYear) && isOpenAndAfterDueDate.test(e, now))) {
-            throw new DomainException("DocumentRequest.registration.has.not.payed.gratuities");
-        }
-
-        if (getPerson().getEventsByEventType(EventType.INSURANCE).stream().anyMatch(e -> isFor.test(e, executionYear) &&
-                isOpenAndAfterDueDate.test(e, now))) {
-            throw new DomainException("DocumentRequest.registration.has.not.payed.insurance.fees");
-        }
-
-        if (Stream.concat(getPerson().getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE).stream(), getPerson()
-                .getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE).stream())
-                .filter(specificEvent -> ((AcademicEvent)specificEvent).getAdministrativeOffice() == getAdministrativeOffice())
-                .anyMatch(e -> isFor.test(e, executionYear) && isOpenAndAfterDueDate.test(e, now))) {
-            
-            throw new DomainException("DocumentRequest.registration.has.not.payed.administrative.office.fees");
-        }
-
-    }
-
-    protected void assertPayedEvents() {
-        assertPayedEvents(null);
-    }
-
-    @Override
     public boolean isDownloadPossible() {
         return getLastGeneratedDocument() != null && !isCancelled() && !isRejected();
     }

@@ -164,15 +164,6 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
                         "DegreeFinalizationCertificateRequest.registration.registryRequestIsNotSentToExternalEntity");
             }
 
-            if (!getFreeProcessed()) {
-                final Optional<CurriculumGroup> curriculumGroup = getProgramConclusion().groupFor(getRegistration());
-                if (curriculumGroup.isPresent()) {
-                    assertPayedEvents(curriculumGroup.get().getIEnrolmentsLastExecutionYear());
-                } else {
-                    assertPayedEvents();
-                }
-            }
-
             if (hasPersonalInfo() && hasMissingPersonalInfo()) {
                 throw new DomainException("AcademicServiceRequest.has.missing.personal.info");
             }

@@ -184,14 +184,6 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
                 throw new DomainException("DiplomaRequest.registration.doesnt.have.dissertation.thesis");
             }
 
-            if (!getFreeProcessed()) {
-                if (hasCurriculumGroup()) {
-                    assertPayedEvents(getCurriculumGroup().getIEnrolmentsLastExecutionYear());
-                } else {
-                    assertPayedEvents();
-                }
-            }
-
             if (isPayable() && !isPayed()) {
                 throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
             }
