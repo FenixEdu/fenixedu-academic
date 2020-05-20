@@ -96,6 +96,9 @@ abstract public class CurricularRuleExecutor {
         case SPECIAL_SEASON_ENROLMENT:
             return executeEnrolmentInEnrolmentEvaluation(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
 
+        case ENROLMENT_PREFILTER:
+            return executeEnrolmentPrefilter(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
+
         default:
             throw new DomainException("error.curricularRules.RuleExecutor.unimplemented.rule.level");
         }
@@ -282,6 +285,12 @@ abstract public class CurricularRuleExecutor {
         }
     }
 
+    
+    protected RuleResult executeEnrolmentPrefilter(ICurricularRule curricularRule,
+            IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
+        return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
+    }
+    
     private boolean isTemporaryOrImpossible(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
             final RuleResult ruleResult) {
         return ruleResult.isTemporaryEnrolmentResultType(sourceDegreeModuleToEvaluate.getDegreeModule())

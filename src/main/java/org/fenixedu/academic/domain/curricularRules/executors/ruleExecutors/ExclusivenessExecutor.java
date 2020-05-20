@@ -132,6 +132,26 @@ public class ExclusivenessExecutor extends CurricularRuleExecutor {
     }
 
     @Override
+    protected RuleResult executeEnrolmentPrefilter(ICurricularRule curricularRule,
+            IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
+        final Exclusiveness rule = (Exclusiveness) curricularRule;
+        final DegreeModule degreeModule = rule.getExclusiveDegreeModule();
+
+        if (degreeModule.isLeaf() && isApproved(enrolmentContext, (CurricularCourse) degreeModule)) {
+            //allow unenrol when other is approved and this is enroled
+            return sourceDegreeModuleToEvaluate.isEnroled() ? RuleResult.createTrue(
+                    sourceDegreeModuleToEvaluate.getDegreeModule()) : createFalseRuleResult(rule, sourceDegreeModuleToEvaluate);
+        }
+
+        if ((isEnroled(enrolmentContext, degreeModule) || isEnrolling(enrolmentContext, degreeModule))
+                && !sourceDegreeModuleToEvaluate.isEnroled()) {
+            return createFalseRuleResult(rule, sourceDegreeModuleToEvaluate);
+        }
+
+        return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
+    }
+
+    @Override
     protected boolean canBeEvaluated(ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
             EnrolmentContext enrolmentContext) {
         Exclusiveness exclusivenessRule = (Exclusiveness) curricularRule;

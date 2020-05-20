@@ -40,7 +40,9 @@ public enum CurricularRuleLevel {
 
     STANDALONE_ENROLMENT_NO_RULES(false),
 
-    NULL_LEVEL(false);
+    NULL_LEVEL(false),
+
+    ENROLMENT_PREFILTER(true);
 
     private boolean isNormal;
 

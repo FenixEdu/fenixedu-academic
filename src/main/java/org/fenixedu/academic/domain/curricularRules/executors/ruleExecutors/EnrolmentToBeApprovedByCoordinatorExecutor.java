@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors;
 
-import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
@@ -26,6 +25,7 @@ import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
 import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.groups.PermissionService;
+import org.fenixedu.academic.util.CurricularRuleLabelFormatter;
 
 public class EnrolmentToBeApprovedByCoordinatorExecutor extends CurricularRuleExecutor {
 
@@ -45,11 +45,7 @@ public class EnrolmentToBeApprovedByCoordinatorExecutor extends CurricularRuleEx
     protected RuleResult executeEnrolmentVerificationWithRules(ICurricularRule curricularRule,
             IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
 
-        final Person responsiblePerson = enrolmentContext.getResponsiblePerson();
-        if (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS,
-                enrolmentContext.getStudentCurricularPlan().getDegree(), responsiblePerson.getUser())
-                || PermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS",
-                        enrolmentContext.getStudentCurricularPlan().getDegree(), responsiblePerson.getUser())) {
+        if (isPersonAuthorized(enrolmentContext)) {
             return RuleResult.createWarning(sourceDegreeModuleToEvaluate.getDegreeModule(),
                     "curricularRules.ruleExecutors.EnrolmentToBeApprovedByCoordinatorExecutor.degree.module.needs.aproval.by.coordinator",
                     sourceDegreeModuleToEvaluate.getName());
@@ -62,6 +58,31 @@ public class EnrolmentToBeApprovedByCoordinatorExecutor extends CurricularRuleEx
         return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
                 "curricularRules.ruleExecutors.EnrolmentToBeApprovedByCoordinatorExecutor.degree.module.needs.aproval.by.coordinator",
                 sourceDegreeModuleToEvaluate.getName());
+    }
+
+    @Override
+    protected RuleResult executeEnrolmentPrefilter(ICurricularRule curricularRule,
+            IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
+        if (isPersonAuthorized(enrolmentContext)) {
+            return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
+        }
+
+        if (!sourceDegreeModuleToEvaluate.isLeaf()) {
+            return RuleResult.createImpossibleWithLiteralMessage(sourceDegreeModuleToEvaluate.getDegreeModule(),
+                    CurricularRuleLabelFormatter.getLabel(curricularRule));
+        }
+
+        return sourceDegreeModuleToEvaluate.isEnroled() ? RuleResult
+                .createImpossibleWithLiteralMessage(sourceDegreeModuleToEvaluate.getDegreeModule(), CurricularRuleLabelFormatter
+                        .getLabel(curricularRule)) : RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule());
+    }
+
+    private boolean isPersonAuthorized(EnrolmentContext enrolmentContext) {
+        return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS,
+                enrolmentContext.getStudentCurricularPlan().getDegree(), enrolmentContext.getResponsiblePerson().getUser())
+                || PermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS",
+                        enrolmentContext.getStudentCurricularPlan().getDegree(),
+                        enrolmentContext.getResponsiblePerson().getUser());
     }
 
     @Override
