@@ -1,3 +1,4 @@
+30.4.0 (20-05-2020)
 - Improvement: added support for enrolment prefilter curricular rule level 
 - Fix: Context intervals intersection should be with execution aggregators
 
