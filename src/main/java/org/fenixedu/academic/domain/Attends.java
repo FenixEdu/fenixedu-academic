@@ -83,11 +83,6 @@ public class Attends extends Attends_Base {
 
     public Attends(Registration registration, ExecutionCourse executionCourse) {
         this();
-        final Student student = registration.getStudent();
-        if (student.hasAttends(executionCourse)) {
-            throw new DomainException("error.cannot.create.multiple.enrolments.for.student.in.execution.course",
-                    executionCourse.getNome(), executionCourse.getExecutionInterval().getQualifiedName());
-        }
         setRegistration(registration);
         setDisciplinaExecucao(executionCourse);
     }
