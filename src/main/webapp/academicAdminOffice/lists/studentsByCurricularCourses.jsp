@@ -102,11 +102,11 @@
 				</fr:slot>
 				<fr:slot name="studentCurricularPlan.registration.person.username" key="label.username" readOnly="true" />
 				<fr:slot name="studentCurricularPlan.registration.person.name" key="label.name" readOnly="true" />
-				<fr:slot name="studentCurricularPlan.registration.registrationProtocol" key="label.registrationAgreement"
+				<fr:slot name="studentCurricularPlan.registration.registrationProtocol.description" key="label.registrationAgreement"
 					readOnly="true" />
 				<fr:slot name="studentCurricularPlan.degreeCurricularPlan.degree.sigla" key="label.degree" readOnly="true" />
 				<fr:slot name="enrollmentState" key="label.state" />
-				<fr:slot name="evaluationSeason" key="label.epoca" />
+				<fr:slot name="evaluationSeason.name" key="label.epoca" />
 			</fr:schema>
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thright thlight thcenter" />
