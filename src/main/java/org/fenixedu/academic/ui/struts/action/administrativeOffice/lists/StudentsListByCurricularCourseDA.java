@@ -244,6 +244,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
                     .getContent());
             spreadsheet.addCell(registrationWithStateForExecutionYearBean.getEnrollmentState().getDescription());
             spreadsheet.addCell(registrationWithStateForExecutionYearBean.getEvaluationSeason().getName().getContent());
+            spreadsheet.addCell(registrationWithStateForExecutionYearBean.getNumberOfTotalEnrolmentsInThisCourse(executionYear.getLastExecutionPeriod()));
             if (detailed) {
                 spreadsheet.addCell(registration.getPerson().hasDefaultEmailAddress() ? registration.getPerson()
                         .getDefaultEmailAddressValue() : "-");
@@ -274,6 +275,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
         spreadsheet.addHeader(getResourceMessage("label.degree"));
         spreadsheet.addHeader(getResourceMessage("label.state"));
         spreadsheet.addHeader(getResourceMessage("label.epoch"));
+        spreadsheet.addHeader(getResourceMessage("label.student.enrolments"));
         if (detailed) {
             spreadsheet.addHeader(getResourceMessage("label.email"));
             spreadsheet.addHeader(getResourceMessage("label.institutional.email"));
