@@ -102,6 +102,10 @@ public class StudentGroupingService {
     @Atomic
     public void createStudentGroup(Grouping grouping, Shift shift, List<Person> personList) {
 
+        if (grouping.getGroupMaximumNumber() <= grouping.getStudentGroupsSet().size()) {
+            throw new DomainException("error.grouping.maxGroupsNumber");
+        }
+
         if (!personList.contains(AccessControl.getPerson())) {
             personList.add(AccessControl.getPerson());
         }
