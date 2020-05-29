@@ -242,23 +242,12 @@ public class MergeExecutionCourses {
 
     private static void copyAttends(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
             throws FenixServiceException {
-        for (Attends attends : executionCourseFrom.getAttendsSet()) {
-            final Attends otherAttends = executionCourseTo.getAttendsByStudent(attends.getRegistration());
-            if (otherAttends == null) {
-                attends.setDisciplinaExecucao(executionCourseTo);
+        for (Attends attendsFrom : executionCourseFrom.getAttendsSet()) {
+            final Attends attendsTo = executionCourseTo.getAttendsByStudent(attendsFrom.getRegistration());
+            if (attendsTo == null) {
+                attendsFrom.setDisciplinaExecucao(executionCourseTo);
             } else {
-                if (attends.getEnrolment() != null && otherAttends.getEnrolment() == null) {
-                    otherAttends.setEnrolment(attends.getEnrolment());
-                } else if (otherAttends.getEnrolment() != null && attends.getEnrolment() == null) {
-                    // do nothing.
-                } else if (otherAttends.getEnrolment() != null && attends.getEnrolment() != null) {
-                    throw new FenixServiceException("Unable to merge execution courses. Registration "
-                            + attends.getRegistration().getNumber() + " has an enrolment in both.");
-                }
-                for (Mark mark : attends.getAssociatedMarksSet()) {
-                    otherAttends.addAssociatedMarks(mark);
-                }
-                attends.delete();
+                mergeAttends(attendsFrom, attendsTo);
             }
         }
 
@@ -282,6 +271,29 @@ public class MergeExecutionCourses {
                 attend.setDisciplinaExecucao(executionCourseTo);
             }
         }
+    }
+
+    private static void mergeAttends(Attends attendsFrom, final Attends attendsTo) throws FenixServiceException {
+        if (attendsFrom.getEnrolment() != null && attendsTo.getEnrolment() == null) {
+            attendsTo.setEnrolment(attendsFrom.getEnrolment());
+        } else if (attendsTo.getEnrolment() != null && attendsFrom.getEnrolment() == null) {
+            // do nothing.
+        } else if (attendsTo.getEnrolment() != null && attendsFrom.getEnrolment() != null) {
+            if (attendsFrom.getEnrolment().isAnnulled()) {
+                attendsFrom.delete();
+            } else if (attendsTo.getEnrolment().isAnnulled()) {
+                attendsTo.setEnrolment(attendsFrom.getEnrolment());
+                attendsFrom.delete();
+            } else {
+                throw new FenixServiceException("Unable to merge execution courses. Registration "
+                        + attendsFrom.getRegistration().getNumber() + " has an enrolment in both.");
+            }
+            return;
+        }
+        for (Mark mark : attendsFrom.getAssociatedMarksSet()) {
+            attendsTo.addAssociatedMarks(mark);
+        }
+        attendsFrom.delete();
     }
 
     private static void copyProfessorships(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
