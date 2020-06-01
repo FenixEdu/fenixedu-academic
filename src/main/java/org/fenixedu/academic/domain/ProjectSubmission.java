@@ -18,16 +18,15 @@
  */
 package org.fenixedu.academic.domain;
 
-import java.util.Comparator;
-
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
-
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
+
+import java.util.Comparator;
 
 public class ProjectSubmission extends ProjectSubmission_Base {
 
@@ -38,22 +37,19 @@ public class ProjectSubmission extends ProjectSubmission_Base {
     private static class ProjectSubmissionProjectListener extends RelationAdapter<ProjectSubmission, Project> {
 
         @Override
-        public void beforeAdd(ProjectSubmission projectSubmission, Project project) {
-
+        public void beforeAdd(final ProjectSubmission projectSubmission, final Project project) {
             if (project != null && projectSubmission != null) {
                 if (!project.isSubmissionPeriodOpen()) {
                     throw new DomainException("error.project.submissionPeriodAlreadyExpired");
                 }
-
-                if (!project.canAddNewSubmissionWithoutExceedLimit(projectSubmission.getStudentGroup())) {
-                    project.getOldestProjectSubmissionForStudentGroup(projectSubmission.getStudentGroup()).delete();
-                }
-
-                if (projectSubmission.getStudentGroup().getGrouping() != project.getGrouping()) {
+                final StudentGroup studentGroup = projectSubmission.getStudentGroup();
+                if (studentGroup.getGrouping() != project.getGrouping()) {
                     throw new DomainException("error.project.studentGroupDoesNotBelongToProjectGrouping");
                 }
+                if (!project.canAddNewSubmissionWithoutExceedLimit(studentGroup)) {
+                    project.getOldestProjectSubmissionForStudentGroup(studentGroup).delete();
+                }
             }
-
             super.beforeAdd(projectSubmission, project);
         }
 
@@ -78,10 +74,9 @@ public class ProjectSubmission extends ProjectSubmission_Base {
                 .addComparator(COMPARATOR_BY_MOST_RECENT_SUBMISSION_DATE);
     }
 
-    public ProjectSubmission(Project project, StudentGroup studentGroup, Attends attends,
-            ProjectSubmissionFile projectSubmissionFile) {
+    public ProjectSubmission(final Project project, final StudentGroup studentGroup, final Attends attends,
+                             final ProjectSubmissionFile projectSubmissionFile) {
         super();
-
         setRootDomainObject(Bennu.getInstance());
         setSubmissionDateTime(new DateTime());
         setStudentGroup(studentGroup);
@@ -107,12 +102,12 @@ public class ProjectSubmission extends ProjectSubmission_Base {
 
     @Deprecated
     public java.util.Date getSubmission() {
-        org.joda.time.DateTime dt = getSubmissionDateTime();
+        final org.joda.time.DateTime dt = getSubmissionDateTime();
         return (dt == null) ? null : new java.util.Date(dt.getMillis());
     }
 
     @Deprecated
-    public void setSubmission(java.util.Date date) {
+    public void setSubmission(final java.util.Date date) {
         if (date == null) {
             setSubmissionDateTime(null);
         } else {

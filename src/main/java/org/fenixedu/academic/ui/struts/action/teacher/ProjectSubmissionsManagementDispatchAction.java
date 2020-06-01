@@ -40,6 +40,7 @@ import org.fenixedu.academic.domain.Project;
 import org.fenixedu.academic.domain.ProjectSubmission;
 import org.fenixedu.academic.domain.ProjectSubmissionLog;
 import org.fenixedu.academic.domain.StudentGroup;
+import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.dto.VariantBean;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.teacher.NotifyStudentGroup;
@@ -84,9 +85,8 @@ public class ProjectSubmissionsManagementDispatchAction extends ExecutionCourseB
             HttpServletResponse response) throws FenixActionException {
 
         final Project project = getProject(request);
-        final List<ProjectSubmission> projectSubmissions =
-                new ArrayList<ProjectSubmission>(project.getProjectSubmissionsByStudentGroup(getStudentGroup(request)));
-        Collections.sort(projectSubmissions, ProjectSubmission.COMPARATOR_BY_MOST_RECENT_SUBMISSION_DATE);
+        final StudentGroup studentGroup = getStudentGroup(request);
+        final List<ProjectSubmission> projectSubmissions = project.getProjectSubmissionsByStudentGroup(studentGroup);
 
         final List<ProjectSubmissionLog> projectSubmissionLogs =
                 new ArrayList<ProjectSubmissionLog>(project.getProjectSubmissionLogsByStudentGroup(getStudentGroup(request)));

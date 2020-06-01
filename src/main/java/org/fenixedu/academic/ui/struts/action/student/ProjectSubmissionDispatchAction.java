@@ -137,10 +137,7 @@ public class ProjectSubmissionDispatchAction extends FenixDispatchAction {
 
     private List<ProjectSubmission> getProjectSubmissionsForStudentGroupSortedByMostRecent(final Project project,
             final StudentGroup studentGroup) {
-        final List<ProjectSubmission> projectSubmissionsSortedByMostRecent =
-                new ArrayList<ProjectSubmission>(project.getProjectSubmissionsByStudentGroup(studentGroup));
-        Collections.sort(projectSubmissionsSortedByMostRecent, ProjectSubmission.COMPARATOR_BY_MOST_RECENT_SUBMISSION_DATE);
-        return projectSubmissionsSortedByMostRecent;
+        return project.getProjectSubmissionsByStudentGroup(studentGroup);
     }
 
     public ActionForward prepareProjectSubmission(ActionMapping mapping, ActionForm form, HttpServletRequest request,
