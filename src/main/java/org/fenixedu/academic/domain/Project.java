@@ -22,14 +22,6 @@
  */
 package org.fenixedu.academic.domain;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.GroupEnrolment;
 import org.fenixedu.academic.domain.util.icalendar.EvaluationEventBean;
@@ -41,8 +33,10 @@ import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Project extends Project_Base {
 
@@ -125,7 +119,7 @@ public class Project extends Project_Base {
         setDescription((description != null) ? description : "");
 
         if (!getProjectSubmissionsSet().isEmpty()) {
-            if (!getGrouping().equals(grouping) || !getOnlineSubmissionsAllowed().equals(onlineSubmissionsAllowed)
+            if (getGrouping() != grouping || !getOnlineSubmissionsAllowed().equals(onlineSubmissionsAllowed)
                     || !getMaxSubmissionsToKeep().equals(maxSubmissionsToKeep)) {
                 throw new DomainException("error.project.onlineSubmissionOptionsCannotBeChangedBecauseSubmissionsAlreadyExist");
             }
@@ -165,7 +159,7 @@ public class Project extends Project_Base {
 
     @Deprecated
     public java.util.Date getBegin() {
-        org.joda.time.DateTime dt = getProjectBeginDateTime();
+        final org.joda.time.DateTime dt = getProjectBeginDateTime();
         return (dt == null) ? null : new java.util.Date(dt.getMillis());
     }
 
@@ -176,7 +170,7 @@ public class Project extends Project_Base {
 
     @Deprecated
     public java.util.Date getEnd() {
-        org.joda.time.DateTime dt = getProjectEndDateTime();
+        final org.joda.time.DateTime dt = getProjectEndDateTime();
         return (dt == null) ? null : new java.util.Date(dt.getMillis());
     }
 
@@ -195,31 +189,13 @@ public class Project extends Project_Base {
     }
 
     public boolean canAddNewSubmissionWithoutExceedLimit(StudentGroup studentGroup) {
-        return (countProjectSubmissionsForStudentGroup(studentGroup) + 1) <= getMaxSubmissionsToKeep()
+        return studentGroup.getProjectSubmissionsSet().size() <= getMaxSubmissionsToKeep()
                 && !(studentGroup.wasDeleted());
     }
 
-    public int countProjectSubmissionsForStudentGroup(StudentGroup studentGroup) {
-        int count = 0;
-
-        for (ProjectSubmission projectSubmission : getProjectSubmissionsSet()) {
-            if (projectSubmission.getStudentGroup() == studentGroup) {
-                count++;
-            }
-        }
-
-        return count;
-    }
-
     public boolean isSubmissionPeriodOpen() {
-        DateTime currentDateTime = new DateTime();
-
-        if ((currentDateTime.compareTo(getProjectBeginDateTime()) < 0)
-                || (currentDateTime.compareTo(getProjectEndDateTime()) > 0)) {
-            return false;
-        } else {
-            return true;
-        }
+        final DateTime now = new DateTime();
+        return !getProjectBeginDateTime().isAfter(now) && !getProjectEndDateTime().isBefore(now);
     }
 
     public boolean isCanComment() {
@@ -247,94 +223,46 @@ public class Project extends Project_Base {
         super.delete();
     }
 
-    public List<ProjectSubmission> getProjectSubmissionsByStudentGroup(StudentGroup studentGroup) {
-        List<ProjectSubmission> result = new ArrayList<ProjectSubmission>();
-
-        for (ProjectSubmission projectSubmission : getProjectSubmissionsSet()) {
-            if (projectSubmission.getStudentGroup() == studentGroup) {
-                result.add(projectSubmission);
-            }
-        }
-
+    public List<ProjectSubmission> getProjectSubmissionsByStudentGroup(final StudentGroup studentGroup) {
+        final List<ProjectSubmission> result = new ArrayList<ProjectSubmission>(studentGroup.getProjectSubmissionsSet());
+        Collections.sort(result, ProjectSubmission.COMPARATOR_BY_MOST_RECENT_SUBMISSION_DATE);
         return result;
     }
 
-    public ProjectSubmission getOldestProjectSubmissionForStudentGroup(StudentGroup studentGroup) {
-        ProjectSubmission oldestProjectSubmission = null;
-        for (ProjectSubmission projectSubmission : getProjectSubmissionsByStudentGroup(studentGroup)) {
-            if (oldestProjectSubmission == null) {
-                oldestProjectSubmission = projectSubmission;
-            } else if (projectSubmission.getSubmissionDateTime().compareTo(oldestProjectSubmission.getSubmissionDateTime()) < 0) {
-                oldestProjectSubmission = projectSubmission;
-            }
-        }
-
-        return oldestProjectSubmission;
+    public ProjectSubmission getOldestProjectSubmissionForStudentGroup(final StudentGroup studentGroup) {
+        return studentGroup.getProjectSubmissionsSet().stream()
+                .max(ProjectSubmission.COMPARATOR_BY_MOST_RECENT_SUBMISSION_DATE).orElse(null);
     }
 
     public Collection<ProjectSubmission> getLastProjectSubmissionForEachStudentGroup() {
-        final Map<StudentGroup, ProjectSubmission> lastProjectSubmissionByStudentGroup =
-                new HashMap<StudentGroup, ProjectSubmission>();
-
-        for (final ProjectSubmission projectSubmission : getProjectSubmissionsSet()) {
-            final StudentGroup studentGroup = projectSubmission.getStudentGroup();
-
-            if (studentGroup.wasDeleted()) {
-                continue;
-            }
-            final ProjectSubmission lastProjectSubmission = lastProjectSubmissionByStudentGroup.get(studentGroup);
-
-            if (lastProjectSubmission == null) {
-                lastProjectSubmissionByStudentGroup.put(studentGroup, projectSubmission);
-            } else if (projectSubmission.getSubmissionDateTime().compareTo(lastProjectSubmission.getSubmissionDateTime()) > 0) {
-                lastProjectSubmissionByStudentGroup.put(studentGroup, projectSubmission);
-            }
-        }
-
-        return lastProjectSubmissionByStudentGroup.values();
+        return getProjectSubmissionsSet().stream()
+                .filter(submission -> !submission.getStudentGroup().wasDeleted())
+                .collect(Collectors.toMap(
+                        submission -> submission.getStudentGroup(),
+                        submission -> submission,
+                        (s1, s2) -> s1.getSubmissionDateTime().compareTo(s2.getSubmissionDateTime()) >= 0 ? s1 : s2
+                )).values();
     }
 
     public Collection<ProjectSubmission> getLastProjectSubmissionForEachDeletedStudentGroup() {
-        final Map<StudentGroup, ProjectSubmission> lastProjectSubmissionByStudentGroup =
-                new HashMap<StudentGroup, ProjectSubmission>();
-
-        for (final ProjectSubmission projectSubmission : getProjectSubmissionsSet()) {
-            final StudentGroup studentGroup = projectSubmission.getStudentGroup();
-
-            if (!studentGroup.wasDeleted()) {
-                continue;
-            }
-
-            final ProjectSubmission lastProjectSubmission = lastProjectSubmissionByStudentGroup.get(studentGroup);
-
-            if (lastProjectSubmission == null) {
-                lastProjectSubmissionByStudentGroup.put(studentGroup, projectSubmission);
-            } else if (projectSubmission.getSubmissionDateTime().compareTo(lastProjectSubmission.getSubmissionDateTime()) > 0) {
-                lastProjectSubmissionByStudentGroup.put(studentGroup, projectSubmission);
-            }
-        }
-
-        return lastProjectSubmissionByStudentGroup.values();
+        return getProjectSubmissionsSet().stream()
+                .filter(submission -> submission.getStudentGroup().wasDeleted())
+                .collect(Collectors.toMap(
+                        submission -> submission.getStudentGroup(),
+                        submission -> submission,
+                        (s1, s2) -> s1.getSubmissionDateTime().compareTo(s2.getSubmissionDateTime()) >= 0 ? s1 : s2
+                )).values();
     }
 
-    public ProjectSubmission getLastProjectSubmissionForStudentGroup(StudentGroup group) {
-        for (ProjectSubmission projectSubmission : getLastProjectSubmissionForEachStudentGroup()) {
-            if (projectSubmission.getStudentGroup().equals(group)) {
-                return projectSubmission;
-            }
-        }
-        return null;
+    public ProjectSubmission getLastProjectSubmissionForStudentGroup(final StudentGroup group) {
+        return group.getProjectSubmissionsSet().stream()
+                .max((s1, s2) -> s1.getSubmissionDateTime().compareTo(s2.getSubmissionDateTime()))
+                .orElse(null);
     }
 
-    public List<ProjectSubmissionLog> getProjectSubmissionLogsByStudentGroup(StudentGroup studentGroup) {
-        List<ProjectSubmissionLog> result = new ArrayList<ProjectSubmissionLog>();
-
-        for (ProjectSubmissionLog projectSubmissionLog : getProjectSubmissionLogsSet()) {
-            if (projectSubmissionLog.getStudentGroup() == studentGroup) {
-                result.add(projectSubmissionLog);
-            }
-        }
-
+    public List<ProjectSubmissionLog> getProjectSubmissionLogsByStudentGroup(final StudentGroup studentGroup) {
+        final List<ProjectSubmissionLog> result = new ArrayList<>(studentGroup.getProjectSubmissionLogsSet());
+        Collections.sort(result, ProjectSubmissionLog.COMPARATOR_BY_MOST_RECENT_SUBMISSION_DATE);
         return result;
     }
 
@@ -358,7 +286,7 @@ public class Project extends Project_Base {
 
     @Deprecated
     public java.util.Date getProjectBegin() {
-        org.joda.time.DateTime dt = getProjectBeginDateTime();
+        final org.joda.time.DateTime dt = getProjectBeginDateTime();
         return (dt == null) ? null : new java.util.Date(dt.getMillis());
     }
 
@@ -373,12 +301,12 @@ public class Project extends Project_Base {
 
     @Deprecated
     public java.util.Date getProjectEnd() {
-        org.joda.time.DateTime dt = getProjectEndDateTime();
+        final org.joda.time.DateTime dt = getProjectEndDateTime();
         return (dt == null) ? null : new java.util.Date(dt.getMillis());
     }
 
     @Deprecated
-    public void setProjectEnd(java.util.Date date) {
+    public void setProjectEnd(final java.util.Date date) {
         if (date == null) {
             setProjectEndDateTime(null);
         } else {
