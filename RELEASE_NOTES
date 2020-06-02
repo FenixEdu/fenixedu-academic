@@ -1,5 +1,6 @@
 30.4.2 (01-06-2020)
 - Fix: Better handling of execution courses attends merge
+- Refactor: Comment unused Enrolment constructor and change default constructor visibility to protected
 
 30.4.1 (21-05-2020)
 - Improvement: Improved PermissionService

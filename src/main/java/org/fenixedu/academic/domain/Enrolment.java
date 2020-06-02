@@ -105,18 +105,19 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     public static final String SIGNAL_CREATED = "fenixedu.academic.enrolment.created";
 
-    public Enrolment() {
+    protected Enrolment() {
         super();
         super.setIsExtraCurricular(Boolean.FALSE);
         Signal.emit(Enrolment.SIGNAL_CREATED, new DomainObjectEvent<>(this));
     }
 
-    public Enrolment(final StudentCurricularPlan studentCurricularPlan, final CurricularCourse curricularCourse,
-            final ExecutionInterval executionInterval, final EnrollmentCondition enrolmentCondition, final String createdBy) {
-        this();
-        initializeAsNew(studentCurricularPlan, curricularCourse, executionInterval, enrolmentCondition, createdBy);
-        createCurriculumLineLog(EnrolmentAction.ENROL);
-    }
+    // TODO: DELETE
+//    public Enrolment(final StudentCurricularPlan studentCurricularPlan, final CurricularCourse curricularCourse,
+//            final ExecutionInterval executionInterval, final EnrollmentCondition enrolmentCondition, final String createdBy) {
+//        this();
+//        initializeAsNew(studentCurricularPlan, curricularCourse, executionInterval, enrolmentCondition, createdBy);
+//        createCurriculumLineLog(EnrolmentAction.ENROL);
+//    }
 
     @Override
     final public boolean isEnrolment() {
