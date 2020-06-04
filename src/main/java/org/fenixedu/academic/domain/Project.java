@@ -189,7 +189,8 @@ public class Project extends Project_Base {
     }
 
     public boolean canAddNewSubmissionWithoutExceedLimit(StudentGroup studentGroup) {
-        return studentGroup.getProjectSubmissionsSet().size() <= getMaxSubmissionsToKeep()
+        return studentGroup.getProjectSubmissionsSet().stream()
+                .filter(submission -> submission.getProject() == this).count() <= getMaxSubmissionsToKeep()
                 && !(studentGroup.wasDeleted());
     }
 
@@ -224,13 +225,15 @@ public class Project extends Project_Base {
     }
 
     public List<ProjectSubmission> getProjectSubmissionsByStudentGroup(final StudentGroup studentGroup) {
-        final List<ProjectSubmission> result = new ArrayList<ProjectSubmission>(studentGroup.getProjectSubmissionsSet());
-        Collections.sort(result, ProjectSubmission.COMPARATOR_BY_MOST_RECENT_SUBMISSION_DATE);
-        return result;
+        return studentGroup.getProjectSubmissionsSet().stream()
+                .filter(submission -> submission.getProject() == this)
+                .sorted(ProjectSubmission.COMPARATOR_BY_MOST_RECENT_SUBMISSION_DATE)
+                .collect(Collectors.toList());
     }
 
     public ProjectSubmission getOldestProjectSubmissionForStudentGroup(final StudentGroup studentGroup) {
         return studentGroup.getProjectSubmissionsSet().stream()
+                .filter(submission -> submission.getProject() == this)
                 .max(ProjectSubmission.COMPARATOR_BY_MOST_RECENT_SUBMISSION_DATE).orElse(null);
     }
 
@@ -256,14 +259,16 @@ public class Project extends Project_Base {
 
     public ProjectSubmission getLastProjectSubmissionForStudentGroup(final StudentGroup group) {
         return group.getProjectSubmissionsSet().stream()
+                .filter(submission -> submission.getProject() == this)
                 .max((s1, s2) -> s1.getSubmissionDateTime().compareTo(s2.getSubmissionDateTime()))
                 .orElse(null);
     }
 
     public List<ProjectSubmissionLog> getProjectSubmissionLogsByStudentGroup(final StudentGroup studentGroup) {
-        final List<ProjectSubmissionLog> result = new ArrayList<>(studentGroup.getProjectSubmissionLogsSet());
-        Collections.sort(result, ProjectSubmissionLog.COMPARATOR_BY_MOST_RECENT_SUBMISSION_DATE);
-        return result;
+        return studentGroup.getProjectSubmissionLogsSet().stream()
+                .filter(log -> log.getProject() == this)
+                .sorted(ProjectSubmissionLog.COMPARATOR_BY_MOST_RECENT_SUBMISSION_DATE)
+                .collect(Collectors.toList());
     }
 
     public List<EvaluationEventBean> getAllEvents(ExecutionCourse executionCourse) {
