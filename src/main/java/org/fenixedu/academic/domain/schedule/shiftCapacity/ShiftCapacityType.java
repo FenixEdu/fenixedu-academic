@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -36,6 +37,14 @@ public class ShiftCapacityType extends ShiftCapacityType_Base {
             findAll().filter(ShiftCapacityType::isDefaultType).forEach(t -> t.setDefaultType(false)); // set current default type to false
         }
         super.setDefaultType(defaultType);
+    }
+
+    @Override
+    public void setCode(String code) {
+        if (StringUtils.isNotBlank(code) && findAll().filter(t -> t != this).anyMatch(t -> code.equalsIgnoreCase(t.getCode()))) {
+            throw new DomainException("error.ShiftCapacityType.setCode.alreadyExistsTypeWithSameCode", code);
+        }
+        super.setCode(code);
     }
 
     public void incrementEvaluationPriority() {
@@ -85,6 +94,7 @@ public class ShiftCapacityType extends ShiftCapacityType_Base {
         });
     }
 
+    // TODO change visibility to private
     public static ShiftCapacityType findOrCreateDefault() {
         return findAll().filter(ShiftCapacityType::isDefaultType).findAny().orElseGet(() -> createDefault());
     }
