@@ -1772,42 +1772,44 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return false;
     }
 
-    public GenericPair<YearMonthDay, YearMonthDay> getMaxLessonsPeriod() {
+    private OccupationPeriod findOccupationPeriodFor(final ExecutionSemester executionSemester, final CurricularCourse curricularCourse) {
+        final ExecutionDegree executionDegree = curricularCourse.getExecutionDegreeFor(executionSemester.getExecutionYear());
+        final Set<Integer> curricularYears = curricularCourse.getParentContextsByExecutionSemester(executionSemester).stream()
+                .map(context -> context.getCurricularYear())
+                .collect(Collectors.toSet());
+        return executionDegree.getOccupationPeriodReferencesSet().stream()
+                .filter(ref -> ref.getPeriodType() == OccupationPeriodType.LESSONS)
+                .filter(ref -> ref.getSemester().intValue() == executionSemester.getSemester().intValue())
+                .filter(ref -> overlap(ref.getCurricularYears().getYears(), curricularYears))
+                .map(ref -> ref.getOccupationPeriod())
+                .max(Comparator.comparing(OccupationPeriod::getStartDate))
+                .orElse(null);
+    }
 
-        YearMonthDay minBeginDate = null, maxEndDate = null;
-        Integer semester = getExecutionPeriod().getSemester();
-
-        for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-            final ExecutionDegree executionDegree = curricularCourse.getExecutionDegreeFor(getExecutionYear());
-            if (semester == 1) {
-                final OccupationPeriod periodLessonsFirstSemester = executionDegree.getPeriodLessonsFirstSemester();
-                if (periodLessonsFirstSemester != null) {
-                    if (minBeginDate == null || minBeginDate.isAfter(periodLessonsFirstSemester.getStartYearMonthDay())) {
-                        minBeginDate = periodLessonsFirstSemester.getStartYearMonthDay();
-                    }
-                    if (maxEndDate == null || maxEndDate.isBefore(periodLessonsFirstSemester.getEndYearMonthDayWithNextPeriods())) {
-                        maxEndDate = periodLessonsFirstSemester.getEndYearMonthDayWithNextPeriods();
-                    }
-                }
-            } else {
-                final OccupationPeriod periodLessonsSecondSemester = executionDegree.getPeriodLessonsSecondSemester();
-                if (periodLessonsSecondSemester != null) {
-                    if (minBeginDate == null || minBeginDate.isAfter(periodLessonsSecondSemester.getStartYearMonthDay())) {
-                        minBeginDate = periodLessonsSecondSemester.getStartYearMonthDay();
-                    }
-                    if (maxEndDate == null
-                            || maxEndDate.isBefore(periodLessonsSecondSemester.getEndYearMonthDayWithNextPeriods())) {
-                        maxEndDate = periodLessonsSecondSemester.getEndYearMonthDayWithNextPeriods();
-                    }
-                }
+    private boolean overlap(final Collection<Integer> list, final Set<Integer> set) {
+        if (list.isEmpty()) {
+            return true;
+        }
+        for (final Integer year : list) {
+            if (year == -1 || set.contains(year)) {
+                return true;
             }
         }
+        return false;
+    }
 
-        if (minBeginDate != null && maxEndDate != null) {
-            return new GenericPair<>(minBeginDate, maxEndDate);
-        }
+    public OccupationPeriod getLessonOccupationPeriod() {
+        final ExecutionSemester semester = getExecutionPeriod();
+        return getAssociatedCurricularCoursesSet().stream()
+                .map(cc -> findOccupationPeriodFor(semester, cc))
+                .distinct()
+                .max(Comparator.comparing(OccupationPeriod::getStartDate))
+                .orElse(null);
+    }
 
-        return null;
+    public GenericPair<YearMonthDay, YearMonthDay> getMaxLessonsPeriod() {
+        final OccupationPeriod occupationPeriod = getLessonOccupationPeriod();
+        return occupationPeriod == null ? null : new GenericPair<>(occupationPeriod.getStartYearMonthDay(), occupationPeriod.getEndYearMonthDayWithNextPeriods());
     }
 
     public Map<ShiftType, CourseLoad> getCourseLoadsMap() {
