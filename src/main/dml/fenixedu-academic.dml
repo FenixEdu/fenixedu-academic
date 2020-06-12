@@ -5255,6 +5255,10 @@ class schedule.shiftCapacity.ShiftCapacity {
 		schedule.shiftCapacity.ShiftCapacity playsRole shiftCapacity;
 	 	ShiftEnrolment playsRole shiftEnrolments { multiplicity *; }
 	}
+	relation ShiftCapacityExtraCapacities {
+	 	schedule.shiftCapacity.ShiftCapacity playsRole extraCapacities { multiplicity *; }
+		schedule.shiftCapacity.ShiftCapacity playsRole extraCapacityReferences { multiplicity *; }
+	}	
 
 class schedule.shiftCapacity.ShiftCapacityType {
 	LocalizedString name (REQUIRED);

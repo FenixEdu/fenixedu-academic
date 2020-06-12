@@ -35,8 +35,16 @@ public class ShiftCapacity extends ShiftCapacity_Base {
         super.setCapacity(capacity);
     }
 
+    public int getFreeVacancies() {
+        return getCapacity() - getShiftEnrolmentsSet().size();
+    }
+
     public boolean isFree() {
-        return getCapacity() - getShiftEnrolmentsSet().size() > 0;
+        return getFreeVacancies() > 0;
+    }
+
+    public boolean isFreeIncludingExtraCapacities() {
+        return isFree() || getExtraCapacitiesSet().stream().anyMatch(sc -> sc.isFree());
     }
 
     public boolean isFor(final DegreeCurricularPlan dcp) {
@@ -84,6 +92,9 @@ public class ShiftCapacity extends ShiftCapacity_Base {
         getDegreeCurricularPlansSet().clear();
         setType(null);
         setShift(null);
+
+        getExtraCapacitiesSet().clear();
+        getExtraCapacityReferencesSet().clear();
 
         setRoot(null);
         super.deleteDomainObject();

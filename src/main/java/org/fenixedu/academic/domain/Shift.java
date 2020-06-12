@@ -341,7 +341,7 @@ public class Shift extends Shift_Base {
     public static Stream<ShiftCapacity> findPossibleShiftsToEnrol(final Registration registration,
             final ExecutionCourse executionCourse, final ShiftType shiftType) {
         return executionCourse.getAssociatedShifts().stream().filter(s -> s.containsType(shiftType))
-                .flatMap(s -> s.getShiftCapacitiesSet().stream()).filter(ShiftCapacity::isFree)
+                .flatMap(s -> s.getShiftCapacitiesSet().stream()).filter(ShiftCapacity::isFreeIncludingExtraCapacities)
                 .filter(sc -> sc.accepts(registration));
     }
 
@@ -354,18 +354,26 @@ public class Shift extends Shift_Base {
      */
     public boolean enrol(final Registration registration) {
         return getShiftCapacitiesSet().stream().sorted(ShiftCapacity.TYPE_EVALUATION_PRIORITY_COMPARATOR)
-                .filter(ShiftCapacity::isFree).filter(sc -> sc.accepts(registration)).findFirst()
+                .filter(ShiftCapacity::isFreeIncludingExtraCapacities).filter(sc -> sc.accepts(registration)).findFirst()
                 .map(sc -> doEnrol(registration, sc)).orElse(false);
     }
 
     public static boolean enrol(final Registration registration, final ShiftCapacity shiftCapacity) {
-        if (shiftCapacity != null && shiftCapacity.isFree() && shiftCapacity.accepts(registration)) {
+        if (shiftCapacity != null && shiftCapacity.isFreeIncludingExtraCapacities() && shiftCapacity.accepts(registration)) {
             return doEnrol(registration, shiftCapacity);
         }
         return false;
     }
 
-    private static boolean doEnrol(final Registration registration, final ShiftCapacity shiftCapacity) {
+    private static boolean doEnrol(final Registration registration, final ShiftCapacity shiftCapacityParam) {
+
+        // if shiftCapacity isn't free, check if is there an extra capacity configured
+        final ShiftCapacity shiftCapacity = shiftCapacityParam.isFree() ? shiftCapacityParam : shiftCapacityParam
+                .getExtraCapacitiesSet().stream().filter(sc -> sc.isFree())
+                .sorted(ShiftCapacity.TYPE_EVALUATION_PRIORITY_COMPARATOR).findFirst().orElse(null);
+        if (shiftCapacity == null) {
+            return false;
+        }
 
         final Shift shift = shiftCapacity.getShift();
 
@@ -387,9 +395,12 @@ public class Shift extends Shift_Base {
                 "log.executionCourse.groupAndShifts.shifts.attends.added", registration.getNumber().toString(), shift.getNome(),
                 executionCourse.getNome(), executionCourse.getDegreePresentationString());
 
-        LOG.info("SHIFT ENROLMENT: student-{} degree-{} shift-{} course-{} shiftCapacity-{}",
+        LOG.info(
+                "SHIFT ENROLMENT: student-{} degree-{} shift-{} course-{} shiftCapacity-{}"
+                        + (shiftCapacityParam != shiftCapacity ? " originalShiftCapacity-{}" : ""),
                 registration.getStudent().getNumber(), registration.getDegree().getCode(), shift.getNome(),
-                executionCourse.getCode(), shiftCapacity.getType().getName().getContent());
+                executionCourse.getCode(), shiftCapacity.getType().getName().getContent(),
+                shiftCapacityParam.getType().getName().getContent());
         return true;
     }
 
