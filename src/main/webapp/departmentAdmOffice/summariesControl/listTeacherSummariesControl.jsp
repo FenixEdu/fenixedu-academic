@@ -54,6 +54,7 @@
 					<fr:slot name="executionSemester" layout="menu-select-postback" key="label.curricular.course.semester" bundle="APPLICATION_RESOURCES">
 						<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.NotClosedExecutionPeriodsProvider"/>
 						<fr:property name="format" value="${executionYear.year} - ${childOrder} Semestre" />
+						<fr:property name="sortBy" value="beginDate=desc" />
 					</fr:slot>
 				</fr:schema>
 			</fr:edit>											
@@ -324,16 +325,8 @@ padding-right: 3px;
 		<% year = year.replace('/','-'); %>
 		<bean:define id="semester" name="executionCourse" property="executionPeriod.childOrder"/>
 		<bean:define id="sigla" name="executionCourse" property="sigla"/>
-		<bean:define id="urlContext" value="<%= request.getContextPath() + "/disciplinas/"+ sigla +"/"+ year + "/" + semester + "-semestre/sumarios" %>"/>		
-		
-		<% 
-		   StringBuilder urlStart = new StringBuilder("http://");
-		   urlStart.append(request.getServerName()); 
-		   int serverPort = request.getServerPort();
-		   if(serverPort != 0 && serverPort != 443) {
-			  urlStart.append(":").append(serverPort); 
-		   }
-		%>
+		<bean:define id="urlCourseSite" name="executionCourse" property="siteUrl"/>
+		<bean:define id="urlContext" value="/sumarios" />		
 		
 		<fr:view name="executionCoursesResume" schema="summaries.control.list">
 			<fr:layout name="tabular">
@@ -344,7 +337,7 @@ padding-right: 3px;
 		</fr:view>				
 
 		<p>
-			<a href="<%= urlStart + urlContext %>" target="_blank"><bean:message key="label.executionCourse.summaries" bundle="PEDAGOGICAL_COUNCIL_RESOURCES"/></a>
+			<a href="<%= urlCourseSite + urlContext %>" target="_blank"><bean:message key="label.executionCourse.summaries" bundle="PEDAGOGICAL_COUNCIL_RESOURCES"/></a>
 		</p>
 
 	</logic:present>
