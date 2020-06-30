@@ -40,6 +40,7 @@ import org.fenixedu.academic.domain.student.curriculum.ExtraCurricularActivityTy
 import org.fenixedu.academic.domain.student.curriculum.ICurriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
 import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
 import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.util.Bundle;
@@ -48,6 +49,8 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import java.math.BigDecimal;
@@ -55,6 +58,7 @@ import java.text.Collator;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
@@ -373,25 +377,23 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
     }
 
     private void addExtraCurricularActivities() {
-        Student student = getDocumentRequest().getStudent();
+        final Interval interval = getDiplomaInterval();
+        final Student student = getDocumentRequest().getStudent();
         if (!student.getExtraCurricularActivitySet().isEmpty()) {
-            List<String> activities = new ArrayList<String>();
-            Map<ExtraCurricularActivityType, List<ExtraCurricularActivity>> activityMap =
-                    new HashMap<ExtraCurricularActivityType, List<ExtraCurricularActivity>>();
-            for (ExtraCurricularActivity activity : student.getExtraCurricularActivitySet()) {
-                if (!activityMap.containsKey(activity.getType())) {
-                    activityMap.put(activity.getType(), new ArrayList<ExtraCurricularActivity>());
-                }
-                activityMap.get(activity.getType()).add(activity);
-            }
-            for (Entry<ExtraCurricularActivityType, List<ExtraCurricularActivity>> entry : activityMap.entrySet()) {
-                StringBuilder activityText = new StringBuilder();
+            final Map<ExtraCurricularActivityType, List<ExtraCurricularActivity>> activityMap =
+                    student.getExtraCurricularActivitySet().stream()
+                            .filter(activity -> intersectsDiplomaInterval(interval, activity))
+                            .collect(Collectors.groupingBy(a -> a.getType()));
+
+            final List<String> activities = new ArrayList<String>();
+            for (final Entry<ExtraCurricularActivityType, List<ExtraCurricularActivity>> entry : activityMap.entrySet()) {
+                final StringBuilder activityText = new StringBuilder();
                 activityText.append(BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
                         "diploma.supplement.six.one.extracurricularactivity.heading"));
                 activityText.append(SINGLE_SPACE);
                 activityText.append(entry.getKey().getName().getContent(getLanguage()));
                 activityText.append(SINGLE_SPACE);
-                List<String> activityTimings = new ArrayList<String>();
+                final List<String> activityTimings = new ArrayList<String>();
                 for (ExtraCurricularActivity activity : entry.getValue()) {
                     activityTimings.add(BundleUtil.getString(Bundle.ACADEMIC, getLocale(),
                             "diploma.supplement.six.one.extracurricularactivity.time.heading")
@@ -411,6 +413,43 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
             addParameter("extraCurricularActivities",
                     BundleUtil.getString(Bundle.ACADEMIC, getLocale(), "diploma.supplement.six.one.extracurricularactivity.none"));
         }
+    }
+
+    private Interval getDiplomaInterval() {
+        final LocalDate[] interval = new LocalDate[2];
+        final CycleType cycleType = getDocumentRequest().getRequestedCycle();
+        final Stream<StudentCurricularPlan> plans =
+                getDocumentRequest().getRegistration().getStudentCurricularPlansSet().stream();
+        final Stream<CurriculumLine> curriculumLines = cycleType == null ? plans.flatMap(scp -> scp.getRoot().getCurriculumLineStream()) :
+                plans.map(scp -> scp.getCycle(cycleType))
+                        .filter(g -> g != null)
+                        .flatMap(g -> g.getCurriculumLineStream());
+        curriculumLines.forEach(line -> {
+            final ExecutionSemester executionSemester = line.getExecutionPeriod();
+            final LocalDate begin = executionSemester.getBeginLocalDate();
+            if (interval[0] == null || interval[0].isAfter(begin)) {
+                interval[0] = begin;
+            }
+            final LocalDate end = executionSemester.getEndLocalDate();
+            if (interval[1] == null || interval[1].isAfter(end)) {
+                interval[1] = end;
+            }
+        });
+        if (interval[0] == null) {
+            interval[0] = getDocumentRequest().getRegistration().getStartExecutionYear().getBeginLocalDate();
+        }
+        if (interval[1] == null) {
+            interval[1] = getDocumentRequest().getConclusionYear().getEndLocalDate();
+        }
+        return new Interval(interval[0].toDateTimeAtStartOfDay(), interval[1].toDateTimeAtStartOfDay());
+    }
+
+    private boolean intersectsDiplomaInterval(final Interval interval, final ExtraCurricularActivity activity) {
+        if (interval.contains(activity.getActivityInterval())) {
+            return true;
+        }
+        final Interval overlap = interval.overlap(activity.getActivityInterval());
+        return overlap != null && overlap.toDuration().getStandardDays() >= 15;
     }
 
     private String applyMessageArguments(String message, String... args) {
