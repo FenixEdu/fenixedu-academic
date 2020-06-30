@@ -1,3 +1,5 @@
+- Fix: PreviousYearsEnrolmentExecutor should also collect root curriculum group rules on verification context 
+
 30.6.1 (30-06-2020)
 - Fix: Typo in Languages method
 

@@ -30,6 +30,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.ExecutionInterval;
@@ -652,7 +654,15 @@ public class PreviousYearsEnrolmentBySemesterExecutor extends CurricularRuleExec
     private boolean isCurricularRulesSatisfied(EnrolmentContext enrolmentContext, CurricularCourse curricularCourse,
             IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate) {
         RuleResult result = RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
-        for (final ICurricularRule curricularRule : curricularCourse.getCurricularRules(enrolmentContext.getExecutionPeriod())) {
+        //Besides course unit rules we can only securely evaluate root curricum group rules, other group rules would require that we know the curriculum group 
+        //from where the course unit was collected, otherwise we could wrongly evaluate rules, which is very dangerous if we are collecting course units from 
+        //previous years and curriculum group is not enroled yet. A possible improvement, would be to find the corresponding curriculum groups, but branches 
+        //and optional groups would require extra caution because two different groups might have the same course unit
+        for (final ICurricularRule curricularRule : Stream
+                .concat(curricularCourse.getCurricularRules(enrolmentContext.getExecutionPeriod()).stream(),
+                        enrolmentContext.getStudentCurricularPlan().getRoot()
+                                .getCurricularRules(enrolmentContext.getExecutionPeriod()).stream())
+                .collect(Collectors.toSet())) {
             result = result.and(curricularRule.verify(getVerifyRuleLevel(enrolmentContext), enrolmentContext, curricularCourse,
                     (CourseGroup) sourceDegreeModuleToEvaluate.getDegreeModule()));
         }
