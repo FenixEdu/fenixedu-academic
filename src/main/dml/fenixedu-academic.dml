@@ -244,6 +244,12 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
     }
 }
 
+valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
+    externalizeWith {
+        JsonElement toJson();
+    }
+}
+
 
 /*
 *
@@ -732,6 +738,7 @@ valueType org.fenixedu.academic.domain.degreeStructure.CycleTypes as CycleTypes 
         Integer lotacao;
         String nome;
         String comment;
+        Languages languages;
     }
     
 
