@@ -36,7 +36,7 @@ public class Languages implements Serializable {
                 .map(Locale::new).collect(Collectors.toUnmodifiableSet());
     }
 
-    public Collection<Locale> geValues() {
+    public Collection<Locale> getValues() {
         return this.languages;
     }
 

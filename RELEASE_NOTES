@@ -1,3 +1,5 @@
+- Fix: Typo in Languages method
+
 30.6.0 (30-06-2020)
 - New feature: Specify shift languages
 - Improvement: Updated permission service
