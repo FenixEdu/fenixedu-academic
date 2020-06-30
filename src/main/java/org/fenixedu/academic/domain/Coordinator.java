@@ -61,6 +61,10 @@ public class Coordinator extends Coordinator_Base {
         return getResponsible().booleanValue();
     }
 
+    public void setResponsible(boolean responsible) {
+        super.setResponsible(responsible);
+    }
+
     public Teacher getTeacher() {
         return getPerson().getTeacher();
     }
