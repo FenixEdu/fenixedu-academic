@@ -107,7 +107,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
             Set<Degree> degrees = AcademicAccessRule
                     .getDegreesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
                     .collect(Collectors.toSet());
-            degrees.addAll(PermissionService.getDegrees("ACADEMIC_OFFICE_REPORTS", Authenticate.getUser()));
+            degrees.addAll(PermissionService.getObjects("ACADEMIC_OFFICE_REPORTS", Degree.class, Authenticate.getUser()));
             bean = new SearchStudentsByCurricularCourseParametersBean(degrees);
         }
         return bean;
@@ -284,7 +284,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
         Set<Degree> degreesToInclude =
                 AcademicAccessRule.getDegreesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
                         .collect(Collectors.toSet());
-        degreesToInclude.addAll(PermissionService.getDegrees("ACADEMIC_OFFICE_REPORTS", Authenticate.getUser()));
+        degreesToInclude.addAll(PermissionService.getObjects("ACADEMIC_OFFICE_REPORTS", Degree.class, Authenticate.getUser()));
 
         final String filename = getResourceMessage("label.statistics") + "_" + executionYear.getName().replace('/', '-');
         final Spreadsheet spreadsheet = new Spreadsheet(filename);
@@ -356,7 +356,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
         Set<DegreeType> programs = AcademicAccessRule
                 .getDegreeTypesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
                 .collect(Collectors.toSet());
-        programs.addAll(PermissionService.getDegreeTypes("ACADEMIC_OFFICE_REPORTS", Authenticate.getUser()));
+        programs.addAll(PermissionService.getObjects("ACADEMIC_OFFICE_REPORTS", DegreeType.class, Authenticate.getUser()));
         return programs;
     }
 }

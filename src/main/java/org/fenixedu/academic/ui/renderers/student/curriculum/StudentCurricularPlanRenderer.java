@@ -1355,7 +1355,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
         Set<AcademicProgram> programs = AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM, person.getUser())
                 .collect(Collectors.toSet());
-        programs.addAll(PermissionService.getDegrees("ACADEMIC_OFFICE_REGISTRATION_ACCESS", person.getUser()));
+        programs.addAll(PermissionService.getObjects("ACADEMIC_OFFICE_REGISTRATION_ACCESS", Degree.class, person.getUser()));
         return programs.stream().anyMatch(p -> p == degree);
     }
 

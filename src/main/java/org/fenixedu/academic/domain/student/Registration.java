@@ -1383,12 +1383,12 @@ public class Registration extends Registration_Base {
         final User user = Authenticate.getUser();
         Set<AcademicProgram> programsManageRegistration = AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_REGISTRATIONS, user).collect(Collectors.toSet());
-        programsManageRegistration.addAll(PermissionService.getDegrees("ACADEMIC_OFFICE_REGISTRATION_ACCESS", user));
+        programsManageRegistration.addAll(PermissionService.getObjects("ACADEMIC_OFFICE_REGISTRATION_ACCESS", Degree.class ,user));
 
         Set<AcademicProgram> programsViewFullStudentCurriculum =
                 AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM, user)
                         .collect(Collectors.toSet());
-        programsViewFullStudentCurriculum.addAll(PermissionService.getDegrees("ACADEMIC_OFFICE_REGISTRATION_ACCESS", user));
+        programsViewFullStudentCurriculum.addAll(PermissionService.getObjects("ACADEMIC_OFFICE_REGISTRATION_ACCESS", Degree.class ,user));
 
         return programsManageRegistration.stream().anyMatch(ap -> ap == degree)
                 || programsViewFullStudentCurriculum.stream().anyMatch(ap -> ap == degree);

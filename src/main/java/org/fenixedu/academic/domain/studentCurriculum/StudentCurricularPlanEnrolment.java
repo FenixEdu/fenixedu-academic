@@ -352,7 +352,7 @@ abstract public class StudentCurricularPlanEnrolment {
         Set<AcademicProgram> programs = AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, getResponsiblePerson().getUser())
                 .collect(Collectors.toSet());
-        programs.addAll(PermissionService.getDegrees("ACADEMIC_OFFICE_ENROLMENTS", getResponsiblePerson().getUser()));
+        programs.addAll(PermissionService.getObjects("ACADEMIC_OFFICE_ENROLMENTS", Degree.class, getResponsiblePerson().getUser()));
         return programs.stream().anyMatch(p -> p == degree);
     }
 

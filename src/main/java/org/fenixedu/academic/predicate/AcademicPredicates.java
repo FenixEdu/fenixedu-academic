@@ -39,7 +39,7 @@ public class AcademicPredicates {
             allowedDegrees.addAll(AcademicAccessRule
                     .getDegreesAccessibleToFunction(AcademicOperationType.MANAGE_DEGREE_CURRICULAR_PLANS, Authenticate.getUser())
                     .collect(Collectors.toSet()));
-            allowedDegrees.addAll(PermissionService.getDegrees("CURRICULAR_MANAGEMENT_DEGREES", Authenticate.getUser()));
+            allowedDegrees.addAll(PermissionService.getObjects("CURRICULAR_MANAGEMENT_DEGREES", Degree.class, Authenticate.getUser()));
             return allowedDegrees.contains(degree);
         };
     };

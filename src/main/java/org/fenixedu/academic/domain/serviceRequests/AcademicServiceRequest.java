@@ -234,7 +234,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
         Set<AcademicProgram> programs = AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_STUDENT_PAYMENTS, Authenticate.getUser())
                 .collect(Collectors.toSet());
-        programs.addAll(PermissionService.getDegrees("TREASURY", Authenticate.getUser()));
+        programs.addAll(PermissionService.getObjects("TREASURY", Degree.class, Authenticate.getUser()));
         return programs.contains(getAcademicProgram())
                 && TreasuryBridgeAPIFactory.implementation().academicTreasuryEventForAcademicServiceRequest(this) != null;
     }
@@ -254,7 +254,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
         Set<AcademicProgram> programs = AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_REGISTRATIONS, Authenticate.getUser())
                 .collect(Collectors.toSet());
-        programs.addAll(PermissionService.getDegrees("ACADEMIC_OFFICE_REGISTRATION_ACCESS", Authenticate.getUser()));
+        programs.addAll(PermissionService.getObjects("ACADEMIC_OFFICE_REGISTRATION_ACCESS", Degree.class ,Authenticate.getUser()));
         return programs.stream().anyMatch(p -> p == program);
     }
 
@@ -900,7 +900,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
         Set<AcademicProgram> programs =
                 AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.SERVICE_REQUESTS, person.getUser())
                         .collect(Collectors.toSet());
-        programs.addAll(PermissionService.getDegrees("ACADEMIC_REQUISITIONS", person.getUser()));
+        programs.addAll(PermissionService.getObjects("ACADEMIC_REQUISITIONS", Degree.class, person.getUser()));
         Collection<AcademicServiceRequest> possible = null;
         if (year != null) {
             possible = AcademicServiceRequestYear.getAcademicServiceRequests(year);

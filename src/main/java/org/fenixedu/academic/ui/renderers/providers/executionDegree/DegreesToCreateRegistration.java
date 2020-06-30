@@ -44,7 +44,7 @@ public class DegreesToCreateRegistration implements DataProvider {
         final Set<Degree> allowed = AcademicAccessRule
                 .getDegreesAccessibleToFunction(AcademicOperationType.CREATE_REGISTRATION, Authenticate.getUser())
                 .collect(Collectors.toSet());
-        allowed.addAll(PermissionService.getDegrees("ACADEMIC_OFFICE_REGISTRATION_CREATION", Authenticate.getUser()));
+        allowed.addAll(PermissionService.getObjects("ACADEMIC_OFFICE_REGISTRATION_CREATION", Degree.class, Authenticate.getUser()));
 
         final Set<Degree> executed;
         final ExecutionYear year =
