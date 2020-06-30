@@ -18,12 +18,19 @@
  */
 package org.fenixedu.academic.domain;
 
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.bennu.core.domain.Bennu;
 
@@ -217,6 +224,34 @@ public class SchoolClass extends SchoolClass_Base {
 
     public ExecutionInterval getExecutionInterval() {
         return super.getExecutionPeriod();
+    }
+
+    public boolean isFreeFor(final Registration registration) {
+
+        final List<ExecutionCourse> attendingCourses = registration.getAttendingExecutionCoursesFor(getExecutionInterval());
+
+        final List<Shift> shiftsForCoursesAndSchoolClass = getAssociatedShiftsSet().stream()
+                .filter(s -> attendingCourses.contains(s.getExecutionCourse())).collect(Collectors.toList());
+
+        final Map<ExecutionCourse, List<Shift>> shiftsGroupedByCourses =
+                shiftsForCoursesAndSchoolClass.stream().collect(Collectors.groupingBy(Shift::getExecutionCourse));
+
+        for (final Entry<ExecutionCourse, List<Shift>> entry : shiftsGroupedByCourses.entrySet()) {
+            final Map<ShiftType, Collection<Shift>> shiftsGroupedByType = new HashMap<>();
+            entry.getValue().forEach(
+                    s -> s.getTypes().forEach(st -> shiftsGroupedByType.computeIfAbsent(st, x -> new HashSet<>()).add(s)));
+
+            for (final ShiftType shiftType : shiftsGroupedByType.keySet()) {
+                final Shift enrolledShift = registration.getShiftFor(entry.getKey(), shiftType);
+                if (enrolledShift == null || !shiftsForCoursesAndSchoolClass.contains(enrolledShift)) {
+                    if (shiftsGroupedByType.get(shiftType).stream().noneMatch(s -> s.isFreeFor(registration))) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 
 }

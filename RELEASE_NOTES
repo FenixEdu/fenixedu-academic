@@ -1,3 +1,4 @@
+- Improvement: New methods to check if shift and school class are free for a specific registration 
 - Fix: Add coordinator responsible setter with primitive boolean param
 
 30.5.1 (22-06-2020)

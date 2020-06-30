@@ -338,6 +338,11 @@ public class Shift extends Shift_Base {
         return Integer.valueOf(stringBuilder.toString());
     }
 
+    public boolean isFreeFor(final Registration registration) {
+        return getShiftCapacitiesSet().stream().filter(ShiftCapacity::isFreeIncludingExtraCapacities)
+                .anyMatch(sc -> sc.accepts(registration));
+    }
+
     public static Stream<ShiftCapacity> findPossibleShiftsToEnrol(final Registration registration,
             final ExecutionCourse executionCourse, final ShiftType shiftType) {
         return executionCourse.getAssociatedShifts().stream().filter(s -> s.containsType(shiftType))
