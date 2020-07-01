@@ -449,7 +449,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
             return true;
         }
         final Interval overlap = interval.overlap(activity.getActivityInterval());
-        return overlap != null && overlap.toDuration().getStandardDays() >= 15;
+        return overlap != null && overlap.toDuration().getStandardDays() >= 1;
     }
 
     private String applyMessageArguments(String message, String... args) {
