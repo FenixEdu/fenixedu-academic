@@ -5217,24 +5217,6 @@ relation ProfileMembers {
     .org.fenixedu.bennu.core.domain.User playsRole FenixMember {
         multiplicity *;
     }
-} 
-
-relation ProfileDegree {
-    .com.qubit.terra.qubAccessControl.domain.AccessControlProfile playsRole accessControlProfile {
-		multiplicity *;
-	}
-    AcademicProgram playsRole degree {
-        multiplicity *;
-    }
-}
-
-relation ProfileDegreeType {
-    .com.qubit.terra.qubAccessControl.domain.AccessControlProfile playsRole accessControlProfile {
-		multiplicity *;
-	}
-    degree.DegreeType playsRole degreeType {
-        multiplicity *;
-    }
 }
 
 /* Shifts Capacity */
