@@ -24,23 +24,8 @@
 
 package org.fenixedu.academic.domain;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.stream.Stream;
-
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.fenixedu.academic.domain.candidacy.CandidacySituationType;
-import org.fenixedu.academic.domain.candidacy.DFACandidacy;
-import org.fenixedu.academic.domain.candidacy.DegreeCandidacy;
-import org.fenixedu.academic.domain.candidacy.IMDCandidacy;
-import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
+import org.fenixedu.academic.domain.candidacy.*;
 import org.fenixedu.academic.domain.candidacy.degree.ShiftDistributionEntry;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
@@ -56,6 +41,9 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
+
+import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * 
@@ -191,6 +179,8 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         for (OccupationPeriodReference reference : getOccupationPeriodReferencesSet()) {
             reference.delete();
         }
+
+        getCoordinatorLogSet().stream().forEach(log -> log.setExecutionDegree(null));
 
         setRootDomainObject(null);
         deleteDomainObject();
