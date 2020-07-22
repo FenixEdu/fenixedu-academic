@@ -30,6 +30,7 @@ import org.fenixedu.academic.util.phd.PhdProperties;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 
+import org.joda.time.LocalDate;
 import pt.ist.fenixframework.Atomic;
 
 public class PhdProgramPublicCandidacyHashCode extends PhdProgramPublicCandidacyHashCode_Base {
@@ -49,7 +50,7 @@ public class PhdProgramPublicCandidacyHashCode extends PhdProgramPublicCandidacy
     }
 
     static public PhdProgramPublicCandidacyHashCode getOrCreatePhdProgramCandidacyHashCode(final String email) {
-        final PhdProgramPublicCandidacyHashCode hashCode = getPhdProgramCandidacyHashCode(email, null);
+        final PhdProgramPublicCandidacyHashCode hashCode = getPhdProgramCandidacyHashCode(email, null, null);
         if (hashCode != null) {
             return hashCode;
         }
@@ -80,19 +81,21 @@ public class PhdProgramPublicCandidacyHashCode extends PhdProgramPublicCandidacy
         return null;
     }
 
-    static public PhdProgramPublicCandidacyHashCode getPhdProgramCandidacyHashCode(final String email, PhdProgram program) {
+    static public PhdProgramPublicCandidacyHashCode getPhdProgramCandidacyHashCode(final String email, final PhdProgram program, final LocalDate candidacyDate) {
         if (StringUtils.isEmpty(email)) {
             throw new IllegalArgumentException();
         }
 
         if (program != null) {
             for (final PublicCandidacyHashCode hashCode : Bennu.getInstance().getCandidacyHashCodesSet()) {
-                if (hashCode.getEmail().equals(email)
-                        && hashCode.isFromPhdProgram()
-                        && ((PhdProgramPublicCandidacyHashCode) hashCode).getPhdProgramCandidacyProcess() != null
-                        && ((PhdProgramPublicCandidacyHashCode) hashCode).getPhdProgramCandidacyProcess().getPhdProgram()
-                                .equals(program)) {
-                    return (PhdProgramPublicCandidacyHashCode) hashCode;
+                if (hashCode.getEmail().equals(email) && hashCode.isFromPhdProgram()) {
+                    PhdProgramPublicCandidacyHashCode phdHashCode = (PhdProgramPublicCandidacyHashCode) hashCode;
+                    if (phdHashCode.getPhdProgramCandidacyProcess() != null
+                            && phdHashCode.getPhdProgramCandidacyProcess().getPhdProgram() == program
+                            && (candidacyDate == null ||
+                            phdHashCode.getPhdProgramCandidacyProcess().getPublicPhdCandidacyPeriod().contains(candidacyDate.toDateTimeAtCurrentTime()))) {
+                        return phdHashCode;
+                    }
                 }
             }
         }

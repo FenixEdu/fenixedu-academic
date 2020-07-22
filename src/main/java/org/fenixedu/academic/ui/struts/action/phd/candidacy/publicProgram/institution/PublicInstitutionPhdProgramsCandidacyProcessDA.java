@@ -273,7 +273,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
             HttpServletResponse response) {
         final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
         final PhdProgramPublicCandidacyHashCode hashCode =
-                PhdProgramPublicCandidacyHashCode.getPhdProgramCandidacyHashCode(bean.getEmail(), bean.getProgram());
+                PhdProgramPublicCandidacyHashCode.getPhdProgramCandidacyHashCode(bean.getEmail(), bean.getProgram(), bean.getCandidacyDate());
 
         if (hashCode != null) {
             if (hashCode.hasCandidacyProcess()) {
@@ -354,7 +354,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 
         final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
         if (PhdProgramPublicCandidacyHashCode.getPhdProgramCandidacyHashCode(bean.getCandidacyHashCode().getEmail(),
-                bean.getProgram()) != null) {
+                bean.getProgram(), bean.getCandidacyDate()) != null) {
             addErrorMessage(request, "error.PhdProgramPublicCandidacyHashCode.already.has.candidacy");
             return fillPersonalDataInvalid(mapping, form, request, response);
         }
