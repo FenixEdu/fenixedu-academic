@@ -83,7 +83,15 @@ table tr.disabled td span.success0 { color: #555; background: #e5e5e5; }
 					</a>
 					</h4>
 				</th>
-				<th></th>
+				<th>
+					<logic:notEmpty name="executionCoursesAnnouncement" property="executionCourse.site">
+						<logic:notEmpty name="executionCoursesAnnouncement" property="executionCourse.site.alternativeSite">
+							<a href="${executionCoursesAnnouncement.executionCourse.site.alternativeSite}" target="_blank">
+								<bean:message key="link.alternative"  bundle="APPLICATION_RESOURCES" />
+							</a>						
+						</logic:notEmpty>
+					</logic:notEmpty>
+				</th>
 				<th><bean:message key="message.out.realization.date" bundle="STUDENT_RESOURCES" /></th>
 				<th><bean:message key="message.out.room" bundle="STUDENT_RESOURCES" /></th>
 				<th><bean:message key="message.out.enrolment.period.normal"  bundle="STUDENT_RESOURCES" /></th>
