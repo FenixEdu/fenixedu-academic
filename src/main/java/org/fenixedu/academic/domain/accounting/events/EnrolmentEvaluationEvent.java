@@ -59,12 +59,26 @@ public class EnrolmentEvaluationEvent extends EnrolmentEvaluationEvent_Base {
 
     public static EnrolmentEvaluationEvent create(EnrolmentEvaluation enrolmentEvaluation) {
         final Person student = enrolmentEvaluation.getStudentCurricularPlan().getPerson();
+
         final AdministrativeOffice administrativeOffice = enrolmentEvaluation.getStudentCurricularPlan()
                 .getAdministrativeOffice();
 
         final EventType eventType = getEventType(enrolmentEvaluation).orElseThrow(
                 () -> new DomainException("Unsupported enrolment evaluation",
                         enrolmentEvaluation.getEvaluationSeason().getName().getContent()));
+
+        EnrolmentEvaluationEvent enrolmentEvaluationEvent = enrolmentEvaluation.getEnrolment().getPerson().getEventsByEventType(eventType).stream()
+                .filter(EnrolmentEvaluationEvent.class::isInstance)
+                .map(EnrolmentEvaluationEvent.class::cast)
+                .filter(e -> e.getEnrolmentEvaluation() == null)
+                .filter(e -> !e.isCancelled())
+                .filter(e -> enrolmentEvaluation.getEnrolment().getName().equals(e.getCourseName()))
+                .filter(e -> enrolmentEvaluation.getExecutionPeriod().getQualifiedName().equals(e.getExecutionPeriodName()))
+                .findAny().orElse(null);
+        if (enrolmentEvaluationEvent != null) {
+        	FenixFramework.atomic(() -> enrolmentEvaluationEvent.setEnrolmentEvaluation(enrolmentEvaluation));
+            return enrolmentEvaluationEvent;
+        }
 
         final PostingRule eventTypePR =
                 administrativeOffice.getServiceAgreementTemplate().findPostingRuleByEventType(eventType);

@@ -94,6 +94,23 @@ public class EnrolmentGratuityEvent extends EnrolmentGratuityEvent_Base {
     public static EnrolmentGratuityEvent create(Person person, Enrolment enrolment, EventType eventType, boolean forAliens) {
         final ExecutionYear executionYear = enrolment.getExecutionYear();
 
+        //when there are enrollments and unenrollments in curricular units the connection to the enrolment is lost but the event still remains
+        //whe don't want to create several different events for the same curricular unit
+        EnrolmentGratuityEvent enrolmentGratuityEvent = person.getEventsByEventType(eventType).stream()
+                .filter(EnrolmentGratuityEvent.class::isInstance)
+                .map(EnrolmentGratuityEvent.class::cast)
+                .filter(e -> e.getEnrolment() == null)
+                .filter(e -> !e.isCancelled())
+                .filter(e -> e.getEventPostingRule().isForAliens() == forAliens)
+                .filter(e -> e.getCourseName().equals(enrolment.getName()))
+                .filter(e -> e.getExecutionPeriodName().equals(enrolment.getExecutionPeriod().getQualifiedName()))
+                .filter(e -> e.getEcts().equals(enrolment.getEctsCreditsForCurriculum()))
+                .findAny().orElse(null);
+        if (enrolmentGratuityEvent != null) {
+        	FenixFramework.atomic(() -> enrolmentGratuityEvent.setEnrolment(enrolment));
+            return enrolmentGratuityEvent;
+        }
+
         Set<PostingRule> postingRules =
                 enrolment.getStudentCurricularPlan().getDegreeCurricularPlan().getServiceAgreementTemplate()
                         .getPostingRulesBy(eventType, executionYear.getBeginLocalDate().toDateTimeAtStartOfDay(),
