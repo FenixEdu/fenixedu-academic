@@ -72,7 +72,7 @@
 				<fr:schema type="org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessBean" bundle="PHD_RESOURCES">
 					<fr:slot name="phdProgram" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 						<fr:property name="providerClass" value="org.fenixedu.academic.ui.struts.action.phd.candidacy.publicProgram.institution.PhdProgramsProviderForPublicCandidacy" />
-						<fr:property name="format" value="${name}" />
+						<fr:property name="format" value="${name.content}" />
 						<fr:property name="sortBy" value="name" /> 
 					</fr:slot>
 					<fr:slot name="thesisTitle" key="label.org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess.thesis.title.proposed">
