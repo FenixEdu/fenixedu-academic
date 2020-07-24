@@ -75,7 +75,11 @@ abstract public class CreatePostingRuleBean implements Serializable, PaymentsBea
 
     public void setStartLocalDate(LocalDate startLocalDate) {
         this.startLocalDate = startLocalDate;
-        this.setStartDate(startLocalDate.toDateTimeAtStartOfDay());
+        if (startLocalDate == null) {
+            this.setStartDate(null);
+        } else {
+            this.setStartDate(startLocalDate.toDateTimeAtStartOfDay());
+        }
     }
 
     public ServiceAgreementTemplate getServiceAgreementTemplate() {
