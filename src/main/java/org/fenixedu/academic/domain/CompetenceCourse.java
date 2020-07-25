@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Predicate;
@@ -81,32 +82,20 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         super.setCurricularStage(curricularStage);
         setType(type);
 
-        if (gradeScale != null) {
-            super.setGradeScale(gradeScale);
-        } else {
-            super.setGradeScale(GradeScale.findUniqueDefault().orElse(null));
-        }
+        super.setGradeScale(Optional.ofNullable(gradeScale).or(() -> GradeScale.findUniqueDefault())
+                .orElseThrow(() -> new DomainException("error.CompetenceCourse.gradeScale.required")));
 
         CompetenceCourseInformation competenceCourseInformation = new CompetenceCourseInformation(name.trim(), nameEn.trim(),
                 basic, academicPeriod, competenceCourseLevel, startInterval, unit);
         super.addCompetenceCourseInformations(competenceCourseInformation);
 
-        
         // acronym creation
         final String strip = name.strip();
         final String normalize = Normalizer.normalize(strip, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
         final String capitalize = StringUtils.capitalize(normalize);
         final String initials = WordUtils.initials(capitalize);
         competenceCourseInformation.setAcronym(initials);
-        
 
-        checkRules();
-    }
-
-    private void checkRules() {
-        if (getGradeScale() == null) {
-            throw new DomainException("error.CompetenceCourse.gradeScale.required");
-        }
     }
 
     public void addCompetenceCourseLoad(Double theoreticalHours, Double problemsHours, Double laboratorialHours,
