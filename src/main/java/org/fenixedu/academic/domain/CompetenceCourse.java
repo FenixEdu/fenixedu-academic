@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain;
 
 import java.text.Collator;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -32,6 +33,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.WordUtils;
 import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReference;
@@ -89,16 +91,14 @@ public class CompetenceCourse extends CompetenceCourse_Base {
                 basic, academicPeriod, competenceCourseLevel, startInterval, unit);
         super.addCompetenceCourseInformations(competenceCourseInformation);
 
-        // unique acronym creation
-        try {
-            Set<CompetenceCourse> competenceCourses = (Set<CompetenceCourse>) CompetenceCourse.readBolonhaCompetenceCourses();
-            competenceCourses.remove(this);
-            final UniqueAcronymCreator<CompetenceCourse> uniqueAcronymCreator = new UniqueAcronymCreator<CompetenceCourse>(
-                    CompetenceCourse::getName, CompetenceCourse::getAcronym, competenceCourses);
-            competenceCourseInformation.setAcronym(uniqueAcronymCreator.create(this).getLeft());
-        } catch (Exception e) {
-            throw new DomainException("competence.course.unable.to.create.acronym");
-        }
+        
+        // acronym creation
+        final String strip = name.strip();
+        final String normalize = Normalizer.normalize(strip, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+        final String capitalize = StringUtils.capitalize(normalize);
+        final String initials = WordUtils.initials(capitalize);
+        competenceCourseInformation.setAcronym(initials);
+        
 
         checkRules();
     }

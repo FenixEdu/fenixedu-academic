@@ -1,4 +1,5 @@
 - Improvement: In student portal initial screen, show execution course alternative site
+- Improvement: Simplified competence course acronym generation
 - Fix: PreviousYearsEnrolmentExecutor should also collect root curriculum group rules on verification context 
 
 30.6.1 (30-06-2020)
