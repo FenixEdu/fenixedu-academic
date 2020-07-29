@@ -1,3 +1,6 @@
+- Refactor: Moved relation PersonCountryHighSchool from specification to academic-core
+- Improvement: Added second nacionality to PersonBean
+
 30.6.2 (27-07-2020)
 - Improvement: In student portal initial screen, show execution course alternative site
 - Improvement: Simplified competence course acronym generation
