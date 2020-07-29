@@ -405,6 +405,7 @@ public class Person extends Person_Base {
         // filiation
         setDateOfBirthYearMonthDay(personBean.getDateOfBirth());
         setCountry(personBean.getNationality());
+        setSecondNationality(personBean.getSecondNationality());
         setParishOfBirth(personBean.getParishOfBirth());
         setDistrictSubdivisionOfBirth(personBean.getDistrictSubdivisionOfBirth());
         setDistrictOfBirth(personBean.getDistrictOfBirth());

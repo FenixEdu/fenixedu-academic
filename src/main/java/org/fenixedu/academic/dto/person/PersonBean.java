@@ -112,6 +112,8 @@ public class PersonBean implements Serializable {
 
     private Country nationality;
 
+    private Country secondNationality;
+
     private String parishOfBirth;
 
     private String districtSubdivisionOfBirth;
@@ -208,6 +210,7 @@ public class PersonBean implements Serializable {
         setMotherName(person.getNameOfMother());
         setProfession(person.getProfession());
         setNationality(person.getCountry());
+        setSecondNationality(person.getSecondNationality());
 
         setCountryOfBirth(person.getCountryOfBirth());
         setDateOfBirth(person.getDateOfBirthYearMonthDay());
@@ -539,6 +542,14 @@ public class PersonBean implements Serializable {
 
     public void setNationality(final Country nationality) {
         this.nationality = nationality;
+    }
+
+    public Country getSecondNationality() {
+        return secondNationality;
+    }
+
+    public void setSecondNationality(final Country secondNationality) {
+        this.secondNationality = secondNationality;
     }
 
     public String getParishOfBirth() {
@@ -900,6 +911,7 @@ public class PersonBean implements Serializable {
         // filiation
         person.setDateOfBirthYearMonthDay(this.getDateOfBirth());
         person.setCountry(this.getNationality());
+        person.setSecondNationality(this.secondNationality);
         person.setParishOfBirth(this.getParishOfBirth());
         person.setDistrictSubdivisionOfBirth(this.getDistrictSubdivisionOfBirth());
         person.setDistrictOfBirth(this.getDistrictOfBirth());
