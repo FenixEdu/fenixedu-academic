@@ -1,3 +1,4 @@
+30.7.0 (29-07-2020)
 - Refactor: Moved relation PersonCountryHighSchool from specification to academic-core
 - Improvement: Added second nacionality to PersonBean
 
