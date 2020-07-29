@@ -378,7 +378,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
             return mapping.findForward("applicationCreationReport");
         } catch (Exception e) {
             if (e instanceof DomainException) {
-                addErrorMessage(request, e);
+                addActionMessageLiteral("error", request, e.getLocalizedMessage());
                 return fillPersonalDataInvalid(mapping, form, request, response);
             }
             throw new Error(e);
