@@ -4816,6 +4816,22 @@ relation PersonIdentificationDocumentExtraInfoRootDomainObject {
     }
 }
 
+
+// This relation should be with PersonalIngrassionData in the near future change this
+// Daniel Pires && Joao Amaral - 29 July 2020
+/*
+ * The country where the student finished the high school should be associated with
+ * Person and not PrecedentDegreeInformation. It is invariant information across
+ * Registrations
+ */ 
+relation PersonCountryHighSchool {
+    .org.fenixedu.academic.domain.Person playsRole {
+        multiplicity *;
+    }
+    
+    .org.fenixedu.academic.domain.Country playsRole countryHighSchool;
+}
+
 /* RAIDES Domain */
 
 relation RootDomainObjectDegreeDesignation {
