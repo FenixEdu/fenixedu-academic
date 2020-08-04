@@ -285,28 +285,35 @@ abstract public class CurricularRuleExecutor {
         }
     }
 
-    
     protected RuleResult executeEnrolmentPrefilter(ICurricularRule curricularRule,
             IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
         return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
     }
-    
+
     private boolean isTemporaryOrImpossible(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
             final RuleResult ruleResult) {
         return ruleResult.isTemporaryEnrolmentResultType(sourceDegreeModuleToEvaluate.getDegreeModule())
                 || ruleResult.isImpossibleEnrolmentResultType(sourceDegreeModuleToEvaluate.getDegreeModule());
     }
 
-    abstract protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule,
-            IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext);
+    @Deprecated
+    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule,
+            IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+        return executeEnrolmentWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
+    }
 
-    abstract protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule,
-            IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext);
+    @Deprecated
+    protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule,
+            IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+        return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
+    }
+
+    protected boolean canBeEvaluated(ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+            EnrolmentContext enrolmentContext) {
+        return true;
+    }
 
     abstract protected RuleResult executeEnrolmentVerificationWithRules(final ICurricularRule curricularRule,
             IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext);
-
-    abstract protected boolean canBeEvaluated(ICurricularRule curricularRule,
-            IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext);
 
 }

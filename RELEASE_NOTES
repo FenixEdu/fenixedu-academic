@@ -1,3 +1,5 @@
+- Improvement: Simplified curricular rule executors creation
+- Refactor: Deprecated old curricular rule execution modes
 - Fix: Enrolment state not evaluated label should not be flunked  
 
 30.7.0 (29-07-2020)
