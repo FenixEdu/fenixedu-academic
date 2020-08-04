@@ -276,7 +276,8 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     private void sendConcludeEmail() {
-        String body = BundleUtil.getString(Bundle.APPLICATION, "mail.academicServiceRequest.concluded.message1");
+        String body = BundleUtil.getString(Bundle.APPLICATION, "mail.academicServiceRequest.concluded.message0") + " " + getPerson().getName() + ",\n\n"; 
+        body += BundleUtil.getString(Bundle.APPLICATION, "mail.academicServiceRequest.concluded.message1");
         body += " " + getServiceRequestNumberYear();
         body += " " + BundleUtil.getString(Bundle.APPLICATION, "mail.academicServiceRequest.concluded.message2");
         body += " '" + getDescription();
