@@ -1,4 +1,4 @@
-- Fix: Enrolment state not evaluated label should not be flunked
+- Fix: Enrolment state not evaluated label should not be flunked  
 
 30.7.0 (29-07-2020)
 - Refactor: Moved relation PersonCountryHighSchool from specification to academic-core
