@@ -42,8 +42,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
-import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.messaging.DepartmentForum;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -64,25 +62,25 @@ public class Department extends Department_Base {
         setRootDomainObject(Bennu.getInstance());
     }
 
-    public List<Teacher> getAllCurrentTeachers() {
-        return getTeacherAuthorizationStream().filter(a -> a.getExecutionInterval().isCurrent())
-                .map(TeacherAuthorization::getTeacher).distinct().collect(Collectors.toList());
-    }
+//    public List<Teacher> getAllCurrentTeachers() {
+//        return getTeacherAuthorizationStream().filter(a -> a.getExecutionInterval().isCurrent())
+//                .map(TeacherAuthorization::getTeacher).distinct().collect(Collectors.toList());
+//    }
 
-    public List<Teacher> getAllTeachers(AcademicInterval interval) {
-        return getTeacherAuthorizationStream().filter(a -> a.getExecutionInterval().getAcademicInterval().overlaps(interval))
-                .map(TeacherAuthorization::getTeacher).distinct().collect(Collectors.toList());
-    }
+//    public List<Teacher> getAllTeachers(AcademicInterval interval) {
+//        return getTeacherAuthorizationStream().filter(a -> a.getExecutionInterval().getAcademicInterval().overlaps(interval))
+//                .map(TeacherAuthorization::getTeacher).distinct().collect(Collectors.toList());
+//    }
 
     public List<Teacher> getAllTeachers(ExecutionInterval interval) {
         return getTeacherAuthorizationStream().filter(a -> a.getExecutionInterval().equals(interval))
                 .map(TeacherAuthorization::getTeacher).distinct().collect(Collectors.toList());
     }
 
-    public List<Teacher> getAllTeachers(ExecutionYear executionYear) {
-        return getTeacherAuthorizationStream().filter(a -> a.getExecutionInterval().getExecutionYear().equals(executionYear))
-                .map(TeacherAuthorization::getTeacher).distinct().collect(Collectors.toList());
-    }
+//    public List<Teacher> getAllTeachers(ExecutionYear executionYear) {
+//        return getTeacherAuthorizationStream().filter(a -> a.getExecutionInterval().getExecutionYear().equals(executionYear))
+//                .map(TeacherAuthorization::getTeacher).distinct().collect(Collectors.toList());
+//    }
 
     public List<Teacher> getAllTeachers() {
         return getTeacherAuthorizationStream().map(TeacherAuthorization::getTeacher).distinct().collect(Collectors.toList());
@@ -96,21 +94,21 @@ public class Department extends Department_Base {
         return getTeacherAuthorizationSet().stream();
     }
 
-    public Set<DegreeType> getDegreeTypes() {
-        Set<DegreeType> degreeTypes = new TreeSet<DegreeType>();
-        for (Degree degree : getDegreesSet()) {
-            degreeTypes.add(degree.getDegreeType());
-        }
-        return degreeTypes;
-    }
-
-    public Set<CycleType> getCycleTypes() {
-        TreeSet<CycleType> cycles = new TreeSet<CycleType>();
-        for (DegreeType degreeType : getDegreeTypes()) {
-            cycles.addAll(degreeType.getCycleTypes());
-        }
-        return cycles;
-    }
+//    public Set<DegreeType> getDegreeTypes() {
+//        Set<DegreeType> degreeTypes = new TreeSet<DegreeType>();
+//        for (Degree degree : getDegreesSet()) {
+//            degreeTypes.add(degree.getDegreeType());
+//        }
+//        return degreeTypes;
+//    }
+//
+//    public Set<CycleType> getCycleTypes() {
+//        TreeSet<CycleType> cycles = new TreeSet<CycleType>();
+//        for (DegreeType degreeType : getDegreeTypes()) {
+//            cycles.addAll(degreeType.getCycleTypes());
+//        }
+//        return cycles;
+//    }
 
     public String getAcronym() {
         return StringUtils.isNotBlank(getCode()) ? getCode() : WordUtils.initials(getName()).replaceAll("[a-z]", "");
@@ -130,19 +128,16 @@ public class Department extends Department_Base {
     // -------------------------------------------------------------
     // read static methods
     // -------------------------------------------------------------
-    public static Department readByName(final String departmentName) {
-        for (final Department department : Bennu.getInstance().getDepartmentsSet()) {
-            if (department.getName().equals(departmentName)) {
-                return department;
-            }
-        }
-        return null;
-    }
+//    public static Department readByName(final String departmentName) {
+//        for (final Department department : Bennu.getInstance().getDepartmentsSet()) {
+//            if (department.getName().equals(departmentName)) {
+//                return department;
+//            }
+//        }
+//        return null;
+//    }
 
     public void delete() {
-        if (!getTeacherGroupSet().isEmpty()) {
-            throw new DomainException("error.department.cannotDeleteDepartmentUsedInAccessControl");
-        }
         setMembersGroup(null);
         setDepartmentUnit(null);
         setRootDomainObject(null);
@@ -198,10 +193,6 @@ public class Department extends Department_Base {
 
     public boolean isCurrentUserMemberOfCompetenceCourseMembersGroup() {
         return isUserMemberOfCompetenceCourseMembersGroup(AccessControl.getPerson());
-    }
-
-    public DepartmentForum getDepartmentForum() {
-        return getForum();
     }
 
     public static Department find(final String departmentCode) {

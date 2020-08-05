@@ -131,25 +131,25 @@ public class Teacher extends Teacher_Base {
         return getDepartment(AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.SEMESTER)).orElse(null);
     }
 
-    /**
-     * Gets the last department the teacher had up to the given interval (inclusive). Useful when we don't want to consider
-     * authorization interruptions, and a teacher once belonging to a department stays with that status.
-     * 
-     * @param interval the time frame to consider
-     * @return an {@code Optional} of the department.
-     */
-    public Department getLastDepartment(AcademicInterval interval) {
-        return getLastTeacherAuthorization(interval).map(a -> a.getDepartment()).orElse(null);
-    }
-
-    /**
-     * Same as {@link #getLastDepartment(AcademicInterval)} for the current semester
-     * 
-     * @return The department or null
-     */
-    public Department getLastDepartment() {
-        return getLastDepartment(AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.SEMESTER));
-    }
+//    /**
+//     * Gets the last department the teacher had up to the given interval (inclusive). Useful when we don't want to consider
+//     * authorization interruptions, and a teacher once belonging to a department stays with that status.
+//     * 
+//     * @param interval the time frame to consider
+//     * @return an {@code Optional} of the department.
+//     */
+//    public Department getLastDepartment(AcademicInterval interval) {
+//        return getLastTeacherAuthorization(interval).map(a -> a.getDepartment()).orElse(null);
+//    }
+//
+//    /**
+//     * Same as {@link #getLastDepartment(AcademicInterval)} for the current semester
+//     * 
+//     * @return The department or null
+//     */
+//    public Department getLastDepartment() {
+//        return getLastDepartment(AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.SEMESTER));
+//    }
 
     /**
      * Gets the latest category of the teacher in the given interval.
