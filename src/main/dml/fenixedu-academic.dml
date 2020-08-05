@@ -1697,8 +1697,6 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
 
         class messaging.ExecutionCourseForum extends messaging.Forum {
         }
-        class messaging.DepartmentForum extends messaging.Forum {
-        }
 
 class QueueJob  {
                Boolean done;
@@ -2772,11 +2770,6 @@ relation ExecutionCourseForumCourse {
         multiplicity *;
     }
     ExecutionCourse playsRole executionCourse;
-}
-
-relation DepartmentForumDepartment {
-    messaging.DepartmentForum playsRole forum;
-    Department playsRole department;
 }
 
 relation ForumSubscriptionForum {
