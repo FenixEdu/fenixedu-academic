@@ -27,11 +27,9 @@ import java.util.stream.Stream;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Professorship;
-import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.annotation.GroupArgument;
@@ -59,48 +57,34 @@ public class TeacherGroup extends FenixGroup {
     private Space campus;
 
     @GroupArgument
-    private Department department;
-
-    @GroupArgument
     private ExecutionYear executionYear;
 
     private TeacherGroup() {
         super();
     }
 
-    private TeacherGroup(Degree degree, ExecutionCourse executionCourse, Space campus, Department department,
-            ExecutionYear executionYear) {
+    private TeacherGroup(Degree degree, ExecutionCourse executionCourse, Space campus, ExecutionYear executionYear) {
         this();
         this.degree = degree;
         this.executionCourse = executionCourse;
         this.campus = campus;
-        this.department = department;
         this.executionYear = executionYear;
     }
 
     public static TeacherGroup get(Degree degree) {
-        return new TeacherGroup(degree, null, null, null, null);
+        return new TeacherGroup(degree, null, null, null);
     }
 
     public static TeacherGroup get(Space campus) {
-        return new TeacherGroup(null, null, campus, null, null);
-    }
-
-    public static TeacherGroup get(Department department, ExecutionYear executionYear) {
-        return new TeacherGroup(null, null, null, department, executionYear);
+        return new TeacherGroup(null, null, campus, null);
     }
 
     public static TeacherGroup get(ExecutionCourse executionCourse) {
-        return new TeacherGroup(null, executionCourse, null, null, null);
+        return new TeacherGroup(null, executionCourse, null, null);
     }
 
-    public static TeacherGroup get(Degree degree, ExecutionCourse executionCourse, Space campus, Department department,
-            ExecutionYear executionYear) {
-        return new TeacherGroup(degree, executionCourse, campus, department, executionYear);
-    }
-
-    private ExecutionYear getExecutionYear() {
-        return executionYear != null ? executionYear : ExecutionYear.findCurrent(null);
+    public static TeacherGroup get(Degree degree, ExecutionCourse executionCourse, Space campus, ExecutionYear executionYear) {
+        return new TeacherGroup(degree, executionCourse, campus, executionYear);
     }
 
     @Override
@@ -113,9 +97,6 @@ public class TeacherGroup extends FenixGroup {
         if (executionCourse != null) {
             parts.add(executionCourse.getName() + " (" + executionCourse.getSigla() + ") "
                     + executionCourse.getAcademicInterval().getPathName());
-        }
-        if (department != null) {
-            parts.add(department.getName());
         }
         if (executionYear != null) {
             parts.add(executionYear.getName());
@@ -166,15 +147,6 @@ public class TeacherGroup extends FenixGroup {
                 }
             });
         }
-        //by department
-        if (department != null) {
-            for (Teacher teacher : department.getAllTeachers(getExecutionYear())) {
-                User user = teacher.getPerson().getUser();
-                if (user != null) {
-                    users.add(user);
-                }
-            }
-        }
         //by execution course
         if (executionCourse != null) {
             for (Professorship professorship : executionCourse.getProfessorshipsSet()) {
@@ -218,12 +190,6 @@ public class TeacherGroup extends FenixGroup {
                     }
                 }
             }
-            if (department != null) {
-                if (department
-                        .equals(user.getPerson().getTeacher().getLastDepartment(getExecutionYear().getAcademicInterval()))) {
-                    return true;
-                }
-            }
         }
         return false;
     }
@@ -235,7 +201,7 @@ public class TeacherGroup extends FenixGroup {
 
     @Override
     public PersistentGroup toPersistentGroup() {
-        return PersistentTeacherGroup.getInstance(degree, executionCourse, campus, department, executionYear);
+        return PersistentTeacherGroup.getInstance(degree, executionCourse, campus, executionYear);
     }
 
     @Override
@@ -243,14 +209,13 @@ public class TeacherGroup extends FenixGroup {
         if (object instanceof TeacherGroup) {
             TeacherGroup other = (TeacherGroup) object;
             return Objects.equal(degree, other.degree) && Objects.equal(executionCourse, other.executionCourse)
-                    && Objects.equal(campus, other.campus) && Objects.equal(department, other.department)
-                    && Objects.equal(executionYear, other.executionYear);
+                    && Objects.equal(campus, other.campus) && Objects.equal(executionYear, other.executionYear);
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(degree, executionCourse, campus, department, executionYear);
+        return Objects.hashCode(degree, executionCourse, campus, executionYear);
     }
 }

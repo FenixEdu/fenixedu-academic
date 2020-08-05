@@ -1,4 +1,5 @@
 - Refactor: Cleanup deprecated DepartmentForum
+- Refactor: Cleanup deprecated department argument in TeacherGroup
 
 30.8.0 (04-08-2020)
 - Improvement: Simplified curricular rule executors creation

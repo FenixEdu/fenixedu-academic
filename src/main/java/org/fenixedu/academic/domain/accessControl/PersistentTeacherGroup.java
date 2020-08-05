@@ -24,57 +24,49 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.spaces.domain.Space;
 
-import pt.ist.fenixframework.dml.runtime.Relation;
-
 import com.google.common.collect.Sets;
 
+import pt.ist.fenixframework.dml.runtime.Relation;
+
 public class PersistentTeacherGroup extends PersistentTeacherGroup_Base {
-    protected PersistentTeacherGroup(Degree degree, ExecutionCourse executionCourse, Space campus, Department department,
-            ExecutionYear executionYear) {
+    protected PersistentTeacherGroup(Degree degree, ExecutionCourse executionCourse, Space campus, ExecutionYear executionYear) {
         super();
         setDegree(degree);
         setExecutionCourse(executionCourse);
         setCampus(campus);
-        setDepartment(department);
         setExecutionYear(executionYear);
     }
 
     @Override
     public Group toGroup() {
-        return TeacherGroup.get(getDegree(), getExecutionCourse(), getCampus(), getDepartment(), getExecutionYear());
+        return TeacherGroup.get(getDegree(), getExecutionCourse(), getCampus(), getExecutionYear());
     }
 
     @Override
     protected Collection<Relation<?, ?>> getContextRelations() {
         return Sets.newHashSet(getRelationPersistentTeacherGroupExecutionCourse(), getRelationPersistentTeacherGroupDegree(),
-                getRelationPersistentTeacherGroupDepartment(), getRelationPersistentTeacherGroupExecutionYear(),
-                getRelationPersistentTeacherGroupCampus());
+                getRelationPersistentTeacherGroupExecutionYear(), getRelationPersistentTeacherGroupCampus());
     }
 
     public static PersistentTeacherGroup getInstance(Degree degree) {
-        return getInstance(() -> degree.getTeacherGroupSet().stream(), degree, null, null, null, null);
+        return getInstance(() -> degree.getTeacherGroupSet().stream(), degree, null, null, null);
     }
 
     public static PersistentTeacherGroup getInstance(Space campus) {
-        return getInstance(() -> campus.getTeacherGroupSet().stream(), null, null, campus, null, null);
-    }
-
-    public static PersistentTeacherGroup getInstance(Department department, ExecutionYear executionYear) {
-        return getInstance(() -> department.getTeacherGroupSet().stream(), null, null, null, department, executionYear);
+        return getInstance(() -> campus.getTeacherGroupSet().stream(), null, null, campus, null);
     }
 
     public static PersistentTeacherGroup getInstance(ExecutionCourse executionCourse) {
-        return getInstance(() -> executionCourse.getTeacherGroupSet().stream(), null, executionCourse, null, null, null);
+        return getInstance(() -> executionCourse.getTeacherGroupSet().stream(), null, executionCourse, null, null);
     }
 
     public static PersistentTeacherGroup getInstance(Degree degree, ExecutionCourse executionCourse, Space campus,
-            Department department, ExecutionYear executionYear) {
+            ExecutionYear executionYear) {
         if (degree != null) {
             return getInstance(degree);
         }
@@ -84,21 +76,15 @@ public class PersistentTeacherGroup extends PersistentTeacherGroup_Base {
         if (executionCourse != null) {
             return getInstance(executionCourse);
         }
-        if (department != null) {
-            return getInstance(department, executionYear);
-        }
         return null;
     }
 
     private static PersistentTeacherGroup getInstance(Supplier<Stream<PersistentTeacherGroup>> options, Degree degree,
-            ExecutionCourse executionCourse, Space campus, Department department, ExecutionYear executionYear) {
-        return singleton(
-                () -> options
-                        .get()
-                        .filter(group -> Objects.equals(group.getDegree(), degree)
-                                && Objects.equals(group.getExecutionCourse(), executionCourse)
-                                && Objects.equals(group.getCampus(), campus) && Objects.equals(group.getDepartment(), department)
-                                && Objects.equals(group.getExecutionYear(), executionYear)).findAny(),
-                () -> new PersistentTeacherGroup(degree, executionCourse, campus, department, executionYear));
+            ExecutionCourse executionCourse, Space campus, ExecutionYear executionYear) {
+        return singleton(() -> options.get()
+                .filter(group -> Objects.equals(group.getDegree(), degree)
+                        && Objects.equals(group.getExecutionCourse(), executionCourse)
+                        && Objects.equals(group.getCampus(), campus) && Objects.equals(group.getExecutionYear(), executionYear))
+                .findAny(), () -> new PersistentTeacherGroup(degree, executionCourse, campus, executionYear));
     }
 }

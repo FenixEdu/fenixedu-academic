@@ -5003,15 +5003,6 @@ relation PersistentTeacherGroupCampus {
     }
 }
 
-relation PersistentTeacherGroupDepartment {
-    public accessControl.PersistentTeacherGroup playsRole teacherGroup {
-        multiplicity *;
-    }
-    public Department playsRole department {
-        multiplicity 0..1;
-    }
-}
-
 relation PersistentTeacherGroupExecutionYear {
     public accessControl.PersistentTeacherGroup playsRole teacherGroup {
         multiplicity *;
