@@ -41,7 +41,7 @@ public class PermissionService {
 
     public static <T extends DomainObject> Set<T> getObjects(AccessControlPermission permission, Class<T> clazz, User user) {
         return (Set<T>) profileProvider.apply(permission, user).stream()
-                .filter(p -> p.getFenixMemberSet().contains(user) && p.getObjectsClass().equals(clazz.getName()))
+                .filter(p -> p.getFenixMemberSet().contains(user) && clazz != null && clazz.getName().equals(p.getObjectsClass()))
                 .flatMap(p -> p.provideObjects().stream()).collect(Collectors.toSet());
     }
 
