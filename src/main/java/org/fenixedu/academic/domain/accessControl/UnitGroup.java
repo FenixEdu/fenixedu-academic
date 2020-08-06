@@ -22,10 +22,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.organizationalStructure.Accountability;
+import org.fenixedu.academic.domain.organizationalStructure.AccountabilityType;
 import org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
@@ -47,8 +49,12 @@ public class UnitGroup extends FenixGroup {
     @GroupArgument
     private Unit unit;
 
+    @Deprecated
     @GroupArgument
     private AccountabilityTypeEnum relationType;
+
+    @GroupArgument
+    private AccountabilityType accountabilityType;
 
     @GroupArgument
     private Boolean includeSubUnits;
@@ -57,23 +63,27 @@ public class UnitGroup extends FenixGroup {
         super();
     }
 
-    private UnitGroup(Unit unit, AccountabilityTypeEnum relationType, Boolean includeSubUnits) {
+    private UnitGroup(Unit unit, AccountabilityTypeEnum relationType, AccountabilityType accountabilityType,
+            Boolean includeSubUnits) {
         this();
         this.unit = unit;
         this.relationType = relationType;
+        this.accountabilityType = accountabilityType;
         this.includeSubUnits = includeSubUnits;
     }
 
+    @Deprecated
     public static UnitGroup recursiveWorkers(Unit unit) {
-        return new UnitGroup(unit, AccountabilityTypeEnum.WORKING_CONTRACT, true);
+        return new UnitGroup(unit, AccountabilityTypeEnum.WORKING_CONTRACT, null, true);
     }
 
+    @Deprecated
     public static UnitGroup workers(Unit unit) {
-        return new UnitGroup(unit, AccountabilityTypeEnum.WORKING_CONTRACT, false);
+        return new UnitGroup(unit, AccountabilityTypeEnum.WORKING_CONTRACT, null, false);
     }
 
-    public static UnitGroup get(Unit unit, AccountabilityTypeEnum relationType, Boolean includeSubUnits) {
-        return new UnitGroup(unit, relationType, includeSubUnits);
+    public static UnitGroup get(Unit unit, AccountabilityType accountabilityType, Boolean includeSubUnits) {
+        return new UnitGroup(unit, null, accountabilityType, includeSubUnits);
     }
 
     public Unit getUnit() {
@@ -85,7 +95,9 @@ public class UnitGroup extends FenixGroup {
         ArrayList<String> args = new ArrayList<String>();
         args.add(unit.getNameI18n().getContent());
         String type = "";
-        if (relationType != null) {
+        if (accountabilityType != null) {
+            type = BundleUtil.getString(Bundle.GROUP, "label.name.unit.connector.relation") + accountabilityType.getName();
+        } else if (relationType != null) {
             type = BundleUtil.getString(Bundle.GROUP, "label.name.unit.connector.relation") + relationType.getLocalizedName();
         }
         args.add(type);
@@ -111,7 +123,10 @@ public class UnitGroup extends FenixGroup {
 
     private void collect(Set<User> users, Unit unit, DateTime when) {
         Collection<? extends Accountability> accs;
-        if (relationType != null) {
+        if (accountabilityType != null) {
+            accs = unit.getChildsSet().stream().filter(a -> a.getAccountabilityType() == accountabilityType)
+                    .collect(Collectors.toSet());
+        } else if (relationType != null) {
             accs = unit.getChildAccountabilities(relationType);
         } else {
             accs = unit.getChildsSet();
@@ -146,19 +161,25 @@ public class UnitGroup extends FenixGroup {
         }
         YearMonthDay whenYMD = when.toYearMonthDay();
         for (Accountability accountability : user.getPerson().getParentsSet()) {
-            if (accountability.getAccountabilityType().getType() == relationType && accountability.isActive(whenYMD)) {
-                if (accountability.getParentParty().equals(unit)) {
-                    return true;
-                } else if (includeSubUnits && isAncestor(unit, accountability.getParentParty(), relationType, whenYMD)) {
-                    return true;
+
+            if ((relationType != null && accountability.getAccountabilityType().getType() == relationType)
+                    || (accountabilityType != null && accountability.getAccountabilityType() == accountabilityType)) {
+
+                if (accountability.isActive(whenYMD)) {
+                    if (accountability.getParentParty().equals(unit)) {
+                        return true;
+                    } else if (includeSubUnits && isAncestor(unit, accountability.getParentParty(), whenYMD)) {
+                        return true;
+                    }
                 }
+
             }
+
         }
         return false;
     }
 
-    private boolean isAncestor(Party possibleAncestor, Party possibleChild, AccountabilityTypeEnum subUnitRecursionType,
-            YearMonthDay when) {
+    private boolean isAncestor(Party possibleAncestor, Party possibleChild, YearMonthDay when) {
         if (possibleChild == null) {
             return false;
         }
@@ -167,7 +188,7 @@ public class UnitGroup extends FenixGroup {
         }
         for (Accountability acc : possibleChild.getParentsSet()) {
             if (acc.getParentParty() instanceof Unit && acc.isActive(when)
-                    && isAncestor(possibleAncestor, acc.getParentParty(), subUnitRecursionType, when)) {
+                    && isAncestor(possibleAncestor, acc.getParentParty(), when)) {
                 return true;
             }
         }
@@ -176,7 +197,8 @@ public class UnitGroup extends FenixGroup {
 
     @Override
     public PersistentGroup toPersistentGroup() {
-        return PersistentUnitGroup.getInstance(unit, relationType, includeSubUnits);
+        final AccountabilityType type = relationType != null ? AccountabilityType.readByType(relationType) : accountabilityType;
+        return PersistentUnitGroup.getInstance(unit, type, includeSubUnits);
     }
 
     @Override
@@ -184,6 +206,7 @@ public class UnitGroup extends FenixGroup {
         if (object instanceof UnitGroup) {
             UnitGroup other = (UnitGroup) object;
             return Objects.equal(unit, other.unit) && Objects.equal(relationType, other.relationType)
+                    && Objects.equal(accountabilityType, other.accountabilityType)
                     && Objects.equal(includeSubUnits, other.includeSubUnits);
         }
         return false;

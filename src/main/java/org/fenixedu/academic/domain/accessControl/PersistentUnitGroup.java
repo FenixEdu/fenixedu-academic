@@ -22,23 +22,23 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
 
-import org.fenixedu.academic.domain.organizationalStructure.AccountabilityTypeEnum;
+import org.fenixedu.academic.domain.organizationalStructure.AccountabilityType;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.bennu.core.groups.Group;
 
 import pt.ist.fenixframework.dml.runtime.Relation;
 
 public class PersistentUnitGroup extends PersistentUnitGroup_Base {
-    protected PersistentUnitGroup(Unit unit, AccountabilityTypeEnum relationType, boolean includeSubUnits) {
+    protected PersistentUnitGroup(Unit unit, AccountabilityType accountabilityType, boolean includeSubUnits) {
         super();
         setUnit(unit);
-        setRelationType(relationType);
+        setAccountabilityType(accountabilityType);
         setIncludeSubUnits(includeSubUnits);
     }
 
     @Override
     public Group toGroup() {
-        return UnitGroup.get(getUnit(), getRelationType(), getIncludeSubUnits());
+        return UnitGroup.get(getUnit(), getAccountabilityType(), getIncludeSubUnits());
     }
 
     @Override
@@ -46,14 +46,13 @@ public class PersistentUnitGroup extends PersistentUnitGroup_Base {
         return Collections.singleton(getRelationPersistentUnitGroupUnit());
     }
 
-    public static PersistentUnitGroup getInstance(final Unit unit, final AccountabilityTypeEnum relationType,
+    public static PersistentUnitGroup getInstance(final Unit unit, final AccountabilityType accountabilityType,
             final Boolean includeSubUnits) {
         return singleton(
-                () -> unit
-                        .getUnitGroupSet()
-                        .stream()
-                        .filter(group -> Objects.equals(group.getRelationType(), relationType)
-                                && Objects.equals(group.getIncludeSubUnits(), includeSubUnits)).findAny(),
-                () -> new PersistentUnitGroup(unit, relationType, includeSubUnits));
+                () -> unit.getUnitGroupSet().stream()
+                        .filter(group -> Objects.equals(group.getAccountabilityType(), accountabilityType)
+                                && Objects.equals(group.getIncludeSubUnits(), includeSubUnits))
+                        .findAny(),
+                () -> new PersistentUnitGroup(unit, accountabilityType, includeSubUnits));
     }
 }

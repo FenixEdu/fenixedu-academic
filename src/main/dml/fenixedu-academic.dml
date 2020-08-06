@@ -5058,6 +5058,15 @@ relation PersistentUnitGroupUnit {
     }
 }
 
+relation PersistentUnitGroupAccountabilityType {
+    public accessControl.PersistentUnitGroup playsRole unitGroup {
+        multiplicity *;
+    }
+    public organizationalStructure.AccountabilityType playsRole accountabilityType {
+        multiplicity 0..1;
+    }
+}
+
 relation PersistentStudentsConcludedInExecutionYearGroupDegrees {
     public accessControl.PersistentStudentsConcludedInExecutionYearGroup playsRole studentsConcludedInExecutionYearGroup {
         multiplicity *;
