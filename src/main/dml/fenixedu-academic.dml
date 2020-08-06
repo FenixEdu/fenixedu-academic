@@ -1188,6 +1188,7 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
     class organizationalStructure.AccountabilityType  {     
         LocalizedString typeName;
         AccountabilityTypeEnum type;
+        String code;
     }
     
     class organizationalStructure.Accountability  {

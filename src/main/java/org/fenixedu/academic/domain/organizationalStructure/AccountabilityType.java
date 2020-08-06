@@ -19,7 +19,9 @@
 package org.fenixedu.academic.domain.organizationalStructure;
 
 import java.util.Collection;
+import java.util.Optional;
 
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.LocalizedString;
@@ -53,6 +55,20 @@ public class AccountabilityType extends AccountabilityType_Base {
             }
         }
         return null;
+    }
+
+    @Override
+    public void setCode(String code) {
+        findByCode(code).filter(at -> at != this).ifPresent(at -> {
+            throw new DomainException("error.accountabilityType.existingCode", code, at.getName());
+        });
+
+        super.setCode(code);
+    }
+
+    public static Optional<AccountabilityType> findByCode(final String code) {
+        return StringUtils.isNotBlank(code) ? Bennu.getInstance().getAccountabilityTypesSet().stream()
+                .filter(at -> code.equals(at.getCode())).findAny() : Optional.empty();
     }
 
     @Override
