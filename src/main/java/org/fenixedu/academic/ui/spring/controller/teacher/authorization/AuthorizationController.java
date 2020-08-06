@@ -99,7 +99,7 @@ public class AuthorizationController {
 			search.setPeriod(service.getCurrentPeriod());
 		}
 		model.addAttribute("search", search);
-		model.addAttribute("departments", service.getDepartments());
+		model.addAttribute("departments", service.getDepartmentsUnits());
 		model.addAttribute("periods", service.getExecutionPeriods());
 		model.addAttribute("authorizations", service.searchAuthorizations(search));
 		return view("show");
@@ -223,7 +223,7 @@ public class AuthorizationController {
 	public String showUpload(Model model) {
 		model.addAttribute("currentUser", Authenticate.getUser());
 		model.addAttribute("categories", service.getCategories());
-		model.addAttribute("departments", service.getDepartments());
+		model.addAttribute("departments", service.getDepartmentsUnits());
 		model.addAttribute("periods", service.getExecutionPeriods());
 		return view("upload");
 	}
@@ -260,7 +260,7 @@ public class AuthorizationController {
 			search.setPeriod(service.getExecutionPeriods().isEmpty() ? null : service.getExecutionPeriods().get(0));
 		}
 		model.addAttribute("formBean", search);
-		model.addAttribute("departments", service.getDepartments());
+		model.addAttribute("departments", service.getDepartmentsUnits());
 		model.addAttribute("periods", service.getExecutionPeriods());
 		model.addAttribute("categories", service.getCategories());
 		return view("create");

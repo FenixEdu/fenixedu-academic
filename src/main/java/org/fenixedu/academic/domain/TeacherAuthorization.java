@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain;
 
 import java.util.Objects;
 
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
@@ -32,11 +33,12 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
         setCreationDate(DateTime.now());
     }
 
-    protected TeacherAuthorization(Teacher teacher, Department department, ExecutionInterval executionInterval,
+    protected TeacherAuthorization(Teacher teacher, Unit unit, ExecutionInterval executionInterval,
             TeacherCategory teacherCategory, Boolean contracted, Double lessonHours, Double workPercentageInInstitution) {
         this();
         setTeacher(teacher);
-        setDepartment(department);
+        setUnit(unit);
+        setDepartment(unit.getDepartment()); // deprecated
         setExecutionSemester(executionInterval);
         setTeacherCategory(teacherCategory);
         setContracted(contracted);
@@ -45,24 +47,24 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
         setAuthorizer(Authenticate.getUser());
     }
 
-    public static TeacherAuthorization createOrUpdate(Teacher teacher, Department department, ExecutionInterval executionInterval,
+    public static TeacherAuthorization createOrUpdate(Teacher teacher, Unit unit, ExecutionInterval executionInterval,
             TeacherCategory teacherCategory, Boolean contracted, Double lessonHours, Double workPercentageInInstitution) {
         Objects.requireNonNull(teacher);
-        Objects.requireNonNull(department);
+        Objects.requireNonNull(unit);
         Objects.requireNonNull(executionInterval);
         Objects.requireNonNull(teacherCategory);
         Objects.requireNonNull(contracted);
         Objects.requireNonNull(lessonHours);
-        TeacherAuthorization existing = teacher.getTeacherAuthorization(executionInterval.getAcademicInterval()).orElse(null);
+        TeacherAuthorization existing = teacher.getTeacherAuthorization(executionInterval).orElse(null);
         if (existing != null) {
-            if (existing.getDepartment().equals(department) && existing.getContracted().equals(contracted)
+            if (existing.getUnit() == unit && existing.getContracted().equals(contracted)
                     && existing.getLessonHours().equals(lessonHours)) {
                 return existing;
             } else {
                 existing.revoke();
             }
         }
-        return new TeacherAuthorization(teacher, department, executionInterval, teacherCategory, contracted, lessonHours,
+        return new TeacherAuthorization(teacher, unit, executionInterval, teacherCategory, contracted, lessonHours,
                 workPercentageInInstitution);
     }
 
@@ -75,8 +77,10 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
     public void revoke() {
         setRevokedTeacher(getTeacher());
         setTeacher(null);
-        setRevokedDepartment(getDepartment());
-        setDepartment(null);
+        setRevokedDepartment(getDepartment()); // deprecated
+        setRevokedUnit(getUnit());
+        setDepartment(null); // deprecated
+        setUnit(null);
         setRevokedExecutionSemester(getExecutionInterval());
         setExecutionSemester(null);
         setRevoker(Authenticate.getUser());
@@ -85,6 +89,7 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
         setRootDomainObject(null);
     }
 
+    @Deprecated
     @Override
     public Department getDepartment() {
         if (getRevokedRootDomainObject() != null) {
@@ -92,6 +97,14 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
         }
         // FIXME: Removed when framework support read-only slots
         return super.getDepartment();
+    }
+
+    @Override
+    public Unit getUnit() {
+        if (getRevokedRootDomainObject() != null) {
+            return getRevokedUnit();
+        }
+        return super.getUnit();
     }
 
     /**
@@ -177,6 +190,19 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
 
     protected ExecutionInterval getRevokedExecutionInterval() {
         return super.getRevokedExecutionSemester();
+    }
+
+    public boolean migrateDepartmentToUnit() {
+        boolean update = false;
+        if (getUnit() == null && getDepartment() != null) {
+            setUnit(getDepartment().getDepartmentUnit());
+            update = true;
+        }
+        if (getRevokedUnit() == null && getRevokedDepartment() != null) {
+            setRevokedUnit(getRevokedDepartment().getDepartmentUnit());
+            update = true;
+        }
+        return update;
     }
 
 }

@@ -33,6 +33,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.messaging.Forum;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -118,6 +119,7 @@ public class Teacher extends Teacher_Base {
      * @param interval the time frame to consider
      * @return an {@code Optional} of the department.
      */
+    @Deprecated
     public Optional<Department> getDepartment(AcademicInterval interval) {
         return getTeacherAuthorization(interval).map(a -> a.getDepartment());
     }
@@ -127,8 +129,19 @@ public class Teacher extends Teacher_Base {
      * 
      * @return The department or null
      */
+    @Deprecated
     public Department getDepartment() {
         return getDepartment(AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.SEMESTER)).orElse(null);
+    }
+
+    /**
+     * Gets the latest unit of the teacher (usually the unit represents a department)
+     * 
+     * @return an {@code Optional} of the unit.
+     */
+    public Optional<Unit> getUnit() {
+        return getTeacherAuthorizationStream().max(Comparator.comparing(TeacherAuthorization::getExecutionInterval))
+                .map(TeacherAuthorization::getUnit);
     }
 
 //    /**
@@ -346,6 +359,10 @@ public class Teacher extends Teacher_Base {
     public Optional<TeacherAuthorization> getTeacherAuthorization(AcademicInterval interval) {
         return getTeacherAuthorizationStream().filter(a -> a.getExecutionInterval().getAcademicInterval().equals(interval))
                 .findFirst();
+    }
+
+    public Optional<TeacherAuthorization> getTeacherAuthorization(ExecutionInterval interval) {
+        return getTeacherAuthorizationStream().filter(a -> a.getExecutionInterval() == interval).findFirst();
     }
 
     public Optional<TeacherAuthorization> getTeacherAuthorization() {

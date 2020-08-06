@@ -18,19 +18,19 @@
  */
 package org.fenixedu.academic.ui.spring.controller.teacher.authorization;
 
-import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionInterval;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 
 public class SearchBean {
 
-    private Department department;
+    private Unit department;
     private ExecutionInterval period;
 
-    public Department getDepartment() {
+    public Unit getDepartment() {
         return department;
     }
 
-    public void setDepartment(Department department) {
+    public void setDepartment(Unit department) {
         this.department = department;
     }
 

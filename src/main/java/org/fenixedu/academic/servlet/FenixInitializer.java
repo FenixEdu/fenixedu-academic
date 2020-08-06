@@ -19,6 +19,8 @@
 package org.fenixedu.academic.servlet;
 
 import java.util.Properties;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -29,11 +31,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.Installation;
+import org.fenixedu.academic.domain.TeacherAuthorization;
 import org.fenixedu.academic.domain.organizationalStructure.UnitNamePart;
 import org.fenixedu.academic.service.StudentWarningsDefaultCheckers;
 import org.fenixedu.academic.service.StudentWarningsService;
 import org.fenixedu.academic.ui.struts.action.externalServices.PhoneValidationUtils;
 import org.fenixedu.bennu.core.api.SystemResource;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.rest.Healthcheck;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +57,8 @@ public class FenixInitializer implements ServletContextListener {
     @Override
     @Atomic(mode = TxMode.READ)
     public void contextInitialized(ServletContextEvent event) {
+        
+        migrateTeacherAuthorizations();
 
         Installation.ensureInstallation();
         loadUnitNames();
@@ -63,6 +69,40 @@ public class FenixInitializer implements ServletContextListener {
         registerHealthchecks();
         registerDefaultStudentWarningCheckers();
 
+    }
+
+    @Atomic
+    private void migrateTeacherAuthorizations() {
+
+        final Set<TeacherAuthorization> authorizations = Bennu.getInstance().getTeacherAuthorizationSet();
+        logger.info("START TeacherAuthorization migration");
+        logger.info(authorizations.size() + " Authorizations (total)");
+
+        final AtomicInteger authorizationsCounter = new AtomicInteger();
+
+        authorizations.forEach(s -> {
+            if (s.migrateDepartmentToUnit()) {
+                authorizationsCounter.incrementAndGet();
+            }
+        });
+
+        logger.info(authorizationsCounter.get() + " Authorizations updated");
+        logger.info("END TeacherAuthorization migration");
+
+        final Set<TeacherAuthorization> revokedAuthorizations = Bennu.getInstance().getRevokedTeacherAuthorizationSet();
+        logger.info("START RevokedTeacherAuthorization migration");
+        logger.info(revokedAuthorizations.size() + " Revoked Authorizations (total)");
+
+        final AtomicInteger revokedAuthorizationsCounter = new AtomicInteger();
+
+        revokedAuthorizations.forEach(s -> {
+            if (s.migrateDepartmentToUnit()) {
+                revokedAuthorizationsCounter.incrementAndGet();
+            }
+        });
+
+        logger.info(revokedAuthorizationsCounter.get() + " Revoked Authorizations updated");
+        logger.info("END RevokedTeacherAuthorization migration");
     }
 
     private void registerDefaultStudentWarningCheckers() {

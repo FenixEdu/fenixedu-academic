@@ -461,7 +461,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
     }
 
     public List<CompetenceCourse> getDepartmentCompetenceCourses() {
-        Unit selectedDepartmentUnit = getPersonDepartment().getDepartmentUnit();
+        Unit selectedDepartmentUnit = getPersonDepartment();
         if (selectedDepartmentUnit != null) {
             return CompetenceCourse.findByUnit(selectedDepartmentUnit, true)
                     .filter(cc -> CurricularStage.APPROVED.equals(cc.getCurricularStage())).collect(Collectors.toList());
@@ -469,10 +469,10 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
         return new ArrayList<CompetenceCourse>();
     }
 
-    public Department getPersonDepartment() {
+    private Unit getPersonDepartment() {
         final Person person = AccessControl.getPerson();
         final Teacher teacher = person == null ? null : person.getTeacher();
-        return teacher == null ? null : teacher.getDepartment();
+        return teacher == null ? null : teacher.getUnit().orElse(null);
     }
 
 }

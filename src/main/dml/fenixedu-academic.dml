@@ -4723,11 +4723,29 @@ relation DepartmentTeacherAuthorizations {
 	}
 }
 
+relation UnitTeacherAuthorizations {
+    organizationalStructure.Unit playsRole unit {
+        multiplicity 0..1;
+    }
+    protected TeacherAuthorization playsRole teacherAuthorizations {
+    	multiplicity *;
+	}
+}
+
 relation DepartmentRevokedTeacherAuthorizations {
     protected Department playsRole revokedDepartment {
         multiplicity 0..1;
     }
     protected TeacherAuthorization playsRole revokedTeacherAuthorization {
+        multiplicity *;
+    }
+}
+
+relation UnitRevokedTeacherAuthorizations {
+    organizationalStructure.Unit playsRole revokedUnit {
+        multiplicity 0..1;
+    }
+    protected TeacherAuthorization playsRole revokedTeacherAuthorizations {
         multiplicity *;
     }
 }

@@ -74,7 +74,7 @@
 				<spring:message code="teacher.authorizations.csv.column.3.departmentAcronym" />
 				<br />
 				<i>
-					<spring:message code="teacher.authorizations.upload.message.example" arguments="${departments[0].nameI18n.content};${departments[0].code}" argumentSeparator=";"/>
+					<spring:message code="teacher.authorizations.upload.message.example" arguments="${departments[0].nameI18n.content};${departments[0].acronym}" argumentSeparator=";"/>
 				</i>
 				<ul>
 					<c:forEach var="department" items="${departments}">

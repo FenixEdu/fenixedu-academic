@@ -732,20 +732,19 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         }
         Collections.sort(result, new BeanComparator("label"));
         if (result.size() == 1) {
-            Department personDepartment = getPersonDepartment();
-            if (personDepartment != null
-                    && !result.get(0).getValue().equals(personDepartment.getDepartmentUnit().getExternalId())) {
-                result.add(0, new SelectItem(personDepartment.getDepartmentUnit().getExternalId(), personDepartment.getName()));
+            Unit personDepartment = getPersonDepartment();
+            if (personDepartment != null && !result.get(0).getValue().equals(personDepartment.getExternalId())) {
+                result.add(0, new SelectItem(personDepartment.getExternalId(), personDepartment.getName()));
             }
         }
         return result;
     }
 
-    private Department getPersonDepartment() {
+    private Unit getPersonDepartment() {
         final User userView = getUserView();
         final Person person = userView == null ? null : userView.getPerson();
         final Teacher teacher = person == null ? null : person.getTeacher();
-        return teacher == null ? null : teacher.getDepartment();
+        return teacher == null ? null : teacher.getUnit().orElse(null);
     }
 
     private List<SelectItem> readCompetenceCourses() {

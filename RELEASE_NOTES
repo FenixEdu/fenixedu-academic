@@ -1,3 +1,4 @@
+- Refactor: Teacher authorizations for units, instead of departments
 - Refactor: Cleanup deprecated DepartmentForum
 - Refactor: Cleanup deprecated department argument in TeacherGroup
 - Refactor: Cleanup deprecated Department and Teacher methods

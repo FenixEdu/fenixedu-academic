@@ -25,7 +25,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionInterval;
@@ -33,6 +32,7 @@ import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.academic.domain.TeacherAuthorization;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.ui.spring.controller.teacher.authorization.AuthorizationService;
 import org.fenixedu.academic.ui.spring.controller.teacher.authorization.SearchBean;
 import org.fenixedu.bennu.core.domain.User;
@@ -163,7 +163,7 @@ public class ProfessorshipService {
      */
     public String getSheetName(SearchBean search) {
         List<String> parts = Lists.newArrayList("teacherProfessorships");
-        Department department = search.getDepartment();
+        Unit department = search.getDepartment();
         parts.add(department != null ? department.getAcronym() : message("label.all"));
         ExecutionInterval period = search.getPeriod();
         if (period != null) {

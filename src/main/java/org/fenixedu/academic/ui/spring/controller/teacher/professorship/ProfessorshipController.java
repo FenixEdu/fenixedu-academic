@@ -28,12 +28,12 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.TeacherAuthorization;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.ui.spring.controller.AcademicAdministrationSpringApplication;
 import org.fenixedu.academic.ui.spring.controller.teacher.authorization.AuthorizationService;
 import org.fenixedu.academic.ui.spring.controller.teacher.authorization.SearchBean;
@@ -85,7 +85,7 @@ public class ProfessorshipController {
         // Used to scroll to a specific authorization in the webview
         model.addAttribute("authorization", authorization);
 
-        model.addAttribute("departments", authorizationService.getDepartments());
+        model.addAttribute("departments", authorizationService.getDepartmentsUnits());
         model.addAttribute("periods", authorizationService.getExecutionPeriods());
         model.addAttribute("search", search);
         model.addAttribute("authorizations", authorizationService.searchAuthorizations(search));
@@ -181,7 +181,7 @@ public class ProfessorshipController {
      * @throws IOException
      */
     @RequestMapping(method = GET, value = "/download")
-    public void download(@RequestParam Department department, @RequestParam ExecutionInterval period,
+    public void download(@RequestParam Unit department, @RequestParam ExecutionInterval period,
             HttpServletResponse response) throws IOException {
         response.setContentType("text/csv");
         SearchBean search = new SearchBean();

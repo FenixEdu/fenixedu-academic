@@ -23,6 +23,7 @@ import java.io.OutputStream;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -34,6 +35,11 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.academic.domain.TeacherAuthorization;
 import org.fenixedu.academic.domain.TeacherCategory;
+import org.fenixedu.academic.domain.organizationalStructure.PartyTypeEnum;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.organizationalStructure.UnitAcronym;
+import org.fenixedu.academic.domain.organizationalStructure.UnitUtils;
+import org.fenixedu.academic.service.services.manager.executionCourseManagement.ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.commons.i18n.I18N;
@@ -81,13 +87,19 @@ public class AuthorizationService {
         return messageSource.getMessage(code, args, I18N.getLocale());
     }
 
-    /***
-     * Get all active deparments
-     * 
-     * @return {@link Department}
-     */
-    public List<Department> getDepartments() {
-        return Department.readActiveDepartments();
+//    /***
+//     * Get all active deparments
+//     * 
+//     * @return {@link Department}
+//     */
+//    @Deprecated
+//    public List<Department> getDepartments() {
+//        return Department.readActiveDepartments();
+//    }
+
+    public List<Unit> getDepartmentsUnits() {
+        return UnitUtils.readAllActiveUnitsByType(PartyTypeEnum.DEPARTMENT).stream().filter(u -> u.isInternal())
+                .collect(Collectors.toList());
     }
 
     /***
@@ -156,7 +168,7 @@ public class AuthorizationService {
      */
 
     @Atomic(mode = TxMode.WRITE)
-    public TeacherAuthorization createTeacherAuthorization(User user, Department department, ExecutionInterval interval,
+    public TeacherAuthorization createTeacherAuthorization(User user, Unit department, ExecutionInterval interval,
             TeacherCategory category, Boolean contracted, Double lessonHours, Double workPercentageInInstitution) {
 
         Teacher teacher;
@@ -185,14 +197,13 @@ public class AuthorizationService {
         return new TeacherCategory(code, name, weight);
     }
 
-    private Stream<TeacherAuthorization> getAuthorizations(Department department) {
+    private Stream<TeacherAuthorization> getAuthorizations(Unit department) {
 
         if (department == null) {
             return Bennu.getInstance().getTeacherAuthorizationSet().stream();
         }
 
-        return department.getTeacherAuthorizationStream();
-
+        return Bennu.getInstance().getTeacherAuthorizationSet().stream().filter(a -> a.getUnit() == department);
     }
 
     /***
@@ -285,14 +296,14 @@ public class AuthorizationService {
 
                 addCell(message("teacher.authorizations.csv.column.1.username"), user.getUsername());
                 addCell(message("teacher.authorizations.csv.column.2.categoryCode"), item.getTeacherCategory().getCode());
-                addCell(message("teacher.authorizations.csv.column.3.departmentAcronym"), item.getDepartment().getAcronym());
+                addCell(message("teacher.authorizations.csv.column.3.departmentAcronym"), item.getUnit().getAcronym());
                 addCell(message("teacher.authorizations.csv.column.4.lessonHours"), item.getLessonHours());
                 addCell(message("teacher.authorizations.csv.column.5.contracted"), item.isContracted() ? "Y" : "N");
                 addCell(message("teacher.authorizations.csv.column.6.workPercentageInInstitution"),
                         item.getWorkPercentageInInstitution());
                 addCell(message("teacher.authorizations.displayname"), user.getProfile().getDisplayName());
                 addCell(message("teacher.authorizations.category"), item.getTeacherCategory().getName().getContent());
-                addCell(message("teacher.authorizations.department"), item.getDepartment().getNameI18n().getContent());
+                addCell(message("teacher.authorizations.department"), item.getUnit().getNameI18n().getContent());
                 addCell(message("teacher.authorizations.period"), item.getExecutionInterval().getQualifiedName());
                 addCell(message("teacher.authorizations.authorized"), item.getAuthorizer() == null ? "" : String.format("%s (%s)",
                         item.getAuthorizer().getProfile().getDisplayName(), item.getAuthorizer().getUsername()));
@@ -374,12 +385,10 @@ public class AuthorizationService {
                 throw new RuntimeException(message("teacher.authorizations.csv.column.2.categoryCode.error", categoryCode));
             }
 
-            Department department = Department.find(departmentAcronym);
-
-            if (department == null) {
-                throw new RuntimeException(
-                        message("teacher.authorizations.csv.column.3.departmentAcronym.error", departmentAcronym));
-            }
+            Unit department = getDepartmentsUnits().stream().filter(u -> Objects.equals(u.getAcronym(), departmentAcronym))
+                    .findAny().orElseThrow(() -> new RuntimeException(
+                            message("teacher.authorizations.csv.column.3.departmentAcronym.error", departmentAcronym)));
+            
             Double lessonHours;
 
             try {
