@@ -158,7 +158,7 @@ public class Unit extends Unit_Base {
     }
 
     private void checkUniqueAcronymInSiblingUnits() {
-        if (getAcronym() != null) {
+        if (StringUtils.isNotBlank(getAcronym())) {
             final Predicate<Unit> predicate = u -> getAcronym().equalsIgnoreCase(u.getAcronym());
             if (getParentUnits().stream().flatMap(pu -> pu.getSubUnits().stream()).filter(u -> u != this).anyMatch(predicate)) {
                 throw new DomainException("error.unit.already.exists.unit.with.same.acronym");

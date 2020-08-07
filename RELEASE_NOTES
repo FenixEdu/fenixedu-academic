@@ -1,3 +1,5 @@
+- Bug fix: Unique acronym check should ignore blank values
+
 30.9.0 (06-08-2020)
 - Improvement: Add AccountabilityType as UnitGroup argument (and deprecate AccountabilityTypeEnum)
 - Improvement: Add code to AccountabilityType
