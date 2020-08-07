@@ -1057,6 +1057,10 @@ public class Unit extends Unit_Base {
         return Boolean.TRUE.equals(getOfficial());
     }
 
+    public void setOfficial(boolean official) {
+        super.setOfficial(official);
+    }
+
     @Override
     public boolean isAdministrativeOfficeUnit() {
         return getAdministrativeOffice() != null;

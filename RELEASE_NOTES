@@ -1,4 +1,5 @@
-- Bug fix: Unique acronym check should ignore blank values
+- Fix: Unique acronym check should ignore blank values
+- Fix: Add official unit setter with primitive boolean param
 
 30.9.0 (06-08-2020)
 - Improvement: Add AccountabilityType as UnitGroup argument (and deprecate AccountabilityTypeEnum)
@@ -7,7 +8,7 @@
 - Refactor: Cleanup deprecated DepartmentForum
 - Refactor: Cleanup deprecated department argument in TeacherGroup
 - Refactor: Cleanup deprecated Department and Teacher methods
-- Bug fix: Fixed PermissionService objects provide
+- Fix: Fixed PermissionService objects provide
 
 30.8.0 (04-08-2020)
 - Improvement: Simplified curricular rule executors creation
