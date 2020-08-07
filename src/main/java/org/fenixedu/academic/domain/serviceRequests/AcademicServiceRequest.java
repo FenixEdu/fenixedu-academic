@@ -49,6 +49,8 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.messaging.core.domain.Message;
+import org.fenixedu.messaging.core.template.DeclareMessageTemplate;
+import org.fenixedu.messaging.core.template.TemplateParameter;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
@@ -56,6 +58,33 @@ import org.joda.time.YearMonthDay;
 import pt.ist.fenixframework.Atomic;
 
 import com.google.common.base.Strings;
+
+@DeclareMessageTemplate(
+        id = "message.template.academicServiceRequest.concluded",
+        description = "message.template.academicServiceRequest.concluded",
+        subject = "message.template.academicServiceRequest.concluded.subject",
+        text = "message.template.academicServiceRequest.concluded.body",
+        parameters = {
+                @TemplateParameter(id = "requestorName", description = "message.template.academicServiceRequest.concluded.param.requestorName"),
+                @TemplateParameter(id = "requestNumber", description = "message.template.academicServiceRequest.concluded.param.requestNumber"),
+                @TemplateParameter(id = "requestDescription", description = "message.template.academicServiceRequest.concluded.param.requestDescription")
+        },
+        bundle = "resources.ApplicationResources"
+)
+
+@DeclareMessageTemplate(
+        id = "message.template.academicServiceRequest.concluded.specialSeason",
+        description = "message.template.academicServiceRequest.concluded.specialSeason",
+        subject = "message.template.academicServiceRequest.concluded.subject",
+        text = "message.template.academicServiceRequest.concluded.specialSeason.body",
+        parameters = {
+                @TemplateParameter(id = "requestorName", description = "message.template.academicServiceRequest.concluded.param.requestorName"),
+                @TemplateParameter(id = "requestNumber", description = "message.template.academicServiceRequest.concluded.param.requestNumber"),
+                @TemplateParameter(id = "requestDescription", description = "message.template.academicServiceRequest.concluded.param.requestDescription"),
+                @TemplateParameter(id = "deferred", description = "message.template.academicServiceRequest.concluded.specialSeason.param.deferred")
+        },
+        bundle = "resources.ApplicationResources"
+)
 
 abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base {
 
@@ -276,34 +305,40 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     private void sendConcludeEmail() {
-        String body = BundleUtil.getString(Bundle.APPLICATION, "mail.academicServiceRequest.concluded.message1");
-        body += " " + getServiceRequestNumberYear();
-        body += " " + BundleUtil.getString(Bundle.APPLICATION, "mail.academicServiceRequest.concluded.message2");
-        body += " '" + getDescription();
-        body += "' " + BundleUtil.getString(Bundle.APPLICATION, "mail.academicServiceRequest.concluded.message3");
-
         if (getAcademicServiceRequestType() == AcademicServiceRequestType.SPECIAL_SEASON_REQUEST) {
             if (((SpecialSeasonRequest) this).getDeferred() == null) {
                 throw new DomainException("special.season.request.deferment.cant.be.null");
             }
+            String deferred = null;
             if (((SpecialSeasonRequest) this).getDeferred()) {
-                body += "\n" + BundleUtil.getString(Bundle.APPLICATION, "mail.academicServiceRequest.concluded.messageSSR4A");
+            	deferred = BundleUtil.getString(Bundle.ACADEMIC, "request.granted").toLowerCase();
             } else {
-                body += "\n" + BundleUtil.getString(Bundle.APPLICATION, "mail.academicServiceRequest.concluded.messageSSR4B");
+                deferred = BundleUtil.getString(Bundle.ACADEMIC, "request.declined").toLowerCase();
             }
-            body += "\n\n" + BundleUtil.getString(Bundle.APPLICATION, "mail.academicServiceRequest.concluded.messageSSR5");
+                        
+            Message.from(getAdministrativeOffice().getUnit().getSender())
+		            .replyToSender()
+		            .to(getPerson().getPersonGroup())
+		            .template("message.template.academicServiceRequest.concluded.specialSeason")
+		            .parameter("requestorName", getPerson().getName())
+		            .parameter("requestNumber", getServiceRequestNumberYear())
+		            .parameter("requestDescription", getDescription())
+		            .parameter("deferred", deferred)
+		            .and()
+		            .wrapped().send();
+            
         } else {
 
-            body += "\n\n" + BundleUtil.getString(Bundle.APPLICATION, "mail.academicServiceRequest.concluded.message4");
-
+            Message.from(getAdministrativeOffice().getUnit().getSender())
+		            .replyToSender()
+		            .to(getPerson().getPersonGroup())
+		            .template("message.template.academicServiceRequest.concluded")
+		            .parameter("requestorName", getPerson().getName())
+		            .parameter("requestNumber", getServiceRequestNumberYear())
+		            .parameter("requestDescription", getDescription())
+		            .and()
+		            .wrapped().send();
         }
-
-        Message.from(getAdministrativeOffice().getUnit().getSender())
-                .replyToSender()
-                .to(getPerson().getPersonGroup())
-                .subject(getDescription())
-                .textBody(body)
-                .send();
     }
 
     @Atomic
