@@ -30,6 +30,11 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.GenericPair;
 
 public class CreditsLimit extends CreditsLimit_Base {
+    
+
+    protected CreditsLimit() {
+        
+    }
 
     private CreditsLimit(final Double minimum, final Double maximum) {
         super();
