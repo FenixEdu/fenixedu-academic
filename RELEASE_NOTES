@@ -1,4 +1,5 @@
 - Improvement: Child execution interval should be created with the default state (not open)
+- Improvement: Mark lesson instance as online
 
 30.9.2 (11-08-2020)
 - Refactor: Allow CreditsLimit rule subclassing

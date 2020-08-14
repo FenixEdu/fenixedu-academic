@@ -664,6 +664,7 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
     class LessonInstance  {
         DateTime beginDateTime;
         DateTime endDateTime;
+        boolean onlineLesson;
     }
     
     class LessonPlanning  {
