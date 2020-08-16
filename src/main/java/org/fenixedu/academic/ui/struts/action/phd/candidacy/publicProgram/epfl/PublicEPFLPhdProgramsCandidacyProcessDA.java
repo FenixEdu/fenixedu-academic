@@ -218,7 +218,7 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
         final PhdProgramPublicCandidacyHashCode hashCode =
                 PhdProgramPublicCandidacyHashCode.getOrCreatePhdProgramCandidacyHashCode(bean.getEmail());
 
-        if (hashCode.hasCandidacyProcess()) {
+        if (hashCode.hasCandidacyProcess() && (bean.getProgram() == null || hashCode.getPhdProgramCandidacyProcess().getPhdProgram().equals(bean.getProgram()))) {
             addErrorMessage(request, "error.PhdProgramPublicCandidacyHashCode.already.has.candidacy");
             return prepareCreateCandidacyIdentification(mapping, actionForm, request, response);
         }

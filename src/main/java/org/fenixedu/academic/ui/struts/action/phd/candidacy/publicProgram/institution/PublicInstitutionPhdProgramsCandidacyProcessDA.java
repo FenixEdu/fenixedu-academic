@@ -223,9 +223,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
         final PhdProgramPublicCandidacyHashCode hashCode =
                 PhdProgramPublicCandidacyHashCode.getOrCreatePhdProgramCandidacyHashCode(bean.getEmail());
 
-        if (hashCode.hasCandidacyProcess()
-                && hashCode.getPhdProgramCandidacyProcess().getCandidacy().getDegreeCurricularPlan()
-                        .equals(bean.getProcess().getCandidacy().getDegreeCurricularPlan())) {
+        if (hashCode.hasCandidacyProcess() && (bean.getProgram() == null || hashCode.getPhdProgramCandidacyProcess().getPhdProgram().equals(bean.getProgram()))) {
             addErrorMessage(request, "error.PhdProgramPublicCandidacyHashCode.already.has.candidacy");
             return prepareCreateIdentification(mapping, form, request, response);
         }
