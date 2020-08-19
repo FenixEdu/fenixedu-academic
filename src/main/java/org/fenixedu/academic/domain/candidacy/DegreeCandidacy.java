@@ -18,11 +18,6 @@
  */
 package org.fenixedu.academic.domain.candidacy;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import org.fenixedu.academic.domain.EntryPhase;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.Person;
@@ -33,7 +28,15 @@ import org.fenixedu.academic.domain.util.workflow.Operation;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
+
 public class DegreeCandidacy extends DegreeCandidacy_Base {
+
+    public static Function<DegreeCandidacy, String> PASSWORD_FOR_IDENTITY_VALIDATION = candidacy -> null;
 
     public DegreeCandidacy(final Person person, final ExecutionDegree executionDegree) {
         super();
