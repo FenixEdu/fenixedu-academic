@@ -45,6 +45,7 @@ public class MaximumNumberOfECTSInSpecialSeasonEvaluationExecutor extends Curric
     @Override
     protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule,
             final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+/*
         final Registration registration = enrolmentContext.getRegistration();
 
         final MaximumNumberOfECTSInSpecialSeasonEvaluation rule = (MaximumNumberOfECTSInSpecialSeasonEvaluation) curricularRule;
@@ -64,7 +65,7 @@ public class MaximumNumberOfECTSInSpecialSeasonEvaluationExecutor extends Curric
                         rule.getMaxEcts().toPlainString());
             }
         }
-
+*/
         return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
     }
 
