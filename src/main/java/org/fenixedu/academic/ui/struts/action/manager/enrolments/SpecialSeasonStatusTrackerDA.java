@@ -195,7 +195,7 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
         }
         final StudentCandidacy studentCandidacy = registration.getStudentCandidacy();
         if (studentCandidacy != null) {
-            if (studentCandidacy.getDislocatedFromPermanentResidence()) {
+            if (isTrue(studentCandidacy.getDislocatedFromPermanentResidence())) {
                 return true;
             }
         }
