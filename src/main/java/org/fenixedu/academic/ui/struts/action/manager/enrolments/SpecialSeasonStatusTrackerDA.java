@@ -201,7 +201,7 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
         }
         final PersonalIngressionData personalIngressionData = registration.getStudent().getLatestPersonalIngressionData();
         if (personalIngressionData != null) {
-            if (personalIngressionData.getDislocatedFromPermanentResidence()) {
+            if (isTrue(personalIngressionData.getDislocatedFromPermanentResidence())) {
                 return true;
             }
         }
