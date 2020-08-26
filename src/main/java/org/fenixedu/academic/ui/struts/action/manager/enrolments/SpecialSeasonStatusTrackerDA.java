@@ -18,21 +18,20 @@
  */
 package org.fenixedu.academic.ui.struts.action.manager.enrolments;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.CompetenceCourse;
+import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
+import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacy;
+import org.fenixedu.academic.domain.contacts.PhysicalAddress;
+import org.fenixedu.academic.domain.student.PersonalIngressionData;
+import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.manager.ManagerApplications.ManagerStudentsApp;
 import org.fenixedu.academic.util.Bundle;
@@ -45,8 +44,14 @@ import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
-
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @StrutsFunctionality(app = ManagerStudentsApp.class, path = "special-season-enrolments",
         titleKey = "label.course.specialSeasonEnrolments")
@@ -147,47 +152,64 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
     }
 
     private Spreadsheet generateSpreadsheet(SpecialSeasonStatusTrackerBean bean) {
-        final Spreadsheet spreadsheet = createSpreadSheet();
+        final Spreadsheet spreadsheet = new Spreadsheet(BundleUtil.getString(Bundle.APPLICATION, "list.students"));
         for (final Enrolment enrolment : bean.getEnrolments()) {
             final Row row = spreadsheet.addRow();
 
-            row.setCell(enrolment.getRegistration().getPerson().getUsername());
-            row.setCell(enrolment.getRegistration().getNumber());
-            row.setCell(enrolment.getRegistration().getPerson().getName());
-            row.setCell(enrolment.getRegistration().getPerson().getInstitutionalOrDefaultEmailAddressValue());
-            row.setCell(enrolment.getRegistration().getDegree().getSigla());
-            row.setCell(enrolment.getRegistration().getStudentCurricularPlan(bean.getExecutionSemester()).getName());
-            row.setCell(enrolment.getCurricularCourse().getAcronym());
-            row.setCell(enrolment.getCurricularCourse().getName());
+            final Registration registration = enrolment.getRegistration();
+            final Person person = registration.getPerson();
+            final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
+            row.setCell(BundleUtil.getString(Bundle.APPLICATION, "label.username"), person.getUsername());
+            row.setCell(BundleUtil.getString(Bundle.APPLICATION, "label.number"), registration.getNumber());
+            row.setCell(BundleUtil.getString(Bundle.APPLICATION, "label.name"), person.getName());
+            row.setCell(BundleUtil.getString(Bundle.APPLICATION, "label.email"), person.getInstitutionalOrDefaultEmailAddressValue());
+            row.setCell(BundleUtil.getString(Bundle.APPLICATION, "label.Degree"), registration.getDegree().getSigla());
+            row.setCell(BundleUtil.getString(Bundle.APPLICATION, "label.curricularPlan"), registration.getStudentCurricularPlan(bean.getExecutionSemester()).getName());
+            row.setCell(BundleUtil.getString(Bundle.APPLICATION, "label.curricular.course.name"), curricularCourse.getAcronym());
+            row.setCell(BundleUtil.getString(Bundle.APPLICATION, "label.curricular.course.name"), curricularCourse.getName());
+            final boolean isDislocated = isDislocated(registration);
+            row.setCell(BundleUtil.getString(Bundle.APPLICATION, "label.isDislocated"), Boolean.toString(isDislocated));
+            row.setCell(BundleUtil.getString(Bundle.APPLICATION, "label.residence.country"), getResidenceCountry(person));
+            row.setCell(BundleUtil.getString(Bundle.APPLICATION, "label.residence.postCode"), getResidencePostCode(person));
         }
 
         return spreadsheet;
     }
 
-    private Spreadsheet createSpreadSheet() {
-        final Spreadsheet spreadsheet = new Spreadsheet(BundleUtil.getString(Bundle.APPLICATION, "list.students"));
+    private String getResidenceCountry(final Person person) {
+        final Country country = person.getCountryOfResidence();
+        return country == null ? " " : country.getCode();
+    }
 
-        spreadsheet.setHeaders(new String[] {
+    private String getResidencePostCode(final Person person) {
+        final PhysicalAddress physicalAddress = person.getDefaultPhysicalAddress();
+        return physicalAddress == null ? " " : physicalAddress.getPostalCode();
+    }
 
-        BundleUtil.getString(Bundle.APPLICATION, "label.username"),
+    private boolean isDislocated(final Registration registration) {
+        final IndividualCandidacy individualCandidacy = registration.getIndividualCandidacy();
+        if (individualCandidacy != null) {
+            if (isTrue(individualCandidacy.getDislocatedFromPermanentResidence())) {
+                return true;
+            }
+        }
+        final StudentCandidacy studentCandidacy = registration.getStudentCandidacy();
+        if (studentCandidacy != null) {
+            if (studentCandidacy.getDislocatedFromPermanentResidence()) {
+                return true;
+            }
+        }
+        final PersonalIngressionData personalIngressionData = registration.getStudent().getLatestPersonalIngressionData();
+        if (personalIngressionData != null) {
+            if (personalIngressionData.getDislocatedFromPermanentResidence()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-        BundleUtil.getString(Bundle.APPLICATION, "label.number"),
-
-        BundleUtil.getString(Bundle.APPLICATION, "label.name"),
-
-        BundleUtil.getString(Bundle.APPLICATION, "label.email"),
-
-        BundleUtil.getString(Bundle.APPLICATION, "label.Degree"),
-
-        BundleUtil.getString(Bundle.APPLICATION, "label.curricularPlan"),
-
-        BundleUtil.getString(Bundle.APPLICATION, "label.curricular.course.name"),
-
-        BundleUtil.getString(Bundle.APPLICATION, "label.curricular.course.name"),
-
-        " ", " " });
-
-        return spreadsheet;
+    private boolean isTrue(final Boolean b) {
+        return b != null && b.booleanValue();
     }
 
     protected Department getDepartment() {
