@@ -51,6 +51,7 @@ public class DfaGratuityEvent extends DfaGratuityEvent_Base {
 
         checkRulesToCreate(studentCurricularPlan);
         init(administrativeOffice, person, studentCurricularPlan, executionYear);
+        persistDueDateAmountMap();
     }
 
     private void checkRulesToCreate(StudentCurricularPlan studentCurricularPlan) {
