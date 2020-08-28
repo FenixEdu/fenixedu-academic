@@ -172,7 +172,7 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
             row.setCell(BundleUtil.getString(Bundle.APPLICATION, "label.isDislocated"), Boolean.toString(isDislocated));
             row.setCell(BundleUtil.getString(Bundle.APPLICATION, "label.residence.country"), getResidenceCountry(person));
             row.setCell(BundleUtil.getString(Bundle.APPLICATION, "label.residence.postCode"), getResidencePostCode(person));
-            row.setCell(BundleUtil.getString(Bundle.APPLICATION, "label.residence.postCode"), getIngression(registration));
+            row.setCell(BundleUtil.getString(Bundle.APPLICATION, "label.ingression"), getIngression(registration));
         }
 
         return spreadsheet;
