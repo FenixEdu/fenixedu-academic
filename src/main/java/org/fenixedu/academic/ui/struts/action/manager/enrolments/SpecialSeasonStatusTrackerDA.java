@@ -27,6 +27,7 @@ import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacy;
 import org.fenixedu.academic.domain.contacts.PhysicalAddress;
@@ -171,9 +172,15 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
             row.setCell(BundleUtil.getString(Bundle.APPLICATION, "label.isDislocated"), Boolean.toString(isDislocated));
             row.setCell(BundleUtil.getString(Bundle.APPLICATION, "label.residence.country"), getResidenceCountry(person));
             row.setCell(BundleUtil.getString(Bundle.APPLICATION, "label.residence.postCode"), getResidencePostCode(person));
+            row.setCell(BundleUtil.getString(Bundle.APPLICATION, "label.residence.postCode"), getIngression(registration));
         }
 
         return spreadsheet;
+    }
+
+    private String getIngression(final Registration registration) {
+        final IngressionType ingressionType = registration.getIngressionType();
+        return ingressionType == null ? " " : ingressionType.getLocalizedName();
     }
 
     private String getResidenceCountry(final Person person) {
