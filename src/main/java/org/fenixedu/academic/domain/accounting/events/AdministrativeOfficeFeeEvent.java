@@ -7,21 +7,16 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.Account;
 import org.fenixedu.academic.domain.accounting.EntryType;
-import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.PostingRule;
 import org.fenixedu.academic.domain.accounting.events.administrativeOfficeFee.IAdministrativeOfficeFeeEvent;
 import org.fenixedu.academic.domain.accounting.postingRules.AdministrativeOfficeFeePR;
 import org.fenixedu.academic.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
-import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.joda.time.LocalDate;
-
-import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class AdministrativeOfficeFeeEvent extends AdministrativeOfficeFeeEvent_Base implements IAdministrativeOfficeFeeEvent {
 
@@ -33,6 +28,7 @@ public class AdministrativeOfficeFeeEvent extends AdministrativeOfficeFeeEvent_B
             ExecutionYear executionYear) {
         this();
         init(administrativeOffice, EventType.ADMINISTRATIVE_OFFICE_FEE, person, executionYear);
+        persistDueDateAmountMap();
     }                                                        
 
     @Override protected Account getFromAccount() {
