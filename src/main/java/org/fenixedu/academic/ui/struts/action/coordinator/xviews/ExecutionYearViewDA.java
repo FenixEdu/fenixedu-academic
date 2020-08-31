@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.ui.struts.action.coordinator.xviews;
 
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -122,7 +121,7 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
         }
         return enrolments;
     }
-    
+
     @Deprecated
     private static final String NA = "NA";
 
@@ -236,7 +235,7 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
                 new HashMap<CurricularCourse, CurricularCourseGradeEntry>();
 
         for (Enrolment enrolment : getDegreeCurricularPlanEnrolmentsForExecutionYear(degreeCurricularPlan, executionYear)) {
-            updateCurricularYearGradeMapIfRelevant(curricularYearGradeMap, enrolment);
+            updateCurricularYearGradeMapIfRelevant(curricularYearGradeMap, enrolment, executionYear);
             updateCurricularCourseGradeMapIfRelevant(curricularCourseGradeMap, enrolment);
         }
 
@@ -340,8 +339,9 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
 
     }
 
-    private void updateCurricularYearGradeMapIfRelevant(Map<CurricularYear, CurricularYearGradeEntry> map, Enrolment enrolment) {
-        CurricularYear year = CurricularYear.readByYear(enrolment.getRegistration().getCurricularYear());
+    private void updateCurricularYearGradeMapIfRelevant(Map<CurricularYear, CurricularYearGradeEntry> map, Enrolment enrolment,
+            ExecutionYear executionYear) {
+        CurricularYear year = CurricularYear.readByYear(enrolment.getRegistration().getCurricularYear(executionYear));
         if (map.containsKey(year)) {
             map.get(year).plus(enrolment);
         } else {
