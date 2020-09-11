@@ -18,6 +18,11 @@
  */
 package org.fenixedu.academic.domain;
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.fenixedu.academic.domain.photograph.AspectRatio;
 import org.fenixedu.academic.domain.photograph.Picture;
 import org.fenixedu.academic.domain.photograph.PictureMode;
@@ -33,12 +38,8 @@ import org.imgscalr.Scalr;
 import org.imgscalr.Scalr.Method;
 import org.imgscalr.Scalr.Mode;
 import org.joda.time.DateTime;
-import pt.ist.fenixframework.Atomic;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
+import pt.ist.fenixframework.Atomic;
 
 public class Photograph extends Photograph_Base implements Comparable<Photograph> {
 
@@ -133,6 +134,8 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
             setPendingHolder(null);
         }
         setPerson(null);
+        setApprover(null);
+        setRejector(null);
         Photograph prev = getPrevious();
         if (prev != null) {
             setPrevious(null);
