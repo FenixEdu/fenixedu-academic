@@ -50,12 +50,15 @@ import org.fenixedu.academic.dto.person.PersonBean;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.signals.Signal;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
+    public final static String ACCEPTED = "candidacy.accepted";
+    
     protected IndividualCandidacy() {
         super();
         super.setWhenCreated(new DateTime());
@@ -206,6 +209,14 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
         return getCandidacyProcess() != null && getCandidacyProcess().isFor(executionInterval);
     }
 
+    @Override
+    public void setState(IndividualCandidacyState state) {
+        super.setState(state);
+        if (state == IndividualCandidacyState.ACCEPTED) {
+           Signal.emit(ACCEPTED, this); 
+        }
+    }
+    
     protected boolean isCandidacyResultStateValid(final IndividualCandidacyState state) {
         return state == IndividualCandidacyState.ACCEPTED || state == IndividualCandidacyState.REJECTED;
     }
