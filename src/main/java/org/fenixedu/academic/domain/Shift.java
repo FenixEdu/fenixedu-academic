@@ -18,21 +18,6 @@
  */
 package org.fenixedu.academic.domain;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
-import java.math.BigDecimal;
-import java.text.Collator;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -47,11 +32,30 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.messaging.core.domain.Message;
 import org.joda.time.Duration;
-
+import org.joda.time.Weeks;
+import org.joda.time.YearMonthDay;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
+import java.math.BigDecimal;
+import java.text.Collator;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+
+import static org.fenixedu.academic.predicate.AccessControl.check;
+
 public class Shift extends Shift_Base {
+
+    public static boolean RESTRICT_STUDENTS_TO_ODD_OR_EVEN_WEEKS = true;
 
     public static final Comparator<Shift> SHIFT_COMPARATOR_BY_NAME =
             (o1, o2) -> Collator.getInstance().compare(o1.getNome(), o2.getNome());
@@ -434,6 +438,40 @@ public class Shift extends Shift_Base {
     }
 
     private static class ShiftStudentListener extends RelationAdapter<Registration, Shift> {
+
+        @Override
+        public void beforeAdd(final Registration registration, final Shift shift) {
+            if (RESTRICT_STUDENTS_TO_ODD_OR_EVEN_WEEKS) {
+                if (registration != null && shift != null && needToCheckShiftType(shift)) {
+                    final YearMonthDay firstPossibleLessonDay = shift.getExecutionCourse().getMaxLessonsPeriod().getLeft();
+                    final boolean isEven = isEven(shift, firstPossibleLessonDay);
+                    final boolean isInconsistent = registration.getShiftsSet().stream()
+                            .filter(other -> other != shift && other.getExecutionPeriod() == shift.getExecutionPeriod())
+                            .map(other -> isEven(other, firstPossibleLessonDay))
+                            .anyMatch(o -> o != isEven);
+                    if (isInconsistent) {
+                        throw new DomainException("error.student.cannot.mix.odd.and.even.weeks");
+                    }
+                }
+            }
+        }
+
+        private boolean isEven(final Shift shift, final YearMonthDay firstPossibleLessonDay) {
+            final Set<Boolean> set = shift.getAssociatedLessonsSet().stream()
+                    .flatMap(lesson -> lesson.getAllLessonIntervals().stream())
+                    .map(interval -> Weeks.weeksBetween(firstPossibleLessonDay, interval.getStart().toLocalDate()).getWeeks() + 1)
+                    .map(week -> week % 2 == 0)
+                    .collect(Collectors.toSet());
+            if (set.size() != 1) {
+                throw new DomainException("error.shift.has.mixed.odd.even.weeks");
+            }
+            return set.iterator().next();
+        }
+
+        private boolean needToCheckShiftType(final Shift shift) {
+            return shift.getTypes().stream()
+                    .anyMatch(type -> type == ShiftType.PROBLEMS || type == ShiftType.LABORATORIAL);
+        }
 
         @Override
         public void afterAdd(Registration registration, Shift shift) {
