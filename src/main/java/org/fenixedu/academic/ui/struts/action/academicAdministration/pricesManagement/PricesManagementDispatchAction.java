@@ -37,6 +37,7 @@ import org.fenixedu.academic.domain.accounting.postingRules.PartialRegistrationR
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication.AcademicAdminPricesApp;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -64,6 +65,8 @@ public class PricesManagementDispatchAction extends FenixDispatchAction {
         for (AdministrativeOffice office : offices) {
             sortedPostingRules.addAll(office.getServiceAgreementTemplate().getActiveVisiblePostingRules());
         }
+        
+        sortedPostingRules.addAll(Bennu.getInstance().getInstitutionUnit().getUnitServiceAgreementTemplate().getActiveVisiblePostingRules());
 
         request.setAttribute("postingRules", sortedPostingRules);
 
