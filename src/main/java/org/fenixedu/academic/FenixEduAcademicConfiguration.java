@@ -125,6 +125,15 @@ public class FenixEduAcademicConfiguration {
 
         @ConfigurationProperty(key = "webServices.internationalRegistration.url")
         public String getWebServicesInternationalRegistrationUrl();
+        
+        @ConfigurationProperty(key = "webServices.manageUser.username")
+        public String getWebServicesManageUserUsername();
+
+        @ConfigurationProperty(key = "webServices.manageUser.password")
+        public String getWebServicesManageUserPassword();
+
+        @ConfigurationProperty(key = "webServices.manageUser.url")
+        public String getWebServicesManageUserUrl();
 
         @ConfigurationProperty(key = "year.for.from.enrolments", defaultValue = "2004/2005")
         public String getYearForFromEnrolments();
