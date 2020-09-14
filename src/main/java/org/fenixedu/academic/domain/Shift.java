@@ -453,7 +453,11 @@ public class Shift extends Shift_Base {
             if (RESTRICT_STUDENTS_TO_ODD_OR_EVEN_WEEKS) {
                 if (registration != null && shift != null && needToCheckShiftType(shift)) {
                     final YearMonthDay firstPossibleLessonDay = shift.getExecutionCourse().getMaxLessonsPeriod().getLeft();
+                    final boolean isStudentEvent = registration.getNumber().intValue() % 2 == 0;
                     final boolean isEven = isEven(shift, firstPossibleLessonDay);
+                    if (isStudentEvent != isEven) {
+                        throw new DomainException("error.student.even.or.odd");
+                    }
                     final boolean isInconsistent = registration.getShiftsSet().stream()
                             .filter(other -> other != shift && other.getExecutionPeriod() == shift.getExecutionPeriod())
                             .map(other -> isEven(other, firstPossibleLessonDay))
