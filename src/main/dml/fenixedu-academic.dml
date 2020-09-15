@@ -2319,6 +2319,12 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
                 AcademicPeriod academicPeriod;
                 Boolean even;
             }
+            
+            class curricularRules.LastDigitSplitRule extends curricularRules.Rule {
+                Integer curricularPeriodOrder;
+                AcademicPeriod academicPeriod;
+                Boolean firstHalf;
+            }
 
             class curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod extends curricularRules.Rule {
             }

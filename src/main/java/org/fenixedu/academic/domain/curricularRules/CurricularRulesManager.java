@@ -72,6 +72,9 @@ public class CurricularRulesManager {
 
         case EVEN_ODD:
             return createEvenOdd(toApplyRule, begin, end, parametersDTO);
+            
+        case LAST_DIGIT_SPLIT:
+            return createLastDigitSplit(toApplyRule, begin, end, parametersDTO);            
 
         default:
             break;
@@ -106,6 +109,17 @@ public class CurricularRulesManager {
 
         return new EvenOddRule(toApplyRule, contextCourseGroup, parametersDTO.getCurricularPeriodInfoDTO().getOrder(),
                 parametersDTO.getCurricularPeriodInfoDTO().getPeriodType(), parametersDTO.getEven(), begin, end);
+
+    }
+    
+    private static CurricularRule createLastDigitSplit(DegreeModule toApplyRule, ExecutionSemester begin, ExecutionSemester end,
+            CurricularRuleParametersDTO parametersDTO) {
+
+        final CourseGroup contextCourseGroup =
+                (CourseGroup) FenixFramework.getDomainObject(parametersDTO.getContextCourseGroupID());
+
+        return new LastDigitSplitRule(toApplyRule, contextCourseGroup, parametersDTO.getCurricularPeriodInfoDTO().getOrder(),
+                parametersDTO.getCurricularPeriodInfoDTO().getPeriodType(), parametersDTO.getFirstHalf(), begin, end);
 
     }
 
