@@ -207,7 +207,14 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
                             curricularRuleType.getName())));
                 }
                 break;
-
+                
+            case LAST_DIGIT_SPLIT:
+                if (getDegreeModule().isLeaf()) {
+                    result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION,
+                            curricularRuleType.getName())));
+                }
+                break;
+                
             case MINIMUM_NUMBER_OF_CREDITS_TO_ENROL:
                 result.add(new SelectItem(curricularRuleType.getName(), BundleUtil.getString(Bundle.ENUMERATION,
                         curricularRuleType.getName())));
@@ -376,6 +383,14 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 
     public String getSelectedEven() {
         return (String) getViewState().getAttribute("even");
+    }
+    
+    public void setSelectedFirstHalf(String selectedFirstHalf) {
+        getViewState().setAttribute("firstHalf", selectedFirstHalf);
+    }
+
+    public String getSelectedFirstHalf() {
+        return (String) getViewState().getAttribute("firstHalf");
     }
 
     public String getCurricularRuleID() {
@@ -821,6 +836,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         parametersDTO.setMaximumYear((Integer) getViewState().getAttribute("maximumYear"));
         parametersDTO.setCredits((Double) getViewState().getAttribute("credits"));
         parametersDTO.setEven(Boolean.valueOf(getSelectedEven()));
+        parametersDTO.setFirstHalf(Boolean.valueOf(getSelectedFirstHalf()));
         return parametersDTO;
     }
 }

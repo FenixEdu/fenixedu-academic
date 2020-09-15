@@ -32,6 +32,7 @@ import org.fenixedu.academic.domain.curricularRules.EvenOddRule;
 import org.fenixedu.academic.domain.curricularRules.Exclusiveness;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.ImprovementOfApprovedEnrolment;
+import org.fenixedu.academic.domain.curricularRules.LastDigitSplitRule;
 import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
 import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfECTSInSpecialSeasonEvaluation;
 import org.fenixedu.academic.domain.curricularRules.MaximumNumberOfEctsInStandaloneCurriculumGroup;
@@ -72,6 +73,7 @@ public class CurricularRuleExecutorFactory {
                 new MaximumNumberOfECTSInSpecialSeasonEvaluationExecutor());
         executors.put(CreditsLimitInExternalCycle.class, new CreditsLimitInExternalCycleExecutor());
         executors.put(EvenOddRule.class, new EvenOddExecuter());
+        executors.put(LastDigitSplitRule.class, new LastDigitSplitExecuter());
         executors.put(MaximumNumberOfEctsInStandaloneCurriculumGroup.class,
                 new MaximumNumberOfEctsInStandaloneCurriculumGroupExecutor());
         executors.put(PhdValidCurricularCoursesRule.class, new PhdValidCurricularCoursesExecutor());

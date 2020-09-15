@@ -128,6 +128,20 @@
 					<f:selectItem itemLabel="#{bolonhaBundle['label.odd']}" itemValue="false"/>
 				</fc:selectOneMenu>					
 				<h:outputText value="</p>" escape="false"/>
+			</h:panelGroup>	
+			
+			<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'LAST_DIGIT_SPLIT'}">
+				<h:outputText value="<p><label>#{bolonhaBundle['apply.in']} #{bolonhaBundle['semester']}:</label>" escape="false"/>
+				<fc:selectOneMenu value="#{CurricularRulesManagement.selectedSemester}">
+					<f:selectItem itemLabel="1" itemValue="1"/>
+					<f:selectItem itemLabel="2" itemValue="2"/>
+				</fc:selectOneMenu>
+				<h:outputText value="<p><label>#{bolonhaBundle['student.with.lastDigit']} :</label>" escape="false"/>
+				<fc:selectOneMenu value="#{CurricularRulesManagement.selectedFirstHalf}">
+					<f:selectItem itemLabel="#{bolonhaBundle['label.lastDigit.firstHalf']}" itemValue="true"/>
+					<f:selectItem itemLabel="#{bolonhaBundle['label.lastDigit.secondHalf']}" itemValue="false"/>
+				</fc:selectOneMenu>					
+				<h:outputText value="</p>" escape="false"/>
 			</h:panelGroup>			
 	 
 			<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'ANY_CURRICULAR_COURSE'}">

@@ -63,7 +63,9 @@ public enum CurricularRuleType {
 
     PHD_VALID_CURRICULAR_COURSES,
 
-    SENIOR_STATUTE_SCOPE;
+    SENIOR_STATUTE_SCOPE,
+    
+    LAST_DIGIT_SPLIT;
 
     public String getName() {
         return name();

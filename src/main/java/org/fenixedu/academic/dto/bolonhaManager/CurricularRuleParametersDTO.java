@@ -41,6 +41,7 @@ public class CurricularRuleParametersDTO extends DataTranferObject {
     private Double credits;
     private DegreeType degreeType;
     private Boolean even;
+    private Boolean firstHalf;
 
     public CurricularRuleParametersDTO() {
     }
@@ -155,5 +156,13 @@ public class CurricularRuleParametersDTO extends DataTranferObject {
 
     public void setEven(Boolean even) {
         this.even = even;
+    }
+
+    public Boolean getFirstHalf() {
+        return firstHalf;
+    }
+
+    public void setFirstHalf(Boolean firstHalf) {
+        this.firstHalf = firstHalf;
     }
 }
