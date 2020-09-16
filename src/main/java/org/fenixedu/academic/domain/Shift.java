@@ -460,6 +460,7 @@ public class Shift extends Shift_Base {
                     }
                     final boolean isInconsistent = registration.getShiftsSet().stream()
                             .filter(other -> other != shift && other.getExecutionPeriod() == shift.getExecutionPeriod())
+                            .filter(other -> needToCheckShiftType(shift))
                             .map(other -> isEven(other, firstPossibleLessonDay))
                             .anyMatch(o -> o != isEven);
                     if (isInconsistent) {
