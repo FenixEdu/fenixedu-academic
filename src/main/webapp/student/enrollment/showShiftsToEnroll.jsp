@@ -37,8 +37,8 @@
 <bean:define id="infoClasslessons" name="infoClasslessons"/>
 <bean:define id="executionSemesterID" name="executionSemesterID" type="java.lang.String"/>
 
-<div class="col-md-10">
 
+<div class="col-md-12">
 <h2><bean:message bundle="STUDENT_RESOURCES" key="message.showShiftsToEnroll.title" /></h2>
 
 <div class="infoop2">		
@@ -47,6 +47,19 @@
 		<li><bean:message bundle="STUDENT_RESOURCES" key="message.showShiftsToEnroll.instructions4"/></li>
 	</ul>
 </div>
+
+
+
+<div class="row">
+<div class="col-md-8 col-lg-10">
+</div>
+<div class="col-lg-2 col-md-4 col-sm-12">
+	<div class="jumbotron" style="padding-left: 20px; padding-right: 20px">
+		<%@include file="listClasses.jsp" %>
+	</div>
+</div>
+</div>
+
 
 <logic:present name="executionCourse">
 	<p class="mbottom05"><bean:message bundle="STUDENT_RESOURCES"  key="message.showShiftsToEnroll.visibleCourse"/>: <strong><bean:write name="executionCourse" property="nome"/></strong></p>
@@ -64,128 +77,123 @@
 </logic:messagesPresent>
 
 <h3 class="mtop15"><bean:message bundle="STUDENT_RESOURCES"  key="label.class" /> <bean:write name="selectedSchoolClass" property="nome"/></h3>
-
-<logic:present name="ram">
-
-
-	<logic:present name="executionCourse">
-		<bean:define id="executionCourseID" name="executionCourse"
-			property="externalId" />
-		<app:gerarHorario name="infoClasslessons"
-			type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
-			studentID="<%= registrationOID.toString() %>"
-			application="<%= request.getContextPath() %>"
-			classID="<%= classId.toString() %>"
-			executionCourseID="<%= executionCourseID.toString() %>"
-			executionSemesterID="<%= executionSemesterID %>"
-			endTime="<%= infoClasslessonsEndTime.toString() %>" action="addRAM" />
+<div style="overflow: auto;">
+	<logic:present name="ram">
+	
+	
+		<logic:present name="executionCourse">
+			<bean:define id="executionCourseID" name="executionCourse"
+				property="externalId" />
+			<app:gerarHorario name="infoClasslessons"
+				type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
+				studentID="<%= registrationOID.toString() %>"
+				application="<%= request.getContextPath() %>"
+				classID="<%= classId.toString() %>"
+				executionCourseID="<%= executionCourseID.toString() %>"
+				executionSemesterID="<%= executionSemesterID %>"
+				endTime="<%= infoClasslessonsEndTime.toString() %>" action="addRAM" />
+		</logic:present>
+	
+		<logic:notPresent name="executionCourse">
+			<app:gerarHorario name="infoClasslessons"
+				type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
+				studentID="<%= registrationOID.toString() %>"
+				application="<%= request.getContextPath() %>"
+				classID="<%= classId.toString() %>"
+				executionSemesterID="<%= executionSemesterID %>"
+				endTime="<%= infoClasslessonsEndTime.toString() %>" action="addRAM" />
+		</logic:notPresent>
+	
+	
+		<p class="mtop3"><strong><bean:message
+			bundle="STUDENT_RESOURCES"
+			key="message.showShiftsToEnroll.actual.timetable" /></strong></p>
+	
+	
+		<logic:present name="executionCourse">
+			<bean:define id="executionCourseID" name="executionCourse"
+				property="externalId" />
+			<app:gerarHorario name="infoLessons"
+				type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
+				studentID="<%= registrationOID.toString() %>"
+				application="<%= request.getContextPath() %>"
+				classID="<%= classId.toString() %>"
+				executionCourseID="<%= executionCourseID.toString() %>"
+				executionSemesterID="<%= executionSemesterID %>"
+				endTime="<%= infoLessonsEndTime.toString() %>" action="removeRAM" />
+		</logic:present>
+	
+		<logic:notPresent name="executionCourse">
+			<app:gerarHorario name="infoLessons"
+				type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
+				studentID="<%= registrationOID.toString() %>"
+				application="<%= request.getContextPath() %>"
+				classID="<%= classId.toString() %>"
+				executionSemesterID="<%= executionSemesterID %>"
+				endTime="<%= infoLessonsEndTime.toString() %>" action="removeRAM" />
+		</logic:notPresent>
 	</logic:present>
-
-	<logic:notPresent name="executionCourse">
-		<app:gerarHorario name="infoClasslessons"
-			type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
-			studentID="<%= registrationOID.toString() %>"
-			application="<%= request.getContextPath() %>"
-			classID="<%= classId.toString() %>"
-			executionSemesterID="<%= executionSemesterID %>"
-			endTime="<%= infoClasslessonsEndTime.toString() %>" action="addRAM" />
+	
+	<logic:notPresent name="ram">
+	
+	
+		<logic:present name="executionCourse">
+			<bean:define id="executionCourseID" name="executionCourse"
+				property="externalId" />
+			<app:gerarHorario name="infoClasslessons"
+				type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
+				studentID="<%= registrationOID.toString() %>"
+				application="<%= request.getContextPath() %>"
+				classID="<%= classId.toString() %>"
+				executionCourseID="<%= executionCourseID.toString() %>"
+				executionSemesterID="<%= executionSemesterID %>"
+				endTime="<%= infoClasslessonsEndTime.toString() %>" action="add" />
+		</logic:present>
+	
+		<logic:notPresent name="executionCourse">
+			<app:gerarHorario name="infoClasslessons"
+				type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
+				studentID="<%= registrationOID.toString() %>"
+				application="<%= request.getContextPath() %>"
+				classID="<%= classId.toString() %>"
+				executionSemesterID="<%= executionSemesterID %>"
+				endTime="<%= infoClasslessonsEndTime.toString() %>" action="add" />
+		</logic:notPresent>
+	
+	
+		<p class="mtop3"><strong><bean:message
+			bundle="STUDENT_RESOURCES"
+			key="message.showShiftsToEnroll.actual.timetable" /></strong></p>
+	
+	
+		<logic:present name="executionCourse">
+			<bean:define id="executionCourseID" name="executionCourse"
+				property="externalId" />
+			<app:gerarHorario name="infoLessons"
+				type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
+				studentID="<%= registrationOID.toString() %>"
+				application="<%= request.getContextPath() %>"
+				classID="<%= classId.toString() %>"
+				executionCourseID="<%= executionCourseID.toString() %>"
+				executionSemesterID="<%= executionSemesterID %>"
+				endTime="<%= infoLessonsEndTime.toString() %>" action="remove" />
+		</logic:present>
+	
+		<logic:notPresent name="executionCourse">
+			<app:gerarHorario name="infoLessons"
+				type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
+				studentID="<%= registrationOID.toString() %>"
+				application="<%= request.getContextPath() %>"
+				classID="<%= classId.toString() %>"
+				executionSemesterID="<%= executionSemesterID %>"
+				endTime="<%= infoLessonsEndTime.toString() %>" action="remove" />
+		</logic:notPresent>
 	</logic:notPresent>
+</div>
 
-
-	<p class="mtop3"><strong><bean:message
-		bundle="STUDENT_RESOURCES"
-		key="message.showShiftsToEnroll.actual.timetable" /></strong></p>
-
-
-	<logic:present name="executionCourse">
-		<bean:define id="executionCourseID" name="executionCourse"
-			property="externalId" />
-		<app:gerarHorario name="infoLessons"
-			type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
-			studentID="<%= registrationOID.toString() %>"
-			application="<%= request.getContextPath() %>"
-			classID="<%= classId.toString() %>"
-			executionCourseID="<%= executionCourseID.toString() %>"
-			executionSemesterID="<%= executionSemesterID %>"
-			endTime="<%= infoLessonsEndTime.toString() %>" action="removeRAM" />
-	</logic:present>
-
-	<logic:notPresent name="executionCourse">
-		<app:gerarHorario name="infoLessons"
-			type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
-			studentID="<%= registrationOID.toString() %>"
-			application="<%= request.getContextPath() %>"
-			classID="<%= classId.toString() %>"
-			executionSemesterID="<%= executionSemesterID %>"
-			endTime="<%= infoLessonsEndTime.toString() %>" action="removeRAM" />
-	</logic:notPresent>
-</logic:present>
-
-<logic:notPresent name="ram">
-
-
-	<logic:present name="executionCourse">
-		<bean:define id="executionCourseID" name="executionCourse"
-			property="externalId" />
-		<app:gerarHorario name="infoClasslessons"
-			type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
-			studentID="<%= registrationOID.toString() %>"
-			application="<%= request.getContextPath() %>"
-			classID="<%= classId.toString() %>"
-			executionCourseID="<%= executionCourseID.toString() %>"
-			executionSemesterID="<%= executionSemesterID %>"
-			endTime="<%= infoClasslessonsEndTime.toString() %>" action="add" />
-	</logic:present>
-
-	<logic:notPresent name="executionCourse">
-		<app:gerarHorario name="infoClasslessons"
-			type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
-			studentID="<%= registrationOID.toString() %>"
-			application="<%= request.getContextPath() %>"
-			classID="<%= classId.toString() %>"
-			executionSemesterID="<%= executionSemesterID %>"
-			endTime="<%= infoClasslessonsEndTime.toString() %>" action="add" />
-	</logic:notPresent>
-
-
-	<p class="mtop3"><strong><bean:message
-		bundle="STUDENT_RESOURCES"
-		key="message.showShiftsToEnroll.actual.timetable" /></strong></p>
-
-
-	<logic:present name="executionCourse">
-		<bean:define id="executionCourseID" name="executionCourse"
-			property="externalId" />
-		<app:gerarHorario name="infoLessons"
-			type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
-			studentID="<%= registrationOID.toString() %>"
-			application="<%= request.getContextPath() %>"
-			classID="<%= classId.toString() %>"
-			executionCourseID="<%= executionCourseID.toString() %>"
-			executionSemesterID="<%= executionSemesterID %>"
-			endTime="<%= infoLessonsEndTime.toString() %>" action="remove" />
-	</logic:present>
-
-	<logic:notPresent name="executionCourse">
-		<app:gerarHorario name="infoLessons"
-			type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
-			studentID="<%= registrationOID.toString() %>"
-			application="<%= request.getContextPath() %>"
-			classID="<%= classId.toString() %>"
-			executionSemesterID="<%= executionSemesterID %>"
-			endTime="<%= infoLessonsEndTime.toString() %>" action="remove" />
-	</logic:notPresent>
-</logic:notPresent>
 
 <br/>
 <ul>
 	<li><html:link page="<%="/studentShiftEnrollmentManager.do?method=start&registrationOID=" + registrationOID + "&amp;executionSemesterID=" + executionSemesterID %>"><strong><bean:message bundle="STUDENT_RESOURCES"  key="button.finish" /></strong></html:link></li>
 </ul>
-
-</div>
-
-<div class="col-md-2">
-	<div class="jumbotron" style="padding-left: 20px; padding-right: 20px">
-		<%@include file="listClasses.jsp" %>
-	</div>
 </div>
