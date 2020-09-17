@@ -11,52 +11,54 @@ import com.google.gson.JsonParser;
 
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ManageUser {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ManageUser.class);
    
     public static boolean isPasswordDefined(String username) {
         final HttpResponse<String> response = Unirest.get(FenixEduAcademicConfiguration.getConfiguration().getWebServicesManageUserUrl() + username)
                 .header("Authorization", getServiceAuth())
                 .asString();
-        
+        LOGGER.info("Checking if password is defined for user -> " + username + " -> with response status -> " + response.getStatus());
         if (response.getStatus() == 200) {
             JsonObject body = new JsonParser().parse(response.getBody()).getAsJsonObject();
-            return body.get("isPasswordSet").getAsBoolean();
-        } else {
-            return false;
+            boolean isPasswordSet = body.get("isPasswordSet").getAsBoolean();
+            LOGGER.info("isPasswordSet -> " + isPasswordSet + " -> for user " + username);
+            return isPasswordSet;
         }
+        return false;
     }
     
     public static boolean isUserExported(String username) {
         final HttpResponse<String> response = Unirest.get(FenixEduAcademicConfiguration.getConfiguration().getWebServicesManageUserUrl() + username)
                 .header("Authorization", getServiceAuth())
                 .asString();
-        
+
+        LOGGER.info("Checking if user '" + username + "' is exported -> with response status: " + response.getStatus());
+
         // NOT_FOUND
-        if (response.getStatus() == 404) {           
-            return false;
-        } else {
-            return true;
-        }
+        return response.getStatus() != 404;
     }
     
     public static boolean exportUser(String username) {
         final HttpResponse<String> response = Unirest.post(FenixEduAcademicConfiguration.getConfiguration().getWebServicesManageUserUrl() + username)
                 .header("Authorization", getServiceAuth())
                 .asString();
-        
+
+        LOGGER.info("Exporting user " + username + " ...");
+        LOGGER.info("Export response for user " + username + " is -> " + response.getStatus());
+
         // SC_CONFLICT -> user already exists
-        if (response.getStatus() == HttpStatus.SC_CONFLICT || response.getStatus() == HttpStatus.SC_CREATED) {           
-            return true;
-        } else {
-            return false;
-        }
+        return response.getStatus() == HttpStatus.SC_CONFLICT || response.getStatus() == HttpStatus.SC_CREATED;
     }
     
     private static String getServiceAuth() {
-        String userpass = FenixEduAcademicConfiguration.getConfiguration().getWebServicesManageUserUsername() + ":" 
+        final String userpass = FenixEduAcademicConfiguration.getConfiguration().getWebServicesManageUserUsername() + ":"
                             + FenixEduAcademicConfiguration.getConfiguration().getWebServicesManageUserPassword();
-        String encoding = new String(BaseEncoding.base64().encode(userpass.getBytes(StandardCharsets.UTF_8)));
+        final String encoding = new String(BaseEncoding.base64().encode(userpass.getBytes(StandardCharsets.UTF_8)));
         return "Basic " + encoding;
     }
 }
