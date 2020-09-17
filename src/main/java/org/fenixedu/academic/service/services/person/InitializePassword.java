@@ -55,14 +55,14 @@ public class InitializePassword {
     }};
 
     public static void run(User user, String password) throws PasswordInitializationException {
-        Form form = new Form().param("istid", user.getUsername()).param("password", password);
-        Response post =
+        final Form form = new Form().param("istid", user.getUsername()).param("password", password);
+        final Response post =
                 HTTP_CLIENT.target(FenixEduAcademicConfiguration.getConfiguration().getWebServicesInternationalRegistrationUrl())
                         .request(MediaType.APPLICATION_JSON).header("Authorization", getServiceAuth()).post(Entity.form(form));
 
         OutputBean output = null;
         if (post.getStatus() == 200) {
-            String entity = post.readEntity(String.class);
+            final String entity = post.readEntity(String.class);
             output = new Gson().fromJson(entity, OutputBean.class);
         }
 
