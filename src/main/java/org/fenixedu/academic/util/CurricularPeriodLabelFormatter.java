@@ -59,8 +59,10 @@ public class CurricularPeriodLabelFormatter {
     private static void buildLabel(CurricularPeriod curricularPeriod, StringBuilder result, boolean abbreviated, Locale locale) {
         result.insert(0, BundleUtil.getString(Bundle.ENUMERATION, (abbreviated) ? curricularPeriod.getAcademicPeriod()
                 .getAbbreviatedName() : curricularPeriod.getAcademicPeriod().getName()));
-        result.insert(0, " ");
-        result.insert(0, curricularPeriod.getChildOrder());
+        if (curricularPeriod.getChildOrder() != null) {
+            result.insert(0, " ");
+            result.insert(0, curricularPeriod.getChildOrder());
+        }
     }
 
 }
