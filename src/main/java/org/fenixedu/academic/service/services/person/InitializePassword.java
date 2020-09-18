@@ -18,17 +18,8 @@
  */
 package org.fenixedu.academic.service.services.person;
 
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.Form;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
+import com.google.common.io.BaseEncoding;
+import com.google.gson.Gson;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.FenixEduAcademicConfiguration.ConfigurationProperties;
 import org.fenixedu.academic.service.services.exceptions.PasswordInitializationException;
@@ -36,8 +27,15 @@ import org.fenixedu.bennu.core.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.io.BaseEncoding;
-import com.google.gson.Gson;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.Form;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 public class InitializePassword {
     private static final Logger logger = LoggerFactory.getLogger(InitializePassword.class);
@@ -60,21 +58,22 @@ public class InitializePassword {
                 HTTP_CLIENT.target(FenixEduAcademicConfiguration.getConfiguration().getWebServicesInternationalRegistrationUrl())
                         .request(MediaType.APPLICATION_JSON).header("Authorization", getServiceAuth()).post(Entity.form(form));
 
-        OutputBean output = null;
+        final String entity = post.readEntity(String.class);
         if (post.getStatus() == 200) {
-            String entity = post.readEntity(String.class);
-            output = new Gson().fromJson(entity, OutputBean.class);
-        }
-
-        if (output == null || output.getErrno() != 0) {
-            String errorMessage = ERRORS.get(output.getError());
-            logger.debug(output.getErrno() + " : " + output.getError());
-            if (errorMessage != null) {
-                throw new PasswordInitializationException(errorMessage);
+            final OutputBean output = new Gson().fromJson(entity, OutputBean.class);
+            if (output != null && output.getErrno().intValue() != 0) {
+                String errorMessage = ERRORS.get(output.getError());
+                logger.debug(user.getUsername() + " : " + output.getErrno() + " : " + output.getError());
+                if (errorMessage != null) {
+                    throw new PasswordInitializationException(errorMessage);
+                }
+                throw new PasswordInitializationException(KEY_RETURN, output.getError());
             }
-            throw new PasswordInitializationException(KEY_RETURN, output.getError());
+        } else if (post.getStatus() == 404) {
+            throw new PasswordInitializationException("internationalRegistration.error.user.not.found");
+        } else {
+            throw new PasswordInitializationException(KEY_RETURN, post.getStatus() + " " + entity);
         }
-
     }
 
     private static String getServiceAuth() {
