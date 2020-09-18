@@ -55,6 +55,39 @@
 	</ul>
 </fr:hasMessages>
 
+<div class='infoop2 mvert15'>
+	<bean:message bundle="APPLICATION_RESOURCES" key="label.fileUpload.information"/>
+	<p><bean:message bundle="APPLICATION_RESOURCES" key="label.marksOnline.currentGradeScale"/><bean:message bundle="ENUMERATION_RESOURCES" key="TYPE.final"/></p>
+	<br/>
+	<p><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="message.submit.marksheet.after.file.upload"/></strong></p>
+</div>
+
+<fr:form action="/createMarkSheet.do" encoding="multipart/form-data">
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="markSheetManagementForm" property="method" value="uploadMarkSheetStepTwo" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.epID" name="markSheetManagementForm" property="epID" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.dID" name="markSheetManagementForm" property="dID" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.dcpID" name="markSheetManagementForm" property="dcpID" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.ccID" name="markSheetManagementForm" property="ccID"  />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.msID" name="markSheetManagementForm" property="msID" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.tn" name="markSheetManagementForm" property="tn" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.ed" name="markSheetManagementForm" property="ed"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.mss" name="markSheetManagementForm" property="mss" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.mst" name="markSheetManagementForm" property="mst" />
+	<fr:edit id="fileInputStream" name="edit">
+		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementCreateBean">
+			<fr:slot name="inputStream" key="label.file" required="true" bundle="APPLICATION_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			</fr:slot>
+		</fr:schema>
+		<fr:layout name="tabular">
+		    <fr:property name="classes" value="tstyle1 thlight mtop05 thleft"/>
+		    <fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+		    <fr:property name="title" value=",,"/>
+		</fr:layout>
+	</fr:edit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="APPLICATION_RESOURCES" key="button.load" /></html:submit>
+</fr:form>
+
+
 <fr:form action="/createMarkSheet.do">
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="markSheetManagementForm" property="method" value="createMarkSheetStepTwo" />

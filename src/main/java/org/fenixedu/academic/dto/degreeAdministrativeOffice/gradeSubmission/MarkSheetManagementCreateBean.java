@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -40,6 +41,8 @@ public class MarkSheetManagementCreateBean extends MarkSheetManagementBaseBean {
             new HashSet<MarkSheetEnrolmentEvaluationBean>();
     private Collection<MarkSheetEnrolmentEvaluationBean> impossibleEnrolmentEvaluationBeans =
             new HashSet<MarkSheetEnrolmentEvaluationBean>();
+    
+    private transient InputStream inputStream;
 
     public EvaluationSeason getEvaluationSeason() {
         return evaluationSeason;
@@ -80,6 +83,14 @@ public class MarkSheetManagementCreateBean extends MarkSheetManagementBaseBean {
     public void setImpossibleEnrolmentEvaluationBeans(
             Collection<MarkSheetEnrolmentEvaluationBean> impossibleEnrolmentEvaluationBeans) {
         this.impossibleEnrolmentEvaluationBeans = impossibleEnrolmentEvaluationBeans;
+    }
+    
+    public InputStream getInputStream() {
+        return inputStream;
+    }
+
+    public void setInputStream(InputStream inputStream) {
+        this.inputStream = inputStream;
     }
 
     public Collection<MarkSheetEnrolmentEvaluationBean> getAllEnrolmentEvalutionBeans() {
