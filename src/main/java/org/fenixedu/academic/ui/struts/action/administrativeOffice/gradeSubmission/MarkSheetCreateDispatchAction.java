@@ -18,9 +18,19 @@
  */
 package org.fenixedu.academic.ui.struts.action.administrativeOffice.gradeSubmission;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,14 +45,18 @@ import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.MarkSheet;
 import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementCreateBean;
 import org.fenixedu.academic.predicate.IllegalDataAccessException;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.util.FileUtils;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
+
+import com.google.common.io.Files;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
@@ -143,6 +157,77 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
             createBean.setImpossibleEnrolmentEvaluationBeans(impossibleEnrolmentEvaluationBeans);
         }
     }
+    
+	public ActionForward uploadMarkSheetStepTwo(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
+
+		MarkSheetManagementCreateBean uploadBean = (MarkSheetManagementCreateBean) RenderUtils
+				.getViewState("fileInputStream").getMetaObject().getObject();
+		uploadBean.setTeacher(Teacher.readByIstId(uploadBean.getTeacherId()));
+		ActionMessages actionMessages = createActionMessages();
+
+		try {
+			final Map<String, String> marks = loadMarks(uploadBean.getInputStream());
+			uploadBean.getAllEnrolmentEvalutionBeans().stream().forEach(bean -> {
+				bean.setGradeValue(null);
+			});
+			
+			marks.keySet().forEach(studentId -> {
+				MarkSheetEnrolmentEvaluationBean enrolmentEvaluationBean = uploadBean.getAllEnrolmentEvalutionBeans()
+						.stream()
+						.filter(enrolmentBean -> enrolmentBean.getEnrolment().getRegistration().getStudent().getPerson()
+								.getUsername().equals(studentId)
+								|| enrolmentBean.getEnrolment().getRegistration().getStudent().getNumber().toString()
+										.equals(studentId))
+						.findAny().orElse(null);
+				if (enrolmentEvaluationBean == null) {
+					addMessage(request, actionMessages, "error.no.studentId.in.markSheet", studentId);
+				} else {
+					String grade = marks.get(studentId);
+					if (grade != null) {
+						enrolmentEvaluationBean.setGradeValue(grade);
+					}
+				}
+			});
+		} catch (IOException e) {
+			addMessage(request, actionMessages, "error.file.badFormat");
+		}
+
+		request.setAttribute("edit", uploadBean);
+		return mapping.findForward("createMarkSheetStep2");
+	}
+    
+    private Map<String, String> loadMarks(final InputStream inputStream) throws IOException {
+        final Map<String, String> marks = new HashMap<>();
+        File file = inputStream != null ? FileUtils.copyToTemporaryFile(inputStream) : null;
+        try {
+            final StringTokenizer stringTokenizer = new StringTokenizer(Files.asCharSource(file, StandardCharsets.UTF_8).read());
+            while (true) {
+                String studentNumber = getNextToken(stringTokenizer);
+                if (studentNumber == null) {
+                    return marks;
+                }
+                String mark = getNextToken(stringTokenizer);
+                if (mark == null) {
+                    throw new Exception();
+                }
+                marks.put(studentNumber, mark);
+            }
+        } catch (Exception e) {
+            throw new IOException("error.file.badFormat");
+        }
+    }
+
+    private String getNextToken(StringTokenizer stringTokenizer) {
+        while (stringTokenizer.hasMoreTokens()) {
+            String token = stringTokenizer.nextToken().trim();
+            if (token.length() > 0) {
+                return token;
+            }
+        }
+        return null;
+    }
+    
 
     public ActionForward createMarkSheetStepTwo(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
