@@ -53,8 +53,8 @@ public class InitializePassword {
     }};
 
     public static void run(User user, String password) throws PasswordInitializationException {
-        Form form = new Form().param("istid", user.getUsername()).param("password", password);
-        Response post =
+        final Form form = new Form().param("istid", user.getUsername()).param("password", password);
+        final Response post =
                 HTTP_CLIENT.target(FenixEduAcademicConfiguration.getConfiguration().getWebServicesInternationalRegistrationUrl())
                         .request(MediaType.APPLICATION_JSON).header("Authorization", getServiceAuth()).post(Entity.form(form));
 
