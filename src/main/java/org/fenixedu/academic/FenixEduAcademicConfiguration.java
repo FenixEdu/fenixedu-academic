@@ -160,6 +160,9 @@ public class FenixEduAcademicConfiguration {
 
         @ConfigurationProperty(key = "mobility.default.erasmus.program", defaultValue = "ERASMUS")
         public String mobilityDefaultErasmusProgram();
+        
+        @ConfigurationProperty(key = "candidate.portal.url")
+        public String getCandidatePortalUrl();
     }
 
     public static ConfigurationProperties getConfiguration() {

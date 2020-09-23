@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.EntryPhase;
@@ -38,6 +39,8 @@ import org.joda.time.DateTime;
 
 public abstract class StudentCandidacy extends StudentCandidacy_Base {
 
+    public static Function<StudentCandidacy, String> PASSWORD_FOR_IDENTITY_VALIDATION = candidacy -> null;
+    
     public StudentCandidacy() {
         super();
     }
