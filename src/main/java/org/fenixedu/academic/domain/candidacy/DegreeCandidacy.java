@@ -32,11 +32,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
 
 public class DegreeCandidacy extends DegreeCandidacy_Base {
-
-    public static Function<DegreeCandidacy, String> PASSWORD_FOR_IDENTITY_VALIDATION = candidacy -> null;
 
     public DegreeCandidacy(final Person person, final ExecutionDegree executionDegree) {
         super();
