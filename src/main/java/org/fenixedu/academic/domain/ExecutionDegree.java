@@ -25,7 +25,11 @@
 package org.fenixedu.academic.domain;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.fenixedu.academic.domain.candidacy.*;
+import org.fenixedu.academic.domain.candidacy.CandidacySituationType;
+import org.fenixedu.academic.domain.candidacy.DFACandidacy;
+import org.fenixedu.academic.domain.candidacy.DegreeCandidacy;
+import org.fenixedu.academic.domain.candidacy.IMDCandidacy;
+import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.domain.candidacy.degree.ShiftDistributionEntry;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
@@ -42,7 +46,16 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -685,8 +698,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         return result;
     }
 
-    public List<ShiftDistributionEntry> getNextFreeShiftDistributions() {
-        final List<ShiftDistributionEntry> entries = new ArrayList<>(getShiftDistributionEntriesSet());
+    public List<ShiftDistributionEntry> getNextFreeShiftDistributions(final Integer registrationNumber) {
+        final List<ShiftDistributionEntry> entries = getShiftDistributionEntriesSet().stream()
+                .filter(entry -> isValidEntryFor(registrationNumber, entry.getAbstractStudentNumber()))
+                .collect(Collectors.toList());
         Collections.sort(entries, ShiftDistributionEntry.NUMBER_COMPARATOR);
 
         final List<ShiftDistributionEntry> result = new ArrayList<>();
@@ -704,6 +719,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
             }
         }
         return result;
+    }
+
+    private boolean isValidEntryFor(final Integer registrationNumber, final Integer abstractStudentNumber) {
+        return !Shift.RESTRICT_STUDENTS_TO_ODD_OR_EVEN_WEEKS || registrationNumber.intValue() % 2 == abstractStudentNumber.intValue() % 2;
     }
 
     public Integer getStudentNumberForShiftDistributionBasedOn(Integer studentNumberPosition) {
