@@ -43,6 +43,7 @@ import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -685,8 +686,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         return result;
     }
 
-    public List<ShiftDistributionEntry> getNextFreeShiftDistributions() {
-        final List<ShiftDistributionEntry> entries = new ArrayList<>(getShiftDistributionEntriesSet());
+    public List<ShiftDistributionEntry> getNextFreeShiftDistributions(final Integer registrationNumber) {
+        final List<ShiftDistributionEntry> entries = getShiftDistributionEntriesSet().stream()
+                .filter(entry -> isValidEntryFor(registrationNumber, entry.getAbstractStudentNumber()))
+                .collect(Collectors.toList());
         Collections.sort(entries, ShiftDistributionEntry.NUMBER_COMPARATOR);
 
         final List<ShiftDistributionEntry> result = new ArrayList<>();
@@ -704,6 +707,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
             }
         }
         return result;
+    }
+
+    private boolean isValidEntryFor(final Integer registrationNumber, final Integer abstractStudentNumber) {
+        return !Shift.RESTRICT_STUDENTS_TO_ODD_OR_EVEN_WEEKS || registrationNumber.intValue() % 2 == abstractStudentNumber.intValue() % 2;
     }
 
     public Integer getStudentNumberForShiftDistributionBasedOn(Integer studentNumberPosition) {

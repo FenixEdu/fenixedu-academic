@@ -18,13 +18,12 @@
  */
 package org.fenixedu.academic.domain.candidacy.degree;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
+
+import java.util.stream.Stream;
 
 public class ShiftDistribution extends ShiftDistribution_Base {
 
@@ -62,14 +61,9 @@ public class ShiftDistribution extends ShiftDistribution_Base {
         super.deleteDomainObject();
     }
 
-    public List<ShiftDistributionEntry> getEntriesByStudentNumber(Integer studentNumber) {
-        final List<ShiftDistributionEntry> result = new ArrayList<ShiftDistributionEntry>();
-        for (final ShiftDistributionEntry shiftDistributionEntry : getShiftDistributionEntriesSet()) {
-            if (shiftDistributionEntry.getAbstractStudentNumber().equals(studentNumber)) {
-                result.add(shiftDistributionEntry);
-            }
-        }
-        return result;
+    public Stream<ShiftDistributionEntry> getEntriesByStudentNumber(final Integer studentNumber) {
+        return getShiftDistributionEntriesSet().stream()
+                .filter(entry -> entry.getAbstractStudentNumber().equals(studentNumber));
     }
 
     @Override
