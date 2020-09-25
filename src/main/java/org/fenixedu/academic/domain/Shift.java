@@ -49,6 +49,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static org.fenixedu.academic.predicate.AccessControl.check;
@@ -482,11 +483,6 @@ public class Shift extends Shift_Base {
             return set.iterator().next();
         }
 
-        private boolean needToCheckShiftType(final Shift shift) {
-            return shift.getTypes().stream()
-                    .anyMatch(type -> type == ShiftType.PROBLEMS || type == ShiftType.LABORATORIAL);
-        }
-
         @Override
         public void afterAdd(Registration registration, Shift shift) {
             if (!shift.hasShiftEnrolment(registration)) {
@@ -498,6 +494,28 @@ public class Shift extends Shift_Base {
         public void afterRemove(Registration registration, Shift shift) {
             shift.unEnrolStudent(registration);
         }
+    }
+
+    public boolean needToCheckShiftType() {
+        return getTypes().stream().anyMatch(type -> type == ShiftType.PROBLEMS || type == ShiftType.LABORATORIAL);
+    }
+
+    private boolean isSomething(final Function<Integer, Boolean> test) {
+        final YearMonthDay firstPossibleLessonDay = getExecutionCourse().getMaxLessonsPeriod().getLeft();
+        final Set<Boolean> set = getAssociatedLessonsSet().stream()
+                .flatMap(lesson -> lesson.getAllLessonIntervals().stream())
+                .map(interval -> Weeks.weeksBetween(firstPossibleLessonDay, interval.getStart().toLocalDate()).getWeeks() + 1)
+                .map(week -> test.apply(week))
+                .collect(Collectors.toSet());
+        return set.size() > 0 && set.iterator().next();
+    }
+
+    public boolean isOdd() {
+        return isSomething(week -> week % 2 != 0);
+    }
+
+    public boolean isEven() {
+        return isSomething(week -> week % 2 == 0);
     }
 
     private boolean hasShiftEnrolment(final Registration registration) {
