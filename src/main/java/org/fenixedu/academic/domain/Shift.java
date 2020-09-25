@@ -452,7 +452,7 @@ public class Shift extends Shift_Base {
         @Override
         public void beforeAdd(final Registration registration, final Shift shift) {
             if (RESTRICT_STUDENTS_TO_ODD_OR_EVEN_WEEKS) {
-                if (registration != null && shift != null && needToCheckShiftType(shift)) {
+                if (registration != null && shift != null && shift.needToCheckShiftType()) {
                     final YearMonthDay firstPossibleLessonDay = shift.getExecutionCourse().getMaxLessonsPeriod().getLeft();
                     final boolean isStudentEvent = registration.getNumber().intValue() % 2 == 0;
                     final boolean isEven = isEven(shift, firstPossibleLessonDay);
@@ -461,7 +461,7 @@ public class Shift extends Shift_Base {
                     }
                     final boolean isInconsistent = registration.getShiftsSet().stream()
                             .filter(other -> other != shift && other.getExecutionPeriod() == shift.getExecutionPeriod())
-                            .filter(other -> needToCheckShiftType(other))
+                            .filter(other -> other.needToCheckShiftType())
                             .map(other -> isEven(other, firstPossibleLessonDay))
                             .anyMatch(o -> o != isEven);
                     if (isInconsistent) {
