@@ -91,14 +91,14 @@ public class FillPersonalDataOperation extends CandidacyOperation {
         setContactsForm(ContactsForm.createFromPerson(getPerson()));
         addForm(getContactsForm());
 
-        setInquiryAboutYieldingPersonalDataForm(new InquiryAboutYieldingPersonalDataForm());
-        addForm(getInquiryAboutYieldingPersonalDataForm());
+//        setInquiryAboutYieldingPersonalDataForm(new InquiryAboutYieldingPersonalDataForm());
+//        addForm(getInquiryAboutYieldingPersonalDataForm());
 
         setOriginInformationForm(OriginInformationForm.createFrom(studentCandidacy));
         addForm(getOriginInformationForm());
 
-        setResidenceApplianceInquiryForm(new ResidenceApplianceInquiryForm());
-        addForm(getResidenceApplianceInquiryForm());
+//        setResidenceApplianceInquiryForm(new ResidenceApplianceInquiryForm());
+//        addForm(getResidenceApplianceInquiryForm());
 
     }
 
@@ -198,9 +198,9 @@ public class FillPersonalDataOperation extends CandidacyOperation {
         fillHouseholdInformation();
         fillResidenceInformation();
         fillContacts();
-        fillPersonalDataAuthorizationChoice();
+//        fillPersonalDataAuthorizationChoice();
         fillOriginInformation();
-        fillResidenceAppliance();
+//        fillResidenceAppliance();
     }
 
     private void fillHouseholdInformation() {

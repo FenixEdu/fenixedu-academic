@@ -137,12 +137,12 @@ public class RegistrationOperation extends CandidacyOperation {
         getStudentCandidacy().getPrecedentDegreeInformation().getPersonalIngressionData()
                 .setStudent(getStudentCandidacy().getPerson().getStudent());
 
-        registration.getStudent().setPersonalDataAuthorization(getStudentCandidacy().getStudentPersonalDataAuthorizationChoice());
+//        registration.getStudent().setPersonalDataAuthorization(getStudentCandidacy().getStudentPersonalDataAuthorizationChoice());
         
-        if (getStudentCandidacy().getApplyForResidence()) {
-            registration.getStudent().setResidenceCandidacyForCurrentExecutionYear(
-                    getStudentCandidacy().getNotesAboutResidenceAppliance());
-        }
+//        if (getStudentCandidacy().getApplyForResidence()) {
+//            registration.getStudent().setResidenceCandidacyForCurrentExecutionYear(
+//                    getStudentCandidacy().getNotesAboutResidenceAppliance());
+//        }
 
         return registration;
     }

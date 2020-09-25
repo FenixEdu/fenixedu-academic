@@ -74,10 +74,6 @@
 	<%@include file="/candidate/degree/firstTimeCandidacyStep1ExtraInfo.jsp"%>
 </logic:equal>
 
-<logic:equal name="currentFormPosition" value="7">
-	<%@include file="/candidate/degree/firstTimeCandidacyStep7ExtraInfo.jsp"%>
-</logic:equal>
-
 <fr:form id="candidacyForm" action="<%="/degreeCandidacyManagement.do?method=processForm&currentFormPosition=" + currentFormPosition%>">
 
 	<bean:define id="isInputForm" name="currentForm" property="input" />
@@ -111,16 +107,3 @@
 	<input type='submit' name='myButton' value='<bean:message key="button.next" />' onclick="return checkForm();"/>
 
 </fr:form>
-
-<script type="text/javascript">
-
-	function checkForm()
-	{
-		var candidacyForm = document.forms["candidacyForm"];
-		candidacyForm.myButton.disabled = true;
-		candidacyForm.myButton.value = '<bean:message key="please.wait" />';
-		candidacyForm.submit();
-		return true;
-	}
-
-</script>

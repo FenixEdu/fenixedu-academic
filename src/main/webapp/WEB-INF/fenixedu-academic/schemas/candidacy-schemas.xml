@@ -474,7 +474,7 @@
     	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
     </slot>
  -->
-    <slot name="identificationDocumentSeriesNumber" />
+    <slot name="identificationDocumentSeriesNumber"/>
     <slot name="documentIdEmissionLocation">
 		<property name="size" value="50"/>
 		<property name="maxLength" value="100"/>
@@ -494,10 +494,10 @@
 		<validator class="org.fenixedu.academic.ui.renderers.validators.SocialSecurityNumberValidator"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
     </slot>
-    <slot name="professionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+    <slot name="professionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" help="help.candidate.firstTime.personalData.professionType"> 
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ActiveProfessionTypeProvider" />
 	</slot>
-    <slot name="professionalCondition" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    <slot name="professionalCondition" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" help="help.candidate.firstTime.personalData.professionalCondition">
     	<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides"/>
     </slot>
     <slot name="profession">
@@ -507,7 +507,7 @@
     <slot name="maritalStatus" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
     	<property name="excludedValues" value="UNKNOWN" />
     </slot>
-    <slot name="grantOwnerType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+    <slot name="grantOwnerType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" help="help.candidate.firstTime.personalData.grantOwnerType"/>
    	<slot name="grantOwnerProviderUnitName" layout="autoComplete">
 		<property name="size" value="50"/>
 		<property name="labelField" value="unit.name"/>
@@ -559,25 +559,25 @@
 
 
 <schema name="HouseholdInformationForm" type="org.fenixedu.academic.domain.candidacy.workflow.form.HouseholdInformationForm" bundle="CANDIDATE_RESOURCES">
-	<slot name="motherSchoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
+	<slot name="motherSchoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select" help="help.candidate.firstTime.householdInformation.schoolLevel">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
 	<slot name="motherProfessionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ActiveProfessionTypeProvider" />
 	</slot>
-	<slot name="motherProfessionalCondition" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="motherProfessionalCondition" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" help="help.candidate.firstTime.householdInformation.professionalCondition">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides"/>
 	</slot>
 
-	<slot name="fatherSchoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
+	<slot name="fatherSchoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select" help="help.candidate.firstTime.householdInformation.schoolLevel">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
 	<slot name="fatherProfessionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ActiveProfessionTypeProvider" />
 	</slot>
-	<slot name="fatherProfessionalCondition" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+	<slot name="fatherProfessionalCondition" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" help="help.candidate.firstTime.householdInformation.professionalCondition">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides"/>
 	</slot>
 </schema>
@@ -589,7 +589,7 @@
 		<property name="destination" value="countrySelectionPostback" />
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 	</slot>
-    <slot name="address">
+    <slot name="address" help="help.candidate.firstTime.residenceInformation.address">
     	<property name="size" value="50"/>
 		<property name="maxLength" value="100"/>
     </slot>
@@ -611,7 +611,7 @@
     	<property name="size" value="50"/>
 		<property name="maxLength" value="100"/>
     </slot>
-    <slot name="dislocatedFromPermanentResidence" layout="radio" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"  >
+    <slot name="dislocatedFromPermanentResidence" layout="radio" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" help="help.candidate.firstTime.residenceInformation.dislocatedFromPermanentResidence">
     	<property name="trueLabel" value="label.true" />
 		<property name="falseLabel" value="label.false" />
 		<property name="bundle" value="APPLICATION_RESOURCES" />
@@ -654,7 +654,7 @@
 		<property name="destination" value="countrySelectionPostback" />
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 	</slot>
-    <slot name="address">
+    <slot name="address" help="help.candidate.firstTime.residenceInformation.address">
     	<property name="size" value="50"/>
 		<property name="maxLength" value="100"/>
     </slot>
@@ -677,7 +677,7 @@
     	<property name="size" value="50"/>
 		<property name="maxLength" value="100"/>
     </slot>
-    <slot name="dislocatedFromPermanentResidence" layout="radio" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"  >
+    <slot name="dislocatedFromPermanentResidence" layout="radio" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" help="help.candidate.firstTime.residenceInformation.dislocatedFromPermanentResidence">
     	<property name="trueLabel" value="label.true" />
 		<property name="falseLabel" value="label.false" />
 		<property name="bundle" value="APPLICATION_RESOURCES" />
@@ -746,7 +746,7 @@
 			<property name="required" value="false" />
 		</validator>
     </slot>
-    <slot name="emergencyContact" required="true">
+    <slot name="emergencyContact" required="true" help="help.candidate.firstTime.contacts.emergencyContact">
         <property name="size" value="50"/>
     </slot>
     <slot name="emailAvailable" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
@@ -770,7 +770,7 @@
 		<property name="sortBy" value="name=asc" />
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
 	</slot>
-	<slot name="schoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select-postback">
+	<slot name="schoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select-postback" help="help.candidate.firstTime.originInformation.level">
 		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
 		<property name="destination" value="institutionPostBack" />
 	</slot>
@@ -858,9 +858,10 @@
             <property name="key" value="true"/>
             <property name="bundle" value="CANDIDATE_RESOURCES"/>
         </validator>
-    </slot>
-    
-</schema><schema name="OriginInformationForm.higherEducationNoInstitution" type="org.fenixedu.academic.domain.candidacy.workflow.form.OriginInformationForm" bundle="CANDIDATE_RESOURCES">
+    </slot>    
+</schema>
+
+<schema name="OriginInformationForm.higherEducationNoInstitution" type="org.fenixedu.academic.domain.candidacy.workflow.form.OriginInformationForm" bundle="CANDIDATE_RESOURCES">
 	<slot name="countryWhereFinishedPreviousCompleteDegree" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 		<property name="format" value="${name}"/>
 		<property name="sortBy" value="name=asc" />
