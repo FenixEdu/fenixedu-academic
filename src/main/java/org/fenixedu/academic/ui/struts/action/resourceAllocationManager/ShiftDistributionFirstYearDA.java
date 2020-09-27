@@ -117,7 +117,7 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
         final Map<DegreeCurricularPlan, List<SchoolClassDistributionInformation>> processedInformation =
                 processInformationFrom(shiftDistributionFromFile, errorLog);
         final Map<DegreeCurricularPlan, List<Integer>> abstractStudentNumbers =
-                generateAbstractStudentNumbers(fileBean.getPhaseNumber(), errorLog);
+                generateAbstractStudentNumbers(fileBean.getPhaseNumber(), errorLog, warningLog);
         final Map<Shift, List<GenericPair<DegreeCurricularPlan, Integer>>> distribution =
                 distributeStudents(abstractStudentNumbers, processedInformation, warningLog);
 
@@ -249,7 +249,7 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
         return result;
     }
 
-    protected Map<DegreeCurricularPlan, List<Integer>> generateAbstractStudentNumbers(int phase, List<String> errorLog) {
+    protected Map<DegreeCurricularPlan, List<Integer>> generateAbstractStudentNumbers(int phase, List<String> errorLog, List<String> warningLog) {
 
         final Collection<Degree> degrees = readFirstYearFirstTimeValidDegrees();
 
@@ -258,10 +258,13 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
         final Map<DegreeCurricularPlan, List<Integer>> result = new HashMap<DegreeCurricularPlan, List<Integer>>();
 
         for (final Degree degree : degrees) {
-            final DegreeCurricularPlan mostRecentDegreeCurricularPlan = degree.getMostRecentDegreeCurricularPlan();
+            final DegreeCurricularPlan mostRecentDegreeCurricularPlan = degree.getDegreeCurricularPlansSet().stream()
+                    .filter(dcp -> dcp.getExecutionDegreesSet().stream().anyMatch(executionDegree -> executionDegree.getExecutionYear().isCurrent()))
+                    .findAny()
+                    .orElseGet(() -> degree.getMostRecentDegreeCurricularPlan());
             if (mostRecentDegreeCurricularPlan == null) {
                 //Found NULL most recentDegreeCurricularPlan for
-                errorLog.add(new StringBuilder("** O plano curricular do curso mais recente está a null para ").append(
+                warningLog.add(new StringBuilder("** O plano curricular do curso mais recente está a null para ").append(
                         degree.getSigla()).toString());
                 continue;
             }
