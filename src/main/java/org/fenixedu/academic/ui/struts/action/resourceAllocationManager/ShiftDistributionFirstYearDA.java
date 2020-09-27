@@ -262,7 +262,7 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
                     .filter(dcp -> dcp.getExecutionDegreesSet().stream().anyMatch(executionDegree -> executionDegree.getExecutionYear().isCurrent()))
                     .findAny()
                     .orElseGet(() -> degree.getMostRecentDegreeCurricularPlan());
-            if (mostRecentDegreeCurricularPlan == null) {
+            if (mostRecentDegreeCurricularPlan == null || !mostRecentDegreeCurricularPlan.isActive()) {
                 //Found NULL most recentDegreeCurricularPlan for
                 warningLog.add(new StringBuilder("** O plano curricular do curso mais recente está a null para ").append(
                         degree.getSigla()).toString());
