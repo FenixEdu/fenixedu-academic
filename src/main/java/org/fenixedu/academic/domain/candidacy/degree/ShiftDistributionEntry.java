@@ -112,11 +112,6 @@ public class ShiftDistributionEntry extends ShiftDistributionEntry_Base {
         throw new DomainException("error.candidacy.degree.ShiftDistributionEntry.cannot.modify.shiftName");
     }
 
-    @Override
-    public void setAbstractStudentNumber(Integer abstractStudentNumber) {
-        throw new DomainException("error.candidacy.degree.ShiftDistributionEntry.cannot.modify.studentNumber");
-    }
-
     public boolean alreadyDistributed() {
         return getDistributed().booleanValue();
     }
