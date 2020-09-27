@@ -259,6 +259,7 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
 
         for (final Degree degree : degrees) {
             final DegreeCurricularPlan mostRecentDegreeCurricularPlan = degree.getDegreeCurricularPlansSet().stream()
+                    .filter(dcp -> dcp.isActive())
                     .filter(dcp -> dcp.getExecutionDegreesSet().stream().anyMatch(executionDegree -> executionDegree.getExecutionYear().isCurrent()))
                     .findAny()
                     .orElseGet(() -> degree.getMostRecentDegreeCurricularPlan());
