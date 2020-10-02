@@ -17,21 +17,26 @@ import org.slf4j.LoggerFactory;
 public class ManageUser {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ManageUser.class);
-   
+
     public static boolean isPasswordDefined(String username) {
         final HttpResponse<String> response = Unirest.get(FenixEduAcademicConfiguration.getConfiguration().getWebServicesManageUserUrl() + username)
                 .header("Authorization", getServiceAuth())
                 .asString();
         LOGGER.info("Checking if password is defined for user -> " + username + " -> with response status -> " + response.getStatus());
         if (response.getStatus() == 200) {
-            JsonObject body = new JsonParser().parse(response.getBody()).getAsJsonObject();
-            boolean isPasswordSet = body.get("isPasswordSet").getAsBoolean();
-            LOGGER.info("isPasswordSet -> " + isPasswordSet + " -> for user " + username);
-            return isPasswordSet;
+            try {
+                final JsonObject body = new JsonParser().parse(response.getBody()).getAsJsonObject();
+                final boolean isPasswordSet = body.get("isPasswordSet").getAsBoolean();
+                LOGGER.info("isPasswordSet -> " + isPasswordSet + " -> for user " + username);
+                return isPasswordSet;
+            } catch (final IllegalStateException ex) {
+                LOGGER.error("bad response checking if isPasswordSet");
+                return false;
+            }
         }
         return false;
     }
-    
+
     public static boolean isUserExported(String username) {
         final HttpResponse<String> response = Unirest.get(FenixEduAcademicConfiguration.getConfiguration().getWebServicesManageUserUrl() + username)
                 .header("Authorization", getServiceAuth())
@@ -42,7 +47,7 @@ public class ManageUser {
         // NOT_FOUND
         return response.getStatus() != 404;
     }
-    
+
     public static boolean exportUser(String username) {
         final HttpResponse<String> response = Unirest.post(FenixEduAcademicConfiguration.getConfiguration().getWebServicesManageUserUrl() + username)
                 .header("Authorization", getServiceAuth())
@@ -54,7 +59,7 @@ public class ManageUser {
         // SC_CONFLICT -> user already exists
         return response.getStatus() == HttpStatus.SC_CONFLICT || response.getStatus() == HttpStatus.SC_CREATED;
     }
-    
+
     private static String getServiceAuth() {
         final String userpass = FenixEduAcademicConfiguration.getConfiguration().getWebServicesManageUserUsername() + ":"
                             + FenixEduAcademicConfiguration.getConfiguration().getWebServicesManageUserPassword();
