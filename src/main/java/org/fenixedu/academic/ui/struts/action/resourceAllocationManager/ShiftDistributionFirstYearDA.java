@@ -328,7 +328,7 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
         for (final String shiftName : shiftNames) {
             Shift shift = readShiftFrom(schoolClass, shiftName);
             if (shift == null) {
-                errorLog.add(new StringBuilder("Não existe nenhum turno: '").append(shiftName).append("' associado à aula: '")
+                errorLog.add(new StringBuilder("Não existe nenhum turno: '").append(shiftName).append("' associado à turma: '")
                         .append(schoolClass.getNome()).append("'.").toString());
                 shift = readShiftByName(shiftName);
                 if (shift == null) {
