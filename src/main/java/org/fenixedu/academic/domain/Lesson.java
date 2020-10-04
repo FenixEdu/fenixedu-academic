@@ -1252,4 +1252,8 @@ public class Lesson extends Lesson_Base {
         return getFrequency() == FrequencyType.BIWEEKLY;
     }
 
+    public void forceSetPeriod(final OccupationPeriod occupationPeriod) {
+        setPeriod(occupationPeriod);
+    }
+
 }
