@@ -1253,7 +1253,7 @@ public class Lesson extends Lesson_Base {
     }
 
     public void forceSetPeriod(final OccupationPeriod occupationPeriod) {
-        setPeriod(occupationPeriod);
+        super.setPeriod(occupationPeriod);
     }
 
 }
