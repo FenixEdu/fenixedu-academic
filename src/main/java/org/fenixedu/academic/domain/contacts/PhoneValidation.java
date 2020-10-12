@@ -23,7 +23,9 @@ import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.ui.struts.action.externalServices.PhoneValidationUtils;
 import org.fenixedu.academic.util.PhoneUtil;
-
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.StringNormalizer;
+import org.fenixedu.messaging.smsdispatch.SMSMessage;
 import pt.ist.fenixframework.Atomic;
 
 public class PhoneValidation extends PhoneValidation_Base {
@@ -65,7 +67,9 @@ public class PhoneValidation extends PhoneValidation_Base {
             if (PhoneUtil.shouldReceiveValidationCall(number)) {
                 PhoneValidationUtils.getInstance().makeCall(PhoneUtil.getInternacionalFormatNumber(number), token, language);
             } else if (PhoneUtil.shouldReceiveValidationSMS(number)) {
-                PhoneValidationUtils.getInstance().sendSMS(PhoneUtil.getInternacionalFormatNumber(number), token);
+                final String message = StringNormalizer.normalizePreservingCapitalizedLetters(BundleUtil.getString(
+                        "resources.GlobalResources", "sms.confirmationCode", token));
+                SMSMessage.getInstance().sendSMS(PhoneUtil.getInternacionalFormatNumber(number), message);
             }
 
             person.incValidationRequest();
