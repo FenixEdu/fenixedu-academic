@@ -42,7 +42,7 @@ public class FenixDomainExceptionHandler extends FenixExceptionHandler {
 
             DomainException domainException = (DomainException) ex;
             String property = domainException.getKey();
-            ActionMessage error = new ActionMessage(domainException.getKey(), domainException.getArgs());
+            ActionMessage error = new ActionMessage(domainException.getLocalizedMessage(), false);
             super.storeException(request, property, error, forward, exceptionConfig.getScope());
         }
         return forward;

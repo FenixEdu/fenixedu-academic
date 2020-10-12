@@ -29,6 +29,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -458,7 +459,7 @@ public class Shift extends Shift_Base {
                     final boolean isStudentEvent = registration.getNumber().intValue() % 2 == 0;
                     final boolean isEven = isEven(shift, firstPossibleLessonDay);
                     if (isStudentEvent != isEven) {
-                        throw new DomainException("error.student.even.or.odd");
+                        throw new DomainException(Optional.of("resources.StudentResources"), "error.student.even.or.odd");
                     }
                     final boolean isInconsistent = registration.getShiftsSet().stream()
                             .filter(other -> other != shift && other.getExecutionPeriod() == shift.getExecutionPeriod())
@@ -466,7 +467,7 @@ public class Shift extends Shift_Base {
                             .map(other -> isEven(other, other.getExecutionCourse().getMaxLessonsPeriod().getLeft()))
                             .anyMatch(o -> o != isEven);
                     if (isInconsistent) {
-                        throw new DomainException("error.student.cannot.mix.odd.and.even.weeks");
+                        throw new DomainException(Optional.of("resources.StudentResources"), "error.student.cannot.mix.odd.and.even.weeks");
                     }
                 }
             }
@@ -479,7 +480,7 @@ public class Shift extends Shift_Base {
                     .map(week -> week % 2 == 0)
                     .collect(Collectors.toSet());
             if (set.size() != 1) {
-                throw new DomainException("error.shift.has.mixed.odd.even.weeks");
+                throw new DomainException(Optional.of("resources.StudentResources"), "error.shift.has.mixed.odd.even.weeks");
             }
             return set.iterator().next();
         }

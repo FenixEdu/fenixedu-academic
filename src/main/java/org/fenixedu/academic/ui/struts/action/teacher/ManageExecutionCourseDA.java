@@ -455,6 +455,8 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
                 } else {
                     actionErrors.add("error", new ActionMessage("label.invalid.student.number"));
                 }
+            } catch (DomainException e) {
+                actionErrors.add("error", new ActionMessage(e.getLocalizedMessage(), false));
             }
         } else {
             actionErrors.add("error", new ActionMessage("label.invalid.student.number"));
