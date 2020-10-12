@@ -18,24 +18,7 @@
  */
 package org.fenixedu.academic.domain;
 
-import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.degree.DegreeType;
-import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.person.RoleType;
-import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.predicate.ResourceAllocationRolePredicates;
-import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.DiaSemana;
-import org.fenixedu.academic.util.WeekDay;
-import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
-import org.fenixedu.messaging.core.domain.Message;
-import org.joda.time.Duration;
-import org.joda.time.Weeks;
-import org.joda.time.YearMonthDay;
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.dml.runtime.RelationAdapter;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 import java.math.BigDecimal;
 import java.text.Collator;
@@ -52,7 +35,25 @@ import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
+import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.person.RoleType;
+import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.predicate.ResourceAllocationRolePredicates;
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.DiaSemana;
+import org.fenixedu.academic.util.WeekDay;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.messaging.core.domain.Message;
+import org.joda.time.Duration;
+import org.joda.time.Weeks;
+import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class Shift extends Shift_Base {
 
@@ -462,7 +463,7 @@ public class Shift extends Shift_Base {
                     final boolean isInconsistent = registration.getShiftsSet().stream()
                             .filter(other -> other != shift && other.getExecutionPeriod() == shift.getExecutionPeriod())
                             .filter(other -> other.needToCheckShiftType())
-                            .map(other -> isEven(other, firstPossibleLessonDay))
+                            .map(other -> isEven(other, other.getExecutionCourse().getMaxLessonsPeriod().getLeft()))
                             .anyMatch(o -> o != isEven);
                     if (isInconsistent) {
                         throw new DomainException("error.student.cannot.mix.odd.and.even.weeks");
