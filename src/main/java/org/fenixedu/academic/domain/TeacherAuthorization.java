@@ -192,17 +192,4 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
         return super.getRevokedExecutionSemester();
     }
 
-    public boolean migrateDepartmentToUnit() {
-        boolean update = false;
-        if (getUnit() == null && getDepartment() != null) {
-            setUnit(getDepartment().getDepartmentUnit());
-            update = true;
-        }
-        if (getRevokedUnit() == null && getRevokedDepartment() != null) {
-            setRevokedUnit(getRevokedDepartment().getDepartmentUnit());
-            update = true;
-        }
-        return update;
-    }
-
 }
