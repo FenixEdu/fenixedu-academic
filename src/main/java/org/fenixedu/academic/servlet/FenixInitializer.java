@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.Installation;
+import org.fenixedu.academic.domain.Lesson;
 import org.fenixedu.academic.domain.SchoolClass;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.organizationalStructure.UnitNamePart;
@@ -61,6 +62,7 @@ public class FenixInitializer implements ServletContextListener {
 
         migrateSchoolClassPtSlots();
         migrateShiftPtSlots();
+        migrateLessonPtSlots();
 
         Installation.ensureInstallation();
         loadUnitNames();
@@ -112,6 +114,24 @@ public class FenixInitializer implements ServletContextListener {
 
         logger.info(nameSlotChangesCounter.get() + " Names slots updated");
         logger.info("END Shift migration");
+    }
+
+    @Atomic
+    private void migrateLessonPtSlots() {
+        final Set<Lesson> lessons = Bennu.getInstance().getLessonsSet();
+        logger.info("START Lesson migration");
+        logger.info(lessons.size() + " Lesson (total)");
+
+        final AtomicInteger weekdaySlotChangesCounter = new AtomicInteger();
+
+        lessons.forEach(l -> {
+            if (l.migrateDiaSemanaToWeekDay()) {
+                weekdaySlotChangesCounter.incrementAndGet();
+            }
+        });
+
+        logger.info(weekdaySlotChangesCounter.get() + " WeekDay slots updated");
+        logger.info("END Lesson migration");
     }
 
     private void registerDefaultStudentWarningCheckers() {

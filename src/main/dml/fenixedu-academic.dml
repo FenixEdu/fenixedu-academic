@@ -656,7 +656,8 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
 
     class Lesson  {
         HourMinuteSecond beginHourMinuteSecond;
-        DiaSemana diaSemana;
+        DiaSemana diaSemana; // deprecated
+        WeekDay weekDay;
         HourMinuteSecond endHourMinuteSecond;
         FrequencyType frequency;
     }

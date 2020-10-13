@@ -2,6 +2,7 @@
 - Refactor: Remove teacher authorization departments to units migration on system init
 - Refactor: Migrate SchoolClass slot names in portuguese to english
 - Refactor: Migrate Shift slot names in portuguese to english
+- Refactor: Migrate Lesson slot names in portuguese to english
 
 30.9.4 (31-08-2020)
 - Fix: Coordinator curricular year statistics should use execution year on computation
