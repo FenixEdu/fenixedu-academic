@@ -43,7 +43,7 @@
         <version.org.fenixedu.bennu>6.11.3</version.org.fenixedu.bennu>
         <version.org.fenixedu.fenixedu-commons>3.0.0</version.org.fenixedu.fenixedu-commons>
         <version.org.fenixedu.fenixedu-spaces>3.0.1</version.org.fenixedu.fenixedu-spaces>
-        <version.org.fenixedu.messaging>4.0.1</version.org.fenixedu.messaging>
+        <version.org.fenixedu.messaging>4.2.0</version.org.fenixedu.messaging>
         <version.org.imgscalr.imgscalr-lib>4.2</version.org.imgscalr.imgscalr-lib>
         <version.org.jsoup.jsoup>1.11.3</version.org.jsoup.jsoup>
         <version.org.mnode.ical4j.ical4j>1.0.5.2</version.org.mnode.ical4j.ical4j>
@@ -123,6 +123,11 @@
             <groupId>org.fenixedu</groupId>
             <artifactId>messaging-core</artifactId>
             <version>${version.org.fenixedu.messaging}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.fenixedu</groupId>
+            <artifactId>sms-dispatch</artifactId>
+	    <version>${version.org.fenixedu.messaging}</version>
         </dependency>
         <dependency>
             <groupId>org.fenixedu</groupId>

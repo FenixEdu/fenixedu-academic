@@ -18,12 +18,6 @@
  */
 package org.fenixedu.academic.ui.struts.action.person;
 
-import java.io.IOException;
-import java.util.Collection;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -31,10 +25,8 @@ import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.PersonInformationLog;
-import org.fenixedu.academic.domain.contacts.MobilePhone;
 import org.fenixedu.academic.domain.contacts.PartyContact;
 import org.fenixedu.academic.domain.contacts.PartyContactValidation;
-import org.fenixedu.academic.domain.contacts.Phone;
 import org.fenixedu.academic.domain.contacts.PhysicalAddress;
 import org.fenixedu.academic.domain.contacts.WebAddress;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -53,15 +45,18 @@ import org.fenixedu.academic.service.services.contacts.DeletePartyContact;
 import org.fenixedu.academic.service.services.contacts.EditPartyContact;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
-import org.fenixedu.academic.ui.struts.action.externalServices.PhoneValidationUtils;
 import org.fenixedu.academic.ui.struts.action.person.UpdateEmergencyContactDA.EmergencyContactBean;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
-
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Collection;
 
 @Mapping(module = "person", path = "/partyContacts", functionality = VisualizePersonalInfo.class)
 @Forwards({ @Forward(name = "visualizePersonalInformation", path = "/person/visualizePersonalInfo.jsp"),
@@ -376,16 +371,12 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 
     public static boolean isToBeValidated(PartyContactBean contact) {
         return !(contact instanceof WebAddressBean
-                || (contact instanceof PhysicalAddressBean && !FenixEduAcademicConfiguration.getConfiguration()
-                        .getPhysicalAddressRequiresValidation()) || ((contact instanceof MobilePhoneBean || contact instanceof PhoneBean) && !PhoneValidationUtils
-                .getInstance().shouldRun()));
+                || (contact instanceof PhysicalAddressBean && !FenixEduAcademicConfiguration.getConfiguration().getPhysicalAddressRequiresValidation()));
     }
 
     protected boolean isToBeValidated(PartyContact contact) {
         return !(contact instanceof WebAddress
-                || (contact instanceof PhysicalAddress && !FenixEduAcademicConfiguration.getConfiguration()
-                        .getPhysicalAddressRequiresValidation()) || ((contact instanceof MobilePhone || contact instanceof Phone) && !PhoneValidationUtils
-                .getInstance().shouldRun()));
+                || (contact instanceof PhysicalAddress && !FenixEduAcademicConfiguration.getConfiguration().getPhysicalAddressRequiresValidation()));
     }
 
 }

@@ -71,9 +71,6 @@ public class MobilePhoneBean extends PartyContactBean {
 
     @Override
     public String getValidationMessageKey() {
-        if (!PhoneValidationUtils.getInstance().shouldRun()) {
-            return "label.contact.validation.message.MobilePhoneValidated";
-        }
         return super.getValidationMessageKey();
     }
 }

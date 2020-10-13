@@ -22,7 +22,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-
 import com.twilio.Twilio;
 import com.twilio.exception.AuthenticationException;
 import com.twilio.exception.TwilioException;
@@ -30,17 +29,7 @@ import com.twilio.http.HttpMethod;
 import com.twilio.http.Request;
 import com.twilio.http.TwilioRestClient;
 import com.twilio.rest.api.v2010.account.Call;
-import com.twilio.rest.api.v2010.account.Message;
-import com.twilio.rest.api.v2010.account.MessageCreator;
 import com.twilio.type.PhoneNumber;
-
-import org.apache.commons.httpclient.Credentials;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.NameValuePair;
-import org.apache.commons.httpclient.UsernamePasswordCredentials;
-import org.apache.commons.httpclient.auth.AuthScope;
-import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.bennu.core.api.SystemResource;
@@ -49,7 +38,6 @@ import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.stream.Stream;
@@ -58,13 +46,10 @@ public class PhoneValidationUtils {
     private static final Logger logger = LoggerFactory.getLogger(PhoneValidationUtils.class);
 
     private TwilioRestClient TWILIO_CLIENT;
-    private String CIIST_SMS_GATEWAY_URL;
-    private HttpClient CIIST_CLIENT;
 
     private static PhoneValidationUtils instance;
     private static final String TWILIO_SID = FenixEduAcademicConfiguration.getConfiguration().getTwilioSid();
     private static final String TWILIO_STOKEN = FenixEduAcademicConfiguration.getConfiguration().getTwilioStoken();
-    private static final String TWILIO_DEFAULT_MESSAGING_SERVICE_SID = FenixEduAcademicConfiguration.getConfiguration().getTwilioDefaultMessagingServiceSid();
     private static final String TWILIO_FROM_NUMBER = FenixEduAcademicConfiguration.getConfiguration().getTwilioFromNumber();
 
     public static PhoneValidationUtils getInstance() {
@@ -74,25 +59,8 @@ public class PhoneValidationUtils {
         return instance;
     }
 
-    public boolean canRun() {
-        return TWILIO_CLIENT != null && CIIST_CLIENT != null && !CoreConfiguration.getConfiguration().developmentMode();
-    }
-
-    public boolean shouldRun() {
-        Boolean ciistsmsShouldRun = FenixEduAcademicConfiguration.getConfiguration().getCIISTSMSShouldRun();
-        //defaults as true to keep old behaviour
-        return ciistsmsShouldRun != null ? ciistsmsShouldRun : true;
-    }
-
-    private void initCIISTSMSGateway() {
-        final String CIIST_SMS_USERNAME = FenixEduAcademicConfiguration.getConfiguration().getCIISTSMSUsername();
-        final String CIIST_SMS_PASSWORD = FenixEduAcademicConfiguration.getConfiguration().getCIISTSMSPassword();
-        CIIST_SMS_GATEWAY_URL = FenixEduAcademicConfiguration.getConfiguration().getCIISTSMSGatewayUrl();
-        if (!StringUtils.isEmpty(CIIST_SMS_USERNAME) && !StringUtils.isEmpty(CIIST_SMS_PASSWORD)) {
-            CIIST_CLIENT = new HttpClient();
-            Credentials credentials = new UsernamePasswordCredentials(CIIST_SMS_USERNAME, CIIST_SMS_PASSWORD);
-            CIIST_CLIENT.getState().setCredentials(AuthScope.ANY, credentials);
-        }
+    private boolean canRun() {
+        return TWILIO_CLIENT != null && !CoreConfiguration.getConfiguration().developmentMode();
     }
 
     private void initTwilio() {
@@ -126,11 +94,9 @@ public class PhoneValidationUtils {
 
     private PhoneValidationUtils() {
         initTwilio();
-        initCIISTSMSGateway();
         if (canRun()) {
             logger.info("Twilio Initialized:\n\tfrom number {} \n\thost: {} \n", TWILIO_FROM_NUMBER, CoreConfiguration
                     .getConfiguration().applicationUrl());
-            logger.info("DSI SMS Gateway Initialized: {}\n", CIIST_SMS_GATEWAY_URL);
         } else {
             logger.debug("Twilio/DSI SMS Gateway not initialized");
         }
@@ -156,68 +122,4 @@ public class PhoneValidationUtils {
         }
     }
 
-    /**
-     *
-     * Send an SMS using the Twilio API via a specific Messaging Service
-     *
-     * @param toNumber The phone number of the recipient
-     * @param from The phone number or custom name of the sender
-     * @param messagingServiceSid The Messaging Service SID
-     * @param message The body of the message
-     *
-     * @return the SID of the created message or null if no message was sent
-     *
-     */
-    public String sendTwilioSMS(String toNumber, String fromName, String messagingServiceSid, String message) {
-        if (canRun()) {
-            return Message.creator(new PhoneNumber(toNumber), new PhoneNumber(fromName), message)
-                    .setMessagingServiceSid(messagingServiceSid)
-                    .create(TWILIO_CLIENT).getSid();
-        }
-        return null;
-    }
-
-    /**
-     *
-     * Send an SMS using the TWilio API
-     *
-     * @param toNumber The phone number of the recipient
-     * @param from The phone number or custom name of the sender
-     * @param message The body of the message
-     *
-     * @return the SID of the created message or null if no message was sent
-     *
-     */
-    public String sendTwilioSMS(String toNumber, String from, String message) {
-        return sendTwilioSMS(toNumber, from, TWILIO_DEFAULT_MESSAGING_SERVICE_SID, message);
-    }
-
-    public boolean sendSMSMessage(String number, String message) {
-        number = number.replace(" ", "");
-        if (canRun()) {
-            PostMethod method = new PostMethod(CIIST_SMS_GATEWAY_URL);
-            method.addParameter(new NameValuePair("number", number));
-            method.addParameter(new NameValuePair("msg", message));
-            try {
-                CIIST_CLIENT.executeMethod(method);
-                if (method.getStatusCode() != 200) {
-                    return false;
-                }
-            } catch (HttpException e) {
-                logger.error(e.getMessage(), e);
-                return false;
-            } catch (IOException e) {
-                logger.error(e.getMessage(), e);
-                return false;
-            }
-        } else {
-            logger.info("SMS to >" + number + "<: " + message);
-        }
-        return true;
-    }
-
-    public boolean sendSMS(String number, String token) {
-        final String message = "Bem-vindo ao sistema Fenix. Introduza o codigo " + token + " . Obrigado!";
-        return sendSMSMessage(number, message);
-    }
 }
