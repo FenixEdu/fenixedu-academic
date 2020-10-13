@@ -504,8 +504,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
                                 }
                             });
 
-            getEnrolmentEvaluationBySeasonAndState(EnrolmentEvaluationState.FINAL_OBJ, EvaluationSeason.readSpecialSeason())
-                    .ifPresent(e -> setEnrollmentState(e.getEnrollmentStateByGrade()));
+            EnrolmentEvaluation finalEnrolmentEvaluation = getFinalEnrolmentEvaluation();
+            if (finalEnrolmentEvaluation != null) {                
+                setEnrollmentState(finalEnrolmentEvaluation.getEnrollmentStateByGrade());
+            }
         } else {
             throw new DomainException("error.invalid.enrolment.state");
         }
