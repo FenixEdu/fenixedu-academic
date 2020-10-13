@@ -642,4 +642,24 @@ public class Shift extends Shift_Base {
         return false;
     }
 
+    @Override
+    public void setName(String name) {
+        super.setName(name);
+        super.setNome(name);
+    }
+
+    @Deprecated
+    @Override
+    public void setNome(String nome) {
+        super.setNome(nome);
+        super.setName(nome);
+    }
+
+    public boolean migrateNomeToName() {
+        if (StringUtils.isBlank(super.getName())) {
+            super.setName(getNome());
+            return true;
+        }
+        return false;
+    }
 }
