@@ -1,5 +1,6 @@
 - Fix: Root curricular period label displaying 'null' on child order
 - Refactor: Remove teacher authorization departments to units migration on system init
+- Refactor: Migrate SchoolClass slot names in portuguese to english
 
 30.9.4 (31-08-2020)
 - Fix: Coordinator curricular year statistics should use execution year on computation

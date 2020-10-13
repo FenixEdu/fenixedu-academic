@@ -61,7 +61,7 @@ public class SchoolClass extends SchoolClass_Base {
         setExecutionDegree(executionDegree);
         setExecutionPeriod(executionInterval);
         setAnoCurricular(curricularYear);
-        setNome(name);
+        setName(name);
     }
 
     public SchoolClass(ExecutionDegree executionDegree, AcademicInterval academicInterval, String name, Integer curricularYear) {
@@ -77,7 +77,7 @@ public class SchoolClass extends SchoolClass_Base {
         // with ExecutionInterval.
         setExecutionPeriod(executionInterval);
         setAnoCurricular(curricularYear);
-        setNome(name);
+        setName(name);
     }
 
     public void edit(String name) {
@@ -198,6 +198,10 @@ public class SchoolClass extends SchoolClass_Base {
     }
 
     public String getName() {
+        if (StringUtils.isNotBlank(super.getName())) {
+            return super.getName();
+        }
+
         final Object editablePartOfName = getEditablePartOfName();
         if (editablePartOfName != null && StringUtils.isNotBlank((String) editablePartOfName)) {
             return (String) editablePartOfName;
@@ -209,16 +213,25 @@ public class SchoolClass extends SchoolClass_Base {
         if (StringUtils.isBlank(name)) {
             throw new DomainException("error.SchoolClass.empty.name");
         }
+
+        super.setName(name);
+
         // super.setNome(name.trim()); 
         // for we will store name as the old way, in order to mantain compatibility to getEditablePartOfName() method across the solution
         setNome(name);
     }
 
+    @Override
     public Integer getCurricularYear() {
+        if (super.getCurricularYear() != null) {
+            return super.getCurricularYear();
+        }
         return getAnoCurricular();
     }
 
-    public void setCurricularYear(final Integer curricularYear) {
+    @Override
+    public void setCurricularYear(Integer curricularYear) {
+        super.setCurricularYear(curricularYear);
         setAnoCurricular(curricularYear);
     }
 
@@ -252,6 +265,22 @@ public class SchoolClass extends SchoolClass_Base {
         }
 
         return true;
+    }
+
+    public boolean migrateNomeToName() {
+        if (StringUtils.isBlank(super.getName())) {
+            super.setName(getName());
+            return true;
+        }
+        return false;
+    }
+
+    public boolean migrateAnoCurricularToCurricularYear() {
+        if (super.getCurricularYear() == null) {
+            super.setCurricularYear(getAnoCurricular());
+            return true;
+        }
+        return false;
     }
 
 }

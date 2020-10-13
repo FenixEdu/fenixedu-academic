@@ -19,6 +19,8 @@
 package org.fenixedu.academic.servlet;
 
 import java.util.Properties;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -29,11 +31,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.Installation;
+import org.fenixedu.academic.domain.SchoolClass;
 import org.fenixedu.academic.domain.organizationalStructure.UnitNamePart;
 import org.fenixedu.academic.service.StudentWarningsDefaultCheckers;
 import org.fenixedu.academic.service.StudentWarningsService;
 import org.fenixedu.academic.ui.struts.action.externalServices.PhoneValidationUtils;
 import org.fenixedu.bennu.core.api.SystemResource;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.rest.Healthcheck;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,6 +58,8 @@ public class FenixInitializer implements ServletContextListener {
     @Atomic(mode = TxMode.READ)
     public void contextInitialized(ServletContextEvent event) {
 
+        migrateSchoolClassPtSlots();
+
         Installation.ensureInstallation();
         loadUnitNames();
         startContactValidationServices();
@@ -63,6 +69,29 @@ public class FenixInitializer implements ServletContextListener {
         registerHealthchecks();
         registerDefaultStudentWarningCheckers();
 
+    }
+
+    @Atomic
+    private void migrateSchoolClassPtSlots() {
+        final Set<SchoolClass> schoolClassses = Bennu.getInstance().getSchoolClasssSet();
+        logger.info("START SchoolClass migration");
+        logger.info(schoolClassses.size() + " SchoolClass (total)");
+
+        final AtomicInteger nameSlotChangesCounter = new AtomicInteger();
+        final AtomicInteger curricularYearSlotChangesCounter = new AtomicInteger();
+
+        schoolClassses.forEach(sc -> {
+            if (sc.migrateNomeToName()) {
+                nameSlotChangesCounter.incrementAndGet();
+            }
+            if (sc.migrateAnoCurricularToCurricularYear()) {
+                curricularYearSlotChangesCounter.incrementAndGet();
+            }
+        });
+
+        logger.info(nameSlotChangesCounter.get() + " Names slots updated");
+        logger.info(curricularYearSlotChangesCounter.get() + " CurricularYear slots updated");
+        logger.info("END SchoolClass migration");
     }
 
     private void registerDefaultStudentWarningCheckers() {
