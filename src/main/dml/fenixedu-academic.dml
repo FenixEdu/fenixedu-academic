@@ -1240,6 +1240,7 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
 			boolean photoAvailable;
 			DateTime dataProcessingTermsReadDate;
 			String iban;
+			String healthCardNumber;
         }
 
 		class PersonIdentificationDocumentExtraInfo  {

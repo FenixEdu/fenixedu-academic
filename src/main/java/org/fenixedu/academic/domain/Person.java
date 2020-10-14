@@ -401,6 +401,7 @@ public class Person extends Person_Base {
         setEmissionDateOfDocumentIdYearMonthDay(personBean.getDocumentIdEmissionDate());
         setExpirationDateOfDocumentIdYearMonthDay(personBean.getDocumentIdExpirationDate());
         setEidentifier(personBean.getEidentifier());
+        setHealthCardNumber(personBean.getHealthCardNumber());
 
         // filiation
         setDateOfBirthYearMonthDay(personBean.getDateOfBirth());

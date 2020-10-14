@@ -1,3 +1,5 @@
+- New Feature: Added Health Card Number to Person according #UL-FBA-1051
+
 30.10.0 (13-10-2020)
 - Fix: Root curricular period label displaying 'null' on child order
 - Refactor: Remove teacher authorization departments to units migration on system init

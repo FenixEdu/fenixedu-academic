@@ -62,6 +62,11 @@
 	</slot>
 </schema>
 
+<schema name="org.fenixedu.academic.dto.person.PersonBean.healthCardNumber" type="org.fenixedu.academic.dto.person.PersonBean"> 
+    <slot name="healthCardNumber" key="label.person.healthCardNumber">
+    </slot>
+</schema>
+
 <schema name="org.fenixedu.academic.domain.Person.contact.info" type="org.fenixedu.academic.domain.Person"> 
 	<slot name="phone" key="label.person.telephone">
 		 <validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
@@ -149,6 +154,7 @@
     <slot name="parishOfBirth" key="label.person.birthPlaceParish"/>
     <slot name="districtSubdivisionOfBirth" key="label.person.birthPlaceMunicipality"/>
     <slot name="districtOfBirth" key="label.person.birthPlaceDistrict"/>
+    <slot name="healthCardNumber" key="label.person.healthCardNumber"/>
     <setter signature="setIdentificationAndNames(documentIdNumber,idDocumentType,givenNames,familyNames)"/>
 </schema>
 

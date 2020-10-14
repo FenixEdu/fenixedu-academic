@@ -637,6 +637,23 @@
 			</html:submit>
 		</fr:form>
 	</div>
+	<div class="col-sm-6">
+        <fr:form action="/updateHealthCardNumber.do?method=updateHealthCardNumber">
+            <p class="mtop15">
+                <bean:message key="person.homepage.update" bundle="HOMEPAGE_RESOURCES"/> <bean:message key="label.person.healthCardNumber" bundle="APPLICATION_RESOURCES"/> 
+            </p>
+            <fr:edit id="healthCardNumber" name="personBean" schema="org.fenixedu.academic.dto.person.PersonBean.healthCardNumber">
+                <fr:layout name="tabular">
+                    <fr:property name="classes" value="tstyle2 thleft thlight mbottom05 thwhite"/>
+                    <fr:property name="columnClasses" value=",,tdclear "/>
+                    <fr:property name="displayLabel" value="false"/>
+                </fr:layout>
+            </fr:edit>
+            <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="mvert05">
+                <bean:message key="person.homepage.update" bundle="HOMEPAGE_RESOURCES"/>
+            </html:submit>
+        </fr:form>
+    </div>
 </div>
 
 <div class="row">

@@ -83,6 +83,8 @@ public class PersonBean implements Serializable {
     private Country fiscalCountry;
 
     private String socialSecurityNumber;
+    
+    private String healthCardNumber;
 
     private ProfessionType professionType;
 
@@ -226,6 +228,8 @@ public class PersonBean implements Serializable {
         setIdentificationDocumentSeriesNumber(person.getIdentificationDocumentSeriesNumber());
         setFiscalCountry(person.getFiscalCountry());
         setSocialSecurityNumber(person.getSocialSecurityNumber());
+        
+        setHealthCardNumber(person.getHealthCardNumber());
 
         if (person.hasDefaultPhysicalAddress()) {
             final PhysicalAddress physicalAddress = person.getDefaultPhysicalAddress();
@@ -635,6 +639,14 @@ public class PersonBean implements Serializable {
         this.socialSecurityNumber = value;
     }
 
+    public String getHealthCardNumber() {
+        return healthCardNumber;
+    }
+    
+    public void setHealthCardNumber(final String healthCardNumber) {
+        this.healthCardNumber = healthCardNumber;
+    }
+    
     public String getUsername() {
         return username;
     }
@@ -907,6 +919,7 @@ public class PersonBean implements Serializable {
         person.setEmissionDateOfDocumentIdYearMonthDay(this.getDocumentIdEmissionDate());
         person.setExpirationDateOfDocumentIdYearMonthDay(this.getDocumentIdExpirationDate());
         person.setEidentifier(this.getEidentifier());
+        person.setHealthCardNumber(this.healthCardNumber);
 
         // filiation
         person.setDateOfBirthYearMonthDay(this.getDateOfBirth());
