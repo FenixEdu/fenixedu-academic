@@ -301,6 +301,9 @@ public class Teacher extends Teacher_Base {
     }
 
     public void delete() {
+        
+        getAuthorizationSet().stream().forEach(a -> a.delete());  
+        
         super.setPerson(null);
         setRootDomainObject(null);
         deleteDomainObject();

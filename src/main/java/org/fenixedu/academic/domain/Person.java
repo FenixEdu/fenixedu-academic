@@ -455,6 +455,10 @@ public class Person extends Person_Base {
             getStudent().delete();
         }
 
+        if (getTeacher() != null) {
+            getTeacher().delete();
+        }
+
         for (; !getIdDocumentsSet().isEmpty(); getIdDocumentsSet().iterator().next().delete()) {
             ;
         }
@@ -467,11 +471,28 @@ public class Person extends Person_Base {
             extraInfo.delete();
         }
 
+        if (getPersonalPhoto() != null) {
+            getPersonalPhoto().delete();
+        }
+
+        final UserProfile profile = getProfile();
+        if (profile != null) {
+            super.setProfile(null);
+            if (getUser() == null) {
+                profile.delete();
+            }
+        }
+
+        final User user = getUser();
+        if (user != null) {
+            super.setUser(null);
+            //also deletes profile
+            user.delete();
+        }
+
         super.setCountry(null);
         super.setSecondNationality(null);
         super.setCountryOfBirth(null);
-        setProfile(null);
-        super.setUser(null);
         super.delete();
     }
 
@@ -479,7 +500,7 @@ public class Person extends Person_Base {
     protected void checkForDeletionBlockers(final Collection<String> blockers) {
         super.checkForDeletionBlockers(blockers);
         if (!(getChildsSet().isEmpty() && getParentsSet().isEmpty() && getAssociatedQualificationsSet().isEmpty()
-                && getEnrolmentEvaluationsSet().isEmpty() && getTeacher() == null && getCreatedQualificationsSet().isEmpty()
+                && getEnrolmentEvaluationsSet().isEmpty() && getCreatedQualificationsSet().isEmpty()
                 && getCreateJobsSet().isEmpty())) {
             blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.person.cannot.be.deleted"));
         }

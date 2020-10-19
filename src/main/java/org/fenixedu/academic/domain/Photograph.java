@@ -102,8 +102,9 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
                 }
                 SystemSender systemSender = getRootDomainObject().getSystemSender();
                 new Message(systemSender, systemSender.getConcreteReplyTos(),
-                        new Recipient(getPerson().getUser().groupOf()).asCollection(), BundleUtil.getString(Bundle.PERSONAL,
-                                REJECTION_MAIL_SUBJECT_KEY), BundleUtil.getString(Bundle.PERSONAL, REJECTION_MAIL_BODY_KEY), "");
+                        new Recipient(getPerson().getUser().groupOf()).asCollection(),
+                        BundleUtil.getString(Bundle.PERSONAL, REJECTION_MAIL_SUBJECT_KEY),
+                        BundleUtil.getString(Bundle.PERSONAL, REJECTION_MAIL_BODY_KEY), "");
 
             }
             if (state == PhotoState.APPROVED) {
@@ -135,20 +136,27 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
     }
 
     public void delete() {
-        setRootDomainObject(null);
         if (getPendingHolder() != null) {
-            setPendingHolder(null);
+            super.setPendingHolder(null);
         }
-        setPerson(null);
+
         Photograph prev = getPrevious();
         if (prev != null) {
-            setPrevious(null);
+            super.setPrevious(null);
             prev.delete();
         }
+
         Photograph next = getNext();
         if (next != null) {
-            setNext(null);
+            super.setNext(null);
         }
+
+        if (getOriginal() != null) {
+            getOriginal().delete();
+        }
+
+        super.setPerson(null);
+        super.setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -165,8 +173,8 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
 
     public byte[] getCustomAvatar(int xRatio, int yRatio, int width, int height, PictureMode pictureMode) {
         PictureOriginal original = getOriginal();
-        BufferedImage image =
-                original.getPictureFileFormat() == ContentType.JPG ? Picture.readImage(original.getPictureData()) : read(original);
+        BufferedImage image = original.getPictureFileFormat() == ContentType.JPG ? Picture
+                .readImage(original.getPictureData()) : read(original);
         return processImage(image, xRatio, yRatio, width, height, pictureMode);
     }
 
@@ -219,7 +227,8 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
         }
     }
 
-    private static byte[] processImage(BufferedImage image, int xRatio, int yRatio, int width, int height, PictureMode pictureMode) {
+    private static byte[] processImage(BufferedImage image, int xRatio, int yRatio, int width, int height,
+            PictureMode pictureMode) {
         final BufferedImage transformed, scaled;
         switch (pictureMode) {
         case FIT:

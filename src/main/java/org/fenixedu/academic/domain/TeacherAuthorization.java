@@ -192,4 +192,15 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
         return super.getRevokedExecutionSemester();
     }
 
+    public void delete() {
+        super.setTeacher(null);
+        super.setDepartment(null);
+        super.setUnit(null);
+        super.setExecutionSemester(null);
+        super.setAuthorizer(null);
+        super.setTeacherCategory(null);
+        super.setRootDomainObject(null);
+        super.deleteDomainObject();
+    }
+
 }
