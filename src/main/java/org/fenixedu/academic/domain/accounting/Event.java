@@ -18,6 +18,26 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
@@ -51,15 +71,9 @@ import org.fenixedu.bennu.core.signals.Signal;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.core.AbstractDomainObject;
-
-import java.math.BigDecimal;
-import java.util.*;
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public abstract class Event extends Event_Base {
 
@@ -497,6 +511,10 @@ public abstract class Event extends Event_Base {
     protected void persistDueDateAmountMap() {
         if (super.getDueDateAmountMap() == null) {
             setDueDateAmountMap(new DueDateAmountMap(calculateDueDateAmountMap()));
+            Money originalAmountToPay = getOriginalAmountToPay();
+            if (originalAmountToPay.isZero()) {
+                recalculateState(new DateTime());
+            }
         }
     }
 
