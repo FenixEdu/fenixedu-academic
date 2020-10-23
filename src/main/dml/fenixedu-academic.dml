@@ -734,8 +734,6 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
     class SchoolClass  {
         Integer curricularYear;
         String name;
-        Integer anoCurricular; // deprecated
-        String nome; // deprecated
     }
 
     class Shift  {      

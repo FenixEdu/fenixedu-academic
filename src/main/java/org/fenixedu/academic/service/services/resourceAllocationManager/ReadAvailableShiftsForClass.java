@@ -44,7 +44,7 @@ public class ReadAvailableShiftsForClass {
         List infoShifts = null;
 
         SchoolClass schoolClass = FenixFramework.getDomainObject(infoClass.getExternalId());
-        Set<Shift> shifts = schoolClass.findAvailableShifts();
+        Set<Shift> shifts = schoolClass.findPossibleShiftsToAdd();
 
         infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
             @Override

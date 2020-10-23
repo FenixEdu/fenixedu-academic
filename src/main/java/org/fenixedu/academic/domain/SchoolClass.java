@@ -40,55 +40,18 @@ import org.fenixedu.bennu.core.domain.Bennu;
  */
 public class SchoolClass extends SchoolClass_Base {
 
-    public static final Comparator<SchoolClass> COMPARATOR_BY_NAME = new Comparator<SchoolClass>() {
-
-        @Override
-        public int compare(SchoolClass o1, SchoolClass o2) {
-            final int i = o1.getNome().compareTo(o2.getNome());
-            return i == 0 ? o1.getExternalId().compareTo(o2.getExternalId()) : i;
-        }
-
-    };
+    public static final Comparator<SchoolClass> COMPARATOR_BY_NAME =
+            Comparator.comparing(SchoolClass::getName).thenComparing(SchoolClass::getExternalId);
 
     public SchoolClass(final ExecutionDegree executionDegree, final ExecutionInterval executionInterval, final String name,
             final Integer curricularYear) {
-//        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageSchoolClass);
         super();
-
-        checkIfExistsSchoolClassWithSameName(executionDegree, executionInterval, curricularYear, name);
 
         setRootDomainObject(Bennu.getInstance());
         setExecutionDegree(executionDegree);
         setExecutionPeriod(executionInterval);
-        setAnoCurricular(curricularYear);
-        setName(name);
-    }
-
-    public SchoolClass(ExecutionDegree executionDegree, AcademicInterval academicInterval, String name, Integer curricularYear) {
-//        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageSchoolClass);
-        super();
-
-        ExecutionInterval executionInterval = ExecutionInterval.getExecutionInterval(academicInterval);
-        checkIfExistsSchoolClassWithSameName(executionDegree, executionInterval, curricularYear, name);
-
-        setRootDomainObject(Bennu.getInstance());
-        setExecutionDegree(executionDegree);
-        // FIXME: cast shouldn't be needed, SchoolClass should relate directly
-        // with ExecutionInterval.
-        setExecutionPeriod(executionInterval);
-        setAnoCurricular(curricularYear);
-        setName(name);
-    }
-
-    public void edit(String name) {
-        if (name != null && !StringUtils.isEmpty(name.trim())) {
-            final SchoolClass otherClassWithSameNewName =
-                    getExecutionDegree().findSchoolClassesByExecutionPeriodAndName(getExecutionInterval(), name.trim());
-            if (otherClassWithSameNewName != null && !otherClassWithSameNewName.equals(this)) {
-                throw new DomainException("Duplicate Entry: " + otherClassWithSameNewName.getNome());
-            }
-        }
-        setNome(name);
+        setCurricularYear(curricularYear);
+        setName(name); // must be set after executionDegree, executionInterval and curricularYear, in order to check duplicate names
     }
 
     public void delete() {
@@ -116,66 +79,39 @@ public class SchoolClass extends SchoolClass_Base {
     }
 
     @Override
-    public void setAnoCurricular(Integer anoCurricular) {
-        if (anoCurricular == null || anoCurricular.intValue() < 1) {
-            throw new DomainException("error.SchoolClass.invalid.curricularYear");
+    public void setCurricularYear(Integer curricularYear) {
+        if (curricularYear == null) {
+            throw new DomainException("error.SchoolClass.empty.curricularYear");
         }
-        super.setAnoCurricular(anoCurricular);
+        super.setCurricularYear(curricularYear);
     }
 
-    @Override
-    public void setNome(String name) {
-        if (name == null || StringUtils.isEmpty(name.trim())) {
+    public void setName(final String name) {
+        if (StringUtils.isBlank(name)) {
             throw new DomainException("error.SchoolClass.empty.name");
         }
-        final DegreeCurricularPlan degreeCurricularPlan = getExecutionDegree().getDegreeCurricularPlan();
-        final Degree degree = degreeCurricularPlan.getDegree();
-        super.setNome(constructName(degree, name.trim(), getAnoCurricular()));
-    }
 
-    private void checkIfExistsSchoolClassWithSameName(ExecutionDegree executionDegree, ExecutionInterval executionInterval,
-            Integer curricularYear, String className) {
-
-        if (executionDegree != null && executionInterval != null && curricularYear != null && className != null) {
-
-            final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-            final Set<SchoolClass> classes = executionDegree.findSchoolClassesByAcademicIntervalAndCurricularYear(
-                    executionInterval.getAcademicInterval(), curricularYear);
-            final Degree degree = degreeCurricularPlan.getDegree();
-            final String schoolClassName = degree.constructSchoolClassPrefix(curricularYear) + className;
-
-            for (final SchoolClass schoolClass : classes) {
-                if (!schoolClass.equals(this) && schoolClassName.equalsIgnoreCase(schoolClass.getNome())) {
-                    throw new DomainException("Duplicate Entry: " + className + " for curricular year " + curricularYear
-                            + " and degree curricular plan " + degreeCurricularPlan.getName());
-                }
+        // check duplicated names
+        if (getExecutionDegree() != null && getExecutionInterval() != null && getCurricularYear() != null) {
+            if (getExecutionDegree().getSchoolClassesSet().stream().filter(sc -> sc != this)
+                    .filter(sc -> getExecutionInterval() == sc.getExecutionInterval())
+                    .filter(sc -> getCurricularYear().equals(sc.getCurricularYear()))
+                    .anyMatch(sc -> name.equalsIgnoreCase(sc.getName()))) {
+                throw new DomainException("Duplicate Entry: " + name + " for curricular year " + getCurricularYear()
+                        + " and degree curricular plan " + getExecutionDegree().getDegreeCurricularPlan().getName());
             }
         }
+
+        super.setName(name);
     }
 
-    protected String constructName(final Degree degree, final String name, final Integer curricularYear) {
-        return degree.constructSchoolClassPrefix(curricularYear) + name;
-    }
-
-    public void associateShift(Shift shift) {
-        if (shift == null) {
-            throw new NullPointerException();
-        }
-        if (!this.getAssociatedShiftsSet().contains(shift)) {
-            this.getAssociatedShiftsSet().add(shift);
-        }
-        if (!shift.getAssociatedClassesSet().contains(this)) {
-            shift.getAssociatedClassesSet().add(this);
-        }
-    }
-
-    public Set<Shift> findAvailableShifts() {
+    public Set<Shift> findPossibleShiftsToAdd() {
         final ExecutionDegree executionDegree = getExecutionDegree();
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
         final Set<Shift> shifts = new HashSet<Shift>();
         for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
-            if (curricularCourse.isActive(getExecutionInterval(), getAnoCurricular())) {
+            if (curricularCourse.isActive(getExecutionInterval(), getCurricularYear())) {
                 for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
                     if (executionCourse.getExecutionInterval() == getExecutionInterval()) {
                         shifts.addAll(executionCourse.getAssociatedShifts());
@@ -187,52 +123,13 @@ public class SchoolClass extends SchoolClass_Base {
         return shifts;
     }
 
-    public Object getEditablePartOfName() {
-        final DegreeCurricularPlan degreeCurricularPlan = getExecutionDegree().getDegreeCurricularPlan();
-        final Degree degree = degreeCurricularPlan.getDegree();
-        return StringUtils.substringAfter(getNome(), degree.constructSchoolClassPrefix(getAnoCurricular()));
+    @Deprecated
+    public Set<Shift> findAvailableShifts() {
+        return findPossibleShiftsToAdd();
     }
 
     public AcademicInterval getAcademicInterval() {
         return getExecutionInterval().getAcademicInterval();
-    }
-
-    public String getName() {
-        if (StringUtils.isNotBlank(super.getName())) {
-            return super.getName();
-        }
-
-        final Object editablePartOfName = getEditablePartOfName();
-        if (editablePartOfName != null && StringUtils.isNotBlank((String) editablePartOfName)) {
-            return (String) editablePartOfName;
-        }
-        return getNome();
-    }
-
-    public void setName(final String name) {
-        if (StringUtils.isBlank(name)) {
-            throw new DomainException("error.SchoolClass.empty.name");
-        }
-
-        super.setName(name);
-
-        // super.setNome(name.trim()); 
-        // for we will store name as the old way, in order to mantain compatibility to getEditablePartOfName() method across the solution
-        setNome(name);
-    }
-
-    @Override
-    public Integer getCurricularYear() {
-        if (super.getCurricularYear() != null) {
-            return super.getCurricularYear();
-        }
-        return getAnoCurricular();
-    }
-
-    @Override
-    public void setCurricularYear(Integer curricularYear) {
-        super.setCurricularYear(curricularYear);
-        setAnoCurricular(curricularYear);
     }
 
     public ExecutionInterval getExecutionInterval() {
@@ -267,20 +164,29 @@ public class SchoolClass extends SchoolClass_Base {
         return true;
     }
 
-    public boolean migrateNomeToName() {
-        if (StringUtils.isBlank(super.getName())) {
-            super.setName(getName());
-            return true;
-        }
-        return false;
+    @Deprecated
+    public String getNome() {
+        return super.getName();
     }
 
-    public boolean migrateAnoCurricularToCurricularYear() {
-        if (super.getCurricularYear() == null) {
-            super.setCurricularYear(getAnoCurricular());
-            return true;
-        }
-        return false;
+    @Deprecated
+    public void setNome(String name) {
+        setName(name);
+    }
+
+    @Deprecated
+    public Object getEditablePartOfName() {
+        return super.getName();
+    }
+
+    @Deprecated
+    public Integer getAnoCurricular() {
+        return getCurricularYear();
+    }
+
+    @Deprecated
+    public void setAnoCurricular(Integer anoCurricular) {
+        setCurricularYear(anoCurricular);
     }
 
 }

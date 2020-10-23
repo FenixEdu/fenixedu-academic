@@ -876,9 +876,9 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return new ArrayList<>(result);
     }
 
-    public String constructSchoolClassPrefix(final Integer curricularYear) {
-        return isBolonhaDegree() ? getSigla() + "0" + curricularYear.toString() : StringUtils.EMPTY;
-    }
+//    public String constructSchoolClassPrefix(final Integer curricularYear) {
+//        return isBolonhaDegree() ? getSigla() + "0" + curricularYear.toString() : StringUtils.EMPTY;
+//    }
 
     public boolean isFirstCycle() {
         return getDegreeType().isFirstCycle();

@@ -49,10 +49,7 @@
 	</p>
 
    	<bean:define id="degree" type="org.fenixedu.academic.domain.Degree" name="executionDegreeD" property="degreeCurricularPlan.degree"/>   	
-   	<bean:define id="curricularYear" type="java.lang.Integer" 
-   		name="<%= PresentationConstants.CURRICULAR_YEAR %>" property="year"/>	
-   	<%= degree.constructSchoolClassPrefix(curricularYear) %>
-
+   	
 	   	<html:text bundle="HTMLALT_RESOURCES" altKey="text.className" property="className"/>
 	   	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="btn btn-primary btn-xs">
 	   		<bean:message key="label.create"/>

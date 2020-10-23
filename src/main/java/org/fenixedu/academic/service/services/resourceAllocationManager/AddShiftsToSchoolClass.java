@@ -43,7 +43,7 @@ public class AddShiftsToSchoolClass {
             if (shift == null) {
                 throw new InvalidArgumentsServiceException();
             }
-            schoolClass.associateShift(shift);
+            schoolClass.addAssociatedShifts(shift);
         }
     }
 

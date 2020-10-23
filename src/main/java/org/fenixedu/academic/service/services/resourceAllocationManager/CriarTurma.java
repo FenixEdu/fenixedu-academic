@@ -25,6 +25,7 @@
 package org.fenixedu.academic.service.services.resourceAllocationManager;
 
 import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.SchoolClass;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.dto.InfoClass;
@@ -42,7 +43,8 @@ public class CriarTurma {
 
         final ExecutionDegree executionDegree = FenixFramework.getDomainObject(infoExecutionDegree.getExternalId());
 
-        final SchoolClass schoolClass = new SchoolClass(executionDegree, academicInterval, className, curricularYear);
+        final SchoolClass schoolClass = new SchoolClass(executionDegree, ExecutionInterval.getExecutionInterval(academicInterval),
+                className, curricularYear);
         return InfoClass.newInfoFromDomain(schoolClass);
     }
 

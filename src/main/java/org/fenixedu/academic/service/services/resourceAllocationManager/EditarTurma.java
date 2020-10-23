@@ -31,7 +31,7 @@ public class EditarTurma {
     public static Object run(final String externalId, final String className) throws ExistingServiceException {
 
         final SchoolClass classToEdit = FenixFramework.getDomainObject(externalId);
-        classToEdit.edit(className);
+        classToEdit.setName(className);
         return InfoClass.newInfoFromDomain(classToEdit);
     }
 
