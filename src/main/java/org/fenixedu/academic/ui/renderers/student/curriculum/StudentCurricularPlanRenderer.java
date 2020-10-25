@@ -915,24 +915,27 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             addTabsToRow(enrolmentRow, level);
             enrolmentRow.setClasses(renderer.getEnrolmentRowClass());
 
+            generateCurricularCourseCodeAndNameCell(enrolmentRow, enrolment, level, allowSelection);
+            generateDegreeCurricularPlanCell(enrolmentRow, enrolment);
+            generateEnrolmentTypeCell(enrolmentRow, enrolment);
+            generateEnrolmentStateCell(enrolmentRow, enrolment);
+            generateEnrolmentGradeCell(enrolmentRow, enrolment);
+            generateEnrolmentWeightCell(enrolmentRow, enrolment, isFromDetail);
+            generateEnrolmentEctsCell(enrolmentRow, enrolment, isFromDetail);
+            generateEnrolmentLastEnrolmentEvaluationTypeCell(enrolmentRow, enrolment);
+            generateExecutionYearCell(enrolmentRow, enrolment);
+            generateSemesterCell(enrolmentRow, enrolment);
             if (enrolment.isEnroled()) {
-                generateEnrolmentWithStateEnroled(enrolmentRow, enrolment, level, allowSelection);
+                if (isViewerAllowedToViewFullStudentCurriculum(studentCurricularPlan)) {
+                    generateCellWithText(enrolmentRow, EMPTY_INFO, renderer.getCreationDateCellClass()); // enrolment
+                    generateCellWithText(enrolmentRow, EMPTY_INFO, renderer.getCreatorCellClass()); // grade
+                }
             } else {
-                generateCurricularCourseCodeAndNameCell(enrolmentRow, enrolment, level, allowSelection);
-                generateDegreeCurricularPlanCell(enrolmentRow, enrolment);
-                generateEnrolmentTypeCell(enrolmentRow, enrolment);
-                generateEnrolmentStateCell(enrolmentRow, enrolment);
-                generateEnrolmentGradeCell(enrolmentRow, enrolment);
-                generateEnrolmentWeightCell(enrolmentRow, enrolment, isFromDetail);
-                generateEnrolmentEctsCell(enrolmentRow, enrolment, isFromDetail);
-                generateEnrolmentLastEnrolmentEvaluationTypeCell(enrolmentRow, enrolment);
-                generateExecutionYearCell(enrolmentRow, enrolment);
-                generateSemesterCell(enrolmentRow, enrolment);
                 generateStatisticsLinkCell(enrolmentRow, enrolment);
                 generateLastEnrolmentEvaluationExamDateCellIfRequired(enrolmentRow, enrolment);
                 generateGradeResponsibleIfRequired(enrolmentRow, enrolment);
-                generateSpacerCellsIfRequired(enrolmentRow);
             }
+            generateSpacerCellsIfRequired(enrolmentRow);
 
             if (!isDismissal && renderer.isDetailed() && isViewerAllowedToViewFullStudentCurriculum(studentCurricularPlan)
                     && enrolment.getAllFinalEnrolmentEvaluations().size() > 1) {
@@ -1156,9 +1159,9 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
         protected void generateEnrolmentStateCell(HtmlTableRow enrolmentRow, Enrolment enrolment) {
             generateCellWithText(
                     enrolmentRow,
-                    enrolment.isApproved() ? EMPTY_INFO : BundleUtil.getString(Bundle.ENUMERATION, enrolment.getEnrollmentState()
-                            .getQualifiedName()), renderer.getEnrolmentStateCellClass());
-
+                    BundleUtil.getString(Bundle.ENUMERATION, enrolment.getEnrollmentState().getQualifiedName())
+                        + " (" + enrolment.getEvaluationSeason().getAcronym().getContent() + ")",
+                    renderer.getEnrolmentStateCellClass());
         }
 
         protected void generateEnrolmentTypeCell(HtmlTableRow enrolmentRow, Enrolment enrolment) {
