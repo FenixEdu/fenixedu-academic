@@ -738,7 +738,6 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
 
     class Shift  {      
         Integer lotacao;
-        String nome; // deprecated
         String name;
         String comment;
         Languages languages;

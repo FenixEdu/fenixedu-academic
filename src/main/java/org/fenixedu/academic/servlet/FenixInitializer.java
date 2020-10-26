@@ -32,7 +32,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.Installation;
 import org.fenixedu.academic.domain.Lesson;
-import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.organizationalStructure.UnitNamePart;
 import org.fenixedu.academic.service.StudentWarningsDefaultCheckers;
 import org.fenixedu.academic.service.StudentWarningsService;
@@ -59,7 +58,6 @@ public class FenixInitializer implements ServletContextListener {
     @Atomic(mode = TxMode.READ)
     public void contextInitialized(ServletContextEvent event) {
 
-        migrateShiftPtSlots();
         migrateLessonPtSlots();
 
         Installation.ensureInstallation();
@@ -71,24 +69,6 @@ public class FenixInitializer implements ServletContextListener {
         registerHealthchecks();
         registerDefaultStudentWarningCheckers();
 
-    }
-
-    @Atomic
-    private void migrateShiftPtSlots() {
-        final Set<Shift> shifts = Bennu.getInstance().getShiftsSet();
-        logger.info("START Shift migration");
-        logger.info(shifts.size() + " Shift (total)");
-
-        final AtomicInteger nameSlotChangesCounter = new AtomicInteger();
-
-        shifts.forEach(s -> {
-            if (s.migrateNomeToName()) {
-                nameSlotChangesCounter.incrementAndGet();
-            }
-        });
-
-        logger.info(nameSlotChangesCounter.get() + " Names slots updated");
-        logger.info("END Shift migration");
     }
 
     @Atomic
