@@ -113,4 +113,26 @@ public class DiaSemana implements Serializable {
         final int i = jodaWeekDay == 7 ? 1 : jodaWeekDay + 1;
         return new DiaSemana(i);
     }
+
+    public static DiaSemana fromWeekDay(final WeekDay weekDay) {
+        switch (weekDay) {
+        case SUNDAY:
+            return new DiaSemana(DiaSemana.DOMINGO);
+        case MONDAY:
+            return new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
+        case TUESDAY:
+            return new DiaSemana(DiaSemana.TERCA_FEIRA);
+        case WEDNESDAY:
+            return new DiaSemana(DiaSemana.QUARTA_FEIRA);
+        case THURSDAY:
+            return new DiaSemana(DiaSemana.QUINTA_FEIRA);
+        case FRIDAY:
+            return new DiaSemana(DiaSemana.SEXTA_FEIRA);
+        case SATURDAY:
+            return new DiaSemana(DiaSemana.SABADO);
+        default:
+            return null;
+        }
+    }
+
 }

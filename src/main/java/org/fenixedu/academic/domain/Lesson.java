@@ -1196,20 +1196,14 @@ public class Lesson extends Lesson_Base {
         }
     }
 
-    @Override
-    public WeekDay getWeekDay() {
-        if (super.getWeekDay() != null) {
-            return super.getWeekDay();
-        }
-
-        final DiaSemana diaSemana = getDiaSemana();
-        return diaSemana == null ? null : WeekDay.getWeekDay(diaSemana);
+    @Deprecated
+    public void setDiaSemana(DiaSemana diaSemana) {
+        setWeekDay(diaSemana == null ? null : WeekDay.getWeekDay(diaSemana));
     }
 
-    @Override
-    public void setDiaSemana(DiaSemana diaSemana) {
-        super.setDiaSemana(diaSemana);
-        setWeekDay(diaSemana == null ? null : WeekDay.getWeekDay(diaSemana));
+    @Deprecated
+    public DiaSemana getDiaSemana() {
+        return DiaSemana.fromWeekDay(getWeekDay());
     }
 
     private static DateTime toDateTime(final YearMonthDay ymd, final HourMinuteSecond hms) {
@@ -1267,14 +1261,6 @@ public class Lesson extends Lesson_Base {
 
     public boolean isBiWeeklyOffset() {
         return getFrequency() == FrequencyType.BIWEEKLY;
-    }
-
-    public boolean migrateDiaSemanaToWeekDay() {
-        if (super.getWeekDay() == null) {
-            super.setWeekDay(getWeekDay());
-            return true;
-        }
-        return false;
     }
 
 }
