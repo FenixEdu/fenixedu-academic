@@ -40,6 +40,10 @@ public class AccountingTransactionDetail extends AccountingTransactionDetail_Bas
         if (whenRegistered == null) {
             throw new DomainException("error.accounting.AccountingTransactionDetail.whenRegistered.cannot.be.null");
         }
+        
+        if (whenRegistered.isAfter(new DateTime())) {
+            throw new DomainException("error.accounting.AccountingTransactionDetail.whenRegistered.cannot.be.after.now");
+        }
 
         if (paymentMethod == null) {
             throw new DomainException("error.accounting.AccountingTransactionDetail.paymentMethod.cannot.be.null");
