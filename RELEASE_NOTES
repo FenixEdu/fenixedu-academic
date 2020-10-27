@@ -2,6 +2,7 @@
 - Refactor: Cleanup SchoolClass slot names in portuguese 
 - Refactor: Cleanup Shift slot names in portuguese
 - Refactor: Cleanup Lesson slot names in portuguese
+- Fix: Shift custom name predicate when course sigla has square brackets
 
 30.11.1 (20-10-2020)
 - Fix: Changed Person related entities to allow delete method execution
