@@ -1,4 +1,5 @@
 - Improvement: Delete degree message more explicit when blocker are curricular plans 
+- Improvement: Add method WeekDay.getDayOfWeek()
 - Refactor: Cleanup SchoolClass slot names in portuguese 
 - Refactor: Cleanup Shift slot names in portuguese
 - Refactor: Cleanup Lesson slot names in portuguese

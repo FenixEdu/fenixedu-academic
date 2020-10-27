@@ -35,6 +35,16 @@ public enum WeekDay {
         return name();
     }
 
+    /**
+     * Get the day of week property
+     * (Monday will return 1, Tuesday 2, ...)
+     * 
+     * @return index of day of week
+     */
+    public int getDayOfWeek() {
+        return ordinal() + 1;
+    }
+
     public static WeekDay getWeekDay(final DiaSemana weekDay) {
         switch (weekDay.getDiaSemana()) {
         case DiaSemana.DOMINGO:
