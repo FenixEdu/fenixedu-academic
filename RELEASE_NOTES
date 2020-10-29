@@ -1,3 +1,5 @@
+- Improvement: Show area slot of party contact in create/edit screens
+
 30.12.0 (27-10-2020)
 - Improvement: Delete degree message more explicit when blocker are curricular plans 
 - Improvement: Add method WeekDay.getDayOfWeek()
