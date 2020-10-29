@@ -103,13 +103,8 @@ request.setAttribute("hideValidationWarning", !partyContact.isToBeValidated());
 					<fr:property name="size" value="50" />
 				</fr:slot>
 				
-				<%-- 
 				<fr:slot name="area">
-					<% if(physicalAddressBean.getCountryOfResidence() != null && physicalAddressBean.getCountryOfResidence().isDefaultCountry()) { %>
-					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-					<% } %>
 				</fr:slot>
-				--%>
 				
 				<fr:slot name="areaCode">
 					<fr:property name="size" value="10" />
