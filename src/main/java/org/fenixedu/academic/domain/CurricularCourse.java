@@ -32,12 +32,10 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
-import org.fenixedu.academic.domain.curriculum.CurricularCourseType;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevel;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
-import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.degreeStructure.RegimeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -72,52 +70,38 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public CurricularCourse() {
         super();
-        final Double d = Double.valueOf(0d);
-        setTheoreticalHours(d);
-        setTheoPratHours(d);
-        setLabHours(d);
-        setPraticalHours(d);
-        setCredits(d);
-        setEctsCredits(d);
-        setWeigth(d);
+        setWeigth(0d);
     }
 
-    protected CurricularCourse(DegreeCurricularPlan degreeCurricularPlan, String name, String code, String acronym,
-            Boolean enrolmentAllowed, CurricularStage curricularStage) {
-        this();
-        checkParameters(name, code, acronym);
-        checkForCurricularCourseWithSameAttributes(degreeCurricularPlan, name, code, acronym);
-        setName(name);
-        setCode(code);
-        setAcronym(acronym);
-        setEnrollmentAllowed(enrolmentAllowed);
-        setCurricularStage(curricularStage);
-        setDegreeCurricularPlan(degreeCurricularPlan);
-    }
+//    protected CurricularCourse(DegreeCurricularPlan degreeCurricularPlan, String name, String code, String acronym,
+//            Boolean enrolmentAllowed, CurricularStage curricularStage) {
+//        this();
+//        checkParameters(name, code, acronym);
+//        checkForCurricularCourseWithSameAttributes(degreeCurricularPlan, name, code, acronym);
+//        setName(name);
+//        setCode(code);
+//        setAcronym(acronym);
+//        setDegreeCurricularPlan(degreeCurricularPlan);
+//    }
 
-    private void checkParameters(final String name, final String code, final String acronym) {
-        if (StringUtils.isEmpty(name)) {
-            throw new DomainException("error.curricularCourse.invalid.name");
-        }
-        if (StringUtils.isEmpty(code)) {
-            throw new DomainException("error.curricularCourse.invalid.code");
-        }
-        if (StringUtils.isEmpty(acronym)) {
-            throw new DomainException("error.curricularCourse.invalid.acronym");
-        }
-    }
+//    private void checkParameters(final String name, final String code, final String acronym) {
+//        if (StringUtils.isEmpty(name)) {
+//            throw new DomainException("error.curricularCourse.invalid.name");
+//        }
+//        if (StringUtils.isEmpty(code)) {
+//            throw new DomainException("error.curricularCourse.invalid.code");
+//        }
+//        if (StringUtils.isEmpty(acronym)) {
+//            throw new DomainException("error.curricularCourse.invalid.acronym");
+//        }
+//    }
 
-    public CurricularCourse(Double weight, String prerequisites, String prerequisitesEn, CurricularStage curricularStage,
-            CompetenceCourse competenceCourse, CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod,
-            ExecutionInterval begin, ExecutionInterval end) {
+    public CurricularCourse(Double weight, CompetenceCourse competenceCourse, CourseGroup parentCourseGroup,
+            CurricularPeriod curricularPeriod, ExecutionInterval begin, ExecutionInterval end) {
 
         this();
         setWeigth(weight);
-        setPrerequisites(prerequisites);
-        setPrerequisitesEn(prerequisitesEn);
-        setCurricularStage(curricularStage);
         setCompetenceCourse(competenceCourse);
-        setType(CurricularCourseType.NORMAL_COURSE);
         new Context(parentCourseGroup, this, curricularPeriod, begin, end);
     }
 
@@ -156,47 +140,20 @@ public class CurricularCourse extends CurricularCourse_Base {
         return getParentDegreeCurricularPlan();
     }
 
-    public void edit(Double weight, String prerequisites, String prerequisitesEn, CurricularStage curricularStage,
-            CompetenceCourse competenceCourse) {
-
-        setWeigth(weight);
-        setPrerequisites(prerequisites);
-        setPrerequisitesEn(prerequisitesEn);
-        setCurricularStage(curricularStage);
-        setCompetenceCourse(competenceCourse);
-    }
-
-    /**
-     * - This method is used to edit a 'special' curricular course that will
-     * represent any curricular course according to a rule
-     * 
-     * @deprecated This method sets attributes that are no longer used in regular CurricularCourse objects.
-     *             Use
-     *             {@link org.fenixedu.academic.domain.degreeStructure.OptionalCurricularCourse#edit(String, String, CurricularStage)
-     *             edit}
-     *             instead.
-     */
-    @Deprecated
-    public void edit(String name, String nameEn, CurricularStage curricularStage) {
-        setName(name);
-        setNameEn(nameEn);
-        setCurricularStage(curricularStage);
-    }
-
-    private void checkForCurricularCourseWithSameAttributes(DegreeCurricularPlan degreeCurricularPlan, String name, String code,
-            String acronym) {
-        for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
-            if (curricularCourse == this) {
-                continue;
-            }
-            if (curricularCourse.getName().equals(name) && curricularCourse.getCode().equals(code)) {
-                throw new DomainException("error.curricularCourseWithSameNameAndCode");
-            }
-            if (curricularCourse.getAcronym().equals(acronym)) {
-                throw new DomainException("error.curricularCourseWithSameAcronym");
-            }
-        }
-    }
+//    private void checkForCurricularCourseWithSameAttributes(DegreeCurricularPlan degreeCurricularPlan, String name, String code,
+//            String acronym) {
+//        for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
+//            if (curricularCourse == this) {
+//                continue;
+//            }
+//            if (curricularCourse.getName().equals(name) && curricularCourse.getCode().equals(code)) {
+//                throw new DomainException("error.curricularCourseWithSameNameAndCode");
+//            }
+//            if (curricularCourse.getAcronym().equals(acronym)) {
+//                throw new DomainException("error.curricularCourseWithSameAcronym");
+//            }
+//        }
+//    }
 
     @Override
     public void delete() {
@@ -349,42 +306,42 @@ public class CurricularCourse extends CurricularCourse_Base {
                 .getTotalLoad(curricularPeriod == null ? null : curricularPeriod.getChildOrder(), executionInterval) : 0.0d;
     }
 
-    @Override
-    final public Double getLabHours() {
-        return getLabHours(null);
-    }
-
+//    @Override
+//    final public Double getLabHours() {
+//        return getLabHours(null);
+//    }
+//
     private Double getLabHours(final ExecutionInterval executionInterval) {
         return getCompetenceCourse() != null ? getCompetenceCourse().getLaboratorialHours(executionInterval) : 0.0d;
     }
-
-    @Override
-    final public Double getTheoreticalHours() {
-        return getTheoreticalHours(null);
-    }
-
+//
+//    @Override
+//    final public Double getTheoreticalHours() {
+//        return getTheoreticalHours(null);
+//    }
+//
     private Double getTheoreticalHours(final ExecutionInterval executionInterval) {
         return getCompetenceCourse() != null ? getCompetenceCourse().getTheoreticalHours(executionInterval) : 0.0d;
     }
+//
+//    @Override
+//    final public Double getPraticalHours() {
+//        final Double praticalHours = super.getPraticalHours();
+//        return praticalHours == null ? 0.0d : praticalHours;
+//    }
+//
+//    @Override
+//    final public Double getTheoPratHours() {
+//        final Double theoPratHours = super.getTheoPratHours();
+//        return theoPratHours == null ? 0.0d : theoPratHours;
+//    }
 
-    @Override
-    final public Double getPraticalHours() {
-        final Double praticalHours = super.getPraticalHours();
-        return praticalHours == null ? 0.0d : praticalHours;
-    }
-
-    @Override
-    final public Double getTheoPratHours() {
-        final Double theoPratHours = super.getTheoPratHours();
-        return theoPratHours == null ? 0.0d : theoPratHours;
-    }
-
-    @Override
+//    @Override
     final public Double getCredits() {
         return getEctsCredits();
     }
 
-    @Override
+//    @Override
     public Double getEctsCredits() {
         return getEctsCredits(null);
     }
@@ -535,14 +492,14 @@ public class CurricularCourse extends CurricularCourse_Base {
         return getCompetenceCourse().getDepartmentUnit();
     }
 
-    public Boolean getBasic(ExecutionInterval interval) {
-        return getCompetenceCourse() != null && getCompetenceCourse().isBasic(interval);
-    }
-
-    @Override
-    public Boolean getBasic() {
-        return getBasic(null);
-    }
+//    public Boolean getBasic(ExecutionInterval interval) {
+//        return getCompetenceCourse() != null && getCompetenceCourse().isBasic(interval);
+//    }
+//
+//    @Override
+//    public Boolean getBasic() {
+//        return getBasic(null);
+//    }
 
     public String getObjectives() {
         return getCompetenceCourse() != null ? getCompetenceCourse().getObjectives() : null;
@@ -578,11 +535,6 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public LocalizedString getEvaluationMethodI18N(ExecutionInterval interval) {
         return getCompetenceCourse() != null ? getCompetenceCourse().getEvaluationMethodI18N(interval) : new LocalizedString();
-    }
-
-    public LocalizedString getPrerequisitesI18N() {
-        return new LocalizedString(org.fenixedu.academic.util.LocaleUtils.PT, getPrerequisites())
-                .with(org.fenixedu.academic.util.LocaleUtils.EN, getPrerequisitesEn());
     }
 
     @Deprecated
@@ -693,17 +645,17 @@ public class CurricularCourse extends CurricularCourse_Base {
         return true;
     }
 
-    @Override
-    public Integer getMinimumValueForAcumulatedEnrollments() {
-        return super.getMinimumValueForAcumulatedEnrollments() == null ? Integer
-                .valueOf(0) : super.getMinimumValueForAcumulatedEnrollments();
-    }
-
-    @Override
-    public Integer getMaximumValueForAcumulatedEnrollments() {
-        return super.getMaximumValueForAcumulatedEnrollments() == null ? Integer
-                .valueOf(0) : super.getMaximumValueForAcumulatedEnrollments();
-    }
+//    @Override
+//    public Integer getMinimumValueForAcumulatedEnrollments() {
+//        return super.getMinimumValueForAcumulatedEnrollments() == null ? Integer
+//                .valueOf(0) : super.getMinimumValueForAcumulatedEnrollments();
+//    }
+//
+//    @Override
+//    public Integer getMaximumValueForAcumulatedEnrollments() {
+//        return super.getMaximumValueForAcumulatedEnrollments() == null ? Integer
+//                .valueOf(0) : super.getMaximumValueForAcumulatedEnrollments();
+//    }
 
     public BigDecimal getTotalHoursByShiftType(ShiftType type, ExecutionInterval executionInterval) {
         if (type != null) {
@@ -711,12 +663,6 @@ public class CurricularCourse extends CurricularCourse_Base {
             switch (type) {
             case TEORICA:
                 hours = getTheoreticalHours(executionInterval);
-                break;
-            case TEORICO_PRATICA:
-                hours = getTheoPratHours();
-                break;
-            case PRATICA:
-                hours = getPraticalHours();
                 break;
             case PROBLEMS:
                 hours = getProblemsHours(executionInterval);
@@ -824,4 +770,9 @@ public class CurricularCourse extends CurricularCourse_Base {
     public Double getBaseWeight() {
         return super.getWeigth();
     }
+
+//    @Override
+//    public CurricularCourseType getType() {
+//        return CurricularCourseType.NORMAL_COURSE;
+//    }
 }

@@ -38,22 +38,13 @@ public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
      * - This constructor is used to create a 'special' curricular course that
      * will represent any curricular course accordding to a rule
      */
-    public OptionalCurricularCourse(CourseGroup parentCourseGroup, String name, String nameEn, CurricularStage curricularStage,
-            CurricularPeriod curricularPeriod, ExecutionInterval beginExecutionPeriod, ExecutionInterval endExecutionPeriod) {
+    public OptionalCurricularCourse(CourseGroup parentCourseGroup, String name, String nameEn, CurricularPeriod curricularPeriod,
+            ExecutionInterval beginExecutionPeriod, ExecutionInterval endExecutionPeriod) {
 
         this();
         setName(name);
         setNameEn(nameEn);
-        setCurricularStage(curricularStage);
-        setType(CurricularCourseType.OPTIONAL_COURSE);
         new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
-    }
-
-    @Override
-    public void edit(String name, String nameEn, CurricularStage curricularStage) {
-        setName(name);
-        setNameEn(nameEn);
-        setCurricularStage(curricularStage);
     }
 
     @Override
@@ -128,5 +119,10 @@ public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
     public String getNameEn(ExecutionInterval interval) {
         return getBaseNameEn();
     }
+
+//    @Override
+//    public CurricularCourseType getType() {
+//        return CurricularCourseType.OPTIONAL_COURSE;
+//    }
 
 }

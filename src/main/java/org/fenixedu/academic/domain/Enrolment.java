@@ -1058,7 +1058,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     final public boolean isEnrolmentTypeNormal() {
-        return getCurricularCourse().getType() == CurricularCourseType.NORMAL_COURSE && !isExtraCurricular() && !isOptional();
+        return !getCurricularCourse().isOptionalCurricularCourse() && !isExtraCurricular() && !isOptional();
     }
 
     @Override

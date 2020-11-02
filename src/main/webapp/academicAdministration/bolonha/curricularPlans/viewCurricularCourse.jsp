@@ -57,12 +57,6 @@
 	<h:panelGroup rendered="#{AcademicAdministrationCurricularCourseManagement.selectedCurricularCourseType == 'NORMAL_COURSE'}">
 		<h:outputText value="<p><label>#{bolonhaBundle['weight']}:</label>" escape="false"/>
 		<h:outputText value="#{AcademicAdministrationCurricularCourseManagement.curricularCourseSemesterBean.weight} (#{bolonhaBundle['for.average.grade.calculus']})</p>" escape="false"/>
-		<h:outputText value="<p><label>#{bolonhaBundle['prerequisites']}:</label>" escape="false"/>
-		<h:outputText value="<div style='margin-left: 11em;'>#{AcademicAdministrationCurricularCourseManagement.curricularCourse.prerequisites}</div></p>" escape="false" rendered="#{!empty AcademicAdministrationCurricularCourseManagement.curricularCourse.prerequisites}"/>	
-		<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i></p>" escape="false" rendered="#{empty AcademicAdministrationCurricularCourseManagement.curricularCourse.prerequisites}"/>
-		<h:outputText value="<p><label>#{bolonhaBundle['prerequisitesEn']}:</label>" escape="false"/>
-		<h:outputText value="<div style='margin-left: 11em;'>#{AcademicAdministrationCurricularCourseManagement.curricularCourse.prerequisitesEn}</div></p>" escape="false" rendered="#{!empty AcademicAdministrationCurricularCourseManagement.curricularCourse.prerequisitesEn}"/>	
-		<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i></p>" escape="false" rendered="#{empty AcademicAdministrationCurricularCourseManagement.curricularCourse.prerequisitesEn}"/>
 	</h:panelGroup>
 	<h:panelGroup rendered="#{AcademicAdministrationCurricularCourseManagement.selectedCurricularCourseType == 'OPTIONAL_COURSE'}">
 		<h:outputText value="<p><label>#{bolonhaBundle['name']} (pt):</label>" escape="false"/>

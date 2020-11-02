@@ -141,19 +141,19 @@ public class Professorship extends Professorship_Base {
         return new ArrayList<Professorship>(professorships);
     }
 
-    public static List<Professorship> readByDegreeCurricularPlanAndExecutionYearAndBasic(
-            DegreeCurricularPlan degreeCurricularPlan, ExecutionYear executionYear, Boolean basic) {
-
-        Set<Professorship> professorships = new HashSet<Professorship>();
-        for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
-            if (curricularCourse.getBasic().equals(basic)) {
-                for (ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionYear(executionYear)) {
-                    professorships.addAll(executionCourse.getProfessorshipsSet());
-                }
-            }
-        }
-        return new ArrayList<Professorship>(professorships);
-    }
+//    public static List<Professorship> readByDegreeCurricularPlanAndExecutionYearAndBasic(
+//            DegreeCurricularPlan degreeCurricularPlan, ExecutionYear executionYear, Boolean basic) {
+//
+//        Set<Professorship> professorships = new HashSet<Professorship>();
+//        for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
+//            if (curricularCourse.getBasic().equals(basic)) {
+//                for (ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionYear(executionYear)) {
+//                    professorships.addAll(executionCourse.getProfessorshipsSet());
+//                }
+//            }
+//        }
+//        return new ArrayList<Professorship>(professorships);
+//    }
 
     public static List<Professorship> readByDegreeCurricularPlanAndExecutionPeriod(DegreeCurricularPlan degreeCurricularPlan,
             ExecutionInterval executionInterval) {
@@ -167,28 +167,28 @@ public class Professorship extends Professorship_Base {
         return new ArrayList<Professorship>(professorships);
     }
 
-    public static List<Professorship> readByDegreeCurricularPlansAndExecutionYearAndBasic(
-            List<DegreeCurricularPlan> degreeCurricularPlans, ExecutionYear executionYear, Boolean basic) {
-
-        Set<Professorship> professorships = new HashSet<Professorship>();
-        for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
-            for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
-                if (curricularCourse.getBasic() == null || curricularCourse.getBasic().equals(basic)) {
-                    if (executionYear != null) {
-                        for (ExecutionCourse executionCourse : curricularCourse
-                                .getExecutionCoursesByExecutionYear(executionYear)) {
-                            professorships.addAll(executionCourse.getProfessorshipsSet());
-                        }
-                    } else {
-                        for (ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
-                            professorships.addAll(executionCourse.getProfessorshipsSet());
-                        }
-                    }
-                }
-            }
-        }
-        return new ArrayList<Professorship>(professorships);
-    }
+//    public static List<Professorship> readByDegreeCurricularPlansAndExecutionYearAndBasic(
+//            List<DegreeCurricularPlan> degreeCurricularPlans, ExecutionYear executionYear, Boolean basic) {
+//
+//        Set<Professorship> professorships = new HashSet<Professorship>();
+//        for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
+//            for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesSet()) {
+//                if (curricularCourse.getBasic() == null || curricularCourse.getBasic().equals(basic)) {
+//                    if (executionYear != null) {
+//                        for (ExecutionCourse executionCourse : curricularCourse
+//                                .getExecutionCoursesByExecutionYear(executionYear)) {
+//                            professorships.addAll(executionCourse.getProfessorshipsSet());
+//                        }
+//                    } else {
+//                        for (ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
+//                            professorships.addAll(executionCourse.getProfessorshipsSet());
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        return new ArrayList<Professorship>(professorships);
+//    }
 
     public static List<Professorship> readByDegreeCurricularPlansAndExecutionYear(
             List<DegreeCurricularPlan> degreeCurricularPlans, ExecutionYear executionYear) {

@@ -1071,25 +1071,6 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
     }
 
         class CurricularCourse extends degreeStructure.DegreeModule {
-            Boolean basic;
-            Double credits;
-            CurricularCourseExecutionScope curricularCourseExecutionScope;
-            CurricularStage curricularStage;
-            Double ectsCredits;
-            Boolean enrollmentAllowed;
-            Integer enrollmentWeigth;
-            Double labHours;
-            Boolean mandatory;
-            Boolean mandatoryEnrollment;
-            Integer maximumValueForAcumulatedEnrollments;
-            Integer minimumValueForAcumulatedEnrollments;
-            Double praticalHours;
-            String prerequisites;
-            String prerequisitesEn;
-            degreeStructure.RegimeType regimeType;
-            Double theoPratHours;
-            Double theoreticalHours;
-            CurricularCourseType type;
             Double weigth;
         }
 

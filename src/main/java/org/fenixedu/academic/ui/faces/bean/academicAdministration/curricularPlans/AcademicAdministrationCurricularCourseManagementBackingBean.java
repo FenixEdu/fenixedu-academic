@@ -131,80 +131,80 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
         this.ectsCredits = ectsCredits;
     }
 
-    public Double getTheoreticalHours() {
-        if (theoreticalHours == null) {
-            theoreticalHours = (getCurricularCourse() != null) ? getCurricularCourse().getTheoreticalHours() : Double.valueOf(0);
-        }
-        return theoreticalHours;
-    }
+//    public Double getTheoreticalHours() {
+//        if (theoreticalHours == null) {
+//            theoreticalHours = (getCurricularCourse() != null) ? getCurricularCourse().getTheoreticalHours() : Double.valueOf(0);
+//        }
+//        return theoreticalHours;
+//    }
+//
+//    public void setTheoreticalHours(final Double theoreticalHours) {
+//        this.theoreticalHours = theoreticalHours;
+//    }
+//
+//    public Double getLabHours() {
+//        if (labHours == null) {
+//            labHours = (getCurricularCourse() != null) ? getCurricularCourse().getLabHours() : Double.valueOf(0);
+//        }
+//        return labHours;
+//    }
+//
+//    public void setLabHours(Double labHours) {
+//        this.labHours = labHours;
+//    }
+//
+//    public Double getPraticalHours() {
+//        if (praticalHours == null) {
+//            praticalHours = (getCurricularCourse() != null) ? getCurricularCourse().getPraticalHours() : Double.valueOf(0);
+//        }
+//        return praticalHours;
+//    }
+//
+//    public void setPraticalHours(Double praticalHours) {
+//        this.praticalHours = praticalHours;
+//    }
+//
+//    public Double getTheoPratHours() {
+//        if (theoPratHours == null) {
+//            theoPratHours = (getCurricularCourse() != null) ? getCurricularCourse().getTheoPratHours() : Double.valueOf(0);
+//        }
+//        return theoPratHours;
+//    }
+//
+//    public void setTheoPratHours(Double theoPratHours) {
+//        this.theoPratHours = theoPratHours;
+//    }
+//
+//    public Integer getEnrollmentWeigth() {
+//        if (enrollmentWeigth == null) {
+//            enrollmentWeigth = (getCurricularCourse() != null) ? getCurricularCourse().getEnrollmentWeigth() : Integer.valueOf(0);
+//        }
+//        return enrollmentWeigth;
+//    }
 
-    public void setTheoreticalHours(final Double theoreticalHours) {
-        this.theoreticalHours = theoreticalHours;
-    }
-
-    public Double getLabHours() {
-        if (labHours == null) {
-            labHours = (getCurricularCourse() != null) ? getCurricularCourse().getLabHours() : Double.valueOf(0);
-        }
-        return labHours;
-    }
-
-    public void setLabHours(Double labHours) {
-        this.labHours = labHours;
-    }
-
-    public Double getPraticalHours() {
-        if (praticalHours == null) {
-            praticalHours = (getCurricularCourse() != null) ? getCurricularCourse().getPraticalHours() : Double.valueOf(0);
-        }
-        return praticalHours;
-    }
-
-    public void setPraticalHours(Double praticalHours) {
-        this.praticalHours = praticalHours;
-    }
-
-    public Double getTheoPratHours() {
-        if (theoPratHours == null) {
-            theoPratHours = (getCurricularCourse() != null) ? getCurricularCourse().getTheoPratHours() : Double.valueOf(0);
-        }
-        return theoPratHours;
-    }
-
-    public void setTheoPratHours(Double theoPratHours) {
-        this.theoPratHours = theoPratHours;
-    }
-
-    public Integer getEnrollmentWeigth() {
-        if (enrollmentWeigth == null) {
-            enrollmentWeigth = (getCurricularCourse() != null) ? getCurricularCourse().getEnrollmentWeigth() : Integer.valueOf(0);
-        }
-        return enrollmentWeigth;
-    }
-
-    public void setEnrollmentWeigth(Integer enrollmentWeigth) {
-        this.enrollmentWeigth = enrollmentWeigth;
-    }
-
-    public Integer getMaximumValueForAcumulatedEnrollments() {
-        if (maximumValueForAcumulatedEnrollments == null) {
-            maximumValueForAcumulatedEnrollments = (getCurricularCourse() != null) ? getCurricularCourse()
-                    .getMaximumValueForAcumulatedEnrollments() : Integer.valueOf(0);
-        }
-        return maximumValueForAcumulatedEnrollments;
-    }
-
-    public void setMaximumValueForAcumulatedEnrollments(Integer maximumValueForAcumulatedEnrollments) {
-        this.maximumValueForAcumulatedEnrollments = maximumValueForAcumulatedEnrollments;
-    }
-
-    public Integer getMinimumValueForAcumulatedEnrollments() {
-        if (minimumValueForAcumulatedEnrollments == null) {
-            minimumValueForAcumulatedEnrollments = (getCurricularCourse() != null) ? getCurricularCourse()
-                    .getMinimumValueForAcumulatedEnrollments() : Integer.valueOf(0);
-        }
-        return minimumValueForAcumulatedEnrollments;
-    }
+//    public void setEnrollmentWeigth(Integer enrollmentWeigth) {
+//        this.enrollmentWeigth = enrollmentWeigth;
+//    }
+//
+//    public Integer getMaximumValueForAcumulatedEnrollments() {
+//        if (maximumValueForAcumulatedEnrollments == null) {
+//            maximumValueForAcumulatedEnrollments = (getCurricularCourse() != null) ? getCurricularCourse()
+//                    .getMaximumValueForAcumulatedEnrollments() : Integer.valueOf(0);
+//        }
+//        return maximumValueForAcumulatedEnrollments;
+//    }
+//
+//    public void setMaximumValueForAcumulatedEnrollments(Integer maximumValueForAcumulatedEnrollments) {
+//        this.maximumValueForAcumulatedEnrollments = maximumValueForAcumulatedEnrollments;
+//    }
+//
+//    public Integer getMinimumValueForAcumulatedEnrollments() {
+//        if (minimumValueForAcumulatedEnrollments == null) {
+//            minimumValueForAcumulatedEnrollments = (getCurricularCourse() != null) ? getCurricularCourse()
+//                    .getMinimumValueForAcumulatedEnrollments() : Integer.valueOf(0);
+//        }
+//        return minimumValueForAcumulatedEnrollments;
+//    }
 
     public void setMinimumValueForAcumulatedEnrollments(Integer minimumValueForAcumulatedEnrollments) {
         this.minimumValueForAcumulatedEnrollments = minimumValueForAcumulatedEnrollments;

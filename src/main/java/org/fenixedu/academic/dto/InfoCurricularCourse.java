@@ -66,13 +66,13 @@ public class InfoCurricularCourse extends InfoObject {
         return curricularCourse;
     }
 
-    public Boolean getBasic() {
-        return getCurricularCourse().getBasic();
-    }
-
-    public String getOwnershipType() {
-        return getBasic() == null ? "" : getBasic().booleanValue() ? "Básica" : "Não Básica";
-    }
+//    public Boolean getBasic() {
+//        return getCurricularCourse().getBasic();
+//    }
+//
+//    public String getOwnershipType() {
+//        return getBasic() == null ? "" : getBasic().booleanValue() ? "Básica" : "Não Básica";
+//    }
 
     @Override
     public boolean equals(Object obj) {
@@ -92,106 +92,106 @@ public class InfoCurricularCourse extends InfoObject {
         return getCurricularCourse().getCredits();
     }
 
-    public Double getLabHours() {
-        return getCurricularCourse().getLabHours();
-    }
-
-    public Double getPraticalHours() {
-        return getCurricularCourse().getPraticalHours();
-    }
-
-    public Double getTheoPratHours() {
-        return getCurricularCourse().getTheoPratHours();
-    }
-
-    public Double getTheoreticalHours() {
-        return getCurricularCourse().getTheoreticalHours();
-    }
-
-    public Double getFieldWorkHours() {
-        return getCurricularCourse().getFieldWorkHours();
-    }
-
-    public Double getProblemsHours() {
-        return getCurricularCourse().getProblemsHours();
-    }
-
-    public Double getSeminaryHours() {
-        return getCurricularCourse().getSeminaryHours();
-    }
-
-    public Double getTrainingPeriodHours() {
-        return getCurricularCourse().getTrainingPeriodHours();
-    }
-
-    public Double getTutorialOrientationHours() {
-        return getCurricularCourse().getTutorialOrientationHours();
-    }
-
-    public Double getTotalLabHours() {
-        BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.LABORATORIAL, null);
-        return totalHours != null ? totalHours.doubleValue() : 0d;
-    }
-
-    public Double getTotalPraticalHours() {
-        BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.PRATICA, null);
-        return totalHours != null ? totalHours.doubleValue() : 0d;
-    }
-
-    public Double getTotalTheoPratHours() {
-        BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.TEORICO_PRATICA, null);
-        return totalHours != null ? totalHours.doubleValue() : 0d;
-    }
-
-    public Double getTotalTheoreticalHours() {
-        BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.TEORICA, null);
-        return totalHours != null ? totalHours.doubleValue() : 0d;
-    }
-
-    public Double getTotalFieldWorkHours() {
-        BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.FIELD_WORK, null);
-        return totalHours != null ? totalHours.doubleValue() : 0d;
-    }
-
-    public Double getTotalProblemsHours() {
-        BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.PROBLEMS, null);
-        return totalHours != null ? totalHours.doubleValue() : 0d;
-    }
-
-    public Double getTotalSeminaryHours() {
-        BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.SEMINARY, null);
-        return totalHours != null ? totalHours.doubleValue() : 0d;
-    }
-
-    public Double getTotalTrainingPeriodHours() {
-        BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.TRAINING_PERIOD, null);
-        return totalHours != null ? totalHours.doubleValue() : 0d;
-    }
-
-    public Double getTotalTutorialOrientationHours() {
-        BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.TUTORIAL_ORIENTATION, null);
-        return totalHours != null ? totalHours.doubleValue() : 0d;
-    }
+//    public Double getLabHours() {
+//        return getCurricularCourse().getLabHours();
+//    }
+//
+//    public Double getPraticalHours() {
+//        return getCurricularCourse().getPraticalHours();
+//    }
+//
+//    public Double getTheoPratHours() {
+//        return getCurricularCourse().getTheoPratHours();
+//    }
+//
+//    public Double getTheoreticalHours() {
+//        return getCurricularCourse().getTheoreticalHours();
+//    }
+//
+//    public Double getFieldWorkHours() {
+//        return getCurricularCourse().getFieldWorkHours();
+//    }
+//
+//    public Double getProblemsHours() {
+//        return getCurricularCourse().getProblemsHours();
+//    }
+//
+//    public Double getSeminaryHours() {
+//        return getCurricularCourse().getSeminaryHours();
+//    }
+//
+//    public Double getTrainingPeriodHours() {
+//        return getCurricularCourse().getTrainingPeriodHours();
+//    }
+//
+//    public Double getTutorialOrientationHours() {
+//        return getCurricularCourse().getTutorialOrientationHours();
+//    }
+//
+//    public Double getTotalLabHours() {
+//        BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.LABORATORIAL, null);
+//        return totalHours != null ? totalHours.doubleValue() : 0d;
+//    }
+//
+//    public Double getTotalPraticalHours() {
+//        BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.PRATICA, null);
+//        return totalHours != null ? totalHours.doubleValue() : 0d;
+//    }
+//
+//    public Double getTotalTheoPratHours() {
+//        BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.TEORICO_PRATICA, null);
+//        return totalHours != null ? totalHours.doubleValue() : 0d;
+//    }
+//
+//    public Double getTotalTheoreticalHours() {
+//        BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.TEORICA, null);
+//        return totalHours != null ? totalHours.doubleValue() : 0d;
+//    }
+//
+//    public Double getTotalFieldWorkHours() {
+//        BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.FIELD_WORK, null);
+//        return totalHours != null ? totalHours.doubleValue() : 0d;
+//    }
+//
+//    public Double getTotalProblemsHours() {
+//        BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.PROBLEMS, null);
+//        return totalHours != null ? totalHours.doubleValue() : 0d;
+//    }
+//
+//    public Double getTotalSeminaryHours() {
+//        BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.SEMINARY, null);
+//        return totalHours != null ? totalHours.doubleValue() : 0d;
+//    }
+//
+//    public Double getTotalTrainingPeriodHours() {
+//        BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.TRAINING_PERIOD, null);
+//        return totalHours != null ? totalHours.doubleValue() : 0d;
+//    }
+//
+//    public Double getTotalTutorialOrientationHours() {
+//        BigDecimal totalHours = getCurricularCourse().getTotalHoursByShiftType(ShiftType.TUTORIAL_ORIENTATION, null);
+//        return totalHours != null ? totalHours.doubleValue() : 0d;
+//    }
 
     public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
         return InfoDegreeCurricularPlan.newInfoFromDomain(getCurricularCourse().getDegreeCurricularPlan());
     }
 
-    public CurricularCourseType getType() {
-        return getCurricularCourse().getType();
-    }
+//    public CurricularCourseType getType() {
+//        return getCurricularCourse().getType();
+//    }
+//
+//    public CurricularCourseExecutionScope getCurricularCourseExecutionScope() {
+//        return getCurricularCourse().getCurricularCourseExecutionScope();
+//    }
+//
+//    public Boolean getMandatory() {
+//        return getCurricularCourse().getMandatory();
+//    }
 
-    public CurricularCourseExecutionScope getCurricularCourseExecutionScope() {
-        return getCurricularCourse().getCurricularCourseExecutionScope();
-    }
-
-    public Boolean getMandatory() {
-        return getCurricularCourse().getMandatory();
-    }
-
-    public boolean infoCurricularCourseIsMandatory() {
-        return getMandatory().booleanValue();
-    }
+//    public boolean infoCurricularCourseIsMandatory() {
+//        return getMandatory().booleanValue();
+//    }
 
     public List getInfoAssociatedExecutionCourses() {
         return infoAssociatedExecutionCourses;
@@ -213,29 +213,29 @@ public class InfoCurricularCourse extends InfoObject {
         return getCurricularCourse().getEctsCredits();
     }
 
-    public Integer getEnrollmentWeigth() {
-        return getCurricularCourse().getEnrollmentWeigth();
-    }
-
-    public Integer getMaximumValueForAcumulatedEnrollments() {
-        return getCurricularCourse().getMaximumValueForAcumulatedEnrollments();
-    }
-
-    public Integer getMinimumValueForAcumulatedEnrollments() {
-        return getCurricularCourse().getMinimumValueForAcumulatedEnrollments();
-    }
+//    public Integer getEnrollmentWeigth() {
+//        return getCurricularCourse().getEnrollmentWeigth();
+//    }
+//
+//    public Integer getMaximumValueForAcumulatedEnrollments() {
+//        return getCurricularCourse().getMaximumValueForAcumulatedEnrollments();
+//    }
+//
+//    public Integer getMinimumValueForAcumulatedEnrollments() {
+//        return getCurricularCourse().getMinimumValueForAcumulatedEnrollments();
+//    }
 
     public Double getWeigth() {
         return getCurricularCourse().getWeigth();
     }
 
-    public Boolean getMandatoryEnrollment() {
-        return getCurricularCourse().getMandatoryEnrollment();
-    }
-
-    public Boolean getEnrollmentAllowed() {
-        return getCurricularCourse().getEnrollmentAllowed();
-    }
+//    public Boolean getMandatoryEnrollment() {
+//        return getCurricularCourse().getMandatoryEnrollment();
+//    }
+//
+//    public Boolean getEnrollmentAllowed() {
+//        return getCurricularCourse().getEnrollmentAllowed();
+//    }
 
     public String getAcronym() {
         return getCurricularCourse().getAcronym();
@@ -269,8 +269,8 @@ public class InfoCurricularCourse extends InfoObject {
         return getCurricularCourse().getExternalId();
     }
 
-    public RegimeType getRegimeType() {
-        return getCurricularCourse().getRegimeType();
-    }
+//    public RegimeType getRegimeType() {
+//        return getCurricularCourse().getRegimeType();
+//    }
 
 }

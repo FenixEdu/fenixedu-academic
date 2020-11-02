@@ -82,13 +82,13 @@ public class InfoExecutionCourse extends InfoObject {
         return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShiftType(ShiftType.TEORICA).doubleValue();
     }
 
-    public Double getWeeklyPraticalHours() {
-        return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShiftType(ShiftType.PRATICA).doubleValue();
-    }
-
-    public Double getWeeklyTheoPratHours() {
-        return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShiftType(ShiftType.TEORICO_PRATICA).doubleValue();
-    }
+//    public Double getWeeklyPraticalHours() {
+//        return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShiftType(ShiftType.PRATICA).doubleValue();
+//    }
+//
+//    public Double getWeeklyTheoPratHours() {
+//        return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShiftType(ShiftType.TEORICO_PRATICA).doubleValue();
+//    }
 
     public Double getWeeklyLabHours() {
         return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShiftType(ShiftType.LABORATORIAL).doubleValue();

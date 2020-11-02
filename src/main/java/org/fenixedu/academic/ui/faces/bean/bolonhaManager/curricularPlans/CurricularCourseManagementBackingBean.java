@@ -91,8 +91,6 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     private boolean toDelete = false;
 
     private Double weight = null;
-    private String prerequisites;
-    private String prerequisitesEn;
 
     private CompetenceCourse competenceCourse = null;
     private DegreeCurricularPlan degreeCurricularPlan = null;
@@ -323,28 +321,6 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         this.weight = weight;
     }
 
-    public String getPrerequisites() {
-        if (prerequisites == null && getCurricularCourse() != null) {
-            prerequisites = getCurricularCourse().getPrerequisites();
-        }
-        return prerequisites;
-    }
-
-    public void setPrerequisites(String prerequisites) {
-        this.prerequisites = prerequisites;
-    }
-
-    public String getPrerequisitesEn() {
-        if (prerequisitesEn == null && getCurricularCourse() != null) {
-            prerequisitesEn = getCurricularCourse().getPrerequisitesEn();
-        }
-        return prerequisitesEn;
-    }
-
-    public void setPrerequisitesEn(String prerequisitesEn) {
-        this.prerequisitesEn = prerequisitesEn;
-    }
-
     public Integer getCurricularYearID() {
         if (curricularYearID == null && getContext(getContextID()) != null) {
             curricularYearID = getContext(getContextID()).getCurricularPeriod().getOrderByType(AcademicPeriod.YEAR);
@@ -377,7 +353,9 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public String getSelectedCurricularCourseType() {
         if (getViewState().getAttribute("selectedCurricularCourseType") == null) {
             if (getCurricularCourse() != null) {
-                setSelectedCurricularCourseType(getCurricularCourse().getType().name());
+                setSelectedCurricularCourseType(
+                        getCurricularCourse().isOptionalCurricularCourse() ? CurricularCourseType.OPTIONAL_COURSE
+                                .name() : CurricularCourseType.NORMAL_COURSE.name());
             } else {
                 setSelectedCurricularCourseType(CurricularCourseType.NORMAL_COURSE.name());
             }
@@ -553,10 +531,9 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         if (curricularCourseType.equals(CurricularCourseType.NORMAL_COURSE)) {
 
             checkCompetenceCourse();
-            CreateCurricularCourse.run(
-                    new CreateCurricularCourse.CreateCurricularCourseArgs(getWeight(), getPrerequisites(), getPrerequisitesEn(),
-                            getCompetenceCourseID(), getCourseGroupID(), getCurricularYearID(), getCurricularSemesterID(),
-                            getDegreeCurricularPlanID(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID()));
+            CreateCurricularCourse.run(new CreateCurricularCourse.CreateCurricularCourseArgs(getWeight(), getCompetenceCourseID(),
+                    getCourseGroupID(), getCurricularYearID(), getCurricularSemesterID(), getDegreeCurricularPlanID(),
+                    getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID()));
 
         } else if (curricularCourseType.equals(CurricularCourseType.OPTIONAL_COURSE)) {
 
@@ -585,8 +562,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         final CurricularCourseType curricularCourseType = CurricularCourseType.valueOf(getSelectedCurricularCourseType());
         if (curricularCourseType.equals(CurricularCourseType.NORMAL_COURSE)) {
             checkCompetenceCourse();
-            EditCurricularCourse.run(getCurricularCourse(), getWeight(), getPrerequisites(), getPrerequisitesEn(),
-                    getCompetenceCourse());
+            EditCurricularCourse.run(getCurricularCourse(), getWeight(), getCompetenceCourse());
         } else if (curricularCourseType.equals(CurricularCourseType.OPTIONAL_COURSE)) {
             EditCurricularCourse.run(getCurricularCourse(), getName(), getNameEn());
         }

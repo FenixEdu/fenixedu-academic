@@ -1,5 +1,6 @@
 - Improvement: Show area slot of party contact in create/edit screens
 - Refactor: Cleanup deprecated shift types
+- Refactor: Cleanup deprecated curricular course slots
 - Refactor: Remove deprecated method in school class 
 
 30.12.0 (27-10-2020)

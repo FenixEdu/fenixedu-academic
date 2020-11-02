@@ -533,19 +533,19 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return curricularCourses;
     }
 
-    public List<CurricularCourse> getCurricularCoursesByBasicAttribute(final Boolean basic) {
-        if (isBolonhaDegree()) {
-            return Collections.emptyList();
-        }
-
-        final List<CurricularCourse> curricularCourses = new ArrayList<>();
-        for (final CurricularCourse curricularCourse : getCurricularCoursesSet()) {
-            if (curricularCourse.getBasic().equals(basic)) {
-                curricularCourses.add(curricularCourse);
-            }
-        }
-        return curricularCourses;
-    }
+//    public List<CurricularCourse> getCurricularCoursesByBasicAttribute(final Boolean basic) {
+//        if (isBolonhaDegree()) {
+//            return Collections.emptyList();
+//        }
+//
+//        final List<CurricularCourse> curricularCourses = new ArrayList<>();
+//        for (final CurricularCourse curricularCourse : getCurricularCoursesSet()) {
+//            if (curricularCourse.getBasic().equals(basic)) {
+//                curricularCourses.add(curricularCourse);
+//            }
+//        }
+//        return curricularCourses;
+//    }
 
     // -------------------------------------------------------------
     // BEGIN: Only for enrollment purposes
@@ -663,24 +663,23 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return new BranchCourseGroup(parentCourseGroup, name, nameEn, branchType, begin, end);
     }
 
-    public CurricularCourse createCurricularCourse(final Double weight, final String prerequisites, final String prerequisitesEn,
-            final CurricularStage curricularStage, final CompetenceCourse competenceCourse, final CourseGroup parentCourseGroup,
-            final CurricularPeriod curricularPeriod, final ExecutionInterval begin, final ExecutionInterval end) {
+    public CurricularCourse createCurricularCourse(final Double weight, final CompetenceCourse competenceCourse,
+            final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod, final ExecutionInterval begin,
+            final ExecutionInterval end) {
 
         if (competenceCourse.getCurricularCourse(this) != null) {
             throw new DomainException("competenceCourse.already.has.a.curricular.course.in.degree.curricular.plan");
         }
         checkIfAnualBeginsInFirstPeriod(competenceCourse, curricularPeriod);
 
-        return new CurricularCourse(weight, prerequisites, prerequisitesEn, curricularStage, competenceCourse, parentCourseGroup,
-                curricularPeriod, begin, end);
+        return new CurricularCourse(weight, competenceCourse, parentCourseGroup, curricularPeriod, begin, end);
     }
 
     public CurricularCourse createOptionalCurricularCourse(final CourseGroup parentCourseGroup, final String name,
-            final String nameEn, final CurricularStage curricularStage, final CurricularPeriod curricularPeriod,
-            final ExecutionInterval begin, final ExecutionInterval end) {
+            final String nameEn, final CurricularPeriod curricularPeriod, final ExecutionInterval begin,
+            final ExecutionInterval end) {
 
-        return new OptionalCurricularCourse(parentCourseGroup, name, nameEn, curricularStage, curricularPeriod, begin, end);
+        return new OptionalCurricularCourse(parentCourseGroup, name, nameEn, curricularPeriod, begin, end);
     }
 
     private void checkIfAnualBeginsInFirstPeriod(final CompetenceCourse competenceCourse,

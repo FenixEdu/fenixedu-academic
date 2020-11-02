@@ -56,8 +56,7 @@ public class CreateCurricularCourse {
                     curricularCourseArgs.getSemester() + 1);
         }
 
-        degreeCurricularPlan.createCurricularCourse(curricularCourseArgs.getWeight(), curricularCourseArgs.getPrerequisites(),
-                curricularCourseArgs.getPrerequisitesEn(), CurricularStage.DRAFT, competenceCourse, parentCourseGroup,
+        degreeCurricularPlan.createCurricularCourse(curricularCourseArgs.getWeight(), competenceCourse, parentCourseGroup,
                 curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }
 
@@ -77,8 +76,7 @@ public class CreateCurricularCourse {
         ExecutionInterval endExecutionPeriod = readEndExecutionPeriod(curricularCourseArgs);
 
         degreeCurricularPlan.createOptionalCurricularCourse(parentCourseGroup, curricularCourseArgs.getName(),
-                curricularCourseArgs.getNameEn(), CurricularStage.DRAFT, curricularPeriod, beginExecutionPeriod,
-                endExecutionPeriod);
+                curricularCourseArgs.getNameEn(), curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }
 
     private static DegreeCurricularPlan readDegreeCurricularPlan(CurricularCourseArgs curricularCourseArgs)
@@ -190,17 +188,12 @@ public class CreateCurricularCourse {
     public static class CreateCurricularCourseArgs extends CurricularCourseArgs {
         private Double weight;
 
-        private String prerequisites, prerequisitesEn;
-
         private String competenceCourseID;
 
-        public CreateCurricularCourseArgs(Double weight, String prerequisites, String prerequisitesEn, String competenceCourseID,
-                String parentCourseGroupID, Integer year, Integer semester, String degreeCurricularPlanID,
-                String beginExecutionPeriodID, String endExecutionPeriodID) {
+        public CreateCurricularCourseArgs(Double weight, String competenceCourseID, String parentCourseGroupID, Integer year,
+                Integer semester, String degreeCurricularPlanID, String beginExecutionPeriodID, String endExecutionPeriodID) {
 
             setWeight(weight);
-            setPrerequisites(prerequisites);
-            setPrerequisitesEn(prerequisitesEn);
             setCompetenceCourseID(competenceCourseID);
             setParentCourseGroupID(parentCourseGroupID);
             setYear(year);
@@ -216,22 +209,6 @@ public class CreateCurricularCourse {
 
         public void setCompetenceCourseID(String competenceCourseID) {
             this.competenceCourseID = competenceCourseID;
-        }
-
-        public String getPrerequisites() {
-            return prerequisites;
-        }
-
-        public void setPrerequisites(String prerequisites) {
-            this.prerequisites = prerequisites;
-        }
-
-        public String getPrerequisitesEn() {
-            return prerequisitesEn;
-        }
-
-        public void setPrerequisitesEn(String prerequisitesEn) {
-            this.prerequisitesEn = prerequisitesEn;
         }
 
         public Double getWeight() {

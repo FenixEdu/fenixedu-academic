@@ -93,15 +93,6 @@
 				<h:inputText alt="#{htmlAltBundle['inputText.weight']}" id="weight" maxlength="5" size="5" value="#{AcademicAdministrationCurricularCourseManagement.weight}" />
 				<h:message for="weight" styleClass="error0"/>
 				<h:outputText value="</p>" escape="false"/>
-
-				<h:outputText value="<p><label>#{bolonhaBundle['prerequisitesPt']}:</label>" escape="false"/>
-				<h:inputTextarea id="prerequisites" cols="55" rows="5" value="#{AcademicAdministrationCurricularCourseManagement.prerequisites}"/>
-				<h:outputText value="</p>" escape="false"/>
-
-				<h:outputText value="<p><label>#{bolonhaBundle['prerequisitesEn']}:</label>" escape="false"/>
-				<h:inputTextarea id="prerequisitesEn" cols="55" rows="5" value="#{AcademicAdministrationCurricularCourseManagement.prerequisitesEn}"/>
-				<h:outputText value="</p>" escape="false"/>
-
 				<h:outputText value="<p>" escape="false" />
 				<h:outputLink value="#{facesContext.externalContext.requestContextPath}/academicAdministration/viewAllCurriculumLinesOfCurricularCourse.do" target="_blank">
 					<h:outputText value="#{bolonhaBundle['view.enrolments']}" />
