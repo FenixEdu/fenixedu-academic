@@ -123,11 +123,6 @@ public class SchoolClass extends SchoolClass_Base {
         return shifts;
     }
 
-    @Deprecated
-    public Set<Shift> findAvailableShifts() {
-        return findPossibleShiftsToAdd();
-    }
-
     public AcademicInterval getAcademicInterval() {
         return getExecutionInterval().getAcademicInterval();
     }
