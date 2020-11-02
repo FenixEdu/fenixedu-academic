@@ -778,9 +778,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public boolean getEqualLoad(ShiftType type, CurricularCourse curricularCourse) {
         if (type != null) {
-            if (type.equals(ShiftType.DUVIDAS) || type.equals(ShiftType.RESERVA)) {
-                return true;
-            }
             BigDecimal ccTotalHours = curricularCourse.getTotalHoursByShiftType(type, getExecutionInterval());
             CourseLoad courseLoad = getCourseLoadByShiftType(type);
             if ((courseLoad == null && ccTotalHours == null)

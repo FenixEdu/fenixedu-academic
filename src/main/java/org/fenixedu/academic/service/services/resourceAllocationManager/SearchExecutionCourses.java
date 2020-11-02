@@ -101,20 +101,20 @@ public class SearchExecutionCourses {
                     if (shift.containsType(ShiftType.TEORICA)) {
                         theoreticalCapacity = Integer.valueOf(theoreticalCapacity.intValue() + shift.getLotacao().intValue());
 
-                    } else if (shift.containsType(ShiftType.TEORICO_PRATICA)) {
-                        theoPraticalCapacity = Integer.valueOf(theoPraticalCapacity.intValue() + shift.getLotacao().intValue());
+//                    } else if (shift.containsType(ShiftType.TEORICO_PRATICA)) {
+//                        theoPraticalCapacity = Integer.valueOf(theoPraticalCapacity.intValue() + shift.getLotacao().intValue());
 
-                    } else if (shift.containsType(ShiftType.DUVIDAS)) {
-                        doubtsCapacity = Integer.valueOf(doubtsCapacity.intValue() + shift.getLotacao().intValue());
+//                    } else if (shift.containsType(ShiftType.DUVIDAS)) {
+//                        doubtsCapacity = Integer.valueOf(doubtsCapacity.intValue() + shift.getLotacao().intValue());
 
                     } else if (shift.containsType(ShiftType.LABORATORIAL)) {
                         labCapacity = Integer.valueOf(labCapacity.intValue() + shift.getLotacao().intValue());
 
-                    } else if (shift.containsType(ShiftType.PRATICA)) {
-                        praticalCapacity = Integer.valueOf(praticalCapacity.intValue() + shift.getLotacao().intValue());
-
-                    } else if (shift.containsType(ShiftType.RESERVA)) {
-                        reserveCapacity = Integer.valueOf(reserveCapacity.intValue() + shift.getLotacao().intValue());
+//                    } else if (shift.containsType(ShiftType.PRATICA)) {
+//                        praticalCapacity = Integer.valueOf(praticalCapacity.intValue() + shift.getLotacao().intValue());
+//
+//                    } else if (shift.containsType(ShiftType.RESERVA)) {
+//                        reserveCapacity = Integer.valueOf(reserveCapacity.intValue() + shift.getLotacao().intValue());
 
                     } else if (shift.containsType(ShiftType.SEMINARY)) {
                         semCapacity = Integer.valueOf(semCapacity.intValue() + shift.getLotacao().intValue());

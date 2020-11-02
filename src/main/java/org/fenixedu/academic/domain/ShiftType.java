@@ -25,15 +25,15 @@ public enum ShiftType {
 
     TEORICA,
 
-    PRATICA,
-
-    TEORICO_PRATICA,
+//    PRATICA,
+//
+//    TEORICO_PRATICA,
 
     LABORATORIAL,
 
-    DUVIDAS,
-
-    RESERVA,
+//    DUVIDAS,
+//
+//    RESERVA,
 
     SEMINARY,
 

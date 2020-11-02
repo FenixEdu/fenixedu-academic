@@ -1,4 +1,5 @@
 - Improvement: Show area slot of party contact in create/edit screens
+- Refactor: Cleanup deprecated shift types
 
 30.12.0 (27-10-2020)
 - Improvement: Delete degree message more explicit when blocker are curricular plans 

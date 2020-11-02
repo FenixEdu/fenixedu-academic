@@ -167,16 +167,16 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
             InfoShift infoShift = (InfoShift) iterator.next();
             if (infoShift.containsType(ShiftType.TEORICA)) {
                 theoreticalShifts.add(infoShift);
-            } else if (infoShift.containsType(ShiftType.PRATICA)) {
-                praticalShifts.add(infoShift);
-            } else if (infoShift.containsType(ShiftType.DUVIDAS)) {
-                doubtsShifts.add(infoShift);
+//            } else if (infoShift.containsType(ShiftType.PRATICA)) {
+//                praticalShifts.add(infoShift);
+//            } else if (infoShift.containsType(ShiftType.DUVIDAS)) {
+//                doubtsShifts.add(infoShift);
             } else if (infoShift.containsType(ShiftType.LABORATORIAL)) {
                 labShifts.add(infoShift);
-            } else if (infoShift.containsType(ShiftType.RESERVA)) {
-                reserveShifts.add(infoShift);
-            } else if (infoShift.containsType(ShiftType.TEORICO_PRATICA)) {
-                theoPraticalShifts.add(infoShift);
+//            } else if (infoShift.containsType(ShiftType.RESERVA)) {
+//                reserveShifts.add(infoShift);
+//            } else if (infoShift.containsType(ShiftType.TEORICO_PRATICA)) {
+//                theoPraticalShifts.add(infoShift);
             } else if (infoShift.containsType(ShiftType.FIELD_WORK)) {
                 fieldWork.add(infoShift);
             } else if (infoShift.containsType(ShiftType.PROBLEMS)) {
