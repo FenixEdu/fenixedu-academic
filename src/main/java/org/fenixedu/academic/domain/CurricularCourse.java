@@ -311,15 +311,15 @@ public class CurricularCourse extends CurricularCourse_Base {
 //        return getLabHours(null);
 //    }
 //
-    private Double getLabHours(final ExecutionInterval executionInterval) {
-        return getCompetenceCourse() != null ? getCompetenceCourse().getLaboratorialHours(executionInterval) : 0.0d;
-    }
-//
-//    @Override
-//    final public Double getTheoreticalHours() {
-//        return getTheoreticalHours(null);
+//    private Double getLabHours(final ExecutionInterval executionInterval) {
+//        return getCompetenceCourse() != null ? getCompetenceCourse().getLaboratorialHours(executionInterval) : 0.0d;
 //    }
-//
+
+//    @Override
+    final public Double getTheoreticalHours() {
+        return getTheoreticalHours(null);
+    }
+
     private Double getTheoreticalHours(final ExecutionInterval executionInterval) {
         return getCompetenceCourse() != null ? getCompetenceCourse().getTheoreticalHours(executionInterval) : 0.0d;
     }
@@ -668,7 +668,7 @@ public class CurricularCourse extends CurricularCourse_Base {
                 hours = getProblemsHours(executionInterval);
                 break;
             case LABORATORIAL:
-                hours = getLabHours(executionInterval);
+                hours = getLaboratorialHours(executionInterval);
                 break;
             case TRAINING_PERIOD:
                 hours = getTrainingPeriodHours(executionInterval);
