@@ -19,7 +19,6 @@
 
 package org.fenixedu.academic.ui.spring.service;
 
-import java.io.ByteArrayOutputStream;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +37,8 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.HashBasedTable;
@@ -50,8 +51,8 @@ import com.google.common.collect.Table;
 @Service
 public class AccountingReportService {
 
-    private final String DATE_PATTERN = "dd/MM/yyyy";
-    private final String DATE_TIME_PATTERN = "dd/MM/yyyy HH:mm:ss";
+    private final DateTimeFormatter DATE_PATTERN = ISODateTimeFormat.date();
+    private final DateTimeFormatter DATE_TIME_PATTERN = ISODateTimeFormat.dateHourMinuteSecond();
 
     private boolean isFor(AccountingTransactionDetail atd, DateTime start, DateTime end) {
         final DateTime whenRegistered = atd.getWhenRegistered();
