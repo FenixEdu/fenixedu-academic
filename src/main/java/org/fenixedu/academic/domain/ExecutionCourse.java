@@ -41,7 +41,6 @@ import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.messaging.ExecutionCourseForum;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
@@ -50,7 +49,6 @@ import org.fenixedu.academic.dto.teacher.executionCourse.SearchExecutionCourseAt
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.DateFormatUtil;
-import org.fenixedu.academic.util.LocaleUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.signals.DomainObjectEvent;
@@ -170,10 +168,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         setProjectTutorialCourse(Boolean.FALSE);
         setUnitCreditValue(null);
 
-        ExecutionCourseForum forum = new ExecutionCourseForum();
-        forum.setName(getNameI18N());
-        addForum(forum);
-
         Signal.emit(ExecutionCourse.CREATED_SIGNAL, new DomainObjectEvent<ExecutionCourse>(this));
     }
 
@@ -292,9 +286,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         for (; !getAttendsSet().isEmpty(); getAttendsSet().iterator().next().delete()) {
             ;
         }
-        for (; !getForuns().isEmpty(); getForuns().iterator().next().delete()) {
-            ;
-        }
         for (; !getExecutionCourseLogsSet().isEmpty(); getExecutionCourseLogsSet().iterator().next().delete()) {
             ;
         }
@@ -327,12 +318,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
         for (final Professorship professorship : getProfessorshipsSet()) {
             if (!professorship.isDeletable()) {
-                blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
-            }
-        }
-
-        for (ExecutionCourseForum forum : getForuns()) {
-            if (forum.getConversationThreadSet().size() != 0) {
                 blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
             }
         }
@@ -520,39 +505,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                 }
             }
         }
-    }
-
-    public void createForum(LocalizedString name, LocalizedString description) {
-        if (hasForumWithName(name)) {
-            throw new DomainException("executionCourse.already.existing.forum");
-        }
-        this.addForum(new ExecutionCourseForum(name, description));
-    }
-
-    @Override
-    public void addForum(ExecutionCourseForum executionCourseForum) {
-        checkIfCanAddForum(executionCourseForum.getNormalizedName());
-        super.addForum(executionCourseForum);
-    }
-
-    public void checkIfCanAddForum(LocalizedString name) {
-        if (hasForumWithName(name)) {
-            throw new DomainException("executionCourse.already.existing.forum");
-        }
-    }
-
-    public boolean hasForumWithName(LocalizedString name) {
-        return getForumByName(name) != null;
-    }
-
-    public ExecutionCourseForum getForumByName(LocalizedString name) {
-        for (final ExecutionCourseForum executionCourseForum : getForuns()) {
-            if (LocaleUtils.equalInAnyLanguage(executionCourseForum.getNormalizedName(), name)) {
-                return executionCourseForum;
-            }
-        }
-
-        return null;
     }
 
     public SortedSet<Degree> getDegreesSortedByDegreeName() {
@@ -994,10 +946,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
         }
         return null;
-    }
-
-    public Set<ExecutionCourseForum> getForuns() {
-        return getForumSet();
     }
 
     public AcademicInterval getAcademicInterval() {

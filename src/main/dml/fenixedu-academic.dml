@@ -1658,30 +1658,6 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
 
     class util.email.SystemSender extends util.email.Sender {}
 
-    class messaging.ConversationMessage {
-        DateTime creationDate;
-        LocalizedString body;
-    }
-
-    class messaging.ConversationThread {
-        DateTime creationDate;
-        LocalizedString title;
-    }
-
-    class messaging.Forum {
-        DateTime creationDate;
-        LocalizedString name;
-        LocalizedString description;
-    }
-
-    class messaging.ForumSubscription  {
-        Boolean favorite;
-        Boolean receivePostsByEmail;
-    }
-
-        class messaging.ExecutionCourseForum extends messaging.Forum {
-        }
-
 class QueueJob  {
                Boolean done;
                Integer failedCounter;
@@ -2749,62 +2725,6 @@ relation PhotographOriginal {
 	photograph.PictureOriginal playsRole original;
 }
 
-relation ExecutionCourseForumCourse {
-    messaging.ExecutionCourseForum playsRole forum {
-        multiplicity *;
-    }
-    ExecutionCourse playsRole executionCourse;
-}
-
-relation ForumSubscriptionForum {
-    messaging.ForumSubscription playsRole forumSubscriptions {
-        multiplicity *;
-    }
-    messaging.Forum playsRole forum;
-}
-
-relation ForumSubscriptionPerson {
-    messaging.ForumSubscription playsRole forumSubscriptions {
-        multiplicity *;
-    }
-    Person playsRole person;
-}
-
-relation ForumConversationThreads {
-    public messaging.Forum playsRole forum;
-    public messaging.ConversationThread playsRole conversationThread {
-        multiplicity *;
-    }
-}
-
-relation ConversationThreadHasMessages {
-    public messaging.ConversationThread playsRole conversationThread;
-    public messaging.ConversationMessage playsRole message {
-        multiplicity *;
-    }
-}
-
-relation ConversationMessageCreator {
-    public Person playsRole creator;
-    public messaging.ConversationMessage playsRole conversationMessage {
-        multiplicity *;
-    }
-}
-
-relation ConversationThreadCreator {
-    public Person playsRole creator;
-    public messaging.ConversationThread playsRole conversationThread {
-        multiplicity *;
-    }
-}
-
-relation ForumCreator {
-    public Person playsRole creator;
-    public messaging.Forum playsRole forum {
-        multiplicity *;
-    }
-}
-
 relation IdDocumentPerson {
     Person playsRole person;
     person.IdDocument playsRole idDocuments {
@@ -3600,13 +3520,6 @@ relation RootDomainObjectPhotographs {
 relation RootDomainObjectPendingPhotographs {
     .org.fenixedu.bennu.core.domain.Bennu playsRole pendingHolder;
     Photograph playsRole pendingPhotographs {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectForumSubscription {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    messaging.ForumSubscription playsRole forumSubscriptions {
         multiplicity *;
     }
 }

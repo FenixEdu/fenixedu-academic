@@ -47,16 +47,11 @@ import org.fenixedu.academic.domain.Summary;
 import org.fenixedu.academic.domain.accessControl.PersistentSpecialCriteriaOverExecutionCourseGroup;
 import org.fenixedu.academic.domain.accessControl.PersistentStudentGroup;
 import org.fenixedu.academic.domain.accessControl.PersistentTeacherGroup;
-import org.fenixedu.academic.domain.messaging.ConversationMessage;
-import org.fenixedu.academic.domain.messaging.ConversationThread;
-import org.fenixedu.academic.domain.messaging.ExecutionCourseForum;
-import org.fenixedu.academic.domain.messaging.ForumSubscription;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.util.email.ExecutionCourseSender;
 import org.fenixedu.academic.service.ServiceMonitoring;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
-import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
@@ -119,7 +114,6 @@ public class MergeExecutionCourses {
         registerMergeHandler(MergeExecutionCourses::copyBibliographicReference);
         registerMergeHandler(MergeExecutionCourses::copySummaries);
         registerMergeHandler(MergeExecutionCourses::removeEvaluations);
-        registerMergeHandler(MergeExecutionCourses::copyForuns);
         registerMergeHandler(MergeExecutionCourses::copyExecutionCourseLogs);
         registerMergeHandler(MergeExecutionCourses::copyPersistentGroups);
         registerMergeHandler(MergeExecutionCourses::copySenderMessages);
@@ -321,69 +315,6 @@ public class MergeExecutionCourses {
             }
         }
         return null;
-    }
-
-    private static void copyForuns(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
-            throws FenixServiceException {
-
-        while (!executionCourseFrom.getForuns().isEmpty()) {
-            ExecutionCourseForum sourceForum = executionCourseFrom.getForuns().iterator().next();
-            LocalizedString forumName = sourceForum.getName();
-
-            ExecutionCourseForum targetForum = executionCourseTo.getForumByName(forumName);
-            if (targetForum == null) {
-                sourceForum.setExecutionCourse(executionCourseTo);
-            } else {
-                copyForumSubscriptions(sourceForum, targetForum);
-                copyThreads(sourceForum, targetForum);
-                executionCourseFrom.removeForum(sourceForum);
-                sourceForum.delete();
-            }
-
-        }
-    }
-
-    private static void copyForumSubscriptions(ExecutionCourseForum sourceForum, ExecutionCourseForum targetForum) {
-
-        while (!sourceForum.getForumSubscriptionsSet().isEmpty()) {
-            ForumSubscription sourceForumSubscription = sourceForum.getForumSubscriptionsSet().iterator().next();
-            Person sourceForumSubscriber = sourceForumSubscription.getPerson();
-            ForumSubscription targetForumSubscription = targetForum.getPersonSubscription(sourceForumSubscriber);
-
-            if (targetForumSubscription == null) {
-                sourceForumSubscription.setForum(targetForum);
-            } else {
-                if (sourceForumSubscription.getReceivePostsByEmail() == true) {
-                    targetForumSubscription.setReceivePostsByEmail(true);
-                }
-
-                if (sourceForumSubscription.getFavorite() == true) {
-                    targetForumSubscription.setFavorite(true);
-                }
-                sourceForum.removeForumSubscriptions(sourceForumSubscription);
-                sourceForumSubscription.delete();
-            }
-
-        }
-    }
-
-    private static void copyThreads(ExecutionCourseForum sourceForum, ExecutionCourseForum targetForum) {
-
-        while (!sourceForum.getConversationThreadSet().isEmpty()) {
-            ConversationThread sourceConversationThread = sourceForum.getConversationThreadSet().iterator().next();
-
-            if (!targetForum.hasConversationThreadWithSubject(sourceConversationThread.getTitle())) {
-                sourceConversationThread.setForum(targetForum);
-            } else {
-                ConversationThread targetConversionThread =
-                        targetForum.getConversationThreadBySubject(sourceConversationThread.getTitle());
-                for (ConversationMessage message : sourceConversationThread.getMessageSet()) {
-                    message.setConversationThread(targetConversionThread);
-                }
-                sourceForum.removeConversationThread(sourceConversationThread);
-                sourceConversationThread.delete();
-            }
-        }
     }
 
     private static void copyExecutionCourseLogs(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {

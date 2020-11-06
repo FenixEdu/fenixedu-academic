@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +31,6 @@ import java.util.stream.Stream;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.messaging.Forum;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
@@ -301,22 +299,12 @@ public class Teacher extends Teacher_Base {
     }
 
     public void delete() {
-        
-        getAuthorizationSet().stream().forEach(a -> a.delete());  
-        
+
+        getAuthorizationSet().stream().forEach(a -> a.delete());
+
         super.setPerson(null);
         setRootDomainObject(null);
         deleteDomainObject();
-    }
-
-    public Collection<? extends Forum> getForuns(final ExecutionInterval executionInterval) {
-        final Collection<Forum> res = new HashSet<Forum>();
-        for (Professorship professorship : getProfessorshipsSet()) {
-            if (professorship.getExecutionCourse().getExecutionInterval() == executionInterval) {
-                res.addAll(professorship.getExecutionCourse().getForuns());
-            }
-        }
-        return res;
     }
 
     public boolean teachesAt(final Space campus) {

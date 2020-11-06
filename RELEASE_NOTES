@@ -1,3 +1,5 @@
+- Refactor: Cleanup deprecated forum
+
 31.0.0 (05-11-2020)
 - Improvement: Show area slot of party contact in create/edit screens
 - Refactor: Cleanup deprecated shift types
