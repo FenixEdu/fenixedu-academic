@@ -122,20 +122,12 @@ public class InfoExecutionCourse extends InfoObject {
         return getExecutionCourse().getSigla();
     }
 
-    public String getComment() {
-        return getExecutionCourse().getComment();
-    }
-
     public Integer getNumberOfAttendingStudents() {
         return getExecutionCourse().getAttendsSet().size();
     }
 
     public String getEqualLoad() {
         return getExecutionCourse().getEqualLoad();
-    }
-
-    public Boolean getAvailableGradeSubmission() {
-        return getExecutionCourse().getAvailableGradeSubmission();
     }
 
     @Deprecated
@@ -235,10 +227,6 @@ public class InfoExecutionCourse extends InfoObject {
     @Override
     public String toString() {
         return getExecutionCourse().toString();
-    }
-
-    public EntryPhase getEntryPhase() {
-        return getExecutionCourse().getEntryPhase();
     }
 
 }

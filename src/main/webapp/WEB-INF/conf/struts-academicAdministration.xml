@@ -138,7 +138,6 @@
 			<form-property type="java.lang.String" name="name"></form-property>
 			<form-property type="java.lang.String" name="code"></form-property>
 			<form-property type="java.lang.String" name="semester"></form-property>
-			<form-property type="java.lang.String" name="comment"></form-property>
 			<form-property type="java.lang.String" name="executionPeriod"></form-property>
 			<form-property type="java.lang.String" name="executionPeriodId"></form-property>
 			<form-property type="java.lang.String" name="executionDegree"></form-property>
@@ -151,8 +150,6 @@
 			<form-property type="java.lang.Integer" name="curricularCoursesListSize"></form-property>
 			<form-property type="java.lang.String[]" name="internalIds"></form-property>
 			<form-property initial="0" type="java.lang.Integer" name="page"></form-property>
-			<form-property type="java.lang.String" name="availableGradeSubmission"></form-property>
-			<form-property type="java.lang.String" name="entryPhase"></form-property>
 		</form-bean>
 		<!-- EXECUTION COURSE MANAGEMENT - SEPARATE EXECUTION COURSES - MIGRATED FROM MANAGER -->
 		<form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="separateExecutionCourseForm">

@@ -61,22 +61,6 @@
 				<bean:write name="<%=PresentationConstants.EXECUTION_COURSE%>" property="sigla" />
 			</td>
 		</tr>
-		<tr>
-			<td>
-				<b><bean:message bundle="MANAGER_RESOURCES" key="message.manager.execution.course.comment"/></b>
-			</td>
-			<td>
-				<bean:write name="<%=PresentationConstants.EXECUTION_COURSE%>" property="comment" />
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<b><bean:message bundle="MANAGER_RESOURCES" key="message.manager.execution.course.available.grade.submission"/></b>
-			</td>
-			<td>
-				<bean:write name="<%=PresentationConstants.EXECUTION_COURSE%>" property="availableGradeSubmission" />
-			</td>
-		</tr>
 	</table>
 	
 	<logic:notEmpty name="<%=PresentationConstants.EXECUTION_COURSE%>" property="courseLoads">

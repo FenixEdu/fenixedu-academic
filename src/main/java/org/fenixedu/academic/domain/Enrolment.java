@@ -466,8 +466,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
                     @Override
                     final public boolean evaluate(final Object arg0) {
                         ExecutionCourse executionCourse = (ExecutionCourse) arg0;
-                        if (executionCourse.getExecutionInterval() == executionInterval
-                                && executionCourse.getEntryPhase() == EntryPhase.FIRST_PHASE) {
+                        if (executionCourse.getExecutionInterval() == executionInterval) {
                             return true;
                         }
                         return false;

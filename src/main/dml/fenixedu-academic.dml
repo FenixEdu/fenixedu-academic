@@ -564,18 +564,10 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
     	}
 
     class ExecutionCourse  {
-        Boolean availableGradeSubmission;
-        String comment;     
         String nome;        
         String sigla;
-        EntryPhase entryPhase;
-        Boolean projectTutorialCourse;
-        BigDecimal unitCreditValue;      
-        BigDecimal effortRate;
-        String unitCreditValueNotes;
         String siteUrl;
-        String email;
-        boolean dynamicMailDistribution;
+        String email; // not set anywhere, to deprecate
         boolean lessonPlanningAvailable;
     }
     

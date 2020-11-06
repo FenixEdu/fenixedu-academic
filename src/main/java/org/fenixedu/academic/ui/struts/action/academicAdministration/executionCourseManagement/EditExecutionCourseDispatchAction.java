@@ -166,11 +166,6 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         DynaActionForm executionCourseForm = (DynaActionForm) form;
         executionCourseForm.set("name", infoExecutionCourse.getNome());
         executionCourseForm.set("code", infoExecutionCourse.getSigla());
-        executionCourseForm.set("comment", infoExecutionCourse.getComment());
-        executionCourseForm.set("entryPhase", infoExecutionCourse.getEntryPhase().getName());
-        if (infoExecutionCourse.getAvailableGradeSubmission() != null) {
-            executionCourseForm.set("availableGradeSubmission", infoExecutionCourse.getAvailableGradeSubmission().toString());
-        }
         request.setAttribute("courseLoadBean", new CourseLoadBean(infoExecutionCourse.getExecutionCourse()));
     }
 
@@ -235,11 +230,6 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
             infoExecutionCourse.setExternalId((String) editExecutionCourseForm.get("executionCourseId"));
             infoExecutionCourse.setNome((String) editExecutionCourseForm.get("name"));
             infoExecutionCourse.setSigla((String) editExecutionCourseForm.get("code"));
-            infoExecutionCourse.setComment((String) editExecutionCourseForm.get("comment"));
-            infoExecutionCourse.setAvailableGradeSubmission(Boolean.valueOf(editExecutionCourseForm
-                    .getString("availableGradeSubmission")));
-            infoExecutionCourse.setEntryPhase(EntryPhase.valueOf(editExecutionCourseForm.getString("entryPhase")));
-
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }

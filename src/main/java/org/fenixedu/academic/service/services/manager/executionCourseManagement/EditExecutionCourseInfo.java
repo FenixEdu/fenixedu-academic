@@ -24,6 +24,8 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.InfoExecutionCourse;
 import org.fenixedu.academic.dto.InfoExecutionCourseEditor;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
+import org.fenixedu.bennu.core.signals.DomainObjectEvent;
+import org.fenixedu.bennu.core.signals.Signal;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -52,9 +54,9 @@ public class EditExecutionCourseInfo {
                     executionInterval.getExecutionYear().getYear(), existentExecutionCourse.getName());
         }
 
-        executionCourse.editInformation(infoExecutionCourse.getNome(), infoExecutionCourse.getSigla(),
-                infoExecutionCourse.getComment(), infoExecutionCourse.getAvailableGradeSubmission(),
-                infoExecutionCourse.getEntryPhase());
+        executionCourse.setNome(infoExecutionCourse.getNome());
+        executionCourse.setSigla(infoExecutionCourse.getSigla());
+        Signal.emit(ExecutionCourse.EDITED_SIGNAL, new DomainObjectEvent<ExecutionCourse>(executionCourse));
 
         return new InfoExecutionCourse(executionCourse);
     }

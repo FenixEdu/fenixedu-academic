@@ -126,62 +126,24 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     static {
         getRelationCurricularCourseExecutionCourse().addListener(new CurricularCourseExecutionCourseListener());
-
-        getRelationCurricularCourseExecutionCourse().addListener(new RelationAdapter<ExecutionCourse, CurricularCourse>() {
-
-            @Override
-            public void beforeAdd(final ExecutionCourse executionCourse, final CurricularCourse curricularCourse) {
-                if (executionCourse != null && curricularCourse != null
-                        && executionCourse.getAssociatedCurricularCoursesSet().size() == 0) {
-                    ExecutionCourse previous = null;
-                    for (final ExecutionCourse otherExecutionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
-                        if (previous == null
-                                || otherExecutionCourse.getExecutionInterval().isAfter(previous.getExecutionInterval())) {
-                            previous = otherExecutionCourse;
-                        }
-                    }
-                    if (previous != null) {
-                        executionCourse.setProjectTutorialCourse(previous.getProjectTutorialCourse());
-                    }
-                }
-            }
-
-        });
     }
 
-    public ExecutionCourse(final String nome, final String sigla, final ExecutionInterval executionInterval,
-            EntryPhase entryPhase) {
+    public ExecutionCourse(final String name, final String initials, final ExecutionInterval executionInterval) {
         super();
 
         setRootDomainObject(Bennu.getInstance());
-        setAvailableGradeSubmission(Boolean.TRUE);
 
-        setNome(nome);
+        setNome(name);
         setExecutionPeriod(executionInterval);
-        setSigla(sigla);
-        setComment("");
-
-        if (entryPhase == null) {
-            entryPhase = EntryPhase.FIRST_PHASE;
-        }
-        setEntryPhase(entryPhase);
-        setProjectTutorialCourse(Boolean.FALSE);
-        setUnitCreditValue(null);
+        setSigla(initials);
 
         Signal.emit(ExecutionCourse.CREATED_SIGNAL, new DomainObjectEvent<ExecutionCourse>(this));
     }
 
-    public void editInformation(String nome, String sigla, String comment, Boolean availableGradeSubmission,
+    @Deprecated
+    public ExecutionCourse(final String nome, final String sigla, final ExecutionInterval executionInterval,
             EntryPhase entryPhase) {
-        setNome(nome);
-        setSigla(sigla);
-        setComment(comment);
-        setAvailableGradeSubmission(availableGradeSubmission);
-        if (entryPhase != null) {
-            setEntryPhase(entryPhase);
-        }
-        Signal.emit(ExecutionCourse.EDITED_SIGNAL, new DomainObjectEvent<ExecutionCourse>(this));
-
+        this(nome, sigla, executionInterval);
     }
 
     public void editCourseLoad(ShiftType type, BigDecimal unitQuantity, BigDecimal totalQuantity) {
@@ -851,36 +813,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
         }
         return result;
-    }
-
-    @Override
-    public Boolean getAvailableGradeSubmission() {
-        if (super.getAvailableGradeSubmission() != null) {
-            return super.getAvailableGradeSubmission();
-        }
-        return Boolean.TRUE;
-    }
-
-    @Override
-    public void setUnitCreditValue(BigDecimal unitCreditValue) {
-        setUnitCreditValue(unitCreditValue, getUnitCreditValueNotes());
-    }
-
-    public void setUnitCreditValue(BigDecimal unitCreditValue, String justification) {
-        if (unitCreditValue != null
-                && (unitCreditValue.compareTo(BigDecimal.ZERO) < 0 || unitCreditValue.compareTo(BigDecimal.ONE) > 0)) {
-            throw new DomainException("error.executionCourse.unitCreditValue.range");
-        }
-        if (unitCreditValue != null && unitCreditValue.compareTo(BigDecimal.ZERO) != 0 && getEffortRate() == null) {
-            throw new DomainException("error.executionCourse.unitCreditValue.noEffortRate");
-        }
-        if (getEffortRate() != null && (unitCreditValue != null
-                && unitCreditValue.compareTo(BigDecimal.valueOf(Math.min(getEffortRate().doubleValue(), 1.0))) < 0
-                && StringUtils.isBlank(justification))) {
-            throw new DomainException("error.executionCourse.unitCreditValue.lower.effortRate.withoutJustification");
-        }
-        super.setUnitCreditValueNotes(justification);
-        super.setUnitCreditValue(unitCreditValue);
     }
 
     public Interval getMaxLessonsInterval() {
