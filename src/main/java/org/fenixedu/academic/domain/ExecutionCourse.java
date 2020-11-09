@@ -39,6 +39,7 @@ import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.dto.GenericPair;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LocaleUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.signals.DomainObjectEvent;
@@ -346,10 +347,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     @Override
     public String getNome() {
         if (I18N.getLocale().getLanguage().equals(Locale.ENGLISH.getLanguage())) {
-            return getCompetenceCoursesInformations().stream().map(cci -> cci.getNameEn()).distinct()
-                    .collect(Collectors.joining(" / "));
+            return getNameEn();
         }
         return super.getNome();
+    }
+
+    private String getNameEn() {
+        return getCompetenceCoursesInformations().stream().map(cci -> cci.getNameEn()).distinct().sorted()
+                .collect(Collectors.joining(" / "));
     }
 
     public String getName() {
@@ -512,53 +517,13 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     /*
-     * This method returns the portuguese name and the english name with the
-     * rules implemented in getNome() method
+     * This method returns the portuguese name and the english name
      */
     public LocalizedString getNameI18N() {
         LocalizedString nameI18N = new LocalizedString();
-        nameI18N = nameI18N.with(org.fenixedu.academic.util.LocaleUtils.PT, super.getNome());
-
-        final StringBuilder stringBuilder = new StringBuilder();
-
-        final Set<String> names = new HashSet<String>();
-
-        for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-            if (curricularCourse.isActive(getExecutionInterval())) {
-                final String name = curricularCourse.getNameEn();
-                if (!names.contains(name)) {
-                    names.add(name);
-                    if (stringBuilder.length() > 0) {
-                        stringBuilder.append(" / ");
-                    }
-                    stringBuilder.append(name);
-                }
-            }
-        }
-
-        if (stringBuilder.length() > 0) {
-            nameI18N = nameI18N.with(org.fenixedu.academic.util.LocaleUtils.EN, stringBuilder.toString());
-            return nameI18N;
-        }
-
-        boolean unique = true;
-        final String nameEn = getAssociatedCurricularCoursesSet().isEmpty() ? null : getAssociatedCurricularCoursesSet()
-                .iterator().next().getNameEn();
-
-        for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-            if (curricularCourse.getNameEn() == null || !curricularCourse.getNameEn().equals(nameEn)) {
-                unique = false;
-                break;
-            }
-        }
-
-        if (unique && nameEn != null) {
-            nameI18N = nameI18N.with(org.fenixedu.academic.util.LocaleUtils.EN, nameEn);
-            return nameI18N;
-        } else {
-            nameI18N = nameI18N.with(org.fenixedu.academic.util.LocaleUtils.EN, super.getNome());
-            return nameI18N;
-        }
+        nameI18N = nameI18N.with(LocaleUtils.PT, super.getNome());
+        nameI18N = nameI18N.with(LocaleUtils.EN, getNameEn());
+        return nameI18N;
     }
 
     public Professorship getProfessorshipForCurrentUser() {
