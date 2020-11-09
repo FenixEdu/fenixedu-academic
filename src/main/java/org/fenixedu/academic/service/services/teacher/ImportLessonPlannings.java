@@ -39,7 +39,7 @@ public class ImportLessonPlannings {
             Shift shift) {
         if (executionCourseTo != null && executionCourseFrom != null) {
             if (shift == null) {
-                executionCourseTo.copyLessonPlanningsFrom(executionCourseFrom);
+                LessonPlanning.copyLessonPlanningsFrom(executionCourseFrom, executionCourseTo);
             } else {
                 createLessonPlanningsUsingSummariesFrom(executionCourseTo, shift);
             }

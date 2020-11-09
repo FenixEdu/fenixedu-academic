@@ -29,12 +29,9 @@ package org.fenixedu.academic.dto;
  */
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
 
-import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Lesson;
 import org.fenixedu.academic.domain.SchoolClass;
 import org.fenixedu.academic.domain.Shift;
@@ -218,27 +215,6 @@ public class InfoShift extends InfoObject {
         }
 
         return 0;
-    }
-
-    public static List<InfoShift> getInfoShiftsByType(ExecutionCourse executionCourse, ShiftType shiftType) {
-        SortedSet<Shift> shifts = executionCourse.getShiftsOrderedByLessons();
-
-        ArrayList<InfoShift> shiftsList = new ArrayList<InfoShift>();
-        if (shifts.size() != 0) {
-            InfoShift infoShift;
-            Shift shift;
-            Iterator<Shift> iter = shifts.iterator();
-
-            while (iter.hasNext()) {
-                shift = iter.next();
-                if (shift.containsType(shiftType)) {
-                    infoShift = new InfoShift(shift);
-                    shiftsList.add(infoShift);
-                }
-            }
-            return shiftsList;
-        }
-        return null;
     }
 
 }

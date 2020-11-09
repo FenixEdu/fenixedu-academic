@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.ui.struts.action.teacher;
 
+import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.Person;
@@ -64,8 +66,8 @@ public class ShowProfessorshipsDA extends FenixAction {
         }
         request.setAttribute("executionPeriod", selectedExecutionPeriod);
 
-        final SortedSet<ExecutionCourse> executionCourses = new TreeSet<ExecutionCourse>(
-                Ordering.from(ExecutionCourse.EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_REVERSED_AND_NAME));
+        final SortedSet<ExecutionCourse> executionCourses =
+                new TreeSet<ExecutionCourse>(Ordering.from(EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_REVERSED_AND_NAME));
         request.setAttribute("executionCourses", executionCourses);
 
         final Person person = AccessControl.getPerson();
@@ -88,4 +90,19 @@ public class ShowProfessorshipsDA extends FenixAction {
 
         return mapping.findForward("list");
     }
+
+    private static final Comparator<ExecutionCourse> EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_REVERSED_AND_NAME =
+            new Comparator<ExecutionCourse>() {
+
+                @Override
+                public int compare(ExecutionCourse o1, ExecutionCourse o2) {
+                    final int cep = ExecutionCourse.EXECUTION_COURSE_EXECUTION_PERIOD_COMPARATOR.compare(o2, o1);
+                    if (cep != 0) {
+                        return cep;
+                    }
+                    final int c = ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR.compare(o1, o2);
+                    return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
+                }
+
+            };
 }

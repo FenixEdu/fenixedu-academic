@@ -112,7 +112,6 @@
 							+ notLinkedCoursesParameter.toString()%>">
 				<bean:message bundle="MANAGER_RESOURCES" key="link.executionCourseManagement.curricular.associate"/>
 			</html:link>
-			<logic:equal name="<%=PresentationConstants.EXECUTION_COURSE%>" property="executionCourse.splittable" value="true" >
 			<logic:present name="sessionBean" property="executionDegree">
 			<bean:define id="degree" name="sessionBean" property="executionDegree.degree"/>
 			<academic:allowed operation="MANAGE_EXECUTION_COURSES_ADV" permission="ACADEMIC_PLANNING_EXECUTIONS" program="<%= (AcademicProgram) degree %>">
@@ -130,7 +129,6 @@
 			</html:link>
 			</academic:allowed>
 			</logic:present>
-			</logic:equal>
 		</li>
 	</ul>
 	<table>

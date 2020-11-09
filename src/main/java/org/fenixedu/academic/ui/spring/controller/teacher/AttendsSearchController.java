@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -38,6 +39,7 @@ import javax.ws.rs.core.UriBuilder;
 
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.Attends.StudentAttendsStateType;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Mark;
 import org.fenixedu.academic.domain.Professorship;
@@ -114,8 +116,14 @@ public class AttendsSearchController extends ExecutionCourseController {
         model.addAttribute("attendsStates", studentAttendsStateTypes);
         model.addAttribute("groupings", view(Collections.emptyList()));
 
-        model.addAttribute("curricularPlans", view(executionCourse.getAttendsDegreeCurricularPlans()));
-        model.addAttribute("shifts", view(executionCourse.getShiftsOrderedByLessons()));
+        final Collection<DegreeCurricularPlan> degreeCurricularPlans = executionCourse.getAttendsSet().stream()
+                .map(a -> a.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan()).collect(Collectors.toSet());
+        model.addAttribute("curricularPlans", view(degreeCurricularPlans));
+
+        final SortedSet<Shift> shifts = new TreeSet<Shift>(Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
+        shifts.addAll(executionCourse.getAssociatedShifts());
+
+        model.addAttribute("shifts", view(shifts));
 
         model.addAttribute("shiftTypes", view(executionCourse.getShiftTypes()));
 
@@ -156,8 +164,10 @@ public class AttendsSearchController extends ExecutionCourseController {
                         addCell(getLabel("label.username"), attends.getRegistration().getPerson().getUsername());
                         addCell(getLabel("label.number"), attends.getRegistration().getNumber());
                         addCell(getLabel("label.name"), attends.getRegistration().getPerson().getName());
-                        addCell(getLabel("label.institutional.email"), attends.getRegistration().getPerson().getInstitutionalEmailAddressValue());
-                        addCell(getLabel("label.default.email"), attends.getRegistration().getPerson().getDefaultEmailAddressValue());
+                        addCell(getLabel("label.institutional.email"),
+                                attends.getRegistration().getPerson().getInstitutionalEmailAddressValue());
+                        addCell(getLabel("label.default.email"),
+                                attends.getRegistration().getPerson().getDefaultEmailAddressValue());
                         executionCourse.getShiftTypes()
                                 .forEach(shiftType -> addCell(getLabel("label.shift") + " " + shiftType.getFullNameTipoAula(),
                                         Optional.ofNullable(

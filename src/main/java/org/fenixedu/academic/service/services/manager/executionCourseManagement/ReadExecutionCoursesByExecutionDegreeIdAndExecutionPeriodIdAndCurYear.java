@@ -30,6 +30,7 @@ import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.dto.InfoExecutionCourse;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
+import org.fenixedu.academic.service.services.resourceAllocationManager.SearchExecutionCourses;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -59,8 +60,9 @@ public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYe
             final ExecutionDegree executionDegree = findExecutionDegreeByID(executionInterval, executionDegreeId);
             final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
             final CurricularYear curricularYear = CurricularYear.readByYear(curricularYearInt);
-            executionCourseList = ExecutionCourse.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
-                    executionInterval, degreeCurricularPlan, curricularYear, "%");
+            executionCourseList =
+                    SearchExecutionCourses.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
+                            executionInterval, degreeCurricularPlan, curricularYear, "%");
         }
 
         final List infoExecutionCourseList = new ArrayList(executionCourseList.size());

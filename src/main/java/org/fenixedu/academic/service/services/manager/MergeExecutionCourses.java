@@ -39,6 +39,7 @@ import org.fenixedu.academic.domain.Evaluation;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionCourseLog;
 import org.fenixedu.academic.domain.LessonInstance;
+import org.fenixedu.academic.domain.LessonPlanning;
 import org.fenixedu.academic.domain.Mark;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Professorship;
@@ -119,7 +120,7 @@ public class MergeExecutionCourses {
         registerMergeHandler(MergeExecutionCourses::copySenderMessages);
         registerMergeHandler(
                 (from, to) -> to.getAssociatedCurricularCoursesSet().addAll(from.getAssociatedCurricularCoursesSet()));
-        registerMergeHandler((from, to) -> to.copyLessonPlanningsFrom(from));
+        registerMergeHandler((from, to) -> LessonPlanning.copyLessonPlanningsFrom(from, to));
     }
 
     @Atomic(mode = TxMode.WRITE)
@@ -221,8 +222,8 @@ public class MergeExecutionCourses {
     }
 
     private static void copyLessonsInstances(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
-        final List<LessonInstance> associatedLessons =
-                new ArrayList<LessonInstance>(executionCourseFrom.getAssociatedLessonInstances());
+        final List<LessonInstance> associatedLessons = executionCourseFrom.getCourseLoadsSet().stream()
+                .flatMap(cl -> cl.getLessonInstancesSet().stream()).collect(Collectors.toUnmodifiableList());
         for (final LessonInstance lessonInstance : associatedLessons) {
             CourseLoad courseLoadFrom = lessonInstance.getCourseLoad();
             CourseLoad courseLoadTo = executionCourseTo.getCourseLoadByShiftType(courseLoadFrom.getType());

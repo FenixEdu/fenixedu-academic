@@ -18,7 +18,11 @@
  */
 package org.fenixedu.academic.service.services.resourceAllocationManager;
 
+import java.math.BigDecimal;
+
+import org.fenixedu.academic.domain.CourseLoad;
 import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ShiftType;
 import org.fenixedu.academic.dto.resourceAllocationManager.CourseLoadBean;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 
@@ -30,7 +34,17 @@ public class EditExecutionCourse {
     public static void run(CourseLoadBean bean) throws FenixServiceException {
         if (bean != null) {
             ExecutionCourse executionCourse = bean.getExecutionCourse();
-            executionCourse.editCourseLoad(bean.getType(), bean.getUnitQuantity(), bean.getTotalQuantity());
+            editCourseLoad(executionCourse, bean.getType(), bean.getUnitQuantity(), bean.getTotalQuantity());
+        }
+    }
+
+    private static void editCourseLoad(ExecutionCourse executionCourse, ShiftType type, BigDecimal unitQuantity,
+            BigDecimal totalQuantity) {
+        CourseLoad courseLoad = executionCourse.getCourseLoadByShiftType(type);
+        if (courseLoad == null) {
+            new CourseLoad(executionCourse, type, unitQuantity, totalQuantity);
+        } else {
+            courseLoad.edit(unitQuantity, totalQuantity);
         }
     }
 }

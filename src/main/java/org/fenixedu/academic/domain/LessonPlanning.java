@@ -20,12 +20,14 @@ package org.fenixedu.academic.domain;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 public class LessonPlanning extends LessonPlanning_Base {
 
@@ -104,7 +106,7 @@ public class LessonPlanning extends LessonPlanning_Base {
 
     public void moveTo(Integer order) {
         if (getExecutionCourse() != null) {
-            List<LessonPlanning> lessonPlannings = getExecutionCourse().getLessonPlanningsOrderedByOrder(getLessonType());
+            List<LessonPlanning> lessonPlannings = LessonPlanning.findOrdered(getExecutionCourse(), getLessonType());
             if (!lessonPlannings.isEmpty() && order != getOrderOfPlanning() && order <= lessonPlannings.size() && order >= 1) {
                 LessonPlanning posPlanning = lessonPlannings.get(order - 1);
                 Integer posOrder = posPlanning.getOrderOfPlanning();
@@ -116,7 +118,7 @@ public class LessonPlanning extends LessonPlanning_Base {
 
     private void reOrderLessonPlannings() {
         if (getExecutionCourse() != null) {
-            List<LessonPlanning> lessonPlannings = getExecutionCourse().getLessonPlanningsOrderedByOrder(getLessonType());
+            List<LessonPlanning> lessonPlannings = findOrdered(getExecutionCourse(), getLessonType());
             if (!lessonPlannings.isEmpty() && !lessonPlannings.get(lessonPlannings.size() - 1).equals(this)) {
                 for (int i = getOrderOfPlanning(); i < lessonPlannings.size(); i++) {
                     LessonPlanning planning = lessonPlannings.get(i);
@@ -127,7 +129,7 @@ public class LessonPlanning extends LessonPlanning_Base {
     }
 
     private void setLastOrder(ExecutionCourse executionCourse, ShiftType lessonType) {
-        List<LessonPlanning> lessonPlannings = executionCourse.getLessonPlanningsOrderedByOrder(lessonType);
+        List<LessonPlanning> lessonPlannings = findOrdered(executionCourse, lessonType);
         Integer order =
                 (!lessonPlannings.isEmpty()) ? (lessonPlannings.get(lessonPlannings.size() - 1).getOrderOfPlanning() + 1) : 1;
         setOrderOfPlanning(order);
@@ -146,6 +148,18 @@ public class LessonPlanning extends LessonPlanning_Base {
         CurricularManagementLog.createLog(getExecutionCourse(), Bundle.MESSAGING,
                 "log.executionCourse.curricular.planning.edited", getTitle().getContent(), getLessonType().getFullNameTipoAula(),
                 getExecutionCourse().getNome(), getExecutionCourse().getDegreePresentationString());
+    }
+
+    public static List<LessonPlanning> findOrdered(final ExecutionCourse executionCourse, final ShiftType lessonType) {
+        return executionCourse.getLessonPlanningsSet().stream().filter(lp -> lp.getLessonType().equals(lessonType))
+                .sorted(COMPARATOR_BY_ORDER).collect(Collectors.toUnmodifiableList());
+    }
+
+    public static void copyLessonPlanningsFrom(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
+        final Set<ShiftType> shiftTypes = executionCourseTo.getShiftTypes();
+        executionCourseFrom.getShiftTypes().stream().filter(st -> shiftTypes.contains(st))
+                .forEach(st -> findOrdered(executionCourseFrom, st).forEach(planning -> new LessonPlanning(planning.getTitle(),
+                        planning.getPlanning(), planning.getLessonType(), executionCourseTo)));
     }
 
 }

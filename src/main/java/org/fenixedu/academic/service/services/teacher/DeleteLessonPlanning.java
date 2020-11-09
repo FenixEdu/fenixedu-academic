@@ -40,7 +40,7 @@ public class DeleteLessonPlanning {
     }
 
     private void deleteLessonPlanningsByLessonType(ExecutionCourse executionCourse, ShiftType shiftType) {
-        List<LessonPlanning> lessonPlanningsOrderedByOrder = executionCourse.getLessonPlanningsOrderedByOrder(shiftType);
+        List<LessonPlanning> lessonPlanningsOrderedByOrder = LessonPlanning.findOrdered(executionCourse, shiftType);
         for (LessonPlanning planning : lessonPlanningsOrderedByOrder) {
             planning.deleteWithoutReOrder();
         }

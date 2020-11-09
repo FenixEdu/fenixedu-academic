@@ -21,7 +21,9 @@ package org.fenixedu.academic.domain;
 import java.util.Comparator;
 
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public class BibliographicReference extends BibliographicReference_Base {
 
@@ -32,6 +34,22 @@ public class BibliographicReference extends BibliographicReference_Base {
     public BibliographicReference() {
         super();
         setRootDomainObject(Bennu.getInstance());
+    }
+
+    public static BibliographicReference create(final String title, final String authors, final String reference,
+            final String year, final Boolean optional) {
+        if (title == null || authors == null || year == null || optional == null) {
+            throw new IllegalArgumentException("Required fields not filled");
+        }
+
+        final BibliographicReference result = new BibliographicReference();
+        result.setTitle(title);
+        result.setAuthors(authors);
+        result.setReference(reference);
+        result.setYear(year);
+        result.setOptional(optional);
+
+        return result;
     }
 
     public void edit(final String title, final String authors, final String reference, final String year, final String url,

@@ -35,6 +35,9 @@ public class OrderBibliographicReferences {
 
     @Atomic
     public static void run(ExecutionCourse executionCourse, List<BibliographicReference> references) {
-        executionCourse.setBibliographicReferencesOrder(references);
+        for (int i = 0; i < references.size(); i++) {
+            references.get(i).setReferenceOrder(i);
+        }
     }
+
 }

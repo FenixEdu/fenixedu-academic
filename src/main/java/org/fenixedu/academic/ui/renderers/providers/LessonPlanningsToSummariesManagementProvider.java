@@ -37,7 +37,7 @@ public class LessonPlanningsToSummariesManagementProvider implements DataProvide
         ShiftType lessonType = bean.getLessonType();
         if (lessonType != null) {
             ExecutionCourse executionCourse = bean.getExecutionCourse();
-            return executionCourse.getLessonPlanningsOrderedByOrder(lessonType);
+            return LessonPlanning.findOrdered(executionCourse, lessonType);
         }
         return new ArrayList<LessonPlanning>();
     }

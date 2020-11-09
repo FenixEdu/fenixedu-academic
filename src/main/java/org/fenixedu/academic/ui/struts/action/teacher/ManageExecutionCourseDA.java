@@ -218,7 +218,7 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
         Map<ShiftType, List<LessonPlanning>> lessonPlanningsMap = new TreeMap<ShiftType, List<LessonPlanning>>();
         for (ShiftType shiftType : executionCourse.getShiftTypes()) {
-            List<LessonPlanning> lessonPlanningsOrderedByOrder = executionCourse.getLessonPlanningsOrderedByOrder(shiftType);
+            List<LessonPlanning> lessonPlanningsOrderedByOrder = LessonPlanning.findOrdered(executionCourse, shiftType);
             if (!lessonPlanningsOrderedByOrder.isEmpty()) {
                 lessonPlanningsMap.put(shiftType, lessonPlanningsOrderedByOrder);
             }
@@ -460,7 +460,6 @@ public class ManageExecutionCourseDA extends ExecutionCourseBaseAction {
 //
 //        return null;
 //    }
-    
 
 //    public ActionForward removeAttendsFromShift(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 //            HttpServletResponse response) {

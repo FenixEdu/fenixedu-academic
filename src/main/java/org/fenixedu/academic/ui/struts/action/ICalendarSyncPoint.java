@@ -99,9 +99,8 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 
         for (Professorship professorShip : user.getPerson().getProfessorshipsSet()) {
             ExecutionCourse executionCourse = professorShip.getExecutionCourse();
-            for (Lesson lesson : executionCourse.getLessons()) {
-                allEvents.addAll(lesson.getAllLessonsEvents());
-            }
+            executionCourse.getAssociatedShifts().stream().flatMap(s -> s.getAssociatedLessonsSet().stream())
+                    .forEach(lesson -> allEvents.addAll(lesson.getAllLessonsEvents()));
         }
         return allEvents;
     }

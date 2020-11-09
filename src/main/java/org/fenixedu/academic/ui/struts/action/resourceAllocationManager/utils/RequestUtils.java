@@ -29,6 +29,7 @@ package org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils;
 import javax.servlet.http.HttpServletRequest;
 
 import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.dto.InfoExecutionCourse;
 import org.fenixedu.academic.dto.InfoExecutionDegree;
@@ -52,13 +53,22 @@ public abstract class RequestUtils {
         AcademicInterval academicInterval = AcademicInterval
                 .getAcademicIntervalFromResumedString((String) request.getAttribute(PresentationConstants.ACADEMIC_INTERVAL));
 
-        final ExecutionCourse executionCourse =
-                ExecutionCourse.getExecutionCourseByInitials(academicInterval, infoExecutionCourseInitials);
+        final ExecutionCourse executionCourse = readBySiglaAndExecutionPeriod(infoExecutionCourseInitials,
+                ExecutionInterval.getExecutionInterval(academicInterval));
         if (executionCourse != null) {
             return InfoExecutionCourse.newInfoFromDomain(executionCourse);
         }
 
         throw new IllegalArgumentException("Not find executionCourse!");
+    }
+
+    private static ExecutionCourse readBySiglaAndExecutionPeriod(final String sigla, ExecutionInterval executionInterval) {
+        for (ExecutionCourse executionCourse : executionInterval.getAssociatedExecutionCoursesSet()) {
+            if (sigla.equalsIgnoreCase(executionCourse.getSigla())) {
+                return executionCourse;
+            }
+        }
+        return null;
     }
 
     public static final InfoExecutionYear getExecutionYearFromRequest(HttpServletRequest request)

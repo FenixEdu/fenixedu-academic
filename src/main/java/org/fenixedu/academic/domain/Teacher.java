@@ -307,18 +307,6 @@ public class Teacher extends Teacher_Base {
         deleteDomainObject();
     }
 
-    public boolean teachesAt(final Space campus) {
-        for (final Professorship professorship : getProfessorshipsSet()) {
-            final ExecutionCourse executionCourse = professorship.getExecutionCourse();
-            if (executionCourse.getExecutionInterval().isCurrent()) {
-                if (executionCourse.functionsAt(campus)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     public Set<Professorship> getProfessorshipsSet() {
         return getPerson().getProfessorshipsSet();
     }

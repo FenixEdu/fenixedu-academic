@@ -22,8 +22,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.fenixedu.academic.domain.Attends;
@@ -64,7 +66,7 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
         setAttendsStates(Arrays.asList(StudentAttendsStateType.values()));
         setWorkingStudentTypes(Arrays.asList(WorkingStudentSelectionType.values()));
         setShifts(getExecutionCourse().getAssociatedShifts());
-        setDegreeCurricularPlans(getExecutionCourse().getAttendsDegreeCurricularPlans());
+        setDegreeCurricularPlans(getAttendsDegreeCurricularPlans(getExecutionCourse()));
         attendsResult = new ArrayList<Attends>();
     }
 
@@ -204,7 +206,7 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
             });
         }
 
-        if (degreeCurricularPlans.size() < getExecutionCourse().getAttendsDegreeCurricularPlans().size()) {
+        if (degreeCurricularPlans.size() < getAttendsDegreeCurricularPlans(getExecutionCourse()).size()) {
             filters.add(new InlinePredicate<Attends, Collection<DegreeCurricularPlan>>(getDegreeCurricularPlans()) {
 
                 @Override
@@ -299,4 +301,13 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
 
         return parameters;
     }
+
+    private static Set<DegreeCurricularPlan> getAttendsDegreeCurricularPlans(final ExecutionCourse executionCourse) {
+        final Set<DegreeCurricularPlan> dcps = new HashSet<DegreeCurricularPlan>();
+        for (final Attends attends : executionCourse.getAttendsSet()) {
+            dcps.add(attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan());
+        }
+        return dcps;
+    }
+
 }

@@ -20,6 +20,8 @@ package org.fenixedu.academic.ui.struts.action.resourceAllocationManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +39,7 @@ import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Teacher;
@@ -128,7 +131,7 @@ public class ListExecutionCourseGroupingsDA extends FenixDispatchAction {
     }
 
     private void fillSpreadSheet(final Spreadsheet spreadsheet, final AcademicInterval academicInterval) {
-        for (final ExecutionCourse executionCourse : ExecutionCourse.filterByAcademicInterval(academicInterval)) {
+        for (final ExecutionCourse executionCourse : filterByAcademicInterval(academicInterval)) {
             final Row row = spreadsheet.addRow();
 
             row.setCell(executionCourse.getNome());
@@ -224,6 +227,13 @@ public class ListExecutionCourseGroupingsDA extends FenixDispatchAction {
 
             row.setCell(executionCourse.getAttendsSet().size());
         }
+    }
+    
+    private static Collection<ExecutionCourse> filterByAcademicInterval(AcademicInterval academicInterval) {
+        ExecutionInterval executionInterval = ExecutionInterval.getExecutionInterval(academicInterval);
+
+        return executionInterval == null ? Collections.<ExecutionCourse> emptyList() : executionInterval
+                .getAssociatedExecutionCoursesSet();
     }
 
     private Map<Degree, Set<Integer>> constructDegreeOccurenceMap(final AcademicInterval academicInterval,

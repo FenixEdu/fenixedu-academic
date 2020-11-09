@@ -31,12 +31,15 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.fenixedu.academic.domain.CurricularYear;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionDegree;
+import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.ShiftType;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
@@ -44,21 +47,22 @@ import org.fenixedu.academic.dto.InfoExecutionCourse;
 import org.fenixedu.academic.service.filter.CoordinatorExecutionDegreeAuthorizationFilter;
 import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
 import org.fenixedu.academic.util.NumberUtils;
+import org.fenixedu.commons.StringNormalizer;
 
 import pt.ist.fenixframework.Atomic;
 
 public class SearchExecutionCourses {
 
     public List<InfoExecutionCourse> run(AcademicInterval academicInterval, ExecutionDegree executionDegree, String courseName) {
-        List<ExecutionCourse> executionCourses = ExecutionCourse
-                .searchByAcademicIntervalAndExecutionDegreeYearAndName(academicInterval, executionDegree, null, courseName);
+        List<ExecutionCourse> executionCourses =
+                searchByAcademicIntervalAndExecutionDegreeYearAndName(academicInterval, executionDegree, null, courseName);
         return fillInfoExecutionCourses(academicInterval, executionCourses);
     }
 
     public List<InfoExecutionCourse> run(AcademicInterval academicInterval, ExecutionDegree executionDegree,
             CurricularYear curricularYear, String courseName) {
-        List<ExecutionCourse> executionCourses = ExecutionCourse.searchByAcademicIntervalAndExecutionDegreeYearAndName(
-                academicInterval, executionDegree, curricularYear, courseName);
+        List<ExecutionCourse> executionCourses = searchByAcademicIntervalAndExecutionDegreeYearAndName(academicInterval,
+                executionDegree, curricularYear, courseName);
         return fillInfoExecutionCourses(academicInterval, executionCourses);
     }
 
@@ -208,4 +212,45 @@ public class SearchExecutionCourses {
         CoordinatorExecutionDegreeAuthorizationFilter.instance.execute(executionDegree.getExternalId());
         return serviceInstance.run(academicInterval, executionDegree, curricularYear, courseName);
     }
+
+    public static List<ExecutionCourse> searchByAcademicIntervalAndExecutionDegreeYearAndName(AcademicInterval academicInterval,
+            ExecutionDegree executionDegree, CurricularYear curricularYear, String name) {
+
+        ExecutionInterval executionInterval = ExecutionInterval.getExecutionInterval(academicInterval);
+
+        return getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(executionInterval,
+                executionDegree.getDegreeCurricularPlan(), curricularYear, name);
+    }
+
+    public static List<ExecutionCourse> getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
+            final ExecutionInterval interval, final DegreeCurricularPlan degreeCurricularPlan,
+            final CurricularYear curricularYear, final String name) {
+
+        final String normalizedName = (name != null) ? StringNormalizer.normalize(name).replaceAll("%", ".*") : null;
+        final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+
+        final Predicate<ExecutionCourse> hasScopePredicate = ec -> ec.getAssociatedCurricularCoursesSet().stream()
+                .anyMatch(cc -> cc.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear, degreeCurricularPlan,
+                        ec.getExecutionInterval()));
+
+        for (final ExecutionCourse executionCourse : interval.getAssociatedExecutionCoursesSet()) {
+            final String executionCourseName = StringNormalizer.normalize(executionCourse.getNome());
+            if (normalizedName != null && executionCourseName.matches(normalizedName)
+                    && hasScopePredicate.test(executionCourse)) {
+                result.add(executionCourse);
+            }
+        }
+        return result;
+    }
+
+    public static List<ExecutionCourse> filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(
+            AcademicInterval academicInterval, DegreeCurricularPlan degreeCurricularPlan, CurricularYear curricularYear,
+            String name) {
+
+        ExecutionInterval executionInterval = ExecutionInterval.getExecutionInterval(academicInterval);
+
+        return executionInterval == null ? Collections.EMPTY_LIST : getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
+                executionInterval, degreeCurricularPlan, curricularYear, name);
+    }
+
 }

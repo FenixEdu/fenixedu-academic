@@ -38,6 +38,7 @@ import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.service.services.manager.CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod;
+import org.fenixedu.academic.service.services.teacher.ImportBibliographicReferences;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -58,7 +59,7 @@ public class SeperateExecutionCourse {
 
         if (destinationExecutionCourse == null) {
             destinationExecutionCourse = createNewExecutionCourse(originExecutionCourse);
-            destinationExecutionCourse.copyBibliographicReferencesFrom(originExecutionCourse);
+            ImportBibliographicReferences.copyBibliographicReferencesFrom(originExecutionCourse, destinationExecutionCourse);
         }
 
         if (destinationExecutionCourse.equals(originExecutionCourse)) {

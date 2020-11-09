@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.service.services.teacher;
 
+import org.fenixedu.academic.domain.BibliographicReference;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.service.filter.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
@@ -41,8 +42,9 @@ public class CreateBibliographicReference {
             throw new InvalidArgumentsServiceException();
         }
 
-        executionCourse.createBibliographicReference(newBibliographyTitle, newBibliographyAuthors, newBibliographyReference,
-                newBibliographyYear, newBibliographyOptional);
+        final BibliographicReference reference = BibliographicReference.create(newBibliographyTitle, newBibliographyAuthors,
+                newBibliographyReference, newBibliographyYear, newBibliographyOptional);
+        reference.setExecutionCourse(executionCourse);
         return true;
     }
 

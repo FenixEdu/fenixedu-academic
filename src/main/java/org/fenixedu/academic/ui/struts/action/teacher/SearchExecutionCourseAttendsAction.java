@@ -22,8 +22,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -69,7 +71,8 @@ public class SearchExecutionCourseAttendsAction extends ExecutionCourseBaseActio
         return super.execute(mapping, actionForm, request, response);
     }
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
         // Integer objectCode =
         // Integer.valueOf(request.getParameter("objectCode"));
         ExecutionCourse executionCourse = getExecutionCourse(request);
@@ -77,7 +80,7 @@ public class SearchExecutionCourseAttendsAction extends ExecutionCourseBaseActio
         // FenixFramework.getDomainObject(objectCode);
         SearchExecutionCourseAttendsBean searchExecutionCourseAttendsBean = readSearchBean(request, executionCourse);
 
-        executionCourse.searchAttends(searchExecutionCourseAttendsBean);
+        searchAttends(executionCourse, searchExecutionCourseAttendsBean);
         request.setAttribute("searchBean", searchExecutionCourseAttendsBean);
         request.setAttribute("executionCourse", searchExecutionCourseAttendsBean.getExecutionCourse());
 
@@ -157,11 +160,11 @@ public class SearchExecutionCourseAttendsAction extends ExecutionCourseBaseActio
 
         SearchExecutionCourseAttendsBean attendsPagesBean = new SearchExecutionCourseAttendsBean(executionCourse);
 
-        executionCourse.searchAttends(attendsPagesBean);
+        searchAttends(executionCourse, attendsPagesBean);
 
         Map<Integer, Integer> enrolmentsNumberMap = new HashMap<Integer, Integer>();
         for (Attends attends : pager.getCollection()) {
-            executionCourse.addAttendsToEnrolmentNumberMap(attends, enrolmentsNumberMap);
+            addAttendsToEnrolmentNumberMap(attends, enrolmentsNumberMap);
         }
         attendsPagesBean.setEnrolmentsNumberMap(enrolmentsNumberMap);
         attendsPagesBean.setAttendsResult(pager.getPage(page));
@@ -197,13 +200,14 @@ public class SearchExecutionCourseAttendsAction extends ExecutionCourseBaseActio
         return EmailsDA.sendEmail(request, sender, recipient);
     }
 
-    public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
         request.setAttribute("objectCode", request.getAttribute("objectCode"));
 
         SearchExecutionCourseAttendsBean bean = getRenderedObject();
         RenderUtils.invalidateViewState();
-        bean.getExecutionCourse().searchAttends(bean);
+        searchAttends(bean.getExecutionCourse(), bean);
 
         request.setAttribute("searchBean", bean);
         request.setAttribute("executionCourse", bean.getExecutionCourse());
@@ -211,6 +215,38 @@ public class SearchExecutionCourseAttendsAction extends ExecutionCourseBaseActio
         prepareAttendsCollectionPages(request, bean, bean.getExecutionCourse());
 
         return mapping.findForward("viewAttendsSearch");
+    }
+
+    private static void searchAttends(ExecutionCourse executionCourse, SearchExecutionCourseAttendsBean attendsBean) {
+        final Predicate<Attends> filter = attendsBean.getFilters();
+        final Collection<Attends> validAttends = new HashSet<Attends>();
+        final Map<Integer, Integer> enrolmentNumberMap = new HashMap<Integer, Integer>();
+        for (final Attends attends : executionCourse.getAttendsSet()) {
+            if (filter.test(attends)) {
+                validAttends.add(attends);
+                addAttendsToEnrolmentNumberMap(attends, enrolmentNumberMap);
+            }
+        }
+        attendsBean.setAttendsResult(validAttends);
+        attendsBean.setEnrolmentsNumberMap(enrolmentNumberMap);
+    }
+
+    private static void addAttendsToEnrolmentNumberMap(final Attends attends, Map<Integer, Integer> enrolmentNumberMap) {
+        Integer enrolmentsNumber;
+        if (attends.getEnrolment() == null) {
+            enrolmentsNumber = 0;
+        } else {
+            enrolmentsNumber =
+                    attends.getEnrolment().getNumberOfTotalEnrolmentsInThisCourse(attends.getEnrolment().getExecutionInterval());
+        }
+
+        Integer mapValue = enrolmentNumberMap.get(enrolmentsNumber);
+        if (mapValue == null) {
+            mapValue = 1;
+        } else {
+            mapValue += 1;
+        }
+        enrolmentNumberMap.put(enrolmentsNumber, mapValue);
     }
 
 }

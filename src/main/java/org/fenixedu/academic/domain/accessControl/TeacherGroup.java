@@ -28,8 +28,10 @@ import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionCourse;
+import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Professorship;
+import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.annotation.GroupArgument;
@@ -142,7 +144,7 @@ public class TeacherGroup extends FenixGroup {
         //by campus
         if (campus != null) {
             RoleType.TEACHER.actualGroup().getMembers().forEach(user -> {
-                if (user.getPerson() != null && user.getPerson().getTeacher().teachesAt(campus)) {
+                if (user.getPerson() != null && teachesAt(user.getPerson().getTeacher(), campus)) {
                     users.add(user);
                 }
             });
@@ -185,13 +187,31 @@ public class TeacherGroup extends FenixGroup {
                     }
                 }
                 if (campus != null) {
-                    if (course.functionsAt(campus)) {
+                    if (functionsAt(course, campus)) {
                         return true;
                     }
                 }
             }
         }
         return false;
+    }
+
+    private static boolean functionsAt(final ExecutionCourse executionCourse, final Space campus) {
+        final ExecutionYear executionYear = executionCourse.getExecutionYear();
+        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
+            final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+            for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
+                if (executionDegree.getCampus() == campus && executionDegree.getExecutionYear() == executionYear) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static boolean teachesAt(final Teacher teacher, final Space campus) {
+        return teacher.getProfessorshipsSet().stream().map(p -> p.getExecutionCourse())
+                .filter(ec -> ec.getExecutionInterval().isCurrent()).anyMatch(ec -> functionsAt(ec, campus));
     }
 
     @Override

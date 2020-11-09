@@ -23,6 +23,7 @@
  */
 package org.fenixedu.academic.dto;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -79,39 +80,44 @@ public class InfoExecutionCourse extends InfoObject {
     // =======================
 
     public Double getWeeklyTheoreticalHours() {
-        return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShiftType(ShiftType.TEORICA).doubleValue();
+        return getWeeklyCourseLoadTotalQuantityByShiftType(getExecutionCourse(), ShiftType.TEORICA).doubleValue();
     }
 
 //    public Double getWeeklyPraticalHours() {
-//        return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShiftType(ShiftType.PRATICA).doubleValue();
+//        return getWeeklyCourseLoadTotalQuantityByShiftType(getExecutionCourse(), ShiftType.PRATICA).doubleValue();
 //    }
 //
 //    public Double getWeeklyTheoPratHours() {
-//        return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShiftType(ShiftType.TEORICO_PRATICA).doubleValue();
+//        return getWeeklyCourseLoadTotalQuantityByShiftType(getExecutionCourse(), ShiftType.TEORICO_PRATICA).doubleValue();
 //    }
 
     public Double getWeeklyLabHours() {
-        return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShiftType(ShiftType.LABORATORIAL).doubleValue();
+        return getWeeklyCourseLoadTotalQuantityByShiftType(getExecutionCourse(), ShiftType.LABORATORIAL).doubleValue();
     }
 
     public Double getWeeklyFieldWorkHours() {
-        return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShiftType(ShiftType.FIELD_WORK).doubleValue();
+        return getWeeklyCourseLoadTotalQuantityByShiftType(getExecutionCourse(), ShiftType.FIELD_WORK).doubleValue();
     }
 
     public Double getWeeklyProblemsHours() {
-        return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShiftType(ShiftType.PROBLEMS).doubleValue();
+        return getWeeklyCourseLoadTotalQuantityByShiftType(getExecutionCourse(), ShiftType.PROBLEMS).doubleValue();
     }
 
     public Double getWeeklySeminaryHours() {
-        return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShiftType(ShiftType.SEMINARY).doubleValue();
+        return getWeeklyCourseLoadTotalQuantityByShiftType(getExecutionCourse(), ShiftType.SEMINARY).doubleValue();
     }
 
     public Double getWeeklyTrainingPeriodHours() {
-        return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShiftType(ShiftType.TRAINING_PERIOD).doubleValue();
+        return getWeeklyCourseLoadTotalQuantityByShiftType(getExecutionCourse(), ShiftType.TRAINING_PERIOD).doubleValue();
     }
 
     public Double getWeeklyTutorialOrientationHours() {
-        return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShiftType(ShiftType.TUTORIAL_ORIENTATION).doubleValue();
+        return getWeeklyCourseLoadTotalQuantityByShiftType(getExecutionCourse(), ShiftType.TUTORIAL_ORIENTATION).doubleValue();
+    }
+
+    private static BigDecimal getWeeklyCourseLoadTotalQuantityByShiftType(ExecutionCourse executionCourse, ShiftType type) {
+        CourseLoad courseLoad = executionCourse.getCourseLoadByShiftType(type);
+        return courseLoad != null ? courseLoad.getWeeklyHours() : BigDecimal.ZERO;
     }
 
     public String getNome() {
@@ -126,9 +132,9 @@ public class InfoExecutionCourse extends InfoObject {
         return getExecutionCourse().getAttendsSet().size();
     }
 
-    public String getEqualLoad() {
-        return getExecutionCourse().getEqualLoad();
-    }
+//    public String getEqualLoad() {
+//        return getExecutionCourse().getEqualLoad();
+//    }
 
     @Deprecated
     public InfoExecutionPeriod getInfoExecutionPeriod() {

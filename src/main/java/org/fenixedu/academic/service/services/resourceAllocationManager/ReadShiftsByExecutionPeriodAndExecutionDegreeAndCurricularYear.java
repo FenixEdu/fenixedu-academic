@@ -51,7 +51,7 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear {
         final CurricularYear curricularYear = FenixFramework.getDomainObject(infoCurricularYear.getExternalId());
         final List<InfoShift> infoShifts = new ArrayList<InfoShift>();
         final List<ExecutionCourse> executionCourses =
-                ExecutionCourse.filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(academicInterval,
+                SearchExecutionCourses.filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(academicInterval,
                         degreeCurricularPlan, curricularYear, "%");
         for (final ExecutionCourse executionCourse : executionCourses) {
             for (final Shift shift : executionCourse.getAssociatedShifts()) {
