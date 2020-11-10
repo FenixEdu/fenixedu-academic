@@ -328,14 +328,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return getAllSchoolClassesOrBy(null);
     }
 
-    /**
-     * @deprecated use {@link LessonPlanning#findOrdered(ExecutionCourse, ShiftType)}
-     */
-    @Deprecated
-    public List<LessonPlanning> getLessonPlanningsOrderedByOrder(ShiftType lessonType) {
-        return LessonPlanning.findOrdered(this, lessonType);
-    }
-
     public Set<ShiftType> getShiftTypes() {
         Set<ShiftType> shiftTypes = new TreeSet<ShiftType>();
         for (CourseLoad courseLoad : getCourseLoadsSet()) {
