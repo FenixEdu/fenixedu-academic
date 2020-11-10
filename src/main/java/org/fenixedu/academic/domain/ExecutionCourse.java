@@ -530,6 +530,18 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return this.getProfessorship(AccessControl.getPerson());
     }
 
+    @Deprecated
+    public int getEnrolmentCount() {
+        return (int) getAttendsSet().stream().filter(a -> a.getEnrolment() != null).count();
+    }
+
+    @Deprecated
+    public List<Enrolment> getActiveEnrollments() {
+        return this.getAssociatedCurricularCoursesSet().stream()
+                .flatMap(cc -> cc.getEnrolmentsByExecutionPeriod(getExecutionInterval()).stream())
+                .collect(Collectors.toUnmodifiableList());
+    }
+
     @Override
     public void addAssociatedCurricularCourses(final CurricularCourse curricularCourse) {
         Collection<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCoursesSet();

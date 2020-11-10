@@ -1,3 +1,5 @@
+- Refactor: Add methods to ensure API retro-compability
+
 32.0.0 (10-11-2020)
 - Refactor: Cleanup deprecated execution course slots
 - Refactor: Cleanup deprecated execution course methods
