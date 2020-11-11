@@ -27,8 +27,6 @@ package org.fenixedu.academic.domain;
 import java.text.Collator;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
@@ -36,8 +34,6 @@ import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-
-import pt.ist.fenixframework.Atomic;
 
 /**
  *
@@ -76,7 +72,7 @@ public class Attends extends Attends_Base {
 
     };
 
-    public Attends() {
+    protected Attends() {
         super();
         setRootDomainObject(Bennu.getInstance());
     }
@@ -109,17 +105,6 @@ public class Attends extends Attends_Base {
         }
     }
 
-    public boolean isAbleToBeRemoved() {
-        try {
-            getRegistration().checkIfHasEnrolmentFor(this);
-            getRegistration().checkIfHasShiftsFor(this.getExecutionCourse());
-        } catch (DomainException e) {
-            return false;
-        }
-
-        return getDeletionBlockers().isEmpty();
-    }
-
     public boolean hasAnyShiftEnrolments() {
         for (Shift shift : this.getExecutionCourse().getAssociatedShifts()) {
             if (shift.getStudentsSet().contains(this.getRegistration())) {
@@ -127,32 +112,6 @@ public class Attends extends Attends_Base {
             }
         }
         return false;
-    }
-
-    public boolean hasAllShiftEnrolments() {
-        if (this.getExecutionCourse().getAssociatedShifts().size() == 0) {
-            return true;
-        }
-
-        Set<ShiftType> shiftTypes = this.getExecutionCourse().getShiftTypes();
-        Set<ShiftType> foundShiftTypes = new HashSet<ShiftType>();
-
-        for (Shift shift : this.getExecutionCourse().getAssociatedShifts()) {
-            if (shift.getStudentsSet().contains(this.getRegistration())) {
-                foundShiftTypes.addAll(shift.getTypes());
-            }
-        }
-
-        return foundShiftTypes.size() == shiftTypes.size();
-    }
-
-    public Mark getMarkByEvaluation(Evaluation evaluation) {
-        for (final Mark mark : getAssociatedMarksSet()) {
-            if (mark.getEvaluation().equals(evaluation)) {
-                return mark;
-            }
-        }
-        return null;
     }
 
     public boolean isFor(final ExecutionInterval interval) {
@@ -229,14 +188,6 @@ public class Attends extends Attends_Base {
         return getExecutionInterval().getExecutionYear();
     }
 
-//    public void removeShifts() {
-//        for (final Shift shift : getRegistration().getShiftsSet()) {
-//            if (shift.getExecutionCourse() == getExecutionCourse()) {
-//                getRegistration().removeShifts(shift);
-//            }
-//        }
-//    }
-
     public StudentCurricularPlan getStudentCurricularPlanFromAttends() {
         final Enrolment enrolment = getEnrolment();
         return enrolment == null ? getRegistration().getLastStudentCurricularPlan() : enrolment.getStudentCurricularPlan();
@@ -271,24 +222,11 @@ public class Attends extends Attends_Base {
         return false;
     }
 
-    public boolean hasExecutionCourseTo(final StudentCurricularPlan studentCurricularPlan) {
-        return hasExecutionCourseTo(studentCurricularPlan.getDegreeCurricularPlan());
-    }
-
     boolean canMove(final StudentCurricularPlan from, final StudentCurricularPlan to) {
         if (getEnrolment() != null) {
             return !from.hasEnrolments(getEnrolment()) && to.hasEnrolments(getEnrolment());
         }
         return !getExecutionInterval().isBefore(to.getStartExecutionInterval());
     }
-
-//    @Atomic
-//    public void deleteShiftEnrolments() {
-//        final Registration registration = getRegistration();
-//        final ExecutionCourse executionCourse = getExecutionCourse();
-//        for (final Shift shift : executionCourse.getAssociatedShifts()) {
-//            shift.removeStudents(registration);
-//        }
-//    }
 
 }

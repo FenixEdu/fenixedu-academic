@@ -59,12 +59,12 @@ public abstract class Evaluation extends Evaluation_Base {
         super.deleteDomainObject();
     }
 
-    public Mark addNewMark(Attends attends, String markValue) {
-        if (attends.getMarkByEvaluation(this) != null) {
-            throw new DomainException("error.Evaluation.attend.already.has.mark.for.evaluation");
-        }
-        return new Mark(attends, this, markValue);
-    }
+//    public Mark addNewMark(Attends attends, String markValue) {
+//        if (attends.getMarkByEvaluation(this) != null) {
+//            throw new DomainException("error.Evaluation.attend.already.has.mark.for.evaluation");
+//        }
+//        return new Mark(attends, this, markValue);
+//    }
 
     public abstract EvaluationType getEvaluationType();
 

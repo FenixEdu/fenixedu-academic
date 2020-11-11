@@ -1,3 +1,5 @@
+- Refactor: Cleanup deprecated attends methods
+
 32.0.2 (11-11-2020)
 - Bug fix: Fix the unnecessary PersistentGroup creation
 
