@@ -9,6 +9,7 @@ public class PersistentPermissionGroup extends PersistentPermissionGroup_Base {
     public PersistentPermissionGroup(String code) {
         super();
         this.setCode(code);
+        this.setPermissionGroupRoot(Bennu.getInstance());
     }
 
     public static Optional<PersistentPermissionGroup> getInstance(String code) {

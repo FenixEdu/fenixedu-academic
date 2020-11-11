@@ -5118,7 +5118,7 @@ public class groups.PersistentPermissionGroup extends .org.fenixedu.bennu.core.d
 }
 
 relation PersistentPermissionGroups {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole bennu {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole permissionGroupRoot {
 		multiplicity 0..1;
 	}
     groups.PersistentPermissionGroup playsRole permissionGroup {
