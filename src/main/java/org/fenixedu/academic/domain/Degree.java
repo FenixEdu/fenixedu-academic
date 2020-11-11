@@ -62,8 +62,6 @@ import org.fenixedu.spaces.domain.Space;
 
 import com.google.common.base.Strings;
 
-import pt.ist.fenixframework.Atomic;
-
 public class Degree extends Degree_Base implements Comparable<Degree> {
     public static final String CREATED_SIGNAL = "academic.degree.create";
 
@@ -184,12 +182,12 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         this.setSigla(code.trim());
         this.setNumericGradeScale(gradeScale);
         this.setQualitativeGradeScale(qualitativeGradeScale);
-        
-        if(this.getNumericGradeScale() == null) {
+
+        if (this.getNumericGradeScale() == null) {
             throw new DomainException("error.Degree.numericGradeScale.required");
         }
 
-        if(this.getQualitativeGradeScale() == null) {
+        if (this.getQualitativeGradeScale() == null) {
             throw new DomainException("error.Degree.qualitativeGradeScale.required");
         }
     }
@@ -273,7 +271,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         Iterator<DegreeInfo> degreeInfosIterator = getDegreeInfosSet().iterator();
         while (degreeInfosIterator.hasNext()) {
             DegreeInfo degreeInfo = degreeInfosIterator.next();
-            degreeInfosIterator.remove();        
+            degreeInfosIterator.remove();
             degreeInfo.delete();
         }
 
@@ -928,17 +926,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         super.setMinistryCode(ministryCode == null || ministryCode.length() == 0 ? null : ministryCode);
     }
 
-    @Override
-    public void setIdCardName(final String idCardName) {
-        super.setIdCardName(idCardName.toUpperCase());
-    }
-
-    @Override
-    public void setNome(final String nome) {
-        super.setNome(nome);
-        setIdCardName(nome);
-    }
-
     public String getDegreeTypeName() {
         return getDegreeType().getName().getContent();
     }
@@ -952,5 +939,5 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
         super.setCode(code);
     }
-    
+
 }
