@@ -34,7 +34,6 @@ import org.fenixedu.academic.domain.CoordinatorLog;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.OperationType;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.scientificCouncil.ScientificCouncilApplication.ScientificBolonhaProcessApp;
@@ -45,6 +44,7 @@ import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 @StrutsFunctionality(app = ScientificBolonhaProcessApp.class, path = "edit-degree-coordination",
@@ -106,8 +106,7 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
 
         ExecutionDegreeCoordinatorsBean coordsBean = getRenderedObject("coordsBean");
 
-        Coordinator.makeCreation(personAdding, coordsBean.getExecutionDegree(), coordsBean.getNewCoordinator(),
-                Boolean.valueOf(false));
+        createCoordinatorService(coordsBean);
 
         coordsBean.setNewCoordinator(null);
         request.setAttribute("coordsBean", coordsBean);
@@ -115,6 +114,11 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
         request.setAttribute("startVisible", true);
 
         return mapping.findForward("editCoordination");
+    }
+
+    @Atomic
+    private void createCoordinatorService(ExecutionDegreeCoordinatorsBean coordsBean) {
+        Coordinator.createCoordinator(coordsBean.getExecutionDegree(), coordsBean.getNewCoordinator(), Boolean.valueOf(false));
     }
 
     public ActionForward switchResponsability(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -132,11 +136,11 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
         String backPath = request.getParameter("backPath");
 
         if (coordinator.isResponsible()) {
-            coordinator.makeAction(OperationType.CHANGERESPONSIBLE_FALSE, personSwitching);
-            // coordinator.setAsNotResponsible();
+//            coordinator.makeAction(OperationType.CHANGERESPONSIBLE_FALSE, personSwitching);
+            setAsNotResponsible(coordinator);
         } else {
-            coordinator.makeAction(OperationType.CHANGERESPONSIBLE_TRUE, personSwitching);
-            // coordinator.setAsResponsible();
+//            coordinator.makeAction(OperationType.CHANGERESPONSIBLE_TRUE, personSwitching);
+            setAsResponsible(coordinator);
         }
 
         ExecutionDegreeCoordinatorsBean coordsBean = new ExecutionDegreeCoordinatorsBean(executionDegree);
@@ -145,6 +149,16 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
         RenderUtils.invalidateViewState("coordsBean");
 
         return mapping.findForward("editCoordination");
+    }
+
+    @Atomic
+    private void setAsResponsible(Coordinator coordinator) {
+        coordinator.setResponsible(Boolean.TRUE);
+    }
+
+    @Atomic
+    private void setAsNotResponsible(Coordinator coordinator) {
+        coordinator.setResponsible(Boolean.FALSE);
     }
 
     public ActionForward deleteCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -161,7 +175,8 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
 
         String backPath = request.getParameter("backPath");
 
-        coordinator.makeAction(OperationType.REMOVE, personDeleting);
+        removeCoordinator(coordinator);
+//        coordinator.makeAction(OperationType.REMOVE, personDeleting);
         // coordinator.setCoordinator(null);
 
         ExecutionDegreeCoordinatorsBean coordsBean = new ExecutionDegreeCoordinatorsBean(executionDegree);
@@ -170,6 +185,11 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
         RenderUtils.invalidateViewState("coordsBean");
 
         return mapping.findForward("editCoordination");
+    }
+
+    @Atomic
+    private void removeCoordinator(Coordinator coordinator) {
+        coordinator.delete();
     }
 
     public ActionForward invalidAddCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,

@@ -21,19 +21,21 @@ package org.fenixedu.academic.ui.renderers.providers;
 import java.util.List;
 import java.util.Set;
 
+import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.ui.struts.action.academicAdministration.executionCourseManagement.ExecutionCourseBean;
 import org.fenixedu.academic.ui.struts.action.academicAdministration.executionCourseManagement.MergeExecutionCourseDA.DegreesMergeBean;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.BiDirectionalConverter;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 
 public class SourceExecutionCoursesProvider implements DataProvider {
 
@@ -89,7 +91,19 @@ public class SourceExecutionCoursesProvider implements DataProvider {
 
     static protected Set<ExecutionCourse> getExecutionCourses(final Degree degree, final AcademicInterval academicInterval) {
         final Set<ExecutionCourse> result = Sets.newTreeSet(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
-        result.addAll(degree.getExecutionCourses(academicInterval));
+        for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
+            for (final CurricularCourse course : degreeCurricularPlan.getCurricularCoursesSet()) {
+                for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCoursesSet()) {
+                    if (academicInterval.isEqualOrEquivalent(executionCourse.getAcademicInterval())) {
+                        if (course.getParentContextsSet().stream()
+                                .anyMatch(ctx -> ctx.isValid(academicInterval) && ctx.getCurricularPeriod()
+                                        .getChildOrder() == academicInterval.getAcademicCalendarEntry().getCardinality())) {
+                            result.add(executionCourse);
+                        }
+                    }
+                }
+            }
+        }
 
         return result;
     }

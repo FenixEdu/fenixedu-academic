@@ -18,35 +18,38 @@
  */
 package org.fenixedu.academic.domain;
 
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.joda.time.DateTime;
-
-import pt.ist.fenixframework.Atomic;
 
 public class Coordinator extends Coordinator_Base {
 
     private Coordinator() {
         super();
         setRootDomainObject(Bennu.getInstance());
-
     }
 
-    private Coordinator(final ExecutionDegree executionDegree, final Person person, final Boolean responsible) {
-        this();
+    public static Coordinator createCoordinator(ExecutionDegree executionDegree, Person person, Boolean responsible) {
 
-        for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
-            if (coordinator.getPerson() == person) {
-                throw new Error("error.person.already.is.coordinator.for.same.execution.degree");
-            }
+        if (executionDegree.getCoordinatorsListSet().stream().anyMatch(c -> c.getPerson() == person)) {
+            throw new DomainException("error.person.already.is.coordinator.for.same.execution.degree");
         }
 
-        setExecutionDegree(executionDegree);
-        setPerson(person);
-        setResponsible(responsible);
-        // CoordinatorLog.createCoordinatorLog(new DateTime(),
-        // OperationType.ADD, this);
+        CoordinationTeamLog.createLog(executionDegree.getDegree(), executionDegree.getExecutionYear(), Bundle.MESSAGING,
+                "log.degree.coordinationteam.addmember", person.getPresentationName(), executionDegree.getPresentationName());
+
+        final Coordinator coordinator = new Coordinator();
+        coordinator.setExecutionDegree(executionDegree);
+        coordinator.setPerson(person);
+        coordinator.setResponsible(responsible);
+        return coordinator;
     }
 
     public void delete() throws DomainException {
@@ -65,67 +68,30 @@ public class Coordinator extends Coordinator_Base {
         super.setResponsible(responsible);
     }
 
-    public Teacher getTeacher() {
-        return getPerson().getTeacher();
-    }
+    public static Stream<Coordinator> findLastCoordinators(final Degree degree, final boolean responsiblesOnly) {
+        final ExecutionYear current = ExecutionYear.findCurrent(degree.getCalendar());
 
-    @Atomic
-    public static Coordinator createCoordinator(ExecutionDegree executionDegree, Person person, Boolean responsible) {
+        final List<ExecutionYear> years =
+                degree.getDegreeCurricularPlansExecutionYears().stream().filter(year -> year.isBeforeOrEquals(current))
+                        .sorted(Comparator.reverseOrder()).collect(Collectors.toUnmodifiableList());
 
-        CoordinationTeamLog.createLog(executionDegree.getDegree(), executionDegree.getExecutionYear(), Bundle.MESSAGING,
-                "log.degree.coordinationteam.addmember", person.getPresentationName(), executionDegree.getPresentationName());
-
-        return new Coordinator(executionDegree, person, responsible);
-    }
-
-    @Atomic
-    public void removeCoordinator() {
-        this.delete();
-    }
-
-    /**
-     * Method to create coordinator logs for adding responsibility
-     * 
-     * @param personAddingResponsible
-     */
-    public void setAsResponsible(Person personAddingResponsible) {
-
-    }
-
-    @Atomic
-    public void setAsResponsible() {
-        this.setResponsible(Boolean.valueOf(true));
-    }
-
-    @Atomic
-    public void setAsNotResponsible() {
-        this.setResponsible(Boolean.valueOf(false));
-    }
-
-    /**
-     * Method to apply a certain operation on coordinator
-     * 
-     * @param operationType
-     * @param personMakingAction
-     */
-    public void makeAction(OperationType operationType, Person personMakingAction) {
-        if (operationType.compareTo(OperationType.CHANGERESPONSIBLE_FALSE) == 0) {
-            CoordinatorLog.createCoordinatorLog(new DateTime(), OperationType.CHANGERESPONSIBLE_FALSE, personMakingAction, this);
-            setAsNotResponsible();
-        } else if (operationType.compareTo(OperationType.CHANGERESPONSIBLE_TRUE) == 0) {
-            CoordinatorLog.createCoordinatorLog(new DateTime(), OperationType.CHANGERESPONSIBLE_TRUE, personMakingAction, this);
-            this.setAsResponsible();
-        } else if (operationType.compareTo(OperationType.REMOVE) == 0) {
-            CoordinatorLog.createCoordinatorLog(new DateTime(), OperationType.REMOVE, personMakingAction, this);
-            this.removeCoordinator();
+        for (final ExecutionYear year : years) {
+            final Collection<Coordinator> coordinators =
+                    findCoordinators(degree, year, responsiblesOnly).collect(Collectors.toUnmodifiableSet());
+            if (!coordinators.isEmpty()) {
+                return coordinators.stream();
+            }
         }
+
+        return Stream.empty();
     }
 
-    public static Coordinator makeCreation(Person personMakingAction, ExecutionDegree executionDegree, Person person,
-            Boolean responsible) {
-        Coordinator coordinator = createCoordinator(executionDegree, person, responsible);
-        CoordinatorLog.createCoordinatorLog(new DateTime(), OperationType.ADD, personMakingAction, coordinator);
-        return coordinator;
+    public static Stream<Coordinator> findCoordinators(final Degree degree, final ExecutionYear executionYear,
+            final boolean responsiblesOnly) {
+        return degree.getDegreeCurricularPlansSet().stream().map(dcp -> dcp.getExecutionDegreeByYear(executionYear))
+                .filter(Objects::nonNull)
+                .flatMap(ed -> responsiblesOnly ? ed.getResponsibleCoordinators().stream() : ed.getCoordinatorsListSet().stream())
+                .distinct();
     }
 
 }

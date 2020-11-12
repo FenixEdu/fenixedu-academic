@@ -151,14 +151,14 @@ public class CoordinatorGroup extends FenixGroup {
 
     private static Set<User> getCoordinators(Degree degree, Boolean isResponsible) {
         Set<User> users = new HashSet<>();
-        for (Coordinator coordinator : degree.getCurrentCoordinators()) {
+        Coordinator.findLastCoordinators(degree, false).forEach(coordinator -> {
             if (isResponsible == null || isResponsible.equals(coordinator.isResponsible())) {
                 User user = coordinator.getPerson().getUser();
                 if (user != null) {
                     users.add(user);
                 }
             }
-        }
+        });
         return users;
     }
 

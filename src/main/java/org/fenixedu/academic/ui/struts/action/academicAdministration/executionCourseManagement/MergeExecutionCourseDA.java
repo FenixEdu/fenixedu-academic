@@ -19,6 +19,8 @@
 package org.fenixedu.academic.ui.struts.action.academicAdministration.executionCourseManagement;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +28,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -82,16 +86,16 @@ public class MergeExecutionCourseDA extends FenixDispatchAction {
 
         request.setAttribute("previousOrEqualSemester", previousOrEqualSemester);
 
-        if (degreeBean.getDestinationDegree().getExecutionCourses(degreeBean.getAcademicInterval()).isEmpty()
-                && degreeBean.getSourceDegree().getExecutionCourses(degreeBean.getAcademicInterval()).isEmpty()) {
+        if (getExecutionCourses(degreeBean.getDestinationDegree(), degreeBean.getAcademicInterval()).isEmpty()
+                && getExecutionCourses(degreeBean.getSourceDegree(), degreeBean.getAcademicInterval()).isEmpty()) {
             addActionMessage("error", request, "message.merge.execution.courses.degreesHasNoCourses");
             return mapping.findForward("chooseDegreesAndExecutionPeriod");
         } else {
-            if (degreeBean.getDestinationDegree().getExecutionCourses(degreeBean.getAcademicInterval()).isEmpty()) {
+            if (getExecutionCourses(degreeBean.getDestinationDegree(), degreeBean.getAcademicInterval()).isEmpty()) {
                 addActionMessage("error", request, "message.merge.execution.courses.destinationDegreeHasNoCourses");
                 return mapping.findForward("chooseDegreesAndExecutionPeriod");
             } else {
-                if (degreeBean.getSourceDegree().getExecutionCourses(degreeBean.getAcademicInterval()).isEmpty()) {
+                if (getExecutionCourses(degreeBean.getSourceDegree(), degreeBean.getAcademicInterval()).isEmpty()) {
                     addActionMessage("error", request, "message.merge.execution.courses.sourceDegreeHasNoCourses");
                     return mapping.findForward("chooseDegreesAndExecutionPeriod");
                 }
@@ -138,6 +142,24 @@ public class MergeExecutionCourseDA extends FenixDispatchAction {
                     periodName);
         }
         return mapping.findForward("sucess");
+    }
+
+    private static List<ExecutionCourse> getExecutionCourses(final Degree degree, final AcademicInterval academicInterval) {
+        final List<ExecutionCourse> result = new ArrayList<>();
+        for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
+            for (final CurricularCourse course : degreeCurricularPlan.getCurricularCoursesSet()) {
+                for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCoursesSet()) {
+                    if (academicInterval.isEqualOrEquivalent(executionCourse.getAcademicInterval())) {
+                        if (course.getParentContextsSet().stream()
+                                .anyMatch(ctx -> ctx.isValid(academicInterval) && ctx.getCurricularPeriod()
+                                        .getChildOrder() == academicInterval.getAcademicCalendarEntry().getCardinality())) {
+                            result.add(executionCourse);
+                        }
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     @SuppressWarnings("serial")

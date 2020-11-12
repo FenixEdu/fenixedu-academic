@@ -1,5 +1,6 @@
 - Refactor: Cleanup deprecated attends methods
 - Refactor: Cleanup deprecated degree slots
+- Refactor: Cleanup deprecated degree and coordinator methods
 
 32.0.2 (11-11-2020)
 - Bug fix: Fix the unnecessary PersistentGroup creation

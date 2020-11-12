@@ -36,7 +36,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.Coordinator;
+import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.ui.struts.action.base.FenixAction;
 import org.fenixedu.academic.ui.struts.action.coordinator.CoordinatorApplication.CoordinatorManagementApp;
@@ -71,9 +74,30 @@ public class DegreeCoordinatorIndex extends FenixAction {
         if (degreeCurricularPlan != null) {
             request.setAttribute(PresentationConstants.MASTER_DEGREE, degreeCurricularPlan.getMostRecentExecutionDegree());
             request.setAttribute("isCoordinator",
-                    degreeCurricularPlan.getDegree().isCoordinatorInSomeExecutionYear(AccessControl.getPerson()));
+                    isCoordinatorInSomeExecutionYear(degreeCurricularPlan.getDegree(), AccessControl.getPerson()));
             request.setAttribute("isScientificCommissionMember", false);
         }
+    }
+
+    /**
+     * Verifies if the given person was a coordinator for this degree regardless
+     * of the execution year.
+     *
+     * @param person
+     *            the person to check
+     * @return <code>true</code> if the person was a coordinator for a certain
+     *         execution degree
+     */
+    private static boolean isCoordinatorInSomeExecutionYear(final Degree degree, final Person person) {
+        if (person != null) {
+            for (Coordinator coordinator : person.getCoordinatorsSet()) {
+                if (coordinator.getExecutionDegree().getDegree() == degree) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     public static String findDegreeCurricularPlanID(HttpServletRequest request) {
