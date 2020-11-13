@@ -388,6 +388,7 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
         String prevailingScientificArea;
         String sigla;
         String ministryCode;
+        String idCardName;
         String siteUrl;
         String code;
     }

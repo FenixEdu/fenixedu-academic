@@ -749,5 +749,16 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
         super.setCode(code);
     }
+    
+    @Override
+    public void setIdCardName(final String idCardName) {
+        super.setIdCardName(idCardName.toUpperCase());
+    }
+
+    @Override
+    public void setNome(final String nome) {
+        super.setNome(nome);
+        setIdCardName(nome);
+    }    
 
 }
