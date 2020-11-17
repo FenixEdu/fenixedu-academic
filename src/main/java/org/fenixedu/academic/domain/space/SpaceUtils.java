@@ -241,7 +241,7 @@ public class SpaceUtils {
 
     public static Space getDefaultCampus() {
         if (Bennu.getInstance().getDefaultCampus() == null) {
-            return Ordering.from(COMPARATOR_BY_PRESENTATION_NAME).min(Space.getAllCampus());
+            return Space.getAllCampus().stream().sorted(COMPARATOR_BY_PRESENTATION_NAME).findFirst().orElse(null);
         }
         return Bennu.getInstance().getDefaultCampus();
     }
