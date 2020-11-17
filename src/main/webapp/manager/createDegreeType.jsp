@@ -43,7 +43,6 @@
             <fr:property name="classes" value="list-unstyled"/>
         </fr:slot>
         <fr:slot name="empty"/>
-        <fr:slot name="bolonha"/>
         <fr:slot name="degree"/>
         <fr:slot name="masterDegree"/>
         <fr:slot name="dea"/>

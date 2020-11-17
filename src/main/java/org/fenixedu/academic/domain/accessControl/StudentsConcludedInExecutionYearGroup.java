@@ -113,18 +113,14 @@ public class StudentsConcludedInExecutionYearGroup extends FenixGroup {
 
     private LocalDate getConclusionDate(Degree degree, Registration registration) {
         for (StudentCurricularPlan scp : registration.getStudentCurricularPlansByDegree(degree)) {
-            if (registration.isBolonha()) {
-                if (scp.getLastConcludedCycleCurriculumGroup() != null) {
-                    YearMonthDay conclusionDate =
-                            registration.getConclusionDate(scp.getLastConcludedCycleCurriculumGroup().getCycleType());
-                    if (conclusionDate != null) {
-                        return conclusionDate.toLocalDate();
-                    }
+            if (scp.getLastConcludedCycleCurriculumGroup() != null) {
+                YearMonthDay conclusionDate =
+                        registration.getConclusionDate(scp.getLastConcludedCycleCurriculumGroup().getCycleType());
+                if (conclusionDate != null) {
+                    return conclusionDate.toLocalDate();
                 }
-                return null;
-            } else {
-                return registration.getConclusionDate() != null ? registration.getConclusionDate().toLocalDate() : null;
             }
+            return null;
         }
         return null;
     }

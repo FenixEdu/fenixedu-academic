@@ -264,7 +264,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     private Double getOtherHours(final ExecutionInterval executionInterval) {
-        return isBolonhaDegree() && getCompetenceCourse() != null ? getCompetenceCourse().getOtherHours(executionInterval) : 0.0d;
+        return getCompetenceCourse() != null ? getCompetenceCourse().getOtherHours(executionInterval) : 0.0d;
     }
 
     final public double getAutonomousWorkHours() {

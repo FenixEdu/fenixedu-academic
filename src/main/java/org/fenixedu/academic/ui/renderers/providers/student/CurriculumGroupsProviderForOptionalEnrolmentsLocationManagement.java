@@ -54,10 +54,6 @@ public class CurriculumGroupsProviderForOptionalEnrolmentsLocationManagement imp
 
         for (final Registration registration : bean.getStudent().getRegistrationsSet()) {
 
-            if (!registration.isBolonha()) {
-                continue;
-            }
-
             if (!programs.contains(registration.getDegree())) {
                 continue;
             }

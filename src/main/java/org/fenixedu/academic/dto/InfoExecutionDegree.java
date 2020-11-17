@@ -175,7 +175,4 @@ public class InfoExecutionDegree extends InfoObject {
         this.getNextExecutionYear = getNextExecutionYear;
     }
 
-    public boolean isBolonhaDegree() {
-        return getExecutionDegree().isBolonhaDegree();
-    }
 }

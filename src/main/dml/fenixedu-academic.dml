@@ -371,7 +371,6 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
 		public String code (REQUIRED);
 	    public LocalizedString name (REQUIRED);
 	    public boolean empty;
-	    public boolean bolonha;
 	    public boolean degreeType;
 	    public boolean masterDegree;
 	    public boolean dea;

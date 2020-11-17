@@ -230,8 +230,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     private void initializeCommon(final StudentCurricularPlan studentCurricularPlan, final CurricularCourse curricularCourse,
             final ExecutionInterval executionInterval, final EnrollmentCondition enrolmentCondition, final String createdBy) {
         setCurricularCourse(curricularCourse);
-        setWeigth(studentCurricularPlan.isBolonhaDegree() ? curricularCourse.getEctsCredits(executionInterval) : curricularCourse
-                .getWeigth());
+        setWeigth(curricularCourse.getEctsCredits(executionInterval));
         setEnrollmentState(EnrollmentState.ENROLLED);
         setExecutionPeriod(executionInterval);
         setEvaluationSeason(EvaluationConfiguration.getInstance().getDefaultEvaluationSeason());
@@ -743,8 +742,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         }
 
         private boolean considerThisEnrolmentNormalEnrolments(final Enrolment enrolment) {
-            if (enrolment.isBolonhaDegree() && !enrolment.isExtraCurricular() && !enrolment.isPropaedeutic()
-                    && !enrolment.isStandalone()) {
+            if (!enrolment.isExtraCurricular() && !enrolment.isPropaedeutic() && !enrolment.isStandalone()) {
                 if (enrolment.getParentCycleCurriculumGroup().isConclusionProcessed()) {
                     return false;
                 }
@@ -1192,8 +1190,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     final public double getAccumulatedEctsCredits(final ExecutionInterval executionInterval) {
-        return isBolonhaDegree() && !parentAllowAccumulatedEctsCredits() ? 0d : getStudentCurricularPlan()
-                .getAccumulatedEctsCredits(executionInterval, getCurricularCourse());
+        return !parentAllowAccumulatedEctsCredits() ? 0d : getStudentCurricularPlan().getAccumulatedEctsCredits(executionInterval,
+                getCurricularCourse());
     }
 
     @Override

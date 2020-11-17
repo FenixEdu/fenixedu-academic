@@ -93,14 +93,14 @@ public class ChooseStudentCurricularPlanBean implements Serializable {
     }
 
     private final Registration readRegistration() {
-        for (RegistrationNumber registrationNumber : Bennu.getInstance().getRegistrationNumbersSet()) {
-            if (registrationNumber.getNumber().intValue() == getNumber().intValue()) {
-                final Registration registration = registrationNumber.getRegistration();
-                if (registration.getDegreeType().isPreBolonhaDegree()) {
-                    return registration;
-                }
-            }
-        }
+//        for (RegistrationNumber registrationNumber : Bennu.getInstance().getRegistrationNumbersSet()) {
+//            if (registrationNumber.getNumber().intValue() == getNumber().intValue()) {
+//                final Registration registration = registrationNumber.getRegistration();
+//                if (registration.getDegreeType().isPreBolonhaDegree()) {
+//                    return registration;
+//                }
+//            }
+//        }
         return null;
     }
 

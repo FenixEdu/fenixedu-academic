@@ -223,12 +223,11 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
         }
 
         List<ExecutionDegree> bachelors = sessionBean.getExecutionYear().getExecutionDegreesSet().stream()
-                .filter(ed -> ed.getDegreeCurricularPlan().getDegree().getDegreeType().isBolonhaDegree())
-                .collect(Collectors.toList());
+                .filter(ed -> ed.getDegreeCurricularPlan().getDegree().getDegreeType().isDegree()).collect(Collectors.toList());
         request.setAttribute("bachelors", bachelors);
 
         List<ExecutionDegree> masters = sessionBean.getExecutionYear().getExecutionDegreesSet().stream()
-                .filter(ed -> ed.getDegreeCurricularPlan().getDegree().getDegreeType().isBolonhaMasterDegree())
+                .filter(ed -> ed.getDegreeCurricularPlan().getDegree().getDegreeType().isMasterDegree())
                 .collect(Collectors.toList());
         request.setAttribute("masters", masters);
 

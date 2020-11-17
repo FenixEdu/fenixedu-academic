@@ -240,8 +240,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
         }
 
         if (StringUtils.isEmpty(actionForm.getString("organizedBy"))) {
-            String organizedBy = registration.getDegreeType().isPreBolonhaMasterDegree() ? OrganizationType.EXECUTION_YEARS
-                    .name() : OrganizationType.GROUPS.name();
+            String organizedBy = OrganizationType.GROUPS.name();
             actionForm.set("organizedBy", organizedBy);
         }
 
@@ -272,7 +271,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
     }
 
     private StudentCurricularPlanIDDomainType getDefaultStudentCPID(final Registration registration) {
-        return registration.isBolonha() ? StudentCurricularPlanIDDomainType.NEWEST : StudentCurricularPlanIDDomainType.ALL;
+        return StudentCurricularPlanIDDomainType.NEWEST;
     }
 
     private String getStudentCPID(HttpServletRequest request, DynaActionForm actionForm) {

@@ -377,10 +377,6 @@ abstract public class DegreeModule extends DegreeModule_Base {
         return false;
     }
 
-    public boolean isBolonhaDegree() {
-        return getParentDegreeCurricularPlan().isBolonhaDegree();
-    }
-
     public boolean isBranchCourseGroup() {
         return false;
     }

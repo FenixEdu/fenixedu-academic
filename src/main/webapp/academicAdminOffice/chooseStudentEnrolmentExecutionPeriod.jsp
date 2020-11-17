@@ -98,12 +98,10 @@
 			<bean:define id="url5">/curriculumLinesLocationManagement.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.externalId"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.externalId"/></bean:define>
 			<html:link action='<%= url5 %>'><bean:message key="label.course.moveEnrolments.with.rules" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 		</li>
-		<logic:equal name="studentEnrolmentBean" property="studentCurricularPlan.bolonhaDegree" value="true">
 		<li>
 			<bean:define id="url6">/optionalCurricularCoursesLocation.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.externalId"/></bean:define>
 			<html:link action='<%= url6 %>'><bean:message key="label.optionalCurricularCourses.move" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 		</li>
-		</logic:equal>
 	</ul>
 
 	<br/>

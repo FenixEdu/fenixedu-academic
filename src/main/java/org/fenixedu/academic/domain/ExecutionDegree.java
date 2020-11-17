@@ -177,10 +177,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         setCampus(campus);
     }
 
-    public boolean isBolonhaDegree() {
-        return this.getDegreeCurricularPlan().isBolonhaDegree();
-    }
-
     @Override
     public int compareTo(ExecutionDegree executionDegree) {
         final ExecutionYear executionYear = executionDegree.getExecutionYear();

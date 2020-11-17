@@ -53,13 +53,8 @@ public class NoCourseGroupEnroledCurriculumModuleWrapper extends EnroledCurricul
     public double getAccumulatedEctsCredits(ExecutionInterval executionInterval) {
         if (getCurriculumModule().isEnrolment()) {
             final Enrolment enrolment = (Enrolment) getCurriculumModule();
-
-            if (!enrolment.isBolonhaDegree()) {
-                return enrolment.getAccumulatedEctsCredits(executionInterval);
-            } else {
-                return enrolment.getStudentCurricularPlan().getAccumulatedEctsCredits(getExecutionInterval(),
-                        enrolment.getCurricularCourse());
-            }
+            return enrolment.getStudentCurricularPlan().getAccumulatedEctsCredits(getExecutionInterval(),
+                    enrolment.getCurricularCourse());
         } else {
             return 0d;
         }

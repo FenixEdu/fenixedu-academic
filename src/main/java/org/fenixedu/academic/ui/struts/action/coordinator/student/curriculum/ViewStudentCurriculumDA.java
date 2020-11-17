@@ -68,15 +68,7 @@ public class ViewStudentCurriculumDA extends FenixDispatchAction {
             return mapping.findForward("chooseStudent");
         }
 
-        if (!getDegreeCurricularPlan(actionForm).isBolonhaDegree()) {
-
-            request.setAttribute("student", student);
-
-            return mapping.findForward("chooseCurriculumType");
-        } else {
-            return getOldCurriculumRedirect(actionForm, student);
-        }
-
+        return getOldCurriculumRedirect(actionForm, student);
     }
 
     private ActionForward getOldCurriculumRedirect(final ActionForm actionForm, final Student student) {

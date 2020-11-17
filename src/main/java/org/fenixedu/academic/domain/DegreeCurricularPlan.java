@@ -321,10 +321,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
     }
 
-    public boolean isBolonhaDegree() {
-        return getDegree().isBolonhaDegree();
-    }
-
     @Deprecated
     public boolean isEmpty() {
         return false;
@@ -613,12 +609,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
      *         ordered by name
      */
     public List<CompetenceCourse> getCompetenceCourses() {
-        if (isBolonhaDegree()) {
-            return getCompetenceCourses(null);
-        } else {
-            return new ArrayList<>();
-        }
-
+        return getCompetenceCourses(null);
     }
 
     /**
@@ -631,16 +622,12 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public List<CompetenceCourse> getCompetenceCourses(final ExecutionYear executionYear) {
         SortedSet<CompetenceCourse> result = new TreeSet<>(CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);
 
-        if (isBolonhaDegree()) {
-            for (final CurricularCourse curricularCourse : getCurricularCourses(executionYear)) {
-                if (!curricularCourse.isOptionalCurricularCourse()) {
-                    result.add(curricularCourse.getCompetenceCourse());
-                }
+        for (final CurricularCourse curricularCourse : getCurricularCourses(executionYear)) {
+            if (!curricularCourse.isOptionalCurricularCourse()) {
+                result.add(curricularCourse.getCompetenceCourse());
             }
-            return new ArrayList<>(result);
-        } else {
-            return new ArrayList<>();
         }
+        return new ArrayList<>(result);
     }
 
     public Set<CurricularCourse> getActiveCurricularCourses(final ExecutionInterval executionInterval) {
@@ -809,16 +796,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return result;
     }
 
-    public static Set<DegreeCurricularPlan> readPreBolonhaDegreeCurricularPlans() {
-        final Set<DegreeCurricularPlan> result = new HashSet<>();
-
-        for (final Degree degree : Degree.readOldDegrees()) {
-            result.addAll(degree.getDegreeCurricularPlansSet());
-        }
-
-        return result;
-    }
-
     static public List<DegreeCurricularPlan> readByCurricularStage(final CurricularStage curricularStage) {
         final List<DegreeCurricularPlan> result = new ArrayList<>();
         for (final DegreeCurricularPlan degreeCurricularPlan : readNotEmptyDegreeCurricularPlans()) {
@@ -874,7 +851,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public ExecutionDegree createExecutionDegree(final ExecutionYear executionYear, final Space campus,
             final Boolean publishedExamMap) {
 
-        if (isBolonhaDegree() && isDraft()) {
+        if (isDraft()) {
             throw new DomainException("degree.curricular.plan.not.approved.cannot.create.execution.degree", this.getName());
         }
 
@@ -1028,10 +1005,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return getDegree().getDegreeType();
     }
 
-    public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree() {
-        return getDegreeType().isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree();
-    }
-
     public boolean isFirstCycle() {
         return getDegree().isFirstCycle();
     }
@@ -1049,15 +1022,15 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public CycleCourseGroup getThirdCycleCourseGroup() {
-        return isBolonhaDegree() ? getRoot().getThirdCycleCourseGroup() : null;
+        return getRoot().getThirdCycleCourseGroup();
     }
 
     public CycleCourseGroup getCycleCourseGroup(final CycleType cycleType) {
-        return isBolonhaDegree() ? getRoot().getCycleCourseGroup(cycleType) : null;
+        return getRoot().getCycleCourseGroup(cycleType);
     }
 
     public CycleCourseGroup getLastOrderedCycleCourseGroup() {
-        return isBolonhaDegree() ? getCycleCourseGroup(getDegreeType().getLastOrderedCycleType()) : null;
+        return getCycleCourseGroup(getDegreeType().getLastOrderedCycleType());
     }
 
     public String getGraduateTitle(final ExecutionYear executionYear, final ProgramConclusion programConclusion,

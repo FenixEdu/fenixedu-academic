@@ -405,10 +405,6 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return toDelete;
     }
 
-    protected boolean isBolonha() {
-        return getDegreeCurricularPlan().isBolonhaDegree();
-    }
-
     public String getExecutionYearID() {
         if (getViewState().getAttribute("executionYearID") == null) {
             if (getAndHoldStringParameter("executionYearID") != null) {

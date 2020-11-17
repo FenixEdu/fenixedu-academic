@@ -589,9 +589,8 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         ectsCell.setClasses(enrolmentEctsClasses);
 
         final StringBuilder ects = new StringBuilder();
-        final double ectsCredits =
-                enrolment.isBolonhaDegree() && getBolonhaStudentEnrollmentBean().getCurricularRuleLevel().isNormal() ? enrolment
-                        .getAccumulatedEctsCredits(enrolment.getExecutionPeriod()) : enrolment.getEctsCredits();
+        final double ectsCredits = getBolonhaStudentEnrollmentBean().getCurricularRuleLevel().isNormal() ? enrolment
+                .getAccumulatedEctsCredits(enrolment.getExecutionPeriod()) : enrolment.getEctsCredits();
         ects.append(ectsCredits).append(" ").append(BundleUtil.getString(Bundle.STUDENT, "label.credits.abbreviation"));
 
         ectsCell.setBody(new HtmlText(ects.toString()));

@@ -41,11 +41,7 @@ public class CurricularCoursesForDegreeCurricularPlan implements DataProvider {
 
             if (executionDegreeListBean.getDegree().getDegreeCurricularPlansSet()
                     .contains(executionDegreeListBean.getDegreeCurricularPlan())) {
-                if (executionDegreeListBean.getDegree().isBolonhaDegree()) {
-                    result.addAll(executionDegreeListBean.getDegreeCurricularPlan().getDcpDegreeModules(CurricularCourse.class));
-                } else {
-                    result.addAll(executionDegreeListBean.getDegreeCurricularPlan().getCurricularCoursesSet());
-                }
+                result.addAll(executionDegreeListBean.getDegreeCurricularPlan().getDcpDegreeModules(CurricularCourse.class));
             } else {
                 executionDegreeListBean.setDegreeCurricularPlan(null);
                 executionDegreeListBean.setCurricularCourse(null);

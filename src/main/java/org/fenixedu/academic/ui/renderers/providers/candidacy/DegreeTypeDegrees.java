@@ -37,7 +37,7 @@ public class DegreeTypeDegrees implements DataProvider {
 
         final List<Degree> result = new ArrayList<Degree>();
         for (Degree degree : Degree.readNotEmptyDegrees()) {
-            if (degree.getDegreeType().isBolonhaDegree()) {
+            if (degree.getDegreeType().isDegree()) {
                 result.add(degree);
             }
         }

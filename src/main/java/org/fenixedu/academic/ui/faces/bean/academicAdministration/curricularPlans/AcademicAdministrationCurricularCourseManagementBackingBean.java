@@ -18,7 +18,6 @@
  */
 package org.fenixedu.academic.ui.faces.bean.academicAdministration.curricularPlans;
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -26,14 +25,9 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
-import org.apache.commons.collections.comparators.ReverseComparator;
-import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.ExecutionDegree;
-import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.dto.commons.CurricularCourseByExecutionSemesterBean;
 import org.fenixedu.academic.service.services.bolonhaManager.AddContextToCurricularCourse;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
@@ -213,11 +207,7 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
     @Override
     protected List<SelectItem> readExecutionYearItems() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        if (isBolonha()) {
-            readBolonhaExecutionYears(result);
-        } else {
-            readPreBolonhaExecutionYears(result);
-        }
+        readBolonhaExecutionYears(result);
         Collections.sort(result, new Comparator<SelectItem>() {
             @Override
             public int compare(SelectItem o1, SelectItem o2) {
@@ -239,42 +229,9 @@ public class AcademicAdministrationCurricularCourseManagementBackingBean extends
         }
     }
 
-    private void readPreBolonhaExecutionYears(final List<SelectItem> result) {
-        for (final ExecutionYear executionYear : rootDomainObject.getExecutionYearsSet()) {
-            result.add(new SelectItem(executionYear.getExternalId(), executionYear.getYear()));
-        }
-        if (getExecutionYearID() == null) {
-            setExecutionYearID(ExecutionYear.findCurrent(getDegreeCurricularPlan().getDegree().getCalendar()).getExternalId());
-        }
-    }
-
     @Override
     protected List<SelectItem> readExecutionPeriodItems() {
-        return isBolonha() ? super.readExecutionPeriodItems() : readPreBolonhaExecutionPeriodItems();
-    }
-
-    private List<SelectItem> readPreBolonhaExecutionPeriodItems() {
-
-        final Comparator<ExecutionInterval> comparator = new Comparator<ExecutionInterval>() {
-
-            @Override
-            public int compare(final ExecutionInterval o1, final ExecutionInterval o2) {
-                final AcademicInterval ai1 = o1.getAcademicInterval();
-                final AcademicInterval ai2 = o2.getAcademicInterval();
-                final int c = ai1.getStartDateTimeWithoutChronology().compareTo(ai2.getStartDateTimeWithoutChronology());
-                return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
-            }
-
-        };
-
-        final List<ExecutionInterval> semesters = new ArrayList<ExecutionInterval>(rootDomainObject.getExecutionPeriodsSet());
-        Collections.sort(semesters, new ReverseComparator(comparator));
-
-        final List<SelectItem> result = new ArrayList<SelectItem>();
-        for (final ExecutionInterval semester : semesters) {
-            result.add(new SelectItem(semester.getExternalId(), semester.getQualifiedName()));
-        }
-        return result;
+        return super.readExecutionPeriodItems();
     }
 
     public boolean isToAddNewContext() {

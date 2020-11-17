@@ -281,10 +281,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return getDegreeCurricularPlan().isPast();
     }
 
-    final public boolean isBolonhaDegree() {
-        return getDegreeCurricularPlan().isBolonhaDegree();
-    }
-
     final public Person getPerson() {
         return getRegistration().getPerson();
     }
@@ -794,35 +790,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public double getAccumulatedEctsCredits(final ExecutionInterval executionInterval, final CurricularCourse curricularCourse) {
-        if (curricularCourse.isBolonhaDegree()) {
-            return isAccumulated(executionInterval, curricularCourse) ? MaximumNumberOfCreditsForEnrolmentPeriod
-                    .getAccumulatedEcts(curricularCourse, executionInterval) : curricularCourse
-                            .getEctsCredits(executionInterval.getChildOrder(), executionInterval);
-        } else {
-            return getAccumulatedEctsCreditsForOldCurricularCourses(curricularCourse, executionInterval);
-        }
-    }
-
-    private double getAccumulatedEctsCreditsForOldCurricularCourses(final CurricularCourse curricularCourse,
-            ExecutionInterval executionInterval) {
-        Double factor;
-        Integer curricularCourseAcumulatedEnrolments = calculateStudentAcumulatedEnrollments(curricularCourse, executionInterval);
-        if (curricularCourseAcumulatedEnrolments == null || curricularCourseAcumulatedEnrolments.intValue() == 0) {
-            factor = 1.0;
-        } else {
-            factor = 0.75;
-        }
-        return curricularCourse.getEctsCredits() * factor;
+        return isAccumulated(executionInterval, curricularCourse) ? MaximumNumberOfCreditsForEnrolmentPeriod.getAccumulatedEcts(
+                curricularCourse,
+                executionInterval) : curricularCourse.getEctsCredits(executionInterval.getChildOrder(), executionInterval);
     }
 
     private boolean isAccumulated(final ExecutionInterval executionInterval, final CurricularCourse curricularCourse) {
-        if (curricularCourse.isBolonhaDegree()) {
-            return hasEnrolmentInCurricularCourseBefore(curricularCourse, executionInterval);
-        } else {
-            Integer curricularCourseAcumulatedEnrolments =
-                    calculateStudentAcumulatedEnrollments(curricularCourse, executionInterval);
-            return curricularCourseAcumulatedEnrolments != null && curricularCourseAcumulatedEnrolments.intValue() != 0;
-        }
+        return hasEnrolmentInCurricularCourseBefore(curricularCourse, executionInterval);
     }
 
     private boolean hasEnrolmentInCurricularCourseBefore(final CurricularCourse curricularCourse,
@@ -849,14 +823,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     // -------------------------------------------------------------
     // BEGIN: Only for enrollment purposes (PROTECTED)
     // -------------------------------------------------------------
-
-    private Integer calculateStudentAcumulatedEnrollments(final CurricularCourse curricularCourse,
-            final ExecutionInterval executionInterval) {
-        if (!this.isBolonhaDegree()) {
-            return getRoot().calculateStudentAcumulatedEnrollments(curricularCourse, executionInterval);
-        }
-        return null;
-    }
 
     private boolean isThisCurricularCoursesInTheList(final CurricularCourse curricularCourse,
             List<CurricularCourse> curricularCourses) {
@@ -968,7 +934,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(final ExecutionInterval executionInterval) {
-        return isBolonhaDegree() ? getRoot().getDegreeModulesToEvaluate(executionInterval) : Collections.EMPTY_SET;
+        return getRoot().getDegreeModulesToEvaluate(executionInterval);
     }
 
     public RuleResult enrol(final ExecutionInterval executionInterval, final Set<IDegreeModuleToEvaluate> degreeModulesToEnrol,
@@ -1327,8 +1293,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
             curriculumLine.setCreatedBy(responsible != null ? responsible.getUsername() : curriculumLine.getCreatedBy());
         }
-
-        runRules &= isBolonhaDegree();
 
         if (runRules) {
             ExecutionYear.findCurrent(getDegree().getCalendar()).getChildIntervals().stream()

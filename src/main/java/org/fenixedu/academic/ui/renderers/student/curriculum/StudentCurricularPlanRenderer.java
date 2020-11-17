@@ -585,8 +585,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
                     groupName.append(") </span>");
                 }
 
-                if (isViewerAllowedToViewFullStudentCurriculum(studentCurricularPlan) && studentCurricularPlan.isBolonhaDegree()
-                        && creditsLimit != null) {
+                if (isViewerAllowedToViewFullStudentCurriculum(studentCurricularPlan) && creditsLimit != null) {
 
                     final ConclusionValue value = curriculumGroup.isConcluded(executionYearContext);
                     groupName.append(

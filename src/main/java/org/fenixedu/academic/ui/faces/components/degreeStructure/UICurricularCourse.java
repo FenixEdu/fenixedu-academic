@@ -85,7 +85,7 @@ public class UICurricularCourse extends UIDegreeModule {
             encodeCurricularRules();
         }
 
-        if (!byYears && this.curricularCourse.isBolonhaDegree() && this.curricularCourse.isAnual(this.executionYear)) {
+        if (!byYears && this.curricularCourse.isAnual(this.executionYear)) {
             encodeInNextPeriod(facesContext);
         }
     }
@@ -114,12 +114,8 @@ public class UICurricularCourse extends UIDegreeModule {
 
         if (linkable) {
             writer.startElement("a", this);
-            if (this.curricularCourse.isBolonhaDegree()) {
-                encodeLinkHref(module + "/viewCurricularCourse.faces",
-                        "&curricularCourseID=" + this.curricularCourse.getExternalId(), false);
-            } else {
-                encodeNonBolonhaLinkHref();
-            }
+            encodeLinkHref(module + "/viewCurricularCourse.faces", "&curricularCourseID=" + this.curricularCourse.getExternalId(),
+                    false);
             appendCodeAndName();
             writer.endElement("a");
         } else {
@@ -127,26 +123,6 @@ public class UICurricularCourse extends UIDegreeModule {
         }
 
         writer.endElement("td");
-    }
-
-    private void encodeNonBolonhaLinkHref() throws IOException {
-
-        final StringBuilder href = new StringBuilder();
-        href.append(module + "/showCourseSite.do?method=showCurricularCourseSite");
-
-        href.append("&curricularCourseID=").append(this.curricularCourse.getExternalId());
-        href.append("&degreeID=").append(this.curricularCourse.getDegree().getExternalId());
-        href.append("&degreeCurricularPlanID=").append(this.curricularCourse.getDegreeCurricularPlan().getExternalId());
-
-        final Map<String, String> requestParameterMap = this.facesContext.getExternalContext().getRequestParameterMap();
-        if (this.executionYear != null) {
-            final ExecutionInterval executionInterval = this.executionYear.getLastExecutionPeriod();
-            href.append("&executionPeriodOID=").append(executionInterval.getExternalId());
-        } else if (requestParameterMap.get("executionPeriodOID") != null) {
-            href.append("&executionPeriodOID=").append(requestParameterMap.get("executionPeriodOID"));
-        }
-
-        writer.writeAttribute("href", href.toString(), null);
     }
 
     private void encodeContext(CurricularPeriod curricularPeriod) throws IOException {

@@ -277,7 +277,6 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         private LocalizedString name;
         private DegreeType selected;
         private boolean empty;
-        private boolean bolonha = true;
         private boolean degree;
         private boolean masterDegree;
         private boolean dea;
@@ -292,7 +291,6 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
             this.selected = type;
             this.name = type.getName();
             this.empty = type.getEmpty();
-            this.bolonha = type.getBolonha();
             this.degree = type.getDegreeType();
             this.masterDegree = type.getMasterDegree();
             this.dea = type.getDea();
@@ -323,14 +321,6 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
 
         public void setEmpty(boolean empty) {
             this.empty = empty;
-        }
-
-        public boolean isBolonha() {
-            return bolonha;
-        }
-
-        public void setBolonha(boolean bolonha) {
-            this.bolonha = bolonha;
         }
 
         public boolean isDegree() {
@@ -415,7 +405,6 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
                 DegreeType type = bean.getSelected() == null ? new DegreeType(bean.getName()) : bean.getSelected();
                 type.setName(bean.getName());
                 type.setEmpty(bean.isEmpty());
-                type.setBolonha(bean.isBolonha());
                 type.setDegreeType(bean.isDegree());
                 type.setMasterDegree(bean.isMasterDegree());
                 type.setDea(bean.isDea());

@@ -144,10 +144,6 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
     public abstract StudentCurricularPlan getStudentCurricularPlan();
 
-    final public boolean isBolonhaDegree() {
-        return getStudentCurricularPlan().isBolonhaDegree();
-    }
-
     public DegreeCurricularPlan getDegreeCurricularPlanOfStudent() {
         return getStudentCurricularPlan().getDegreeCurricularPlan();
     }

@@ -49,15 +49,7 @@ public class DisplayCurricularPlan extends FenixBackingBean {
 
     public List getDegreeCurricularPlans() throws FenixServiceException {
 
-        List degreeCurricularPlans = (List) ReadActiveDegreeCurricularPlansByDegreeType.run(DegreeType::isPreBolonhaDegree);
-
-        List<SelectItem> result = new ArrayList<SelectItem>(degreeCurricularPlans.size());
-        for (InfoDegreeCurricularPlan degreeCurricularPlan : (List<InfoDegreeCurricularPlan>) degreeCurricularPlans) {
-            String label = degreeCurricularPlan.getInfoDegree().getNome() + " - " + degreeCurricularPlan.getName();
-            result.add(new SelectItem(degreeCurricularPlan.getExternalId(), label));
-        }
-
-        return result;
+        return List.of();
     }
 
     public List getExecutionYears() throws FenixServiceException {
@@ -82,9 +74,6 @@ public class DisplayCurricularPlan extends FenixBackingBean {
 
         return executionYear.getYear();
     }
-
-
-
 
     public String getChoosenExecutionYearID() {
         return choosenExecutionYearID;

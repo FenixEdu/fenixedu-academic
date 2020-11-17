@@ -29,8 +29,7 @@ public class BolonhaDegreeTypesProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        return DegreeType.all().filter(type -> !type.isEmpty()).filter(DegreeType::isBolonhaType).sorted()
-                .collect(Collectors.toList());
+        return DegreeType.all().filter(type -> !type.isEmpty()).sorted().collect(Collectors.toList());
     }
 
     @Override

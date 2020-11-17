@@ -566,7 +566,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             final List<Degree> allDegrees = Degree.readNotEmptyDegrees();
             final DegreeType bolonhaDegreeType = getDegreeType(selectedDegreeType);
             for (final Degree degree : allDegrees) {
-                if (degree.isBolonhaDegree() && (bolonhaDegreeType == null || degree.getDegreeType() == bolonhaDegreeType)) {
+                if (bolonhaDegreeType == null || degree.getDegreeType() == bolonhaDegreeType) {
                     result.add(new SelectItem(degree.getExternalId(),
                             "[" + degree.getDegreeType().getName().getContent() + "] " + degree.getNome()));
                 }

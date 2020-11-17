@@ -87,26 +87,6 @@ public class DegreeType extends DegreeType_Base implements Comparable<DegreeType
         return getDfa();
     }
 
-    public boolean isPreBolonhaDegree() {
-        return !this.isBolonhaType() && this.isDegree();
-    }
-
-    public boolean isBolonhaDegree() {
-        return this.isBolonhaType() && this.isDegree();
-    }
-
-    public boolean isPreBolonhaMasterDegree() {
-        return !this.isBolonhaType() && this.isMasterDegree();
-    }
-
-    public boolean isBolonhaMasterDegree() {
-        return this.isBolonhaType() && this.isMasterDegree();
-    }
-
-    public boolean isBolonhaType() {
-        return getBolonha();
-    }
-
     public boolean isDegree() {
         return getDegreeType();
     }
@@ -119,12 +99,8 @@ public class DegreeType extends DegreeType_Base implements Comparable<DegreeType
         return getCycleTypes().contains(CycleType.FIRST_CYCLE) && getCycleTypes().contains(CycleType.SECOND_CYCLE);
     }
 
-    public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree() {
-        return this.isDegree() || isIntegratedMasterDegree();
-    }
-
     final public String getCreditsDescription() {
-        return this.isPreBolonhaMasterDegree() ? " Créd." : " ECTS";
+        return " ECTS";
     }
 
     public String getPrefix() {

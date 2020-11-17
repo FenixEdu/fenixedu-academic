@@ -32,9 +32,7 @@ import org.fenixedu.academic.ui.faces.bean.scientificCouncil.curricularPlans.Deg
 public class AcademicAdministrationDegreeManagementBackingBean extends DegreeManagementBackingBean {
 
     public List<Degree> getFilteredPreBolonhaDegrees() {
-        final List<Degree> orderedResult = Degree.readOldDegrees();
-        Collections.sort(orderedResult, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-        return orderedResult;
+        return List.of();
     }
 
     @Override

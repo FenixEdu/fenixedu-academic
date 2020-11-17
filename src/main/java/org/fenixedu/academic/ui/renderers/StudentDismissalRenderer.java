@@ -272,16 +272,11 @@ public class StudentDismissalRenderer extends InputRenderer {
 
         protected void generateCourseGroupCycles(final HtmlBlockContainer blockContainer,
                 final StudentCurricularPlan studentCurricularPlan, final ExecutionInterval executionInterval) {
-            if (studentCurricularPlan.isBolonhaDegree()) {
-                for (final CycleType cycleType : studentCurricularPlan.getDegreeType().getSupportedCyclesToEnrol()) {
-                    final CourseGroup courseGroup = getCourseGroupWithCycleType(studentCurricularPlan, cycleType);
-                    if (courseGroup != null) {
-                        generateCourseGroups(blockContainer, studentCurricularPlan, courseGroup, executionInterval, 0);
-                    }
+            for (final CycleType cycleType : studentCurricularPlan.getDegreeType().getSupportedCyclesToEnrol()) {
+                final CourseGroup courseGroup = getCourseGroupWithCycleType(studentCurricularPlan, cycleType);
+                if (courseGroup != null) {
+                    generateCourseGroups(blockContainer, studentCurricularPlan, courseGroup, executionInterval, 0);
                 }
-            } else {
-                generateCourseGroups(blockContainer, studentCurricularPlan, studentCurricularPlan.getRoot().getDegreeModule(),
-                        executionInterval, 0);
             }
         }
 

@@ -168,7 +168,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
         final Map<ExecutionDegree, Integer> modified = new HashMap<ExecutionDegree, Integer>();
 
         for (final Degree degree : Degree
-                .readAllMatching(DegreeType.oneOf(DegreeType::isBolonhaDegree, DegreeType::isIntegratedMasterDegree))) {
+                .readAllMatching(DegreeType.oneOf(DegreeType::isDegree, DegreeType::isIntegratedMasterDegree))) {
             for (final DegreeCurricularPlan degreeCurricularPlan : degree.getActiveDegreeCurricularPlans()) {
                 final ExecutionDegree executionDegree = degreeCurricularPlan
                         .getExecutionDegreeByAcademicInterval(executionInterval.getExecutionYear().getAcademicInterval());

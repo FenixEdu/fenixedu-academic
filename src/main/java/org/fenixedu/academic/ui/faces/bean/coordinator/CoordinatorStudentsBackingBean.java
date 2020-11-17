@@ -403,8 +403,8 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
         final Registration registration = studentCurricularPlan.getRegistration();
 
         if (registration.isConcluded()) {
-            if (registration.isRegistrationConclusionProcessed() && (!registration.isBolonha()
-                    || studentCurricularPlan.getInternalCycleCurriculumGroupsSize().intValue() == 1)) {
+            if (registration.isRegistrationConclusionProcessed()
+                    && studentCurricularPlan.getInternalCycleCurriculumGroupsSize().intValue() == 1) {
                 return registration.getRawGrade().getValue();
             } else {
                 return " - ";

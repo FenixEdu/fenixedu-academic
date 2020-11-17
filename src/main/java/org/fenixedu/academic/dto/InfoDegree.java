@@ -69,10 +69,6 @@ public class InfoDegree extends InfoObject implements Comparable {
         return obj instanceof InfoDegree && getDegree().equals(((InfoDegree) obj).getDegree());
     }
 
-    public boolean isBolonhaDegree() {
-        return getDegree().isBolonhaDegree();
-    }
-
     public DegreeType getDegreeType() {
         return getDegree().getDegreeType();
     }

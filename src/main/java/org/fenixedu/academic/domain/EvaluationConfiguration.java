@@ -95,9 +95,6 @@ public class EvaluationConfiguration extends EvaluationConfiguration_Base {
     public static class EnrolmentComparator implements Comparator<EnrolmentEvaluation> {
         @Override
         public int compare(EnrolmentEvaluation o1, EnrolmentEvaluation o2) {
-            if (o1.getEnrolment().getStudentCurricularPlan().getDegreeType().isPreBolonhaMasterDegree()) {
-                return compareMyWhenAlteredDateToAnotherWhenAlteredDate(o1.getWhen(), o2.getWhen());
-            }
 
             if (isInCurriculumValidationContextAndIsFinal(o1) && !isInCurriculumValidationContextAndIsFinal(o2)) {
                 return 1;

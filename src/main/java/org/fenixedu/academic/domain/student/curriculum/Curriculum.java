@@ -151,9 +151,6 @@ public class Curriculum implements Serializable, ICurriculum {
             if (getCycleType(curriculum) != null) {
                 return;
             }
-            if (!curriculum.getStudentCurricularPlan().getDegreeCurricularPlan().isBolonhaDegree()) {
-                return;
-            }
             //this is to prevent some oddly behavior spotted (e.g. student 57276)
             if (curriculum.getStudentCurricularPlan().getCycleCurriculumGroups().isEmpty()) {
                 return;
@@ -170,7 +167,7 @@ public class Curriculum implements Serializable, ICurriculum {
         }
 
         private CycleType getCycleType(final Curriculum curriculum) {
-            if (!curriculum.hasCurriculumModule() || !curriculum.isBolonha()) {
+            if (!curriculum.hasCurriculumModule()) {
                 return null;
             }
 
@@ -224,7 +221,7 @@ public class Curriculum implements Serializable, ICurriculum {
 
         private void doCalculus(final Curriculum curriculum) {
             GradeScale gradeScale = curriculum.getStudentCurricularPlan().getRegistration().getDegree().getNumericGradeScale();
-            
+
             sumPiCi = BigDecimal.ZERO;
             sumPi = BigDecimal.ZERO;
             countAverage(curriculum.averageEnrolmentRelatedEntries);
@@ -308,8 +305,6 @@ public class Curriculum implements Serializable, ICurriculum {
 
     private CurriculumModule curriculumModule;
 
-    private Boolean bolonhaDegree;
-
     private final ExecutionYear executionYear;
 
     private final Set<ICurriculumEntry> averageEnrolmentRelatedEntries = new HashSet<>();
@@ -332,7 +327,6 @@ public class Curriculum implements Serializable, ICurriculum {
 
     private Curriculum(final CurriculumModule curriculumModule, final ExecutionYear executionYear) {
         this.curriculumModule = curriculumModule;
-        this.bolonhaDegree = curriculumModule == null ? null : curriculumModule.getStudentCurricularPlan().isBolonhaDegree();
         this.executionYear = executionYear;
     }
 
@@ -350,7 +344,6 @@ public class Curriculum implements Serializable, ICurriculum {
     public void add(final Curriculum curriculum) {
         if (!hasCurriculumModule()) {
             this.curriculumModule = curriculum.getCurriculumModule();
-            this.bolonhaDegree = curriculum.isBolonha();
         }
 
         addAverageEntries(averageEnrolmentRelatedEntries, curriculum.getEnrolmentRelatedEntries());
@@ -380,10 +373,8 @@ public class Curriculum implements Serializable, ICurriculum {
     }
 
     private void add(final Set<ICurriculumEntry> entries, final ICurriculumEntry newEntry) {
-        if (isBolonha() || !isAlreadyCurricularYearEntry(newEntry)) {
-            if (getCurriculumEntryPredicate().test(newEntry)) {
-                entries.add(newEntry);
-            }
+        if (getCurriculumEntryPredicate().test(newEntry)) {
+            entries.add(newEntry);
         }
     }
 
@@ -425,10 +416,6 @@ public class Curriculum implements Serializable, ICurriculum {
 
     public boolean hasCurriculumModule() {
         return getCurriculumModule() != null;
-    }
-
-    public Boolean isBolonha() {
-        return bolonhaDegree;
     }
 
     public ExecutionYear getExecutionYear() {
@@ -554,7 +541,6 @@ public class Curriculum implements Serializable, ICurriculum {
         if (hasCurriculumModule()) {
             result.append("\n[CURRICULUM_MODULE][ID] " + getCurriculumModule().getExternalId() + "\t[NAME]"
                     + getCurriculumModule().getName().getContent());
-            result.append("\n[BOLONHA] " + isBolonha().toString());
         } else {
             result.append("\n[NO CURRICULUM_MODULE]");
         }

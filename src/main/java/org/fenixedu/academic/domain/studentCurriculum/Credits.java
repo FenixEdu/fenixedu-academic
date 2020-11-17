@@ -110,8 +110,7 @@ public class Credits extends Credits_Base {
 
     private void checkGivenCredits(final StudentCurricularPlan studentCurricularPlan, final CourseGroup courseGroup,
             final Double credits, final ExecutionInterval executionInterval) {
-        if (courseGroup.isBolonhaDegree()
-                && !allowsEctsCredits(studentCurricularPlan, courseGroup, executionInterval, credits.doubleValue())) {
+        if (!allowsEctsCredits(studentCurricularPlan, courseGroup, executionInterval, credits.doubleValue())) {
             throw new DomainException("error.credits.invalid.credits", credits.toString());
         }
     }

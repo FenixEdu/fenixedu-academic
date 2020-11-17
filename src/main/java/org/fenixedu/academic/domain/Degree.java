@@ -323,21 +323,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     @Deprecated
-    public DegreeType getBolonhaDegreeType() {
-        return getDegreeType();
-    }
-
-    public boolean isBolonhaDegree() {
-        return getDegreeType().isBolonhaType();
-    }
-
-    @Deprecated
     public boolean isEmpty() {
         return false;
-    }
-
-    public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree() {
-        return getDegreeType().isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree();
     }
 
     public static Degree find(final String code) {
@@ -598,6 +585,10 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return null;
     }
 
+    public static Stream<Degree> findAll() {
+        return Bennu.getInstance().getDegreesSet().stream();
+    }
+
     /**
      * @deprecated Degrees cannot be empty anymore so usage of this method is unecessary
      */
@@ -606,28 +597,12 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return new ArrayList<>(Bennu.getInstance().getDegreesSet());
     }
 
-    public static Stream<Degree> findAll() {
-        return Bennu.getInstance().getDegreesSet().stream();
-    }
-
-    public static List<Degree> readOldDegrees() {
-        List<Degree> result = new ArrayList<>();
-        for (final Degree degree : Degree.readNotEmptyDegrees()) {
-            if (!degree.isBolonhaDegree()) {
-                result.add(degree);
-            }
-        }
-        return result;
-    }
-
+    /**
+     * @deprecated Degrees cannot be non bolonha anymore so usage of this method is unecessary
+     */
+    @Deprecated
     public static List<Degree> readBolonhaDegrees() {
-        List<Degree> result = new ArrayList<>();
-        for (final Degree degree : Degree.readNotEmptyDegrees()) {
-            if (degree.isBolonhaDegree()) {
-                result.add(degree);
-            }
-        }
-        return result;
+        return new ArrayList<>(Bennu.getInstance().getDegreesSet());
     }
 
     public static List<Degree> readAllMatching(final Predicate<DegreeType> predicate) {
