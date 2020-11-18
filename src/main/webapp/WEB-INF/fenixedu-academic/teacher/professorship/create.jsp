@@ -104,7 +104,7 @@
 		<small><spring:message code="label.add" /></small>
 	</h1>
 </div>
-<a href="${baseUrl}?period=${bean.period.externalId}&department=${authorization.department.externalId}" class="btn btn-link"><spring:message code="label.back"/></a>
+<a href="${baseUrl}?period=${bean.period.externalId}" class="btn btn-link"><spring:message code="label.back"/></a>
 <section>
 	<div class="panel panel-default">
   		<div class="panel-heading">
