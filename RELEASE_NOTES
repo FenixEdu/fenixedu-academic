@@ -1,3 +1,4 @@
+32.2.0 (18-11-2020)
 - Bug fix: Prevent exception in ordering campus when none exists yet
 - Refactor: Remove deprecated slot bolonha from degree type
 
