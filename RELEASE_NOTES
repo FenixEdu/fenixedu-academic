@@ -1,3 +1,4 @@
+32.3.0 (19-11-2020)
 - Improvement: Support multiple sub-units with same name under same parent
 - Bug fix: Fix broken back navigation from professorship creation
 - Refactor: Remove deprecated relation between administrative office and campus
