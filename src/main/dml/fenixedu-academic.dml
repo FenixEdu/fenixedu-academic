@@ -1961,15 +1961,6 @@ relation AdministrativeOfficeResponsible {
     }
 }
 
-relation AdministrativeOfficeCampus {
-    protected administrativeOffice.AdministrativeOffice playsRole administrativeOfficeOfCampus {
-        multiplicity *;
-    }
-    public .org.fenixedu.spaces.domain.Space playsRole campus {
-        multiplicity 1..1;
-    }
-}
-
 relation AcademicServiceRequestAdministrativeOffice {
     administrativeOffice.AdministrativeOffice playsRole administrativeOffice {
     	multiplicity 1..1;

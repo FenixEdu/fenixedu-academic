@@ -473,8 +473,6 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         AdministrativeOffice office = new AdministrativeOffice();
         office.setAdministrativeOfficeType(bean.getType());
 
-        office.setCampus(bean.getBuilding());
-
         office.setName(bean.getNameLS());
         office.setCoordinator(User.findByUsername(bean.getUsername()));
         office.setRootDomainObject(Bennu.getInstance());
