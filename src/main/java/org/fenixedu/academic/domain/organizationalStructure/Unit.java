@@ -113,16 +113,8 @@ public class Unit extends Unit_Base {
             throw new DomainException("error.Party.empty.partyName");
         }
         super.setPartyName(partyName);
-        checkUniqueNameInSiblingUnits();
 
         setName(LocaleUtils.getPreferedContent(partyName));
-    }
-
-    private void checkUniqueNameInSiblingUnits() {
-        final Predicate<Unit> predicate = u -> getName().equalsIgnoreCase(u.getName());
-        if (getParentUnits().stream().flatMap(pu -> pu.getSubUnits().stream()).filter(u -> u != this).anyMatch(predicate)) {
-            throw new DomainException("error.unit.already.exists.unit.with.same.name");
-        }
     }
 
     @Override
