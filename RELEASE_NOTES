@@ -1,3 +1,4 @@
+32.3.2 (23-11-2020)
 - Bug Fix: Set CurrentPartyContact to null when deleting party contact #UL-FM-1968
 
 32.3.1 (23-11-2020)
