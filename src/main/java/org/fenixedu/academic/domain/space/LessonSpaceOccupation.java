@@ -206,9 +206,9 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
     
     @Override
     public DateTime getStart() {
-        List<Interval> intervals = getIntervals();
+        List<Interval> intervals = getPeriod().getIntervals();
         intervals.sort((i1, i2) -> i1.getStart().compareTo(i2.getStart()));
-        if (intervals.size() > 1) {
+        if (intervals.size() > 0) {
             return intervals.get(0).getStart();
         }
         return null;
@@ -216,9 +216,9 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
 
     @Override
     public DateTime getEnd() {
-        List<Interval> intervals = getIntervals();
+        List<Interval> intervals = getPeriod().getIntervals();
         intervals.sort((i1, i2) -> i1.getEnd().compareTo(i2.getEnd()));
-        if (intervals.size() > 1) {
+        if (intervals.size() > 0) {
             return intervals.get(intervals.size() - 1).getEnd();
         }
         return null;
