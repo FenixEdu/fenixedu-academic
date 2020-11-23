@@ -1,3 +1,5 @@
+- Bug Fix: Set CurrentPartyContact to null when deleting party contact #UL-FM-1968
+
 32.3.1 (23-11-2020)
 - Bug fix: Error accessing coordinator portal due to removal of bolonha type in degree type
 

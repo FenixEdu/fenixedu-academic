@@ -280,6 +280,7 @@ public abstract class PartyContact extends PartyContact_Base {
             }
             setParty(null);
             setContactRoot(null);
+            setCurrentPartyContact(null);
             setPrevPartyContact(null);
             deleteDomainObject();
         }
