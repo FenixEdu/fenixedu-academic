@@ -213,4 +213,9 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
         }
         return asd;
     }
+    
+    @Override
+    public String getType() {
+        return BundleUtil.getString(Bundle.APPLICATION, "label.lesson");
+    }
 }

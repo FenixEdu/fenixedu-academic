@@ -26,9 +26,11 @@ import org.fenixedu.academic.domain.FrequencyType;
 import org.fenixedu.academic.domain.Lesson;
 import org.fenixedu.academic.domain.OccupationPeriod;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.DiaSemana;
 import org.fenixedu.academic.util.HourMinuteSecond;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -195,6 +197,11 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
     @Override
     protected boolean overlaps(final Interval interval) {
         return getLesson().overlaps(interval);
+    }
+    
+    @Override
+    public String getType() {
+        return BundleUtil.getString(Bundle.APPLICATION, "label.lesson");
     }
 
 }
