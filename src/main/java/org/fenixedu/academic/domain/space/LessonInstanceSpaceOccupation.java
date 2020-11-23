@@ -213,9 +213,29 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
         }
         return asd;
     }
-    
+
     @Override
     public String getType() {
         return BundleUtil.getString(Bundle.APPLICATION, "label.lesson");
+    }
+
+    @Override
+    public DateTime getStart() {
+        List<Interval> intervals = getIntervals();
+        intervals.sort((i1, i2) -> i1.getStart().compareTo(i2.getStart()));
+        if (intervals.size() > 1) {
+            return intervals.get(0).getStart();
+        }
+        return null;
+    }
+
+    @Override
+    public DateTime getEnd() {
+        List<Interval> intervals = getIntervals();
+        intervals.sort((i1, i2) -> i1.getEnd().compareTo(i2.getEnd()));
+        if (intervals.size() > 1) {
+            return intervals.get(intervals.size() - 1).getEnd();
+        }
+        return null;
     }
 }
