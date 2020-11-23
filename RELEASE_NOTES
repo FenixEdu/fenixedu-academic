@@ -1,3 +1,5 @@
+- Bug fix: Error accessing coordinator portal due to removal of bolonha type in degree type
+
 32.3.0 (19-11-2020)
 - Improvement: Support multiple sub-units with same name under same parent
 - Bug fix: Fix broken back navigation from professorship creation

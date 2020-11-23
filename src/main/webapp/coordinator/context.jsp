@@ -74,25 +74,23 @@
                   </a>
                 </li>
               --%>
-                <c:if test="${degree.bolonhaDegree}">
-                  <li>
-                    <a href="${base}/degreeCurricularPlan/showDegreeCurricularPlanBolonha.faces?degreeCurricularPlanID=${dcp}&organizeBy=groups&showRules=false&hideCourses=false">
-                      <bean:message key="link.coordinator.degreeCurricularPlan.management"/>
-                    </a>
-                  </li>
-                  <%--
-                  <li>
-                    <a href="${base}/degreeCurricularPlan/showAllCompetenceCourses.faces?degreeCurricularPlanID=${dcp}">
-                      <bean:message key="list.competence.courses"/>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="${base}/degreeCurricularPlan/equivalencyPlan.do?method=showPlan&degreeCurricularPlanID=${dcp}">
-                      <bean:message key="link.equivalency.plan"/>
-                    </a>
-                  </li>
-                  --%>
-                </c:if>
+                <li>
+                  <a href="${base}/degreeCurricularPlan/showDegreeCurricularPlanBolonha.faces?degreeCurricularPlanID=${dcp}&organizeBy=groups&showRules=false&hideCourses=false">
+                    <bean:message key="link.coordinator.degreeCurricularPlan.management"/>
+                  </a>
+                </li>
+                <%--
+                <li>
+                  <a href="${base}/degreeCurricularPlan/showAllCompetenceCourses.faces?degreeCurricularPlanID=${dcp}">
+                    <bean:message key="list.competence.courses"/>
+                  </a>
+                </li>
+                <li>
+                  <a href="${base}/degreeCurricularPlan/equivalencyPlan.do?method=showPlan&degreeCurricularPlanID=${dcp}">
+                    <bean:message key="link.equivalency.plan"/>
+                  </a>
+                </li>
+                --%>
                 <%--
                 <li>
                   <a href="${base}/sendEmail.do?method=sendEmail&degreeCurricularPlanID=${dcp}">
