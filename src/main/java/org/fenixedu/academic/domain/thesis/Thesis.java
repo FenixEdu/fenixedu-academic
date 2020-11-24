@@ -1251,7 +1251,10 @@ public class Thesis extends Thesis_Base {
             if (orientation.stream().mapToInt(o -> o.getPercentageDistribution()).sum() > 100) {
                 conditions.add(new ThesisCondition("thesis.condition.orientation.credits.overflow"));
             }
-
+            
+            if (orientation.size()>2) {
+                conditions.add(new ThesisCondition("thesis.condition.orientation.limited.to.two"));
+            }
             // check for duplicated persons
             if (orientation.stream().map(ThesisEvaluationParticipant::getPerson).filter(Objects::nonNull).count() != orientation
                     .stream().map(ThesisEvaluationParticipant::getPerson).filter(Objects::nonNull).distinct().count()) {
