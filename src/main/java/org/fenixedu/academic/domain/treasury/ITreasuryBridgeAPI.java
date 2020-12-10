@@ -24,15 +24,15 @@ public interface ITreasuryBridgeAPI {
 
     public Set<ITreasuryEntity> getTreasuryEntities();
 
-    public ITreasuryEntity getTreasuryEntityByCode(final String code);
+    public ITreasuryEntity getTreasuryEntityByCode(String code);
 
-    public Set<ITreasuryProduct> getProducts(final ITreasuryEntity treasuryEntity);
+    public Set<ITreasuryProduct> getProducts(ITreasuryEntity treasuryEntity);
 
-    public ITreasuryProduct getProductByCode(final String code);
+    public ITreasuryProduct getProductByCode(String code);
 
-    public List<IPaymentCodePool> getPaymentCodePools(final ITreasuryEntity treasuryEntity);
+    public List<IPaymentCodePool> getPaymentCodePools(ITreasuryEntity treasuryEntity);
 
-    public IPaymentCodePool getPaymentCodePoolByCode(final String code);
+    public IPaymentCodePool getPaymentCodePoolByCode(String code);
 
     // @formatter:off
     /* ------------------------
@@ -45,7 +45,7 @@ public interface ITreasuryBridgeAPI {
     public static String ACADEMIC_SERVICE_REQUEST_REJECT_OR_CANCEL_EVENT = "ACADEMIC_SERVICE_REQUEST_REJECT_OR_CANCEL_EVENT";
 
     public IAcademicServiceRequestAndAcademicTaxTreasuryEvent academicTreasuryEventForAcademicServiceRequest(
-            final AcademicServiceRequest academicServiceRequest);
+            AcademicServiceRequest academicServiceRequest);
 
     // @formatter:off
     /* ----------
@@ -59,11 +59,11 @@ public interface ITreasuryBridgeAPI {
     public static String IMPROVEMENT_ENROLMENT = "IMPROVEMENT_ENROLMENT";
     public static String NORMAL_ENROLMENT = "NORMAL_ENROLMENT";
 
-    public void standaloneUnenrolment(final Enrolment standaloneEnrolment);
+    public void standaloneUnenrolment(Enrolment standaloneEnrolment);
 
-    public void extracurricularUnenrolment(final Enrolment extracurricularEnrolment);
+    public void extracurricularUnenrolment(Enrolment extracurricularEnrolment);
 
-    public void improvementUnrenrolment(final EnrolmentEvaluation improvementEnrolmentEvaluation);
+    public void improvementUnrenrolment(EnrolmentEvaluation improvementEnrolmentEvaluation);
 
     // @formatter:off
     /* --------
@@ -72,19 +72,16 @@ public interface ITreasuryBridgeAPI {
      */
     // @formatter:on
 
-    public boolean isToPayTuition(final Registration registration, final ExecutionYear executionYear);
+    public boolean isToPayTuition(Registration registration, ExecutionYear executionYear);
 
-    public ITuitionTreasuryEvent getTuitionForRegistrationTreasuryEvent(final Registration registration,
-            final ExecutionYear executionYear);
+    public ITuitionTreasuryEvent getTuitionForRegistrationTreasuryEvent(Registration registration, ExecutionYear executionYear);
 
-    public ITuitionTreasuryEvent getTuitionForStandaloneTreasuryEvent(final Registration registration,
-            final ExecutionYear executionYear);
+    public ITuitionTreasuryEvent getTuitionForStandaloneTreasuryEvent(Registration registration, ExecutionYear executionYear);
 
-    public ITuitionTreasuryEvent getTuitionForExtracurricularTreasuryEvent(final Registration registration,
-            final ExecutionYear executionYear);
+    public ITuitionTreasuryEvent getTuitionForExtracurricularTreasuryEvent(Registration registration,
+            ExecutionYear executionYear);
 
-    public ITuitionTreasuryEvent getTuitionForImprovementTreasuryEvent(final Registration registration,
-            final ExecutionYear executionYear);
+    public ITuitionTreasuryEvent getTuitionForImprovementTreasuryEvent(Registration registration, ExecutionYear executionYear);
 
     // @formatter:off
     /* --------------
@@ -93,10 +90,9 @@ public interface ITreasuryBridgeAPI {
      */
     // @formatter:on
 
-    public IImprovementTreasuryEvent getImprovementTaxTreasuryEvent(final Registration registration,
-            final ExecutionYear executionYear);
+    public IImprovementTreasuryEvent getImprovementTaxTreasuryEvent(Registration registration, ExecutionYear executionYear);
 
-    public List<IAcademicTreasuryEvent> getAcademicTaxesList(final Registration registration, final ExecutionYear executionYear);
+    public List<IAcademicTreasuryEvent> getAcademicTaxesList(Registration registration, ExecutionYear executionYear);
 
     // @formatter:off
     /* ------------------------
@@ -105,16 +101,17 @@ public interface ITreasuryBridgeAPI {
      */
     // @formatter:on
 
-    public IAcademicTreasuryEvent getAcademicTreasuryEventForTarget(final IAcademicTreasuryTarget target);
-    public void anullDebtsForTarget(final IAcademicTreasuryTarget target, final String reason);
+    public IAcademicTreasuryEvent getAcademicTreasuryEventForTarget(IAcademicTreasuryTarget target);
 
-    public IAcademicTreasuryEvent createDebt(final ITreasuryEntity treasuryEntity, final ITreasuryProduct treasuryProduct,
-            final IAcademicTreasuryTarget target, final LocalDate when, final boolean createPaymentCode,
-            final IPaymentCodePool paymentCodePool, final int numberOfUnits, final int numberOfPages);
+    public void anullDebtsForTarget(IAcademicTreasuryTarget target, String reason);
 
-    public IAcademicTreasuryEvent createDebt(final ITreasuryEntity treasuryEntity, final ITreasuryProduct treasuryProduct,
-            final IAcademicTreasuryTarget target, final BigDecimal amount, final LocalDate when, final LocalDate dueDate,
-            final boolean createPaymentCode, final IPaymentCodePool paymentCodePool);
+    public IAcademicTreasuryEvent createDebt(ITreasuryEntity treasuryEntity, ITreasuryProduct treasuryProduct,
+            IAcademicTreasuryTarget target, LocalDate when, boolean createPaymentCode, IPaymentCodePool paymentCodePool,
+            int numberOfUnits, int numberOfPages);
+
+    public IAcademicTreasuryEvent createDebt(ITreasuryEntity treasuryEntity, ITreasuryProduct treasuryProduct,
+            IAcademicTreasuryTarget target, BigDecimal amount, LocalDate when, LocalDate dueDate, boolean createPaymentCode,
+            IPaymentCodePool paymentCodePool);
 
     // @formatter:off
     /* --------------
@@ -123,9 +120,9 @@ public interface ITreasuryBridgeAPI {
      */
     // @formatter:on
 
-    public boolean isAcademicalActsBlocked(final Person person, final LocalDate when);
+    public boolean isAcademicalActsBlocked(Person person, LocalDate when);
 
-    public boolean isAcademicalActBlockingSuspended(final Person person, final LocalDate when);
+    public boolean isAcademicalActBlockingSuspended(Person person, LocalDate when);
 
     // @formatter:off
     /* -----
@@ -134,7 +131,7 @@ public interface ITreasuryBridgeAPI {
      */
     // @formatter:on
 
-    public List<IAcademicTreasuryEvent> getAllAcademicTreasuryEventsList(final Person person);
+    public List<IAcademicTreasuryEvent> getAllAcademicTreasuryEventsList(Person person);
 
     // @formatter:off
     /* ------------------------------------
@@ -143,22 +140,27 @@ public interface ITreasuryBridgeAPI {
      */
     // @formatter:on
 
-    public boolean isPersonAccountTreasuryManagementAvailable(final Person person);
+    public boolean isPersonAccountTreasuryManagementAvailable(Person person);
 
-    public String getPersonAccountTreasuryManagementURL(final Person person);
+    public String getPersonAccountTreasuryManagementURL(Person person);
 
     public String getRegistrationAccountTreasuryManagementURL(Registration registration);
 
-    public void createAcademicDebts(final Registration registration);
-    
-    public boolean isValidFiscalNumber(final String fiscalAddressCountryCode, final String fiscalNumber);
+    public void createAcademicDebts(Registration registration);
 
-    public boolean updateCustomer(final Person person, final String fiscalAddressCountryCode, final String fiscalNumber);
-    
-    public boolean createCustomerIfMissing(final Person person);
+    public boolean isValidFiscalNumber(String fiscalAddressCountryCode, String fiscalNumber);
 
-    public void saveFiscalAddressFieldsFromPersonInActiveCustomer(final Person person);
-    
-    public PhysicalAddress createSaftDefaultPhysicalAddress(final Person person);
-    
+    public boolean updateCustomer(Person person, String fiscalAddressCountryCode, String fiscalNumber);
+
+    public boolean createCustomerIfMissing(Person person);
+
+    public void saveFiscalAddressFieldsFromPersonInActiveCustomer(Person person);
+
+    public PhysicalAddress createSaftDefaultPhysicalAddress(Person person);
+
+    public ITreasuryCustomer getActiveCustomer(Person person);
+
+    public List<ITreasuryCustomer> getCustomersForFiscalNumber(Person person, String fiscalCountry, String fiscalNumber);
+
+    public ITreasuryDebtAccount getActiveDebtAccountForRegistration(Registration registration);
 }
