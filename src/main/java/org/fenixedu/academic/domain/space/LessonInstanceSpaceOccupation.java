@@ -180,7 +180,7 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
         if (!getLessonInstancesSet().isEmpty()) {
             return getLessonInstancesSet().iterator().next().getLesson().getShift().getExecutionCourse().getSigla();
         }
-        return getClass().getName();
+        return "";
     }
 
     @Override
