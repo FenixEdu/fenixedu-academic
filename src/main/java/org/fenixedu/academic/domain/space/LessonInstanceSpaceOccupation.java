@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.space;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.FrequencyType;
@@ -206,12 +207,17 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
 
     @Override
     public String getInfo() {
-        Lesson theLesson = getLessonInstancesSet().iterator().next().getLesson();
-        String asd = theLesson.getShift().getCourseLoadsSet().iterator().next().getType().getFullNameTipoAula();
-        for (YearMonthDay ymd : theLesson.getAllLessonDates()) {
-            asd += "\n" + ymd.toString();
+        Set<LessonInstance> lessonInstancesSet = getLessonInstancesSet();
+        if (!lessonInstancesSet.isEmpty()) {
+            Lesson theLesson = lessonInstancesSet.iterator().next().getLesson();
+            String asd = theLesson.getShift().getCourseLoadsSet().iterator().next().getType().getFullNameTipoAula();
+            for (YearMonthDay ymd : theLesson.getAllLessonDates()) {
+                asd += "\n" + ymd.toString();
+            }
+            return asd;
         }
-        return asd;
+
+        return "";
     }
 
     @Override
