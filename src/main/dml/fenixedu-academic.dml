@@ -1324,6 +1324,10 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
         LocalDate eventStartDate;
     }
 
+        class accounting.CustomEvent extends accounting.Event {
+            String config;
+        }
+
         class accounting.AcademicEvent extends accounting.Event {
         
         }
@@ -12514,5 +12518,12 @@ relation RefundAccountingTransaction {
     }
     accounting.AccountingTransaction playsRole accountingTransaction {
         multiplicity 0..1;
+    }
+}
+
+relation CustomEventAccount {
+    accounting.CustomEvent playsRole customEvent {
+    }
+    accounting.Account playsRole customToAccount {
     }
 }
