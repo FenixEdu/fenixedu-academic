@@ -1727,6 +1727,9 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
         DateTime startDate;
     }
 
+        class accounting.CustomEventPostingRule extends accounting.PostingRule {
+        }
+
         class accounting.postingRules.AdministrativeOfficeFeeAndInsurancePR extends accounting.PostingRule {
 
         }

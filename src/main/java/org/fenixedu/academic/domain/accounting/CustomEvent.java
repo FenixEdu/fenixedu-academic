@@ -30,7 +30,7 @@ public class CustomEvent extends CustomEvent_Base {
 
     @Override
     public PostingRule getPostingRule() {
-        return null;
+        return CustomEventPostingRule.getInstance();
     }
 
     @Override

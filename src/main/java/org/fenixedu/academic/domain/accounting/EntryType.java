@@ -126,7 +126,9 @@ public enum EntryType {
 
     GENERIC_EVENT,
 
-    PAST_CERTIFICATE_REQUEST;
+    PAST_CERTIFICATE_REQUEST,
+
+    CUSTOM;
 
     public String getName() {
         return name();
