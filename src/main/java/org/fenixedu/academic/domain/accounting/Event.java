@@ -814,7 +814,7 @@ public abstract class Event extends Event_Base {
         return (paymentMethod == PaymentMethod.getSibsPaymentMethod()) ? PaymentCodeState.PROCESSED : PaymentCodeState.CANCELLED;
     }
 
-    public final LabelFormatter getDescription() {
+    public LabelFormatter getDescription() {
         return getDescriptionForEntryType(getEntryType());
     }
 
