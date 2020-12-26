@@ -166,8 +166,9 @@ public enum EventType {
      */
     STANDALONE_PER_ENROLMENT_GRATUITY,
 
+    PARTIAL_REGIME_GRATUITY,
 
-    PARTIAL_REGIME_GRATUITY
+    CUSTOM
     ;
 
     final static List<EventType> GRATUITY_EVENTS = Arrays.asList(EventType.GRATUITY, EventType.STANDALONE_ENROLMENT_GRATUITY);
