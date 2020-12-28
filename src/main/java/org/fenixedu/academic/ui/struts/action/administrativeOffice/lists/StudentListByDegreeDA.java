@@ -50,12 +50,9 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.candidacy.StudentCandidacy;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
-import org.fenixedu.academic.domain.groups.PermissionService;
-import org.fenixedu.academic.domain.student.PrecedentDegreeInformation;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.domain.student.StatuteType;
@@ -66,6 +63,7 @@ import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.dto.academicAdministration.SearchStudentsByDegreeParametersBean;
 import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
 import org.fenixedu.academic.dto.student.RegistrationWithStateForExecutionYearBean;
+import org.fenixedu.academic.service.AcademicPermissionService;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication.AcademicAdminListingsApp;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
@@ -117,12 +115,12 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             Set<DegreeType> degreeTypesForOperation = AcademicAccessRule
                     .getDegreeTypesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
                     .collect(Collectors.toSet());
-            degreeTypesForOperation.addAll(PermissionService.getObjects("ACADEMIC_OFFICE_REPORTS", DegreeType.class, Authenticate.getUser()));
+            degreeTypesForOperation.addAll(AcademicPermissionService.getDegreeTypes("ACADEMIC_OFFICE_REPORTS", Authenticate.getUser()));
 
             Set<Degree> degreesForOperation = AcademicAccessRule
                     .getDegreesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
                     .collect(Collectors.toSet());
-            degreesForOperation.addAll(PermissionService.getObjects("ADMIN_OFFICE_REPORTS", Degree.class, Authenticate.getUser()));
+            degreesForOperation.addAll(AcademicPermissionService.getDegrees("ADMIN_OFFICE_REPORTS", Authenticate.getUser()));
             bean = new SearchStudentsByDegreeParametersBean(degreeTypesForOperation, degreesForOperation);
         }
         return bean;
@@ -652,7 +650,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
         Set<DegreeType> programs = AcademicAccessRule
                 .getDegreeTypesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
                 .collect(Collectors.toSet());
-        programs.addAll(PermissionService.getObjects("ACADEMIC_OFFICE_REPORTS", DegreeType.class, Authenticate.getUser()));
+        programs.addAll(AcademicPermissionService.getDegreeTypes("ACADEMIC_OFFICE_REPORTS", Authenticate.getUser()));
         for (DegreeType degreeType : programs) {
             cycles.addAll(degreeType.getCycleTypes());
         }

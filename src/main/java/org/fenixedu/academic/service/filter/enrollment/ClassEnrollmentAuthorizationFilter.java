@@ -31,9 +31,9 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.service.AcademicPermissionService;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.bennu.core.security.Authenticate;
 
@@ -61,7 +61,7 @@ public class ClassEnrollmentAuthorizationFilter {
 
         if (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, registration.getDegree(),
                 person.getUser())
-                || PermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS", registration.getDegree(), person.getUser())) {
+                || AcademicPermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS", registration.getDegree(), person.getUser())) {
             return;
         }
 
@@ -87,7 +87,7 @@ public class ClassEnrollmentAuthorizationFilter {
 
         if (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, registration.getDegree(),
                 person.getUser())
-                || PermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS", registration.getDegree(), person.getUser())) {
+                || AcademicPermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS", registration.getDegree(), person.getUser())) {
             return;
         }
 

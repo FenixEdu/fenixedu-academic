@@ -71,7 +71,6 @@ import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.domain.log.CurriculumLineLog;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.student.curriculum.ConclusionProcess;
@@ -88,6 +87,7 @@ import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.domain.studentCurriculum.StandaloneCurriculumGroup;
 import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.service.AcademicPermissionService;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
@@ -1133,7 +1133,7 @@ public class Registration extends Registration_Base {
         final User userView = Authenticate.getUser();
         if (userView == null || !(AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS,
                 getDegree(), userView.getPerson().getUser())
-                || PermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS", getDegree(), userView.getPerson().getUser()))) {
+                || AcademicPermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS", getDegree(), userView.getPerson().getUser()))) {
             if (readAttendsInCurrentExecutionPeriod().size() >= MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD) {
                 throw new DomainException("error.student.reached.attends.limit",
                         String.valueOf(MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD));
@@ -1277,13 +1277,13 @@ public class Registration extends Registration_Base {
         Set<AcademicProgram> programsManageRegistration = AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_REGISTRATIONS, user).collect(Collectors.toSet());
         programsManageRegistration
-                .addAll(PermissionService.getObjects("ACADEMIC_OFFICE_REGISTRATION_ACCESS", Degree.class, user));
+                .addAll(AcademicPermissionService.getDegrees("ACADEMIC_OFFICE_REGISTRATION_ACCESS", user));
 
         Set<AcademicProgram> programsViewFullStudentCurriculum =
                 AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM, user)
                         .collect(Collectors.toSet());
         programsViewFullStudentCurriculum
-                .addAll(PermissionService.getObjects("ACADEMIC_OFFICE_REGISTRATION_ACCESS", Degree.class, user));
+                .addAll(AcademicPermissionService.getDegrees("ACADEMIC_OFFICE_REGISTRATION_ACCESS", user));
 
         return programsManageRegistration.stream().anyMatch(ap -> ap == degree)
                 || programsViewFullStudentCurriculum.stream().anyMatch(ap -> ap == degree);
@@ -1659,7 +1659,7 @@ public class Registration extends Registration_Base {
     public boolean canRepeatConclusionProcess(final Person person) {
         return AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.REPEAT_CONCLUSION_PROCESS, getDegree(),
                 person.getUser())
-                || PermissionService.hasAccess("ACADEMIC_OFFICE_CONCLUSION_REPEAT", getDegree(), person.getUser());
+                || AcademicPermissionService.hasAccess("ACADEMIC_OFFICE_CONCLUSION_REPEAT", getDegree(), person.getUser());
     }
 
     public void conclude(final CurriculumGroup curriculumGroup) {

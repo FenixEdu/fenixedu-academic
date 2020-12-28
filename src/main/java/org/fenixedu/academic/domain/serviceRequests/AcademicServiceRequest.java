@@ -37,7 +37,6 @@ import org.fenixedu.academic.domain.accessControl.academicAdministration.Academi
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import org.fenixedu.academic.domain.treasury.IAcademicServiceRequestAndAcademicTaxTreasuryEvent;
 import org.fenixedu.academic.domain.treasury.IAcademicTreasuryEvent;
@@ -49,6 +48,7 @@ import org.fenixedu.academic.domain.util.email.Sender;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestBean;
 import org.fenixedu.academic.dto.serviceRequests.AcademicServiceRequestCreateBean;
 import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.service.AcademicPermissionService;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -234,7 +234,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
         Set<AcademicProgram> programs = AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_STUDENT_PAYMENTS, Authenticate.getUser())
                 .collect(Collectors.toSet());
-        programs.addAll(PermissionService.getObjects("TREASURY", Degree.class, Authenticate.getUser()));
+        programs.addAll(AcademicPermissionService.getDegrees("TREASURY", Authenticate.getUser()));
         return programs.contains(getAcademicProgram())
                 && TreasuryBridgeAPIFactory.implementation().academicTreasuryEventForAcademicServiceRequest(this) != null;
     }
@@ -254,7 +254,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
         Set<AcademicProgram> programs = AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_REGISTRATIONS, Authenticate.getUser())
                 .collect(Collectors.toSet());
-        programs.addAll(PermissionService.getObjects("ACADEMIC_OFFICE_REGISTRATION_ACCESS", Degree.class ,Authenticate.getUser()));
+        programs.addAll(AcademicPermissionService.getDegrees("ACADEMIC_OFFICE_REGISTRATION_ACCESS", Authenticate.getUser()));
         return programs.stream().anyMatch(p -> p == program);
     }
 
@@ -786,7 +786,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
         return isCancelledSituationAccepted() && (createdByStudent() && !isConcluded()
                 || AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.SERVICE_REQUESTS,
                         this.getAcademicProgram(), Authenticate.getUser())
-                || PermissionService.hasAccess("ACADEMIC_REQUISITIONS", (Degree) this.getAcademicProgram(),
+                || AcademicPermissionService.hasAccess("ACADEMIC_REQUISITIONS", (Degree) this.getAcademicProgram(),
                         Authenticate.getUser()));
     }
 
@@ -900,7 +900,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
         Set<AcademicProgram> programs =
                 AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.SERVICE_REQUESTS, person.getUser())
                         .collect(Collectors.toSet());
-        programs.addAll(PermissionService.getObjects("ACADEMIC_REQUISITIONS", Degree.class, person.getUser()));
+        programs.addAll(AcademicPermissionService.getDegrees("ACADEMIC_REQUISITIONS", person.getUser()));
         Collection<AcademicServiceRequest> possible = null;
         if (year != null) {
             possible = AcademicServiceRequestYear.getAcademicServiceRequests(year);

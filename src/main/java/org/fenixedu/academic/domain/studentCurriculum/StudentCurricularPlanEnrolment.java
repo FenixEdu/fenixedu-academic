@@ -46,11 +46,11 @@ import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.EnrollmentDomainException;
-import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions.EnrolmentPreConditionResult;
+import org.fenixedu.academic.service.AcademicPermissionService;
 import org.fenixedu.bennu.core.groups.Group;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -182,7 +182,7 @@ abstract public class StudentCurricularPlanEnrolment {
         if (isEnrolmentWithoutRules()
                 && !(AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.ENROLMENT_WITHOUT_RULES,
                         getStudentCurricularPlan().getDegree(), getResponsiblePerson().getUser())
-                        || PermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS_ADMIN", getStudentCurricularPlan().getDegree(),
+                        || AcademicPermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS_ADMIN", getStudentCurricularPlan().getDegree(),
                                 getResponsiblePerson().getUser()))
                 && !isResponsibleInternationalRelationOffice()) {
             throw new DomainException("error.permissions.cannot.enrol.without.rules");
@@ -192,7 +192,7 @@ abstract public class StudentCurricularPlanEnrolment {
     protected void checkUpdateRegistrationAfterConclusion() {
         if (!(AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION,
                 getStudentCurricularPlan().getDegree(), getResponsiblePerson().getUser())
-                || PermissionService.hasAccess("ACADEMIC_OFFICE_CONCLUSION", getStudentCurricularPlan().getDegree(),
+                || AcademicPermissionService.hasAccess("ACADEMIC_OFFICE_CONCLUSION", getStudentCurricularPlan().getDegree(),
                         getResponsiblePerson().getUser()))) {
             throw new DomainException("error.permissions.cannot.update.registration.after.conclusion.process");
         }
@@ -352,7 +352,7 @@ abstract public class StudentCurricularPlanEnrolment {
         Set<AcademicProgram> programs = AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, getResponsiblePerson().getUser())
                 .collect(Collectors.toSet());
-        programs.addAll(PermissionService.getObjects("ACADEMIC_OFFICE_ENROLMENTS", Degree.class, getResponsiblePerson().getUser()));
+        programs.addAll(AcademicPermissionService.getDegrees("ACADEMIC_OFFICE_ENROLMENTS", getResponsiblePerson().getUser()));
         return programs.stream().anyMatch(p -> p == degree);
     }
 

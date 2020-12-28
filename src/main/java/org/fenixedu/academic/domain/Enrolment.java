@@ -38,18 +38,15 @@ import org.apache.commons.collections.Predicate;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.curriculum.CurricularCourseType;
 import org.fenixedu.academic.domain.curriculum.EnrollmentCondition;
 import org.fenixedu.academic.domain.curriculum.EnrollmentState;
 import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationContext;
-import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.degreeStructure.OptionalCurricularCourse;
 import org.fenixedu.academic.domain.enrolment.EnroledEnrolmentWrapper;
 import org.fenixedu.academic.domain.enrolment.ExternalDegreeEnrolmentWrapper;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.domain.log.EnrolmentLog;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.student.Registration;
@@ -64,6 +61,7 @@ import org.fenixedu.academic.domain.studentCurriculum.EctsAndWeightProviderRegis
 import org.fenixedu.academic.domain.studentCurriculum.InternalCreditsSourceCurriculumGroup;
 import org.fenixedu.academic.domain.treasury.ITreasuryBridgeAPI;
 import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
+import org.fenixedu.academic.service.AcademicPermissionService;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.EnrolmentAction;
 import org.fenixedu.academic.util.EnrolmentEvaluationState;
@@ -717,7 +715,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
             final boolean isServices =
                     AcademicAuthorizationGroup.get(AcademicOperationType.STUDENT_ENROLMENTS).isMember(Authenticate.getUser())
-                            || PermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS", Authenticate.getUser());
+                            || AcademicPermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS", Authenticate.getUser());
             return considerThisEnrolmentNormalEnrolments(enrolment)
                     || considerThisEnrolmentPropaedeuticEnrolments(enrolment, isServices)
                     || considerThisEnrolmentExtraCurricularEnrolments(enrolment, isServices)

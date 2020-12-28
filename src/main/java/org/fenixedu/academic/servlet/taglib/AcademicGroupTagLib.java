@@ -29,7 +29,7 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.accessControl.AcademicAuthorizationGroup;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
-import org.fenixedu.academic.domain.groups.PermissionService;
+import org.fenixedu.academic.service.AcademicPermissionService;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 public class AcademicGroupTagLib extends TagSupport {
@@ -54,12 +54,12 @@ public class AcademicGroupTagLib extends TagSupport {
                 AcademicAuthorizationGroup.get(AcademicOperationType.valueOf(operation), programs, offices, null);
 
         if (program == null) {
-            if (group.isMember(Authenticate.getUser()) || PermissionService.hasAccess(permission, Authenticate.getUser())) {
+            if (group.isMember(Authenticate.getUser()) || AcademicPermissionService.hasAccess(permission, Authenticate.getUser())) {
                 return EVAL_BODY_INCLUDE;
             }
         } else {
             if (group.isMember(Authenticate.getUser())
-                    || PermissionService.hasAccess(permission, (Degree) program, Authenticate.getUser())) {
+                    || AcademicPermissionService.hasAccess(permission, (Degree) program, Authenticate.getUser())) {
                 return EVAL_BODY_INCLUDE;
             }
         }

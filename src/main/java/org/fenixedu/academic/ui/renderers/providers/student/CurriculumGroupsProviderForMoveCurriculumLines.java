@@ -22,16 +22,15 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.AcademicProgram;
-import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.curriculumLine.CurriculumLineLocationBean;
+import org.fenixedu.academic.service.AcademicPermissionService;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 import com.google.common.collect.Sets;
@@ -87,7 +86,7 @@ public class CurriculumGroupsProviderForMoveCurriculumLines implements DataProvi
         final Set<AcademicProgram> programs = AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, Authenticate.getUser())
                 .collect(Collectors.toSet());
-        programs.addAll(PermissionService.getObjects("ACADEMIC_OFFICE_ENROLMENTS", Degree.class, Authenticate.getUser()));
+        programs.addAll(AcademicPermissionService.getDegrees("ACADEMIC_OFFICE_ENROLMENTS", Authenticate.getUser()));
 
         return result.stream().filter(i -> programs.contains(i.getDegreeCurricularPlanOfStudent().getDegree()))
                 .collect(Collectors.toSet());

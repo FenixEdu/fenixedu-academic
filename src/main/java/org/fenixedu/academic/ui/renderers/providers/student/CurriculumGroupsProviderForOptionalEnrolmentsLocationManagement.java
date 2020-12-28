@@ -24,14 +24,13 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.AcademicProgram;
-import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.dto.student.OptionalCurricularCoursesLocationBean.OptionalEnrolmentLocationBean;
+import org.fenixedu.academic.service.AcademicPermissionService;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
@@ -50,7 +49,7 @@ public class CurriculumGroupsProviderForOptionalEnrolmentsLocationManagement imp
         final Set<AcademicProgram> programs = AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, Authenticate.getUser())
                 .collect(Collectors.toSet());
-        programs.addAll(PermissionService.getObjects("ACADEMIC_OFFICE_ENROLMENTS", Degree.class, Authenticate.getUser()));
+        programs.addAll(AcademicPermissionService.getDegrees("ACADEMIC_OFFICE_ENROLMENTS", Authenticate.getUser()));
 
         for (final Registration registration : bean.getStudent().getRegistrationsSet()) {
 

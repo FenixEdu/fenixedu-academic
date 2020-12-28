@@ -25,8 +25,8 @@ import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.dto.administrativeOffice.ExecutionDegreeBean;
+import org.fenixedu.academic.service.AcademicPermissionService;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.security.Authenticate;
 
@@ -44,7 +44,7 @@ public class DegreesToCreateRegistration implements DataProvider {
         final Set<Degree> allowed = AcademicAccessRule
                 .getDegreesAccessibleToFunction(AcademicOperationType.CREATE_REGISTRATION, Authenticate.getUser())
                 .collect(Collectors.toSet());
-        allowed.addAll(PermissionService.getObjects("ACADEMIC_OFFICE_REGISTRATION_CREATION", Degree.class, Authenticate.getUser()));
+        allowed.addAll(AcademicPermissionService.getDegrees("ACADEMIC_OFFICE_REGISTRATION_CREATION", Authenticate.getUser()));
 
         final Set<Degree> executed;
         final ExecutionYear year =

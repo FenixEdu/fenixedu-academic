@@ -60,6 +60,7 @@ import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
 import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import org.fenixedu.academic.predicate.AccessControl;
+import org.fenixedu.academic.service.AcademicPermissionService;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
@@ -1239,7 +1240,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             if (registration != null && programConclusion != null) {
                 boolean canManageConclusion = AcademicAuthorizationGroup
                         .get(AcademicOperationType.MANAGE_CONCLUSION, registration.getDegree()).isMember(Authenticate.getUser())
-                        || PermissionService.hasAccess("ACADEMIC_OFFICE_CONCLUSION", registration.getDegree(),
+                        || AcademicPermissionService.hasAccess("ACADEMIC_OFFICE_CONCLUSION", registration.getDegree(),
                                 Authenticate.getUser());
                 if (canManageConclusion) {
                     final HtmlLink result = new HtmlLink();
@@ -1354,7 +1355,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
         Set<AcademicProgram> programs = AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM, person.getUser())
                 .collect(Collectors.toSet());
-        programs.addAll(PermissionService.getObjects("ACADEMIC_OFFICE_REGISTRATION_ACCESS", Degree.class, person.getUser()));
+        programs.addAll(AcademicPermissionService.getDegrees("ACADEMIC_OFFICE_REGISTRATION_ACCESS", person.getUser()));
         return programs.stream().anyMatch(p -> p == degree);
     }
 

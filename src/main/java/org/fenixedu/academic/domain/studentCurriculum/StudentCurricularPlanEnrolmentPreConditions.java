@@ -28,8 +28,8 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.groups.PermissionService;
 import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
+import org.fenixedu.academic.service.AcademicPermissionService;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.LocalDate;
 
@@ -89,7 +89,7 @@ public class StudentCurricularPlanEnrolmentPreConditions {
         final boolean hasAcademicalAuthorizationToEnrol =
                 AcademicAccessRule.isMember(Authenticate.getUser(), AcademicOperationType.STUDENT_ENROLMENTS,
                         Collections.singleton(scp.getDegree()), Collections.singleton(scp.getAdministrativeOffice()))
-                        || PermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS", scp.getDegree(), Authenticate.getUser());
+                        || AcademicPermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS", scp.getDegree(), Authenticate.getUser());
 
         final boolean isStudentEnrolling = authenticatedPerson.getStudent() != null
                 && authenticatedPerson.getStudent() == scp.getRegistration().getStudent();
