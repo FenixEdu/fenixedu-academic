@@ -23,8 +23,6 @@ import org.fenixedu.academic.domain.accessControl.CoordinatorGroup;
 import org.fenixedu.academic.domain.accessControl.StudentGroup;
 import org.fenixedu.academic.domain.accessControl.TeacherGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
-import org.fenixedu.academic.domain.organizationalStructure.Unit;
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
 
@@ -52,11 +50,14 @@ public class CoordinatorSender extends CoordinatorSender_Base {
         addRecipients(createRecipient(students));
 //        addRecipients(createRecipient(RoleType.TEACHER.actualGroup()));
 //        addRecipients(createRecipient(StudentGroup.get()));
-        setFromName(createFromName());
     }
 
-    public String createFromName() {
-        return String.format("%s (%s: %s)", Unit.getInstitutionAcronym(), getDegree().getSigla(), "Coordenação");
+    @Override
+    public String getFromName() {
+        if (getDegree() != null) {
+            return String.format("%s - %s (%s)", getDegree().getCode(), getDegree().getNameI18N().getContent(), "Coordenação");
+        }
+        return super.getFromName();
     }
 
     @Override
