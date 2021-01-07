@@ -222,12 +222,10 @@
 					<td>
 						<span ng-repeat="studentStatute in attendee.studentStatutes">
 							<div>{{ studentStatute.type.name }}</div>
-								<ul ng-if="studentStatute.comment">
-									<li>{{ studentStatute.comment }}</li>
+								<ul>
+									<li>{{ studentStatute.beginDate }} - {{ studentStatute.endDate }}</li>
+									<li ng-if="studentStatute.comment">{{ studentStatute.comment }}</li>
 								</ul>
-								<span ng-if="!studentStatute.comment">
-									<p>
-								</span>
 						</span>
 						<span ng-if="attendee.studentStatutes.length == 0">-</span>
 					</td> 

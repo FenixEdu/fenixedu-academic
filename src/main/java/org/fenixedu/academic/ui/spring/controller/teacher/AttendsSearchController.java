@@ -18,32 +18,24 @@
  */
 package org.fenixedu.academic.ui.spring.controller.teacher;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.stream.Stream.Builder;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
+import com.google.common.base.Joiner;
+import com.google.common.base.Strings;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.Attends.StudentAttendsStateType;
 import org.fenixedu.academic.domain.Mark;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Shift;
-import org.fenixedu.academic.domain.StudentGroup;
+import org.fenixedu.academic.domain.student.StudentStatute;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.dto.student.StudentStatuteBean;
 import org.fenixedu.academic.ui.struts.action.teacher.ManageExecutionCourseDA;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.groups.NamedGroup;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.spring.security.CSRFTokenBean;
@@ -52,8 +44,8 @@ import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.commons.spreadsheet.SheetData;
 import org.fenixedu.commons.spreadsheet.SpreadsheetBuilder;
 import org.fenixedu.commons.spreadsheet.WorkbookExportFormat;
-import org.fenixedu.bennu.core.domain.groups.NamedGroup;
 import org.fenixedu.messaging.core.ui.MessageBean;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,15 +58,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
-
-import com.google.common.base.Joiner;
-import com.google.common.base.Strings;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
 import pt.ist.fenixframework.FenixFramework;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.Stream.Builder;
 
 @Controller
 @RequestMapping("/teacher/{executionCourse}/attends/")
@@ -184,16 +182,11 @@ public class AttendsSearchController extends ExecutionCourseController {
                         addCell(getLabel("label.Degree"), attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan()
                                 .getPresentationName());
 
-                        Collection<StudentStatuteBean> studentStatutes =
-                                attends.getRegistration().getStudent().getStatutes(executionCourse.getExecutionPeriod());
-                        if (studentStatutes.size() > 0) {
-                            addCell(getLabel("label.studentStatutes"),
-                                    studentStatutes.stream()
-                                            .map(st -> st.getStatuteType().getName().getContent()
-                                                    + (Strings.isNullOrEmpty(st.getStudentStatute().getComment()) ? "" : " ("
-                                                            + st.getStudentStatute().getComment() + ")"))
-                                            .collect(Collectors.joining(" | ")));
-                        }
+                        final String studentStatutes = attends.getRegistration().getStudent()
+                                .getStatutes(executionCourse.getExecutionPeriod()).stream()
+                                .map(st -> describe(st))
+                                .collect(Collectors.joining("; "));
+                        addCell(getLabel("label.studentStatutes"), studentStatutes);
                     }
                 });
 
@@ -210,6 +203,28 @@ public class AttendsSearchController extends ExecutionCourseController {
             builder.build(WorkbookExportFormat.EXCEL, response.getOutputStream());
         }
 
+    }
+
+    private static String describe(final StudentStatuteBean bean) {
+        final StudentStatute studentStatute = bean.getStudentStatute();
+        final StringBuilder builder = new StringBuilder();
+        builder.append(bean.getStatuteType().getName().getContent());
+        final LocalDate beginDate = getDate(studentStatute.getBeginDate(), () -> studentStatute.getBeginExecutionPeriod().getBeginLocalDate());
+        final LocalDate endDate = getDate(studentStatute.getEndDate(), () -> studentStatute.getEndExecutionPeriod().getEndLocalDate());
+        builder.append(" (");
+        builder.append(beginDate.toString("yyyy-MM-dd"));
+        builder.append(" - ");
+        builder.append(endDate.toString("yyyy-MM-dd"));
+        builder.append(")");
+        if (!Strings.isNullOrEmpty(studentStatute.getComment())) {
+            builder.append(" ");
+            builder.append(studentStatute.getComment());
+        }
+        return builder.toString();
+    }
+
+    private static LocalDate getDate(final LocalDate date, final Supplier<LocalDate> alternative) {
+        return date == null ? alternative.get() : date;
     }
 
     @RequestMapping(value = "/studentEvaluationsSpreadsheet", method = RequestMethod.POST)
