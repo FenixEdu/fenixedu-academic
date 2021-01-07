@@ -1,4 +1,5 @@
-<%--
+<%@ page import="org.fenixedu.academic.domain.student.StudentStatute" %>
+<%@ page import="java.util.List" %><%--
 
     Copyright © 2002 Instituto Superior Técnico
 
@@ -30,6 +31,42 @@
 <logic:empty name="studentStatutes">
 	<bean:message key="message.student.statutes.empty" bundle="STUDENT_RESOURCES"/>
 </logic:empty>
+
+<% final List<StudentStatute> studentStatutes = (List<StudentStatute>) request.getAttribute("studentStatutes"); %>
+<table class="tstyle1" style="width: 100%">
+	<tr>
+		<th>
+			<bean:message key="label.student.statute.description"/>
+		</th>
+		<th>
+			<bean:message key="label.student.statute.startdate"/>
+		</th>
+		<th>
+			<bean:message key="label.student.statute.enddate"/>
+		</th>
+	</tr>
+	<% for (final StudentStatute studentStatute : studentStatutes ) { %>
+		<tr>
+			<td>
+				<%= studentStatute.getType().getName().getContent() %>
+			</td>
+			<td>
+				<% if (studentStatute.getBeginDate() == null) { %>
+					<%= studentStatute.getBeginExecutionPeriod().getBeginLocalDate().toString("yyyy-MM-dd") %>
+				<% } else { %>
+					<%= studentStatute.getBeginDate().toString("yyyy-MM-dd") %>
+				<% } %>
+			</td>
+			<td>
+				<% if (studentStatute.getEndDate() == null) { %>
+					<%= studentStatute.getEndExecutionPeriod().getEndLocalDate().toString("yyyy-MM-dd") %>
+				<% } else { %>
+					<%= studentStatute.getEndDate().toString("yyyy-MM-dd") %>
+				<% } %>
+			</td>
+		</tr>
+	<% } %>
+</table>
 
 <logic:notEmpty name="studentStatutes">
 	<fr:view name="studentStatutes" schema="student.studentStatutes.show">
