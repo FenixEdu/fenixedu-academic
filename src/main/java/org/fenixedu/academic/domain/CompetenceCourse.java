@@ -1213,6 +1213,92 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         }
         return LocalizedString;
     }
+    
+    public LocalizedString getPrerequisitesI18N() {
+        return getPrerequisitesI18N(null);
+    }
+
+    public LocalizedString getPrerequisitesI18N(ExecutionSemester semester) {
+        LocalizedString LocalizedString = new LocalizedString();
+        String prerequisites = getPrerequisites(semester);
+        if (prerequisites != null && prerequisites.length() > 0) {
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.PT, prerequisites);
+        }
+        String prerequisitesEn = getPrerequisitesEn(semester);
+        if (prerequisitesEn != null && prerequisitesEn.length() > 0) {
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.EN, prerequisitesEn);
+        }
+        return LocalizedString;
+    }
+    
+    public LocalizedString getLaboratorialComponentI18N() {
+        return getLaboratorialComponentI18N(null);
+    }
+
+    public LocalizedString getLaboratorialComponentI18N(ExecutionSemester semester) {
+        LocalizedString LocalizedString = new LocalizedString();
+        String laboratorialComponent = getLaboratorialComponent(semester);
+        if (laboratorialComponent != null && laboratorialComponent.length() > 0) {
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.PT, laboratorialComponent);
+        }
+        String laboratorialComponentEn = getLaboratorialComponentEn(semester);
+        if (laboratorialComponentEn != null && laboratorialComponentEn.length() > 0) {
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.EN, laboratorialComponentEn);
+        }
+        return LocalizedString;
+    }
+    
+    public LocalizedString getEthicalPrinciplesI18N() {
+        return getEthicalPrinciplesI18N(null);
+    }
+
+    public LocalizedString getEthicalPrinciplesI18N(ExecutionSemester semester) {
+        LocalizedString LocalizedString = new LocalizedString();
+        String ethicalPrinciples = getEthicalPrinciples(semester);
+        if (ethicalPrinciples != null && ethicalPrinciples.length() > 0) {
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.PT, ethicalPrinciples);
+        }
+        String ethicalPrinciplesEn = getEthicalPrinciplesEn(semester);
+        if (ethicalPrinciplesEn != null && ethicalPrinciplesEn.length() > 0) {
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.EN, ethicalPrinciplesEn);
+        }
+        return LocalizedString;
+    }
+    
+    public LocalizedString getProgrammingAndComputingComponentI18N() {
+        return getProgrammingAndComputingComponentI18N(null);
+    }
+
+    public LocalizedString getProgrammingAndComputingComponentI18N(ExecutionSemester semester) {
+        LocalizedString LocalizedString = new LocalizedString();
+        String programmingAndComputingComponent = getProgrammingAndComputingComponent(semester);
+        if (programmingAndComputingComponent != null && programmingAndComputingComponent.length() > 0) {
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.PT, programmingAndComputingComponent);
+        }
+        String programmingAndComputingComponentEn = getProgrammingAndComputingComponentEn(semester);
+        if (programmingAndComputingComponentEn != null && programmingAndComputingComponentEn.length() > 0) {
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.EN, programmingAndComputingComponentEn);
+        }
+        return LocalizedString;
+    }
+    
+    public LocalizedString getCrossCompetenceComponentI18N() {
+        return getCrossCompetenceComponentI18N(null);
+    }
+
+    public LocalizedString getCrossCompetenceComponentI18N(ExecutionSemester semester) {
+        LocalizedString LocalizedString = new LocalizedString();
+        String CrossCompetenceComponent = getCrossCompetenceComponent(semester);
+        if (CrossCompetenceComponent != null && CrossCompetenceComponent.length() > 0) {
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.PT, CrossCompetenceComponent);
+        }
+        String CrossCompetenceComponentEn = getCrossCompetenceComponentEn(semester);
+        if (CrossCompetenceComponentEn != null && CrossCompetenceComponentEn.length() > 0) {
+            LocalizedString = LocalizedString.with(org.fenixedu.academic.util.LocaleUtils.EN, CrossCompetenceComponentEn);
+        }
+        return LocalizedString;
+    }    
+    
 
     public List<ExecutionCourse> getExecutionCoursesByExecutionPeriod(final ExecutionSemester executionSemester) {
         List<ExecutionCourse> executionCourseList = new ArrayList<ExecutionCourse>();
