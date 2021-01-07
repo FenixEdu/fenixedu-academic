@@ -258,7 +258,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
         if (competenceCoursesManagementGroup != null) {
             competenceCoursesManagementGroup.getMembers().forEach(user -> result
-                    .add(new SelectItem(user.getExternalId(), user.getPerson().getName() + " (" + user.getUsername() + ")")));
+                    .add(new SelectItem(user.getExternalId(), user.getProfile().getFullName() + " (" + user.getUsername() + ")")));
         }
 
         return result;
