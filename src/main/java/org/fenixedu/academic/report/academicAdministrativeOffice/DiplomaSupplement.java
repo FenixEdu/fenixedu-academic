@@ -418,13 +418,14 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
     private Interval getDiplomaInterval() {
         final LocalDate[] interval = new LocalDate[2];
         final CycleType cycleType = getDocumentRequest().getRequestedCycle();
-        final Stream<StudentCurricularPlan> plans =
-                getDocumentRequest().getRegistration().getStudentCurricularPlansSet().stream();
-        final Stream<CurriculumLine> curriculumLines = cycleType == null ? plans.flatMap(scp -> scp.getRoot().getCurriculumLineStream()) :
-                plans.map(scp -> scp.getCycle(cycleType))
-                        .filter(g -> g != null)
-                        .flatMap(g -> g.getCurriculumLineStream());
-        curriculumLines.forEach(line -> {
+        Registration registration = getDocumentRequest().getRegistration();
+        if (registration != null) {
+            final Stream<StudentCurricularPlan> plans = registration.getStudentCurricularPlansSet().stream();
+            final Stream<CurriculumLine> curriculumLines = cycleType == null ? plans.flatMap(scp -> scp.getRoot().getCurriculumLineStream()) :
+                    plans.map(scp -> scp.getCycle(cycleType))
+                            .filter(g -> g != null)
+                            .flatMap(g -> g.getCurriculumLineStream());
+            curriculumLines.forEach(line -> {
             final ExecutionSemester executionSemester = line.getExecutionPeriod();
             final LocalDate begin = executionSemester.getBeginLocalDate();
             if (interval[0] == null || interval[0].isAfter(begin)) {
@@ -434,9 +435,13 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
             if (interval[1] == null || interval[1].isAfter(end)) {
                 interval[1] = end;
             }
-        });
+            });
+            if (interval[0] == null) {
+                interval[0] = registration.getStartExecutionYear().getBeginLocalDate();
+            }
+        }
         if (interval[0] == null) {
-            interval[0] = getDocumentRequest().getRegistration().getStartExecutionYear().getBeginLocalDate();
+            interval[0] = getDocumentRequest().getStartYear().getBeginLocalDate();
         }
         if (interval[1] == null) {
             interval[1] = getDocumentRequest().getConclusionYear().getEndLocalDate();
