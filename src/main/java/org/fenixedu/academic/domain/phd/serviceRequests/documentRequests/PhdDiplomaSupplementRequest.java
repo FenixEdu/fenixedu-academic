@@ -282,6 +282,11 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
     }
 
     @Override
+    public ExecutionYear getStartYear() {
+        return getPhdIndividualProgramProcess().getExecutionYear();
+    }
+
+    @Override
     public EctsGraduationGradeConversionTable getGraduationConversionTable() {
         try {
             return EctsTableIndex.getGraduationGradeConversionTable(getPhdIndividualProgramProcess().getPhdProgram().getDegree(),

@@ -40,6 +40,8 @@ public interface IDiplomaSupplementRequest extends IProgramConclusionRequest {
 
     ExecutionYear getConclusionYear();
 
+    ExecutionYear getStartYear();
+
     EctsGraduationGradeConversionTable getGraduationConversionTable();
 
     Integer getNumberOfCurricularYears();

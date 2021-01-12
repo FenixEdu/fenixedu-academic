@@ -248,6 +248,11 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
     }
 
     @Override
+    public ExecutionYear getStartYear() {
+        return getRegistration().getStartExecutionYear();
+    }
+
+    @Override
     public CycleType getRequestedCycle() {
         return getProgramConclusion().groupFor(getRegistration()).filter(CurriculumGroup::isCycleCurriculumGroup)
                 .map(cg -> ((CycleCurriculumGroup) cg).getCycleType()).orElse(null);
