@@ -53,26 +53,9 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
         super.setIgnoreExternalEntries(bean.isIgnoreExternalEntries());
         super.setIgnoreCurriculumInAdvance(bean.isIgnoreCurriculumInAdvance());
 
-        // TODO: remove this after DEA diplomas and certificates
-        if (!isDEARegistration()) {
-
-            if (getRegistration().isConcluded()) {
-                throw new DomainException("ApprovementCertificateRequest.registration.is.concluded");
-            }
-
-            if (getRegistration().isRegistrationConclusionProcessed()) {
-                throw new DomainException("ApprovementCertificateRequest.registration.has.conclusion.processed");
-            }
-        }
-
-        if (getEntriesToReport(isDEARegistration()).isEmpty()) {
+        if (getEntriesToReport().isEmpty()) {
             throw new DomainException("ApprovementCertificateRequest.registration.without.approvements");
         }
-    }
-
-    // TODO: remove this after DEA diplomas and certificates
-    private boolean isDEARegistration() {
-        return getRegistration().getDegreeType().isAdvancedSpecializationDiploma();
     }
 
     @Override
@@ -88,19 +71,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
         if (academicServiceRequestBean.isToProcess()) {
 
-            // TODO: remove this after DEA diplomas and certificate
-            if (!isDEARegistration()) {
-
-                if (getRegistration().isConcluded()) {
-                    throw new DomainException("ApprovementCertificateRequest.registration.is.concluded");
-                }
-
-                if (getRegistration().isRegistrationConclusionProcessed()) {
-                    throw new DomainException("ApprovementCertificateRequest.registration.has.conclusion.processed");
-                }
-            }
-
-            if (getEntriesToReport(isDEARegistration()).isEmpty()) {
+            if (getEntriesToReport().isEmpty()) {
                 throw new DomainException("ApprovementCertificateRequest.registration.without.approvements");
             }
 
@@ -149,8 +120,8 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     }
 
     private int calculateNumberOfUnits() {
-        return getEntriesToReport(isDEARegistration()).size() + getExtraCurricularEntriesToReport().size()
-                + getPropaedeuticEntriesToReport().size();
+		return getEntriesToReport().size() + getExtraCurricularEntriesToReport().size()
+				+ getPropaedeuticEntriesToReport().size();
     }
 
     @Override
@@ -174,14 +145,14 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
         return !hasConcluded() || units != null && units.intValue() == calculateNumberOfUnits();
     }
 
-    final private Collection<ICurriculumEntry> getEntriesToReport(final boolean useConcluded) {
+    final private Collection<ICurriculumEntry> getEntriesToReport() {
         final HashSet<ICurriculumEntry> result = new HashSet<ICurriculumEntry>();
 
         final Registration registration = getRegistration();
         ICurriculum curriculum;
         if (registration.isBolonha()) {
             for (final CycleCurriculumGroup cycle : registration.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops()) {
-                if (cycle.hasAnyApprovedCurriculumLines() && (useConcluded || !cycle.isConclusionProcessed())) {
+                if (cycle.hasAnyApprovedCurriculumLines()) {
                     curriculum = cycle.getCurriculum(getFilteringDate());
                     filterEntries(result, this, curriculum);
                 }
