@@ -67,16 +67,3 @@
 		</tr>
 	<% } %>
 </table>
-
-<logic:notEmpty name="studentStatutes">
-	<fr:view name="studentStatutes" schema="student.studentStatutes.show">
-		<fr:schema type="org.fenixedu.academic.domain.student.StudentStatute" bundle="STUDENT_RESOURCES">
-			<fr:slot name="type.name.content" key="label.student.statute.description" />
-			<fr:slot name="beginExecutionPeriod.beginDateYearMonthDay" key="label.student.statute.startdate" />
-			<fr:slot name="endExecutionPeriod.endDateYearMonthDay" key="label.student.statute.enddate" />
-		</fr:schema>
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle1 thlight mtop05" />
-		</fr:layout>
-	</fr:view>
-</logic:notEmpty>
