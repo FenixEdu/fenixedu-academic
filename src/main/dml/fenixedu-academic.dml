@@ -12526,7 +12526,9 @@ relation RefundAccountingTransaction {
 
 relation CustomEventAccount {
     accounting.CustomEvent playsRole customEvent {
+        multiplicity *;
     }
     accounting.Account playsRole customToAccount {
+        multiplicity 1..1;
     }
 }
