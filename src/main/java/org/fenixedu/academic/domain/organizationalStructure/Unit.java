@@ -515,7 +515,8 @@ public class Unit extends Unit_Base {
             return getParentUnits().stream().flatMap(u -> u.getAllowedChildPartyTypes(managedByUser).stream())
                     .collect(Collectors.toSet());
         }
-        return getPartyType().getAllowedChildPartyTypes(managedByUser);
+        return Optional.ofNullable(getPartyType()).map(pt -> pt.getAllowedChildPartyTypes(managedByUser))
+                .orElseGet(() -> Set.of());
     }
 
 //    public Accountability getMostRecentParentUnitAccountability() {
