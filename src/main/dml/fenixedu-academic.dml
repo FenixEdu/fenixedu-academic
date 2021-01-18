@@ -557,6 +557,7 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
 	    public boolean masterDegree;
 	    public boolean dea;
 	    public boolean dfa;
+	    public boolean minor;
 	    protected CycleTypes cycles (REQUIRED);
 	    protected CycleTypes cyclesToEnrol (REQUIRED);
 	}
@@ -1310,6 +1311,15 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
             boolean excessOnly;
             RefundState state (REQUIRED);
             LocalDate stateDate (REQUIRED);
+    }
+
+    class accounting.ProofOfPaymentFile extends .org.fenixedu.bennu.io.domain.GenericFile {
+    }
+
+    class accounting.ProofOfPayment {
+        DateTime uploadDate;
+        DateTime verificationDate;
+        String verificationUsername;
     }
 
     class accounting.Event  {
@@ -12532,3 +12542,40 @@ relation CustomEventAccount {
         multiplicity 1..1;
     }
 }
+
+relation EventProofOfPayment {
+    accounting.Event playsRole event {
+        multiplicity 1..1;
+    }
+    accounting.ProofOfPayment playsRole proofOfPayment {
+        multiplicity *;
+    }
+}
+
+relation ProofOfPaymentProofOfPaymentFile {
+    accounting.ProofOfPayment playsRole proofOfPayment {
+        multiplicity 1..1;
+    }
+    accounting.ProofOfPaymentFile playsRole proofOfPaymentFile {
+        multiplicity 1..1;
+    }
+}
+
+relation BennuProofOfPayment {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole bennu {
+        multiplicity 0..1;
+    }
+    accounting.ProofOfPayment playsRole proofOfPayment {
+        multiplicity *;
+    }
+}
+
+relation ProofOfPaymentAccountingTransactionDetail {
+    accounting.ProofOfPayment playsRole proofOfPayment {
+        multiplicity 0..1;
+    }
+    accounting.AccountingTransactionDetail playsRole accountingTransactionDetail {
+        multiplicity 0..1;
+    }
+}
+
