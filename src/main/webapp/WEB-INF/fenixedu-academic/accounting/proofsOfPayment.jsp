@@ -58,7 +58,7 @@
                       action="<%= CoreConfiguration.getConfiguration().applicationUrl() %>/accounting-management/proof-of-payment/<%= proofOfPayment.getExternalId() %>/reject">
                     ${csrf.field()}
                     <button class="btn btn-danger" onclick="return confirm('Are you sure?');">
-                        <spring:message code="label.accounting.management.proof.of.payment.process" text="Mark As Processed"/>
+                        <spring:message code="label.accounting.management.proof.of.payment.reject" text="Mark As Processed"/>
                     </button>
                 </form>
             </td>
