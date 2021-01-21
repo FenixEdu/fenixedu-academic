@@ -3,6 +3,8 @@
 <%@ page import="org.fenixedu.bennu.core.util.CoreConfiguration" %>
 <%@ page import="org.fenixedu.bennu.io.servlet.FileDownloadServlet" %>
 <%@ page import="org.fenixedu.academic.domain.accounting.AccountingTransaction" %>
+<%@ page import="org.joda.time.DateTime" %>
+<%@ page import="java.util.Set" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <%
@@ -65,7 +67,7 @@
         </tr>
         <tr id="transactions<%= proofOfPayment.getExternalId() %>" style="display: none; background-color: oldlace;">
             <td colspan="5">
-                <% if (proofOfPayment.getEvent().getAccountingTransactionsSet().isEmpty()) { %>
+                <% if (proofOfPayment.getEvent().getNonAdjustingTransactions().isEmpty()) { %>
                     <spring:message code="label.accounting.management.proof.of.payment.process.no.transactions" text="No payments found"/>
                 <% } else { %>
                     <table style="width: 100%;">
@@ -85,7 +87,7 @@
                             <th>
                             </th>
                         </tr>
-                        <% for (final AccountingTransaction accountingTransaction : proofOfPayment.getEvent().getAccountingTransactionsSet()) { %>
+                        <% for (final AccountingTransaction accountingTransaction : proofOfPayment.getEvent().getNonAdjustingTransactions()) { %>
                             <tr>
                                 <td>
                                     <%= accountingTransaction.getPaymentMethod().getLocalizedName() %>
