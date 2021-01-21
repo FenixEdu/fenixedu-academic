@@ -108,20 +108,12 @@
 				<bean:message key="label.lesson.period" bundle="SOP_RESOURCES"/>
 			</th>
 			<td>
-<%
-	for (final OccupationPeriod occupationPeriod : executionCourse.getLessonPeriods()) {
-%>
-			<% for (final Interval interval : occupationPeriod.getIntervals()) { %>
-				<% if (!interval.getStart().equals(occupationPeriod.getIntervals().iterator().next().getStart())) { %>
-					;
+				<% final Interval maxInterval = executionCourse.getMaxLessonsInterval(); %>
+				<% if (maxInterval != null) { %>
+					<%= maxInterval.getStart().toString("yyyy-MM-dd") %>
+					-
+					<%= maxInterval.getEnd().toString("yyyy-MM-dd") %>
 				<% } %>
-				<%= interval.getStart().toString("yyyy-MM-dd") %>
-				-
-				<%= interval.getEnd().toString("yyyy-MM-dd") %>
-			<% } %>
-<%
-	}
-%>
 			</td>
 		</tr>
 		<tr>
