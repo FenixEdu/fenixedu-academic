@@ -36,7 +36,7 @@
     <% for (final ProofOfPayment proofOfPayment : Bennu.getInstance().getProofOfPaymentSet()) { %>
         <tr>
             <td>
-                <%= proofOfPayment.getUploadDate().toString("yyyy-mm-dd HH:mm") %>
+                <%= proofOfPayment.getUploadDate().toString("yyyy-MM-dd HH:mm") %>
             </td>
             <td>
                 <a href="<%= FileDownloadServlet.getDownloadUrl(proofOfPayment.getProofOfPaymentFile()) %>">
