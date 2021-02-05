@@ -887,21 +887,6 @@ public class Person extends Person_Base {
         return getPresentationName();
     }
 
-    public List<Formation> getFormations() {
-        final List<Formation> formations = new ArrayList<Formation>();
-        for (final Qualification qualification : getAssociatedQualificationsSet()) {
-            if (qualification instanceof Formation) {
-                formations.add((Formation) qualification);
-            }
-        }
-        return formations;
-    }
-
-    public Qualification getLastQualification() {
-        return !getAssociatedQualificationsSet().isEmpty() ? Collections.max(getAssociatedQualificationsSet(),
-                Qualification.COMPARATOR_BY_YEAR) : null;
-    }
-
     public Professorship getProfessorshipByExecutionCourse(final ExecutionCourse executionCourse) {
         return getProfessorshipsSet().stream().filter(prof -> prof.getExecutionCourse().equals(executionCourse)).findAny()
                 .orElse(null);

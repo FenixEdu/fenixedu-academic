@@ -522,67 +522,6 @@
 	<slot name="name" />
 </schema>
 
-<schema name="manager.qualification.showQualifications"
-		type="org.fenixedu.academic.domain.Qualification"
-		bundle="MANAGER_RESOURCES">
-	<slot name="degree" key="label.qualification.degree" layout="null-as-label"/>
-	<slot name="school" key="label.qualification.school" layout="null-as-label"/>
-	<slot name="type" key="label.qualification.type" layout="null-as-label" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="specializationArea" key="label.qualification.specializationArea" layout="null-as-label"/>
-	<slot name="year" >
-       	<property name="size" value="4"/>
-		<property name="maxLength" value="4"/>
-        <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\d{4}|)"/>
-            <property name="message" value="error.date.invalidFormat"/>
-            <property name="key" value="true"/>
-        </validator>
-    </slot>
-</schema>
-
-<schema name="manager.qualification.qualification"
-		type="org.fenixedu.academic.domain.Qualification"
-		bundle="MANAGER_RESOURCES" extends="manager.qualification.showQualifications">
-		<slot name="person" hidden="true"/> 
-		<slot name="branch" key="label.qualification.branch" layout="null-as-label"/>
-		<slot name="degreeRecognition" key="label.qualification.degreeRecognition" layout="null-as-label"/>
-		<slot name="dateYearMonthDay" key="label.qualification.dateYearMonthDay" layout="null-as-label">
-			<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
-			<property name="size" value="12" />
-			<property name="maxLength" value="10"/>
-		</slot>
-		<slot name="mark" key="label.qualification.mark" layout="null-as-label"/>
-		<slot name="title" key="label.qualification.title" layout="null-as-label"/>
-		<slot name="equivalenceDateYearMonthDay" key="label.qualification.equivalenceDataYearMonthDay" layout="null-as-label">
-			<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
-			<property name="size" value="12" />
-			<property name="maxLength" value="10"/>
-		</slot>
-		<slot name="equivalenceSchool" key="label.qualification.equivalenceSchool" layout="null-as-label"/>
-		
-		<slot name="designation" key="label.qualification.designation" layout="null-as-label"/>
-		<slot name="attendedBegin" key="label.qualification.attendedBegin" layout="year-month">
-			<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
-				<property name="dateFormat" value="MM/yyyy" />
-			</validator>
-			<property name="maxLength" value="7" />
-			<property name="size" value="7" />
-		</slot>
-		<slot name="attendedEnd" key="label.qualification.attendedEnd" layout="year-month"  >
-			<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
-				<property name="dateFormat" value="MM/yyyy" />
-			</validator>
-			<property name="maxLength" value="7" />
-			<property name="size" value="7" />
-		</slot>
-		<slot name="country" layout="menu-select" key="label.qualification.country" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" > 
-			<property name="format" value="${name}"/>
-			<property name="sortBy" value="name=asc" />z
-			<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DistinctCountriesProvider" />
-		</slot>	
-		<setter signature="edit(person,country,branch,dateYearMonthDay,degree,degreeRecognition,equivalenceDateYearMonthDay,equivalenceSchool,mark,school,specializationArea,title,type,year,designation,attendedBegin,attendedEnd)"/>
-</schema>
-
 <schema name="manager.list.queueJobs.undone" type="org.fenixedu.academic.domain.QueueJob" bundle="MANAGER_RESOURCES">
 	<slot name="class.name" layout="null-as-label" key="label.queueJobs.list.listing"/>
 	<slot name="requestDate" key="label.queueJobs.list.date"/>

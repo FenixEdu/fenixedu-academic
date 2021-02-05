@@ -1,3 +1,5 @@
+- Refactor: Cleanup deprecated Qualification slots, EducationArea and Formation 
+
 32.6.3 (21-01-2021)
 - Bug Fix: Replaced reference to deprecated method in lessons management 
 

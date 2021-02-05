@@ -25,7 +25,6 @@ package org.fenixedu.academic.domain;
 enum org.fenixedu.academic.domain.CompetenceCourseType                                                                 as CompetenceCourseType;
 enum org.fenixedu.academic.domain.ContractType                                                                         as ContractType;
 enum org.fenixedu.academic.domain.ExecutionCourseBoardPermittedGroupType                                               as ExecutionCourseBoardPermittedGroupType;
-enum org.fenixedu.academic.domain.FormationType                                                                        as FormationType;
 enum org.fenixedu.academic.domain.FrequencyType                                                                        as FrequencyType;
 enum org.fenixedu.academic.domain.GradeScaleEnum                                                                       as GradeScaleEnum;
 enum org.fenixedu.academic.domain.GrantOwnerType                                                                       as GrantOwnerType;
@@ -38,7 +37,6 @@ enum org.fenixedu.academic.domain.photograph.PictureMode																  as Pic
 enum org.fenixedu.academic.domain.photograph.PictureSize																  as PictureSize;
 enum org.fenixedu.academic.domain.ProfessionType                                                                       as ProfessionType;
 enum org.fenixedu.academic.domain.ProfessionalSituationConditionType                                                   as ProfessionalSituationConditionType;
-enum org.fenixedu.academic.domain.QualificationType                                                                    as QualificationType;
 enum org.fenixedu.academic.domain.RequestState                                                                         as RequestState;
 enum org.fenixedu.academic.domain.SalaryType                                                                           as SalaryType;
 enum org.fenixedu.academic.domain.SchoolLevelType                                                                      as SchoolLevelType;
@@ -691,33 +689,13 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
     }
 
     class Qualification  {
-        String branch;
-        YearMonthDay dateYearMonthDay;
         String degree;
-        String degreeRecognition;
-        YearMonthDay equivalenceDateYearMonthDay;
-        String equivalenceSchool;
-        DateTime lastModificationDateDateTime;
         String mark;
         String school;
-        String specializationArea;
-        String title;
-        QualificationType type;
+        YearMonthDay dateYearMonthDay;
         String year;
-        String designation;
-        Partial attendedBegin;
-        Partial attendedEnd;
-        LocalDate whenCreated;
-        boolean mainQualification;
         String otherLevel;
-    }
-
-    class Formation extends Qualification {
-        FormationType formationType;
-        AcademicalInstitutionType institutionType;
-        String beginYear;
-        BigDecimal ectsCredits;
-        Integer formationHours;
+        boolean mainQualification;
     }
     
     class SchoolClass  {
@@ -1095,11 +1073,6 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
         public RegistrationStateType targetState;
     }
 	
-    class EducationArea  {
-        String code;
-        String description;
-    }
-
     class BusinessArea  {
         Integer level;
         String code;
@@ -4197,48 +4170,6 @@ relation RootDomainObjectBusinessArea {
     BusinessArea playsRole businessAreas {
         multiplicity *;
     }
-}
-
-relation EducationAreaEducationArea {
-    EducationArea playsRole parentArea;
-    EducationArea playsRole childAreas {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectEducationArea {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    EducationArea playsRole educationAreas {
-        multiplicity *;
-    }
-}
-
-relation FormationEducationArea {
-    Formation playsRole associatedFormations {
-        multiplicity *;
-    }
-    EducationArea playsRole educationArea;
-}
-
-relation FormationUnit {
-    Formation playsRole associatedFormations {
-        multiplicity *;
-    }
-    organizationalStructure.Unit playsRole institution;
-}
-
-relation BaseFormationUnit {
-    Formation playsRole associatedBaseFormations {
-        multiplicity *;
-    }
-    organizationalStructure.Unit playsRole baseInstitution;
-}
-
-relation FormationCountryUnit {
-    Formation playsRole associatedCountryUnitFormations {
-        multiplicity *;
-    }
-    organizationalStructure.Unit playsRole countryUnit;
 }
 
 relation RootDomainObjectUtilEmailMessage {
