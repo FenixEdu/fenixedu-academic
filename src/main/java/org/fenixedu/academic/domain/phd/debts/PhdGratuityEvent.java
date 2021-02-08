@@ -97,7 +97,7 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
                 final PhdIndividualProgramProcessState type = stateForToday.getType();
                 if (type == PhdIndividualProgramProcessState.WORK_DEVELOPMENT || type == PhdIndividualProgramProcessState.SUSPENDED) {
                     final PhdGratuityEvent result = new PhdGratuityEvent(phdIndividualProgramProcess, year, dt);
-                    result.fixDueDate(new LocalDate(year, initialDateForEventCreation.getMonthOfYear(), initialDateForEventCreation.getDayOfMonth()));
+                    result.fixDueDate(result.getWhenOccured().plusYears(1).minusDays(1).toLocalDate());
                     return result;
                 }
             }
