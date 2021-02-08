@@ -21,6 +21,12 @@ public class PermissionService {
     private static BiFunction<AccessControlPermission, User, Set<AccessControlProfile>> profileProvider;
     private static BiFunction<AccessControlPermission, User, Set<? extends DomainObject>> objectsProvider;
     private static BiFunction<AccessControlPermission, User, Boolean> memberProvider;
+    private static BiFunction<AccessControlProfile, User, Boolean> profileMembershipProvider;
+
+    public static void registerProfileMembershipProvider(
+            BiFunction<AccessControlProfile, User, Boolean> profileMembershipProvider) {
+        PermissionService.profileMembershipProvider = profileMembershipProvider;
+    }
 
     public static void registerProfileProvider(
             BiFunction<AccessControlPermission, User, Set<AccessControlProfile>> profileProvider) {
@@ -40,8 +46,8 @@ public class PermissionService {
     }
 
     public static <T extends DomainObject> Set<T> getObjects(AccessControlPermission permission, Class<T> clazz, User user) {
-        return (Set<T>) profileProvider.apply(permission, user).stream()
-                .filter(p -> p.getFenixMemberSet().contains(user) && clazz != null && clazz.getName().equals(p.getObjectsClass()))
+        return (Set<T>) permission.getProfileSet().stream().flatMap(p -> getAllParentProfiles(p).stream()).filter(
+                p -> clazz != null && clazz.getName().equals(p.getObjectsClass()) && profileMembershipProvider.apply(p, user))
                 .flatMap(p -> p.provideObjects().stream()).collect(Collectors.toSet());
     }
 
@@ -67,7 +73,8 @@ public class PermissionService {
     }
 
     public static <T extends DomainObject> boolean hasAccess(AccessControlPermission permission, T object, User user) {
-        return profileProvider.apply(permission, user).stream().anyMatch(profile -> profile.containsObject(object));
+        return permission.getProfileSet().stream().flatMap(p -> getAllParentProfiles(p).stream())
+                .anyMatch(p -> p.containsObject(object) && profileMembershipProvider.apply(p, user));
     }
 
     public static <T extends DomainObject> boolean hasAccess(AccessControlPermission permission, T object) {
@@ -119,5 +126,12 @@ public class PermissionService {
 
     public static <T extends DomainObject> Stream<T> filter(String permission, Stream<T> objects) {
         return filter(permission, objects.collect(Collectors.toSet())).stream();
+    }
+
+    private static Set<AccessControlProfile> getAllParentProfiles(AccessControlProfile profile) {
+        Set<AccessControlProfile> result = new HashSet<>();
+        result.add(profile);
+        profile.getParentSet().forEach(parent -> result.addAll(getAllParentProfiles(parent)));
+        return result;
     }
 }

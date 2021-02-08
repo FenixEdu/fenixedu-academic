@@ -1,3 +1,5 @@
+- Bug fix: Fixed performance issue validation object access with PermissionService
+
 32.7.0 (07-02-2021)
 - Refactor: Cleanup deprecated Qualification slots, EducationArea and Formation 
 
