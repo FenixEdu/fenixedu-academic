@@ -53,7 +53,7 @@ public class AccountingProofOfPaymentController {
 
     @RequestMapping(path = "/{proofOfPayment}/reject", method = RequestMethod.POST)
     public String reject(final Model model, final @PathVariable ProofOfPayment proofOfPayment) {
-        proofOfPayment.reject();
+        proofOfPayment.reject(true);
         return "redirect:/accounting-management/proof-of-payment";
     }
 

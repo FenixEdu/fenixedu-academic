@@ -48,17 +48,19 @@ public class ProofOfPayment extends ProofOfPayment_Base {
     }
 
     @Atomic
-    public void reject() {
-        final Person person = getEvent().getPerson();
-        final String email = person == null ? null : person.getEmailForSendingEmails();
-        if (email != null) {
-            Message.fromSystem()
-                    .singleTos(email)
-                    .template("proof.of.payment.rejected.email")
-                    .parameter("uploadDate", getUploadDate().toString("yyyy-MM-dd HH:mm"))
-                    .parameter("eventDescription", getEvent().getDescription().toString())
-                    .and()
-                    .wrapped().send();
+    public void reject(final boolean notifyUser) {
+        if (notifyUser) {
+            final Person person = getEvent().getPerson();
+            final String email = person == null ? null : person.getEmailForSendingEmails();
+            if (email != null) {
+                Message.fromSystem()
+                        .singleTos(email)
+                        .template("proof.of.payment.rejected.email")
+                        .parameter("uploadDate", getUploadDate().toString("yyyy-MM-dd HH:mm"))
+                        .parameter("eventDescription", getEvent().getDescription().toString())
+                        .and()
+                        .wrapped().send();
+            }
         }
         setBennu(null);
         setVerificationDate(new DateTime());
