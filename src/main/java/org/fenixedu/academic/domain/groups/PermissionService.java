@@ -46,8 +46,8 @@ public class PermissionService {
     }
 
     public static <T extends DomainObject> Set<T> getObjects(AccessControlPermission permission, Class<T> clazz, User user) {
-        return (Set<T>) permission.getProfileSet().stream().flatMap(p -> getAllParentProfiles(p).stream()).filter(
-                p -> clazz != null && clazz.getName().equals(p.getObjectsClass()) && profileMembershipProvider.apply(p, user))
+        return (Set<T>) permission.getProfileSet().stream()
+                .filter(p -> clazz != null && clazz.getName().equals(p.getObjectsClass()) && isMember(p, user))
                 .flatMap(p -> p.provideObjects().stream()).collect(Collectors.toSet());
     }
 
@@ -73,8 +73,7 @@ public class PermissionService {
     }
 
     public static <T extends DomainObject> boolean hasAccess(AccessControlPermission permission, T object, User user) {
-        return permission.getProfileSet().stream().flatMap(p -> getAllParentProfiles(p).stream())
-                .anyMatch(p -> p.containsObject(object) && profileMembershipProvider.apply(p, user));
+        return permission.getProfileSet().stream().anyMatch(p -> p.containsObject(object) && isMember(p, user));
     }
 
     public static <T extends DomainObject> boolean hasAccess(AccessControlPermission permission, T object) {
@@ -128,10 +127,11 @@ public class PermissionService {
         return filter(permission, objects.collect(Collectors.toSet())).stream();
     }
 
-    private static Set<AccessControlProfile> getAllParentProfiles(AccessControlProfile profile) {
-        Set<AccessControlProfile> result = new HashSet<>();
-        result.add(profile);
-        profile.getParentSet().forEach(parent -> result.addAll(getAllParentProfiles(parent)));
-        return result;
+    private static boolean isMember(AccessControlProfile profile, User user) {
+        if (profileMembershipProvider.apply(profile, user)) {
+            return true;
+        }
+
+        return profile.getParentSet().stream().anyMatch(parent -> isMember(parent, user));
     }
 }
