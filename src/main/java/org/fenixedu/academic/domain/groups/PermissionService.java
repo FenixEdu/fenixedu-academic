@@ -73,7 +73,7 @@ public class PermissionService {
     }
 
     public static <T extends DomainObject> boolean hasAccess(AccessControlPermission permission, T object, User user) {
-        return permission.getProfileSet().stream().anyMatch(p -> p.containsObject(object) && isMember(p, user));
+        return permission.getProfileSet().stream().anyMatch(p -> containsObjectAndHasAccess(p, object, user));
     }
 
     public static <T extends DomainObject> boolean hasAccess(AccessControlPermission permission, T object) {
@@ -127,6 +127,15 @@ public class PermissionService {
         return filter(permission, objects.collect(Collectors.toSet())).stream();
     }
 
+    private static <T extends DomainObject> boolean containsObjectAndHasAccess(AccessControlProfile profile, T object,
+            User user) {
+        if (profile.containsObject(object) && isMember(profile, user)) {
+            return true;
+        }
+
+        return profile.getParentSet().stream().anyMatch(parent -> containsObjectAndHasAccess(parent, object, user));
+    }
+
     private static boolean isMember(AccessControlProfile profile, User user) {
         if (profileMembershipProvider.apply(profile, user)) {
             return true;
@@ -134,4 +143,5 @@ public class PermissionService {
 
         return profile.getParentSet().stream().anyMatch(parent -> isMember(parent, user));
     }
+
 }

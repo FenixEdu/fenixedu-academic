@@ -1,3 +1,5 @@
+- Bug fix: Fixed bug in access control validation
+
 32.7.2 (12-02-2021)
 - Improvement: Improved performance checking access with PermissionService
 
