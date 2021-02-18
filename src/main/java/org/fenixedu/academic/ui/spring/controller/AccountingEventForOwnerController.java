@@ -1,13 +1,5 @@
 package org.fenixedu.academic.ui.spring.controller;
 
-import java.math.BigDecimal;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import javax.servlet.ServletContext;
-
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.calculator.Debt;
@@ -19,9 +11,11 @@ import org.fenixedu.academic.ui.spring.service.AccountingManagementAccessControl
 import org.fenixedu.academic.ui.spring.service.AccountingManagementService;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.Money;
-import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.spring.portal.SpringFunctionality;
+import org.fenixedu.connect.domain.Account;
+import org.fenixedu.connect.ui.AccountController;
+import org.fenixedu.connect.ui.BaseController;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,10 +23,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.ServletContext;
+import java.math.BigDecimal;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Created by Sérgio Silva (hello@fenixedu.org).
@@ -64,19 +66,33 @@ public class AccountingEventForOwnerController extends AccountingController {
     }
 
     @RequestMapping
-    public String entrypoint(User loggedUser) {
-        return "redirect:" + REQUEST_MAPPING + "/" + loggedUser.getPerson().getExternalId();
+    public String entrypoint(final @CookieValue(name = AccountController.ACCESS_TOKEN_COOKIE, required = false) String accessToken) {
+        final Account account = BaseController.requireAccount(accessToken);
+        return "redirect:" + REQUEST_MAPPING + "/" +  AccountingManagementAccessControlService.PERSON_FOR_ACCOUNT.apply(account).getExternalId();
+    }
+
+    private String entrypoint(final Account account) {
+        return "redirect:" + REQUEST_MAPPING + "/" +  AccountingManagementAccessControlService.PERSON_FOR_ACCOUNT.apply(account).getExternalId();
     }
 
     @RequestMapping(value = "{event}/pay", method = RequestMethod.GET)
-    public String doPayment(@PathVariable Event event, Model model, User loggedUser) {
-        accessControlService.checkEventOwner(event, loggedUser);
+    public String doPayment(final @PathVariable Event event,
+                            final Model model,
+                            final @CookieValue(name = AccountController.ACCESS_TOKEN_COOKIE, required = false) String accessToken) {
+        final Account account = BaseController.requireAccount(accessToken);
+        return doPayment(event, model, account);
+    }
+
+    public String doPayment(final @PathVariable Event event,
+                            final Model model,
+                            final Account account) {
+        accessControlService.checkEventOwner(event, account);
         final DebtInterestCalculator debtInterestCalculator = event.getDebtInterestCalculator(new DateTime());
 
         if (debtInterestCalculator.getTotalDueAmount().compareTo(BigDecimal.ZERO) < 1) {
             logger.warn("Hacky user {} tried to access payment interface for event {}",
-                    Optional.ofNullable(loggedUser).map(User::getUsername).orElse("---"), event.getExternalId());
-            return entrypoint(loggedUser);
+                    Optional.ofNullable(account).map(Account::getEmail).orElse("---"), event.getExternalId());
+            return entrypoint(account);
         }
 
         if (debtInterestCalculator.hasDueInterestAmount()) {
@@ -108,8 +124,19 @@ public class AccountingEventForOwnerController extends AccountingController {
     }
 
     @RequestMapping(value = "{event}/paymentRef/{paymentCodeEntry}")
-    public String showPaymentReference(@PathVariable Event event, @PathVariable EventPaymentCodeEntry paymentCodeEntry, Model model, User loggedUser) {
-        accessControlService.checkEventOwner(event, loggedUser);
+    public String showPaymentReference(final @PathVariable Event event,
+                                       final @PathVariable EventPaymentCodeEntry paymentCodeEntry,
+                                       final Model model,
+                                       final @CookieValue(name = AccountController.ACCESS_TOKEN_COOKIE, required = false) String accessToken) {
+        final Account account = BaseController.requireAccount(accessToken);
+        return showPaymentReference(event, paymentCodeEntry, model, account);
+    }
+
+    private String showPaymentReference(final @PathVariable Event event,
+                                       final @PathVariable EventPaymentCodeEntry paymentCodeEntry,
+                                       final Model model,
+                                       final Account account) {
+        accessControlService.checkEventOwner(event, account);
 
         model.addAttribute("paymentCodeEntry", paymentCodeEntry);
         model.addAttribute("maxDaysBetweenPromiseAndPayment", FenixEduAcademicConfiguration.getConfiguration().getMaxDaysBetweenPromiseAndPayment());
@@ -118,18 +145,22 @@ public class AccountingEventForOwnerController extends AccountingController {
     }
 
     @RequestMapping(value = "{event}/pay", method = RequestMethod.POST)
-    public String generatePaymentCodeEntry(@PathVariable Event event, @RequestParam BigDecimal totalAmount, Model model, User loggedUser) {
-        accessControlService.checkEventOwner(event, loggedUser);
+    public String generatePaymentCodeEntry(final @PathVariable Event event,
+                                           final @RequestParam BigDecimal totalAmount,
+                                           final Model model,
+                                           final @CookieValue(name = AccountController.ACCESS_TOKEN_COOKIE, required = false) String accessToken) {
+        final Account account = BaseController.requireAccount(accessToken);
+        accessControlService.checkEventOwner(event, account);
 
         final long currentNewCodes = event.getEventPaymentCodeEntrySet().stream().filter(entry -> entry.getPaymentCode().isNew()).count();
         final Integer maxNewPaymentCodesPerEvent = FenixEduAcademicConfiguration.getConfiguration().getMaxNewPaymentCodesPerEvent();
 
         if (currentNewCodes >= maxNewPaymentCodesPerEvent) {
             model.addAttribute("error", BundleUtil.getString(Bundle.ACADEMIC, "block.entry.creation.max.new.payment.codes", maxNewPaymentCodesPerEvent.toString()));
-            return doPayment(event, model, loggedUser);
+            return doPayment(event, model, account);
         } else if (totalAmount.compareTo(BigDecimal.ZERO) <= 0) {
             model.addAttribute("error", BundleUtil.getString(Bundle.ACADEMIC, "block.entry.creation.not.positive.total.amount"));
-            return doPayment(event, model, loggedUser);
+            return doPayment(event, model, account);
         }
         else {
             final EventPaymentCodeEntry paymentCodeEntry = EventPaymentCodeEntry.create(event, new Money(totalAmount));
@@ -156,9 +187,9 @@ public class AccountingEventForOwnerController extends AccountingController {
     }
 
     @Override
-    protected String depositAdvancementInput(final Event event, final User user, final Model model) {
+    protected String depositAdvancementInput(final Event event, final Account account, final Model model) {
         final EventPaymentCodeEntry paymentCodeEntry = event.getEventPaymentCodeEntrySet().stream().max(EventPaymentCodeEntry.COMPARATOR_BY_CREATED).orElse(null);
-        return showPaymentReference(event, paymentCodeEntry, model, user);
+        return showPaymentReference(event, paymentCodeEntry, model, account);
     }
 
     @Override

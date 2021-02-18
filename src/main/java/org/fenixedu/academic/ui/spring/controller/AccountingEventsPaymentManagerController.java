@@ -3,12 +3,21 @@ package org.fenixedu.academic.ui.spring.controller;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.*;
+import org.fenixedu.academic.domain.accounting.AccountingTransaction;
+import org.fenixedu.academic.domain.accounting.Discount;
+import org.fenixedu.academic.domain.accounting.Event;
+import org.fenixedu.academic.domain.accounting.Exemption;
+import org.fenixedu.academic.domain.accounting.PaymentMethod;
+import org.fenixedu.academic.domain.accounting.Refund;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
 import org.fenixedu.academic.domain.accounting.events.EventExemptionJustificationType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.dto.accounting.*;
+import org.fenixedu.academic.dto.accounting.AnnulAccountingTransactionBean;
+import org.fenixedu.academic.dto.accounting.CreateExemptionBean;
 import org.fenixedu.academic.dto.accounting.CreateExemptionBean.ExemptionType;
+import org.fenixedu.academic.dto.accounting.DepositAmountBean;
+import org.fenixedu.academic.dto.accounting.EntryDTO;
+import org.fenixedu.academic.dto.accounting.PaymentsManagementDTO;
 import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.service.services.accounting.AnnulAccountingTransaction;
@@ -21,6 +30,9 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.spring.portal.SpringFunctionality;
 import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.connect.domain.Account;
+import org.fenixedu.connect.ui.AccountController;
+import org.fenixedu.connect.ui.BaseController;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
@@ -32,14 +44,27 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pt.ist.fenixframework.DomainObject;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.TreeMap;
+import java.util.UUID;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -155,8 +180,15 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
     }
 
     @RequestMapping(value = "{event}/deposit", method = RequestMethod.GET)
-    public String deposit(@PathVariable Event event, User user, Model model){
-        accessControlService.checkPaymentManager(event, user);
+    public String deposit(final @PathVariable Event event,
+                          final Model model,
+                          final @CookieValue(name = AccountController.ACCESS_TOKEN_COOKIE, required = false) String accessToken) {
+        final org.fenixedu.connect.domain.Account account = BaseController.requireAccount(accessToken);
+        return deposit(event, account, model);
+    }
+
+    private String deposit(@PathVariable Event event, org.fenixedu.connect.domain.Account account, Model model){
+        accessControlService.checkPaymentManager(event, accessControlService.userFor(account));
         final Person person = event.getPerson();
         model.addAttribute("eventDetailsUrl", getEventDetailsUrl(event));
         model.addAttribute("paymentMethods", PaymentMethod.all());
@@ -168,21 +200,25 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
     }
 
     @RequestMapping(value = "{event}/depositAmount", method = RequestMethod.POST)
-    public String depositAmount(@PathVariable Event event, User user, Model model, @ModelAttribute DepositAmountBean depositAmountBean) {
-        accessControlService.checkPaymentManager(event, user);
+    public String depositAmount(final @PathVariable Event event,
+                                final Model model,
+                                final @ModelAttribute DepositAmountBean depositAmountBean,
+                                final @CookieValue(name = AccountController.ACCESS_TOKEN_COOKIE, required = false) String accessToken) {
+        final org.fenixedu.connect.domain.Account account = BaseController.requireAccount(accessToken);
+        accessControlService.checkPaymentManager(event, accessControlService.userFor(account));
 
         if (depositAmountBean.getPaymentMethod() == Bennu.getInstance().getSibsPaymentMethod()
                 || depositAmountBean.getPaymentMethod() == Bennu.getInstance().getPaymentMethodForRefundDeposit()) {
             model.addAttribute("error", messageSource.getMessage("error.deposit.invalid.payment.method", null, I18N.getLocale()));
-            return deposit(event, user, model);
+            return deposit(event, account, model);
         }
 
         try {
-            accountingManagementService.depositAmount(event, user, depositAmountBean);
+            accountingManagementService.depositAmount(event, accessControlService.userFor(account), depositAmountBean);
         }
         catch (DomainException e) {
             model.addAttribute("error", e.getLocalizedMessage());
-            return deposit(event, user, model);
+            return deposit(event, account, model);
         }
 
         return redirectToEventDetails(event);
@@ -436,8 +472,8 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
     }
 
     @Override
-    protected String depositAdvancementInput(Event event, User user, Model model) {
-        return deposit(event, user, model);
+    protected String depositAdvancementInput(final Event event, final Account account, final Model model) {
+        return deposit(event, account, model);
     }
 
     private String redirectToDelete(@PathVariable final Event event, @ModelAttribute final AnnulAccountingTransactionBean annulAccountingTransactionBean) {
