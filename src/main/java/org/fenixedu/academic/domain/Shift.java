@@ -58,7 +58,7 @@ import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class Shift extends Shift_Base {
 
-    public static boolean RESTRICT_STUDENTS_TO_ODD_OR_EVEN_WEEKS = true;
+    public static boolean RESTRICT_STUDENTS_TO_ODD_OR_EVEN_WEEKS = false;
 
     public static final Comparator<Shift> SHIFT_COMPARATOR_BY_NAME =
             (o1, o2) -> Collator.getInstance().compare(o1.getNome(), o2.getNome());
