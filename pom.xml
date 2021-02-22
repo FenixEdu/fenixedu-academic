@@ -309,7 +309,7 @@
         <dependency>
 			<groupId>com.qubit.terra</groupId>
 			<artifactId>qub-access-control</artifactId>
-			<version>1.7.1</version>
+			<version>1.8.0</version>
 		</dependency>
     </dependencies>
 
