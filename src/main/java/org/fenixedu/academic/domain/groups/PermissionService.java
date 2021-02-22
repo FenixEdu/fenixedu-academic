@@ -13,6 +13,7 @@ import org.fenixedu.bennu.core.security.Authenticate;
 
 import com.qubit.terra.qubAccessControl.domain.AccessControlPermission;
 import com.qubit.terra.qubAccessControl.domain.AccessControlProfile;
+import com.qubit.terra.qubAccessControl.domain.ObjectProfilesCache;
 
 import pt.ist.fenixframework.DomainObject;
 
@@ -46,8 +47,8 @@ public class PermissionService {
     }
 
     public static <T extends DomainObject> Set<T> getObjects(AccessControlPermission permission, Class<T> clazz, User user) {
-        return (Set<T>) permission.getProfileSet().stream()
-                .filter(p -> clazz != null && clazz.getName().equals(p.getObjectsClass()) && isMember(p, user))
+        return (Set<T>) permission.getProfileSet().stream().filter(
+                p -> clazz != null && clazz.getName().equals(p.getObjectsClass()) && profileMembershipProvider.apply(p, user))
                 .flatMap(p -> p.provideObjects().stream()).collect(Collectors.toSet());
     }
 
@@ -73,7 +74,7 @@ public class PermissionService {
     }
 
     public static <T extends DomainObject> boolean hasAccess(AccessControlPermission permission, T object, User user) {
-        return permission.getProfileSet().stream().anyMatch(p -> containsObjectAndHasAccess(p, object, user));
+        return ObjectProfilesCache.hasAccess(permission, object).stream().anyMatch(p -> profileMembershipProvider.apply(p, user));
     }
 
     public static <T extends DomainObject> boolean hasAccess(AccessControlPermission permission, T object) {
@@ -126,22 +127,4 @@ public class PermissionService {
     public static <T extends DomainObject> Stream<T> filter(String permission, Stream<T> objects) {
         return filter(permission, objects.collect(Collectors.toSet())).stream();
     }
-
-    private static <T extends DomainObject> boolean containsObjectAndHasAccess(AccessControlProfile profile, T object,
-            User user) {
-        if (profile.containsObject(object) && isMember(profile, user)) {
-            return true;
-        }
-
-        return profile.getParentSet().stream().anyMatch(parent -> containsObjectAndHasAccess(parent, object, user));
-    }
-
-    private static boolean isMember(AccessControlProfile profile, User user) {
-        if (profileMembershipProvider.apply(profile, user)) {
-            return true;
-        }
-
-        return profile.getParentSet().stream().anyMatch(parent -> isMember(parent, user));
-    }
-
 }
