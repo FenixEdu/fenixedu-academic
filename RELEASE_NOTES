@@ -1,3 +1,4 @@
+32.7.5 (23-02-2021)
 - Improvement: remove registration state domain harcoded restriction (to allow in the future transform enum to entity)
 
 32.7.4 (22-02-2021)
