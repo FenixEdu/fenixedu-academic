@@ -110,7 +110,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     protected DegreeCurricularPlan() {
         super();
         super.setRootDomainObject(Bennu.getInstance());
-        super.setApplyPreviousYearsEnrolmentRule(Boolean.TRUE);
+        super.setApplyPreviousYearsEnrolmentRule(Boolean.FALSE);
     }
 
     private DegreeCurricularPlan(Degree degree, String name, GradeScale gradeScale) {
