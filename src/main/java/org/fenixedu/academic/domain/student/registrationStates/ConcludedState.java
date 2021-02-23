@@ -37,10 +37,6 @@ public class ConcludedState extends ConcludedState_Base {
     protected ConcludedState(Registration registration, Person person, DateTime dateTime) {
         super();
 
-        if (!registration.hasConcluded()) {
-            throw new DomainException("error.registration.is.not.concluded");
-        }
-
         init(registration, person, dateTime);
         registration.getPerson().getUser().openLoginPeriod();
     }
