@@ -155,6 +155,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
             getOriginal().delete();
         }
 
+        super.setApprover(null);
         super.setPerson(null);
         super.setRootDomainObject(null);
         super.deleteDomainObject();
