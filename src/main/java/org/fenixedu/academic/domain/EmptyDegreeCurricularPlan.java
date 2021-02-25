@@ -469,11 +469,6 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     }
 
     @Override
-    public Boolean getApplyPreviousYearsEnrolmentRule() {
-        return Boolean.FALSE;
-    }
-
-    @Override
     public Set<DegreeCurricularPlanEquivalencePlan> getTargetEquivalencePlans() {
         return Collections.emptySet();
     }
