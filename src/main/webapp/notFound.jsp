@@ -76,7 +76,12 @@ response.setStatus(404);
 			<p>${portal.message('resources.GlobalResources', 'error.message.resource.not.found.message')}</p>
 			<c:if test="${empty LOGGED_USER_ATTRIBUTE}">
 				<br />
-				<p><a href="${pageContext.request.contextPath}/login">Login</a></p>
+				<p><a id="goToLogin" href="${pageContext.request.contextPath}/login">Login</a></p>
+                 <script>
+                         var link = document.getElementById("goToLogin");
+                         var href = link.href;
+                         link.href= href + "?callback=" + window.location.href;
+                 </script>
 			</c:if>
 		</div>
 	</div>
