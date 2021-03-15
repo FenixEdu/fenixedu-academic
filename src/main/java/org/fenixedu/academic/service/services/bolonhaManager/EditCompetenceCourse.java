@@ -52,7 +52,7 @@ public class EditCompetenceCourse {
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
         checkIfCanEditCompetenceCourse(competenceCourse, name.trim(), nameEn.trim(), code);
         competenceCourse.edit(name, nameEn, basic, competenceCourseLevel, type, curricularStage);
-        competenceCourse.setCode(code);
+//        competenceCourse.setCode(code);
     }
 
     protected void run(String competenceCourseID, String acronym) throws FenixServiceException {
