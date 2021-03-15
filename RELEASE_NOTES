@@ -1,3 +1,4 @@
+- Improvement: Add slot to indicate if lesson is extraordinary
 - Bug fix: Fixed photograph deletion by removing relation with photo approver
 
 32.7.5 (23-02-2021)

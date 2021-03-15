@@ -647,6 +647,7 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
         HourMinuteSecond beginHourMinuteSecond;
         HourMinuteSecond endHourMinuteSecond;
         FrequencyType frequency;
+        boolean extraLesson;
     }
 
     class LessonInstance  {
