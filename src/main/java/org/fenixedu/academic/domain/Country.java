@@ -27,9 +27,9 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LocaleUtils;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 public class Country extends Country_Base {
 
@@ -42,10 +42,10 @@ public class Country extends Country_Base {
     public static Comparator<Country> COMPARATOR_BY_NAME = new Comparator<Country>() {
         @Override
         public int compare(Country leftCountry, Country rightCountry) {
-            int comparationResult =
-                    Collator.getInstance().compare(leftCountry.getLocalizedName().getContent(),
-                            rightCountry.getLocalizedName().getContent());
-            return (comparationResult == 0) ? leftCountry.getExternalId().compareTo(rightCountry.getExternalId()) : comparationResult;
+            int comparationResult = Collator.getInstance().compare(leftCountry.getLocalizedName().getContent(),
+                    rightCountry.getLocalizedName().getContent());
+            return (comparationResult == 0) ? leftCountry.getExternalId()
+                    .compareTo(rightCountry.getExternalId()) : comparationResult;
         }
     };
 
@@ -67,6 +67,20 @@ public class Country extends Country_Base {
         setThreeLetterCode(threeLetterCode);
     }
 
+    /**
+     * If setting country as default, first sets current default to false
+     */
+    @Override
+    public void setDefaultCountry(Boolean defaultCountry) {
+        if (Boolean.TRUE.equals(defaultCountry)) {
+            final Country currentDefault = readDefault();
+            if (currentDefault != null && currentDefault != this) {
+                currentDefault.setDefaultCountry(false);
+            }
+        }
+        super.setDefaultCountry(defaultCountry);
+    }
+
     // -------------------------------------------------------------
     // read static methods
     // -------------------------------------------------------------
@@ -75,6 +89,7 @@ public class Country extends Country_Base {
      * If the person country is undefined it is set to default. In a not
      * distance future this will not be needed since the coutry can never be
      * null.
+     * 
      * @return default country
      */
     public static Country readDefault() {
@@ -106,7 +121,8 @@ public class Country extends Country_Base {
             if (!country.getName().equalsIgnoreCase(PORTUGAL)) {
                 result.add(country);
             } else {
-                if (country.getCountryNationality().getContent(org.fenixedu.academic.util.LocaleUtils.PT).equalsIgnoreCase(NATIONALITY_PORTUGUESE)) {
+                if (country.getCountryNationality().getContent(org.fenixedu.academic.util.LocaleUtils.PT)
+                        .equalsIgnoreCase(NATIONALITY_PORTUGUESE)) {
                     result.add(country);
                 }
             }
