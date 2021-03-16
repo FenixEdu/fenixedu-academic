@@ -1,4 +1,5 @@
 - Improvement: Add slot to indicate if lesson is extraordinary
+- Improvement: Add selfAccountCreated to Person
 - Bug fix: Disable competence course code edition
 - Bug fix: When setting a country as default, unset the previous one
 - Bug fix: Fixed photograph deletion by removing relation with photo approver
