@@ -1182,6 +1182,7 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
 			DateTime dataProcessingTermsReadDate;
 			String iban;
 			String healthCardNumber;
+			Boolean selfAccountCreated;
         }
 
 		class PersonIdentificationDocumentExtraInfo  {
