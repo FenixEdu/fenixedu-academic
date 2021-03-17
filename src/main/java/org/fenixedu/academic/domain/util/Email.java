@@ -26,6 +26,7 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.function.Supplier;
 
 import javax.mail.Address;
 import javax.mail.BodyPart;
@@ -60,24 +61,37 @@ public class Email extends Email_Base {
     private static Session SESSION = null;
     private static int MAX_MAIL_RECIPIENTS;
 
-    private static DateTimeFormatter rfc5322Fmt =
-            DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss Z").withLocale(Locale.ENGLISH);
-
-    private static synchronized Session init() {
-        final Properties properties = new Properties();
+    private static Supplier<Session> sessionSupplier = () -> {
+        Properties properties = new Properties();
         properties.put("mail.smtp.host", FenixEduAcademicConfiguration.getConfiguration().getMailSmtpHost());
         properties.put("mail.smtp.name", FenixEduAcademicConfiguration.getConfiguration().getMailSmtpName());
         properties.put("mailSender.max.recipients",
                 FenixEduAcademicConfiguration.getConfiguration().getMailSenderMaxRecipients());
         properties.put("mail.debug", "false");
-        final Session tempSession = Session.getDefaultInstance(properties, null);
+
+        Session tempSession = Session.getDefaultInstance(properties, null);
+
         MAX_MAIL_RECIPIENTS = Integer.parseInt(properties.getProperty("mailSender.max.recipients"));
-        SESSION = tempSession;
         LOG.debug("Initialize mail properties");
         for (Entry<Object, Object> entry : properties.entrySet()) {
             LOG.debug("\t{}={}", entry.getKey(), entry.getValue());
         }
+
+        return tempSession;
+    };
+
+    private static DateTimeFormatter rfc5322Fmt =
+            DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss Z").withLocale(Locale.ENGLISH);
+
+    private static synchronized Session init() {
+        SESSION = sessionSupplier.get();
         return SESSION;
+    }
+
+    public static void setSessionSupplier(Supplier<Session> supplier) {
+        sessionSupplier = supplier;
+        // Wipe the cached Session so the new Supplier is called
+        SESSION = null;
     }
 
     private Email() {

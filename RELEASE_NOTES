@@ -1,3 +1,5 @@
+- Refactor: added Session supplier to handle authenticated email servers
+
 32.8.0 (16-03-2021)
 - Improvement: Add slot to indicate if lesson is extraordinary
 - Improvement: Add selfAccountCreated to Person
