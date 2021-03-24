@@ -18,26 +18,7 @@
  */
 package org.fenixedu.academic.domain;
 
-import java.io.Serializable;
-import java.lang.ref.SoftReference;
-import java.text.Collator;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
+import com.google.common.base.Strings;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.accessControl.CoordinatorGroup;
@@ -60,7 +41,6 @@ import org.fenixedu.academic.domain.thesis.ThesisState;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.predicate.AcademicPredicates;
-import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LocaleUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -72,9 +52,27 @@ import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.messaging.core.domain.Sender;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
-
-import com.google.common.base.Strings;
 import pt.ist.fenixframework.Atomic;
+
+import java.io.Serializable;
+import java.lang.ref.SoftReference;
+import java.text.Collator;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Degree extends Degree_Base implements Comparable<Degree> {
     public static final String CREATED_SIGNAL = "academic.degree.create";
@@ -608,9 +606,9 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         LocalizedString degreeType = getDegreeType().getName();
 
         LocalizedString.Builder builder = new LocalizedString.Builder();
-        CoreConfiguration.supportedLocales().forEach(
-                l -> builder.with(l, degreeType.getContent(l) + " " + BundleUtil.getString(Bundle.APPLICATION, "label.in") + " "
-                        + getNameI18N(executionYear).getContent(l)));
+        CoreConfiguration.supportedLocales().forEach(locale -> builder.with(locale, degreeType.getContent(locale)
+                        + " " + BundleUtil.getString(Bundle.APPLICATION, locale, "label.in")
+                        + " " + getNameI18N(executionYear).getContent(locale)));
         return builder.build();
     }
 
