@@ -1,3 +1,5 @@
+- Refactor: Deprecated some DegreeInfo getters and setters
+
 32.8.1 (22-03-2021)
 - Refactor: added Session supplier to handle authenticated email servers
 

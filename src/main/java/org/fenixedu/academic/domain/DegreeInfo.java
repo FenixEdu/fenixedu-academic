@@ -108,18 +108,34 @@ public class DegreeInfo extends DegreeInfo_Base {
         return hasName() && getName().equals(name);
     }
 
+    /**
+     * @deprecated use ExtendedDegreeInfo.setHigherEducationAccess()
+     */
+    @Deprecated(forRemoval = true)
     public void setGraduationNextLevelAccess(final LocalizedString graduationNextLevelAccess) {
         getDegreeInfoFuture().setGraduationNextLevelAccess(graduationNextLevelAccess);
     }
 
+    /**
+     * @deprecated use ExtendedDegreeInfo.getHigherEducationAccess()
+     */
+    @Deprecated(forRemoval = true)
     public LocalizedString getGraduationNextLevelAccess() {
         return getDegreeInfoFuture().getGraduationNextLevelAccess();
     }
 
+    /**
+     * @deprecated use ExtendedDegreeInfo.setProfessionalStatus()
+     */
+    @Deprecated(forRemoval = true)
     public void setProfessionalStatute(final LocalizedString professionalStatute) {
         getDegreeInfoFuture().setProfessionalStatute(professionalStatute);
     }
 
+    /**
+     * @deprecated use ExtendedDegreeInfo.getProfessionalStatus()
+     */
+    @Deprecated(forRemoval = true)
     public LocalizedString getProfessionalStatute() {
         return getDegreeInfoFuture().getProfessionalStatute();
     }
@@ -333,5 +349,41 @@ public class DegreeInfo extends DegreeInfo_Base {
 //            return true;
 //        }
 //        return false;
+    }
+
+    /**
+     * @deprecated use ExtendedDegreeInfo.getStudyProgrammeDuration()
+     */
+    @Deprecated(forRemoval = true)
+    @Override
+    public LocalizedString getOfficialProgramDuration() {
+        return super.getOfficialProgramDuration();
+    }
+
+    /**
+     * @deprecated use ExtendedDegreeInfo.setStudyProgrammeDuration()
+     */
+    @Deprecated(forRemoval = true)
+    @Override
+    public void setOfficialProgramDuration(LocalizedString officialProgramDuration) {
+        super.setOfficialProgramDuration(officialProgramDuration);
+    }
+
+    /**
+     * @deprecated use ExtendedDegreeInfo.getStudyRegime()
+     */
+    @Deprecated(forRemoval = true)
+    @Override
+    public LocalizedString getStudyRegime() {
+        return super.getStudyRegime();
+    }
+
+    /**
+     * @deprecated use ExtendedDegreeInfo.setStudyRegime()
+     */
+    @Deprecated(forRemoval = true)
+    @Override
+    public void setStudyRegime(LocalizedString studyRegime) {
+        super.setStudyRegime(studyRegime);
     }
 }
