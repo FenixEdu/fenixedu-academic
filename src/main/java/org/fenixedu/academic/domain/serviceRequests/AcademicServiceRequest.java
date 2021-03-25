@@ -503,7 +503,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     final public boolean isRePrintPossible() {
-        return finishedSuccessfully() && isToPrint();
+        return /*finishedSuccessfully() && */ isToPrint();
     }
 
     private List<AcademicServiceRequestSituationType> getAcceptedSituationTypes(AcademicServiceRequestSituationType situationType) {
