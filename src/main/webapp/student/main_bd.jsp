@@ -1,4 +1,4 @@
-<%--
+<%@ page import="org.fenixedu.academic.ui.struts.action.student.StudentDashboard" %><%--
 
     Copyright © 2002 Instituto Superior Técnico
 
@@ -47,6 +47,14 @@ table tr.disabled td span.success0 { color: #555; background: #e5e5e5; }
 	</ul>
 	<br />
 </logic:messagesPresent>
+
+<%
+	for (final StudentDashboard dashboard : StudentDashboard.SUPPLIERS) {
+%>
+		<jsp:include page="<%= dashboard.getJspPath() %>"/>
+<%
+	}
+%>
 
 <logic:notEmpty name="genericDegreeWarnings">
 	<div class="alert alert-warning">
