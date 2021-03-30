@@ -18,26 +18,6 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.SortedSet;
-import java.util.TreeMap;
-import java.util.TreeSet;
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
@@ -71,9 +51,28 @@ import org.fenixedu.bennu.core.signals.Signal;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
-
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.core.AbstractDomainObject;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public abstract class Event extends Event_Base {
 
@@ -671,8 +670,14 @@ public abstract class Event extends Event_Base {
     }
 
     public void open() {
-
         changeState(EventState.OPEN, new DateTime());
+        super.setResponsibleForCancel(null);
+        super.setCancelJustification(null);
+
+    }
+
+    public void openWithoutSignals() {
+        changeStateWithoutSignals(EventState.OPEN, new DateTime());
         super.setResponsibleForCancel(null);
         super.setCancelJustification(null);
 
@@ -863,10 +868,13 @@ public abstract class Event extends Event_Base {
 
     protected void changeState(EventState state, DateTime when) {
         Signal.emit(EventState.EVENT_STATE_CHANGED, new EventState.ChangeStateEvent(state, this, when));
+        changeStateWithoutSignals(state, when);
+    }
+
+    protected void changeStateWithoutSignals(EventState state, DateTime when) {
         super.setEventState(state);
         super.setEventStateDate(when);
     }
-
 
     public boolean isOtherPartiesPaymentsSupported() {
         return false;
