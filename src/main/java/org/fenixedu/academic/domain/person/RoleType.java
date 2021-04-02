@@ -38,7 +38,7 @@ public enum RoleType implements IPresentableEnum {
 
     STUDENT("activeStudents"),
 
-    TEACHER("activeTeachers"),
+    TEACHER("professors"),
 
     RESEARCHER("#researcher"),
 
