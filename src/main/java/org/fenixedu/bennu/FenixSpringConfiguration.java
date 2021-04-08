@@ -20,11 +20,32 @@ package org.fenixedu.bennu;
 
 import org.fenixedu.academic.service.GOPSendMessageService;
 import org.fenixedu.bennu.spring.BennuSpringModule;
+import org.fenixedu.commons.configuration.ConfigurationInvocationHandler;
+import org.fenixedu.commons.configuration.ConfigurationManager;
+import org.fenixedu.commons.configuration.ConfigurationProperty;
 import org.fenixedu.spaces.core.service.NotificationService;
 import org.springframework.context.annotation.Bean;
 
 @BennuSpringModule(basePackages = "org.fenixedu.academic.ui.spring", bundles = "ApplicationResources")
 public class FenixSpringConfiguration {
+
+    @ConfigurationManager(description = "FenixEdu Academic Configuration")
+    public interface ConfigurationProperties {
+
+        @ConfigurationProperty(key = "payment.method.bankTrasnfer.bank", defaultValue = "Bank of Portugal")
+        public String paymentMethodBankTransferBank();
+
+        @ConfigurationProperty(key = "payment.method.bankTrasnfer.iban", defaultValue = "1234")
+        public String paymentMethodBankTransferIBAN();
+
+        @ConfigurationProperty(key = "payment.method.bankTrasnfer.bic", defaultValue = "Run Forest, Run")
+        public String paymentMethodBankTransferBIC();
+
+    }
+
+    public static ConfigurationProperties getConfiguration() {
+        return ConfigurationInvocationHandler.getConfiguration(ConfigurationProperties.class);
+    }
 
     @Bean
     public NotificationService notificationService() {
