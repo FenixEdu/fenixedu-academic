@@ -1,24 +1,25 @@
 /**
  * Copyright © 2002 Instituto Superior Técnico
- *
+ * <p>
  * This file is part of FenixEdu Academic.
- *
+ * <p>
  * FenixEdu Academic is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * FenixEdu Academic is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.fenixedu.academic.domain.accounting;
 
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
+import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.DomainObjectUtil;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
@@ -281,7 +282,7 @@ public abstract class Event extends Event_Base {
 
     public Stream<AccountingTransaction> getNonAdjustingTransactionStream() {
         return super.getAccountingTransactionsSet().stream()
-            .filter(at -> !at.isAdjustingTransaction() && at.getAmountWithAdjustment().isPositive());
+                .filter(at -> !at.isAdjustingTransaction() && at.getAmountWithAdjustment().isPositive());
     }
 
     public List<AccountingTransaction> getAllAdjustedAccountingTransactions() {
@@ -452,8 +453,8 @@ public abstract class Event extends Event_Base {
         if (getEventState() == EventState.CANCELLED) {
             return;
         }
-        
-       internalRecalculateState(whenRegistered.plusSeconds(1));
+
+        internalRecalculateState(whenRegistered.plusSeconds(1));
     }
 
     protected void internalRecalculateState(final DateTime whenRegistered) {
@@ -571,7 +572,7 @@ public abstract class Event extends Event_Base {
         getNonAdjustingTransactions().forEach(t -> {
             if (paymentsPredicate.apply(t, when)) {
                 builder.payment(t.getExternalId(), t.getWhenProcessed(), t.getWhenRegistered().toLocalDate(), t.getEvent()
-                        .getDescription().toString(), t.getAmountWithAdjustment().getAmount(),
+                                .getDescription().toString(), t.getAmountWithAdjustment().getAmount(),
                         Optional.ofNullable(t.getRefund()).map(AbstractDomainObject::getExternalId).orElse(null));
             }
         });
@@ -581,33 +582,33 @@ public abstract class Event extends Event_Base {
                 final EventExemptionJustificationType type = e.getExemptionJustification().getJustificationType();
                 final String description = type == EventExemptionJustificationType.CUSTOM_PAYMENT_PLAN ?
                         EventExemptionJustificationType.CUSTOM_PAYMENT_PLAN.name() : e.getDescription().toString();
-                builder.debtExemption(e.getExternalId(),e.getWhenCreated(), e.getWhenCreated().toLocalDate(),
+                builder.debtExemption(e.getExternalId(), e.getWhenCreated(), e.getWhenCreated().toLocalDate(),
                         description, e.getExemptionAmount(baseAmount).getAmount());
             }
         });
 
         this.getDiscountsSet().forEach(d -> {
             if (!d.getWhenCreated().isAfter(when)) {
-                builder.debtExemption(d.getExternalId(), d.getWhenCreated(), d.getWhenCreated().toLocalDate(),"Desconto",
+                builder.debtExemption(d.getExternalId(), d.getWhenCreated(), d.getWhenCreated().toLocalDate(), "Desconto",
                         d.getAmount().getAmount());
             }
         });
 
         getExemptionsSet()
-            .stream()
-            .filter(e -> !e.getWhenCreated().isAfter(when))
-            .filter(FixedAmountPenaltyExemption.class::isInstance)
-            .map(FixedAmountPenaltyExemption.class::cast)
-            .forEach(e -> {
-                if (e.isForInterest()) {
-                    builder.interestExemption(e.getExternalId(),e.getWhenCreated(), e.getWhenCreated().toLocalDate(), e
-                            .getDescription().toString(), e.getExemptionAmount(baseAmount).getAmount());
-                }
-                if (e.isForFine()) {
-                    builder.fineExemption(e.getExternalId(),e.getWhenCreated(), e.getWhenCreated().toLocalDate(), e
-                            .getDescription().toString(), e.getExemptionAmount(baseAmount).getAmount());
-                }
-            });
+                .stream()
+                .filter(e -> !e.getWhenCreated().isAfter(when))
+                .filter(FixedAmountPenaltyExemption.class::isInstance)
+                .map(FixedAmountPenaltyExemption.class::cast)
+                .forEach(e -> {
+                    if (e.isForInterest()) {
+                        builder.interestExemption(e.getExternalId(), e.getWhenCreated(), e.getWhenCreated().toLocalDate(), e
+                                .getDescription().toString(), e.getExemptionAmount(baseAmount).getAmount());
+                    }
+                    if (e.isForFine()) {
+                        builder.fineExemption(e.getExternalId(), e.getWhenCreated(), e.getWhenCreated().toLocalDate(), e
+                                .getDescription().toString(), e.getExemptionAmount(baseAmount).getAmount());
+                    }
+                });
 
         builder.setToApplyInterest(FenixEduAcademicConfiguration.isToUseGlobalInterestRateTableForEventPenalties(this));
         return builder.build();
@@ -619,28 +620,28 @@ public abstract class Event extends Event_Base {
 
     private Set<LocalDate> getDebtFineExemptions(DateTime when) {
         return getExemptionsSet()
-                   .stream()
-                   .filter(e -> !e.getWhenCreated().isAfter(when))
-                   .filter(PenaltyExemption.class::isInstance)
-                   .map(PenaltyExemption.class::cast)
-                   .flatMap(e -> e.getDueDates(when).stream())
-                   .collect(Collectors.toSet());
+                .stream()
+                .filter(e -> !e.getWhenCreated().isAfter(when))
+                .filter(PenaltyExemption.class::isInstance)
+                .map(PenaltyExemption.class::cast)
+                .flatMap(e -> e.getDueDates(when).stream())
+                .collect(Collectors.toSet());
     }
 
     private Set<LocalDate> getDebtInterestExemptions(DateTime when) {
         return getExemptionsSet()
-            .stream()
-            .filter(e -> !e.getWhenCreated().isAfter(when))
-            .filter(InstallmentPenaltyExemption.class::isInstance)
-            .map(InstallmentPenaltyExemption.class::cast)
-            .map(i -> i.getInstallment().getEndDate(this))
-            .collect(Collectors.toSet());
+                .stream()
+                .filter(e -> !e.getWhenCreated().isAfter(when))
+                .filter(InstallmentPenaltyExemption.class::isInstance)
+                .map(InstallmentPenaltyExemption.class::cast)
+                .map(i -> i.getInstallment().getEndDate(this))
+                .collect(Collectors.toSet());
     }
 
     public Money getTotalAmount() {
         return getTotalAmount(new DateTime());
     }
-    
+
     public Money getTotalAmount(DateTime when) {
         return new Money(getDebtInterestCalculator(when).getTotalAmount());
     }
@@ -691,11 +692,12 @@ public abstract class Event extends Event_Base {
         if (isCancelled()) {
             return;
         }
-        
+
         changeState(EventState.CANCELLED, new DateTime());
         super.setResponsibleForCancel(responsible);
         super.setCancelJustification(cancelJustification);
     }
+
     public void exempt(Person responsible, String justification) {
         exempt(responsible, EventExemptionJustificationType.CANCELLED, justification);
     }
@@ -729,7 +731,7 @@ public abstract class Event extends Event_Base {
                     justificationType, new DateTime(), justification);
             eventExemption.setWhenCreated(when);
         }
-        
+
     }
 
     public void cancel(final Person responsible, final String cancelJustification) {
@@ -737,7 +739,7 @@ public abstract class Event extends Event_Base {
         if (isCancelled()) {
             return;
         }
-        
+
         if (!isOpen()) {
             throw new DomainException("error.accounting.Event.only.open.events.can.be.cancelled");
         }
@@ -899,7 +901,7 @@ public abstract class Event extends Event_Base {
     public final AccountingTransaction depositAmount(final User responsibleUser, final Money amount, final EntryType entryType, final AccountingTransactionDetailDTO transactionDetailDTO) {
 
         final AccountingTransaction result =
-            getPostingRule().depositAmount(responsibleUser, this, getParty().getAccountBy(AccountType.EXTERNAL), getToAccount(), amount, entryType, transactionDetailDTO);
+                getPostingRule().depositAmount(responsibleUser, this, getParty().getAccountBy(AccountType.EXTERNAL), getToAccount(), amount, entryType, transactionDetailDTO);
 
         recalculateState(new DateTime());
 
@@ -979,7 +981,7 @@ public abstract class Event extends Event_Base {
         }
         return true;
     }
-    
+
     protected void checkRulesToDelete() {
         if (isClosed() || !getNonAdjustingTransactions().isEmpty()) {
             throw new DomainException("error.accounting.Event.cannot.delete.because.event.is.already.closed.or.has.transactions.associated");
@@ -1155,7 +1157,7 @@ public abstract class Event extends Event_Base {
     }
 
     private String getOperationsAfter(Exemption e) {
-        return BundleUtil.getString(Bundle.ACADEMIC, "label.accounting.operation.after.exemption", e.getDescription().toString(),e
+        return BundleUtil.getString(Bundle.ACADEMIC, "label.accounting.operation.after.exemption", e.getDescription().toString(), e
                 .getWhenCreated()
                 .toString());
     }
@@ -1190,9 +1192,9 @@ public abstract class Event extends Event_Base {
 
         //force open state before exemption creation
         super.setEventState(EventState.OPEN);
-        
+
         final DateTime now = new DateTime().minusSeconds(3);
-        
+
         DebtInterestCalculator debtInterestCalculator = getDebtInterestCalculator(now);
         final BigDecimal paidDebtAmount = debtInterestCalculator.getPaidDebtAmount().subtract(debtInterestCalculator.getTotalRefundAmount());
         if (paidDebtAmount.subtract(value).signum() < 0) {
@@ -1202,7 +1204,7 @@ public abstract class Event extends Event_Base {
             throw new DomainException(Optional.of(Bundle.ACCOUNTING), "error.accounting.refund.not.possible.openDebt.notTotalValue");
         }
         final Refund refund = new Refund(this, new Money(value), creator, false, now);
-        
+
         exempt(creator.getPerson(), justificationType, reason);
 
         return refund;
@@ -1216,7 +1218,7 @@ public abstract class Event extends Event_Base {
                 final DebtInterestCalculator calculator = event.getDebtInterestCalculator(now);
                 final BigDecimal unusedAmount = calculator.getPaidUnusedAmount();
                 if (unusedAmount.signum() > 0) {
-                    if (event instanceof ResidenceEvent == this instanceof ResidenceEvent){
+                    if (event instanceof ResidenceEvent == this instanceof ResidenceEvent) {
                         result.put(event, unusedAmount);
                     }
                 }
@@ -1308,6 +1310,20 @@ public abstract class Event extends Event_Base {
             throw new DomainException(Optional.of(Bundle.ACCOUNTING), "error.custom.payment.plan.value.does.not.match.value.to.be.deleted");
         }
         setDueDateAmountMap(new DueDateAmountMap(oldDueDateAmountMap));
+    }
+
+    @Atomic
+    public ProofOfPayment registerProofOfPayment(final byte[] content, final String contentType) {
+        getProofOfPaymentSet().stream()
+                .filter(proofOfPayment -> proofOfPayment.getAccountingTransactionDetail() == null)
+                .forEach(proofOfPayment -> proofOfPayment.reject(false));
+        return new ProofOfPayment(this, content, contentType);
+    }
+
+    public boolean allowBankTransfer() {
+        final Person person = getPerson();
+        final Country country = person == null ? null : person.getCountry();
+        return country != null && country != Bennu.getInstance().getInstitutionUnit().getCountry();
     }
 
 }

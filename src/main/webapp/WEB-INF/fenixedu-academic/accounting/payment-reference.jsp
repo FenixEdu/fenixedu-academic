@@ -1,4 +1,8 @@
-<%--
+<%@ page import="org.fenixedu.commons.i18n.I18N" %>
+<%@ page import="org.fenixedu.bennu.portal.domain.PortalConfiguration" %>
+<%@ page import="org.fenixedu.academic.domain.accounting.Event" %>
+<%@ page import="org.fenixedu.academic.domain.accounting.ProofOfPayment" %>
+<%@ page import="org.fenixedu.bennu.FenixSpringConfiguration" %><%--
 
     Copyright © 2017 Instituto Superior Técnico
 
@@ -25,6 +29,11 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://fenixedu.org/taglib/intersection" prefix="modular" %>
 <%@ page trimDirectiveWhitespaces="true" %>
+
+<%
+    final String contextPath = request.getContextPath();
+    final Event event = (Event) request.getAttribute("event");
+%>
 
 <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/accounting.css"/>
 <spring:url var="backUrl" value="../details">
@@ -77,7 +86,7 @@
 
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="overall-description">
                     <h4><b><spring:message code="label.payment.method.sibs" text="Payment Via SIBS"/></b></h4>
 
@@ -110,10 +119,95 @@
                     </div>
                 </div>
             </div>
+        </div>
 
+        <% if (event.allowBankTransfer()) { %>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="overall-description">
+                    <h4><b><spring:message code="label.payment.method.bankTrasnfer" text="Payment Via Bank Transfer"/></b></h4>
+                    <div class="alert alert-warning">
+                        <p>
+                            <spring:message code="label.payment.method.bankTrasnfer.info" text="Upload the proof of payment after transfering funds"/>
+                        </p>
+                    </div>
+                    <ul>
+                        <li>
+                            <spring:message code="label.payment.method.bankTrasnfer.institution" text="Institution"/>
+                            :
+                            <%= PortalConfiguration.getInstance().getApplicationCopyright().getContent().substring(2) %>
+                        </li>
+                        <li>
+                            <spring:message code="label.payment.method.bankTrasnfer.bank" text="Bank"/>
+                            :
+                            <%= FenixSpringConfiguration.getConfiguration().paymentMethodBankTransferBank() %>
+                        </li>
+                        <li>
+                            <spring:message code="label.payment.method.bankTrasnfer.iban" text="IBAN"/>
+                            :
+                            <%= FenixSpringConfiguration.getConfiguration().paymentMethodBankTransferIBAN() %>
+                        </li>
+                        <li>
+                            <spring:message code="label.payment.method.bankTrasnfer.bic" text="BIC/SWIFT"/>
+                            :
+                            <%= FenixSpringConfiguration.getConfiguration().paymentMethodBankTransferBIC() %>
+                        </li>
+                    </ul>
+
+                    <h5 style="padding-top: 25px;"><b><spring:message code="label.payment.method.bankTrasnfer.proof.of.payment" text="Proof of Payment"/></b></h5>
+                    <%
+                        ProofOfPayment latestProofOfPayment = null;
+                        for (final ProofOfPayment proofOfPayment : event.getProofOfPaymentSet()) {
+                            if (latestProofOfPayment == null || latestProofOfPayment.getUploadDate().isBefore(proofOfPayment.getUploadDate())) {
+                                latestProofOfPayment = proofOfPayment;
+                            }
+                        }
+                    %>
+                    <% if (latestProofOfPayment != null) { %>
+                        <ul>
+                            <li>
+                                <%= latestProofOfPayment.getUploadDate().toString("yyyy-MM-dd HH:mm:ss") %>
+                                -
+                                <%= latestProofOfPayment.getProofOfPaymentFile().getDisplayName() %>
+                                <% final String color = latestProofOfPayment.getBennu() != null ? "darkorange"
+                                        : latestProofOfPayment.getAccountingTransactionDetail() == null ? "darkred"
+                                        : "darkgreen"; %>
+                                <span style="padding-left: 5px; color: <%= color %>">
+                                <% if (latestProofOfPayment.getBennu() != null) { %>
+                                    <spring:message code="label.payment.method.bankTrasnfer.proof.of.payment.pending.verification" text="Pending Verification"/>
+                                <% } else if (latestProofOfPayment.getAccountingTransactionDetail() == null) { %>
+                                    <spring:message code="label.payment.method.bankTrasnfer.proof.of.payment.rejected" text="Rejected"/>
+                                <% } else { %>
+                                    <spring:message code="label.payment.method.bankTrasnfer.proof.of.payment.accepted" text="Accepted"/>
+                                <% } %>
+                                </span>
+                            </li>
+                        </ul>
+                    <% } %>
+
+                    <p style="padding-top: 25px;">
+                    <form method="post" id="form" action="<%= contextPath %>/owner-accounting-events/<%= event.getExternalId() %>/proofOfPayment" enctype="multipart/form-data">
+                        ${csrf.field()}
+
+                        <div class="form-group">
+                            <input id="proofOfPayment" name="proofOfPayment" type="file"
+                                   accept="image/png, image/jpeg, image/jpg, application/pdf"/>
+                        </div>
+                        <button class="btn btn--primary">
+                            <spring:message code="label.payment.method.bankTrasnfer.proof.of.payment.upload" text="Upload Proof of Payment"/>
+                        </button>
+                    </form>
+                    </p>
+                </div>
+            </diV>
+        </diV>
+        <% } %>
+
+        <div class="row">
             <modular:intersect location="event.payment.reference.extra.info" position="paymentMethods">
                 <modular:arg key="event" value="${paymentCodeEntry.event}"/>
             </modular:intersect>
-        </diV>
+        </div>
+
     </main>
 </div>

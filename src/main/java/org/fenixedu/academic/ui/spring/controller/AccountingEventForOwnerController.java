@@ -25,8 +25,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
@@ -140,6 +142,19 @@ public class AccountingEventForOwnerController extends AccountingController {
             final EventPaymentCodeEntry paymentCodeEntry = EventPaymentCodeEntry.create(event, new Money(totalAmount));
             return String.format("redirect:%s/%s/paymentRef/%s", REQUEST_MAPPING, event.getExternalId(), paymentCodeEntry.getExternalId());
         }
+    }
+
+    @RequestMapping(value = "{event}/proofOfPayment", method = RequestMethod.POST)
+    public String uploadProofOfPayment(final @PathVariable Event event,
+                                       final @RequestParam("proofOfPayment") MultipartFile proofOfPayment) {
+        accessControlService.checkEventOwner(event);
+        try {
+            event.registerProofOfPayment(proofOfPayment.getBytes(), proofOfPayment.getContentType());
+        } catch (final IOException ex) {
+            throw new Error(ex);
+        }
+        final EventPaymentCodeEntry paymentCodeEntry = EventPaymentCodeEntry.getOrCreateReusable(event);
+        return String.format("redirect:%s/%s/paymentRef/%s", REQUEST_MAPPING, event.getExternalId(), paymentCodeEntry.getExternalId());
     }
 
     private List<EventPaymentCodeEntry> getSortedEventPaymentCodeEntries(Event event) {
