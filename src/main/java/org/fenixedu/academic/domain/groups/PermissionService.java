@@ -47,9 +47,16 @@ public class PermissionService {
     }
 
     public static <T extends DomainObject> Set<T> getObjects(AccessControlPermission permission, Class<T> clazz, User user) {
-        return (Set<T>) permission.getProfileSet().stream().filter(
+        return (Set<T>) permission.getProfileSet().stream().flatMap(p -> getAllParents(p).stream()).filter(
                 p -> clazz != null && clazz.getName().equals(p.getObjectsClass()) && profileMembershipProvider.apply(p, user))
                 .flatMap(p -> p.provideObjects().stream()).collect(Collectors.toSet());
+    }
+
+    private static Set<AccessControlProfile> getAllParents(AccessControlProfile profile) {
+        HashSet<AccessControlProfile> parents = new HashSet<AccessControlProfile>();
+        parents.add(profile);
+        profile.getParentSet().forEach(parent -> parents.addAll(getAllParents(parent)));
+        return parents;
     }
 
     public static <T extends DomainObject> Set<T> getObjects(String permission, Class<T> clazz, User user) {

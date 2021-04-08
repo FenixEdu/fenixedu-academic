@@ -1,3 +1,5 @@
+- Bug fix: Fixed getting objects of a type for a given permission and user
+
 32.8.2 (03-04-2021)
 - Refactor: Deprecated some DegreeInfo getters and setters
 - Fix: Change Teacher role type expression in order to include also inactive teachers in find person functionality
