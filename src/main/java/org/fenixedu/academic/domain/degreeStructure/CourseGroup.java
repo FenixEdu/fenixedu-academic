@@ -18,7 +18,26 @@
  */
 package org.fenixedu.academic.domain.degreeStructure;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
+import com.google.common.base.Strings;
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.comparators.ReverseComparator;
+import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.CurricularCourse;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.ExecutionInterval;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
+import org.fenixedu.academic.domain.curricularRules.AndRule;
+import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
+import org.fenixedu.academic.domain.curricularRules.CurricularRule;
+import org.fenixedu.academic.domain.curricularRules.CurricularRuleType;
+import org.fenixedu.academic.domain.curricularRules.DegreeModulesSelectionLimit;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.predicate.CourseGroupPredicates;
+import org.fenixedu.academic.util.StringFormatter;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,28 +51,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.comparators.ReverseComparator;
-import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
-import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
-import org.fenixedu.academic.domain.curricularRules.CurricularRule;
-import org.fenixedu.academic.domain.curricularRules.CurricularRuleType;
-import org.fenixedu.academic.domain.curricularRules.DegreeModulesSelectionLimit;
-import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.predicate.CourseGroupPredicates;
-import org.fenixedu.academic.util.StringFormatter;
-import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.commons.i18n.I18N;
-
-import com.google.common.base.Strings;
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 public class CourseGroup extends CourseGroup_Base {
 
@@ -566,7 +567,12 @@ public class CourseGroup extends CourseGroup_Base {
     @Override
     public Double getMaxEctsCredits(final ExecutionSemester executionSemester) {
         final List<CreditsLimit> creditsLimitRules =
-                (List<CreditsLimit>) getCurricularRules(CurricularRuleType.CREDITS_LIMIT, executionSemester);
+                getCurricularRulesSet().stream()
+                        .filter(rule -> executionSemester == null || rule.isValid(executionSemester))
+                        .flatMap(rule -> rule instanceof AndRule ? ((AndRule) rule).getCurricularRulesSet().stream() : Stream.of(rule))
+                        .filter(rule -> rule.hasCurricularRuleType(CurricularRuleType.CREDITS_LIMIT))
+                        .map(CreditsLimit.class::cast)
+                        .collect(Collectors.toList());
         if (!creditsLimitRules.isEmpty()) {
             for (final CreditsLimit creditsLimit : creditsLimitRules) {
                 if (getParentCourseGroupStream().anyMatch(g -> g == creditsLimit.getContextCourseGroup())) {
@@ -599,7 +605,12 @@ public class CourseGroup extends CourseGroup_Base {
     @Override
     public Double getMinEctsCredits(final ExecutionSemester executionSemester) {
         final List<CreditsLimit> creditsLimitRules =
-                (List<CreditsLimit>) getCurricularRules(CurricularRuleType.CREDITS_LIMIT, executionSemester);
+                getCurricularRulesSet().stream()
+                        .filter(rule -> executionSemester == null || rule.isValid(executionSemester))
+                        .flatMap(rule -> rule instanceof AndRule ? ((AndRule) rule).getCurricularRulesSet().stream() : Stream.of(rule))
+                        .filter(rule -> rule.hasCurricularRuleType(CurricularRuleType.CREDITS_LIMIT))
+                        .map(CreditsLimit.class::cast)
+                        .collect(Collectors.toList());
         if (!creditsLimitRules.isEmpty()) {
             for (final CreditsLimit creditsLimit : creditsLimitRules) {
             	if (getParentCourseGroupStream().anyMatch(g -> g == creditsLimit.getContextCourseGroup())) {
