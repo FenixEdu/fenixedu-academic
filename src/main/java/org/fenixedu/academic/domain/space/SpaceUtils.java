@@ -38,7 +38,6 @@ import org.fenixedu.academic.domain.Lesson;
 import org.fenixedu.academic.domain.LessonInstance;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.person.RoleType;
-import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.dto.InfoRoom;
 import org.fenixedu.academic.util.DiaSemana;
 import org.fenixedu.academic.util.HourMinuteSecond;
@@ -55,7 +54,6 @@ import org.joda.time.YearMonthDay;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSortedSet;
-import com.google.common.collect.Ordering;
 
 public class SpaceUtils {
     public static final String SCHOOL_SPACES = "School Spaces";
@@ -419,20 +417,6 @@ public class SpaceUtils {
             }
         }
         return result;
-    }
-
-    public static List<Lesson> getAssociatedLessons(Space space, AcademicInterval academicInterval) {
-        final List<Lesson> lessons = new ArrayList<Lesson>();
-        for (Occupation spaceOccupation : space.getOccupationSet()) {
-            if (spaceOccupation instanceof LessonSpaceOccupation) {
-                LessonSpaceOccupation roomOccupation = (LessonSpaceOccupation) spaceOccupation;
-                final Lesson lesson = roomOccupation.getLesson();
-                if (lesson.getAcademicInterval().equals(academicInterval)) {
-                    lessons.add(lesson);
-                }
-            }
-        }
-        return lessons;
     }
 
     public static String[] getIdentificationWords(String name) {

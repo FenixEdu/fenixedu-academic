@@ -21,7 +21,9 @@ package org.fenixedu.academic.ui.struts.action.resourceAllocationManager;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
@@ -48,6 +50,7 @@ import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.SchoolClass;
 import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.ShiftEnrolment;
+import org.fenixedu.academic.domain.space.LessonInstanceSpaceOccupation;
 import org.fenixedu.academic.domain.space.LessonSpaceOccupation;
 import org.fenixedu.academic.domain.space.SpaceUtils;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
@@ -69,6 +72,7 @@ import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
 import org.fenixedu.spaces.domain.Space;
 import org.fenixedu.spaces.domain.SpaceClassification;
+import org.fenixedu.spaces.domain.occupation.Occupation;
 import org.joda.time.DateTime;
 
 import com.google.common.collect.Ordering;
@@ -145,7 +149,7 @@ public class ViewAllRoomsSchedulesDA extends FenixDispatchAction {
         final List<RoomLessonsBean> beans = new ArrayList<RoomLessonsBean>();
         for (final Space room : rooms) {
             if (!StringUtils.isEmpty(room.getName())) {
-                final List<Lesson> lessons = SpaceUtils.getAssociatedLessons(room, bean.getAcademicInterval());
+                final Collection<Lesson> lessons = getAssociatedLessons(room, bean.getAcademicInterval());
                 final List<InfoLesson> infoLessons = new ArrayList<InfoLesson>(lessons.size());
                 for (Lesson lesson : lessons) {
                     infoLessons.add(InfoLesson.newInfoFromDomain(lesson));
@@ -157,6 +161,25 @@ public class ViewAllRoomsSchedulesDA extends FenixDispatchAction {
         request.setAttribute("academicInterval", bean.getAcademicInterval());
         request.setAttribute("beans", beans);
         return mapping.findForward("list");
+    }
+
+    private static Collection<Lesson> getAssociatedLessons(Space space, AcademicInterval academicInterval) {
+        final Set<Lesson> lessons = new HashSet<>();
+        for (Occupation spaceOccupation : space.getOccupationSet()) {
+            if (spaceOccupation instanceof LessonSpaceOccupation) {
+                LessonSpaceOccupation roomOccupation = (LessonSpaceOccupation) spaceOccupation;
+                final Lesson lesson = roomOccupation.getLesson();
+                if (lesson.getAcademicInterval().equals(academicInterval)) {
+                    lessons.add(lesson);
+                }
+            }
+            if (spaceOccupation instanceof LessonInstanceSpaceOccupation) {
+                LessonInstanceSpaceOccupation roomOccupation = (LessonInstanceSpaceOccupation) spaceOccupation;
+                roomOccupation.getLessonInstancesSet().stream().map(LessonInstance::getLesson)
+                        .filter(lesson -> lesson.getAcademicInterval().equals(academicInterval)).forEach(lessons::add);
+            }
+        }
+        return lessons;
     }
 
     public static class RoomLessonsBean {

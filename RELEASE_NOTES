@@ -1,3 +1,5 @@
+- Bug fix: When listing rooms schedules, take also into account lesson instances occupations
+
 32.8.3 (08-04-2021)
 - Bug fix: Fixed getting objects of a type for a given permission and user
 
