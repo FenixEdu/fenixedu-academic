@@ -18,12 +18,8 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Stream;
-
+import com.google.common.base.Joiner;
+import com.google.common.base.Objects;
 import org.fenixedu.academic.domain.Coordinator;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ExecutionDegree;
@@ -37,8 +33,11 @@ import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Objects;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Stream;
 
 @GroupOperator("coordinator")
 public class CoordinatorGroup extends FenixGroup {
@@ -108,7 +107,7 @@ public class CoordinatorGroup extends FenixGroup {
     public Stream<User> getMembers() {
         Set<User> users = new HashSet<>();
         if (degreeType != null) {
-            ExecutionYear year = ExecutionYear.readCurrentExecutionYear();
+            ExecutionYear year = getExecutionYear();
             for (final ExecutionDegree executionDegree : year.getExecutionDegreesSet()) {
                 if (degreeType.equals(executionDegree.getDegreeType())) {
                     for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
@@ -128,7 +127,7 @@ public class CoordinatorGroup extends FenixGroup {
         }
 
         if (degree == null && degreeType == null) {
-            final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+            final ExecutionYear executionYear = getExecutionYear();
             for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
                 for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
                     if (responsible == null || responsible.equals(coordinator.isResponsible())) {
@@ -166,9 +165,10 @@ public class CoordinatorGroup extends FenixGroup {
         if (user == null || user.getPerson().getCoordinatorsSet().isEmpty()) {
             return false;
         }
-        for (Coordinator coordinator : user.getPerson().getCoordinatorsSet()) {
-            ExecutionDegree executionDegree = coordinator.getExecutionDegree();
-            if (executionDegree.getExecutionYear().isCurrent()) {
+        final ExecutionYear executionYear = getExecutionYear();
+        for (final Coordinator coordinator : user.getPerson().getCoordinatorsSet()) {
+            final ExecutionDegree executionDegree = coordinator.getExecutionDegree();
+            if (executionDegree.getExecutionYear() == executionYear) {
                 if (degreeType != null && degreeType != executionDegree.getDegree().getDegreeType()) {
                     continue;
                 }
@@ -208,6 +208,23 @@ public class CoordinatorGroup extends FenixGroup {
     @Override
     public int hashCode() {
         return Objects.hashCode(degreeType, degree, responsible);
+    }
+
+    private ExecutionYear getExecutionYear() {
+        final ExecutionYear current = ExecutionYear.readCurrentExecutionYear();
+        if (degree != null && getExecutionYears().noneMatch(executionYear -> executionYear == current)) {
+            return getExecutionYears()
+                    .sorted(ExecutionYear.COMPARATOR_BY_YEAR.reversed())
+                    .findFirst().orElse(current);
+        }
+        return current;
+    }
+
+    private Stream<ExecutionYear> getExecutionYears() {
+        return degree.getDegreeCurricularPlansSet().stream()
+                .flatMap(dcp -> dcp.getExecutionDegreesSet().stream())
+                .map(executionDegree -> executionDegree.getExecutionYear())
+                .distinct();
     }
 
 }
