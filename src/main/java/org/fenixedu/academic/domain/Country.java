@@ -21,23 +21,14 @@ package org.fenixedu.academic.domain;
 import java.text.Collator;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LocaleUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.LocalizedString;
 
 public class Country extends Country_Base {
-
-    static final public String PORTUGAL = "PORTUGAL";
-
-    static final public String NATIONALITY_PORTUGUESE = "PORTUGUESA";
-
-    static final public String DEFAULT_COUNTRY_NATIONALITY = NATIONALITY_PORTUGUESE;
 
     public static Comparator<Country> COMPARATOR_BY_NAME = new Comparator<Country>() {
         @Override
@@ -86,65 +77,22 @@ public class Country extends Country_Base {
     // -------------------------------------------------------------
 
     /**
-     * If the person country is undefined it is set to default. In a not
-     * distance future this will not be needed since the coutry can never be
-     * null.
-     * 
      * @return default country
      */
     public static Country readDefault() {
-        for (final Country country : Bennu.getInstance().getCountrysSet()) {
-            if (country.isDefaultCountry()) {
-                return country;
-            }
-        }
-
-        return null;
+        return readAll().stream().filter(country -> country.isDefaultCountry()).findAny().orElse(null);
     }
 
-    public static Country readCountryByNationality(final String nationality) {
-        for (final Country country : Bennu.getInstance().getCountrysSet()) {
-            if (country.getNationality().equals(nationality)) {
-                return country;
-            }
-        }
-        return null;
-    }
-
-    // FIXME: This method is wrong and should not exist
-    // exists only because PORTUGAL is repeated
-    // country object should be split in 2 objects: Country and District
-    // where Country has many Districts
-    public static Set<Country> readDistinctCountries() {
-        final Set<Country> result = new HashSet<Country>();
-        for (final Country country : Bennu.getInstance().getCountrysSet()) {
-            if (!country.getName().equalsIgnoreCase(PORTUGAL)) {
-                result.add(country);
-            } else {
-                if (country.getCountryNationality().getContent(org.fenixedu.academic.util.LocaleUtils.PT)
-                        .equalsIgnoreCase(NATIONALITY_PORTUGUESE)) {
-                    result.add(country);
-                }
-            }
-        }
-
-        return result;
+    public static Set<Country> readAll() {
+        return Bennu.getInstance().getCountrysSet();
     }
 
     /**
-     * This method is (yet another) hack in Country due to strange values for
-     * the Portuguese nationality.
-     * 
+     * @deprecated use {@link #readAll()}
      */
     @Deprecated
-    public String getFilteredNationality(final Locale locale) {
-        final String nationality = getCountryNationality().getContent(locale);
-        if (this != readDefault()) {
-            return nationality;
-        }
-
-        final String specialCase = BundleUtil.getString(Bundle.APPLICATION, "label.person.portugueseNationality").toUpperCase();
-        return nationality.trim().contains(specialCase) ? specialCase : nationality;
+    public static Set<Country> readDistinctCountries() {
+        return readAll();
     }
 
     public boolean isDefaultCountry() {
@@ -152,45 +100,13 @@ public class Country extends Country_Base {
     }
 
     static public Country readByTwoLetterCode(String code) {
-
-        if (StringUtils.isEmpty(code)) {
-            return null;
-        }
-
-        // TODO: Hack to remove, when we no longer have 4(!!) Portugal countries
-        // with same code (pt)
-        final Country defaultCountry = readDefault();
-        if (defaultCountry.getCode().equalsIgnoreCase(code)) {
-            return defaultCountry;
-        }
-
-        for (final Country country : Bennu.getInstance().getCountrysSet()) {
-            if (country.getCode().equalsIgnoreCase(code)) {
-                return country;
-            }
-        }
-        return null;
+        return StringUtils.isBlank(code) ? null : readAll().stream().filter(country -> code.equals(country.getCode())).findAny()
+                .orElse(null);
     }
 
     static public Country readByThreeLetterCode(String code) {
-
-        if (StringUtils.isEmpty(code)) {
-            return null;
-        }
-
-        // TODO: Hack to remove, when we no longer have 4(!!) Portugal countries
-        // with same code (pt)
-        Country defaultCountry = readDefault();
-        if (defaultCountry.getThreeLetterCode().equalsIgnoreCase(code)) {
-            return defaultCountry;
-        }
-
-        for (final Country country : Bennu.getInstance().getCountrysSet()) {
-            if (country.getThreeLetterCode() != null && country.getThreeLetterCode().equalsIgnoreCase(code)) {
-                return country;
-            }
-        }
-        return null;
+        return StringUtils.isBlank(code) ? null : readAll().stream().filter(country -> code.equals(country.getThreeLetterCode()))
+                .findAny().orElse(null);
     }
 
     @Deprecated
