@@ -65,6 +65,11 @@ public class ExtraCurricularActivity extends ExtraCurricularActivity_Base {
             }
         }
     }
+    
+    public void edit(Interval interval) {
+        checkParameters(getStudent(), getType(), interval);
+        super.setActivityInterval(interval);
+    }
 
     public boolean getIsDeletable() {
         return true;
