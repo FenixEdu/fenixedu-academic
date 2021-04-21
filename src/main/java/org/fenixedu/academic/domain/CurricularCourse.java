@@ -18,20 +18,6 @@
  */
 package org.fenixedu.academic.domain;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.text.Collator;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
@@ -62,10 +48,25 @@ import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.Mark
 import org.fenixedu.academic.predicate.MarkSheetPredicates;
 import org.fenixedu.academic.util.DateFormatUtil;
 import org.fenixedu.academic.util.EnrolmentEvaluationState;
-import org.fenixedu.commons.i18n.LocalizedString;
+import org.fenixedu.academic.util.ReportCache;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.text.Collator;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class CurricularCourse extends CurricularCourse_Base {
 
@@ -998,13 +999,27 @@ public class CurricularCourse extends CurricularCourse_Base {
         return getEctsCredits(curricularPeriod == null ? null : curricularPeriod.getChildOrder(), executionSemester);
     }
 
-    public Double getEctsCredits(final Integer order, final ExecutionSemester executionSemester) {
+    private Double calculateEctsCredits(final Integer order, final ExecutionSemester executionSemester) {
         if (getCompetenceCourse() != null) {
             return getCompetenceCourse().getEctsCredits(order, executionSemester);
         } else if (isOptionalCurricularCourse()) {
             return 0.0d;
         }
         throw new DomainException("CurricularCourse.with.no.ects.credits");
+    }
+
+    public Double getEctsCredits(final Integer order, final ExecutionSemester executionSemester) {
+        if (ReportCache.isActive()) {
+            final String key = getExternalId() + order + executionSemester.getExternalId();
+            final Double cachedValue = ReportCache.read(key);
+            if (cachedValue != null) {
+                return cachedValue;
+            }
+            final Double result = calculateEctsCredits(order, executionSemester);
+            ReportCache.cache(key, result);
+            return result;
+        }
+        return calculateEctsCredits(order, executionSemester);
     }
 
     @Override
@@ -1506,7 +1521,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     /**
      * Maintened for legacy code compatibility purposes only. Makes no sense to
      * check an Enrolment concept in a CurricularCourse.
-     * 
+     *
      * @return true if CurricularCourseType checks accordingly
      */
     @Deprecated
@@ -2155,7 +2170,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     @Deprecated
     /**
      * @deprecated Use {@link #getWeight()} instead.
-     * 
+     *
      */
     public Double getBaseWeight() {
         return super.getWeigth();
