@@ -110,7 +110,7 @@ public class StudentCurricularPlanEnrolmentPreConditions {
      * @param scp
      * @return EnrolmentPreConditionResult
      */
-    static EnrolmentPreConditionResult checkDebts(StudentCurricularPlan scp) {
+    public static EnrolmentPreConditionResult checkDebts(StudentCurricularPlan scp) {
 
         if (EnrolmentBlocker.enrolmentBlocker.isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt(scp, ExecutionYear.readCurrentExecutionYear())) {
             return createFalse("error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
