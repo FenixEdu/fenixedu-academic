@@ -18,12 +18,8 @@
  */
 package org.fenixedu.academic.ui.struts.action.student;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,14 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.academic.domain.Attends;
-import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.Enrolment;
-import org.fenixedu.academic.domain.ExecutionCourse;
-import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.GradeScale;
-import org.fenixedu.academic.domain.Mark;
-import org.fenixedu.academic.domain.WrittenEvaluation;
+import org.fenixedu.academic.domain.*;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
@@ -299,7 +288,11 @@ public class ShowStudentStatisticsDispatchAction extends FenixDispatchAction {
     private JsonElement computeCurricularCourseOvertimeStatistics(CurricularCourse curricularCourse) {
         JsonObject jsonObject = new JsonObject();
         JsonArray entries = new JsonArray();
-        for (ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
+        List<ExecutionCourse> sortedExecutionCoursesSet = curricularCourse.getAssociatedExecutionCoursesSet()
+                .stream()
+                .sorted(Comparator.comparing(ExecutionCourse_Base::getExecutionPeriod).reversed())
+                .collect(Collectors.toList());
+        for (ExecutionCourse executionCourse : sortedExecutionCoursesSet) {
             if (executionCourse.getExecutionPeriod().isBefore(ExecutionSemester.readActualExecutionSemester())
                     && executionCourse.getEnrolmentCount() > 0) {
                 JsonElement executionCourseStatistics = computeExecutionCourseStatistics(executionCourse);
