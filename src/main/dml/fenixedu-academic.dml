@@ -792,6 +792,7 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
             Boolean onlineSubmissionsAllowed;
             DateTime projectBeginDateTime;
             DateTime projectEndDateTime;
+            Boolean visible;
         }
 
         class WrittenEvaluation extends Evaluation {

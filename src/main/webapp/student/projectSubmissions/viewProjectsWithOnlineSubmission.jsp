@@ -47,12 +47,14 @@
 			<ul>
 				<logic:iterate id="projectWithOnlineSubmission" name="projectsWithOnlineSubmission" type="org.fenixedu.academic.domain.Project">
 					<bean:define id="projectId" name="projectWithOnlineSubmission" property="externalId" />
-					<li>
-						<bean:write name="projectWithOnlineSubmission" property="name"/> , 
-						<html:link action="<%="/projectSubmission.do?method=viewProjectSubmissions&amp;attendsId=" + attendsId + "&amp;projectId=" + projectId%>">
-							<bean:message key="link.projectSubmissions.viewProjectsWithOnlineSubmission.viewProjectSubmissions"/>
-						</html:link>
-					</li>
+					<logic:notEqual value="false" name="projectWithOnlineSubmission" property="visible">
+						<li>
+							<bean:write name="projectWithOnlineSubmission" property="name"/> ,
+							<html:link action="<%="/projectSubmission.do?method=viewProjectSubmissions&amp;attendsId=" + attendsId + "&amp;projectId=" + projectId%>">
+								<bean:message key="link.projectSubmissions.viewProjectsWithOnlineSubmission.viewProjectSubmissions"/>
+							</html:link>
+						</li>
+					</logic:notEqual>
 				</logic:iterate>
 			</ul>
 		</logic:notEmpty>
