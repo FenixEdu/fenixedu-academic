@@ -18,16 +18,6 @@
  */
 package org.fenixedu.academic.domain.studentCurriculum;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.function.Supplier;
-
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionSemester;
@@ -52,6 +42,16 @@ import org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPlanEnrol
 import org.fenixedu.bennu.core.groups.Group;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.function.Supplier;
 
 abstract public class StudentCurricularPlanEnrolment {
 
@@ -96,8 +96,21 @@ abstract public class StudentCurricularPlanEnrolment {
         return result;
     }
 
+    private static InheritableThreadLocal<Boolean> checkDebts = new InheritableThreadLocal<>();
+
+    public static void disableCheckDebts() {
+        checkDebts.set(Boolean.TRUE);
+    }
+
+    public static void enableCheckDebts() {
+        checkDebts.remove();
+    }
+
     protected void assertEnrolmentPreConditions() {
-        checkDebts();
+        final Boolean disabled = checkDebts.get();
+        if (disabled == null && !disabled.booleanValue()) {
+            checkDebts();
+        }
 
         if (isResponsiblePersonAllowedToEnrolStudents() || isResponsibleInternationalRelationOffice()) {
             assertAcademicAdminOfficePreConditions();
