@@ -20,10 +20,12 @@ package org.fenixedu.academic.ui.struts.action.student;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -299,7 +301,11 @@ public class ShowStudentStatisticsDispatchAction extends FenixDispatchAction {
     private JsonElement computeCurricularCourseOvertimeStatistics(CurricularCourse curricularCourse) {
         JsonObject jsonObject = new JsonObject();
         JsonArray entries = new JsonArray();
-        for (ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
+        List<ExecutionCourse> sortedExecutionCoursesSet = curricularCourse.getAssociatedExecutionCoursesSet()
+                .stream()
+                .sorted(Comparator.comparing(ExecutionCourse::getExecutionPeriod).reversed())
+                .collect(Collectors.toList());
+        for (ExecutionCourse executionCourse : sortedExecutionCoursesSet) {
             if (executionCourse.getExecutionPeriod().isBefore(ExecutionSemester.readActualExecutionSemester())
                     && executionCourse.getEnrolmentCount() > 0) {
                 JsonElement executionCourseStatistics = computeExecutionCourseStatistics(executionCourse);
