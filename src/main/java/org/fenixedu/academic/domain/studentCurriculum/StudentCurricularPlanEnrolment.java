@@ -108,7 +108,7 @@ abstract public class StudentCurricularPlanEnrolment {
 
     protected void assertEnrolmentPreConditions() {
         final Boolean disabled = checkDebts.get();
-        if (disabled == null && !disabled.booleanValue()) {
+        if (disabled == null || !disabled.booleanValue()) {
             checkDebts();
         }
 
