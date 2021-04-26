@@ -41,8 +41,8 @@ import pt.ist.fenixframework.FenixFramework;
 public class CreateProject {
 
     protected void run(String executionCourseID, String name, Date begin, Date end, String description,
-            Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, String groupingID, Boolean visible,
-            GradeScale gradeScale, List<Department> departments) throws FenixServiceException {
+            Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, String groupingID, GradeScale gradeScale,
+            List<Department> departments) throws FenixServiceException {
 
         final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
         if (executionCourse == null) {
@@ -53,7 +53,7 @@ public class CreateProject {
 
         final Project project =
                 new Project(name, begin, end, description, onlineSubmissionsAllowed, maxSubmissionsToKeep, grouping,
-                        executionCourse, visible, gradeScale);
+                        executionCourse, gradeScale);
         project.getDeparmentsSet().addAll(departments);
     }
 
@@ -63,17 +63,17 @@ public class CreateProject {
 
     @Atomic
     public static void runCreateProject(String executionCourseID, String name, Date begin, Date end, String description,
-            Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, String groupingID, Boolean visible,
-            GradeScale gradeScale, List<Department> departments) throws FenixServiceException, NotAuthorizedException {
+            Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, String groupingID, GradeScale gradeScale,
+            List<Department> departments) throws FenixServiceException, NotAuthorizedException {
         try {
             ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
             serviceInstance.run(executionCourseID, name, begin, end, description, onlineSubmissionsAllowed, maxSubmissionsToKeep,
-                    groupingID, visible, gradeScale, departments);
+                    groupingID, gradeScale, departments);
         } catch (NotAuthorizedException ex1) {
             try {
                 ExecutionCourseCoordinatorAuthorizationFilter.instance.execute(executionCourseID);
                 serviceInstance.run(executionCourseID, name, begin, end, description, onlineSubmissionsAllowed,
-                        maxSubmissionsToKeep, groupingID, visible, gradeScale, departments);
+                        maxSubmissionsToKeep, groupingID, gradeScale, departments);
             } catch (NotAuthorizedException ex2) {
                 throw ex2;
             }

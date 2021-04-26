@@ -73,9 +73,9 @@ public class Project extends Project_Base {
     }
 
     public Project(String name, Date begin, Date end, String description, Boolean onlineSubmissionsAllowed,
-            Integer maxSubmissionsToKeep, Grouping grouping, ExecutionCourse executionCourse, Boolean visible) {
+            Integer maxSubmissionsToKeep, Grouping grouping, ExecutionCourse executionCourse) {
         this();
-        if (name == null || begin == null || end == null || executionCourse == null || visible == null) {
+        if (name == null || begin == null || end == null || executionCourse == null) {
             throw new NullPointerException();
         }
         if (begin.after(end)) {
@@ -88,16 +88,14 @@ public class Project extends Project_Base {
         this.setDescription(description != null ? description : "");
         this.addAssociatedExecutionCourses(executionCourse);
         this.setGradeScale(GradeScale.TYPE20);
-        this.setVisible(visible);
 
         setOnlineSubmissionProperties(onlineSubmissionsAllowed, maxSubmissionsToKeep, grouping);
     }
 
     public Project(String name, Date begin, Date end, String description, Boolean onlineSubmissionsAllowed,
-            Integer maxSubmissionsToKeep, Grouping grouping, ExecutionCourse executionCourse, Boolean visible,
-                   GradeScale gradeScale) {
+            Integer maxSubmissionsToKeep, Grouping grouping, ExecutionCourse executionCourse, GradeScale gradeScale) {
 
-        this(name, begin, end, description, onlineSubmissionsAllowed, maxSubmissionsToKeep, grouping, executionCourse, visible);
+        this(name, begin, end, description, onlineSubmissionsAllowed, maxSubmissionsToKeep, grouping, executionCourse);
 
         if (gradeScale != null) {
             this.setGradeScale(gradeScale);
@@ -107,7 +105,7 @@ public class Project extends Project_Base {
     }
 
     public void edit(String name, Date begin, Date end, String description, Boolean onlineSubmissionsAllowed,
-            Integer maxSubmissionsToKeep, Grouping grouping, Boolean visible, GradeScale gradeScale, List<Department> departments) {
+            Integer maxSubmissionsToKeep, Grouping grouping, GradeScale gradeScale, List<Department> departments) {
         if (name == null || begin == null || end == null) {
             throw new NullPointerException();
         }
@@ -117,7 +115,6 @@ public class Project extends Project_Base {
         setName(name);
         setBegin(begin);
         setEnd(end);
-        setVisible(visible);
         setGradeScale(gradeScale);
         setDescription((description != null) ? description : "");
 

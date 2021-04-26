@@ -93,12 +93,6 @@
 					<h:inputText alt="#{htmlAltBundle['inputText.maxSubmissionsToKeep']}" id="maxSubmissionsToKeep" required="false" value="#{projectManagementBackingBean.maxSubmissionsToKeep}" maxlength="2" size="2"/>
 					<h:message for="maxSubmissionsToKeep" styleClass="error"/>
 				</h:panelGroup>
-
-				<h:outputText value="#{bundle['label.org.fenixedu.academic.domain.Project.visible']}:" />
-				<h:panelGroup>
-					<h:selectBooleanCheckbox id="visible" required="true" value="#{projectManagementBackingBean.visible}" />
-					<h:message for="visible" styleClass="error"/>
-				</h:panelGroup>
 				
 				<h:outputText value="#{bundle['label.org.fenixedu.academic.domain.Project.grouping.name']}:" />
 				<h:panelGroup>

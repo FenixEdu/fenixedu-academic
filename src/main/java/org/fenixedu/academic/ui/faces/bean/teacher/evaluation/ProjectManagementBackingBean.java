@@ -69,8 +69,6 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
 
     protected String groupingID;
 
-    protected Boolean visible;
-
     protected List<SelectItem> executionCourseGroupings;
 
     protected List<String> selectedDepartments;
@@ -103,7 +101,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
             CreateProject.runCreateProject(getExecutionCourseID(), getName(),
                     DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBeginString()),
                     DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription(), getOnlineSubmissionsAllowed(),
-                    getMaxSubmissionsToKeep(), getGroupingID(), getVisible(), getGradeScale(), getSelectDepartments());
+                    getMaxSubmissionsToKeep(), getGroupingID(), getGradeScale(), getSelectDepartments());
         } catch (final FenixServiceException e) {
             setErrorMessage(e.getMessage());
             return "";
@@ -122,7 +120,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
             EditProject.runEditProject(getExecutionCourseID(), getProjectID(), getName(),
                     DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBeginString()),
                     DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription(), getOnlineSubmissionsAllowed(),
-                    getMaxSubmissionsToKeep(), getGroupingID(), getVisible(), getGradeScale(), getSelectDepartments());
+                    getMaxSubmissionsToKeep(), getGroupingID(), getGradeScale(), getSelectDepartments());
             setAssociatedProjects(null);
         } catch (final NotAuthorizedException e) {
         } catch (final FenixServiceException e) {
@@ -295,18 +293,6 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
         }
 
         return this.executionCourseGroupings;
-    }
-
-    public Boolean getVisible() {
-        if (this.visible == null && this.getProject() != null) {
-            // if it is null, default to true
-            this.visible = this.getProject().getVisible() == null || this.getProject().getVisible();
-        }
-        return visible;
-    }
-
-    public void setVisible(Boolean visible) {
-        this.visible = visible;
     }
 
     @Override

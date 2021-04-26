@@ -36,7 +36,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class EditProject {
 
     protected void run(String executionCourseID, String projectID, String name, Date begin, Date end, String description,
-            Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, String groupingID, Boolean visible, GradeScale gradeScale,
+            Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, String groupingID, GradeScale gradeScale,
             List<Department> departments) throws FenixServiceException {
         final Project project = (Project) FenixFramework.getDomainObject(projectID);
         if (project == null) {
@@ -45,8 +45,8 @@ public class EditProject {
 
         final Grouping grouping = (groupingID != null) ? FenixFramework.<Grouping> getDomainObject(groupingID) : null;
 
-        project.edit(name, begin, end, description, onlineSubmissionsAllowed, maxSubmissionsToKeep, grouping, visible,
-                gradeScale, departments);
+        project.edit(name, begin, end, description, onlineSubmissionsAllowed, maxSubmissionsToKeep, grouping, gradeScale,
+                departments);
     }
 
     // Service Invokers migrated from Berserk
@@ -56,16 +56,16 @@ public class EditProject {
     @Atomic
     public static void runEditProject(String executionCourseID, String projectID, String name, Date begin, Date end,
             String description, Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, String groupingID,
-            Boolean visible, GradeScale gradeScale, List<Department> departments) throws FenixServiceException, NotAuthorizedException {
+            GradeScale gradeScale, List<Department> departments) throws FenixServiceException, NotAuthorizedException {
         try {
             ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
             serviceInstance.run(executionCourseID, projectID, name, begin, end, description, onlineSubmissionsAllowed,
-                    maxSubmissionsToKeep, groupingID, visible, gradeScale, departments);
+                    maxSubmissionsToKeep, groupingID, gradeScale, departments);
         } catch (NotAuthorizedException ex1) {
             try {
                 ExecutionCourseCoordinatorAuthorizationFilter.instance.execute(executionCourseID);
                 serviceInstance.run(executionCourseID, projectID, name, begin, end, description, onlineSubmissionsAllowed,
-                        maxSubmissionsToKeep, groupingID, visible, gradeScale, departments);
+                        maxSubmissionsToKeep, groupingID, gradeScale, departments);
             } catch (NotAuthorizedException ex2) {
                 throw ex2;
             }
