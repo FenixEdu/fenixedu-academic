@@ -47,16 +47,34 @@
 			<ul>
 				<logic:iterate id="projectWithOnlineSubmission" name="projectsWithOnlineSubmission" type="org.fenixedu.academic.domain.Project">
 					<bean:define id="projectId" name="projectWithOnlineSubmission" property="externalId" />
-					<logic:notEqual value="false" name="projectWithOnlineSubmission" property="visible">
+					<logic:equal value="false" name="projectWithOnlineSubmission" property="pastSubmissionEndDate">
 						<li>
 							<bean:write name="projectWithOnlineSubmission" property="name"/> ,
 							<html:link action="<%="/projectSubmission.do?method=viewProjectSubmissions&amp;attendsId=" + attendsId + "&amp;projectId=" + projectId%>">
 								<bean:message key="link.projectSubmissions.viewProjectsWithOnlineSubmission.viewProjectSubmissions"/>
 							</html:link>
 						</li>
-					</logic:notEqual>
+					</logic:equal>
 				</logic:iterate>
 			</ul>
+			<bean:define id="projectsWithOnlineSubmissionPastEndDate" name="executionCourse" property="projectsWithOnlineSubmissionPastEndDate" />
+			<logic:notEmpty name="projectsWithOnlineSubmissionPastEndDate">
+				<details>
+					<!-- Add list-item display property, otherwise the toggle arrow doesn't show up -->
+					<summary  style="display: list-item;"><bean:message key="link.projectSubmissions.viewProjectsWithOnlineSubmission.viewPastProjects"/></summary>
+					<ul>
+						<logic:iterate id="projectWithOnlineSubmissionPastEndDate" name="projectsWithOnlineSubmissionPastEndDate" type="org.fenixedu.academic.domain.Project">
+							<bean:define id="projectId" name="projectWithOnlineSubmissionPastEndDate" property="externalId" />
+							<li>
+								<bean:write name="projectWithOnlineSubmissionPastEndDate" property="name"/> ,
+								<html:link action="<%="/projectSubmission.do?method=viewProjectSubmissions&amp;attendsId=" + attendsId + "&amp;projectId=" + projectId%>">
+									<bean:message key="link.projectSubmissions.viewProjectsWithOnlineSubmission.viewProjectSubmissions"/>
+								</html:link>
+							</li>
+						</logic:iterate>
+					</ul>
+				</details>
+			</logic:notEmpty>
 		</logic:notEmpty>
 		<logic:empty name="projectsWithOnlineSubmission">
 			<p class="mtop05">

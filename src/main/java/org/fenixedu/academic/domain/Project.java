@@ -202,6 +202,11 @@ public class Project extends Project_Base {
         return !getProjectBeginDateTime().isAfter(now) && !getProjectEndDateTime().isBefore(now);
     }
 
+    public boolean isPastSubmissionEndDate() {
+        final DateTime now = new DateTime();
+        return getProjectEndDateTime().isBefore(now);
+    }
+
     public boolean isCanComment() {
         for (ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
             final Professorship professorship = executionCourse.getProfessorshipForCurrentUser();

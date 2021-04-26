@@ -1180,6 +1180,17 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return result;
     }
 
+    public List<Project> getProjectsWithOnlineSubmissionPastEndDate() {
+        List<Project> result = new ArrayList<>();
+        for (Project project : getAssociatedProjects()) {
+            if (project.getOnlineSubmissionsAllowed() && project.isPastSubmissionEndDate()) {
+                result.add(project);
+            }
+        }
+
+        return result;
+    }
+
     private Set<SchoolClass> getAllSchoolClassesOrBy(DegreeCurricularPlan degreeCurricularPlan) {
         final Set<SchoolClass> result = new HashSet<>();
         for (final Shift shift : getAssociatedShifts()) {
