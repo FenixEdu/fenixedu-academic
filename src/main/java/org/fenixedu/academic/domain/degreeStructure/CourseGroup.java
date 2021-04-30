@@ -33,6 +33,7 @@ import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
 import org.fenixedu.academic.domain.curricularRules.CurricularRule;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleType;
 import org.fenixedu.academic.domain.curricularRules.DegreeModulesSelectionLimit;
+import org.fenixedu.academic.domain.curricularRules.OrRule;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.predicate.CourseGroupPredicates;
 import org.fenixedu.academic.util.StringFormatter;
@@ -569,7 +570,8 @@ public class CourseGroup extends CourseGroup_Base {
         final List<CreditsLimit> creditsLimitRules =
                 getCurricularRulesSet().stream()
                         .filter(rule -> executionSemester == null || rule.isValid(executionSemester))
-                        .flatMap(rule -> rule instanceof AndRule ? ((AndRule) rule).getCurricularRulesSet().stream() : Stream.of(rule))
+                        .flatMap(rule -> rule instanceof AndRule ? ((AndRule) rule).getCurricularRulesSet().stream() :
+                                (rule instanceof OrRule ? ((OrRule) rule).getCurricularRulesSet().stream() : Stream.of(rule)))
                         .filter(rule -> rule.hasCurricularRuleType(CurricularRuleType.CREDITS_LIMIT))
                         .map(CreditsLimit.class::cast)
                         .collect(Collectors.toList());
@@ -607,7 +609,8 @@ public class CourseGroup extends CourseGroup_Base {
         final List<CreditsLimit> creditsLimitRules =
                 getCurricularRulesSet().stream()
                         .filter(rule -> executionSemester == null || rule.isValid(executionSemester))
-                        .flatMap(rule -> rule instanceof AndRule ? ((AndRule) rule).getCurricularRulesSet().stream() : Stream.of(rule))
+                        .flatMap(rule -> rule instanceof AndRule ? ((AndRule) rule).getCurricularRulesSet().stream() :
+                                (rule instanceof OrRule ? ((OrRule) rule).getCurricularRulesSet().stream() : Stream.of(rule)))
                         .filter(rule -> rule.hasCurricularRuleType(CurricularRuleType.CREDITS_LIMIT))
                         .map(CreditsLimit.class::cast)
                         .collect(Collectors.toList());
