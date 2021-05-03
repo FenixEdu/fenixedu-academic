@@ -199,9 +199,10 @@ public class Project extends Project_Base {
         return !getProjectBeginDateTime().isAfter(now) && !getProjectEndDateTime().isBefore(now);
     }
 
-    public boolean isPastSubmissionEndDate() {
-        final DateTime now = new DateTime();
-        return getProjectEndDateTime().isBefore(now);
+    public boolean isPastSubmission() {
+        final DateTime prevDay = new DateTime().minusDays(1);
+        // Submissions are only in the "past" if 1 day has passed
+        return getProjectEndDateTime().isBefore(prevDay);
     }
 
     public boolean isCanComment() {

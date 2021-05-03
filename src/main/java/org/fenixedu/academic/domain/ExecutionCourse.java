@@ -1180,10 +1180,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return result;
     }
 
-    public List<Project> getProjectsWithOnlineSubmissionPastEndDate() {
+    public List<Project> getPastProjectsWithOnlineSubmission() {
         List<Project> result = new ArrayList<>();
         for (Project project : getAssociatedProjects()) {
-            if (project.getOnlineSubmissionsAllowed() && project.isPastSubmissionEndDate()) {
+            if (project.getOnlineSubmissionsAllowed() && project.isPastSubmission()) {
                 result.add(project);
             }
         }

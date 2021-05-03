@@ -47,7 +47,7 @@
 			<ul>
 				<logic:iterate id="projectWithOnlineSubmission" name="projectsWithOnlineSubmission" type="org.fenixedu.academic.domain.Project">
 					<bean:define id="projectId" name="projectWithOnlineSubmission" property="externalId" />
-					<logic:equal value="false" name="projectWithOnlineSubmission" property="pastSubmissionEndDate">
+					<logic:equal value="false" name="projectWithOnlineSubmission" property="pastSubmission">
 						<li>
 							<bean:write name="projectWithOnlineSubmission" property="name"/> ,
 							<html:link action="<%="/projectSubmission.do?method=viewProjectSubmissions&amp;attendsId=" + attendsId + "&amp;projectId=" + projectId%>">
@@ -57,16 +57,16 @@
 					</logic:equal>
 				</logic:iterate>
 			</ul>
-			<bean:define id="projectsWithOnlineSubmissionPastEndDate" name="executionCourse" property="projectsWithOnlineSubmissionPastEndDate" />
-			<logic:notEmpty name="projectsWithOnlineSubmissionPastEndDate">
+			<bean:define id="pastProjectsWithOnlineSubmission" name="executionCourse" property="pastProjectsWithOnlineSubmission" />
+			<logic:notEmpty name="pastProjectsWithOnlineSubmission">
 				<details>
 					<!-- Add list-item display property, otherwise the toggle arrow doesn't show up -->
 					<summary  style="display: list-item;"><bean:message key="link.projectSubmissions.viewProjectsWithOnlineSubmission.viewPastProjects"/></summary>
 					<ul>
-						<logic:iterate id="projectWithOnlineSubmissionPastEndDate" name="projectsWithOnlineSubmissionPastEndDate" type="org.fenixedu.academic.domain.Project">
-							<bean:define id="projectId" name="projectWithOnlineSubmissionPastEndDate" property="externalId" />
+						<logic:iterate id="pastProjectWithOnlineSubmission" name="pastProjectsWithOnlineSubmission" type="org.fenixedu.academic.domain.Project">
+							<bean:define id="projectId" name="pastProjectWithOnlineSubmission" property="externalId" />
 							<li>
-								<bean:write name="projectWithOnlineSubmissionPastEndDate" property="name"/> ,
+								<bean:write name="pastProjectWithOnlineSubmission" property="name"/> ,
 								<html:link action="<%="/projectSubmission.do?method=viewProjectSubmissions&amp;attendsId=" + attendsId + "&amp;projectId=" + projectId%>">
 									<bean:message key="link.projectSubmissions.viewProjectsWithOnlineSubmission.viewProjectSubmissions"/>
 								</html:link>
