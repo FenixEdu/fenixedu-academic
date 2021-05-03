@@ -33,6 +33,7 @@ import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
 import org.fenixedu.academic.domain.curricularRules.CurricularRule;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleType;
 import org.fenixedu.academic.domain.curricularRules.DegreeModulesSelectionLimit;
+import org.fenixedu.academic.domain.curricularRules.OrRule;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.predicate.CourseGroupPredicates;
 import org.fenixedu.academic.util.StringFormatter;
@@ -42,6 +43,7 @@ import org.fenixedu.commons.i18n.I18N;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -51,7 +53,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.fenixedu.academic.predicate.AccessControl.check;
@@ -566,13 +567,25 @@ public class CourseGroup extends CourseGroup_Base {
 
     @Override
     public Double getMaxEctsCredits(final ExecutionSemester executionSemester) {
-        final List<CreditsLimit> creditsLimitRules =
-                getCurricularRulesSet().stream()
-                        .filter(rule -> executionSemester == null || rule.isValid(executionSemester))
-                        .flatMap(rule -> rule instanceof AndRule ? ((AndRule) rule).getCurricularRulesSet().stream() : Stream.of(rule))
-                        .filter(rule -> rule.hasCurricularRuleType(CurricularRuleType.CREDITS_LIMIT))
-                        .map(CreditsLimit.class::cast)
-                        .collect(Collectors.toList());
+        final List<CreditsLimit> creditsLimitRules = new ArrayList<>();
+        for (CurricularRule rule : getCurricularRulesSet()) {
+            if (executionSemester == null || rule.isValid(executionSemester)) {
+                CreditsLimit finalRule = null;
+                if (rule instanceof AndRule) {
+                    finalRule = getMaxCreditsAndRule(((AndRule)rule).getCurricularRulesSet());
+                } else if (rule instanceof OrRule) {
+                    finalRule = getMaxCreditsOrRule(((OrRule)rule).getCurricularRulesSet());
+                } else {
+                    if (rule.hasCurricularRuleType(CurricularRuleType.CREDITS_LIMIT)) {
+                        finalRule = (CreditsLimit) rule;
+                    }
+                }
+                if (finalRule != null) {
+                    creditsLimitRules.add(finalRule);
+                }
+            }
+        }
+
         if (!creditsLimitRules.isEmpty()) {
             for (final CreditsLimit creditsLimit : creditsLimitRules) {
                 if (getParentCourseGroupStream().anyMatch(g -> g == creditsLimit.getContextCourseGroup())) {
@@ -591,6 +604,36 @@ public class CourseGroup extends CourseGroup_Base {
         return countMaxEctsCredits(modulesByExecutionPeriod, executionSemester, modulesByExecutionPeriod.size());
     }
 
+    private CreditsLimit getMaxCreditsOrRule(Set<CurricularRule> orCurricularRules) {
+        List<CreditsLimit> creditsRules = getMaxCreditsLimitsRule(orCurricularRules);
+        return creditsRules.stream().max(Comparator.comparing(CreditsLimit::getMaximumCredits)).orElseGet(null);
+    }
+
+    private CreditsLimit getMaxCreditsAndRule(Set<CurricularRule> andCurricularRules) {
+        List<CreditsLimit> creditsRules = getMaxCreditsLimitsRule(andCurricularRules);
+        return creditsRules.stream().min(Comparator.comparing(CreditsLimit::getMaximumCredits)).orElseGet(null);
+    }
+
+    private List<CreditsLimit> getMaxCreditsLimitsRule(Set<CurricularRule> curricularRules) {
+        List<CreditsLimit> creditsRules = new ArrayList<>();
+        for (CurricularRule rule : curricularRules) {
+            CreditsLimit finalRule = null;
+            if (rule instanceof AndRule) {
+                finalRule = getMaxCreditsAndRule(((AndRule) rule).getCurricularRulesSet());
+            } else if (rule instanceof OrRule) {
+                finalRule = getMaxCreditsOrRule(((OrRule) rule).getCurricularRulesSet());
+            } else {
+                if (rule.hasCurricularRuleType(CurricularRuleType.CREDITS_LIMIT)) {
+                    finalRule = (CreditsLimit) rule;
+                }
+            }
+            if (finalRule != null) {
+                creditsRules.add(finalRule);
+            }
+        }
+        return creditsRules;
+    }
+
     private Double countMaxEctsCredits(final Collection<DegreeModule> modulesByExecutionPeriod,
             final ExecutionSemester executionSemester, final Integer maximumLimit) {
 
@@ -604,13 +647,24 @@ public class CourseGroup extends CourseGroup_Base {
 
     @Override
     public Double getMinEctsCredits(final ExecutionSemester executionSemester) {
-        final List<CreditsLimit> creditsLimitRules =
-                getCurricularRulesSet().stream()
-                        .filter(rule -> executionSemester == null || rule.isValid(executionSemester))
-                        .flatMap(rule -> rule instanceof AndRule ? ((AndRule) rule).getCurricularRulesSet().stream() : Stream.of(rule))
-                        .filter(rule -> rule.hasCurricularRuleType(CurricularRuleType.CREDITS_LIMIT))
-                        .map(CreditsLimit.class::cast)
-                        .collect(Collectors.toList());
+        final List<CreditsLimit> creditsLimitRules = new ArrayList<>();
+        for (CurricularRule rule : getCurricularRulesSet()) {
+            if (executionSemester == null || rule.isValid(executionSemester)) {
+                CreditsLimit finalRule = null;
+                if (rule instanceof AndRule) {
+                    finalRule = getMinCreditsRule(((AndRule)rule).getCurricularRulesSet());
+                } else if (rule instanceof OrRule) {
+                    finalRule = getMinCreditsRule(((OrRule)rule).getCurricularRulesSet());
+                } else {
+                    if (rule.hasCurricularRuleType(CurricularRuleType.CREDITS_LIMIT)) {
+                        finalRule = (CreditsLimit) rule;
+                    }
+                }
+                if (finalRule != null) {
+                    creditsLimitRules.add(finalRule);
+                }
+            }
+        }
         if (!creditsLimitRules.isEmpty()) {
             for (final CreditsLimit creditsLimit : creditsLimitRules) {
             	if (getParentCourseGroupStream().anyMatch(g -> g == creditsLimit.getContextCourseGroup())) {
@@ -629,6 +683,31 @@ public class CourseGroup extends CourseGroup_Base {
         return countMinEctsCredits(modulesByExecutionPeriod, executionSemester, modulesByExecutionPeriod.size());
     }
 
+    private CreditsLimit getMinCreditsRule(Set<CurricularRule> curricularRules) {
+        List<CreditsLimit> creditsRules = getMinCreditsLimitsRule(curricularRules);
+        return creditsRules.stream().min(Comparator.comparing(CreditsLimit::getMinimumCredits)).orElseGet(null);
+    }
+
+    private List<CreditsLimit> getMinCreditsLimitsRule(Set<CurricularRule> curricularRules) {
+        List<CreditsLimit> creditsRules = new ArrayList<>();
+        for (CurricularRule rule : curricularRules) {
+            CreditsLimit finalRule = null;
+            if (rule instanceof AndRule) {
+                finalRule = getMinCreditsRule(((AndRule) rule).getCurricularRulesSet());
+            } else if (rule instanceof OrRule) {
+                finalRule = getMinCreditsRule(((OrRule) rule).getCurricularRulesSet());
+            } else {
+                if (rule.hasCurricularRuleType(CurricularRuleType.CREDITS_LIMIT)) {
+                    finalRule = (CreditsLimit) rule;
+                }
+            }
+            if (finalRule != null) {
+                creditsRules.add(finalRule);
+            }
+        }
+        return creditsRules;
+    }
+    
     private Double countMinEctsCredits(final Collection<DegreeModule> modulesByExecutionPeriod,
             final ExecutionSemester executionSemester, final Integer minimumLimit) {
 
