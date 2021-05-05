@@ -1183,7 +1183,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public List<Project> getPastProjectsWithOnlineSubmission() {
         List<Project> result = new ArrayList<>();
         for (Project project : getAssociatedProjects()) {
-            if (project.getOnlineSubmissionsAllowed() && project.isPastSubmission()) {
+            if (project.getOnlineSubmissionsAllowed() && project.isPastProject()) {
                 result.add(project);
             }
         }
