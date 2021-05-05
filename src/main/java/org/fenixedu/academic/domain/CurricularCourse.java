@@ -1438,7 +1438,37 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         return new LocalizedString();
     }
-
+       
+    public LocalizedString getCrossCompetenceComponentI18N(ExecutionSemester period) {
+        if (getCompetenceCourse() != null ) {
+            return getCompetenceCourse().getCrossCompetenceComponentI18N(period);
+      }       
+        return new LocalizedString();
+    }
+    
+    public LocalizedString getLaboratorialComponentI18N(ExecutionSemester period) {
+        if (getCompetenceCourse() != null ) {
+            return getCompetenceCourse().getLaboratorialComponentI18N(period);
+      }       
+        return new LocalizedString();
+    }
+    
+    
+    public LocalizedString getProgrammingAndComputingComponentI18N(ExecutionSemester period) {
+        if (getCompetenceCourse() != null ) {
+            return getCompetenceCourse().getProgrammingAndComputingComponentI18N(period);
+      }       
+        return new LocalizedString();
+    }
+    
+    public LocalizedString getEthicalPrinciplesI18N(ExecutionSemester period) {
+        if (getCompetenceCourse() != null ) {
+            return getCompetenceCourse().getEthicalPrinciplesI18N(period);
+      }       
+        return new LocalizedString();
+    }
+    
+    
     public LocalizedString getPrerequisitesI18N() {
         return new LocalizedString(org.fenixedu.academic.util.LocaleUtils.PT, getPrerequisites()).with(org.fenixedu.academic.util.LocaleUtils.EN,
                 getPrerequisitesEn());

@@ -582,6 +582,8 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
        String dgesReference;
        String universityReference;
        String officialReference (REQUIRED);
+       String linkReference;
+       Boolean includeInDiplomaSuplement;
     }
 
     class DegreeSpecializationArea  {

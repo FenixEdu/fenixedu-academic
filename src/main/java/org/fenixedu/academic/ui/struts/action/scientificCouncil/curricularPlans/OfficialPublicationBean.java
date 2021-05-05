@@ -50,7 +50,10 @@ public class OfficialPublicationBean implements Serializable {
     private final DegreeOfficialPublication degreeOfficialPublication;
     private final List<SpecializationName> specializationNames = new ArrayList<OfficialPublicationBean.SpecializationName>();
     private LocalDate publication;
-
+    private String linkReference;
+    private Boolean includeInDiplomaSuplement;
+    
+    
     public OfficialPublicationBean(DegreeOfficialPublication degreeOfficialPublication) {
         super();
         this.degreeOfficialPublication = degreeOfficialPublication;
@@ -59,6 +62,8 @@ public class OfficialPublicationBean implements Serializable {
         this.newNameEn = "";
         initSpecializationNames();
         this.publication = degreeOfficialPublication.getPublication();
+        this.linkReference=degreeOfficialPublication.getLinkReference();
+        this.includeInDiplomaSuplement=degreeOfficialPublication.getIncludeInDiplomaSuplement();
     }
 
     private void initSpecializationNames() {
@@ -108,6 +113,36 @@ public class OfficialPublicationBean implements Serializable {
         this.publication = publication;
     }
 
+    public String getLinkReference() {
+        return linkReference;
+    }
+
+    public void setLinkReference(String linkReference) {
+        this.linkReference = linkReference;
+    }
+
+    public Boolean getIncludeInDiplomaSuplement() {
+        return includeInDiplomaSuplement;
+    }
+
+    public void setIncludeInDiplomaSuplement(Boolean includeInDiplomaSuplement) {
+        this.includeInDiplomaSuplement = includeInDiplomaSuplement;
+    }
+
+    
+
+    public String fetchSpecializationAreas(DegreeOfficialPublication degreeOfficialPublication) {
+        String specializationAreas = "";
+
+
+        for (DegreeSpecializationArea specializationArea : degreeOfficialPublication.getSpecializationAreaSet()) {
+            specializationAreas +=
+                    (specializationAreas.compareTo("") == 0 ? "" : ", ") + specializationArea.getName().getContent();
+        }
+
+        return specializationAreas;
+    }
+    
     public class ReferenceName implements Serializable {
 
         /**

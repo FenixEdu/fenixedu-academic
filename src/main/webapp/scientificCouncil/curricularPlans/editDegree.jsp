@@ -179,12 +179,15 @@
 			
 			
 		
-		<h:outputText value="<table class='tstyle5 thlight thright'>"
+		<h:outputText value="<table class='tstyle8 thlight thcenter'>"
 			escape="false" />
 			<h:outputText value="<tr>" escape="false" />
-			<h:outputText value="<th> Publicação Oficial</th>" escape="false" />
-			<h:outputText value="<th> Data de Publicação</th>" escape="false" />
-			<h:outputText value="<th> Area de Especialização</th>" escape="false" />
+			<h:outputText value="<th> #{scouncilBundle['officialPublication']}</th>" escape="false" />
+			<h:outputText value="<th> #{scouncilBundle['officialPublicationDate']}</th>" escape="false" />
+			<h:outputText value="<th> #{scouncilBundle['officialPublicationLink']}</th>" escape="false" />
+			<h:outputText value="<th> #{scouncilBundle['includeSuplDiploma']}</th>" escape="false" />
+			<h:outputText value="<th> #{scouncilBundle['areaEspecialization']}</th>" escape="false" />
+			
 			<h:outputText value="</tr>" escape="false" />
 			
 		<fc:dataRepeater value="#{DegreeManagement.officialPublicationsBeanPrettyPrints}"
@@ -195,7 +198,14 @@
 			<h:outputText value="<tr>" escape="false" />
 			<h:outputText value="<td> #{publicationsPrettyPrint.officialReference}</td>" escape="false"/>
 			<h:outputText value="<td> #{publicationsPrettyPrint.date}</td>" escape="false"/>
-
+		    
+		    <h:outputText value="<td>" escape="false" />
+			    <h:outputLink value="#{publicationsPrettyPrint.linkReference}" target="_blank">
+			    	<h:outputText value="#{publicationsPrettyPrint.linkReference} "></h:outputText>		    	
+			    </h:outputLink>
+		    <h:outputText value="</td>" escape="false" />
+		    
+		    <h:outputText value="<td> #{publicationsPrettyPrint.includeInDiplomaSuplement}</td>" escape="false"/>
 			<h:outputText value="<td> #{publicationsPrettyPrint.specializationsAreas}</td>" escape="false"/>
 			<h:outputText value="<td>" escape="false" />
 
