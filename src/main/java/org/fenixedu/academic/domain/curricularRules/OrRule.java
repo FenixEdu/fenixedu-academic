@@ -45,13 +45,18 @@ public class OrRule extends OrRule_Base {
     @Override
     public RuleResult evaluate(IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
         RuleResult resultOR = RuleResult.createFalse(EnrolmentResultType.NULL, sourceDegreeModuleToEvaluate.getDegreeModule());
+        boolean allAreNA = true;
         for (final CurricularRule curricularRule : getCurricularRulesSet()) {
-            resultOR = resultOR.or(curricularRule.evaluate(sourceDegreeModuleToEvaluate, enrolmentContext));
+            final RuleResult ruleResult = curricularRule.evaluate(sourceDegreeModuleToEvaluate, enrolmentContext);
+            if (!ruleResult.isNA()) {
+                allAreNA = false;
+            }
+            resultOR = resultOR.or(ruleResult);
             if (resultOR.isTrue() && resultOR.isValidated(sourceDegreeModuleToEvaluate.getDegreeModule())) {
                 return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
             }
         }
-        return resultOR;
+        return allAreNA ? RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule()) : resultOR;
     }
 
     @Override
