@@ -432,7 +432,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
                 interval[0] = begin;
             }
             final LocalDate end = executionSemester.getEndLocalDate();
-            if (interval[1] == null || interval[1].isAfter(end)) {
+            if (interval[1] == null || interval[1].isBefore(end)) {
                 interval[1] = end;
             }
             });
