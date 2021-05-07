@@ -694,7 +694,7 @@ public class CourseGroup extends CourseGroup_Base {
         final Collection<CurricularRule> curricularRules = getCurricularRulesByExecutionPeriod(executionSemester);
         final List<DegreeModulesSelectionLimit> degreeModulesSelectionLimits = getDegreeModulesSelectionLimitRules(curricularRules);
         if (!degreeModulesSelectionLimits.isEmpty()) {
-            return countMinEctsCredits(modulesByExecutionPeriod, executionSemester, getModulesSelectionMinimumLimit(degreeModulesSelectionLimits);
+            return countMinEctsCredits(modulesByExecutionPeriod, executionSemester, getModulesSelectionMinimumLimit(degreeModulesSelectionLimits));
         }
 
         return countMinEctsCredits(modulesByExecutionPeriod, executionSemester, modulesByExecutionPeriod.size());
