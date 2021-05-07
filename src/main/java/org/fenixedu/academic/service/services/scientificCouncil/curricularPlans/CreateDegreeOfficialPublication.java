@@ -39,7 +39,7 @@ public class CreateDegreeOfficialPublication {
      * @throws FenixServiceException
      */
     @Atomic
-    public static void run(Degree degree, LocalDate date, String officialReference) throws FenixServiceException {
+    public static void run(Degree degree, LocalDate date, String officialReference,String linkReference,Boolean includeInDiplomaSuplement) throws FenixServiceException {
         check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
 
         if (degree == null || date == null) {
@@ -48,6 +48,8 @@ public class CreateDegreeOfficialPublication {
 
         DegreeOfficialPublication degreeOfficialPublication = new DegreeOfficialPublication(degree, date);
         degreeOfficialPublication.setOfficialReference(officialReference);
+        degreeOfficialPublication.setLinkReference(linkReference);
+        degreeOfficialPublication.setIncludeInDiplomaSuplement(includeInDiplomaSuplement);
 
     }
 

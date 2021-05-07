@@ -648,6 +648,8 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         private final DegreeOfficialPublication degreeOfficialPublication;
         private final String date;
         private final String officialReference;
+        private final String linkReference;
+        private final Boolean includeInDiplomaSuplement;
         private final String specializationsAreas;
 
         public OfficialPubBeanPrint(DegreeOfficialPublication degreeOfficialPublication) {
@@ -655,6 +657,8 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
             this.date = degreeOfficialPublication.getPublication().toString();
             this.officialReference = degreeOfficialPublication.getOfficialReference();
             this.specializationsAreas = fetchSpecializationAreas(degreeOfficialPublication);
+            this.linkReference=degreeOfficialPublication.getLinkReference();
+            this.includeInDiplomaSuplement=degreeOfficialPublication.getIncludeInDiplomaSuplement();
         }
 
         public DegreeOfficialPublication getDegreeOfficialPublication() {
@@ -671,6 +675,14 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
         public String getDate() {
             return date;
+        }
+        
+        public String getLinkReference() {
+            return linkReference;
+        }
+
+        public Boolean getIncludeInDiplomaSuplement() {
+            return includeInDiplomaSuplement;
         }
 
         public String fetchSpecializationAreas(DegreeOfficialPublication degreeOfficialPublication) {
@@ -695,6 +707,8 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
         private String date;
         private String officialReference;
+        private String linkReference;
+        private Boolean includeInDiplomaSuplement;
         private String officialPubId;
         private DegreeOfficialPublication degreeOfficialPublication;
         private String newOfficialReference;
@@ -792,6 +806,22 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         public void setOfficialReference(String officialReference) {
             this.officialReference = officialReference;
         }
+                
+        public String getLinkReference() {
+            return linkReference;
+        }
+
+        public void setLinkReference(String linkReference) {
+            this.linkReference = linkReference;
+        }
+
+        public Boolean getIncludeInDiplomaSuplement() {
+            return includeInDiplomaSuplement;
+        }
+
+        public void setIncludeInDiplomaSuplement(Boolean includeInDiplomaSuplement) {
+            this.includeInDiplomaSuplement = includeInDiplomaSuplement;
+        }
 
         public String makeAndInsertDegreeOfficialPublication() {
 
@@ -824,7 +854,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
             Degree degree = getDegree();
 
             try {
-                CreateDegreeOfficialPublication.run(degree, localDate, officialReference);
+                CreateDegreeOfficialPublication.run(degree, localDate, officialReference,linkReference,includeInDiplomaSuplement);
             } catch (IllegalDataAccessException e) {
                 this.addErrorMessage(BundleUtil.getString(Bundle.SCIENTIFIC, "error.notAuthorized"));
                 return "";

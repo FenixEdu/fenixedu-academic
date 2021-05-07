@@ -60,7 +60,12 @@
 			<fr:slot name="newReference" key="reference">
 				<fr:property name="size" value="60" />
 			</fr:slot>
+			<fr:slot name="linkReference" key="linkReference">
+				<fr:property name="size" value="100" />
+			</fr:slot>
 			<fr:slot name="publication" key="date" required="true" />
+			<fr:slot name="includeInDiplomaSuplement" key="includeInDiplomaSuplement" >
+			</fr:slot>
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />

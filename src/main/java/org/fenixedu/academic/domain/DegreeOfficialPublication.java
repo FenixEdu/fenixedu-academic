@@ -45,9 +45,11 @@ public class DegreeOfficialPublication extends DegreeOfficialPublication_Base {
     }
 
     @Atomic
-    public void changeOfficialreference(String officialReference, final LocalDate publication) {
+    public void changeOfficialreference(String officialReference, final LocalDate publication,final String linkReference,Boolean includeInDiplomaSuplement) {
         this.setOfficialReference(officialReference);
         this.setPublication(publication);
+        this.setLinkReference(linkReference);
+        this.setIncludeInDiplomaSuplement(includeInDiplomaSuplement);
     }
 
     @Atomic

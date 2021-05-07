@@ -55,13 +55,31 @@
 			<h:message for="nameEn" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
 		</h:panelGroup>
 				<h:outputText value="</tr>" escape="false"/>
+	
+		<h:outputText value="<tr>" escape="false"/>
+  
 		
+		<h:outputText value="<th><span ></span> #{scouncilBundle['label.degree.officialPublication.linkReference']}:</th><td>" escape="false"/>
+		<h:panelGroup>
+			<h:inputText alt="#{htmlAltBundle['inputText.nameEn']}" id="linkReference" value="#{DegreeManagement.officialPublicationBean.linkReference}" maxlength="100" size="100"/>
+			<h:message for="nameEn" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
+		</h:panelGroup>
+				<h:outputText value="</tr>" escape="false"/>
+				
+						
 				<h:outputText value="<th><span ></span> #{scouncilBundle['label.degree.officialPublication.creation.date']}:</th><td>" escape="false"/>
 		<h:panelGroup>
 			<h:inputText alt="#{htmlAltBundle['inputText.nameEn']}" id="date" value="#{DegreeManagement.officialPublicationBean.date}" maxlength="100" size="10"/>
 			<h:message for="nameEn" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
 		</h:panelGroup>
-
+			<h:outputText value="</tr>" escape="false"/>
+			
+		<h:outputText value="<th><span ></span> #{scouncilBundle['label.degree.officialPublication.includeInDiplomaSuplement']}:</th><td>" escape="false"/>
+		<h:panelGroup>
+			<h:selectBooleanCheckbox id="includeInDiplomaSuplement" value="#{DegreeManagement.officialPublicationBean.includeInDiplomaSuplement}">
+			</h:selectBooleanCheckbox>
+			<h:message for="nameEn" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
+		</h:panelGroup>
 
 
 <h:outputText value="</table>" escape="false"/>

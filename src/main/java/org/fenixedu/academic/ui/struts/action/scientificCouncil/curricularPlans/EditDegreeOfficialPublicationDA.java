@@ -75,12 +75,12 @@ public class EditDegreeOfficialPublicationDA extends FenixDispatchAction {
         OfficialPublicationBean bean = (OfficialPublicationBean) getRenderedObject("referenceBean");
 
         if (bean.getNewReference().compareTo("") == 0) {
-            addErrorMessage(request, "error", "confirm.error.edit.name.specializationArea");
+            addErrorMessage(request, "error", "confirm.error.edit.reference.officialPublication");
             error = true;
         }
 
         if (!error) {
-            bean.getDegreeOfficialPublication().changeOfficialreference(bean.getNewReference(), bean.getPublication());
+            bean.getDegreeOfficialPublication().changeOfficialreference(bean.getNewReference(), bean.getPublication(),bean.getLinkReference(),bean.getIncludeInDiplomaSuplement());
             addActionMessage("success", request, "confirm.success.edit.reference.officialPublication");
         }
 
