@@ -455,12 +455,12 @@ public class CourseGroup extends CourseGroup_Base {
 
         final Collection<DegreeModule> degreeModules = getDegreeModulesByExecutionPeriod(executionSemester);
         final Collection<CurricularRule> curricularRules = getCurricularRulesByExecutionPeriod(executionSemester);
-        final DegreeModulesSelectionLimit degreeModulesSelectionLimit = getDegreeModulesSelectionLimitRule(curricularRules);
+        final List<DegreeModulesSelectionLimit> degreeModulesSelectionLimits = getDegreeModulesSelectionLimitRules(curricularRules);
 
-        if (degreeModulesSelectionLimit != null) {
+        if (!degreeModulesSelectionLimits.isEmpty()) {
 
-            if (degreeModulesSelectionLimit.getMinimumLimit().equals(degreeModulesSelectionLimit.getMaximumLimit())
-                    && degreeModulesSelectionLimit.getMaximumLimit().equals(degreeModules.size())) {
+            if (getModulesSelectionMinimumLimit(degreeModulesSelectionLimits) == getModulesSelectionMaximumLimit(degreeModulesSelectionLimits)
+                    && getModulesSelectionMaximumLimit(degreeModulesSelectionLimits) == degreeModules.size()) {
 
                 return filterCourseGroups(degreeModules);
 
@@ -481,13 +481,28 @@ public class CourseGroup extends CourseGroup_Base {
         return result;
     }
 
-    private DegreeModulesSelectionLimit getDegreeModulesSelectionLimitRule(final Collection<CurricularRule> curricularRules) {
+    private List<DegreeModulesSelectionLimit> getDegreeModulesSelectionLimitRules(final Collection<CurricularRule> curricularRules) {
+        final List<DegreeModulesSelectionLimit> modulesSelectionLimit = new ArrayList<>();
         for (final CurricularRule curricularRule : curricularRules) {
-            if (curricularRule.getCurricularRuleType() == CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT) {
-                return (DegreeModulesSelectionLimit) curricularRule;
+            if (curricularRule instanceof AndRule) {
+                modulesSelectionLimit.addAll(getDegreeModulesSelectionLimitRules(((AndRule)curricularRule).getCurricularRulesSet()));
+            } else if (curricularRule instanceof OrRule) {
+                modulesSelectionLimit.addAll(getDegreeModulesSelectionLimitRules(((OrRule)curricularRule).getCurricularRulesSet()));
+            } else {
+                if (curricularRule.getCurricularRuleType() == CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT) {
+                    modulesSelectionLimit.add((DegreeModulesSelectionLimit) curricularRule);
+                }
             }
         }
-        return null;
+        return modulesSelectionLimit;
+    }
+
+    private int getModulesSelectionMinimumLimit(final List<DegreeModulesSelectionLimit> selectionLimitRules) {
+        return selectionLimitRules.stream().min(Comparator.comparing(DegreeModulesSelectionLimit::getMinimumLimit)).get().getMinimumLimit();
+    }
+
+    private int getModulesSelectionMaximumLimit(final List<DegreeModulesSelectionLimit> selectionLimitRules) {
+        return selectionLimitRules.stream().min(Comparator.comparing(DegreeModulesSelectionLimit::getMaximumLimit)).get().getMaximumLimit();
     }
 
     private Collection<CurricularRule> getCurricularRulesByExecutionPeriod(final ExecutionSemester executionSemester) {
@@ -596,9 +611,10 @@ public class CourseGroup extends CourseGroup_Base {
         }
 
         final Collection<DegreeModule> modulesByExecutionPeriod = getOpenChildDegreeModulesByExecutionPeriod(executionSemester);
-        final DegreeModulesSelectionLimit modulesSelectionLimit = getDegreeModulesSelectionLimitRule(executionSemester);
-        if (modulesSelectionLimit != null) {
-            return countMaxEctsCredits(modulesByExecutionPeriod, executionSemester, modulesSelectionLimit.getMaximumLimit());
+        final Collection<CurricularRule> curricularRules = getCurricularRulesByExecutionPeriod(executionSemester);
+        final List<DegreeModulesSelectionLimit> degreeModulesSelectionLimits = getDegreeModulesSelectionLimitRules(curricularRules);
+        if (!degreeModulesSelectionLimits.isEmpty()) {
+            return countMaxEctsCredits(modulesByExecutionPeriod, executionSemester, getModulesSelectionMaximumLimit(degreeModulesSelectionLimits));
         }
 
         return countMaxEctsCredits(modulesByExecutionPeriod, executionSemester, modulesByExecutionPeriod.size());
@@ -675,9 +691,10 @@ public class CourseGroup extends CourseGroup_Base {
         }
 
         final Collection<DegreeModule> modulesByExecutionPeriod = getOpenChildDegreeModulesByExecutionPeriod(executionSemester);
-        final DegreeModulesSelectionLimit modulesSelectionLimit = getDegreeModulesSelectionLimitRule(executionSemester);
-        if (modulesSelectionLimit != null) {
-            return countMinEctsCredits(modulesByExecutionPeriod, executionSemester, modulesSelectionLimit.getMinimumLimit());
+        final Collection<CurricularRule> curricularRules = getCurricularRulesByExecutionPeriod(executionSemester);
+        final List<DegreeModulesSelectionLimit> degreeModulesSelectionLimits = getDegreeModulesSelectionLimitRules(curricularRules);
+        if (!degreeModulesSelectionLimits.isEmpty()) {
+            return countMinEctsCredits(modulesByExecutionPeriod, executionSemester, getModulesSelectionMinimumLimit(degreeModulesSelectionLimits);
         }
 
         return countMinEctsCredits(modulesByExecutionPeriod, executionSemester, modulesByExecutionPeriod.size());
