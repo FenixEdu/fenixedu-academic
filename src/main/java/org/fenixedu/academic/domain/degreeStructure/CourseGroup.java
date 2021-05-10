@@ -622,12 +622,12 @@ public class CourseGroup extends CourseGroup_Base {
 
     private CreditsLimit getMaxCreditsOrRule(Set<CurricularRule> orCurricularRules) {
         List<CreditsLimit> creditsRules = getMaxCreditsLimitsRule(orCurricularRules);
-        return creditsRules.stream().max(Comparator.comparing(CreditsLimit::getMaximumCredits)).orElseGet(null);
+        return creditsRules.stream().max(Comparator.comparing(CreditsLimit::getMaximumCredits)).orElse(null);
     }
 
     private CreditsLimit getMaxCreditsAndRule(Set<CurricularRule> andCurricularRules) {
         List<CreditsLimit> creditsRules = getMaxCreditsLimitsRule(andCurricularRules);
-        return creditsRules.stream().min(Comparator.comparing(CreditsLimit::getMaximumCredits)).orElseGet(null);
+        return creditsRules.stream().min(Comparator.comparing(CreditsLimit::getMaximumCredits)).orElse(null);
     }
 
     private List<CreditsLimit> getMaxCreditsLimitsRule(Set<CurricularRule> curricularRules) {
@@ -702,7 +702,7 @@ public class CourseGroup extends CourseGroup_Base {
 
     private CreditsLimit getMinCreditsRule(Set<CurricularRule> curricularRules) {
         List<CreditsLimit> creditsRules = getMinCreditsLimitsRule(curricularRules);
-        return creditsRules.stream().min(Comparator.comparing(CreditsLimit::getMinimumCredits)).orElseGet(null);
+        return creditsRules.stream().min(Comparator.comparing(CreditsLimit::getMinimumCredits)).orElse(null);
     }
 
     private List<CreditsLimit> getMinCreditsLimitsRule(Set<CurricularRule> curricularRules) {
