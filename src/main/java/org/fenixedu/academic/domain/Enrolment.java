@@ -450,12 +450,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         }
 
         final ExecutionSemester enrolmentExecutionPeriod = getExecutionPeriod();
-        if (improvementExecutionPeriod.isBeforeOrEquals(enrolmentExecutionPeriod)) {
+        if (improvementExecutionPeriod.isBefore(enrolmentExecutionPeriod)) {
             throw new DomainException("Enrolment.cannot.improve.enrolment.prior.to.its.execution.period");
         }
 
         ExecutionSemester enrolmentNextExecutionPeriod = enrolmentExecutionPeriod.getNextExecutionPeriod();
-        if (improvementExecutionPeriod == enrolmentNextExecutionPeriod) {
+        if (improvementExecutionPeriod == enrolmentExecutionPeriod || improvementExecutionPeriod == enrolmentNextExecutionPeriod) {
             return true;
         }
 
