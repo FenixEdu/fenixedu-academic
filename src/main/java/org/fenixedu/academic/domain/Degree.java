@@ -71,10 +71,15 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Degree extends Degree_Base implements Comparable<Degree> {
+
+    public static Function<Degree, Stream<Degree>> CONNECTED_DEGREE_STREAM = degree -> Stream.of(degree);
+
     public static final String CREATED_SIGNAL = "academic.degree.create";
 
     public static final String DEFAULT_MINISTRY_CODE = "9999";
