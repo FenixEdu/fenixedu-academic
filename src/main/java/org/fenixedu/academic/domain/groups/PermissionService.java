@@ -134,4 +134,8 @@ public class PermissionService {
     public static <T extends DomainObject> Stream<T> filter(String permission, Stream<T> objects) {
         return filter(permission, objects.collect(Collectors.toSet())).stream();
     }
+
+    public static boolean hasAccess(AccessControlProfile profile, User user) {
+        return profileMembershipProvider.apply(profile, user);
+    }
 }
