@@ -4163,7 +4163,8 @@ class phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestElement  {
 }
 
 class phd.PhdProgramProcessDocument extends .org.fenixedu.bennu.io.domain.GenericFile {
-    PhdIndividualProgramDocumentType documentType;  
+    PhdIndividualProgramDocumentType documentType;
+    DateTime availableAfter;
     String remarks;
     Integer documentVersion;
     Boolean documentAccepted;
