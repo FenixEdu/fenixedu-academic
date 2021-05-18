@@ -154,6 +154,8 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
                     || ExternalUser.isExternalUser(user.getUsername())) {
                 return true;
             }
+        } else if(getAvailableAfter() != null && getAvailableAfter().isBeforeNow()) {
+            return true;
         }
 
         return false;
