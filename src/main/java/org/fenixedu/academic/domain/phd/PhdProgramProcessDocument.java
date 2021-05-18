@@ -146,7 +146,9 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
 
     @Override
     public boolean isAccessible(User user) {
-        if (user != null && user.getPerson() != null) {
+        if(getAvailableAfter() != null && getAvailableAfter().isBeforeNow()) {
+            return true;
+        } else if (user != null && user.getPerson() != null) {
             if (getPhdProgramProcess().getPerson() == user.getPerson()
                     || AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES).isMember(user)
                     || getPhdProgramProcess().getIndividualProgramProcess().isCoordinatorForPhdProgram(user.getPerson())
@@ -154,8 +156,6 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
                     || ExternalUser.isExternalUser(user.getUsername())) {
                 return true;
             }
-        } else if(getAvailableAfter() != null && getAvailableAfter().isBeforeNow()) {
-            return true;
         }
 
         return false;
