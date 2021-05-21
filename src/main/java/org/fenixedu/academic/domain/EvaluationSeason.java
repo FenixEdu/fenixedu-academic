@@ -30,7 +30,7 @@ public class EvaluationSeason extends EvaluationSeason_Base implements Comparabl
     }
 
     public EvaluationSeason(LocalizedString acronym, LocalizedString name, boolean normal, boolean improvement,
-            boolean specialAuthorization, boolean special) {
+            boolean specialAuthorization, boolean special, boolean extraordinary) {
         this();
         setAcronym(acronym);
         setName(name);
@@ -38,6 +38,7 @@ public class EvaluationSeason extends EvaluationSeason_Base implements Comparabl
         setImprovement(improvement);
         setSpecialAuthorization(specialAuthorization);
         setSpecial(special);
+        setExtraordinary(extraordinary);
     }
 
     public boolean isNormal() {

@@ -691,6 +691,7 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
 	    boolean improvement;
 	    boolean special;
 	    boolean specialAuthorization;
+	    boolean extraordinary;
 	}
 	
 	class EnrolmentEvaluation  {
