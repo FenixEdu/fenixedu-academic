@@ -30,7 +30,7 @@ public class EvaluationSeason extends EvaluationSeason_Base implements Comparabl
     }
 
     public EvaluationSeason(LocalizedString acronym, LocalizedString name, boolean normal, boolean improvement,
-            boolean specialAuthorization, boolean special, boolean extraordinary) {
+                            boolean specialAuthorization, boolean special, boolean extraordinary) {
         this();
         setAcronym(acronym);
         setName(name);
@@ -57,6 +57,10 @@ public class EvaluationSeason extends EvaluationSeason_Base implements Comparabl
         return getSpecialAuthorization();
     }
 
+    public boolean isExtraordinary() {
+        return getExtraordinary();
+    }
+
     public static EvaluationSeason readNormalSeason() {
         return all().filter(EvaluationSeason::isNormal).findAny().orElse(null);
     }
@@ -71,6 +75,10 @@ public class EvaluationSeason extends EvaluationSeason_Base implements Comparabl
 
     public static EvaluationSeason readSpecialAuthorization() {
         return all().filter(EvaluationSeason::isSpecialAuthorization).findAny().orElse(null);
+    }
+
+    public static EvaluationSeason readExtraordinarySeason() {
+        return all().filter(EvaluationSeason::isExtraordinary).findAny().orElse(null);
     }
 
     public static Stream<EvaluationSeason> all() {
