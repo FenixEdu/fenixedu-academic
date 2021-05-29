@@ -54,6 +54,9 @@ public class EnrolmentEvaluationEvent extends EnrolmentEvaluationEvent_Base {
         if (enrolmentEvaluation.getEvaluationSeason().isSpecial()) {
             return Optional.of(EventType.SPECIAL_SEASON_ENROLMENT);
         }
+        if (enrolmentEvaluation.getEvaluationSeason().isExtraordinary()) {
+            return Optional.of(EventType.EXTRAORDINARY_SEASON_ENROLMENT);
+        }
         return Optional.empty();
     }
 

@@ -174,7 +174,8 @@ abstract public class MarkSheetDispatchAction extends FenixDispatchAction {
                 addMessage(request, actionMessages, "error.evaluationDateNotInExamsPeriod");
             }
 
-        } else if (!(season.isSpecialAuthorization() || season.isImprovement() || (evaluationDate != null && season.getExamPeriods(executionDegree,
+        } else if (!(season.isExtraordinary() || season.isSpecialAuthorization() || season.isImprovement() ||
+                (evaluationDate != null && season.getExamPeriods(executionDegree,
                 executionSemester).anyMatch(
                 o1 -> o1.nestedOccupationPeriodsContainsDay(YearMonthDay.fromDateFields(evaluationDate)))))) {
             String dateFormat = "dd/MM/yyyy";

@@ -32,6 +32,8 @@ public enum CurricularRuleLevel {
 
     SPECIAL_SEASON_ENROLMENT(false),
 
+    EXTRAORDINARY_SEASON_ENROLMENT(false),
+
     EXTRA_ENROLMENT(false),
 
     PROPAEUDEUTICS_ENROLMENT(false),

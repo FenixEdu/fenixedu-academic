@@ -159,6 +159,10 @@ public class EnrolmentContext {
         return getCurricularRuleLevel() == CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT;
     }
 
+    public boolean isExtraordinarySeason() {
+        return getCurricularRuleLevel() == CurricularRuleLevel.EXTRAORDINARY_SEASON_ENROLMENT;
+    }
+
     public boolean isExtra() {
         return getCurricularRuleLevel() == CurricularRuleLevel.EXTRA_ENROLMENT;
     }

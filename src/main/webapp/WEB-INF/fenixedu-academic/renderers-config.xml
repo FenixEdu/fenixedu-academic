@@ -148,6 +148,10 @@ Documentation:
     <renderer mode="input" type="org.fenixedu.academic.dto.student.enrollment.bolonha.BolonhaStudentEnrollmentBean" layout="bolonha-student-special-season-enrolment" class="org.fenixedu.academic.ui.renderers.student.enrollment.bolonha.BolonhaStudentEnrollmentInputRenderer">
     	<property name="defaultLayout" value="org.fenixedu.academic.ui.renderers.student.enrollment.bolonha.BolonhaStudentSpecialSeasonEnrolmentLayout"/>
     </renderer>
+
+	<renderer mode="input" type="org.fenixedu.academic.dto.student.enrollment.bolonha.BolonhaStudentEnrollmentBean" layout="bolonha-student-extraordinary-season-enrolment" class="org.fenixedu.academic.ui.renderers.student.enrollment.bolonha.BolonhaStudentEnrollmentInputRenderer">
+		<property name="defaultLayout" value="org.fenixedu.academic.ui.renderers.student.enrollment.bolonha.BolonhaStudentSpecialSeasonEnrolmentLayout"/>
+	</renderer>
     
     <renderer mode="input" type="org.fenixedu.academic.dto.student.enrollment.bolonha.BolonhaStudentOptionalEnrollmentBean" layout="bolonha-student-optional-enrolments" class="org.fenixedu.academic.ui.renderers.student.enrollment.bolonha.BolonhaStudentOptionalEnrollmentInputRenderer"/>
     
