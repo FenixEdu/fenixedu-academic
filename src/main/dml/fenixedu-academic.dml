@@ -1878,6 +1878,10 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
                 Money fixedAmount;
             }
 
+            class accounting.postingRules.ExtraordinarySeasonEnrolmentPR extends accounting.postingRules.GenericSingleEntryTypePR {
+                Money fixedAmount;
+            }
+
             class accounting.postingRules.gratuity.DFAGratuityPR extends accounting.postingRules.GenericSingleEntryTypePR {
                 BigDecimal dfaPartialAcceptedPercentage;
                 Money dfaTotalAmount;
