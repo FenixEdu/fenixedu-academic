@@ -58,7 +58,7 @@
 
 <logic:present role="role(STUDENT)">
 	<div class="infoop2">
-		<bean:message key="label.student.SpecialSeasonEnrollment.description" bundle="STUDENT_RESOURCES"/><br/><br/>
+		<bean:message key="label.student.ExtraordinarySeasonEnrollment.description" bundle="STUDENT_RESOURCES"/><br/><br/>
 	</div>
 	<logic:notPresent name="disableContinue">
 		<html:link page="/enrollment/evaluations/extraordinarySeason.do?method=pickSCP"><bean:message key="button.continue" bundle="STUDENT_RESOURCES"/></html:link>
