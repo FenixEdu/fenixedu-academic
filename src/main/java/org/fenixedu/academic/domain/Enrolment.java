@@ -537,11 +537,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         if (getEvaluationSeason().isExtraordinary() && hasExtraordinarySeason()) {
             setEnrolmentCondition(EnrollmentCondition.FINAL);
             setEvaluationSeason(EvaluationConfiguration.getInstance().getDefaultEvaluationSeason());
-            /* TODO getEnrolmentEvaluationBySeasonAndState(EnrolmentEvaluationState.TEMPORARY_OBJ, EvaluationSeason.readExtraordinarySeason())
+            getEnrolmentEvaluationBySeasonAndState(EnrolmentEvaluationState.TEMPORARY_OBJ, EvaluationSeason.readExtraordinarySeason())
                     .ifPresent(
                             ee -> {
-                                if (ee.getSpecialSeasonEnrolmentEvent() != null) {
-                                    ee.getSpecialSeasonEnrolmentEvent()
+                                /* TODO is this the right method to use? */
+                                if (ee.getEnrolmentEvaluationEvent() != null) {
+                                    ee.getEnrolmentEvaluationEvent()
                                             .cancel(Authenticate.getUser().getPerson(),
                                                     BundleUtil.getString(Bundle.ACADEMIC,
                                                             "enrolmentEvaluation.cancel.event.disenrolled"));
@@ -549,7 +550,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
                                 } else {
                                     ee.delete();
                                 }
-                            });*/
+                            });
 
             EnrolmentEvaluation finalEnrolmentEvaluation = getFinalEnrolmentEvaluation();
             if (finalEnrolmentEvaluation != null) {
