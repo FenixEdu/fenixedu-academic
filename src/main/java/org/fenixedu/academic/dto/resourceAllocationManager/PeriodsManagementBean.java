@@ -83,6 +83,10 @@ public class PeriodsManagementBean implements Serializable {
             types.add(OccupationPeriodType.GRADE_SUBMISSION_SPECIAL_SEASON);
         }
 
+        if (EvaluationSeason.readExtraordinarySeason() != null) {
+            types.add(OccupationPeriodType.EXAMS_EXTRAORDINARY_SEASON);
+            types.add(OccupationPeriodType.GRADE_SUBMISSION_EXTRAORDINARY_SEASON);
+        }
         return types.stream().map(Enum::name).collect(Collectors.joining(","));
     }
 

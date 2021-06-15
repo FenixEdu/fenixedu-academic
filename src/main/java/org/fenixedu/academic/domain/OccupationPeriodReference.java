@@ -55,10 +55,16 @@ public class OccupationPeriodReference extends OccupationPeriodReference_Base {
             if (getEvaluationSeasonSet().stream().anyMatch(EvaluationSeason::isSpecial)) {
                 return OccupationPeriodType.EXAMS_SPECIAL_SEASON;
             }
+            if (getEvaluationSeasonSet().stream().anyMatch(EvaluationSeason::isExtraordinary)) {
+                return OccupationPeriodType.EXAMS_EXTRAORDINARY_SEASON;
+            }
             break;
         case GRADE_SUBMISSION:
             if (getEvaluationSeasonSet().stream().anyMatch(EvaluationSeason::isSpecial)) {
                 return OccupationPeriodType.GRADE_SUBMISSION_SPECIAL_SEASON;
+            }
+            if (getEvaluationSeasonSet().stream().anyMatch(EvaluationSeason::isExtraordinary)) {
+                return OccupationPeriodType.GRADE_SUBMISSION_EXTRAORDINARY_SEASON;
             }
         }
         return super.getPeriodType();
@@ -82,6 +88,10 @@ public class OccupationPeriodReference extends OccupationPeriodReference_Base {
             addEvaluationSeason(EvaluationSeason.readSpecialSeason());
             super.setPeriodType(OccupationPeriodType.EXAMS);
             break;
+        case EXAMS_EXTRAORDINARY_SEASON:
+            addEvaluationSeason(EvaluationSeason.readExtraordinarySeason());
+            super.setPeriodType(OccupationPeriodType.EXAMS);
+            break;
         case GRADE_SUBMISSION:
             addEvaluationSeason(EvaluationSeason.readNormalSeason());
             addEvaluationSeason(EvaluationSeason.readImprovementSeason());
@@ -91,6 +101,11 @@ public class OccupationPeriodReference extends OccupationPeriodReference_Base {
             addEvaluationSeason(EvaluationSeason.readSpecialSeason());
             super.setPeriodType(OccupationPeriodType.GRADE_SUBMISSION);
             break;
+        case GRADE_SUBMISSION_EXTRAORDINARY_SEASON:
+            addEvaluationSeason(EvaluationSeason.readExtraordinarySeason());
+            super.setPeriodType(OccupationPeriodType.GRADE_SUBMISSION);
+            break;
+
         default:
             super.setPeriodType(periodType);
             break;

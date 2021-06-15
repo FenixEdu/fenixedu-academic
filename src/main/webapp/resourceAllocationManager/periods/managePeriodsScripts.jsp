@@ -168,8 +168,10 @@ ul.courses-list {
 #periods-filters span.classes,
 #periods-filters span.exams,
 #periods-filters span.special-exams,
+#periods-filters span.extraordinary-exams,
 #periods-filters span.grades, 
-#periods-filters span.special-grades
+#periods-filters span.special-grades,
+#periods-filters span.extraordinary-grades
 	{
 	border: 1px solid #ccc;
 	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.08), 0px 1px 1px
@@ -236,6 +238,24 @@ ul.courses-list {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fee18b', endColorstr='#f1d67e',GradientType=0 );
 }
 
+.EXAMS_EXTRAORDINARY_SEASON header,span.extraordinary-exams {
+    background:#ecf27d;
+    background-image: linear-gradient(bottom, rgb(236,242,125) 100%, rgb(237,244,107) 0%);
+    background-image: -o-linear-gradient(bottom, rgb(236,242,125) 100%, rgb(237,244,107) 0%);
+    background-image: -moz-linear-gradient(bottom, rgb(236,242,125) 100%, rgb(237,244,107) 0%);
+    background-image: -webkit-linear-gradient(bottom, rgb(236,242,125) 100%, rgb(237,244,107) 0%);
+    background-image: -ms-linear-gradient(bottom, rgb(236,242,125) 100%, rgb(237,244,107) 0%);
+
+    background-image: -webkit-gradient(
+            linear,
+            left bottom,
+            left top,
+            color-stop(1, rgb(236,242,125)),
+            color-stop(0, rgb(237,244,107))
+    );
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#edf46b', endColorstr='#ecf27d',GradientType=0 );
+}
+
 .GRADE_SUBMISSION header,span.grades {
 	background:#ebb88e;
 	background-image: linear-gradient(bottom, rgb(247,196,155) 100%, rgb(235,184,142) 0%);
@@ -269,6 +289,23 @@ ul.courses-list {
         color-stop(1, rgb(255,181,181))
 	);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffb5b5', endColorstr='#f2a8a8',GradientType=0 );
+}
+
+.GRADE_SUBMISSION_EXTRAORDINARY_SEASON header,span.extraordinary-grades {
+    background:#de98f2;
+    background-image: linear-gradient(bottom, rgb(222,152,242) 0%, rgb(216,123,242) 100% );
+    background-image: -o-linear-gradient(bottom, rgb(222,152,242) 0%, rgb(216,123,242) 100% );
+    background-image: -moz-linear-gradient(bottom, rgb(222,152,242) 0%, rgb(216,123,242) 100% );
+    background-image: -webkit-linear-gradient(bottom, rgb(222,152,242) 0%, rgb(216,123,242) 100% );
+    background-image: -ms-linear-gradient(bottom, rgb(222,152,242) 0%, rgb(216,123,242) 100% );
+    background-image: -webkit-gradient(
+            linear,
+            left bottom,
+            left top,
+            color-stop(0, rgb(222,152,242)),
+            color-stop(1, rgb(216,123,242))
+    );
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d87bf2', endColorstr='#de98f2',GradientType=0 );
 }
 
 /* Edit Periods */
@@ -757,6 +794,14 @@ a,input,.symbol {
 				$("#periods-specialGrades").change(function() {
 					$(".GRADE_SUBMISSION_SPECIAL_SEASON").fadeToggle('fast');
 				});
+
+                $("#periods-extraordinaryExams").change(function() {
+                    $(".EXAMS_EXTRAORDINARY_SEASON").fadeToggle('fast');
+                });
+
+                $("#periods-extraordinaryGrades").change(function() {
+                    $(".GRADE_SUBMISSION_EXTRAORDINARY_SEASON").fadeToggle('fast');
+                });
 				
 				$("#periods-grades").change(function() {
 					$(".GRADE_SUBMISSION").fadeToggle('fast');
