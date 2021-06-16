@@ -45,6 +45,12 @@
 	<slot name="fixedAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR.fixedAmount"/>
 </schema>
 
+<schema name="ExtraordinarySeasonEnrolmentPR.view"
+		type="org.fenixedu.academic.domain.accounting.postingRules.ExtraordinarySeasonEnrolmentPR"
+		bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+<slot name="fixedAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR.fixedAmount"/>
+</schema>
+
 <schema name="DegreeCandidacyForGraduatedPersonPR.view"
 	type="org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR"
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
@@ -368,6 +374,13 @@
 	<setter signature="edit(fixedAmount)"/>
 </schema>
 
+<schema name="ExtraordinarySeasonEnrolmentPR.edit"
+		type="org.fenixedu.academic.domain.accounting.postingRules.ExtraordinarySeasonEnrolmentPR"
+		bundle="APPLICATION_RESOURCES">
+<slot name="fixedAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR.fixedAmount" />
+<setter signature="edit(fixedAmount)"/>
+</schema>
+
 <schema name="DegreeCandidacyForGraduatedPersonPR.edit"
 	type="org.fenixedu.academic.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR"
 	bundle="APPLICATION_RESOURCES">
@@ -585,6 +598,10 @@
 
 <schema name="SpecialSeasonEnrolmentPR.view-student" type="org.fenixedu.academic.domain.accounting.postingRules.SpecialSeasonEnrolmentPR" extends="PostingRule.view-student" bundle="APPLICATION_RESOURCES">
 	<slot name="fixedAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR.fixedAmount"  />
+</schema>
+
+<schema name="ExtraordinarySeasonEnrolmentPR.view-student" type="org.fenixedu.academic.domain.accounting.postingRules.ExtraordinarySeasonEnrolmentPR" extends="PostingRule.view-student" bundle="APPLICATION_RESOURCES">
+<slot name="fixedAmount" key="label.org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR.fixedAmount"  />
 </schema>
 
 <schema name="FixedAmountPR.view-student" type="org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR" extends="PostingRule.view-student" bundle="APPLICATION_RESOURCES">
