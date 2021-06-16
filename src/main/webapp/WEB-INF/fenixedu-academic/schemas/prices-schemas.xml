@@ -200,6 +200,11 @@
 	<slot name="specializationDegreeAmountPerEctsCredit" />
 </schema>
 
+<schema name="CustomEventPostingRule.view"
+		type="org.fenixedu.academic.domain.accounting.CustomEventPostingRule"
+		bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+</schema>
+
 <schema name="DFAGratuityPREditor.edit" 
 		type="org.fenixedu.academic.ui.struts.action.manager.payments.PostingRulesManagementDA$DFAGratuityPREditor"
 		bundle="APPLICATION_RESOURCES">

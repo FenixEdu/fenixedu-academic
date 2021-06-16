@@ -69,10 +69,6 @@ public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecial
                         enrolmentPeriod.getEndDateDateTime().toString("dd-MM-yyyy"));
                 request.setAttribute("disableContinue", true);
             }
-        } else if (hasPendingDebts(student)) {
-            addActionMessage("error", request, "error.special.season.cannot.enroll.due.to.pending.debts");
-            request.setAttribute("disableContinue", true);
-
         } else if (scps.isEmpty()) {
             request.setAttribute("disableContinue", true);
         }
@@ -180,14 +176,6 @@ public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecial
         }
         return nextOpenPeriodsForEachSCP.isEmpty() ? null : Collections.min(nextOpenPeriodsForEachSCP,
                 EnrolmentPeriodInSpecialSeasonEvaluations.COMPARATOR_BY_START);
-    }
-
-    private boolean hasPendingDebts(Student student) {
-        return hasAnyAdministrativeOfficeFeeAndInsuranceInDebt(student, ExecutionYear.readCurrentExecutionYear())
-                || hasAnyGratuityDebt(student, ExecutionYear.readCurrentExecutionYear())
-                || hasAnyAdministrativeOfficeFeeAndInsuranceInDebt(student, ExecutionYear.readCurrentExecutionYear()
-                        .getPreviousExecutionYear())
-                || hasAnyGratuityDebt(student, ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear());
     }
 
     @Override
