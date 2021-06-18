@@ -25,12 +25,14 @@ import java.util.List;
 import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.Enrolment;
+import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.ExecutionSemester;
 
 public class SpecialSeasonStatusTrackerBean implements Serializable {
 
     private static final long serialVersionUID = 7601169267648955212L;
 
+    private EvaluationSeason evaluationSeason;
     private ExecutionSemester executionSemester;
     private Department department;
     private CompetenceCourse competenceCourse;
@@ -40,6 +42,14 @@ public class SpecialSeasonStatusTrackerBean implements Serializable {
     public SpecialSeasonStatusTrackerBean() {
         super();
         entries = new ArrayList<SpecialSeasonStatusTrackerRegisterBean>();
+    }
+
+    public EvaluationSeason getEvaluationSeason() {
+        return evaluationSeason;
+    }
+
+    public void setEvaluationSeason(EvaluationSeason evaluationSeason) {
+        this.evaluationSeason = evaluationSeason;
     }
 
     public ExecutionSemester getExecutionSemester() {
