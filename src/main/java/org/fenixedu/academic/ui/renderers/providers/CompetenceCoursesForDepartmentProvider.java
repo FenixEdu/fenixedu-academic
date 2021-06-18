@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.fenixedu.academic.domain.CompetenceCourse;
-import org.fenixedu.academic.ui.struts.action.manager.enrolments.SpecialSeasonStatusTrackerBean;
+import org.fenixedu.academic.ui.struts.action.manager.enrolments.EvaluationSeasonStatusTrackerBean;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -38,7 +38,7 @@ public class CompetenceCoursesForDepartmentProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        SpecialSeasonStatusTrackerBean bean = ((SpecialSeasonStatusTrackerBean) source);
+        EvaluationSeasonStatusTrackerBean bean = ((EvaluationSeasonStatusTrackerBean) source);
         final List<CompetenceCourse> courses = new ArrayList<CompetenceCourse>();
         if (bean != null && bean.getDepartment() != null) {
             courses.addAll(bean.getDepartment().getBolonhaCompetenceCourses());

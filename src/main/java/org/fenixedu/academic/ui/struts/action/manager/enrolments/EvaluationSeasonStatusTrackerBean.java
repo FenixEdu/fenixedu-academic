@@ -28,7 +28,7 @@ import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.ExecutionSemester;
 
-public class SpecialSeasonStatusTrackerBean implements Serializable {
+public class EvaluationSeasonStatusTrackerBean implements Serializable {
 
     private static final long serialVersionUID = 7601169267648955212L;
 
@@ -37,11 +37,11 @@ public class SpecialSeasonStatusTrackerBean implements Serializable {
     private Department department;
     private CompetenceCourse competenceCourse;
     private List<Enrolment> enrolments;
-    private List<SpecialSeasonStatusTrackerRegisterBean> entries;
+    private List<EvaluationSeasonStatusTrackerRegisterBean> entries;
 
-    public SpecialSeasonStatusTrackerBean() {
+    public EvaluationSeasonStatusTrackerBean() {
         super();
-        entries = new ArrayList<SpecialSeasonStatusTrackerRegisterBean>();
+        entries = new ArrayList<EvaluationSeasonStatusTrackerRegisterBean>();
     }
 
     public EvaluationSeason getEvaluationSeason() {
@@ -84,13 +84,13 @@ public class SpecialSeasonStatusTrackerBean implements Serializable {
         this.enrolments = enrolments;
     }
 
-    public List<SpecialSeasonStatusTrackerRegisterBean> getEntries() {
+    public List<EvaluationSeasonStatusTrackerRegisterBean> getEntries() {
         return entries;
     }
 
     public void addEntry(Integer studentNumber, String studentName, String degreeSigla, String courseName) {
-        SpecialSeasonStatusTrackerRegisterBean newEntry =
-                new SpecialSeasonStatusTrackerRegisterBean(studentNumber, studentName, degreeSigla, courseName);
+        EvaluationSeasonStatusTrackerRegisterBean newEntry =
+                new EvaluationSeasonStatusTrackerRegisterBean(studentNumber, studentName, degreeSigla, courseName);
         entries.add(newEntry);
     }
 

@@ -54,19 +54,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@StrutsFunctionality(app = ManagerStudentsApp.class, path = "special-season-enrolments",
-        titleKey = "label.course.specialSeasonEnrolments")
-@Mapping(path = "/specialSeason/specialSeasonStatusTracker", module = "manager")
-@Forwards({ @Forward(name = "selectCourse", path = "/manager/specialSeason/selectCourse.jsp"),
-        @Forward(name = "listStudents", path = "/manager/specialSeason/listStudents.jsp") })
-public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
+@StrutsFunctionality(app = ManagerStudentsApp.class, path = "evaluation-season-enrolments",
+        titleKey = "label.course.evaluationSeasonEnrolments")
+@Mapping(path = "/evaluationSeason/evaluationSeasonStatusTracker", module = "manager")
+@Forwards({ @Forward(name = "selectCourse", path = "/manager/evaluationSeason/selectCourse.jsp"),
+        @Forward(name = "listStudents", path = "/manager/evaluationSeason/listStudents.jsp") })
+public class EvaluationSeasonStatusTrackerDA extends FenixDispatchAction {
 
     @EntryPoint
     public ActionForward selectCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        SpecialSeasonStatusTrackerBean bean = getRenderedObject();
+        EvaluationSeasonStatusTrackerBean bean = getRenderedObject();
         if (bean == null) {
-            bean = new SpecialSeasonStatusTrackerBean();
+            bean = new EvaluationSeasonStatusTrackerBean();
         }
         request.setAttribute("bean", bean);
         RenderUtils.invalidateViewState();
@@ -75,7 +75,7 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
 
     public ActionForward updateDepartmentSelection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        SpecialSeasonStatusTrackerBean bean = getRenderedObject();
+        EvaluationSeasonStatusTrackerBean bean = getRenderedObject();
         request.setAttribute("bean", bean);
         RenderUtils.invalidateViewState();
         return mapping.findForward("selectCourse");
@@ -83,7 +83,7 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
 
     public ActionForward listStudents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        final SpecialSeasonStatusTrackerBean bean = getRenderedObject();
+        final EvaluationSeasonStatusTrackerBean bean = getRenderedObject();
         bean.clearEntries();
         List<Enrolment> enrolments = new ArrayList<Enrolment>();
         List<CompetenceCourse> courses = new ArrayList<CompetenceCourse>();
@@ -114,7 +114,7 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
             courses.clear();
         }
         bean.setEnrolments(enrolments);
-        Collections.sort(bean.getEntries(), SpecialSeasonStatusTrackerRegisterBean.COMPARATOR_STUDENT_NUMBER);
+        Collections.sort(bean.getEntries(), EvaluationSeasonStatusTrackerRegisterBean.COMPARATOR_STUDENT_NUMBER);
         request.setAttribute("bean", bean);
         RenderUtils.invalidateViewState();
         return mapping.findForward("listStudents");
@@ -122,7 +122,7 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
 
     public ActionForward exportXLS(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws IOException {
-        SpecialSeasonStatusTrackerBean bean = getRenderedObject();
+        EvaluationSeasonStatusTrackerBean bean = getRenderedObject();
         final Spreadsheet spreadsheet = generateSpreadsheet(bean);
 
         response.setContentType("application/vnd.ms-excel");
@@ -133,9 +133,11 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
         return null;
     }
 
-    private String getFilename(SpecialSeasonStatusTrackerBean bean) {
+    private String getFilename(EvaluationSeasonStatusTrackerBean bean) {
         StringBuilder strBuilder = new StringBuilder();
-        strBuilder.append(BundleUtil.getString(Bundle.APPLICATION, "special.season.filename"));
+        strBuilder.append(BundleUtil.getString(Bundle.APPLICATION, "evaluation.season.filename"));
+        strBuilder.append("_");
+        strBuilder.append(bean.getEvaluationSeason().getAcronym().getContent());
         if (bean.getCompetenceCourse() != null) {
             strBuilder.append("_");
             strBuilder.append(bean.getCompetenceCourse().getAcronym());
@@ -146,13 +148,13 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
         strBuilder.append("_");
         strBuilder.append(bean.getExecutionSemester().getSemester());
         strBuilder.append("_");
-        strBuilder.append(BundleUtil.getString(Bundle.APPLICATION, "special.season.semester"));
+        strBuilder.append(BundleUtil.getString(Bundle.APPLICATION, "evaluation.season.semester"));
         strBuilder.append("_");
         strBuilder.append(bean.getExecutionSemester().getExecutionYear().getName());
         return strBuilder.toString();
     }
 
-    private Spreadsheet generateSpreadsheet(SpecialSeasonStatusTrackerBean bean) {
+    private Spreadsheet generateSpreadsheet(EvaluationSeasonStatusTrackerBean bean) {
         final Spreadsheet spreadsheet = new Spreadsheet(BundleUtil.getString(Bundle.APPLICATION, "list.students"));
         for (final Enrolment enrolment : bean.getEnrolments()) {
             final Row row = spreadsheet.addRow();
@@ -220,7 +222,7 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
     }
 
     protected Department getDepartment() {
-        SpecialSeasonStatusTrackerBean bean = getRenderedObject();
+        EvaluationSeasonStatusTrackerBean bean = getRenderedObject();
         if (bean != null && bean.getDepartment() != null) {
             return bean.getDepartment();
         }
