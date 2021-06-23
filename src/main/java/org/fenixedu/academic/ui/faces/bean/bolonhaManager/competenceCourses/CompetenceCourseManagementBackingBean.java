@@ -32,6 +32,7 @@ import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
+import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevel;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLoad;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
@@ -1315,6 +1316,12 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         if (executionSemesterID == null) {
             executionSemesterID = (String) getViewState().getAttribute("executionSemesterID");
         }
+        if (executionSemesterID == null) {
+            final ExecutionYear executionYear = getExecutionYear();
+            if (executionYear != null) {
+                executionSemesterID = executionYear.getFirstExecutionPeriod().getExternalId();
+            }
+        }
         ExecutionSemester currentSemester = ExecutionSemester.readActualExecutionSemester();
         if ((executionSemesterID == null) && (getCompetenceCourse() != null)) {
             if (getCompetenceCourse().getCompetenceCourseInformationsSet().size() == 1) {
@@ -1474,6 +1481,11 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         evaluationMethodEn = null;
         stage = null;
         bibliographicReferenceID = null;
+    }
+
+    public boolean isBasic() {
+        final CompetenceCourseInformation information = getCompetenceCourse().findCompetenceCourseInformationForExecutionPeriod(getAssociatedExecutionPeriod());
+        return information != null && information.getBasic() && information.getBasic().booleanValue();
     }
 
 }
