@@ -447,7 +447,7 @@ public class Person extends Person_Base {
             partyContact.delete();
         }
 
-        if (getPersonalPhotoEvenIfRejected() != null) {
+        while (getPersonalPhotoEvenIfRejected() != null) {
             getPersonalPhotoEvenIfRejected().delete();
         }
 

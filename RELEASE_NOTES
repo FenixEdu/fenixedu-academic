@@ -1,3 +1,5 @@
+- Refactor: Change Photograph delete to be able to delete any photo
+
 32.8.7 (17-05-2021)
 - Improvement: Added method to check if user is member of profile
 

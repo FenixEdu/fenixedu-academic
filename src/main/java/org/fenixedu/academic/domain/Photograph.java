@@ -141,15 +141,16 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
         }
 
         Photograph prev = getPrevious();
-        if (prev != null) {
-            super.setPrevious(null);
-            prev.delete();
+        Photograph next = getNext();
+
+        if (next == null && prev != null) {
+            prev.setPerson(getPerson());
+        } else if (prev != null) {
+            prev.setNext(next);
         }
 
-        Photograph next = getNext();
-        if (next != null) {
-            super.setNext(null);
-        }
+        super.setPrevious(null);
+        super.setNext(null);
 
         if (getOriginal() != null) {
             getOriginal().delete();
