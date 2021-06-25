@@ -31,6 +31,14 @@ public interface IAcademicTreasuryTarget extends DomainObject {
     
     public void handleTotalPayment(final IAcademicTreasuryEvent e);
     
+    public default boolean isEventAccountedAsTuition() {
+        return false;
+    }
+    
+    public default boolean isEventDiscountInTuitionFee() {
+        return false;
+    }
+    
     public default void handleSettlement(final IAcademicTreasuryEvent e) {
         //TODO: considerar isenções sobre dívidas não facturadas
         if(e.isPayed()) {
