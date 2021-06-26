@@ -49,6 +49,7 @@ import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCourses;
 import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCoursesFlunkedSeason;
 import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason;
 import org.fenixedu.academic.domain.EnrolmentPeriodInImprovementOfApprovedEnrolment;
+import org.fenixedu.academic.domain.EnrolmentPeriodInExtraordinarySeasonEvaluations;
 import org.fenixedu.academic.domain.EnrolmentPeriodInSpecialSeasonEvaluations;
 import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionSemester;
@@ -88,6 +89,8 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
             EnrolmentPeriodInCurricularCourses.class,
 
             EnrolmentPeriodInSpecialSeasonEvaluations.class,
+
+            EnrolmentPeriodInExtraordinarySeasonEvaluations.class,
 
             EnrolmentPeriodInClasses.class,
 

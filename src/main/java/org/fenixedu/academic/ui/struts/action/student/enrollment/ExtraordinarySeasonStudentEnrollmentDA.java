@@ -21,6 +21,7 @@ package org.fenixedu.academic.ui.struts.action.student.enrollment;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.EnrolmentPeriodInExtraordinarySeasonEvaluations;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.student.Registration;
@@ -38,6 +39,7 @@ import pt.ist.fenixframework.FenixFramework;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @StrutsFunctionality(app = StudentEnrollApp.class, path = "extraordinary-season", titleKey = "link.extraordinarySeason.enrolment")
@@ -54,10 +56,16 @@ public class ExtraordinarySeasonStudentEnrollmentDA extends AcademicAdminOfficeE
         final Student student = getLoggedStudent(request);
 
         final List<StudentCurricularPlan> scps = generateSCPList(student);
-        if (hasPendingDebts(student)) {
-            addActionMessage("error", request, "error.special.season.cannot.enroll.due.to.pending.debts");
+        if (enrollmentPeriodNotOpen(new ArrayList<StudentCurricularPlan>(scps))) {
+            EnrolmentPeriodInExtraordinarySeasonEvaluations enrolmentPeriod = getNextEnrollmentPeriod(scps);
+            if (enrolmentPeriod == null) {
+                addActionMessage("warning", request, "message.out.curricular.course.enrolment.period.default");
+            } else {
+                addActionMessage("warning", request, "message.out.extraordinary.season.enrolment.period.upcoming", enrolmentPeriod
+                                .getStartDateDateTime().toString("dd-MM-yyyy"),
+                        enrolmentPeriod.getEndDateDateTime().toString("dd-MM-yyyy"));
+            }
             request.setAttribute("disableContinue", true);
-
         } else if (scps.isEmpty()) {
             request.setAttribute("disableContinue", true);
         }
@@ -117,12 +125,39 @@ public class ExtraordinarySeasonStudentEnrollmentDA extends AcademicAdminOfficeE
         return result;
     }
 
-    private boolean hasPendingDebts(Student student) {
-        return hasAnyAdministrativeOfficeFeeAndInsuranceInDebt(student, ExecutionYear.readCurrentExecutionYear())
-                || hasAnyGratuityDebt(student, ExecutionYear.readCurrentExecutionYear())
-                || hasAnyAdministrativeOfficeFeeAndInsuranceInDebt(student, ExecutionYear.readCurrentExecutionYear()
-                        .getPreviousExecutionYear())
-                || hasAnyGratuityDebt(student, ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear());
+    private boolean enrollmentPeriodNotOpen(List<StudentCurricularPlan> scps) {
+        if (scps.isEmpty()) {
+            return true;
+        }
+
+        final StudentCurricularPlan scp = scps.iterator().next();
+        scps.remove(0);
+        // Any ExtraordinarySeason enrollment period opened for this/last year will
+        // count.
+        return !(scp.getDegreeCurricularPlan().hasOpenExtraordinarySeasonEnrolmentPeriod(
+                ExecutionYear.readCurrentExecutionYear().getFirstExecutionPeriod())
+                || scp.getDegreeCurricularPlan().hasOpenExtraordinarySeasonEnrolmentPeriod(
+                ExecutionYear.readCurrentExecutionYear().getLastExecutionPeriod())
+                || scp.getDegreeCurricularPlan().hasOpenExtraordinarySeasonEnrolmentPeriod(
+                ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getFirstExecutionPeriod()) || scp
+                .getDegreeCurricularPlan().hasOpenExtraordinarySeasonEnrolmentPeriod(
+                        ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getLastExecutionPeriod()))
+                && enrollmentPeriodNotOpen(scps);
+
+    }
+
+    private EnrolmentPeriodInExtraordinarySeasonEvaluations getNextEnrollmentPeriod(List<StudentCurricularPlan> scps) {
+        final List<EnrolmentPeriodInExtraordinarySeasonEvaluations> nextOpenPeriodsForEachSCP =
+                new ArrayList<EnrolmentPeriodInExtraordinarySeasonEvaluations>();
+        EnrolmentPeriodInExtraordinarySeasonEvaluations result;
+        for (final StudentCurricularPlan scp : scps) {
+            result = scp.getDegreeCurricularPlan().getNextExtraordinarySeasonEnrolmentPeriod();
+            if (result != null) {
+                nextOpenPeriodsForEachSCP.add(result);
+            }
+        }
+        return nextOpenPeriodsForEachSCP.isEmpty() ? null : Collections.min(nextOpenPeriodsForEachSCP,
+                EnrolmentPeriodInExtraordinarySeasonEvaluations.COMPARATOR_BY_START);
     }
 
     @Override

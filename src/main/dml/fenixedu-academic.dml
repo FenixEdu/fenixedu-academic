@@ -744,6 +744,9 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
         class EnrolmentPeriodInSpecialSeasonEvaluations extends EnrolmentPeriod {
         }
 
+        class EnrolmentPeriodInExtraordinarySeasonEvaluations extends EnrolmentPeriod {
+        }
+
         class EnrolmentPeriodInImprovementOfApprovedEnrolment extends EnrolmentPeriod {
         }
 

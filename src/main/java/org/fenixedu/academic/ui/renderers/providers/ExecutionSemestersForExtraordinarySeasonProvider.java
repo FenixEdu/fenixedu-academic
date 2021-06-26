@@ -20,6 +20,7 @@ package org.fenixedu.academic.ui.renderers.providers;
 
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.ui.struts.action.student.enrollment.ExtraordinarySeasonStudentEnrollmentBean;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -37,12 +38,19 @@ public class ExecutionSemestersForExtraordinarySeasonProvider implements DataPro
         final ExecutionYear previousYear = currentYear.getPreviousExecutionYear();
         final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>();
 
-        /* TODO */
-
-        executionSemesters.add(currentYear.getLastExecutionPeriod());
-        executionSemesters.add(currentYear.getFirstExecutionPeriod());
-        executionSemesters.add(previousYear.getLastExecutionPeriod());
-        executionSemesters.add(previousYear.getFirstExecutionPeriod());
+        ExtraordinarySeasonStudentEnrollmentBean bean = (ExtraordinarySeasonStudentEnrollmentBean) source;
+        if (bean.getScp().getDegreeCurricularPlan().hasOpenExtraordinarySeasonEnrolmentPeriod(currentYear.getLastExecutionPeriod())) {
+            executionSemesters.add(currentYear.getLastExecutionPeriod());
+        }
+        if (bean.getScp().getDegreeCurricularPlan().hasOpenExtraordinarySeasonEnrolmentPeriod(currentYear.getFirstExecutionPeriod())) {
+            executionSemesters.add(currentYear.getFirstExecutionPeriod());
+        }
+        if (bean.getScp().getDegreeCurricularPlan().hasOpenExtraordinarySeasonEnrolmentPeriod(previousYear.getLastExecutionPeriod())) {
+            executionSemesters.add(previousYear.getLastExecutionPeriod());
+        }
+        if (bean.getScp().getDegreeCurricularPlan().hasOpenExtraordinarySeasonEnrolmentPeriod(previousYear.getFirstExecutionPeriod())) {
+            executionSemesters.add(previousYear.getFirstExecutionPeriod());
+        }
 
         Collections.sort(executionSemesters, ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
         Collections.reverse(executionSemesters);

@@ -649,6 +649,28 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return false;
     }
 
+    public EnrolmentPeriodInExtraordinarySeasonEvaluations getNextExtraordinarySeasonEnrolmentPeriod() {
+        final List<EnrolmentPeriodInExtraordinarySeasonEvaluations> positivesSet =
+                new ArrayList<EnrolmentPeriodInExtraordinarySeasonEvaluations>();
+        for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriodsSet()) {
+            if (enrolmentPeriod instanceof EnrolmentPeriodInExtraordinarySeasonEvaluations && enrolmentPeriod.isUpcomingPeriod()) {
+                positivesSet.add((EnrolmentPeriodInExtraordinarySeasonEvaluations) enrolmentPeriod);
+            }
+        }
+        return positivesSet.isEmpty() ? null : Collections.min(positivesSet,
+                EnrolmentPeriodInExtraordinarySeasonEvaluations.COMPARATOR_BY_START);
+    }
+
+    public boolean hasOpenExtraordinarySeasonEnrolmentPeriod(ExecutionSemester executionSemester) {
+        for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriodsSet()) {
+            if (enrolmentPeriod instanceof EnrolmentPeriodInExtraordinarySeasonEvaluations && enrolmentPeriod.isFor(executionSemester)
+                    && enrolmentPeriod.isValid()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     //TODO remove in next major it's no used and there can be more than one active, if don't specify the semester
     public EnrolmentPeriodInCurricularCoursesSpecialSeason getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() {
         for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriodsSet()) {

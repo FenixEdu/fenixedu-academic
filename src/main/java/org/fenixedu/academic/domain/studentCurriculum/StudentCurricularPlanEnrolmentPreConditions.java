@@ -172,6 +172,14 @@ public class StudentCurricularPlanEnrolmentPreConditions {
         return createTrue();
     }
 
+    static EnrolmentPreConditionResult checkEnrolmentPeriodsForExtraordinarySeason(StudentCurricularPlan scp, ExecutionSemester semester) {
+        if (!scp.getDegreeCurricularPlan().hasOpenExtraordinarySeasonEnrolmentPeriod(semester)) {
+            return outOfPeriodResult("extraordinarySeason", scp.getDegreeCurricularPlan()
+                    .getNextExtraordinarySeasonEnrolmentPeriod());
+        }
+        return createTrue();
+    }
+
     /*
      * Student must have flunked state and then registered (in same year), otherwise is not considered to be prescribed
      */

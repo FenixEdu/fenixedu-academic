@@ -80,6 +80,13 @@ public class StudentCurricularPlanEnrolmentInExtraordinarySeasonEvaluationManage
             throw new DomainException("error.StudentCurricularPlan.invalid.curricular.rule.level");
         }
 
+        final StudentCurricularPlanEnrolmentPreConditions.EnrolmentPreConditionResult result =
+                StudentCurricularPlanEnrolmentPreConditions.checkEnrolmentPeriodsForExtraordinarySeason(getStudentCurricularPlan(),
+                        getExecutionSemester());
+
+        if (!result.isValid()) {
+            throw new DomainException(result.message(), result.args());
+        }
     }
 
     private Collection<Registration> getRegistrationsToEnrolByStudent(final Student student) {
