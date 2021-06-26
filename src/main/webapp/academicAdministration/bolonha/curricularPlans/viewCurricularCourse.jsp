@@ -47,6 +47,7 @@
 		<h:outputLink value="#{AcademicAdministrationCurricularCourseManagement.contextPath}/academicAdministration/bolonha/competenceCourses/showCompetenceCourse.faces" target="_blank">
 			<h:outputText value="(#{bolonhaBundle['showPage']} #{bolonhaBundle['competenceCourse']})"/>
 			<f:param name="competenceCourseID" value="#{AcademicAdministrationCurricularCourseManagement.curricularCourse.competenceCourse.externalId}"/>
+			<f:param name="executionYearID" value="#{AcademicAdministrationCurricularCourseManagement.executionYear.externalId}"/>
 		</h:outputLink>
 		<h:outputText value="</p></fieldset></div>" escape="false"/>
 	</h:panelGroup>

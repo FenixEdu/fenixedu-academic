@@ -25,16 +25,15 @@
 
 <fp:select actionClass="org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication$CurricularPlansManagement" />
 
-
 <f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
 	<h:outputText value="<h2>" escape="false"/>
-		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.code} - " rendered="#{!empty CompetenceCourseManagement.competenceCourse.code}"/>
-		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.name} " escape="false"/>
-		<h:outputText rendered="#{!empty CompetenceCourseManagement.competenceCourse.acronym}" value="(#{CompetenceCourseManagement.competenceCourse.acronym})" escape="false"/>
+		<h:outputText value="#{CompetenceCourseManagement.code} - " rendered="#{!empty CompetenceCourseManagement.code}"/>
+		<h:outputText value="#{CompetenceCourseManagement.name} " escape="false"/>
+		<h:outputText rendered="#{!empty CompetenceCourseManagement.acronym}" value="(#{CompetenceCourseManagement.acronym})" escape="false"/>
 	<h:outputText value="</h2>" escape="false"/>
 
 	<h:outputText value="<ul class='nobullet padding1 indent0 mtop3'>" escape="false"/>
@@ -81,31 +80,35 @@
 	<h:outputText rendered="#{CompetenceCourseManagement.competenceCourse.curricularStage.name == 'DRAFT'}" value="<span class='highlight1'>#{enumerationBundle[CompetenceCourseManagement.competenceCourse.curricularStage.name]}</span></p>" escape="false"/>
 	<h:outputText rendered="#{CompetenceCourseManagement.competenceCourse.curricularStage.name == 'PUBLISHED'}" value="<span class='highlight3'>#{enumerationBundle[CompetenceCourseManagement.competenceCourse.curricularStage.name]}</span></p>" escape="false"/>
 	<h:outputText rendered="#{CompetenceCourseManagement.competenceCourse.curricularStage.name == 'APPROVED'}" value="<span class='highlight4'>#{enumerationBundle[CompetenceCourseManagement.competenceCourse.curricularStage.name]}</span></p>" escape="false"/>		
-	<h:outputText value="<ul class='nobullet padding1 indent0 mbottom0'>" escape="false"/>	
+	<h:outputText value="<ul class='nobullet padding1 indent0 mbottom0'>" escape="false"/>
+
+	<h:outputText value="<li>" escape="false"/>
+	<h:outputText value="#{CompetenceCourseManagement.executionYear.name}</li>" escape="false"/>
+
 	<h:outputText value="<li><strong>#{bolonhaBundle['name']} (pt): </strong>" escape="false"/>
-	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.name}</li>" escape="false"/>
+	<h:outputText value="#{CompetenceCourseManagement.name}</li>" escape="false"/>
 	<h:outputText value="<li><strong>#{bolonhaBundle['nameEn']} (en): </strong>" escape="false"/>
-	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.nameEn}</li>" escape="false" />
-	<h:panelGroup rendered="#{!empty CompetenceCourseManagement.competenceCourse.acronym}">
+	<h:outputText value="#{CompetenceCourseManagement.nameEn}</li>" escape="false" />
+	<h:panelGroup rendered="#{!empty CompetenceCourseManagement.acronym}">
 		<h:outputText value="<li><strong>#{bolonhaBundle['acronym']}: </strong>" escape="false"/>
-		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.acronym}</li>" escape="false"/>
+		<h:outputText value="#{CompetenceCourseManagement.acronym}</li>" escape="false"/>
 	</h:panelGroup>
 	<h:outputText value="<li><strong>#{bolonhaBundle['competenceCourseLevel']}: </strong>" escape="false"/>
-	<h:outputText value="#{enumerationBundle[CompetenceCourseManagement.competenceCourse.competenceCourseLevel]}</li>" escape="false" rendered="#{!empty CompetenceCourseManagement.competenceCourse.competenceCourseLevel}"/>	
-	<h:outputText value="<em>#{bolonhaBundle['label.notDefined']}</em></li>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.competenceCourseLevel}"/>	
+	<h:outputText value="#{enumerationBundle[CompetenceCourseManagement.competenceCourseLevel]}</li>" escape="false" rendered="#{!empty CompetenceCourseManagement.competenceCourseLevel}"/>
+	<h:outputText value="<em>#{bolonhaBundle['label.notDefined']}</em></li>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourseLevel}"/>
 	<h:outputText value="<li><strong>#{bolonhaBundle['type']}: </strong>" escape="false"/>
-	<h:outputText value="#{bolonhaBundle['basic']}</li>" rendered="#{CompetenceCourseManagement.competenceCourse.basic}" escape="false"/>
-	<h:outputText value="#{bolonhaBundle['nonBasic']}</li>" rendered="#{!CompetenceCourseManagement.competenceCourse.basic}" escape="false"/>
+	<h:outputText value="#{bolonhaBundle['basic']}</li>" rendered="#{CompetenceCourseManagement.basic}" escape="false"/>
+	<h:outputText value="#{bolonhaBundle['nonBasic']}</li>" rendered="#{!CompetenceCourseManagement.basic}" escape="false"/>
 	<h:outputText value="</ul></div>" escape="false"/>
 	
 	<h:outputText value="<div class='simpleblock3 mtop2'>" escape="false"/>
 	<h:outputText value="<ul class='nobullet padding1 indent0 mbottom0'>" escape="false"/>
 	<h:outputText value="<li><strong>#{bolonhaBundle['regime']}: </strong>" escape="false"/>
-	<h:outputText value="#{enumerationBundle[CompetenceCourseManagement.competenceCourse.regime.name]}</li>" escape="false"/>	
+	<h:outputText value="#{enumerationBundle[CompetenceCourseManagement.regime]}</li>" escape="false"/>
 	<h:outputText value="<li><strong>#{bolonhaBundle['lessonHours']}: </strong>" escape="false"/>	
 	<fc:dataRepeater value="#{CompetenceCourseManagement.sortedCompetenceCourseLoads}" var="competenceCourseLoad" rowCountVar="numberOfElements">
 		<h:outputText value="<p class='mbotton0'><em>#{competenceCourseLoad.order}º #{bolonhaBundle['semester']}</em></p>" escape="false"
-			rendered="#{CompetenceCourseManagement.competenceCourse.regime.name == 'ANUAL' && numberOfElements == 2}"/>
+			rendered="#{CompetenceCourseManagement.regime == 'ANUAL' && numberOfElements == 2}"/>
 		
 		<h:outputText value="<ul class='mvert0'>" escape="false"/>
 		<h:outputText value="<li>#{bolonhaBundle['theoreticalLesson']}: " escape="false"/>
@@ -144,18 +147,18 @@
 	<h:outputText value="<table class='showinfo1 emphasis2'>" escape="false"/>
 	<h:outputText value="<tr><th>#{bolonhaBundle['objectives']}:</th>" escape="false"/>
 	<h:outputText value="<td>" escape="false"/>
-	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.objectives}" linebreak="true"/>
-	<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.objectives}"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.objectives}" linebreak="true"/>
+	<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.objectives}"/>
 	<h:outputText value="</td></tr>" escape="false"/>
 	<h:outputText value="<tr><th>#{bolonhaBundle['program']}:</th>" escape="false"/>
 	<h:outputText value="<td>" escape="false"/>
-	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.program}" linebreak="true"/>
-	<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.program}"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.program}" linebreak="true"/>
+	<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.program}"/>
 	<h:outputText value="</td></tr>" escape="false"/>
 	<h:outputText value="<tr><th>#{bolonhaBundle['evaluationMethod']}:</th>" escape="false"/>
 	<h:outputText value="<td>" escape="false"/>
-	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.evaluationMethod}" linebreak="true"/>
-	<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.evaluationMethod}"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.evaluationMethod}" linebreak="true"/>
+	<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.evaluationMethod}"/>
 	<h:outputText value="</td></tr>" escape="false"/>
 	<h:outputText value="</table>" escape="false"/>
 	
@@ -163,18 +166,18 @@
 	<h:outputText value="<table class='showinfo1 emphasis2'>" escape="false"/>
 	<h:outputText value="<tr><th>#{bolonhaBundle['objectivesEn']}:</th>" escape="false"/>
 	<h:outputText value="<td>" escape="false"/>
-	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.objectivesEn}" linebreak="true"/>
-	<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.objectivesEn}"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.objectivesEn}" linebreak="true"/>
+	<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.objectivesEn}"/>
 	<h:outputText value="</td></tr>" escape="false"/>
 	<h:outputText value="<tr><th>#{bolonhaBundle['programEn']}:</th>" escape="false"/>
 	<h:outputText value="<td>" escape="false"/>
-	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.programEn}" linebreak="true"/>
-	<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.programEn}"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.programEn}" linebreak="true"/>
+	<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.programEn}"/>
 	<h:outputText value="</td></tr>" escape="false"/>
 	<h:outputText value="<tr><th>#{bolonhaBundle['evaluationMethodEn']}:</th>" escape="false"/>
 	<h:outputText value="<td>" escape="false"/>
-	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.evaluationMethodEn}" linebreak="true"/>	
-	<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.evaluationMethodEn}"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.evaluationMethodEn}" linebreak="true"/>
+	<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.evaluationMethodEn}"/>
 	<h:outputText value="</td></tr>" escape="false"/>
 	<h:outputText value="</table>" escape="false"/>
 	<h:outputText value="</div>" escape="false"/>
