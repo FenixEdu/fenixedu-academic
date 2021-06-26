@@ -167,7 +167,7 @@ public class StudentCurricularPlanEnrolmentPreConditions {
     static EnrolmentPreConditionResult checkEnrolmentPeriodsForSpecialSeason(StudentCurricularPlan scp, ExecutionSemester semester) {
         if (!scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(semester)) {
             return outOfPeriodResult("specialSeason", scp.getDegreeCurricularPlan()
-                    .getNextEnrolmentPeriodInCurricularCoursesSpecialSeason());
+                    .getNextSpecialSeasonEnrolmentPeriod());
         }
         return createTrue();
     }
