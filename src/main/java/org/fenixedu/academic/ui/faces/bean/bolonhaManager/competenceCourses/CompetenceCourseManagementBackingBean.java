@@ -1483,9 +1483,4 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         bibliographicReferenceID = null;
     }
 
-    public boolean isBasic() {
-        final CompetenceCourseInformation information = getCompetenceCourse().findCompetenceCourseInformationForExecutionPeriod(getAssociatedExecutionPeriod());
-        return information != null && information.getBasic() && information.getBasic().booleanValue();
-    }
-
 }
