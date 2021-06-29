@@ -42,7 +42,8 @@ public class MarkSheetController {
     public String uploadSignedMarkSheet(final Model model, @PathVariable ExecutionCourse executionCourse,
                                         @PathVariable MarkSheet markSheet, @RequestParam MultipartFile signedMarkSheet,
                                         final HttpServletRequest request) {
-        if (markSheet != null && markSheet.getResponsibleTeacher() != null
+        if (markSheet != null && !markSheet.isConfirmed() && markSheet.getPrinted() != null && markSheet.getPrinted().booleanValue()
+                && markSheet.getResponsibleTeacher() != null
                 && markSheet.getResponsibleTeacher().getPerson().getUser() == Authenticate.getUser()) {
             try {
                 markSheet.saveSignedMarkSheet(signedMarkSheet.getBytes());

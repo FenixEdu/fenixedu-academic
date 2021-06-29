@@ -155,12 +155,19 @@ ${portal.toolkit()}
 	}
 
 <%
-	if (isPrinted) {
+	if (isPrinted && markSheet.getSignedMarkSheet() != null) {
 %>
 	Array.prototype.forEach.call(document.getElementsByClassName("hideWhenPrinted"), function(e) {
 		e.style.display = "none";
 	});
+    <%
+        if (markSheet.isConfirmed()) {
+    %>
+    Array.prototype.forEach.call(document.getElementsByClassName("showWhenPrinted"), function(e) {
+        e.style.display = "none";
+    });
 <%
+        }
 	} else {
 %>
 	Array.prototype.forEach.call(document.getElementsByClassName("showWhenPrinted"), function(e) {
