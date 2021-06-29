@@ -79,6 +79,9 @@ ${portal.toolkit()}
 			<input type="file" id="signedMarkSheet" name="signedMarkSheet" class="form-control form-inline" accept="application/pdf" />
 		</div>
 	</div>
+	<div class="form-group hideWhenPrinted">
+		<span class="infoop2" ><bean:message key="label.mark.sheet.signedMarkSheet.digital.signature" bundle="ACADEMIC_OFFICE_RESOURCES"/></span>
+	</div>
 </form>
 <%
 	}
