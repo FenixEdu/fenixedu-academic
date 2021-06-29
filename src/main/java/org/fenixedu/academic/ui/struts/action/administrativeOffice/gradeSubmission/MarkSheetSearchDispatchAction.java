@@ -18,21 +18,6 @@
  */
 package org.fenixedu.academic.ui.struts.action.administrativeOffice.gradeSubmission;
 
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
-
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -67,11 +52,24 @@ import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 import org.joda.time.DateTime;
-
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.fenixframework.FenixFramework;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 @StrutsFunctionality(app = AcademicAdminMarksheetApp.class, path = "search", titleKey = "link.markSheet.management")
 @Mapping(path = "/markSheetManagement", module = "academicAdministration", formBean = "markSheetManagementForm",
@@ -398,7 +396,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
             response.setContentType("application/pdf");
             response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", document.getReportFileName()));
             writer.write(data);
-            markAsPrinted(markSheet);
+            markSheet.markAsPrinted();
             return null;
         } catch (Exception e) {
             request.setAttribute("markSheet", markSheetString);
@@ -435,17 +433,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
 
     @Atomic(mode = TxMode.WRITE)
     private void markAsPrinted(Collection<MarkSheet> markSheets) {
-        markSheets.forEach(markSheet -> {
-            if (!markSheet.getPrinted()) {
-                markSheet.setPrinted(Boolean.TRUE);
-            }
-        });
+        markSheets.forEach(MarkSheet::markAsPrinted);
     }
 
-    @Atomic(mode = TxMode.WRITE)
-    private void markAsPrinted(MarkSheet markSheet) {
-        if (!markSheet.getPrinted()) {
-            markSheet.setPrinted(Boolean.TRUE);
-        }
-    }
 }

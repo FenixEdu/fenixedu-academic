@@ -1,18 +1,18 @@
 /**
  * Copyright © 2002 Instituto Superior Técnico
- *
+ * <p>
  * This file is part of FenixEdu Academic.
- *
+ * <p>
  * FenixEdu Academic is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * FenixEdu Academic is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Lesser General Public License
  * along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -21,20 +21,14 @@
  */
 package org.fenixedu.academic.ui.struts.action.teacher;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.google.common.base.Strings;
+import org.apache.commons.io.IOUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.apache.struts.upload.MultipartRequestWrapper;
 import org.fenixedu.academic.domain.Attends;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
@@ -54,15 +48,30 @@ import org.fenixedu.academic.predicate.IllegalDataAccessException;
 import org.fenixedu.academic.service.services.administrativeOffice.gradeSubmission.CreateMarkSheetByTeacher;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
+import org.fenixedu.academic.ui.struts.action.administrativeOffice.gradeSubmission.MarkSheetDocument;
+import org.fenixedu.academic.util.report.ReportsUtils;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
-
+import org.joda.time.DateTime;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
 
-import com.google.common.base.Strings;
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapping(path = "/markSheetManagement", module = "teacher", functionality = ManageExecutionCourseDA.class)
 @Forwards(@Forward(name = "mainPage", path = "/teacher/evaluation/finalEvaluationIndex.faces"))
@@ -79,7 +88,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
     }
 
     public ActionForward evaluationIndex(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
+                                         HttpServletResponse response) {
         return doForward(request, "/teacher/evaluation/evaluationIndex.jsp");
     }
 
@@ -90,7 +99,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
     }
 
     public ActionForward prepareSubmitMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
+                                            HttpServletResponse response) {
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
         if (!executionCourse.getAvailableGradeSubmission()) {
             addActionMessage(request, "error.teacher.gradeSubmission.gradeSubmission.not.available");
@@ -105,7 +114,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
     }
 
     public ActionForward gradeSubmissionStepOne(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
+                                                HttpServletResponse response) {
 
         MarkSheetTeacherGradeSubmissionBean submissionBean =
                 (MarkSheetTeacherGradeSubmissionBean) RenderUtils.getViewState().getMetaObject().getObject();
@@ -129,7 +138,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
     }
 
     public ActionForward gradeSubmissionStepTwo(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException {
+                                                HttpServletResponse response) throws FenixServiceException {
 
         User userView = getUserView(request);
         MarkSheetTeacherGradeSubmissionBean submissionBean =
@@ -156,7 +165,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
     }
 
     public ActionForward backToMainPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException {
+                                        HttpServletResponse response) throws FenixServiceException {
 
         return mapping.findForward("mainPage");
     }
@@ -209,7 +218,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
     }
 
     private boolean checkIfCanSubmitMarksToAnyCurricularCourse(Collection<CurricularCourse> curricularCourses,
-            ExecutionSemester executionSemester, HttpServletRequest request, ActionMessages actionMessages) {
+                                                               ExecutionSemester executionSemester, HttpServletRequest request, ActionMessages actionMessages) {
         boolean result = true;
         String dateFormat = "dd/MM/yyyy";
         for (CurricularCourse curricularCourse : curricularCourses) {
@@ -227,7 +236,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
     }
 
     private void addMessageGradeSubmissionPeriods(HttpServletRequest request, ActionMessages actionMessages, String dateFormat,
-            EvaluationSeason season, ExecutionDegree executionDegree) {
+                                                  EvaluationSeason season, ExecutionDegree executionDegree) {
         String period =
                 season.getGradeSubmissionPeriods(executionDegree, null)
                         .map(o -> o.getStartYearMonthDay().toString(dateFormat) + "-"
@@ -238,7 +247,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
     }
 
     public ActionForward viewSubmitedMarkSheets(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
+                                                HttpServletResponse response) {
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
         Collection<MarkSheet> associatedMarkSheets = executionCourse.getAssociatedMarkSheets();
 
@@ -248,7 +257,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
     }
 
     public ActionForward viewMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
+                                       HttpServletResponse response) {
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
         String markSheetID = request.getParameter("msID");
         MarkSheet markSheet = FenixFramework.getDomainObject(markSheetID);
@@ -256,4 +265,26 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
         request.setAttribute("executionCourseID", executionCourse.getExternalId());
         return doForward(request, "/teacher/evaluation/gradeSubmission/viewMarkSheet.jsp");
     }
+
+    public ActionForward printMarkSheet(final ActionMapping mapping, final ActionForm actionForm,
+                                        final HttpServletRequest request, final HttpServletResponse response) {
+        final MarkSheet markSheet = getDomainObject(request, "markSheetId");
+        if (markSheet != null && markSheet.getResponsibleTeacher() != null
+                && markSheet.getResponsibleTeacher().getPerson().getUser() == Authenticate.getUser()) {
+            final MarkSheetDocument markSheetDocument = new MarkSheetDocument(markSheet);
+            byte[] data = ReportsUtils.generateReport(markSheetDocument).getData();
+            response.setContentLength(data.length);
+            response.setContentType("application/pdf");
+            response.addHeader("Content-Disposition",
+                    String.format("attachment; filename=%s.pdf", "marksheets-" + new DateTime().toString()));
+            try (final ServletOutputStream writer = response.getOutputStream()) {
+                writer.write(data);
+            } catch (final Exception e) {
+                throw new Error(e);
+            }
+            markSheet.markAsPrinted();
+        }
+        return null;
+    }
+
 }
