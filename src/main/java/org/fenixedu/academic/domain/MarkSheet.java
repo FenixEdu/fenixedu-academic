@@ -546,6 +546,10 @@ public class MarkSheet extends MarkSheet_Base {
             }
         }
 
+        if (getSignedMarkSheet() != null) {
+            getSignedMarkSheet().delete();
+        }
+
         setRootDomainObject(null);
         deleteDomainObject();
     }
