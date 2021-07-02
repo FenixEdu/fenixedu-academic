@@ -43,6 +43,9 @@
 <br/>
 
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mark.sheets.for.signing"/></h2>
+<p class="infoop2">
+	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mark.sheets.for.signing.instructions"/>
+</p>
 <ul>
 <%
 	final List<EnrolmentEvaluation> marksSubmited = (List<EnrolmentEvaluation>) request.getAttribute("marksSubmited");
