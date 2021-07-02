@@ -18,6 +18,12 @@
  */
 package org.fenixedu.academic.ui.struts.action.administrativeOffice.gradeSubmission;
 
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.pdf.PdfContentByte;
+import com.lowagie.text.pdf.PdfImportedPage;
+import com.lowagie.text.pdf.PdfReader;
+import com.lowagie.text.pdf.PdfWriter;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -33,6 +39,7 @@ import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.MarkSheet;
 import org.fenixedu.academic.domain.MarkSheetState;
+import org.fenixedu.academic.domain.SignedMarkSheet;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -60,6 +67,9 @@ import pt.ist.fenixframework.FenixFramework;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -70,6 +80,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @StrutsFunctionality(app = AcademicAdminMarksheetApp.class, path = "search", titleKey = "link.markSheet.management")
 @Mapping(path = "/markSheetManagement", module = "academicAdministration", formBean = "markSheetManagementForm",
@@ -390,11 +401,20 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
         ActionMessages actionMessages = new ActionMessages();
 
         try (ServletOutputStream writer = response.getOutputStream()) {
-            MarkSheetDocument document = new MarkSheetDocument(markSheet);
-            byte[] data = ReportsUtils.generateReport(document).getData();
+            final SignedMarkSheet signedMarkSheet = markSheet.getSignedMarkSheet();
+            final byte[] data;
+            final String filename;
+            if (signedMarkSheet == null) {
+                MarkSheetDocument document = new MarkSheetDocument(markSheet);
+                data = ReportsUtils.generateReport(document).getData();
+                filename = document.getReportFileName();
+            } else {
+                data = signedMarkSheet.getContent();
+                filename = signedMarkSheet.getFilename();
+            }
             response.setContentLength(data.length);
             response.setContentType("application/pdf");
-            response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", document.getReportFileName()));
+            response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", filename));
             writer.write(data);
             markSheet.markAsPrinted();
             return null;
@@ -416,8 +436,16 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
             Collection<MarkSheet> markSheets =
                     getExecutionSemester(form).getWebMarkSheetsNotPrinted(AccessControl.getPerson(),
                             getDegreeCurricularPlan(form));
-            List<MarkSheetDocument> reports = markSheets.stream().map(MarkSheetDocument::new).collect(Collectors.toList());
-            byte[] data = ReportsUtils.generateReport(reports.toArray(new MarkSheetDocument[0])).getData();
+            List<MarkSheetDocument> reports = markSheets.stream()
+                    .filter(markSheet -> markSheet.getSignedMarkSheet() == null)
+                    .map(MarkSheetDocument::new).collect(Collectors.toList());
+            final Stream<byte[]> signedData = markSheets.stream()
+                    .map(markSheet -> markSheet.getSignedMarkSheet())
+                    .filter(signedMarkSheet -> signedMarkSheet != null)
+                    .map(signedMarkSheet -> signedMarkSheet.getContent());
+            final byte[] reportData = reports.isEmpty() ? null : ReportsUtils.generateReport(reports.toArray(new MarkSheetDocument[0])).getData();
+            final byte[] data = merge(Stream.concat(Stream.of(reportData), signedData));
+
             response.setContentLength(data.length);
             response.setContentType("application/pdf");
             response.addHeader("Content-Disposition",
@@ -429,6 +457,44 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
             addMessage(request, actionMessages, e.getMessage());
             return choosePrinterMarkSheetsWeb(mapping, actionForm, request, response);
         }
+    }
+
+    private byte[] merge(final Stream<byte[]> data) {
+        final List<byte[]> list = data.collect(Collectors.toList());
+        return list.size() == 0 ? null : list.size() == 1 ? list.get(0) : mergePdfFiles(list);
+    }
+
+    static byte[] mergePdfFiles(final List<byte[]> inputList) {
+        final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        final Document document = new Document();
+        final List<PdfReader> readers = new ArrayList<PdfReader>();
+
+        try {
+            for (final byte[] data : inputList) {
+                final ByteArrayInputStream pdf = new ByteArrayInputStream(data);
+                PdfReader pdfReader = new PdfReader(pdf);
+                readers.add(pdfReader);
+            }
+
+            final PdfWriter writer = PdfWriter.getInstance(document, outputStream);
+            document.open();
+
+            final PdfContentByte pageContentByte = writer.getDirectContent();
+
+            PdfImportedPage pdfImportedPage;
+            for (final PdfReader pdfReader : readers) {
+                for (int currentPdfReaderPage = 1; currentPdfReaderPage <= pdfReader.getNumberOfPages(); currentPdfReaderPage++) {
+                    document.newPage();
+                    pdfImportedPage = writer.getImportedPage(pdfReader, currentPdfReaderPage);
+                    pageContentByte.addTemplate(pdfImportedPage, 0, 0);
+                }
+            }
+        } catch (final IOException | DocumentException ex) {
+            throw new Error(ex);
+        }
+        document.close();
+        return outputStream.toByteArray();
     }
 
     @Atomic(mode = TxMode.WRITE)
