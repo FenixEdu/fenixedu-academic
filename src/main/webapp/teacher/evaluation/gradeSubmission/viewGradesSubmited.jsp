@@ -1,4 +1,9 @@
-<%--
+<%@ page import="org.fenixedu.academic.domain.EnrolmentEvaluation" %>
+<%@ page import="org.fenixedu.academic.domain.ExecutionCourse" %>
+<%@ page import="org.fenixedu.academic.domain.MarkSheet" %>
+<%@ page import="java.util.HashSet" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Set" %><%--
 
     Copyright © 2002 Instituto Superior Técnico
 
@@ -36,3 +41,32 @@
 		</fr:layout>
 </fr:view>
 <br/>
+
+<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mark.sheets.for.signing"/></h2>
+<p class="infoop2">
+	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mark.sheets.for.signing.instructions"/>
+</p>
+<ul>
+<%
+	final List<EnrolmentEvaluation> marksSubmited = (List<EnrolmentEvaluation>) request.getAttribute("marksSubmited");
+	if (marksSubmited != null && marksSubmited.size() > 0) {
+		final Set<MarkSheet> markSheets = new HashSet<MarkSheet>();
+		for (final EnrolmentEvaluation enrolmentEvaluation : marksSubmited) {
+			final MarkSheet markSheet = enrolmentEvaluation.getMarkSheet();
+			if (!markSheets.contains(markSheet)) {
+				markSheets.add(markSheet);
+%>
+	<li>
+		<a href="<%= request.getContextPath() + "/teacher/markSheetManagement.do?method=viewMarkSheet"
+						+ "&msID=" + markSheet.getExternalId()
+						+ "&executionCourseID=" + ((ExecutionCourse) request.getAttribute("executionCourse")).getExternalId()
+				 		%>">
+			<%= markSheet.getDegreeCurricularPlanName() %>
+		</a>
+	</li>
+<%
+			}
+		}
+	}
+%>
+</ul>

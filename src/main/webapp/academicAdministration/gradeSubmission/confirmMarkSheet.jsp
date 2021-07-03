@@ -25,6 +25,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
 <%@page import="org.fenixedu.academic.util.FenixDigestUtils"%>
+<%@ page import="org.fenixedu.academic.domain.MarkSheet" %>
 
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.confirmMarkSheet"/></h2>
 
@@ -55,6 +56,18 @@
 <bean:define id="mark" name="markSheet" type="org.fenixedu.academic.domain.MarkSheet"/>
 <bean:define id="checksum" value="<%= FenixDigestUtils.getPrettyCheckSum(mark.getCheckSum())%>"/>
 
+<%
+	final MarkSheet markSheet = (MarkSheet) request.getAttribute("markSheet");
+%>
+<% if (markSheet.getSignedMarkSheet() != null) { %>
+<p>
+	<a href="<%= request.getContextPath() + "/downloadFile/" + markSheet.getSignedMarkSheet().getExternalId() + "/signedMarkSheet.pdf" %>">
+		<bean:message key="label.mark.sheet.signedMarkSheet" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+	</a>
+</p>
+<%
+	}
+%>
 
 <p>
 	<span class="highlight1"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.checksum"/></strong> : <bean:write name="checksum"/></span>

@@ -1071,7 +1071,7 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
             YearMonthDay whenSubmitedYearMonthDay;
         }
         
-    class MarkSheet  {
+    class MarkSheet {
         String archiveInformation;
         String checkSum;
         DateTime confirmationDateDateTime;
@@ -1086,6 +1086,8 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
         class OldMarkSheet extends MarkSheet {
         }
 
+        class SignedMarkSheet extends .org.fenixedu.bennu.io.domain.GenericFile {
+        }
 
     class NonAffiliatedTeacher  {
         String name;
@@ -12582,3 +12584,11 @@ relation ProofOfPaymentAccountingTransactionDetail {
     }
 }
 
+relation MarkSheetSignedMarkSheet {
+    SignedMarkSheet playsRole signedMarkSheet {
+        multiplicity 0..1;
+    }
+    MarkSheet playsRole markSheet {
+        multiplicity 1..1;
+    }
+}
