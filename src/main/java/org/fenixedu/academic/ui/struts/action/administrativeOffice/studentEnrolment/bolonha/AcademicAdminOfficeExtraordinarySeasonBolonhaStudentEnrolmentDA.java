@@ -27,10 +27,8 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import org.fenixedu.academic.domain.accounting.events.AnnualEvent;
-import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
 import org.fenixedu.academic.domain.accounting.events.insurance.InsuranceEvent;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
-import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.dto.student.enrollment.bolonha.ExtraordinarySeasonBolonhaStudentEnrolmentBean;
 import org.fenixedu.academic.ui.struts.action.administrativeOffice.student.SearchForStudentsDA;
@@ -74,10 +72,6 @@ public class AcademicAdminOfficeExtraordinarySeasonBolonhaStudentEnrolmentDA ext
         if (hasAnyAdministrativeOfficeFeeAndInsuranceInDebt(student, executionSemester.getExecutionYear())) {
             addActionMessage("warning", request, "registration.has.not.payed.insurance.fees");
         }
-
-        if (hasAnyGratuityDebt(student, executionSemester.getExecutionYear())) {
-            addActionMessage("warning", request, "registration.has.not.payed.gratuities");
-        }
     }
 
     protected boolean hasAnyAdministrativeOfficeFeeAndInsuranceInDebt(final Student student, final ExecutionYear executionYear) {
@@ -95,19 +89,6 @@ public class AcademicAdminOfficeExtraordinarySeasonBolonhaStudentEnrolmentDA ext
             }
         }
 
-        return false;
-    }
-
-    protected boolean hasAnyGratuityDebt(final Student student, final ExecutionYear executionYear) {
-        for (final Registration registration : student.getRegistrationsSet()) {
-            for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
-                for (final GratuityEvent gratuityEvent : studentCurricularPlan.getGratuityEventsSet()) {
-                    if (gratuityEvent.getExecutionYear().isBeforeOrEquals(executionYear) && gratuityEvent.isInDebt()) {
-                        return true;
-                    }
-                }
-            }
-        }
         return false;
     }
 
