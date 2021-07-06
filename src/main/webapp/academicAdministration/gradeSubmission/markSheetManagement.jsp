@@ -1,4 +1,7 @@
-<%--
+<%@ page import="org.fenixedu.academic.domain.Degree" %>
+<%@ page import="org.fenixedu.academic.domain.ExecutionSemester" %>
+<%@ page import="org.fenixedu.academic.domain.MarkSheet" %>
+<%@ page import="org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementSearchBean" %><%--
 
     Copyright © 2002 Instituto Superior Técnico
 
@@ -145,3 +148,72 @@
 	</logic:notEmpty>
 </div>
 </logic:present>
+
+<%
+	final MarkSheetManagementSearchBean markSheetManagementSearchBean = (MarkSheetManagementSearchBean) request.getAttribute("edit");
+	final ExecutionSemester executionSemester = markSheetManagementSearchBean.getExecutionPeriod();
+	final Degree degree = markSheetManagementSearchBean.getDegree();
+	if (executionSemester != null && degree == null) {
+%>
+<div id="signedMarkSheets" style="display: none; margin-top: 50px;">
+<h4>
+	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mark.sheet.signed.pendingConfirmation"/>
+</h4>
+<table class="tstyle4 table">
+	<thead>
+		<tr>
+			<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mark.sheet.degree"/></th>
+			<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mark.sheet.curricularCourse"/></th>
+			<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mark.sheet.responsible"/></th>
+			<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mark.sheet.season"/></th>
+			<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mark.sheet.evaluationDate"/></th>
+			<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mark.sheet.studentCount"/></th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+<%
+		boolean hasSignedMarkSheets = false;
+		for (final MarkSheet markSheet : executionSemester.getMarkSheetsSet()) {
+			if (!markSheet.isConfirmed() && markSheet.getSignedMarkSheet() != null) {
+				hasSignedMarkSheets = true;
+%>
+		<tr>
+			<td><%= markSheet.getDegreeCurricularPlanName() %></td>
+			<td><%= markSheet.getCurricularCourseName() %></td>
+			<td><%= markSheet.getResponsibleTeacher().getPerson().getUsername() %></td>
+			<td><%= markSheet.getEvaluationSeason().getName().getContent() %></td>
+			<td><%= markSheet.getEvaluationDateDateTime().toString("yyyy-MM-dd") %></td>
+			<td><%= markSheet.getEnrolmentEvaluationsSet().size() %></td>
+			<td>
+				<a href="<%= request.getContextPath() + "/academicAdministration/markSheetManagement.do?method=prepareConfirmMarkSheet"
+						+ "&ccID=" + markSheet.getCurricularCourse().getExternalId()
+						+ "&msID=" + markSheet.getExternalId()
+						+ "&dID=" + markSheet.getCurricularCourse().getDegree().getExternalId()
+						+ "&epID=" + markSheet.getExecutionPeriod().getExternalId()
+						+ "&dcpID=" + markSheet.getCurricularCourse().getDegreeCurricularPlan().getExternalId()
+				 		%>">
+					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.confirm"/>
+				</a>
+			</td>
+		</tr>
+<%
+			}
+		}
+%>
+	</tbody>
+</table>
+</div>
+<%
+	if (hasSignedMarkSheets) {
+%>
+<script>
+	document.getElementById("signedMarkSheets").style.display = 'block';
+</script>
+	<%
+        }
+    %>
+
+<%
+	}
+%>

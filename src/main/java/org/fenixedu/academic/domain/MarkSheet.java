@@ -18,17 +18,7 @@
  */
 package org.fenixedu.academic.domain;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
-
+import com.google.common.base.Strings;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
@@ -48,8 +38,18 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+import pt.ist.fenixframework.Atomic;
 
-import com.google.common.base.Strings;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 public class MarkSheet extends MarkSheet_Base {
     static final private Comparator<MarkSheet> COMPARATOR_BY_EVALUATION_DATE = new Comparator<MarkSheet>() {
@@ -547,6 +547,10 @@ public class MarkSheet extends MarkSheet_Base {
             }
         }
 
+        if (getSignedMarkSheet() != null) {
+            getSignedMarkSheet().delete();
+        }
+
         setRootDomainObject(null);
         deleteDomainObject();
     }
@@ -946,6 +950,21 @@ public class MarkSheet extends MarkSheet_Base {
     public java.util.Date getEvaluationDate() {
         org.joda.time.DateTime dt = getEvaluationDateDateTime();
         return (dt == null) ? null : new java.util.Date(dt.getMillis());
+    }
+
+    @Atomic(mode = Atomic.TxMode.WRITE)
+    public void markAsPrinted() {
+        if (getPrinted() == null || !getPrinted()) {
+            setPrinted(Boolean.TRUE);
+        }
+    }
+
+    @Atomic(mode = Atomic.TxMode.WRITE)
+    public void saveSignedMarkSheet(byte[] content) {
+        if (getSignedMarkSheet() != null) {
+            getSignedMarkSheet().delete();
+        }
+        new SignedMarkSheet(this, content);
     }
 
 }
