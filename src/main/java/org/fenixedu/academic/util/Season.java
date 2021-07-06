@@ -32,17 +32,20 @@ public class Season extends FenixUtil {
     public static final int SEASON1 = 1;
     public static final int SEASON2 = 2;
     public static final int SPECIAL_SEASON = 3;
+    public static final int EXTRAORDINARY_SEASON = 4;
 
-    private static String[] SEASON_KEYS = { "label.firstSeason", "label.secondSeason", "label.specialSeason" };
+    private static String[] SEASON_KEYS = { "label.firstSeason", "label.secondSeason", "label.specialSeason", "label.extraordinarySeason" };
 
     public static final String SEASON1_STRING = "1ª Época";
     public static final String SEASON2_STRING = "2ª Época";
     public static final String SPECIAL_SEASON_STRING = "Época Especial";
+    public static final String EXTRAORDINARY_SEASON_STRING = "Época Extraordinária";
     public static final String DEFAULT = "[Escolha a Epoca]";
 
     public static final Season SEASON1_OBJ = new Season(SEASON1);
     public static final Season SEASON2_OBJ = new Season(SEASON2);
     public static final Season SPECIAL_SEASON_OBJ = new Season(SPECIAL_SEASON);
+    public static final Season EXTRAORDINARY_SEASON_OBJ = new Season(EXTRAORDINARY_SEASON);
 
     private final Integer season;
 
@@ -61,6 +64,8 @@ public class Season extends FenixUtil {
             this.season = Integer.valueOf(Season.SEASON2);
         } else if (season.equals(Season.SPECIAL_SEASON_STRING)) {
             this.season = Integer.valueOf(Season.SPECIAL_SEASON);
+        } else if (season.equals(Season.EXTRAORDINARY_SEASON_STRING)) {
+            this.season = Integer.valueOf(Season.EXTRAORDINARY_SEASON);
         } else {
             throw new UnsupportedOperationException();
         }
@@ -85,6 +90,9 @@ public class Season extends FenixUtil {
         }
         if (season.intValue() == Season.SPECIAL_SEASON) {
             return Season.SPECIAL_SEASON_STRING;
+        }
+        if(season.intValue() == Season.EXTRAORDINARY_SEASON) {
+            return Season.EXTRAORDINARY_SEASON_STRING;
         }
         return "ERROR";
     }
