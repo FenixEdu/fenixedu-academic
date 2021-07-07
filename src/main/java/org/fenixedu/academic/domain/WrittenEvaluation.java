@@ -18,18 +18,6 @@
  */
 package org.fenixedu.academic.domain;
 
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-
 import org.fenixedu.academic.domain.CurricularCourseScope.DegreeModuleScopeCurricularCourseScope;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.Context.DegreeModuleScopeContext;
@@ -53,6 +41,18 @@ import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
@@ -988,4 +988,12 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     public Date getEvaluationDate() {
         return getDayDate();
     }
+
+    public boolean isEnrolled() {
+        final Student student = Authenticate.getUser().getPerson().getStudent();
+        return student.getRegistrationsSet().stream()
+                .flatMap(registration -> registration.getWrittenEvaluationEnrolmentsSet().stream())
+                .anyMatch(enrolment -> enrolment.getWrittenEvaluation() == this);
+    }
+
 }
