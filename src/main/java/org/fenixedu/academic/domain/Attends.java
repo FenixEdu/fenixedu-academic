@@ -61,7 +61,7 @@ import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 public class Attends extends Attends_Base {
 
     public static enum StudentAttendsStateType {
-        ENROLED, NOT_ENROLED, IMPROVEMENT, SPECIAL_SEASON;
+        ENROLED, NOT_ENROLED, IMPROVEMENT, SPECIAL_SEASON, EXTRAORDINARY_SEASON;
         public String getQualifiedName() {
             return StudentAttendsStateType.class.getSimpleName() + "." + name();
         }
@@ -531,6 +531,9 @@ public class Attends extends Attends_Base {
         }
 
         if (getEnrolment().isValid(getExecutionPeriod())) {
+            if(getEnrolment().hasExtraordinarySeason()) {
+                return StudentAttendsStateType.EXTRAORDINARY_SEASON;
+            }
             if (getEnrolment().hasSpecialSeason()) {
                 return StudentAttendsStateType.SPECIAL_SEASON;
             }
