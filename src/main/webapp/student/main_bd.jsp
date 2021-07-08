@@ -1,4 +1,5 @@
-<%@ page import="org.fenixedu.academic.ui.struts.action.student.StudentDashboard" %><%--
+<%@ page import="org.fenixedu.academic.ui.struts.action.student.StudentDashboard" %>
+<%@ page import="org.fenixedu.bennu.core.util.CoreConfiguration" %><%--
 
     Copyright © 2002 Instituto Superior Técnico
 
@@ -75,7 +76,7 @@ table tr.disabled td span.success0 { color: #555; background: #e5e5e5; }
 			</a>
 			</logic:notEmpty>
 		</h3>
-		
+
 		<div class="table-responsive">
 		<table class="tstyle1 thlight table table-condensed">
 		<logic:iterate id="executionCoursesAnnouncement" name="studentPortalBean" property="executionCoursesAnnouncements">
@@ -128,9 +129,9 @@ table tr.disabled td span.success0 { color: #555; background: #e5e5e5; }
 							</logic:equal>
 							<logic:equal name="evaluationAnnouncement" property="enrolmentElapsing" value="true">
 								<logic:equal name="evaluationAnnouncement" property="groupEnrolment" value="false">
-									<html:link page="/enrollment/evaluations/showEvaluations.faces">
+									<a href="<%= CoreConfiguration.getConfiguration().applicationUrl() %>/student/enroll/enrollment-evaluations-showEvaluations">
 										<bean:write name="evaluationAnnouncement" property="register"/>
-									</html:link>
+									</a>
 								</logic:equal>
 								<logic:equal name="evaluationAnnouncement" property="groupEnrolment" value="true">
 									<html:link page="/enroll/student-groups">
@@ -147,7 +148,7 @@ table tr.disabled td span.success0 { color: #555; background: #e5e5e5; }
 					
 				</logic:iterate>
 			</logic:notEmpty>
-				
+
 			<tr class="clear">
 				<td colspan="5" style="border: none; padding: 0.75em 0; background: #fff;"></td>
 			</tr>
