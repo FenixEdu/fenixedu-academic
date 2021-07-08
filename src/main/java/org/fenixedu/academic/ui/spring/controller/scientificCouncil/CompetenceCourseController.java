@@ -22,12 +22,17 @@ import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixframework.FenixFramework;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
@@ -40,14 +45,14 @@ import java.util.stream.Stream;
 @SpringFunctionality(app = AcademicAdministrationSpringApplication.class, title = "competence.course.management.title")
 @RequestMapping("/competence-management")
 public class CompetenceCourseController {
-    
+
     @RequestMapping(method = RequestMethod.GET)
     public String home(@RequestParam(required = false) CurricularStage curricularStage, @RequestParam(required = false)
-            DepartmentUnit 
+            DepartmentUnit
             departmentUnit, Model model, User user) {
         boolean isBolonhaManager = isBolonhaManager(user);
         boolean isScientificCouncilMember = isScientificCouncilMember(user);
-        
+
         List<DepartmentUnit> departmentUnits = getDepartmentUnits(user, isBolonhaManager, isScientificCouncilMember);
         model.addAttribute("departmentUnits", departmentUnits);
         model.addAttribute("isBolonhaManager", isBolonhaManager);
@@ -57,7 +62,7 @@ public class CompetenceCourseController {
         if (departmentUnit == null) {
             departmentUnit = departmentUnits.stream().findAny().orElse(null);
         }
-        
+
         if (departmentUnit != null) {
             Group competenceCoursesManagementGroup = departmentUnit.getDepartment().getCompetenceCourseMembersGroup();
             if (competenceCoursesManagementGroup != null) {
@@ -65,7 +70,7 @@ public class CompetenceCourseController {
             }
             model.addAttribute("scientificAreaUnits", departmentUnit.getScientificAreaUnits());
         }
-        
+
         model.addAttribute("departmentUnit", departmentUnit);
         return resolveView("home");
     }
@@ -178,6 +183,28 @@ public class CompetenceCourseController {
             spreadsheet.exportToXLSSheet(response.getOutputStream());
         }
         response.flushBuffer();
+    }
+
+    @RequestMapping(value = "{competenceCourse}/externalUrl", method = RequestMethod.GET)
+    public String competenceCourseExternalUrl(@PathVariable(required = false) CompetenceCourse competenceCourse) {
+        return "/competenceCourse/externalUrl";
+    }
+
+    @RequestMapping(value = "{competenceCourse}/externalUrl", method = RequestMethod.POST)
+    public String changeCompetenceCourseExternalUrl(final @PathVariable(required = false) CompetenceCourse competenceCourse,
+                                                    final @RequestParam(required = false) String externalUrl,
+                                                    final HttpServletRequest request) {
+        final User loggedUser = Authenticate.getUser();
+        if (isScientificCouncilMember(loggedUser)) {
+            competenceCourse.changeExternalUrl(externalUrl);
+        }
+
+        final String path = request.getContextPath()
+                + "/scientificCouncil/competenceCourses/showCompetenceCourse.faces?action=ccm"
+                + "&competenceCourseID=" + competenceCourse.getExternalId()
+                + "&selectedDepartmentUnitID=" + competenceCourse.getDepartmentUnit().getExternalId();
+        return "redirect:" + path + "&_request_checksum_=" + GenericChecksumRewriter.calculateChecksum(
+                request.getContextPath() + path, request.getSession(false));
     }
 
 }

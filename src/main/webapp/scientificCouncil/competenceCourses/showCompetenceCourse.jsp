@@ -1,4 +1,6 @@
-<%--
+<%@ page import="org.fenixedu.bennu.core.util.CoreConfiguration" %>
+<%@ page import="org.fenixedu.bennu.core.i18n.BundleUtil" %>
+<%@ page import="org.fenixedu.academic.util.Bundle" %><%--
 
     Copyright © 2002 Instituto Superior Técnico
 
@@ -18,6 +20,7 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
@@ -76,7 +79,11 @@
         </h:panelGroup>
         </h:form>
     </logic:present>
-	
+	<logic:present role="role(SCIENTIFIC_COUNCIL)">
+		<a href="<%= CoreConfiguration.getConfiguration().applicationUrl() %>/competence-management/${CompetenceCourseManagement.competenceCourse.externalId}/externalUrl">
+			<%= BundleUtil.getString(Bundle.SCIENTIFIC, "label.external.url") %>
+		</a>
+	</logic:present>
 	<h:outputText value="<p class='mtop15 mbottom0'><strong>#{scouncilBundle['activeCurricularPlans']}: </strong></p>" escape="false"/>
 	<h:panelGroup rendered="#{empty CompetenceCourseManagement.competenceCourse.associatedCurricularCourses}">
 		<h:outputText value="<i>#{scouncilBundle['noCurricularCourses']}</i>" escape="false"/>
@@ -119,6 +126,13 @@
 		<h:outputText value="<li>#{scouncilBundle['acronym']}: " escape="false"/>
 		<h:outputText value="#{CompetenceCourseManagement.acronym}</li>" escape="false"/>
 	</h:panelGroup>
+	<c:if test="${not empty CompetenceCourseManagement.competenceCourse.externalUrl}">
+		<li>
+			<a href="${CompetenceCourseManagement.competenceCourse.externalUrl}">
+				${CompetenceCourseManagement.competenceCourse.externalUrl}
+			</a>
+		</li>
+	</c:if>
 	<h:outputText value="<li>#{scouncilBundle['competenceCourseLevel']}: " escape="false"/>
 	<h:outputText value="#{enumerationBundle[CompetenceCourseManagement.competenceCourseLevel]}</li>" escape="false" rendered="#{!empty CompetenceCourseManagement.competenceCourseLevel}"/>	
 	<h:outputText value="<em>#{scouncilBundle['label.notDefined']}</em></li>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourseLevel}"/>	

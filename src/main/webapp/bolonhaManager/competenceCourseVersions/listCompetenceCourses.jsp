@@ -52,11 +52,13 @@
 
 <p class="mtop15 mbottom05"><strong class='highlight1'><bean:message key="groupMembers" bundle="BOLONHA_MANAGER_RESOURCES"/></strong> <bean:message key="label.group.members.explanation" bundle="BOLONHA_MANAGER_RESOURCES"/></p>
 
-<ul>
-	<logic:iterate id="user" name="competenceCourseMembersGroupMembers">
-		<li><fr:view name="user" property="person" layout="name-with-alias"/></li>
-	</logic:iterate>
-</ul>
+	<ul>
+		<logic:iterate id="user" name="competenceCourseMembersGroupMembers">
+			<logic:notEmpty name="user" property="person">
+				<li><fr:view name="user" property="person" layout="name-with-alias"/></li>
+			</logic:notEmpty>
+		</logic:iterate>
+	</ul>
 </logic:notEmpty>
 
 <logic:empty name="competenceCourseMembersGroupMembers">
