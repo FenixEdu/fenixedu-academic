@@ -1,12 +1,9 @@
+<%@ page import="org.fenixedu.academic.domain.Exam" %>
 <%@ page import="org.fenixedu.academic.domain.ExecutionSemester" %>
 <%@ page import="org.fenixedu.academic.domain.WrittenEvaluation" %>
+<%@ page import="org.fenixedu.academic.domain.WrittenTest" %>
 <%@ page import="org.fenixedu.bennu.core.util.CoreConfiguration" %>
 <%@ page import="java.util.SortedSet" %>
-<%@ page import="org.fenixedu.academic.domain.Exam" %>
-<%@ page import="org.fenixedu.academic.domain.WrittenTest" %>
-<%@ page import="org.fenixedu.academic.domain.ExecutionCourse" %>
-<%@ page import="java.util.Set" %>
-<%@ page import="org.fenixedu.bennu.core.security.Authenticate" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
@@ -168,10 +165,10 @@ ${portal.angularToolkit()}
             <% } %>
             <br/>
             <spring:message code="label.evaluations.evaluation.date.from" text="until"/>
-            <%= writtenEvaluation.getEnrolmentPeriodStart().toString("yyyy-MM-dd HH:mm") %>
+            <%= writtenEvaluation.getEnrolmentPeriodStart() == null ? "" : writtenEvaluation.getEnrolmentPeriodStart().toString("yyyy-MM-dd HH:mm") %>
             <br/>
             <spring:message code="label.evaluations.evaluation.date.until" text="until"/>
-            <%= writtenEvaluation.getEnrolmentPeriodEnd().toString("yyyy-MM-dd HH:mm") %>
+            <%= writtenEvaluation.getEnrolmentPeriodEnd() == null ? "" : writtenEvaluation.getEnrolmentPeriodEnd().toString("yyyy-MM-dd HH:mm") %>
         </td>
         <td>
             <% if (writtenEvaluation.getIsInEnrolmentPeriod()) { %>
