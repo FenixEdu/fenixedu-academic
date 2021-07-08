@@ -18,6 +18,14 @@
  */
 package org.fenixedu.academic.domain.degreeStructure;
 
+import org.fenixedu.academic.domain.Degree;
+import org.fenixedu.academic.domain.DegreeCurricularPlan;
+import org.fenixedu.academic.domain.ExecutionInterval;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import pt.ist.fenixframework.Atomic;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -25,15 +33,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-
-import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.ExecutionInterval;
-import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.exceptions.DomainException;
-
-import pt.ist.fenixframework.Atomic;
 
 public class CycleCourseGroup extends CycleCourseGroup_Base {
 
@@ -175,4 +174,9 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
 
         return null;
     }
+
+    public boolean hasParentCycleType(final CycleType cycleType) {
+        return cycleType == getCycleType();
+    }
+
 }
