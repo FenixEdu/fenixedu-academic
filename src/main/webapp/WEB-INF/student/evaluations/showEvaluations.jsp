@@ -3,6 +3,7 @@
 <%@ page import="org.fenixedu.academic.domain.WrittenEvaluation" %>
 <%@ page import="org.fenixedu.academic.domain.WrittenTest" %>
 <%@ page import="org.fenixedu.bennu.core.util.CoreConfiguration" %>
+<%@ page import="org.fenixedu.spaces.domain.Space" %>
 <%@ page import="java.util.SortedSet" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -54,6 +55,7 @@ ${portal.angularToolkit()}
         <th><spring:message code="label.evaluations.type" text="Tipo"/></th>
         <th><spring:message code="label.evaluations.execution.course" text="Program"/></th>
         <th><spring:message code="label.evaluations.evaluation" text="Evaluation"/></th>
+        <th><spring:message code="label.evaluations.evaluation.rooms" text="Room(s)"/></th>
         <th><spring:message code="label.evaluations.evaluation.date" text="Evaluation Date"/></th>
         <th><spring:message code="label.evaluations.evaluation.enrolment.period" text="Enrolment Period"/></th>
         <td></td>
@@ -78,6 +80,11 @@ ${portal.angularToolkit()}
             <%= writtenEvaluation.getPresentationName() %>
             <% } else if (writtenEvaluation instanceof WrittenTest) { %>
             <%= ((WrittenTest) writtenEvaluation).getDescription() %>
+            <% } %>
+        </td>
+        <td>
+            <% for(final Space room : writtenEvaluation.getAssociatedRooms()) { %>
+                <%= room.getName() %>
             <% } %>
         </td>
         <td>
@@ -125,6 +132,7 @@ ${portal.angularToolkit()}
         <th><spring:message code="label.evaluations.type" text="Tipo"/></th>
         <th><spring:message code="label.evaluations.execution.course" text="Program"/></th>
         <th><spring:message code="label.evaluations.evaluation" text="Evaluation"/></th>
+        <th><spring:message code="label.evaluations.evaluation.rooms" text="Room(s)"/></th>
         <th><spring:message code="label.evaluations.evaluation.date" text="Evaluation Date"/></th>
         <th><spring:message code="label.evaluations.evaluation.enrolment.period" text="Enrolment Period"/></th>
         <td></td>
@@ -148,6 +156,11 @@ ${portal.angularToolkit()}
             <%= writtenEvaluation.getPresentationName() %>
             <% } else if (writtenEvaluation instanceof WrittenTest) { %>
             <%= ((WrittenTest) writtenEvaluation).getDescription() %>
+            <% } %>
+        </td>
+        <td>
+            <% for(final Space room : writtenEvaluation.getAssociatedRooms()) { %>
+                <%= room.getName() %>
             <% } %>
         </td>
         <td>
@@ -196,6 +209,7 @@ ${portal.angularToolkit()}
         <th><spring:message code="label.evaluations.type" text="Tipo"/></th>
         <th><spring:message code="label.evaluations.execution.course" text="Program"/></th>
         <th><spring:message code="label.evaluations.evaluation" text="Evaluation"/></th>
+        <th><spring:message code="label.evaluations.evaluation.rooms" text="Room(s)"/></th>
         <th><spring:message code="label.evaluations.evaluation.date" text="Evaluation Date"/></th>
     </tr>
     </thead>
@@ -217,6 +231,11 @@ ${portal.angularToolkit()}
                         <%= writtenEvaluation.getPresentationName() %>
                     <% } else if (writtenEvaluation instanceof WrittenTest) { %>
                         <%= ((WrittenTest) writtenEvaluation).getDescription() %>
+                    <% } %>
+                </td>
+                <td>
+                    <% for(final Space room : writtenEvaluation.getAssociatedRooms()) { %>
+                        <%= room.getName() %>
                     <% } %>
                 </td>
                 <td>
