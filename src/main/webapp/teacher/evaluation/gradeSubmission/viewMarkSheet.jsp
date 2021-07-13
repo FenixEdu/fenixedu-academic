@@ -76,7 +76,7 @@ ${portal.toolkit()}
 			<% } %>
 		</label>
 		<div class="hideWhenPrinted">
-			<input type="file" id="signedMarkSheet" name="signedMarkSheet" class="form-control form-inline" accept="application/pdf" />
+			<input type="file" id="signedMarkSheet" name="signedMarkSheet" class="form-control form-inline" accept="application/pdf" required/>
 		</div>
 	</div>
 	<div class="form-group hideWhenPrinted">
