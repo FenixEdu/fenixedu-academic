@@ -53,6 +53,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
@@ -101,17 +102,10 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public String getFullName() {
-        Collection<ExecutionCourse> courses = this.getAssociatedExecutionCoursesSet();
-        String fullName = "";
-        int i = 0;
-        for (ExecutionCourse course : courses) {
-            if (i > 0) {
-                fullName = fullName + ", ";
-            }
-            fullName = fullName + " " + course.getNome();
-            i++;
-        }
-        return fullName;
+        return getAssociatedExecutionCoursesSet().stream()
+                .map(executionCourse -> executionCourse.getName())
+                .distinct()
+                .collect(Collectors.joining(", "));
     }
 
     public Space getCampus() {
