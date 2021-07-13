@@ -45,7 +45,6 @@ import org.joda.time.YearMonthDay;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
@@ -88,17 +87,10 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public String getName() {
-        Collection<ExecutionCourse> courses = this.getAssociatedExecutionCoursesSet();
-        String name = "";
-        int i = 0;
-        for (ExecutionCourse course : courses) {
-            if (i > 0) {
-                name = name + ", ";
-            }
-            name = name + " " + course.getSigla();
-            i++;
-        }
-        return name;
+        return getAssociatedExecutionCoursesSet().stream()
+                .map(executionCourse -> executionCourse.getSigla())
+                .distinct()
+                .collect(Collectors.joining(", "));
     }
 
     public String getFullName() {
