@@ -996,4 +996,14 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
                 .anyMatch(enrolment -> enrolment.getWrittenEvaluation() == this);
     }
 
+    public Space getAttributedRoom() {
+        final Student student = Authenticate.getUser().getPerson().getStudent();
+        return student.getRegistrationsSet().stream()
+                .flatMap(registration -> registration.getWrittenEvaluationEnrolmentsSet().stream())
+                .filter(enrolment -> enrolment.getWrittenEvaluation() == this)
+                .map(enrolment -> enrolment.getRoom())
+                .filter(room -> room != null)
+                .findAny().orElse(null);
+    }
+
 }

@@ -84,7 +84,8 @@ ${portal.angularToolkit()}
             <% } %>
         </td>
         <td>
-            <% for(final Space room : writtenEvaluation.getAssociatedRooms()) { %>
+            <% for (final WrittenEvaluationSpaceOccupation roomOccupation : writtenEvaluation.getWrittenEvaluationSpaceOccupationsSet()) { %>
+                <% final Space room = roomOccupation.getRoom(); %>
                 <%= room.getName() %>
             <% } %>
         </td>
@@ -144,6 +145,7 @@ ${portal.angularToolkit()}
     <tbody>
     <% for (final WrittenEvaluation writtenEvaluation : writtenEvaluations) {
         if (writtenEvaluation.isEnrolled()) {
+            final Space attributedRoom = writtenEvaluation.getAttributedRoom();
     %>
     <tr class="evaluation <%= writtenEvaluation.getClass().getSimpleName() + " " + writtenEvaluation.getAssociatedExecutionCoursesSet().iterator().next().getExecutionPeriod().getExternalId() %>">
         <td>
@@ -164,7 +166,13 @@ ${portal.angularToolkit()}
         <td>
             <% for (final WrittenEvaluationSpaceOccupation roomOccupation : writtenEvaluation.getWrittenEvaluationSpaceOccupationsSet()) { %>
                 <% final Space room = roomOccupation.getRoom(); %>
-                <%= room.getName() %>
+                <% if (attributedRoom == null) { %>
+                    <%= room.getName() %>
+                <% } else if (attributedRoom == room) { %>
+                    <span style="font-weight: bold;"><%= room.getName() %></span>
+                <% } else { %>
+                    <span style="color: #A9A9A9;"><%= room.getName() %></span>
+                <% } %>
             <% } %>
         </td>
         <td>
@@ -240,7 +248,8 @@ ${portal.angularToolkit()}
                     <% } %>
                 </td>
                 <td>
-                    <% for(final Space room : writtenEvaluation.getAssociatedRooms()) { %>
+                    <% for (final WrittenEvaluationSpaceOccupation roomOccupation : writtenEvaluation.getWrittenEvaluationSpaceOccupationsSet()) { %>
+                    <% final Space room = roomOccupation.getRoom(); %>
                         <%= room.getName() %>
                     <% } %>
                 </td>
