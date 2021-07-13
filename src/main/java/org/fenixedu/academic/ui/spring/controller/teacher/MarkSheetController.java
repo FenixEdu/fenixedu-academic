@@ -46,7 +46,10 @@ public class MarkSheetController {
                 && markSheet.getResponsibleTeacher() != null
                 && markSheet.getResponsibleTeacher().getPerson().getUser() == Authenticate.getUser()) {
             try {
-                markSheet.saveSignedMarkSheet(signedMarkSheet.getBytes());
+                final byte[] content = signedMarkSheet.getBytes();
+                if (content.length > 0) {
+                    markSheet.saveSignedMarkSheet(content);
+                }
             } catch (final IOException e) {
                 throw new Error(e);
             }
