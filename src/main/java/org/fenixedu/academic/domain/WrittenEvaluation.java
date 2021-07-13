@@ -45,7 +45,6 @@ import org.joda.time.YearMonthDay;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
@@ -53,6 +52,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
@@ -87,31 +87,17 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public String getName() {
-        Collection<ExecutionCourse> courses = this.getAssociatedExecutionCoursesSet();
-        String name = "";
-        int i = 0;
-        for (ExecutionCourse course : courses) {
-            if (i > 0) {
-                name = name + ", ";
-            }
-            name = name + " " + course.getSigla();
-            i++;
-        }
-        return name;
+        return getAssociatedExecutionCoursesSet().stream()
+                .map(executionCourse -> executionCourse.getSigla())
+                .distinct()
+                .collect(Collectors.joining(", "));
     }
 
     public String getFullName() {
-        Collection<ExecutionCourse> courses = this.getAssociatedExecutionCoursesSet();
-        String fullName = "";
-        int i = 0;
-        for (ExecutionCourse course : courses) {
-            if (i > 0) {
-                fullName = fullName + ", ";
-            }
-            fullName = fullName + " " + course.getNome();
-            i++;
-        }
-        return fullName;
+        return getAssociatedExecutionCoursesSet().stream()
+                .map(executionCourse -> executionCourse.getName())
+                .distinct()
+                .collect(Collectors.joining(", "));
     }
 
     public Space getCampus() {
@@ -994,6 +980,16 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         return student.getRegistrationsSet().stream()
                 .flatMap(registration -> registration.getWrittenEvaluationEnrolmentsSet().stream())
                 .anyMatch(enrolment -> enrolment.getWrittenEvaluation() == this);
+    }
+
+    public Space getAttributedRoom() {
+        final Student student = Authenticate.getUser().getPerson().getStudent();
+        return student.getRegistrationsSet().stream()
+                .flatMap(registration -> registration.getWrittenEvaluationEnrolmentsSet().stream())
+                .filter(enrolment -> enrolment.getWrittenEvaluation() == this)
+                .map(enrolment -> enrolment.getRoom())
+                .filter(room -> room != null)
+                .findAny().orElse(null);
     }
 
 }

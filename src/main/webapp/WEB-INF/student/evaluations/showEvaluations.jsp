@@ -2,6 +2,7 @@
 <%@ page import="org.fenixedu.academic.domain.ExecutionSemester" %>
 <%@ page import="org.fenixedu.academic.domain.WrittenEvaluation" %>
 <%@ page import="org.fenixedu.academic.domain.WrittenTest" %>
+<%@ page import="org.fenixedu.academic.domain.space.WrittenEvaluationSpaceOccupation" %>
 <%@ page import="org.fenixedu.bennu.core.util.CoreConfiguration" %>
 <%@ page import="org.fenixedu.spaces.domain.Space" %>
 <%@ page import="java.util.SortedSet" %>
@@ -83,7 +84,8 @@ ${portal.angularToolkit()}
             <% } %>
         </td>
         <td>
-            <% for(final Space room : writtenEvaluation.getAssociatedRooms()) { %>
+            <% for (final WrittenEvaluationSpaceOccupation roomOccupation : writtenEvaluation.getWrittenEvaluationSpaceOccupationsSet()) { %>
+                <% final Space room = roomOccupation.getRoom(); %>
                 <%= room.getName() %>
             <% } %>
         </td>
@@ -91,8 +93,10 @@ ${portal.angularToolkit()}
             <%= writtenEvaluation.getBeginningDateTime().toString("yyyy-MM-dd") %>
             &nbsp;
             <%= writtenEvaluation.getBeginningDateTime().toString("HH:mm") %>
-            <spring:message code="label.evaluations.evaluation.date.until" text="until"/>
-            <%= writtenEvaluation.getEndDateTime().toString("HH:mm") %>
+            <% if (writtenEvaluation.getEndDateHourMinuteSecond() != null) { %>
+                <spring:message code="label.evaluations.evaluation.date.until" text="until"/>
+                <%= writtenEvaluation.getEndDateTime().toString("HH:mm") %>
+            <% } %>
         </td>
         <td>
             <% if (writtenEvaluation.getIsInEnrolmentPeriod()) { %>
@@ -141,6 +145,7 @@ ${portal.angularToolkit()}
     <tbody>
     <% for (final WrittenEvaluation writtenEvaluation : writtenEvaluations) {
         if (writtenEvaluation.isEnrolled()) {
+            final Space attributedRoom = writtenEvaluation.getAttributedRoom();
     %>
     <tr class="evaluation <%= writtenEvaluation.getClass().getSimpleName() + " " + writtenEvaluation.getAssociatedExecutionCoursesSet().iterator().next().getExecutionPeriod().getExternalId() %>">
         <td>
@@ -159,16 +164,25 @@ ${portal.angularToolkit()}
             <% } %>
         </td>
         <td>
-            <% for(final Space room : writtenEvaluation.getAssociatedRooms()) { %>
-                <%= room.getName() %>
+            <% for (final WrittenEvaluationSpaceOccupation roomOccupation : writtenEvaluation.getWrittenEvaluationSpaceOccupationsSet()) { %>
+                <% final Space room = roomOccupation.getRoom(); %>
+                <% if (attributedRoom == null) { %>
+                    <%= room.getName() %>
+                <% } else if (attributedRoom == room) { %>
+                    <span style="font-weight: bold;"><%= room.getName() %></span>
+                <% } else { %>
+                    <span style="color: #A9A9A9;"><%= room.getName() %></span>
+                <% } %>
             <% } %>
         </td>
         <td>
             <%= writtenEvaluation.getBeginningDateTime().toString("yyyy-MM-dd") %>
             &nbsp;
             <%= writtenEvaluation.getBeginningDateTime().toString("HH:mm") %>
-            <spring:message code="label.evaluations.evaluation.date.until" text="until"/>
-            <%= writtenEvaluation.getEndDateTime().toString("HH:mm") %>
+            <% if (writtenEvaluation.getEndDateHourMinuteSecond() != null) { %>
+                <spring:message code="label.evaluations.evaluation.date.until" text="until"/>
+                <%= writtenEvaluation.getEndDateTime().toString("HH:mm") %>
+            <% } %>
         </td>
         <td>
             <% if (writtenEvaluation.getIsInEnrolmentPeriod()) { %>
@@ -234,7 +248,8 @@ ${portal.angularToolkit()}
                     <% } %>
                 </td>
                 <td>
-                    <% for(final Space room : writtenEvaluation.getAssociatedRooms()) { %>
+                    <% for (final WrittenEvaluationSpaceOccupation roomOccupation : writtenEvaluation.getWrittenEvaluationSpaceOccupationsSet()) { %>
+                    <% final Space room = roomOccupation.getRoom(); %>
                         <%= room.getName() %>
                     <% } %>
                 </td>
@@ -242,8 +257,10 @@ ${portal.angularToolkit()}
                     <%= writtenEvaluation.getBeginningDateTime().toString("yyyy-MM-dd") %>
                     &nbsp;
                     <%= writtenEvaluation.getBeginningDateTime().toString("HH:mm") %>
-                    <spring:message code="label.evaluations.evaluation.date.until" text="until"/>
-                    <%= writtenEvaluation.getEndDateTime().toString("HH:mm") %>
+                    <% if (writtenEvaluation.getEndDateHourMinuteSecond() != null) { %>
+                        <spring:message code="label.evaluations.evaluation.date.until" text="until"/>
+                        <%= writtenEvaluation.getEndDateTime().toString("HH:mm") %>
+                    <% } %>
                 </td>
             </tr>
         <%
