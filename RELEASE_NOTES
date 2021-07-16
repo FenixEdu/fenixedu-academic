@@ -1,3 +1,4 @@
+- Bug fix: Fixed NPE checking if rule applies to context
 - Bug fix: Fixed wrong english translation for annuled enrolment state
 
 32.8.8 (24-06-2021)

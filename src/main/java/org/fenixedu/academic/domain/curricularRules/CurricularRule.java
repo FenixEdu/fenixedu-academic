@@ -101,7 +101,11 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
 
     @Override
     public boolean appliesToContext(final Context context) {
-        return (context == null || appliesToCourseGroup(context.getParentCourseGroup()))
+        return context == null || appliesToCourseGroupAndCurricularPeriod(context);
+    }
+
+    private boolean appliesToCourseGroupAndCurricularPeriod(final Context context) {
+        return appliesToCourseGroup(context.getParentCourseGroup())
                 && (getCurricularPeriod() == null || getCurricularPeriod() == context.getCurricularPeriod());
     }
 
