@@ -1323,7 +1323,8 @@ public abstract class Event extends Event_Base {
     public boolean allowBankTransfer() {
         final Person person = getPerson();
         final Country country = person == null ? null : person.getCountry();
-        return country != null && country != Bennu.getInstance().getInstitutionUnit().getCountry();
+        return country != null && country != Bennu.getInstance().getInstitutionUnit().getCountry()
+                && !isDfaRegistrationEvent() && !isPhdEvent() && !isSpecializationDegreeRegistrationEvent();
     }
 
 }
