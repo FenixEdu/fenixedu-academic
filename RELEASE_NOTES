@@ -1,3 +1,4 @@
+32.8.9 (26-07-2021)
 - Improvement: When execution course has multiple competences, the resulted code should be sorted 
 - Bug fix: Fixed NPE checking if rule applies to context
 - Bug fix: Fixed wrong english translation for annuled enrolment state
