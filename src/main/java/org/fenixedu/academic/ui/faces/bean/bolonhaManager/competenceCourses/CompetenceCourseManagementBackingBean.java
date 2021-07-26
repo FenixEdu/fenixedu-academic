@@ -1316,11 +1316,10 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         if (executionSemesterID == null) {
             executionSemesterID = (String) getViewState().getAttribute("executionSemesterID");
         }
-        if (executionSemesterID == null) {
+        //the getExecutionYearID is never null
+        if (executionSemesterID == null && getAndHoldStringParameter("executionYearID") != null) {
             final ExecutionYear executionYear = getExecutionYear();
-            if (executionYear != null) {
-                executionSemesterID = executionYear.getFirstExecutionPeriod().getExternalId();
-            }
+            executionSemesterID = executionYear.getFirstExecutionPeriod().getExternalId();
         }
         ExecutionSemester currentSemester = ExecutionSemester.readActualExecutionSemester();
         if ((executionSemesterID == null) && (getCompetenceCourse() != null)) {
