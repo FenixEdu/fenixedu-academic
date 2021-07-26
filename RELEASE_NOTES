@@ -1,6 +1,7 @@
 - Improvement: When execution course has multiple competences, the resulted code should be sorted 
 - Bug fix: Fixed NPE checking if rule applies to context
 - Bug fix: Fixed wrong english translation for annuled enrolment state
+- Bug fix: Allow empty marks
 
 32.8.8 (24-06-2021)
 - Refactor: Change Photograph delete to be able to delete any photo

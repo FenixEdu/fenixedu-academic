@@ -18,9 +18,7 @@
  */
 package org.fenixedu.academic.domain;
 
-import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.EvaluationType;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 public class Mark extends Mark_Base {
@@ -47,25 +45,20 @@ public class Mark extends Mark_Base {
         }
     }
 
+    private boolean validateMark(String mark) {
+        try {
+            Grade.createGrade(mark, getEvaluation().getGradeScale()); // internally it will test if grade is valid (belongs to grade scale)
+            return true;
+        } catch (DomainException de) {
+            return false;
+        }
+    }
+
     public void delete() {
         setAttend(null);
         setEvaluation(null);
         setRootDomainObject(null);
         deleteDomainObject();
-    }
-
-    @Deprecated
-    private boolean validateMark(String mark) {
-        try {
-            final Grade grade = Grade.createGrade(mark, getEvaluation().getGradeScale());
-            if (grade.isEmpty()) {
-                return false;
-            }
-            
-            return getEvaluation().getGradeScale().belongsTo(mark);
-        } catch (DomainException de) {
-            return false;
-        }
     }
 
 }
