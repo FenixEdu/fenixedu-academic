@@ -120,6 +120,7 @@ public class Person extends Person_Base {
 
     /**
      * @deprecated Use {@link UserProfile#getGivenNames()}
+     * But still used in academic-treasury-base module
      */
     @Deprecated
     public String getGivenNames() {
@@ -128,6 +129,7 @@ public class Person extends Person_Base {
 
     /**
      * @deprecated Use {@link UserProfile#getFamilyNames()}
+     * But still used in academic-treasury-base module
      */
     @Deprecated
     public String getFamilyNames() {
