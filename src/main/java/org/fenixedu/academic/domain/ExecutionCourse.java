@@ -354,7 +354,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public String getCode() {
-        return getCompetenceCourses().stream().map(cc -> cc.getCode()).distinct().collect(Collectors.joining(", "));
+        return getCompetenceCourses().stream().map(cc -> cc.getCode()).distinct().sorted().collect(Collectors.joining(", "));
     }
 
     public String getPrettyAcronym() {
