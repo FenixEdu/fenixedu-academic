@@ -18,18 +18,6 @@
  */
 package org.fenixedu.academic.domain.degreeStructure;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Locale;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
 import org.apache.commons.collections.Predicate;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
@@ -48,8 +36,20 @@ import org.fenixedu.academic.domain.curricularRules.Exclusiveness;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.LocalizedString;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Locale;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 abstract public class DegreeModule extends DegreeModule_Base {
 
@@ -647,4 +647,11 @@ abstract public class DegreeModule extends DegreeModule_Base {
     public boolean isOptionalCourseGroup() {
         return false;
     }
+
+    public boolean hasParentCycleType(final CycleType cycleType) {
+        return getParentContextsSet().stream()
+                .map(context -> context.getParentCourseGroup())
+                .anyMatch(courseGroup -> courseGroup.hasParentCycleType(cycleType));
+    }
+
 }

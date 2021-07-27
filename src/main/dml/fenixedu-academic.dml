@@ -497,6 +497,7 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
         CurricularStage curricularStage;
         String name;
         CompetenceCourseType type;
+        String externalUrl;
     }
 
     class Coordinator  {

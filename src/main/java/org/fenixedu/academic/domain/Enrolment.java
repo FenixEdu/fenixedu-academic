@@ -437,7 +437,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
         temporaryImprovement.delete();
         Attends attends = getAttendsFor(executionSemester);
-        if (attends != null) {
+        //the improvement can be in the same execution semester and in that case we don't want to delete the attends, only when there is an improvement in another semester and consequently another attends
+        if (attends != null && getExecutionPeriod() != executionSemester) {
             attends.delete();
         }
     }

@@ -18,15 +18,15 @@
  */
 package org.fenixedu.academic.domain.degreeStructure;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Locale;
-
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Locale;
 
 public class RootCourseGroup extends RootCourseGroup_Base {
 
@@ -138,6 +138,10 @@ public class RootCourseGroup extends RootCourseGroup_Base {
     @Override
     public Collection<CycleCourseGroup> getParentCycleCourseGroups() {
         return Collections.emptySet();
+    }
+
+    public boolean hasParentCycleType(final CycleType cycleType) {
+        return false;
     }
 
 }

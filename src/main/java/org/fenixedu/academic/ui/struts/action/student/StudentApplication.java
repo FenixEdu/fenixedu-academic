@@ -55,10 +55,10 @@ public class StudentApplication extends ForwardAction {
     }
 
     // Faces Entry Points
-    @StrutsFunctionality(app = StudentEnrollApp.class, path = "evaluations", titleKey = "link.evaluations.enrolment")
-    @Mapping(path = "/enrollment/evaluations/showEvaluations", module = "student")
-    public static class ShowStudentEvaluations extends FacesEntryPoint {
-    }
+//    @StrutsFunctionality(app = StudentEnrollApp.class, path = "evaluations", titleKey = "link.evaluations.enrolment")
+//    @Mapping(path = "/enrollment/evaluations/showEvaluations", module = "student")
+//    public static class ShowStudentEvaluations extends FacesEntryPoint {
+//    }
 
     @StrutsFunctionality(app = StudentEnrollApp.class, path = "exams", titleKey = "link.exams.enrolment")
     @Mapping(path = "/enrollment/evaluations/showStudentExams", module = "student",

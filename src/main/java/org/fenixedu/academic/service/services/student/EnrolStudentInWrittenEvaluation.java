@@ -55,17 +55,12 @@ public class EnrolStudentInWrittenEvaluation {
     }
 
     private Registration findCorrectRegistration(final Student student, final Set<ExecutionCourse> associatedExecutionCoursesSet) {
-        for (final Registration registration : student.getRegistrationsSet()) {
-            if (registration.isActive()) {
-                for (final Attends attends : registration.getAssociatedAttendsSet()) {
-                    final ExecutionCourse executionCourse = attends.getExecutionCourse();
-                    if (associatedExecutionCoursesSet.contains(executionCourse)) {
-                        return registration;
-                    }
-                }
-            }
-        }
-        return null;
+        return student.getRegistrationsSet().stream()
+                //.filter(registration -> registration.isActive())
+                .flatMap(registration -> registration.getAssociatedAttendsSet().stream())
+                .filter(attends -> associatedExecutionCoursesSet.contains(attends.getExecutionCourse()))
+                .map(attends -> attends.getRegistration())
+                .findAny().orElse(null);
     }
 
     public void enrolmentAction(final WrittenEvaluation writtenEvaluation, final Registration registration) {
