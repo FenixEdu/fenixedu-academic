@@ -49,6 +49,10 @@ public class StudentCurricularPlanEnrolmentInExtraordinarySeasonEvaluationManage
             throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
         }
 
+        if (!hasExtraordinarySeasonStatute()) {
+            throw new DomainException("error.StudentCurricularPlan.student.has.no.extraordinary.season.statute");
+        }
+
         super.assertEnrolmentPreConditions();
     }
 
@@ -192,6 +196,12 @@ public class StudentCurricularPlanEnrolmentInExtraordinarySeasonEvaluationManage
                 }
             }
         }
+    }
+
+    private boolean hasExtraordinarySeasonStatute() {
+        return getResponsiblePerson().getStudent().getStudentStatutesSet().stream()
+                .filter(statute -> statute.getType().isExtraordinarySeasonGranted() || statute.hasSeniorStatuteForRegistration(getRegistration()))
+                .anyMatch(statute -> statute.isValidInExecutionPeriod(getExecutionSemester()));
     }
 
 }

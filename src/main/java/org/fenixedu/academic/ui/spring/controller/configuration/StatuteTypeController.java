@@ -75,20 +75,26 @@ public class StatuteTypeController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String create(@RequestParam String code, @RequestParam LocalizedString name,
-            @RequestParam(required = false) boolean active, @RequestParam(required = false) boolean visible, @RequestParam(
-                    required = false) boolean specialSeasonGranted, @RequestParam(required = false) boolean explicitCreation,
-            @RequestParam(required = false) boolean workingStudentStatute,
-            @RequestParam(required = false) boolean associativeLeaderStatute,
-            @RequestParam(required = false) boolean specialSeasonGrantedByRequest,
-            @RequestParam(required = false) boolean grantOwnerStatute, @RequestParam(required = false) boolean seniorStatute,
-            @RequestParam(required = false) boolean handicappedStatute, Model model) throws Exception {
+    public String create(@RequestParam String code,
+                         @RequestParam LocalizedString name,
+                         @RequestParam(required = false) boolean active,
+                         @RequestParam(required = false) boolean visible,
+                         @RequestParam(required = false) boolean specialSeasonGranted,
+                         @RequestParam(required = false) boolean extraordinarySeasonGranted,
+                         @RequestParam(required = false) boolean explicitCreation,
+                         @RequestParam(required = false) boolean workingStudentStatute,
+                         @RequestParam(required = false) boolean associativeLeaderStatute,
+                         @RequestParam(required = false) boolean specialSeasonGrantedByRequest,
+                         @RequestParam(required = false) boolean grantOwnerStatute,
+                         @RequestParam(required = false) boolean seniorStatute,
+                         @RequestParam(required = false) boolean handicappedStatute,
+                         Model model) throws Exception {
 
         try {
             StatuteType statuteType =
                     atomic(() -> new StatuteType(code, name, workingStudentStatute, associativeLeaderStatute,
                             specialSeasonGrantedByRequest, grantOwnerStatute, seniorStatute, handicappedStatute, active,
-                            explicitCreation, visible, specialSeasonGranted));
+                            explicitCreation, visible, specialSeasonGranted, extraordinarySeasonGranted));
             return "redirect:/academic/configuration/statutes/" + statuteType.getExternalId();
         } catch (DomainException ex) {
             ControllerHelper.addErrorMessage(ex.getLocalizedMessage(), model);

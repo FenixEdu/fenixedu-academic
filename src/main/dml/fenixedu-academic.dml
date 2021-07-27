@@ -3220,6 +3220,7 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
 		boolean explicitCreation;
 		boolean visible;
 		boolean specialSeasonGranted;
+		boolean extraordinarySeasonGranted;
 	}
 
     class student.StudentStatute  {
