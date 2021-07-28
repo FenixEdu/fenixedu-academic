@@ -44,7 +44,7 @@
 			bundle="ACADEMIC_OFFICE_RESOURCES">
 			<fr:slot name="executionYear" key="label.executionYear" layout="menu-select-postback" required="true">
 				<fr:property name="providerClass"
-					value="org.fenixedu.academic.ui.renderers.providers.OpenExecutionYearsProvider" />
+					value="org.fenixedu.academic.ui.renderers.providers.ExecutionYearsProvider" />
 				<fr:property name="format" value="${year}" />
 				<fr:property name="destination" value="executionYearPostBack" />
 			</fr:slot>
