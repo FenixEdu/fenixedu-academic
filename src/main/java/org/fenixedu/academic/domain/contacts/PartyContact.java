@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -396,7 +397,10 @@ public abstract class PartyContact extends PartyContact_Base {
         boolean oldValueDiffersFromNew = false;
         if (valueChanged) {
             if (getPrevPartyContact() != null) {
-                oldValueDiffersFromNew = getPrevPartyContact().getPresentationValue().compareTo(getPresentationValue()) != 0;
+                String prevPartyContactPresentationValue = getPrevPartyContact().getPresentationValue();
+                oldValueDiffersFromNew =
+                        prevPartyContactPresentationValue == null ? getPresentationValue() != null : prevPartyContactPresentationValue
+                                .compareTo(getPresentationValue()) != 0;
             }
         }
 
