@@ -23,7 +23,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<%@page import="org.fenixedu.academic.domain.serviceRequests.SpecialSeasonRequest"%>
+<%@ page import="org.fenixedu.academic.domain.serviceRequests.IDeferableRequest" %>
 
 <html:xhtml/>
 
@@ -74,7 +74,7 @@
 	<br/>
 	<strong><bean:message key="label.serviceRequests.sendEmailToStudent" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong><html:radio property="sendEmailToStudent" value="true"><bean:message key="label.yes" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:radio><html:radio property="sendEmailToStudent" value="false"><bean:message key="label.no" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:radio>
 	<%
-	if(academicServiceRequest instanceof SpecialSeasonRequest) {
+	if (academicServiceRequest instanceof IDeferableRequest) {
 	%>
 	<br/>
 	<br/>

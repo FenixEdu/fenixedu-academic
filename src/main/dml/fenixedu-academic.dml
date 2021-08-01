@@ -3035,6 +3035,10 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
             class serviceRequests.SpecialSeasonRequest extends serviceRequests.RegistrationAcademicServiceRequest {
             	Boolean deferred;
             }
+
+            class serviceRequests.ExtraordinarySeasonRequest extends serviceRequests.RegistrationAcademicServiceRequest {
+            	Boolean deferred;
+            }
             
             class serviceRequests.PartialRegistrationRegimeRequest extends serviceRequests.RegistrationAcademicServiceRequest {
             }
@@ -6175,6 +6179,20 @@ relation SpecialSeasonRequestBeginPeriod {
 relation SpecialSeasonRequestEndPeriod {
     ExecutionSemester playsRole endExecutionPeriod;
     serviceRequests.SpecialSeasonRequest playsRole endingSpecialSeason {
+        multiplicity *;
+    }
+}
+
+relation ExtraordinarySeasonRequestBeginPeriod {
+    ExecutionSemester playsRole beginExecutionPeriod;
+    serviceRequests.ExtraordinarySeasonRequest playsRole beginningExtraordinarySeason {
+        multiplicity *;
+    }
+}
+
+relation ExtraordinarySpecialSeasonRequestEndPeriod {
+    ExecutionSemester playsRole endExecutionPeriod;
+    serviceRequests.ExtraordinarySeasonRequest playsRole endingExtraordinarySeason {
         multiplicity *;
     }
 }

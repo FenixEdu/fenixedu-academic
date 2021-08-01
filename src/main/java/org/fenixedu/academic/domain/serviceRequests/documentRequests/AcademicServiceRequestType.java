@@ -42,6 +42,8 @@ public enum AcademicServiceRequestType {
 
     SPECIAL_SEASON_REQUEST(true),
 
+    EXTRAORDINARY_SEASON_REQUEST(true),
+
     EXTRA_EXAM_REQUEST(true),
 
     PHOTOCOPY_REQUEST(true),

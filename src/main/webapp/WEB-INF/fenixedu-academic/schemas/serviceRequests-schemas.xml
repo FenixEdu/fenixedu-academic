@@ -908,6 +908,18 @@
 		</slot>
 </schema>
 
+<schema name="RegistrationAcademicServiceRequestCreateBean.EXTRAORDINARY_SEASON_REQUEST"
+		type="org.fenixedu.academic.dto.serviceRequests.RegistrationAcademicServiceRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES"
+		extends="RegistrationAcademicServiceRequestCreateBean.choose.type">
+</schema>
+
+<schema name="ExtraordinarySeasonRequest.view" type="org.fenixedu.academic.domain.serviceRequests.ExtraordinarySeasonRequest"
+		extends="AcademicServiceRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+		<slot name="defermentDescription" key="label.serviceRequests.defermentDescription">
+			<property name="style" value="font-style: italic;"/>
+		</slot>
+</schema>
+
 <schema name="RegistrationAcademicServiceRequestCreateBean.EXTRA_EXAM_REQUEST"
 	type="org.fenixedu.academic.dto.serviceRequests.RegistrationAcademicServiceRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES"
 	extends="RegistrationAcademicServiceRequestCreateBean.choose.type">

@@ -142,6 +142,10 @@ public class StatuteType extends StatuteType_Base {
         return readAll(StatuteType::isSpecialSeasonGrantedByRequest).findFirst();
     }
 
+    public static Optional<StatuteType> findExtraordinarySeasonGrantedStatuteType() {
+        return readAll(StatuteType::isExtraordinarySeasonGranted).findFirst();
+    }
+
     public static Optional<StatuteType> findSeniorStatuteType() {
         return readAll(StatuteType::isSeniorStatute).findFirst();
     }
