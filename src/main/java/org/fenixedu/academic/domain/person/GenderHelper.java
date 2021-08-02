@@ -48,7 +48,9 @@ public class GenderHelper {
                         new LabelValueBean(BundleUtil.getString(Bundle.APPLICATION, locale, Gender.MALE.name()),
                                 Gender.MALE.name()),
                         new LabelValueBean(BundleUtil.getString(Bundle.APPLICATION, locale, Gender.FEMALE.name()),
-                                Gender.FEMALE.name()) };
+                                Gender.FEMALE.name()),
+                        new LabelValueBean(BundleUtil.getString(Bundle.APPLICATION, locale, Gender.OTHER.name()),
+                                Gender.OTHER.name()) };
         sexLabelValuesByLocale.put(locale, labelValueBeans);
         return labelValueBeans;
     }

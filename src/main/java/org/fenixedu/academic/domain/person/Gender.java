@@ -28,7 +28,7 @@ import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 
 public enum Gender implements IPresentableEnum {
 
-    MALE, FEMALE;
+    MALE, FEMALE, OTHER;
 
     /**
      * Returns a localized String of Genders
