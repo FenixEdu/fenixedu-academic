@@ -33,6 +33,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
@@ -1783,18 +1784,16 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return false;
     }
 
-    private OccupationPeriod findOccupationPeriodFor(final ExecutionSemester executionSemester, final CurricularCourse curricularCourse) {
+    private OccupationPeriod findOccupationPeriodFor(final ExecutionSemester executionSemester,
+            final CurricularCourse curricularCourse) {
         final ExecutionDegree executionDegree = curricularCourse.getExecutionDegreeFor(executionSemester.getExecutionYear());
         final Set<Integer> curricularYears = curricularCourse.getParentContextsByExecutionSemester(executionSemester).stream()
-                .map(context -> context.getCurricularYear())
-                .collect(Collectors.toSet());
-        return executionDegree.getOccupationPeriodReferencesSet().stream()
+                .map(context -> context.getCurricularYear()).collect(Collectors.toSet());
+        return executionDegree == null ? null : executionDegree.getOccupationPeriodReferencesSet().stream()
                 .filter(ref -> ref.getPeriodType() == OccupationPeriodType.LESSONS)
                 .filter(ref -> ref.getSemester().intValue() == executionSemester.getSemester().intValue())
                 .filter(ref -> overlap(ref.getCurricularYears().getYears(), curricularYears))
-                .map(ref -> ref.getOccupationPeriod())
-                .max(Comparator.comparing(OccupationPeriod::getStartDate))
-                .orElse(null);
+                .map(ref -> ref.getOccupationPeriod()).max(Comparator.comparing(OccupationPeriod::getStartDate)).orElse(null);
     }
 
     private boolean overlap(final Collection<Integer> list, final Set<Integer> set) {
@@ -1811,11 +1810,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public OccupationPeriod getLessonOccupationPeriod() {
         final ExecutionSemester semester = getExecutionPeriod();
-        return getAssociatedCurricularCoursesSet().stream()
-                .map(cc -> findOccupationPeriodFor(semester, cc))
-                .distinct()
-                .max(Comparator.comparing(OccupationPeriod::getStartDate))
-                .orElse(null);
+        return getAssociatedCurricularCoursesSet().stream().map(cc -> findOccupationPeriodFor(semester, cc))
+                .filter(Objects::nonNull).distinct().max(Comparator.comparing(OccupationPeriod::getStartDate)).orElse(null);
     }
 
     public GenericPair<YearMonthDay, YearMonthDay> getMaxLessonsPeriod() {
