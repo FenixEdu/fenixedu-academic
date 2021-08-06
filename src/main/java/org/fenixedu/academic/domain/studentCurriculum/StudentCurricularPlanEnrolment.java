@@ -425,6 +425,9 @@ abstract public class StudentCurricularPlanEnrolment {
             } else if (enrolmentContext.isSpecialSeason()) {
                 return new StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager(enrolmentContext);
 
+            } else if (enrolmentContext.isExtraordinarySeason()) {
+                return new StudentCurricularPlanEnrolmentInExtraordinarySeasonEvaluationManager(enrolmentContext);
+
             } else if (enrolmentContext.isExtra()) {
                 return new StudentCurricularPlanExtraEnrolmentManager(enrolmentContext);
 

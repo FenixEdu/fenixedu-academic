@@ -25,6 +25,7 @@ import org.fenixedu.academic.domain.serviceRequests.DuplicateRequest;
 import org.fenixedu.academic.domain.serviceRequests.EquivalencePlanRequest;
 import org.fenixedu.academic.domain.serviceRequests.EquivalencePlanRevisionRequest;
 import org.fenixedu.academic.domain.serviceRequests.ExtraExamRequest;
+import org.fenixedu.academic.domain.serviceRequests.ExtraordinarySeasonRequest;
 import org.fenixedu.academic.domain.serviceRequests.FreeSolicitationAcademicRequest;
 import org.fenixedu.academic.domain.serviceRequests.PartialRegistrationRegimeRequest;
 import org.fenixedu.academic.domain.serviceRequests.SpecialSeasonRequest;
@@ -76,6 +77,10 @@ public class RegistrationAcademicServiceRequestCreator extends RegistrationAcade
 
         case SPECIAL_SEASON_REQUEST:
             result = new SpecialSeasonRequest(this);
+            break;
+
+        case EXTRAORDINARY_SEASON_REQUEST:
+            result = new ExtraordinarySeasonRequest(this);
             break;
 
         case PHOTOCOPY_REQUEST:

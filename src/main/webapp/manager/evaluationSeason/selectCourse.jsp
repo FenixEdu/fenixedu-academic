@@ -28,17 +28,28 @@
 <html:xhtml/>
 
 <h2><bean:message bundle="MANAGER_RESOURCES"
-	key="label.manager.specialSeason.specialSeasonStatusTracker" /></h2>
+	key="label.manager.evaluationSeason.evaluationSeasonStatusTracker" /></h2>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
-<fr:form id="searchForm" action="/specialSeason/specialSeasonStatusTracker.do?method=listStudents">
+<fr:form id="searchForm" action="/evaluationSeason/evaluationSeasonStatusTracker.do?method=listStudents">
 	<fr:edit id="bean" name="bean">
-		<fr:schema type="org.fenixedu.academic.ui.struts.action.manager.enrolments.SpecialSeasonStatusTrackerBean" bundle="MANAGER_RESOURCES">
+		<fr:schema type="org.fenixedu.academic.ui.struts.action.manager.enrolments.EvaluationSeasonStatusTrackerBean" bundle="MANAGER_RESOURCES">
+			<fr:slot name="evaluationSeason" layout="menu-select" key="label.evaluationSeason" required="true">
+				<fr:property name="format" value="${name.content}"/>
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.EvaluationSeasonProvider"/>
+				<fr:property name="saveOptions" value="true"/>
+			</fr:slot>
 			<fr:slot name="executionSemester" layout="menu-select" key="label.executionSemester" required="true">
 				<fr:property name="format" value="${qualifiedName}"/>
 				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.ExecutionSemestersProvider"/>
 				<fr:property name="saveOptions" value="true"/>
+			</fr:slot>
+			<fr:slot name="department" layout="menu-select-postback" key="label.department">
+				<fr:property name="format" value="${name}"/>
+				<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.DepartmentsProvider"/>
+				<fr:property name="saveOptions" value="true"/>
+				<fr:property name="destination" value="postback"/>
 			</fr:slot>
 			<fr:slot name="competenceCourse" layout="menu-select" key="label.competenceCourse">
 				<fr:property name="format" value="${name}"/>
@@ -47,7 +58,7 @@
 			</fr:slot>
 		</fr:schema>
 		<fr:layout name="tabular">
-			<fr:destination name="postback" path="/specialSeason/specialSeasonStatusTracker.do?method=updateDepartmentSelection" />
+			<fr:destination name="postback" path="/evaluationSeason/evaluationSeasonStatusTracker.do?method=updateDepartmentSelection" />
 			<fr:property name="classes" value="tstyle5 thmiddle thright thlight"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>

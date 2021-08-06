@@ -919,6 +919,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         result.add(new SelectItem(Season.SEASON2_STRING, messages.getMessage(I18N.getLocale(), "property.exam.2stExam")));
         result.add(new SelectItem(Season.SPECIAL_SEASON_STRING, messages.getMessage(I18N.getLocale(),
                 "property.exam.specialSeasonExam")));
+        result.add(new SelectItem(Season.EXTRAORDINARY_SEASON_STRING, messages.getMessage(I18N.getLocale(),
+                "property.exam.extraordinarySeasonExam")));
         return result;
     }
 

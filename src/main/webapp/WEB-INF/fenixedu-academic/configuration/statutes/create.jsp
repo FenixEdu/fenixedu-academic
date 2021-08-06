@@ -51,7 +51,7 @@ ${portal.toolkit()}
 			<input class="form-control" type="text" name="name" bennu-localized-string required-any />
 		</div>
 	</div>
-	<c:forEach var="key" items="${'active,visible,specialSeasonGranted,explicitCreation,workingStudentStatute,associativeLeaderStatute,specialSeasonGrantedByRequest,grantOwnerStatute,seniorStatute,handicappedStatute'.split(',')}">
+	<c:forEach var="key" items="${'active,visible,specialSeasonGranted,extraordinarySeasonGranted,explicitCreation,workingStudentStatute,associativeLeaderStatute,specialSeasonGrantedByRequest,grantOwnerStatute,seniorStatute,handicappedStatute'.split(',')}">
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
 			<div class="checkbox">

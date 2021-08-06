@@ -169,6 +169,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return hasSpecialSeason();
     }
 
+    final public boolean isExtraordinarySeason() {
+        return hasExtraordinarySeason();
+    }
+
     // new student structure methods
     public Enrolment(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
             CurricularCourse curricularCourse, ExecutionSemester executionSemester, EnrollmentCondition enrolmentCondition,
@@ -514,6 +518,50 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         }
     }
 
+    final public EnrolmentEvaluation createExtraordinarySeasonEvaluation(final Person person) {
+        if (!getEvaluationSeason().isExtraordinary() && !isApproved()) {
+            setEvaluationSeason(EvaluationSeason.readExtraordinarySeason());
+            setEnrollmentState(EnrollmentState.ENROLLED);
+
+            if (person == null) {
+                return new EnrolmentEvaluation(this, EvaluationSeason.readExtraordinarySeason(), EnrolmentEvaluationState.TEMPORARY_OBJ);
+            }
+
+            return new EnrolmentEvaluation(this, EvaluationSeason.readExtraordinarySeason(), EnrolmentEvaluationState.TEMPORARY_OBJ,
+                    person);
+        } else {
+            throw new DomainException("error.invalid.enrolment.state");
+        }
+    }
+
+    final public void deleteExtraordinarySeasonEvaluation() {
+        if (getEvaluationSeason().isExtraordinary() && hasExtraordinarySeason()) {
+            setEnrolmentCondition(EnrollmentCondition.FINAL);
+            setEvaluationSeason(EvaluationConfiguration.getInstance().getDefaultEvaluationSeason());
+            getEnrolmentEvaluationBySeasonAndState(EnrolmentEvaluationState.TEMPORARY_OBJ, EvaluationSeason.readExtraordinarySeason())
+                    .ifPresent(
+                            ee -> {
+                                /* TODO is this the right method to use? */
+                                if (ee.getEnrolmentEvaluationEvent() != null) {
+                                    ee.getEnrolmentEvaluationEvent()
+                                            .cancel(Authenticate.getUser().getPerson(),
+                                                    BundleUtil.getString(Bundle.ACADEMIC,
+                                                            "enrolmentEvaluation.cancel.event.disenrolled"));
+                                    ee.setEnrolmentEvaluationState(EnrolmentEvaluationState.ANNULED_OBJ);
+                                } else {
+                                    ee.delete();
+                                }
+                            });
+
+            EnrolmentEvaluation finalEnrolmentEvaluation = getFinalEnrolmentEvaluation();
+            if (finalEnrolmentEvaluation != null) {
+                setEnrollmentState(finalEnrolmentEvaluation.getEnrollmentStateByGrade());
+            }
+        } else {
+            throw new DomainException("error.invalid.enrolment.state");
+        }
+    }
+
     final public List<EnrolmentEvaluation> getAllFinalEnrolmentEvaluations() {
         final List<EnrolmentEvaluation> result = new ArrayList<EnrolmentEvaluation>();
 
@@ -544,6 +592,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     final public boolean hasSpecialSeason() {
         return getEnrolmentEvaluationBySeason(EvaluationSeason.readSpecialSeason()).anyMatch(
+                ee -> !ee.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.ANNULED_OBJ));
+    }
+
+    final public boolean hasExtraordinarySeason() {
+        return getEnrolmentEvaluationBySeason(EvaluationSeason.readExtraordinarySeason()).anyMatch(
                 ee -> !ee.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.ANNULED_OBJ));
     }
 
@@ -1095,9 +1148,18 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return isSpecialSeason() && isValid(executionSemester) && getTempSpecialSeasonEvaluation() != null;
     }
 
+    final public boolean isExtraordinarySeasonEnroled(ExecutionSemester executionSemester) {
+        return isExtraordinarySeason() && isValid(executionSemester) && getTempExtraordinarySeasonEvaluation() != null;
+    }
+
     private EnrolmentEvaluation getTempSpecialSeasonEvaluation() {
         return getEnrolmentEvaluationBySeasonAndState(EnrolmentEvaluationState.TEMPORARY_OBJ,
                 EvaluationSeason.readSpecialSeason()).orElse(null);
+    }
+
+    private EnrolmentEvaluation getTempExtraordinarySeasonEvaluation() {
+        return getEnrolmentEvaluationBySeasonAndState(EnrolmentEvaluationState.TEMPORARY_OBJ,
+                EvaluationSeason.readExtraordinarySeason()).orElse(null);
     }
 
     final public boolean canBeSpecialSeasonEnroled(ExecutionYear executionYear) {
@@ -1106,6 +1168,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     final public boolean canBeSpecialSeasonEnroled(ExecutionSemester executionSemester) {
         return !getEvaluationSeason().isSpecial() && getExecutionPeriod() == executionSemester && !isApproved();
+    }
+
+    final public boolean canBeExtraordinarySeasonEnroled(ExecutionSemester executionSemester) {
+        // TODO keep isApproved?
+        return !getEvaluationSeason().isExtraordinary() && getExecutionPeriod() == executionSemester && !isApproved();
     }
 
     @Override
@@ -1117,6 +1184,20 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     @Override
     final public Collection<Enrolment> getSpecialSeasonEnrolments(final ExecutionSemester executionSemester) {
         if (isSpecialSeason() && isValid(executionSemester)) {
+            return Collections.singleton(this);
+        }
+        return Collections.emptySet();
+    }
+
+    @Override
+    final public Collection<Enrolment> getExtraordinarySeasonEnrolments(final ExecutionYear executionYear) {
+        return getExecutionPeriod().getExecutionYear() == executionYear && isExtraordinarySeason() ?
+                Collections.singleton(this) : Collections.emptySet();
+    }
+
+    @Override
+    final public Collection<Enrolment> getExtraordinarySeasonEnrolments(final ExecutionSemester executionSemester) {
+        if (isExtraordinarySeason() && isValid(executionSemester)) {
             return Collections.singleton(this);
         }
         return Collections.emptySet();

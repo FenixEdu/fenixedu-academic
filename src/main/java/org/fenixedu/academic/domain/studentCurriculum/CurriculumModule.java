@@ -351,6 +351,10 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
     abstract public Collection<Enrolment> getSpecialSeasonEnrolments(ExecutionSemester executionSemester);
 
+    abstract public Collection<Enrolment> getExtraordinarySeasonEnrolments(ExecutionYear executionYear);
+
+    abstract public Collection<Enrolment> getExtraordinarySeasonEnrolments(ExecutionSemester executionSemester);
+
     abstract public void collectDismissals(final List<Dismissal> result);
 
     abstract public void getAllDegreeModules(Collection<DegreeModule> degreeModules);

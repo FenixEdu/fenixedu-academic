@@ -107,11 +107,12 @@ public class FenixBootstrapper {
         createOrganizationalStructure();
         createIdDocumentTypeObjects();
 
-        EvaluationSeason normalSeason = createEvaluationSeason("EN", "RS", "NORMAL", true, false, false, false);
+        EvaluationSeason normalSeason = createEvaluationSeason("EN", "RS", "NORMAL", true, false, false, false, false);
         EvaluationConfiguration.getInstance().setDefaultEvaluationSeason(normalSeason);
-        createEvaluationSeason("MN", "GI", "IMPROVEMENT", false, true, false, false);
-        createEvaluationSeason("AE", "SA", "SPECIAL_AUTHORIZATION", false, false, true, false);
-        createEvaluationSeason("EE", "SS", "SPECIAL_SEASON", false, false, false, true);
+        createEvaluationSeason("MN", "GI", "IMPROVEMENT", false, true, false, false, false);
+        createEvaluationSeason("AE", "SA", "SPECIAL_AUTHORIZATION", false, false, true, false, false);
+        createEvaluationSeason("EE", "SS", "SPECIAL_SEASON", false, false, false, true, false);
+        createEvaluationSeason("EX", "ES", "EXTRAORDINARY_SEASON", false, false, false, false, true);
         //new CreateExecutionYears().doIt();
         //new CreateResources().doIt();
 
@@ -159,11 +160,12 @@ public class FenixBootstrapper {
     }
 
     private static EvaluationSeason createEvaluationSeason(final String ptCode, final String enCode, final String nameKey,
-            final boolean normal, final boolean improvement, final boolean specialAuthorization, final boolean special) {
+            final boolean normal, final boolean improvement, final boolean specialAuthorization, final boolean special,
+                                                           final boolean extraordinary) {
         final LocalizedString acronym = new LocalizedString.Builder().with(Locale.forLanguageTag("pt-PT"), ptCode)
                 .with(Locale.forLanguageTag("en-GB"), enCode).build();
         return new EvaluationSeason(acronym, BundleUtil.getLocalizedString(Bundle.ENUMERATION, nameKey), normal, improvement,
-                specialAuthorization, special);
+                specialAuthorization, special, extraordinary);
     }
 
     private static void createDefaultRegistrationProtocol() {

@@ -209,6 +209,16 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     public Collection<Enrolment> getSpecialSeasonEnrolments(ExecutionSemester executionSemester) {
         return Collections.emptySet();
     }
+    
+    @Override
+    public Collection<Enrolment> getExtraordinarySeasonEnrolments(ExecutionYear executionYear) {
+        return Collections.emptySet();
+    }
+
+    @Override
+    public Collection<Enrolment> getExtraordinarySeasonEnrolments(ExecutionSemester executionSemester) {
+        return Collections.emptySet();
+    }
 
     @Override
     final public void getAllDegreeModules(final Collection<DegreeModule> degreeModules) {

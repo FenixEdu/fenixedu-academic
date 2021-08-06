@@ -42,7 +42,7 @@ public class StatuteType extends StatuteType_Base {
 
     public StatuteType(String code, LocalizedString name, boolean workingStudentStatute, boolean associativeLeaderStatute,
             boolean specialSeasonGrantedByRequest, boolean grantOwnerStatute, boolean seniorStatute, boolean handicappedStatute,
-            boolean active, boolean explicitCreation, boolean visible, boolean specialSeasonGranted) {
+            boolean active, boolean explicitCreation, boolean visible, boolean specialSeasonGranted, boolean extraordinarySeasonGranted) {
         this();
         setCode(code);
         setName(name);
@@ -57,6 +57,7 @@ public class StatuteType extends StatuteType_Base {
         setExplicitCreation(explicitCreation);
         setVisible(visible);
         setSpecialSeasonGranted(specialSeasonGranted);
+        setExtraordinarySeasonGranted(extraordinarySeasonGranted);
 
         checkRules();
     }
@@ -141,6 +142,10 @@ public class StatuteType extends StatuteType_Base {
         return readAll(StatuteType::isSpecialSeasonGrantedByRequest).findFirst();
     }
 
+    public static Optional<StatuteType> findExtraordinarySeasonGrantedStatuteType() {
+        return readAll(StatuteType::isExtraordinarySeasonGranted).findFirst();
+    }
+
     public static Optional<StatuteType> findSeniorStatuteType() {
         return readAll(StatuteType::isSeniorStatute).findFirst();
     }
@@ -160,5 +165,9 @@ public class StatuteType extends StatuteType_Base {
 
     public boolean isSpecialSeasonGranted() {
         return getSpecialSeasonGranted();
+    }
+
+    public boolean isExtraordinarySeasonGranted() {
+        return getExtraordinarySeasonGranted();
     }
 }

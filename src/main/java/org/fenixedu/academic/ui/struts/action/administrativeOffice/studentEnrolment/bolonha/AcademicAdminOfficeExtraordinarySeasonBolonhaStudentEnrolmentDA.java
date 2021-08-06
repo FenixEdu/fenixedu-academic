@@ -18,11 +18,6 @@
  */
 package org.fenixedu.academic.ui.struts.action.administrativeOffice.studentEnrolment.bolonha;
 
-import java.util.Collection;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -34,36 +29,35 @@ import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAnd
 import org.fenixedu.academic.domain.accounting.events.AnnualEvent;
 import org.fenixedu.academic.domain.accounting.events.insurance.InsuranceEvent;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
-import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
-import org.fenixedu.academic.domain.student.StudentStatute;
-import org.fenixedu.academic.dto.student.enrollment.bolonha.SpecialSeasonBolonhaStudentEnrolmentBean;
+import org.fenixedu.academic.dto.student.enrollment.bolonha.ExtraordinarySeasonBolonhaStudentEnrolmentBean;
 import org.fenixedu.academic.ui.struts.action.administrativeOffice.student.SearchForStudentsDA;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
-@Mapping(path = "/specialSeasonBolonhaStudentEnrollment", module = "academicAdministration",
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@Mapping(path = "/extraordinarySeasonBolonhaStudentEnrollment", module = "academicAdministration",
         formBean = "bolonhaStudentEnrollmentForm", functionality = SearchForStudentsDA.class)
 @Forwards({
         @Forward(name = "showDegreeModulesToEnrol",
                 path = "/academicAdminOffice/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp"),
         @Forward(name = "showStudentEnrollmentMenu",
-                path = "/academicAdministration/studentEnrolments.do?method=prepareFromStudentEnrollmentWithRules"),
-        @Forward(name = "changeSpecialSeasonCode",
-                path = "/academicAdminOffice/student/enrollment/bolonha/chooseSpecialSeasonCode.jsp") })
-public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends AcademicAdminOfficeBolonhaStudentEnrollmentDA {
+                path = "/academicAdministration/studentEnrolments.do?method=prepareFromStudentEnrollmentWithRules") })
+public class AcademicAdminOfficeExtraordinarySeasonBolonhaStudentEnrolmentDA extends AcademicAdminOfficeBolonhaStudentEnrollmentDA {
 
     @Override
     protected CurricularRuleLevel getCurricularRuleLevel(ActionForm form) {
-        return CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT;
+        return CurricularRuleLevel.EXTRAORDINARY_SEASON_ENROLMENT;
     }
 
     @Override
     protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
         request.setAttribute("action", getAction());
-        request.setAttribute("bolonhaStudentEnrollmentBean", new SpecialSeasonBolonhaStudentEnrolmentBean(studentCurricularPlan,
+        request.setAttribute("bolonhaStudentEnrollmentBean", new ExtraordinarySeasonBolonhaStudentEnrolmentBean(studentCurricularPlan,
                 executionSemester));
 
         addDebtsWarningMessages(studentCurricularPlan.getRegistration().getStudent(), executionSemester, request);
@@ -100,7 +94,7 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
 
     @Override
     protected String getAction() {
-        return "/specialSeasonBolonhaStudentEnrollment.do";
+        return "/extraordinarySeasonBolonhaStudentEnrollment.do";
     }
 
     public ActionForward checkPermission(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -109,19 +103,8 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
         StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(request);
         ExecutionSemester executionSemester = getExecutionPeriod(request);
 
-        if (!hasStatute(studentCurricularPlan.getRegistration().getStudent(), executionSemester,
-                studentCurricularPlan.getRegistration())) {
-            if (!studentCurricularPlan.getRegistration().getStudent().isSenior(executionSemester.getExecutionYear())) {
-                addActionMessage(request, "error.special.season.not.granted");
-                request.setAttribute("studentCurricularPlan", studentCurricularPlan);
-                request.setAttribute("executionPeriod", executionSemester);
-
-                return mapping.findForward("showStudentEnrollmentMenu");
-            }
-        }
-
         request.setAttribute("action", getAction());
-        request.setAttribute("bolonhaStudentEnrollmentBean", new SpecialSeasonBolonhaStudentEnrolmentBean(studentCurricularPlan,
+        request.setAttribute("bolonhaStudentEnrollmentBean", new ExtraordinarySeasonBolonhaStudentEnrolmentBean(studentCurricularPlan,
                 executionSemester));
 
         addDebtsWarningMessages(studentCurricularPlan.getRegistration().getStudent(), executionSemester, request);
@@ -129,20 +112,5 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
 
     }
 
-    protected boolean hasStatute(Student student, ExecutionSemester executionSemester, Registration registration) {
-        Collection<StudentStatute> statutes = student.getStudentStatutesSet();
-        for (StudentStatute statute : statutes) {
-            if (!statute.getType().isSpecialSeasonGranted() && !statute.hasSeniorStatuteForRegistration(registration)) {
-                continue;
-            }
-            if (!statute.isValidInExecutionPeriod(executionSemester)) {
-                continue;
-            }
-
-            return true;
-
-        }
-        return false;
-    }
 
 }

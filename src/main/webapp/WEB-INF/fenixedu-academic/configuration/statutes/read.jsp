@@ -60,7 +60,7 @@
 				<c:out value="${statuteType.name.content}"/> 				
 			</td> 
 		</tr>
-		<c:forEach var="key" items="${'active,visible,specialSeasonGranted,explicitCreation,workingStudentStatute,associativeLeaderStatute,specialSeasonGrantedByRequest,grantOwnerStatute,seniorStatute,handicappedStatute'.split(',')}">
+		<c:forEach var="key" items="${'active,visible,specialSeasonGranted,extraordinarySeasonGranted,explicitCreation,workingStudentStatute,associativeLeaderStatute,specialSeasonGrantedByRequest,grantOwnerStatute,seniorStatute,handicappedStatute'.split(',')}">
 		<tr>
 			<th class="col-sm-3"><spring:message code="label.StatuteType.${key}"/></th> 
 			<td>

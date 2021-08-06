@@ -692,6 +692,7 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
 	    boolean improvement;
 	    boolean special;
 	    boolean specialAuthorization;
+	    boolean extraordinary;
 	}
 	
 	class EnrolmentEvaluation  {
@@ -742,6 +743,9 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
         }
         
         class EnrolmentPeriodInSpecialSeasonEvaluations extends EnrolmentPeriod {
+        }
+
+        class EnrolmentPeriodInExtraordinarySeasonEvaluations extends EnrolmentPeriod {
         }
 
         class EnrolmentPeriodInImprovementOfApprovedEnrolment extends EnrolmentPeriod {
@@ -1877,6 +1881,10 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
             }
 
             class accounting.postingRules.SpecialSeasonEnrolmentPR extends accounting.postingRules.GenericSingleEntryTypePR {
+                Money fixedAmount;
+            }
+
+            class accounting.postingRules.ExtraordinarySeasonEnrolmentPR extends accounting.postingRules.GenericSingleEntryTypePR {
                 Money fixedAmount;
             }
 
@@ -3027,6 +3035,10 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
             class serviceRequests.SpecialSeasonRequest extends serviceRequests.RegistrationAcademicServiceRequest {
             	Boolean deferred;
             }
+
+            class serviceRequests.ExtraordinarySeasonRequest extends serviceRequests.RegistrationAcademicServiceRequest {
+            	Boolean deferred;
+            }
             
             class serviceRequests.PartialRegistrationRegimeRequest extends serviceRequests.RegistrationAcademicServiceRequest {
             }
@@ -3212,6 +3224,7 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
 		boolean explicitCreation;
 		boolean visible;
 		boolean specialSeasonGranted;
+		boolean extraordinarySeasonGranted;
 	}
 
     class student.StudentStatute  {
@@ -6166,6 +6179,20 @@ relation SpecialSeasonRequestBeginPeriod {
 relation SpecialSeasonRequestEndPeriod {
     ExecutionSemester playsRole endExecutionPeriod;
     serviceRequests.SpecialSeasonRequest playsRole endingSpecialSeason {
+        multiplicity *;
+    }
+}
+
+relation ExtraordinarySeasonRequestBeginPeriod {
+    ExecutionSemester playsRole beginExecutionPeriod;
+    serviceRequests.ExtraordinarySeasonRequest playsRole beginningExtraordinarySeason {
+        multiplicity *;
+    }
+}
+
+relation ExtraordinarySpecialSeasonRequestEndPeriod {
+    ExecutionSemester playsRole endExecutionPeriod;
+    serviceRequests.ExtraordinarySeasonRequest playsRole endingExtraordinarySeason {
         multiplicity *;
     }
 }

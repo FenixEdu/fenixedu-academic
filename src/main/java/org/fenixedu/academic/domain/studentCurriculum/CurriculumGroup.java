@@ -852,6 +852,24 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     @Override
+    public Collection<Enrolment> getExtraordinarySeasonEnrolments(final ExecutionYear executionYear) {
+        final Collection<Enrolment> result = new HashSet<Enrolment>();
+        for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+            result.addAll(curriculumModule.getExtraordinarySeasonEnrolments(executionYear));
+        }
+        return result;
+    }
+
+    @Override
+    public Collection<Enrolment> getExtraordinarySeasonEnrolments(final ExecutionSemester executionSemester) {
+        final Collection<Enrolment> result = new HashSet<Enrolment>();
+        for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+            result.addAll(curriculumModule.getExtraordinarySeasonEnrolments(executionSemester));
+        }
+        return result;
+    }
+
+    @Override
     final public void getAllDegreeModules(final Collection<DegreeModule> degreeModules) {
         degreeModules.add(getDegreeModule());
         for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {

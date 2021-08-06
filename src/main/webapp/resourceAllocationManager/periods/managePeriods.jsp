@@ -88,6 +88,14 @@
 						<input type="checkbox" name="periods-specialGrades" value="" id="periods-specialGrades" checked>
 						<label for="periods-specialGrades"><bean:message key="label.occupation.period.type.GRADE_SUBMISSION_SPECIAL_SEASON" bundle="SOP_RESOURCES"/></label>
 					</span>
+					<span class="extraordinary-exams">
+						<input type="checkbox" name="periods-extraordinaryExams" value="" id="periods-extraordinaryExams" checked>
+						<label for="periods-extraordinaryExams"><bean:message key="label.occupation.period.type.EXAMS_EXTRAORDINARY_SEASON" bundle="SOP_RESOURCES"/></label>
+					</span>
+					<span class="extraordinary-grades">
+						<input type="checkbox" name="periods-extraordinaryGrades" value="" id="periods-extraordinaryGrades" checked>
+						<label for="periods-extraordinaryGrades"><bean:message key="label.occupation.period.type.GRADE_SUBMISSION_EXTRAORDINARY_SEASON" bundle="SOP_RESOURCES"/></label>
+					</span>
 				</div>
 				
 				<br />

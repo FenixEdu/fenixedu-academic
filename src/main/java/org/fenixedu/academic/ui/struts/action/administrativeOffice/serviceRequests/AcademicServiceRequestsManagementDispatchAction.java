@@ -45,8 +45,8 @@ import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequest;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequestSituation;
 import org.fenixedu.academic.domain.serviceRequests.AcademicServiceRequestSituationType;
+import org.fenixedu.academic.domain.serviceRequests.IDeferableRequest;
 import org.fenixedu.academic.domain.serviceRequests.RegistrationAcademicServiceRequest;
-import org.fenixedu.academic.domain.serviceRequests.SpecialSeasonRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DiplomaRequest;
 import org.fenixedu.academic.domain.serviceRequests.documentRequests.DocumentRequest;
@@ -399,13 +399,12 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
         RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
 
         final AcademicServiceRequestsManagementForm form = (AcademicServiceRequestsManagementForm) actionForm;
-        if (academicServiceRequest.getAcademicServiceRequestType() == AcademicServiceRequestType.SPECIAL_SEASON_REQUEST) {
+        if (academicServiceRequest instanceof IDeferableRequest) {
             if (form.getDeferRequest() == null) {
                 return prepareConcludeAcademicServiceRequest(mapping, actionForm, request, response);
             }
-            final SpecialSeasonRequest specialSeasonRequest = (SpecialSeasonRequest) academicServiceRequest;
-            specialSeasonRequest.setDeferment(form.getDeferRequest());
-            academicServiceRequest = specialSeasonRequest;
+            final IDeferableRequest deferableRequest = (IDeferableRequest) academicServiceRequest;
+            deferableRequest.setDeferment(form.getDeferRequest());
         }
 
         if (academicServiceRequest.getRegistration().getRegistrationProtocol().isMobilityAgreement()) {

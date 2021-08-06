@@ -1672,6 +1672,21 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return result;
     }
 
+    final public Collection<Enrolment> getExtraordinarySeasonEnrolments(ExecutionYear executionYear) {
+        if (isBolonhaDegree()) {
+            return getRoot().getExtraordinarySeasonEnrolments(executionYear);
+        }
+
+        final Set<Enrolment> result = new HashSet<Enrolment>();
+        for (Enrolment enrolment : getEnrolmentsSet()) {
+            if (enrolment.getEvaluationSeason().isExtraordinary()
+                    && enrolment.getExecutionPeriod().getExecutionYear().equals(executionYear)) {
+                result.add(enrolment);
+            }
+        }
+        return result;
+    }
+
     public BigDecimal getSpecialSeasonEcts(ExecutionYear executionYear) {
         Collection<Enrolment> specialSeasonEnrolments = getSpecialSeasonEnrolments(executionYear);
         BigDecimal result = BigDecimal.ZERO;
