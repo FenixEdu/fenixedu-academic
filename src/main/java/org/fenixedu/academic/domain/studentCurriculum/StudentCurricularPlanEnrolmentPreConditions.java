@@ -30,7 +30,11 @@ import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 
+import java.util.function.BiPredicate;
+
 public class StudentCurricularPlanEnrolmentPreConditions {
+
+    public static BiPredicate<StudentCurricularPlan, ExecutionSemester> skipEnrolmentPeriodChecks = (scp, es) -> false;
 
     static public class EnrolmentPreConditionResult {
         private boolean valid = false;
@@ -142,25 +146,25 @@ public class StudentCurricularPlanEnrolmentPreConditions {
      * @return EnrolmentPreConditionResult
      */
     static EnrolmentPreConditionResult checkEnrolmentPeriods(StudentCurricularPlan scp, ExecutionSemester semester) {
+        if (!skipEnrolmentPeriodChecks.test(scp, semester)) {
+            if (semester.isFirstOfYear() && hasSpecialSeason(scp, semester)) {
 
-        if (semester.isFirstOfYear() && hasSpecialSeason(scp, semester)) {
+                if (!scp.getDegreeCurricularPlan().getActiveEnrolmentPeriodInCurricularCoursesSpecialSeason(semester).isPresent()) {
+                    return outOfPeriodResult("specialSeason", scp.getDegreeCurricularPlan()
+                            .getNextEnrolmentPeriodInCurricularCoursesSpecialSeason());
+                }
 
-            if (!scp.getDegreeCurricularPlan().getActiveEnrolmentPeriodInCurricularCoursesSpecialSeason(semester).isPresent()) {
-                return outOfPeriodResult("specialSeason", scp.getDegreeCurricularPlan()
-                        .getNextEnrolmentPeriodInCurricularCoursesSpecialSeason());
+            } else if (semester.isFirstOfYear() && hasPrescribed(scp, semester)) {
+
+                if (!scp.getDegreeCurricularPlan().getActiveEnrolmentPeriodInCurricularCoursesFlunkedSeason(semester).isPresent()) {
+                    return outOfPeriodResult("flunked", scp.getDegreeCurricularPlan()
+                            .getNextEnrolmentPeriodInCurricularCoursesFlunkedSeason());
+                }
+
+            } else if (!scp.getDegreeCurricularPlan().getActiveCurricularCourseEnrolmentPeriod(semester).isPresent()) {
+                return outOfPeriodResult("normal", scp.getDegreeCurricularPlan().getNextEnrolmentPeriod());
             }
-
-        } else if (semester.isFirstOfYear() && hasPrescribed(scp, semester)) {
-
-            if (!scp.getDegreeCurricularPlan().getActiveEnrolmentPeriodInCurricularCoursesFlunkedSeason(semester).isPresent()) {
-                return outOfPeriodResult("flunked", scp.getDegreeCurricularPlan()
-                        .getNextEnrolmentPeriodInCurricularCoursesFlunkedSeason());
-            }
-
-        } else if (!scp.getDegreeCurricularPlan().getActiveCurricularCourseEnrolmentPeriod(semester).isPresent()) {
-            return outOfPeriodResult("normal", scp.getDegreeCurricularPlan().getNextEnrolmentPeriod());
         }
-
         return createTrue();
     }
 
