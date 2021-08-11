@@ -147,13 +147,8 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         final ExecutionSemester selectedExecutionPeriod = findExecutionPeriod(executionSemesters, executionPeriodID);
         dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getExternalId().toString());
 
-        final Collection<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
-        for (final ExecutionDegree executionDegree : selectedExecutionPeriod.getExecutionYear()
-                .getExecutionDegreesSortedByDegreeName()) {
-            if (executionDegree.getDegreeCurricularPlan().getDegree().getDegreeType().isPreBolonhaDegree()) {
-                executionDegrees.add(executionDegree);
-            }
-        }
+        final Collection<ExecutionDegree> executionDegrees = selectedExecutionPeriod.getExecutionYear()
+                .getExecutionDegreesSortedByDegreeName();
         request.setAttribute("executionDegrees", executionDegrees);
 
         final Set<CurricularYear> curricularYears = new TreeSet<CurricularYear>(Bennu.getInstance().getCurricularYearsSet());
