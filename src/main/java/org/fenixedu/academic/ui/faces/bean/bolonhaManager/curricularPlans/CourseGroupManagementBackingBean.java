@@ -21,10 +21,7 @@
  */
 package org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularPlans;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.faces.model.SelectItem;
@@ -63,6 +60,8 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
     private String programConclusionID = null;
     private List<SelectItem> courseGroups = null;
     private Boolean isOptional;
+    private String description = null;
+    private String descriptionEn = null;
 
     public String getParentCourseGroupID() {
         return getAndHoldStringParameter("parentCourseGroupID");
@@ -111,6 +110,14 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
         return (isOptional == null && getCourseGroupID() != null) ? getCourseGroup(getCourseGroupID()).getIsOptional() : isOptional;
     }
 
+    public String getDescription() {
+        return (description == null && getCourseGroupID() != null) ? getCourseGroup(getCourseGroupID()).getDescription() : description;
+    }
+
+    public String getDescriptionEn() {
+        return (descriptionEn == null && getCourseGroupID() != null) ? getCourseGroup(getCourseGroupID()).getDescriptionEn() : descriptionEn;
+    }
+
     public void setIsOptional(Boolean isOptional) {
         this.isOptional = isOptional;
     }
@@ -123,6 +130,14 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
     @Override
     public void setNameEn(String nameEn) {
         this.nameEn = nameEn;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setDescriptionEn(String descriptionEn) {
+        this.descriptionEn = descriptionEn;
     }
 
     public CourseGroup getCourseGroup(String courseGroupID) {
@@ -158,7 +173,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
     public String createCourseGroup() {
         try {
             CreateCourseGroup.run(getDegreeCurricularPlanID(), getParentCourseGroupID(), getName(), getNameEn(),
-                    getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID(), getProgramConclusionID());
+                    getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID(), getProgramConclusionID(), getDescription(), getDescriptionEn());
             addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "courseGroupCreated"));
             return "editCurricularPlanStructure";
         } catch (final FenixServiceException e) {
@@ -172,7 +187,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
     public String editCourseGroup() {
         try {
             EditCourseGroup.run(getCourseGroupID(), getContextID(), getName(), getNameEn(), getBeginExecutionPeriodID(),
-                    getFinalEndExecutionPeriodID(), getIsOptional(), getProgramConclusionID());
+                    getFinalEndExecutionPeriodID(), getIsOptional(), getProgramConclusionID(), getDescription(), getDescriptionEn());
             addInfoMessage(BundleUtil.getString(Bundle.BOLONHA, "courseGroupEdited"));
             return "editCurricularPlanStructure";
         } catch (final IllegalDataAccessException e) {

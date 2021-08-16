@@ -21,23 +21,27 @@
  */
 package org.fenixedu.academic.service.services.bolonhaManager;
 
+import com.google.gson.JsonParser;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 
+import org.fenixedu.commons.i18n.LocalizedString;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 import com.google.common.base.Strings;
 
+import java.util.Locale;
+
 public class EditCourseGroup {
 
     @Atomic
     public static void run(final String courseGroupID, final String contextID, final String name, final String nameEn,
-            final String beginExecutionPeriodID, final String endExecutionPeriodID, final Boolean isOptional,
-            final String programConclusionID) throws FenixServiceException {
+                           final String beginExecutionPeriodID, final String endExecutionPeriodID, final Boolean isOptional,
+                           final String programConclusionID, final String description, final String descriptionEn) throws FenixServiceException {
 
         final CourseGroup courseGroup = (CourseGroup) FenixFramework.getDomainObject(courseGroupID);
         if (courseGroup == null) {
@@ -54,7 +58,7 @@ public class EditCourseGroup {
         }
 
         courseGroup.edit(name, nameEn, context, getBeginExecutionPeriod(beginExecutionPeriodID),
-                getEndExecutionPeriod(endExecutionPeriodID), isOptional, programConclusion);
+                getEndExecutionPeriod(endExecutionPeriodID), isOptional, programConclusion, description, descriptionEn);
     }
 
     private static ExecutionSemester getBeginExecutionPeriod(final String beginExecutionPeriodID) {
