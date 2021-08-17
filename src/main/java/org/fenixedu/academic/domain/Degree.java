@@ -1148,7 +1148,10 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public String constructSchoolClassPrefix(final Integer curricularYear) {
-        return isBolonhaDegree() ? getSigla() + "0" + curricularYear.toString() : StringUtils.EMPTY;
+        if (isBolonhaDegree()) {
+            return getSigla() + "0" + curricularYear.toString();
+        }
+        return getDegreeType().getMinor() ? getSigla() : StringUtils.EMPTY;
     }
 
     public List<StudentCurricularPlan> getLastStudentCurricularPlans() {
