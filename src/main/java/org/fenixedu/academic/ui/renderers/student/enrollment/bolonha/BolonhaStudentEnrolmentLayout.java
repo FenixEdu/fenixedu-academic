@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.google.gson.JsonParser;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Enrolment;
@@ -52,6 +53,7 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.commons.i18n.I18N;
 
+import org.fenixedu.commons.i18n.LocalizedString;
 import pt.ist.fenixWebFramework.rendererExtensions.controllers.CopyCheckBoxValuesController;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
 import pt.ist.fenixWebFramework.renderers.components.HtmlActionLink;
@@ -165,7 +167,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
                 curriculumGroup.getDegreeModule().getCurricularRules(context,
                         getBolonhaStudentEnrollmentBean().getExecutionPeriod());
         if (!curricularRules.isEmpty()) {
-            encodeCurricularRules(groupTable, curricularRules);
+            encodeCurricularRules(groupTable, curricularRules, curriculumGroup.getDegreeModule());
         }
     }
 
@@ -406,21 +408,21 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
             }
 
             if (getRenderer().isEncodeCurricularRules()) {
-                encodeCurricularRules(groupTable, degreeModuleToEvaluate);
+                encodeCurricularRules(groupTable, degreeModuleToEvaluate, studentCurriculumGroupBean.getCurriculumModule().getDegreeModule());
             }
         }
     }
 
-    protected void encodeCurricularRules(final HtmlTable groupTable, final IDegreeModuleToEvaluate degreeModuleToEvaluate) {
+    protected void encodeCurricularRules(final HtmlTable groupTable, final IDegreeModuleToEvaluate degreeModuleToEvaluate, CourseGroup courseGroup) {
         final DegreeModule degreeModule = degreeModuleToEvaluate.getDegreeModule();
         final List<CurricularRule> curricularRules =
                 degreeModule.getCurricularRules(degreeModuleToEvaluate.getContext(), degreeModuleToEvaluate.getExecutionPeriod());
         if (!curricularRules.isEmpty()) {
-            encodeCurricularRules(groupTable, curricularRules);
+            encodeCurricularRules(groupTable, curricularRules, courseGroup);
         }
     }
 
-    protected void encodeCurricularRules(final HtmlTable groupTable, final List<CurricularRule> curricularRules) {
+    protected void encodeCurricularRules(final HtmlTable groupTable, final List<CurricularRule> curricularRules, CourseGroup courseGroup) {
         final HtmlTableRow htmlTableRow = groupTable.createRow();
 
         final HtmlTable rulesTable = new HtmlTable();
@@ -432,6 +434,15 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 
         rulesTable.setClasses("smalltxt noborder");
         rulesTable.setStyle("width: 100%;");
+
+        if (courseGroup.getDescription() != null) {
+            LocalizedString description = LocalizedString.fromJson(
+                    new JsonParser().parse("{\"pt-PT\":\"" + courseGroup.getDescription()  + "\",\"en-GB\":\"" + courseGroup.getDescriptionEn()  + "\"}"));
+
+            final HtmlTableCell cellName = rulesTable.createRow().createCell();
+            cellName.setStyle("color: #888");
+            cellName.setBody(new HtmlText(description.getContent(I18N.getLocale())));
+        }
 
         for (final CurricularRule curricularRule : curricularRules) {
             final HtmlTableCell cellName = rulesTable.createRow().createCell();
@@ -585,7 +596,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         cell.setBody(checkBox);
 
         if (getRenderer().isEncodeGroupRules()) {
-            encodeCurricularRules(groupTable, degreeModuleToEnrol);
+            encodeCurricularRules(groupTable, degreeModuleToEnrol, degreeModuleToEnrol.getCurriculumGroup().getDegreeModule());
         }
     }
 
