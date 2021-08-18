@@ -436,12 +436,9 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         rulesTable.setStyle("width: 100%;");
 
         if (courseGroup.getDescription() != null) {
-            LocalizedString description = LocalizedString.fromJson(
-                    new JsonParser().parse("{\"pt-PT\":\"" + courseGroup.getDescription()  + "\",\"en-GB\":\"" + courseGroup.getDescriptionEn()  + "\"}"));
-
             final HtmlTableCell cellName = rulesTable.createRow().createCell();
             cellName.setStyle("color: #888");
-            cellName.setBody(new HtmlText(description.getContent(I18N.getLocale())));
+            cellName.setBody(new HtmlText(courseGroup.getDescriptionI18n().getContent(I18N.getLocale())));
         }
 
         for (final CurricularRule curricularRule : curricularRules) {

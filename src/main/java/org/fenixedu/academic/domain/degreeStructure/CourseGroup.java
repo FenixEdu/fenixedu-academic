@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.degreeStructure;
 
 import com.google.common.base.Strings;
+import com.google.gson.JsonParser;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
@@ -1070,5 +1071,10 @@ public class CourseGroup extends CourseGroup_Base {
     final public String getGraduateTitle(final ExecutionYear executionYear, final Locale locale) {
         return getProgramConclusion() == null ? null : getProgramConclusion().getGraduationTitle(locale,
                 getDegreeNameWithTitleSuffix(executionYear, locale));
+    }
+
+    public LocalizedString getDescriptionI18n() {
+        return LocalizedString.fromJson(
+                new JsonParser().parse("{\"pt-PT\":\"" + getDescription()  + "\",\"en-GB\":\"" + getDescriptionEn()  + "\"}"));
     }
 }
