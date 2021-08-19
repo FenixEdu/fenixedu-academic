@@ -144,7 +144,7 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
             }
 
             if (getRenderer().isEncodeCurricularRules()) {
-                encodeCurricularRules(groupTable, degreeModuleToEvaluate);
+                encodeCurricularRules(groupTable, degreeModuleToEvaluate, degreeModuleToEvaluate.getCurriculumGroup().getDegreeModule());
             }
         }
     }

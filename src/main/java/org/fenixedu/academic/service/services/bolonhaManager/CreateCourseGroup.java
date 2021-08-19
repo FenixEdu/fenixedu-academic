@@ -34,7 +34,7 @@ public class CreateCourseGroup {
     @Atomic
     public static void run(final String degreeCurricularPlanID, final String parentCourseGroupID, final String name,
             final String nameEn, final String beginExecutionPeriodID, final String endExecutionPeriodID,
-            String programConclusionID) throws FenixServiceException {
+            String programConclusionID, String description, String descriptionEn) throws FenixServiceException {
 
         final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
         if (degreeCurricularPlan == null) {
@@ -61,6 +61,6 @@ public class CreateCourseGroup {
         }
 
         degreeCurricularPlan.createCourseGroup(parentCourseGroup, name, nameEn, beginExecutionPeriod, endExecutionPeriod,
-                programConclusion);
+                programConclusion, description, descriptionEn);
     }
 }

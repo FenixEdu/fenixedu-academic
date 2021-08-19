@@ -2561,6 +2561,8 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
 
         class degreeStructure.CourseGroup extends degreeStructure.DegreeModule {
         	boolean isOptional;
+        	String description;
+        	String descriptionEn;
         }
 
         	class degreeStructure.BranchCourseGroup extends degreeStructure.CourseGroup {

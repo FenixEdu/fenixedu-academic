@@ -1058,12 +1058,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public CourseGroup createCourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
             final ExecutionSemester begin, final ExecutionSemester end) {
-        return new CourseGroup(parentCourseGroup, name, nameEn, begin, end, null);
+        return new CourseGroup(parentCourseGroup, name, nameEn, begin, end, null, null, null);
     }
 
     public CourseGroup createCourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
-            final ExecutionSemester begin, final ExecutionSemester end, final ProgramConclusion programConclusion) {
-        return new CourseGroup(parentCourseGroup, name, nameEn, begin, end, programConclusion);
+            final ExecutionSemester begin, final ExecutionSemester end, final ProgramConclusion programConclusion,
+                                         final String description, final String descriptionEn) {
+        return new CourseGroup(parentCourseGroup, name, nameEn, begin, end, programConclusion, description, descriptionEn);
     }
 
     public BranchCourseGroup createBranchCourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,

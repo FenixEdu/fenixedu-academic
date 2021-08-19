@@ -19,6 +19,7 @@
 package org.fenixedu.academic.domain.degreeStructure;
 
 import com.google.common.base.Strings;
+import com.google.gson.JsonParser;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
@@ -39,6 +40,7 @@ import org.fenixedu.academic.predicate.CourseGroupPredicates;
 import org.fenixedu.academic.util.StringFormatter;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -85,20 +87,27 @@ public class CourseGroup extends CourseGroup_Base {
 
     public CourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
             final ExecutionSemester begin, final ExecutionSemester end) {
-        this(parentCourseGroup, name, nameEn, begin, end, null);
+        this(parentCourseGroup, name, nameEn, begin, end, null, null, null);
     }
 
     public CourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
-            final ExecutionSemester begin, final ExecutionSemester end, final ProgramConclusion programConclusion) {
-        init(parentCourseGroup, name, nameEn, begin, end, programConclusion);
+                       final ExecutionSemester begin, final ExecutionSemester end, final String description,
+                       final String descriptionEn) {
+        this(parentCourseGroup, name, nameEn, begin, end, null, description, descriptionEn);
+    }
+
+    public CourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
+                       final ExecutionSemester begin, final ExecutionSemester end, final ProgramConclusion programConclusion,
+                       final String description, final String descriptionEn) {
+        init(parentCourseGroup, name, nameEn, begin, end, programConclusion, description, descriptionEn);
     }
 
     protected void init(CourseGroup parentCourseGroup, String name, String nameEn, ExecutionSemester begin, ExecutionSemester end) {
-        init(parentCourseGroup, name, nameEn, begin, end, null);
+        init(parentCourseGroup, name, nameEn, begin, end, null, null, null);
     }
 
     protected void init(CourseGroup parentCourseGroup, String name, String nameEn, ExecutionSemester begin,
-            ExecutionSemester end, final ProgramConclusion programConclusion) {
+            ExecutionSemester end, final ProgramConclusion programConclusion, final String description, final String descriptionEn) {
         init(name, nameEn);
         if (parentCourseGroup == null) {
             throw new DomainException("error.degreeStructure.CourseGroup.parentCourseGroup.cannot.be.null");
@@ -106,6 +115,8 @@ public class CourseGroup extends CourseGroup_Base {
         parentCourseGroup.checkDuplicateChildNames(name, nameEn);
         new Context(parentCourseGroup, this, null, null, begin, end);
         setProgramConclusion(programConclusion);
+        setDescription(description);
+        setDescriptionEn(descriptionEn);
     }
 
     @Override
@@ -114,7 +125,8 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     public void edit(String name, String nameEn, Context context, ExecutionSemester beginExecutionPeriod,
-            ExecutionSemester endExecutionPeriod, Boolean isOptional, ProgramConclusion programConclusion) {
+            ExecutionSemester endExecutionPeriod, Boolean isOptional, ProgramConclusion programConclusion,
+                     String description, String descriptionEn) {
         // override, assure that root's name equals degree curricular plan name
         if (this.isRoot()) {
             setName(getParentDegreeCurricularPlan().getName());
@@ -131,6 +143,8 @@ public class CourseGroup extends CourseGroup_Base {
         }
         setIsOptional(isOptional);
         setProgramConclusion(programConclusion);
+        setDescription(description);
+        setDescriptionEn(descriptionEn);
     }
 
     @Override
@@ -1057,5 +1071,10 @@ public class CourseGroup extends CourseGroup_Base {
     final public String getGraduateTitle(final ExecutionYear executionYear, final Locale locale) {
         return getProgramConclusion() == null ? null : getProgramConclusion().getGraduationTitle(locale,
                 getDegreeNameWithTitleSuffix(executionYear, locale));
+    }
+
+    public LocalizedString getDescriptionI18n() {
+        return LocalizedString.fromJson(
+                new JsonParser().parse("{\"pt-PT\":\"" + getDescription()  + "\",\"en-GB\":\"" + getDescriptionEn()  + "\"}"));
     }
 }
