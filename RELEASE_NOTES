@@ -1,5 +1,7 @@
+- Improvement: Only attempt shift enrolment in the first suitable capacity for provided registration
+
 32.8.10 (29-07-2021)
-- Bug Fix: Fix NPE due to inexsistent previous party contact (#UL-FMD-483)
+- Bug Fix: Fix NPE due to inexsistent previous party contact
 
 32.8.9 (26-07-2021)
 - Improvement: When execution course has multiple competences, the resulted code should be sorted 

@@ -30,6 +30,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
@@ -352,16 +353,27 @@ public class Shift extends Shift_Base {
     }
 
     /**
-     * Enrolls provided registration in this shift and its first suitable free capacity, and unenroll it from other shifts of same
+     * Enrolls provided registration in this shift and its first suitable capacity, and unenroll it from other shifts of same
      * type and course
      * 
      * @param registration registration to enroll in this shift
      * @return <code>true</code> if registration enrolled successfully in this shift
      */
     public boolean enrol(final Registration registration) {
-        return getShiftCapacitiesSet().stream().sorted(ShiftCapacity.TYPE_EVALUATION_PRIORITY_COMPARATOR)
-                .filter(ShiftCapacity::isFreeIncludingExtraCapacities).filter(sc -> sc.accepts(registration)).findFirst()
-                .map(sc -> doEnrol(registration, sc)).orElse(false);
+        final List<ShiftCapacity> sortedCapacities = getShiftCapacitiesSet().stream()
+                .sorted(ShiftCapacity.TYPE_EVALUATION_PRIORITY_COMPARATOR).collect(Collectors.toUnmodifiableList());
+
+        for (final ShiftCapacity shiftCapacity : sortedCapacities) {
+            if (shiftCapacity.accepts(registration)) {
+                if (shiftCapacity.isFreeIncludingExtraCapacities()) {
+                    return doEnrol(registration, shiftCapacity);
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        return false;
     }
 
     public static boolean enrol(final Registration registration, final ShiftCapacity shiftCapacity) {
