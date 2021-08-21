@@ -9,6 +9,7 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -21,6 +22,13 @@ public class ShiftCapacityType extends ShiftCapacityType_Base {
 
         final Integer maxPriority = findAll().map(t -> t.getEvaluationPriority()).max(Comparator.naturalOrder()).orElse(0);
         setEvaluationPriority(maxPriority + 1);
+    }
+
+    public static ShiftCapacityType create(final LocalizedString name, final ShiftCapacityStrategy strategy) {
+        final ShiftCapacityType type = new ShiftCapacityType();
+        type.setName(name);
+        type.setStrategy(strategy);
+        return type;
     }
 
     public boolean isActive() {
