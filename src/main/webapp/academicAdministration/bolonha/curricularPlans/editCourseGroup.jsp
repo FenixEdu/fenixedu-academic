@@ -94,13 +94,11 @@
 		<h:outputText value="</p>" escape="false"/>
 
 		<h:outputText value="<p><label>#{bolonhaBundle['description']} (pt):</label>" escape="false"/>
-		<h:inputText alt="#{htmlAltBundle['inputText.description']}" id="description" required="true" size="60" maxlength="100" value="#{CourseGroupManagement.description}"/>
-		<h:message for="description" styleClass="error0"/>
+		<h:inputTextarea id="description" cols="55" rows="5" value="#{CourseGroupManagement.description}"/>
 		<h:outputText value="</p>" escape="false"/>
 
 		<h:outputText value="<p><label>#{bolonhaBundle['description']} (en):</label>" escape="false"/>
-		<h:inputText alt="#{htmlAltBundle['inputText.descriptionEN']}" id="descriptionEN" required="true" size="60" maxlength="100" value="#{CourseGroupManagement.descriptionEn}"/>
-		<h:message for="descriptionEN" styleClass="error0"/>
+		<h:inputTextarea id="descriptionEN" cols="55" rows="5" value="#{CourseGroupManagement.descriptionEn}"/>
 		<h:outputText value="</p>" escape="false"/>
 		
 		<h:outputText value="#{CourseGroupManagement.ifBranchShowType}" escape="false"/>
