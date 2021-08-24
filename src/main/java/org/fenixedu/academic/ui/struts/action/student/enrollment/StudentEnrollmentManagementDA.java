@@ -35,6 +35,7 @@ import org.fenixedu.academic.domain.accounting.EnrolmentBlocker;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.student.StudentApplication.StudentEnrollApp;
 import org.fenixedu.bennu.struts.annotations.Forward;
@@ -69,12 +70,27 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
         if (registrationsToEnrol.size() == 1) {
             final Registration registration = registrationsToEnrol.iterator().next();
             request.setAttribute("registration", registration);
-
+            executionSemester = getSemesterWithEnrolmentPeriodOpen(executionSemester, registration);
+            request.setAttribute("executionSemester", executionSemester);
             return getActionForwardForRegistration(mapping, request, registration, executionSemester);
         } else {
             request.setAttribute("registrationsToEnrol", registrationsToEnrol);
             request.setAttribute("registrationsToChooseSecondCycle", getRegistrationsToChooseSecondCycle(student));
             return mapping.findForward("chooseRegistration");
+        }
+    }
+
+    private ExecutionSemester getSemesterWithEnrolmentPeriodOpen(final ExecutionSemester executionSemester, final Registration registration) {
+        final StudentCurricularPlanEnrolmentPreConditions.EnrolmentPreConditionResult conditionResult = StudentCurricularPlanEnrolmentPreConditions.checkEnrolmentPeriods(registration.getLastStudentCurricularPlan(), executionSemester);
+        if (conditionResult.isValid()) {
+            return executionSemester;
+        } else {
+            final ExecutionSemester nextExecutionPeriod = executionSemester.getNextExecutionPeriod();
+            if (nextExecutionPeriod == null) {
+                return null;
+            }
+            final ExecutionSemester resultSemester = getSemesterWithEnrolmentPeriodOpen(nextExecutionPeriod, registration);
+            return resultSemester == null ? executionSemester : resultSemester;
         }
     }
 
@@ -136,7 +152,8 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
             return mapping.findForward("notAuthorized");
         }
 
-        final ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterID");
+        ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterID");
+        executionSemester = getSemesterWithEnrolmentPeriodOpen(executionSemester, registration);
         request.setAttribute("executionSemester", executionSemester);
         return getActionForwardForRegistration(mapping, request, registration, executionSemester);
     }
