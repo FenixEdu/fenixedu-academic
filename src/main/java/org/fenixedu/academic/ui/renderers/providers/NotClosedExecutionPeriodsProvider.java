@@ -24,11 +24,15 @@ import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyCon
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
+import java.util.List;
+
 public class NotClosedExecutionPeriodsProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        return ExecutionSemester.readNotClosedExecutionPeriods();
+        final List<ExecutionSemester> executionSemesters = ExecutionSemester.readNotClosedExecutionPeriods();
+        executionSemesters.sort(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR.reversed());
+        return executionSemesters;
     }
 
     @Override
