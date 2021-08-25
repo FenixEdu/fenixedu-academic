@@ -45,21 +45,19 @@
 		<li>
 			<html:link action="/bolonhaStudentEnrollment.do?method=showEnrollmentInstructions" styleClass="externallink" target="_blank"><bean:message bundle="STUDENT_RESOURCES"  key="label.viewInstructions"/></html:link>
 		</li>
-		<li>
-			<bean:define id="studentCurricularPlan" name="bolonhaStudentEnrollmentBean" property="studentCurricularPlan" type="org.fenixedu.academic.domain.StudentCurricularPlan" />
-			<logic:present name="studentCurricularPlan" property="degree.siteUrl">
-				<bean:define id="siteUrl" name="studentCurricularPlan" property="degree.siteUrl" type="java.lang.String" />
-				
+		<bean:define id="studentCurricularPlan" name="bolonhaStudentEnrollmentBean" property="studentCurricularPlan" type="org.fenixedu.academic.domain.StudentCurricularPlan" />
+		<logic:present name="studentCurricularPlan" property="degree.siteUrl">
+			<bean:define id="siteUrl" name="studentCurricularPlan" property="degree.siteUrl" type="java.lang.String" />
+			<li>
 				<html:link href="<%= siteUrl %>" styleClass="externallink" target="_blank">
 					<bean:message bundle="STUDENT_RESOURCES"  key="label.viewDegreeCurricularPlan"/>
 				</html:link>
-			</logic:present>
-		</li>
+			</li>
+		</logic:present>
 		<li>
 			<html:link action="/viewStudentCurriculum.do?method=prepare" paramId="registrationOID" paramName="studentCurricularPlan" paramProperty="registration.externalId" styleClass="externallink" target="_blank"><bean:message bundle="STUDENT_RESOURCES"  key="label.viewStudentCurricularPlan"/></html:link>
 		</li>
-		<li>			
-			
+		<li>
 			<% request.setAttribute("academicSupportAddress", org.fenixedu.academic.domain.Installation.getInstance().getAcademicEmailAddress()); %>
 			<html:link href="mailto:${academicSupportAddress}" styleClass="externallink">
 				<bean:message key="link.academicSupport" bundle="GLOBAL_RESOURCES"/>

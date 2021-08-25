@@ -145,7 +145,7 @@ public class StudentCurricularPlanEnrolmentPreConditions {
      * @param semester
      * @return EnrolmentPreConditionResult
      */
-    static EnrolmentPreConditionResult checkEnrolmentPeriods(StudentCurricularPlan scp, ExecutionSemester semester) {
+    public static EnrolmentPreConditionResult checkEnrolmentPeriods(StudentCurricularPlan scp, ExecutionSemester semester) {
         if (!skipEnrolmentPeriodChecks.test(scp, semester)) {
             if (semester.isFirstOfYear() && hasSpecialSeason(scp, semester)) {
 
