@@ -19,13 +19,18 @@
 package org.fenixedu.academic.domain.degreeStructure;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
+import org.fenixedu.academic.domain.curricularRules.AndRule;
 import org.fenixedu.academic.domain.curricularRules.AnyCurricularCourse;
 import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
+import org.fenixedu.academic.domain.curricularRules.CurricularRule;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleType;
+import org.fenixedu.academic.domain.curricularRules.OrRule;
 import org.fenixedu.academic.domain.curriculum.CurricularCourseType;
+import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.commons.i18n.LocalizedString;
 
 public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
@@ -127,6 +132,32 @@ public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
     @Override
     public String getNameEn(ExecutionSemester period) {
         return getBaseNameEn();
+    }
+
+    @Override
+    protected Double calculateEctsCredits(final Integer order, final ExecutionSemester executionSemester) {
+        if (getCompetenceCourse() != null) {
+            return super.calculateEctsCredits(order, executionSemester);
+        }
+        return getCurricularRulesSet().stream()
+                    .filter(rule -> executionSemester == null || rule.isValid(executionSemester))
+                    .flatMap(rule -> explode(rule))
+                    .filter(rule -> rule.hasCurricularRuleType(CurricularRuleType.ANY_CURRICULAR_COURSE))
+                    .map(AnyCurricularCourse.class::cast)
+                    .filter(rule -> rule.getMinimumCredits() != null)
+                    .mapToDouble(rule -> rule.getMinimumCredits())
+                    .filter(c -> c > 0.0d)
+                    .min().orElse(0.0d);
+    }
+
+    private static Stream<CurricularRule> explode(final CurricularRule rule) {
+        if (rule instanceof AndRule) {
+            return ((AndRule) rule).getCurricularRulesSet().stream().flatMap(child -> explode(child));
+        }
+        if (rule instanceof OrRule) {
+            return ((OrRule) rule).getCurricularRulesSet().stream().flatMap(child -> explode(child));
+        }
+        return Stream.of(rule);
     }
 
 }

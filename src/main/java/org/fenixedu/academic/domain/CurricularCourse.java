@@ -23,7 +23,11 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.branch.BranchType;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
+import org.fenixedu.academic.domain.curricularRules.AndRule;
+import org.fenixedu.academic.domain.curricularRules.CreditsLimit;
 import org.fenixedu.academic.domain.curricularRules.CurricularRule;
+import org.fenixedu.academic.domain.curricularRules.CurricularRuleType;
+import org.fenixedu.academic.domain.curricularRules.OrRule;
 import org.fenixedu.academic.domain.curricularRules.RestrictionDoneDegreeModule;
 import org.fenixedu.academic.domain.curriculum.CurricularCourseType;
 import org.fenixedu.academic.domain.degree.DegreeType;
@@ -67,6 +71,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 public class CurricularCourse extends CurricularCourse_Base {
 
@@ -999,11 +1004,9 @@ public class CurricularCourse extends CurricularCourse_Base {
         return getEctsCredits(curricularPeriod == null ? null : curricularPeriod.getChildOrder(), executionSemester);
     }
 
-    private Double calculateEctsCredits(final Integer order, final ExecutionSemester executionSemester) {
+    protected Double calculateEctsCredits(final Integer order, final ExecutionSemester executionSemester) {
         if (getCompetenceCourse() != null) {
             return getCompetenceCourse().getEctsCredits(order, executionSemester);
-        } else if (isOptionalCurricularCourse()) {
-            return 0.0d;
         }
         throw new DomainException("CurricularCourse.with.no.ects.credits");
     }
