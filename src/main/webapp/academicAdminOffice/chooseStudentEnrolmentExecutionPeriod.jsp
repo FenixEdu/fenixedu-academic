@@ -74,6 +74,10 @@
 			<bean:define id="url6">/specialSeasonBolonhaStudentEnrollment.do?method=checkPermission&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.externalId"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.externalId"/></bean:define>
 			<html:link action='<%= url6 %>'><bean:message key="label.course.specialSeasonEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 		</li>
+		<li>
+			<bean:define id="url6">/extraordinarySeasonBolonhaStudentEnrollment.do?method=checkPermission&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.externalId"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.externalId"/></bean:define>
+			<html:link action='<%= url6 %>'><bean:message key="label.course.extraordinarySeasonEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
+		</li>
 		<br />			
 		<li>
 			<bean:define id="url3">/studentPropaeudeuticEnrolments.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.externalId"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.externalId"/></bean:define>

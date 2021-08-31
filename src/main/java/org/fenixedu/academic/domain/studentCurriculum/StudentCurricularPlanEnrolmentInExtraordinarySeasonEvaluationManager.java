@@ -49,10 +49,6 @@ public class StudentCurricularPlanEnrolmentInExtraordinarySeasonEvaluationManage
             throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
         }
 
-        if (!hasExtraordinarySeasonStatute()) {
-            throw new DomainException("error.StudentCurricularPlan.student.has.no.extraordinary.season.statute");
-        }
-
         super.assertEnrolmentPreConditions();
     }
 
@@ -75,6 +71,10 @@ public class StudentCurricularPlanEnrolmentInExtraordinarySeasonEvaluationManage
 
         if (!getRegistrationsToEnrolByStudent(getResponsiblePerson().getStudent()).contains(getRegistration())) {
             throw new DomainException("error.StudentCurricularPlan.student.is.not.allowed.to.perform.enrol");
+        }
+
+        if (!hasExtraordinarySeasonStatute()) {
+            throw new DomainException("error.StudentCurricularPlan.student.has.no.extraordinary.season.statute");
         }
 
         if (getCurricularRuleLevel() != CurricularRuleLevel.EXTRAORDINARY_SEASON_ENROLMENT) {
@@ -164,7 +164,7 @@ public class StudentCurricularPlanEnrolmentInExtraordinarySeasonEvaluationManage
                     result.put(degreeModuleToEvaluate, curricularRules);
                 } else {
                     throw new DomainException(
-                            "StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager.can.only.manage.enrolment.evaluations.of.enrolments");
+                            "StudentCurricularPlanEnrolmentInExtraordinarySeasonEvaluationManager.can.only.manage.enrolment.evaluations.of.enrolments");
                 }
             }
         }
@@ -191,7 +191,7 @@ public class StudentCurricularPlanEnrolmentInExtraordinarySeasonEvaluationManage
                         }
                     } else {
                         throw new DomainException(
-                                "StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager.can.only.manage.enrolment.evaluations.of.enrolments");
+                                "StudentCurricularPlanEnrolmentInExtraordinarySeasonEvaluationManager.can.only.manage.enrolment.evaluations.of.enrolments");
                     }
                 }
             }
