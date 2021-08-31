@@ -70,7 +70,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
         if (registrationsToEnrol.size() == 1) {
             final Registration registration = registrationsToEnrol.iterator().next();
             request.setAttribute("registration", registration);
-            executionSemester = getSemesterWithEnrolmentPeriodOpen(executionSemester, registration);
+            executionSemester = getSemesterWithValidEnrolmentPeriod(executionSemester, registration);
             request.setAttribute("executionSemester", executionSemester);
             return getActionForwardForRegistration(mapping, request, registration, executionSemester);
         } else {
@@ -80,17 +80,26 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
         }
     }
 
-    private ExecutionSemester getSemesterWithEnrolmentPeriodOpen(final ExecutionSemester executionSemester, final Registration registration) {
+    private ExecutionSemester getSemesterWithValidEnrolmentPeriod(final ExecutionSemester executionSemester, final Registration registration) {
         final StudentCurricularPlanEnrolmentPreConditions.EnrolmentPreConditionResult conditionResult = StudentCurricularPlanEnrolmentPreConditions.checkEnrolmentPeriods(registration.getLastStudentCurricularPlan(), executionSemester);
         if (conditionResult.isValid()) {
             return executionSemester;
         } else {
-            final ExecutionSemester nextExecutionPeriod = executionSemester.getNextExecutionPeriod();
-            if (nextExecutionPeriod == null) {
-                return null;
+            final ExecutionSemester semesterWithCorrectEnrolmentPeriod = getNextSemesterWithValidEnrolmentPeriod(executionSemester.getNextExecutionPeriod(), registration);
+            return semesterWithCorrectEnrolmentPeriod == null ? executionSemester : semesterWithCorrectEnrolmentPeriod;
+        }
+    }
+
+    private ExecutionSemester getNextSemesterWithValidEnrolmentPeriod(final ExecutionSemester executionSemester, final Registration registration) {
+        if (executionSemester == null) {
+            return null;
+        } else {
+            final StudentCurricularPlanEnrolmentPreConditions.EnrolmentPreConditionResult conditionResult = StudentCurricularPlanEnrolmentPreConditions.checkEnrolmentPeriods(registration.getLastStudentCurricularPlan(), executionSemester);
+            if (conditionResult.isValid()) {
+                return executionSemester;
+            } else {
+                return getNextSemesterWithValidEnrolmentPeriod(executionSemester.getNextExecutionPeriod(), registration);
             }
-            final ExecutionSemester resultSemester = getSemesterWithEnrolmentPeriodOpen(nextExecutionPeriod, registration);
-            return resultSemester == null ? executionSemester : resultSemester;
         }
     }
 
@@ -153,7 +162,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
         }
 
         ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterID");
-        executionSemester = getSemesterWithEnrolmentPeriodOpen(executionSemester, registration);
+        executionSemester = getSemesterWithValidEnrolmentPeriod(executionSemester, registration);
         request.setAttribute("executionSemester", executionSemester);
         return getActionForwardForRegistration(mapping, request, registration, executionSemester);
     }
