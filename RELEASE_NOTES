@@ -1,3 +1,4 @@
+32.8.13 (06-09-2021)
 - Bug fix: OrRule should evaluate to true on prefilter level
 
 32.8.12 (26-08-2021)
