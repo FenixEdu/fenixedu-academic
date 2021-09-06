@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.curricularRules;
 import java.util.List;
 
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
+import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.EnrolmentResultType;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleLevel;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
@@ -44,6 +45,11 @@ public class OrRule extends OrRule_Base {
 
     @Override
     public RuleResult evaluate(IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
+        if (enrolmentContext.getCurricularRuleLevel() == CurricularRuleLevel.ENROLMENT_PREFILTER) {
+            //Future improvement: only return true if all rule evaluations resulted in NA
+            return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
+        }
+
         RuleResult resultOR = RuleResult.createFalse(EnrolmentResultType.NULL, sourceDegreeModuleToEvaluate.getDegreeModule());
         for (final CurricularRule curricularRule : getCurricularRulesSet()) {
             resultOR = resultOR.or(curricularRule.evaluate(sourceDegreeModuleToEvaluate, enrolmentContext));
