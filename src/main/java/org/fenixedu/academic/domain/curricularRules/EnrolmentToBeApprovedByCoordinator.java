@@ -48,13 +48,18 @@ public class EnrolmentToBeApprovedByCoordinator extends EnrolmentToBeApprovedByC
 
     @Override
     public List<GenericPair<Object, Boolean>> getLabel() {
+        return getLabel(null);
+    }
+
+    @Override
+    public List<GenericPair<Object, Boolean>> getLabel(final ExecutionSemester executionSemester) {
         final List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>(1);
         labelList.add(new GenericPair<Object, Boolean>("label.enrolmentToBeApprovedByCoordinator", true));
         if (getContextCourseGroup() != null) {
             labelList.add(new GenericPair<Object, Boolean>(", ", false));
             labelList.add(new GenericPair<Object, Boolean>("label.inGroup", true));
             labelList.add(new GenericPair<Object, Boolean>(" ", false));
-            labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(), false));
+            labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(executionSemester), false));
         }
         return labelList;
     }

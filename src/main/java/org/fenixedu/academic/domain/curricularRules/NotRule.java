@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain.curricularRules;
 
 import java.util.List;
 
+import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.dto.GenericPair;
@@ -54,6 +55,11 @@ public class NotRule extends NotRule_Base {
     @Override
     public List<GenericPair<Object, Boolean>> getLabel() {
         return getWrappedRule().getLabel();
+    }
+    
+    @Override
+    public List<GenericPair<Object, Boolean>> getLabel(final ExecutionSemester executionSemester) {
+        return getWrappedRule().getLabel(executionSemester);
     }
 
     @Override
