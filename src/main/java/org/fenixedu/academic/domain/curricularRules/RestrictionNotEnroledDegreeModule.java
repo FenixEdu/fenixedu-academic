@@ -80,6 +80,11 @@ public class RestrictionNotEnroledDegreeModule extends RestrictionNotEnroledDegr
 
     @Override
     public List<GenericPair<Object, Boolean>> getLabel() {
+        return getLabel(null);
+    }
+
+    @Override
+    public List<GenericPair<Object, Boolean>> getLabel(final ExecutionSemester executionSemester) {
         List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>();
 
         if (belongsToCompositeRule() && getParentCompositeRule().getCompositeRuleType().equals(LogicOperator.NOT)) {
@@ -92,15 +97,15 @@ public class RestrictionNotEnroledDegreeModule extends RestrictionNotEnroledDegr
 
         // getting full name only for course groups
         String precedenceDegreeModule =
-                (getPrecedenceDegreeModule().isLeaf()) ? getPrecedenceDegreeModule().getName() : getPrecedenceDegreeModule()
-                        .getOneFullName();
+                (getPrecedenceDegreeModule().isLeaf()) ? getPrecedenceDegreeModule().getName(executionSemester) : getPrecedenceDegreeModule()
+                        .getOneFullName(executionSemester);
         labelList.add(new GenericPair<Object, Boolean>(precedenceDegreeModule, false));
 
         if (getContextCourseGroup() != null) {
             labelList.add(new GenericPair<Object, Boolean>(", ", false));
             labelList.add(new GenericPair<Object, Boolean>("label.inContext", true));
             labelList.add(new GenericPair<Object, Boolean>(" ", false));
-            labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(), false));
+            labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(executionSemester), false));
         }
 
         if (!hasNoCurricularPeriodOrder()) {

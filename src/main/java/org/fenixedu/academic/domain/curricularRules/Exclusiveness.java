@@ -69,6 +69,11 @@ public class Exclusiveness extends Exclusiveness_Base {
 
     @Override
     public List<GenericPair<Object, Boolean>> getLabel() {
+        return getLabel(null);
+    }
+
+    @Override
+    public List<GenericPair<Object, Boolean>> getLabel(final ExecutionSemester executionSemester) {
         final List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>();
 
         labelList.add(new GenericPair<Object, Boolean>("label.exclusiveness", true));
@@ -78,11 +83,11 @@ public class Exclusiveness extends Exclusiveness_Base {
 
         // getting full name only for course groups
         String degreeModuleToApplyRule =
-                (getDegreeModuleToApplyRule().isLeaf()) ? getDegreeModuleToApplyRule().getName() : getDegreeModuleToApplyRule()
-                        .getOneFullName();
+                (getDegreeModuleToApplyRule().isLeaf()) ? getDegreeModuleToApplyRule().getNameI18N(executionSemester).getContent() : getDegreeModuleToApplyRule()
+                        .getOneFullName(executionSemester);
         String exclusiveDegreeModule =
-                (getExclusiveDegreeModule().isLeaf()) ? getExclusiveDegreeModule().getName() : getExclusiveDegreeModule()
-                        .getOneFullName();
+                (getExclusiveDegreeModule().isLeaf()) ? getExclusiveDegreeModule().getNameI18N(executionSemester).getContent() : getExclusiveDegreeModule()
+                        .getOneFullName(executionSemester);
 
         labelList.add(new GenericPair<Object, Boolean>(degreeModuleToApplyRule, false));
         labelList.add(new GenericPair<Object, Boolean>(" ", false));
@@ -95,7 +100,7 @@ public class Exclusiveness extends Exclusiveness_Base {
             labelList.add(new GenericPair<Object, Boolean>(", ", false));
             labelList.add(new GenericPair<Object, Boolean>("label.inGroup", true));
             labelList.add(new GenericPair<Object, Boolean>(" ", false));
-            labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(), false));
+            labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(executionSemester), false));
         }
         return labelList;
     }

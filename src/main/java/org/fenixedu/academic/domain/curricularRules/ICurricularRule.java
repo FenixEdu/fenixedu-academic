@@ -43,6 +43,10 @@ public interface ICurricularRule {
     };
 
     public List<GenericPair<Object, Boolean>> getLabel();
+    
+    public default List<GenericPair<Object, Boolean>> getLabel(final ExecutionSemester executionSemester){
+        return getLabel();
+    }
 
     public DegreeModule getDegreeModuleToApplyRule();
 
