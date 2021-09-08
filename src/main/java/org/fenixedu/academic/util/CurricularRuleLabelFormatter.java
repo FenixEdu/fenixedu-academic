@@ -24,6 +24,7 @@ package org.fenixedu.academic.util;
 import java.util.List;
 import java.util.Locale;
 
+import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.dto.GenericPair;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -38,13 +39,25 @@ public class CurricularRuleLabelFormatter {
     public static String getLabel(ICurricularRule curricularRule) {
         return buildLabel(curricularRule, I18N.getLocale());
     }
+    
+    public static String getLabel(ICurricularRule curricularRule, ExecutionSemester executionSemester) {
+        return buildLabel(curricularRule, I18N.getLocale(), executionSemester);
+    }
 
     public static String getLabel(ICurricularRule curricularRule, Locale locale) {
         return buildLabel(curricularRule, locale);
     }
+    
+    public static String getLabel(ICurricularRule curricularRule, Locale locale, ExecutionSemester executionSemester) {
+        return buildLabel(curricularRule, locale, executionSemester);
+    }
 
     private static String buildLabel(ICurricularRule curricularRule, Locale locale) {
-        List<GenericPair<Object, Boolean>> labelList = curricularRule.getLabel();
+        return buildLabel(curricularRule, locale, null);
+    }
+    
+    private static String buildLabel(ICurricularRule curricularRule, Locale locale, ExecutionSemester executionSemester) {
+        List<GenericPair<Object, Boolean>> labelList = curricularRule.getLabel(executionSemester);
         StringBuilder labelResult = new StringBuilder();
         for (GenericPair<Object, Boolean> labelElement : labelList) {
             if (labelElement.getRight() == true) {

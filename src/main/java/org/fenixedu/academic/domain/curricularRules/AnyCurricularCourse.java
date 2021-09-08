@@ -138,6 +138,11 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 
     @Override
     public List<GenericPair<Object, Boolean>> getLabel() {
+        return getLabel(null);
+    }
+
+    @Override
+    public List<GenericPair<Object, Boolean>> getLabel(final ExecutionSemester executionSemester) {
         final List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>();
 
         labelList.add(new GenericPair<Object, Boolean>("label.anyCurricularCourse", true));
@@ -218,7 +223,7 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
             labelList.add(new GenericPair<Object, Boolean>(" ", false));
             labelList.add(new GenericPair<Object, Boolean>("label.degree", true));
             labelList.add(new GenericPair<Object, Boolean>(" ", false));
-            labelList.add(new GenericPair<Object, Boolean>(getDegree().getNome(), false));
+            labelList.add(new GenericPair<Object, Boolean>(getDegree().getNameFor(executionSemester).getContent(), false));
         }
 
         if (getDepartmentUnit() != null) {
@@ -232,11 +237,11 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
             labelList.add(new GenericPair<Object, Boolean>(", ", false));
             labelList.add(new GenericPair<Object, Boolean>("label.inGroup", true));
             labelList.add(new GenericPair<Object, Boolean>(" ", false));
-            labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(), false));
+            labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(executionSemester), false));
         }
         return labelList;
     }
-
+    
     @Override
     protected void removeOwnParameters() {
         setDegree(null);
