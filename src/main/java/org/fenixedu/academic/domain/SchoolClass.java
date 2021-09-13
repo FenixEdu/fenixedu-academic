@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -52,6 +53,7 @@ public class SchoolClass extends SchoolClass_Base {
         setExecutionPeriod(executionInterval);
         setCurricularYear(curricularYear);
         setName(name); // must be set after executionDegree, executionInterval and curricularYear, in order to check duplicate names
+        setAvailableForAutomaticEnrolment(true);
     }
 
     public void delete() {
@@ -129,6 +131,11 @@ public class SchoolClass extends SchoolClass_Base {
 
     public ExecutionInterval getExecutionInterval() {
         return super.getExecutionPeriod();
+    }
+    
+    @Override
+    public Boolean getAvailableForAutomaticEnrolment() {
+        return Optional.ofNullable(super.getAvailableForAutomaticEnrolment()).orElse(Boolean.TRUE);
     }
 
     public boolean isFreeFor(final Registration registration) {

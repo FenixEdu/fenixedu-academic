@@ -702,6 +702,7 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
     class SchoolClass  {
         Integer curricularYear;
         String name;
+        Boolean availableForAutomaticEnrolment;
     }
 
     class Shift  {      
