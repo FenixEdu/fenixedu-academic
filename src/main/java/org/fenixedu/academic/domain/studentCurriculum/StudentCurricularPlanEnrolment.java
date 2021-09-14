@@ -30,8 +30,10 @@ import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.EnrolmentResultType;
+import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
 import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
+import org.fenixedu.academic.domain.enrolment.OptionalDegreeModuleToEnrol;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.EnrollmentDomainException;
 import org.fenixedu.academic.domain.person.RoleType;
@@ -44,6 +46,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -278,8 +281,25 @@ abstract public class StudentCurricularPlanEnrolment {
 
         if (!finalResult.isFalse()) {
             for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : rulesToEvaluate.keySet()) {
-                addDegreeModuleToEvaluateToMap(degreeModulesEnrolMap,
-                        finalResult.getEnrolmentResultTypeFor(degreeModuleToEvaluate.getDegreeModule()), degreeModuleToEvaluate);
+                if (degreeModuleToEvaluate.isOptional()) {
+                    boolean isCycleEqualOrGreater = false;
+                    final Collection<CycleCourseGroup> parentCycleCourseGroups = ((OptionalDegreeModuleToEnrol) degreeModuleToEvaluate).getCurricularCourse().getParentCycleCourseGroups();
+                    for (CycleCourseGroup cycleCourseGroup : degreeModuleToEvaluate.getDegreeModule().getParentCycleCourseGroups()) {
+                        if (hasSameOrHigherCycle(cycleCourseGroup, parentCycleCourseGroups)) {
+                            isCycleEqualOrGreater = true;
+                            break;
+                        }
+                    }
+                    if (isCycleEqualOrGreater) {
+                        addDegreeModuleToEvaluateToMap(degreeModulesEnrolMap,
+                                finalResult.getEnrolmentResultTypeFor(degreeModuleToEvaluate.getDegreeModule()), degreeModuleToEvaluate);
+                    } else {
+                        finalResult = RuleResult.createFalse(degreeModuleToEvaluate.getDegreeModule(), "error.Enrolment.cannot.enrol.optional.inferior.cycle");
+                    }
+                } else {
+                    addDegreeModuleToEvaluateToMap(degreeModulesEnrolMap,
+                            finalResult.getEnrolmentResultTypeFor(degreeModuleToEvaluate.getDegreeModule()), degreeModuleToEvaluate);
+                }
             }
 
         }
@@ -289,6 +309,11 @@ abstract public class StudentCurricularPlanEnrolment {
         }
 
         return finalResult;
+    }
+
+    private boolean hasSameOrHigherCycle(CycleCourseGroup cycleCourseGroup, Collection<CycleCourseGroup> parentCycleCourseGroups) {
+        return parentCycleCourseGroups.stream()
+                .anyMatch(parentCycleCourseGroup -> cycleCourseGroup.getCycleType().isBeforeOrEquals(parentCycleCourseGroup.getCycleType()));
     }
 
     protected RuleResult evaluateExtraRules(final RuleResult actualResult) {
