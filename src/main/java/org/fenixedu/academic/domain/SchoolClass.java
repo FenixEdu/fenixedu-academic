@@ -24,10 +24,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -53,7 +54,7 @@ public class SchoolClass extends SchoolClass_Base {
         setExecutionPeriod(executionInterval);
         setCurricularYear(curricularYear);
         setName(name); // must be set after executionDegree, executionInterval and curricularYear, in order to check duplicate names
-        setAvailableForAutomaticEnrolment(true);
+        setAvailableForEnrolment(true);
     }
 
     public void delete() {
@@ -132,10 +133,10 @@ public class SchoolClass extends SchoolClass_Base {
     public ExecutionInterval getExecutionInterval() {
         return super.getExecutionPeriod();
     }
-    
+
     @Override
-    public Boolean getAvailableForAutomaticEnrolment() {
-        return Optional.ofNullable(super.getAvailableForAutomaticEnrolment()).orElse(Boolean.TRUE);
+    public Boolean getAvailableForEnrolment() {
+        return Optional.ofNullable(super.getAvailableForEnrolment()).orElse(Boolean.TRUE);
     }
 
     public boolean isFreeFor(final Registration registration) {
@@ -164,6 +165,12 @@ public class SchoolClass extends SchoolClass_Base {
         }
 
         return true;
+    }
+
+    public static Stream<SchoolClass> findBy(final ExecutionDegree executionDegree, final ExecutionInterval interval,
+            final Integer curricularYear) {
+        return executionDegree.getSchoolClassesSet().stream().filter(sc -> sc.getCurricularYear().equals(curricularYear))
+                .filter(sc -> sc.getExecutionPeriod() == interval);
     }
 
     @Deprecated
