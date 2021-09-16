@@ -2137,7 +2137,7 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isQualifiedToRegistrationConclusionProcess() {
-        return isActive() || isConcluded() || isSchoolPartConcluded();
+        return isActive() || isConcluded() || isSchoolPartConcluded() || isTransited();
     }
 
     public ExecutionYear calculateConclusionYear() {
