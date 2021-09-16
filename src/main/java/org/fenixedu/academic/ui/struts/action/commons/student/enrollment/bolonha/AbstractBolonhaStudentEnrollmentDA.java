@@ -213,6 +213,15 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
             addActionMessage("error", request, de.getLocalizedMessage(), false);
             request.setAttribute("optionalEnrolmentBean", optionalStudentEnrollmentBean);
             return mapping.findForward("chooseOptionalCurricularCourseToEnrol");
+
+        } catch (RuntimeException re) {
+            if (re.getCause() != null && re.getCause() instanceof DomainException) {
+                final DomainException de = (DomainException) re.getCause();
+                addActionMessage("error", request, de.getLocalizedMessage(), false);
+                request.setAttribute("optionalEnrolmentBean", optionalStudentEnrollmentBean);
+                return mapping.findForward("chooseOptionalCurricularCourseToEnrol");
+            }
+            throw re;
         }
 
         //after an enrolment the registration can change state

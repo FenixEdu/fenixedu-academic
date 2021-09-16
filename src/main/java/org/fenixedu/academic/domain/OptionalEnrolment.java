@@ -18,10 +18,6 @@
  */
 package org.fenixedu.academic.domain;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
 import org.fenixedu.academic.domain.curriculum.EnrollmentCondition;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
 import org.fenixedu.academic.domain.degreeStructure.OptionalCurricularCourse;
@@ -31,10 +27,18 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.log.OptionalEnrolmentLog;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.util.EnrolmentAction;
-import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.core.signals.DomainObjectEvent;
+import org.fenixedu.bennu.core.signals.Signal;
+import org.fenixedu.commons.i18n.LocalizedString;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 public class OptionalEnrolment extends OptionalEnrolment_Base {
+
+    public static final String SIGNAL_CREATED = "fenixedu.academic.optional.enrolment.created";
 
     protected OptionalEnrolment() {
         super();
@@ -55,6 +59,7 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
                 createdBy);
         setOptionalCurricularCourse(optionalCurricularCourse);
         createCurriculumLineLog(EnrolmentAction.ENROL);
+        Signal.emit(SIGNAL_CREATED, new DomainObjectEvent<OptionalEnrolment>(this));
     }
 
     protected void checkInitConstraints(StudentCurricularPlan studentCurricularPlan, CurricularCourse curricularCourse,
