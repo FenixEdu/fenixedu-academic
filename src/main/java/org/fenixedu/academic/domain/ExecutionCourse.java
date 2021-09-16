@@ -345,12 +345,18 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     private String getNameEn() {
-        return getCompetenceCoursesInformations().stream().map(cci -> cci.getNameEn()).distinct().sorted()
-                .collect(Collectors.joining(" / "));
+        return getCompetenceCoursesInformations().stream().map(cci -> cci.getNameEn()).filter(Objects::nonNull).distinct()
+                .sorted().collect(Collectors.joining(" / "));
     }
 
     public String getName() {
         return getNome();
+    }
+
+    public void updateName() {
+        final String newName = getCompetenceCoursesInformations().stream().map(cci -> cci.getName()).filter(Objects::nonNull)
+                .distinct().sorted().collect(Collectors.joining(" / "));
+        setNome(newName);
     }
 
     public String getCode() {
