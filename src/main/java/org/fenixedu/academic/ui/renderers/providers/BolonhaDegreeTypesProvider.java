@@ -18,18 +18,20 @@
  */
 package org.fenixedu.academic.ui.renderers.providers;
 
-import java.util.stream.Collectors;
-
 import org.fenixedu.academic.domain.degree.DegreeType;
-
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
+
+import java.util.stream.Collectors;
 
 public class BolonhaDegreeTypesProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        return DegreeType.all().filter(type -> !type.isEmpty()).filter(DegreeType::isBolonhaType).sorted()
+        return DegreeType.all()
+                .filter(type -> !type.isEmpty())
+                .filter(type -> type.isBolonhaType() || type.getUnstructured())
+                .sorted()
                 .collect(Collectors.toList());
     }
 
