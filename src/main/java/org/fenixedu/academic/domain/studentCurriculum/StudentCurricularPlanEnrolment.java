@@ -18,6 +18,7 @@
  */
 package org.fenixedu.academic.domain.studentCurriculum;
 
+import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionSemester;
@@ -30,6 +31,7 @@ import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.EnrolmentResultType;
+import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
 import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
@@ -283,14 +285,16 @@ abstract public class StudentCurricularPlanEnrolment {
             for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : rulesToEvaluate.keySet()) {
                 if (degreeModuleToEvaluate.isOptional()) {
                     boolean isCycleEqualOrGreater = false;
-                    final Collection<CycleCourseGroup> parentCycleCourseGroups = ((OptionalDegreeModuleToEnrol) degreeModuleToEvaluate).getCurricularCourse().getParentCycleCourseGroups();
+                    final CurricularCourse curricularCourse =((OptionalDegreeModuleToEnrol) degreeModuleToEvaluate).getCurricularCourse();
+                    final Collection<CycleCourseGroup> parentCycleCourseGroups = curricularCourse.getParentCycleCourseGroups();
                     for (CycleCourseGroup cycleCourseGroup : degreeModuleToEvaluate.getDegreeModule().getParentCycleCourseGroups()) {
                         if (hasSameOrHigherCycle(cycleCourseGroup, parentCycleCourseGroups)) {
                             isCycleEqualOrGreater = true;
                             break;
                         }
                     }
-                    if (isCycleEqualOrGreater) {
+                    final DegreeType degreeType = curricularCourse.getDegreeType();
+                    if (isCycleEqualOrGreater || degreeType.getUnstructured() || degreeType.getMinor()) {
                         addDegreeModuleToEvaluateToMap(degreeModulesEnrolMap,
                                 finalResult.getEnrolmentResultTypeFor(degreeModuleToEvaluate.getDegreeModule()), degreeModuleToEvaluate);
                     } else {
