@@ -548,6 +548,10 @@ public class Registration extends Registration_Base {
 
         return false;
     }
+    
+    public Stream<Enrolment> findEnrolments() {
+        return getStudentCurricularPlansSet().stream().flatMap(scp -> scp.getEnrolmentStream());
+    }
 
     final public Collection<Enrolment> getEnrolments(final ExecutionYear executionYear) {
         final StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(executionYear);

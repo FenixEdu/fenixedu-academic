@@ -18,11 +18,14 @@
  */
 package org.fenixedu.academic.domain.accessControl;
 
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.annotation.GroupArgument;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
@@ -35,6 +38,26 @@ public class ActiveStudentsGroup extends GroupStrategy {
 
     private static final long serialVersionUID = 2139482012047494196L;
 
+    @GroupArgument
+    private Boolean checkEnrolments;
+
+    private ActiveStudentsGroup() {
+        super();
+    }
+
+    private ActiveStudentsGroup(Boolean checkEnrolments) {
+        this();
+        this.checkEnrolments = checkEnrolments;
+    }
+
+    public static ActiveStudentsGroup get() {
+        return new ActiveStudentsGroup();
+    }
+
+    public static ActiveStudentsGroup get(Boolean checkEnrolments) {
+        return new ActiveStudentsGroup(checkEnrolments);
+    }
+
     @Override
     public String getPresentationName() {
         return BundleUtil.getString(Bundle.GROUP, "label.name.ActiveStudentsGroup");
@@ -42,7 +65,7 @@ public class ActiveStudentsGroup extends GroupStrategy {
 
     @Override
     public Stream<User> getMembers() {
-        return Bennu.getInstance().getStudentsSet().stream().filter(Student::hasActiveRegistrations).map(Student::getPerson)
+        return Bennu.getInstance().getStudentsSet().stream().filter(activeRegistrationsFilter()).map(Student::getPerson)
                 .map(Person::getUser);
     }
 
@@ -56,12 +79,17 @@ public class ActiveStudentsGroup extends GroupStrategy {
         if (user == null || user.getPerson() == null) {
             return false;
         }
-        return user.getPerson().getStudent() != null && user.getPerson().getStudent().hasActiveRegistrations();
+        return user.getPerson().getStudent() != null && activeRegistrationsFilter().test(user.getPerson().getStudent());
     }
 
     @Override
     public boolean isMember(User user, DateTime when) {
         return isMember(user);
+    }
+
+    private Predicate<Student> activeRegistrationsFilter() {
+        return s -> s.getActiveRegistrationStream().anyMatch(
+                r -> !Boolean.TRUE.equals(checkEnrolments) || r.findEnrolments().anyMatch(Predicate.not(Enrolment::isAnnulled)));
     }
 
 }
