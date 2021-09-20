@@ -1,3 +1,4 @@
+32.9.3 (20-09-2021)
 - Improvement: Active students group with argument to check enrolments
 - Refactor: Add IdDocumentTypeObject creator and finder methods
 
