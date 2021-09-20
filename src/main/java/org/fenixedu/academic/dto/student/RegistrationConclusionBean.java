@@ -86,7 +86,7 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     }
 
     public void setCurriculumGroup(CurriculumGroup curriculumGroup) {
-        if (curriculumGroup.getDegreeModule().getProgramConclusion() != null) {
+        if (curriculumGroup != null && curriculumGroup.getDegreeModule().getProgramConclusion() != null) {
             setProgramConclusion(curriculumGroup.getDegreeModule().getProgramConclusion());
         } else {
             setProgramConclusion(null);
