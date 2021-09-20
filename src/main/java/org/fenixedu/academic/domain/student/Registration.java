@@ -1346,7 +1346,7 @@ public class Registration extends Registration_Base {
         return getActiveStateType().isActive();
     }
 
-    private boolean hasAnyActiveState(final ExecutionInterval executionInterval) {
+    public boolean hasAnyActiveState(final ExecutionInterval executionInterval) {
         return getRegistrationStates(executionInterval).stream().anyMatch(s -> s.isActive());
     }
 
