@@ -18,6 +18,8 @@
  */
 package org.fenixedu.academic.domain.person;
 
+import java.util.Optional;
+
 import org.fenixedu.bennu.core.domain.Bennu;
 
 public class IdDocumentTypeObject extends IdDocumentTypeObject_Base {
@@ -25,6 +27,17 @@ public class IdDocumentTypeObject extends IdDocumentTypeObject_Base {
     public IdDocumentTypeObject() {
         super();
         setRootDomainObject(Bennu.getInstance());
+    }
+
+    public static IdDocumentTypeObject create(final IDDocumentType input) {
+        final IdDocumentTypeObject result = new IdDocumentTypeObject();
+        result.setValue(input);
+        return result;
+    }
+
+    public static Optional<IdDocumentTypeObject> findBy(final IDDocumentType documentType) {
+        return Bennu.getInstance().getIdDocumentTypesSet().stream().filter(typeObject -> typeObject.getValue() == documentType)
+                .findAny();
     }
 
     public static IdDocumentTypeObject readByIDDocumentType(final IDDocumentType documentType) {
