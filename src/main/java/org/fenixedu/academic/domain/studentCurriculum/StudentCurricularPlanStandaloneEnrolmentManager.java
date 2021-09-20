@@ -50,7 +50,7 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
     @Override
     protected void assertEnrolmentPreConditions() {
         if (!isResponsiblePersonAllowedToEnrolStudents() && !isResponsibleInternationalRelationOffice()) {
-            throw new DomainException("error.StudentCurricularPlan.cannot.enrol.in.propaeudeutics");
+            throw new DomainException("error.StudentCurricularPlan.cannot.enrol.in.standalone.courses");
         }
 
         if (!AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.ENROLMENT_WITHOUT_RULES,
