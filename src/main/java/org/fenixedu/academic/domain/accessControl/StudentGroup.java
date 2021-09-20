@@ -35,6 +35,7 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule.ConclusionValue;
@@ -164,6 +165,9 @@ public class StudentGroup extends FenixGroup {
             } else {
                 connector = BundleUtil.getString(Bundle.GROUP, "label.name.connector.default");
             }
+        } else {
+            parts.add(Unit.getInstitutionAcronym());
+            connector = BundleUtil.getString(Bundle.GROUP, "label.name.connector.male");
         }
         return new String[] { connector, Joiner.on(", ").join(parts) };
     }
