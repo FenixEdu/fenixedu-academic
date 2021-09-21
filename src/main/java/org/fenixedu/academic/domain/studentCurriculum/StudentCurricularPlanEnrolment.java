@@ -283,7 +283,7 @@ abstract public class StudentCurricularPlanEnrolment {
 
         if (!finalResult.isFalse()) {
             for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : rulesToEvaluate.keySet()) {
-                if (degreeModuleToEvaluate.isOptional()) {
+                if (degreeModuleToEvaluate.isOptional() && !isEnrolmentWithoutRules()) { //allow when is enrolment with no rules
                     boolean isCycleEqualOrGreater = false;
                     final CurricularCourse curricularCourse =((OptionalDegreeModuleToEnrol) degreeModuleToEvaluate).getCurricularCourse();
                     final Collection<CycleCourseGroup> parentCycleCourseGroups = curricularCourse.getParentCycleCourseGroups();
