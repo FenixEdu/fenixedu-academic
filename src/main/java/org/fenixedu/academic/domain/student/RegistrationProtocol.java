@@ -48,11 +48,24 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
         return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(this, rp) : c;
     }
 
+    private RegistrationProtocol() {
+        super();
+        setRootDomainObject(Bennu.getInstance());
+    }
+
+    public static RegistrationProtocol create(String code, LocalizedString description) {
+        final RegistrationProtocol protocol = new RegistrationProtocol();
+        protocol.setCode(code);
+        protocol.setDescription(description);
+        return protocol;
+    }
+
+    @Deprecated
     public RegistrationProtocol(String code, LocalizedString description, Boolean enrolmentByStudentAllowed, Boolean payGratuity,
             Boolean allowsIDCard, Boolean onlyAllowedDegreeEnrolment, Boolean isAlien, Boolean exempted, Boolean mobility,
             Boolean military, Boolean allowDissertationCandidacyWithoutChecks, Boolean forOfficialMobilityReporting,
             Boolean attemptAlmaMatterFromPrecedent) {
-        setRootDomainObject(Bennu.getInstance());
+        this();
         setCode(code);
         setDescription(description);
         setEnrolmentByStudentAllowed(enrolmentByStudentAllowed);
@@ -150,7 +163,7 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
     public boolean attemptAlmaMatterFromPrecedent() {
         return getAttemptAlmaMatterFromPrecedent() != null && getAttemptAlmaMatterFromPrecedent().booleanValue();
     }
-    
+
     public void delete() {
         super.setRootDomainObject(null);
         super.deleteDomainObject();
