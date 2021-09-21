@@ -75,7 +75,7 @@ public class CreditsLimitInExternalCycle extends CurricularRuleNotPersistent {
     }
 
     public boolean creditsInPreviousCycleSufficient(final Double previousCycleCredits) {
-        return previousCycleCredits.compareTo(MIN_CREDITS_IN_PREVIOUS_CYCLE) > 0;
+        return previousCycleCredits.compareTo(MIN_CREDITS_IN_PREVIOUS_CYCLE) >= 0;
     }
 
     @Override
