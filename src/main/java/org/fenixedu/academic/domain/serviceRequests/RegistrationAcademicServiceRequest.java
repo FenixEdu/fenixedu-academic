@@ -53,7 +53,6 @@ abstract public class RegistrationAcademicServiceRequest extends RegistrationAca
 
     private void checkParameters(final RegistrationAcademicServiceRequestCreateBean bean) {
         checkRegistration(bean);
-        checkRegistrationIsNotTransited(bean);
         checkRegistrationStartDate(bean);
         checkRegistrationExecutionYear(bean);
     }
@@ -67,12 +66,6 @@ abstract public class RegistrationAcademicServiceRequest extends RegistrationAca
     protected void checkRegistrationStartDate(RegistrationAcademicServiceRequestCreateBean bean) {
         if (ExecutionYear.readByDateTime(bean.getRequestDate()).isBefore(bean.getRegistration().getStartExecutionYear())) {
             throw new DomainException("error.RegistrationAcademicServiceRequest.requestDate.before.registrationStartDate");
-        }
-    }
-
-    protected void checkRegistrationIsNotTransited(RegistrationAcademicServiceRequestCreateBean bean) {
-        if (!isAvailableForTransitedRegistrations() && bean.getRegistration().isTransited()) {
-            throw new DomainException("RegistrationAcademicServiceRequest.registration.cannot.be.transited");
         }
     }
 
