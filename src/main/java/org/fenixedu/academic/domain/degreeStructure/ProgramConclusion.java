@@ -202,4 +202,9 @@ public class ProgramConclusion extends ProgramConclusion_Base {
                 .anyMatch(pc -> pc.groupFor(studentCurricularPlan).map(CurriculumGroup::isConcluded).orElse(false));
     }
 
+    public static Optional<ProgramConclusion> findByCode(String code) {
+        return Bennu.getInstance().getProgramConclusionSet().stream()
+                .filter(pc -> pc.getCode() != null && pc.getCode().equals(code)).findAny();
+    }
+
 }

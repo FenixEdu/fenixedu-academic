@@ -1,4 +1,5 @@
 - Refactor: Add RegistrationProtocol creator method
+- Refactor: Add ProgramConclusion finder method
 
 32.9.3 (20-09-2021)
 - Improvement: Active students group with argument to check enrolments
