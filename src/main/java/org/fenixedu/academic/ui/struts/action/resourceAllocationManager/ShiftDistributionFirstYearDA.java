@@ -83,10 +83,7 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
     private static final String COLUMN_SEPARATOR = "\t";
     private static final String LINE_SEPARATOR = "\n";
 
-    private static final String[] NO_VACANCY_DEGREE_CODES = { "9032", // Territorio
-            "9223", // Quimica
-            "9099" // Mestrado Ambiente
-    };
+    private static final String[] NO_VACANCY_DEGREE_CODES = { };
 
     @EntryPoint
     public ActionForward prepareShiftDistribution(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
