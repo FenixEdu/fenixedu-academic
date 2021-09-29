@@ -304,7 +304,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
         final RegistrationState previousState = bean.getRegistration().getStateInDate(bean.getStateDateTime());
         if (previousState == null) {
             createdState =
-                    RegistrationState.createState(bean.getRegistration(), null, bean.getStateDateTime(), bean.getStateType());
+                    RegistrationState.createState(bean.getRegistration(), bean.getResponsible(), bean.getStateDateTime(), bean.getStateType());
         } else {
             createdState = (RegistrationState) StateMachine.execute(previousState, bean);
         }
@@ -317,6 +317,16 @@ public abstract class RegistrationState extends RegistrationState_Base implement
         org.fenixedu.academic.domain.student.RegistrationStateLog.createRegistrationStateLog(bean.getRegistration(),
                 Bundle.MESSAGING, "log.registration.registrationstate.added", bean.getStateType().getDescription(),
                 bean.getRemarks());
+        return createdState;
+    }
+
+    public static RegistrationState createRegistrationStateWithoutValidation(final Registration registration, final Person responsible,
+                                  final DateTime stateStart, final RegistrationStateType stateType, final String remarks) {
+        final RegistrationState createdState =  RegistrationState.createState(registration, responsible, stateStart, stateType);
+        createdState.setRemarks(remarks);
+
+        org.fenixedu.academic.domain.student.RegistrationStateLog.createRegistrationStateLog(registration,
+                Bundle.MESSAGING, "log.registration.registrationstate.added", stateType.getDescription(), remarks);
         return createdState;
     }
 
