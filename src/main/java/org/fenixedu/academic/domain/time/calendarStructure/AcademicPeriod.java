@@ -25,6 +25,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.base.BaseSingleFieldPeriod;
 
 public abstract class AcademicPeriod extends BaseSingleFieldPeriod {
@@ -123,6 +126,10 @@ public abstract class AcademicPeriod extends BaseSingleFieldPeriod {
 
     public boolean isBiggerOrEquals(final AcademicPeriod input) {
         return this.compareTo(input) <= 0;
+    }
+
+    public LocalizedString getPresentationName() {
+        return BundleUtil.getLocalizedString(Bundle.APPLICATION, AcademicPeriod.class.getSimpleName() + "." + getName());
     }
 
     @Deprecated

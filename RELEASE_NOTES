@@ -1,3 +1,4 @@
+- Improvement: Add presentation name to AcademicPeriod
 - Refactor: Add RegistrationProtocol creator method
 - Refactor: Add ProgramConclusion finder method
 
