@@ -1,3 +1,5 @@
+- Improvement: Student group with argument to check enrolments
+
 32.9.4 (30-09-2021)
 - Improvement: Add presentation name to AcademicPeriod
 - Refactor: Add RegistrationProtocol creator method

@@ -39,7 +39,7 @@ import pt.ist.fenixframework.dml.runtime.Relation;
 
 public class PersistentStudentGroup extends PersistentStudentGroup_Base {
     protected PersistentStudentGroup(DegreeType degreeType, Degree degree, CycleType cycle, Space campus,
-            ExecutionCourse executionCourse, CurricularYear curricularYear, ExecutionYear executionYear) {
+            ExecutionCourse executionCourse, CurricularYear curricularYear, ExecutionYear executionYear, Boolean withEnrolments) {
         super();
         setDegreeType(degreeType);
         setDegree(degree);
@@ -48,6 +48,8 @@ public class PersistentStudentGroup extends PersistentStudentGroup_Base {
         setExecutionCourse(executionCourse);
         setCurricularYear(curricularYear);
         setExecutionYear(executionYear);
+        setWithEnrolments(withEnrolments);
+
         if (degree != null || executionCourse != null || campus != null || curricularYear != null && executionYear != null) {
             setRootForFenixPredicate(null);
         }
@@ -56,7 +58,7 @@ public class PersistentStudentGroup extends PersistentStudentGroup_Base {
     @Override
     public Group toGroup() {
         return StudentGroup.get(getDegreeType(), getDegree(), getCycle(), getCampus(), getExecutionCourse(), getCurricularYear(),
-                getExecutionYear());
+                getExecutionYear(), getWithEnrolments());
     }
 
     @Override
@@ -73,75 +75,78 @@ public class PersistentStudentGroup extends PersistentStudentGroup_Base {
     }
 
     public static PersistentStudentGroup getInstance() {
-        return getInstance(() -> filter(PersistentStudentGroup.class), null, null, null, null, null, null, null);
+        return getInstance(() -> filter(PersistentStudentGroup.class), null, null, null, null, null, null, null, null);
     }
 
     public static PersistentStudentGroup getInstance(DegreeType degreeType) {
-        return getInstance(() -> filter(PersistentStudentGroup.class), degreeType, null, null, null, null, null, null);
+        return getInstance(() -> filter(PersistentStudentGroup.class), degreeType, null, null, null, null, null, null, null);
     }
 
     public static PersistentStudentGroup getInstance(CycleType cycle) {
-        return getInstance(() -> filter(PersistentStudentGroup.class), null, null, cycle, null, null, null, null);
+        return getInstance(() -> filter(PersistentStudentGroup.class), null, null, cycle, null, null, null, null, null);
     }
 
     public static PersistentStudentGroup getInstance(Degree degree, CycleType cycle) {
-        return getInstance(() -> degree.getStudentGroupSet().stream(), null, degree, cycle, null, null, null, null);
+        return getInstance(() -> degree.getStudentGroupSet().stream(), null, degree, cycle, null, null, null, null, null);
     }
 
     public static PersistentStudentGroup getInstance(Space campus) {
-        return getInstance(() -> campus.getStudentGroupSet().stream(), null, null, null, campus, null, null, null);
+        return getInstance(() -> campus.getStudentGroupSet().stream(), null, null, null, campus, null, null, null, null);
     }
 
     public static PersistentStudentGroup getInstance(Degree degree, CurricularYear curricularYear, ExecutionYear executionYear) {
         return getInstance(() -> curricularYear.getStudentGroupSet().stream(), null, degree, null, null, null, curricularYear,
-                executionYear);
+                executionYear, null);
     }
 
     public static PersistentStudentGroup getInstance(ExecutionCourse executionCourse) {
         return getInstance(() -> executionCourse.getStudentGroupSet().stream(), null, null, null, null, executionCourse, null,
-                null);
+                null, null);
     }
 
     public static PersistentStudentGroup getInstance(DegreeType degreeType, Degree degree, CycleType cycle, Space campus,
-            ExecutionCourse executionCourse, CurricularYear curricularYear, ExecutionYear executionYear) {
+            ExecutionCourse executionCourse, CurricularYear curricularYear, ExecutionYear executionYear, Boolean withEnrolments) {
         if (curricularYear != null) {
             return getInstance(() -> curricularYear.getStudentGroupSet().stream(), degreeType, degree, cycle, campus,
-                    executionCourse, curricularYear, executionYear);
+                    executionCourse, curricularYear, executionYear, withEnrolments);
         }
         if (executionCourse != null) {
             return getInstance(() -> executionCourse.getStudentGroupSet().stream(), degreeType, degree, cycle, campus,
-                    executionCourse, curricularYear, executionYear);
+                    executionCourse, curricularYear, executionYear, withEnrolments);
         }
         if (campus != null) {
             return getInstance(() -> campus.getStudentGroupSet().stream(), degreeType, degree, cycle, campus, executionCourse,
-                    curricularYear, executionYear);
+                    curricularYear, executionYear, withEnrolments);
         }
         if (degree != null) {
             return getInstance(() -> degree.getStudentGroupSet().stream(), degreeType, degree, cycle, campus, executionCourse,
-                    curricularYear, executionYear);
+                    curricularYear, executionYear, withEnrolments);
         }
         return getInstance(() -> filter(PersistentStudentGroup.class), degreeType, degree, cycle, campus, executionCourse,
-                curricularYear, executionYear);
+                curricularYear, executionYear, withEnrolments);
     }
 
     private static PersistentStudentGroup getInstance(Supplier<Stream<PersistentStudentGroup>> options, DegreeType degreeType,
             Degree degree, CycleType cycle, Space campus, ExecutionCourse executionCourse, CurricularYear curricularYear,
-            ExecutionYear executionYear) {
+            ExecutionYear executionYear, Boolean withEnrolments) {
         return singleton(
-                () -> select(options, degreeType, degree, cycle, campus, executionCourse, curricularYear, executionYear),
+                () -> select(options, degreeType, degree, cycle, campus, executionCourse, curricularYear, executionYear,
+                        withEnrolments),
                 () -> new PersistentStudentGroup(degreeType, degree, cycle, campus, executionCourse, curricularYear,
-                        executionYear));
+                        executionYear, withEnrolments));
     }
 
     private static Optional<PersistentStudentGroup> select(Supplier<Stream<PersistentStudentGroup>> options,
             final DegreeType degreeType, final Degree degree, final CycleType cycle, final Space campus,
-            final ExecutionCourse executionCourse, final CurricularYear curricularYear, final ExecutionYear executionYear) {
-        return options
-                .get()
+            final ExecutionCourse executionCourse, final CurricularYear curricularYear, final ExecutionYear executionYear,
+            Boolean withEnrolments) {
+        return options.get()
                 .filter(group -> Objects.equals(group.getDegreeType(), degreeType) && Objects.equals(group.getDegree(), degree)
                         && Objects.equals(group.getCycle(), cycle) && Objects.equals(group.getCampus(), campus)
                         && Objects.equals(group.getExecutionCourse(), executionCourse)
                         && Objects.equals(group.getCurricularYear(), curricularYear)
-                        && Objects.equals(group.getExecutionYear(), executionYear)).findAny();
+                        && Objects.equals(group.getExecutionYear(), executionYear)
+                        && Objects.equals(group.getWithEnrolments(), withEnrolments))
+                .findAny();
     }
 }
