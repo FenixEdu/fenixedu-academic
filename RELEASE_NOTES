@@ -1,3 +1,5 @@
+- Fix: Changed degree designation (SchoolLevelType.DEGREE) #UL-REIT-2403
+
 32.9.5 (06-10-2021)
 - Improvement: Student group with argument to check enrolments
 
