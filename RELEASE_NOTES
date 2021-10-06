@@ -1,4 +1,4 @@
-- Fix: Changed degree designation (SchoolLevelType.DEGREE) #UL-REIT-2403
+- Fix: Changed degree designation (SchoolLevelType.DOCTORATE_DEGREE SchoolLevelType.MASTER_DEGREE) #UL-REIT-2403
 
 32.9.5 (06-10-2021)
 - Improvement: Student group with argument to check enrolments
