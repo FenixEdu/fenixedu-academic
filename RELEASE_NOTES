@@ -1,3 +1,6 @@
+- Refactor: Ensure Statute Type code is required
+- Refactor: Add creator method for Statute Type
+
 32.9.6 (06-10-2021)
 - Fix: Changed degree designation (SchoolLevelType.DOCTORATE_DEGREE SchoolLevelType.MASTER_DEGREE) #UL-REIT-2403
 

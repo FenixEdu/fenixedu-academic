@@ -40,6 +40,7 @@ public class StatuteType extends StatuteType_Base {
         setRootDomainObject(Bennu.getInstance());
     }
 
+    @Deprecated
     public StatuteType(String code, LocalizedString name, boolean workingStudentStatute, boolean associativeLeaderStatute,
             boolean specialSeasonGrantedByRequest, boolean grantOwnerStatute, boolean seniorStatute, boolean handicappedStatute,
             boolean active, boolean explicitCreation, boolean visible, boolean specialSeasonGranted,
@@ -89,6 +90,7 @@ public class StatuteType extends StatuteType_Base {
     }
 
     protected void checkRules() {
+        check(getCode(), "error.StatuteType.code.required");
         check(getName(), "error.StatuteType.name.required");
     }
 
@@ -163,5 +165,19 @@ public class StatuteType extends StatuteType_Base {
 
     public boolean isSpecialSeasonGranted() {
         return getSpecialSeasonGranted();
+    }
+
+    public static StatuteType create(String code, LocalizedString name) {
+        final StatuteType result = new StatuteType();
+        result.setCode(code);
+        result.setName(name);
+        result.setActive(true);
+        result.setVisible(true);
+        result.setExplicitCreation(true);
+        result.setAppliedOnRegistration(true);
+
+        result.checkRules();
+
+        return result;
     }
 }
