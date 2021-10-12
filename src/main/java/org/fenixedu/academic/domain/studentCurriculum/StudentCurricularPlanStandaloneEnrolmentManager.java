@@ -186,7 +186,7 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
                     Enrolment enrolment = new Enrolment(getStudentCurricularPlan(), degreeModuleToEvaluate.getCurriculumGroup(), curricularCourse,
                             getExecutionSemester(), EnrollmentCondition.VALIDATED, getResponsiblePerson().getUsername());
                     if (getStudentCurricularPlan().getRegistration().getRegistrationProtocol().isToPayGratuity()) {
-                        new AccountingEventsManager().createStandaloneEnrolmentGratuityEvent(enrolment);
+                        //new AccountingEventsManager().createStandaloneEnrolmentGratuityEvent(enrolment); //needs update
                     }
                 }
             }
