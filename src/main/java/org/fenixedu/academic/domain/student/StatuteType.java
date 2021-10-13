@@ -150,10 +150,6 @@ public class StatuteType extends StatuteType_Base {
         return statuteTypes;
     }
 
-    public static Optional<StatuteType> findSpecialSeasonGrantedByRequestStatuteType() {
-        return readAll(StatuteType::isSpecialSeasonGrantedByRequest).findFirst();
-    }
-
     @Deprecated
     public boolean isExplicitCreation() {
         return getExplicitCreation();
