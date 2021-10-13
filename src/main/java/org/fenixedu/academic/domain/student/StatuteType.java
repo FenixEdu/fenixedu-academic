@@ -18,9 +18,12 @@
  */
 package org.fenixedu.academic.domain.student;
 
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.DomainObjectUtil;
@@ -46,18 +49,6 @@ public class StatuteType extends StatuteType_Base {
             boolean active, boolean explicitCreation, boolean visible, boolean specialSeasonGranted,
             final boolean appliedOnRegistration) {
 
-        this(code, name, workingStudentStatute, associativeLeaderStatute, specialSeasonGrantedByRequest, grantOwnerStatute,
-                seniorStatute, handicappedStatute, active, explicitCreation, visible, specialSeasonGranted);
-
-        setAppliedOnRegistration(appliedOnRegistration);
-
-        checkRules();
-    }
-
-    @Deprecated
-    public StatuteType(String code, LocalizedString name, boolean workingStudentStatute, boolean associativeLeaderStatute,
-            boolean specialSeasonGrantedByRequest, boolean grantOwnerStatute, boolean seniorStatute, boolean handicappedStatute,
-            boolean active, boolean explicitCreation, boolean visible, boolean specialSeasonGranted) {
         this();
         setCode(code);
         setName(name);
@@ -68,10 +59,10 @@ public class StatuteType extends StatuteType_Base {
         setSeniorStatute(seniorStatute);
         setHandicappedStatute(handicappedStatute);
         setActive(active);
-
         setExplicitCreation(explicitCreation);
         setVisible(visible);
         setSpecialSeasonGranted(specialSeasonGranted);
+        setAppliedOnRegistration(appliedOnRegistration);
 
         checkRules();
     }
@@ -104,27 +95,8 @@ public class StatuteType extends StatuteType_Base {
         return getWorkingStudentStatute();
     }
 
-    @Deprecated
-    public boolean isAssociativeLeaderStatute() {
-        return getAssociativeLeaderStatute();
-    }
-
-    @Deprecated
-    public boolean isSpecialSeasonGrantedByRequest() {
-        return getSpecialSeasonGrantedByRequest();
-    }
-
-    public boolean isGrantOwnerStatute() {
-        return getGrantOwnerStatute();
-    }
-
     public boolean isAppliedOnRegistration() {
         return getAppliedOnRegistration();
-    }
-
-    @Deprecated
-    public boolean isActive() {
-        return getActive();
     }
 
     public boolean isDeletable() {
@@ -141,28 +113,6 @@ public class StatuteType extends StatuteType_Base {
         deleteDomainObject();
     }
 
-    @SafeVarargs
-    public static Stream<StatuteType> readAll(Predicate<StatuteType>... predicates) {
-        Stream<StatuteType> statuteTypes = Bennu.getInstance().getStatuteTypesSet().stream();
-        for (Predicate<StatuteType> predicate : predicates) {
-            statuteTypes = statuteTypes.filter(predicate);
-        }
-        return statuteTypes;
-    }
-
-    @Deprecated
-    public boolean isExplicitCreation() {
-        return getExplicitCreation();
-    }
-
-    public boolean isVisible() {
-        return getVisible();
-    }
-
-    public boolean isSpecialSeasonGranted() {
-        return getSpecialSeasonGranted();
-    }
-
     public static StatuteType create(String code, LocalizedString name) {
         final StatuteType result = new StatuteType();
         result.setCode(code);
@@ -175,5 +125,27 @@ public class StatuteType extends StatuteType_Base {
         result.checkRules();
 
         return result;
+    }
+
+    public static Collection<StatuteType> findActive() {
+        return readAll(s -> s.getActive()).collect(Collectors.toSet());
+    }
+
+    public static Optional<StatuteType> findByCode(String code) {
+        return readAll(s -> Objects.equals(code, s.getCode())).findFirst();
+    }
+
+    public static Collection<StatuteType> findAll() {
+        return readAll().collect(Collectors.toSet());
+    }
+
+    //TODO: change to private
+    @SafeVarargs
+    public static Stream<StatuteType> readAll(Predicate<StatuteType>... predicates) {
+        Stream<StatuteType> statuteTypes = Bennu.getInstance().getStatuteTypesSet().stream();
+        for (Predicate<StatuteType> predicate : predicates) {
+            statuteTypes = statuteTypes.filter(predicate);
+        }
+        return statuteTypes;
     }
 }

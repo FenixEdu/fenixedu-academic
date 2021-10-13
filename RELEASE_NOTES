@@ -1,4 +1,4 @@
-- Refactor: Remove Statute Type deprecated method
+- Refactor: Statute Type API cleanup
 - Refactor: Ensure Statute Type code is required
 - Refactor: Add creator method for Statute Type
 

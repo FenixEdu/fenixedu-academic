@@ -226,10 +226,6 @@ public class StudentStatute extends StudentStatute_Base {
 //        }
 //    }
 
-    public boolean isGrantOwnerStatute() {
-        return getType().isGrantOwnerStatute();
-    }
-
     public String toDetailedString() {
         return (getBeginExecutionInterval() != null ? getBeginExecutionInterval().getQualifiedName() : " - ") + " ..... "
                 + (getEndExecutionInterval() != null ? getEndExecutionInterval().getQualifiedName() : " - ");

@@ -726,7 +726,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
             final Student student = registration.getStudent();
 
             for (StudentStatute statute : student.getStudentStatutesSet()) {
-                if (!statute.getType().isSpecialSeasonGranted() && !statute.hasSeniorStatuteForRegistration(registration)) {
+                if (!statute.getType().getSpecialSeasonGranted() && !statute.hasSeniorStatuteForRegistration(registration)) {
                     continue;
                 }
                 if (!statute.isValidInExecutionInterval(getExecutionInterval())) {

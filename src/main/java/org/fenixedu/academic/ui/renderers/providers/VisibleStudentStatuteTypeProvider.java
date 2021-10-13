@@ -26,6 +26,6 @@ public class VisibleStudentStatuteTypeProvider extends AbstractDomainObjectProvi
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        return StatuteType.readAll(StatuteType::isVisible, StatuteType::isExplicitCreation).collect(Collectors.toList());
+        return StatuteType.readAll(StatuteType::getVisible, StatuteType::getExplicitCreation).collect(Collectors.toList());
     }
 }
