@@ -539,7 +539,7 @@
 <schema name="DegreeFinalizationCertificateRequestPR.edit"
 	type="org.fenixedu.academic.domain.accounting.postingRules.serviceRequests.DegreeFinalizationCertificateRequestPR"
 	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.edit">
-	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage)"/>
+	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage,maximumAmount)"/>
 </schema>
 
 <schema name="EquivalencePlanRequestPR.edit"
