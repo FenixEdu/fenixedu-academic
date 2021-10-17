@@ -165,8 +165,9 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 
     private void checkRulesToDelete() {
         if (isFirstCycle()) {
-            if (getRegistration().getIngressionType().isDirectAccessFrom1stCycle()
-                    || getRegistration().getIngressionType().isInternal2ndCycleAccess()) {
+            if (getRegistration().getIngressionType() != null &&
+                    (getRegistration().getIngressionType().isDirectAccessFrom1stCycle()
+                        || getRegistration().getIngressionType().isInternal2ndCycleAccess())) {
                 final User userView = Authenticate.getUser();
                 if (AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS, getRegistration()
                         .getDegree(), userView.getPerson().getUser())
