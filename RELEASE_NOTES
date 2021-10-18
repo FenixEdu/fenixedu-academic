@@ -1,3 +1,4 @@
+- Refactor: Add findByCode to DegreeType
 - Refactor: Statute Type API cleanup
 - Refactor: Ensure Statute Type code is required
 - Refactor: Add creator method for Statute Type

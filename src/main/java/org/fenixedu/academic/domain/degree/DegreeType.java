@@ -26,6 +26,7 @@ package org.fenixedu.academic.domain.degree;
 
 import java.util.Collection;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.TreeSet;
 import java.util.function.Predicate;
@@ -69,6 +70,17 @@ public class DegreeType extends DegreeType_Base implements Comparable<DegreeType
 
     public final void setCycleTypesToEnrol(Collection<CycleType> types) {
         setCyclesToEnrol(new CycleTypes(types));
+    }
+
+    @Override
+    public void setCode(String code) {
+        if (StringUtils.isNotBlank(code)) {
+            if (DegreeType.all().anyMatch(dt -> Objects.equals(dt.getCode(), code) && dt != this)) {
+                throw new DomainException("error.DegreeType.code.already.exists");
+            }
+        }
+
+        super.setCode(code);
     }
 
     public boolean isEmpty() {
@@ -215,6 +227,10 @@ public class DegreeType extends DegreeType_Base implements Comparable<DegreeType
     public static Collection<DegreeType> allWithDegrees() {
         return Bennu.getInstance().getDegreeTypeSet().stream().filter(dt -> !dt.getDegreeSet().isEmpty())
                 .collect(Collectors.toSet());
+    }
+
+    public static Optional<DegreeType> findByCode(String code) {
+        return all().filter(dt -> Objects.equals(dt.getCode(), code)).findFirst();
     }
 
     public void delete() {
