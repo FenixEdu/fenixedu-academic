@@ -1333,6 +1333,7 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
     }
 
     class accounting.EventTemplate {
+        String code;
         LocalizedString title;
         LocalizedString description;
     }
@@ -12653,6 +12654,15 @@ relation EventTemplateEventTemplateConfig {
     }
 }
 
+relation EventTemplateAlternative {
+    accounting.EventTemplate playsRole eventTemplateFromAlternative {
+        multiplicity *;
+    }
+    accounting.EventTemplate playsRole alternativeEventTemplate {
+        multiplicity *;
+    }
+}
+
 relation EventTemplateRegistration {
     accounting.EventTemplate playsRole eventTemplate {
         multiplicity 0..1;
@@ -12662,11 +12672,11 @@ relation EventTemplateRegistration {
     }
 }
 
-relation EventTemplateAlternative {
-    accounting.EventTemplate playsRole eventTemplateFromAlternative {
-        multiplicity *;
-    }
-    accounting.EventTemplate playsRole alternativeEventTemplate {
+relation EventTemplateRegistrationDataByExecutionYear {
+    accounting.EventTemplate playsRole eventTemplate {
         multiplicity 0..1;
+    }
+    student.RegistrationDataByExecutionYear playsRole registrationDataByExecutionYear {
+        multiplicity *;
     }
 }

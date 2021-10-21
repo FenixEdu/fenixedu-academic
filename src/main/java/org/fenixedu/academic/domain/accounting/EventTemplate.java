@@ -7,9 +7,17 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
 public class EventTemplate extends EventTemplate_Base {
-    
-    public EventTemplate(final LocalizedString title, final LocalizedString description) {
+
+    public enum Type {
+        TUITION, INSURANCE, ADMIN_FEES
+    }
+
+    public EventTemplate(final String code, final LocalizedString title, final LocalizedString description) {
+        if (Bennu.getInstance().getEventTemplateSet().stream().anyMatch(t -> t.getCode().equals(code))) {
+            throw new Error("Duplicate event template for code " + code);
+        }
         setBennu(Bennu.getInstance());
+        setCode(code);
         setTitle(title);
         setDescription(description);
     }
