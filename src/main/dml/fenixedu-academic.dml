@@ -1332,6 +1332,18 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
         String verificationUsername;
     }
 
+    class accounting.EventTemplate {
+        String code;
+        LocalizedString title;
+        LocalizedString description;
+    }
+
+    class accounting.EventTemplateConfig {
+        DateTime applyFrom;
+        DateTime applyUntil;
+        String data;
+    }
+
     class accounting.Event  {
         String cancelJustification;
         EventState eventState;
@@ -12621,5 +12633,50 @@ relation MarkSheetSignedMarkSheet {
     }
     MarkSheet playsRole markSheet {
         multiplicity 1..1;
+    }
+}
+
+relation BennuEventTemplate {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole bennu {
+        multiplicity 1..1;
+    }
+    accounting.EventTemplate playsRole eventTemplate {
+        multiplicity *;
+    }
+}
+
+relation EventTemplateEventTemplateConfig {
+    accounting.EventTemplate playsRole eventTemplate {
+        multiplicity 1..1;
+    }
+    accounting.EventTemplateConfig playsRole eventTemplateConfig {
+        multiplicity *;
+    }
+}
+
+relation EventTemplateAlternative {
+    accounting.EventTemplate playsRole eventTemplateFromAlternative {
+        multiplicity *;
+    }
+    accounting.EventTemplate playsRole alternativeEventTemplate {
+        multiplicity *;
+    }
+}
+
+relation EventTemplateRegistration {
+    accounting.EventTemplate playsRole eventTemplate {
+        multiplicity 0..1;
+    }
+    student.Registration playsRole registration {
+        multiplicity *;
+    }
+}
+
+relation EventTemplateRegistrationDataByExecutionYear {
+    accounting.EventTemplate playsRole eventTemplate {
+        multiplicity 0..1;
+    }
+    student.RegistrationDataByExecutionYear playsRole registrationDataByExecutionYear {
+        multiplicity *;
     }
 }
