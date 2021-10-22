@@ -37,4 +37,10 @@ public class EventTemplate extends EventTemplate_Base {
                 .findAny().orElse(null);
     }
 
+    public static EventTemplate readByCode(final String code) {
+        return Bennu.getInstance().getEventTemplateSet().stream()
+                .filter(t -> t.getCode().equals(code))
+                .findAny().orElse(null);
+    }
+
 }
