@@ -106,11 +106,11 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
         }
 
         for (final CycleCurriculumGroup cycle : cycles) {
-            if (!cycle.isConclusionProcessed() || isDEARegistration()) {
+            //if (!cycle.isConclusionProcessed() || isDEARegistration()) {
                 final ApprovementMobilityCertificateRequest request = (getDocumentRequest());
                 final Curriculum curriculum = cycle.getCurriculum(request.getFilteringDate());
                 ApprovementMobilityCertificateRequest.filterEntries(entries, request, curriculum);
-            }
+         //   }
         }
     }
 
