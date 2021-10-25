@@ -7,8 +7,13 @@ import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.commons.i18n.LocalizedString;
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 public class CustomEvent extends CustomEvent_Base {
@@ -50,4 +55,29 @@ public class CustomEvent extends CustomEvent_Base {
         return new LabelFormatter(description.getContent());
     }
 
+    @Override
+    public boolean isToApplyInterest() {
+        if (getConfigObject().has("applyInterest")) {
+            return getConfigObject().get("applyInterest").getAsBoolean();
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public Map<LocalDate, Money> getPenaltyDueDateAmountMap(DateTime when) {
+        if (getConfigObject().has("penaltyAmountMap")) {
+            final Map<LocalDate, Money> penaltyAmountMap = new HashMap<>();
+            final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd/MM/yyyy"); //same as dueDateAmountMap
+            getConfigObject().get("penaltyAmountMap").getAsJsonObject().entrySet().stream()
+                    .forEach(entry -> {
+                        final LocalDate localDate = LocalDate.parse(entry.getKey(), dateTimeFormatter);
+                        final Money value = Money.valueOf(entry.getValue().getAsLong());
+                        penaltyAmountMap.put(localDate, value);
+                    });
+            return penaltyAmountMap;
+        } else {
+            return Collections.emptyMap();
+        }
+    }
 }

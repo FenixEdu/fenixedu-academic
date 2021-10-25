@@ -538,7 +538,7 @@ public abstract class Event extends Event_Base {
         final Builder builder = new Builder(when, InterestRate::getInterestBean);
         final Map<LocalDate, Money> dueDateAmountMap = getDueDateAmountMap();
         final Money baseAmount = dueDateAmountMap.values().stream().reduce(Money.ZERO, Money::add);
-        final Map<LocalDate, Money> dueDatePenaltyAmountMap = getPostingRule().getDueDatePenaltyAmountMap(this, when);
+        final Map<LocalDate, Money> dueDatePenaltyAmountMap = getPenaltyDueDateAmountMap(when);
         final Set<LocalDate> debtInterestExemptions = getDebtInterestExemptions(when);
         final Set<LocalDate> debtFineExemptions = getDebtFineExemptions(when);
 
@@ -612,6 +612,10 @@ public abstract class Event extends Event_Base {
 
         builder.setToApplyInterest(FenixEduAcademicConfiguration.isToUseGlobalInterestRateTableForEventPenalties(this));
         return builder.build();
+    }
+
+    public Map<LocalDate, Money> getPenaltyDueDateAmountMap(DateTime when) {
+        return getPostingRule().getDueDatePenaltyAmountMap(this, when);
     }
 
     private Stream<Exemption> getDebtExemptions() {
@@ -1327,4 +1331,7 @@ public abstract class Event extends Event_Base {
                 && !isDfaRegistrationEvent() && !isPhdEvent() && !isSpecializationDegreeRegistrationEvent();
     }
 
+    public boolean isToApplyInterest() {
+        return false;
+    }
 }
