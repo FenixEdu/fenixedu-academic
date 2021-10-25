@@ -18,12 +18,13 @@
  */
 package org.fenixedu.academic.domain.student;
 
-import java.util.Optional;
-
+import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.LocalDate;
+
+import java.util.Optional;
 
 /**
  * 
@@ -121,6 +122,24 @@ public class RegistrationDataByExecutionYear extends RegistrationDataByExecution
     @Override
     public Registration getRegistration() {
         return super.getRegistration();
+    }
+
+    public void checkEnrolmentsConformToSettings() {
+        final ExecutionSemester allowedSemester = getAllowedSemesterForEnrolments();
+        if (allowedSemester != null && getRegistration().getStudentCurricularPlansSet().stream()
+                    .flatMap(scp -> scp.getEnrolmentStream())
+                    .filter(enrolment -> enrolment.getExecutionPeriod() != allowedSemester)
+                    .anyMatch(enrolment -> enrolment.getExecutionPeriod().getExecutionYear() == getExecutionYear())) {
+            throw new DomainException("error.student.not.allowed.to.enroll.in.semester.other.that", allowedSemester.getQualifiedName());
+        }
+        final Double maxCredits = getMaxCreditsPerYear();
+        if (maxCredits != null && maxCredits.doubleValue() > getRegistration().getStudentCurricularPlansSet().stream()
+                .flatMap(scp -> scp.getEnrolmentStream())
+                .filter(enrolment -> enrolment.getExecutionYear() == getExecutionYear())
+                .mapToDouble(enrolment -> enrolment.getEctsCredits().doubleValue())
+                .sum()) {
+            throw new DomainException("error.student.cannot.exceed.max.credits.enrolments.for.year", Double.toString(maxCredits));
+        }
     }
 
 }

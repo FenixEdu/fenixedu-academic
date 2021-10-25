@@ -18,21 +18,6 @@
  */
 package org.fenixedu.academic.domain;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.stream.Stream;
-
 import org.fenixedu.academic.domain.accounting.events.gratuity.EnrolmentGratuityEvent;
 import org.fenixedu.academic.domain.curriculum.CurricularCourseType;
 import org.fenixedu.academic.domain.curriculum.EnrollmentCondition;
@@ -49,6 +34,7 @@ import org.fenixedu.academic.domain.log.EnrolmentEvaluationLog;
 import org.fenixedu.academic.domain.log.EnrolmentLog;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.RegistrationDataByExecutionYear;
 import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculumEntry;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
@@ -65,8 +51,22 @@ import org.fenixedu.bennu.core.signals.DomainObjectEvent;
 import org.fenixedu.bennu.core.signals.Signal;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
-
 import pt.ist.fenixframework.consistencyPredicates.ConsistencyPredicate;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.stream.Stream;
 
 /**
  * @author dcs-rjao
@@ -234,6 +234,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         setEnrolmentCondition(enrolmentCondition);
         createAttend(studentCurricularPlan.getRegistration(), curricularCourse, executionSemester);
         super.setIsExtraCurricular(Boolean.FALSE);
+        final RegistrationDataByExecutionYear dataByExecutionYear = studentCurricularPlan.getRegistration().getRegistrationDataByExecutionYearSet().stream()
+                .filter(data -> data.getExecutionYear() == executionSemester.getExecutionYear())
+                .findAny().orElse(null);
+        if (dataByExecutionYear != null) {
+            dataByExecutionYear.checkEnrolmentsConformToSettings();
+        }
     }
 
     protected void initializeAsNewWithoutEnrolmentEvaluation(StudentCurricularPlan studentCurricularPlan,

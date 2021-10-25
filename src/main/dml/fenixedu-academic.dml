@@ -3158,6 +3158,7 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
 		LocalDate reingressionDate;
         EnrolmentModel enrolmentModel;
         protected LocalDate enrolmentDate;
+        Double maxCreditsPerYear;
     }
 
     class student.RegistrationNumber  {
@@ -12680,3 +12681,13 @@ relation EventTemplateRegistrationDataByExecutionYear {
         multiplicity *;
     }
 }
+
+relation RegistrationDataByExecutionYearLimitEnrolmentsToSemester {
+    student.RegistrationDataByExecutionYear playsRole registrationDataByExecutionYear {
+        multiplicity *;
+    }
+    ExecutionSemester playsRole allowedSemesterForEnrolments {
+        multiplicity 0..1;
+    }
+}
+
