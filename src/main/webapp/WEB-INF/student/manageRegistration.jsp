@@ -66,31 +66,41 @@
                         </strong>
                     </li>
                     <li>
-                        <spring:message code="label.tuition.value" text="Tuition"/>:
-                        <% if (templateConfig == null) { %>
+                        <spring:message code="label.payment.plan" text="Payment Plan"/>:
+                        <% if (eventTemplate == null) { %>
                             <spring:message code="label.pending" text="Pending"/>
                         <% } else { %>
-                            <%= templateConfig.valueFor(EventTemplate.Type.TUITION) %>
-                            <spring:message code="label.euro" text="Euro"/>:
+                            <%= eventTemplate.getTitle().getContent() %>
                         <% } %>
-                    </li>
-                    <li>
-                        <spring:message code="label.insurance.value" text="Insurance"/>:
-                        <% if (templateConfig == null) { %>
-                            <spring:message code="label.pending" text="Pending"/>
-                        <% } else { %>
-                            <%= templateConfig.valueFor(EventTemplate.Type.INSURANCE) %>
-                            <spring:message code="label.euro" text="Euro"/>:
-                        <% } %>
-                    </li>
-                    <li>
-                        <spring:message code="label.adminFees.value" text="Administrative Fees"/>:
-                        <% if (templateConfig == null) { %>
-                            <spring:message code="label.pending" text="Pending"/>
-                        <% } else { %>
-                            <%= templateConfig.valueFor(EventTemplate.Type.ADMIN_FEES) %>
-                            <spring:message code="label.euro" text="Euro"/>:
-                        <% } %>
+                        <ul>
+                            <li>
+                                <spring:message code="label.tuition.value" text="Tuition"/>:
+                                <% if (templateConfig == null) { %>
+                                <spring:message code="label.pending" text="Pending"/>
+                                <% } else { %>
+                                <%= templateConfig.valueFor(EventTemplate.Type.TUITION) %>
+                                <spring:message code="label.euro" text="Euro"/>:
+                                <% } %>
+                            </li>
+                            <li>
+                                <spring:message code="label.insurance.value" text="Insurance"/>:
+                                <% if (templateConfig == null) { %>
+                                <spring:message code="label.pending" text="Pending"/>
+                                <% } else { %>
+                                <%= templateConfig.valueFor(EventTemplate.Type.INSURANCE) %>
+                                <spring:message code="label.euro" text="Euro"/>:
+                                <% } %>
+                            </li>
+                            <li>
+                                <spring:message code="label.adminFees.value" text="Administrative Fees"/>:
+                                <% if (templateConfig == null) { %>
+                                <spring:message code="label.pending" text="Pending"/>
+                                <% } else { %>
+                                <%= templateConfig.valueFor(EventTemplate.Type.ADMIN_FEES) %>
+                                <spring:message code="label.euro" text="Euro"/>:
+                                <% } %>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
 
