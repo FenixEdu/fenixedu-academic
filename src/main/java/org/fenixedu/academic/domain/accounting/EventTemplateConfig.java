@@ -32,8 +32,6 @@ import java.util.stream.Stream;
 
 public class EventTemplateConfig extends EventTemplateConfig_Base {
 
-    private DateTimeFormatter DT_FORMATTER = DateTimeFormat.forPattern("dd/MM/yyyy");
-
     EventTemplateConfig(final EventTemplate eventTemplate, final DateTime applyFrom, final DateTime applyUntil,
                         final JsonObject config) {
         setEventTemplate(eventTemplate);
@@ -109,7 +107,7 @@ public class EventTemplateConfig extends EventTemplateConfig_Base {
                             final JsonObject config = getConfig().getAsJsonObject(type.name());
                             final Map<LocalDate, Money> dueDateAmountMap = new TreeMap<>();
                             final JsonObject byECTS = config.getAsJsonObject("byECTS");
-                            dueDateAmountMap.put(new LocalDate().plusDays(JsonUtils.getInt(byECTS, "")),
+                            dueDateAmountMap.put(new LocalDate().plusDays(JsonUtils.getInt(byECTS, "daysToPay")),
                                     new Money(byECTS.get("value").getAsString()).multiply(new BigDecimal(enrolment.getEctsCredits().doubleValue())));
                             final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
                             final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
@@ -149,7 +147,7 @@ public class EventTemplateConfig extends EventTemplateConfig_Base {
     private Map<LocalDate, Money> toDueDateAmountMap(final JsonObject json) {
         final Map<LocalDate, Money> dueDateAmountMap = new TreeMap<>();
         json.entrySet().forEach(e -> {
-            dueDateAmountMap.put(DT_FORMATTER.parseLocalDate(e.getKey()), new Money(e.getValue().getAsString()));
+            dueDateAmountMap.put(DateTimeFormat.forPattern("dd/MM/yyyy").parseLocalDate(e.getKey()), new Money(e.getValue().getAsString()));
         });
         return dueDateAmountMap;
     }
