@@ -72,7 +72,7 @@ public class CustomEvent extends CustomEvent_Base {
             getConfigObject().get("penaltyAmountMap").getAsJsonObject().entrySet().stream()
                     .forEach(entry -> {
                         final LocalDate localDate = LocalDate.parse(entry.getKey(), dateTimeFormatter);
-                        final Money value = Money.valueOf(entry.getValue().getAsLong());
+                        final Money value = new Money(entry.getValue().getAsString());
                         penaltyAmountMap.put(localDate, value);
                     });
             return penaltyAmountMap;
