@@ -33,6 +33,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 
+@Deprecated
 public class IRSDeclaration extends AdministrativeOfficeDocument {
 
     protected IRSDeclaration(final IDocumentRequest documentRequest) {

@@ -1089,17 +1089,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         throw new DomainException("phd.PhdIndividualProgramProcess.cannot.modify.destiny");
     }
 
-    final public boolean hasInsuranceDebts(final ExecutionYear executionYear) {
-        return hasAnyNotPayedInsuranceEventUntil(executionYear);
-    }
-
     final public boolean hasAdministrativeOfficeFeeAndInsuranceDebts(final AdministrativeOffice office,
             final ExecutionYear executionYear) {
         return hasAnyNotPayedAdministrativeOfficeFeeAndInsuranceEventUntil(office, executionYear);
-    }
-
-    private boolean hasAnyNotPayedInsuranceEventUntil(final ExecutionYear executionYear) {
-        return getPerson().getNotCancelledInsuranceEventsUntil(executionYear).stream().anyMatch(Event::isInDebt);
     }
 
     private boolean hasAnyNotPayedAdministrativeOfficeFeeAndInsuranceEventUntil(final AdministrativeOffice office,

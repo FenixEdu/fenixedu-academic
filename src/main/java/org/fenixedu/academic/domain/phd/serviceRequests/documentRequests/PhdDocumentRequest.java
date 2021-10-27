@@ -118,19 +118,6 @@ public abstract class PhdDocumentRequest extends PhdDocumentRequest_Base impleme
         }
     }
 
-    protected void assertPayedEvents(final ExecutionYear executionYear) {
-        if (executionYear != null) {
-            if (getPhdIndividualProgramProcess().hasInsuranceDebts(executionYear)) {
-                throw new PhdDomainOperationException("DocumentRequest.registration.has.not.payed.insurance.fees");
-            }
-
-            if (getPhdIndividualProgramProcess().hasAdministrativeOfficeFeeAndInsuranceDebts(getAdministrativeOffice(),
-                    executionYear)) {
-                throw new PhdDomainOperationException("DocumentRequest.registration.has.not.payed.administrative.office.fees");
-            }
-        }
-    }
-
     @Override
     public boolean isDownloadPossible() {
         return getLastGeneratedDocument() != null;

@@ -75,21 +75,8 @@ public class AcademicAdminOfficeExtraordinarySeasonBolonhaStudentEnrolmentDA ext
     }
 
     protected boolean hasAnyAdministrativeOfficeFeeAndInsuranceInDebt(final Student student, final ExecutionYear executionYear) {
-        for (final Event event : student.getPerson().getEventsSet()) {
-
-            if (event instanceof AnnualEvent) {
-                final AnnualEvent annualEvent = (AnnualEvent) event;
-                if (annualEvent.getExecutionYear().isAfter(executionYear)) {
-                    continue;
-                }
-            }
-
-            if ((event instanceof AdministrativeOfficeFeeAndInsuranceEvent || event instanceof InsuranceEvent) && event.isOpen()) {
-                return true;
-            }
-        }
-
-        return false;
+        return student.getPerson().hasAnyAdministrativeOfficeFeeDebtUntil(executionYear) ||
+                student.getPerson().hasAnyInsuranceDebtUntil(executionYear);
     }
 
     @Override

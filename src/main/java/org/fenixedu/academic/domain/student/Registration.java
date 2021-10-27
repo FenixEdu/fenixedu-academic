@@ -75,6 +75,7 @@ import org.fenixedu.academic.domain.WrittenTest;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.accounting.EnrolmentBlocker;
+import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import org.fenixedu.academic.domain.accounting.events.EnrolmentOutOfPeriodEvent;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
@@ -2553,13 +2554,7 @@ public class Registration extends Registration_Base {
     }
 
     private boolean hasAnyNotPayedInsuranceEvents() {
-        for (final InsuranceEvent event : getPerson().getNotCancelledInsuranceEvents()) {
-            if (event.isInDebt()) {
-                return true;
-            }
-        }
-
-        return false;
+        return getPerson().getNotCancelledInsuranceEvents().stream().anyMatch(Event::isInDebt);
     }
 
     private boolean hasAnyNotPayedAdministrativeOfficeFeeAndInsuranceEvents(final AdministrativeOffice office) {
@@ -2579,16 +2574,6 @@ public class Registration extends Registration_Base {
                 return true;
             }
         }
-        return false;
-    }
-
-    private boolean hasAnyNotPayedInsuranceEventUntil(final ExecutionYear executionYear) {
-        for (final InsuranceEvent event : getPerson().getNotCancelledInsuranceEventsUntil(executionYear)) {
-            if (event.isInDebt()) {
-                return true;
-            }
-        }
-
         return false;
     }
 
@@ -2869,10 +2854,6 @@ public class Registration extends Registration_Base {
 
     final public boolean hasGratuityDebts(final ExecutionYear executionYear) {
         return hasAnyNotPayedGratuityEventUntil(executionYear);
-    }
-
-    final public boolean hasInsuranceDebts(final ExecutionYear executionYear) {
-        return hasAnyNotPayedInsuranceEventUntil(executionYear);
     }
 
     final public boolean hasAdministrativeOfficeFeeAndInsuranceDebts(final AdministrativeOffice office,
