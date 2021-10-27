@@ -217,6 +217,11 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
         return true;
     }
 
+    @Override
+    public boolean isToApplyInterest() {
+        return true;
+    }
+
     public boolean isDfaGratuityEvent() {
         return false;
     }

@@ -170,7 +170,7 @@ public class FenixEduAcademicConfiguration {
     }
 
     public static boolean isToUseGlobalInterestRateTableForEventPenalties(Event event) {
-        return useGlobalInterestRateTableForEventPenalties && event.isGratuity();
+        return useGlobalInterestRateTableForEventPenalties && event.isToApplyInterest();
     }
 
     public static void setUseGlobalInterestRateTableForEventPenalties(boolean value) {
