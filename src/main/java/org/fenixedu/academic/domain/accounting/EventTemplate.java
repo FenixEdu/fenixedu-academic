@@ -30,6 +30,8 @@ public class EventTemplate extends EventTemplate_Base implements Comparable<Even
                     dataByExecutionYear.setAllowedSemesterForEnrolments(templateConfig.getSemester());
 
                     dataByExecutionYear.checkEnrolmentsConformToSettings();
+
+                    templateConfig.updateEventsFor(dataByExecutionYear);
                 }
             }
         });
