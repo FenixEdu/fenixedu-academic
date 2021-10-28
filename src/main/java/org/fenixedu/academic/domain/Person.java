@@ -36,11 +36,14 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.google.common.collect.Streams;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.accounting.AcademicEvent;
+import org.fenixedu.academic.domain.accounting.CustomEvent;
 import org.fenixedu.academic.domain.accounting.Entry;
 import org.fenixedu.academic.domain.accounting.Event;
+import org.fenixedu.academic.domain.accounting.EventTemplate;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.PaymentCode;
 import org.fenixedu.academic.domain.accounting.PaymentCodeType;
@@ -105,6 +108,7 @@ import org.fenixedu.bennu.core.domain.exceptions.BennuCoreDomainException;
 import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.json.JsonUtils;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.commons.i18n.LocalizedString;
@@ -120,6 +124,7 @@ import com.google.common.base.Strings;
 
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 public class Person extends Person_Base {
 
@@ -849,31 +854,75 @@ public class Person extends Person_Base {
         return hasInsuranceEventFor(executionYear) || hasAdministrativeOfficeFeeInsuranceEventFor(executionYear);
     }
 
-    public Set<InsuranceEvent> getNotCancelledInsuranceEvents() {
-        return getEventsByEventType(EventType.INSURANCE).stream()
+    public Set<Event> getNotCancelledInsuranceEvents() {
+        final Stream<InsuranceEvent> insuranceEventStream = getEventsByEventType(EventType.INSURANCE).stream()
                 .map(event -> (InsuranceEvent) event)
-                .filter(specificEvent -> !specificEvent.isCancelled())
-                .collect(Collectors.toSet());
-    }
+                .filter(specificEvent -> !specificEvent.isCancelled());
 
-    public Set<InsuranceEvent> getNotCancelledInsuranceEventsUntil(final ExecutionYear executionYear) {
-        return getEventsByEventType(EventType.INSURANCE).stream()
-                .map(event -> (InsuranceEvent) event)
-                .filter(specificEvent -> !specificEvent.isCancelled())
-                .filter(specificEvent -> specificEvent.getExecutionYear().isBeforeOrEquals(executionYear))
-                .collect(Collectors.toSet());
-    }
+        final Stream<CustomEvent> customEventStream = getEventsByEventType(EventType.CUSTOM).stream()
+                .map(CustomEvent.class::cast)
+                .filter(event -> !event.isCancelled())
+                .filter(event -> EventTemplate.Type.INSURANCE.name().equals(JsonUtils.get(event.getConfigObject(), "type")));
 
-    public InsuranceEvent getInsuranceEventFor(final ExecutionYear executionYear) {
-        return getEventsByEventType(EventType.INSURANCE).stream()
-                .map(event -> (InsuranceEvent) event)
-                .filter(insuranceEvent -> !insuranceEvent.isCancelled())
-                .filter(insuranceEvent -> insuranceEvent.isFor(executionYear))
-                .findAny().orElse(null);
+        return Streams.concat(insuranceEventStream, customEventStream).collect(Collectors.toSet());
     }
 
     public boolean hasInsuranceEventFor(final ExecutionYear executionYear) {
-        return getInsuranceEventFor(executionYear) != null;
+        final boolean anyMatch = getEventsByEventType(EventType.INSURANCE).stream()
+                .map(event -> (InsuranceEvent) event)
+                .filter(insuranceEvent -> !insuranceEvent.isCancelled())
+                .anyMatch(insuranceEvent -> insuranceEvent.isFor(executionYear));
+        if (anyMatch) {
+            return true;
+        } else {
+            return getEventsByEventType(EventType.CUSTOM).stream()
+                    .map(CustomEvent.class::cast)
+                    .filter(event -> !event.isCancelled())
+                    .filter(event -> EventTemplate.Type.INSURANCE.name().equals(JsonUtils.get(event.getConfigObject(), "type")))
+                    .anyMatch(event -> {
+                        final String executionYearID = event.getConfigObject().get("executionYear").getAsString();
+                        return executionYear.getExternalId().equals(executionYearID);
+                    });
+        }
+    }
+
+    public boolean hasAnyInsuranceDebtUntil(final ExecutionYear executionYear) {
+        final boolean anyMatch = getEventsByEventType(EventType.INSURANCE).stream()
+                .map(event -> (InsuranceEvent) event)
+                .filter(insuranceEvent -> !insuranceEvent.getExecutionYear().isAfterOrEquals(executionYear))
+                .anyMatch(insuranceEvent -> insuranceEvent.isInDebt());
+        if (anyMatch) {
+            return true;
+        } else {
+            return getEventsByEventType(EventType.CUSTOM).stream()
+                    .map(CustomEvent.class::cast)
+                    .filter(event -> !event.isCancelled())
+                    .filter(event -> EventTemplate.Type.INSURANCE.name().equals(JsonUtils.get(event.getConfigObject(), "type")))
+                    .anyMatch(event -> {
+                        final ExecutionYear eventExecutionYear = JsonUtils.toDomainObject(event.getConfigObject(), "executionYear");
+                        return !eventExecutionYear.isAfter(executionYear) && event.isInDebt();
+                    });
+        }
+    }
+
+    public boolean hasAnyGratuityDebtUntil(final ExecutionYear executionYear) {
+        final boolean anyMatch = getEventsSet().stream()
+                .filter(event -> event.isGratuity())
+                .map(GratuityEvent.class::cast)
+                .filter(gratuityEvent -> !gratuityEvent.getExecutionYear().isAfter(executionYear))
+                .anyMatch(event -> event.isInDebt());
+        if (anyMatch) {
+            return true;
+        } else {
+            return getEventsByEventType(EventType.CUSTOM).stream()
+                    .map(CustomEvent.class::cast)
+                    .filter(event -> !event.isCancelled())
+                    .filter(event -> EventTemplate.Type.TUITION.name().equals(JsonUtils.get(event.getConfigObject(), "type")))
+                    .anyMatch(event -> {
+                        final ExecutionYear eventExecutionYear = JsonUtils.toDomainObject(event.getConfigObject(), "executionYear");
+                        return !eventExecutionYear.isAfter(executionYear) && event.isInDebt();
+                    });
+        }
     }
 
     public Set<AdministrativeOfficeFeeAndInsuranceEvent> getNotCancelledAdministrativeOfficeFeeAndInsuranceEvents(
@@ -908,15 +957,42 @@ public class Person extends Person_Base {
     }
 
     private boolean hasAdministrativeOfficeFeeEventFor(final ExecutionYear executionYear) {
-        return getAdministrativeOfficeFeeEventFor(executionYear) != null;
+        final boolean anyMatch = getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE).stream()
+                .map(event -> (AdministrativeOfficeFeeEvent) event)
+                .filter(administrativeOfficeFeeEvent -> !administrativeOfficeFeeEvent.isCancelled())
+                .anyMatch(administrativeOfficeFeeEvent -> administrativeOfficeFeeEvent.isFor(executionYear));
+
+        if (anyMatch) {
+            return true;
+        } else {
+            return getEventsByEventType(EventType.CUSTOM).stream()
+                    .map(CustomEvent.class::cast)
+                    .filter(event -> !event.isCancelled())
+                    .filter(event -> EventTemplate.Type.ADMIN_FEES.name().equals(JsonUtils.get(event.getConfigObject(), "type")))
+                    .anyMatch(event -> {
+                        final String executionYearID = event.getConfigObject().get("executionYear").getAsString();
+                        return executionYear.getExternalId().equals(executionYearID);
+                    });
+        }
     }
 
-    private AdministrativeOfficeFeeEvent getAdministrativeOfficeFeeEventFor(final ExecutionYear executionYear) {
-            return getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE).stream()
-                    .map(event -> (AdministrativeOfficeFeeEvent) event)
-                    .filter(administrativeOfficeFeeEvent -> !administrativeOfficeFeeEvent.isCancelled())
-                    .filter(administrativeOfficeFeeEvent -> administrativeOfficeFeeEvent.isFor(executionYear))
-                    .findAny().orElse(null);
+    public boolean hasAnyAdministrativeOfficeFeeDebtUntil(final ExecutionYear executionYear) {
+        final boolean anyMatch = getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE).stream()
+                .map(event -> (AdministrativeOfficeFeeEvent) event)
+                .filter(administrativeOfficeFeeEvent -> !administrativeOfficeFeeEvent.getExecutionYear().isAfterOrEquals(executionYear))
+                .anyMatch(administrativeOfficeFeeEvent -> administrativeOfficeFeeEvent.isInDebt());
+        if (anyMatch) {
+            return true;
+        } else {
+            return getEventsByEventType(EventType.CUSTOM).stream()
+                    .map(CustomEvent.class::cast)
+                    .filter(event -> !event.isCancelled())
+                    .filter(event -> EventTemplate.Type.ADMIN_FEES.name().equals(JsonUtils.get(event.getConfigObject(), "type")))
+                    .anyMatch(event -> {
+                        final ExecutionYear eventExecutionYear = JsonUtils.toDomainObject(event.getConfigObject(), "executionYear");
+                        return !eventExecutionYear.isAfter(executionYear) && event.isInDebt();
+                    });
+        }
     }
 
     public Set<Event> getEventsSupportingPaymentByOtherParties() {

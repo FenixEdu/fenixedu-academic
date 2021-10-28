@@ -1122,8 +1122,7 @@ public class Student extends Student_Base {
     }
 
     public boolean hasValidInsuranceEvent() {
-        return getPerson().getInsuranceEventFor(ExecutionYear.readCurrentExecutionYear()) != null
-                && !getPerson().getInsuranceEventFor(ExecutionYear.readCurrentExecutionYear()).isCancelled();
+        return getPerson().hasInsuranceEventFor(ExecutionYear.readCurrentExecutionYear());
     }
 
     public List<PersonalInformationBean> getPersonalInformationsWithMissingInformation() {
