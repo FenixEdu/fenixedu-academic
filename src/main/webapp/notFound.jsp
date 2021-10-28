@@ -18,6 +18,7 @@
     along with FenixEdu Academic.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
+<%@ page import="org.fenixedu.bennu.core.util.CoreConfiguration" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
 response.setStatus(404);
@@ -76,7 +77,7 @@ response.setStatus(404);
 			<p>${portal.message('resources.GlobalResources', 'error.message.resource.not.found.message')}</p>
 			<c:if test="${empty LOGGED_USER_ATTRIBUTE}">
 				<br />
-				<p><a href="${pageContext.request.contextPath}/login">Login</a></p>
+				<p><a href="${pageContext.request.contextPath}/login?callback=<%= CoreConfiguration.getConfiguration().applicationUrl() %>${pageContext.request.getAttribute("javax.servlet.error.request_uri")}">Login</a></p>
 			</c:if>
 		</div>
 	</div>
