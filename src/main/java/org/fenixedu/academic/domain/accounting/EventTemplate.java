@@ -1,5 +1,6 @@
 package org.fenixedu.academic.domain.accounting;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.fenixedu.academic.domain.student.RegistrationDataByExecutionYear;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -29,13 +30,11 @@ public class EventTemplate extends EventTemplate_Base implements Comparable<Even
                     dataByExecutionYear.setAllowedSemesterForEnrolments(templateConfig.getSemester());
 
                     dataByExecutionYear.checkEnrolmentsConformToSettings();
+
+                    templateConfig.updateEventsFor(dataByExecutionYear);
                 }
             }
         });
-    }
-
-    public enum Type {
-        TUITION, INSURANCE, ADMIN_FEES
     }
 
     public EventTemplate(final String code, final LocalizedString title, final LocalizedString description) {
@@ -46,6 +45,15 @@ public class EventTemplate extends EventTemplate_Base implements Comparable<Even
         setCode(code);
         setTitle(title);
         setDescription(description);
+    }
+
+    public enum Type {
+        TUITION, INSURANCE, ADMIN_FEES;
+
+        public boolean isType(final CustomEvent event) {
+            final JsonElement type = event.getConfigObject().get("type");
+            return type != null && !type.isJsonNull() && type.getAsString().equals(name());
+        }
     }
 
     public EventTemplateConfig createConfig(final DateTime applyFrom, final DateTime applyUntil,
@@ -90,6 +98,16 @@ public class EventTemplate extends EventTemplate_Base implements Comparable<Even
     public int compareTo(final EventTemplate et) {
         final int t = Collator.getInstance().compare(getTitle().getContent(), et.getTitle().getContent());
         return t == 0 ? getExternalId().compareTo(et.getExternalId()) : t;
+    }
+
+    public void createEventsFor(final RegistrationDataByExecutionYear dataByExecutionYear) {
+        final DateTime enrolmentDate = dataByExecutionYear.getEnrolmentDate().toDateTimeAtStartOfDay();
+        if (enrolmentDate.plusDays(12).isBeforeNow()) {
+            final EventTemplateConfig templateConfig = getConfigFor(enrolmentDate);
+            if (templateConfig != null) {
+                templateConfig.createEventsFor(dataByExecutionYear);
+            }
+        }
     }
 
 }
