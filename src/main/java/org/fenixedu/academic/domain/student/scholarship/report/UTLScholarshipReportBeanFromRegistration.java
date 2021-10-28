@@ -25,10 +25,13 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Stream;
 
+import com.google.common.collect.Streams;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -36,11 +39,16 @@ import org.fenixedu.academic.domain.IEnrolment;
 import org.fenixedu.academic.domain.Qualification;
 import org.fenixedu.academic.domain.QualificationType;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.accounting.CustomEvent;
 import org.fenixedu.academic.domain.accounting.Event;
+import org.fenixedu.academic.domain.accounting.EventTemplate;
+import org.fenixedu.academic.domain.accounting.EventType;
+import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.RegistrationDataByExecutionYear;
 import org.fenixedu.academic.domain.student.RegistrationRegimeType;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
@@ -51,6 +59,7 @@ import org.fenixedu.academic.domain.studentCurriculum.Dismissal;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.json.JsonUtils;
 import org.fenixedu.commons.spreadsheet.Spreadsheet;
 import org.fenixedu.commons.spreadsheet.Spreadsheet.Row;
 import org.joda.time.DateTime;
@@ -310,10 +319,15 @@ public class UTLScholarshipReportBeanFromRegistration implements Serializable, I
             return Money.ZERO;
         }
 
-        StudentCurricularPlan lastStudentCurricularPlan = registration.getLastStudentCurricularPlan();
-
-        return lastStudentCurricularPlan.getGratuityEvent(readCurrentExecutionYear(), GratuityEventWithPaymentPlan.class).map
-                        (Event::getOriginalAmountToPay).findAny().orElse(Money.ZERO);
+        if (!registration.getDegree().isEmpty()) {
+            final Stream<Event> eventsFor = registration.getGratuityEventsFor(readCurrentExecutionYear());
+            final Event event = eventsFor.sorted(Comparator.comparing(Event::getWhenOccured).reversed())
+                    .findFirst().orElse(null);
+            if (event != null) {
+                return event.getOriginalAmountToPay();
+            }
+        }
+        return Money.ZERO;
     }
 
     @Override

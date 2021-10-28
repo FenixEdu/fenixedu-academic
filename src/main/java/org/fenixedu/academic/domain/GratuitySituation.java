@@ -45,6 +45,7 @@ import java.util.stream.Collectors;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * @author Tânia Pousão
  */
+@Deprecated
 public class GratuitySituation extends GratuitySituation_Base {
 
     // TODO: this should be configurable

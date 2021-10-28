@@ -25,11 +25,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -347,36 +349,15 @@ public class StudentLine implements java.io.Serializable {
             return Money.ZERO;
         }
 
-        return
-                getStudentCurricularPlan().getGratuityEvent(getForExecutionYear(), GratuityEventWithPaymentPlan.class).map
-                        (Event::getOriginalAmountToPay).findAny().orElse(Money.ZERO);
-
-    }
-
-    public LocalDate getFirstInstallmentPaymentLocalDate() {
-        if (!getRegistration().hasToPayGratuityOrInsurance()) {
-            return null;
-        }
-
-        GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan =
-                getStudentCurricularPlan().getGratuityEvent(getForExecutionYear(), GratuityEventWithPaymentPlan.class)
-                        .findAny().orElseThrow(UnsupportedOperationException::new);
-
-        Installment firstInstallment = gratuityEventWithPaymentPlan.getInstallments().iterator().next();
-
-        /*
-         * iterate the non adjusting accounting transactions until its paid
-         */
-        Money paidForFirstInstallment = Money.ZERO;
-        for (AccountingTransaction accountingTransaction : gratuityEventWithPaymentPlan.getNonAdjustingTransactions()) {
-            paidForFirstInstallment = paidForFirstInstallment.add(accountingTransaction.getAmountWithAdjustment());
-
-            if (paidForFirstInstallment.greaterOrEqualThan(firstInstallment.getAmount())) {
-                return accountingTransaction.getWhenRegistered().toLocalDate();
+        if (!registration.getDegree().isEmpty()) {
+            final Stream<Event> eventsFor = registration.getGratuityEventsFor(getForExecutionYear());
+            final Event event = eventsFor.sorted(Comparator.comparing(Event::getWhenOccured).reversed())
+                    .findFirst().orElse(null);
+            if (event != null) {
+                return event.getOriginalAmountToPay();
             }
         }
-
-        return firstInstallment.getEndDate().toLocalDate();
+        return Money.ZERO;
     }
 
     public String getRegime() {

@@ -37,6 +37,7 @@ import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.A
 
 import pt.ist.fenixframework.FenixFramework;
 
+@Deprecated
 public class SearchPaymentCodesByExecutionYear implements AutoCompleteProvider<PaymentCode> {
 
     @Override

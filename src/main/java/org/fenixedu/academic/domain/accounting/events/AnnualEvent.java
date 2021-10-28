@@ -102,21 +102,6 @@ public abstract class AnnualEvent extends AnnualEvent_Base {
         return true;
     }
 
-    private static List<AnnualEvent> readBy(final ExecutionYear executionYear, final EventState eventState) {
-        final List<AnnualEvent> result = new ArrayList<AnnualEvent>();
-        for (final Event event : executionYear.getAnnualEventsSet()) {
-            if (event.isInState(eventState)) {
-                result.add((AnnualEvent) event);
-            }
-        }
-
-        return result;
-    }
-
-    public static List<AnnualEvent> readNotPayedBy(final ExecutionYear executionYear) {
-        return readBy(executionYear, EventState.OPEN);
-    }
-
     static public Set<AccountingTransaction> readPaymentsFor(final Class<? extends AnnualEvent> eventClass,
             final YearMonthDay startDate, final YearMonthDay endDate) {
         final Set<AccountingTransaction> result = new HashSet<AccountingTransaction>();
