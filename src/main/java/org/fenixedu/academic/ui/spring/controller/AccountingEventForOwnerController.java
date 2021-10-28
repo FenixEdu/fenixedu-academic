@@ -81,7 +81,7 @@ public class AccountingEventForOwnerController extends AccountingController {
             return entrypoint();
         }
 
-        if (debtInterestCalculator.hasDueInterestAmount()) {
+        if (debtInterestCalculator.hasDueInterestAmount() || event.getDueDateAmountMap().size() > 1) {
             // has open interests
             final List<Interest> interests = getInterests(debtInterestCalculator);
             final List<Fine> fines = getFines(debtInterestCalculator);
