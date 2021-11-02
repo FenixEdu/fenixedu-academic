@@ -40,6 +40,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.google.common.collect.Streams;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
@@ -74,12 +75,14 @@ import org.fenixedu.academic.domain.WrittenEvaluationEnrolment;
 import org.fenixedu.academic.domain.WrittenTest;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
+import org.fenixedu.academic.domain.accounting.CustomEvent;
 import org.fenixedu.academic.domain.accounting.EnrolmentBlocker;
 import org.fenixedu.academic.domain.accounting.Event;
+import org.fenixedu.academic.domain.accounting.EventTemplate;
+import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import org.fenixedu.academic.domain.accounting.events.EnrolmentOutOfPeriodEvent;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
-import org.fenixedu.academic.domain.accounting.events.insurance.InsuranceEvent;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOfficeType;
 import org.fenixedu.academic.domain.candidacy.IngressionType;
@@ -124,6 +127,7 @@ import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.json.JsonUtils;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.spaces.domain.Space;
@@ -2544,13 +2548,7 @@ public class Registration extends Registration_Base {
     }
 
     private boolean hasAnyNotPayedGratuityEvents() {
-        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-            if (studentCurricularPlan.hasAnyNotPayedGratuityEvents()) {
-                return true;
-            }
-        }
-
-        return false;
+        return getGratuityEventsUntil(ExecutionYear.readCurrentExecutionYear()).anyMatch(Event::isInDebt);
     }
 
     private boolean hasAnyNotPayedInsuranceEvents() {
@@ -2888,12 +2886,43 @@ public class Registration extends Registration_Base {
     }
 
     final public boolean hasGratuityEvent(final ExecutionYear executionYear, final Class<? extends GratuityEvent> type) {
-        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-            if (studentCurricularPlan.hasGratuityEvent(executionYear, type)) {
-                return true;
-            }
-        }
-        return false;
+        return getGratuityEventsUntil(executionYear).anyMatch(type::isInstance);
+    }
+
+    final public Stream<Event> getGratuityEventsFor(final ExecutionYear executionYear) {
+        final Stream<GratuityEvent> gratuityEventStream = getStudentCurricularPlanStream()
+                .flatMap(scp -> scp.getGratuityEventsSet().stream())
+                .filter(gratuityEvent -> !gratuityEvent.isCancelled())
+                .filter(gratuityEvent -> gratuityEvent.getExecutionYear() == (executionYear));
+        final Stream<CustomEvent> customEventStream = getPerson().getEventsByEventType(EventType.CUSTOM).stream()
+                .map(CustomEvent.class::cast)
+                .filter(event -> !event.isCancelled())
+                .filter(event -> EventTemplate.Type.TUITION.name().equals(JsonUtils.get(event.getConfigObject(), "type")))
+                .filter(event -> {
+                    final ExecutionYear eventExecutionYear = JsonUtils.toDomainObject(event.getConfigObject(), "executionYear");
+                    final Registration registration = JsonUtils.toDomainObject(event.getConfigObject(), "registration");
+                    return eventExecutionYear == executionYear && registration == this;
+                });
+
+        return Streams.concat(gratuityEventStream, customEventStream);
+    }
+
+    final public Stream<Event> getGratuityEventsUntil(final ExecutionYear executionYear) {
+        final Stream<GratuityEvent> gratuityEventStream = getStudentCurricularPlanStream()
+                .flatMap(scp -> scp.getGratuityEventsSet().stream())
+                .filter(gratuityEvent -> !gratuityEvent.isCancelled())
+                .filter(gratuityEvent -> !gratuityEvent.getExecutionYear().isAfter(executionYear));
+        final Stream<CustomEvent> customEventStream = getPerson().getEventsByEventType(EventType.CUSTOM).stream()
+                .map(CustomEvent.class::cast)
+                .filter(event -> !event.isCancelled())
+                .filter(event -> EventTemplate.Type.TUITION.name().equals(JsonUtils.get(event.getConfigObject(), "type")))
+                .filter(event -> {
+                    final ExecutionYear eventExecutionYear = JsonUtils.toDomainObject(event.getConfigObject(), "executionYear");
+                    final Registration registration = JsonUtils.toDomainObject(event.getConfigObject(), "registration");
+                    return !eventExecutionYear.isAfter(executionYear) && registration == this;
+                });
+
+        return Streams.concat(gratuityEventStream, customEventStream);
     }
 
     final public boolean hasDissertationThesis() {

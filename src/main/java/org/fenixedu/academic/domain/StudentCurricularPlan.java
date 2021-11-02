@@ -41,6 +41,7 @@ import org.apache.commons.collections.Transformer;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
+import org.fenixedu.academic.domain.accounting.Event;
 import org.fenixedu.academic.domain.accounting.events.EnrolmentEvaluationEvent;
 import org.fenixedu.academic.domain.accounting.events.EnrolmentOutOfPeriodEvent;
 import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
@@ -1539,72 +1540,25 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return null;
     }
 
-    final public <T extends GratuityEvent> Stream<T> getGratuityEvent(final ExecutionYear executionYear,
-            final Class<T> type) {
-        return getGratuityEvent(executionYear, type, true);
-    }
-
-    final public <T extends GratuityEvent> Stream<T> getGratuityEvent(final ExecutionYear executionYear,
-            final Class<T> type, boolean excludeCanceled) {
-
-        Stream<T> eventStream = getGratuityEventsSet().stream().filter(g -> g.getExecutionYear().equals(executionYear))
-                .filter(type::isInstance).map(type::cast);
-
-        if (excludeCanceled) {
-            eventStream = eventStream.filter(g -> !g.isCancelled());
-        }
-
-        return eventStream;
-    }
-
     final public boolean hasGratuityEvent(final ExecutionYear executionYear, final Class<? extends GratuityEvent> type) {
-        return getGratuityEvent(executionYear, type).count() > 0;
-    }
-
-    final public Set<GratuityEvent> getNotPayedGratuityEvents() {
-        final Set<GratuityEvent> result = new HashSet<GratuityEvent>();
-
-        for (final GratuityEvent gratuityEvent : getGratuityEventsSet()) {
-            if (gratuityEvent.isInDebt()) {
-                result.add(gratuityEvent);
-            }
-        }
-
-        return result;
+        return getRegistration().hasGratuityEvent(executionYear, type);
     }
 
     final public boolean hasAnyNotPayedGratuityEvents() {
-        for (final GratuityEvent gratuityEvent : getGratuityEventsSet()) {
-            if (gratuityEvent.isInDebt()) {
-                return true;
-            }
-        }
-
-        return false;
+        return hasAnyNotPayedGratuityEventsUntil(ExecutionYear.readCurrentExecutionYear());
     }
 
     final public boolean hasAnyNotPayedGratuityEventsUntil(final ExecutionYear executionYear) {
-        for (final GratuityEvent gratuityEvent : getGratuityEventsSet()) {
-            if (gratuityEvent.getExecutionYear().isBeforeOrEquals(executionYear) && gratuityEvent.isInDebt()) {
-                return true;
-            }
-        }
-
-        return false;
+        return getRegistration().getGratuityEventsUntil(executionYear)
+                .anyMatch(Event::isInDebt);
     }
 
     /*
      * Check payed gratuity events until given execution year (exclusive)
      */
     final public boolean hasAnyNotPayedGratuityEventsForPreviousYears(final ExecutionYear limitExecutionYear) {
-
-        for (final GratuityEvent gratuityEvent : getGratuityEventsSet()) {
-            if (gratuityEvent.getExecutionYear().isBefore(limitExecutionYear) && gratuityEvent.isInDebt()) {
-                return true;
-            }
-        }
-
-        return false;
+        return getRegistration().getGratuityEventsUntil(limitExecutionYear.getPreviousExecutionYear())
+                .anyMatch(Event::isInDebt);
     }
 
     public int numberCompletedCoursesForSpecifiedDegrees(final Set<Degree> degrees) {
@@ -2585,14 +2539,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public boolean hasAnyGratuityEventFor(final ExecutionYear executionYear) {
-        for (final GratuityEvent gratuityEvent : getGratuityEventsSet()) {
-            if (gratuityEvent.isFor(executionYear)) {
-                return true;
-            }
-        }
-
-        return false;
-
+        return getRegistration().getGratuityEventsFor(executionYear).count() > 0;
     }
 
     public boolean hasAnyGratuitySituationFor(final ExecutionYear executionYear) {

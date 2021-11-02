@@ -33,6 +33,7 @@ import org.joda.time.YearMonthDay;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
+@Deprecated
 public class GratuityTransaction extends GratuityTransaction_Base {
 
     public GratuityTransaction() {
