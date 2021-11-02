@@ -230,7 +230,7 @@ public class EventTemplateConfig extends EventTemplateConfig_Base {
                 ? BundleUtil.getLocalizedString(Bundle.STUDENT, "label.custom.event." + type.name(),
                 registration.getDegree().getSigla(), executionYear.getName())
                 : BundleUtil.getLocalizedString(Bundle.STUDENT, "label.custom.event." + type.name(),
-                registration.getName());
+                executionYear.getName());
         return createEvent(type, registration, description, dueDateAmountMap, data -> {
             data.addProperty("executionYear", executionYear.getExternalId());
             if (type == EventTemplate.Type.TUITION) {
