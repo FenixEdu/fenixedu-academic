@@ -12691,3 +12691,12 @@ relation RegistrationDataByExecutionYearLimitEnrolmentsToSemester {
     }
 }
 
+relation EventSibsPayment {
+    accounting.Event playsRole event {
+        multiplicity 0..1;
+    }
+    .pt.ist.payments.domain.SibsPayment playsRole sibsPayment {
+        multiplicity *;
+    }
+}
+
