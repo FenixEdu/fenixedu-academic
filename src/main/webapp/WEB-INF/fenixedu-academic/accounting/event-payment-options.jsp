@@ -1,4 +1,5 @@
-<%--
+<%@ page import="org.fenixedu.bennu.core.groups.Group" %>
+<%@ page import="org.fenixedu.bennu.core.security.Authenticate" %><%--
 
     Copyright © 2017 Instituto Superior Técnico
 
@@ -34,11 +35,13 @@
     function setTotalAmount(amount) {
         $('#totalAmount').text(Math.round(amount*100)/100);
         $('#totalAmountInput').val(Math.round(amount*100)/100);
+        $('#totalAmountInputDPG').val(Math.round(amount*100)/100);
     }
 
     function recalculateAmount() {
         setTotalAmount(amount + getAmount("input.debt:checked"));
         $("#paySubmit").prop('disabled', ($('#totalAmountInput').val() <= 0));
+        $("#paySubmitDPG").prop('disabled', ($('#totalAmountInput').val() <= 0));
     }
 
     function getAmount(clazz) {
@@ -137,7 +140,7 @@
                 </div>
             </div>
         </c:if>
-
+<%--
         <c:if test="${not empty paymentCodeEntries}">
             <div class="row">
                 <div class="col-xs-12 col-md-4">
@@ -168,6 +171,7 @@
                 </div>
             </div>
         </c:if>
+--%>
 
         <div class="row">
             <div class="col-md-12">
@@ -233,24 +237,34 @@
             </div>
             <div class="col-md-4">
                 <section class="resume">
-                    <spring:url var="generatePaymentEntry" value="../{event}/pay">
+                    <spring:url var="generatePaymentEntry" value="../{event}/payDPG">
                         <spring:param name="event" value="${eventId}"/>
                     </spring:url>
+                    <dl class="sum">
+                        <dt><spring:message code="accounting.event.details.total" text="Total"/></dt>
+                        <dd><span id="totalAmount"></span><span>€</span></dd>
+                    </dl>
                     <form:form id="generatePaymentEntryForm" class="form-horizontal" method="POST" action="${generatePaymentEntry}">
                         ${csrf.field()}
-                        <dl class="sum">
-                            <dt><spring:message code="accounting.event.details.total" text="Total"/></dt>
-                            <dd><span id="totalAmount"></span><span>€</span></dd>
-                            <input id="totalAmountInput" name="totalAmount" hidden/>
-                        </dl>
+                        <input id="totalAmountInput" name="totalAmount" hidden/>
                         <div class="actions">
-                            <button id="paySubmit" class="btn btn-block btn-primary" type="submit">Obter dados de pagamento</button>
+                            <button id="paySubmit" class="btn btn-block btn-primary" type="submit"><spring:message code="accounting.event.get.payment.data" text="Proceed with payment"/></button>
                         </div>
                     </form:form>
+<% if (Group.parse("#betaTesters").isMember(Authenticate.getUser())) { %>
+                    <form:form class="form-horizontal" method="POST" action="${generatePaymentEntry}">
+                        ${csrf.field()}
+                        <input id="totalAmountInputDPG" name="totalAmount" hidden/>
+                        <div class="actions">
+                            <button id="paySubmitDPG" class="btn btn-block btn-primary" type="submit"><spring:message code="accounting.event.get.payment.data" text="Proceed with payment"/> DPG</button>
+                        </div>
+                    </form:form>
+<% } %>
                 </section>
             </div>
         </div>
 
+<%--
         <div class="row">
             <div class="col-md-12">
                 <header>
@@ -291,5 +305,6 @@
                 </table>
             </div>
         </div>
+--%>
     </main>
 </div>

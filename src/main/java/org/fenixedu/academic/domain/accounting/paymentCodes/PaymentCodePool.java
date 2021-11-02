@@ -1,26 +1,22 @@
 package org.fenixedu.academic.domain.accounting.paymentCodes;
 
-import java.util.Comparator;
+import com.google.common.collect.Lists;
+import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accounting.Event;
+import org.fenixedu.academic.domain.accounting.PaymentCodeState;
+import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.util.Money;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.joda.time.LocalDate;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
+
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
-import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.accounting.Event;
-import org.fenixedu.academic.domain.accounting.PaymentCode;
-import org.fenixedu.academic.domain.accounting.PaymentCodeState;
-import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.util.Money;
-import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.domain.User;
-import org.joda.time.LocalDate;
-
-import com.google.common.collect.Lists;
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.FenixFramework;
 
 public class PaymentCodePool extends PaymentCodePool_Base {
 
@@ -85,7 +81,8 @@ public class PaymentCodePool extends PaymentCodePool_Base {
 
     public EventPaymentCode getAvailablePaymentCode() {
         return getPaymentCodeStream().filter(paymentCodeIsUsed.negate())
-                .min(Comparator.comparing(PaymentCode::getWhenCreated))
+                //.min(Comparator.comparing(PaymentCode::getWhenCreated))
+                .findAny()
                 .orElseThrow(() -> new DomainException("no.available.payment.codes.in.pool"));
     }
 
