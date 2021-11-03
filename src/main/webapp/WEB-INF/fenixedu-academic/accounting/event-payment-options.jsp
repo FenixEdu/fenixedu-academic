@@ -86,6 +86,7 @@
 
         $('#paySubmitDPG').click(function () {
             $('#paySubmitDPG').attr('disabled', true);
+            $("#generatePaymentEntryForm").submit();
         });
 
         recalculateAmount();
@@ -208,7 +209,7 @@
                         <dt><spring:message code="accounting.event.details.total" text="Total"/></dt>
                         <dd><span id="totalAmount"></span><span>€</span></dd>
                     </dl>
-                    <form:form class="form-horizontal" method="POST" action="${generatePaymentEntry}">
+                    <form:form id="generatePaymentEntryForm" class="form-horizontal" method="POST" action="${generatePaymentEntry}">
                         ${csrf.field()}
                         <input id="totalAmountInputDPG" name="totalAmount" hidden/>
                         <div class="actions">
