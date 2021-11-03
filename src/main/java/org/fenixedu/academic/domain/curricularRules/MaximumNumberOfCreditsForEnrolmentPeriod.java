@@ -35,8 +35,6 @@ public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCre
 
     static final public double MAXIMUM_NUMBER_OF_CREDITS = FenixEduAcademicConfiguration.getConfiguration().getMaximumNumberOfCreditsForEnrolment();
 
-    static final public double MAXIMUM_NUMBER_OF_CREDITS_PARTIAL_TIME = MAXIMUM_NUMBER_OF_CREDITS / 2;
-
     /*
      * Previous value was 0.75d until 2008/2009. These constants should be rule
      * attributes, and to change this we should have a new rule. When
