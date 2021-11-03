@@ -18,20 +18,14 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Stream;
-
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Person;
+import org.fenixedu.academic.domain.accounting.accountingTransactions.detail.SibsTransactionDetail;
+import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.DomainExceptionWithLabelFormatter;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
-import org.fenixedu.academic.util.LabelFormatter;
+import org.fenixedu.academic.dto.accounting.SibsTransactionDetailDTO;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
@@ -41,6 +35,15 @@ import org.fenixedu.bennu.core.signals.Signal;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
+import pt.ist.payments.domain.SibsPayment;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Stream;
 
 /**
  * Two-ledged accounting transaction
@@ -75,6 +78,31 @@ public class AccountingTransaction extends AccountingTransaction_Base {
             AccountingTransaction transactionToAdjust) {
         this();
         init(responsibleUser, transactionToAdjust.getEvent(), debit, credit, transactionDetail, transactionToAdjust);
+    }
+
+    public AccountingTransaction(final SibsPayment sibsPayment) {
+        this();
+        final DateTime whenRegistered = getWhenRegisteredForEvent(sibsPayment);
+        final AccountingTransactionDetail detail = new AccountingTransactionDetail(whenRegistered,
+                PaymentMethod.getSibsPaymentMethod(), sibsPayment.getMbReference(), sibsPayment.getSibsTransactionId());
+        final Event event = sibsPayment.getEvent();
+        final EntryType entryType = event.getEntryType();
+        final Money amount = new Money(sibsPayment.getValue());
+        init(Authenticate.getUser(), sibsPayment.getEvent(), makeEntry(entryType, amount.negate(), event.getFromAccount()),
+                makeEntry(entryType, amount.negate(), event.getToAccount()), detail);
+        setSibsPayment(sibsPayment);
+    }
+
+    protected Entry makeEntry(EntryType entryType, Money amount, Account account) {
+        return new Entry(entryType, amount, account);
+    }
+
+    private DateTime getWhenRegisteredForEvent(final SibsPayment sibsPayment) {
+        final Event event = sibsPayment.getEvent();
+        final DateTime createdAt = sibsPayment.getCreatedAt();
+        final DebtInterestCalculator calculator = event.getDebtInterestCalculator(createdAt);
+        return calculator.getDueInterestAmount().add(calculator.getDueFineAmount()).signum() > 0 ? createdAt
+                : sibsPayment.getSibsLastTimestamp();
     }
 
     protected void init(User responsibleUser, Event event, Entry debit, Entry credit,

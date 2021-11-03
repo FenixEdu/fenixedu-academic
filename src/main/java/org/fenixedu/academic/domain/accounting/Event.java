@@ -57,6 +57,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.core.AbstractDomainObject;
+import pt.ist.payments.domain.SibsPaymentProgressStatus;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -1349,6 +1350,14 @@ public abstract class Event extends Event_Base {
             }
         }
         return ExecutionYear.readByDateTime(this.getWhenOccured());
+    }
+
+    @Atomic
+    public void updateTransactionsFromDPG() {
+        getSibsPaymentSet().stream()
+                .filter(sibsPayment -> sibsPayment.getStatus() == SibsPaymentProgressStatus.SUCCESSFUL)
+                .filter(sibsPayment -> sibsPayment.getAccountingTransaction() == null)
+                .forEach(sibsPayment -> new AccountingTransaction(sibsPayment));
     }
 
 }
