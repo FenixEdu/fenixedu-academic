@@ -165,8 +165,7 @@ public class AccountingEventForOwnerController extends AccountingController {
         } else {
             final SibsPaymentBean paymentBean = new SibsPaymentBean();
             paymentBean.setDescription(event.getDescription().toString());
-            final String value = totalAmount.toPlainString();
-            paymentBean.setValue(value.indexOf('.') >= 0 ? value : (value + ".00"));
+            paymentBean.setValue(String.format("%.2f", totalAmount.doubleValue()));
             paymentBean.setCurrency("EUR");
             paymentBean.setReturnAddress(CoreConfiguration.getConfiguration().applicationUrl()
                     + REQUEST_MAPPING + "/" + event.getExternalId() + "/waitForDPG");
@@ -194,6 +193,7 @@ public class AccountingEventForOwnerController extends AccountingController {
                              final Model model) {
         accessControlService.checkEventOwner(event);
         model.addAttribute("eventDetailsUrl", getEventDetailsUrl(event));
+        event.updateTransactionsFromDPG();
         return event.getSibsPaymentSet().stream()
                 .anyMatch(sibsPayment -> sibsPayment.getStatus() == SibsPaymentProgressStatus.POST_CHECKOUT)
                 ? view("waitForDPG") : redirectToEventDetails(event);
