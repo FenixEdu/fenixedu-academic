@@ -193,6 +193,7 @@ public class AccountingEventForOwnerController extends AccountingController {
                              final Model model) {
         accessControlService.checkEventOwner(event);
         model.addAttribute("eventDetailsUrl", getEventDetailsUrl(event));
+        event.updateTransactionsFromDPG();
         return event.getSibsPaymentSet().stream()
                 .anyMatch(sibsPayment -> sibsPayment.getStatus() == SibsPaymentProgressStatus.POST_CHECKOUT)
                 ? view("waitForDPG") : redirectToEventDetails(event);

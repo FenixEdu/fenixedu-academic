@@ -12700,3 +12700,11 @@ relation EventSibsPayment {
     }
 }
 
+relation AccountingTransactionSibsPayment {
+    accounting.AccountingTransaction playsRole accountingTransaction {
+        multiplicity 0..1;
+    }
+    .pt.ist.payments.domain.SibsPayment playsRole sibsPayment {
+        multiplicity 0..1;
+    }
+}
