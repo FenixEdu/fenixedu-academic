@@ -910,9 +910,7 @@ public class Person extends Person_Base {
     public boolean hasAnyGratuityDebtUntil(final ExecutionYear executionYear) {
         final boolean anyMatch = getEventsSet().stream()
                 .filter(event -> event.isGratuity())
-                .filter(event -> !event.isCancelled())
-                .map(GratuityEvent.class::cast)
-                .filter(gratuityEvent -> !gratuityEvent.getExecutionYear().isAfter(executionYear))
+                .filter(gratuityEvent -> !gratuityEvent.executionYearOf().isAfter(executionYear))
                 .anyMatch(event -> event.isInDebt());
         if (anyMatch) {
             return true;

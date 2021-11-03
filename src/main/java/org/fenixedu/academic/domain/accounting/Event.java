@@ -21,9 +21,11 @@ package org.fenixedu.academic.domain.accounting;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.DomainObjectUtil;
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator;
 import org.fenixedu.academic.domain.accounting.calculator.DebtInterestCalculator.Builder;
+import org.fenixedu.academic.domain.accounting.events.AnnualEvent;
 import org.fenixedu.academic.domain.accounting.events.EventExemption;
 import org.fenixedu.academic.domain.accounting.events.EventExemptionJustificationType;
 import org.fenixedu.academic.domain.accounting.events.PenaltyExemption;
@@ -47,6 +49,7 @@ import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.json.JsonUtils;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.signals.Signal;
 import org.joda.time.DateTime;
@@ -1334,4 +1337,18 @@ public abstract class Event extends Event_Base {
     public boolean isToApplyInterest() {
         return false;
     }
+
+    public ExecutionYear executionYearOf() {
+        if (this instanceof AnnualEvent) {
+            return ((AnnualEvent) this).getExecutionYear();
+        } else if (this instanceof CustomEvent) {
+            CustomEvent customEvent = (CustomEvent) this;
+            ExecutionYear executionYear = JsonUtils.toDomainObject(customEvent.getConfigObject(), "executionYear");
+            if (executionYear != null) {
+                return executionYear;
+            }
+        }
+        return ExecutionYear.readByDateTime(this.getWhenOccured());
+    }
+
 }
