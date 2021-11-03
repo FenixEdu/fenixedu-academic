@@ -165,7 +165,7 @@ public class AccountingEventForOwnerController extends AccountingController {
         } else {
             final SibsPaymentBean paymentBean = new SibsPaymentBean();
             paymentBean.setDescription(event.getDescription().toString());
-            paymentBean.setValue(String.format("%.2f", totalAmount.doubleValue()));
+            paymentBean.setValue(String.format("%.2f", totalAmount.doubleValue()).replace(',', '.'));
             paymentBean.setCurrency("EUR");
             paymentBean.setReturnAddress(CoreConfiguration.getConfiguration().applicationUrl()
                     + REQUEST_MAPPING + "/" + event.getExternalId() + "/waitForDPG");
