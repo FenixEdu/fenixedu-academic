@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -3196,7 +3197,13 @@ public class Registration extends Registration_Base {
     }
 
     public boolean isPartialRegime(final ExecutionYear executionYear) {
-        return getRegimeType(executionYear) == RegistrationRegimeType.PARTIAL_TIME;
+        final Optional<RegistrationDataByExecutionYear> data = getRegistrationDataByExecutionYearSet().stream()
+                .filter(rd -> rd.getExecutionYear() == executionYear)
+                .findAny();
+        if (data.isPresent()) {
+            return data.get().getMaxCreditsPerYear() != null;
+        }
+        return false;
     }
 
     public boolean isFullRegime(final ExecutionYear executionYear) {

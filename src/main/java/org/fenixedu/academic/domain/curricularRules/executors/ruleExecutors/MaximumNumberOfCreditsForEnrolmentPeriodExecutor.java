@@ -45,20 +45,6 @@ public class MaximumNumberOfCreditsForEnrolmentPeriodExecutor extends Curricular
         for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
         	accumulated += degreeModuleToEvaluate.getAccumulatedEctsCredits(executionSemester);
         }
-        final boolean isPartial = registration.isPartialRegime(executionYear);
-        if (isPartial) {
-        	for (final ExecutionSemester semester : executionYear.getExecutionPeriodsSet()) {
-        		if (semester != executionSemester) {
-        			accumulated += studentCurricularPlan.getRoot().getCurriculumLineStream()
-        				.filter(cl -> cl.isEnrolment())
-        				.map(cl -> (Enrolment) cl)
-        				.filter(e -> e.getExecutionPeriod() == semester)
-        				.filter(e -> !e.isAnnulled())
-        				.mapToDouble(e -> e.getEctsCredits())
-        				.sum();
-        		}
-        	}
-        }
 
         final double maxEcts = MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS;
 
