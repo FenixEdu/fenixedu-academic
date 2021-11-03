@@ -1,5 +1,4 @@
-<%@ page import="org.fenixedu.bennu.core.groups.Group" %>
-<%@ page import="org.fenixedu.bennu.core.security.Authenticate" %><%--
+<%--
 
     Copyright © 2017 Instituto Superior Técnico
 
@@ -34,14 +33,12 @@
 
     function setTotalAmount(amount) {
         $('#totalAmount').text(Math.round(amount*100)/100);
-        $('#totalAmountInput').val(Math.round(amount*100)/100);
         $('#totalAmountInputDPG').val(Math.round(amount*100)/100);
     }
 
     function recalculateAmount() {
         setTotalAmount(amount + getAmount("input.debt:checked"));
-        $("#paySubmit").prop('disabled', ($('#totalAmountInput').val() <= 0));
-        $("#paySubmitDPG").prop('disabled', ($('#totalAmountInput').val() <= 0));
+        $("#paySubmitDPG").prop('disabled', ($('#totalAmountInputDPG').val() <= 0));
     }
 
     function getAmount(clazz) {
@@ -87,9 +84,8 @@
             recalculateAmount();
         });
 
-        $('#paySubmit').click(function () {
-            $('#paySubmit').attr('disabled', true);
-            $("#generatePaymentEntryForm").submit();
+        $('#paySubmitDPG').click(function () {
+            $('#paySubmitDPG').attr('disabled', true);
         });
 
         recalculateAmount();
@@ -140,38 +136,6 @@
                 </div>
             </div>
         </c:if>
-<%--
-        <c:if test="${not empty paymentCodeEntries}">
-            <div class="row">
-                <div class="col-xs-12 col-md-4">
-                    <section class="reference-card">
-                        <c:set var="mostRecentEntry" value="${paymentCodeEntries[0]}"/>
-                        <h2><spring:message code="accounting.event.payment.last.reference.generated" text="Last Reference Generated"/></h2>
-                        <dl>
-                            <dt><spring:message code="accounting.event.payment.entity" text="Entity"/></dt>
-                            <dd><c:out value="${mostRecentEntry.paymentCode.entityCode}"/></dd>
-                        </dl>
-                        <dl>
-                            <dt><spring:message code="accounting.event.payment.reference" text="Reference"/></dt>
-                            <dd><c:out value="${mostRecentEntry.paymentCode.formattedCode}"/></dd>
-                        </dl>
-                        <dl>
-                            <dt><spring:message code="accounting.event.details.value" text="Value"/></dt>
-                            <dd><c:out value="${mostRecentEntry.amount}"/><span>€</span></dd>
-                        </dl>
-                        <dl>
-                            <dt><spring:message code="accounting.event.details.state" text="State"/></dt>
-                            <dd>${fr:message('resources.EnumerationResources',mostRecentEntry.paymentCode.state.qualifiedName)}</dd>
-                        </dl>
-                        <dl>
-                            <dt><spring:message code="accounting.event.details.creation.date" text="Creation Date"/></dt>
-                            <dd><time datetime="${mostRecentEntry.created.toString("yyyy-MM-dd HH:mm:ss")}">${mostRecentEntry.created.toString("dd/MM/yyyy HH:mm:ss")}</time></dd>
-                        </dl>
-                    </section>
-                </div>
-            </div>
-        </c:if>
---%>
 
         <div class="row">
             <div class="col-md-12">
@@ -244,67 +208,15 @@
                         <dt><spring:message code="accounting.event.details.total" text="Total"/></dt>
                         <dd><span id="totalAmount"></span><span>€</span></dd>
                     </dl>
-                    <form:form id="generatePaymentEntryForm" class="form-horizontal" method="POST" action="${generatePaymentEntry}">
-                        ${csrf.field()}
-                        <input id="totalAmountInput" name="totalAmount" hidden/>
-                        <div class="actions">
-                            <button id="paySubmit" class="btn btn-block btn-primary" type="submit"><spring:message code="accounting.event.get.payment.data" text="Proceed with payment"/></button>
-                        </div>
-                    </form:form>
-<% if (Group.parse("#betaTesters").isMember(Authenticate.getUser())) { %>
                     <form:form class="form-horizontal" method="POST" action="${generatePaymentEntry}">
                         ${csrf.field()}
                         <input id="totalAmountInputDPG" name="totalAmount" hidden/>
                         <div class="actions">
-                            <button id="paySubmitDPG" class="btn btn-block btn-primary" type="submit"><spring:message code="accounting.event.get.payment.data" text="Proceed with payment"/> DPG</button>
+                            <button id="paySubmitDPG" class="btn btn-block btn-primary" type="submit"><spring:message code="accounting.event.get.payment.data" text="Proceed with payment"/></button>
                         </div>
                     </form:form>
-<% } %>
                 </section>
             </div>
         </div>
-
-<%--
-        <div class="row">
-            <div class="col-md-12">
-                <header>
-                    <h2><spring:message code="accounting.event.payment.generated.payment.data" text="Generated Payment Data"/></h2>
-                </header>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th><spring:message code="accounting.event.details.creation.date" text="Creation Date"/></th>
-                        <th><spring:message code="accounting.event.payment.entity" text="Entity"/></th>
-                        <th><spring:message code="accounting.event.payment.reference" text="Reference"/></th>
-                        <th><spring:message code="accounting.event.details.value" text="Value"/></th>
-                        <th><spring:message code="accounting.event.details.state" text="State"/></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:if test="${empty paymentCodeEntries}">
-                        <tr>
-                            <td colspan="6"><spring:message code="accounting.event.payment.no.generated.payment.data" text="There are no generated payment data"/></td>
-                        </tr>
-                    </c:if>
-                    <c:if test="${not empty paymentCodeEntries}">
-                        <c:forEach var="entry" items="${paymentCodeEntries}">
-                            <tr data-id="${entry.externalId}">
-                                <td><time datetime="${entry.created.toString("yyyy-MM-dd HH:mm:ss")}">${entry.created.toString("dd/MM/yyyy HH:mm:ss")}</time></td>
-                                <td><c:out value="${entry.paymentCode.entityCode}"/></td>
-                                <td><c:out value="${entry.paymentCode.formattedCode}"/></td>
-                                <td><c:out value="${entry.amount}"/><span>€</span></td>
-                                <td>${fr:message('resources.EnumerationResources',entry.paymentCode.state.qualifiedName)}</td>
-                            </tr>
-                        </c:forEach>
-                    </c:if>
-                    </tbody>
-                </table>
-            </div>
-        </div>
---%>
     </main>
 </div>
