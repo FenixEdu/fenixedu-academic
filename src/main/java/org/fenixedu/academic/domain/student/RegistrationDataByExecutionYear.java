@@ -133,7 +133,7 @@ public class RegistrationDataByExecutionYear extends RegistrationDataByExecution
             throw new DomainException("error.student.not.allowed.to.enroll.in.semester.other.that", allowedSemester.getQualifiedName());
         }
         final Double maxCredits = getMaxCreditsPerYear();
-        if (maxCredits != null && maxCredits.doubleValue() > getRegistration().getStudentCurricularPlansSet().stream()
+        if (maxCredits != null && maxCredits.doubleValue() < getRegistration().getStudentCurricularPlansSet().stream()
                 .flatMap(scp -> scp.getEnrolmentStream())
                 .filter(enrolment -> enrolment.getExecutionYear() == getExecutionYear())
                 .mapToDouble(enrolment -> enrolment.getEctsCredits().doubleValue())
