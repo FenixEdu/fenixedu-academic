@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>fenixedu-academic</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>27.1.5</version>
     <packaging>jar</packaging>
 
     <name>FenixEdu Academic</name>
