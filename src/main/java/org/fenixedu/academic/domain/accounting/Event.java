@@ -1354,10 +1354,14 @@ public abstract class Event extends Event_Base {
 
     @Atomic
     public void updateTransactionsFromDPG() {
-        getSibsPaymentSet().stream()
+        final long c = getSibsPaymentSet().stream()
                 .filter(sibsPayment -> sibsPayment.getStatus() == SibsPaymentProgressStatus.SUCCESSFUL)
                 .filter(sibsPayment -> sibsPayment.getAccountingTransaction() == null)
-                .forEach(sibsPayment -> new AccountingTransaction(sibsPayment));
+                .map(sibsPayment -> new AccountingTransaction(sibsPayment))
+                .count();
+        if (c > 0) {
+            recalculateState(new DateTime());
+        }
     }
 
 }
