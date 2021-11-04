@@ -46,7 +46,7 @@
                     </li>
                     <li>
                         <spring:message code="label.registrationDate" text="Registration Date"/>:
-                        <%= dataByYear.getEnrolmentDate().toString("yyyy-MM-dd") %>
+                        <%= dataByYear.getEnrolmentDate() == null ? "" : dataByYear.getEnrolmentDate().toString("yyyy-MM-dd") %>
                     </li>
                     <li>
                         <spring:message code="label.enrolment.limit" text="Enrolment Limit"/>:
