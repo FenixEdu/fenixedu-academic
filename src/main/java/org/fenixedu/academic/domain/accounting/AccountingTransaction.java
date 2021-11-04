@@ -89,7 +89,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
         final EntryType entryType = event.getEntryType();
         final Money amount = new Money(sibsPayment.getValue());
         init(Authenticate.getUser(), sibsPayment.getEvent(), makeEntry(entryType, amount.negate(), event.getFromAccount()),
-                makeEntry(entryType, amount.negate(), event.getToAccount()), detail);
+                makeEntry(entryType, amount, event.getToAccount()), detail);
         setSibsPayment(sibsPayment);
     }
 
