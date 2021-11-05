@@ -124,9 +124,37 @@ public class EventTemplateConfig extends EventTemplateConfig_Base {
 
     private Map<LocalDate, Money> toDueDateAmountMap(final JsonObject json) {
         final Map<LocalDate, Money> dueDateAmountMap = new TreeMap<>();
+        final Money[] values = new Money[] { Money.ZERO, Money.ZERO };
         json.entrySet().forEach(e -> {
-            dueDateAmountMap.put(DateTimeFormat.forPattern("dd/MM/yyyy").parseLocalDate(e.getKey()), new Money(e.getValue().getAsString()));
+            final LocalDate date = DateTimeFormat.forPattern("dd/MM/yyyy").parseLocalDate(e.getKey());
+            final Money value = new Money(e.getValue().getAsString());
+            dueDateAmountMap.put(date, value);
+            values[0] = values[0].add(value);
+            if (date.toDateTimeAtStartOfDay().isBeforeNow()) {
+                values[1] = values[1].add(value);
+            }
         });
+        if (values[0].equals(values[1])) {
+            // all dates have passed... don't do anything else. Event will be created with fines
+        } else if (values[1].isZero()) {
+            // all is ok... nothing needs to be done.
+        } else {
+            dueDateAmountMap.keySet().stream()
+                    .filter(date -> date.toDateTimeAtStartOfDay().isBeforeNow())
+                    .forEach(date -> dueDateAmountMap.remove(date));
+            final int count = dueDateAmountMap.size();
+            if (count == 0) {
+                throw new Error("Should never happen... problem calculating adjusted due date amount map.");
+            }
+            final Money valueToDistribute = values[1];
+            final Money unitDistribution = valueToDistribute.divide(new BigDecimal(count));
+            dueDateAmountMap.replaceAll((date, value) -> value.add(unitDistribution));
+            final Money diff = valueToDistribute.subtract(unitDistribution.multiply(count));
+            if (diff.isPositive()) {
+                final LocalDate localDate = dueDateAmountMap.keySet().iterator().next();
+                dueDateAmountMap.put(localDate, dueDateAmountMap.get(localDate).add(diff));
+            }
+        }
         return dueDateAmountMap;
     }
 
