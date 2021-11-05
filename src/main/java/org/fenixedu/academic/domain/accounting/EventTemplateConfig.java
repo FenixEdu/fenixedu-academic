@@ -150,7 +150,7 @@ public class EventTemplateConfig extends EventTemplateConfig_Base {
             final Money unitDistribution = valueToDistribute.divide(new BigDecimal(count));
             dueDateAmountMap.replaceAll((date, value) -> value.add(unitDistribution));
             final Money diff = valueToDistribute.subtract(unitDistribution.multiply(count));
-            if (diff.isPositive()) {
+            if (!diff.isZero()) {
                 final LocalDate localDate = dueDateAmountMap.keySet().iterator().next();
                 dueDateAmountMap.put(localDate, dueDateAmountMap.get(localDate).add(diff));
             }
