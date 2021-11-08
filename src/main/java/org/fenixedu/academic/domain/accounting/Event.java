@@ -51,12 +51,16 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.json.JsonUtils;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.core.signals.DomainObjectEvent;
 import org.fenixedu.bennu.core.signals.Signal;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.DomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.core.AbstractDomainObject;
+import pt.ist.payments.domain.SibsPayment;
 import pt.ist.payments.domain.SibsPaymentProgressStatus;
 
 import java.math.BigDecimal;
@@ -1362,6 +1366,15 @@ public abstract class Event extends Event_Base {
         if (c > 0) {
             recalculateState(new DateTime());
         }
+    }
+
+    static {
+        Signal.registerWithoutTransaction(SibsPayment.SUCCESSFUL_PAYMENT, de -> {
+            FenixFramework.atomic(() -> {
+                final SibsPayment sibsPayment = ((DomainObjectEvent<SibsPayment>) de).getInstance();
+                sibsPayment.getEvent().updateTransactionsFromDPG();
+            });
+        });
     }
 
 }
