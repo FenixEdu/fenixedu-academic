@@ -7,6 +7,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
@@ -101,11 +102,14 @@ public class EventTemplate extends EventTemplate_Base implements Comparable<Even
     }
 
     public void createEventsFor(final RegistrationDataByExecutionYear dataByExecutionYear) {
-        final DateTime enrolmentDate = dataByExecutionYear.getEnrolmentDate().toDateTimeAtStartOfDay();
-        if (enrolmentDate.plusDays(12).isBeforeNow()) {
-            final EventTemplateConfig templateConfig = getConfigFor(enrolmentDate);
-            if (templateConfig != null) {
-                templateConfig.createEventsFor(dataByExecutionYear);
+        final LocalDate enrolmentDate = dataByExecutionYear.getEnrolmentDate();
+        if (enrolmentDate != null) {
+            final DateTime enrolmentDateTime = enrolmentDate.toDateTimeAtStartOfDay();
+            if (enrolmentDateTime.plusDays(12).isBeforeNow()) {
+                final EventTemplateConfig templateConfig = getConfigFor(enrolmentDateTime);
+                if (templateConfig != null) {
+                    templateConfig.createEventsFor(dataByExecutionYear);
+                }
             }
         }
     }
