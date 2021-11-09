@@ -143,6 +143,11 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
     }
 
     @Override
+    public boolean isToApplyInterest() {
+        return true;
+    }
+
+    @Override
     public boolean isTransferable() { return isOpen()  && !hasExternalScholarshipGratuityExemption(); }
 
     public boolean hasExternalScholarshipGratuityExemption() {
