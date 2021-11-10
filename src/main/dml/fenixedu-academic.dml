@@ -1354,6 +1354,8 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
         LocalDate whenSentLetter;
         protected DueDateAmountMap dueDateAmountMap;
         LocalDate eventStartDate;
+        boolean lapsed;
+        String extraInfo;
     }
 
         class accounting.CustomEvent extends accounting.Event {

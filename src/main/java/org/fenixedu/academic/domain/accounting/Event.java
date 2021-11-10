@@ -18,6 +18,9 @@
  */
 package org.fenixedu.academic.domain.accounting;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.DomainObjectUtil;
@@ -57,7 +60,6 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.core.AbstractDomainObject;
 import pt.ist.payments.domain.SibsPayment;
@@ -761,6 +763,34 @@ public abstract class Event extends Event_Base {
         }
         exempt(responsible, cancelJustification);
         forceCancel(responsible, cancelJustification);
+    }
+
+    public void markAsLapsed(final Person responsible, final String justification) {
+        if (isCancelled()) {
+            return;
+        }
+        if (!isOpen()) {
+            throw new DomainException("error.accounting.Event.only.open.events.can.be.cancelled");
+        }
+        setLapsed(true);
+        log("markAsLapsed", responsible.getUsername(), justification);
+    }
+
+    private void log(final String key, final String username, final String description) {
+        final JsonObject extraInfo = getExtraInfo() == null ? new JsonObject()
+                : new JsonParser().parse(getExtraInfo()).getAsJsonObject();
+        JsonArray logs = extraInfo.getAsJsonArray("logs");
+        if (logs == null) {
+            logs = new JsonArray();
+            extraInfo.add("logs", logs);
+        }
+        final JsonObject log = new JsonObject();
+        log.addProperty("key", key);
+        log.addProperty("username", username);
+        log.addProperty("description", description);
+        logs.add(log);
+        setExtraInfo(extraInfo.toString());
+
     }
 
     public boolean hasInstallments() {
