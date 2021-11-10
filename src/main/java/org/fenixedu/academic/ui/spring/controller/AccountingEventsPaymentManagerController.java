@@ -79,8 +79,8 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
 
     @Autowired
     public AccountingEventsPaymentManagerController(AccountingManagementService accountingManagementService,
-            AccountingManagementAccessControlService accountingManagementAccessControlService, ServletContext servletContext,
-            MessageSource messageSource) {
+                                                    AccountingManagementAccessControlService accountingManagementAccessControlService, ServletContext servletContext,
+                                                    MessageSource messageSource) {
         super(accountingManagementService, accountingManagementAccessControlService, servletContext, messageSource);
     }
 
@@ -102,7 +102,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
     @RequestMapping(value = "paymentReference", method = RequestMethod.GET)
     @ResponseBody
     public String getPaymentReference(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) DateTime date,
-            @RequestParam PaymentMethod paymentMethod) {
+                                      @RequestParam PaymentMethod paymentMethod) {
         return paymentMethod.getPaymentReference(date);
     }
 
@@ -125,16 +125,13 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
             model.addAttribute("annulAccountingTransactionBean", new AnnulAccountingTransactionBean((AccountingTransaction) transaction));
             model.addAttribute("event", event);
             return view("event-annul-transaction");
-        }
-        else if (transaction instanceof Exemption){
+        } else if (transaction instanceof Exemption) {
             try {
                 DeleteExemption.run((Exemption) transaction);
-            }
-            catch (DomainException e) {
+            } catch (DomainException e) {
                 ra.addFlashAttribute("error", e.getLocalizedMessage());
             }
-        }
-        else if (transaction instanceof Discount) {
+        } else if (transaction instanceof Discount) {
             try {
                 AccessControl.check(AcademicPredicates.MANAGE_STUDENT_PAYMENTS);
                 ((Discount) transaction).delete();
@@ -147,8 +144,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
             } catch (DomainException e) {
                 ra.addFlashAttribute("error", e.getLocalizedMessage());
             }
-        }
-        else {
+        } else {
             throw new UnsupportedOperationException(String.format("Can't delete unknown transaction %s%n", transaction.getClass
                     ().getSimpleName()));
         }
@@ -157,12 +153,11 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
 
     @RequestMapping(value = "{event}/deleteTransaction", method = RequestMethod.POST)
     public String deleteTransaction(@PathVariable Event event, User user, Model model,
-            @ModelAttribute AnnulAccountingTransactionBean annulAccountingTransactionBean, RedirectAttributes ra){
+                                    @ModelAttribute AnnulAccountingTransactionBean annulAccountingTransactionBean, RedirectAttributes ra) {
         accessControlService.checkAdvancedPaymentManager(event, user);
         try {
             AnnulAccountingTransaction.run(annulAccountingTransactionBean);
-        }
-        catch (DomainException e){
+        } catch (DomainException e) {
             model.addAttribute("error", e.getLocalizedMessage());
         } catch (RuntimeException re) {
             if (re.getCause() instanceof DomainException) {
@@ -203,8 +198,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
 
         try {
             accountingManagementService.depositAmount(event, Authenticate.getUser(), depositAmountBean);
-        }
-        catch (DomainException e) {
+        } catch (DomainException e) {
             model.addAttribute("error", e.getLocalizedMessage());
             return deposit(event, model);
         }
@@ -228,8 +222,31 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
 
         try {
             accountingManagementService.cancelEvent(event, user.getPerson(), justification);
+        } catch (DomainException e) {
+            model.addAttribute("error", e.getLocalizedMessage());
+            return cancel(event, user, model);
         }
-        catch (DomainException e) {
+
+        return redirectToEventDetails(event);
+    }
+
+    @RequestMapping(value = "{event}/markAsLapsed", method = RequestMethod.GET)
+    public String markAsLapsed(@PathVariable Event event, User user, Model model) {
+        accessControlService.checkAdvancedPaymentManager(event, user);
+        model.addAttribute("eventDetailsUrl", getEventDetailsUrl(event));
+        model.addAttribute("person", event.getPerson());
+        model.addAttribute("event", event);
+
+        return view("event-markAsLapsed");
+    }
+
+    @RequestMapping(value = "{event}/markAsLapsed", method = RequestMethod.POST)
+    public String markAsLapsedEvent(@PathVariable Event event, User user, Model model, @RequestParam String justification) {
+        accessControlService.checkAdvancedPaymentManager(event, user);
+
+        try {
+            accountingManagementService.markAsLapsed(event, user.getPerson(), justification);
+        } catch (DomainException e) {
             model.addAttribute("error", e.getLocalizedMessage());
             return cancel(event, user, model);
         }
@@ -264,13 +281,12 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
     }
 
     @RequestMapping(value = "{event}/createExemption", method = RequestMethod.POST)
-    public String createExemption(@PathVariable Event event, User user, Model model, @ModelAttribute CreateExemptionBean createExemptionBean){
+    public String createExemption(@PathVariable Event event, User user, Model model, @ModelAttribute CreateExemptionBean createExemptionBean) {
         accessControlService.checkAdvancedPaymentManager(event, user);
 
         try {
             accountingManagementService.exemptEvent(event, user.getPerson(), createExemptionBean);
-        }
-        catch (DomainException e) {
+        } catch (DomainException e) {
             model.addAttribute("error", e.getLocalizedMessage());
             return exempt(event, user, model);
         }
@@ -307,7 +323,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
     }
 
     @RequestMapping(value = "{event}/refundExcessPayment", method = RequestMethod.POST)
-    public String refundExcessPayment(final @PathVariable Event event, final User user, final Model model){
+    public String refundExcessPayment(final @PathVariable Event event, final User user, final Model model) {
         return doRefund(event, user, model, () -> accountingManagementService.refundExcessPayment(event, user, null));
     }
 
@@ -319,11 +335,11 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
             model.addAttribute("error", e.getLocalizedMessage());
             return refund(event, user, model);
         }
-        return redirectToEventDetails(event);        
+        return redirectToEventDetails(event);
     }
 
     @RequestMapping(value = "{person}/multiplePayments/select", method = RequestMethod.GET)
-    public String prepareMultiplePayments(@PathVariable Person person, HttpSession httpSession, Model model, User loggedUser){
+    public String prepareMultiplePayments(@PathVariable Person person, HttpSession httpSession, Model model, User loggedUser) {
         accessControlService.isPaymentManager(loggedUser);
 
         // Show penalties first then order by due date
@@ -357,13 +373,13 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
 
     private TreeMap<Event, List<EntryDTO>> buildEventEntryDTOMap(List<EntryDTO> entryDTOS) {
         return entryDTOS.stream().collect(Collectors.groupingBy(EntryDTO::getEvent,
-                        () -> new TreeMap<>(Comparator.comparing(Event::getWhenOccured).thenComparing(Event::getExternalId)), Collectors.toList()));
+                () -> new TreeMap<>(Comparator.comparing(Event::getWhenOccured).thenComparing(Event::getExternalId)), Collectors.toList()));
     }
 
     @RequestMapping(value = "{person}/multiplePayments/confirm", method = RequestMethod.POST)
     public String confirmMultiplePayments(@PathVariable Person person, HttpSession httpSession, Model model, User loggedUser,
-            @RequestParam String identifier, @RequestParam PaymentMethod paymentMethod, @RequestParam String paymentReference,
-            @RequestParam List<String> entries) {
+                                          @RequestParam String identifier, @RequestParam PaymentMethod paymentMethod, @RequestParam String paymentReference,
+                                          @RequestParam List<String> entries) {
 
         accessControlService.isPaymentManager(loggedUser);
 
@@ -385,7 +401,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
 
     @RequestMapping(value = "{person}/multiplePayments/register", method = RequestMethod.POST)
     public String registerMultiplePayments(@PathVariable Person person, HttpSession httpSession, Model model, User loggedUser,
-            @RequestParam String identifier, RedirectAttributes redirectAttributes) {
+                                           @RequestParam String identifier, RedirectAttributes redirectAttributes) {
 
         accessControlService.isPaymentManager(loggedUser);
 

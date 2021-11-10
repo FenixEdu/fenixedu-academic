@@ -52,6 +52,10 @@
     <spring:param name="event" value="${eventId}"/>
 </spring:url>
 
+<spring:url var="markAsLapsedUrl" value="../{event}/markAsLapsed">
+    <spring:param name="event" value="${eventId}"/>
+</spring:url>
+
 <spring:url var="backUrl" value="${entrypointUrl}">
     <spring:param name="person" value="${event.person.externalId}"/>
 </spring:url>
@@ -127,6 +131,9 @@
                             <a class="btn btn-default btn-block" href="${exemptUrl}"><spring:message code="accounting.event.action.exempt" text="Exempt"/></a>
                         </c:if>
                         <a class="btn btn-danger btn-block" href="${cancelUrl}"><spring:message code="accounting.event.action.cancel" text="Cancel"/></a>
+                        <c:if test="${not event.lapsed}">
+                            <a class="btn btn-danger btn-block" href="${markAsLapsedUrl}"><spring:message code="accounting.event.action.markAsLapsed" text="Mark as Lapsed"/></a>
+                        </c:if>
                     </c:if>
                 </c:if>
                 <modular:intersect location="event.details.extra.info" position="operations"> 

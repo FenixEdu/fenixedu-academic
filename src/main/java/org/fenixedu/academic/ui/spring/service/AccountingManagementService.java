@@ -1,16 +1,7 @@
 package org.fenixedu.academic.ui.spring.service;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.AccountingTransaction;
 import org.fenixedu.academic.domain.accounting.Event;
@@ -40,11 +31,18 @@ import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Service;
-
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
-
 import pt.ist.fenixframework.Atomic;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by Sérgio Silva (hello@fenixedu.org).
@@ -311,6 +309,11 @@ public class AccountingManagementService {
     @Atomic
     public void cancelEvent(final Event event, final Person responsible, final String justification) {
         event.cancel(responsible, justification);
+    }
+
+    @Atomic
+    public void markAsLapsed(final Event event, final Person responsible, final String justification) {
+        event.markAsLapsed(responsible, justification);
     }
 
     @Atomic
