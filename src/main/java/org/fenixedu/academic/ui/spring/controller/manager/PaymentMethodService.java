@@ -46,14 +46,15 @@ public class PaymentMethodService {
     }
 
     @Atomic
-    public PaymentMethod createPaymentMethod(String code, LocalizedString description, String paymentReferenceFormat) {
-        return PaymentMethod.create(code, description, paymentReferenceFormat == null ? "" : paymentReferenceFormat);
+    public PaymentMethod createPaymentMethod(String code, LocalizedString description, String paymentReferenceFormat,
+                                             boolean allowManualUse) {
+        return PaymentMethod.create(code, description, paymentReferenceFormat == null ? "" : paymentReferenceFormat, allowManualUse);
     }
 
     @Atomic
     public void editPaymentMethod(PaymentMethod paymentMethod, String code, LocalizedString description,
-            String paymentReferenceFormat) {
-        paymentMethod.edit(code, description, paymentReferenceFormat == null ? "" : paymentReferenceFormat);
+            String paymentReferenceFormat, boolean allowManualUse) {
+        paymentMethod.edit(code, description, paymentReferenceFormat == null ? "" : paymentReferenceFormat, allowManualUse);
     }
 
     @Atomic

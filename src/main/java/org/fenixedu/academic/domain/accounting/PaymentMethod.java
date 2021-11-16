@@ -38,12 +38,13 @@ import pt.ist.fenixframework.Atomic;
 
 public class PaymentMethod extends PaymentMethod_Base {
 
-    public PaymentMethod(String code, LocalizedString description, String paymentReferenceFormat) {
+    public PaymentMethod(String code, LocalizedString description, String paymentReferenceFormat, boolean allowManualUse) {
         super();
         setBennu(Bennu.getInstance());
         setCode(code);
         setDescription(description);
         setPaymentReferenceFormat(paymentReferenceFormat);
+        setAllowManualUse(allowManualUse);
         createLog(Bundle.MESSAGING, "log.paymentMethod.created", code, getFormattedDescriptionForLog(description),
                 paymentReferenceFormat);
     }
@@ -63,6 +64,13 @@ public class PaymentMethod extends PaymentMethod_Base {
                 .collect(Collectors.toList());
     }
 
+    public static List<PaymentMethod> allowedForDeposit() {
+        return Bennu.getInstance().getPaymentMethodSet().stream()
+                .filter(PaymentMethod::getAllowManualUse)
+                .sorted(Comparator.comparing(PaymentMethod::getCode))
+                .collect(Collectors.toList());
+    }
+
     @Atomic
     public static void setDefaultPaymentMethods(PaymentMethod defaultCashPaymentMethod, PaymentMethod defaultSibsPaymentMethod,
      PaymentMethod defaultRefundPaymentMethod) {
@@ -77,23 +85,24 @@ public class PaymentMethod extends PaymentMethod_Base {
     }
 
     @Atomic
-    public static PaymentMethod create(String code, LocalizedString description, String paymentReferenceFormat) {
+    public static PaymentMethod create(String code, LocalizedString description, String paymentReferenceFormat, boolean allowManualUse) {
         return Bennu.getInstance().getPaymentMethodSet().stream().filter(i -> i.getName().equals(code)).findAny()
-                .orElseGet(() -> new PaymentMethod(code, description, paymentReferenceFormat));
+                .orElseGet(() -> new PaymentMethod(code, description, paymentReferenceFormat, allowManualUse));
     }
 
     @Atomic
-    public void edit(String code, LocalizedString description, String paymentReferenceFormat) {
+    public void edit(String code, LocalizedString description, String paymentReferenceFormat, boolean allowManualUse) {
         if (Bennu.getInstance().getPaymentMethodSet().stream().filter(i -> !i.equals(this))
                 .noneMatch(i -> i.getCode().equals(code))) {
             if (!this.getCode().equals(code) || !this.getDescription().equals(description) || !this.getPaymentReferenceFormat()
-                    .equals(paymentReferenceFormat)) {
+                    .equals(paymentReferenceFormat) || getAllowManualUse() != allowManualUse) {
                 createLog(Bundle.MESSAGING, "log.paymentMethod.edited", getCode(), code,
                         getFormattedDescriptionForLog(getDescription()), getFormattedDescriptionForLog(description),
-                        getPaymentReferenceFormat(), paymentReferenceFormat);
+                        getPaymentReferenceFormat(), paymentReferenceFormat, String.valueOf(getAllowManualUse()), String.valueOf(allowManualUse));
                 setCode(code);
                 setDescription(description);
                 setPaymentReferenceFormat(paymentReferenceFormat);
+                setAllowManualUse(allowManualUse);
             }
         } else {
             throw new DomainException(Optional.of(Bundle.ACCOUNTING), "error.payment.method.already.exists", code);

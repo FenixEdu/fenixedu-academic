@@ -181,7 +181,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
         accessControlService.checkPaymentManager(event, Authenticate.getUser());
         final Person person = event.getPerson();
         model.addAttribute("eventDetailsUrl", getEventDetailsUrl(event));
-        model.addAttribute("paymentMethods", PaymentMethod.all());
+        model.addAttribute("paymentMethods", PaymentMethod.allowedForDeposit());
         model.addAttribute("person", person);
         model.addAttribute("event", event);
         model.addAttribute("depositAmountBean", new DepositAmountBean());
@@ -346,7 +346,7 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
 
         httpSession.setAttribute(MULTIPLE_PAYMENTS_ATTRIBUTE + uuid, paymentsManagementDTO);
         model.addAttribute("multiplePayments", uuid);
-        model.addAttribute("paymentMethods", PaymentMethod.all());
+        model.addAttribute("paymentMethods", PaymentMethod.allowedForDeposit());
         model.addAttribute("paymentsManagementDTO", paymentsManagementDTO);
         model.addAttribute("eventEntryDTOMap", buildEventEntryDTOMap(entryDTOS));
         model.addAttribute("person", person);
