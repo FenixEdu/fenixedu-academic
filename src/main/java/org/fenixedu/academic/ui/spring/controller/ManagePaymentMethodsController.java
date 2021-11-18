@@ -64,9 +64,9 @@ public class ManagePaymentMethodsController {
 
     @RequestMapping(value = "create", method = RequestMethod.POST)
     public String create(Model model, @RequestParam String code, @RequestParam LocalizedString description,
-            @RequestParam String paymentReferenceFormat) {
+            @RequestParam String paymentReferenceFormat, @RequestParam boolean allowManualUse) {
         try {
-            paymentMethodService.createPaymentMethod(code, description, paymentReferenceFormat);
+            paymentMethodService.createPaymentMethod(code, description, paymentReferenceFormat, allowManualUse);
             return redirectHome();
         } catch (DomainException de) {
             model.addAttribute("error", de.getLocalizedMessage());
@@ -82,9 +82,10 @@ public class ManagePaymentMethodsController {
 
     @RequestMapping(value = "{paymentMethod}", method = RequestMethod.POST)
     public String edit(Model model, @PathVariable PaymentMethod paymentMethod, @RequestParam String code,
-            @RequestParam LocalizedString description, @RequestParam String paymentReferenceFormat) {
+            @RequestParam LocalizedString description, @RequestParam String paymentReferenceFormat,
+            @RequestParam boolean allowManualUse) {
         try {
-            paymentMethodService.editPaymentMethod(paymentMethod, code, description, paymentReferenceFormat);
+            paymentMethodService.editPaymentMethod(paymentMethod, code, description, paymentReferenceFormat, allowManualUse);
             return redirectHome();
         } catch (DomainException de) {
             model.addAttribute("error", de.getLocalizedMessage());

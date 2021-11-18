@@ -1657,6 +1657,7 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
         String code;
         LocalizedString description;
         String paymentReferenceFormat;
+        boolean allowManualUse;
     }
 
     class accounting.PaymentCode  {
@@ -6398,7 +6399,7 @@ relation AccountingTransactionDetailPaymentMethod {
         multiplicity 0..*;
     }
     accounting.PaymentMethod playsRole paymentMethod {
-        multiplicity 0..1; //TODO: Change to 1..1 when migration is done
+        multiplicity 1..1;
     }
 }
 

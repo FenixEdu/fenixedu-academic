@@ -59,6 +59,29 @@ ${portal.toolkit()}
             </div>
         </div>
         <div class="form-group">
+            <label class="col-sm-1 control-label"><spring:message code="label.paymentMethods.allowManualUse" /></label>
+            <div class="col-sm-1">
+                <c:set var="checkedTrue" value=""/>
+                <c:set var="checkedFalse" value=""/>
+                <c:if var="checkedTrue" test="${paymentMethod.allowManualUse}">
+                    <c:set var="checkedTrue" value="checked"/>
+                </c:if>
+                <c:if var="checkedFalse" test="${!paymentMethod.allowManualUse}">
+                    <c:set var="checkedFalse" value="checked"/>
+                </c:if>
+                <div class="form-group">
+                    <div>
+                        <input id="allowManualUseFalse" class="col-sm-5" name="allowManualUse" type="radio" value="false" required ${checkedFalse}/>
+                        <input id="allowManualUseTrue" class="col-sm-5" name="allowManualUse" type="radio" value="true" required  ${checkedTrue}/>
+                    </div>
+                    <div>
+                        <label for="allowManualUseFalse" class="col-sm-5 control-label"><spring:message code="label.false" /></label>
+                        <label for="allowManualUseTrue" class="col-sm-5 control-label"><spring:message code="label.yes" /></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
             <label for="paymentReferenceFormat" class="col-sm-1 control-label"><spring:message code="label.paymentMethods.paymentReferenceFormat" /></label>
             <div class="col-sm-1">
                 <input id="paymentReferenceFormat" name="paymentReferenceFormat" type="text" value='<c:out value="${paymentMethod.paymentReferenceFormat}"/>' placeholder="CC %YYYY%MM%DD" />

@@ -45,6 +45,7 @@
     <thead>
         <th><spring:message code="label.paymentMethods.code" /></th>
         <th><spring:message code="label.paymentMethods.description" /></th>
+        <th><spring:message code="label.paymentMethods.allowManualUse" /></th>
         <th><spring:message code="label.paymentMethods.paymentReferenceFormat" /></th>
     </thead>
     <tbody>
@@ -56,6 +57,9 @@
                 </td>
                 <td>
                     <c:out value="${paymentMethod.localizedName}"/>
+                </td>
+                <td>
+                    <c:out value="${paymentMethod.allowManualUse}"/>
                 </td>
                 <td>
                     <c:out value="${paymentMethod.paymentReferenceFormat}"/>
