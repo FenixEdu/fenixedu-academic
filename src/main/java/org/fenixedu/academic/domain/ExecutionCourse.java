@@ -1269,7 +1269,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public Map<CompetenceCourse, Set<CurricularCourse>> getCurricularCoursesIndexedByCompetenceCourse() {
         final Map<CompetenceCourse, Set<CurricularCourse>> curricularCourseMap = new HashMap<>();
         for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-            if (curricularCourse.isBolonhaDegree()) {
+            if (!curricularCourse.getDegreeType().isPreBolonhaDegree()) {
                 final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
                 if (competenceCourse != null) {
                     final Set<CurricularCourse> curricularCourses;

@@ -86,7 +86,7 @@ public class DegreeType extends DegreeType_Base implements Comparable<DegreeType
     }
 
     public boolean isPreBolonhaDegree() {
-        return !this.isBolonhaType() && this.isDegree();
+        return !this.isBolonhaType() && !this.getMinor() && !this.getUnstructured() && this.isDegree();
     }
 
     public boolean isBolonhaDegree() {

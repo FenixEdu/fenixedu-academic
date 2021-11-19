@@ -203,7 +203,7 @@
 							<li>									
 							<div id="oid" style="display:none"><bean:write name="course" property="oid"/></div>
 							<div id="years" style="display:none"><bean:write name="reference" property="curricularYearsString" /></div>
-							<bean:write name="course" property="degree.presentationName"/> <span>- <bean:write name="reference" property="curricularYearsPresentationString"/></span>
+							<bean:write name="course" property="degree.presentationName"/> <bean:write name="course" property="degreeCurricularPlan.name"/>  <span>- <bean:write name="reference" property="curricularYearsPresentationString"/></span>
 							<img src="${pageContext.request.contextPath}/images/iconRemoveOff.png" alt="remove"/>
 							</li>
 						</logic:iterate>
@@ -278,7 +278,7 @@
 											<div id="oid" style="display:none"><bean:write name="degree" property="oid"/></div>
 											<div id="presentationName" style="display:none"><bean:write name="degree" property="degree.presentationName"/></div>
 											<div id="availableYears" style="display: none"><bean:write name="degree" property="degreeCurricularPlan.durationInYears"/></div>
-											<div id="name"><bean:write name="degree" property="degreeName"/></div>
+											<div id="name"><bean:write name="degree" property="degreeName"/> <bean:write name="degree" property="degreeCurricularPlan.name"/></div>
 										</div>
 									</logic:equal>
 								</logic:equal>
@@ -303,7 +303,7 @@
 											<div id="oid" style="display:none"><bean:write name="degree" property="oid"/></div>
 											<div id="presentationName" style="display:none"><bean:write name="degree" property="degree.presentationName"/></div>
 											<div id="availableYears" style="display: none"><bean:write name="degree" property="degreeCurricularPlan.durationInYears"/></div>
-											<div id="name"><bean:write name="degree" property="degreeName"/></div>
+											<div id="name"><bean:write name="degree" property="degreeName"/> <bean:write name="degree" property="degreeCurricularPlan.name"/></div>
 										</div>
 									</logic:equal>
 								</logic:equal>
@@ -328,7 +328,7 @@
 											<div id="oid" style="display:none"><bean:write name="degree" property="oid"/></div>
 											<div id="presentationName" style="display:none"><bean:write name="degree" property="degree.presentationName"/></div>
 											<div id="availableYears" style="display: none"><bean:write name="degree" property="degreeCurricularPlan.durationInYears"/></div>
-											<div id="name"><bean:write name="degree" property="degreeName"/></div>
+											<div id="name"><bean:write name="degree" property="degreeName"/> <bean:write name="degree" property="degreeCurricularPlan.name"/></div>
 										</div>
 									</logic:equal>
 								</logic:equal>
@@ -352,7 +352,7 @@
 										<div id="oid" style="display:none"><bean:write name="degree" property="oid"/></div>
 										<div id="presentationName" style="display:none"><bean:write name="degree" property="degree.presentationName"/></div>
 										<div id="availableYears" style="display: none"><bean:write name="degree" property="degreeCurricularPlan.durationInYears"/></div>
-										<div id="name"><bean:write name="degree" property="degreeName"/></div>
+										<div id="name"><bean:write name="degree" property="degreeName"/> <bean:write name="degree" property="degreeCurricularPlan.name"/></div>
 									</div>							
 								</logic:equal>
 							</logic:iterate>
@@ -377,7 +377,7 @@
 												<div id="oid" style="display:none"><bean:write name="degree" property="oid"/></div>
 												<div id="presentationName" style="display:none"><bean:write name="degree" property="degree.presentationName"/></div>
 												<div id="availableYears" style="display: none"><bean:write name="degree" property="degreeCurricularPlan.durationInYears"/></div>
-												<div id="name"><bean:write name="degree" property="degreeName"/></div>
+												<div id="name"><bean:write name="degree" property="degreeName"/> <bean:write name="degree" property="degreeCurricularPlan.name"/></div>
 											</div>
 										</logic:equal>
 									</logic:equal>
