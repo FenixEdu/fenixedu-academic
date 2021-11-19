@@ -1,3 +1,5 @@
+- Refactor: Predicates in TreasuryEvent to check if it is related with tuition debts, and if the event discount on tuition total amount
+
 32.9.7 (19-10-2021)
 - Refactor: Add findByCode to DegreeType
 - Refactor: Statute Type API cleanup
