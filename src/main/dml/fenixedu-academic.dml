@@ -1344,7 +1344,16 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
         String data;
     }
 
-    class accounting.Event  {
+    class accounting.IBANGroup {
+        String prefix;
+    }
+
+    class accounting.IBAN {
+        String infix;
+        String suffix;
+    }
+
+    class accounting.Event {
         String cancelJustification;
         EventState eventState;
         DateTime eventStateDate;
@@ -12709,5 +12718,32 @@ relation AccountingTransactionSibsPayment {
     }
     .pt.ist.payments.domain.SibsPayment playsRole sibsPayment {
         multiplicity 0..1;
+    }
+}
+
+relation BennuIBANGroup {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole bennu {
+        multiplicity 1..1;
+    }
+    accounting.IBANGroup playsRole iBANGroup {
+        multiplicity *;
+    }
+}
+
+relation IBANGroupIBAN {
+    accounting.IBANGroup playsRole iBANGroup {
+        multiplicity 1..1;
+    }
+    accounting.IBAN playsRole iBAN {
+        multiplicity *;
+    }
+}
+
+relation IBANGroupAvailableIBAN {
+    accounting.IBANGroup playsRole iBANGroupFromAvailable {
+        multiplicity 1..1;
+    }
+    accounting.IBAN playsRole availableIBAN {
+        multiplicity *;
     }
 }
