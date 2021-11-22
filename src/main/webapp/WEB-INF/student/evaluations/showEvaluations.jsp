@@ -86,7 +86,9 @@ ${portal.angularToolkit()}
         <td>
             <% for (final WrittenEvaluationSpaceOccupation roomOccupation : writtenEvaluation.getWrittenEvaluationSpaceOccupationsSet()) { %>
                 <% final Space room = roomOccupation.getRoom(); %>
-                <%= room.getName() %>
+               	<% if(room != null) { %>
+                	<%= room.getName() %>
+                <% } %>
             <% } %>
         </td>
         <td>
@@ -166,13 +168,15 @@ ${portal.angularToolkit()}
         <td>
             <% for (final WrittenEvaluationSpaceOccupation roomOccupation : writtenEvaluation.getWrittenEvaluationSpaceOccupationsSet()) { %>
                 <% final Space room = roomOccupation.getRoom(); %>
-                <% if (attributedRoom == null) { %>
-                    <%= room.getName() %>
-                <% } else if (attributedRoom == room) { %>
-                    <span style="font-weight: bold;"><%= room.getName() %></span>
-                <% } else { %>
-                    <span style="color: #A9A9A9;"><%= room.getName() %></span>
-                <% } %>
+                <% if (room != null) { %>
+	                <% if (attributedRoom == null) { %>
+	                    <%= room.getName() %>
+	                <% } else if (attributedRoom == room) { %>
+	                    <span style="font-weight: bold;"><%= room.getName() %></span>
+	                <% } else { %>
+	                    <span style="color: #A9A9A9;"><%= room.getName() %></span>
+	                <% } %>
+                 <% } %>
             <% } %>
         </td>
         <td>
@@ -250,7 +254,9 @@ ${portal.angularToolkit()}
                 <td>
                     <% for (final WrittenEvaluationSpaceOccupation roomOccupation : writtenEvaluation.getWrittenEvaluationSpaceOccupationsSet()) { %>
                     <% final Space room = roomOccupation.getRoom(); %>
-                        <%= room.getName() %>
+                    	<% if(room != null) { %>
+                    		<%= room.getName() %>
+                    	<% } %>
                     <% } %>
                 </td>
                 <td>
