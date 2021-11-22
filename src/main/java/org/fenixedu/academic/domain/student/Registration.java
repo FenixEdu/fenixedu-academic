@@ -2918,7 +2918,7 @@ public class Registration extends Registration_Base {
                 .filter(event -> !event.isCancelled())
                 .filter(event -> EventTemplate.Type.TUITION.name().equals(JsonUtils.get(event.getConfigObject(), "type")))
                 .filter(event -> {
-                    final ExecutionYear eventExecutionYear = JsonUtils.toDomainObject(event.getConfigObject(), "executionYear");
+                    final ExecutionYear eventExecutionYear = event.getExecutionYear();
                     final Registration registration = JsonUtils.toDomainObject(event.getConfigObject(), "registration");
                     return !eventExecutionYear.isAfter(executionYear) && registration == this;
                 });
