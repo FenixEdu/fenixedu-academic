@@ -113,14 +113,14 @@ public class Money implements Comparable<Money>, Serializable {
 
     public Money divide(Money money) {
         if (money != null) {
-            return new Money(this.amount.divide(money.getAmount()));
+            return divide(money.getAmount());
         } else {
             return this;
         }
     }
 
     public Money divide(BigDecimal amount) {
-        return new Money(this.amount.divide(amount));
+        return new Money(this.amount.divide(amount, 2, RoundingMode.HALF_EVEN));
     }
 
     public String toPlainString() {

@@ -30,6 +30,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class EventTemplateConfig extends EventTemplateConfig_Base {
@@ -141,6 +142,7 @@ public class EventTemplateConfig extends EventTemplateConfig_Base {
         } else {
             dueDateAmountMap.keySet().stream()
                     .filter(date -> date.toDateTimeAtStartOfDay().isBeforeNow())
+                    .collect(Collectors.toSet())
                     .forEach(date -> dueDateAmountMap.remove(date));
             final int count = dueDateAmountMap.size();
             if (count == 0) {
