@@ -2,10 +2,13 @@ package org.fenixedu.academic.domain.accounting;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.fenixedu.academic.domain.ExecutionSemester;
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
+import org.fenixedu.bennu.core.json.JsonUtils;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -79,5 +82,18 @@ public class CustomEvent extends CustomEvent_Base {
         } else {
             return Collections.emptyMap();
         }
+    }
+
+    public ExecutionYear getExecutionYear() {
+        ExecutionYear executionYear = JsonUtils.toDomainObject(getConfigObject(), "executionYear");
+        if (executionYear == null) {
+            ExecutionSemester executionSemester = JsonUtils.toDomainObject(getConfigObject(), "executionSemester");
+            if (executionSemester != null) {
+                executionYear = executionSemester.getExecutionYear();
+            } else {
+                executionYear = ExecutionYear.readByDateTime(getWhenOccured());
+            }
+        }
+        return executionYear;
     }
 }
