@@ -18,14 +18,10 @@
  */
 package org.fenixedu.academic.ui.struts.action.administrativeOffice.studentEnrolment;
 
-import java.io.Serializable;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.academic.domain.accounting.EventTemplate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.RegistrationDataByExecutionYear;
 import org.fenixedu.academic.ui.struts.action.administrativeOffice.student.SearchForStudentsDA;
@@ -34,8 +30,11 @@ import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.joda.time.LocalDate;
-
 import pt.ist.fenixframework.Atomic;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.Serializable;
 
 @Mapping(path = "/manageRegistrationDataByExecutionYear", module = "academicAdministration",
         functionality = SearchForStudentsDA.class)
@@ -57,9 +56,15 @@ public class ManageRegistrationDataByExecutionYearDA extends FenixDispatchAction
 
         private LocalDate enrolmentDate;
 
+        private EventTemplate eventTemplate;
+
         public RegistrationDataByYearBean(RegistrationDataByExecutionYear dataByExecutionYear) {
             this.dataByExecutionYear = dataByExecutionYear;
             this.enrolmentDate = dataByExecutionYear.getEnrolmentDate();
+            this.eventTemplate = dataByExecutionYear.getEventTemplate();
+            if (eventTemplate == null) {
+               eventTemplate = dataByExecutionYear.getRegistration().getEventTemplate();
+            }
         }
 
         public LocalDate getEnrolmentDate() {
@@ -72,6 +77,14 @@ public class ManageRegistrationDataByExecutionYearDA extends FenixDispatchAction
 
         public RegistrationDataByExecutionYear getDataByExecutionYear() {
             return dataByExecutionYear;
+        }
+
+        public EventTemplate getEventTemplate() {
+            return eventTemplate;
+        }
+
+        public void setEventTemplate(final EventTemplate eventTemplate) {
+            this.eventTemplate = eventTemplate;
         }
 
     }
@@ -111,7 +124,7 @@ public class ManageRegistrationDataByExecutionYearDA extends FenixDispatchAction
 
     @Atomic
     private void editService(RegistrationDataByYearBean bean) {
-        bean.getDataByExecutionYear().edit(bean.getEnrolmentDate());
+        bean.getDataByExecutionYear().edit(bean.getEnrolmentDate(), bean.getEventTemplate());
     }
 
 }

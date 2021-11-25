@@ -27,8 +27,9 @@
 <%@ taglib uri="http://fenixedu.org/taglib/intersection" prefix="modular" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%@page import="org.fenixedu.academic.domain.ExecutionYear"%>
 <%@page import="org.fenixedu.academic.domain.student.RegistrationDataByExecutionYear"%>
+<%@page import="java.util.SortedSet"%>
+<%@ page import="java.util.TreeSet" %>
 
 <html:xhtml/>
 
@@ -100,25 +101,8 @@
 <table>
 	<tr>
 		<td>
-		
 			<%-- Registration Details --%>
-			<logic:present name="registration" property="ingressionType">
-			<fr:view name="registration" schema="student.registrationDetail" >
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle4 thright thlight"/>
-					<fr:property name="rowClasses" value=",,,,,,,,"/>
-				</fr:layout>
-			</fr:view>
-			</logic:present>
-			<logic:notPresent name="registration" property="ingressionType">
-			<fr:view name="registration" schema="student.registrationsWithStartData" >
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>
-					<fr:property name="rowClasses" value=",,,,,,,"/>
-				</fr:layout>
-			</fr:view>
-			</logic:notPresent>
-		
+			<jsp:include page="registrationDetailsTable.jsp"/>
 		</td>
 		
 		<td style="vertical-align: top; padding-top: 1em;">
@@ -202,7 +186,7 @@
 		</td>
 	</tr>
 </table>
-	
+
 	<logic:notEmpty name="registration" property="phdIndividualProgramProcess">
 		<academic:allowed operation="MANAGE_PHD_PROCESSES" program="<%= registration.getPhdIndividualProgramProcess().getPhdProgram() %>">
 		
@@ -228,26 +212,55 @@
 		</p>
 		</academic:allowed>
 	</logic:notEmpty>
-	
+
 	<%-- Registration Data by Execution Year --%>
 	<h3 class="mbottom05 mtop25 separator2"><bean:message key="title.registrationDataByExecutionYear" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	<logic:empty name="registration" property="registrationDataByExecutionYear">
 		<bean:message key="label.registrationDataByExecutionYear.noResults" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 	</logic:empty>
 	<logic:notEmpty name="registration" property="registrationDataByExecutionYear">
-		<fr:view name="registration" property="registrationDataByExecutionYear">
-			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="<%= RegistrationDataByExecutionYear.class.getName() %>">
-				<fr:slot name="executionYear.qualifiedName" key="label.executionYear" />
-				<fr:slot name="enrolmentDate" key="label.enrolmentDate" />
-			</fr:schema>
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle2 thright thlight thcenter"/>
-				<fr:property name="columnClasses" value="acenter,acenter,acenter" />
-				<fr:property name="sortBy" value="executionYear=desc" />
-				<fr:link name="edit" label="label.edit,ACADEMIC_OFFICE_RESOURCES" 
-							 link="/manageRegistrationDataByExecutionYear.do?method=prepareEdit&registrationDataByExecutionYearId=${externalId}" order="1" />
-			</fr:layout>
-		</fr:view>
+		<%
+			final SortedSet<RegistrationDataByExecutionYear> byExecutionYears = new TreeSet();
+			byExecutionYears.addAll(registration.getRegistrationDataByExecutionYearSet());
+		%>
+			<table class="tstyle2 thright thlight thcenter" style="width: 100%;">
+				<thead>
+					<tr>
+						<th class="acenter"><bean:message key="label.executionYear" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+						<th class="acenter"><bean:message key="label.enrolmentDate" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+						<th class="acenter"><bean:message key="label.enrolment.limit" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+						<th class="acenter"><bean:message key="label.allowed.semesters.for.enrolment" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+						<th class="acenter"><bean:message key="label.payment.plan" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+						<th class="acenter"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<%
+						for (final RegistrationDataByExecutionYear byExecutionYear : byExecutionYears) {
+					%>
+							<tr>
+								<td class="acenter"><%= byExecutionYear.getExecutionYear().getQualifiedName() %></td>
+								<td class="acenter"><%= byExecutionYear.getEnrolmentDate() == null ? "-" : byExecutionYear.getEnrolmentDate().toString("yyyy-MM-dd") %></td>
+								<td class="acenter"><%= byExecutionYear.getMaxCreditsPerYear() == null ? "100%" : (byExecutionYear.getMaxCreditsPerYear() + " ECTS")%></td>
+								<td class="acenter">
+									<% if (byExecutionYear.getAllowedSemesterForEnrolments() == null) { %>
+										<bean:message key="label.both.semesters" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+									<% } else { %>
+										<%= byExecutionYear.getAllowedSemesterForEnrolments().getQualifiedName() %>
+									<% } %>
+								</td>
+								<td class="acenter"><%= byExecutionYear.getEventTemplate() == null ? "-" : byExecutionYear.getEventTemplate().getTitle().getContent() %></td>
+								<td class="acenter">
+									<a href="<%= "/academicAdministration/manageRegistrationDataByExecutionYear.do?registrationDataByExecutionYearId="
+										+ byExecutionYear.getExternalId()
+										+ "&method=prepareEdit" %>">
+										<bean:message key="label.edit" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+									</a>
+								</td>
+							</tr>
+					<% } %>
+				</tbody>
+			</table>
 	</logic:notEmpty>
 	
 	

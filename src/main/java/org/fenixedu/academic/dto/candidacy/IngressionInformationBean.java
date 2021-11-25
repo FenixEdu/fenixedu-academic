@@ -18,16 +18,17 @@
  */
 package org.fenixedu.academic.dto.candidacy;
 
-import java.io.Serializable;
-import java.util.Collection;
-
 import org.fenixedu.academic.domain.EntryPhase;
 import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.accounting.EventTemplate;
 import org.fenixedu.academic.domain.candidacy.IngressionType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
+
+import java.io.Serializable;
+import java.util.Collection;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -53,9 +54,12 @@ public class IngressionInformationBean implements Serializable {
     private Registration registration;
     private LocalDate reingressionDate;
 
+    private EventTemplate eventTemplate;
+
     public IngressionInformationBean(Registration registration) {
         setEntryPhase(registration.getStudentCandidacy().getEntryPhase());
         setRegistration(registration);
+        eventTemplate = registration == null ? null : registration.getEventTemplate();
     }
 
     public ExecutionYear getExecutionYear() {
@@ -160,6 +164,14 @@ public class IngressionInformationBean implements Serializable {
 
     public void setStudiesStartDate(YearMonthDay studiesStartDate) {
         this.studiesStartDate = studiesStartDate;
+    }
+
+    public EventTemplate getEventTemplate() {
+        return eventTemplate;
+    }
+
+    public void setEventTemplate(final EventTemplate eventTemplate) {
+        this.eventTemplate = eventTemplate;
     }
 
 }
