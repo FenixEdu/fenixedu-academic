@@ -216,7 +216,7 @@ public class EventTemplateConfig extends EventTemplateConfig_Base {
                 }
                 if (payedAmount < newDebtAmount) {
                     final CustomEvent event = createEvent(dataByExecutionYear, type);
-                    if (payedAmount > 0d) {
+                    if (event != null && payedAmount > 0d) {
                         new EventExemption(event, registration.getPerson(), new Money(payedAmount),
                                 EventExemptionJustificationType.DIRECTIVE_COUNCIL_AUTHORIZATION, new DateTime(),
                                 BundleUtil.getString(Bundle.STUDENT, "label.change.payment.plan.justification"));
@@ -256,6 +256,9 @@ public class EventTemplateConfig extends EventTemplateConfig_Base {
         final ExecutionYear executionYear = dataByExecutionYear.getExecutionYear();
         final JsonObject config = getConfig().getAsJsonObject(type.name());
         final Map<LocalDate, Money> dueDateAmountMap = toDueDateAmountMap(config.getAsJsonObject("dueDateAmountMap"));
+        if (dueDateAmountMap.isEmpty()) {
+            return null;
+        }
         final LocalizedString description = type == EventTemplate.Type.TUITION
                 ? BundleUtil.getLocalizedString(Bundle.STUDENT, "label.custom.event." + type.name(),
                 registration.getDegree().getSigla(), executionYear.getName())
