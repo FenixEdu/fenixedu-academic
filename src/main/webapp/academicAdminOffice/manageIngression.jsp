@@ -32,7 +32,7 @@
 	</p>
 </html:messages>
 
-<bean:define id="registration" name="ingressionBean" property="registration" />
+<bean:define id="registration" name="ingressionBean" property="registration" toScope="request" />
 <bean:define id="registrationId" name="registration" property="externalId" />
 
 
@@ -60,25 +60,8 @@
 	</span>
 </p>
 
-<logic:present name="registration" property="ingressionType">
 <h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-<fr:view name="registration" schema="student.registrationDetail" >
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thright thlight mtop05"/>
-		<fr:property name="rowClasses" value=",,tdhl1,,,,,,"/>
-	</fr:layout>
-</fr:view>
-</logic:present>
-
-<logic:notPresent name="registration" property="ingressionType">
-<h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-<fr:view name="registration" schema="student.registrationsWithStartData" >
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thright thlight mtop05"/>
-		<fr:property name="rowClasses" value=",,tdhl1,,,,,,"/>
-	</fr:layout>
-</fr:view>
-</logic:notPresent>
+<jsp:include page="student/registration/registrationDetailsTable.jsp"/>
 
 <bean:define id="registrationID" name="ingressionBean" property="registration.externalId" />
 
@@ -108,7 +91,7 @@
 			<fr:destination name="entryPhasePostBack" path="/manageIngression.do?method=postBack" />
 		</fr:edit>
 	</logic:equal>
-	
+
 	<html:submit><bean:message key="label.submit" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:submit>
 	<html:cancel onclick="this.form.method.value='prepare'; return true;"><bean:message key="label.cancel" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:cancel>
 

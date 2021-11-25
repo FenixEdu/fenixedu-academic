@@ -293,7 +293,11 @@
 		<property name="saveOptions" value="true" />
 		<property name="format" value="${localizedName}" />
 		<property name="destination" value="entryPhasePostBack"/>
-	</slot>	
+	</slot>
+	<slot name="eventTemplate" key="label.payment.plan" bundle="ACADEMIC_OFFICE_RESOURCES"  layout="menu-select">
+		<property name="format" value="${title.content}"/>
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.EventTemplateProviderProvider" />
+	</slot>
 </schema>
 
 <schema name="ingression.information.requestAgreementInformation" type="org.fenixedu.academic.dto.candidacy.IngressionInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES">
@@ -321,7 +325,11 @@
 		<property name="saveOptions" value="true" />
 		<property name="format" value="${localizedName}" />
 		<property name="destination" value="entryPhasePostBack"/>
-	</slot>	
+	</slot>
+	<slot name="eventTemplate" key="label.payment.plan" bundle="ACADEMIC_OFFICE_RESOURCES"  layout="menu-select">
+		<property name="format" value="${title.content}"/>
+		<property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.EventTemplateProviderProvider" />
+	</slot>
 </schema>
 
 <schema name="ingression.information-edit" bundle="ACADEMIC_OFFICE_RESOURCES" extends="ingression.information"

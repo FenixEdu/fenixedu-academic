@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain.student;
 
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.accounting.EventTemplate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.LocalDate;
@@ -31,7 +32,7 @@ import java.util.Optional;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class RegistrationDataByExecutionYear extends RegistrationDataByExecutionYear_Base {
+public class RegistrationDataByExecutionYear extends RegistrationDataByExecutionYear_Base implements Comparable<RegistrationDataByExecutionYear> {
 
     private RegistrationDataByExecutionYear(Registration registration, ExecutionYear executionYear) {
         setExecutionYear(executionYear);
@@ -102,8 +103,15 @@ public class RegistrationDataByExecutionYear extends RegistrationDataByExecution
         return result.isPresent() ? result.get() : new RegistrationDataByExecutionYear(registration, executionYear);
     }
 
-    public void edit(LocalDate enrolmentDate) {
+    public void edit(final LocalDate enrolmentDate, final EventTemplate eventTemplate) {
         setEnrolmentDate(enrolmentDate);
+        final EventTemplate registrationTemplate = getRegistration().getEventTemplate();
+        if (registrationTemplate == null || registrationTemplate == eventTemplate
+                || !registrationTemplate.getAlternativeEventTemplateSet().contains(eventTemplate)) {
+            setEventTemplate(null);
+        } else {
+            setEventTemplate(eventTemplate);
+        }
         checkRules();
     }
 
@@ -140,6 +148,12 @@ public class RegistrationDataByExecutionYear extends RegistrationDataByExecution
                 .sum()) {
             throw new DomainException("error.student.cannot.exceed.max.credits.enrolments.for.year", Double.toString(maxCredits));
         }
+    }
+
+    @Override
+    public int compareTo(final RegistrationDataByExecutionYear byExecutionYear) {
+        final int result = getExecutionYear().compareTo(byExecutionYear.getExecutionYear());
+        return result == 0 ? getExternalId().compareTo(byExecutionYear.getExternalId()) : result;
     }
 
 }

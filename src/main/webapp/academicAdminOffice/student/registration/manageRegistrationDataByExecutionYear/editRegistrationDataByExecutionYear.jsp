@@ -57,6 +57,10 @@
 	<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="<%= request.getAttribute("dataByExecutionYearBean").getClass().getName() %>">
 		<fr:slot name="dataByExecutionYear.executionYear.qualifiedName" key="label.executionYear" bundle="ACADEMIC_OFFICE_RESOURCES" readOnly="true" />
 		<fr:slot name="enrolmentDate" key="label.enrolmentDate" bundle="ACADEMIC_OFFICE_RESOURCES" />
+		<fr:slot name="eventTemplate" key="label.payment.plan" bundle="ACADEMIC_OFFICE_RESOURCES"  layout="menu-select">
+			<fr:property name="format" value="\${title.content}"/>
+			<fr:property name="providerClass" value="org.fenixedu.academic.ui.renderers.providers.EventTemplateProviderProvider" />
+		</fr:slot>
 	</fr:schema>
 	<fr:destination name="invalid" path="/manageRegistrationDataByExecutionYear.do?method=prepareEditInvalid"/>
 	<fr:destination name="cancel" path='<%= "/student.do?method=visualizeRegistration&registrationID=" + registrationId.toString() %>'/>

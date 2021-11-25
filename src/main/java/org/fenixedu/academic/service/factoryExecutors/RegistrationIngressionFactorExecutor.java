@@ -18,11 +18,11 @@
  */
 package org.fenixedu.academic.service.factoryExecutors;
 
-import java.io.Serializable;
-
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.dto.candidacy.IngressionInformationBean;
 import org.fenixedu.academic.service.services.commons.FactoryExecutor;
+
+import java.io.Serializable;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -44,6 +44,7 @@ public class RegistrationIngressionFactorExecutor {
                 setAgreementInformation(getRegistration().getAgreementInformation());
                 setIngressionType(getRegistration().getIngressionType());
                 setEntryPhase(getRegistration().getEntryPhase());
+                setEventTemplate(getRegistration().getEventTemplate());
             }
         }
 
@@ -53,6 +54,7 @@ public class RegistrationIngressionFactorExecutor {
             getRegistration().setAgreementInformation(getAgreementInformation());
             getRegistration().setIngressionType(getIngressionType());
             getRegistration().setEntryPhase(getEntryPhase());
+            getRegistration().setEventTemplate(getEventTemplate());
             return getRegistration();
         }
 

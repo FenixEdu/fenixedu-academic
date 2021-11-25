@@ -3398,7 +3398,7 @@ public class Registration extends Registration_Base {
                 }
             });
 
-            registrationData.edit(firstEnrolment.getCreationDateDateTime().toLocalDate());
+            registrationData.edit(firstEnrolment.getCreationDateDateTime().toLocalDate(), registrationData.getEventTemplate());
         }
     }
 
