@@ -68,6 +68,11 @@ public class CustomEvent extends CustomEvent_Base {
     }
 
     @Override
+    public boolean isGratuity() {
+        return EventTemplate.Type.TUITION.isType(this);
+    }
+
+    @Override
     public Map<LocalDate, Money> getPenaltyDueDateAmountMap(DateTime when) {
         if (getConfigObject().has("penaltyAmountMap")) {
             final Map<LocalDate, Money> penaltyAmountMap = new HashMap<>();
