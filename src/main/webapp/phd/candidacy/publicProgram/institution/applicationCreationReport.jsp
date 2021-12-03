@@ -22,8 +22,10 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
+<%@ page import="org.fenixedu.bennu.core.util.CoreConfiguration"%>
 <%@ page import="org.fenixedu.commons.i18n.I18N"%>
-<%@ page import="java.util.Locale"%>
+<%@ page import="java.util.Locale" %>
+<%@ page import="org.fenixedu.bennu.core.security.Authenticate" %>
 
 
 <html:xhtml/>
@@ -64,39 +66,38 @@
 
 <bean:define id="phdIndividualProgramProcess" name="phdIndividualProgramProcess" />
 <bean:define id="individualCandidacyProcess" name="phdIndividualProgramProcess" property="candidacyProcess" />
+<bean:define id="event" name="individualCandidacyProcess" property="event" type="org.fenixedu.academic.domain.accounting.Event" />
+
+
+<p>
+	<ul>
+	<li>
+		<strong><bean:message key="label.application.fee.amount" bundle="PHD_RESOURCES"/>:</strong>
+		<fr:view name="event" property="originalAmountToPay"/> &euro;
+	</li>
+<% if (Authenticate.getUser() != null) { %>
+	<li>
+		<a href="<%= CoreConfiguration.getConfiguration().applicationUrl()
+			+ "/owner-accounting-events/" + event.getExternalId() + "/details" %>"><bean:message key="label.pay" bundle="PHD_RESOURCES"/></a>
+	</li>
+<% } %>
+	</ul>
+</p>
 
 <logic:notEmpty name="individualCandidacyProcess" property="associatedPaymentCode">
-	<p> <bean:message key="message.phd.institution.application.sibs.payment.details" bundle="PHD_RESOURCES" /></p>
-	<table>
-		<tr>
-			<td><strong><bean:message key="label.sibs.entity.code" bundle="CANDIDATE_RESOURCES"/>:</strong></td>
-			<td><bean:write name="sibsEntityCode"/></td>
-		</tr>
-		<tr>
-			<td><strong><bean:message key="label.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/>:</strong></td>
-			<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.formattedCode"/></td>
-		</tr>
-		<tr>
-			<td><strong><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/>:</strong></td>
-			<td><fr:view name="individualCandidacyProcess" property="event.originalAmountToPay"/> &euro;</td>
-		</tr>
-	</table>
-		
-	<% 
+	<%
 		if(locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
 	%>
 	
 	<p>
 		<bean:message key="message.phd.institution.application.unable.to.pay.with.sibs" bundle="PHD_RESOURCES" />:
 		<ul>
-			<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.bankName" bundle="PHD_RESOURCES" />: CAIXA GERAL DE DEPÓSITOS</li>
-			<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.swift" bundle="PHD_RESOURCES" />: CGDIPTPL</li>
-			<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.nib" bundle="PHD_RESOURCES" />: 003503730000914273075</li>
-			<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.iban" bundle="PHD_RESOURCES" />: PT50003503730000914273075</li>
+			<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.bankName" bundle="PHD_RESOURCES" />: Banco Santander Totta S.A.</li>
+			<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.swift" bundle="PHD_RESOURCES" />: TOTAPTPL</li>
+			<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.iban" bundle="PHD_RESOURCES" />: PT50 0018 000344001808020 08</li>
 			<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.value" bundle="PHD_RESOURCES" />: <fr:view name="individualCandidacyProcess" property="event.originalAmountToPay"/> &euro;</li>
 		</ul>
 	</p>
-	
 	<% 
 		}
 	%>
