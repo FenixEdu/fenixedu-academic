@@ -24,8 +24,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@ page import="org.fenixedu.commons.i18n.I18N"%>
-<%@ page import="java.util.Locale"%>
+<%@ page import="org.fenixedu.bennu.core.security.Authenticate"%>
+<%@ page import="org.fenixedu.bennu.core.util.CoreConfiguration"%>
 
 <html:xhtml/>
 
@@ -319,24 +319,24 @@ max-width: 231px;
 <%--  ### Payment details ### --%>
 <logic:equal value="true" name="hasPaymentFees">
 	<h2 style="margin-top: 1.5em;"><bean:message key="title.phd.public.candidacy.payment.details" bundle="PHD_RESOURCES"/> </h2>
-	
-	<logic:notEmpty name="process" property="associatedPaymentCode">
-	<p> <bean:message key="message.phd.institution.application.sibs.payment.details" bundle="PHD_RESOURCES" /></p>
-	<table>
-		<tr>
-			<td><strong><bean:message key="label.sibs.entity.code" bundle="CANDIDATE_RESOURCES"/>:</strong></td>
-			<td><bean:write name="sibsEntityCode"/></td>
-		</tr>
-		<tr>
-			<td><strong><bean:message key="label.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/>:</strong></td>
-			<td><fr:view name="process" property="associatedPaymentCode.formattedCode"/></td>
-		</tr>
-		<tr>
-			<td><strong><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/>:</strong></td>
-			<td><fr:view name="process" property="event.originalAmountToPay"/> &euro;</td>
-		</tr>
-	</table>
-	</logic:notEmpty>
+
+	<bean:define id="event" name="process" property="event" type="org.fenixedu.academic.domain.accounting.Event" />
+
+	<p>
+	<ul>
+		<li>
+			<strong><bean:message key="label.application.fee.amount" bundle="PHD_RESOURCES"/>:</strong>
+			<fr:view name="event" property="originalAmountToPay"/> &euro;
+		</li>
+<% if (Authenticate.getUser() != null) { %>
+		<li>
+			<a href="<%= CoreConfiguration.getConfiguration().applicationUrl()
+			+ "/owner-accounting-events/" + event.getExternalId() + "/details" %>"><bean:message key="label.pay" bundle="PHD_RESOURCES"/></a>
+		</li>
+<% } %>
+	</ul>
+	</p>
+
 </logic:equal>
 
 <%--  ### Phd Supervisors ### --%>
