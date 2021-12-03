@@ -102,10 +102,13 @@ public class EventTemplate extends EventTemplate_Base implements Comparable<Even
     }
 
     public void createEventsFor(final RegistrationDataByExecutionYear dataByExecutionYear) {
-        final LocalDate enrolmentDate = dataByExecutionYear.getEnrolmentDate();
+        LocalDate enrolmentDate = dataByExecutionYear.getEnrolmentDate();
+        if (enrolmentDate == null && dataByExecutionYear.getRegistration().isInMobilityState()) {
+            enrolmentDate = dataByExecutionYear.getExecutionYear().getBeginLocalDate().plusDays(12);
+        }
         if (enrolmentDate != null) {
             final DateTime enrolmentDateTime = enrolmentDate.toDateTimeAtStartOfDay();
-            if (enrolmentDateTime.plusDays(12).isBeforeNow() || dataByExecutionYear.getRegistration().isInMobilityState()) {
+            if (enrolmentDateTime.plusDays(12).isBeforeNow()) {
                 final EventTemplateConfig templateConfig = getConfigFor(enrolmentDateTime);
                 if (templateConfig != null) {
                     templateConfig.createEventsFor(dataByExecutionYear);
