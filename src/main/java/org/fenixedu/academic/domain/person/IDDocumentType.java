@@ -51,7 +51,11 @@ public enum IDDocumentType implements IPresentableEnum {
 
     CITIZEN_CARD,
 
-    RESIDENCE_AUTHORIZATION;
+    RESIDENCE_AUTHORIZATION,
+    
+    EU_PERMANENT_RESIDENCE_CARD,
+    
+    EU_REGISTRATION_CERTIFICATE;
 
     public String getName() {
         return name();
