@@ -205,17 +205,30 @@
                     <spring:url var="generatePaymentEntry" value="../{event}/payDPG">
                         <spring:param name="event" value="${eventId}"/>
                     </spring:url>
+                    <spring:url var="allocateIBAN" value="../{event}/allocateIBAN">
+                        <spring:param name="event" value="${eventId}"/>
+                    </spring:url>
                     <dl class="sum">
                         <dt><spring:message code="accounting.event.details.total" text="Total"/></dt>
                         <dd><span id="totalAmount"></span><span>€</span></dd>
                     </dl>
-                    <form:form id="generatePaymentEntryForm" class="form-horizontal" method="POST" action="${generatePaymentEntry}">
-                        ${csrf.field()}
-                        <input id="totalAmountInputDPG" name="totalAmount" hidden/>
-                        <div class="actions">
-                            <button id="paySubmitDPG" class="btn btn-block btn-primary" type="submit"><spring:message code="accounting.event.get.payment.data" text="Proceed with payment"/></button>
-                        </div>
-                    </form:form>
+                    <p>
+                        <form:form id="allocateIBANForm" class="form-horizontal" method="POST" action="${allocateIBAN}">
+                            ${csrf.field()}
+                            <div class="actions">
+                                <button id="allocateIBANSubmit" class="btn btn-block btn-primary" type="submit"><spring:message code="accounting.event.allocate.iban" text="Pay Via SEPA Transfer"/></button>
+                            </div>
+                        </form:form>
+                    </p>
+                    <p>
+                        <form:form id="generatePaymentEntryForm" class="form-horizontal" method="POST" action="${generatePaymentEntry}">
+                            ${csrf.field()}
+                            <input id="totalAmountInputDPG" name="totalAmount" hidden/>
+                            <div class="actions">
+                                <button id="paySubmitDPG" class="btn btn-block btn-primary" type="submit"><spring:message code="accounting.event.get.payment.data" text="Proceed with payment"/></button>
+                            </div>
+                        </form:form>
+                    </p>
                 </section>
             </div>
         </div>

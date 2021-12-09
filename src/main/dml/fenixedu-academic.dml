@@ -1346,6 +1346,7 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
 
     class accounting.IBANGroup {
         String prefix;
+        int nextInfix;
     }
 
     class accounting.IBAN {
@@ -12739,11 +12740,20 @@ relation IBANGroupIBAN {
     }
 }
 
-relation IBANGroupAvailableIBAN {
-    accounting.IBANGroup playsRole iBANGroupFromAvailable {
+relation IBANKeyIndex {
+	accounting.IBAN playsRole iBAN {
+		multiplicity *;
+	}
+	.org.fenixedu.bennu.search.domain.KeyIndex playsRole iBANKeyIndex {
+		multiplicity 1;
+	}
+}
+
+relation EventIBAN {
+    accounting.Event playsRole event {
         multiplicity 1..1;
     }
-    accounting.IBAN playsRole availableIBAN {
-        multiplicity *;
+    accounting.IBAN playsRole iBAN {
+        multiplicity 0..1;
     }
 }

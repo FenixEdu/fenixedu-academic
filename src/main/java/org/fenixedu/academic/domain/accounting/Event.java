@@ -50,6 +50,7 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LabelFormatter;
 import org.fenixedu.academic.util.Money;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.Singleton;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.json.JsonUtils;
@@ -1404,6 +1405,15 @@ public abstract class Event extends Event_Base {
                 final SibsPayment sibsPayment = ((DomainObjectEvent<SibsPayment>) de).getInstance();
                 sibsPayment.getEvent().updateTransactionsFromDPG();
             });
+        });
+    }
+
+    @Atomic
+    public IBAN allocateIBAN() {
+        return Singleton.getInstance(() -> getIBAN(), () -> {
+            final IBAN iban = IBANGroup.allocate();
+            setIBAN(iban);
+            return iban;
         });
     }
 

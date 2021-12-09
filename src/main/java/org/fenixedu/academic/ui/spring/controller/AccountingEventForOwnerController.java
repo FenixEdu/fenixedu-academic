@@ -188,6 +188,14 @@ public class AccountingEventForOwnerController extends AccountingController {
         }
     }
 
+    @RequestMapping(value = "{event}/allocateIBAN", method = RequestMethod.POST)
+    public String allocateIBAN(final @PathVariable Event event,
+                               final Model model) {
+        accessControlService.checkEventOwner(event);
+        event.allocateIBAN();
+        return view("event-payment-iban");
+    }
+
     @RequestMapping(value = "{event}/waitForDPG", method = RequestMethod.GET)
     public String waitForDPG(final @PathVariable Event event,
                              final Model model) {
