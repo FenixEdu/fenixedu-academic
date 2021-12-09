@@ -1471,6 +1471,13 @@ public class CurricularCourse extends CurricularCourse_Base {
         return new LocalizedString();
     }
     
+    public LocalizedString getPrerequisitesI18N(ExecutionSemester period) {
+        if (getCompetenceCourse() != null ) {
+            return getCompetenceCourse().getPrerequisitesI18N(period);
+      }       
+        return new LocalizedString();
+    }
+    
     
     public LocalizedString getPrerequisitesI18N() {
         return new LocalizedString(org.fenixedu.academic.util.LocaleUtils.PT, getPrerequisites()).with(org.fenixedu.academic.util.LocaleUtils.EN,
