@@ -20,9 +20,13 @@ package org.fenixedu.academic.domain.accounting;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.signals.DomainObjectEvent;
+import org.fenixedu.bennu.core.signals.Signal;
 import org.joda.time.DateTime;
 
 public class AccountingTransactionDetail extends AccountingTransactionDetail_Base {
+
+    public static final String SIGNAL_TRANSACTION_DETAIL_INIT = AccountingTransactionDetail.class.getName() + ".init";
 
     protected AccountingTransactionDetail() {
         super();
@@ -59,6 +63,8 @@ public class AccountingTransactionDetail extends AccountingTransactionDetail_Bas
         super.setPaymentMethod(paymentMethod);
         super.setPaymentReference(paymentReference);
         super.setComments(comments);
+
+        Signal.emit(SIGNAL_TRANSACTION_DETAIL_INIT, new DomainObjectEvent<>(this));
     }
 
     @Override
