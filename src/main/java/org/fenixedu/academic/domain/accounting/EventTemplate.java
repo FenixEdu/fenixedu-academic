@@ -19,10 +19,12 @@ public class EventTemplate extends EventTemplate_Base implements Comparable<Even
         getRelationEventTemplateRegistrationDataByExecutionYear().addListener(new RelationAdapter<RegistrationDataByExecutionYear, EventTemplate>() {
             @Override
             public void afterAdd(final RegistrationDataByExecutionYear dataByExecutionYear, final EventTemplate eventTemplate) {
-                if (dataByExecutionYear != null && eventTemplate != null) {
+                if (dataByExecutionYear != null) {
                     final DateTime dateTime = dataByExecutionYear.getExecutionYear().getBeginLocalDate().plusWeeks(4)
                             .toDateTimeAtStartOfDay();
-                    final EventTemplateConfig templateConfig = eventTemplate.getConfigFor(dateTime);
+                    final EventTemplate newEventTemplate = eventTemplate == null
+                            ? dataByExecutionYear.getRegistration().getEventTemplate() : eventTemplate;
+                    final EventTemplateConfig templateConfig = newEventTemplate.getConfigFor(dateTime);
                     if (templateConfig == null) {
                         throw new Error("No template config available for registration date: " + dateTime.minusWeeks(4)
                                 .toString("yyyy-MM-dd"));
