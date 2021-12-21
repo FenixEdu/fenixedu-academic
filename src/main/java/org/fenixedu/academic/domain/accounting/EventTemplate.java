@@ -19,7 +19,7 @@ public class EventTemplate extends EventTemplate_Base implements Comparable<Even
         getRelationEventTemplateRegistrationDataByExecutionYear().addListener(new RelationAdapter<RegistrationDataByExecutionYear, EventTemplate>() {
             @Override
             public void afterAdd(final RegistrationDataByExecutionYear dataByExecutionYear, final EventTemplate eventTemplate) {
-                if (dataByExecutionYear != null) {
+                if (dataByExecutionYear != null && dataByExecutionYear.getRegistration().getEventTemplate() != null) {
                     final DateTime dateTime = dataByExecutionYear.getExecutionYear().getBeginLocalDate().plusWeeks(4)
                             .toDateTimeAtStartOfDay();
                     final EventTemplate newEventTemplate = eventTemplate == null
