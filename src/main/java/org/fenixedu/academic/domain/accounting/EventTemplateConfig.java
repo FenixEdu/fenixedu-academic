@@ -300,4 +300,24 @@ public class EventTemplateConfig extends EventTemplateConfig_Base {
     }
 
 
+    public Money calculateTuition(final RegistrationDataByExecutionYear dataByExecutionYear) {
+        final JsonObject config = getConfig().getAsJsonObject(EventTemplate.Type.TUITION.name());
+        if (config != null) {
+            final Map<LocalDate, Money> dueDateAmountMap = toDueDateAmountMap(config.getAsJsonObject("dueDateAmountMap"));
+            final Money baseTuition = dueDateAmountMap.values().stream().reduce(Money.ZERO, Money::add);
+            final JsonObject byECTS = config.getAsJsonObject("byECTS");
+            return byECTS == null ? baseTuition : baseTuition.add(new Money(byECTS.get("value").getAsString())
+                    .multiply(enrolledECTS(dataByExecutionYear)));
+        }
+        return null;
+    }
+
+    private BigDecimal enrolledECTS(final RegistrationDataByExecutionYear dataByExecutionYear) {
+        final ExecutionYear executionYear = dataByExecutionYear.getExecutionYear();
+        return dataByExecutionYear.getRegistration().getStudentCurricularPlansSet().stream()
+                .flatMap(scp -> scp.getEnrolmentStream())
+                .map(enrolment -> enrolment.getEctsCreditsForCurriculum())
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
 }
