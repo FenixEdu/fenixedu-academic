@@ -118,6 +118,9 @@ public class EventTemplateConfig extends EventTemplateConfig_Base {
             }
             data.add("productCode", config.get("productCode"));
             data.add("productDescription", config.get("productDescription"));
+            if (type == EventTemplate.Type.TUITION) {
+                config.addProperty("applyInterest", true);
+            }
 
             eventConfigConsumer.accept(data);
         }));
