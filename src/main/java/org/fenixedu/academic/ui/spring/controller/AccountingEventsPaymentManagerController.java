@@ -317,14 +317,17 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
     }
 
     @RequestMapping(value = "{event}/refundEvent", method = RequestMethod.POST)
-    public String refundEvent(final @PathVariable Event event, final User user, final Model model, @RequestParam
-            EventExemptionJustificationType justificationType, @RequestParam String reason, @RequestParam BigDecimal amount) {
-        return doRefund(event, user, model, () -> accountingManagementService.refundEvent(event, user, justificationType, reason, amount));
+    public String refundEvent(final @PathVariable Event event, final User user, final Model model,
+                              final @RequestParam EventExemptionJustificationType justificationType,
+                              final @RequestParam String reason, final @RequestParam BigDecimal amount,
+                              final @RequestParam String bankAccountNumber) {
+        return doRefund(event, user, model, () -> accountingManagementService.refundEvent(event, user, justificationType, reason, amount, bankAccountNumber));
     }
 
     @RequestMapping(value = "{event}/refundExcessPayment", method = RequestMethod.POST)
-    public String refundExcessPayment(final @PathVariable Event event, final User user, final Model model) {
-        return doRefund(event, user, model, () -> accountingManagementService.refundExcessPayment(event, user, null));
+    public String refundExcessPayment(final @PathVariable Event event, final User user, final Model model,
+                                      final @RequestParam String bankAccountNumber) {
+        return doRefund(event, user, model, () -> accountingManagementService.refundExcessPayment(event, user, null, bankAccountNumber));
     }
 
     private String doRefund(final @PathVariable Event event, final User user, final Model model, Supplier<Refund> supplier) {

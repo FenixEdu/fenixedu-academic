@@ -8,16 +8,15 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
-
 import pt.ist.fenixframework.Atomic;
 
 public class Refund extends Refund_Base {
 
-    public Refund(Event event, Money amount, User creator, boolean excessOnly) {
-        this(event, amount, creator, excessOnly, new DateTime());
+    public Refund(Event event, Money amount, User creator, boolean excessOnly, final String bankAccountNumber) {
+        this(event, amount, creator, excessOnly, new DateTime(), bankAccountNumber);
     }
     
-    public Refund(Event event, Money amount, User creator, boolean excessOnly, DateTime when) {
+    public Refund(Event event, Money amount, User creator, boolean excessOnly, DateTime when, final String bankAccountNumber) {
         setEvent(event);
         setWhenOccured(when);
         setAmount(amount);
@@ -25,6 +24,7 @@ public class Refund extends Refund_Base {
         setExcessOnly(excessOnly);
         setState(RefundState.PENDING);
         setStateDate(when.toLocalDate());
+        setBankAccountNumber(bankAccountNumber);
     }
 
     @Atomic(mode = Atomic.TxMode.WRITE)

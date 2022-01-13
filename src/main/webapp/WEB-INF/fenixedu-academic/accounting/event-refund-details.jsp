@@ -76,6 +76,12 @@
                         <c:out value="${refund.amount.toPlainString()}"/><span>€</span>
                     </dd>
                 </dl>
+                <dl>
+                    <dt><spring:message code="label.org.fenixedu.academic.dto.accounting.bankAccountNumber" text="Bank Account Number"/>:</dt>
+                    <dd>
+                        <c:out value="${refund.bankAccountNumber}"/><span>€</span>
+                    </dd>
+                </dl>
             </section>
         </div>
         <div class="col-md-2 col-md-offset-2">

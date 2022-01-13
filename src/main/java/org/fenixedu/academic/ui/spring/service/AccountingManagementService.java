@@ -285,7 +285,8 @@ public class AccountingManagementService {
     }
 
     @Atomic
-    public AccountingTransaction depositAdvancement(final Event eventToDeposit, final Event eventToRefund, final User user) {
+    public AccountingTransaction depositAdvancement(final Event eventToDeposit, final Event eventToRefund,
+                                                    final User user) {
 
         // In case of ResidenceEvents, source and target must be of the same type
         if (eventToRefund instanceof ResidenceEvent ^ eventToDeposit instanceof ResidenceEvent) {
@@ -298,7 +299,7 @@ public class AccountingManagementService {
         final Money amountToRefund =
                 Stream.of(availableAmountToDeposit, availableAmountToRefund).min(Money::compareTo).orElseThrow(UnsupportedOperationException::new);
 
-        final Refund refund = refundExcessPayment(eventToRefund, user, amountToRefund);
+        final Refund refund = refundExcessPayment(eventToRefund, user, amountToRefund, null);
 
         final AccountingTransaction tx = eventToDeposit.depositAmount(user, refund.getAmount(), eventToDeposit.getEntryType(),
                 new AccountingTransactionDetailDTO(new DateTime(), PaymentMethod.getRefundPaymentMethod(), refund.getExternalId(), ""));
@@ -337,19 +338,19 @@ public class AccountingManagementService {
     @Deprecated
     @Atomic
     public Refund refundEvent(final Event event, final User creator, EventExemptionJustificationType
-            justificationType, String reason) {
-        return event.refund(creator, justificationType, reason);
+            justificationType, String reason, final String bankAccountNumber) {
+        return event.refund(creator, justificationType, reason, bankAccountNumber);
     }
 
     @Atomic
     public Refund refundEvent(final Event event, final User creator, EventExemptionJustificationType
-            justificationType, String reason, BigDecimal value) {
-        return event.refund(creator, justificationType, reason, value);
+            justificationType, String reason, BigDecimal value, final String bankAccountNumber) {
+        return event.refund(creator, justificationType, reason, value, bankAccountNumber);
     }
 
     @Atomic
-    public Refund refundExcessPayment(final Event event, final User creator, final Money amount) {
-        return event.refundExcess(creator, amount);
+    public Refund refundExcessPayment(final Event event, final User creator, final Money amount, final String bankAccountNumber) {
+        return event.refundExcess(creator, amount, bankAccountNumber);
     }
 
 }

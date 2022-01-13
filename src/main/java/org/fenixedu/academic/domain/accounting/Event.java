@@ -1217,14 +1217,16 @@ public abstract class Event extends Event_Base {
 
     @Deprecated
     @Atomic(mode = Atomic.TxMode.WRITE)
-    public Refund refund(User creator, EventExemptionJustificationType justificationType, String reason) {
+    public Refund refund(final User creator, final EventExemptionJustificationType justificationType,
+                         final String reason, final String bankAccountNumber) {
         final DateTime now = new DateTime().minusSeconds(2);
         DebtInterestCalculator debtInterestCalculator = getDebtInterestCalculator(now);
-        return refund(creator, justificationType, reason, debtInterestCalculator.getPaidDebtAmount());
+        return refund(creator, justificationType, reason, debtInterestCalculator.getPaidDebtAmount(), bankAccountNumber);
     }
 
     @Atomic(mode = Atomic.TxMode.WRITE)
-    public Refund refund(User creator, EventExemptionJustificationType justificationType, String reason, BigDecimal value) {
+    public Refund refund(final User creator, final EventExemptionJustificationType justificationType,
+                         final String reason, final BigDecimal value, final String bankAccountNumber) {
         if (!isRefundable()) {
             throw new DomainException("error.event.cannot.be.refunded");
         }
@@ -1245,7 +1247,7 @@ public abstract class Event extends Event_Base {
         if (paidDebtAmount.subtract(value).signum() != 0 && debtInterestCalculator.getDueAmount().signum() == 1) {
             throw new DomainException(Optional.of(Bundle.ACCOUNTING), "error.accounting.refund.not.possible.openDebt.notTotalValue");
         }
-        final Refund refund = new Refund(this, new Money(value), creator, false, now);
+        final Refund refund = new Refund(this, new Money(value), creator, false, now, bankAccountNumber);
 
         exempt(creator.getPerson(), justificationType, reason);
 
@@ -1269,12 +1271,12 @@ public abstract class Event extends Event_Base {
         return result;
     }
 
-    public Refund refundExcess(User creator) {
-        return refundExcess(creator, null);
+    public Refund refundExcess(final User creator, final String bankAccountNumber) {
+        return refundExcess(creator, null, bankAccountNumber);
     }
 
     @Atomic(mode = Atomic.TxMode.WRITE)
-    public Refund refundExcess(User creator, Money amount) {
+    public Refund refundExcess(User creator, Money amount, final String bankAccountNumber) {
         if (!isRefundable()) {
             throw new DomainException("error.event.cannot.be.refunded");
         }
@@ -1288,7 +1290,7 @@ public abstract class Event extends Event_Base {
         }
 
         if (paidUnusedAmount.isPositive() && amount.lessOrEqualThan(paidUnusedAmount)) {
-            return new Refund(this, amount, creator, true, now);
+            return new Refund(this, amount, creator, true, now, bankAccountNumber);
         }
 
         throw new DomainException(Optional.of(Bundle.ACCOUNTING), "error.no.refundable.excess.amount", this.getExternalId(), this
