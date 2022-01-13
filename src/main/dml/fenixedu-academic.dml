@@ -1321,6 +1321,7 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
             boolean excessOnly;
             RefundState state (REQUIRED);
             LocalDate stateDate (REQUIRED);
+            String bankAccountNumber;
     }
 
     class accounting.ProofOfPaymentFile extends .org.fenixedu.bennu.io.domain.GenericFile {
