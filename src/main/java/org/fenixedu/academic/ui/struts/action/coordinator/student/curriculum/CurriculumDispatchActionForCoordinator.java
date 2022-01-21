@@ -46,7 +46,7 @@ public class CurriculumDispatchActionForCoordinator extends CurriculumDispatchAc
         registration = student.readRegistrationByDegreeCurricularPlan(degreeCurricularPlan);
         if (registration == null) {
             for (final Registration r : student.getRegistrationsSet()) {
-                if (r.getIngressionType().isIsolatedCurricularUnits()) {
+                if (r.getDegree().isEmpty()) {
                     registration = r;
                     break;
                 }
