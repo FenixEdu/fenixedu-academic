@@ -18,9 +18,6 @@
  */
 package org.fenixedu.academic.ui.struts.action.person;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -31,8 +28,13 @@ import org.fenixedu.academic.ui.struts.action.person.PersonApplication.PersonalA
 import org.fenixedu.academic.ui.struts.action.person.UpdateEmergencyContactDA.EmergencyContactBean;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.core.util.NotificationPlug;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @StrutsFunctionality(app = PersonalAreaApp.class, descriptionKey = "label.person.visualizeInformation", path = "information",
         titleKey = "label.person.visualizeInformation")
@@ -42,6 +44,14 @@ public class VisualizePersonalInfo extends ForwardAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        final HttpSession httpSession = request.getSession(false);
+        final NotificationPlug notificationPlug = NotificationPlug.PLUGS.stream()
+                .filter(plug -> plug.showNotification(Authenticate.getUser(), httpSession))
+                .findAny().orElse(null);
+        if (notificationPlug != null) {
+            return new ActionForward(notificationPlug.redirectUrl(httpSession), true);
+        }
+
         PersonBean person = new PersonBean(getLoggedUser());
         EmergencyContactBean emergencyContactBean = new EmergencyContactBean(getLoggedUser());
         request.setAttribute("personBean", person);

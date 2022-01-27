@@ -40,7 +40,7 @@
         <version.org.apache.poi.poi>3.17</version.org.apache.poi.poi>
         <version.org.fenixedu.bennu-renderers>6.1.0</version.org.fenixedu.bennu-renderers>
         <version.org.fenixedu.bennu-modular-rendering>1.1.0</version.org.fenixedu.bennu-modular-rendering>
-        <version.org.fenixedu.bennu>6.18.0</version.org.fenixedu.bennu>
+        <version.org.fenixedu.bennu>6.22.0</version.org.fenixedu.bennu>
         <version.org.fenixedu.fenixedu-commons>3.0.0</version.org.fenixedu.fenixedu-commons>
         <version.org.fenixedu.fenixedu-spaces>3.0.1</version.org.fenixedu.fenixedu-spaces>
         <version.org.fenixedu.messaging>4.2.0</version.org.fenixedu.messaging>
