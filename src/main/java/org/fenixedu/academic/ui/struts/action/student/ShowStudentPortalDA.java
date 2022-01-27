@@ -18,15 +18,6 @@
  */
 package org.fenixedu.academic.ui.struts.action.student;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.TreeSet;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -44,11 +35,22 @@ import org.fenixedu.academic.dto.student.StudentPortalBean;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.core.util.NotificationPlug;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.StrutsApplication;
 import org.joda.time.YearMonthDay;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.TreeSet;
 
 @StrutsApplication(bundle = "TitlesResources", path = "student", titleKey = "private.student",
         accessGroup = StudentApplication.ACCESS_GROUP, hint = StudentApplication.HINT)
@@ -62,6 +64,14 @@ public class ShowStudentPortalDA extends Action {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        final HttpSession httpSession = request.getSession(false);
+        final NotificationPlug notificationPlug = NotificationPlug.PLUGS.stream()
+                .filter(plug -> plug.showNotification(Authenticate.getUser(), httpSession))
+                .findAny().orElse(null);
+        if (notificationPlug != null) {
+            return new ActionForward(notificationPlug.redirectUrl(httpSession), true);
+        }
+
         List<StudentPortalBean> studentPortalBeans = new ArrayList<StudentPortalBean>();
         List<String> genericDegreeWarnings = new ArrayList<String>();
 
