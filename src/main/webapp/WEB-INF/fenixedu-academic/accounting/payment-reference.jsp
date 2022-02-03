@@ -125,36 +125,36 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="overall-description">
-                    <h4><b><spring:message code="label.payment.method.bankTrasnfer" text="Payment Via Bank Transfer"/></b></h4>
+                    <h4><b><spring:message code="label.payment.method.bankTransfer" text="Payment Via Bank Transfer"/></b></h4>
                     <div class="alert alert-warning">
                         <p>
-                            <spring:message code="label.payment.method.bankTrasnfer.info" text="Upload the proof of payment after transfering funds"/>
+                            <spring:message code="label.payment.method.bankTransfer.info" text="Upload the proof of payment after transfering funds"/>
                         </p>
                     </div>
                     <ul>
                         <li>
-                            <spring:message code="label.payment.method.bankTrasnfer.institution" text="Institution"/>
+                            <spring:message code="label.payment.method.bankTransfer.institution" text="Institution"/>
                             :
                             <%= PortalConfiguration.getInstance().getApplicationCopyright().getContent().substring(2) %>
                         </li>
                         <li>
-                            <spring:message code="label.payment.method.bankTrasnfer.bank" text="Bank"/>
+                            <spring:message code="label.payment.method.bankTransfer.bank" text="Bank"/>
                             :
                             <%= FenixSpringConfiguration.getConfiguration().paymentMethodBankTransferBank() %>
                         </li>
                         <li>
-                            <spring:message code="label.payment.method.bankTrasnfer.iban" text="IBAN"/>
+                            <spring:message code="label.payment.method.bankTransfer.iban" text="IBAN"/>
                             :
                             <%= FenixSpringConfiguration.getConfiguration().paymentMethodBankTransferIBAN() %>
                         </li>
                         <li>
-                            <spring:message code="label.payment.method.bankTrasnfer.bic" text="BIC/SWIFT"/>
+                            <spring:message code="label.payment.method.bankTransfer.bic" text="BIC/SWIFT"/>
                             :
                             <%= FenixSpringConfiguration.getConfiguration().paymentMethodBankTransferBIC() %>
                         </li>
                     </ul>
 
-                    <h5 style="padding-top: 25px;"><b><spring:message code="label.payment.method.bankTrasnfer.proof.of.payment" text="Proof of Payment"/></b></h5>
+                    <h5 style="padding-top: 25px;"><b><spring:message code="label.payment.method.bankTransfer.proof.of.payment" text="Proof of Payment"/></b></h5>
                     <%
                         ProofOfPayment latestProofOfPayment = null;
                         for (final ProofOfPayment proofOfPayment : event.getProofOfPaymentSet()) {
@@ -174,11 +174,11 @@
                                         : "darkgreen"; %>
                                 <span style="padding-left: 5px; color: <%= color %>">
                                 <% if (latestProofOfPayment.getBennu() != null) { %>
-                                    <spring:message code="label.payment.method.bankTrasnfer.proof.of.payment.pending.verification" text="Pending Verification"/>
+                                    <spring:message code="label.payment.method.bankTransfer.proof.of.payment.pending.verification" text="Pending Verification"/>
                                 <% } else if (latestProofOfPayment.getAccountingTransactionDetail() == null) { %>
-                                    <spring:message code="label.payment.method.bankTrasnfer.proof.of.payment.rejected" text="Rejected"/>
+                                    <spring:message code="label.payment.method.bankTransfer.proof.of.payment.rejected" text="Rejected"/>
                                 <% } else { %>
-                                    <spring:message code="label.payment.method.bankTrasnfer.proof.of.payment.accepted" text="Accepted"/>
+                                    <spring:message code="label.payment.method.bankTransfer.proof.of.payment.accepted" text="Accepted"/>
                                 <% } %>
                                 </span>
                             </li>
@@ -194,7 +194,7 @@
                                    accept="image/png, image/jpeg, image/jpg, application/pdf"/>
                         </div>
                         <button class="btn btn--primary">
-                            <spring:message code="label.payment.method.bankTrasnfer.proof.of.payment.upload" text="Upload Proof of Payment"/>
+                            <spring:message code="label.payment.method.bankTransfer.proof.of.payment.upload" text="Upload Proof of Payment"/>
                         </button>
                     </form>
                     </p>

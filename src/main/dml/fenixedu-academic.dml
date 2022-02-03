@@ -1345,7 +1345,18 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
         String data;
     }
 
-    class accounting.Event  {
+    class accounting.IBANGroup {
+        String prefix;
+        int nextInfix;
+        boolean active;
+    }
+
+    class accounting.IBAN {
+        String infix;
+        String suffix;
+    }
+
+    class accounting.Event {
         String cancelJustification;
         EventState eventState;
         DateTime eventStateDate;
@@ -8883,6 +8894,13 @@ relation RootDomainObjectCountry {
     }
 }
 
+relation RootDomainObjectSEPACountry {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootObject;
+    Country playsRole sepaCountries {
+        multiplicity *;
+    }
+}
+
 relation RootDomainObjectCreditNote {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.CreditNote playsRole creditNotes {
@@ -12709,6 +12727,42 @@ relation AccountingTransactionSibsPayment {
         multiplicity 0..1;
     }
     .pt.ist.payments.domain.SibsPayment playsRole sibsPayment {
+        multiplicity 0..1;
+    }
+}
+
+relation BennuIBANGroup {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole bennu {
+        multiplicity 1..1;
+    }
+    accounting.IBANGroup playsRole iBANGroup {
+        multiplicity *;
+    }
+}
+
+relation IBANGroupIBAN {
+    accounting.IBANGroup playsRole iBANGroup {
+        multiplicity 1..1;
+    }
+    accounting.IBAN playsRole iBAN {
+        multiplicity *;
+    }
+}
+
+relation IBANKeyIndex {
+	accounting.IBAN playsRole iBAN {
+		multiplicity *;
+	}
+	.org.fenixedu.bennu.search.domain.KeyIndex playsRole iBANKeyIndex {
+		multiplicity 1;
+	}
+}
+
+relation EventIBAN {
+    accounting.Event playsRole event {
+        multiplicity 1..1;
+    }
+    accounting.IBAN playsRole iBAN {
         multiplicity 0..1;
     }
 }
