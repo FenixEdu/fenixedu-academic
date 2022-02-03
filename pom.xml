@@ -157,6 +157,11 @@
         </dependency>
         <dependency>
             <groupId>org.fenixedu</groupId>
+            <artifactId>bennu-search</artifactId>
+            <version>${version.org.fenixedu.bennu}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.fenixedu</groupId>
             <artifactId>bennu-renderers</artifactId>
             <version>${version.org.fenixedu.bennu-renderers}</version>
         </dependency>

@@ -1968,4 +1968,11 @@ public class Person extends Person_Base {
                 .findFirst().orElse(null);
     }
 
+    public Country getVATCountry() {
+        if (getSocialSecurityNumber() != null && getSocialSecurityNumber().length() >= 2) {
+            final String countryCode = getSocialSecurityNumber().substring(0, 2);
+            return Country.readByTwoLetterCode(countryCode);
+        }
+        return null;
+    }
 }

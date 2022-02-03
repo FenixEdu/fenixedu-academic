@@ -188,6 +188,23 @@ public class AccountingEventForOwnerController extends AccountingController {
         }
     }
 
+    @RequestMapping(value = "{event}/allocateIBAN", method = RequestMethod.POST)
+    public String allocateIBAN(final @PathVariable Event event,
+                               final Model model) {
+        accessControlService.checkEventOwner(event);
+        event.allocateIBAN();
+        model.addAttribute("eventDetailsUrl", getEventDetailsUrl(event));
+        return view("event-payment-iban");
+    }
+
+    @RequestMapping(value = "{event}/bankTransfer", method = RequestMethod.POST)
+    public String bankTransfer(final @PathVariable Event event,
+                               final Model model) {
+        accessControlService.checkEventOwner(event);
+        model.addAttribute("eventDetailsUrl", getEventDetailsUrl(event));
+        return view("event-payment-transfer");
+    }
+
     @RequestMapping(value = "{event}/waitForDPG", method = RequestMethod.GET)
     public String waitForDPG(final @PathVariable Event event,
                              final Model model) {
@@ -208,8 +225,7 @@ public class AccountingEventForOwnerController extends AccountingController {
         } catch (final IOException ex) {
             throw new Error(ex);
         }
-        final EventPaymentCodeEntry paymentCodeEntry = EventPaymentCodeEntry.getOrCreateReusable(event);
-        return String.format("redirect:%s/%s/paymentRef/%s", REQUEST_MAPPING, event.getExternalId(), paymentCodeEntry.getExternalId());
+        return view("event-payment-transfer");
     }
 
     private List<EventPaymentCodeEntry> getSortedEventPaymentCodeEntries(Event event) {
