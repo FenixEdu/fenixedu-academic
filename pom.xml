@@ -28,7 +28,7 @@
         <version.commons-beanutils.commons-beanutils>1.9.3</version.commons-beanutils.commons-beanutils>
         <version.commons-collections.commons-collections>3.2.2</version.commons-collections.commons-collections>
         <version.commons-httpclient.commons-httpclient>3.1</version.commons-httpclient.commons-httpclient>
-        <version.commons-io.commons-io>2.6</version.commons-io.commons-io>
+        <version.commons-io.commons-io>2.7</version.commons-io.commons-io>
         <version.commons-lang.commons-lang>2.6</version.commons-lang.commons-lang>
         <version.commons-validator.commons-validator>1.6</version.commons-validator.commons-validator>
         <version.javax.faces.jsf-api>1.1_01</version.javax.faces.jsf-api>
