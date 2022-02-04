@@ -1,3 +1,4 @@
+32.9.10 (04-02-2022)
 - Fix: Add missing AcademicPeriod.OTHER label
 - Fix: Remove argument to check enrolments in active students group 
 
