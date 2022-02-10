@@ -18,24 +18,7 @@
  */
 package org.fenixedu.academic.domain;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
+import com.google.common.base.Strings;
 import com.google.common.collect.Streams;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
@@ -55,7 +38,6 @@ import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeAnd
 import org.fenixedu.academic.domain.accounting.events.AdministrativeOfficeFeeEvent;
 import org.fenixedu.academic.domain.accounting.events.AnnualEvent;
 import org.fenixedu.academic.domain.accounting.events.PastAdministrativeOfficeFeeAndInsuranceEvent;
-import org.fenixedu.academic.domain.accounting.events.gratuity.GratuityEvent;
 import org.fenixedu.academic.domain.accounting.events.insurance.InsuranceEvent;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.candidacy.Candidacy;
@@ -119,11 +101,26 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.Months;
 import org.joda.time.YearMonthDay;
-
-import com.google.common.base.Strings;
-
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.ist.fenixframework.Atomic;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 public class Person extends Person_Base {
 
@@ -1973,6 +1970,8 @@ public class Person extends Person_Base {
             final String countryCode = getSocialSecurityNumber().substring(0, 2);
             return Country.readByTwoLetterCode(countryCode);
         }
-        return null;
+        final Country country = getNationality();
+        return country == null || country.getCode()
+                .equals(Bennu.getInstance().getInstitutionUnit().getNationality().getCode()) ? null : country;
     }
 }
