@@ -511,7 +511,6 @@ public abstract class Event extends Event_Base {
 
     /**
      * Should return entries representing the due date and the corresponding amount
-     *
      */
     @Override
     public final DueDateAmountMap getDueDateAmountMap() {
@@ -1366,21 +1365,19 @@ public abstract class Event extends Event_Base {
     }
 
     public boolean allowBankTransfer() {
-        if (!allowSEPATransfer()) {
-            final Country country = getPerson().getVATCountry();
-            return country != null && country != Bennu.getInstance().getInstitutionUnit().getCountry()
-                    && !isDfaRegistrationEvent() && !isPhdEvent() && !isSpecializationDegreeRegistrationEvent();
-        }
-        return false;
+        final Country country = getPerson().getVATCountry();
+        return country != null
+                && (!allowSEPATransfer())
+                && (!country.getCode().equals(Bennu.getInstance().getInstitutionUnit().getNationality().getCode()))
+                && !isDfaRegistrationEvent()
+                && !isPhdEvent()
+                && !isSpecializationDegreeRegistrationEvent();
     }
 
     public boolean allowSEPATransfer() {
         final Country country = getPerson().getVATCountry();
-        if (country != null) {
-            return Bennu.getInstance().getSepaCountriesSet().stream()
-                    .anyMatch(c -> c == country);
-        }
-        return false;
+        return country != null && Bennu.getInstance().getSepaCountriesSet().stream()
+                .anyMatch(c -> c == country);
     }
 
     public boolean isToApplyInterest() {
