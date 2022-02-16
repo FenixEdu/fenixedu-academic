@@ -1,6 +1,6 @@
 32.9.10 (04-02-2022)
-- Fix: Add missing AcademicPeriod.OTHER label
-- Fix: Remove argument to check enrolments in active students group 
+- Bug fix: Add missing AcademicPeriod.OTHER label
+- Bug fix: Remove argument to check enrolments in active students group 
 
 32.9.9 (07-12-2021)
 - Improvement: Add types "EU_PERMANENT_RESIDENCE_CARD" and "EU_REGISTRATION_CERTIFICATE" to IDDocumentType
@@ -15,7 +15,7 @@
 - Refactor: Add creator method for Statute Type
 
 32.9.6 (06-10-2021)
-- Fix: Changed degree designation (SchoolLevelType.DOCTORATE_DEGREE SchoolLevelType.MASTER_DEGREE) #UL-REIT-2403
+- Bug fix: Changed degree designation (SchoolLevelType.DOCTORATE_DEGREE SchoolLevelType.MASTER_DEGREE)
 
 32.9.5 (06-10-2021)
 - Improvement: Student group with argument to check enrolments
@@ -42,7 +42,7 @@
 - Bug fix: OrRule should evaluate to true on prefilter level
 
 32.8.12 (26-08-2021)
-- Fix: Changed degree designation (SchoolLevelType.DEGREE) #UL-REIT-2403
+- Bug fix: Changed degree designation (SchoolLevelType.DEGREE)
 
 32.8.11 (23-08-2021)
 - Improvement: Only attempt shift enrolment in the first suitable capacity for provided registration
@@ -77,7 +77,7 @@
 
 32.8.2 (03-04-2021)
 - Refactor: Deprecated some DegreeInfo getters and setters
-- Fix: Change Teacher role type expression in order to include also inactive teachers in find person functionality
+- Bug fix: Change Teacher role type expression in order to include also inactive teachers in find person functionality
 
 32.8.1 (22-03-2021)
 - Refactor: added Session supplier to handle authenticated email servers
@@ -127,7 +127,7 @@
 - Refactor: Add interfaces and methods to get treasury customer and debt account
 
 32.3.2 (23-11-2020)
-- Bug Fix: Set CurrentPartyContact to null when deleting party contact #UL-FM-1968
+- Bug Fix: Set CurrentPartyContact to null when deleting party contact
 
 32.3.1 (23-11-2020)
 - Bug fix: Error accessing coordinator portal due to removal of bolonha type in degree type
@@ -169,23 +169,23 @@
 - Refactor: Cleanup SchoolClass slot names in portuguese 
 - Refactor: Cleanup Shift slot names in portuguese
 - Refactor: Cleanup Lesson slot names in portuguese
-- Fix: Shift custom name predicate when course sigla has square brackets
+- Bug fix: Shift custom name predicate when course sigla has square brackets
 
 30.11.1 (20-10-2020)
-- Fix: Changed Person related entities to allow delete method execution
+- Bug fix: Changed Person related entities to allow delete method execution
 
 30.11.0 (14-10-2020)
 - New Feature: Added Health Card Number to Person according
 
 30.10.0 (13-10-2020)
-- Fix: Root curricular period label displaying 'null' on child order
+- Bug fix: Root curricular period label displaying 'null' on child order
 - Refactor: Remove teacher authorization departments to units migration on system init
 - Refactor: Migrate SchoolClass slot names in portuguese to english
 - Refactor: Migrate Shift slot names in portuguese to english
 - Refactor: Migrate Lesson slot names in portuguese to english
 
 30.9.4 (31-08-2020)
-- Fix: Coordinator curricular year statistics should use execution year on computation
+- Bug fix: Coordinator curricular year statistics should use execution year on computation
 
 30.9.3 (14-08-2020)
 - Improvement: Child execution interval should be created with the default state (not open)
@@ -195,8 +195,8 @@
 - Refactor: Allow CreditsLimit rule subclassing
 
 30.9.1 (07-08-2020)
-- Fix: Unique acronym check should ignore blank values
-- Fix: Add official unit setter with primitive boolean param
+- Bug fix: Unique acronym check should ignore blank values
+- Bug fix: Add official unit setter with primitive boolean param
 
 30.9.0 (06-08-2020)
 - Improvement: Add AccountabilityType as UnitGroup argument (and deprecate AccountabilityTypeEnum)
@@ -205,12 +205,12 @@
 - Refactor: Cleanup deprecated DepartmentForum
 - Refactor: Cleanup deprecated department argument in TeacherGroup
 - Refactor: Cleanup deprecated Department and Teacher methods
-- Fix: Fixed PermissionService objects provide
+- Bug fix: Fixed PermissionService objects provide
 
 30.8.0 (04-08-2020)
 - Improvement: Simplified curricular rule executors creation
 - Refactor: Deprecated old curricular rule execution modes
-- Fix: Enrolment state not evaluated label should not be flunked  
+- Bug fix: Enrolment state not evaluated label should not be flunked  
 
 30.7.0 (29-07-2020)
 - Refactor: Moved relation PersonCountryHighSchool from specification to academic-core
@@ -219,19 +219,19 @@
 30.6.2 (27-07-2020)
 - Improvement: In student portal initial screen, show execution course alternative site
 - Improvement: Simplified competence course acronym generation
-- Fix: PreviousYearsEnrolmentExecutor should also collect root curriculum group rules on verification context 
+- Bug fix: PreviousYearsEnrolmentExecutor should also collect root curriculum group rules on verification context 
 
 30.6.1 (30-06-2020)
-- Fix: Typo in Languages method
+- Bug fix: Typo in Languages method
 
 30.6.0 (30-06-2020)
 - New feature: Specify shift languages
 - Improvement: Updated permission service
 - Improvement: New methods to check if shift and school class are free for a specific registration 
-- Fix: Add coordinator responsible setter with primitive boolean param
+- Bug fix: Add coordinator responsible setter with primitive boolean param
 
 30.5.1 (22-06-2020)
-- Fix: Summaries control - sort intervals and fix course url site
+- Bug fix: Summaries control - sort intervals and fix course url site
 
 30.5.0 (12-06-2020)
 - New feature: Shifts extra capacity, used when its own is full
@@ -240,23 +240,23 @@
 - Improvement: Added code to ShiftCapacityType 
 
 30.4.2 (01-06-2020)
-- Fix: Better handling of execution courses attends merge
+- Bug fix: Better handling of execution courses attends merge
 - Refactor: Comment unused Enrolment constructor and change default constructor visibility to protected
 
 30.4.1 (21-05-2020)
 - Improvement: Improved PermissionService
-- Fix: Remove restriction for unique attends in an execution coruse within all registrations of a student
+- Bug fix: Remove restriction for unique attends in an execution coruse within all registrations of a student
 
 30.4.0 (20-05-2020)
 - Improvement: added support for enrolment prefilter curricular rule level 
-- Fix: Context intervals intersection should be with execution aggregators
+- Bug fix: Context intervals intersection should be with execution aggregators
 
 30.3.1 (08-05-2020)
 - Improvement: Add type getter/setter to BibliographicReference
 
 30.3.0 (08-05-2020)
 - Improvement: AdministrativeOffice coordinator not mandatory
-- Fix: Bootstrap countries with english names
+- Bug fix: Bootstrap countries with english names
 - Refactor: Clean unused configuration properties
 - Refactor: Remove initialization of default shift capacities
 
@@ -288,7 +288,7 @@
 29.1.0 (13-04-2020)
 - Improvement: Rewrite of method ExecutionCourse.getDegreePresentationString() to improve performance 
 - Improvement: Support for custom names in PartyType and AccountabilityType 
-- Fix: Creation of AcademicYearCE should always create a correspondent ExecutionYear
+- Bug fix: Creation of AcademicYearCE should always create a correspondent ExecutionYear
 
 29.0.0 (04-04-2020)
 - Refactor: Deprecated PrecedentDegreeInformation slots cleanup
@@ -297,11 +297,11 @@
 
 28.8.0 (27-03-2020)
 - Refactor: Prepare code to allow mixing of different academic period types on same degree curricular plan (contexts and curricular rules validity are now always evaluated for execution year)
-- Fix: Added responsibleFor setter with primitive boolean param
+- Bug fix: Added responsibleFor setter with primitive boolean param
 
 28.7.0 (19-03-2020)
 - Refactor: PrecedentDegreeInformation split into 'completed' and 'previous'  
-- Fix: Deletion of AcademicCalendarEntries connected to ExecutionIntervals
+- Bug fix: Deletion of AcademicCalendarEntries connected to ExecutionIntervals
 
 28.6.0 (18-03-2020)
 - Improvement: added support for AcademicPeriod type Other
@@ -313,7 +313,7 @@
 - New feature: Support for Java 11
 
 28.4.0 (10-03-2020)
-- Fix: ExecutionInterval method overloading dispatching 
+- Bug fix: ExecutionInterval method overloading dispatching 
 
 28.3.0 (10-03-2020)
 - Refactor: Removed deprecated relation between PrecedentDegreeInformation and Registration
@@ -336,11 +336,11 @@
 - New Fixture: Model for grade scales as domain entities
 
 26.2.4 (13-02-2020)
-- Fix: Removed the check rules when a student statute is deleted
+- Bug fix: Removed the check rules when a student statute is deleted
 - Improvement: Added more information to user when a degree module has more than one credits limit for executionYear
 
 26.2.3 (07-02-2020)
-- Fix: Added  null slot check for first time candidacies
+- Bug fix: Added  null slot check for first time candidacies
 
 26.2.2 (07-02-2020)
 - Refactor: New Registrations should create StudentCandidacy instances
@@ -368,7 +368,7 @@
 - Improvement: Registration active state takes into account the whole execution year
 
 25.9.1 (13-01-2020)
-- Fix: Possible ExecutionIntervals of Dismissals must be childs
+- Bug fix: Possible ExecutionIntervals of Dismissals must be childs
 - Refactor: Replace usage of ExecutionSemester.getSemester() to ExecutionSemester.getChildOrder()
 
 25.9.0 (13-01-2020)
@@ -378,7 +378,7 @@
 - Improvement: Don't allow multiple ExecutionYears with same name
 - Refactor: Replace AcademicSemesterCE references by AcademicPeriod
 - Refactor: Removed unused Units sub-classes
-- Fix: CurricularPeriod comparator should also compare its type
+- Bug fix: CurricularPeriod comparator should also compare its type
 
 25.7.0 (24-12-2019)
 - Refactor: Replaced ExecutionSemester references to ExecutionInterval
