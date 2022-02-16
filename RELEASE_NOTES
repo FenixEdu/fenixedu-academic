@@ -1,3 +1,4 @@
+32.10.0 (16-02-2022)
 - Bug fix: Get curricular rules from curriculum module shouldn't reuse group rules result
 - Improvement: Add taught languages field to competence course information 
 
