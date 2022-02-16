@@ -1,3 +1,5 @@
+- Bug fix: Get curricular rules from curriculum module shouldn't reuse group rules result
+
 32.9.10 (04-02-2022)
 - Bug fix: Add missing AcademicPeriod.OTHER label
 - Bug fix: Remove argument to check enrolments in active students group 

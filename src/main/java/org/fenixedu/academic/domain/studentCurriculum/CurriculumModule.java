@@ -193,8 +193,8 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     }
 
     public Set<ICurricularRule> getCurricularRules(ExecutionInterval executionInterval) {
-        final Set<ICurricularRule> result = getCurriculumGroup() != null ? getCurriculumGroup()
-                .getCurricularRules(executionInterval) : new HashSet<ICurricularRule>();
+        final Set<ICurricularRule> result = getCurriculumGroup() != null ? new HashSet<ICurricularRule>(
+                getCurriculumGroup().getCurricularRules(executionInterval)) : new HashSet<ICurricularRule>();
         result.addAll(getDegreeModule().getCurricularRules(executionInterval));
 
         return result;
