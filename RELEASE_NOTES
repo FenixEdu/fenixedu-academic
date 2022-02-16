@@ -1,4 +1,5 @@
 - Bug fix: Get curricular rules from curriculum module shouldn't reuse group rules result
+- Improvement: Add taught languages field to competence course information 
 
 32.9.10 (04-02-2022)
 - Bug fix: Add missing AcademicPeriod.OTHER label

@@ -971,6 +971,7 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
         String programEn;
         degreeStructure.RegimeType regime;
         AcademicPeriod academicPeriod;
+        Languages languages;
     }
 
     class degreeStructure.CompetenceCourseInformationChangeRequest  {
