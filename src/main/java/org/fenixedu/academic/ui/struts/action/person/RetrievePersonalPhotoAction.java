@@ -18,29 +18,27 @@
  */
 package org.fenixedu.academic.ui.struts.action.person;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionServlet;
 import org.fenixedu.academic.domain.Photograph;
+import org.fenixedu.academic.domain.photograph.PictureMode;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.util.ContentType;
 import org.fenixedu.bennu.core.domain.Avatar;
-import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import pt.ist.fenixframework.FenixFramework;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -54,11 +52,13 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
 
     public ActionForward retrieveOwnPhoto(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        final User userView = Authenticate.getUser();
-        final Photograph personalPhoto = userView.getPerson().getPersonalPhotoEvenIfPending();
-        if (personalPhoto != null) {
-            writePhoto(response, personalPhoto);
-            return null;
+        final Avatar.PhotoProvider photoProvider = Avatar.photoProvider.apply(Authenticate.getUser());
+        if (photoProvider != null) {
+            byte[] content = photoProvider.getCustomAvatar(100, 100, PictureMode.FIT.name());
+            if (content != null) {
+                writePhoto(response, photoProvider.getMimeType(), content);
+                return null;
+            }
         }
         writeUnavailablePhoto(response);
         return null;
@@ -77,10 +77,13 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
     }
 
     public static void writePhoto(final HttpServletResponse response, final Photograph personalPhoto) {
+        writePhoto(response, ContentType.PNG.getMimeType(), personalPhoto.getDefaultAvatar());
+    }
+
+    public static void writePhoto(final HttpServletResponse response, final String contentType, final byte[] avatar) {
         try {
-            response.setContentType(ContentType.PNG.getMimeType());
+            response.setContentType(contentType);
             final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
-            byte[] avatar = personalPhoto.getDefaultAvatar();
             dos.write(avatar);
             dos.close();
         } catch (IOException e) {
