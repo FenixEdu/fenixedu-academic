@@ -12,6 +12,8 @@ import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 import java.text.Collator;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class EventTemplate extends EventTemplate_Base implements Comparable<EventTemplate> {
 
@@ -74,10 +76,36 @@ public class EventTemplate extends EventTemplate_Base implements Comparable<Even
                 .findAny().orElse(null);
     }
 
+    public Interval getAppliedInterval() {
+        DateTime start = null;
+        DateTime end = null;
+
+        for (EventTemplateConfig config : getEventTemplateConfigSet()) {
+            if (start == null || config.getApplyFrom().isBefore(start)) {
+                start = config.getApplyFrom();
+            }
+            if (end == null || config.getApplyUntil().isAfter(end)) {
+                end = config.getApplyUntil();
+            }
+        }
+
+        if (start == null || end == null) {
+            return null;
+        }
+
+        return new Interval(start, end);
+    }
+
     public static EventTemplate readByCode(final String code) {
         return Bennu.getInstance().getEventTemplateSet().stream()
                 .filter(t -> t.getCode().equals(code))
                 .findAny().orElse(null);
+    }
+
+    public static Set<EventTemplate> getTopLevelTemplates() {
+        return Bennu.getInstance().getEventTemplateSet().stream()
+                .filter(t -> t.getEventTemplateFromAlternativeSet().isEmpty())
+                .collect(Collectors.toSet());
     }
 
     public static EventTemplate templateFor(final RegistrationDataByExecutionYear dataByExecutionYear) {
