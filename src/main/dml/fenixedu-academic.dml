@@ -415,6 +415,8 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
        String dgesReference;
        String universityReference;
        String officialReference (REQUIRED);
+       LocalDate beginDate;
+       LocalDate endDate;
     }
 
     class DegreeSpecializationArea  {
