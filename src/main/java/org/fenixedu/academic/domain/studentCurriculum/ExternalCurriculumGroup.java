@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.studentCurriculum;
 
-import java.util.Set;
-
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.ExecutionSemester;
 import org.fenixedu.academic.domain.ExecutionYear;
@@ -33,12 +31,17 @@ import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 
+import java.util.Set;
+import java.util.function.BiPredicate;
+
 /**
  * 
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
 public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
+
+    public static BiPredicate<StudentCurricularPlan, CourseGroup> CAN_HAVE_EXTERNAL_GROUP = (scp, group) -> false;
 
     public ExternalCurriculumGroup() {
         super();
@@ -66,6 +69,10 @@ public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
 
         checkIfCycleCourseGroupIsInDestinationAffinitiesOfSource(parent.getStudentCurricularPlan(), courseGroup);
 
+        if (!CAN_HAVE_EXTERNAL_GROUP.test(parent.getStudentCurricularPlan(), courseGroup)) {
+            throw new DomainException("error.studentCurriculum.CurriculumGroup.courseGroup.not.allowed",
+                    courseGroup.getName() + " - " +  courseGroup.getParentDegreeCurricularPlan().getName());
+        }
     }
 
     private void checkIfCycleCourseGroupIsInDestinationAffinitiesOfSource(final StudentCurricularPlan studentCurricularPlan,
