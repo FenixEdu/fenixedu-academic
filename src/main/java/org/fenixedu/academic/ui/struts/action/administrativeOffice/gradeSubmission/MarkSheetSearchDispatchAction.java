@@ -25,24 +25,13 @@ import com.lowagie.text.pdf.PdfImportedPage;
 import com.lowagie.text.pdf.PdfReader;
 import com.lowagie.text.pdf.PdfWriter;
 import org.apache.commons.collections.comparators.ReverseComparator;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessages;
-import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.action.*;
 import org.apache.struts.util.LabelValueBean;
-import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.EnrolmentEvaluation;
-import org.fenixedu.academic.domain.EvaluationSeason;
-import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.MarkSheet;
-import org.fenixedu.academic.domain.MarkSheetState;
-import org.fenixedu.academic.domain.SignedMarkSheet;
+import org.fenixedu.academic.domain.*;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DefaultDocumentGenerator;
 import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementSearchBean;
 import org.fenixedu.academic.dto.degreeAdministrativeOffice.gradeSubmission.MarkSheetSearchResultBean;
 import org.fenixedu.academic.predicate.AccessControl;
@@ -52,8 +41,8 @@ import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsService
 import org.fenixedu.academic.service.services.manager.RemoveGradesFromConfirmedMarkSheet;
 import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication.AcademicAdminMarksheetApp;
 import org.fenixedu.academic.util.DateFormatUtil;
-import org.fenixedu.academic.util.report.ReportsUtils;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.io.domain.GenericFile;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
@@ -71,14 +60,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -406,7 +388,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
             final String filename;
             if (signedMarkSheet == null) {
                 MarkSheetDocument document = new MarkSheetDocument(markSheet);
-                data = ReportsUtils.generateReport(document).getData();
+                data = DefaultDocumentGenerator.getGenerator().generateReport(Collections.singletonList(document));
                 filename = document.getReportFileName();
             } else {
                 data = signedMarkSheet.getContent();
@@ -440,11 +422,12 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
                     .filter(markSheet -> markSheet.getSignedMarkSheet() == null)
                     .map(MarkSheetDocument::new).collect(Collectors.toList());
             final Stream<byte[]> signedData = markSheets.stream()
-                    .map(markSheet -> markSheet.getSignedMarkSheet())
-                    .filter(signedMarkSheet -> signedMarkSheet != null)
-                    .map(signedMarkSheet -> signedMarkSheet.getContent());
-            final byte[] reportData = reports.isEmpty() ? null : ReportsUtils.generateReport(reports.toArray(new MarkSheetDocument[0])).getData();
-            final byte[] data = merge(Stream.concat(Stream.of(reportData), signedData));
+                    .map(MarkSheet_Base::getSignedMarkSheet)
+                    .filter(Objects::nonNull)
+                    .map(GenericFile::getContent);
+            final Stream<byte[]> reportData = reports.isEmpty() ? Stream.of() : reports.stream()
+                    .map(report -> DefaultDocumentGenerator.getGenerator().generateReport(Collections.singletonList(report)));
+            final byte[] data = merge(Stream.concat(reportData, signedData));
 
             response.setContentLength(data.length);
             response.setContentType("application/pdf");

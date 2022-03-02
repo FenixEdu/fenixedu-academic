@@ -22,25 +22,10 @@
 package org.fenixedu.academic.ui.struts.action.teacher;
 
 import com.google.common.base.Strings;
-import org.apache.commons.io.IOUtils;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
-import org.apache.struts.action.ActionMessages;
-import org.apache.struts.upload.MultipartRequestWrapper;
-import org.fenixedu.academic.domain.Attends;
-import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.Enrolment;
-import org.fenixedu.academic.domain.EnrolmentEvaluation;
-import org.fenixedu.academic.domain.EvaluationConfiguration;
-import org.fenixedu.academic.domain.EvaluationSeason;
-import org.fenixedu.academic.domain.ExecutionCourse;
-import org.fenixedu.academic.domain.ExecutionDegree;
-import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.FinalMark;
-import org.fenixedu.academic.domain.MarkSheet;
+import org.apache.struts.action.*;
+import org.fenixedu.academic.domain.*;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DefaultDocumentGenerator;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.dto.teacher.gradeSubmission.MarkSheetTeacherGradeSubmissionBean;
 import org.fenixedu.academic.dto.teacher.gradeSubmission.MarkSheetTeacherMarkBean;
@@ -49,7 +34,6 @@ import org.fenixedu.academic.service.services.administrativeOffice.gradeSubmissi
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.exceptions.InvalidArgumentsServiceException;
 import org.fenixedu.academic.ui.struts.action.administrativeOffice.gradeSubmission.MarkSheetDocument;
-import org.fenixedu.academic.util.report.ReportsUtils;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
@@ -59,18 +43,10 @@ import org.joda.time.DateTime;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
 
-import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Mapping(path = "/markSheetManagement", module = "teacher", functionality = ManageExecutionCourseDA.class)
@@ -272,7 +248,8 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
         if (markSheet != null && markSheet.getResponsibleTeacher() != null
                 && markSheet.getResponsibleTeacher().getPerson().getUser() == Authenticate.getUser()) {
             final MarkSheetDocument markSheetDocument = new MarkSheetDocument(markSheet);
-            byte[] data = ReportsUtils.generateReport(markSheetDocument).getData();
+            byte[] data = DefaultDocumentGenerator.getGenerator()
+                    .generateReport(Collections.singletonList(markSheetDocument));
             response.setContentLength(data.length);
             response.setContentType("application/pdf");
             response.addHeader("Content-Disposition",
