@@ -18,17 +18,20 @@
  */
 package org.fenixedu.academic.report.phd.notification;
 
-import java.util.Locale;
-
 import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import org.fenixedu.academic.report.FenixReport;
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
+import java.util.Locale;
+
 public class PhdCandidacyDeclarationDocument extends FenixReport {
+
+    private static final String DATE_FORMAT_PT = "dd/MM/yyyy";
+
+    private static final String DATE_FORMAT_EN = "yyyy/MM/dd";
+
     private PhdProgramCandidacyProcess candidacyProcess;
 
     private Locale language;
@@ -59,20 +62,21 @@ public class PhdCandidacyDeclarationDocument extends FenixReport {
 
     @Override
     protected void fillReport() {
-        addParameter("name", getCandidacyProcess().getPerson().getName());
         final ExecutionYear executionYear = getCandidacyProcess().getIndividualProgramProcess().getExecutionYear();
-        addParameter("programName",
-                getCandidacyProcess().getIndividualProgramProcess().getPhdProgram().getName(executionYear).getContent(getLanguage()));
-        addParameter("candidacyDate", getCandidacyProcess().getCandidacyDate());
-        addParameter("currentDate", new LocalDate());
-        addParameter("documentIdNumber", getCandidacyProcess().getPerson().getDocumentIdNumber());
-        addParameter("candidacyNumber", getCandidacyProcess().getProcessNumber());
 
-        addParameter("administrativeOfficeCoordinator", getCandidacyProcess().getIndividualProgramProcess().getPhdProgram()
-                .getAdministrativeOffice().getCoordinator().getProfile().getDisplayName());
+        getPayload().addProperty("name", getCandidacyProcess().getPerson().getName());
+        getPayload().addProperty("programName", getCandidacyProcess().getIndividualProgramProcess()
+                .getPhdProgram().getName(executionYear).getContent(getLanguage()));
+        getPayload().addProperty("candidacyDate", getCandidacyProcess().getCandidacyDate().toString(getDateFormat()));
+        getPayload().addProperty("documentIdNumber", getCandidacyProcess().getPerson().getDocumentIdNumber());
+        getPayload().addProperty("candidacyNumber", getCandidacyProcess().getProcessNumber());
+        getPayload().addProperty("administrativeOfficeCoordinator", getCandidacyProcess().getIndividualProgramProcess()
+                .getPhdProgram().getAdministrativeOffice().getCoordinator().getProfile().getDisplayName());
+        getPayload().addProperty("currentDate", new LocalDate().toString(getDateFormat()));
+    }
 
-        addParameter("institutionName", Bennu.getInstance().getInstitutionUnit().getPartyName().getContent());
-        addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getPartyName().getContent());
+    private String getDateFormat() {
+        return getLanguage() == org.fenixedu.academic.util.LocaleUtils.PT ? DATE_FORMAT_PT : DATE_FORMAT_EN;
     }
 
     @Override
