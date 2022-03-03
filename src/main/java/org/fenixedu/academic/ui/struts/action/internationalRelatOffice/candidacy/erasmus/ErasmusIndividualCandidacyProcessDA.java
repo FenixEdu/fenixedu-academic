@@ -18,16 +18,6 @@
  */
 package org.fenixedu.academic.ui.struts.action.internationalRelatOffice.candidacy.erasmus;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -47,6 +37,7 @@ import org.fenixedu.academic.domain.caseHandling.Activity;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import org.fenixedu.academic.domain.exceptions.EnrollmentDomainException;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DefaultDocumentGenerator;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
 import org.fenixedu.academic.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
@@ -62,16 +53,19 @@ import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.student.administrativeOfficeServices.CreateExtraEnrolment;
 import org.fenixedu.academic.service.services.student.enrolment.bolonha.EnrolBolonhaStudent;
 import org.fenixedu.academic.ui.struts.FenixActionForm;
-import org.fenixedu.academic.util.report.ReportsUtils;
 import org.fenixedu.bennu.core.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.joda.time.YearMonthDay;
-
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.*;
 
 @Mapping(path = "/caseHandlingMobilityIndividualApplicationProcess", module = "internationalRelatOffice",
         formBeanClass = FenixActionForm.class, functionality = ErasmusCandidacyProcessDA.class)
@@ -269,7 +263,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
         MobilityIndividualApplicationProcess process = getProcess(request);
 
         final LearningAgreementDocument document = new LearningAgreementDocument(process);
-        byte[] data = ReportsUtils.generateReport(document).getData();
+        byte[] data = DefaultDocumentGenerator.getGenerator().generateReport(Collections.singletonList(document));
 
         response.setContentLength(data.length);
         response.setContentType("application/pdf");

@@ -18,17 +18,18 @@
  */
 package org.fenixedu.academic.report.candidacy.erasmus;
 
-import java.util.Locale;
-import java.util.TreeSet;
-
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType;
 import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityApplicationProcess;
 import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.report.FenixReport;
-import org.fenixedu.academic.util.FenixStringTools;
 import org.jsoup.helper.StringUtil;
+
+import java.util.Locale;
+import java.util.TreeSet;
 
 public class LearningAgreementDocument extends FenixReport {
 
@@ -53,28 +54,31 @@ public class LearningAgreementDocument extends FenixReport {
 
     @Override
     protected void fillReport() {
-        addParameter("mobilityProgram", process.getMobilityProgram().getName().getContent(org.fenixedu.academic.util.LocaleUtils.EN));
-        addParameter("academicYear", process.getCandidacyExecutionInterval().getName());
-        addParameter("studentName", process.getPersonalDetails().getName());
-        addParameter("sendingInstitution", process.getCandidacy().getMobilityStudentData().getSelectedOpening()
+        getPayload().addProperty("mobilityProgram", process.getMobilityProgram().getName()
+                .getContent(org.fenixedu.academic.util.LocaleUtils.EN));
+        getPayload().addProperty("academicYear", process.getCandidacyExecutionInterval().getName());
+        getPayload().addProperty("studentName", process.getPersonalDetails().getName());
+        getPayload().addProperty("sendingInstitution", process.getCandidacy().getMobilityStudentData().getSelectedOpening()
                 .getMobilityAgreement().getUniversityUnit().getNameI18n().getContent());
 
-        addParameter("desiredEnrollments", getChosenSubjectsInformation());
+        getPayload().add("courses", getChosenSubjectsInformation());
     }
 
-    private String getChosenSubjectsInformation() {
-        StringBuilder result = new StringBuilder();
+    private JsonArray getChosenSubjectsInformation() {
+        JsonArray result = new JsonArray();
 
         for (CurricularCourse course : process.getCandidacy().getCurricularCoursesSet()) {
-            String yearAndSemester = buildYearAndSemester(course);
+            JsonObject courseInfo = new JsonObject();
 
-            result.append(
-                    FenixStringTools.multipleLineRightPadWithSuffix(course.getNameI18N().getContent(org.fenixedu.academic.util.LocaleUtils.EN)
-                            + " (" + course.getDegree().getSigla() + ")" + yearAndSemester, LINE_LENGTH, END_CHAR, course
-                            .getEctsCredits().toString())).append(LINE_BREAK);
+            String yearAndSemester = buildYearAndSemester(course);
+            courseInfo.addProperty("title", course.getNameI18N()
+                    .getContent(org.fenixedu.academic.util.LocaleUtils.EN) + " (" + course.getDegree().getSigla() + ")"
+                    + yearAndSemester);
+
+            courseInfo.addProperty("ects", course.getEctsCredits().toString());
         }
 
-        return result.toString();
+        return result;
     }
 
     private String buildYearAndSemester(CurricularCourse course) {
