@@ -18,12 +18,6 @@
  */
 package org.fenixedu.academic.report.phd.notification;
 
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
-
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.EventType;
@@ -38,6 +32,12 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Locale;
 
 public class PhdNotificationDocument extends FenixReport {
 
@@ -74,47 +74,39 @@ public class PhdNotificationDocument extends FenixReport {
 
     @Override
     protected void fillReport() {
-
         final PhdProgramCandidacyProcess candidacyProcess = getNotification().getCandidacyProcess();
         final Person person = candidacyProcess.getPerson();
         final PhdIndividualProgramProcess individualProgramProcess = candidacyProcess.getIndividualProgramProcess();
-
-        addParameter("administrativeOfficeCoordinator", individualProgramProcess.getPhdProgram().getAdministrativeOffice()
-                .getCoordinator().getProfile().getDisplayName());
-
-        addParameter("name", person.getName());
-        addParameter("address", person.getAddress());
-        addParameter("areaCode", person.getAreaCode());
-        addParameter("areaOfAreaCode", person.getAreaOfAreaCode());
         final ExecutionYear executionYear = individualProgramProcess.getExecutionYear();
-        addParameter("programName", individualProgramProcess.getPhdProgram().getName(executionYear).getContent(getLanguage()));
-
-        addParameter("processNumber", individualProgramProcess.getProcessNumber());
-
         final LocalDate whenRatified = candidacyProcess.getWhenRatified();
 
-        addParameter("ratificationDate", whenRatified != null ? whenRatified.toString(getDateFormat()) : "");
-
-        addParameter("insuranceFee", getInsuranceFee(individualProgramProcess));
-        addParameter("registrationFee", getRegistrationFee(individualProgramProcess, whenRatified));
-
-        addParameter("date", new LocalDate().toString(getDateFormat()));
-        addParameter("notificationNumber", getNotification().getNotificationNumber());
-
-        addGuidingsParameter(individualProgramProcess);
+        getPayload().addProperty("administrativeOfficeCoordinator", individualProgramProcess.getPhdProgram().getAdministrativeOffice()
+                .getCoordinator().getProfile().getDisplayName());
+        getPayload().addProperty("name", person.getName());
+        getPayload().addProperty("processNumber", individualProgramProcess.getProcessNumber());
+        getPayload().addProperty("address", person.getAddress());
+        getPayload().addProperty("areaCode", person.getAreaCode());
+        getPayload().addProperty("areaOfAreaCode", person.getAreaOfAreaCode());
+        getPayload().addProperty("programName", individualProgramProcess.getPhdProgram().getName(executionYear).getContent(getLanguage()));
+        getPayload().addProperty("ratificationDate", whenRatified != null ? whenRatified.toString(getDateFormat()) : "");
+        getPayload().addProperty("insuranceFee", getInsuranceFee(individualProgramProcess));
+        getPayload().addProperty("registrationFee", getRegistrationFee(individualProgramProcess, whenRatified));
+        getPayload().addProperty("currentDate", new LocalDate().toString(getDateFormat()));
+        getPayload().addProperty("notificationNumber", getNotification().getNotificationNumber());
+        addGuidingsProperty(individualProgramProcess);
 
     }
 
-    private void addGuidingsParameter(final PhdIndividualProgramProcess individualProgramProcess) {
+    private void addGuidingsProperty(final PhdIndividualProgramProcess individualProgramProcess) {
         if (!individualProgramProcess.getGuidingsSet().isEmpty() && !individualProgramProcess.getAssistantGuidingsSet().isEmpty()) {
-            addParameter("guidingsInformation", MessageFormat.format(getMessageFromResource(getClass().getName()
+            getPayload().addProperty("guidingsInformation", MessageFormat.format(getMessageFromResource(getClass().getName()
                     + ".full.guidings.template"), buildGuidingsInformation(individualProgramProcess.getGuidingsSet()),
                     buildGuidingsInformation(individualProgramProcess.getAssistantGuidingsSet())));
         } else if (!individualProgramProcess.getGuidingsSet().isEmpty()) {
-            addParameter("guidingsInformation", MessageFormat.format(getMessageFromResource(getClass().getName()
+            getPayload().addProperty("guidingsInformation", MessageFormat.format(getMessageFromResource(getClass().getName()
                     + ".guidings.only.template"), buildGuidingsInformation(individualProgramProcess.getGuidingsSet())));
         } else {
-            addParameter("guidingsInformation", "");
+            getPayload().addProperty("guidingsInformation", "");
         }
     }
 
