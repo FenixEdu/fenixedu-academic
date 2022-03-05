@@ -18,48 +18,16 @@
  */
 package org.fenixedu.academic.ui.struts.action.phd.academicAdminOffice;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.function.Predicate;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.academic.domain.Alert;
-import org.fenixedu.academic.domain.Country;
-import org.fenixedu.academic.domain.EnrolmentPeriod;
-import org.fenixedu.academic.domain.EnrolmentPeriodInCurricularCourses;
-import org.fenixedu.academic.domain.ExecutionSemester;
-import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.JobBean;
-import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.QualificationBean;
+import org.fenixedu.academic.domain.*;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.phd.ManageEnrolmentsBean;
-import org.fenixedu.academic.domain.phd.PhdConfigurationIndividualProgramProcessBean;
-import org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType;
-import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
-import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcessBean;
-import org.fenixedu.academic.domain.phd.PhdParticipant;
-import org.fenixedu.academic.domain.phd.PhdParticipantBean;
-import org.fenixedu.academic.domain.phd.PhdProcessState;
-import org.fenixedu.academic.domain.phd.PhdProgram;
-import org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean;
-import org.fenixedu.academic.domain.phd.PhdStudyPlanBean;
-import org.fenixedu.academic.domain.phd.PhdStudyPlanEntry;
-import org.fenixedu.academic.domain.phd.PhdStudyPlanEntryBean;
-import org.fenixedu.academic.domain.phd.SearchPhdIndividualProgramProcessBean;
+import org.fenixedu.academic.domain.phd.*;
 import org.fenixedu.academic.domain.phd.alert.PhdAlert;
 import org.fenixedu.academic.domain.phd.alert.PhdAlertMessage;
 import org.fenixedu.academic.domain.phd.alert.PhdCustomAlertBean;
@@ -68,55 +36,15 @@ import org.fenixedu.academic.domain.phd.email.PhdEmailBean;
 import org.fenixedu.academic.domain.phd.email.PhdIndividualProgramProcessEmail;
 import org.fenixedu.academic.domain.phd.email.PhdIndividualProgramProcessEmailBean;
 import org.fenixedu.academic.domain.phd.email.PhdIndividualProgramProcessEmailBean.PhdEmailParticipantsGroup;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.AbandonIndividualProgramProcess;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.ActivatePhdProgramProcessInCandidacyState;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.ActivatePhdProgramProcessInThesisDiscussionState;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.ActivatePhdProgramProcessInWorkDevelopmentState;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.AddAssistantGuidingInformation;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.AddCustomAlert;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.AddGuidingInformation;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.AddJobInformation;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.AddQualification;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.AddStudyPlan;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.AddStudyPlanEntry;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.CancelPhdProgramProcess;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.ConcludeIndividualProgramProcess;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.ConfigurePhdIndividualProgramProcess;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.DeleteAssistantGuiding;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.DeleteCustomAlert;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.DeleteGuiding;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.DeleteJobInformation;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.DeleteQualification;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.DeleteStudyPlan;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.DeleteStudyPlanEntry;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.DissociateRegistration;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.EditIndividualProcessInformation;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.EditPersonalInformation;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.EditPhdParticipant;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.EditQualificationExams;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.EditStudyPlan;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.EditWhenStartedStudies;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.FlunkedPhdProgramProcess;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.NotAdmittedPhdProgramProcess;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.RemoveLastStateOnPhdIndividualProgramProcess;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.RequestPublicThesisPresentation;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.SendPhdEmail;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.SuspendPhdProgramProcess;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.TransferToAnotherProcess;
-import org.fenixedu.academic.domain.phd.individualProcess.activities.UploadGuidanceAcceptanceLetter;
-import org.fenixedu.academic.domain.phd.migration.PhdMigrationGuiding;
-import org.fenixedu.academic.domain.phd.migration.PhdMigrationIndividualPersonalDataBean;
-import org.fenixedu.academic.domain.phd.migration.PhdMigrationIndividualProcessData;
-import org.fenixedu.academic.domain.phd.migration.PhdMigrationIndividualProcessDataBean;
-import org.fenixedu.academic.domain.phd.migration.PhdMigrationProcess;
-import org.fenixedu.academic.domain.phd.migration.PhdMigrationProcessStateType;
-import org.fenixedu.academic.domain.phd.migration.SearchPhdMigrationProcessBean;
+import org.fenixedu.academic.domain.phd.individualProcess.activities.*;
+import org.fenixedu.academic.domain.phd.migration.*;
 import org.fenixedu.academic.domain.phd.migration.common.exceptions.PhdMigrationException;
 import org.fenixedu.academic.domain.phd.reports.EPFLCandidatesReport;
 import org.fenixedu.academic.domain.phd.reports.PhdGuidersReport;
 import org.fenixedu.academic.domain.phd.reports.PhdIndividualProgramProcessesReport;
 import org.fenixedu.academic.domain.phd.reports.RecommendationLetterReport;
 import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessBean;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DefaultDocumentGenerator;
 import org.fenixedu.academic.dto.person.PersonBean;
 import org.fenixedu.academic.dto.person.PhotographUploadBean;
 import org.fenixedu.academic.dto.person.PhotographUploadBean.UnableToProcessTheImage;
@@ -132,7 +60,6 @@ import org.fenixedu.academic.ui.struts.action.phd.PhdProcessStateBean;
 import org.fenixedu.academic.util.ContentType;
 import org.fenixedu.academic.util.predicates.AndPredicate;
 import org.fenixedu.academic.util.predicates.PredicateContainer;
-import org.fenixedu.academic.util.report.ReportsUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
@@ -140,8 +67,13 @@ import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
-
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.*;
+import java.util.function.Predicate;
 
 @StrutsFunctionality(app = AcademicAdminPhdApp.class, path = "phd-processes", titleKey = "label.phd.manageProcesses",
         accessGroup = "academic(MANAGE_PHD_PROCESSES)")
@@ -1144,7 +1076,8 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
             HttpServletResponse response) throws IOException {
 
         final PhdSchoolRegistrationDeclarationDocument report = new PhdSchoolRegistrationDeclarationDocument(getProcess(request));
-        writeFile(response, report.getReportFileName() + ".pdf", "application/pdf", ReportsUtils.generateReport(report).getData());
+        writeFile(response, report.getReportFileName() + ".pdf", "application/pdf", DefaultDocumentGenerator
+                .getGenerator().generateReport(Collections.singletonList(report)));
         return null;
     }
 

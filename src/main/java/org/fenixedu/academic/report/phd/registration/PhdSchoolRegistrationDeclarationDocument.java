@@ -21,14 +21,12 @@ package org.fenixedu.academic.report.phd.registration;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
-import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.academic.domain.person.Gender;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.report.FenixReport;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
@@ -48,25 +46,20 @@ public class PhdSchoolRegistrationDeclarationDocument extends FenixReport {
     @Override
     protected void fillReport() {
         final AdministrativeOffice administrativeOffice = process.getPhdProgram().getAdministrativeOffice();
-
-        addParameter("administrativeOfficeName", administrativeOffice.getName().getContent());
-        addParameter("administrativeOfficeCoordinator", administrativeOffice.getCoordinator().getProfile().getDisplayName());
-
-        addParameter("institutionName", Bennu.getInstance().getInstitutionUnit().getPartyName().getContent());
-        addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getPartyName().getContent());
-
-        addParameter("studentNumber", getStudentNumber());
-        addParameter("studentName", getPerson().getName());
-        addParameter("documentId", getPerson().getDocumentIdNumber());
-        addParameter("parishOfBirth", getPerson().getParishOfBirth());
-        addParameter("nationality", getPerson().getCountry().getCountryNationality().getContent());
-
-        addParameter("registrationState", getRegistrationStateLabel());
-        addParameter("executionYear", process.getExecutionYear().getName());
         final ExecutionYear executionYear = process.getExecutionYear();
-        addParameter("phdProgramName", process.getPhdProgram().getName(executionYear).getContent());
 
-        addParameter("documentDate", new LocalDate().toString(DD_MMMM_YYYY, I18N.getLocale()));
+        getPayload().addProperty("administrativeOfficeName", administrativeOffice.getName().getContent());
+        getPayload().addProperty("administrativeOfficeCoordinator", administrativeOffice.getCoordinator()
+                .getProfile().getDisplayName());
+        getPayload().addProperty("studentNumber", getStudentNumber());
+        getPayload().addProperty("studentName", getPerson().getName());
+        getPayload().addProperty("documentId", getPerson().getDocumentIdNumber());
+        getPayload().addProperty("parishOfBirth", getPerson().getParishOfBirth());
+        getPayload().addProperty("nationality", getPerson().getCountry().getCountryNationality().getContent());
+        getPayload().addProperty("registrationState", getRegistrationStateLabel());
+        getPayload().addProperty("executionYear", executionYear.getName());
+        getPayload().addProperty("phdProgramName", process.getPhdProgram().getName(executionYear).getContent());
+        getPayload().addProperty("documentDate", new LocalDate().toString(DD_MMMM_YYYY, I18N.getLocale()));
     }
 
     private String getStudentNumber() {
