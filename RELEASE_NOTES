@@ -1,3 +1,4 @@
+32.10.2 (07-03-2022)
 - Refactor: Deprecate IAcademicTreasuryEvent::getExemptedAmount, which will be replaced by IAcademicTreasuryEvent::getNetExemptedAmount
 
 32.10.1 (24-02-2022)
