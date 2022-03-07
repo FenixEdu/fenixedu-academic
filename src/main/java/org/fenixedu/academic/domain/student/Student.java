@@ -100,6 +100,14 @@ public class Student extends Student_Base {
         this(person, null);
     }
 
+    /**
+     * It should be given preference to use {@link Registration#readByNumber(Integer)} instead of
+     * this method. If it is not possible to use {@link Registration#readByNumber(Integer)}, then
+     * the logic should be evaluated and reviewed.
+     * 
+     * @param number
+     * @return
+     */
     public static Student readStudentByNumber(final Integer number) {
         return Bennu.getInstance().getStudentNumbersSet().stream().filter(sn -> sn.getNumber().equals(number))
                 .map(StudentNumber::getStudent).findAny().orElse(null);

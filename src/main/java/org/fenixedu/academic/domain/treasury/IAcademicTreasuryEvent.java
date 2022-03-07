@@ -53,7 +53,13 @@ public interface IAcademicTreasuryEvent {
 
     public BigDecimal getRemainingAmountToPay();
 
+    @Deprecated
+    /** Must be replaced by {@link IAcademicTreasuryEvent#getNetExemptedAmount()} */
     public BigDecimal getExemptedAmount();
+
+    default public BigDecimal getNetExemptedAmount() {
+        return getExemptedAmount();
+    }
 
     public String getExemptionTypeName();
 

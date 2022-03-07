@@ -1,3 +1,5 @@
+- Refactor: Deprecate IAcademicTreasuryEvent::getExemptedAmount, which will be replaced by IAcademicTreasuryEvent::getNetExemptedAmount
+
 32.10.1 (24-02-2022)
 -Improvement: Added dates to DegreeOfficialPublication
 
