@@ -1,3 +1,5 @@
+- Bug Fix: Add delete method for PersistentSpecialCriteriaOverExecutionCourseGroup
+
 32.10.2 (07-03-2022)
 - Refactor: Deprecate IAcademicTreasuryEvent::getExemptedAmount, which will be replaced by IAcademicTreasuryEvent::getNetExemptedAmount
 

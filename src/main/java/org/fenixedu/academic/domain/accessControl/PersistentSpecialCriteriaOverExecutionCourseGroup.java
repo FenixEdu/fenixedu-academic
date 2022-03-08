@@ -37,6 +37,13 @@ public abstract class PersistentSpecialCriteriaOverExecutionCourseGroup extends
         setExecutionCourse(executionCourse);
     }
 
+    public void delete() {
+        super.setBennu(null);
+        super.setExecutionCourse(null);
+
+        super.deleteDomainObject();
+    }
+
     @Override
     protected Collection<Relation<?, ?>> getContextRelations() {
         return Collections.singleton(getRelationPersistentSpecialCriteriaOverExecutionCourseGroupExecutionCourse());
