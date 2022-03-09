@@ -18,17 +18,15 @@
  */
 package org.fenixedu.academic.report.phd.thesis;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang.StringUtils;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcess;
 import org.fenixedu.academic.domain.phd.thesis.ThesisJuryElement;
 import org.fenixedu.academic.report.FenixReport;
-import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
+
+import java.util.TreeSet;
 
 public class PhdThesisJuryElementsDocument extends FenixReport {
 
@@ -44,85 +42,42 @@ public class PhdThesisJuryElementsDocument extends FenixReport {
 
     @Override
     protected void fillReport() {
-
-        addJuryElementsInformation();
-
         AdministrativeOffice adminOffice = process.getIndividualProgramProcess().getPhdProgram().getAdministrativeOffice();
 
-        addParameter("presidentTitle", this.process.getPresidentTitle().getContent(getLanguage()));
-        addParameter("administrativeOfficeCoordinator", adminOffice.getCoordinator().getProfile().getDisplayName());
-        addParameter("administrativeOfficeName", adminOffice.getName().getContent());
-        addParameter("ratificationEntityMessage",
-                process.getPhdJuryElementsRatificationEntity().getRatificationEntityMessage(process, getLocale()));
+        getPayload().addProperty("ratificationEntityMessage", process.getPhdJuryElementsRatificationEntity()
+                .getRatificationEntityMessage(process, getLocale()));
+        getPayload().addProperty("presidentTitle", this.process.getPresidentTitle().getContent(getLanguage()));
+        getPayload().add("juryElements", getJuryElementsInformation());
+        getPayload().addProperty("administrativeOfficeCoordinator", adminOffice.getCoordinator().getProfile()
+                .getDisplayName());
     }
 
-    private void addJuryElementsInformation() {
-        final List<ThesisJuryElementInfo> elements = new ArrayList<ThesisJuryElementInfo>();
+    private JsonArray getJuryElementsInformation() {
+        JsonArray result = new JsonArray();
 
-        for (final ThesisJuryElement element : process.getOrderedThesisJuryElements()) {
-            elements.add(new ThesisJuryElementInfo(element));
+        TreeSet<ThesisJuryElement> elements = process.getOrderedThesisJuryElements();
+        for (ThesisJuryElement el : elements) {
+            JsonObject juryElement = new JsonObject();
+
+            juryElement.addProperty("title", el.getTitle());
+            juryElement.addProperty("name", el.getName());
+            juryElement.addProperty("category", el.getCategory());
+            juryElement.addProperty("workLocation", el.getWorkLocation());
+            juryElement.addProperty("institution", el.getInstitution());
+            juryElement.addProperty("isExpert", el.getExpert());
+            juryElement.addProperty("isAssistantGuiding", el.isAssistantGuiding());
+            juryElement.addProperty("isMainGuiding", el.isMainGuiding());
+            juryElement.addProperty("isReporter", el.getReporter());
+
+            result.add(juryElement);
         }
 
-        addDataSourceElements(elements);
+        return result;
     }
 
     @Override
     public String getReportFileName() {
         return "JuryElements-" + new DateTime().toString(YYYYMMDDHHMMSS);
-    }
-
-    static public class ThesisJuryElementInfo {
-
-        private final String description;
-
-        public ThesisJuryElementInfo(ThesisJuryElement element) {
-            this.description = buildDescription(element);
-        }
-
-        private String buildDescription(ThesisJuryElement element) {
-            final StringBuilder builder = new StringBuilder();
-
-            builder.append(!StringUtils.isEmpty(element.getTitle()) ? element.getTitle() : "").append(" ");
-            builder.append(element.getName()).append(", ");
-            builder.append(element.getCategory());
-
-            if (!StringUtils.isEmpty(element.getWorkLocation())) {
-                builder.append(" ")
-                        .append(BundleUtil.getString(Bundle.PHD, "label.phd.thesis.jury.elements.document.keyword.of"))
-                        .append(" ").append(element.getWorkLocation());
-            }
-
-            if (!StringUtils.isEmpty(element.getInstitution())) {
-                builder.append(" ")
-                        .append(BundleUtil.getString(Bundle.PHD, "label.phd.thesis.jury.elements.document.keyword.of"))
-                        .append(" ").append(element.getInstitution());
-            }
-
-            if (element.getExpert()) {
-                builder.append(" ").append(BundleUtil.getString(Bundle.PHD, "label.phd.thesis.jury.elements.document.expert"));
-            }
-
-            builder.append(";");
-
-            if (element.isAssistantGuiding()) {
-                builder.append(" (")
-                        .append(BundleUtil.getString(Bundle.PHD, "label.phd.thesis.jury.elements.document.assistantGuiding"))
-                        .append(")");
-            } else if (element.isMainGuiding()) {
-                builder.append(" (").append(BundleUtil.getString(Bundle.PHD, "label.phd.thesis.jury.elements.document.guiding"))
-                        .append(")");
-            } else if (element.getReporter()) {
-                builder.append(" - ")
-                        .append(BundleUtil.getString(Bundle.PHD, "label.phd.thesis.jury.elements.document.reporter"));
-            }
-
-            return builder.toString();
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
     }
 
 }
