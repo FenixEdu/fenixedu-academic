@@ -18,26 +18,13 @@
  */
 package org.fenixedu.academic.ui.struts.action.coordinator.thesis;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.DegreeCurricularPlan;
-import org.fenixedu.academic.domain.Enrolment;
-import org.fenixedu.academic.domain.ExecutionDegree;
-import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.StudentCurricularPlan;
+import org.fenixedu.academic.domain.*;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DefaultDocumentGenerator;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant;
@@ -45,24 +32,21 @@ import org.fenixedu.academic.domain.thesis.ThesisParticipationType;
 import org.fenixedu.academic.report.thesis.ApproveJuryDocument;
 import org.fenixedu.academic.report.thesis.StudentThesisIdentificationDocument;
 import org.fenixedu.academic.service.services.scientificCouncil.thesis.ApproveThesisProposal;
-import org.fenixedu.academic.service.services.thesis.CancelSubmitThesis;
-import org.fenixedu.academic.service.services.thesis.ChangeThesisPerson;
+import org.fenixedu.academic.service.services.thesis.*;
 import org.fenixedu.academic.service.services.thesis.ChangeThesisPerson.PersonChange;
 import org.fenixedu.academic.service.services.thesis.ChangeThesisPerson.PersonTarget;
-import org.fenixedu.academic.service.services.thesis.CreateThesisProposal;
-import org.fenixedu.academic.service.services.thesis.DeleteThesis;
-import org.fenixedu.academic.service.services.thesis.ReviseThesis;
-import org.fenixedu.academic.service.services.thesis.SubmitThesis;
 import org.fenixedu.academic.ui.struts.action.commons.AbstractManageThesisDA;
 import org.fenixedu.academic.ui.struts.action.coordinator.DegreeCoordinatorIndex;
 import org.fenixedu.academic.ui.struts.action.coordinator.ThesisSummaryBean;
-import org.fenixedu.academic.util.report.ReportsUtils;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
-
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.*;
 
 @Mapping(module = "coordinator", path = "/manageThesis", functionality = DegreeCoordinatorIndex.class)
 @Forwards({ @Forward(name = "search-student", path = "/coordinator/thesis/searchStudent.jsp"),
@@ -662,8 +646,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
         try {
             ApproveJuryDocument document = new ApproveJuryDocument(thesis);
-            byte[] data = ReportsUtils.generateReport(document).getData();
-
+            byte[] data = DefaultDocumentGenerator.getGenerator().generateReport(Collections.singletonList(document));
             response.setContentLength(data.length);
             response.setContentType("application/pdf");
             response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", document.getReportFileName()));
@@ -743,8 +726,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
         try {
             StudentThesisIdentificationDocument document = new StudentThesisIdentificationDocument(thesis);
-            byte[] data = ReportsUtils.generateReport(document).getData();
-
+            byte[] data = DefaultDocumentGenerator.getGenerator().generateReport(Collections.singletonList(document));
             response.setContentLength(data.length);
             response.setContentType("application/pdf");
             response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", document.getReportFileName()));

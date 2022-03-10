@@ -18,16 +18,7 @@
  */
 package org.fenixedu.academic.ui.struts.action.scientificCouncil.thesis;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.SortedSet;
-import java.util.stream.Stream;
-
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.google.common.io.ByteStreams;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -38,12 +29,9 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DefaultDocumentGenerator;
 import org.fenixedu.academic.domain.student.Student;
-import org.fenixedu.academic.domain.thesis.Thesis;
-import org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant;
-import org.fenixedu.academic.domain.thesis.ThesisFile;
-import org.fenixedu.academic.domain.thesis.ThesisParticipationType;
-import org.fenixedu.academic.domain.thesis.ThesisVisibilityType;
+import org.fenixedu.academic.domain.thesis.*;
 import org.fenixedu.academic.report.thesis.StudentThesisIdentificationDocument;
 import org.fenixedu.academic.service.services.scientificCouncil.thesis.ApproveThesisDiscussion;
 import org.fenixedu.academic.service.services.scientificCouncil.thesis.ApproveThesisProposal;
@@ -54,7 +42,6 @@ import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.coordinator.thesis.ThesisPresentationState;
 import org.fenixedu.academic.ui.struts.action.scientificCouncil.ScientificCouncilApplication.ScientificDisserationsApp;
 import org.fenixedu.academic.ui.struts.action.student.thesis.ThesisFileBean;
-import org.fenixedu.academic.util.report.ReportsUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.struts.annotations.Forward;
@@ -65,11 +52,18 @@ import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 import org.fenixedu.commons.spreadsheet.SheetData;
 import org.fenixedu.commons.spreadsheet.SpreadsheetBuilder;
 import org.fenixedu.commons.spreadsheet.WorkbookExportFormat;
-
-import com.google.common.io.ByteStreams;
-
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.SortedSet;
+import java.util.stream.Stream;
 
 @StrutsFunctionality(app = ScientificDisserationsApp.class, path = "list-new", titleKey = "navigation.list.jury.proposals.new")
 @Mapping(path = "/manageSecondCycleThesis", module = "scientificCouncil")
@@ -412,8 +406,7 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
 
         try {
             StudentThesisIdentificationDocument document = new StudentThesisIdentificationDocument(thesis);
-            byte[] data = ReportsUtils.generateReport(document).getData();
-
+            byte[] data = DefaultDocumentGenerator.getGenerator().generateReport(Collections.singletonList(document));
             response.setContentLength(data.length);
             response.setContentType("application/pdf");
             response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", document.getReportFileName()));
