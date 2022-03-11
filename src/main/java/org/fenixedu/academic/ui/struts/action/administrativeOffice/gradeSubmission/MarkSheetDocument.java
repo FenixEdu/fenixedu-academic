@@ -25,15 +25,13 @@ import org.fenixedu.academic.domain.MarkSheet;
 import org.fenixedu.academic.report.FenixReport;
 import org.fenixedu.academic.util.FenixDigestUtils;
 import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 public class MarkSheetDocument extends FenixReport {
     private static final long serialVersionUID = -1015332436546905622L;
+
+    private static final String DATE_FORMAT_PT = "dd/MM/yyyy";
 
     protected MarkSheet markSheet;
 
@@ -45,18 +43,13 @@ public class MarkSheetDocument extends FenixReport {
 
     @Override
     public String getKey() {
-        if (markSheet.isRectification()) {
-            return "markSheetRectification";
-        }
-        return "markSheet";
+        return (markSheet.isRectification() ? "markSheetRectification" : "markSheet");
     }
 
     @Override
     public String getReportTemplateKey() {
-        if (markSheet.isRectification()) {
-            return super.getReportTemplateKey() + "-rectified";
-        }
-        return super.getReportTemplateKey();
+        String key = super.getReportTemplateKey();
+        return (markSheet.isRectification() ? key + "-rectified" : key);
     }
 
     @Override
@@ -66,12 +59,9 @@ public class MarkSheetDocument extends FenixReport {
 
     @Override
     protected void fillReport() {
-        DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy");
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
         getPayload().addProperty("executionYear", markSheet.getExecutionPeriod().getExecutionYear().getYear());
         getPayload().addProperty("executionSemester", markSheet.getExecutionPeriod().getSemester());
-        getPayload().addProperty("currentDate", new LocalDate().toString(dtf));
+        getPayload().addProperty("currentDate", new LocalDate().toString(DATE_FORMAT_PT));
         getPayload().addProperty("profUsername", markSheet.getResponsibleTeacher().getTeacherId());
         getPayload().addProperty("profName", markSheet.getResponsibleTeacher().getPerson().getName());
         if (!markSheet.getCurricularCourse().isBolonhaDegree()) {
@@ -89,12 +79,14 @@ public class MarkSheetDocument extends FenixReport {
             getPayload().addProperty("studentName", rectification.getRegistration().getName());
             getPayload().addProperty("rectifiedSeason", rectified.getEvaluationSeason().getAcronym().getContent());
             getPayload().addProperty("rectifiedGrade", rectified.getGradeValue());
-            getPayload().addProperty("rectifiedExamDate", sdf.format(rectified.getExamDate()));
+            getPayload().addProperty("rectifiedExamDate", Optional.ofNullable(rectified.getExamDate())
+                            .map(d -> new LocalDate(d).toString(DATE_FORMAT_PT)).orElse(""));
             getPayload().addProperty("rectificationSeason", rectification.getEvaluationSeason().getAcronym().getContent());
             getPayload().addProperty("rectificationGrade", rectification.getGradeValue());
-            getPayload().addProperty("rectificationExamDate", sdf.format(rectification.getExamDate()));
+            getPayload().addProperty("rectificationExamDate",  Optional.ofNullable(rectification.getExamDate())
+                    .map(d -> new LocalDate(d).toString(DATE_FORMAT_PT)).orElse(""));
             getPayload().addProperty("creatorUsername", markSheet.getCreator().getUsername());
-            getPayload().addProperty("creationDate", markSheet.getCreationDateDateTime().toString(dtf));
+            getPayload().addProperty("creationDate", markSheet.getCreationDateDateTime().toString(DATE_FORMAT_PT));
         } else {
             getPayload().add("students", getStudentEntries());
         }
@@ -103,19 +95,18 @@ public class MarkSheetDocument extends FenixReport {
     private JsonArray getStudentEntries() {
         JsonArray result = new JsonArray();
 
-        List<EnrolmentEvaluation> evaluations = new ArrayList<EnrolmentEvaluation>(markSheet.getEnrolmentEvaluationsSet());
-        evaluations.sort(EnrolmentEvaluation.SORT_BY_STUDENT_NUMBER);
-
-        for (EnrolmentEvaluation evaluation : evaluations) {
+        markSheet.getEnrolmentEvaluationsSet().stream().sorted(EnrolmentEvaluation.SORT_BY_STUDENT_NUMBER).map(e -> {
             JsonObject student = new JsonObject();
-            student.addProperty("number", evaluation.getRegistration().getNumber());
-            student.addProperty("name", evaluation.getRegistration().getName());
-            student.addProperty("season", evaluation.getEvaluationSeason().getAcronym().getContent());
-            student.addProperty("grade", evaluation.getGradeValue());
-            student.addProperty("examDate", new SimpleDateFormat("dd/MM/yyyy").format(evaluation.getExamDate()));
-            result.add(student);
-        }
+            student.addProperty("number", e.getRegistration().getNumber());
+            student.addProperty("name", e.getRegistration().getName());
+            student.addProperty("season", e.getEvaluationSeason().getAcronym().getContent());
+            student.addProperty("grade", e.getGradeValue());
+            student.addProperty("examDate", Optional.ofNullable(e.getExamDate())
+                    .map(d -> new LocalDate(d).toString(DATE_FORMAT_PT)).orElse(""));
+            return student;
+        }).forEach(result::add);
 
         return result;
     }
+
 }
