@@ -21,10 +21,12 @@ package org.fenixedu.academic.report.phd.registration;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
+import org.fenixedu.academic.domain.organizationalStructure.UniversityUnit;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.report.FenixReport;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -48,6 +50,10 @@ public class PhdSchoolRegistrationDeclarationDocument extends FenixReport {
         getPayload().addProperty("administrativeOfficeName", administrativeOffice.getName().getContent());
         getPayload().addProperty("administrativeOfficeCoordinator", administrativeOffice.getCoordinator()
                 .getProfile().getDisplayName());
+
+        getPayload().addProperty("institutionName", Bennu.getInstance().getInstitutionUnit().getPartyName().getContent());
+        getPayload().addProperty("universityName", UniversityUnit.getInstitutionsUniversityUnit().getPartyName().getContent());
+
         getPayload().addProperty("studentNumber", getStudentNumber());
         getPayload().addProperty("studentName", getPerson().getName());
         getPayload().addProperty("documentId", getPerson().getDocumentIdNumber());
