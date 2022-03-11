@@ -41,7 +41,6 @@ import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.phd.PhdProcessStateBean;
 import org.fenixedu.academic.ui.struts.action.phd.academicAdminOffice.PhdIndividualProgramProcessDA;
 import org.fenixedu.academic.ui.struts.action.phd.candidacy.CommonPhdCandidacyDA;
-import org.fenixedu.academic.util.report.ReportsUtils;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
