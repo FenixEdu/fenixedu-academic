@@ -23,6 +23,7 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR;
+import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdParticipant;
 import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcess;
@@ -73,11 +74,12 @@ public class PhdNotificationDocument extends FenixReport {
         final PhdProgramCandidacyProcess candidacyProcess = getNotification().getCandidacyProcess();
         final Person person = candidacyProcess.getPerson();
         final PhdIndividualProgramProcess individualProgramProcess = candidacyProcess.getIndividualProgramProcess();
+        final AdministrativeOffice administrativeOffice = individualProgramProcess.getPhdProgram().getAdministrativeOffice();
         final ExecutionYear executionYear = individualProgramProcess.getExecutionYear();
         final LocalDate whenRatified = candidacyProcess.getWhenRatified();
 
-        getPayload().addProperty("administrativeOfficeCoordinator", individualProgramProcess.getPhdProgram().getAdministrativeOffice()
-                .getCoordinator().getProfile().getDisplayName());
+        getPayload().addProperty("administrativeOfficeName", administrativeOffice.getName().getContent());
+        getPayload().addProperty("administrativeOfficeCoordinator", administrativeOffice.getCoordinator().getProfile().getDisplayName());
         getPayload().addProperty("name", person.getName());
         getPayload().addProperty("processNumber", individualProgramProcess.getProcessNumber());
         getPayload().addProperty("address", person.getAddress());

@@ -45,6 +45,7 @@ public class PhdThesisJuryElementsDocument extends FenixReport {
                 .getRatificationEntityMessage(process, getLocale()));
         getPayload().addProperty("presidentTitle", this.process.getPresidentTitle().getContent(getLanguage()));
         getPayload().add("juryElements", getJuryElementsInformation());
+        getPayload().addProperty("administrativeOfficeName", adminOffice.getName().getContent());
         getPayload().addProperty("administrativeOfficeCoordinator", adminOffice.getCoordinator().getProfile()
                 .getDisplayName());
     }
