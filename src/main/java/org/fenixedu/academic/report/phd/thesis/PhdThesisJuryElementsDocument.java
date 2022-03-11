@@ -22,11 +22,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcess;
-import org.fenixedu.academic.domain.phd.thesis.ThesisJuryElement;
 import org.fenixedu.academic.report.FenixReport;
 import org.joda.time.DateTime;
-
-import java.util.TreeSet;
 
 public class PhdThesisJuryElementsDocument extends FenixReport {
 
@@ -55,8 +52,7 @@ public class PhdThesisJuryElementsDocument extends FenixReport {
     private JsonArray getJuryElementsInformation() {
         JsonArray result = new JsonArray();
 
-        TreeSet<ThesisJuryElement> elements = process.getOrderedThesisJuryElements();
-        for (ThesisJuryElement el : elements) {
+        process.getOrderedThesisJuryElements().stream().map(el -> {
             JsonObject juryElement = new JsonObject();
 
             juryElement.addProperty("title", el.getTitle());
@@ -69,8 +65,8 @@ public class PhdThesisJuryElementsDocument extends FenixReport {
             juryElement.addProperty("isMainGuiding", el.isMainGuiding());
             juryElement.addProperty("isReporter", el.getReporter());
 
-            result.add(juryElement);
-        }
+            return juryElement;
+        }).forEach(result::add);
 
         return result;
     }
