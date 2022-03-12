@@ -75,7 +75,7 @@ public class PhdCandidacyDeclarationDocument extends FenixReport {
         getPayload().addProperty("documentIdNumber", getCandidacyProcess().getPerson().getDocumentIdNumber());
         getPayload().addProperty("candidacyNumber", getCandidacyProcess().getProcessNumber());
         getPayload().addProperty("administrativeOfficeCoordinator", administrativeOffice.getCoordinator().getProfile().getDisplayName());
-        getPayload().addProperty("administrativeOfficeName", administrativeOffice.getName().getContent());
+        getPayload().addProperty("administrativeOfficeName", administrativeOffice.getName().getContent(getLanguage()));
         getPayload().addProperty("currentDate", new LocalDate().toString(getDateFormat()));
     }
 
