@@ -90,8 +90,4 @@ public class PhdSchoolRegistrationDeclarationDocument extends FenixReport {
         return "SchoolRegistrationDeclaration-" + new DateTime().toString(YYYYMMDDHHMMSS);
     }
 
-    @Override
-    public String getReportTemplateKey() {
-        return super.getReportTemplateKey() + ".pt";
-    }
 }

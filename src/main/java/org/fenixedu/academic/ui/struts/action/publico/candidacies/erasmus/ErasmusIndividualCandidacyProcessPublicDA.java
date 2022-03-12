@@ -39,6 +39,7 @@ import org.fenixedu.academic.ui.struts.action.commons.FenixActionForward;
 import org.fenixedu.academic.ui.struts.action.publico.PublicApplication.PublicCandidaciesApp;
 import org.fenixedu.academic.ui.struts.action.publico.candidacies.RefactoredIndividualCandidacyProcessPublicDA;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LocaleUtils;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -728,7 +729,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
             HttpServletResponse response) throws Exception {
         MobilityIndividualApplicationProcess process = (MobilityIndividualApplicationProcess) getProcess(request);
 
-        final LearningAgreementDocument document = new LearningAgreementDocument(process);
+        final LearningAgreementDocument document = new LearningAgreementDocument(process, LocaleUtils.EN);
         byte[] data = DefaultDocumentGenerator.getGenerator().generateReport(Collections.singletonList(document));
 
         response.setContentLength(data.length);

@@ -19,8 +19,10 @@
 package org.fenixedu.academic.report.phd.notification;
 
 import org.fenixedu.academic.domain.ExecutionYear;
+import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import org.fenixedu.academic.report.FenixReport;
+import org.fenixedu.academic.util.LocaleUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -49,7 +51,7 @@ public class PhdCandidacyDeclarationDocument extends FenixReport {
     }
 
     public void setLanguage(Locale language) {
-        this.language = language;
+        this.language = (language.getLanguage().equals(LocaleUtils.PT.getLanguage()) ? LocaleUtils.PT : LocaleUtils.EN);
     }
 
     public PhdProgramCandidacyProcess getCandidacyProcess() {
@@ -63,6 +65,8 @@ public class PhdCandidacyDeclarationDocument extends FenixReport {
     @Override
     protected void fillReport() {
         final ExecutionYear executionYear = getCandidacyProcess().getIndividualProgramProcess().getExecutionYear();
+        final AdministrativeOffice administrativeOffice = getCandidacyProcess().getIndividualProgramProcess()
+                .getPhdProgram().getAdministrativeOffice();
 
         getPayload().addProperty("name", getCandidacyProcess().getPerson().getName());
         getPayload().addProperty("programName", getCandidacyProcess().getIndividualProgramProcess()
@@ -70,8 +74,8 @@ public class PhdCandidacyDeclarationDocument extends FenixReport {
         getPayload().addProperty("candidacyDate", getCandidacyProcess().getCandidacyDate().toString(getDateFormat()));
         getPayload().addProperty("documentIdNumber", getCandidacyProcess().getPerson().getDocumentIdNumber());
         getPayload().addProperty("candidacyNumber", getCandidacyProcess().getProcessNumber());
-        getPayload().addProperty("administrativeOfficeCoordinator", getCandidacyProcess().getIndividualProgramProcess()
-                .getPhdProgram().getAdministrativeOffice().getCoordinator().getProfile().getDisplayName());
+        getPayload().addProperty("administrativeOfficeCoordinator", administrativeOffice.getCoordinator().getProfile().getDisplayName());
+        getPayload().addProperty("administrativeOfficeName", administrativeOffice.getName().getContent());
         getPayload().addProperty("currentDate", new LocalDate().toString(getDateFormat()));
     }
 
@@ -82,11 +86,6 @@ public class PhdCandidacyDeclarationDocument extends FenixReport {
     @Override
     public String getReportFileName() {
         return "CandidacyDeclaration-" + new DateTime().toString(YYYYMMDDHHMMSS);
-    }
-
-    @Override
-    public String getReportTemplateKey() {
-        return getClass().getName() + "." + getLanguage().getLanguage();
     }
 
 }

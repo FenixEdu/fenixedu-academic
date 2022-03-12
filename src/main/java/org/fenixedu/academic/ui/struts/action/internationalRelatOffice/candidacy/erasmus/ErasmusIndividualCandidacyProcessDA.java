@@ -53,6 +53,7 @@ import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.service.services.student.administrativeOfficeServices.CreateExtraEnrolment;
 import org.fenixedu.academic.service.services.student.enrolment.bolonha.EnrolBolonhaStudent;
 import org.fenixedu.academic.ui.struts.FenixActionForm;
+import org.fenixedu.academic.util.LocaleUtils;
 import org.fenixedu.bennu.core.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
@@ -262,7 +263,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
             HttpServletResponse response) throws Exception {
         MobilityIndividualApplicationProcess process = getProcess(request);
 
-        final LearningAgreementDocument document = new LearningAgreementDocument(process);
+        final LearningAgreementDocument document = new LearningAgreementDocument(process, LocaleUtils.EN);
         byte[] data = DefaultDocumentGenerator.getGenerator().generateReport(Collections.singletonList(document));
 
         response.setContentLength(data.length);

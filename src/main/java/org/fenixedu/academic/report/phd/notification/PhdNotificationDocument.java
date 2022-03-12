@@ -29,6 +29,7 @@ import org.fenixedu.academic.domain.phd.PhdParticipant;
 import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import org.fenixedu.academic.domain.phd.notification.PhdNotification;
 import org.fenixedu.academic.report.FenixReport;
+import org.fenixedu.academic.util.LocaleUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -66,7 +67,7 @@ public class PhdNotificationDocument extends FenixReport {
     }
 
     public void setLanguage(Locale language) {
-        this.language = language;
+        this.language = (language.getLanguage().equals(LocaleUtils.PT.getLanguage()) ? LocaleUtils.PT : LocaleUtils.EN);
     }
 
     @Override
@@ -132,7 +133,7 @@ public class PhdNotificationDocument extends FenixReport {
 
     @Override
     public String getReportTemplateKey() {
-        return getClass().getName() + "." + getNotification().getType().name() + "." + getLanguage();
+        return getClass().getName() + "." + getNotification().getType().name();
     }
 
 }
