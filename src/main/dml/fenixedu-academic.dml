@@ -4706,6 +4706,7 @@ class raides.DegreeDesignation  {
 
 class raides.DegreeClassification  {
 	String code;
+	String codeLevelMapping;
 	String description1;
 	String description2;
 	String abbreviation;
