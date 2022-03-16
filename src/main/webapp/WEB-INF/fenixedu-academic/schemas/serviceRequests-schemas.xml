@@ -665,7 +665,7 @@
 
 <schema name="Enrolment.view-curricular-course-name-only" 
 	type="org.fenixedu.academic.domain.Enrolment" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="degreeModule.name" key="label.executionCourse" />
+	<slot name="name.content" key="label.executionCourse" />
 </schema>
 
 <schema name="DocumentRequestCreateBean.IRS_DECLARATION.AdditionalInformation"

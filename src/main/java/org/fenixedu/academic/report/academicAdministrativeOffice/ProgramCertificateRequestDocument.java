@@ -203,7 +203,7 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
             this.degree =
                     getMLSTextContent(enrolment.getCurricularCourse().getDegree().getNameI18N(enrolment.getExecutionYear()));
             this.degreeCurricularPlan = enrolment.getCurricularCourse().getDegreeCurricularPlan().getName();
-            this.curricularCourse = buildCurricularCourseName(enrolment.getCurricularCourse());
+            this.curricularCourse = buildCurricularCourseName(enrolment);
             this.contexts = buildContextsInformation(enrolment.getCurricularCourse());
         }
 
@@ -215,9 +215,11 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
             return result;
         }
 
-        private String buildCurricularCourseName(final CurricularCourse curricularCourse) {
-            return getMLSTextContent(curricularCourse.getNameI18N())
-                    + (StringUtils.isEmpty(curricularCourse.getAcronym()) ? EMPTY_STR : " (" + curricularCourse.getAcronym()
+        private String buildCurricularCourseName(final Enrolment enrolment) {
+            final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
+            final ExecutionSemester executionPeriod = enrolment.getExecutionPeriod();
+            return getMLSTextContent(curricularCourse.getNameI18N(executionPeriod))
+                    + (StringUtils.isEmpty(curricularCourse.getAcronym(executionPeriod)) ? EMPTY_STR : " (" + curricularCourse.getAcronym(executionPeriod)
                             + ")");
         }
 
