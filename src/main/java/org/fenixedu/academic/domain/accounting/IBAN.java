@@ -12,6 +12,7 @@ public class IBAN extends IBAN_Base {
         setInfix(infix);
         setSuffix(suffix);
         DomainIndexSystem.getInstance().index(getIBANNumber(), (index) -> index.getIBANSet(), this);
+        DomainIndexSystem.getInstance().index(infix, (index) -> index.getIBANSet(), this);
     }
 
     public String getIBANNumber() {

@@ -6,7 +6,7 @@ import org.fenixedu.bennu.search.domain.DomainIndexSystem;
 
 public class IBANGroup extends IBANGroup_Base {
     
-    public IBANGroup(final String prefix) {
+    public IBANGroup(final String prefix, final long account) {
         if (prefix == null) {
             throw new NullPointerException("IBAN Prefix cannot be null");
         }
@@ -18,6 +18,7 @@ public class IBANGroup extends IBANGroup_Base {
         }
         setBennu(Bennu.getInstance());
         setPrefix(prefix);
+        setAccount(account);
         setDefault();
     }
 
@@ -43,11 +44,18 @@ public class IBANGroup extends IBANGroup_Base {
         throw new Error("Unable to calculate correct IBAN for " + accountNumber);
     }
 
-    public IBAN lookup(final String ibanNumber) {
+    public IBAN lookupIBANNumber(final String ibanNumber) {
         return DomainIndexSystem.getInstance().search(ibanNumber, (index) -> index.getIBANSet().stream())
             .filter(iban -> iban.getIBANGroup() == this)
             .filter(iban -> iban.getIBANNumber().equals(ibanNumber))
             .findAny().orElse(null);
+    }
+
+    public IBAN lookup(final String ibanInfix) {
+        return DomainIndexSystem.getInstance().search(ibanInfix, (index) -> index.getIBANSet().stream())
+                .filter(iban -> iban.getIBANGroup() == this)
+                .filter(iban -> iban.getInfix().equals(ibanInfix))
+                .findAny().orElse(null);
     }
 
     public static IBAN allocate() {

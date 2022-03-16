@@ -93,6 +93,19 @@ public class AccountingTransaction extends AccountingTransaction_Base {
         setSibsPayment(sibsPayment);
     }
 
+    public AccountingTransaction(final IBANPayment ibanPayment) {
+        this();
+        final DateTime whenRegistered = ibanPayment.getSettlementDate().toDateTimeAtStartOfDay();
+        final AccountingTransactionDetail detail = new AccountingTransactionDetail(whenRegistered,
+                PaymentMethod.getIBANPaymentMethod(), ibanPayment.getIBAN().getIBANNumber(), ibanPayment.getSettlement());
+        final Event event = ibanPayment.getIBAN().getEvent();
+        final EntryType entryType = event.getEntryType();
+        final Money amount = ibanPayment.getAmount();
+        init(Authenticate.getUser(), event, makeEntry(entryType, amount.negate(), event.getFromAccount()),
+                makeEntry(entryType, amount, event.getToAccount()), detail);
+        setIBANPayment(ibanPayment);
+    }
+
     protected Entry makeEntry(EntryType entryType, Money amount, Account account) {
         return new Entry(entryType, amount, account);
     }

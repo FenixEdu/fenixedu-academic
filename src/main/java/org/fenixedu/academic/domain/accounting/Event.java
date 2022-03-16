@@ -1427,4 +1427,24 @@ public abstract class Event extends Event_Base {
         });
     }
 
+    @Atomic
+    public void updateTransactionsFromIBAN() {
+        final long c = getIBAN().getIBANPaymentSet().stream()
+                .filter(ibanPayment -> ibanPayment.getSettlement() != null)
+                .filter(ibanPayment -> ibanPayment.getAccountingTransaction() == null)
+                .map(ibanPayment -> new AccountingTransaction(ibanPayment))
+                .count();
+        if (c > 0) {
+            recalculateState(new DateTime());
+        }
+    }
+
+    static {
+        Signal.registerWithoutTransaction(IBANPayment.IBAN_PAYMENT_CREATED, ip -> {
+            FenixFramework.atomic(() -> {
+                final IBANPayment ibanPayment = ((DomainObjectEvent<IBANPayment>) ip).getInstance();
+                ibanPayment.getIBAN().getEvent().updateTransactionsFromIBAN();
+            });
+        });
+    }
 }

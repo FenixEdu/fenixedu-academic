@@ -59,6 +59,10 @@ public class PaymentMethod extends PaymentMethod_Base {
 
     public static PaymentMethod getRefundPaymentMethod() { return Bennu.getInstance().getPaymentMethodForRefundDeposit(); }
 
+    public static PaymentMethod getIBANPaymentMethod() {
+        return Bennu.getInstance().getIBANPaymentMethod();
+    }
+
     public static List<PaymentMethod> all() {
         return Bennu.getInstance().getPaymentMethodSet().stream().sorted(Comparator.comparing(PaymentMethod::getCode))
                 .collect(Collectors.toList());

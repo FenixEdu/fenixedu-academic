@@ -1348,12 +1348,20 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
     class accounting.IBANGroup {
         String prefix;
         int nextInfix;
+        long account;
         boolean active;
     }
 
     class accounting.IBAN {
         String infix;
         String suffix;
+    }
+
+    class accounting.IBANPayment {
+        LocalDate operationDate;
+        LocalDate settlementDate;
+        Money amount;
+        String settlement;
     }
 
     class accounting.Event {
@@ -6430,6 +6438,15 @@ relation PaymentMethodDefaultCash {
         multiplicity 0..1;
     }
     accounting.PaymentMethod playsRole cashPaymentMethod {
+        multiplicity 0..1;
+    }
+}
+
+relation PaymentMethodDefaultIBAN {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole iBANBennu {
+        multiplicity 0..1;
+    }
+    accounting.PaymentMethod playsRole iBANPaymentMethod {
         multiplicity 0..1;
     }
 }
@@ -12766,4 +12783,31 @@ relation EventIBAN {
     accounting.IBAN playsRole iBAN {
         multiplicity 0..1;
     }
+}
+
+relation IBANPaymentIBAN {
+    accounting.IBANPayment playsRole iBANPayment {
+        multiplicity *;
+    }
+    accounting.IBAN playsRole iBAN {
+        multiplicity 0..1;
+    }
+}
+
+relation IBANPaymentAccountingTransaction {
+    accounting.IBANPayment playsRole iBANPayment {
+        multiplicity 0..1;
+    }
+    accounting.AccountingTransaction playsRole accountingTransaction {
+        multiplicity 0..1;
+    }
+}
+
+relation IBANPaymentKeyIndex {
+	accounting.IBANPayment playsRole iBANPayment {
+		multiplicity *;
+	}
+	.org.fenixedu.bennu.search.domain.KeyIndex playsRole iBANPaymentKeyIndex {
+		multiplicity 1;
+	}
 }
