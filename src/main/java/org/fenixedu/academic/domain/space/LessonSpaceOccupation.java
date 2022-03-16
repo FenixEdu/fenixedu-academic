@@ -69,17 +69,15 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
     public void edit(Space allocatableSpace) {
         check(this, SpacePredicates.checkPermissionsToManageLessonSpaceOccupations);
 
-        if (getPeriod() == null) {
-            throw new DomainException("error.LessonSpaceOccupation.empty.period");
-        }
-
-        final SortedSet<Interval> allLessonIntervalsWithoutInstanceDates =
-                getLesson().getAllLessonIntervalsWithoutInstanceDates();
-        if (allocatableSpace != null /* && !allocatableSpace.isFree(this) */
-                && !allocatableSpace.isFree(Lists.newArrayList(allLessonIntervalsWithoutInstanceDates))) {
-            throw new DomainException("error.LessonSpaceOccupation.room.is.not.free", allocatableSpace.getName(), getPeriod()
-                    .getStartYearMonthDay().toString("dd-MM-yyy"), getPeriod().getLastOccupationPeriodOfNestedPeriods()
-                    .getEndYearMonthDay().toString("dd-MM-yyy"));
+        if (getPeriod() != null) {
+            final SortedSet<Interval> allLessonIntervalsWithoutInstanceDates =
+                    getLesson().getAllLessonIntervalsWithoutInstanceDates();
+            if (allocatableSpace != null /* && !allocatableSpace.isFree(this) */
+                    && !allocatableSpace.isFree(Lists.newArrayList(allLessonIntervalsWithoutInstanceDates))) {
+                throw new DomainException("error.LessonSpaceOccupation.room.is.not.free", allocatableSpace.getName(),
+                        getPeriod().getStartYearMonthDay().toString("dd-MM-yyy"),
+                        getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay().toString("dd-MM-yyy"));
+            }
         }
 
         setResource(allocatableSpace);

@@ -241,12 +241,10 @@ public class Lesson extends Lesson_Base {
     private void lessonSpaceOccupationManagement(Space newRoom) {
         LessonSpaceOccupation lessonSpaceOccupation = getLessonSpaceOccupation();
         if (newRoom != null) {
-            if (!wasFinished()) {
-                if (lessonSpaceOccupation == null) {
-                    lessonSpaceOccupation = new LessonSpaceOccupation(newRoom, this);
-                } else {
-                    lessonSpaceOccupation.edit(newRoom);
-                }
+            if (lessonSpaceOccupation == null) {
+                lessonSpaceOccupation = new LessonSpaceOccupation(newRoom, this);
+            } else {
+                lessonSpaceOccupation.edit(newRoom);
             }
         } else {
             if (lessonSpaceOccupation != null) {
