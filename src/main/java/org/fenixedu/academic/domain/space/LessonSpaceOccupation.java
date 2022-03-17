@@ -52,15 +52,13 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
 
         setLesson(lesson);
 
-        if (getPeriod() == null) {
-            throw new DomainException("error.LessonSpaceOccupation.empty.period");
-        }
-
-        if (allocatableSpace != null /* && !allocatableSpace.isFree(this) */
-                && !allocatableSpace.isFree(Lists.newArrayList(lesson.getAllLessonIntervalsWithoutInstanceDates()))) {
-            throw new DomainException("error.LessonSpaceOccupation.room.is.not.free", allocatableSpace.getName(), getPeriod()
-                    .getStartYearMonthDay().toString("dd-MM-yyy"), getPeriod().getLastOccupationPeriodOfNestedPeriods()
-                    .getEndYearMonthDay().toString("dd-MM-yyy"));
+        if (getPeriod() != null) {
+            if (allocatableSpace != null /* && !allocatableSpace.isFree(this) */
+                    && !allocatableSpace.isFree(Lists.newArrayList(lesson.getAllLessonIntervalsWithoutInstanceDates()))) {
+                throw new DomainException("error.LessonSpaceOccupation.room.is.not.free", allocatableSpace.getName(),
+                        getPeriod().getStartYearMonthDay().toString("dd-MM-yyy"),
+                        getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay().toString("dd-MM-yyy"));
+            }
         }
 
         setResource(allocatableSpace);
