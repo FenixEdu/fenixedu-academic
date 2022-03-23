@@ -31,6 +31,7 @@ import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.curriculum.ConclusionProcess;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
+import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -119,7 +120,11 @@ public class ProgramConclusion extends ProgramConclusion_Base {
     }
 
     private static Stream<CurriculumGroup> curriculumGroups(StudentCurricularPlan studentCurricularPlan) {
-        return Stream.concat(Stream.of(studentCurricularPlan.getRoot()), studentCurricularPlan.getAllCurriculumGroups().stream());
+        return Stream.concat(Stream.of(studentCurricularPlan.getRoot()),
+                studentCurricularPlan.getAllCurriculumGroups().stream().filter(cg -> {
+                    final CycleCurriculumGroup cycle = cg.getParentCycleCurriculumGroup();
+                    return cycle == null || !cycle.isExternal();
+                }));
     }
 
     public Optional<CurriculumGroup> groupFor(StudentCurricularPlan studentCurricularPlan) {

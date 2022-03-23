@@ -1,3 +1,5 @@
+- Bug Fix: External curriculum groups should not be considered for conclusion purposes
+
 32.10.3 (08-03-2022)
 - Bug Fix: Add delete method for PersistentSpecialCriteriaOverExecutionCourseGroup
 
