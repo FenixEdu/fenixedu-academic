@@ -455,5 +455,5 @@
         $("#selectConfig").change(function() {
             $(this).parents("form").submit();
         })
-    }
+    });
 </script>

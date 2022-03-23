@@ -10,6 +10,13 @@
 
 <spring:url var="createUrl" value="/event-template-management/create"></spring:url>
 
+<style>
+.form-horizontal {
+    margin-top: 18px;
+    margin-bottom: 9px;
+}
+</style>
+
 <div class="container-fluid">
     <main>
         <header>
@@ -20,14 +27,26 @@
             </div>
         </header>
         <section>
+                ${csrf.field()}
+            <form role="form" class="form-horizontal" action="" method="GET">
+                <div class="form-group">
+                    <label for="config" class="control-label col-sm-8">View</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" id="showAll" name="showAll">
+                            <option value="false" ${!showAll ? "selected" : ""}>only top level templates</option>
+                            <option value="true" ${showAll ? "selected" : ""}>all templates</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
             <div class="table-responsive">
                 <table class="table table-stripped">
                     <thead>
                         <tr>
                             <th class="col-sm-2 col-md-3">Code</th>
                             <th class="col-sm-4 col-md-5">Title</th>
-                            <th class="col-sm-2 col-md-1">From</th>
-                            <th class="col-sm-2 col-md-1">Until</th>
+                            <th class="col-sm-2 col-md-1">First Config From</th>
+                            <th class="col-sm-2 col-md-1">Last Config Until</th>
                             <th class="col-sm-2"></th>
                         </tr>
                     </thead>
@@ -60,3 +79,11 @@
         </section>
     </main>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#showAll").change(function() {
+            $(this).parents("form").submit();
+        })
+    });
+</script>
