@@ -29,7 +29,7 @@ ${portal.toolkit()}
         <header>
             <div class="row">
                 <div class="col-sm-12">
-                    <h1>Event Templates</h1>
+                    <h1><spring:message code="accounting.management.event.templates.title"/></h1>
                 </div>
             </div>
         </header>
@@ -38,16 +38,19 @@ ${portal.toolkit()}
             <div class="row">
                 <div class="col-sm-8">
                     <h2>
-                        Create
-                        <c:if test="${parent != null}">
-                            Alternative
-                        </c:if>
-                        Event Template
+                        <c:choose>
+                            <c:when test="${parent != null}">
+                                <spring:message code="accounting.management.event.templates.action.create.alternative"/>
+                            </c:when>
+                            <c:otherwise>
+                                <spring:message code="accounting.management.event.templates.action.create.template"/>
+                            </c:otherwise>
+                        </c:choose>
                     </h2>
                 </div>
                 
                 <div class="col-sm-4 actions">
-                    <a class="btn btn-block btn-default" href="${backUrl}">Back</a>
+                    <a class="btn btn-block btn-default" href="${backUrl}"><spring:message code="accounting.management.event.templates.action.back"/></a>
                 </div>
             </div>
         </section>
@@ -55,11 +58,11 @@ ${portal.toolkit()}
         <c:if test="${parent != null}">
             <section>
                 <div class="alert alert-info" role="alert">
-                    You are creating an alternative to the following event template:
+                    <spring:message code="accounting.management.event.templates.alert.creatingAlternativeToTemplate"/>
                     <ul>
-                        <li> ${parent.code} </li>
-                        <li> ${parent.title.content} </li>
-                        <li> ${parent.description.content} </li>
+                        <li> <c:out value='${parent.code}'/> </li>
+                        <li> <c:out value='${parent.title.content}'/> </li>
+                        <li> <c:out value='${parent.description.content}'/> </li>
                     </ul>
                 </div>
             </section>
@@ -69,19 +72,19 @@ ${portal.toolkit()}
             <form role="form" class="form-horizontal" action="" method="POST">
                 ${csrf.field()}
                 <div class="form-group">
-                    <label for="code" class="control-label col-sm-2">Code</label>
+                    <label for="code" class="control-label col-sm-2"><spring:message code="accounting.management.event.templates.label.code"/></label>
                     <div class="col-sm-10">
                         <input class="form-control" id="code" name="code" value='${parent == null ? "" : parent.code}' required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="title" class="control-label col-sm-2">Title</label>
+                    <label for="title" class="control-label col-sm-2"><spring:message code="accounting.management.event.templates.label.title"/></label>
                     <div class="col-sm-10">
                         <input id="title" name="title" value='${parent == null ? "" : parent.title.json()}' bennu-localized-string required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="description" class="control-label col-sm-2">Description</label>
+                    <label for="description" class="control-label col-sm-2"><spring:message code="accounting.management.event.templates.label.description"/></label>
                     <div class="col-sm-10">
                         <textarea id="description" name="description" bennu-localized-string required>${parent == null ? "" : parent.description.json()}</textarea>
                     </div>
@@ -89,7 +92,7 @@ ${portal.toolkit()}
 
                 <div class="row">
                     <div class="col-sm-offset-8 col-sm-4">
-                        <button id="submitForm" class="btn btn-block btn-primary" type="submit">Create</button>
+                        <button id="submitForm" class="btn btn-block btn-primary" type="submit"><spring:message code="accounting.management.event.templates.action.create"/></button>
                     </div>
                 </div>
             </form>

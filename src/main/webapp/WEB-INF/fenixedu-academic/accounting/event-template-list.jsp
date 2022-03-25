@@ -22,56 +22,64 @@
         <header>
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Event Templates</h1>
+                    <h1><spring:message code="accounting.management.event.templates.title"/></h1>
                 </div>
             </div>
         </header>
         <section>
-                ${csrf.field()}
+            ${csrf.field()}
             <form role="form" class="form-horizontal" action="" method="GET">
                 <div class="form-group">
-                    <label for="config" class="control-label col-sm-8">View</label>
+                    <label for="config" class="control-label col-sm-8"><spring:message code="accounting.management.event.templates.action.show"/></label>
                     <div class="col-sm-4">
                         <select class="form-control" id="showAll" name="showAll">
-                            <option value="false" ${!showAll ? "selected" : ""}>only top level templates</option>
-                            <option value="true" ${showAll ? "selected" : ""}>all templates</option>
+                            <option value="false" ${!showAll ? "selected" : ""}><spring:message code="accounting.management.event.templates.action.show.top"/></option>
+                            <option value="true" ${showAll ? "selected" : ""}><spring:message code="accounting.management.event.templates.action.show.all"/></option>
                         </select>
                     </div>
                 </div>
             </form>
-            <div class="table-responsive">
-                <table class="table table-stripped">
-                    <thead>
-                        <tr>
-                            <th class="col-sm-2 col-md-3">Code</th>
-                            <th class="col-sm-4 col-md-5">Title</th>
-                            <th class="col-sm-2 col-md-1">First Config From</th>
-                            <th class="col-sm-2 col-md-1">Last Config Until</th>
-                            <th class="col-sm-2"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${templates}" var="template">
-                            <spring:url var="detailsUrl" value="/event-template-management/{template}">
-                                <spring:param name="template" value="${template.externalId}"/>
-                            </spring:url>
-                            <c:set var="appliedInterval" value="${template.appliedInterval}"/>
-                            <tr>
-                                <td>${template.code}</td>
-                                <td>${template.title.content}</td>
-                                <td>${appliedInterval == null ? "N/A" : appliedInterval.start.toString("yyyy-MM-dd")}</td>
-                                <td>${appliedInterval == null ? "N/A" : appliedInterval.end.toString("yyyy-MM-dd")}</td>
-                                <td class="text-right"><a href="${detailsUrl}">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-            </div>
+            
+            <c:choose>
+                <c:when test="${templates.isEmpty()}">
+                    <div class="alert alert-info" role="alert"><spring:message code="accounting.management.event.templates.alert.noTemplates"/></div>
+                </c:when>
+                <c:otherwise>
+                    <div class="table-responsive">
+                        <table class="table table-stripped">
+                            <thead>
+                                <tr>
+                                    <th class="col-sm-2 col-md-3"><spring:message code="accounting.management.event.templates.label.code"/></th>
+                                    <th class="col-sm-4 col-md-5"><spring:message code="accounting.management.event.templates.label.title"/></th>
+                                    <th class="col-sm-2 col-md-1"><spring:message code="accounting.management.event.templates.label.start"/></th>
+                                    <th class="col-sm-2 col-md-1"><spring:message code="accounting.management.event.templates.label.end"/></th>
+                                    <th class="col-sm-2"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${templates}" var="template">
+                                    <spring:url var="detailsUrl" value="/event-template-management/{template}">
+                                        <spring:param name="template" value="${template.externalId}"/>
+                                    </spring:url>
+                                    <c:set var="appliedInterval" value="${template.appliedInterval}"/>
+                                    <tr>
+                                        <td><c:out value="${template.code}"/></td>
+                                        <td><c:out value="${template.title.content}"/></td>
+                                        <td>${appliedInterval == null ? "N/A" : appliedInterval.start.toString("yyyy-MM-dd")}</td>
+                                        <td>${appliedInterval == null ? "N/A" : appliedInterval.end.toString("yyyy-MM-dd")}</td>
+                                        <td class="text-right"><a href="${detailsUrl}"><spring:message code="accounting.management.event.templates.action.view"/></a></td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </c:otherwise>
+            </c:choose>
             <div class="row">
                 <div class="col-sm-offset-8 col-sm-4">
                     <section>
                         <div class="actions">
-                            <a class="btn btn-block btn-primary" href="${createUrl}">Create Event Template</a>
+                            <a class="btn btn-block btn-primary" href="${createUrl}"><spring:message code="accounting.management.event.templates.action.create.template"/></a>
                         </div>
                     </section>
                 </div>

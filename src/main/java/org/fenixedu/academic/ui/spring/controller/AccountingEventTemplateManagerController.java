@@ -3,7 +3,6 @@ package org.fenixedu.academic.ui.spring.controller;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.Map.Entry;
 
@@ -40,7 +39,7 @@ import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.Atomic.TxMode;
 
 @Controller
-@SpringFunctionality(app = AcademicAdministrationSpringApplication.class, title = "Event Templates")
+@SpringFunctionality(app = AcademicAdministrationSpringApplication.class, title = "accounting.management.event.templates.title")
 @RequestMapping(AccountingEventTemplateManagerController.REQUEST_MAPPING)
 public class AccountingEventTemplateManagerController {
 
@@ -135,7 +134,9 @@ public class AccountingEventTemplateManagerController {
                         : FenixFramework.getDomainObject(semesterData.getAsString());
                 model.addAttribute("semester", semester);
             } catch (JsonSyntaxException jse) {
-                // TODO maybe log this
+                logger.error(
+                        "Unable to deliver Event Template details page due to malformed config JSON data (as detailed in the following exception)",
+                        jse);
             }
         }
 
