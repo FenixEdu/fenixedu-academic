@@ -599,10 +599,10 @@ public class Lesson extends Lesson_Base {
         }
 
         if (currentDate.isEqual(summaryDate)) {
-            HourMinuteSecond lessonEndTime = null;
+            HourMinuteSecond lessonStartTime = null;
             LessonInstance lessonInstance = getLessonInstanceFor(summaryDate);
-            lessonEndTime = lessonInstance != null ? lessonInstance.getEndTime() : getEndHourMinuteSecond();
-            return !lessonEndTime.isAfter(timeToInsert);
+            lessonStartTime = lessonInstance != null ? lessonInstance.getStartTime() : getBeginHourMinuteSecond();
+            return !lessonStartTime.isAfter(timeToInsert);
         }
 
         return true;
