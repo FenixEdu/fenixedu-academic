@@ -67,7 +67,7 @@
                                         <td><c:out value="${template.title.content}"/></td>
                                         <td>${appliedInterval == null ? "N/A" : appliedInterval.start.toString("yyyy-MM-dd")}</td>
                                         <td>${appliedInterval == null ? "N/A" : appliedInterval.end.toString("yyyy-MM-dd")}</td>
-                                        <td class="text-right"><a href="${detailsUrl}"><spring:message code="accounting.management.event.templates.action.view"/></a></td>
+                                        <td class="text-right"><a class="btn btn-primary" href="${detailsUrl}"><spring:message code="accounting.management.event.templates.action.edit"/></a></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -79,7 +79,7 @@
                 <div class="col-sm-offset-8 col-sm-4">
                     <section>
                         <div class="actions">
-                            <a class="btn btn-block btn-primary" href="${createUrl}"><spring:message code="accounting.management.event.templates.action.create.template"/></a>
+                            <a class="btn btn-block btn-default" href="${createUrl}"><spring:message code="accounting.management.event.templates.action.create.template"/></a>
                         </div>
                     </section>
                 </div>

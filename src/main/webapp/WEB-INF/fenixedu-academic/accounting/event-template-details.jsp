@@ -83,7 +83,7 @@
                                         <td><c:out value='${parent.title.content}'/></td>
                                         <td>${appliedInterval == null ? "N/A" : appliedInterval.start.toString("yyyy-MM-dd")}</td>
                                         <td>${appliedInterval == null ? "N/A" : appliedInterval.end.toString("yyyy-MM-dd")}</td>
-                                        <td class="text-right"><a href="${detailsUrl}"><spring:message code="accounting.management.event.templates.actions.view"/></a></td>
+                                        <td class="text-right"><a class="btn btn-default" href="${detailsUrl}"><spring:message code="accounting.management.event.templates.action.edit"/></a></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -99,7 +99,7 @@
                     <h2><spring:message code="accounting.management.event.templates.label.alternatives"/></h2>
                 </div>
                 <div class="col-sm-4 actions">
-                    <a class="btn btn-block btn-primary" href="${createChildUrl}"><spring:message code="accounting.management.event.templates.action.create.alternative"/></a>
+                    <a class="btn btn-block btn-default" href="${createChildUrl}"><spring:message code="accounting.management.event.templates.action.create.alternative"/></a>
                 </div>
             </div>
             <c:choose>
@@ -129,7 +129,7 @@
                                         <td><c:out value='${child.title.content}'/></td>
                                         <td>${appliedInterval == null ? "N/A" : appliedInterval.start.toString("yyyy-MM-dd")}</td>
                                         <td>${appliedInterval == null ? "N/A" : appliedInterval.end.toString("yyyy-MM-dd")}</td>
-                                        <td class="text-right"><a href="${detailsUrl}"><spring:message code="accounting.management.event.templates.action.view"/></a></td>
+                                        <td class="text-right"><a class="btn btn-default" href="${detailsUrl}"><spring:message code="accounting.management.event.templates.action.edit"/></a></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -139,7 +139,7 @@
             </c:choose>
         </section>
         
-        <section>
+        <section id="configs">
             <div class="row">
                 <div class="col-sm-8">
                     <h2><spring:message code="accounting.management.event.templates.label.configs"/></h2>
@@ -153,7 +153,7 @@
                     <div class="alert alert-info" role="alert"><spring:message code="accounting.management.event.templates.alert.noConfigs"/></div>
                 </c:when>
                 <c:otherwise>
-                    <form role="form" class="form-horizontal" action="" method="POST">
+                    <form role="form" class="form-horizontal" action="#configs" method="GET">
                         ${csrf.field()}
                         <div class="form-group">
                             <label for="config" class="control-label col-sm-2"><spring:message code="accounting.management.event.templates.action.view.config"/>:</label>

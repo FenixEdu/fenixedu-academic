@@ -59,11 +59,14 @@ ${portal.toolkit()}
             <section>
                 <div class="alert alert-info" role="alert">
                     <spring:message code="accounting.management.event.templates.alert.creatingAlternativeToTemplate"/>
-                    <ul>
-                        <li> <c:out value='${parent.code}'/> </li>
-                        <li> <c:out value='${parent.title.content}'/> </li>
-                        <li> <c:out value='${parent.description.content}'/> </li>
-                    </ul>
+                    <dl>
+                        <dt><spring:message code="accounting.management.event.templates.label.code"/></dt>
+                        <dd><c:out value='${parent.code}'/></dd>
+                        <dt><spring:message code="accounting.management.event.templates.label.title"/></dt>
+                        <dd><c:out value='${parent.title.content}'/></dd>
+                        <dt><spring:message code="accounting.management.event.templates.label.description"/></dt>
+                        <dd><c:out value='${parent.description.content}'/></dd>
+                    </dl>
                 </div>
             </section>
         </c:if>

@@ -12,6 +12,7 @@ import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 import java.text.Collator;
+import java.util.Comparator;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -74,6 +75,11 @@ public class EventTemplate extends EventTemplate_Base implements Comparable<Even
         return getEventTemplateConfigSet().stream()
                 .filter(config -> config.contains(when))
                 .findAny().orElse(null);
+    }
+
+    public EventTemplateConfig getLastConfig() {
+        return getEventTemplateConfigSet().stream()
+                .max(Comparator.comparing((EventTemplateConfig c) -> c.getApplyFrom())).orElse(null);
     }
 
     public Interval getAppliedInterval() {

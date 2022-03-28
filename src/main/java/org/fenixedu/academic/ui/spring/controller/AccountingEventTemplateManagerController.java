@@ -144,7 +144,7 @@ public class AccountingEventTemplateManagerController {
     }
 
     @RequestMapping(value = "{template}/create-config", method = RequestMethod.GET)
-    public String prepareCreateConfig(@PathVariable EventTemplate template, Model model) {
+    public String prepareCreateConfig(@PathVariable EventTemplate template, boolean error, Model model) {
         model.addAttribute("template", template);
 
         List<ExecutionSemester> semesters = new ArrayList<ExecutionSemester>(
@@ -155,6 +155,57 @@ public class AccountingEventTemplateManagerController {
         List<EventTemplate> children = new ArrayList<EventTemplate>(template.getAlternativeEventTemplateSet());
         children.sort(Comparator.comparing((t) -> t.getCode()));
         model.addAttribute("children", children);
+
+        // pre-filled fields
+        final EventTemplateConfig prevConfig = template.getLastConfig();
+        if (prevConfig != null) {
+            model.addAttribute("prevConfigApplyUntil", prevConfig.getApplyUntil());
+
+            final JsonObject prevTuition = prevConfig.getConfig().has("TUITION")
+                    ? prevConfig.getConfig().getAsJsonObject("TUITION")
+                    : new JsonObject();
+            model.addAttribute("prevConfigTuitionProductCode",
+                    prevTuition.has("productCode") ? prevTuition.get("productCode").getAsString() : "");
+            model.addAttribute("prevConfigTuitionProductDescription",
+                    prevTuition.has("productDescription") ? prevTuition.get("productDescription").getAsString() : "");
+            model.addAttribute("prevConfigTuitionAccountId",
+                    prevTuition.has("accountId") ? prevTuition.get("accountId").getAsString() : "");
+
+            final JsonObject prevInsurance = prevConfig.getConfig().has("INSURANCE")
+                    ? prevConfig.getConfig().getAsJsonObject("INSURANCE")
+                    : new JsonObject();
+            model.addAttribute("prevConfigInsuranceProductCode",
+                    prevInsurance.has("productCode") ? prevInsurance.get("productCode").getAsString() : "");
+            model.addAttribute("prevConfigInsuranceProductDescription",
+                    prevInsurance.has("productDescription") ? prevInsurance.get("productDescription").getAsString()
+                            : "");
+            model.addAttribute("prevConfigInsuranceAccountId",
+                    prevInsurance.has("accountId") ? prevInsurance.get("accountId").getAsString() : "");
+
+            final JsonObject prevAdminFees = prevConfig.getConfig().has("ADMIN_FEES")
+                    ? prevConfig.getConfig().getAsJsonObject("ADMIN_FEES")
+                    : new JsonObject();
+            model.addAttribute("prevConfigAdminFeesProductCode",
+                    prevAdminFees.has("productCode") ? prevAdminFees.get("productCode").getAsString() : "");
+            model.addAttribute("prevConfigAdminFeesProductDescription",
+                    prevAdminFees.has("productDescription") ? prevAdminFees.get("productDescription").getAsString()
+                            : "");
+            model.addAttribute("prevConfigAdminFeesAccountId",
+                    prevAdminFees.has("accountId") ? prevAdminFees.get("accountId").getAsString() : "");
+        } else {
+            model.addAttribute("prevConfigApplyUntil", null);
+            model.addAttribute("prevConfigTuitionProductCode", "");
+            model.addAttribute("prevConfigTuitionProductDescription", "");
+            model.addAttribute("prevConfigTuitionAccountId", "");
+            model.addAttribute("prevConfigInsuranceProductCode", "");
+            model.addAttribute("prevConfigInsuranceProductDescription", "");
+            model.addAttribute("prevConfigInsuranceAccountId", "");
+            model.addAttribute("prevConfigAdminFeesProductCode", "");
+            model.addAttribute("prevConfigAdminFeesProductDescription", "");
+            model.addAttribute("prevConfigAdminFeesAccountId", "");
+        }
+
+        model.addAttribute("error", error);
 
         return view("event-template-config-create");
     }
@@ -223,7 +274,7 @@ public class AccountingEventTemplateManagerController {
         // configs created successfully, return to template page
         logger.info("Request accepted, config created ({})", config.getExternalId());
         return "redirect:" + REQUEST_MAPPING + "/" + template.getExternalId() + "?config=" +
-                config.getExternalId();
+                config.getExternalId() + "#configs";
     }
 
     @RequestMapping(value = "{template}/create-alternative", method = RequestMethod.GET)
@@ -305,9 +356,16 @@ public class AccountingEventTemplateManagerController {
             JsonElement value = patch.get("value");
             switch (path) {
                 case "/TUITION/dueDateAmountMap":
-                    property = path.substring("/TUITION/".length()); // remove the "/TUITION/" to obtain the correct
-                                                                     // name
-                    original.getAsJsonObject("TUITION").add(property, value);
+                    // intentional fall through!
+                case "/INSURANCE/dueDateAmountMap":
+                    // intentional fall through!
+                case "/ADMIN_FEES/dueDateAmountMap":
+                    // intentional fall through!
+                case "/ADMIN_FEES/penaltyAmountMap":
+                    final int rightSeperatorIndex = path.lastIndexOf('/');
+                    property = path.substring(rightSeperatorIndex + 1); // remove the "/TUITION/" to obtain the correct
+                                                                        // name
+                    original.getAsJsonObject(path.substring(1, rightSeperatorIndex)).add(property, value);
                     break;
                 case "/maxCredits":
                     // intentional fall through!
@@ -321,13 +379,8 @@ public class AccountingEventTemplateManagerController {
                     return;
             }
         }
-        if ("remove".equals(patch.get("op").getAsString())) {
+        if ("remove".equals(op)) {
             switch (path) {
-                case "/TUITION/dueDateAmountMap":
-                    property = path.substring("/TUITION/".length()); // remove the "/TUITION/" to obtain the correct
-                                                                     // name
-                    original.getAsJsonObject("TUITION").remove(property);
-                    break;
                 case "/maxCredits":
                     // intentional fall through!
                 case "/semester":
@@ -490,12 +543,19 @@ public class AccountingEventTemplateManagerController {
         if (!(paymentDataObj.has("accountId")
                 && paymentDataObj.get("accountId").isJsonPrimitive()
                 && paymentDataObj.getAsJsonPrimitive("accountId").isString())) {
-            // TODO check if corresponds to valid account
             // accountId is invalid
+            return false;
+        }
+        // check if corresponds to valid account
+        final boolean accountExists = Bennu.getInstance().getAccountsSet().stream()
+                .anyMatch(a -> a.getExternalId().equals(paymentDataObj.get("accountId").getAsString()));
+        if (!accountExists) {
             return false;
         }
 
         return true;
+        // I am aware I can just `return accountExists` here, but I decided to leave it
+        // like this to parallel the other validation methods
     }
 
     private boolean validateAmountMapData(JsonElement amountMapData) {
@@ -554,9 +614,12 @@ public class AccountingEventTemplateManagerController {
                 String patchPath = patchOpObj.getAsJsonPrimitive("path").getAsString();
 
                 if ("remove".equals(patchOp)) {
-                    // no more checks necessary
-                    return true;
-                } else if ("add".equals(patchOp) && !patchOpObj.has("value")) {
+                    // just need to check whether the path is valid
+                    return "/maxCredits".equals(patchPath) || "/semester".equals(patchPath);
+                }
+                // we know we're dealing with an "add" op
+
+                if (!patchOpObj.has("value")) {
                     // we need a value for this op
                     return false;
                 }
@@ -564,8 +627,14 @@ public class AccountingEventTemplateManagerController {
                 // we know there's a value field, we need to validate it
                 switch (patchPath) {
                     case "/TUITION/dueDateAmountMap":
+                        // intentional fall through!
+                    case "/INSURANCE/dueDateAmountMap":
+                        // intentional fall through!
+                    case "/ADMIN_FEES/dueDateAmountMap":
+                        // intentional fall through!
+                    case "/ADMIN_FEES/penaltyAmountMap":
                         if (!validateAmountMapData(patchOpObj.get("value"))) {
-                            // new value for /TUITION/dueDateAmountMap is malformed
+                            // new value for this dueDateAmountMap is malformed
                             return false;
                         }
                         break;
