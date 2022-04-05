@@ -132,9 +132,9 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
         final ProgramConclusion programConclusion = getDocumentRequest().getProgramConclusion();
         getPayload().addProperty("programConclusionName", programConclusion.getName().getContent(getLocale()));
         getPayload().addProperty("programConclusionDescription", programConclusion.getDescription().getContent(getLocale()));
-        getPayload().addProperty("degreeName", getDocumentRequest().getDegreeName(getLocale(), getExecutionYear()));
+        getPayload().addProperty("degreeName", getDocumentRequest().getDegreeName(getLocale(), getDocumentRequest().getConclusionYear()));
     }
-
+ 
     protected String getConclusion() {
         final ProgramConclusion programConclusion = getDocumentRequest().getProgramConclusion();
         final ArrayList<String> result = new ArrayList<>();
