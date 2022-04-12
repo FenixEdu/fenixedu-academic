@@ -399,7 +399,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         if (enrolment != null && enrolment.getCurricularCourse().isDissertation()) {
             final Thesis thesis = enrolment.getThesis();
             if (thesis != null) {
-                if (grade.isEmpty()) {
+                if (grade.isEmpty() || !grade.isNumeric()) {
                     thesis.removeMark();
                 } else {
                     thesis.setMark(Integer.valueOf(grade.getValue()));
