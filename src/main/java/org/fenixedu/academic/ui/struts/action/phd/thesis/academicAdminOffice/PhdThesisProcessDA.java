@@ -18,23 +18,12 @@
  */
 package org.fenixedu.academic.ui.struts.action.phd.thesis.academicAdminOffice;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType;
-import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
-import org.fenixedu.academic.domain.phd.PhdProcessState;
-import org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean;
-import org.fenixedu.academic.domain.phd.PhdProgramInformation;
+import org.fenixedu.academic.domain.phd.*;
 import org.fenixedu.academic.domain.phd.alert.AlertService;
 import org.fenixedu.academic.domain.phd.conclusion.PhdConclusionProcessBean;
 import org.fenixedu.academic.domain.phd.exceptions.PhdDomainOperationException;
@@ -42,46 +31,30 @@ import org.fenixedu.academic.domain.phd.thesis.PhdThesisJuryElementBean;
 import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcess;
 import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessBean;
 import org.fenixedu.academic.domain.phd.thesis.ThesisJuryElement;
-import org.fenixedu.academic.domain.phd.thesis.activities.AddJuryElement;
-import org.fenixedu.academic.domain.phd.thesis.activities.AddPresidentJuryElement;
-import org.fenixedu.academic.domain.phd.thesis.activities.AddState;
-import org.fenixedu.academic.domain.phd.thesis.activities.ConcludePhdProcess;
-import org.fenixedu.academic.domain.phd.thesis.activities.DeleteJuryElement;
-import org.fenixedu.academic.domain.phd.thesis.activities.EditJuryElement;
-import org.fenixedu.academic.domain.phd.thesis.activities.EditPhdThesisProcessInformation;
-import org.fenixedu.academic.domain.phd.thesis.activities.MoveJuryElementOrder;
-import org.fenixedu.academic.domain.phd.thesis.activities.RatifyFinalThesis;
-import org.fenixedu.academic.domain.phd.thesis.activities.RejectJuryElements;
-import org.fenixedu.academic.domain.phd.thesis.activities.RejectJuryElementsDocuments;
-import org.fenixedu.academic.domain.phd.thesis.activities.RemindJuryReviewToReporters;
-import org.fenixedu.academic.domain.phd.thesis.activities.RemoveLastState;
-import org.fenixedu.academic.domain.phd.thesis.activities.ReplaceDocument;
-import org.fenixedu.academic.domain.phd.thesis.activities.RequestJuryElements;
-import org.fenixedu.academic.domain.phd.thesis.activities.RequestJuryReviews;
-import org.fenixedu.academic.domain.phd.thesis.activities.ScheduleThesisDiscussion;
-import org.fenixedu.academic.domain.phd.thesis.activities.SetFinalGrade;
-import org.fenixedu.academic.domain.phd.thesis.activities.SetPhdJuryElementRatificationEntity;
-import org.fenixedu.academic.domain.phd.thesis.activities.SubmitJuryElementsDocuments;
-import org.fenixedu.academic.domain.phd.thesis.activities.SubmitThesis;
-import org.fenixedu.academic.domain.phd.thesis.activities.SwapJuryElementsOrder;
-import org.fenixedu.academic.domain.phd.thesis.activities.ValidateJury;
+import org.fenixedu.academic.domain.phd.thesis.activities.*;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DefaultDocumentGenerator;
 import org.fenixedu.academic.report.phd.thesis.PhdThesisJuryElementsDocument;
 import org.fenixedu.academic.service.services.caseHandling.ExecuteProcessActivity;
 import org.fenixedu.academic.ui.struts.action.phd.PhdProcessStateBean;
 import org.fenixedu.academic.ui.struts.action.phd.academicAdminOffice.PhdIndividualProgramProcessDA;
 import org.fenixedu.academic.ui.struts.action.phd.thesis.CommonPhdThesisProcessDA;
 import org.fenixedu.academic.util.Pair;
-import org.fenixedu.academic.util.report.ReportsUtils;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.joda.time.LocalDate;
-
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @Mapping(path = "/phdThesisProcess", module = "academicAdministration", functionality = PhdIndividualProgramProcessDA.class)
 @Forwards({
@@ -433,7 +406,8 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
         final PhdThesisJuryElementsDocument report = new PhdThesisJuryElementsDocument(getProcess(request));
 
-        writeFile(response, report.getReportFileName() + ".pdf", "application/pdf", ReportsUtils.generateReport(report).getData());
+        writeFile(response, report.getReportFileName() + ".pdf", "application/pdf", DefaultDocumentGenerator
+                .getGenerator().generateReport(Collections.singletonList(report)));
 
         return null;
     }

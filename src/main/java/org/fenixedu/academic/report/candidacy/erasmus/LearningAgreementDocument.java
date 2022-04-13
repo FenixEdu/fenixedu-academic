@@ -18,27 +18,22 @@
  */
 package org.fenixedu.academic.report.candidacy.erasmus;
 
-import java.util.Locale;
-import java.util.TreeSet;
-
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType;
 import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityApplicationProcess;
 import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.report.FenixReport;
-import org.fenixedu.academic.util.FenixStringTools;
-import org.jsoup.helper.StringUtil;
+
+import java.util.Locale;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 public class LearningAgreementDocument extends FenixReport {
 
     MobilityIndividualApplicationProcess process;
-
-    static final protected char END_CHAR = ' ';
-    static final protected int LINE_LENGTH = 70;
-    static final protected String LINE_BREAK = "\n";
-    static final protected String YEAR_TEXT = "Y.";
-    static final protected String SEMESTER_TEXT = "Sem.";
 
     public LearningAgreementDocument(MobilityIndividualApplicationProcess process) {
         this.process = process;
@@ -53,68 +48,88 @@ public class LearningAgreementDocument extends FenixReport {
 
     @Override
     protected void fillReport() {
-        addParameter("mobilityProgram", process.getMobilityProgram().getName().getContent(org.fenixedu.academic.util.LocaleUtils.EN));
-        addParameter("academicYear", process.getCandidacyExecutionInterval().getName());
-        addParameter("studentName", process.getPersonalDetails().getName());
-        addParameter("sendingInstitution", process.getCandidacy().getMobilityStudentData().getSelectedOpening()
+        getPayload().addProperty("mobilityProgram", process.getMobilityProgram().getName()
+                .getContent(org.fenixedu.academic.util.LocaleUtils.EN));
+        getPayload().addProperty("academicYear", process.getCandidacyExecutionInterval().getName());
+        getPayload().addProperty("studentName", process.getPersonalDetails().getName());
+        getPayload().addProperty("sendingInstitution", process.getCandidacy().getMobilityStudentData().getSelectedOpening()
                 .getMobilityAgreement().getUniversityUnit().getNameI18n().getContent());
 
-        addParameter("desiredEnrollments", getChosenSubjectsInformation());
+        getPayload().add("courses", getChosenSubjectsInformation());
     }
 
-    private String getChosenSubjectsInformation() {
-        StringBuilder result = new StringBuilder();
+    private JsonArray getChosenSubjectsInformation() {
+        JsonArray result = new JsonArray();
 
-        for (CurricularCourse course : process.getCandidacy().getCurricularCoursesSet()) {
-            String yearAndSemester = buildYearAndSemester(course);
+        process.getCandidacy().getCurricularCoursesSet().stream().map(course -> {
+            JsonObject courseInfo = new JsonObject();
+            YearSemesterInfo yearAndSemester = getYearAndSemester(course);
 
-            result.append(
-                    FenixStringTools.multipleLineRightPadWithSuffix(course.getNameI18N().getContent(org.fenixedu.academic.util.LocaleUtils.EN)
-                            + " (" + course.getDegree().getSigla() + ")" + yearAndSemester, LINE_LENGTH, END_CHAR, course
-                            .getEctsCredits().toString())).append(LINE_BREAK);
+            courseInfo.addProperty("title", course.getNameI18N()
+                    .getContent(org.fenixedu.academic.util.LocaleUtils.EN));
+            courseInfo.addProperty("degree", course.getDegree().getSigla());
+            courseInfo.addProperty("year", yearAndSemester.getYear());
+            courseInfo.addProperty("semester", yearAndSemester.getSemester());
+            courseInfo.addProperty("ects", course.getEctsCredits().toString());
+
+            return courseInfo;
+        }).forEach(result::add);
+
+        return result;
+    }
+
+    private static class YearSemesterInfo {
+        private final String year;
+        private final String semester;
+
+        public YearSemesterInfo(String year, String semester) {
+            this.year = year;
+            this.semester = semester;
         }
 
-        return result.toString();
+        public String getYear() {
+            return year;
+        }
+
+        public String getSemester() {
+            return semester;
+        }
     }
 
-    private String buildYearAndSemester(CurricularCourse course) {
+    private YearSemesterInfo getYearAndSemester(CurricularCourse course) {
         String year = "";
         String semester = "";
 
         if (course.getParentContextsSet().size() > 1
                 && ((MobilityApplicationProcess) process.getCandidacyProcess()).getForSemester().equals(
                         ErasmusApplyForSemesterType.SECOND_SEMESTER)) {
-            TreeSet<Integer> years = new TreeSet<Integer>();
-            for (Context context : course.getParentContextsSet()) {
-                years.add(context.getCurricularYear());
-            }
+            TreeSet<Integer> years = course.getParentContextsSet().stream().map(Context::getCurricularYear)
+                    .collect(Collectors.toCollection(TreeSet::new));
+
             if (years.size() == 1) {
-                year = YEAR_TEXT + years.iterator().next();
+                year = years.iterator().next().toString();
             }
 
-            semester = SEMESTER_TEXT + "2";
+            semester = "2";
         } else if (course.getParentContextsSet().size() == 1) {
             Context context = course.getParentContextsSet().iterator().next();
-            year = YEAR_TEXT + context.getCurricularYear();
-            semester = SEMESTER_TEXT + (context.containsSemester(1) ? "1" : "2");
+            year = context.getCurricularYear().toString();
+            semester = (context.containsSemester(1) ? "1" : "2");
         } else {
-            TreeSet<Integer> years = new TreeSet<Integer>();
-            TreeSet<Integer> semesters = new TreeSet<Integer>();
-            for (Context context : course.getParentContextsSet()) {
-                years.add(context.getCurricularYear());
-                semesters.add(context.containsSemester(1) ? 1 : 2);
-            }
+            TreeSet<Integer> years = course.getParentContextsSet().stream().map(Context::getCurricularYear)
+                    .collect(Collectors.toCollection(TreeSet::new));
+            TreeSet<Integer> semesters = course.getParentContextsSet().stream().map(c -> c.containsSemester(1) ? 1 : 2)
+                    .collect(Collectors.toCollection(TreeSet::new));
+
             if (years.size() == 1) {
-                year = YEAR_TEXT + years.iterator().next();
+                year = years.iterator().next().toString();
             }
             if (semesters.size() == 1) {
-                semester = SEMESTER_TEXT + semesters.iterator().next();
+                semester = semesters.iterator().next().toString();
             }
         }
 
-        String yearAndSemester = year + (StringUtil.isBlank(semester) || StringUtil.isBlank(year) ? "" : " - ") + semester;
-        yearAndSemester = (StringUtil.isBlank(yearAndSemester) ? "" : " - ") + yearAndSemester;
-        return yearAndSemester;
+        return new YearSemesterInfo(year, semester);
     }
 
     @Override

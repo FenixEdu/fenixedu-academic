@@ -18,39 +18,19 @@
  */
 package org.fenixedu.academic.ui.struts.action.publico.candidacies.erasmus;
 
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
-
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.domain.ExecutionYear;
-import org.fenixedu.academic.domain.Installation;
-import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.domain.PublicCandidacyHashCode;
-import org.fenixedu.academic.domain.candidacyProcess.CandidacyProcess;
-import org.fenixedu.academic.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
-import org.fenixedu.academic.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCodeOperations;
-import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyDocumentFile;
-import org.fenixedu.academic.domain.candidacyProcess.IndividualCandidacyProcessBean;
+import org.fenixedu.academic.domain.*;
+import org.fenixedu.academic.domain.candidacyProcess.*;
 import org.fenixedu.academic.domain.candidacyProcess.erasmus.ApprovedLearningAgreementDocumentFile;
 import org.fenixedu.academic.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType;
 import org.fenixedu.academic.domain.candidacyProcess.exceptions.HashCodeForEmailAndProcessAlreadyBounded;
-import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityApplicationProcess;
-import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
-import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean;
-import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityQuota;
-import org.fenixedu.academic.domain.candidacyProcess.mobility.MobilityStudentDataBean;
+import org.fenixedu.academic.domain.candidacyProcess.mobility.*;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.person.IDDocumentType;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DefaultDocumentGenerator;
 import org.fenixedu.academic.dto.person.PersonBean;
 import org.fenixedu.academic.report.candidacy.erasmus.LearningAgreementDocument;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
@@ -59,7 +39,7 @@ import org.fenixedu.academic.ui.struts.action.commons.FenixActionForward;
 import org.fenixedu.academic.ui.struts.action.publico.PublicApplication.PublicCandidaciesApp;
 import org.fenixedu.academic.ui.struts.action.publico.candidacies.RefactoredIndividualCandidacyProcessPublicDA;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.report.ReportsUtils;
+import org.fenixedu.academic.util.LocaleUtils;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
@@ -70,8 +50,16 @@ import org.fenixedu.messaging.core.template.DeclareMessageTemplate;
 import org.fenixedu.messaging.core.template.TemplateParameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
 
 @DeclareMessageTemplate(
         id = "error.mobility.report.mail.template",
@@ -741,8 +729,8 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
             HttpServletResponse response) throws Exception {
         MobilityIndividualApplicationProcess process = (MobilityIndividualApplicationProcess) getProcess(request);
 
-        final LearningAgreementDocument document = new LearningAgreementDocument(process);
-        byte[] data = ReportsUtils.generateReport(document).getData();
+        final LearningAgreementDocument document = new LearningAgreementDocument(process, LocaleUtils.EN);
+        byte[] data = DefaultDocumentGenerator.getGenerator().generateReport(Collections.singletonList(document));
 
         response.setContentLength(data.length);
         response.setContentType("application/pdf");

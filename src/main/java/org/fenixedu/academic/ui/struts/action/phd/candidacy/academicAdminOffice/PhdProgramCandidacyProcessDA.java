@@ -18,36 +18,19 @@
  */
 package org.fenixedu.academic.ui.struts.action.phd.candidacy.academicAdminOffice;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.caseHandling.Process;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.phd.PhdIndividualProgramDocumentType;
-import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
-import org.fenixedu.academic.domain.phd.PhdProcessState;
-import org.fenixedu.academic.domain.phd.PhdProgramCandidacyProcessState;
-import org.fenixedu.academic.domain.phd.PhdProgramDocumentUploadBean;
-import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcess;
-import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
-import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean;
-import org.fenixedu.academic.domain.phd.candidacy.RatifyCandidacyBean;
-import org.fenixedu.academic.domain.phd.candidacy.RegistrationFormalizationBean;
+import org.fenixedu.academic.domain.phd.*;
+import org.fenixedu.academic.domain.phd.candidacy.*;
 import org.fenixedu.academic.domain.phd.exceptions.PhdDomainOperationException;
 import org.fenixedu.academic.domain.phd.notification.PhdNotification;
 import org.fenixedu.academic.domain.phd.notification.PhdNotificationBean;
 import org.fenixedu.academic.domain.phd.thesis.PhdThesisProcessBean;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DefaultDocumentGenerator;
 import org.fenixedu.academic.dto.person.ChoosePersonBean;
 import org.fenixedu.academic.dto.person.PersonBean;
 import org.fenixedu.academic.report.phd.notification.PhdCandidacyDeclarationDocument;
@@ -58,15 +41,18 @@ import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.struts.action.phd.PhdProcessStateBean;
 import org.fenixedu.academic.ui.struts.action.phd.academicAdminOffice.PhdIndividualProgramProcessDA;
 import org.fenixedu.academic.ui.struts.action.phd.candidacy.CommonPhdCandidacyDA;
-import org.fenixedu.academic.util.report.ReportsUtils;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
-
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.*;
 
 @Mapping(path = "/phdProgramCandidacyProcess", module = "academicAdministration",
         functionality = PhdIndividualProgramProcessDA.class)
@@ -396,7 +382,8 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
             HttpServletResponse response) throws IOException {
 
         final PhdNotificationDocument report = new PhdNotificationDocument(getNotification(request), getLanguage(request));
-        writeFile(response, report.getReportFileName() + ".pdf", "application/pdf", ReportsUtils.generateReport(report).getData());
+        writeFile(response, report.getReportFileName() + ".pdf", "application/pdf",  DefaultDocumentGenerator
+                .getGenerator().generateReport(Collections.singletonList(report)));
 
         return null;
 
@@ -420,7 +407,8 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 
         final PhdCandidacyDeclarationDocument report =
                 new PhdCandidacyDeclarationDocument(getProcess(request), getLanguage(request));
-        writeFile(response, report.getReportFileName() + ".pdf", "application/pdf", ReportsUtils.generateReport(report).getData());
+        writeFile(response, report.getReportFileName() + ".pdf", "application/pdf", DefaultDocumentGenerator.getGenerator()
+                .generateReport(Collections.singletonList(report)));
 
         return null;
 

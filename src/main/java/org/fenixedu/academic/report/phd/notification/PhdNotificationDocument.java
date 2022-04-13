@@ -18,26 +18,24 @@
  */
 package org.fenixedu.academic.report.phd.notification;
 
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
-
+import com.google.gson.JsonArray;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accounting.EventType;
 import org.fenixedu.academic.domain.accounting.postingRules.FixedAmountPR;
+import org.fenixedu.academic.domain.administrativeOffice.AdministrativeOffice;
 import org.fenixedu.academic.domain.phd.PhdIndividualProgramProcess;
 import org.fenixedu.academic.domain.phd.PhdParticipant;
 import org.fenixedu.academic.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import org.fenixedu.academic.domain.phd.notification.PhdNotification;
 import org.fenixedu.academic.report.FenixReport;
-import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LocaleUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+
+import java.util.Locale;
+import java.util.Set;
 
 public class PhdNotificationDocument extends FenixReport {
 
@@ -69,84 +67,41 @@ public class PhdNotificationDocument extends FenixReport {
     }
 
     public void setLanguage(Locale language) {
-        this.language = language;
+        this.language = (language.getLanguage().equals(LocaleUtils.PT.getLanguage()) ? LocaleUtils.PT : LocaleUtils.EN);
     }
 
     @Override
     protected void fillReport() {
-
         final PhdProgramCandidacyProcess candidacyProcess = getNotification().getCandidacyProcess();
         final Person person = candidacyProcess.getPerson();
         final PhdIndividualProgramProcess individualProgramProcess = candidacyProcess.getIndividualProgramProcess();
-
-        addParameter("administrativeOfficeCoordinator", individualProgramProcess.getPhdProgram().getAdministrativeOffice()
-                .getCoordinator().getProfile().getDisplayName());
-
-        addParameter("name", person.getName());
-        addParameter("address", person.getAddress());
-        addParameter("areaCode", person.getAreaCode());
-        addParameter("areaOfAreaCode", person.getAreaOfAreaCode());
+        final AdministrativeOffice administrativeOffice = individualProgramProcess.getPhdProgram().getAdministrativeOffice();
         final ExecutionYear executionYear = individualProgramProcess.getExecutionYear();
-        addParameter("programName", individualProgramProcess.getPhdProgram().getName(executionYear).getContent(getLanguage()));
-
-        addParameter("processNumber", individualProgramProcess.getProcessNumber());
-
         final LocalDate whenRatified = candidacyProcess.getWhenRatified();
 
-        addParameter("ratificationDate", whenRatified != null ? whenRatified.toString(getDateFormat()) : "");
-
-        addParameter("insuranceFee", getInsuranceFee(individualProgramProcess));
-        addParameter("registrationFee", getRegistrationFee(individualProgramProcess, whenRatified));
-
-        addParameter("date", new LocalDate().toString(getDateFormat()));
-        addParameter("notificationNumber", getNotification().getNotificationNumber());
-
-        addGuidingsParameter(individualProgramProcess);
-
+        getPayload().addProperty("administrativeOfficeName", administrativeOffice.getName().getContent());
+        getPayload().addProperty("administrativeOfficeCoordinator", administrativeOffice.getCoordinator().getProfile().getDisplayName());
+        getPayload().addProperty("name", person.getName());
+        getPayload().addProperty("processNumber", individualProgramProcess.getProcessNumber());
+        getPayload().addProperty("address", person.getAddress());
+        getPayload().addProperty("areaCode", person.getAreaCode());
+        getPayload().addProperty("areaOfAreaCode", person.getAreaOfAreaCode());
+        getPayload().addProperty("programName", individualProgramProcess.getPhdProgram().getName(executionYear).getContent(getLanguage()));
+        getPayload().addProperty("ratificationDate", whenRatified != null ? whenRatified.toString(getDateFormat()) : "");
+        getPayload().addProperty("insuranceFee", getInsuranceFee(individualProgramProcess));
+        getPayload().addProperty("registrationFee", getRegistrationFee(individualProgramProcess, whenRatified));
+        getPayload().addProperty("currentDate", new LocalDate().toString(getDateFormat()));
+        getPayload().addProperty("notificationNumber", getNotification().getNotificationNumber());
+        getPayload().add("mainAdvisors", getAdvisors(individualProgramProcess.getGuidingsSet()));
+        getPayload().add("coAdvisors", getAdvisors(individualProgramProcess.getAssistantGuidingsSet()));
     }
 
-    private void addGuidingsParameter(final PhdIndividualProgramProcess individualProgramProcess) {
-        if (!individualProgramProcess.getGuidingsSet().isEmpty() && !individualProgramProcess.getAssistantGuidingsSet().isEmpty()) {
-            addParameter("guidingsInformation", MessageFormat.format(getMessageFromResource(getClass().getName()
-                    + ".full.guidings.template"), buildGuidingsInformation(individualProgramProcess.getGuidingsSet()),
-                    buildGuidingsInformation(individualProgramProcess.getAssistantGuidingsSet())));
-        } else if (!individualProgramProcess.getGuidingsSet().isEmpty()) {
-            addParameter("guidingsInformation", MessageFormat.format(getMessageFromResource(getClass().getName()
-                    + ".guidings.only.template"), buildGuidingsInformation(individualProgramProcess.getGuidingsSet())));
-        } else {
-            addParameter("guidingsInformation", "");
-        }
-    }
+    private JsonArray getAdvisors(Set<PhdParticipant> advisors) {
+        JsonArray advisorsArray = new JsonArray();
 
-    private String buildGuidingsInformation(final Collection<PhdParticipant> guidings) {
-        final StringBuilder result = new StringBuilder();
-        List<PhdParticipant> guidingsList = new ArrayList<>(guidings);
-        for (int i = 0; i < guidingsList.size(); i++) {
-            final PhdParticipant guiding = guidingsList.get(i);
-            result.append(guiding.getNameWithTitle());
-            if (i == guidings.size() - 2) {
-                result.append(" ").append(getMessageFromResource("label.and")).append(" ");
-            } else {
-                result.append(", ");
-            }
-        }
+        advisors.stream().map(PhdParticipant::getNameWithTitle).forEach(advisorsArray::add);
 
-        if (result.length() > 0) {
-            if (result.toString().endsWith(getMessageFromResource("label.and"))) {
-                return result.substring(0, result.length() - getMessageFromResource("label.and").length());
-            }
-
-            if (result.toString().endsWith(", ")) {
-                return result.substring(0, result.length() - 2);
-            }
-        }
-
-        return result.toString();
-
-    }
-
-    private String getMessageFromResource(String key) {
-        return BundleUtil.getString(Bundle.PHD, getLanguage(), key);
+        return advisorsArray;
     }
 
     private String getDateFormat() {
@@ -178,7 +133,7 @@ public class PhdNotificationDocument extends FenixReport {
 
     @Override
     public String getReportTemplateKey() {
-        return getClass().getName() + "." + getNotification().getType().name() + "." + getLanguage();
+        return getClass().getName() + "." + getNotification().getType().name();
     }
 
 }
