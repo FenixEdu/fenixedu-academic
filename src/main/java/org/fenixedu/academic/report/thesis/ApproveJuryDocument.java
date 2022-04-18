@@ -18,12 +18,13 @@
  */
 package org.fenixedu.academic.report.thesis;
 
-import java.util.Locale;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.academic.domain.Coordinator_Base;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant;
+
+import java.util.Locale;
 
 public class ApproveJuryDocument extends ThesisDocument {
 
@@ -39,37 +40,37 @@ public class ApproveJuryDocument extends ThesisDocument {
 
         Thesis thesis = getThesis();
 
-        final ThesisEvaluationParticipant thesisEvaluationParticipant = thesis.getProposalApprover();
+        final ThesisEvaluationParticipant proposalApprover = thesis.getProposalApprover();
         final String author;
         final String date;
         final String ccAuthor;
         final String ccDate;
-        if (thesisEvaluationParticipant == null) {
+        if (proposalApprover == null) {
             author = date = ccAuthor = ccDate = StringUtils.EMPTY;
         } else {
-            final Person person = thesisEvaluationParticipant.getPerson();
+            final Person person = proposalApprover.getPerson();
             boolean isDegreeCoordinator = checkCoordinator(thesis, person);
 
             if (person != null && !isDegreeCoordinator) {
                 author = date = StringUtils.EMPTY;
-                ccAuthor = thesisEvaluationParticipant.getName();
+                ccAuthor = proposalApprover.getName();
                 ccDate = String.format(new Locale("pt"), "%1$td de %1$tB de %1$tY", thesis.getApproval().toDate());
             } else {
                 ccAuthor = ccDate = StringUtils.EMPTY;
-                author = thesisEvaluationParticipant.getName();
+                author = proposalApprover.getName();
                 date = String.format(new Locale("pt"), "%1$td de %1$tB de %1$tY", thesis.getApproval().toDate());
             }
         }
 
-        addParameter("author", author);
-        addParameter("date", date);
-        addParameter("ccAuthor", ccAuthor);
-        addParameter("ccDate", ccDate);
+        getPayload().addProperty("author", author);
+        getPayload().addProperty("date", date);
+        getPayload().addProperty("ccAuthor", ccAuthor);
+        getPayload().addProperty("ccDate", ccDate);
     }
 
     private boolean checkCoordinator(Thesis thesis, final Person person) {
-        return thesis.getDegree().getCurrentCoordinators().stream().map(coordinator -> coordinator.getPerson())
-                .anyMatch(coord -> coord.equals(person));
+        return thesis.getDegree().getCurrentCoordinators().stream().map(Coordinator_Base::getPerson)
+                .anyMatch(coordinator -> coordinator.equals(person));
     }
 
     @Override

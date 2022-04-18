@@ -18,15 +18,12 @@
  */
 package org.fenixedu.academic.report.thesis;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
+import com.google.gson.JsonArray;
 import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.domain.thesis.ThesisFile;
-import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
-import org.joda.time.DateTime;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class StudentThesisIdentificationDocument extends ThesisDocument {
 
@@ -42,63 +39,38 @@ public class StudentThesisIdentificationDocument extends ThesisDocument {
 
         ThesisFile file = thesis.getDissertation();
         if (file != null) {
-            addParameter("thesisTitle", file.getTitle());
-            addParameter("thesisSubtitle", neverNull(file.getSubTitle()));
+            getPayload().addProperty("thesisTitle", file.getTitle());
         } else {
-            addParameter("thesisTitle", thesis.getTitle().getContent());
-            addParameter("thesisSubtitle", EMPTY_STR);
+            getPayload().addProperty("thesisTitle", thesis.getTitle().getContent());
         }
 
-        String date = null;
+        String date = Optional.of(thesis.getDiscussed()).map(
+                discussion -> {
+                    return String.format(new Locale("pt"), "%1$td/%1$tm/%1$tY", discussion.toDate());
+                }
+        ).orElse(EMPTY_STR);
+        getPayload().addProperty("discussion", date);
 
-        DateTime discussion = thesis.getDiscussed();
-        if (discussion != null) {
-            date = String.format(new Locale("pt"), "%1$td/%1$tm/%1$tY", discussion.toDate());
-        }
+        getPayload().add("keywordsPt", getKeywordsJson(thesis.getKeywordsPt()));
+        getPayload().add("keywordsEn",  getKeywordsJson(thesis.getKeywordsEn()));
 
-        addParameter("discussion", neverNull(date));
+        getPayload().addProperty("abstractPt", Optional.ofNullable(thesis.getThesisAbstractPt()).orElse(EMPTY_STR));
+        getPayload().addProperty("abstractEn", Optional.ofNullable(thesis.getThesisAbstractEn()).orElse(EMPTY_STR));
+    }
 
-        int index = 0;
-        for (String keyword : splitKeywords(thesis.getKeywordsPt())) {
-            addParameter("keywordPt" + index++, keyword);
-        }
-
-        while (index < 6) {
-            addParameter("keywordPt" + index++, EMPTY_STR);
-        }
-
-        index = 0;
-        for (String keyword : splitKeywords(thesis.getKeywordsEn())) {
-            addParameter("keywordEn" + index++, keyword);
-        }
-
-        while (index < 6) {
-            addParameter("keywordEn" + index++, EMPTY_STR);
-        }
-
-        addParameter("keywordsPt", thesis.getKeywordsPt());
-        addParameter("keywordsEn", thesis.getKeywordsEn());
-
-        addParameter("abstractPt", neverNull(thesis.getThesisAbstractPt()));
-        addParameter("abstractEn", neverNull(thesis.getThesisAbstractEn()));
+    private JsonArray getKeywordsJson(String keywords) {
+        JsonArray keywordsJson = new JsonArray();
+        splitKeywords(keywords).stream().limit(6).forEach(keywordsJson::add);
+        return keywordsJson;
     }
 
     private List<String> splitKeywords(String keywords) {
-        List<String> result = new ArrayList<String>();
-
-        if (keywords == null) {
-            return result;
-        }
-
-        for (String part : keywords.split(",")) {
-            String trimmed = part.trim();
-
-            if (trimmed.length() > 0) {
-                result.add(trimmed);
-            }
-        }
-
-        return result;
+        return Optional.of(keywords)
+                .map(k -> Arrays.stream(k.split(","))
+                        .map(String::trim)
+                        .filter(s -> !s.isEmpty())
+                        .collect(Collectors.toList()))
+                .orElse(new ArrayList<>());
     }
 
     @Override

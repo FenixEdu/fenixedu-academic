@@ -18,12 +18,8 @@
  */
 package org.fenixedu.academic.report.thesis;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
-
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.student.Student;
@@ -31,6 +27,9 @@ import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.domain.thesis.ThesisEvaluationParticipant;
 import org.fenixedu.academic.report.FenixReport;
 import org.fenixedu.bennu.core.domain.Bennu;
+
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Base document for Thesis related reports. This document tries to setup the
@@ -41,31 +40,6 @@ import org.fenixedu.bennu.core.domain.Bennu;
  * @author cfgi
  */
 public abstract class ThesisDocument extends FenixReport {
-
-    public static class OrientationInfo {
-
-        public OrientationInfo(String advisorName, String advisorCategory, String advisorAffiliation) {
-            this.advisorName = advisorName;
-            this.advisorCategory = advisorCategory;
-            this.advisorAffiliation = advisorAffiliation;
-        }
-
-        public String getAdvisorCategory() {
-            return advisorCategory;
-        }
-
-        public String getAdvisorAffiliation() {
-            return advisorAffiliation;
-        }
-
-        public String getAdvisorName() {
-            return advisorName;
-        }
-
-        private final String advisorName;
-        private final String advisorCategory;
-        private final String advisorAffiliation;
-    }
 
     private final Thesis thesis;
 
@@ -94,85 +68,73 @@ public abstract class ThesisDocument extends FenixReport {
     }
 
     protected void fillInstitution() {
-        addParameter("institutionName", neverNull(Bennu.getInstance().getInstitutionUnit().getName()).toUpperCase());
+        getPayload().addProperty("institutionName", Optional.ofNullable(Bennu.getInstance().getInstitutionUnit().getName())
+                .orElse(EMPTY_STR));
     }
 
     protected void fillDegree() {
         final Degree degree = thesis.getDegree();
-        addParameter("studentDegreeName", neverNull(degree.getNameI18N(thesis.getExecutionYear()).getContent()));
+        getPayload().addProperty("studentDegreeName",Optional.ofNullable(degree.getNameI18N(thesis.getExecutionYear()).getContent())
+                .orElse(EMPTY_STR));
     }
 
     protected void fillStudent() {
         final Student student = thesis.getStudent();
-        addParameter("studentNumber", student.getNumber());
+        getPayload().addProperty("studentNumber", student.getNumber());
 
         final Person person = student.getPerson();
-        addParameter("studentName", person.getName());
+        getPayload().addProperty("studentName", person.getName());
     }
 
     protected void fillThesisInfo() {
-        addParameter("thesisTitle", thesis.getTitle().getContent());
+        getPayload().addProperty("thesisTitle", thesis.getTitle().getContent());
     }
 
     protected void fillOrientation() {
+        JsonArray result = new JsonArray();
 
-        List<OrientationInfo> advisors =
-                thesis.getOrientation()
-                        .stream()
-                        .map(orientator -> new OrientationInfo(orientator.getName(), participantCategoryName(orientator),
-                                neverNull(orientator.getAffiliation()))).collect(Collectors.toList());
+        thesis.getOrientation().stream().map(o -> {
+            JsonObject advisor = new JsonObject();
+            advisor.addProperty("name", o.getName());
+            advisor.addProperty("category", o.getCategory());
+            advisor.addProperty("affiliation", o.getAffiliation());
+            return advisor;
+        }).forEach(result::add);
 
-        addParameter("advisors", advisors);
+        getPayload().add("advisors", result);
     }
 
     protected void fillJury() {
         final ThesisEvaluationParticipant juryPresident = thesis.getPresident();
-        addParameter("juryPresidentName", juryPresident.getName());
-        addParameter("juryPresidentCategory", participantCategoryName(juryPresident));
-        addParameter("juryPresidentAffiliation", neverNull(juryPresident.getAffiliation()));
+        getPayload().addProperty("juryPresidentName", juryPresident.getName());
+        getPayload().addProperty("juryPresidentCategory", participantCategoryName(juryPresident));
+        getPayload().addProperty("juryPresidentAffiliation", Optional.ofNullable(juryPresident.getAffiliation()).orElse(EMPTY_STR));
 
-        final Set<ThesisEvaluationParticipant> vowels =
-                new TreeSet<ThesisEvaluationParticipant>(ThesisEvaluationParticipant.COMPARATOR_BY_PERSON_NAME);
-        vowels.addAll(thesis.getVowels());
+        JsonArray result = new JsonArray();
 
-        Iterator<ThesisEvaluationParticipant> iterator = vowels.iterator();
-        int guidanceVowel = 0;
-        for (int i = 1; i <= 4; i++) {
-            final String vowelPrefix = "vowel" + i;
+        boolean hasAdvisor = false;
+        thesis.getVowels().stream().sorted(ThesisEvaluationParticipant.COMPARATOR_BY_PERSON_NAME).map(jm -> {
+            JsonObject juryMember = new JsonObject();
+            juryMember.addProperty("name", jm.getName());
+            juryMember.addProperty("category", participantCategoryName(jm));
+            juryMember.addProperty("affiliation", Optional.ofNullable(jm.getAffiliation()).orElse(EMPTY_STR));
+            juryMember.addProperty("isAdvisor", !hasAdvisor && isAdvisor(jm));
+            return juryMember;
+        }).forEach(result::add);
 
-            if (iterator.hasNext()) {
-                ThesisEvaluationParticipant vowel = iterator.next();
-                if (guidanceVowel == 0 && isGuidanceVowel(vowel)) {
-                    guidanceVowel = i;
-                }
-                addParameter(vowelPrefix + "Name", vowel.getName());
-                addParameter(vowelPrefix + "Category", participantCategoryName(vowel));
-                addParameter(vowelPrefix + "Affiliation", neverNull(vowel.getAffiliation()));
-            } else {
-                addParameter(vowelPrefix + "Name", EMPTY_STR);
-                addParameter(vowelPrefix + "Category", EMPTY_STR);
-                addParameter(vowelPrefix + "Affiliation", EMPTY_STR);
-            }
-        }
-        addParameter("guidanceVowel", guidanceVowel);
+        getPayload().add("members", result);
     }
 
-    protected String neverNull(String value) {
-        return value == null ? EMPTY_STR : value;
-    }
-
-    private boolean isGuidanceVowel(ThesisEvaluationParticipant vowel) {
-        Person vowelPerson = vowel.getPerson();
+    private boolean isAdvisor(ThesisEvaluationParticipant juryMember) {
+        Person juryPerson = juryMember.getPerson();
 
         Set<Person> orientationPersons = thesis.getOrientationPersons();
 
-        return vowelPerson != null && orientationPersons.contains(vowelPerson);
+        return juryPerson != null && orientationPersons.contains(juryPerson);
     }
 
     private String participantCategoryName(ThesisEvaluationParticipant participant) {
-        if (participant == null) {
-            return EMPTY_STR;
-        } else if (participant.getCategory() == null) {
+        if (participant == null || participant.getCategory() == null) {
             return EMPTY_STR;
         } else {
             return participant.getCategory();

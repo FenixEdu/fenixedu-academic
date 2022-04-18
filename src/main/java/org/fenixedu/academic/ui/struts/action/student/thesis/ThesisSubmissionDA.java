@@ -18,16 +18,13 @@
  */
 package org.fenixedu.academic.ui.struts.action.student.thesis;
 
-import java.util.TreeSet;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.google.common.io.ByteStreams;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.Enrolment;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.serviceRequests.documentRequests.DefaultDocumentGenerator;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.thesis.Thesis;
 import org.fenixedu.academic.report.thesis.StudentThesisIdentificationDocument;
@@ -37,18 +34,19 @@ import org.fenixedu.academic.service.services.thesis.CreateThesisDissertationFil
 import org.fenixedu.academic.service.services.thesis.RejectThesisDeclaration;
 import org.fenixedu.academic.ui.struts.action.commons.AbstractManageThesisDA;
 import org.fenixedu.academic.ui.struts.action.student.StudentApplication.StudentSubmitApp;
-import org.fenixedu.academic.util.report.ReportsUtils;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
-
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
 
-import com.google.common.io.ByteStreams;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Collections;
+import java.util.TreeSet;
 
 @StrutsFunctionality(app = StudentSubmitApp.class, path = "thesis", titleKey = "label.student.thesis.submission")
 @Mapping(path = "/thesisSubmission", module = "student")
@@ -310,8 +308,7 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
 
         try {
             StudentThesisIdentificationDocument document = new StudentThesisIdentificationDocument(thesis);
-            byte[] data = ReportsUtils.generateReport(document).getData();
-
+            byte[] data = DefaultDocumentGenerator.getGenerator().generateReport(Collections.singletonList(document));
             response.setContentLength(data.length);
             response.setContentType("application/pdf");
             response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", document.getReportFileName()));
