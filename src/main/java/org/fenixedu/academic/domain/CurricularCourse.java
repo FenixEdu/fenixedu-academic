@@ -275,9 +275,10 @@ public class CurricularCourse extends CurricularCourse_Base {
         return getAutonomousWorkHours((CurricularPeriod) null, executionInterval);
     }
 
-    final public Double getAutonomousWorkHours(final CurricularPeriod curricularPeriod, final ExecutionInterval executionYear) {
-        return getCompetenceCourse() != null ? getCompetenceCourse().getAutonomousWorkHours(curricularPeriod.getChildOrder(),
-                executionYear) : 0d;
+    final public Double getAutonomousWorkHours(final CurricularPeriod curricularPeriod,
+            final ExecutionInterval executionInterval) {
+        return getCompetenceCourse() != null ? getCompetenceCourse().getAutonomousWorkHours(
+                curricularPeriod == null ? null : curricularPeriod.getChildOrder(), executionInterval) : 0.0d;
     }
 
     final public double getContactLoad() {
