@@ -18,6 +18,8 @@
  */
 package org.fenixedu.academic.domain.organizationalStructure;
 
+import java.util.stream.Stream;
+
 import org.fenixedu.bennu.core.domain.Bennu;
 
 public class ConnectionRule extends ConnectionRule_Base {
@@ -45,6 +47,11 @@ public class ConnectionRule extends ConnectionRule_Base {
 
     public boolean isValid(PartyType parentType, PartyType childType) {
         return getAllowedParentPartyType() == parentType && getAllowedChildPartyType() == childType;
+    }
+
+    public static Stream<ConnectionRule> find(PartyType parentType, PartyType childType, AccountabilityType accountabilityType) {
+        return Bennu.getInstance().getConnectionRulesSet().stream().filter(cr -> cr.getAllowedParentPartyType() == parentType
+                && cr.getAllowedChildPartyType() == childType && cr.getAccountabilityType() == accountabilityType);
     }
 
 }

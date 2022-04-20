@@ -39,6 +39,13 @@ public class AccountabilityType extends AccountabilityType_Base {
         setTypeName(name);
     }
 
+    public static AccountabilityType create(final String code, final LocalizedString name) {
+        final AccountabilityType accountabilityType = new AccountabilityType();
+        accountabilityType.setCode(code);
+        accountabilityType.setTypeName(name);
+        return accountabilityType;
+    }
+
     @Override
     public void setType(AccountabilityTypeEnum type) {
         if (type == null) {

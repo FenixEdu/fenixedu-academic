@@ -102,7 +102,8 @@ public class PartyType extends PartyType_Base {
     }
 
     public static Optional<PartyType> of(final PartyTypeEnum partyTypeEnum) {
-        return Bennu.getInstance().getPartyTypesSet().stream().filter(pt -> pt.getType() == partyTypeEnum).findAny();
+        return partyTypeEnum == null ? Optional.empty() : Bennu.getInstance().getPartyTypesSet().stream()
+                .filter(pt -> pt.getType() == partyTypeEnum).findAny();
     }
 
     /**
