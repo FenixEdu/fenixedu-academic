@@ -1,3 +1,4 @@
+32.11.0 (20-04-2022)
 - Improvement: Copy learning languages in Degree Info
 - Bug Fix: Fix NPE on method CurricularCourse.getAutonomousWorkHours(CurricularPeriod, ExecutionInterval)
 - Refactor: Add code to party type
