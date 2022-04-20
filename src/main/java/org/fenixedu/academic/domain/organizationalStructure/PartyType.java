@@ -24,8 +24,10 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 public class PartyType extends PartyType_Base {
 
@@ -39,12 +41,33 @@ public class PartyType extends PartyType_Base {
         setType(partyTypeEnum);
     }
 
+    public static PartyType create(final String code, final LocalizedString name) {
+        final PartyType partyType = new PartyType();
+        partyType.setCode(code);
+        partyType.setTypeName(name);
+        return partyType;
+    }
+
     @Override
     public void setType(final PartyTypeEnum type) {
         if (type == null) {
             throw new DomainException("error.PartyType.empty.type");
         }
         super.setType(type);
+    }
+
+    @Override
+    public void setCode(String code) {
+        findByCode(code).filter(pt -> pt != this).ifPresent(pt -> {
+            throw new DomainException("error.partyType.existingCode", code, pt.getName());
+        });
+
+        super.setCode(code);
+    }
+
+    public static Optional<PartyType> findByCode(final String code) {
+        return StringUtils.isNotBlank(code) ? Bennu.getInstance().getPartyTypesSet().stream()
+                .filter(pt -> code.equals(pt.getCode())).findAny() : Optional.empty();
     }
 
     public String getName() {

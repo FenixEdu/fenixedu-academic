@@ -1,5 +1,6 @@
 - Improvement: Copy learning languages in Degree Info
 - Bug Fix: Fix NPE on method CurricularCourse.getAutonomousWorkHours(CurricularPeriod, ExecutionInterval)
+- Refactor: Add code to party type
 
 32.10.5 (29-03-2022)
 - Improvement: Summary can be created as soon as lesson starts 
