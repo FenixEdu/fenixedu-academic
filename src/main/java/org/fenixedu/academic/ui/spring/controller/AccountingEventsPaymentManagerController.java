@@ -289,6 +289,13 @@ public class AccountingEventsPaymentManagerController extends AccountingControll
         } catch (DomainException e) {
             model.addAttribute("error", e.getLocalizedMessage());
             return exempt(event, user, model);
+        } catch (RuntimeException re) {
+            if (re.getCause() != null && re.getCause() instanceof DomainException) {
+                DomainException de = (DomainException) re.getCause();
+                model.addAttribute("error", de.getLocalizedMessage());
+                return exempt(event, user, model);
+            }
+            throw re;
         }
 
         return redirectToEventDetails(event);
