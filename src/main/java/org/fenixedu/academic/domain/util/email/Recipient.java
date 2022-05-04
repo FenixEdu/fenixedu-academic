@@ -76,6 +76,8 @@ public class Recipient extends Recipient_Base {
 
     @Atomic(mode = TxMode.WRITE)
     public void delete() {
+        setMembersGroup(null);
+        
         for (final Sender sender : getSendersSet()) {
             removeSenders(sender);
         }

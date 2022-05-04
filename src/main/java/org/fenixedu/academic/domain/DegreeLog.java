@@ -29,6 +29,7 @@ public class DegreeLog extends DegreeLog_Base {
     public enum DegreeLogTypes {
 
         CANDIDACIES, COORDINATION_TEAM, PROGRAM_TUTORED_PARTICIPATION, QUC_RESULTS, SCIENTIFIC_COMISSION;
+
         public String getQualifiedName() {
             return DegreeLogTypes.class.getSimpleName() + "." + name();
         }
@@ -61,6 +62,13 @@ public class DegreeLog extends DegreeLog_Base {
 
     public DegreeLogTypes getDegreeLogType() {
         return null;
+    }
+
+    @Override
+    public void delete() {
+        setExecutionYear(null);
+        setDegree(null);
+        super.delete();
     }
 
 }

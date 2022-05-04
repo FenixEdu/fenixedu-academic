@@ -1,3 +1,5 @@
+- Bug Fix: Proper handle of degree delete
+
 32.11.0 (20-04-2022)
 - Improvement: Copy learning languages in Degree Info
 - Bug Fix: Fix NPE on method CurricularCourse.getAutonomousWorkHours(CurricularPeriod, ExecutionInterval)

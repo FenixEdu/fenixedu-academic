@@ -279,8 +279,11 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
         // checkDeletion assures that site is deletable
         if (getSender() != null) {
+            getSender().setFromName(getSender().getFromName()); // persist from name in sender
             setSender(null);
         }
+
+        getDegreeLogsSet().forEach(DegreeLog::delete);
 
         setNumericGradeScale(null);
         setCalendar(null);
@@ -724,7 +727,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
         super.setCode(code);
     }
-    
+
     @Override
     public void setIdCardName(final String idCardName) {
         super.setIdCardName(idCardName.toUpperCase());
@@ -734,6 +737,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public void setNome(final String nome) {
         super.setNome(nome);
         setIdCardName(nome);
-    }    
+    }
 
 }
