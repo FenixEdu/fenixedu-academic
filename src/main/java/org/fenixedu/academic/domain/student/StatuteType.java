@@ -31,6 +31,8 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.LocalizedString;
 
+import com.google.common.base.Strings;
+
 import pt.ist.fenixframework.Atomic;
 
 public class StatuteType extends StatuteType_Base {
@@ -69,15 +71,17 @@ public class StatuteType extends StatuteType_Base {
 
     @Override
     public void setCode(String code) {
-        if (code == null || code.trim().isEmpty()) {
-            super.setCode(null);
-        } else {
-            if (readAll().filter(statute -> code.equals(statute.getCode()) && statute != StatuteType.this).findAny()
-                    .isPresent()) {
-                throw new DomainException("error.StatuteType.code.alreadyUsed");
-            }
-            super.setCode(code);
+    	
+    	if (Strings.isNullOrEmpty(code)) {
+            throw new DomainException("error.StatuteType.code.cannot.be.null");
         }
+
+        if (findAll().stream().anyMatch(it -> it != this && Objects.equals(it.getCode(), code))) {
+            throw new DomainException("error.StatuteType.code.alreadyUsed", code);
+        }
+    	
+		super.setCode(code);
+        
     }
 
     protected void checkRules() {
