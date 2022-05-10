@@ -27,9 +27,14 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.DomainObjectUtil;
+import org.fenixedu.academic.domain.ExecutionInterval;
+import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.LocalizedString;
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 
 import com.google.common.base.Strings;
 
@@ -71,17 +76,17 @@ public class StatuteType extends StatuteType_Base {
 
     @Override
     public void setCode(String code) {
-    	
-    	if (Strings.isNullOrEmpty(code)) {
+
+        if (Strings.isNullOrEmpty(code)) {
             throw new DomainException("error.StatuteType.code.cannot.be.null");
         }
 
         if (findAll().stream().anyMatch(it -> it != this && Objects.equals(it.getCode(), code))) {
             throw new DomainException("error.StatuteType.code.alreadyUsed", code);
         }
-    	
-		super.setCode(code);
-        
+
+        super.setCode(code);
+
     }
 
     protected void checkRules() {
@@ -152,4 +157,43 @@ public class StatuteType extends StatuteType_Base {
         }
         return statuteTypes;
     }
+
+    public static Stream<StatuteType> findforRegistration(final Registration registration,
+            final ExecutionInterval executionInterval) {
+        return findforRegistration(registration, executionInterval, null);
+    }
+
+    public static Stream<StatuteType> findforRegistration(final Registration registration,
+            final ExecutionInterval executionInterval, final Interval datesInterval) {
+
+        if (executionInterval instanceof ExecutionYear) {
+            final ExecutionYear executionYear = (ExecutionYear) executionInterval;
+            return executionYear.getExecutionPeriodsSet().stream()
+                    .flatMap(ei -> findforRegistrationByChildExecutionIntervalAndDates(registration, ei, datesInterval));
+        }
+
+        return findforRegistrationByChildExecutionIntervalAndDates(registration, executionInterval, datesInterval);
+    }
+
+    static private Stream<StatuteType> findforRegistrationByChildExecutionIntervalAndDates(final Registration registration,
+            final ExecutionInterval executionInterval, final Interval datesInterval) {
+
+        final Predicate<StudentStatute> validInDates = ss -> {
+            if (datesInterval == null || (ss.getBeginDate() == null && ss.getEndDate() == null)) {
+                return true;
+            }
+
+            final DateTime statuteBegin =
+                    Optional.ofNullable(ss.getBeginDate()).orElseGet(() -> new LocalDate(0, 1, 1)).toDateTimeAtStartOfDay();
+            final DateTime statuteEnd =
+                    Optional.ofNullable(ss.getEndDate()).orElseGet(() -> new LocalDate(9999, 1, 1)).toDateTimeAtStartOfDay();
+
+            return new Interval(statuteBegin, statuteEnd).overlaps(datesInterval);
+        };
+
+        return registration.getStudent().getStudentStatutesSet().stream()
+                .filter(s -> s.isValidInExecutionInterval(executionInterval)).filter(validInDates)
+                .filter(s -> (s.getRegistration() == null || s.getRegistration() == registration)).map(s -> s.getType());
+    }
+
 }
