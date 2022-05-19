@@ -975,7 +975,20 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
         AcademicPeriod academicPeriod;
         Languages languages;
     }
-
+    
+    class degreeStructure.CompetenceCourseLevelType  {
+    	String code (REQUIRED); 
+    	LocalizedString name (REQUIRED);
+    }
+		relation CompetenceCourseLevelTypeRoot {
+		    degreeStructure.CompetenceCourseLevelType playsRole competenceCourseLevelTypes { multiplicity *; }
+		    .org.fenixedu.bennu.core.domain.Bennu playsRole root;
+		}
+		relation CompetenceCourseInformationLevelType {
+		    degreeStructure.CompetenceCourseLevelType playsRole levelType { multiplicity 0..1; } 
+		    degreeStructure.CompetenceCourseInformation playsRole competenceCourseInformations { multiplicity *; }
+		}	    
+    
     class degreeStructure.CompetenceCourseInformationChangeRequest  {
         String justification;
         Boolean approved;

@@ -217,6 +217,12 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setRegime(input.equals(AcademicPeriod.YEAR) ? RegimeType.ANUAL : RegimeType.SEMESTRIAL);
     }
 
+    @Override
+    public void setCompetenceCourseLevel(CompetenceCourseLevel competenceCourseLevel) {
+        super.setCompetenceCourseLevel(competenceCourseLevel);
+        CompetenceCourseLevelType.findByCode(competenceCourseLevel.name()).ifPresent(lt -> setLevelType(lt));
+    }
+
     public LocalizedString getNameI18N() {
         LocalizedString result = new LocalizedString();
 
