@@ -19,7 +19,7 @@
 
     <properties>
         <version.com.github.axet.kaptcha>0.0.9</version.com.github.axet.kaptcha>
-        <version.com.google.code.gson.gson>2.8.5</version.com.google.code.gson.gson>
+        <version.com.google.code.gson.gson>2.8.9</version.com.google.code.gson.gson>
         <version.com.google.guava.guava>27.0-jre</version.com.google.guava.guava>
         <version.com.googlecode.libphonenumber.libphonenumber>8.10.0</version.com.googlecode.libphonenumber.libphonenumber>
         <version.com.lowagie.itext>2.1.7</version.com.lowagie.itext>
