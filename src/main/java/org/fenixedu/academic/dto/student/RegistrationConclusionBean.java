@@ -62,24 +62,9 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     private String observations;
 
     private StudentCurricularPlan studentCurricularPlan;
-    
+
     protected RegistrationConclusionBean() {
         super();
-    }
-
-    public RegistrationConclusionBean(final Registration registration) {
-        setRegistration(registration);
-    }
-
-    @Deprecated
-    public RegistrationConclusionBean(final Registration registration, final CurriculumGroup curriculumGroup) {
-        setRegistration(registration);
-        setCurriculumGroup(curriculumGroup);
-    }
-
-    public RegistrationConclusionBean(final Registration registration, ProgramConclusion programConclusion) {
-        setRegistration(registration);
-        setProgramConclusion(programConclusion);
     }
 
     public RegistrationConclusionBean(final StudentCurricularPlan studentCurricularPlan,
@@ -99,14 +84,6 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
         }
 
         return getProgramConclusion() == null ? null : getProgramConclusion().groupFor(getRegistration()).orElse(null);
-    }
-
-    public void setCurriculumGroup(CurriculumGroup curriculumGroup) {
-        if (curriculumGroup.getDegreeModule().getProgramConclusion() != null) {
-            setProgramConclusion(curriculumGroup.getDegreeModule().getProgramConclusion());
-        } else {
-            setProgramConclusion(null);
-        }
     }
 
     public ProgramConclusion getProgramConclusion() {

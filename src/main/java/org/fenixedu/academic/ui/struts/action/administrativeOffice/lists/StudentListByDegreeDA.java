@@ -115,7 +115,8 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             Set<DegreeType> degreeTypesForOperation = AcademicAccessRule
                     .getDegreeTypesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
                     .collect(Collectors.toSet());
-            degreeTypesForOperation.addAll(AcademicPermissionService.getDegreeTypes("ACADEMIC_OFFICE_REPORTS", Authenticate.getUser()));
+            degreeTypesForOperation
+                    .addAll(AcademicPermissionService.getDegreeTypes("ACADEMIC_OFFICE_REPORTS", Authenticate.getUser()));
 
             Set<Degree> degreesForOperation = AcademicAccessRule
                     .getDegreesAccessibleToFunction(AcademicOperationType.STUDENT_LISTINGS, Authenticate.getUser())
@@ -542,7 +543,8 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
     private void fillSpreadSheetBolonhaInfo(StyledExcelSpreadsheet spreadsheet, Registration registration,
             CycleCurriculumGroup cycle) {
         if (cycle != null && !cycle.isExternal()) {
-            RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration, cycle);
+            RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(
+                    cycle.getStudentCurricularPlan(), cycle.getDegreeModule().getProgramConclusion());
             fillSpreadSheetRegistrationInfo(spreadsheet, registrationConclusionBean, registrationConclusionBean.isConcluded());
         } else {
             fillSpreadSheetEmptyCells(spreadsheet);

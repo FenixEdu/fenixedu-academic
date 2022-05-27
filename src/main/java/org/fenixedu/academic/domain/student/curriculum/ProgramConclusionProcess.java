@@ -60,9 +60,10 @@ public class ProgramConclusionProcess extends ProgramConclusionProcess_Base {
     }
 
     @Override
-    final public void update(final Person responsible, final Grade finalGrade, final Grade rawGrade,
-            final Grade descriptiveGrade, final LocalDate conclusionDate, final String notes) {
-        addVersions(new RegistrationConclusionBean(getRegistration(), getGroup()));
+    final public void update(final Person responsible, final Grade finalGrade, final Grade rawGrade, final Grade descriptiveGrade,
+            final LocalDate conclusionDate, final String notes) {
+        addVersions(new RegistrationConclusionBean(getGroup().getStudentCurricularPlan(),
+                getGroup().getDegreeModule().getProgramConclusion()));
         getLastVersion().update(responsible, finalGrade, rawGrade, descriptiveGrade, conclusionDate, notes);
     }
 
@@ -80,9 +81,8 @@ public class ProgramConclusionProcess extends ProgramConclusionProcess_Base {
         List<Dismissal> dismissalsList = new ArrayList<>();
         getGroup().collectDismissals(dismissalsList);
 
-        Stream<Enrolment> dismissals =
-                dismissalsList.stream().flatMap(d -> d.getSourceIEnrolments().stream())
-                        .filter(e -> e.isEnrolment() && ((Enrolment) e).isDissertation()).map(ie -> (Enrolment) ie);
+        Stream<Enrolment> dismissals = dismissalsList.stream().flatMap(d -> d.getSourceIEnrolments().stream())
+                .filter(e -> e.isEnrolment() && ((Enrolment) e).isDissertation()).map(ie -> (Enrolment) ie);
         return Stream.concat(enrolments, dismissals).max(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_ID).orElse(null);
     }
 

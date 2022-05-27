@@ -131,7 +131,8 @@ public class RegistrationDA extends StudentRegistrationDA {
 
         final Registration registration = getAndSetRegistration(request);
 
-        request.setAttribute("registrationConclusionBean", new RegistrationConclusionBean(registration));
+        request.setAttribute("registrationConclusionBean",
+                new RegistrationConclusionBean(registration.getLastStudentCurricularPlan(), null));
         return mapping.findForward("chooseProgramConclusion");
     }
 
@@ -202,7 +203,8 @@ public class RegistrationDA extends StudentRegistrationDA {
             HttpServletResponse response) {
         Registration registration = getDomainObject(request, "registration");
         ProgramConclusion programConclusion = getDomainObject(request, "programConclusion");
-        RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration, programConclusion);
+        RegistrationConclusionBean registrationConclusionBean =
+                new RegistrationConclusionBean(registration.getLastStudentCurricularPlan(), programConclusion);
         request.setAttribute("registrationConclusionBean", registrationConclusionBean);
         request.setAttribute("registration", registrationConclusionBean.getRegistration());
         return mapping.findForward("registrationConclusion");
@@ -222,7 +224,8 @@ public class RegistrationDA extends StudentRegistrationDA {
             addActionMessage(request, BundleUtil.getString(Bundle.APPLICATION, "error.program.conclusion.empty"), false);
         }
 
-        registrationConclusionBean = new RegistrationConclusionBean(registration, curriculumGroup);
+        registrationConclusionBean = new RegistrationConclusionBean(curriculumGroup.getStudentCurricularPlan(),
+                curriculumGroup.getDegreeModule().getProgramConclusion());
         request.setAttribute("registrationConclusionBean", registrationConclusionBean);
 
         String degreePresentationName =

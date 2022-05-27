@@ -1321,7 +1321,8 @@ public class CurriculumGroup extends CurriculumGroup_Base {
             throw new DomainException("error.CycleCurriculumGroup.cycle.is.not.concluded");
         }
 
-        final RegistrationConclusionBean bean = new RegistrationConclusionBean(getRegistration(), this);
+        final RegistrationConclusionBean bean =
+                new RegistrationConclusionBean(getStudentCurricularPlan(), getDegreeModule().getProgramConclusion());
         if (super.getConclusionProcess() != null) {
             super.getConclusionProcess().update(bean);
         } else {
