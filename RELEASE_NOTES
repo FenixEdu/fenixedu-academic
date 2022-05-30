@@ -1,4 +1,5 @@
 - Bug Fix: Disconnect level on competence course deletion
+- Bug Fix: Add missing competence course level erros messages
 
 32.12.1 (27-05-2022)
 - Bug Fix: RegistrationConclusionBean should always use StudentCurricularPlan and ProgramConclusion precision
