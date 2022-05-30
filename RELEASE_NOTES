@@ -1,3 +1,5 @@
+- Bug Fix: Disconnect level on competence course deletion
+
 32.12.1 (27-05-2022)
 - Bug Fix: RegistrationConclusionBean should always use StudentCurricularPlan and ProgramConclusion precision
 - Refactor: RegistrationConclusionBean constructor cleanup

@@ -220,7 +220,12 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     @Override
     public void setCompetenceCourseLevel(CompetenceCourseLevel competenceCourseLevel) {
         super.setCompetenceCourseLevel(competenceCourseLevel);
-        CompetenceCourseLevelType.findByCode(competenceCourseLevel.name()).ifPresent(lt -> setLevelType(lt));
+        
+        if (competenceCourseLevel != null) {
+            CompetenceCourseLevelType.findByCode(competenceCourseLevel.name()).ifPresent(lt -> setLevelType(lt));
+        } else {
+            setLevelType(null);
+        }
     }
 
     public LocalizedString getNameI18N() {
@@ -336,6 +341,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setExecutionPeriod(null);
         setCompetenceCourse(null);
         setCompetenceCourseGroupUnit(null);
+        setCompetenceCourseLevel(null);
         for (; !getCompetenceCourseLoadsSet().isEmpty(); getCompetenceCourseLoadsSet().iterator().next().delete()) {
             ;
         }
