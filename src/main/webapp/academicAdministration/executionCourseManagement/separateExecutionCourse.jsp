@@ -52,7 +52,7 @@
 
 <logic:present name="infoExecutionCourse">
 	<bean:define id="executionCourseId" name="infoExecutionCourse" property="externalId"/>
-	<bean:define id="executionCourseName" name="infoExecutionCourse" property="nome"/>
+	<bean:define id="executionCourseName" name="infoExecutionCourse" property="nameI18N.content"/>
 	<bean:define id="executionPeriodName" name="infoExecutionCourse" property="infoExecutionPeriod.executionPeriod.qualifiedName"/>
 	<bean:define id="curricularYearName">
 		<bean:message bundle="ENUMERATION_RESOURCES" key="<%= pageContext.findAttribute("curYear") + ".ordinal.short" %>"/>

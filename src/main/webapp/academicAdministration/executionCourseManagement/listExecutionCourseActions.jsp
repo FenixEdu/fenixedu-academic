@@ -176,7 +176,7 @@
 	</fr:layout>
 
 	<fr:schema type="org.fenixedu.academic.domain.ExecutionCourse" bundle="MANAGER_RESOURCES">
-		<fr:slot name="nome" key="label.manager.teachersManagement.executionCourseName" />
+		<fr:slot name="nomeI18" key="label.manager.teachersManagement.executionCourseName" />
 		<fr:slot name="sigla" key="label.manager.curricularCourse.code" />
 	</fr:schema>
 </fr:view>

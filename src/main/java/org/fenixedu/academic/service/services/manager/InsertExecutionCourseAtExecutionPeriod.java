@@ -53,7 +53,7 @@ public class InsertExecutionCourseAtExecutionPeriod {
         }
 
         final ExecutionCourse executionCourse =
-                new ExecutionCourse(infoExecutionCourse.getNome(), infoExecutionCourse.getSigla(), executionSemester,
+                new ExecutionCourse(infoExecutionCourse.getNameI18N(),infoExecutionCourse.getNome(), infoExecutionCourse.getSigla(), executionSemester,
                         infoExecutionCourse.getEntryPhase());
     }
 }

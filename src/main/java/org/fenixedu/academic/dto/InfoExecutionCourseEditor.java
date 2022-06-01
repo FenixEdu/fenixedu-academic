@@ -21,11 +21,18 @@ package org.fenixedu.academic.dto;
 import java.util.List;
 
 import org.fenixedu.academic.domain.EntryPhase;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 public class InfoExecutionCourseEditor extends InfoObject {
 
     protected String _nome;
-
+    
+    protected String _nomePT;
+    
+    protected String _nomeEN;
+    
+    protected LocalizedString _nameI18N;
+    
     protected String _sigla;
 
     protected String _programa;
@@ -86,6 +93,30 @@ public class InfoExecutionCourseEditor extends InfoObject {
 
     public void setNome(String nome) {
         _nome = nome;
+    }
+
+    public String getName() {
+        return _nomePT;
+    }
+
+    public void setName(String _nomePT) {
+        this._nomePT = _nomePT;
+    }
+
+    public String getNameEn() {
+        return _nomeEN;
+    }
+
+    public void setNameEn(String _nomeEN) {
+        this._nomeEN = _nomeEN;
+    }
+
+    public LocalizedString getNameI18N() {
+        return _nameI18N;
+    }
+
+    public void setNameI18(LocalizedString _nameI18N) {
+        this._nameI18N = _nameI18N;
     }
 
     public String getSigla() {

@@ -41,6 +41,8 @@ import org.fenixedu.academic.domain.Shift;
 import org.fenixedu.academic.domain.ShiftType;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.dto.teacher.InfoNonAffiliatedTeacher;
+import org.fenixedu.academic.util.LocaleUtils;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 /**
  * @author tfc130
@@ -121,9 +123,21 @@ public class InfoExecutionCourse extends InfoObject {
     }
 
     public String getNome() {
-        return getExecutionCourse().getNome();
+        return getExecutionCourse().getNameI18N().getContent(LocaleUtils.PT);
+    }
+    
+    public String getNomePT() {
+        return getExecutionCourse().getNameI18N().getContent(LocaleUtils.PT);
+    }
+    
+    public String getNomeEN() {
+        return getExecutionCourse().getNameI18N().getContent(LocaleUtils.EN);
     }
 
+    public LocalizedString getNameI18N() {
+        return getExecutionCourse().getNameI18N();
+    }
+    
     public String getSigla() {
         return getExecutionCourse().getSigla();
     }

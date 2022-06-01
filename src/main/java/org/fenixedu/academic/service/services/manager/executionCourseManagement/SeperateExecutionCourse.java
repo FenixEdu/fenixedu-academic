@@ -44,11 +44,15 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.service.services.manager.CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod;
 import org.fenixedu.academic.service.utils.ExecutionCourseUtils;
+import org.fenixedu.bennu.core.signals.DomainObjectEvent;
+import org.fenixedu.bennu.core.signals.Signal;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class SeperateExecutionCourse {
+    
+    public static final String EDITED_SIGNAL = "academic.executionCourse.create";
 
     @Atomic
     public static ExecutionCourse run(final ExecutionCourse originExecutionCourse, ExecutionCourse destinationExecutionCourse,
@@ -83,7 +87,8 @@ public class SeperateExecutionCourse {
         fixStudentShiftEnrolements(originExecutionCourse);
         fixStudentShiftEnrolements(destinationExecutionCourse);
 
-        associateGroupings(originExecutionCourse, destinationExecutionCourse);
+        associateGroupings(originExecutionCourse, destinationExecutionCourse);        
+        Signal.emit(ExecutionCourse.EDITED_SIGNAL, new DomainObjectEvent<>(originExecutionCourse));
 
         return destinationExecutionCourse;
     }
@@ -184,7 +189,7 @@ public class SeperateExecutionCourse {
                         originExecutionCourse.getSigla());
 
         final ExecutionCourse destinationExecutionCourse =
-                new ExecutionCourse(originExecutionCourse.getNome(), sigla, originExecutionCourse.getExecutionPeriod(), null);
+                new ExecutionCourse(originExecutionCourse.getNameI18N(),originExecutionCourse.getNome(),  sigla, originExecutionCourse.getExecutionPeriod(), null);
 
         for (CourseLoad courseLoad : originExecutionCourse.getCourseLoadsSet()) {
             new CourseLoad(destinationExecutionCourse, courseLoad.getType(), courseLoad.getUnitQuantity(),

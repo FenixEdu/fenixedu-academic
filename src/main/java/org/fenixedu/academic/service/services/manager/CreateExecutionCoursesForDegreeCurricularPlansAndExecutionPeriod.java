@@ -72,7 +72,7 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod {
                     if (originalCode != null) {
                         final String sigla = getUniqueSigla(existentsExecutionCoursesSiglas, originalCode);
                         final ExecutionCourse executionCourse =
-                                new ExecutionCourse(curricularCourse.getName(), sigla, executionSemester, null);
+                                new ExecutionCourse(curricularCourse.getNameI18N(),curricularCourse.getName(), sigla, executionSemester, null);
                         curricularCourse.addAssociatedExecutionCourses(executionCourse);
                         numberExecutionCourses++;
                         curricularCodes.append(curricularCourse.getAcronym() + ", ");

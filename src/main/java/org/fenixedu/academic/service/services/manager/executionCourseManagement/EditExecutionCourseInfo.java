@@ -52,7 +52,7 @@ public class EditExecutionCourseInfo {
                             .getYear(), existentExecutionCourse.getName());
         }
 
-        executionCourse.editInformation(infoExecutionCourse.getNome(), infoExecutionCourse.getSigla(),
+        executionCourse.editInformation(infoExecutionCourse.getNameI18N() , infoExecutionCourse.getNome(), infoExecutionCourse.getSigla(),
                 infoExecutionCourse.getComment(), infoExecutionCourse.getAvailableGradeSubmission(),
                 infoExecutionCourse.getEntryPhase());
 

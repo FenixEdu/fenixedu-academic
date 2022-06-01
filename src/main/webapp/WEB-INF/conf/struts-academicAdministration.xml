@@ -135,6 +135,7 @@
 		<!-- EXECUTION COURSE MANAGEMENT - EDIT EXECUTION COURSES - MIGRATED FROM MANAGER -->
 		<form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="executionCourseForm">
 			<form-property type="java.lang.String" name="name"></form-property>
+			<form-property type="java.lang.String" name="nameEn"></form-property>			
 			<form-property type="java.lang.String" name="code"></form-property>
 			<form-property type="java.lang.String" name="semester"></form-property>
 			<form-property type="java.lang.String" name="comment"></form-property>
@@ -167,6 +168,7 @@
 		<!-- EXECUTION COURSE MANAGEMENT - INSERT EXECUTION COURSES - MIGRATED FROM MANAGER -->
 		<form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="insertExecutionCourseForm">
         	<form-property type="java.lang.String" name="name"></form-property>
+        	<form-property type="java.lang.String" name="nameEn"></form-property>
         	<form-property type="java.lang.String" name="code"></form-property>
         	<form-property type="java.lang.String" name="semester"></form-property>
         	<form-property type="java.lang.String" name="comment"></form-property>

@@ -50,6 +50,7 @@ import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
 import org.fenixedu.academic.util.Bundle;
+import org.fenixedu.academic.util.LocaleUtils;
 import org.fenixedu.academic.util.PeriodState;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.struts.annotations.Forward;
@@ -57,6 +58,7 @@ import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
+import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.FenixFramework;
 
@@ -163,6 +165,12 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
         String name = (String) dynaForm.get("name");
         infoExecutionCourse.setNome(name);
 
+        String nameEn = (String) dynaForm.get("nameEn");
+        infoExecutionCourse.setNameEn(nameEn);
+
+        LocalizedString nameI18 = new LocalizedString(LocaleUtils.PT, name).with(LocaleUtils.EN, nameEn);
+        infoExecutionCourse.setNameI18(nameI18);
+
         String code = (String) dynaForm.get("code");
         infoExecutionCourse.setSigla(code);
 
@@ -196,6 +204,9 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
             errors.append(errorStringBuilder("property.executionPeriod"));
         }
         if (StringUtils.isEmpty(infoExecutionCourse.getNome())) {
+            errors.append(errorStringBuilder("label.name"));
+        }
+        if (StringUtils.isEmpty(infoExecutionCourse.getNameEn())) {
             errors.append(errorStringBuilder("label.name"));
         }
         if (StringUtils.isEmpty(infoExecutionCourse.getSigla())) {
