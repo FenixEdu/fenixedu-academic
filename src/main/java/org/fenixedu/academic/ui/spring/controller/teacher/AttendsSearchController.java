@@ -180,8 +180,9 @@ public class AttendsSearchController extends ExecutionCourseController {
                             addCell(getLabel("label.numberOfEnrollments"), "--");
                         }
 
-                        addCell(getLabel("label.attends.enrollmentState"),
-                                BundleUtil.getString(Bundle.ENUMERATION, attends.getAttendsStateType().getQualifiedName()));
+                        final StudentAttendsStateType attendsStateType = attends.getAttendsStateType();
+                        addCell(getLabel("label.attends.enrollmentState"), BundleUtil.getString(Bundle.ENUMERATION,
+                                attendsStateType != null ? attendsStateType.getQualifiedName() : ""));
 
                         RegistrationState registrationState =
                                 attends.getRegistration().getLastRegistrationState(attends.getExecutionYear());
@@ -236,8 +237,9 @@ public class AttendsSearchController extends ExecutionCourseController {
                         addCell(getLabel("label.name"), attends.getRegistration().getPerson().getPresentationName());
                         addCell(getLabel("label.Degree"),
                                 attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan().getPresentationName());
-                        addCell(getLabel("label.attends.enrollmentState"),
-                                BundleUtil.getString(Bundle.ENUMERATION, attends.getAttendsStateType().getQualifiedName()));
+                        final StudentAttendsStateType attendsStateType = attends.getAttendsStateType();
+                        addCell(getLabel("label.attends.enrollmentState"), BundleUtil.getString(Bundle.ENUMERATION,
+                                attendsStateType != null ? attendsStateType.getQualifiedName() : ""));
                         executionCourse.getAssociatedEvaluationsSet()
                                 .forEach(ev -> addCell(ev.getPresentationName(),
                                         attends.getAssociatedMarksSet().stream().filter(mark -> mark.getEvaluation() == ev)
