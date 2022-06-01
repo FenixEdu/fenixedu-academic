@@ -824,7 +824,8 @@ valueType org.fenixedu.academic.domain.accounting.DueDateAmountMap as DueDateAmo
     class ExecutionCourse  {
         Boolean availableGradeSubmission;
         String comment;     
-        String nome;        
+        String nome;
+        LocalizedString nameI18N;     
         String sigla;
         EntryPhase entryPhase;
         Boolean projectTutorialCourse;

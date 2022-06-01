@@ -72,6 +72,14 @@
 				</td>
 			</tr>
 			<tr>
+			<td>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.execution.course.nameEn"/>
+			</td>
+			<td>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.nameEn" size="30" property="nameEn" />
+			</td>
+		</tr>
+			<tr>
 				<td>
 					<bean:message bundle="MANAGER_RESOURCES" key="message.manager.execution.course.code"/>
 				</td>

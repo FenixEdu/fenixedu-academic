@@ -48,7 +48,7 @@
 
 
 <logic:present name="<%=PresentationConstants.EXECUTION_COURSE%>">
-	<bean:define id="executionCourseName" name="<%=PresentationConstants.EXECUTION_COURSE%>" property="nome"/>
+	<bean:define id="executionCourseName" name="<%=PresentationConstants.EXECUTION_COURSE%>" property="nameI18N.content"/>
  	<bean:define id="executionCourseId" name="<%=PresentationConstants.EXECUTION_COURSE%>" property="externalId"/>
 	<bean:define id="executionPeriodName" name="<%=PresentationConstants.EXECUTION_COURSE%>" property="infoExecutionPeriod.name"/>
 	<bean:define id="executionPeriodId" name="<%=PresentationConstants.EXECUTION_COURSE%>" property="infoExecutionPeriod.externalId"/>
@@ -75,7 +75,15 @@
 				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.execution.course.name"/>
 			</td>
 			<td>
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" size="30" property="name" />
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" size="70" property="name" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.execution.course.nameEn"/>
+			</td>
+			<td>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.nameEn" size="70" property="nameEn" />
 			</td>
 		</tr>
 		<tr>

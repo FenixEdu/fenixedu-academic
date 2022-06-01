@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -139,7 +140,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                         && executionCourse.getAssociatedCurricularCoursesSet().size() == 0) {
                     ExecutionCourse previous = null;
                     for (final ExecutionCourse otherExecutionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
-                        if (previous == null || otherExecutionCourse.getExecutionPeriod().isAfter(previous.getExecutionPeriod())) {
+                        if (previous == null
+                                || otherExecutionCourse.getExecutionPeriod().isAfter(previous.getExecutionPeriod())) {
                             previous = otherExecutionCourse;
                         }
                     }
@@ -152,14 +154,16 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         });
     }
 
-    public ExecutionCourse(final String nome, final String sigla, final ExecutionSemester executionSemester, EntryPhase entryPhase) {
+    public ExecutionCourse(LocalizedString nameI18, final String nome, final String sigla,
+            final ExecutionSemester executionSemester, EntryPhase entryPhase) {
         super();
 
         setRootDomainObject(Bennu.getInstance());
         addAssociatedEvaluations(new FinalEvaluation());
         setAvailableGradeSubmission(Boolean.TRUE);
 
-        setNome(nome);
+        setNameI18N(nameI18);
+        setNome(nameI18.getContent(LocaleUtils.PT));
         setExecutionPeriod(executionSemester);
         setSigla(sigla);
         setComment("");
@@ -178,8 +182,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         Signal.emit(ExecutionCourse.CREATED_SIGNAL, new DomainObjectEvent<>(this));
     }
 
-    public void editInformation(String nome, String sigla, String comment, Boolean availableGradeSubmission, EntryPhase entryPhase) {
-        setNome(nome);
+    public void editInformation(final LocalizedString nameI18N, String nome, String sigla, String comment,
+            Boolean availableGradeSubmission, EntryPhase entryPhase) {
+        setNameI18N(nameI18N);
+        setNome(getNomePT());
         setSigla(sigla);
         setComment(comment);
         setAvailableGradeSubmission(availableGradeSubmission);
@@ -187,7 +193,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             setEntryPhase(entryPhase);
         }
         Signal.emit(ExecutionCourse.EDITED_SIGNAL, new DomainObjectEvent<>(this));
-    
+
     }
 
     public void editCourseLoad(ShiftType type, BigDecimal unitQuantity, BigDecimal totalQuantity) {
@@ -303,7 +309,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public List<BibliographicReference> copyBibliographicReferencesFrom(final ExecutionCourse executionCourseFrom) {
         final List<BibliographicReference> notCopiedBibliographicReferences = new ArrayList<>();
 
-        for (final BibliographicReference bibliographicReference : executionCourseFrom.getAssociatedBibliographicReferencesSet()) {
+        for (final BibliographicReference bibliographicReference : executionCourseFrom
+                .getAssociatedBibliographicReferencesSet()) {
             if (canAddBibliographicReference(bibliographicReference)) {
                 this.createBibliographicReference(bibliographicReference.getTitle(), bibliographicReference.getAuthors(),
                         bibliographicReference.getReference(), bibliographicReference.getYear(),
@@ -399,7 +406,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         for (; !getExportGroupingsSet().isEmpty(); getExportGroupingsSet().iterator().next().delete()) {
             ;
         }
-        for (; !getGroupingSenderExecutionCourseSet().isEmpty(); getGroupingSenderExecutionCourseSet().iterator().next().delete()) {
+        for (; !getGroupingSenderExecutionCourseSet().isEmpty(); getGroupingSenderExecutionCourseSet().iterator().next()
+                .delete()) {
             ;
         }
         for (; !getCourseLoadsSet().isEmpty(); getCourseLoadsSet().iterator().next().delete()) {
@@ -834,9 +842,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         public double[] getTotalAverage() {
             final double[] valuesAverage = new double[numberOfWeeks];
             for (int i = 0; i < numberOfWeeks; i++) {
-                valuesAverage[i] =
-                        Math.round((0.0 + getContactSum()[i] + getAutonomousStudySum()[i] + getOtherSum()[i])
-                                / getNumberResponses()[i]);
+                valuesAverage[i] = Math.round(
+                        (0.0 + getContactSum()[i] + getAutonomousStudySum()[i] + getOtherSum()[i]) / getNumberResponses()[i]);
             }
             return valuesAverage;
         }
@@ -993,8 +1000,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
         List<Summary> summaries = new ArrayList<>();
         for (Summary summary : this.getAssociatedSummariesSet()) {
-            if (summary.getProfessorship() == null
-                    && (summary.getTeacher() != null || (summary.getTeacherName() != null && !summary.getTeacherName().equals("")))) {
+            if (summary.getProfessorship() == null && (summary.getTeacher() != null
+                    || (summary.getTeacherName() != null && !summary.getTeacherName().equals("")))) {
                 summaries.add(summary);
             }
         }
@@ -1146,7 +1153,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                 constructSortedSet(getAssociatedShifts(), Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
         int counter = 0;
         for (final Shift shift : shifts) {
-            if(shift.isCustomName()){
+            if (shift.isCustomName()) {
                 continue;
             }
             final String name = constructShiftName(shift, ++counter);
@@ -1441,7 +1448,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             CourseLoad courseLoad = getCourseLoadByShiftType(type);
             if ((courseLoad == null && ccTotalHours == null)
                     || (courseLoad == null && ccTotalHours != null && ccTotalHours.compareTo(BigDecimal.ZERO) == 0)
-                    || (courseLoad != null && ccTotalHours != null && courseLoad.getTotalQuantity().compareTo(ccTotalHours) == 0)) {
+                    || (courseLoad != null && ccTotalHours != null
+                            && courseLoad.getTotalQuantity().compareTo(ccTotalHours) == 0)) {
                 return true;
             }
         }
@@ -1477,51 +1485,25 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
     }
 
-    @Override
     public String getNome() {
-        if (I18N.getLocale().getLanguage().equals("en") && !getAssociatedCurricularCoursesSet().isEmpty()) {
-            final StringBuilder stringBuilder = new StringBuilder();
+        return getNomePT() != null ? getNomePT() : super.getNome();
 
-            final Set<String> names = new HashSet<>();
+    }
 
-            for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-                if (!curricularCourse.getActiveDegreeModuleScopesInExecutionPeriod(getExecutionPeriod()).isEmpty()) {
-                    final String name = curricularCourse.getNameEn();
-                    if (!names.contains(name)) {
-                        names.add(name);
-                        if (stringBuilder.length() > 0) {
-                            stringBuilder.append(" / ");
-                        }
-                        stringBuilder.append(name);
-                    }
-                }
-            }
+//    public String getNome() {
+//        return getNomePT();
+//    }
 
-            if (stringBuilder.length() > 0) {
-                return stringBuilder.toString();
-            }
+    public String getNomePT() {
+        return getNomeI18(LocaleUtils.PT);
+    }
 
-            boolean unique = true;
-            final String nameEn = getAssociatedCurricularCoursesSet().iterator().next().getNameEn();
-
-            for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-                if (curricularCourse.getNameEn() == null || !curricularCourse.getNameEn().equals(nameEn)) {
-                    unique = false;
-                    break;
-                }
-            }
-
-            if (unique) {
-                return nameEn;
-            } else {
-                return super.getNome();
-            }
-        }
-        return super.getNome();
+    public String getNomeEN() {
+        return getNomeI18(LocaleUtils.EN);
     }
 
     public String getName() {
-        return getNome();
+        return getNomeI18(I18N.getLocale());
     }
 
     public String getPrettyAcronym() {
@@ -1579,7 +1561,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public void setBibliographicReferencesOrder(List<BibliographicReference> references) {
-        for(int i = 0; i < references.size(); i++) {
+        for (int i = 0; i < references.size(); i++) {
             references.get(i).setReferenceOrder(i);
         }
     }
@@ -1634,9 +1616,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         final Collection<Curriculum> result = new HashSet<>();
 
         for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-            final Curriculum curriculum =
-                    executionYear == null ? curricularCourse.findLatestCurriculum() : curricularCourse
-                            .findLatestCurriculumModifiedBefore(executionYear.getEndDate());
+            final Curriculum curriculum = executionYear == null ? curricularCourse.findLatestCurriculum() : curricularCourse
+                    .findLatestCurriculumModifiedBefore(executionYear.getEndDate());
             if (curriculum != null) {
                 result.add(curriculum);
             }
@@ -1729,10 +1710,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         if (unitCreditValue != null && unitCreditValue.compareTo(BigDecimal.ZERO) != 0 && getEffortRate() == null) {
             throw new DomainException("error.executionCourse.unitCreditValue.noEffortRate");
         }
-        if (getEffortRate() != null
-                && (unitCreditValue != null
-                        && unitCreditValue.compareTo(BigDecimal.valueOf(Math.min(getEffortRate().doubleValue(), 1.0))) < 0 && StringUtils
-                            .isBlank(justification))) {
+        if (getEffortRate() != null && (unitCreditValue != null
+                && unitCreditValue.compareTo(BigDecimal.valueOf(Math.min(getEffortRate().doubleValue(), 1.0))) < 0
+                && StringUtils.isBlank(justification))) {
             throw new DomainException("error.executionCourse.unitCreditValue.lower.effortRate.withoutJustification");
         }
         super.setUnitCreditValueNotes(justification);
@@ -1816,7 +1796,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public GenericPair<YearMonthDay, YearMonthDay> getMaxLessonsPeriod() {
         final OccupationPeriod occupationPeriod = getLessonOccupationPeriod();
-        return occupationPeriod == null ? null : new GenericPair<>(occupationPeriod.getStartYearMonthDay(), occupationPeriod.getEndYearMonthDayWithNextPeriods());
+        return occupationPeriod == null ? null : new GenericPair<>(occupationPeriod.getStartYearMonthDay(),
+                occupationPeriod.getEndYearMonthDayWithNextPeriods());
     }
 
     public Map<ShiftType, CourseLoad> getCourseLoadsMap() {
@@ -1898,8 +1879,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             final LocalizedString evaluationElements = getEvaluationMethod().getEvaluationElements();
 
             return evaluationElements != null && evaluationElements.getContent(LocaleUtils.PT) != null ? evaluationElements
-                    .getContent(LocaleUtils.PT) : !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator()
-                    .next().getEvaluationMethod() : "";
+                    .getContent(LocaleUtils.PT) : !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next()
+                            .getEvaluationMethod() : "";
         } else {
             return !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
         }
@@ -1910,8 +1891,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             final LocalizedString evaluationElements = getEvaluationMethod().getEvaluationElements();
 
             return evaluationElements != null && evaluationElements.getContent(LocaleUtils.EN) != null ? evaluationElements
-                    .getContent(LocaleUtils.EN) : !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator()
-                    .next().getEvaluationMethod() : "";
+                    .getContent(LocaleUtils.EN) : !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next()
+                            .getEvaluationMethod() : "";
         } else {
             return !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
         }
@@ -1958,7 +1939,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public static ExecutionCourse readLastByExecutionIntervalAndSigla(final String sigla, ExecutionInterval executionInterval) {
         return executionInterval instanceof ExecutionSemester ? readBySiglaAndExecutionPeriod(sigla,
-                (ExecutionSemester) executionInterval) : readLastByExecutionYearAndSigla(sigla, (ExecutionYear) executionInterval);
+                (ExecutionSemester) executionInterval) : readLastByExecutionYearAndSigla(sigla,
+                        (ExecutionYear) executionInterval);
     }
 
     @Override
@@ -2124,8 +2106,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         // ExecutionInterval
         ExecutionSemester executionSemester = (ExecutionSemester) ExecutionInterval.getExecutionInterval(academicInterval);
 
-        return executionSemester == null ? Collections.emptyList() : executionSemester
-                .getAssociatedExecutionCoursesSet();
+        return executionSemester == null ? Collections.emptyList() : executionSemester.getAssociatedExecutionCoursesSet();
     }
 
     public static ExecutionCourse getExecutionCourseByInitials(AcademicInterval academicInterval, String courseInitials) {
@@ -2178,15 +2159,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     @Atomic
     private Sender buildDefaultSender() {
-        Sender sender = Sender
-                .from(Installation.getInstance().getInstituitionalEmailAddress("noreply"))
-                .as(createFromName())
-                .replyTo(getEmail())
-                .members(TeacherGroup.get(this))
-                .recipients(TeacherGroup.get(this))
-                .recipients(StudentGroup.get(this))
-                .recipients(TeacherResponsibleOfExecutionCourseGroup.get(this))
-                .build();
+        Sender sender = Sender.from(Installation.getInstance().getInstituitionalEmailAddress("noreply")).as(createFromName())
+                .replyTo(getEmail()).members(TeacherGroup.get(this)).recipients(TeacherGroup.get(this))
+                .recipients(StudentGroup.get(this)).recipients(TeacherResponsibleOfExecutionCourseGroup.get(this)).build();
         setSender(sender);
         return sender;
     }
@@ -2198,56 +2173,15 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return String.format("%s (%s: %s, %s)", Unit.getInstitutionAcronym(), degreeName, courseName, period);
     }
 
-    /*
-     * This method returns the portuguese name and the english name with the
-     * rules implemented in getNome() method
-     */
-    public LocalizedString getNameI18N() {
-        LocalizedString nameI18N = new LocalizedString();
-        nameI18N = nameI18N.with(LocaleUtils.PT, super.getNome());
-
-        final StringBuilder stringBuilder = new StringBuilder();
-
-        final Set<String> names = new HashSet<>();
-
-        for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-            if (!curricularCourse.getActiveDegreeModuleScopesInExecutionPeriod(getExecutionPeriod()).isEmpty()) {
-                final String name = curricularCourse.getNameEn();
-                if (!names.contains(name)) {
-                    names.add(name);
-                    if (stringBuilder.length() > 0) {
-                        stringBuilder.append(" / ");
-                    }
-                    stringBuilder.append(name);
-                }
-            }
-        }
-
-        if (stringBuilder.length() > 0) {
-            nameI18N = nameI18N.with(LocaleUtils.EN, stringBuilder.toString());
-            return nameI18N;
-        }
-
-        boolean unique = true;
-        final String nameEn =
-                getAssociatedCurricularCoursesSet().isEmpty() ? null : getAssociatedCurricularCoursesSet().iterator().next()
-                        .getNameEn();
-
-        for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
-            if (curricularCourse.getNameEn() == null || !curricularCourse.getNameEn().equals(nameEn)) {
-                unique = false;
-                break;
-            }
-        }
-
-        if (unique && nameEn != null) {
-            nameI18N = nameI18N.with(LocaleUtils.EN, nameEn);
-            return nameI18N;
-        } else {
-            nameI18N = nameI18N.with(LocaleUtils.EN, super.getNome());
-            return nameI18N;
-        }
-    }
+//    private void appendName(final StringBuilder stringBuilder, final Set<String> names, final String name) {
+//        if (!names.contains(name)) {
+//            names.add(name);
+//            if (stringBuilder.length() > 0) {
+//                stringBuilder.append(" / ");
+//            }
+//            stringBuilder.append(name);
+//        }
+//    }
 
     public Professorship getProfessorshipForCurrentUser() {
         return this.getProfessorship(AccessControl.getPerson());
@@ -2258,9 +2192,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             if (attend.getEnrolment() != null) {
                 StudentCurricularPlan scp = attend.getRegistration().getStudentCurricularPlan(getExecutionPeriod());
                 if (scp != null) {
-                    ExecutionDegree studentExecutionDegree =
-                            scp.getDegreeCurricularPlan().getExecutionDegreeByYearAndCampus(getExecutionYear(),
-                                    scp.getCampus(getExecutionYear()));
+                    ExecutionDegree studentExecutionDegree = scp.getDegreeCurricularPlan()
+                            .getExecutionDegreeByYearAndCampus(getExecutionYear(), scp.getCampus(getExecutionYear()));
                     if (studentExecutionDegree == executionDegree) {
                         return true;
                     }
@@ -2320,6 +2253,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
 
         super.addAssociatedCurricularCourses(curricularCourse);
+        Signal.emit(ExecutionCourse.EDITED_SIGNAL, new DomainObjectEvent<>(this));
     }
 
     @Atomic
@@ -2330,6 +2264,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     @Atomic
     public void dissociateCurricularCourse(final CurricularCourse curricularCourse) {
         super.removeAssociatedCurricularCourses(curricularCourse);
+        Signal.emit(ExecutionCourse.EDITED_SIGNAL, new DomainObjectEvent<>(this));
     }
 
     public Double getEctsCredits() {
@@ -2347,12 +2282,21 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public Set<OccupationPeriod> getLessonPeriods() {
-        final Set<OccupationPeriod> result = new TreeSet<>(Comparator.comparing((OccupationPeriod op) -> op.getPeriodInterval().getStart())
+        final Set<OccupationPeriod> result =
+                new TreeSet<>(Comparator.comparing((OccupationPeriod op) -> op.getPeriodInterval().getStart())
                         .thenComparing(AbstractDomainObject::getExternalId));
         for (final ExecutionDegree executionDegree : getExecutionDegrees()) {
             result.add(executionDegree.getPeriodLessons(getExecutionPeriod()));
         }
         return result;
+    }
+
+    public String getNomeI18() {
+        return getNameI18N() != null ? getNameI18N().getContent() : null;
+    }
+
+    public String getNomeI18(Locale locale) {
+        return getNameI18N() != null ? getNameI18N().getContent(locale) : null;
     }
 
 }

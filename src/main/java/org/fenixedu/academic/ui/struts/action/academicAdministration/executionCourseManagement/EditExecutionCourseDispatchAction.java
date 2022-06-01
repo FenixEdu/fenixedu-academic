@@ -48,9 +48,11 @@ import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.academic.ui.struts.action.exceptions.FenixActionException;
 import org.fenixedu.academic.ui.struts.action.resourceAllocationManager.utils.PresentationConstants;
 import org.fenixedu.academic.ui.struts.action.utils.RequestUtils;
+import org.fenixedu.academic.util.LocaleUtils;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -164,7 +166,8 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
     private void fillForm(ActionForm form, InfoExecutionCourse infoExecutionCourse, HttpServletRequest request) {
 
         DynaActionForm executionCourseForm = (DynaActionForm) form;
-        executionCourseForm.set("name", infoExecutionCourse.getNome());
+        executionCourseForm.set("name", infoExecutionCourse.getNameI18N().getContent(LocaleUtils.PT));
+        executionCourseForm.set("nameEn", infoExecutionCourse.getNameI18N().getContent(LocaleUtils.EN));
         executionCourseForm.set("code", infoExecutionCourse.getSigla());
         executionCourseForm.set("comment", infoExecutionCourse.getComment());
         executionCourseForm.set("entryPhase", infoExecutionCourse.getEntryPhase().getName());
@@ -230,10 +233,14 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         InfoExecutionCourseEditor infoExecutionCourse = new InfoExecutionCourseEditor();
 
         DynaActionForm editExecutionCourseForm = (DynaActionForm) actionForm;
-
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject((String) editExecutionCourseForm.get("executionCourseId"));
+        LocalizedString nameI18N = getNameI18NChanged(executionCourse,editExecutionCourseForm);
+         
         try {
-            infoExecutionCourse.setExternalId((String) editExecutionCourseForm.get("executionCourseId"));
-            infoExecutionCourse.setNome((String) editExecutionCourseForm.get("name"));
+            infoExecutionCourse.setExternalId(executionCourse.getExternalId());
+            infoExecutionCourse.setNome(nameI18N.getContent(LocaleUtils.PT));
+            infoExecutionCourse.setNameEn(nameI18N.getContent(LocaleUtils.EN));
+            infoExecutionCourse.setNameI18(nameI18N);
             infoExecutionCourse.setSigla((String) editExecutionCourseForm.get("code"));
             infoExecutionCourse.setComment((String) editExecutionCourseForm.get("comment"));
             infoExecutionCourse.setAvailableGradeSubmission(Boolean.valueOf(editExecutionCourseForm
@@ -246,6 +253,16 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 
         return infoExecutionCourse;
     }
+    
+    private LocalizedString getNameI18NChanged(ExecutionCourse executionCourse ,DynaActionForm editExecutionCourseForm) {
+        LocalizedString nameI18N =new LocalizedString();
+        String name = editExecutionCourseForm.getString("name");
+        String nameEn = editExecutionCourseForm.getString("nameEn");
+        nameI18N = executionCourse.getNameI18N();
+
+        return nameI18N.with(LocaleUtils.PT, name).with(LocaleUtils.EN, nameEn);
+    }
+
 
     protected String separateLabel(ActionForm form, HttpServletRequest request, String property, String id, String name) {
 

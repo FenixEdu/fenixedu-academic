@@ -54,6 +54,8 @@ import org.fenixedu.academic.util.DateFormatUtil;
 import org.fenixedu.academic.util.EnrolmentEvaluationState;
 import org.fenixedu.academic.util.ReportCache;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.signals.DomainObjectEvent;
+import org.fenixedu.bennu.core.signals.Signal;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
@@ -2189,6 +2191,13 @@ public class CurricularCourse extends CurricularCourse_Base {
             }
         }
         super.addAssociatedExecutionCourses(associatedExecutionCourses);
+        Signal.emit(ExecutionCourse.EDITED_SIGNAL, new DomainObjectEvent<>(associatedExecutionCourses)); 
+    }
+    
+    @Override
+    public void removeAssociatedExecutionCourses(final ExecutionCourse associatedExecutionCourses) { 
+        super.removeAssociatedExecutionCourses(associatedExecutionCourses);        
+        Signal.emit(ExecutionCourse.EDITED_SIGNAL, new DomainObjectEvent<>(associatedExecutionCourses));
     }
 
     public String getCodeAndName(final ExecutionInterval executionInterval) {

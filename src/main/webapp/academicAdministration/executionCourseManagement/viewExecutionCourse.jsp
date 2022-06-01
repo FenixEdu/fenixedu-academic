@@ -31,7 +31,7 @@
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <logic:present name="<%=PresentationConstants.EXECUTION_COURSE%>">
-	<bean:define id="executionCourseName" name="<%=PresentationConstants.EXECUTION_COURSE%>" property="nome"/>
+	<bean:define id="executionCourseName" name="<%=PresentationConstants.EXECUTION_COURSE%>" property="nameI18N.content"/>
  	<bean:define id="executionCourseId" name="<%=PresentationConstants.EXECUTION_COURSE%>" property="externalId"/>
 
 	<bean:write name="executionPeriodName"/>	
@@ -50,9 +50,19 @@
 				<b><bean:message bundle="MANAGER_RESOURCES" key="message.manager.execution.course.name"/></b>
 			</td>
 			<td>
-				<bean:write name="<%=PresentationConstants.EXECUTION_COURSE%>" property="nome" />
+				<bean:write name="<%=PresentationConstants.EXECUTION_COURSE%>" property="nomePT" />
 			</td>
 		</tr>
+		
+		<tr>
+			<td>
+				<b><bean:message bundle="MANAGER_RESOURCES" key="message.manager.execution.course.nameEn"/></b>
+			</td>
+			<td>
+				<bean:write name="<%=PresentationConstants.EXECUTION_COURSE%>" property="nomeEN" />
+			</td>
+		</tr>
+		
 		<tr>
 			<td>
 				<b><bean:message bundle="MANAGER_RESOURCES" key="message.manager.execution.course.code"/></b>
