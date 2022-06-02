@@ -175,22 +175,27 @@ public class Department extends Department_Base {
         return count;
     }
 
+    @Deprecated
     public Group getCompetenceCourseMembersGroup() {
         return getMembersGroup().toGroup();
     }
 
+    @Deprecated
     public void setCompetenceCourseMembersGroup(Group group) {
         setMembersGroup(group.toPersistentGroup());
     }
 
+    @Deprecated
     public boolean isUserMemberOfCompetenceCourseMembersGroup(User user) {
         return getCompetenceCourseMembersGroup().isMember(user);
     }
 
+    @Deprecated
     public boolean isUserMemberOfCompetenceCourseMembersGroup(Person person) {
         return getCompetenceCourseMembersGroup().isMember(person.getUser());
     }
 
+    @Deprecated
     public boolean isCurrentUserMemberOfCompetenceCourseMembersGroup() {
         return isUserMemberOfCompetenceCourseMembersGroup(AccessControl.getPerson());
     }

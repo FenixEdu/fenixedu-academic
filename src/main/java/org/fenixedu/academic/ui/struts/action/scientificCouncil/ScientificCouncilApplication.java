@@ -55,10 +55,4 @@ public class ScientificCouncilApplication extends ForwardAction {
     public static class ScientificCompetenceCoursesManagement extends FacesEntryPoint {
     }
 
-    @StrutsFunctionality(app = ScientificBolonhaProcessApp.class, path = "curricular-plans",
-            titleKey = "navigation.curricularPlansManagement")
-    @Mapping(path = "/curricularPlans/curricularPlansManagement", module = "scientificCouncil")
-    public static class ScientificCurricularPlansManagement extends FacesEntryPoint {
-    }
-
 }

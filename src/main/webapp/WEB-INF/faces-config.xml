@@ -74,12 +74,6 @@
 	</managed-bean>
 	
 	<managed-bean>
-		<managed-bean-name>displayCurricularPlan</managed-bean-name>
-		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.manager.DisplayCurricularPlan</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	
-	<managed-bean>
 		<managed-bean-name>createExecutionDegrees</managed-bean-name>
 		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.manager.degree.CreateExecutionDegreesForExecutionYearBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
@@ -95,89 +89,13 @@
 
 	<!-- BEGIN: Bolonha Management Beans -->
 	<managed-bean>
-		<description>DegreeManagement</description>
-		<managed-bean-name>DegreeManagement</managed-bean-name>
-		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.scientificCouncil.curricularPlans.DegreeManagementBackingBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	<managed-bean>
-		<description>ManagerDegreeManagement</description>
-		<managed-bean-name>ManagerDegreeManagement</managed-bean-name>
-		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.manager.curricularPlans.ManagerDegreeManagementBackingBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	<managed-bean>
-		<description>AcademicAdministrationDegreeManagement</description>
-		<managed-bean-name>AcademicAdministrationDegreeManagement</managed-bean-name>
-		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.academicAdministration.curricularPlans.AcademicAdministrationDegreeManagementBackingBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	
-	<managed-bean>
-		<description>DegreeCurricularPlanManagement</description>
-		<managed-bean-name>DegreeCurricularPlanManagement</managed-bean-name>
-		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.scientificCouncil.curricularPlans.DegreeCurricularPlanManagementBackingBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	<managed-bean>
-		<description>CurricularCourseManagementBackingBean</description>
-		<managed-bean-name>CurricularCourseManagement</managed-bean-name>
-		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularPlans.CurricularCourseManagementBackingBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	<managed-bean>
-		<description>ManagerCurricularCourseManagementBackingBean</description>
-		<managed-bean-name>ManagerCurricularCourseManagement</managed-bean-name>
-		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.manager.curricularPlans.ManagerCurricularCourseManagementBackingBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	<managed-bean>
-		<description>AcademicAdministrationCurricularCourseManagementBackingBean</description>
-		<managed-bean-name>AcademicAdministrationCurricularCourseManagement</managed-bean-name>
-		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.academicAdministration.curricularPlans.AcademicAdministrationCurricularCourseManagementBackingBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>	
-	<managed-bean>
 		<description>CompetenceCourseManagementBackingBean</description>
 		<managed-bean-name>CompetenceCourseManagement</managed-bean-name>
 		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.bolonhaManager.competenceCourses.CompetenceCourseManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
-	<managed-bean>
-		<description>CourseGroupManagementBackingBean</description>
-		<managed-bean-name>CourseGroupManagement</managed-bean-name>
-		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularPlans.CourseGroupManagementBackingBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	<managed-bean>
-		<description>BranchCourseGroupManagementBackingBean</description>
-		<managed-bean-name>BranchCourseGroupManagement</managed-bean-name>
-		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularPlans.BranchCourseGroupManagementBackingBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
 	
-	<managed-bean>
-		<description>CourseGroupReportBackingBean</description>
-		<managed-bean-name>CourseGroupReport</managed-bean-name>
-		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularPlans.CourseGroupReportBackingBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
 	<!-- END: Bolonha Management Beans -->
-	
-	<!-- BEGIN: CurricularRules Management Beans -->
-	<managed-bean>
-		<description>CurricularRulesManagementBackingBean</description>
-		<managed-bean-name>CurricularRulesManagement</managed-bean-name>
-		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularRules.CurricularRulesManagementBackingBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>	
-	<managed-bean>
-		<description>CompositeRulesManagementBackingBean</description>
-		<managed-bean-name>CompositeRulesManagement</managed-bean-name>
-		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.bolonhaManager.curricularRules.CompositeRulesManagementBackingBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	<!-- END: CurricularRules Management Beans -->
 	
 	<!-- BEGIN: OrganizationalStructure Managed Beans (Modularized) -->
 	<managed-bean>

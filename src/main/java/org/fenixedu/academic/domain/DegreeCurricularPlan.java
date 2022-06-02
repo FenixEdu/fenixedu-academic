@@ -177,7 +177,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         this.setAnotation(annotation);
     }
 
-    DegreeCurricularPlan(final Degree degree, final String name, final Person creator, final CurricularPeriod curricularPeriod) {
+    public DegreeCurricularPlan(final Degree degree, final String name, final Person creator, final CurricularPeriod curricularPeriod) {
         this(degree, name);
 
         if (creator == null) {
@@ -650,17 +650,17 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return new BranchCourseGroup(parentCourseGroup, name, nameEn, branchType, begin, end);
     }
 
-    public CurricularCourse createCurricularCourse(final Double weight, final CompetenceCourse competenceCourse,
-            final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod, final ExecutionInterval begin,
-            final ExecutionInterval end) {
-
-        if (competenceCourse.getCurricularCourse(this) != null) {
-            throw new DomainException("competenceCourse.already.has.a.curricular.course.in.degree.curricular.plan");
-        }
-        checkIfAnualBeginsInFirstPeriod(competenceCourse, curricularPeriod);
-
-        return new CurricularCourse(weight, competenceCourse, parentCourseGroup, curricularPeriod, begin, end);
-    }
+//    public CurricularCourse createCurricularCourse(final Double weight, final CompetenceCourse competenceCourse,
+//            final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod, final ExecutionInterval begin,
+//            final ExecutionInterval end) {
+//
+//        if (competenceCourse.getCurricularCourse(this) != null) {
+//            throw new DomainException("competenceCourse.already.has.a.curricular.course.in.degree.curricular.plan");
+//        }
+//        checkIfAnualBeginsInFirstPeriod(competenceCourse, curricularPeriod);
+//
+//        return new CurricularCourse(weight, competenceCourse, parentCourseGroup, curricularPeriod, begin, end);
+//    }
 
     public CurricularCourse createOptionalCurricularCourse(final CourseGroup parentCourseGroup, final String name,
             final String nameEn, final CurricularPeriod curricularPeriod, final ExecutionInterval begin,
@@ -669,12 +669,12 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return new OptionalCurricularCourse(parentCourseGroup, name, nameEn, curricularPeriod, begin, end);
     }
 
-    private void checkIfAnualBeginsInFirstPeriod(final CompetenceCourse competenceCourse,
-            final CurricularPeriod curricularPeriod) {
-        if (competenceCourse.isAnual() && !curricularPeriod.hasChildOrderValue(1)) {
-            throw new DomainException("competenceCourse.anual.but.trying.to.associate.curricular.course.not.to.first.period");
-        }
-    }
+//    private void checkIfAnualBeginsInFirstPeriod(final CompetenceCourse competenceCourse,
+//            final CurricularPeriod curricularPeriod) {
+//        if (competenceCourse.isAnual() && !curricularPeriod.hasChildOrderValue(1)) {
+//            throw new DomainException("competenceCourse.anual.but.trying.to.associate.curricular.course.not.to.first.period");
+//        }
+//    }
 
     public List<DegreeModule> getDcpDegreeModules(final Class<? extends DegreeModule> clazz) {
         return getDcpDegreeModules(clazz, (ExecutionYear) null);
@@ -684,6 +684,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return new ArrayList<>(getRoot().collectAllChildDegreeModules(clazz, executionYear));
     }
 
+    @Deprecated(forRemoval = true) // potential to remove
     public List<List<DegreeModule>> getDcpDegreeModulesIncludingFullPath(final Class<? extends DegreeModule> clazz,
             final ExecutionYear executionYear) {
 
@@ -717,10 +718,12 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 || executionDegrees.iterator().next().getExecutionYear().isCurrent();
     }
 
+    @Deprecated
     public Group getCurricularPlanMembersGroup() {
         return getMembersGroup() != null ? getMembersGroup().toGroup() : Group.nobody();
     }
 
+    @Deprecated
     public void setCurricularPlanMembersGroup(final Group group) {
         setMembersGroup(group.toPersistentGroup());
     }
@@ -885,17 +888,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                     new CurricularPeriodInfoDTO[] { new CurricularPeriodInfoDTO(semester, AcademicPeriod.SEMESTER) };
         }
         return curricularPeriodInfos;
-    }
-
-    /**
-     * @deprecated curricular period structure should be managed according to academic period type
-     * 
-     */
-    @Deprecated
-    public CurricularPeriod createCurricularPeriodFor(final int year, final int semester) {
-        final CurricularPeriodInfoDTO[] curricularPeriodInfos = buildCurricularPeriodInfoDTOsFor(year, semester);
-
-        return getDegreeStructure().addCurricularPeriod(curricularPeriodInfos);
     }
 
     public CurricularPeriod getCurricularPeriodFor(final int year, final int childOrder,
@@ -1166,13 +1158,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             }
         }
         return result;
-    }
-
-    @Atomic
-    public void editApplyPreviousYearsEnrolment(final Boolean input) {
-        if (input != null) {
-            setApplyPreviousYearsEnrolmentRule(input);
-        }
     }
 
     public boolean isToApplyPreviousYearsEnrolmentRule() {

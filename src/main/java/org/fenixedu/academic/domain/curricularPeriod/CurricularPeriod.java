@@ -99,26 +99,6 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
         return curricularPeriod;
     }
 
-    public CurricularPeriod addCurricularPeriod(CurricularPeriodInfoDTO... curricularPeriodsPaths) {
-
-        validatePath(curricularPeriodsPaths);
-
-        CurricularPeriod curricularPeriod = null;
-        CurricularPeriod curricularPeriodParent = this;
-
-        for (CurricularPeriodInfoDTO path : curricularPeriodsPaths) {
-            curricularPeriod = curricularPeriodParent.findChild(path.getPeriodType(), path.getOrder());
-
-            if (curricularPeriod == null) {
-                curricularPeriod = new CurricularPeriod(path.getPeriodType(), path.getOrder(), curricularPeriodParent);
-            }
-
-            curricularPeriodParent = curricularPeriod;
-        }
-
-        return curricularPeriod;
-    }
-
     public Integer getOrderByType(AcademicPeriod academicPeriod) {
 
         Integer resultOrder = null;
