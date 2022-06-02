@@ -69,7 +69,7 @@ public class WrittenEvaluationReportFile extends WrittenEvaluationReportFile_Bas
                         row.setCell(getExecutionYear().getYear());
                         row.setCell(executionSemester.getSemester());
                         row.setCell(GepReportFile.getExecutionCourseCode(executionCourse));
-                        row.setCell(executionCourse.getName());
+                        row.setCell(executionCourse.getNameI18N().getContent());
                         row.setCell(GepReportFile.getWrittenEvaluationCode(writtenEvaluation));
                         row.setCell(writtenEvaluation instanceof Exam ? "Exame" : "Teste");
                         row.setCell(writtenEvaluation.getDayDateYearMonthDay().toString("yyyy-MM-dd"));

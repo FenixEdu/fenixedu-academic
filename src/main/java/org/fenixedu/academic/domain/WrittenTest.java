@@ -252,7 +252,7 @@ public class WrittenTest extends WrittenTest_Base {
 
         for (ExecutionCourse ec : getAssociatedExecutionCoursesSet()) {
             EvaluationManagementLog.createLog(ec, Bundle.MESSAGING, "log.executionCourse.evaluation.generic.edited.rooms",
-                    getPresentationName(), ec.getName(), ec.getDegreePresentationString());
+                    getPresentationName(), ec.getNameI18N().getContent(), ec.getDegreePresentationString());
         }
 
     }

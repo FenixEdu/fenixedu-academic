@@ -408,7 +408,7 @@ public class ViewAllRoomsSchedulesDA extends FenixDispatchAction {
                     final Row row = spreadsheet.addRow();
                     row.setCell(semester);
                     row.setCell(executionYear);
-                    row.setCell(executionCourse.getName());
+                    row.setCell(executionCourse.getNameI18N().getContent());
                     row.setCell(executionDegreeBuilder.toString());
                     row.setCell(curricularYearBuilder.toString());
                     row.setCell(shift.getNome());
@@ -484,7 +484,7 @@ public class ViewAllRoomsSchedulesDA extends FenixDispatchAction {
                     }
 
                     row.setCell(shift.getNome());
-                    row.setCell(executionCourse.getName());
+                    row.setCell(executionCourse.getNameI18N().getContent());
                     row.setCell(executionDegreeBuilder.toString());
                     row.setCell(scheduleBuilder.toString().replace(';', '\n'));
                     row.setCell(roomBuilder.toString().replace(';', '\n'));

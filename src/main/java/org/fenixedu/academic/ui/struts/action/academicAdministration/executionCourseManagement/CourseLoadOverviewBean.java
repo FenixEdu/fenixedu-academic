@@ -107,7 +107,7 @@ public class CourseLoadOverviewBean implements Serializable {
                     spreadsheet.newRow();
                     spreadsheet.addCell(getDepartmentString(executionCourse));
                     spreadsheet.addCell(executionCourse.getDegreePresentationString());
-                    spreadsheet.addCell(executionCourse.getName());
+                    spreadsheet.addCell(executionCourse.getNameI18N().getContent());
                     spreadsheet.addCell(shift.getNome());
                     spreadsheet.addCell(courseLoad.getType().getFullNameTipoAula());
                     final BigDecimal competenceCourseLoad =

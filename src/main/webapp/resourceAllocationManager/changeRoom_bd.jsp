@@ -87,7 +87,7 @@
 					<bean:message key="label.executionCourse" bundle="SOP_RESOURCES"/>
 				</th>
 				<td>
-					<%= lesson.getExecutionCourse().getName() %> (<%= executionCourse.getDegreePresentationString() %>)
+					<%= lesson.getExecutionCourse().getNameI18N().getContent() %> (<%= executionCourse.getDegreePresentationString() %>)
 				</td>
 			</tr>
 			<tr>

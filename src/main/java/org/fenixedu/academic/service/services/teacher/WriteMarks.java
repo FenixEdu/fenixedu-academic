@@ -176,7 +176,7 @@ public class WriteMarks {
 
         EvaluationManagementLog.createLog(executionCourse, Bundle.MESSAGING,
                 "log.executionCourse.evaluation.generic.edited.marks", evaluation.getPresentationName(),
-                executionCourse.getName(), executionCourse.getDegreePresentationString());
+                executionCourse.getNameI18N().getContent(), executionCourse.getDegreePresentationString());
     }
 
     private static Attends findAttend(final ExecutionCourse executionCourse, final String attendId) {

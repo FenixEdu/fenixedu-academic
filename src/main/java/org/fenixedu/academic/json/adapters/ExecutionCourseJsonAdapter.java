@@ -33,7 +33,7 @@ public class ExecutionCourseJsonAdapter implements JsonViewer<ExecutionCourse> {
     public JsonElement view(ExecutionCourse executionCourse, JsonBuilder ctx) {
         JsonObject object = new JsonObject();
         object.addProperty("externalId", executionCourse.getExternalId());
-        object.addProperty("name", executionCourse.getName());
+        object.addProperty("name", executionCourse.getNameI18N().getContent());
         object.addProperty("site", executionCourse.getSiteUrl());
 
         return object;

@@ -99,7 +99,7 @@ public abstract class Evaluation extends Evaluation_Base {
 
     private void logAuxBasic(String key) {
         for (ExecutionCourse ec : getAssociatedExecutionCoursesSet()) {
-            EvaluationManagementLog.createLog(ec, Bundle.MESSAGING, key, getPresentationName(), ec.getName(),
+            EvaluationManagementLog.createLog(ec, Bundle.MESSAGING, key, getPresentationName(), ec.getNameI18N().getContent(),
                     ec.getDegreePresentationString());
         }
     }

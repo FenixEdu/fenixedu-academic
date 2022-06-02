@@ -111,7 +111,7 @@ public class TeacherGroup extends FenixGroup {
             parts.add(degree.getPresentationName());
         }
         if (executionCourse != null) {
-            parts.add(executionCourse.getName() + " (" + executionCourse.getSigla() + ") "
+            parts.add(executionCourse.getNameI18N().getContent() + " (" + executionCourse.getSigla() + ") "
                     + executionCourse.getAcademicInterval().getPathName());
         }
         if (department != null) {

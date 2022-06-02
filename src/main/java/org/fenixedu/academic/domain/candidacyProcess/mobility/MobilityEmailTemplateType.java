@@ -160,7 +160,7 @@ public enum MobilityEmailTemplateType {
             StringBuilder missingShifts = new StringBuilder();
 
             for (ExecutionCourse course : miap.getMissingShifts()) {
-                missingShifts.append("- ").append(course.getName()).append("\n");
+                missingShifts.append("- ").append(course.getNameI18N().getContent()).append("\n");
             }
 
             String subject =

@@ -136,7 +136,7 @@ public class MonitorSystemDA extends FenixDispatchAction {
         if (ces != null && pes != null) {
             long s = System.currentTimeMillis();
             for (final ExecutionCourse executionCourse : ces.getAssociatedExecutionCoursesSet()) {
-                executionCourse.getName();
+                executionCourse.getNameI18N().getContent();
                 for (final CourseLoad courseLoad : executionCourse.getCourseLoadsSet()) {
                     courseLoad.getType();
                     for (final Shift shift : courseLoad.getShiftsSet()) {

@@ -18,30 +18,6 @@
  */
 package org.fenixedu.academic.domain;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
-import java.math.BigDecimal;
-import java.text.Collator;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.accessControl.StudentGroup;
@@ -78,7 +54,6 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.signals.DomainObjectEvent;
 import org.fenixedu.bennu.core.signals.Signal;
 import org.fenixedu.commons.StringNormalizer;
-import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.messaging.core.domain.Sender;
 import org.fenixedu.spaces.domain.Space;
@@ -88,10 +63,33 @@ import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
-
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.core.AbstractDomainObject;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
+
+import java.math.BigDecimal;
+import java.text.Collator;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+import static org.fenixedu.academic.predicate.AccessControl.check;
 
 public class ExecutionCourse extends ExecutionCourse_Base {
     public static final String CREATED_SIGNAL = "academic.executionCourse.create";
@@ -303,7 +301,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             type = BundleUtil.getString(Bundle.APPLICATION, "option.bibliographicReference.recommended");
         }
         CurricularManagementLog.createLog(this, Bundle.MESSAGING, "log.executionCourse.curricular.bibliographic.created", type,
-                title, this.getName(), this.getDegreePresentationString());
+                title, getNameI18N().getContent(), this.getDegreePresentationString());
     }
 
     public List<BibliographicReference> copyBibliographicReferencesFrom(final ExecutionCourse executionCourseFrom) {
@@ -1503,7 +1501,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public String getName() {
-        return getNomeI18(I18N.getLocale());
+        return getNameI18N().getContent();
     }
 
     public String getPrettyAcronym() {
