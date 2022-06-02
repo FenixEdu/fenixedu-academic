@@ -637,7 +637,7 @@ public final class SummariesControlAction extends FenixDispatchAction {
                     sheet.newRow();
                     sheet.addCell(semester.getName(), sheet.getExcelStyle().getLabelStyle());
                     sheet.addCell(department.getName(), sheet.getExcelStyle().getLabelStyle());
-                    sheet.addCell(executionCourse.getExecutionCourse().getName(), sheet.getExcelStyle().getLabelStyle());
+                    sheet.addCell(executionCourse.getExecutionCourse().getNameI18N().getContent(), sheet.getExcelStyle().getLabelStyle());
                     sheet.addCell(lessons, sheet.getExcelStyle().getLabelStyle());
                     sheet.addCell(lessonsWithSummaries, sheet.getExcelStyle().getLabelStyle());
                     sheet.addCell(lessonsWithSummariesPercentage, sheet.getExcelStyle().getLabelStyle());

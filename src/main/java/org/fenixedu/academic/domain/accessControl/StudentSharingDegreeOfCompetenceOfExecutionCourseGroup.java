@@ -60,7 +60,7 @@ public class StudentSharingDegreeOfCompetenceOfExecutionCourseGroup extends Feni
 
     @Override
     public String[] getPresentationNameKeyArgs() {
-        return new String[] { executionCourse.getName() };
+        return new String[] { executionCourse.getNameI18N().getContent() };
     }
 
     @Override

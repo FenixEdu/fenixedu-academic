@@ -49,7 +49,7 @@ public class EditExecutionCourseInfo {
         if (existentExecutionCourse != null && !existentExecutionCourse.equals(executionCourse)) {
             throw new DomainException("error.manager.executionCourseManagement.acronym.exists",
                     existentExecutionCourse.getSigla(), executionSemester.getName(), executionSemester.getExecutionYear()
-                            .getYear(), existentExecutionCourse.getName());
+                            .getYear(), existentExecutionCourse.getNameI18N().getContent());
         }
 
         executionCourse.editInformation(infoExecutionCourse.getNameI18N() , infoExecutionCourse.getNome(), infoExecutionCourse.getSigla(),

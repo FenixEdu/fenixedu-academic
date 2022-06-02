@@ -260,7 +260,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
 
             String destinationExecutionCourseName = destinationExecutionCourse.getNameI18N().getContent();
             if (StringUtils.isEmpty(destinationExecutionCourseName)) {
-                destinationExecutionCourseName = destinationExecutionCourse.getName();
+                destinationExecutionCourseName = destinationExecutionCourse.getNameI18N().getContent();
             }
             String destinationExecutionCourseCode = destinationExecutionCourse.getSigla();
             String destinationDegreeName = destinationExecutionCourse.getDegreePresentationString();
@@ -283,7 +283,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
                 // origin execution course degree has changed (no longer on original degree)
                 String originCourseName = originExecutionCourse.getNameI18N().getContent();
                 if (StringUtils.isEmpty(originCourseName)) {
-                    originCourseName = originExecutionCourse.getName();
+                    originCourseName = originExecutionCourse.getNameI18N().getContent();
                 }
                 addActionMessage("info", request,
                         "message.manager.executionCourseManagement.transferCourse.success.switchContext", originCourseName,
@@ -333,7 +333,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
 
             String destinationExecutionCourseName = destinationExecutionCourse.getNameI18N().getContent();
             if (StringUtils.isEmpty(destinationExecutionCourseName)) {
-                destinationExecutionCourseName = destinationExecutionCourse.getName();
+                destinationExecutionCourseName = destinationExecutionCourse.getNameI18N().getContent();
             }
             String destinationExecutionCourseCode = destinationExecutionCourse.getSigla();
             String destinationDegreeName = destinationExecutionCourse.getDegreePresentationString();
@@ -356,7 +356,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
                 // origin execution course degree has changed (no longer on original degree)
                 String originCourseName = originExecutionCourse.getNameI18N().getContent();
                 if (StringUtils.isEmpty(originCourseName)) {
-                    originCourseName = originExecutionCourse.getName();
+                    originCourseName = originExecutionCourse.getNameI18N().getContent();
                 }
                 addActionMessage("info", request, "message.manager.executionCourseManagement.separate.success.switchContext",
                         originCourseName, originExecutionDegreesString, originExecutionCourse.getDegreePresentationString(),

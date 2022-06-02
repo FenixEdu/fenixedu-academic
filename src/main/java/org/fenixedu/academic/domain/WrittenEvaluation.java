@@ -95,7 +95,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     public String getFullName() {
         return getAssociatedExecutionCoursesSet().stream()
-                .map(executionCourse -> executionCourse.getName())
+                .map(executionCourse -> executionCourse.getNameI18N().getContent())
                 .distinct()
                 .collect(Collectors.joining(", "));
     }
@@ -468,7 +468,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         this.setEnrollmentEndTimeDate(enrolmentEndTime);
         for (ExecutionCourse ec : getAssociatedExecutionCoursesSet()) {
             EvaluationManagementLog.createLog(ec, Bundle.MESSAGING, "log.executionCourse.evaluation.generic.edited.enrolment",
-                    getPresentationName(), ec.getName(), ec.getDegreePresentationString());
+                    getPresentationName(), ec.getNameI18N().getContent(), ec.getDegreePresentationString());
         }
     }
 
@@ -563,7 +563,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
         for (ExecutionCourse ec : getAssociatedExecutionCoursesSet()) {
             EvaluationManagementLog.createLog(ec, Bundle.MESSAGING,
-                    "log.executionCourse.evaluation.generic.edited.rooms.distributed", getPresentationName(), ec.getName(),
+                    "log.executionCourse.evaluation.generic.edited.rooms.distributed", getPresentationName(), ec.getNameI18N().getContent(),
                     ec.getDegreePresentationString());
         }
 

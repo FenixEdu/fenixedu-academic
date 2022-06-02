@@ -71,7 +71,7 @@ public class BibliographicReference extends BibliographicReference_Base {
             type = BundleUtil.getString(Bundle.APPLICATION, "option.bibliographicReference.recommended");
         }
         CurricularManagementLog.createLog(executionCourse, Bundle.MESSAGING,
-                "log.executionCourse.curricular.bibliographic.edited", type, title, executionCourse.getName(),
+                "log.executionCourse.curricular.bibliographic.edited", type, title, executionCourse.getNameI18N().getContent(),
                 executionCourse.getDegreePresentationString());
     }
 
@@ -89,7 +89,7 @@ public class BibliographicReference extends BibliographicReference_Base {
 
         CurricularManagementLog.createLog(executionCourse, Bundle.MESSAGING,
                 "log.executionCourse.curricular.bibliographic.removed", type, blBibliographicReference,
-                executionCourse.getName(), executionCourse.getDegreePresentationString());
+                executionCourse.getNameI18N().getContent(), executionCourse.getDegreePresentationString());
 
         setExecutionCourse(null);
         setRootDomainObject(null);

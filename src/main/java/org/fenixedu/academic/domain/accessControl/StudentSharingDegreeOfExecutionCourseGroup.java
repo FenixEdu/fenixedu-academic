@@ -57,7 +57,7 @@ public class StudentSharingDegreeOfExecutionCourseGroup extends FenixGroup {
 
     @Override
     public String[] getPresentationNameKeyArgs() {
-        return new String[] { executionCourse.getName() };
+        return new String[] { executionCourse.getNameI18N().getContent() };
     }
 
     @Override

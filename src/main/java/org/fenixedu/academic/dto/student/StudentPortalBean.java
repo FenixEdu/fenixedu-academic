@@ -386,7 +386,7 @@ public class StudentPortalBean implements Serializable {
         for (ExecutionCourse executionCourse : executionCourses) {
             addExecutionCoursesAnnouncement(new ExecutionCoursesAnnouncements(executionCourse));
         }
-        Collections.sort(getExecutionCoursesAnnouncements(), new BeanComparator("executionCourse.name"));
+        Collections.sort(getExecutionCoursesAnnouncements(), new BeanComparator("executionCourse.nameI18N.content"));
     }
 
     public Degree getDegree() {

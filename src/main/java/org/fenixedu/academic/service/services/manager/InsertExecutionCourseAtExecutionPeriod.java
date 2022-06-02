@@ -49,7 +49,7 @@ public class InsertExecutionCourseAtExecutionPeriod {
         if (existentExecutionCourse != null) {
             throw new DomainException("error.manager.executionCourseManagement.acronym.exists",
                     existentExecutionCourse.getSigla(), executionSemester.getName(), executionSemester.getExecutionYear()
-                            .getYear(), existentExecutionCourse.getName());
+                            .getYear(), existentExecutionCourse.getNameI18N().getContent());
         }
 
         final ExecutionCourse executionCourse =

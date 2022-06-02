@@ -123,7 +123,7 @@ public class ExportFirstYearShiftsDA extends FenixContextDispatchAction {
     private void addHeader(final Spreadsheet spreadsheet, final EntryPhase phase) {
         spreadsheet.setHeader(BundleUtil.getString(Bundle.RESOURCE_ALLOCATION, "label.manager.degree.name"));
         spreadsheet.setHeader(BundleUtil.getString(Bundle.RESOURCE_ALLOCATION, "label.class"));
-        spreadsheet.setHeader(BundleUtil.getString(Bundle.RESOURCE_ALLOCATION, "property.executionCourse.name"));
+        spreadsheet.setHeader(BundleUtil.getString(Bundle.RESOURCE_ALLOCATION, "property.executionCourse.nameI18N.content"));
         spreadsheet.setHeader(BundleUtil.getString(Bundle.RESOURCE_ALLOCATION, "property.shift"));
         spreadsheet.setHeader(BundleUtil.getString(Bundle.RESOURCE_ALLOCATION, "property.shift.type"));
         spreadsheet.setHeader(BundleUtil.getString(Bundle.RESOURCE_ALLOCATION, "property.shift.capacity"));

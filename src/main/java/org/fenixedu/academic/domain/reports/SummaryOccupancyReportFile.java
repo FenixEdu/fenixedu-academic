@@ -68,7 +68,7 @@ public class SummaryOccupancyReportFile extends SummaryOccupancyReportFile_Base 
                     row.setCell(getExecutionYear().getYear());
                     row.setCell(executionSemester.getSemester());
                     row.setCell(GepReportFile.getExecutionCourseCode(executionCourse));
-                    row.setCell(executionCourse.getName());
+                    row.setCell(executionCourse.getNameI18N().getContent());
                     final LessonInstance lessonInstance = summary.getLessonInstance();
                     final CourseLoad courseLoad = lessonInstance == null ? null : lessonInstance.getCourseLoad();
                     final ShiftType shiftType = courseLoad == null ? null : courseLoad.getType();

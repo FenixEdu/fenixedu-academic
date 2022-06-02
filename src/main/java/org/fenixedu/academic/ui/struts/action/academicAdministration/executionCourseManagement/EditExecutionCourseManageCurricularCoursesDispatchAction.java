@@ -92,7 +92,7 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
         String executionCourseId = RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
         String curricularCourseId = RequestUtils.getAndSetStringToRequest(request, "curricularCourseId");
         ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
-        String executionCourseName = executionCourse.getName() + " [" + executionCourse.getDegreePresentationString() + "]";
+        String executionCourseName = executionCourse.getNameI18N().getContent() + " [" + executionCourse.getDegreePresentationString() + "]";
 
         try {
             DissociateCurricularCourseByExecutionCourseId.run(executionCourseId, curricularCourseId);
