@@ -19,7 +19,6 @@
 package org.fenixedu.academic.domain.studentCurriculum;
 
 import java.util.Collection;
-import java.util.Locale;
 
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.ExecutionInterval;
@@ -104,8 +103,7 @@ public class CreditsDismissal extends CreditsDismissal_Base {
 
     @Override
     public LocalizedString getName() {
-        return new LocalizedString(org.fenixedu.academic.util.LocaleUtils.PT,
-                BundleUtil.getString(Bundle.ACADEMIC, new Locale("pt", "PT"), "label.group.credits"));
+        return BundleUtil.getLocalizedString(Bundle.ACADEMIC, "label.group.credits");
     }
 
     @Override
