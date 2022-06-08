@@ -1748,6 +1748,7 @@ class accessControl.FenixPredicateGroup extends .org.fenixedu.bennu.core.domain.
 class accessControl.PersistentStudentGroup extends accessControl.FenixPredicateGroup {
     public CycleType cycle;
     public Boolean withEnrolments;
+    public Boolean firstTimeInDegree;
 }
 
 class accessControl.PersistentSpecialCriteriaOverExecutionCourseGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;

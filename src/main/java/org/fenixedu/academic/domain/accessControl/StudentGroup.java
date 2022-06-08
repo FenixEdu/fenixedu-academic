@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.accessControl;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -39,11 +40,13 @@ import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.student.Registration;
+import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule.ConclusionValue;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.annotation.GroupArgument;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -82,12 +85,15 @@ public class StudentGroup extends FenixGroup {
     @GroupArgument
     private Boolean withEnrolments;
 
+    @GroupArgument
+    private Boolean firstTimeInDegree;
+
     private StudentGroup() {
         super();
     }
 
     private StudentGroup(DegreeType degreeType, Degree degree, CycleType cycle, Space campus, ExecutionCourse executionCourse,
-            CurricularYear curricularYear, ExecutionYear executionYear, Boolean withEnrolments) {
+            CurricularYear curricularYear, ExecutionYear executionYear, Boolean withEnrolments, Boolean firstTimeInDegree) {
         super();
         this.degreeType = degreeType;
         this.degree = degree;
@@ -97,58 +103,64 @@ public class StudentGroup extends FenixGroup {
         this.curricularYear = curricularYear;
         this.executionYear = executionYear;
         this.withEnrolments = withEnrolments;
+        this.firstTimeInDegree = firstTimeInDegree;
     }
 
     public static StudentGroup get() {
-        return new StudentGroup(null, null, null, null, null, null, null, null);
+        return new StudentGroup(null, null, null, null, null, null, null, null, null);
     }
 
     public static StudentGroup get(ExecutionYear executionYear) {
-        return new StudentGroup(null, null, null, null, null, null, executionYear, null);
+        return new StudentGroup(null, null, null, null, null, null, executionYear, null, null);
+    }
+
+    public static StudentGroup get(ExecutionYear executionYear, Boolean firstTimeInDegree) {
+        return new StudentGroup(null, null, null, null, null, null, executionYear, null, firstTimeInDegree);
     }
 
     public static StudentGroup get(DegreeType degreeType) {
-        return new StudentGroup(degreeType, null, null, null, null, null, null, null);
+        return new StudentGroup(degreeType, null, null, null, null, null, null, null, null);
     }
 
     public static StudentGroup get(Degree degree, CycleType cycle) {
-        return new StudentGroup(null, degree, cycle, null, null, null, null, null);
+        return new StudentGroup(null, degree, cycle, null, null, null, null, null, null);
     }
 
     public static StudentGroup get(CycleType cycle) {
-        return new StudentGroup(null, null, cycle, null, null, null, null, null);
+        return new StudentGroup(null, null, cycle, null, null, null, null, null, null);
     }
 
     public static StudentGroup get(CycleType cycle, ExecutionYear executionYear) {
-        return new StudentGroup(null, null, cycle, null, null, null, executionYear, null);
+        return new StudentGroup(null, null, cycle, null, null, null, executionYear, null, null);
     }
 
     public static StudentGroup get(Space campus) {
-        return new StudentGroup(null, null, null, campus, null, null, null, null);
+        return new StudentGroup(null, null, null, campus, null, null, null, null, null);
     }
 
     public static StudentGroup get(ExecutionCourse executionCourse) {
-        return new StudentGroup(null, null, null, null, executionCourse, null, null, null);
+        return new StudentGroup(null, null, null, null, executionCourse, null, null, null, null);
     }
 
     public static StudentGroup get(Degree degree, CurricularYear curricularYear, ExecutionYear executionYear) {
-        return new StudentGroup(null, degree, null, null, null, curricularYear, executionYear, null);
+        return new StudentGroup(null, degree, null, null, null, curricularYear, executionYear, null, null);
     }
 
     public static StudentGroup get(Boolean withEnrolments) {
-        return new StudentGroup(null, null, null, null, null, null, null, withEnrolments);
+        return new StudentGroup(null, null, null, null, null, null, null, withEnrolments, null);
     }
 
     @Deprecated
     public static StudentGroup get(DegreeType degreeType, Degree degree, CycleType cycle, Space campus,
             ExecutionCourse executionCourse, CurricularYear curricularYear, ExecutionYear executionYear) {
-        return new StudentGroup(degreeType, degree, cycle, campus, executionCourse, curricularYear, executionYear, null);
+        return new StudentGroup(degreeType, degree, cycle, campus, executionCourse, curricularYear, executionYear, null, null);
     }
 
     public static StudentGroup get(DegreeType degreeType, Degree degree, CycleType cycle, Space campus,
-            ExecutionCourse executionCourse, CurricularYear curricularYear, ExecutionYear executionYear, Boolean withEnrolments) {
-        return new StudentGroup(degreeType, degree, cycle, campus, executionCourse, curricularYear, executionYear,
-                withEnrolments);
+            ExecutionCourse executionCourse, CurricularYear curricularYear, ExecutionYear executionYear, Boolean withEnrolments,
+            Boolean firstTimeInDegree) {
+        return new StudentGroup(degreeType, degree, cycle, campus, executionCourse, curricularYear, executionYear, withEnrolments,
+                firstTimeInDegree);
     }
 
     @Override
@@ -179,6 +191,11 @@ public class StudentGroup extends FenixGroup {
         }
         if (Boolean.TRUE.equals(withEnrolments)) {
             parts.add(BundleUtil.getString(Bundle.GROUP, "label.name.student.withEnrolments"));
+        }
+        if (firstTimeInDegree != null) {
+            final String firstTimeInDegreeArg =
+                    BundleUtil.getString(Bundle.APPLICATION, firstTimeInDegree ? "label.true" : "label.false");
+            parts.add(BundleUtil.getString(Bundle.GROUP, "label.name.student.firstTimeInDegree", firstTimeInDegreeArg));
         }
 
         if (!parts.isEmpty()) {
@@ -218,7 +235,7 @@ public class StudentGroup extends FenixGroup {
         } else if (degree != null) {
             registrations = getRegistrations(degree);
         } else if (executionYear != null) {
-            registrations = getRegistrations(executionYear);
+            registrations = getRegistrations(executionYear, withEnrolments);
         } else {
             registrations = getRegistrations();
         }
@@ -227,6 +244,7 @@ public class StudentGroup extends FenixGroup {
         registrations = filterCycle(registrations, cycle, getExecutionYear());
         registrations = filterCurricularYear(registrations, curricularYear, getExecutionYear());
         registrations = filterWithEnrolments(registrations, withEnrolments);
+        registrations = filterFirstTimeInDegree(registrations, firstTimeInDegree, getExecutionYear());
         return registrations.collect(Collectors.toSet());
     }
 
@@ -287,6 +305,14 @@ public class StudentGroup extends FenixGroup {
         return registrations.filter(r -> r.findEnrolments().anyMatch(Predicate.not(Enrolment::isAnnulled)));
     }
 
+    private static Stream<Registration> filterFirstTimeInDegree(Stream<Registration> registrations, Boolean firstTimeInDegree,
+            ExecutionYear executionYear) {
+        if (firstTimeInDegree == null) {
+            return registrations;
+        }
+        return registrations.filter(r -> firstTimeInDegree.equals(r.getRegistrationYear() == executionYear));
+    }
+
     private static Stream<Registration> getRegistrations(DegreeType type) {
         Set<Registration> registrations = new HashSet<>();
         RoleType.STUDENT.actualGroup().getMembers().forEach(user -> {
@@ -311,13 +337,18 @@ public class StudentGroup extends FenixGroup {
         return registrations.stream();
     }
 
-    private Stream<Registration> getRegistrations(ExecutionYear executionYear) {
-        return executionYear.getChildIntervals().stream().flatMap(ei -> ei.getEnrolmentsSet().stream())
-                .filter(e -> !e.isAnnulled()).map(e -> e.getRegistration());
+    private Stream<Registration> getRegistrations(ExecutionYear executionYear, Boolean withEnrolments) {
+        if (Boolean.TRUE.equals(withEnrolments)) {
+            return executionYear.getChildIntervals().stream().flatMap(ei -> ei.getEnrolmentsSet().stream())
+                    .filter(e -> !e.isAnnulled()).map(e -> e.getRegistration());
+        } else {
+            return Bennu.getInstance().getRegistrationsSet().stream().filter(r -> Optional
+                    .ofNullable(r.getLastRegistrationState(executionYear)).map(RegistrationState::isActive).orElse(false));
+        }
     }
 
     private static Stream<Registration> getRegistrations() {
-        return RoleType.STUDENT.actualGroup().getMembers().flatMap(u -> u.getPerson().getStudent().getActiveRegistrationStream());
+        return Bennu.getInstance().getRegistrationsSet().stream().filter(Registration::isActive);
     }
 
     private static Stream<User> registrationsToUsers(Stream<Registration> registrations) {
@@ -351,6 +382,7 @@ public class StudentGroup extends FenixGroup {
 
         Stream<Registration> result = registrations.stream();
         result = filterWithEnrolments(result, withEnrolments);
+        result = filterFirstTimeInDegree(result, firstTimeInDegree, getExecutionYear());
         return result;
     }
 
@@ -371,7 +403,7 @@ public class StudentGroup extends FenixGroup {
             if (executionCourse != null && registration.getAttendingExecutionCoursesFor().contains(executionCourse)) {
                 return true;
             }
-            if (executionYear != null && cycle == null
+            if (executionYear != null && cycle == null && firstTimeInDegree == null
                     && registration.getEnrolments(executionYear).stream().anyMatch(e -> !e.isAnnulled())) {
                 return true;
             }
@@ -399,6 +431,11 @@ public class StudentGroup extends FenixGroup {
                         && registration.findEnrolments().filter(Predicate.not(Enrolment::isAnnulled)).findAny().isEmpty()) {
                     continue;
                 }
+                if (firstTimeInDegree != null
+                        && !firstTimeInDegree.equals(registration.getRegistrationYear() == getExecutionYear())) {
+                    continue;
+                }
+
                 return true;
             }
         }
@@ -413,7 +450,7 @@ public class StudentGroup extends FenixGroup {
     @Override
     public PersistentGroup toPersistentGroup() {
         return PersistentStudentGroup.getInstance(degreeType, degree, cycle, campus, executionCourse, curricularYear,
-                executionYear, withEnrolments);
+                executionYear, withEnrolments, firstTimeInDegree);
     }
 
     @Override
@@ -424,14 +461,15 @@ public class StudentGroup extends FenixGroup {
                     && Objects.equal(cycle, other.cycle) && Objects.equal(campus, other.campus)
                     && Objects.equal(executionCourse, other.executionCourse)
                     && Objects.equal(curricularYear, other.curricularYear) && Objects.equal(executionYear, other.executionYear)
-                    && Objects.equal(withEnrolments, other.withEnrolments);
+                    && Objects.equal(withEnrolments, other.withEnrolments)
+                    && Objects.equal(firstTimeInDegree, other.firstTimeInDegree);
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(degreeType, degree, cycle, campus, executionCourse, curricularYear, executionYear,
-                withEnrolments);
+        return Objects.hashCode(degreeType, degree, cycle, campus, executionCourse, curricularYear, executionYear, withEnrolments,
+                firstTimeInDegree);
     }
 }
