@@ -87,16 +87,6 @@
 	</managed-bean>
 	<!-- END: COORDINATOR Managed Beans -->
 
-	<!-- BEGIN: Bolonha Management Beans -->
-	<managed-bean>
-		<description>CompetenceCourseManagementBackingBean</description>
-		<managed-bean-name>CompetenceCourseManagement</managed-bean-name>
-		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.bolonhaManager.competenceCourses.CompetenceCourseManagementBackingBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	
-	<!-- END: Bolonha Management Beans -->
-	
 	<!-- BEGIN: OrganizationalStructure Managed Beans (Modularized) -->
 	<managed-bean>
 		<managed-bean-name>organizationalStructure</managed-bean-name>

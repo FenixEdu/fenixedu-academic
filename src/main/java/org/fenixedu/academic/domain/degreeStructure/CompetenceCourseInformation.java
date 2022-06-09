@@ -154,14 +154,14 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setCompetenceCourseGroupUnit(unit);
     }
 
-    public void edit(final String name, final String nameEn, final Boolean basic,
-            final CompetenceCourseLevel competenceCourseLevel) {
-        checkParameters(name, nameEn, basic, getAcademicPeriod(), competenceCourseLevel);
-        setName(name);
-        setNameEn(nameEn);
-        setBasic(basic);
-        setCompetenceCourseLevel(competenceCourseLevel);
-    }
+//    public void edit(final String name, final String nameEn, final Boolean basic,
+//            final CompetenceCourseLevel competenceCourseLevel) {
+//        checkParameters(name, nameEn, basic, getAcademicPeriod(), competenceCourseLevel);
+//        setName(name);
+//        setNameEn(nameEn);
+//        setBasic(basic);
+//        setCompetenceCourseLevel(competenceCourseLevel);
+//    }
 
     public void edit(final String objectives, final String program, final String evaluationMethod, final String objectivesEn,
             final String programEn, final String evaluationMethodEn) {
