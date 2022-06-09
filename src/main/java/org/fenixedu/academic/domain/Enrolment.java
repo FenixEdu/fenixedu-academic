@@ -831,6 +831,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return false;
     }
 
+    public boolean hasSpecialSeasonFor(final ExecutionInterval interval) {
+        return this.getEvaluationsSet().stream().filter(ee -> ee.getEvaluationSeason().isSpecial())
+                .anyMatch(ee -> ee.getExecutionInterval() == interval);
+    }
+
+    @Deprecated
     final public boolean hasSpecialSeason() {
         for (final EnrolmentEvaluation evaluation : getEvaluationsSet()) {
             final EvaluationSeason season = evaluation.getEvaluationSeason();
@@ -843,6 +849,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return false;
     }
 
+    @Deprecated
     final public boolean hasSpecialSeasonInExecutionYear(final ExecutionYear executionYear) {
         for (final Enrolment enrolment : getBrothers()) {
             if (enrolment.getExecutionYear() == executionYear && enrolment.hasSpecialSeason()) {
