@@ -74,9 +74,9 @@ public class SpaceUtils {
     public static final Comparator<SpaceClassification> COMPARATORY_BY_PARENT_ROOM_CLASSIFICATION_AND_CODE =
             new BeanComparator("absoluteCode");
 
-    public static Space findAllocatableSpaceForEducationByName(String name) {
-        return allocatableSpacesForEducation().filter(space -> space.getName().equalsIgnoreCase(name)).findAny().orElse(null);
-    }
+//    public static Space findAllocatableSpaceForEducationByName(String name) {
+//        return allocatableSpacesForEducation().filter(space -> space.getName().equalsIgnoreCase(name)).findAny().orElse(null);
+//    }
 
     public static Stream<Space> allocatableSpaces() {
         return Space.getSpaces().filter(space -> isAllocatable(space)).sorted();
@@ -86,12 +86,12 @@ public class SpaceUtils {
         return allocatableSpaces().filter(space -> isForEducation(space));
     }
 
-    public static List<InfoRoom> allocatableSpace(YearMonthDay startDate, YearMonthDay endDate, HourMinuteSecond startTimeHMS,
-            HourMinuteSecond endTimeHMS, DiaSemana dayOfWeek, Integer normalCapacity, FrequencyType frequency, boolean withLabs) {
-        return allocatableSpace(normalCapacity, withLabs)
-                .filter(space -> isFree(space, startDate, endDate, startTimeHMS, endTimeHMS, dayOfWeek, frequency, true, true))
-                .map(space -> InfoRoom.newInfoFromDomain(space)).collect(Collectors.toList());
-    }
+//    public static List<InfoRoom> allocatableSpace(YearMonthDay startDate, YearMonthDay endDate, HourMinuteSecond startTimeHMS,
+//            HourMinuteSecond endTimeHMS, DiaSemana dayOfWeek, Integer normalCapacity, FrequencyType frequency, boolean withLabs) {
+//        return allocatableSpace(normalCapacity, withLabs)
+//                .filter(space -> isFree(space, startDate, endDate, startTimeHMS, endTimeHMS, dayOfWeek, frequency, true, true))
+//                .map(space -> InfoRoom.newInfoFromDomain(space)).collect(Collectors.toList());
+//    }
 
     public static List<InfoRoom> allocatableSpace(Integer normalCapacity, boolean withLabs, List<Interval> intervals) {
         return allocatableSpace(normalCapacity, withLabs).filter(space -> isFree(space, intervals))

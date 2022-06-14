@@ -25,6 +25,7 @@ import org.fenixedu.commons.i18n.LocalizedString;
 
 import pt.ist.fenixframework.Atomic;
 
+@Deprecated(forRemoval = true)
 public class EnrolmentInstructions extends EnrolmentInstructions_Base {
 
     /**

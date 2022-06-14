@@ -46,12 +46,12 @@ public class CourseLoad extends CourseLoad_Base {
         checkQuantities();
     }
 
-    public void edit(BigDecimal unitQuantity, BigDecimal totalQuantity) {
-        setUnitQuantity(unitQuantity);
-        setTotalQuantity(totalQuantity);
-
-        checkQuantities();
-    }
+//    public void edit(BigDecimal unitQuantity, BigDecimal totalQuantity) {
+//        setUnitQuantity(unitQuantity);
+//        setTotalQuantity(totalQuantity);
+//
+//        checkQuantities();
+//    }
 
     public void delete() {
         DomainException.throwWhenDeleteBlocked(getDeletionBlockers());

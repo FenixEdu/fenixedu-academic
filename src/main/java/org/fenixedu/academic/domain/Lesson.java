@@ -108,71 +108,71 @@ public class Lesson extends Lesson_Base {
         }
     }
 
-    public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, Shift shift, FrequencyType frequency,
-            ExecutionInterval executionInterval, YearMonthDay beginDate, YearMonthDay endDate, Space room) {
+//    public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, Shift shift, FrequencyType frequency,
+//            ExecutionInterval executionInterval, YearMonthDay beginDate, YearMonthDay endDate, Space room) {
+//
+//        super();
+//
+//        OccupationPeriod period = null;
+//        if (shift != null) {
+//            final ExecutionCourse executionCourse = shift.getExecutionCourse();
+//            final Interval maxLessonsInterval = executionCourse.getMaxLessonsInterval();
+//            if (beginDate == null || beginDate.isBefore(maxLessonsInterval.getStart().toLocalDate())) {
+//                throw new DomainException("error.Lesson.invalid.begin.date");
+//            }
+//            if (endDate == null || endDate.isAfter(maxLessonsInterval.getEnd().toLocalDate())) {
+//                throw new DomainException("error.invalid.new.date");
+//            }
+//
+//            period = OccupationPeriod.createOccupationPeriodForLesson(executionCourse, beginDate, endDate);
+//        }
+//
+//        setRootDomainObject(Bennu.getInstance());
+//        setDiaSemana(diaSemana);
+//        setInicio(inicio);
+//        setFim(fim);
+//        setShift(shift);
+//        setFrequency(frequency);
+//        setPeriod(period);
+//
+//        checkShiftLoad(shift);
+//
+//        if (room != null) {
+//            new LessonSpaceOccupation(room, this);
+//        }
+//    }
 
-        super();
-
-        OccupationPeriod period = null;
-        if (shift != null) {
-            final ExecutionCourse executionCourse = shift.getExecutionCourse();
-            final Interval maxLessonsInterval = executionCourse.getMaxLessonsInterval();
-            if (beginDate == null || beginDate.isBefore(maxLessonsInterval.getStart().toLocalDate())) {
-                throw new DomainException("error.Lesson.invalid.begin.date");
-            }
-            if (endDate == null || endDate.isAfter(maxLessonsInterval.getEnd().toLocalDate())) {
-                throw new DomainException("error.invalid.new.date");
-            }
-
-            period = OccupationPeriod.createOccupationPeriodForLesson(executionCourse, beginDate, endDate);
-        }
-
-        setRootDomainObject(Bennu.getInstance());
-        setDiaSemana(diaSemana);
-        setInicio(inicio);
-        setFim(fim);
-        setShift(shift);
-        setFrequency(frequency);
-        setPeriod(period);
-
-        checkShiftLoad(shift);
-
-        if (room != null) {
-            new LessonSpaceOccupation(room, this);
-        }
-    }
-
-    public void edit(YearMonthDay newBeginDate, YearMonthDay newEndDate, DiaSemana diaSemana, Calendar inicio, Calendar fim,
-            FrequencyType frequency, Boolean createLessonInstances, Space newRoom) {
-
-        if (newBeginDate != null && newEndDate != null && newBeginDate.isAfter(newEndDate)) {
-            throw new DomainException("error.Lesson.new.begin.date.after.new.end.date");
-        }
-
-        final ExecutionCourse executionCourse = getShift().getExecutionCourse();
-        final Interval maxLessonsInterval = executionCourse.getMaxLessonsInterval();
-        if (newBeginDate == null || newBeginDate.isBefore(maxLessonsInterval.getStart().toLocalDate())) {
-            throw new DomainException("error.Lesson.invalid.new.begin.date");
-        }
-        if (newEndDate == null || newEndDate.isAfter(maxLessonsInterval.getEnd().toLocalDate())) {
-            throw new DomainException("error.invalid.new.end.date");
-        }
-
-        refreshPeriodAndInstancesInEditOperation(newBeginDate, newEndDate, createLessonInstances);
-
-        if (wasFinished() && (getLessonSpaceOccupation() != null || !hasAnyLessonInstances())) {
-            throw new DomainException("error.Lesson.empty.period");
-        }
-
-        setDiaSemana(diaSemana);
-        setInicio(inicio);
-        setFim(fim);
-        setFrequency(frequency);
-
-        checkShiftLoad(getShift());
-
-        lessonSpaceOccupationManagement(newRoom);
-    }
+//    public void edit(YearMonthDay newBeginDate, YearMonthDay newEndDate, DiaSemana diaSemana, Calendar inicio, Calendar fim,
+//            FrequencyType frequency, Boolean createLessonInstances, Space newRoom) {
+//
+//        if (newBeginDate != null && newEndDate != null && newBeginDate.isAfter(newEndDate)) {
+//            throw new DomainException("error.Lesson.new.begin.date.after.new.end.date");
+//        }
+//
+//        final ExecutionCourse executionCourse = getShift().getExecutionCourse();
+//        final Interval maxLessonsInterval = executionCourse.getMaxLessonsInterval();
+//        if (newBeginDate == null || newBeginDate.isBefore(maxLessonsInterval.getStart().toLocalDate())) {
+//            throw new DomainException("error.Lesson.invalid.new.begin.date");
+//        }
+//        if (newEndDate == null || newEndDate.isAfter(maxLessonsInterval.getEnd().toLocalDate())) {
+//            throw new DomainException("error.invalid.new.end.date");
+//        }
+//
+//        refreshPeriodAndInstancesInEditOperation(newBeginDate, newEndDate, createLessonInstances);
+//
+//        if (wasFinished() && (getLessonSpaceOccupation() != null || !hasAnyLessonInstances())) {
+//            throw new DomainException("error.Lesson.empty.period");
+//        }
+//
+//        setDiaSemana(diaSemana);
+//        setInicio(inicio);
+//        setFim(fim);
+//        setFrequency(frequency);
+//
+//        checkShiftLoad(getShift());
+//
+//        lessonSpaceOccupationManagement(newRoom);
+//    }
 
     public void edit(final Space newRoom) {
         lessonSpaceOccupationManagement(newRoom);

@@ -172,10 +172,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         deleteDomainObject();
     }
 
-    public void edit(ExecutionYear executionYear, Space campus, Boolean publishedExamMap) {
-        setExecutionYear(executionYear);
-        setCampus(campus);
-    }
+//    public void edit(ExecutionYear executionYear, Space campus, Boolean publishedExamMap) {
+//        setExecutionYear(executionYear);
+//        setCampus(campus);
+//    }
 
     @Override
     public int compareTo(ExecutionDegree executionDegree) {
