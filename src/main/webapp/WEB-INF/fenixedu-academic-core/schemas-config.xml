@@ -40,7 +40,6 @@
     <!ENTITY partyContacts SYSTEM "/fenixedu-academic/schemas/partyContacts-schemas.xml">
     <!ENTITY bolonhaManagerSchemas SYSTEM "/fenixedu-academic/schemas/bolonhaManager-schemas.xml">
     <!ENTITY pedagogicalCouncilSchemas SYSTEM "/fenixedu-academic/schemas/pedagogicalCouncil-schemas.xml">
-    <!ENTITY externalSupervision SYSTEM "/fenixedu-academic/schemas/externalSupervision-schemas.xml">
 ]>
 
 <schemas>
