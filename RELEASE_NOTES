@@ -9,6 +9,7 @@
 - Refactor: Remove legacy candidate module
 - Refactor: Remove legacy external supervision module
 - Refactor: Remove legacy residence management module
+- Refactor: Remove legacy delegate module
 
 32.14.0 (14-06-2022)
 - Refactor: Add new method to check if enrolment in special season exists
