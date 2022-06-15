@@ -71,7 +71,6 @@
     { "name": "publico", "configFile": "struts-publico.xml" },
     { "name": "coordinator", "configFile": "struts-coordinator.xml" },
     { "name": "messaging", "configFile": "struts-messaging.xml" },
-    { "name": "pedagogicalCouncil", "configFile": "struts-pedagogicalCouncil.xml" },
     { "name": "student", "configFile": "struts-student.xml" }
   ]
 }

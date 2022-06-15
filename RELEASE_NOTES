@@ -14,6 +14,7 @@
 - Refactor: Remove legacy rectorate module
 - Refactor: Remove legacy alumni module
 - Refactor: Remove legacy library module
+- Refactor: Remove legacy pedagogical council module
 
 32.14.0 (14-06-2022)
 - Refactor: Add new method to check if enrolment in special season exists
