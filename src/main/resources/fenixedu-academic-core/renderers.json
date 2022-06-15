@@ -71,7 +71,6 @@
     { "name": "bolonhaManager", "configFile": "struts-bolonhaManager.xml" },
     { "name": "operator", "configFile": "struts-operator.xml" },
     { "name": "publico", "configFile": "struts-publico.xml" },
-    { "name": "rectorate", "configFile": "struts-rectorate.xml" },
     { "name": "alumni", "configFile": "struts-alumni.xml" },
     { "name": "coordinator", "configFile": "struts-coordinator.xml" },
     { "name": "library", "configFile": "struts-library.xml" },
