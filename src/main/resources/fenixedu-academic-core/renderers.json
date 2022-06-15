@@ -67,7 +67,6 @@
     { "name": "teacher", "configFile": "struts-teacher.xml" },
     { "name": "academicAdministration", "configFile": "struts-academicAdministration.xml" },
     { "name": "external", "configFile": "struts-external.xml" },
-    { "name": "nape", "configFile": "struts-nape.xml" },
     { "name": "manager", "configFile": "struts-manager.xml" },
     { "name": "candidate", "configFile": "struts-candidate.xml" },
     { "name": "departmentMember", "configFile": "struts-departmentMember.xml" },
