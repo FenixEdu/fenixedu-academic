@@ -6,6 +6,7 @@
 - Refactor: Remove legacy master degree administrative office module
 - Refactor: Remove legacy researcher module
 - Refactor: Remove legacy nape module
+- Refactor: Remove legacy candidate module
 
 32.14.0 (14-06-2022)
 - Refactor: Add new method to check if enrolment in special season exists
