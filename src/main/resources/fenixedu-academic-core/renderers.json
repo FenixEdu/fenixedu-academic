@@ -78,7 +78,6 @@
     { "name": "operator", "configFile": "struts-operator.xml" },
     { "name": "externalSupervision", "configFile": "struts-externalSupervision.xml" },
     { "name": "residenceManagement", "configFile": "struts-residenceManagement.xml" },
-    { "name": "masterDegreeAdministrativeOffice", "configFile": "struts-masterDegreeAdministrativeOffice.xml" },
     { "name": "publico", "configFile": "struts-publico.xml" },
     { "name": "delegate", "configFile": "struts-delegate.xml" },
     { "name": "publicRelations", "configFile": "struts-publicRelations.xml" },
