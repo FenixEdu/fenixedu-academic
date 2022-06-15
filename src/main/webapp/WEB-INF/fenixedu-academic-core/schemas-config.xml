@@ -23,7 +23,6 @@
      Currently there is a semi-hack built in the RendererPlugin to accept this format.
 -->
 <!DOCTYPE schemas SYSTEM "/fenix-renderers-schemas.dtd" [
-	<!ENTITY researcher SYSTEM "/fenixedu-academic/schemas/researcher-schemas.xml">
 	<!ENTITY messaging SYSTEM "/fenixedu-academic/schemas/messaging-schemas.xml">
 	<!ENTITY party SYSTEM "/fenixedu-academic/schemas/party-schemas.xml">
 	<!ENTITY execution SYSTEM "/fenixedu-academic/schemas/execution-schemas.xml">

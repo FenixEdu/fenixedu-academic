@@ -65,7 +65,6 @@
   },
   "modules": [
     { "name": "teacher", "configFile": "struts-teacher.xml" },
-    { "name": "researcher", "configFile": "struts-researcher.xml" },
     { "name": "academicAdministration", "configFile": "struts-academicAdministration.xml" },
     { "name": "external", "configFile": "struts-external.xml" },
     { "name": "nape", "configFile": "struts-nape.xml" },
