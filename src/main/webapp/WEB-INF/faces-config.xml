@@ -73,12 +73,6 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	
-	<managed-bean>
-		<managed-bean-name>createExecutionDegrees</managed-bean-name>
-		<managed-bean-class>org.fenixedu.academic.ui.faces.bean.manager.degree.CreateExecutionDegreesForExecutionYearBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>	
-
 	<!-- BEGIN: COORDINATOR Managed Beans -->
 	<managed-bean>
 		<managed-bean-name>CoordinatorStudentsBackingBean</managed-bean-name>
@@ -252,34 +246,6 @@
 	</navigation-rule>
 	
 	<!-- NAVIGATION RULES -->
-
-	<navigation-rule>
-		<from-view-id>/manager/degree/chooseDegreeType.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>choose</from-outcome>
-			<to-view-id>/manager/degree/chooseDegreeCurricularPlans.jsp</to-view-id>
-		</navigation-case>			
-	</navigation-rule>	
-	
-	<navigation-rule>
-		<from-view-id>/manager/degree/chooseDegreeCurricularPlans.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>success</from-outcome>
-			<to-view-id>/manager/degree/insertExecutionDegreesSuccess.jsp</to-view-id>
-		</navigation-case>			
-		<navigation-case>
-			<from-outcome>back</from-outcome>
-			<to-view-id>/manager/degree/chooseDegreeType.jsp</to-view-id>
-		</navigation-case>			
-	</navigation-rule>
-	
-	<navigation-rule>
-		<from-view-id>/manager/degree/insertExecutionDegreesSuccess.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>back</from-outcome>
-			<to-view-id>/manager/degree/chooseDegreeType.jsp</to-view-id>
-		</navigation-case>			
-	</navigation-rule>
 	
 	<!-- BEGIN: FUNCTIONS_MANAGEMENT Navigation Rules -->
 	
