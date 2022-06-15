@@ -79,7 +79,6 @@
     { "name": "person", "configFile": "struts-person.xml" },
     { "name": "bolonhaManager", "configFile": "struts-bolonhaManager.xml" },
     { "name": "operator", "configFile": "struts-operator.xml" },
-    { "name": "resourceAllocationManager", "configFile": "struts-resourceAllocationManager.xml" },
     { "name": "externalSupervision", "configFile": "struts-externalSupervision.xml" },
     { "name": "residenceManagement", "configFile": "struts-residenceManagement.xml" },
     { "name": "masterDegreeAdministrativeOffice", "configFile": "struts-masterDegreeAdministrativeOffice.xml" },
