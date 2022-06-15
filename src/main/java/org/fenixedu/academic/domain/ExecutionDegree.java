@@ -328,21 +328,21 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         return getDegree().getDegreeType();
     }
 
-    public static List<ExecutionDegree> filterByAcademicInterval(AcademicInterval academicInterval) {
-        AcademicCalendarEntry academicCalendarEntry = academicInterval.getAcademicCalendarEntry();
-        while (!(academicCalendarEntry instanceof AcademicCalendarRootEntry)) {
-            if (academicCalendarEntry instanceof AcademicYearCE) {
-                ExecutionYear year = ExecutionYear.getExecutionYear((AcademicYearCE) academicCalendarEntry);
-                List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
-                result.addAll(year.getExecutionDegreesSet());
-                return result;
-            } else {
-                academicCalendarEntry = academicCalendarEntry.getParentEntry();
-            }
-        }
-
-        return Collections.emptyList();
-    }
+//    public static List<ExecutionDegree> filterByAcademicInterval(AcademicInterval academicInterval) {
+//        AcademicCalendarEntry academicCalendarEntry = academicInterval.getAcademicCalendarEntry();
+//        while (!(academicCalendarEntry instanceof AcademicCalendarRootEntry)) {
+//            if (academicCalendarEntry instanceof AcademicYearCE) {
+//                ExecutionYear year = ExecutionYear.getExecutionYear((AcademicYearCE) academicCalendarEntry);
+//                List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
+//                result.addAll(year.getExecutionDegreesSet());
+//                return result;
+//            } else {
+//                academicCalendarEntry = academicCalendarEntry.getParentEntry();
+//            }
+//        }
+//
+//        return Collections.emptyList();
+//    }
 
     public AcademicInterval getAcademicInterval() {
         return getExecutionYear().getAcademicInterval();

@@ -234,47 +234,47 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
         throw new UnsupportedOperationException("Unknown AcademicPeriod " + academicPeriod);
     }
 
-    @Deprecated
-    public static List<AcademicInterval> readAcademicIntervals(AcademicPeriod academicPeriod) {
-        Bennu rootDomainObject = Bennu.getInstance();
+//    @Deprecated
+//    public static List<AcademicInterval> readAcademicIntervals(AcademicPeriod academicPeriod) {
+//        Bennu rootDomainObject = Bennu.getInstance();
+//
+//        if (academicPeriod.equals(AcademicPeriod.SEMESTER)) {
+//            List<AcademicInterval> result = new ArrayList<AcademicInterval>();
+//            for (ExecutionInterval semester : rootDomainObject.getExecutionPeriodsSet()) {
+//                result.add(semester.getAcademicInterval());
+//            }
+//
+//            return result;
+//        } else if (academicPeriod.equals(AcademicPeriod.YEAR)) {
+//            List<AcademicInterval> result = new ArrayList<AcademicInterval>();
+//            for (ExecutionYear executionYear : rootDomainObject.getExecutionYearsSet()) {
+//                result.add(executionYear.getAcademicInterval());
+//            }
+//
+//            return result;
+//        }
+//        throw new UnsupportedOperationException("Unknown AcademicPeriod " + academicPeriod);
+//    }
 
-        if (academicPeriod.equals(AcademicPeriod.SEMESTER)) {
-            List<AcademicInterval> result = new ArrayList<AcademicInterval>();
-            for (ExecutionInterval semester : rootDomainObject.getExecutionPeriodsSet()) {
-                result.add(semester.getAcademicInterval());
-            }
-
-            return result;
-        } else if (academicPeriod.equals(AcademicPeriod.YEAR)) {
-            List<AcademicInterval> result = new ArrayList<AcademicInterval>();
-            for (ExecutionYear executionYear : rootDomainObject.getExecutionYearsSet()) {
-                result.add(executionYear.getAcademicInterval());
-            }
-
-            return result;
-        }
-        throw new UnsupportedOperationException("Unknown AcademicPeriod " + academicPeriod);
-    }
-
-    @Deprecated
-    public static List<AcademicInterval> readActiveAcademicIntervals(AcademicPeriod academicPeriod) {
-        if (academicPeriod.equals(AcademicPeriod.SEMESTER)) {
-            List<AcademicInterval> result = new ArrayList<AcademicInterval>();
-            for (ExecutionInterval semester : ExecutionInterval.findActiveChilds()) {
-                result.add(semester.getAcademicInterval());
-            }
-
-            return result;
-        } else if (academicPeriod.equals(AcademicPeriod.YEAR)) {
-            List<AcademicInterval> result = new ArrayList<AcademicInterval>();
-            for (ExecutionYear executionYear : ExecutionYear.readNotClosedExecutionYears()) {
-                result.add(executionYear.getAcademicInterval());
-            }
-
-            return result;
-        }
-        throw new UnsupportedOperationException("Unknown AcademicPeriod " + academicPeriod);
-    }
+//    @Deprecated
+//    public static List<AcademicInterval> readActiveAcademicIntervals(AcademicPeriod academicPeriod) {
+//        if (academicPeriod.equals(AcademicPeriod.SEMESTER)) {
+//            List<AcademicInterval> result = new ArrayList<AcademicInterval>();
+//            for (ExecutionInterval semester : ExecutionInterval.findActiveChilds()) {
+//                result.add(semester.getAcademicInterval());
+//            }
+//
+//            return result;
+//        } else if (academicPeriod.equals(AcademicPeriod.YEAR)) {
+//            List<AcademicInterval> result = new ArrayList<AcademicInterval>();
+//            for (ExecutionYear executionYear : ExecutionYear.readNotClosedExecutionYears()) {
+//                result.add(executionYear.getAcademicInterval());
+//            }
+//
+//            return result;
+//        }
+//        throw new UnsupportedOperationException("Unknown AcademicPeriod " + academicPeriod);
+//    }
 
     public AcademicInterval getNextAcademicInterval() {
         AcademicCalendarEntry nextAcademicCalendarEntry = getAcademicCalendarEntry().getNextAcademicCalendarEntry();

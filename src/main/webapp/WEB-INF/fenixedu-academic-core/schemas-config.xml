@@ -32,7 +32,6 @@
     <!ENTITY student SYSTEM "/fenixedu-academic/schemas/student-schemas.xml">
     <!ENTITY departmentMember SYSTEM "/fenixedu-academic/schemas/departmentMember-schemas.xml">
     <!ENTITY manager SYSTEM "/fenixedu-academic/schemas/manager-schemas.xml">
-    <!ENTITY resourceAllocationManager SYSTEM "/fenixedu-academic/schemas/resourceAllocationManager-schemas.xml">
     <!ENTITY teacher SYSTEM "/fenixedu-academic/schemas/teacher-schemas.xml">
     <!ENTITY coordinator SYSTEM "/fenixedu-academic/schemas/coordinator-schemas.xml">
     <!ENTITY operator SYSTEM "/fenixedu-academic/schemas/operator-schemas.xml">
@@ -494,7 +493,6 @@
 		<slot name="showCourses" key="label.view.curricularCourses" />
 	</schema>
 	
- 	&researcher;
 	&messaging;
 	&space;
 	&party;
@@ -505,7 +503,6 @@
     &student;
     &departmentMember;
     &manager;
-    &resourceAllocationManager;
     &teacher;
     &coordinator;
     &operator;
@@ -513,7 +510,4 @@
     &partyContacts;
     &bolonhaManagerSchemas;
     &pedagogicalCouncilSchemas;
-    &gep;
-    &grp;
-    &externalSupervision;
 </schemas>
