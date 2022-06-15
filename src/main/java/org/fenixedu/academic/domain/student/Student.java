@@ -196,6 +196,10 @@ public class Student extends Student_Base {
         for (; !getRegistrationsSet().isEmpty(); getRegistrationsSet().iterator().next().delete()) {
             ;
         }
+        
+        for (; !getPersonalIngressionsDataSet().isEmpty(); getPersonalIngressionsDataSet().iterator().next().delete()) {
+            ;
+        }
 
         setNumber(null);
 
