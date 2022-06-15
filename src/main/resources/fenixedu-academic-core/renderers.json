@@ -32,7 +32,6 @@
       "ImageiResources",
       "InquiriesResources",
       "LanguageResources",
-      "LibraryResources",
       "ManagerResources",
       "MessagingResources",
       "PedagogicalCouncilResources",
@@ -71,7 +70,6 @@
     { "name": "operator", "configFile": "struts-operator.xml" },
     { "name": "publico", "configFile": "struts-publico.xml" },
     { "name": "coordinator", "configFile": "struts-coordinator.xml" },
-    { "name": "library", "configFile": "struts-library.xml" },
     { "name": "messaging", "configFile": "struts-messaging.xml" },
     { "name": "pedagogicalCouncil", "configFile": "struts-pedagogicalCouncil.xml" },
     { "name": "student", "configFile": "struts-student.xml" }
