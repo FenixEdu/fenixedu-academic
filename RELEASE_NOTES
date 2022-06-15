@@ -12,6 +12,7 @@
 - Refactor: Remove legacy delegate module
 - Refactor: Remove legacy public relations module
 - Refactor: Remove legacy rectorate module
+- Refactor: Remove legacy alumni module
 
 32.14.0 (14-06-2022)
 - Refactor: Add new method to check if enrolment in special season exists

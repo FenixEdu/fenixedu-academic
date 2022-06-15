@@ -186,7 +186,6 @@
       <message-resources null="false" key="SOP_RESOURCES" parameter="resources.ResourceAllocationManagerResources"></message-resources>
       <message-resources null="false" key="SPACE_RESOURCES" parameter="resources.SpaceResources"></message-resources>
       <message-resources null="false" key="MESSAGING_RESOURCES" parameter="resources.MessagingResources"></message-resources>
-      <message-resources null="false" key="ALUMNI_RESOURCES" parameter="resources.AlumniResources"></message-resources>
       <message-resources null="false" key="DOMAIN_RESOURCES" parameter="resources.DomainResources"></message-resources>
       <message-resources null="false" key="COMMON_RESOURCES" parameter="resources.CommonResources"></message-resources>
       <message-resources null="false" key="INTERNATIONAL_RELATIONS_OFFICE" parameter="resources.InternRelationOfficeResources"></message-resources>
