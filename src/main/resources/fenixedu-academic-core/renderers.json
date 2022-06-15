@@ -34,7 +34,6 @@
       "ImageResources",
       "ImageiResources",
       "InquiriesResources",
-      "InternRelationOfficeResources",
       "LanguageResources",
       "LibraryResources",
       "ManagerResources",
@@ -89,7 +88,6 @@
     { "name": "library", "configFile": "struts-library.xml" },
     { "name": "gep", "configFile": "struts-gep.xml" },
     { "name": "messaging", "configFile": "struts-messaging.xml" },
-    { "name": "internationalRelatOffice", "configFile": "struts-internationalRelatOffice.xml" },
     { "name": "pedagogicalCouncil", "configFile": "struts-pedagogicalCouncil.xml" },
     { "name": "student", "configFile": "struts-student.xml" }
   ]

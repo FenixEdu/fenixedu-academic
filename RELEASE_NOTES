@@ -1,5 +1,6 @@
 - Refactor: Remove legacy resource allocation manager functionalities
 - Refactor: Remove legacy directive council module
+- Refactor: Remove legacy international relation office module
 
 32.14.0 (14-06-2022)
 - Refactor: Add new method to check if enrolment in special season exists
