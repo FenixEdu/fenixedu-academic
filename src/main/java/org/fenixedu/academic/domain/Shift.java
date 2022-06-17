@@ -106,28 +106,28 @@ public class Shift extends Shift_Base {
 //        this(executionCourse, types, lotacao, null);
 //    }
 
-//    public void edit(List<ShiftType> newTypes, ExecutionCourse newExecutionCourse, String newName, String comment) {
-//
-//        ExecutionCourse beforeExecutionCourse = getExecutionCourse();
-//
-//        if (newExecutionCourse.getAssociatedShifts().stream().anyMatch(s -> s.getNome().equals(newName) && s != this)) {
-//            throw new DomainException("error.Shift.with.this.name.already.exists");
-//        }
-//
-//        shiftTypeManagement(newTypes, newExecutionCourse);
-//        setNome(newName);
-//
-//        beforeExecutionCourse.setShiftNames();
-//        if (!beforeExecutionCourse.equals(newExecutionCourse)) {
-//            newExecutionCourse.setShiftNames();
-//        }
-//
-//        if (getCourseLoadsSet().isEmpty()) {
-//            throw new DomainException("error.Shift.empty.courseLoads");
-//        }
-//
-//        setComment(comment);
-//    }
+    public void edit(List<ShiftType> newTypes, ExecutionCourse newExecutionCourse, String newName, String comment) {
+
+        ExecutionCourse beforeExecutionCourse = getExecutionCourse();
+
+        if (newExecutionCourse.getAssociatedShifts().stream().anyMatch(s -> s.getName().equals(newName) && s != this)) {
+            throw new DomainException("error.Shift.with.this.name.already.exists");
+        }
+
+        shiftTypeManagement(newTypes, newExecutionCourse);
+        setName(newName);
+
+        beforeExecutionCourse.setShiftNames();
+        if (!beforeExecutionCourse.equals(newExecutionCourse)) {
+            newExecutionCourse.setShiftNames();
+        }
+
+        if (getCourseLoadsSet().isEmpty()) {
+            throw new DomainException("error.Shift.empty.courseLoads");
+        }
+
+        setComment(comment);
+    }
 
     public boolean isCustomName() {
         final String cleanSigla = getExecutionCourse().getSigla().replaceAll("\\(", "\\\\(").replaceAll("\\)", "\\\\)")
