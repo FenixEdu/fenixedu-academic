@@ -16,6 +16,7 @@
 - Refactor: Remove legacy library module
 - Refactor: Remove legacy pedagogical council module
 - Refactor: Remove legacy department member module
+- Refactor: Remove evaluation abstract methods
 
 32.14.0 (14-06-2022)
 - Refactor: Add new method to check if enrolment in special season exists

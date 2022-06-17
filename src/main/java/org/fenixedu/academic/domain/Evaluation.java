@@ -66,7 +66,9 @@ public abstract class Evaluation extends Evaluation_Base {
 //        return new Mark(attends, this, markValue);
 //    }
 
-    public abstract EvaluationType getEvaluationType();
+    public EvaluationType getEvaluationType() {
+        return null;
+    }
 
     public Mark getMarkByAttend(Attends attends) {
         for (Mark mark : getMarksSet()) {
@@ -104,7 +106,9 @@ public abstract class Evaluation extends Evaluation_Base {
         }
     }
 
-    public abstract Date getEvaluationDate();
+    public Date getEvaluationDate() {
+        return null;
+    }
 
     public InfoEvaluation newInfoFromDomain() {
         InfoEvaluation infoEvaluation = new InfoEvaluation();
