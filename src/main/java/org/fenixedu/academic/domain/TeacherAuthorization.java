@@ -22,7 +22,6 @@ import java.util.Objects;
 
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 
@@ -68,12 +67,6 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
                 workPercentageInInstitution);
     }
 
-    @Override
-    public DateTime getCreationDate() {
-        //FIXME: remove when the framework enables read-only slots
-        return super.getCreationDate();
-    }
-
     public void revoke() {
         setRevokedTeacher(getTeacher());
         setTeacher(null);
@@ -95,7 +88,6 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
         if (getRevokedRootDomainObject() != null) {
             return getRevokedDepartment();
         }
-        // FIXME: Removed when framework support read-only slots
         return super.getDepartment();
     }
 
@@ -120,13 +112,11 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
         if (getRevokedRootDomainObject() != null) {
             return getRevokedExecutionSemester();
         }
-        // FIXME: Removed when framework support read-only slots
         return super.getExecutionSemester();
     }
 
     @Override
     public Teacher getTeacher() {
-        // FIXME: Removed when framework support read-only slots
         if (getRevokedRootDomainObject() != null) {
             return getRevokedTeacher();
         }
@@ -134,45 +124,8 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
         return super.getTeacher();
     }
 
-    @Override
-    public TeacherCategory getTeacherCategory() {
-        // FIXME: Removed when framework support read-only slots
-        return super.getTeacherCategory();
-    }
-
     public boolean isContracted() {
-        // FIXME: Removed when framework support read-only slots
         return super.getContracted();
-    }
-
-    @Override
-    public Double getLessonHours() {
-        // FIXME: Removed when framework support read-only slots
-        return super.getLessonHours();
-    }
-
-    @Override
-    public Double getWorkPercentageInInstitution() {
-        // FIXME: Removed when framework support read-only slots
-        return super.getWorkPercentageInInstitution();
-    }
-
-    @Override
-    public User getAuthorizer() {
-        // FIXME: Removed when framework support read-only slots
-        return super.getAuthorizer();
-    }
-
-    @Override
-    public User getRevoker() {
-        // FIXME: Removed when framework support read-only slots
-        return super.getRevoker();
-    }
-
-    @Override
-    public DateTime getRevokeTime() {
-        // FIXME: Removed when framework support read-only slots
-        return super.getRevokeTime();
     }
 
     @Override
@@ -200,6 +153,14 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
         super.setAuthorizer(null);
         super.setTeacherCategory(null);
         super.setRootDomainObject(null);
+
+        super.setRevokedDepartment(null);
+        super.setRevokedExecutionSemester(null);
+        super.setRevokedTeacher(null);
+        super.setRevokedUnit(null);
+        super.setRevokedRootDomainObject(null);
+        super.setRevoker(null);
+
         super.deleteDomainObject();
     }
 

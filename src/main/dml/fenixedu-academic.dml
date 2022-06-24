@@ -751,11 +751,11 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
     }
 
 	class TeacherAuthorization {
-	    protected DateTime creationDate;
-	    protected Boolean contracted (REQUIRED);
-	    protected DateTime revokeTime;
-        protected Double lessonHours (REQUIRED);
-        protected Double workPercentageInInstitution;
+	    DateTime creationDate;
+	    Boolean contracted (REQUIRED);
+	    DateTime revokeTime;
+        Double lessonHours (REQUIRED);
+        Double workPercentageInInstitution;
 	}
 
 	class TeacherCategory {
@@ -4546,10 +4546,10 @@ relation TeacherRevokedTeacherAuthorization {
 }
 
 relation DepartmentTeacherAuthorizations {
-    protected Department playsRole department {
+    Department playsRole department {
         multiplicity 0..1;
     }
-    protected TeacherAuthorization playsRole teacherAuthorization {
+    TeacherAuthorization playsRole teacherAuthorization {
     	multiplicity *;
 	}
 }
@@ -4558,16 +4558,16 @@ relation UnitTeacherAuthorizations {
     organizationalStructure.Unit playsRole unit {
         multiplicity 0..1;
     }
-    protected TeacherAuthorization playsRole teacherAuthorizations {
+    TeacherAuthorization playsRole teacherAuthorizations {
     	multiplicity *;
 	}
 }
 
 relation DepartmentRevokedTeacherAuthorizations {
-    protected Department playsRole revokedDepartment {
+    Department playsRole revokedDepartment {
         multiplicity 0..1;
     }
-    protected TeacherAuthorization playsRole revokedTeacherAuthorization {
+    TeacherAuthorization playsRole revokedTeacherAuthorization {
         multiplicity *;
     }
 }
@@ -4576,7 +4576,7 @@ relation UnitRevokedTeacherAuthorizations {
     organizationalStructure.Unit playsRole revokedUnit {
         multiplicity 0..1;
     }
-    protected TeacherAuthorization playsRole revokedTeacherAuthorizations {
+    TeacherAuthorization playsRole revokedTeacherAuthorizations {
         multiplicity *;
     }
 }
@@ -4591,28 +4591,28 @@ relation ExecutionSemesterTeacherAuthorizations {
 }
 
 relation ExecutionSemesterRevokedTeacherAuthorizations {
-    protected ExecutionInterval playsRole revokedExecutionSemester {
+    ExecutionInterval playsRole revokedExecutionSemester {
         multiplicity 0..1;
     }
-    protected TeacherAuthorization playsRole revokedTeacherAuthorization {
+    TeacherAuthorization playsRole revokedTeacherAuthorization {
         multiplicity *;
     }
 }
 
 relation TeacherAuthorizationAuthorizer {
-    protected .org.fenixedu.bennu.core.domain.User playsRole authorizer {
+    .org.fenixedu.bennu.core.domain.User playsRole authorizer {
         multiplicity 0..1;
     }
-    protected TeacherAuthorization playsRole teacherAuthorizationAuthorized {
+    TeacherAuthorization playsRole teacherAuthorizationAuthorized {
         multiplicity *;
     }
 }
 
 relation TeacherAuthorizationRevokerer {
-	protected .org.fenixedu.bennu.core.domain.User playsRole revoker {
+	.org.fenixedu.bennu.core.domain.User playsRole revoker {
         multiplicity 0..1;
 	}
-	protected TeacherAuthorization playsRole teacherAuthorizationRevoked {
+	TeacherAuthorization playsRole teacherAuthorizationRevoked {
     	multiplicity *;
 	}
 }
@@ -4627,10 +4627,10 @@ relation TeacherCategoryRoot {
 }
 
 relation TeacherAuthorizationTeacherCategory {
-    protected TeacherCategory playsRole teacherCategory {
+    TeacherCategory playsRole teacherCategory {
         multiplicity 1..1;
     }
-    protected TeacherAuthorization playsRole authorization {
+    TeacherAuthorization playsRole authorization {
         multiplicity *;
     }
 }

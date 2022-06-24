@@ -1,3 +1,5 @@
+- Refactor: Change teacher authorizations slots visibility in order to allow edition
+
 33.0.0 (17-06-2022)
 - Bug Fix: Remove the personal ingression data when a student is deleted
 - Refactor: Remove legacy resource allocation manager functionalities
