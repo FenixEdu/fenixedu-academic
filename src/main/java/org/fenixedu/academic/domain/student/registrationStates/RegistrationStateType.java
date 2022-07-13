@@ -30,40 +30,37 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
  */
 public enum RegistrationStateType {
 
-    REGISTERED(true, true),
+    REGISTERED(true),
 
-    MOBILITY(true, true),
+    MOBILITY(true),
 
-    CANCELED(false, false),
+    CANCELED(false),
 
-    CONCLUDED(false, true),
+    CONCLUDED(false),
 
-    FLUNKED(false, false),
+    FLUNKED(false),
 
-    INTERRUPTED(false, false),
+    INTERRUPTED(false),
 
-    SCHOOLPARTCONCLUDED(false, true),
+    SCHOOLPARTCONCLUDED(false),
 
-    INTERNAL_ABANDON(false, false),
+    INTERNAL_ABANDON(false),
 
-    EXTERNAL_ABANDON(false, false),
+    EXTERNAL_ABANDON(false),
 
-    TRANSITION(false, true),
+    TRANSITION(false),
 
-    TRANSITED(false, true),
+    TRANSITED(false),
 
-    STUDYPLANCONCLUDED(false, true),
+    STUDYPLANCONCLUDED(false),
 
-    INACTIVE(false, false); //Closed state for the registrations regarding the AFA & MA protocols
+    INACTIVE(false); //Closed state for the registrations regarding the AFA & MA protocols
 
-    private RegistrationStateType(final boolean active, final boolean canHaveCurriculumLinesOnCreation) {
+    private RegistrationStateType(final boolean active) {
         this.active = active;
-        this.canHaveCurriculumLinesOnCreation = canHaveCurriculumLinesOnCreation;
     }
 
     private boolean active;
-
-    private boolean canHaveCurriculumLinesOnCreation;
 
     public String getName() {
         return name();
@@ -77,10 +74,6 @@ public enum RegistrationStateType {
         return !active;
     }
 
-    public boolean canHaveCurriculumLinesOnCreation() {
-        return canHaveCurriculumLinesOnCreation;
-    }
-
     public String getQualifiedName() {
         return RegistrationStateType.class.getSimpleName() + "." + name();
     }
@@ -91,11 +84,6 @@ public enum RegistrationStateType {
 
     public String getDescription() {
         return BundleUtil.getString(Bundle.ENUMERATION, getQualifiedName());
-    }
-
-    public boolean canReingress() {
-        return this == FLUNKED || this == INTERRUPTED || this == INTERNAL_ABANDON || this == EXTERNAL_ABANDON || this == CANCELED
-                || this == INACTIVE;
     }
 
 }
