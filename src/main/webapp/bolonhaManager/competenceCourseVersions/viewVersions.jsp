@@ -100,7 +100,7 @@
 					<fr:layout name="null-as-label">
 						<fr:property name="label" value="-"/>
 						<fr:property name="subLayout" value="values"/>
-						<fr:property name="subSchema" value="showNickName"/>
+						<fr:property name="subSchema" value="responsiblePerson.name"/>
 					</fr:layout>
 				</fr:view>
 			</td>
@@ -109,7 +109,7 @@
 					<fr:layout name="null-as-label">
 						<fr:property name="label" value="-"/>
 						<fr:property name="subLayout" value="values"/>
-						<fr:property name="subSchema" value="showNickName"/>
+						<fr:property name="subSchema" value="responsiblePerson.name"/>
 					</fr:layout>
 				</fr:view>
 			</td>
