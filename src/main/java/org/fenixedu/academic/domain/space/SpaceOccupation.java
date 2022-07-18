@@ -32,36 +32,36 @@ public abstract class SpaceOccupation extends SpaceOccupation_Base {
         super();
     }
 
-    public abstract Group getAccessGroup();
+//    public abstract Group getAccessGroup();
 
-    public void checkPermissionsToManageSpaceOccupations() {
-        User user = Authenticate.getUser();
-        Space r = getSpace();
-        if (SpaceUtils.personIsSpacesAdministrator(user.getPerson()) || r.getManagementGroupWithChainOfResponsability() != null
-                && r.getManagementGroupWithChainOfResponsability().isMember(user)) {
-            return;
-        }
+//    public void checkPermissionsToManageSpaceOccupations() {
+//        User user = Authenticate.getUser();
+//        Space r = getSpace();
+//        if (SpaceUtils.personIsSpacesAdministrator(user.getPerson()) || r.getManagementGroupWithChainOfResponsability() != null
+//                && r.getManagementGroupWithChainOfResponsability().isMember(user)) {
+//            return;
+//        }
+//
+//        final Group group = getAccessGroup();
+//        if (group != null && group.isMember(user)) {
+//            return;
+//        }
+//
+//        throw new DomainException("error.logged.person.not.authorized.to.make.operation");
+//    }
 
-        final Group group = getAccessGroup();
-        if (group != null && group.isMember(user)) {
-            return;
-        }
-
-        throw new DomainException("error.logged.person.not.authorized.to.make.operation");
-    }
-
-    public void checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManager() {
-        User user = Authenticate.getUser();
-        if (getSpace() == null) {
-            return;
-        }
-        final Group group = getAccessGroup();
-        if (group != null && group.isMember(user)) {
-            return;
-        }
-
-        throw new DomainException("error.logged.person.not.authorized.to.make.operation");
-    }
+//    public void checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManager() {
+//        User user = Authenticate.getUser();
+//        if (getSpace() == null) {
+//            return;
+//        }
+//        final Group group = getAccessGroup();
+//        if (group != null && group.isMember(user)) {
+//            return;
+//        }
+//
+//        throw new DomainException("error.logged.person.not.authorized.to.make.operation");
+//    }
 
     public Space getSpace() {
         Set<Space> spaces = getSpaces();

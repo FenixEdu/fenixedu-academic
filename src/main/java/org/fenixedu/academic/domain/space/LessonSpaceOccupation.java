@@ -18,22 +18,20 @@
  */
 package org.fenixedu.academic.domain.space;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.SortedSet;
 
-import org.fenixedu.academic.domain.ExecutionCourse;
-import org.fenixedu.academic.domain.FrequencyType;
 import org.fenixedu.academic.domain.Lesson;
 import org.fenixedu.academic.domain.OccupationPeriod;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.DiaSemana;
-import org.fenixedu.academic.util.HourMinuteSecond;
-import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import com.google.common.collect.Lists;
@@ -54,12 +52,11 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
         if (getPeriod() == null) {
             throw new DomainException("error.LessonSpaceOccupation.empty.period");
         }
-
         if (allocatableSpace != null /* && !allocatableSpace.isFree(this) */
                 && !allocatableSpace.isFree(Lists.newArrayList(lesson.getAllLessonIntervalsWithoutInstanceDates()))) {
-            throw new DomainException("error.LessonSpaceOccupation.room.is.not.free", allocatableSpace.getName(), getPeriod()
-                    .getStartYearMonthDay().toString("dd-MM-yyy"), getPeriod().getLastOccupationPeriodOfNestedPeriods()
-                    .getEndYearMonthDay().toString("dd-MM-yyy"));
+            throw new DomainException("error.LessonSpaceOccupation.room.is.not.free", allocatableSpace.getName(),
+                    getPeriod().getStartYearMonthDay().toString("dd-MM-yyy"),
+                    getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay().toString("dd-MM-yyy"));
         }
 
         setResource(allocatableSpace);
@@ -74,9 +71,9 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
                 getLesson().getAllLessonIntervalsWithoutInstanceDates();
         if (allocatableSpace != null /* && !allocatableSpace.isFree(this) */
                 && !allocatableSpace.isFree(Lists.newArrayList(allLessonIntervalsWithoutInstanceDates))) {
-            throw new DomainException("error.LessonSpaceOccupation.room.is.not.free", allocatableSpace.getName(), getPeriod()
-                    .getStartYearMonthDay().toString("dd-MM-yyy"), getPeriod().getLastOccupationPeriodOfNestedPeriods()
-                    .getEndYearMonthDay().toString("dd-MM-yyy"));
+            throw new DomainException("error.LessonSpaceOccupation.room.is.not.free", allocatableSpace.getName(),
+                    getPeriod().getStartYearMonthDay().toString("dd-MM-yyy"),
+                    getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay().toString("dd-MM-yyy"));
         }
 
         setResource(allocatableSpace);
@@ -88,18 +85,18 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
         super.delete();
     }
 
-    public OccupationPeriod getPeriod() {
+    private OccupationPeriod getPeriod() {
         return getLesson() == null ? null : getLesson().getPeriod();
     }
 
-    @Override
-    protected boolean intersects(YearMonthDay startDate, YearMonthDay endDate) {
-        return getPeriod() != null && getPeriod().nestedOccupationPeriodsIntersectDates(startDate, endDate);
-    }
+//    @Override
+//    protected boolean intersects(YearMonthDay startDate, YearMonthDay endDate) {
+//        return getPeriod() != null && getPeriod().nestedOccupationPeriodsIntersectDates(startDate, endDate);
+//    }
 
     @Override
-    public List<Interval> getEventSpaceOccupationIntervals(YearMonthDay startDateToSearch, YearMonthDay endDateToSearch) {
-        return Lists.newArrayList(getLesson().getAllLessonIntervalsWithoutInstanceDates());
+    public List<Interval> getIntervals() {
+        return new ArrayList<>(getLesson().getAllLessonIntervalsWithoutInstanceDates());
     }
 
     @Override
@@ -110,65 +107,66 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
         super.setLesson(lesson);
     }
 
-    @Override
-    public FrequencyType getFrequency() {
-        return getLesson().getFrequency();
-    }
+//    @Override
+//    public FrequencyType getFrequency() {
+//        return getLesson().getFrequency();
+//    }
 
-    @Override
-    public Group getAccessGroup() {
-        return getSpace().getOccupationsGroupWithChainOfResponsability();
-    }
+//    @Override
+//    public Group getAccessGroup() {
+//        return getSpace().getOccupationsGroupWithChainOfResponsability();
+//    }
 
-    @Override
-    public YearMonthDay getBeginDate() {
-        return getPeriod() != null ? getPeriod().getStartYearMonthDay() : null;
-    }
+//    @Override
+//    public LocalDate getBeginDate() {
+//        return getPeriod() != null ? getPeriod().getStartYearMonthDay().toLocalDate() : null;
+//    }
+//
+//    @Override
+//    public LocalDate getEndDate() {
+//        return getPeriod() != null ? getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay()
+//                .toLocalDate() : null;
+//    }
+//
+//    @Override
+//    public DiaSemana getDayOfWeek() {
+//        return getLesson().getDiaSemana();
+//    }
+//
+//    @Override
+//    public HourMinuteSecond getStartTimeDateHourMinuteSecond() {
+//        return getLesson().getBeginHourMinuteSecond();
+//    }
+//
+//    @Override
+//    public HourMinuteSecond getEndTimeDateHourMinuteSecond() {
+//        return getLesson().getEndHourMinuteSecond();
+//    }
 
-    @Override
-    public YearMonthDay getEndDate() {
-        return getPeriod() != null ? getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay() : null;
-    }
+//    @Override
+//    public Boolean getDailyFrequencyMarkSaturday() {
+//        return null;
+//    }
+//
+//    @Override
+//    public Boolean getDailyFrequencyMarkSunday() {
+//        return null;
+//    }
 
-    @Override
-    public DiaSemana getDayOfWeek() {
-        return getLesson().getDiaSemana();
-    }
-
-    @Override
-    public HourMinuteSecond getStartTimeDateHourMinuteSecond() {
-        return getLesson().getBeginHourMinuteSecond();
-    }
-
-    @Override
-    public HourMinuteSecond getEndTimeDateHourMinuteSecond() {
-        return getLesson().getEndHourMinuteSecond();
-    }
-
-    @Override
-    public Boolean getDailyFrequencyMarkSaturday() {
-        return null;
-    }
-
-    @Override
-    public Boolean getDailyFrequencyMarkSunday() {
-        return null;
-    }
-
-    @Override
-    public boolean isOccupiedByExecutionCourse(final ExecutionCourse executionCourse, final DateTime start, final DateTime end) {
-        final Lesson lesson = getLesson();
-        if (lesson.getExecutionCourse() == executionCourse) {
-            final List<Interval> intervals =
-                    getEventSpaceOccupationIntervals(start.toYearMonthDay(), end.toYearMonthDay().plusDays(1));
-            for (final Interval interval : intervals) {
-                if (start.isBefore(interval.getEnd()) && end.isAfter(interval.getStart())) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+//    @Override
+//    public boolean isOccupiedByExecutionCourse(final ExecutionCourse executionCourse, final DateTime start, final DateTime end) {
+//        final Lesson lesson = getLesson();
+//        if (lesson.getExecutionCourse() == executionCourse) {
+//            final List<Interval> intervals =
+//                    getEventSpaceOccupationIntervals(start.toYearMonthDay(), end.toYearMonthDay().plusDays(1));
+//            for (final Interval interval : intervals) {
+//                if (start.isBefore(interval.getEnd()) && end.isAfter(interval.getStart())) {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
 
     @Override
     public String getUrl() {
@@ -194,34 +192,24 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
         return getLesson().getShift().getExecutionCourse().getSigla();
     }
 
-    @Override
-    protected boolean overlaps(final Interval interval) {
-        return getLesson().overlaps(interval);
-    }
-    
+//    @Override
+//    protected boolean overlaps(final Interval interval) {
+//        return getLesson().overlaps(interval);
+//    }
+
     @Override
     public String getType() {
         return BundleUtil.getString(Bundle.APPLICATION, "label.lesson");
     }
-    
+
     @Override
     public DateTime getStart() {
-        List<Interval> intervals = getPeriod().getIntervals();
-        intervals.sort((i1, i2) -> i1.getStart().compareTo(i2.getStart()));
-        if (intervals.size() > 0) {
-            return intervals.get(0).getStart();
-        }
-        return null;
+        return getIntervals().stream().map(Interval::getStart).min(Comparator.naturalOrder()).orElse(null);
     }
 
     @Override
     public DateTime getEnd() {
-        List<Interval> intervals = getPeriod().getIntervals();
-        intervals.sort((i1, i2) -> i1.getEnd().compareTo(i2.getEnd()));
-        if (intervals.size() > 0) {
-            return intervals.get(intervals.size() - 1).getEnd();
-        }
-        return null;
+        return getIntervals().stream().map(Interval::getEnd).max(Comparator.naturalOrder()).orElse(null);
     }
 
 }

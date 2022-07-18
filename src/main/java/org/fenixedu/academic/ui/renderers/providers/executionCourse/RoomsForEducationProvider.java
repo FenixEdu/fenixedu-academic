@@ -18,10 +18,14 @@
  */
 package org.fenixedu.academic.ui.renderers.providers.executionCourse;
 
+import java.text.Collator;
+import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.fenixedu.academic.domain.space.SpaceUtils;
 import org.fenixedu.spaces.domain.Space;
 
@@ -31,12 +35,16 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class RoomsForEducationProvider implements DataProvider {
 
+    private final static Comparator<Space> ROOM_COMPARATOR_BY_NAME = new ComparatorChain();
+    static {
+        ((ComparatorChain) ROOM_COMPARATOR_BY_NAME).addComparator(new BeanComparator("name", Collator.getInstance()));
+        ((ComparatorChain) ROOM_COMPARATOR_BY_NAME).addComparator(new BeanComparator("externalId"));
+    }
+
     @Override
     public Object provide(Object source, Object currentValue) {
-        Set<Space> rooms = new TreeSet<Space>(SpaceUtils.ROOM_COMPARATOR_BY_NAME);
-        rooms.addAll(SpaceUtils.allocatableSpaces()
-                .filter(space -> space.isActive())
-                .collect(Collectors.toList()));
+        Set<Space> rooms = new TreeSet<Space>(ROOM_COMPARATOR_BY_NAME);
+        rooms.addAll(SpaceUtils.allocatableSpaces().filter(space -> space.isActive()).collect(Collectors.toList()));
         return rooms;
     }
 

@@ -27,7 +27,7 @@ import org.fenixedu.spaces.domain.Space;
 public class SpaceArgument implements ArgumentParser<Space> {
     @Override
     public Space parse(String argument) {
-        return SpaceUtils.getSpaceByName(argument);
+        return SpaceUtils.findSpaceByName(argument).findAny().get();
     }
 
     @Override

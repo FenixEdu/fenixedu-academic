@@ -1,3 +1,4 @@
+- Refactor: Clean unused legacy space occupation and space utils code  
 - Refactor: Remove unused field canHaveCurriculumLinesOnCreation from RegistrationStateType
 - Bug Fix: Fix bug which prevents the edition of RegistrationProtocol which is set by omission
 

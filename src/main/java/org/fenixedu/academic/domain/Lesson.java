@@ -348,15 +348,15 @@ public class Lesson extends Lesson_Base {
         }
     }
 
-    private void refreshPeriodAndInstancesInEditOperation(YearMonthDay newBeginDate, YearMonthDay newEndDate,
-            Boolean createLessonInstances) {
-
-        removeExistentInstancesWithoutSummaryAfterOrEqual(newBeginDate);
-        SortedSet<YearMonthDay> instanceDates =
-                getAllLessonInstancesDatesToCreate(getLessonStartDay(), newBeginDate.minusDays(1), createLessonInstances);
-        refreshPeriod(newBeginDate, newEndDate);
-        createAllLessonInstances(instanceDates);
-    }
+//    private void refreshPeriodAndInstancesInEditOperation(YearMonthDay newBeginDate, YearMonthDay newEndDate,
+//            Boolean createLessonInstances) {
+//
+//        removeExistentInstancesWithoutSummaryAfterOrEqual(newBeginDate);
+//        SortedSet<YearMonthDay> instanceDates =
+//                getAllLessonInstancesDatesToCreate(getLessonStartDay(), newBeginDate.minusDays(1), createLessonInstances);
+//        refreshPeriod(newBeginDate, newEndDate);
+//        createAllLessonInstances(instanceDates);
+//    }
 
     private void createAllLessonInstances(SortedSet<YearMonthDay> instanceDates) {
         for (YearMonthDay day : instanceDates) {
@@ -765,35 +765,35 @@ public class Lesson extends Lesson_Base {
         return dates;
     }
 
-    public boolean overlaps(final Interval interval) {
-        if (wasFinished()) {
-            return false;
-        }
-        final YearMonthDay startDateToSearch = getLessonStartDay();
-        if (startDateToSearch == null) {
-            return false;
-        }
-        final YearMonthDay endDateToSearch = getLessonEndDay();
-        if (endDateToSearch == null) {
-            return false;
-        }
-        final DateTime intervalStart = interval.getStart();
-        if (intervalStart.isAfter(endDateToSearch.toDateTimeAtMidnight().plusDays(1))) {
-            return false;
-        }
-        final DateTime intervalEnd = interval.getEnd();
-        if (intervalEnd.isBefore(startDateToSearch.toDateTimeAtMidnight())) {
-            return false;
-        }
-        final HourMinuteSecond b = getBeginHourMinuteSecond();
-        final HourMinuteSecond e = getEndHourMinuteSecond();
-        for (final YearMonthDay yearMonthDay : getAllValidLessonDatesWithoutInstancesDates(startDateToSearch, endDateToSearch)) {
-            if (new Interval(toDateTime(yearMonthDay, b), toDateTime(yearMonthDay, e)).overlaps(interval)) {
-                return true;
-            }
-        }
-        return false;
-    }
+//    public boolean overlaps(final Interval interval) {
+//        if (wasFinished()) {
+//            return false;
+//        }
+//        final YearMonthDay startDateToSearch = getLessonStartDay();
+//        if (startDateToSearch == null) {
+//            return false;
+//        }
+//        final YearMonthDay endDateToSearch = getLessonEndDay();
+//        if (endDateToSearch == null) {
+//            return false;
+//        }
+//        final DateTime intervalStart = interval.getStart();
+//        if (intervalStart.isAfter(endDateToSearch.toDateTimeAtMidnight().plusDays(1))) {
+//            return false;
+//        }
+//        final DateTime intervalEnd = interval.getEnd();
+//        if (intervalEnd.isBefore(startDateToSearch.toDateTimeAtMidnight())) {
+//            return false;
+//        }
+//        final HourMinuteSecond b = getBeginHourMinuteSecond();
+//        final HourMinuteSecond e = getEndHourMinuteSecond();
+//        for (final YearMonthDay yearMonthDay : getAllValidLessonDatesWithoutInstancesDates(startDateToSearch, endDateToSearch)) {
+//            if (new Interval(toDateTime(yearMonthDay, b), toDateTime(yearMonthDay, e)).overlaps(interval)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     public SortedSet<YearMonthDay> getAllLessonDates() {
         SortedSet<YearMonthDay> dates = getAllLessonInstanceDates();

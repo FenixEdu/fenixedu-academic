@@ -18,10 +18,6 @@
  */
 package org.fenixedu.academic.ui.renderers.providers.spaceManager;
 
-import java.util.Set;
-import java.util.TreeSet;
-
-import org.fenixedu.academic.domain.space.SpaceUtils;
 import org.fenixedu.spaces.domain.Space;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
@@ -32,10 +28,7 @@ public class CampusProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        Set<Space> result = new TreeSet<Space>(SpaceUtils.COMPARATOR_BY_PRESENTATION_NAME);
-        Set<Space> allActiveCampus = Space.getAllCampus();
-        result.addAll(allActiveCampus);
-        return result;
+        return Space.getAllCampus();
     }
 
     @Override

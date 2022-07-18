@@ -23,10 +23,12 @@
 package org.fenixedu.academic.dto;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import org.fenixedu.academic.domain.FrequencyType;
 import org.fenixedu.academic.domain.space.EventSpaceOccupation;
 import org.fenixedu.academic.util.DiaSemana;
+import org.fenixedu.academic.util.HourMinuteSecond;
 
 /**
  * @author Ana e Ricardo
@@ -48,30 +50,40 @@ public class InfoRoomOccupation extends InfoObject {
         return roomOccupationDomainReference;
     }
 
-    public FrequencyType getFrequency() {
-        return getRoomOccupation().getFrequency();
-    }
+//    public FrequencyType getFrequency() {
+//        return getRoomOccupation().getFrequency();
+//    }
 
     /**
      * @return
      */
-    public DiaSemana getDayOfWeek() {
-        return getRoomOccupation().getDayOfWeek();
-    }
+//    public DiaSemana getDayOfWeek() {
+//        return getRoomOccupation().getDayOfWeek();
+//    }
 
-    /**
-     * @return
-     */
-    public Calendar getEndTime() {
-        return getRoomOccupation().getEndTime();
-    }
-
-    /**
-     * @return
-     */
-    public Calendar getStartTime() {
-        return getRoomOccupation().getStartTime();
-    }
+//    public Calendar getEndTime() {
+//        HourMinuteSecond hms = getRoomOccupation().getEndTimeDateHourMinuteSecond();
+//        Date date =
+//                (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+//        if (date != null) {
+//            Calendar result = Calendar.getInstance();
+//            result.setTime(date);
+//            return result;
+//        }
+//        return null;
+//    }
+//
+//    public Calendar getStartTime() {
+//        HourMinuteSecond hms = getRoomOccupation().getStartTimeDateHourMinuteSecond();
+//        Date date =
+//                (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+//        if (date != null) {
+//            Calendar result = Calendar.getInstance();
+//            result.setTime(date);
+//            return result;
+//        }
+//        return null;
+//    }
 
     /**
      * @return Returns the infoRoom.

@@ -54,10 +54,10 @@ public class InfoRoom extends InfoObject implements Comparable {
         return building != null ? building.getName() : "";
     }
 
-    public Integer getPiso() {
-        Space spaceFloor = SpaceUtils.getSpaceFloor(getRoom());
-        return spaceFloor != null ? spaceFloor.<Integer> getMetadata("level").orElse(null) : null;
-    }
+//    public Integer getPiso() {
+//        Space spaceFloor = SpaceUtils.getSpaceFloor(getRoom());
+//        return spaceFloor != null ? spaceFloor.<Integer> getMetadata("level").orElse(null) : null;
+//    }
 
     public String getTipo() {
         return getRoom().getClassification().getName().getContent();

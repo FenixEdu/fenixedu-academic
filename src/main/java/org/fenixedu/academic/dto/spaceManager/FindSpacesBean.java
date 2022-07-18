@@ -83,10 +83,21 @@ public class FindSpacesBean implements Serializable {
     private List<LinkObject> getPath(Space space) {
         List<LinkObject> result = new ArrayList<LinkObject>();
         if (space != null) {
-            List<Space> spaceFullPath = SpaceUtils.getSpaceFullPath(space);
+            List<Space> spaceFullPath = getSpaceFullPath(space);
             for (Space surroundingSpace : spaceFullPath) {
                 result.add(new LinkObject(surroundingSpace.getExternalId(), "viewSpace", surroundingSpace.getName()));
             }
+        }
+        return result;
+    }
+    
+    private static List<Space> getSpaceFullPath(Space space) {
+        List<Space> result = new ArrayList<Space>();
+        result.add(space);
+        Space suroundingSpace = space.getParent();
+        while (suroundingSpace != null) {
+            result.add(0, suroundingSpace);
+            suroundingSpace = suroundingSpace.getParent();
         }
         return result;
     }
@@ -154,7 +165,7 @@ public class FindSpacesBean implements Serializable {
 
     public Boolean getWithSchedule() {
         Space space = getSpace();
-        if (space != null && (SpaceUtils.isRoom(space) || SpaceUtils.isRoomSubdivision(space))) {
+        if (space != null && SpaceUtils.isRoom(space)) {
             return Boolean.TRUE;
         }
         return Boolean.FALSE;

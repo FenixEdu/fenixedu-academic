@@ -18,28 +18,22 @@
  */
 package org.fenixedu.academic.domain.space;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import org.fenixedu.academic.domain.ExecutionCourse;
-import org.fenixedu.academic.domain.FrequencyType;
 import org.fenixedu.academic.domain.Lesson;
 import org.fenixedu.academic.domain.LessonInstance;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.academic.util.DiaSemana;
-import org.fenixedu.academic.util.HourMinuteSecond;
-import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
-import org.joda.time.TimeOfDay;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
-
-import com.google.common.collect.Lists;
 
 public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation_Base {
 
@@ -63,16 +57,9 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
         }
 
         Space space = getSpace();
-        //final ExecutionCourse executionCourse = lessonInstance.getLesson().getExecutionCourse();
-        if (/*!space.isOccupiedByExecutionCourse(executionCourse, lessonInstance.getBeginDateTime(),
-                lessonInstance.getEndDateTime())
-                &&*//*!space.isFree(lessonInstance.getDay(), lessonInstance.getDay(), lessonInstance.getStartTime(),
-                    lessonInstance.getEndTime(), lessonInstance.getDayOfweek(), null, null, null)*/
-        !space.isFree(Lists.newArrayList(new Interval[] { new Interval(lessonInstance.getBeginDateTime(), lessonInstance
-                .getEndDateTime()) }))) {
-
-            throw new DomainException("error.LessonInstanceSpaceOccupation.room.is.not.free", space.getName(), lessonInstance
-                    .getDay().toString("dd-MM-yy"));
+        if (!space.isFree(lessonInstance.getInterval())) {
+            throw new DomainException("error.LessonInstanceSpaceOccupation.room.is.not.free", space.getName(),
+                    lessonInstance.getDay().toString("dd-MM-yy"));
         }
 
         addLessonInstances(lessonInstance);
@@ -93,87 +80,72 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
         }
     }
 
-    @Override
-    protected boolean intersects(YearMonthDay startDate, YearMonthDay endDate) {
-        return true;
-    }
+//    @Override
+//    protected boolean intersects(YearMonthDay startDate, YearMonthDay endDate) {
+//        return true;
+//    }
 
     @Override
-    public List<Interval> getEventSpaceOccupationIntervals(YearMonthDay startDateToSearch, YearMonthDay endDateToSearch) {
-
-        List<Interval> result = new ArrayList<Interval>();
-        Collection<LessonInstance> lessonInstances = getLessonInstancesSet();
-
-        DateTime startDateTime = startDateToSearch != null ? startDateToSearch.toDateTimeAtMidnight() : null;
-        DateTime endDateTime = endDateToSearch != null ? endDateToSearch.toDateTime(new TimeOfDay(23, 59, 59)) : null;
-
-        for (LessonInstance lessonInstance : lessonInstances) {
-            if (startDateTime == null
-                    || (!lessonInstance.getEndDateTime().isBefore(startDateTime) && !lessonInstance.getBeginDateTime().isAfter(
-                            endDateTime))) {
-
-                result.add(new Interval(lessonInstance.getBeginDateTime(), lessonInstance.getEndDateTime()));
-            }
-        }
-        return result;
+    public List<Interval> getIntervals() {
+        return getLessonInstancesSet().stream().map(LessonInstance::getInterval).collect(Collectors.toUnmodifiableList());
     }
 
-    @Override
-    public YearMonthDay getBeginDate() {
-        return null;
-    }
+//    @Override
+//    public LocalDate getBeginDate() {
+//        return getLessonInstancesSet().stream().map(LessonInstance::getDate).min(Comparator.naturalOrder()).orElse(null);
+//    }
+//    
+//    @Override
+//    public LocalDate getEndDate() {
+//        return getLessonInstancesSet().stream().map(LessonInstance::getDate).max(Comparator.naturalOrder()).orElse(null);
+//    }
+//
+//    @Override
+//    public HourMinuteSecond getStartTimeDateHourMinuteSecond() {
+//        return null;
+//    }
+//
+//    @Override
+//    public HourMinuteSecond getEndTimeDateHourMinuteSecond() {
+//        return null;
+//    }
+//
+//    @Override
+//    public FrequencyType getFrequency() {
+//        return null;
+//    }
+//
+//    @Override
+//    public DiaSemana getDayOfWeek() {
+//        return null;
+//    }
 
-    @Override
-    public YearMonthDay getEndDate() {
-        return null;
-    }
+//    @Override
+//    public Boolean getDailyFrequencyMarkSaturday() {
+//        return null;
+//    }
+//
+//    @Override
+//    public Boolean getDailyFrequencyMarkSunday() {
+//        return null;
+//    }
 
-    @Override
-    public HourMinuteSecond getStartTimeDateHourMinuteSecond() {
-        return null;
-    }
+//    @Override
+//    public Group getAccessGroup() {
+//        return getSpace().getOccupationsGroupWithChainOfResponsability();
+//    }
 
-    @Override
-    public HourMinuteSecond getEndTimeDateHourMinuteSecond() {
-        return null;
-    }
-
-    @Override
-    public FrequencyType getFrequency() {
-        return null;
-    }
-
-    @Override
-    public DiaSemana getDayOfWeek() {
-        return null;
-    }
-
-    @Override
-    public Boolean getDailyFrequencyMarkSaturday() {
-        return null;
-    }
-
-    @Override
-    public Boolean getDailyFrequencyMarkSunday() {
-        return null;
-    }
-
-    @Override
-    public Group getAccessGroup() {
-        return getSpace().getOccupationsGroupWithChainOfResponsability();
-    }
-
-    @Override
-    public boolean isOccupiedByExecutionCourse(final ExecutionCourse executionCourse, final DateTime start, final DateTime end) {
-        for (final LessonInstance lessonInstance : getLessonInstancesSet()) {
-            final Lesson lesson = lessonInstance.getLesson();
-            if (lesson.getExecutionCourse() == executionCourse && start.isBefore(lessonInstance.getEndDateTime())
-                    && end.isAfter(lessonInstance.getBeginDateTime())) {
-                return true;
-            }
-        }
-        return false;
-    }
+//    @Override
+//    public boolean isOccupiedByExecutionCourse(final ExecutionCourse executionCourse, final DateTime start, final DateTime end) {
+//        for (final LessonInstance lessonInstance : getLessonInstancesSet()) {
+//            final Lesson lesson = lessonInstance.getLesson();
+//            if (lesson.getExecutionCourse() == executionCourse && start.isBefore(lessonInstance.getEndDateTime())
+//                    && end.isAfter(lessonInstance.getBeginDateTime())) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     @Override
     public String getPresentationString() {
@@ -183,16 +155,16 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
         return "";
     }
 
-    @Override
-    protected boolean overlaps(final Interval interval) {
-        for (final LessonInstance instance : getLessonInstancesSet()) {
-            final Interval lessonInterval = instance.getInterval();
-            if (interval.overlaps(lessonInterval)) {
-                return true;
-            }
-        }
-        return false;
-    }
+//    @Override
+//    protected boolean overlaps(final Interval interval) {
+//        for (final LessonInstance instance : getLessonInstancesSet()) {
+//            final Interval lessonInterval = instance.getInterval();
+//            if (interval.overlaps(lessonInterval)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     @Override
     public String getUrl() {
@@ -244,4 +216,5 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
         }
         return null;
     }
+
 }

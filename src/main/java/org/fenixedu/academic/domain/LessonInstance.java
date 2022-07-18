@@ -34,6 +34,7 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 import org.joda.time.Minutes;
 import org.joda.time.YearMonthDay;
 
@@ -225,6 +226,10 @@ public class LessonInstance extends LessonInstance_Base {
 
     public YearMonthDay getDay() {
         return getBeginDateTime().toYearMonthDay();
+    }
+    
+    public LocalDate getDate() {
+        return getBeginDateTime().toLocalDate();
     }
 
     public HourMinuteSecond getStartTime() {
