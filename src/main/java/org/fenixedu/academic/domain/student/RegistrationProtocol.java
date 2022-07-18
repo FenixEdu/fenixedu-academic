@@ -101,7 +101,7 @@ public class RegistrationProtocol extends RegistrationProtocol_Base implements C
         if (input) {
 
             final RegistrationProtocol current = getDefault();
-            if (current != null) {
+            if (current != null && current != this) {
                 throw new DomainException("error.RegistrationProtocol.default.duplicate", current.getDescription().getContent(),
                         getDescription().getContent());
             }

@@ -1,4 +1,5 @@
 - Refactor: Remove unused field canHaveCurriculumLinesOnCreation from RegistrationStateType
+- Bug Fix: Fix bug which prevents the edition of RegistrationProtocol which is set by omission
 
 33.1.0 (13-07-2022)
 - Improvement: Add new profession types
