@@ -87,7 +87,7 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
 
     @Override
     public List<Interval> getIntervals() {
-        return getLessonInstancesSet().stream().map(LessonInstance::getInterval).collect(Collectors.toUnmodifiableList());
+        return getLessonInstancesSet().stream().map(LessonInstance::getInterval).collect(Collectors.toList());
     }
 
 //    @Override

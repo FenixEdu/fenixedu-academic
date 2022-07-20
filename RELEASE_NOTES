@@ -1,3 +1,5 @@
+- Bug Fix: Revert return of unmodifiable instance occupation intervals
+
 34.0.0 (19-07-2022)
 - Refactor: Clean unused legacy space occupation and space utils code  
 - Refactor: Remove unused field canHaveCurriculumLinesOnCreation from RegistrationStateType
