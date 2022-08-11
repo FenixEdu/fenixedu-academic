@@ -18,40 +18,52 @@
  */
 package org.fenixedu.academic.domain;
 
+import java.util.stream.Stream;
+
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 public enum ProfessionalSituationConditionType {
 
-    //TODO: RAIDES Provider and beans exclude this value.
-    //This enum should be refactored to contain an "isActive"
-    UNKNOWN,
+    UNKNOWN(false),
 
-    WORKS_FOR_OTHERS,
+    WORKS_FOR_OTHERS(true),
 
-    EMPLOYEER,
+    EMPLOYEER(true),
 
-    INDEPENDENT_WORKER,
+    INDEPENDENT_WORKER(true),
 
-    WORKS_FOR_FAMILY_WITHOUT_PAYMENT,
+    WORKS_FOR_FAMILY_WITHOUT_PAYMENT(true),
 
-    RETIRED,
+    RETIRED(true),
 
-    UNEMPLOYED,
+    UNEMPLOYED(true),
 
-    HOUSEWIFE,
+    HOUSEWIFE(true),
 
-    STUDENT,
+    STUDENT(true),
 
-    INTERN,
+    INTERN(true),
 
-    GRANT_HOLDER,
+    GRANT_HOLDER(true),
 
-    //TODO: RAIDES Provider and beans exclude this value.
-    //This enum should be refactored to contain an "isActive"
-    MILITARY_SERVICE,
+    MILITARY_SERVICE(false),
 
-    OTHER;
+    OTHER(true);
+
+    private boolean active;
+
+    private ProfessionalSituationConditionType(boolean active) {
+        setActive(active);
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
 
     public String getName() {
         return name();
@@ -67,6 +79,10 @@ public enum ProfessionalSituationConditionType {
 
     public String getLocalizedName() {
         return BundleUtil.getString(Bundle.ENUMERATION, getQualifiedName());
+    }
+
+    public static Stream<ProfessionalSituationConditionType> getActiveValues() {
+        return Stream.of(ProfessionalSituationConditionType.values()).filter(ProfessionalSituationConditionType::isActive);
     }
 
 }
