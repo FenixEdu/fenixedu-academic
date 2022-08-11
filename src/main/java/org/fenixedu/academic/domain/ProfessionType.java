@@ -51,7 +51,7 @@ public enum ProfessionType {
 
     MILITARY_MEMBER(false),
 
-    OTHER(true),
+    OTHER(false),
 
     /*
      * NEW RAIDES VALUES 
