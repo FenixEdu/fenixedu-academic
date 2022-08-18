@@ -1007,6 +1007,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                 Authenticate.getUser().getUsername(), optionalCurricularCourse);
     }
 
+    @Deprecated
     final public RuleResult createNoCourseGroupCurriculumGroupEnrolment(final NoCourseGroupEnrolmentBean bean) {
         return org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPlanEnrolment
                 .createManager(EnrolmentContext.createForNoCourseGroupCurriculumGroupEnrolment(this, bean)).manage();
