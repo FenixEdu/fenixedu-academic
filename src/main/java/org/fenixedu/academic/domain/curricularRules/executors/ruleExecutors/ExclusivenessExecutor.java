@@ -155,6 +155,10 @@ public class ExclusivenessExecutor extends CurricularRuleExecutor {
     protected boolean canBeEvaluated(ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
             EnrolmentContext enrolmentContext) {
         Exclusiveness exclusivenessRule = (Exclusiveness) curricularRule;
+        
+        if (!enrolmentContext.getStudentCurricularPlan().getDegreeType().hasAnyCycleTypes()) {
+            return true;
+        }
 
         Collection<CycleCourseGroup> cycleCourseGroups =
                 exclusivenessRule.getExclusiveDegreeModule().getParentCycleCourseGroups();
