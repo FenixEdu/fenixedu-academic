@@ -60,51 +60,6 @@ import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 
 public class PreviousYearsEnrolmentBySemesterExecutor extends CurricularRuleExecutor {
 
-    private static class CollectContext {
-
-        public double ectsCredits;
-
-        public CollectContext parentContext;
-
-        public CollectContext() {
-            this(null);
-        }
-
-        public CollectContext(final CollectContext parentContext) {
-            this.parentContext = parentContext;
-
-        }
-
-        public boolean hasCreditsToSpent(final double ectsCredits) {
-            if (this.ectsCredits >= ectsCredits) {
-                return true;
-            }
-
-            if (this.parentContext == null) {
-                return false;
-            }
-
-            return this.parentContext.hasCreditsToSpent(ectsCredits - this.ectsCredits);
-
-        }
-
-        public void useCredits(final double ectsCredits) {
-            if (this.ectsCredits >= ectsCredits) {
-                this.ectsCredits = this.ectsCredits - ectsCredits;
-            } else {
-                double creditsMissing = ectsCredits - this.ectsCredits;
-                if (this.parentContext == null) {
-                    throw new DomainException(
-                            "error.org.fenixedu.academic.domain.curricularRules.ruleExecutors.CollectContext.parentContent.is.expected");
-                }
-
-                this.parentContext.useCredits(creditsMissing);
-            }
-
-        }
-
-    }
-
     @Override
     protected RuleResult executeEnrolmentVerificationWithRules(final ICurricularRule curricularRule,
             IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
@@ -123,6 +78,18 @@ public class PreviousYearsEnrolmentBySemesterExecutor extends CurricularRuleExec
         return hasAnyCurricularCoursesToEnrolInPreviousYears(enrolmentContext, curricularCoursesToEnrolByYear,
                 sourceDegreeModuleToEvaluate);
 
+    }
+
+    private boolean isEnrollingInCourseGroupsOnly(final EnrolmentContext enrolmentContext,
+            final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate) {
+        for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext
+                .getAllChildDegreeModulesToEvaluateFor(sourceDegreeModuleToEvaluate.getDegreeModule())) {
+            if (degreeModuleToEvaluate.isLeaf()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private void printCurricularCoursesToEnrol(Map<Integer, Set<CurricularCourse>> curricularCoursesToEnrolByYear) {
@@ -213,18 +180,6 @@ public class PreviousYearsEnrolmentBySemesterExecutor extends CurricularRuleExec
                 degreeModuleToEvaluate.getContext().getCurricularYear().toString());
     }
 
-    private boolean isEnrollingInCourseGroupsOnly(final EnrolmentContext enrolmentContext,
-            final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate) {
-        for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext
-                .getAllChildDegreeModulesToEvaluateFor(sourceDegreeModuleToEvaluate.getDegreeModule())) {
-            if (degreeModuleToEvaluate.isLeaf()) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     private Map<Integer, Set<CurricularCourse>> getCurricularCoursesToEnrolByYear(
             final PreviousYearsEnrolmentCurricularRule previousYearsEnrolmentCurricularRule,
             final EnrolmentContext enrolmentContext, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
@@ -233,8 +188,8 @@ public class PreviousYearsEnrolmentBySemesterExecutor extends CurricularRuleExec
 
         for (CourseGroup courseGroup : getCourseGroupsToEvaluate(
                 previousYearsEnrolmentCurricularRule.getDegreeModuleToApplyRule(), enrolmentContext)) {
-            collectCourseGroupCurricularCoursesToEnrol(result, courseGroup, new CollectContext(), enrolmentContext,
-                    sourceDegreeModuleToEvaluate, withTemporaryEnrolments);
+            collectCourseGroupCurricularCoursesToEnrol(result, courseGroup, enrolmentContext, sourceDegreeModuleToEvaluate,
+                    withTemporaryEnrolments);
         }
 
         return result;
@@ -262,7 +217,7 @@ public class PreviousYearsEnrolmentBySemesterExecutor extends CurricularRuleExec
     }
 
     private void collectCourseGroupCurricularCoursesToEnrol(final Map<Integer, Set<CurricularCourse>> result,
-            final CourseGroup courseGroup, final CollectContext collectContext, final EnrolmentContext enrolmentContext,
+            final CourseGroup courseGroup, final EnrolmentContext enrolmentContext,
             final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, boolean withTemporaryEnrolments) {
 
         if (!isToCollectCurricularCourses(courseGroup, enrolmentContext, sourceDegreeModuleToEvaluate, withTemporaryEnrolments)) {
@@ -272,7 +227,7 @@ public class PreviousYearsEnrolmentBySemesterExecutor extends CurricularRuleExec
         final int childDegreeModulesCount =
                 courseGroup.getActiveChildContextsWithMax(enrolmentContext.getExecutionPeriod()).size();
 
-        collectCurricularCoursesToEnrol(result, courseGroup, collectContext, enrolmentContext, sourceDegreeModuleToEvaluate,
+        collectCurricularCoursesToEnrol(result, courseGroup, enrolmentContext, sourceDegreeModuleToEvaluate,
                 withTemporaryEnrolments);
 
         final int minModules = getMinModules(courseGroup, enrolmentContext.getExecutionPeriod());
@@ -280,25 +235,25 @@ public class PreviousYearsEnrolmentBySemesterExecutor extends CurricularRuleExec
         if (minModules == maxModules) {
             if (maxModules == childDegreeModulesCount) {
                 // N-N == Nchilds
-                collectChildCourseGroupsCurricularCoursesToEnrol(result, courseGroup, collectContext, enrolmentContext,
+                collectChildCourseGroupsCurricularCoursesToEnrol(result, courseGroup, enrolmentContext,
                         sourceDegreeModuleToEvaluate, withTemporaryEnrolments);
             } else {
                 // N-N <> Nchilds
                 if (getSelectedChildDegreeModules(courseGroup, enrolmentContext).size() < minModules) {
-                    collectChildCourseGroupsCurricularCoursesToEnrol(result, courseGroup, collectContext, enrolmentContext,
+                    collectChildCourseGroupsCurricularCoursesToEnrol(result, courseGroup, enrolmentContext,
                             sourceDegreeModuleToEvaluate, withTemporaryEnrolments);
                 } else {
-                    collectSelectedChildCourseGroupsCurricularCoursesToEnrol(result, courseGroup, collectContext,
-                            enrolmentContext, sourceDegreeModuleToEvaluate, withTemporaryEnrolments);
+                    collectSelectedChildCourseGroupsCurricularCoursesToEnrol(result, courseGroup, enrolmentContext,
+                            sourceDegreeModuleToEvaluate, withTemporaryEnrolments);
                 }
             }
         } else {
             // N-M
             if (getSelectedChildDegreeModules(courseGroup, enrolmentContext).size() < minModules) {
-                collectChildCourseGroupsCurricularCoursesToEnrol(result, courseGroup, collectContext, enrolmentContext,
+                collectChildCourseGroupsCurricularCoursesToEnrol(result, courseGroup, enrolmentContext,
                         sourceDegreeModuleToEvaluate, withTemporaryEnrolments);
             } else {
-                collectSelectedChildCourseGroupsCurricularCoursesToEnrol(result, courseGroup, collectContext, enrolmentContext,
+                collectSelectedChildCourseGroupsCurricularCoursesToEnrol(result, courseGroup, enrolmentContext,
                         sourceDegreeModuleToEvaluate, withTemporaryEnrolments);
             }
         }
@@ -373,13 +328,13 @@ public class PreviousYearsEnrolmentBySemesterExecutor extends CurricularRuleExec
     }
 
     private void collectSelectedChildCourseGroupsCurricularCoursesToEnrol(Map<Integer, Set<CurricularCourse>> result,
-            CourseGroup courseGroup, CollectContext collectContext, EnrolmentContext enrolmentContext,
-            IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, boolean withTemporaryEnrolments) {
+            CourseGroup courseGroup, EnrolmentContext enrolmentContext, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+            boolean withTemporaryEnrolments) {
 
         for (final DegreeModule degreeModule : getSelectedChildDegreeModules(courseGroup, enrolmentContext)) {
             if (degreeModule.isCourseGroup()) {
-                collectCourseGroupCurricularCoursesToEnrol(result, (CourseGroup) degreeModule, new CollectContext(collectContext),
-                        enrolmentContext, sourceDegreeModuleToEvaluate, withTemporaryEnrolments);
+                collectCourseGroupCurricularCoursesToEnrol(result, (CourseGroup) degreeModule, enrolmentContext,
+                        sourceDegreeModuleToEvaluate, withTemporaryEnrolments);
             }
         }
 
@@ -466,11 +421,10 @@ public class PreviousYearsEnrolmentBySemesterExecutor extends CurricularRuleExec
     }
 
     private void collectCurricularCoursesToEnrol(final Map<Integer, Set<CurricularCourse>> result, final CourseGroup courseGroup,
-            final CollectContext collectContext, final EnrolmentContext enrolmentContext,
-            final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final boolean withTemporaryEnrolments) {
+            final EnrolmentContext enrolmentContext, final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+            final boolean withTemporaryEnrolments) {
 
         final CurriculumGroup curriculumGroup = enrolmentContext.getStudentCurricularPlan().findCurriculumGroupFor(courseGroup);
-        collectContext.ectsCredits = curriculumGroup != null ? curriculumGroup.getChildCreditsDismissalEcts() : 0;
 
         final double missingEctsToConcludeGroup;
         if (curriculumGroup != null) {
@@ -500,21 +454,6 @@ public class PreviousYearsEnrolmentBySemesterExecutor extends CurricularRuleExec
                 childContextsWithMaxByCurricularPeriod, sortedCurricularCoursesContexts, enrolmentContext);
 
         addValidCurricularCourses(result, sortedCurricularCoursesContexts, courseGroup, enrolmentContext.getExecutionPeriod());
-    }
-
-    private void removeCurricularCoursesThatCanBeApprovedInOtherCurricularPeriodOLD(final double missingEctsToConcludeGroup,
-            final Map<CurricularPeriod, Set<Context>> childContextsWithMaxByCurricularPeriod,
-            final SortedSet<Context> sortedCurricularCoursesContexts, final EnrolmentContext enrolmentContext) {
-        final Iterator<Context> iterator = sortedCurricularCoursesContexts.iterator();
-        while (iterator.hasNext()) {
-            final Context context = iterator.next();
-
-            if (canObtainApprovalInOtherCurricularPeriod(missingEctsToConcludeGroup, context,
-                    childContextsWithMaxByCurricularPeriod)) {
-                iterator.remove();
-            }
-
-        }
     }
 
     private void removeCurricularCoursesThatCanBeApprovedInOtherCurricularPeriod(final double missingEctsToConcludeGroup,
@@ -552,25 +491,7 @@ public class PreviousYearsEnrolmentBySemesterExecutor extends CurricularRuleExec
             } else if (!isCurricularRulesSatisfied(enrolmentContext, curricularCourse, sourceDegreeModuleToEvaluate)) {
                 iterator.remove();
                 removeFromChildContextsByCurricularPeriod(childContextsWithMaxByCurricularPeriod, context);
-
             }
-            // } else {
-            // final double creditsRequiredToApprove =
-            // curricularCourse.isOptionalCurricularCourse() ?
-            // ((OptionalCurricularCourse) curricularCourse)
-            // .getMinEctsCredits(enrolmentContext.getExecutionPeriod())
-            // :
-            // curricularCourse.getEctsCredits(enrolmentContext.getExecutionPeriod
-            // ());
-            // if
-            // (collectContext.hasCreditsToSpent(creditsRequiredToApprove))
-            // {
-            // collectContext.useCredits(creditsRequiredToApprove);
-            // iterator.remove();
-            //
-            // }
-            // }
-
         }
 
     }
@@ -772,117 +693,15 @@ public class PreviousYearsEnrolmentBySemesterExecutor extends CurricularRuleExec
     }
 
     private void collectChildCourseGroupsCurricularCoursesToEnrol(final Map<Integer, Set<CurricularCourse>> result,
-            final CourseGroup courseGroup, final CollectContext parentCollectContext, final EnrolmentContext enrolmentContext,
+            final CourseGroup courseGroup, final EnrolmentContext enrolmentContext,
             final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final boolean withTemporaryEnrolments) {
         for (final DegreeModule childDegreeModule : courseGroup
                 .getChildDegreeModulesValidOn(enrolmentContext.getExecutionPeriod())) {
             if (childDegreeModule.isCourseGroup()) {
-                collectCourseGroupCurricularCoursesToEnrol(result, (CourseGroup) childDegreeModule,
-                        new CollectContext(parentCollectContext), enrolmentContext, sourceDegreeModuleToEvaluate,
-                        withTemporaryEnrolments);
+                collectCourseGroupCurricularCoursesToEnrol(result, (CourseGroup) childDegreeModule, enrolmentContext,
+                        sourceDegreeModuleToEvaluate, withTemporaryEnrolments);
             }
         }
-    }
-
-    @Override
-    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule,
-            IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
-
-        if (isEnrollingInCourseGroupsOnly(enrolmentContext, sourceDegreeModuleToEvaluate)) {
-            return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
-        }
-
-        final PreviousYearsEnrolmentCurricularRule previousYearsEnrolmentCurricularRule =
-                (PreviousYearsEnrolmentCurricularRule) curricularRule;
-        final Map<Integer, Set<CurricularCourse>> curricularCoursesToEnrolByYear = getCurricularCoursesToEnrolByYear(
-                previousYearsEnrolmentCurricularRule, enrolmentContext, sourceDegreeModuleToEvaluate, false);
-        final Map<Integer, Set<CurricularCourse>> curricularCoursesToEnrolByYearWithTemporaries =
-                getCurricularCoursesToEnrolByYear(previousYearsEnrolmentCurricularRule, enrolmentContext,
-                        sourceDegreeModuleToEvaluate, true);
-
-        return hasAnyCurricularCoursesToEnrolInPreviousYears(enrolmentContext, curricularCoursesToEnrolByYear,
-                curricularCoursesToEnrolByYearWithTemporaries, sourceDegreeModuleToEvaluate);
-
-    }
-
-    private RuleResult hasAnyCurricularCoursesToEnrolInPreviousYears(final EnrolmentContext enrolmentContext,
-            final Map<Integer, Set<CurricularCourse>> curricularCoursesToEnrolByYear,
-            final Map<Integer, Set<CurricularCourse>> curricularCoursesToEnrolByYearWithTemporaries,
-            final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate) {
-
-        RuleResult result = RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
-        for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext
-                .getAllChildDegreeModulesToEvaluateFor(sourceDegreeModuleToEvaluate.getDegreeModule())) {
-            if (degreeModuleToEvaluate.isLeaf()) {
-
-                if (degreeModuleToEvaluate.isAnnualCurricularCourse(enrolmentContext.getExecutionPeriod().getExecutionYear())
-                        && degreeModuleToEvaluate.getContext() == null) {
-                    continue;
-                }
-
-                if (degreeModuleToEvaluate.getContext() == null) {
-                    throw new DomainException("error.degreeModuleToEvaluate.has.invalid.context",
-                            degreeModuleToEvaluate.getName(), degreeModuleToEvaluate.getExecutionInterval().getQualifiedName());
-                }
-
-                if (hasCurricularCoursesToEnrolInPreviousYears(curricularCoursesToEnrolByYearWithTemporaries,
-                        degreeModuleToEvaluate.getContext().getCurricularYear())) {
-
-                    if (degreeModuleToEvaluate.isEnroled()) {
-                        result = result.and(createImpossibleRuleResult(sourceDegreeModuleToEvaluate, degreeModuleToEvaluate));
-
-                    } else {
-                        result = result.and(createFalseRuleResult(sourceDegreeModuleToEvaluate, degreeModuleToEvaluate));
-                    }
-
-                } else {
-                    if (isAnyPreviousYearCurricularCoursesTemporary(curricularCoursesToEnrolByYear,
-                            curricularCoursesToEnrolByYearWithTemporaries,
-                            degreeModuleToEvaluate.getContext().getCurricularYear())) {
-                        result = result.and(
-                                RuleResult.createTrue(EnrolmentResultType.TEMPORARY, degreeModuleToEvaluate.getDegreeModule()));
-
-                    }
-                }
-            }
-        }
-
-        return result;
-    }
-
-    private boolean isAnyPreviousYearCurricularCoursesTemporary(
-            Map<Integer, Set<CurricularCourse>> curricularCoursesToEnrolByYear,
-            Map<Integer, Set<CurricularCourse>> curricularCoursesToEnrolByYearWithTemporaries, Integer curricularYear) {
-
-        for (int i = curricularYear; i > 0; i--) {
-            final int previousYear = i - 1;
-
-            if (!curricularCoursesToEnrolByYear.containsKey(previousYear)
-                    && !curricularCoursesToEnrolByYearWithTemporaries.containsKey(previousYear)) {
-                continue;
-            }
-
-            if ((curricularCoursesToEnrolByYearWithTemporaries.containsKey(previousYear)
-                    && !curricularCoursesToEnrolByYear.containsKey(previousYear))
-                    || (!curricularCoursesToEnrolByYearWithTemporaries.containsKey(previousYear)
-                            && curricularCoursesToEnrolByYear.containsKey(previousYear))) {
-                return true;
-            }
-
-            if (curricularCoursesToEnrolByYear.get(previousYear).size() != curricularCoursesToEnrolByYearWithTemporaries
-                    .get(previousYear).size()) {
-                return true;
-            }
-        }
-
-        return false;
-
-    }
-
-    @Override
-    protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule,
-            final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
-        return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
     }
 
     @Override
