@@ -336,23 +336,23 @@ public class CurriculumGroup extends CurriculumGroup_Base {
         for (Context context : this.getDegreeModulesFor(executionInterval)) {
             if (context.getChildDegreeModule().isLeaf()) {
 
-                CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
+                final CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
 
                 if (getDegreeCurricularPlanOfStudent().getCurricularRuleValidationType() == CurricularRuleValidationType.YEAR) {
 
                     if (!getStudentCurricularPlan().isApproved(curricularCourse, executionInterval)
                             && !getStudentCurricularPlan().getRoot().hasEnrolmentWithEnroledState(curricularCourse,
                                     executionInterval.getExecutionYear())
-                            && !hasEnrolmentForSemester(curricularCourse, executionInterval)
-                            && (!curricularCourse.isAnual(executionInterval.getExecutionYear()) || context.getCurricularPeriod()
-                                    .getChildOrder().intValue() == executionInterval.getChildOrder().intValue())) {
+                            && !hasEnrolmentForInterval(curricularCourse, executionInterval)
+                            && matchesIntervalCurricularPeriod(executionInterval, context)) {
                         result.add(context);
                     }
 
                 } else {
 
                     if (!this.getStudentCurricularPlan().isApproved(curricularCourse, executionInterval)
-                            && !this.getStudentCurricularPlan().isEnroledInExecutionPeriod(curricularCourse, executionInterval)) {
+                            && !this.getStudentCurricularPlan().isEnroledInExecutionPeriod(curricularCourse, executionInterval)
+                            && matchesIntervalCurricularPeriod(executionInterval, context)) {
                         result.add(context);
                     }
                 }
@@ -362,7 +362,14 @@ public class CurriculumGroup extends CurriculumGroup_Base {
         return result;
     }
 
-    private boolean hasEnrolmentForSemester(CurricularCourse curricularCourse, ExecutionInterval executionInterval) {
+    private boolean matchesIntervalCurricularPeriod(ExecutionInterval executionInterval, Context context) {
+        final CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
+        return !curricularCourse.isAnual(executionInterval.getExecutionYear())
+                || (context.getCurricularPeriod().getChildOrder().intValue() == executionInterval.getChildOrder().intValue()
+                        && context.getCurricularPeriod().getAcademicPeriod().equals(executionInterval.getAcademicPeriod()));
+    }
+
+    private boolean hasEnrolmentForInterval(CurricularCourse curricularCourse, ExecutionInterval executionInterval) {
         for (final Enrolment enrolment : getStudentCurricularPlan().getEnrolments(curricularCourse)) {
             if (enrolment.isValid(executionInterval)) {
                 return true;

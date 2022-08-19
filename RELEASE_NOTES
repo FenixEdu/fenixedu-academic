@@ -1,4 +1,5 @@
 - Improvement: Allow exclusiveness rule to be used in degrees without cycles
+- Bug Fix: Annual curricular course should only be enroled in first period of year
 - Refactor: Previous years enrolment rule code cleanup
 - Refactor: Drop support for deprecated rule level (with temporary enrolments)
 
