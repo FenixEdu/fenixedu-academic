@@ -1,5 +1,6 @@
 - Improvement: Allow exclusiveness rule to be used in degrees without cycles
 - Refactor: Previous years enrolment rule code cleanup
+- Refactor: Drop support for deprecated rule level (with temporary enrolments)
 
 34.0.2 (12-08-2022)
 - Improvement: Add support for activate/desactivate professional situation conditions
