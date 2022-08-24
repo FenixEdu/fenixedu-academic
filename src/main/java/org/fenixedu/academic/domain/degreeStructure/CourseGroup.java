@@ -704,74 +704,12 @@ public class CourseGroup extends CourseGroup_Base {
         return result;
     }
 
-    public Set<Context> getActiveChildContexts() {
-        final Set<Context> result = new HashSet<Context>();
-
-        for (final Context context : getChildContextsSet()) {
-            if (context.isOpen()) {
-                result.add(context);
-            }
-        }
-
-        return result;
-    }
-
-    public Set<Context> getActiveChildContextsWithMax(final ExecutionInterval executionInterval) {
-        final Map<DegreeModule, Context> maxContextsByDegreeModule = new HashMap<DegreeModule, Context>();
-
-        for (final Context context : getActiveChildContexts()) {
-            if (maxContextsByDegreeModule.containsKey(context.getChildDegreeModule())) {
-                final Context existingContext = maxContextsByDegreeModule.get(context.getChildDegreeModule());
-                if (existingContext.getCurricularPeriod().getChildOrder().intValue() != executionInterval.getChildOrder()
-                        .intValue()
-                        && context.getCurricularPeriod().getChildOrder().intValue() == executionInterval.getChildOrder()
-                                .intValue()) {
-                    maxContextsByDegreeModule.put(context.getChildDegreeModule(), context);
-                }
-
-            } else {
-                maxContextsByDegreeModule.put(context.getChildDegreeModule(), context);
-            }
-        }
-
-        return new HashSet<Context>(maxContextsByDegreeModule.values());
-    }
-
-    public Map<CurricularPeriod, Set<Context>> getActiveChildCurricularContextsWithMaxByCurricularPeriod(
-            final ExecutionInterval executionInterval) {
-        final Map<CurricularPeriod, Set<Context>> result = new HashMap<CurricularPeriod, Set<Context>>();
-
-        for (final Context context : getActiveChildContextsWithMax(executionInterval)) {
-            if (context.getChildDegreeModule().isCurricularCourse()) {
-                if (!result.containsKey(context.getCurricularPeriod())) {
-                    result.put(context.getCurricularPeriod(), new HashSet<Context>());
-                }
-
-                result.get(context.getCurricularPeriod()).add(context);
-            }
-        }
-
-        return result;
-    }
-
     public Set<CurricularCourse> getChildCurricularCoursesValidOn(final ExecutionInterval executionInterval) {
         final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
 
         for (final Context context : getValidChildContexts(executionInterval)) {
             if (context.getChildDegreeModule().isCurricularCourse()) {
                 result.add((CurricularCourse) context.getChildDegreeModule());
-            }
-        }
-
-        return result;
-    }
-
-    public Set<Context> getActiveChildContextsWithMaxCurricularPeriodForCurricularCourses(
-            final ExecutionInterval executionInterval) {
-        final Set<Context> result = new HashSet<Context>();
-        for (final Context context : getActiveChildContextsWithMax(executionInterval)) {
-            if (context.getChildDegreeModule().isCurricularCourse()) {
-                result.add(context);
             }
         }
 
