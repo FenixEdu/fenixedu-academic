@@ -21,8 +21,8 @@ package org.fenixedu.academic.domain.accessControl;
 import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
+import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
-import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -50,28 +50,16 @@ public class AllAlumniGroup extends GroupStrategy {
      */
     private boolean isAlumni(Student student) {
 
-        return student
-                .getRegistrationsSet()
-                .stream()
-                .anyMatch(
-                        registration -> ProgramConclusion
-                                .conclusionsFor(registration)
-                                .filter(ProgramConclusion::isAlumniProvider)
-                                .anyMatch(
-                                        conclusion -> conclusion.groupFor(registration).isPresent()
-                                                && conclusion.groupFor(registration).get().isConclusionProcessed()));
+        return student.getRegistrationsSet().stream().anyMatch(registration -> ProgramConclusion.conclusionsFor(registration)
+                .filter(ProgramConclusion::isAlumniProvider).anyMatch(conclusion -> conclusion.groupFor(registration).isPresent()
+                        && conclusion.groupFor(registration).get().isConclusionProcessed()));
 
     }
 
     @Override
     public Stream<User> getMembers() {
-        return Bennu
-                .getInstance()
-                .getStudentsSet()
-                .stream()
-                .filter(student -> student.getAlumni() != null
-                        || student.hasAnyRegistrationInState(RegistrationStateType.CONCLUDED)
-                        || student.hasAnyRegistrationInState(RegistrationStateType.STUDYPLANCONCLUDED) || isAlumni(student))
+        return Bennu.getInstance().getStudentsSet().stream()
+                .filter(student -> student.getAlumni() != null || hasAnyRegistrationConcluded(student) || isAlumni(student))
                 .map(student -> student.getPerson().getUser());
     }
 
@@ -82,18 +70,18 @@ public class AllAlumniGroup extends GroupStrategy {
 
     @Override
     public boolean isMember(User user) {
-        return user != null
-                && user.getPerson() != null
-                && user.getPerson().getStudent() != null
+        return user != null && user.getPerson() != null && user.getPerson().getStudent() != null
                 && (user.getPerson().getStudent().getAlumni() != null
-                        || user.getPerson().getStudent().hasAnyRegistrationInState(RegistrationStateType.CONCLUDED)
-                        || user.getPerson().getStudent().hasAnyRegistrationInState(RegistrationStateType.STUDYPLANCONCLUDED) || isAlumni(user
-                        .getPerson().getStudent()));
+                        || hasAnyRegistrationConcluded(user.getPerson().getStudent()) || isAlumni(user.getPerson().getStudent()));
     }
 
     @Override
     public boolean isMember(User user, DateTime when) {
         return isMember(user);
+    }
+
+    private static boolean hasAnyRegistrationConcluded(final Student student) {
+        return student.getRegistrationStream().anyMatch(Registration::isConcluded);
     }
 
 }
