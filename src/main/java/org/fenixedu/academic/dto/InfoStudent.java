@@ -71,13 +71,13 @@ public class InfoStudent extends InfoObject {
         return registration == null ? null : new InfoStudent(registration);
     }
 
-    public Boolean getFlunked() {
-        return getRegistration().getFlunked();
-    }
+//    public Boolean getFlunked() {
+//        return getRegistration().getFlunked();
+//    }
 
-    public Boolean getInterruptedStudies() {
-        return getRegistration().getInterruptedStudies();
-    }
+//    public Boolean getInterruptedStudies() {
+//        return getRegistration().getInterruptedStudies();
+//    }
 
     @Override
     public String getExternalId() {

@@ -40,7 +40,7 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.student.StudentStatute;
-import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
+import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateTypeEnum;
 import org.fenixedu.academic.domain.treasury.TreasuryBridgeAPIFactory;
 import org.joda.time.LocalDate;
 
@@ -64,7 +64,7 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
     }
 
     private boolean hasRegistrationInValidState() {
-        return getRegistration().hasStateType(getExecutionYear(), RegistrationStateType.REGISTERED);
+        return getRegistration().hasStateType(getExecutionYear(), RegistrationStateTypeEnum.REGISTERED);
     }
 
     @Override

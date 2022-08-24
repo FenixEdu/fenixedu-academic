@@ -18,9 +18,6 @@
  */
 package org.fenixedu.academic.domain.student.registrationStates;
 
-import java.util.Collections;
-import java.util.Set;
-
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.student.Registration;
 import org.joda.time.DateTime;
@@ -40,6 +37,11 @@ public class CanceledState extends CanceledState_Base {
     @Override
     public RegistrationStateType getStateType() {
         return RegistrationStateType.CANCELED;
+    }
+
+    @Override
+    public RegistrationStateTypeEnum getStateTypeEnum() {
+        return RegistrationStateTypeEnum.CANCELED;
     }
 
 }

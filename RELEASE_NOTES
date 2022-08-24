@@ -1,3 +1,5 @@
+- Refactor: Introduce RegistrationStateTypeEnum to ease conversion to entity
+
 34.1.0 (24-08-2022)
 - Improvement: Allow exclusiveness rule to be used in degrees without cycles
 - Bug Fix: Annual curricular course should only be enroled in first period of year

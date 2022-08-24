@@ -35,4 +35,9 @@ public class StudyPlanConcludedState extends StudyPlanConcludedState_Base {
         return RegistrationStateType.STUDYPLANCONCLUDED;
     }
 
+    @Override
+    public RegistrationStateTypeEnum getStateTypeEnum() {
+        return RegistrationStateTypeEnum.STUDYPLANCONCLUDED;
+    }
+
 }

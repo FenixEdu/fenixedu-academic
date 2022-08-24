@@ -167,9 +167,9 @@ public class Student extends Student_Base {
                 .isEmpty() ? null : (Registration) Collections.max(activeRegistrations, Registration.COMPARATOR_BY_START_DATE);
     }
 
-    public boolean hasAnyRegistrationInState(final RegistrationStateType stateType) {
-        return getRegistrationStream().anyMatch(r -> r.getActiveStateType() == stateType);
-    }
+//    public boolean hasAnyRegistrationInState(final RegistrationStateType stateType) {
+//        return getRegistrationStream().anyMatch(r -> r.getActiveStateType() == stateType);
+//    }
 
     public static Integer generateStudentNumber() {
         int max = 0;

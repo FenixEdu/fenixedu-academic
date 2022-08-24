@@ -39,4 +39,9 @@ public class RegisteredState extends RegisteredState_Base {
         return RegistrationStateType.REGISTERED;
     }
 
+    @Override
+    public RegistrationStateTypeEnum getStateTypeEnum() {
+        return RegistrationStateTypeEnum.REGISTERED;
+    }
+
 }

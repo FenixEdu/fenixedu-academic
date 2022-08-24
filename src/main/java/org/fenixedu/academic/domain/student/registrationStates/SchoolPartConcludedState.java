@@ -39,4 +39,9 @@ public class SchoolPartConcludedState extends SchoolPartConcludedState_Base {
         return RegistrationStateType.SCHOOLPARTCONCLUDED;
     }
 
+    @Override
+    public RegistrationStateTypeEnum getStateTypeEnum() {
+        return RegistrationStateTypeEnum.SCHOOLPARTCONCLUDED;
+    }
+
 }

@@ -39,4 +39,9 @@ public class InterruptedState extends InterruptedState_Base {
         return RegistrationStateType.INTERRUPTED;
     }
 
+    @Override
+    public RegistrationStateTypeEnum getStateTypeEnum() {
+        return RegistrationStateTypeEnum.INTERRUPTED;
+    }
+
 }

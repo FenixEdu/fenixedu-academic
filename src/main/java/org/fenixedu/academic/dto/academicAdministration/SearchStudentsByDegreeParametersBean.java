@@ -30,7 +30,6 @@ import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.domain.student.RegistrationRegimeType;
 import org.fenixedu.academic.domain.student.StatuteType;
-import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 
 /**
  *
@@ -41,8 +40,6 @@ import org.fenixedu.academic.domain.student.registrationStates.RegistrationState
 public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearBean {
 
     private List<RegistrationProtocol> registrationProtocols = new ArrayList<RegistrationProtocol>();
-
-    private List<RegistrationStateType> registrationStateTypes = new ArrayList<RegistrationStateType>();
 
     private List<StatuteType> statuteTypes = new ArrayList<StatuteType>();
 
@@ -82,14 +79,6 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
         this.registrationProtocols = registrationProtocols;
     }
 
-    public List<RegistrationStateType> getRegistrationStateTypes() {
-        return registrationStateTypes;
-    }
-
-    public void setRegistrationStateTypes(List<RegistrationStateType> registrationStateTypes) {
-        this.registrationStateTypes = registrationStateTypes;
-    }
-
     public List<StatuteType> getStudentStatuteTypes() {
         return statuteTypes;
     }
@@ -107,27 +96,23 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
         return hasAnyRegistrationProtocol();
     }
 
-    public boolean hasAnyRegistrationStateTypes() {
-        return this.registrationStateTypes != null && !this.registrationStateTypes.isEmpty();
-    }
-
     public boolean hasAnyStudentStatuteType() {
         return this.statuteTypes != null && !this.statuteTypes.isEmpty();
     }
 
     public boolean hasAnyProgramConclusion() {
-    	return this.programConclusions != null && !this.programConclusions.isEmpty();
+        return this.programConclusions != null && !this.programConclusions.isEmpty();
     }
 
     public List<ProgramConclusion> getProgramConclusions() {
-		return programConclusions;
-	}
+        return programConclusions;
+    }
 
-	public void setProgramConclusions(List<ProgramConclusion> programConclusions) {
-		this.programConclusions = programConclusions;
-	}
+    public void setProgramConclusions(List<ProgramConclusion> programConclusions) {
+        this.programConclusions = programConclusions;
+    }
 
-	public boolean getActiveEnrolments() {
+    public boolean getActiveEnrolments() {
         return activeEnrolments;
     }
 

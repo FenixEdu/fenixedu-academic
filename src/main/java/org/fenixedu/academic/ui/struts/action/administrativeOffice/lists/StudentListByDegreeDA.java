@@ -57,7 +57,6 @@ import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.RegistrationProtocol;
 import org.fenixedu.academic.domain.student.StatuteType;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
-import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.domain.studentCurriculum.BranchCurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.dto.academicAdministration.SearchStudentsByDegreeParametersBean;
@@ -186,10 +185,10 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             registrationStream = registrationStream.filter(r -> hasStudentStatuteType(searchBean, r));
         }
 
-        if (searchBean.hasAnyRegistrationStateTypes()) {
-            registrationStream = registrationStream.filter(r -> searchBean.getRegistrationStateTypes()
-                    .contains(r.getLastRegistrationState(executionYear).getStateType()));
-        }
+//        if (searchBean.hasAnyRegistrationStateTypes()) {
+//            registrationStream = registrationStream.filter(r -> searchBean.getRegistrationStateTypes()
+//                    .contains(r.getLastRegistrationState(executionYear).getStateType()));
+//        }
 
         if (searchBean.isIngressedInChosenYear()) {
             registrationStream = registrationStream.filter(r -> r.getIngressionYear() == executionYear);
@@ -219,8 +218,8 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             registrationStream = registrationStream.filter(r -> r.getIngressionType() == searchBean.getIngressionType());
         }
 
-        registrationStream
-                .forEach(r -> result.add(new RegistrationWithStateForExecutionYearBean(r, r.getLastStateType(), executionYear)));
+//        registrationStream
+//                .forEach(r -> result.add(new RegistrationWithStateForExecutionYearBean(r, r.getLastStateType(), executionYear)));
 
         return result;
     }
@@ -325,13 +324,6 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
             spreadsheet.addHeader(getResourceMessage("label.registrationAgreement") + ":");
             for (RegistrationProtocol protocol : searchBean.getRegistrationProtocols()) {
                 spreadsheet.addHeader(protocol.getDescription().getContent());
-            }
-        }
-        spreadsheet.newHeaderRow();
-        if (searchBean.hasAnyRegistrationStateTypes()) {
-            spreadsheet.addHeader(getResourceMessage("label.registrationState") + ":");
-            for (RegistrationStateType state : searchBean.getRegistrationStateTypes()) {
-                spreadsheet.addHeader(state.getDescription());
             }
         }
         spreadsheet.newHeaderRow();

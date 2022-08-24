@@ -34,4 +34,9 @@ public class InactiveState extends InactiveState_Base {
         return RegistrationStateType.INACTIVE;
     }
 
+    @Override
+    public RegistrationStateTypeEnum getStateTypeEnum() {
+        return RegistrationStateTypeEnum.INACTIVE;
+    }
+
 }

@@ -38,4 +38,9 @@ public class TransitionalState extends TransitionalState_Base {
         return RegistrationStateType.TRANSITION;
     }
 
+    @Override
+    public RegistrationStateTypeEnum getStateTypeEnum() {
+        return RegistrationStateTypeEnum.TRANSITION;
+    }
+
 }

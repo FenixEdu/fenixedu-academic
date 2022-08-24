@@ -38,4 +38,9 @@ public class TransitedState extends TransitedState_Base {
         return RegistrationStateType.TRANSITED;
     }
 
+    @Override
+    public RegistrationStateTypeEnum getStateTypeEnum() {
+        return RegistrationStateTypeEnum.TRANSITED;
+    }
+
 }

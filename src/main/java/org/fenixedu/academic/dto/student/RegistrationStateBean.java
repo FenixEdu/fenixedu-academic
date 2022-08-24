@@ -27,6 +27,7 @@ import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
+import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateTypeEnum;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -70,7 +71,13 @@ public class RegistrationStateBean implements Serializable {
         setStateDate(null);
     }
 
+    @Deprecated
     public RegistrationStateBean(final RegistrationStateType type) {
+        this(type.name());
+    }
+
+    @Deprecated
+    public RegistrationStateBean(final RegistrationStateTypeEnum type) {
         this(type.name());
     }
 
@@ -123,8 +130,13 @@ public class RegistrationStateBean implements Serializable {
         return remarks;
     }
 
+    @Deprecated
     public RegistrationStateType getStateType() {
         return getNextState() == null ? null : RegistrationStateType.valueOf(getNextState());
+    }
+
+    public RegistrationStateTypeEnum getStateTypeEnum() {
+        return getNextState() == null ? null : RegistrationStateTypeEnum.valueOf(getNextState());
     }
 
     public void setRegistration(Registration registration) {
@@ -135,7 +147,12 @@ public class RegistrationStateBean implements Serializable {
         this.remarks = remarks;
     }
 
+    @Deprecated
     public void setStateType(final RegistrationStateType stateType) {
+        setNextState(stateType == null ? null : stateType.name());
+    }
+
+    public void setStateTypeEnum(final RegistrationStateTypeEnum stateType) {
         setNextState(stateType == null ? null : stateType.name());
     }
 

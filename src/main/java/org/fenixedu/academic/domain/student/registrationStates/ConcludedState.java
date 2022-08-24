@@ -21,7 +21,6 @@ package org.fenixedu.academic.domain.student.registrationStates;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.service.AcademicPermissionService;
@@ -60,6 +59,11 @@ public class ConcludedState extends ConcludedState_Base {
     @Override
     public RegistrationStateType getStateType() {
         return RegistrationStateType.CONCLUDED;
+    }
+
+    @Override
+    public RegistrationStateTypeEnum getStateTypeEnum() {
+        return RegistrationStateTypeEnum.CONCLUDED;
     }
 
 }

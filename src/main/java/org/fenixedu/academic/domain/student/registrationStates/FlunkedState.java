@@ -39,4 +39,9 @@ public class FlunkedState extends FlunkedState_Base {
         return RegistrationStateType.FLUNKED;
     }
 
+    @Override
+    public RegistrationStateTypeEnum getStateTypeEnum() {
+        return RegistrationStateTypeEnum.FLUNKED;
+    }
+
 }

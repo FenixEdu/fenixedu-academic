@@ -39,4 +39,9 @@ public class MobilityState extends MobilityState_Base {
         return RegistrationStateType.MOBILITY;
     }
 
+    @Override
+    public RegistrationStateTypeEnum getStateTypeEnum() {
+        return RegistrationStateTypeEnum.MOBILITY;
+    }
+
 }

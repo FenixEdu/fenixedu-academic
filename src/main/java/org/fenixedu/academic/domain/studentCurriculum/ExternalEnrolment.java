@@ -248,13 +248,13 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
         return BigDecimal.valueOf(getWeigth());
     }
 
-    public boolean isResultOfMobility() {
-        if (getExecutionInterval() == null) {
-            return false;
-        }
-
-        return getRegistration().getRegistrationStatesTypes(getExecutionYear()).contains(RegistrationStateType.MOBILITY);
-    }
+//    public boolean isResultOfMobility() {
+//        if (getExecutionInterval() == null) {
+//            return false;
+//        }
+//
+//        return getRegistration().getRegistrationStatesTypes(getExecutionYear()).contains(RegistrationStateType.MOBILITY);
+//    }
 
     @Override
     public boolean isAnual() {

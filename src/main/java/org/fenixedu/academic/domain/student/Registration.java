@@ -78,6 +78,7 @@ import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculum;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
+import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateTypeEnum;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
@@ -158,7 +159,7 @@ public class Registration extends Registration_Base {
         setStartDate(now.toYearMonthDay());
         setDegree(degree);
         setRegistrationYear(executionYear);
-        RegistrationState.createRegistrationState(this, AccessControl.getPerson(), now, RegistrationStateType.REGISTERED,
+        RegistrationState.createRegistrationState(this, AccessControl.getPerson(), now, RegistrationStateTypeEnum.REGISTERED,
                 executionYear.getFirstExecutionPeriod());
     }
 
@@ -548,7 +549,7 @@ public class Registration extends Registration_Base {
 
         return false;
     }
-    
+
     public Stream<Enrolment> findEnrolments() {
         return getStudentCurricularPlansSet().stream().flatMap(scp -> scp.getEnrolmentStream());
     }
@@ -1137,7 +1138,8 @@ public class Registration extends Registration_Base {
         final User userView = Authenticate.getUser();
         if (userView == null || !(AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.STUDENT_ENROLMENTS,
                 getDegree(), userView.getPerson().getUser())
-                || AcademicPermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS", getDegree(), userView.getPerson().getUser()))) {
+                || AcademicPermissionService.hasAccess("ACADEMIC_OFFICE_ENROLMENTS", getDegree(),
+                        userView.getPerson().getUser()))) {
             if (readAttendsInCurrentExecutionPeriod().size() >= MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD) {
                 throw new DomainException("error.student.reached.attends.limit",
                         String.valueOf(MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD));
@@ -1280,8 +1282,7 @@ public class Registration extends Registration_Base {
         final User user = Authenticate.getUser();
         Set<AcademicProgram> programsManageRegistration = AcademicAccessRule
                 .getProgramsAccessibleToFunction(AcademicOperationType.MANAGE_REGISTRATIONS, user).collect(Collectors.toSet());
-        programsManageRegistration
-                .addAll(AcademicPermissionService.getDegrees("ACADEMIC_OFFICE_REGISTRATION_ACCESS", user));
+        programsManageRegistration.addAll(AcademicPermissionService.getDegrees("ACADEMIC_OFFICE_REGISTRATION_ACCESS", user));
 
         Set<AcademicProgram> programsViewFullStudentCurriculum =
                 AcademicAccessRule.getProgramsAccessibleToFunction(AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM, user)
@@ -1302,6 +1303,7 @@ public class Registration extends Registration_Base {
         return false;
     }
 
+    @Deprecated
     public Set<RegistrationStateType> getRegistrationStatesTypes(final ExecutionYear executionYear) {
         final Set<RegistrationStateType> result = new HashSet<>();
 
@@ -1310,6 +1312,10 @@ public class Registration extends Registration_Base {
         }
 
         return result;
+    }
+
+    public Set<RegistrationStateTypeEnum> getRegistrationStatesTypesEnums(final ExecutionYear executionYear) {
+        return getRegistrationStates(executionYear).stream().map(RegistrationState::getStateTypeEnum).collect(Collectors.toSet());
     }
 
     public boolean isRegistered(final ExecutionInterval executionInterval) {
@@ -1332,18 +1338,30 @@ public class Registration extends Registration_Base {
         return getRegistrationStatesSet().stream().max(RegistrationState.EXECUTION_INTERVAL_AND_DATE_COMPARATOR).orElse(null);
     }
 
+    @Deprecated
     public RegistrationStateType getLastStateType() {
         final RegistrationState registrationState = getLastState();
         return registrationState == null ? null : registrationState.getStateType();
     }
 
+    public RegistrationStateTypeEnum getLastStateTypeEnum() {
+        final RegistrationState registrationState = getLastState();
+        return registrationState == null ? null : registrationState.getStateTypeEnum();
+    }
+
+    @Deprecated
     public RegistrationStateType getActiveStateType() {
         final RegistrationState activeState = getActiveState();
         return activeState != null ? activeState.getStateType() : RegistrationStateType.REGISTERED;
     }
 
+    public RegistrationStateTypeEnum getActiveStateTypeEnum() {
+        final RegistrationState activeState = getActiveState();
+        return activeState != null ? activeState.getStateTypeEnum() : RegistrationStateTypeEnum.REGISTERED;
+    }
+
     public boolean isActive() {
-        return getActiveStateType().isActive();
+        return getActiveStateTypeEnum().isActive();
     }
 
     public boolean hasAnyActiveState(final ExecutionInterval executionInterval) {
@@ -1360,24 +1378,24 @@ public class Registration extends Registration_Base {
                 .isActive();
     }
 
-    public boolean getInterruptedStudies() {
-        return getActiveStateType() == RegistrationStateType.INTERRUPTED;
-    }
+//    public boolean getInterruptedStudies() {
+//        return getActiveStateType() == RegistrationStateType.INTERRUPTED;
+//    }
 
-    public boolean getFlunked() {
-        return getActiveStateType() == RegistrationStateType.FLUNKED;
-    }
+//    public boolean getFlunked() {
+//        return getActiveStateType() == RegistrationStateType.FLUNKED;
+//    }
 
-    public boolean isSchoolPartConcluded() {
-        return getActiveStateType() == RegistrationStateType.SCHOOLPARTCONCLUDED;
-    }
+//    public boolean isSchoolPartConcluded() {
+//        return getActiveStateType() == RegistrationStateType.SCHOOLPARTCONCLUDED;
+//    }
 
     public boolean isConcluded() {
-        return getActiveStateType() == RegistrationStateType.CONCLUDED;
+        return getActiveStateTypeEnum() == RegistrationStateTypeEnum.CONCLUDED;
     }
 
     public boolean isCanceled() {
-        return getActiveStateType() == RegistrationStateType.CANCELED;
+        return getActiveStateTypeEnum() == RegistrationStateTypeEnum.CANCELED;
     }
 
     public RegistrationState getStateInDate(final DateTime dateTime) {
@@ -1458,8 +1476,13 @@ public class Registration extends Registration_Base {
                 .max(RegistrationState.EXECUTION_INTERVAL_AND_DATE_COMPARATOR).orElse(null);
     }
 
+    @Deprecated
     public boolean hasStateType(final ExecutionYear executionYear, final RegistrationStateType registrationStateType) {
         return getRegistrationStatesTypes(executionYear).contains(registrationStateType);
+    }
+
+    public boolean hasStateType(final ExecutionYear executionYear, final RegistrationStateTypeEnum registrationStateType) {
+        return getRegistrationStatesTypesEnums(executionYear).contains(registrationStateType);
     }
 
     final public double getEctsCredits() {
@@ -1494,9 +1517,9 @@ public class Registration extends Registration_Base {
         return getLastStudentCurricularPlan().isConclusionProcessed();
     }
 
-    public boolean isQualifiedToRegistrationConclusionProcess() {
-        return isActive() || isConcluded() || isSchoolPartConcluded();
-    }
+//    public boolean isQualifiedToRegistrationConclusionProcess() {
+//        return isActive() || isConcluded() || isSchoolPartConcluded();
+//    }
 
     public YearMonthDay getConclusionDate() {
         return ProgramConclusion.getConclusionProcess(getLastStudentCurricularPlan())
