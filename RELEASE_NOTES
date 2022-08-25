@@ -1,3 +1,4 @@
+- Refactor: Add log to previous years enrolment rule
 - Refactor: Introduce RegistrationStateTypeEnum to ease conversion to entity
 
 34.1.0 (24-08-2022)

@@ -55,8 +55,12 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor {
+
+    private static final Logger logger = LoggerFactory.getLogger(PreviousYearsEnrolmentByYearExecutor.class);
 
     static public interface SkipCollectCurricularCoursesPredicate {
         public boolean skip(final CourseGroup courseGroup, final EnrolmentContext enrolmentContext);
@@ -75,7 +79,7 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
         if (input != null) {
             SKIP_COLLECT_CURRICULAR_COURSES_PREDICATE = input;
         } else {
-            System.out.println("Could not set SKIP_COLLECT_CURRICULAR_COURSES_PREDICATE to null");
+            logger.error("Could not set SKIP_COLLECT_CURRICULAR_COURSES_PREDICATE to null");
         }
     }
 
@@ -92,7 +96,7 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
         final Map<Integer, Set<CurricularCourse>> curricularCoursesToEnrolByYear = getCurricularCoursesToEnrolByYear(
                 previousYearsEnrolmentCurricularRule, enrolmentContext, sourceDegreeModuleToEvaluate);
 
-//        printCurricularCoursesToEnrol(curricularCoursesToEnrolByYear);
+        printCurricularCoursesToEnrol(curricularCoursesToEnrolByYear);
 
         return hasAnyCurricularCoursesToEnrolInPreviousYears(enrolmentContext, curricularCoursesToEnrolByYear,
                 sourceDegreeModuleToEvaluate);
@@ -113,12 +117,12 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
 
     protected void printCurricularCoursesToEnrol(Map<Integer, Set<CurricularCourse>> curricularCoursesToEnrolByYear) {
         for (final Entry<Integer, Set<CurricularCourse>> entry : curricularCoursesToEnrolByYear.entrySet()) {
-            System.out.println("Year " + entry.getKey());
+            logger.debug("Year " + entry.getKey());
             for (final CurricularCourse curricularCourse : entry.getValue()) {
-                System.out.println(curricularCourse.getName());
+                logger.debug(curricularCourse.getName());
             }
 
-            System.out.println("-------------");
+            logger.debug("-------------");
         }
 
     }
