@@ -489,7 +489,7 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
             } else if (isEnroled(enrolmentContext, curricularCourse) || isEnrolling(enrolmentContext, curricularCourse)) {
                 iterator.remove();
 
-            } else if (!isCurricularRulesSatisfied(enrolmentContext, curricularCourse, sourceDegreeModuleToEvaluate)) {
+            } else if (!isCurricularRulesSatisfied(enrolmentContext, context, sourceDegreeModuleToEvaluate)) {
                 iterator.remove();
 
             }
@@ -513,8 +513,10 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
         return result;
     }
 
-    private boolean isCurricularRulesSatisfied(EnrolmentContext enrolmentContext, CurricularCourse curricularCourse,
+    private boolean isCurricularRulesSatisfied(EnrolmentContext enrolmentContext, Context context,
             IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate) {
+        final CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
+
         RuleResult result = RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
         //Besides course unit rules we can only securely evaluate root curricum group rules, other group rules would require that we know the curriculum group 
         //from where the course unit was collected, otherwise we could wrongly evaluate rules, which is very dangerous if we are collecting course units from 
@@ -525,6 +527,11 @@ public class PreviousYearsEnrolmentByYearExecutor extends CurricularRuleExecutor
                         enrolmentContext.getStudentCurricularPlan().getRoot()
                                 .getCurricularRules(enrolmentContext.getExecutionPeriod()).stream())
                 .collect(Collectors.toSet())) {
+
+            if (!curricularRule.appliesToContext(context)) {
+                continue;
+            }
+
             result = result.and(curricularRule.verify(getVerifyRuleLevel(enrolmentContext), enrolmentContext, curricularCourse,
                     (CourseGroup) sourceDegreeModuleToEvaluate.getDegreeModule()));
         }

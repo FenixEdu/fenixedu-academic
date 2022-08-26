@@ -1,3 +1,4 @@
+- Bug Fix: Previous years rule verifier mode should test if rule applies to context 
 - Refactor: Add log to previous years enrolment rule
 - Refactor: Introduce RegistrationStateTypeEnum to ease conversion to entity
 
