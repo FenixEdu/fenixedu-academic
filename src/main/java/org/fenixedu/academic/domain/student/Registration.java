@@ -1382,9 +1382,9 @@ public class Registration extends Registration_Base {
 //        return getActiveStateType() == RegistrationStateType.INTERRUPTED;
 //    }
 
-//    public boolean getFlunked() {
-//        return getActiveStateType() == RegistrationStateType.FLUNKED;
-//    }
+    public boolean getFlunked() {
+        return getActiveStateTypeEnum() == RegistrationStateTypeEnum.FLUNKED;
+    }
 
 //    public boolean isSchoolPartConcluded() {
 //        return getActiveStateType() == RegistrationStateType.SCHOOLPARTCONCLUDED;
