@@ -146,4 +146,9 @@ public class Exclusiveness extends Exclusiveness_Base {
         return new ExclusivenessVerifier();
     }
 
+    @Override
+    public boolean isRulePreventingAutomaticEnrolment() {
+        return true;
+    }
+
 }
