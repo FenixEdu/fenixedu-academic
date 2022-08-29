@@ -71,11 +71,11 @@ public enum RegistrationStateTypeEnum {
     }
 
     public String getQualifiedName() {
-        return "RegistrationStateTypeEnum." + name();
+        return "RegistrationStateType." + name();
     }
 
     public String getFullyQualifiedName() {
-        return "org.fenixedu.academic.domain.student.registrationStates.RegistrationStateTypeEnum." + name();
+        return "org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType." + name();
     }
 
     public String getDescription() {
