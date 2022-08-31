@@ -32,7 +32,7 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.accessControl.SearchDegreeStudentsGroup;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
+import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateTypeEnum;
 import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
 import org.fenixedu.academic.ui.faces.bean.base.FenixBackingBean;
 import org.fenixedu.academic.util.Bundle;
@@ -111,7 +111,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
         if (registrationStateTypeString == null) {
             registrationStateTypeString = getAndHoldStringParameter("registrationStateTypeString");
         }
-        return (registrationStateTypeString == null) ? RegistrationStateType.REGISTERED.toString() : registrationStateTypeString;
+        return (registrationStateTypeString == null) ? RegistrationStateTypeEnum.REGISTERED.toString() : registrationStateTypeString;
     }
 
     public void setRegistrationStateTypeString(String registrationStateTypeString) {
@@ -254,10 +254,10 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
         this.maximumYearString = maximumYearString;
     }
 
-    public List<Entry<StudentCurricularPlan, RegistrationStateType>> getStudentCurricularPlans() throws FenixServiceException {
-        Map<StudentCurricularPlan, RegistrationStateType> studentCurricularPlans = filterPageStudentCurricularPlans();
+    public List<Entry<StudentCurricularPlan, RegistrationStateTypeEnum>> getStudentCurricularPlans() throws FenixServiceException {
+        Map<StudentCurricularPlan, RegistrationStateTypeEnum> studentCurricularPlans = filterPageStudentCurricularPlans();
 
-        RegistrationStateType registrationState;
+        RegistrationStateTypeEnum registrationState;
 
         for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlans.keySet()) {
             if (studentCurricularPlan.getRegistration() == null) {
@@ -266,12 +266,12 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
                 registrationState = null;
             } else {
                 registrationState =
-                        studentCurricularPlan.getRegistration().getLastRegistrationState(getExecutionYear()).getStateType();
+                        studentCurricularPlan.getRegistration().getLastRegistrationState(getExecutionYear()).getStateTypeEnum();
             }
             studentCurricularPlans.put(studentCurricularPlan, registrationState);
         }
 
-        return new ArrayList<Entry<StudentCurricularPlan, RegistrationStateType>>(studentCurricularPlans.entrySet());
+        return new ArrayList<Entry<StudentCurricularPlan, RegistrationStateTypeEnum>>(studentCurricularPlans.entrySet());
 
     }
 
@@ -289,17 +289,17 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
                 getMinStudentNumber(), getMaxStudentNumber(), getMinimumYear(), getMaximumYear());
     }
 
-    private Map<StudentCurricularPlan, RegistrationStateType> filterAllStudentCurricularPlans() {
+    private Map<StudentCurricularPlan, RegistrationStateTypeEnum> filterAllStudentCurricularPlans() {
         SearchDegreeStudentsGroup searchGroup = getSearchCriteriaGroup();
 
-        final Map<StudentCurricularPlan, RegistrationStateType> map = searchGroup.searchStudentCurricularPlans(null, null);
+        final Map<StudentCurricularPlan, RegistrationStateTypeEnum> map = searchGroup.searchStudentCurricularPlans(null, null);
         return map;
     }
 
-    private Map<StudentCurricularPlan, RegistrationStateType> filterPageStudentCurricularPlans() {
+    private Map<StudentCurricularPlan, RegistrationStateTypeEnum> filterPageStudentCurricularPlans() {
         SearchDegreeStudentsGroup searchGroup = getSearchCriteriaGroup();
 
-        final Map<StudentCurricularPlan, RegistrationStateType> map =
+        final Map<StudentCurricularPlan, RegistrationStateTypeEnum> map =
                 searchGroup.searchStudentCurricularPlans(getMinIndex(), getMaxIndex());
 
         return map;
@@ -314,10 +314,10 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
         return searchGroup.serialize();
     }
 
-    public RegistrationStateType getRegistrationStateType() {
+    public RegistrationStateTypeEnum getRegistrationStateType() {
         final String registrationStateTypeString = getRegistrationStateTypeString();
         return (registrationStateTypeString != null && registrationStateTypeString.length() > 0
-                && !registrationStateTypeString.equals("SHOWALL")) ? RegistrationStateType
+                && !registrationStateTypeString.equals("SHOWALL")) ? RegistrationStateTypeEnum
                         .valueOf(registrationStateTypeString) : null;
     }
 

@@ -36,7 +36,6 @@ import org.fenixedu.academic.domain.degreeStructure.RegimeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
