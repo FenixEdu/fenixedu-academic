@@ -29,7 +29,7 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.curriculum.ConclusionProcess;
-import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
+import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateTypeEnum;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
 import org.fenixedu.academic.util.Bundle;
@@ -59,7 +59,7 @@ public class ProgramConclusion extends ProgramConclusion_Base {
 
     public ProgramConclusion(LocalizedString name, LocalizedString description, LocalizedString graduationTitle,
             LocalizedString graduationLevel, boolean isAverageEditable, boolean isAlumniProvider, boolean isSkipValidation,
-            RegistrationStateType targetState) {
+            RegistrationStateTypeEnum targetState) {
         this();
         edit(name, description, graduationTitle, graduationLevel, isAverageEditable, isAlumniProvider, isSkipValidation,
                 targetState);
@@ -67,7 +67,7 @@ public class ProgramConclusion extends ProgramConclusion_Base {
 
     public void edit(LocalizedString name, LocalizedString description, LocalizedString graduationTitle,
             LocalizedString graduationLevel, boolean isAverageEditable, boolean isAlumniProvider, boolean isSkipValidation,
-            RegistrationStateType targetState) {
+            RegistrationStateTypeEnum targetState) {
         setName(name);
         setDescription(description);
         setGraduationTitle(graduationTitle);
@@ -151,7 +151,7 @@ public class ProgramConclusion extends ProgramConclusion_Base {
     }
 
     public boolean isTerminal() {
-        return RegistrationStateType.CONCLUDED.equals(getTargetState());
+        return RegistrationStateTypeEnum.CONCLUDED.equals(getTargetState());
     }
 
     public boolean isConclusionProcessed(Registration registration) {

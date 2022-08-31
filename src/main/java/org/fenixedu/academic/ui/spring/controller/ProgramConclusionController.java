@@ -22,7 +22,7 @@ import java.util.Set;
 
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
+import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateTypeEnum;
 import org.fenixedu.academic.ui.spring.service.ProgramConclusionService;
 import org.fenixedu.bennu.spring.portal.SpringFunctionality;
 import org.fenixedu.commons.i18n.LocalizedString;
@@ -70,12 +70,12 @@ public class ProgramConclusionController {
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String create(Model model) {
         model.addAttribute("allEventTypes", service.getEventTypes());
-        model.addAttribute("registrationStates", RegistrationStateType.values());
+        model.addAttribute("registrationStates", RegistrationStateTypeEnum.values());
         return view("create");
     }
 
-    private RegistrationStateType getRegistrationStateType(String targetState) {
-        return Strings.isNullOrEmpty(targetState) ? null : RegistrationStateType.valueOf(targetState);
+    private RegistrationStateTypeEnum getRegistrationStateType(String targetState) {
+        return Strings.isNullOrEmpty(targetState) ? null : RegistrationStateTypeEnum.valueOf(targetState);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/create")
@@ -100,7 +100,7 @@ public class ProgramConclusionController {
     @RequestMapping(value = "/{programConclusion}", method = RequestMethod.GET)
     public String edit(Model model, @PathVariable ProgramConclusion programConclusion) {
         model.addAttribute("allEventTypes", service.getEventTypes());
-        model.addAttribute("registrationStates", RegistrationStateType.values());
+        model.addAttribute("registrationStates", RegistrationStateTypeEnum.values());
         model.addAttribute("programConclusion", programConclusion);
         return view("create");
     }

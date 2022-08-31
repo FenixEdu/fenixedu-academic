@@ -1,3 +1,5 @@
+- Refactor: Change ProgramConclusion targetState slot to RegistrationStateTypeEnum
+
 34.2.0 (31-08-2022)
 - Bug Fix: Mark rules that prevent automatic group enrolment
 - Bug Fix: Previous years rule verifier mode should test if rule applies to context 
