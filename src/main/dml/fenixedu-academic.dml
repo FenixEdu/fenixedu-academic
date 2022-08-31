@@ -79,7 +79,7 @@ enum org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationContext         
 enum org.fenixedu.academic.domain.OperationType																		  as OperationType;
 enum org.fenixedu.academic.domain.contacts.PartyContactValidationState 									              as PartyContactValidationState;
 enum org.fenixedu.academic.domain.SchoolPeriodDuration																  as SchoolPeriodDuration;
-enum org.fenixedu.academic.domain.student.registrationStates.RegistrationStateTypeEnum                                 as RegistrationStateType;
+enum org.fenixedu.academic.domain.student.registrationStates.RegistrationStateTypeEnum                                 as RegistrationStateTypeEnum;
 enum org.fenixedu.academic.domain.candidacy.CandidacySituationType                                                     as CandidacySituationType;
 
 
@@ -1088,7 +1088,7 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
         protected boolean averageEditable;
         protected boolean alumniProvider;
         protected boolean skipValidation;
-        public RegistrationStateType targetState;
+        public RegistrationStateTypeEnum targetState;
     }
 	
     class BusinessArea  {
