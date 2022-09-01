@@ -1,3 +1,4 @@
+34.3.0 (01-09-2022)
 - Refactor: Change ProgramConclusion targetState slot to RegistrationStateTypeEnum
 - Refactor: Replace usage of RegistrationStateType by RegistrationStateTypeEnum
 
