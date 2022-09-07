@@ -27,6 +27,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -177,7 +178,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         this.setAnotation(annotation);
     }
 
-    public DegreeCurricularPlan(final Degree degree, final String name, final Person creator, final CurricularPeriod curricularPeriod) {
+    public DegreeCurricularPlan(final Degree degree, final String name, final Person creator,
+            final CurricularPeriod curricularPeriod) {
         this(degree, name);
 
         if (creator == null) {
@@ -379,6 +381,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             }
         }
         return null;
+    }
+
+    public Optional<ExecutionDegree> findExecutionDegree(final ExecutionInterval interval) {
+        final ExecutionYear executionYear = interval.getExecutionYear();
+        return getExecutionDegreesSet().stream().filter(ed -> ed.getExecutionYear() == executionYear).findAny();
     }
 
     // FIXME: Optimization Required
