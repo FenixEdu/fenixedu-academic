@@ -18,16 +18,12 @@
  */
 package org.fenixedu.academic.domain;
 
-
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 
 import org.fenixedu.academic.domain.curriculum.EnrollmentState;
 import org.fenixedu.academic.domain.curriculum.EnrolmentEvaluationContext;
-import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.exceptions.EnrolmentNotPayedException;
 import org.fenixedu.academic.domain.student.Registration;
@@ -188,6 +184,14 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         generateCheckSum();
     }
 
+    public void removeGrade() {
+        setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
+        setGrade(Grade.createEmptyGrade());
+        setExamDateYearMonthDay(null);
+        setGradeAvailableDateYearMonthDay(null);
+        setPersonResponsibleForGrade(null);
+    }
+
     private ExecutionYear getExecutionYear() {
         return getExecutionInterval().getExecutionYear();
     }
@@ -197,21 +201,21 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
             throw new DomainException("EnrolmentEvaluation.cannot.submit.not.temporary",
                     getEnrolment().getStudent().getPerson().getUsername());
         }
-        
+
         if (!hasGrade()) {
             throw new DomainException("EnrolmentEvaluation.cannot.submit.with.empty.grade");
         }
-        
+
         if (isPayable() && !isPayed()) {
             throw new EnrolmentNotPayedException("EnrolmentEvaluation.cannot.set.grade.on.not.payed.enrolment.evaluation",
                     getEnrolment());
         }
-        
+
         setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
         setPerson(person);
         setObservation(observation);
         setWhenDateTime(new DateTime());
-        
+
         this.getEnrolment().setEnrollmentState(getEnrolment().getGrade().getEnrolmentState());
     }
 
