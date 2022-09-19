@@ -39,7 +39,7 @@
         <version.net.sourceforge.htmlcleaner.htmlcleaner>2.18</version.net.sourceforge.htmlcleaner.htmlcleaner>
         <version.org.apache.poi.poi>3.11</version.org.apache.poi.poi>
         <version.org.fenixedu.bennu-renderers>5.1.1</version.org.fenixedu.bennu-renderers>
-        <version.org.fenixedu.bennu>6.0.8-FORK</version.org.fenixedu.bennu>
+        <version.org.fenixedu.bennu>6.2.6-FORK</version.org.fenixedu.bennu>
         <version.org.fenixedu.fenixedu-commons>1.1.2</version.org.fenixedu.fenixedu-commons>
         <version.org.fenixedu.fenixedu-spaces>4.0.0-FORK</version.org.fenixedu.fenixedu-spaces>
         <version.org.imgscalr.imgscalr-lib>4.2</version.org.imgscalr.imgscalr-lib>

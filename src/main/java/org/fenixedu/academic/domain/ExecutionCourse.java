@@ -36,11 +36,13 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
+import org.fenixedu.academic.domain.util.email.Recipient;
 import org.fenixedu.academic.dto.GenericPair;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.LocaleUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.signals.DomainObjectEvent;
 import org.fenixedu.bennu.core.signals.Signal;
@@ -110,6 +112,17 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     // Delete Method
     public void delete() {
         DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
+
+        getStudentGroupSet().forEach(g -> {
+            g.setExecutionCourse(null);
+            deleteGroup(g);
+        });
+
+        getSpecialCriteriaOverExecutionCourseGroupSet().forEach(g -> {
+            g.setExecutionCourse(null);
+            deleteGroup(g);
+        });
+
         if (getSender() != null) {
             getSender().getRecipientsSet().clear();
             getSender().delete();
@@ -139,6 +152,16 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         super.deleteDomainObject();
     }
 
+    private void deleteGroup(PersistentGroup group) {
+        group.getRecipientAsMembersSet().forEach(Recipient::delete); // initialized on teacher sender creation, 'safe' to delete
+
+        if (!group.isDeletable()) {
+            throw new IllegalStateException(BundleUtil.getString(Bundle.APPLICATION,
+                    "error.executionCourse.cannotDeleteExecutionCourseUsedInAccessControl"));
+        }
+        PersistentGroup.garbageCollect(group);
+    }
+
     @Override
     protected void checkForDeletionBlockers(Collection<String> blockers) {
         super.checkForDeletionBlockers(blockers);
@@ -163,16 +186,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                 blockers.add(BundleUtil.getString(Bundle.APPLICATION, "error.execution.course.cant.delete"));
             }
         }
-
-        if (!getStudentGroupSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION,
-                    "error.executionCourse.cannotDeleteExecutionCourseUsedInAccessControl"));
-        }
-        if (!getSpecialCriteriaOverExecutionCourseGroupSet().isEmpty()) {
-            blockers.add(BundleUtil.getString(Bundle.APPLICATION,
-                    "error.executionCourse.cannotDeleteExecutionCourseUsedInAccessControl"));
-        }
-
     }
 
     public Set<Shift> getAssociatedShifts() {
