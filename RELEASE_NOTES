@@ -1,3 +1,5 @@
+- Refactor: Declare default method IAcademicTreasuryTarget::getEventTargetCurrentState to retrieve to current state of the process associated with treasury event
+
 34.3.2 (20-09-2022)
 - Improvement: Allow deletion of execution course with messaging groups created
 

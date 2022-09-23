@@ -45,5 +45,9 @@ public interface IAcademicTreasuryTarget extends DomainObject {
             handleTotalPayment(e);
         }
     }
+
+    public default LocalizedString getEventTargetCurrentState() {
+        return new LocalizedString();
+    }
     
 }
