@@ -18,18 +18,19 @@
  */
 package org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors;
 
+import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.CurricularCourse;
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.curricularRules.AnyCurricularCourse;
 import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
+import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevelType;
 import org.fenixedu.academic.domain.enrolment.EnroledOptionalEnrolment;
 import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.enrolment.OptionalDegreeModuleToEnrol;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.util.CurricularRuleLabelFormatter;
 
 public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
@@ -46,12 +47,6 @@ public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
         return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
     }
 
-    /**
-     * -&gt; if getDegree() == null ? getBolonhaDegreeType() == null ? any degree
-     * from IST ? getBolonhaDegreeType() != null ? any degree with same
-     * DegreeType -&gt; else ? check selected degree -&gt; if departmentUnit != null ?
-     * CurricularCourse from CompetenceCourse that belong to that Department
-     */
     @Override
     protected RuleResult executeEnrolmentVerificationWithRules(final ICurricularRule curricularRule,
             IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
@@ -90,18 +85,14 @@ public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
 
         boolean result = true;
 
-        result &= rule.hasMinimumCredits() ? rule.getMinimumCredits() <= curricularCourseToEnrol
-                .getEctsCredits(executionInterval) : true;
+        result &= matchesMinCredits(rule, curricularCourseToEnrol, executionInterval);
+        result &= matchesMaxCredits(rule, curricularCourseToEnrol, executionInterval);
+        result &= matchesDegreesAndDegreeTypes(rule, degree);
+        result &= matchesCompetenceCoursesAndLevels(rule, curricularCourseToEnrol, executionInterval);
+        result &= matchesUnits(rule, curricularCourseToEnrol, executionInterval);
 
-        result &= rule.hasMaximumCredits() ? rule.getMaximumCredits() >= curricularCourseToEnrol
-                .getEctsCredits(executionInterval) : true;
-
-        result &= rule.getDegree() != null ? rule.getDegree() == degree : rule
-                .hasBolonhaDegreeType() ? degree.getDegreeType() == rule.getBolonhaDegreeType() : true;
-
-        if (rule.getDepartmentUnit() != null) {
-            final Unit departmentUnit = curricularCourseToEnrol.getCompetenceCourse().getDepartmentUnit(executionInterval);
-            result &= departmentUnit != null && departmentUnit.equals(rule.getDepartmentUnit());
+        if (Boolean.TRUE.equals(rule.getNegation())) {
+            result = !result;
         }
 
         if (result) {
@@ -119,9 +110,59 @@ public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
     }
 
     @Override
-    protected boolean canBeEvaluated(ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
-            EnrolmentContext enrolmentContext) {
-        return true;
+    protected RuleResult executeEnrolmentPrefilter(ICurricularRule curricularRule,
+            IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
+
+        if (sourceDegreeModuleToEvaluate instanceof OptionalDegreeModuleToEnrol) {
+            final RuleResult result =
+                    executeEnrolmentVerificationWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
+            return result.isTrue() ? result : RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule());
+        }
+
+        return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
+    }
+
+    private boolean matchesMinCredits(final AnyCurricularCourse rule, final CurricularCourse curricularCourseToEnrol,
+            final ExecutionInterval executionInterval) {
+        return rule.hasMinimumCredits() ? rule.getMinimumCredits() <= curricularCourseToEnrol
+                .getEctsCredits(executionInterval) : true;
+    }
+
+    private boolean matchesMaxCredits(final AnyCurricularCourse rule, final CurricularCourse curricularCourseToEnrol,
+            final ExecutionInterval executionInterval) {
+        return rule.hasMaximumCredits() ? rule.getMaximumCredits() >= curricularCourseToEnrol
+                .getEctsCredits(executionInterval) : true;
+    }
+
+    private boolean matchesCompetenceCoursesAndLevels(AnyCurricularCourse rule, CurricularCourse courseToEnrol,
+            ExecutionInterval executionInterval) {
+
+        final CompetenceCourse competenceCourse = courseToEnrol.getCompetenceCourse();
+        if (!rule.getCompetenceCoursesSet().isEmpty()) {
+            return rule.getCompetenceCoursesSet().contains(competenceCourse);
+        }
+
+        final CompetenceCourseLevelType levelType =
+                competenceCourse.findInformationMostRecentUntil(executionInterval).getLevelType();
+        return rule.getCompetenceCourseLevelTypesSet().isEmpty()
+                || (levelType != null && rule.getCompetenceCourseLevelTypesSet().contains(levelType));
+    }
+
+    private boolean matchesDegreesAndDegreeTypes(AnyCurricularCourse rule, Degree degree) {
+        if (!rule.getDegreesSet().isEmpty()) {
+            return rule.getDegreesSet().contains(degree);
+        }
+
+        return rule.getDegreeTypesSet().isEmpty() || rule.getDegreeTypesSet().contains(degree.getDegreeType());
+    }
+
+    private boolean matchesUnits(AnyCurricularCourse rule, CurricularCourse courseToEnrol, ExecutionInterval executionInterval) {
+        if (rule.getUnitsSet().isEmpty()) {
+            return true;
+        }
+
+        return courseToEnrol.getCompetenceCourse().getParentUnits(u -> rule.getUnitsSet().contains(u), executionInterval)
+                .findAny().isPresent();
     }
 
 }

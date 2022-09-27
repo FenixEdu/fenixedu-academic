@@ -1,3 +1,7 @@
+- Improvement: Add AnyCurricularCourse new filters (negation, degree types, degrees, units, competence course levels and competence courses)
+- Improvement: Add OR rule support for prefilter (only return true if any of child rules evalutes to NA)
+- Improvement: Add AnyCurricularCourseExceptions prefilter support
+
 34.3.3 (23-09-2022)
 - Refactor: Declare default method IAcademicTreasuryTarget::getEventTargetCurrentState to retrieve to current state of the process associated with treasury event
 

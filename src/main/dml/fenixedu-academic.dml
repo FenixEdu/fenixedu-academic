@@ -900,6 +900,7 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
                 Integer curricularPeriodOrder;
                 Double minimumCredits;
                 Double maximumCredits;
+                Boolean negation;
             }
             
             class curricularRules.AnyCurricularCourseExceptions extends curricularRules.Rule {
@@ -2028,19 +2029,70 @@ relation AffinityCycleCourseGroup {
 }
 
 relation AnyCurricularCourseDegree {
-    curricularRules.AnyCurricularCourse playsRole participatingAnyCurricularCourseCurricularRules {
+    curricularRules.AnyCurricularCourse playsRole anyCurricularCourseRules {
         multiplicity *;
     }
-    Degree playsRole degree;
+    
+    Degree playsRole degrees {
+    	multiplicity *;
+    }
+}
+
+relation AnyCurricularCourseCompetenceCourse {
+    curricularRules.AnyCurricularCourse playsRole anyCurricularCourseRules {
+        multiplicity *;
+    }
+    
+    CompetenceCourse playsRole competenceCourses {
+    	multiplicity *;
+    }
+}
+
+relation AnyCurricularCourseUnit {
+    curricularRules.AnyCurricularCourse playsRole anyCurricularCourseRules {
+    	multiplicity *;
+    }
+    organizationalStructure.Unit playsRole units {
+    	multiplicity *;
+    }
+}
+
+relation AnyCurricularCourseCompetenceCourseLevelType {
+    curricularRules.AnyCurricularCourse playsRole anyCurricularCourseRules {
+    	multiplicity *;
+    }
+    degreeStructure.CompetenceCourseLevelType playsRole competenceCourseLevelTypes {
+    	multiplicity *;
+    }
 }
 
 relation AnyCurricularCourseDegreeType {
+    curricularRules.AnyCurricularCourse playsRole anyCurricularCourseRules {
+        multiplicity *;
+    }
+    
+    degree.DegreeType playsRole degreeTypes {
+       multiplicity *;
+    }
+}
+
+//Deprecated
+relation AnyCurricularCourseSingleDegreeType {
     curricularRules.AnyCurricularCourse playsRole participatingAnyCurricularCourseCurricularRules {
         multiplicity *;
     }
     degree.DegreeType playsRole bolonhaDegreeType;
 }
 
+//Deprecated
+relation AnyCurricularCourseSingleDegree {
+    curricularRules.AnyCurricularCourse playsRole participatingAnyCurricularCourseCurricularRules {
+        multiplicity *;
+    }
+    Degree playsRole degree;
+}
+
+//Deprecated
 relation AnyCurricularCourseDepartmentUnit {
     curricularRules.AnyCurricularCourse playsRole participatingAnyCurricularCourseCurricularRules {
         multiplicity *;

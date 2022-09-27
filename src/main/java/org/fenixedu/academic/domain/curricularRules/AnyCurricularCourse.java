@@ -22,7 +22,11 @@
 package org.fenixedu.academic.domain.curricularRules;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ExecutionInterval;
@@ -38,8 +42,7 @@ import org.fenixedu.academic.dto.GenericPair;
 public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 
     public AnyCurricularCourse(final OptionalCurricularCourse toApplyRule, final CourseGroup contextCourseGroup,
-            final ExecutionInterval begin, final ExecutionInterval end, final Double minimumCredits, Double maximumCredits,
-            final Integer curricularPeriodOrder, final DegreeType degreeType, final Degree degree, final Unit departmentUnit) {
+            final ExecutionInterval begin, final ExecutionInterval end, final Double minimumCredits, Double maximumCredits) {
 
         super();
 
@@ -49,21 +52,7 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 
         setMinimumCredits(minimumCredits);
         setMaximumCredits(maximumCredits);
-        setCurricularPeriodOrder(curricularPeriodOrder);
-        setBolonhaDegreeType(degreeType);
-        setDegree(degree);
-        setDepartmentUnit(departmentUnit);
-    }
-
-    protected void edit(final CourseGroup contextCourseGroup, final Double credits, final Integer curricularPeriodOrder,
-            final DegreeType degreeType, final Degree degree, final Unit departmentUnit) {
-
-        setContextCourseGroup(contextCourseGroup);
-        setCredits(credits);
-        setCurricularPeriodOrder(curricularPeriodOrder);
-        setBolonhaDegreeType(degreeType);
-        setDegree(degree);
-        setDepartmentUnit(departmentUnit);
+        setCurricularPeriodOrder(0);//Deprecated (compatibility reasons only)
     }
 
     @Override
@@ -112,6 +101,11 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
     public List<GenericPair<Object, Boolean>> getLabel() {
         final List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>();
 
+        if (Boolean.TRUE.equals(getNegation())) {
+            labelList.add(new GenericPair<Object, Boolean>("label.except.upper", true));
+            labelList.add(new GenericPair<Object, Boolean>(" ", false));
+        }
+
         labelList.add(new GenericPair<Object, Boolean>("label.anyCurricularCourse", true));
 
         if (getMinimumCredits() != null && getMaximumCredits() != null) {
@@ -144,6 +138,7 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
             labelList.add(new GenericPair<Object, Boolean>("label.credits", true));
         }
 
+        //deprecated
         if (getCurricularPeriodOrder().intValue() != 0) {
             labelList.add(new GenericPair<Object, Boolean>(", ", false));
             labelList.add(new GenericPair<Object, Boolean>("label.in", true));
@@ -153,38 +148,66 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
             labelList.add(new GenericPair<Object, Boolean>("SEMESTER", true));
         }
 
-        labelList.add(new GenericPair<Object, Boolean>(", ", false));
-        if (getDegree() == null) {
-            if (!hasBolonhaDegreeType()) {
-                labelList.add(new GenericPair<Object, Boolean>("label.of", true));
-                labelList.add(new GenericPair<Object, Boolean>(" ", false));
-                labelList.add(new GenericPair<Object, Boolean>(Unit.getInstitutionAcronym(), false));
-            } else {
-                labelList.add(new GenericPair<Object, Boolean>("label.of1", true));
-                labelList.add(new GenericPair<Object, Boolean>(" ", false));
-                labelList.add(new GenericPair<Object, Boolean>(getBolonhaDegreeType().getName().getContent(), false));
-            }
-        } else {
-            labelList.add(new GenericPair<Object, Boolean>("label.of", true));
-            labelList.add(new GenericPair<Object, Boolean>(" ", false));
-            labelList.add(new GenericPair<Object, Boolean>("label.degree", true));
-            labelList.add(new GenericPair<Object, Boolean>(" ", false));
-            labelList.add(new GenericPair<Object, Boolean>(getDegree().getNome(), false));
+        if (!getDegreesSet().isEmpty()) {
+            labelList.add(new GenericPair<Object, Boolean>(", ", false));
+            labelList.add(new GenericPair<Object, Boolean>("label.ofDegrees", true));
+            labelList.add(new GenericPair<Object, Boolean>(": [", false));
+            labelList.add(new GenericPair<Object, Boolean>(
+                    getDegreesSet().stream().map(d -> d.getAcronym()).collect(Collectors.joining(", ")), false));
+            labelList.add(new GenericPair<Object, Boolean>("]", false));
+        } else if (!getDegreeTypesSet().isEmpty()) {
+            labelList.add(new GenericPair<Object, Boolean>(", ", false));
+            labelList.add(new GenericPair<Object, Boolean>("label.ofDegreeTypes", true));
+            labelList.add(new GenericPair<Object, Boolean>(": [", false));
+            labelList.add(new GenericPair<Object, Boolean>(
+                    getDegreeTypesSet().stream().map(dt -> dt.getName().getContent()).collect(Collectors.joining(", ")), false));
+            labelList.add(new GenericPair<Object, Boolean>("]", false));
         }
 
-        if (getDepartmentUnit() != null) {
+        if (!getCompetenceCourseLevelTypesSet().isEmpty() && getCompetenceCoursesSet().isEmpty()) {
             labelList.add(new GenericPair<Object, Boolean>(", ", false));
-            labelList.add(new GenericPair<Object, Boolean>("label.of", true));
-            labelList.add(new GenericPair<Object, Boolean>(" ", false));
-            labelList.add(new GenericPair<Object, Boolean>(getDepartmentUnit().getName(), false));
+            labelList.add(new GenericPair<Object, Boolean>("label.ofLevels", true));
+            labelList.add(new GenericPair<Object, Boolean>(": [", false));
+            labelList.add(new GenericPair<Object, Boolean>(getCompetenceCourseLevelTypesSet().stream()
+                    .map(l -> l.getName().getContent()).sorted().collect(Collectors.joining(", ")), false));
+            labelList.add(new GenericPair<Object, Boolean>("]", false));
         }
 
-        if (getContextCourseGroup() != null) {
+        if (!getCompetenceCoursesSet().isEmpty()) {
             labelList.add(new GenericPair<Object, Boolean>(", ", false));
-            labelList.add(new GenericPair<Object, Boolean>("label.inGroup", true));
-            labelList.add(new GenericPair<Object, Boolean>(" ", false));
-            labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(), false));
+            labelList.add(new GenericPair<Object, Boolean>("label.ofList", true));
+            labelList.add(new GenericPair<Object, Boolean>(": [", false));
+            labelList.add(new GenericPair<Object, Boolean>(getCompetenceCoursesSet().stream()
+                    .map(c -> c.getNameI18N().getContent()).sorted().collect(Collectors.joining(", ")), false));
+            labelList.add(new GenericPair<Object, Boolean>("]", false));
         }
+
+        if (!getUnitsSet().isEmpty()) {
+            labelList.add(new GenericPair<Object, Boolean>(", ", false));
+            final Map<String, List<Unit>> unitsByType = getUnitsSet().stream().sorted(Unit.COMPARATOR_BY_NAME).collect(
+                    Collectors.groupingBy((Unit u) -> u.getPartyType().getName(), LinkedHashMap::new, Collectors.toList()));
+
+            final AtomicBoolean firstPartyType = new AtomicBoolean(true);
+            unitsByType.forEach((partyType, units) -> {
+                if (!firstPartyType.get()) {
+                    labelList.add(new GenericPair<Object, Boolean>(" ", false));
+                    labelList.add(new GenericPair<Object, Boolean>("label.or.upper", true));
+                    labelList.add(new GenericPair<Object, Boolean>(" ", false));
+                } else {
+                    labelList.add(new GenericPair<Object, Boolean>("label.belongingTo", true));
+                    labelList.add(new GenericPair<Object, Boolean>(" ", false));
+                    firstPartyType.set(false);
+                }
+
+                labelList.add(new GenericPair<Object, Boolean>(partyType, false));
+                labelList.add(new GenericPair<Object, Boolean>(": [", false));
+                labelList.add(new GenericPair<Object, Boolean>(
+                        units.stream().map(u -> u.getNameI18n().getContent()).collect(Collectors.joining(", ")), false));
+                labelList.add(new GenericPair<Object, Boolean>("]", false));
+            });
+
+        }
+
         return labelList;
     }
 
@@ -193,10 +216,11 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
         setDegree(null);
         setDepartmentUnit(null);
         setBolonhaDegreeType(null);
-    }
-
-    public boolean hasBolonhaDegreeType() {
-        return getBolonhaDegreeType() != null;
+        getCompetenceCourseLevelTypesSet().clear();
+        getCompetenceCoursesSet().clear();
+        getDegreeTypesSet().clear();
+        getDegreesSet().clear();
+        getUnitsSet().clear();
     }
 
     public boolean hasCredits() {
@@ -209,6 +233,39 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 
     public boolean hasMaximumCredits() {
         return getMaximumCredits() != null && getMaximumCredits().doubleValue() != 0d;
+    }
+
+    //To remove
+    @Deprecated
+    @Override
+    public void setBolonhaDegreeType(DegreeType bolonhaDegreeType) {
+        super.setBolonhaDegreeType(bolonhaDegreeType);
+        getDegreeTypesSet().clear();
+        if (bolonhaDegreeType != null) {
+            getDegreeTypesSet().add(bolonhaDegreeType);
+        }
+    }
+
+    //To remove
+    @Deprecated
+    @Override
+    public void setDegree(Degree degree) {
+        super.setDegree(degree);
+        getDegreesSet().clear();
+        if (degree != null) {
+            getDegreesSet().add(degree);
+        }
+    }
+
+    //To remove
+    @Deprecated
+    @Override
+    public void setDepartmentUnit(Unit departmentUnit) {
+        super.setDepartmentUnit(departmentUnit);
+        getUnitsSet().clear();
+        if (departmentUnit != null) {
+            getUnitsSet().add(departmentUnit);
+        }
     }
 
     @Override

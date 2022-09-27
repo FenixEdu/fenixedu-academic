@@ -45,18 +45,21 @@ public class OrRule extends OrRule_Base {
 
     @Override
     public RuleResult evaluate(IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
-        if (enrolmentContext.getCurricularRuleLevel() == CurricularRuleLevel.ENROLMENT_PREFILTER) {
-            //Future improvement: only return true if all rule evaluations resulted in NA
-            return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
-        }
-
+        boolean ruleEvaluated = false;
         RuleResult resultOR = RuleResult.createFalse(EnrolmentResultType.NULL, sourceDegreeModuleToEvaluate.getDegreeModule());
         for (final CurricularRule curricularRule : getCurricularRulesSet()) {
-            resultOR = resultOR.or(curricularRule.evaluate(sourceDegreeModuleToEvaluate, enrolmentContext));
+            final RuleResult ruleResult = curricularRule.evaluate(sourceDegreeModuleToEvaluate, enrolmentContext);
+            ruleEvaluated |= !ruleResult.isNA();
+            resultOR = resultOR.or(ruleResult);
             if (resultOR.isTrue() && resultOR.isValidated(sourceDegreeModuleToEvaluate.getDegreeModule())) {
                 return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
             }
         }
+
+        if (!ruleEvaluated && enrolmentContext.getCurricularRuleLevel() == CurricularRuleLevel.ENROLMENT_PREFILTER) {
+            return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
+        }
+
         return resultOR;
     }
 
@@ -65,8 +68,8 @@ public class OrRule extends OrRule_Base {
             DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
         RuleResult resultOR = RuleResult.createFalse(EnrolmentResultType.NULL, degreeModuleToVerify);
         for (final CurricularRule curricularRule : getCurricularRulesSet()) {
-            resultOR =
-                    resultOR.or(curricularRule.verify(verifyRuleLevel, enrolmentContext, degreeModuleToVerify, parentCourseGroup));
+            resultOR = resultOR
+                    .or(curricularRule.verify(verifyRuleLevel, enrolmentContext, degreeModuleToVerify, parentCourseGroup));
             if (resultOR.isTrue() && resultOR.isValidated(degreeModuleToVerify)) {
                 return RuleResult.createTrue(degreeModuleToVerify);
             }

@@ -23,6 +23,7 @@ import org.fenixedu.academic.domain.curricularRules.ICurricularRule;
 import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
 import org.fenixedu.academic.domain.enrolment.EnrolmentContext;
 import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
+import org.fenixedu.academic.domain.enrolment.OptionalDegreeModuleToEnrol;
 
 public class AnyCurricularCourseExceptionsExecutor extends CurricularRuleExecutor {
 
@@ -54,6 +55,19 @@ public class AnyCurricularCourseExceptionsExecutor extends CurricularRuleExecuto
         }
 
         return getLogic().executeEnrolmentVerificationWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
+    }
+
+    @Override
+    protected RuleResult executeEnrolmentPrefilter(ICurricularRule curricularRule,
+            IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
+
+        if (sourceDegreeModuleToEvaluate instanceof OptionalDegreeModuleToEnrol) {
+            final RuleResult result =
+                    executeEnrolmentVerificationWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
+            return result.isTrue() ? result : RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule());
+        }
+
+        return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
     }
 
 }
