@@ -41,6 +41,8 @@ public interface ICurriculum {
 
     abstract public Grade getFinalGrade();
 
+    abstract public Grade getUnroundedGrade();
+
     abstract public BigDecimal getSumEctsCredits();
 
     abstract public Integer getCurricularYear();

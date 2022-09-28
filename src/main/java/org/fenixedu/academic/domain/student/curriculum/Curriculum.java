@@ -190,8 +190,7 @@ public class Curriculum implements Serializable, ICurriculum {
 
         Grade finalGrade(Curriculum curriculum);
 
-        @Deprecated
-        BigDecimal weigthedGradeSum(Curriculum curriculum);
+        Grade unroundedGrade(Curriculum curriculum);
     }
 
     static public CurriculumGradeCalculator getCurriculumGradeCalculator() {
@@ -219,6 +218,8 @@ public class Curriculum implements Serializable, ICurriculum {
 
         private Grade finalGrade;
 
+        private Grade unroundedGrade;
+
         private void doCalculus(final Curriculum curriculum) {
             GradeScale gradeScale = curriculum.getStudentCurricularPlan().getRegistration().getDegree().getNumericGradeScale();
 
@@ -227,6 +228,7 @@ public class Curriculum implements Serializable, ICurriculum {
             countAverage(curriculum.averageEnrolmentRelatedEntries);
             countAverage(curriculum.averageDismissalRelatedEntries);
             BigDecimal avg = calculateAverage();
+            unroundedGrade = Grade.createGrade(avg.toString(), gradeScale);
             rawGrade = Grade.createGrade(avg.setScale(2, RoundingMode.HALF_UP).toString(), gradeScale);
             finalGrade = Grade.createGrade(avg.setScale(0, RoundingMode.HALF_UP).toString(), gradeScale);
         }
@@ -264,11 +266,11 @@ public class Curriculum implements Serializable, ICurriculum {
         }
 
         @Override
-        public BigDecimal weigthedGradeSum(final Curriculum curriculum) {
-            if (sumPiCi == null) {
+        public Grade unroundedGrade(final Curriculum curriculum) {
+            if (unroundedGrade == null) {
                 doCalculus(curriculum);
             }
-            return sumPiCi;
+            return unroundedGrade;
         }
     };
 
@@ -498,11 +500,6 @@ public class Curriculum implements Serializable, ICurriculum {
         }).map(i -> i.getApprovementDate()).max(YearMonthDay::compareTo).orElse(null);
     }
 
-    @Deprecated
-    public BigDecimal getWeigthedGradeSum() {
-        return getGradeCalculator().weigthedGradeSum(this);
-    }
-
     @Override
     public Grade getRawGrade() {
         return getGradeCalculator().rawGrade(this);
@@ -511,6 +508,11 @@ public class Curriculum implements Serializable, ICurriculum {
     @Override
     public Grade getFinalGrade() {
         return getGradeCalculator().finalGrade(this);
+    }
+
+    @Override
+    public Grade getUnroundedGrade() {
+        return getGradeCalculator().unroundedGrade(this);
     }
 
     @Override
