@@ -1,3 +1,5 @@
+- Refactor: Remove legacy JSF functionalities and framework
+
 34.4.1 (28-09-2022)
 - Refactor: Add Curriculum API method to get unrounded grade
 - Refactor: Remove getWeigthedGradeSum deprecated method from curriculum calculator

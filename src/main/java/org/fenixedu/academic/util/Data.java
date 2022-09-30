@@ -19,10 +19,7 @@
 package org.fenixedu.academic.util;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-
-import javax.faces.model.SelectItem;
 
 import org.apache.struts.util.LabelValueBean;
 
@@ -89,14 +86,6 @@ public class Data {
         return result;
     }
 
-    public static final List<SelectItem> getMonthDaysSelectItems() {
-        List<SelectItem> result = new ArrayList<SelectItem>();
-        for (int i = 1; i <= 31; i++) {
-            result.add(new SelectItem(i, new Integer(i).toString()));
-        }
-        return result;
-    }
-
     public static final List<LabelValueBean> getMonths() {
         List<LabelValueBean> result = new ArrayList<LabelValueBean>();
         result.add(new LabelValueBean(Data.OPTION_STRING, Data.OPTION_DEFAULT));
@@ -130,33 +119,6 @@ public class Data {
         result.add(new LabelValueBean(Data.OCTOBER_STRING, String.valueOf(Data.OCTOBER + 1)));
         result.add(new LabelValueBean(Data.NOVEMBER_STRING, String.valueOf(Data.NOVEMBER + 1)));
         result.add(new LabelValueBean(Data.DECEMBER_STRING, String.valueOf(Data.DECEMBER + 1)));
-        return result;
-    }
-
-    public static final List<SelectItem> getMonthsSelectItems() {
-        List<SelectItem> result = new ArrayList<SelectItem>();
-        result.add(new SelectItem(Data.JANUARY, Data.JANUARY_STRING));
-        result.add(new SelectItem(Data.FEBRUARY, Data.FEBRUARY_STRING));
-        result.add(new SelectItem(Data.MARCH, Data.MARCH_STRING));
-        result.add(new SelectItem(Data.APRIL, Data.APRIL_STRING));
-        result.add(new SelectItem(Data.MAY, Data.MAY_STRING));
-        result.add(new SelectItem(Data.JUNE, Data.JUNE_STRING));
-        result.add(new SelectItem(Data.JULY, Data.JULY_STRING));
-        result.add(new SelectItem(Data.AUGUST, Data.AUGUST_STRING));
-        result.add(new SelectItem(Data.SETEMBER, Data.SETEMBER_STRING));
-        result.add(new SelectItem(Data.OCTOBER, Data.OCTOBER_STRING));
-        result.add(new SelectItem(Data.NOVEMBER, Data.NOVEMBER_STRING));
-        result.add(new SelectItem(Data.DECEMBER, Data.DECEMBER_STRING));
-        return result;
-    }
-
-    public static final List<SelectItem> getExpirationYearsSelectItems() {
-        List<SelectItem> result = new ArrayList<SelectItem>();
-        Calendar date = Calendar.getInstance();
-
-        for (int i = date.get(Calendar.YEAR) - 1; i < (date.get(Calendar.YEAR) + 20); i++) {
-            result.add(new SelectItem(i, new Integer(i).toString()));
-        }
         return result;
     }
 

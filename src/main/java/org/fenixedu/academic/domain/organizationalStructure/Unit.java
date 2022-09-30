@@ -35,7 +35,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.util.email.UnitBasedSender;
@@ -1057,15 +1056,6 @@ public class Unit extends Unit_Base {
     @Override
     public boolean isAdministrativeOfficeUnit() {
         return getAdministrativeOffice() != null;
-    }
-
-    /**
-     * @deprecated method cannot be removed yet because it's used in JSF pages (competenceCoursesManagement.jsp)
-     */
-    @Deprecated
-    public List<CompetenceCourse> getCompetenceCourses() {
-        return CompetenceCourse.findByUnit(this, false).sorted(CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME)
-                .collect(Collectors.toList());
     }
 
 }

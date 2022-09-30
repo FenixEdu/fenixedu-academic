@@ -31,7 +31,6 @@ import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.DegreeCurricularPlan;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.degreeStructure.Context;
-import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication.CurricularPlansManagement;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
@@ -41,7 +40,7 @@ import com.google.common.collect.Lists;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
-@Mapping(path = "/searchCurricularCourses", module = "academicAdministration", functionality = CurricularPlansManagement.class)
+@Mapping(path = "/searchCurricularCourses", module = "academicAdministration")
 @Forwards({ @Forward(name = "searchCurricularCourses",
         path = "/academicAdministration/bolonha/curricularCourses/search/searchCurricularCourses.jsp") })
 public class SearchCurricularCoursesInDegreeCurricularPlan extends FenixDispatchAction {

@@ -32,8 +32,6 @@
         <version.commons-io.commons-io>2.5</version.commons-io.commons-io>
         <version.commons-lang.commons-lang>2.6</version.commons-lang.commons-lang>
         <version.commons-validator.commons-validator>1.5.1</version.commons-validator.commons-validator>
-        <version.javax.faces.jsf-api>1.1_01</version.javax.faces.jsf-api>
-        <version.javax.faces.jsf-impl>1.1</version.javax.faces.jsf-impl>
         <version.javax.servlet.jsp.jsp-api>2.1</version.javax.servlet.jsp.jsp-api>
         <version.joda.time.joda.time>2.9.7</version.joda.time.joda.time>
         <version.net.sourceforge.htmlcleaner.htmlcleaner>2.18</version.net.sourceforge.htmlcleaner.htmlcleaner>
@@ -199,16 +197,6 @@
             <groupId>com.sun.mail</groupId>
             <artifactId>javax.mail</artifactId>
             <version>${version.com.sun.mail.javax.mail}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.faces</groupId>
-            <artifactId>jsf-impl</artifactId>
-            <version>${version.javax.faces.jsf-impl}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.faces</groupId>
-            <artifactId>jsf-api</artifactId>
-            <version>${version.javax.faces.jsf-api}</version>
         </dependency>
         <dependency>
             <groupId>net.sourceforge.htmlcleaner</groupId>

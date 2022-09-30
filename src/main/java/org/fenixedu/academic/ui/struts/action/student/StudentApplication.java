@@ -19,7 +19,6 @@
 package org.fenixedu.academic.ui.struts.action.student;
 
 import org.apache.struts.actions.ForwardAction;
-import org.fenixedu.academic.ui.struts.action.commons.FacesEntryPoint;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.StrutsApplication;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
@@ -52,12 +51,6 @@ public class StudentApplication extends ForwardAction {
     @StrutsApplication(descriptionKey = "link.student.seniorTitle", path = "finalists", titleKey = "link.student.seniorTitle",
             bundle = BUNDLE, accessGroup = ACCESS_GROUP, hint = HINT)
     public static class StudentSeniorsApp {
-    }
-
-    // Faces Entry Points
-    @StrutsFunctionality(app = StudentEnrollApp.class, path = "evaluations", titleKey = "link.evaluations.enrolment")
-    @Mapping(path = "/enrollment/evaluations/showEvaluations", module = "student")
-    public static class ShowStudentEvaluations extends FacesEntryPoint {
     }
 
     @StrutsFunctionality(app = StudentEnrollApp.class, path = "exams", titleKey = "link.exams.enrolment")

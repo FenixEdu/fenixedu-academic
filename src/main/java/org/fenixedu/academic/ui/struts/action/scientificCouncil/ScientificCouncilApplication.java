@@ -19,10 +19,8 @@
 package org.fenixedu.academic.ui.struts.action.scientificCouncil;
 
 import org.apache.struts.actions.ForwardAction;
-import org.fenixedu.academic.ui.struts.action.commons.FacesEntryPoint;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.StrutsApplication;
-import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 @StrutsApplication(bundle = ScientificCouncilApplication.BUNDLE, path = "scientific-council", titleKey = "scientificCouncil",
         accessGroup = ScientificCouncilApplication.ACCESS_GROUP, hint = ScientificCouncilApplication.HINT)
@@ -45,14 +43,6 @@ public class ScientificCouncilApplication extends ForwardAction {
 
     @StrutsApplication(bundle = BUNDLE, path = "teachers", titleKey = "title.teachers", accessGroup = ACCESS_GROUP, hint = HINT)
     public static class ScientificTeachersApp {
-    }
-
-    // Faces Entry Points
-
-    @StrutsFunctionality(app = ScientificBolonhaProcessApp.class, path = "competence-courses",
-            titleKey = "navigation.competenceCoursesManagement")
-    @Mapping(path = "/competenceCourses/competenceCoursesManagement", module = "scientificCouncil")
-    public static class ScientificCompetenceCoursesManagement extends FacesEntryPoint {
     }
 
 }

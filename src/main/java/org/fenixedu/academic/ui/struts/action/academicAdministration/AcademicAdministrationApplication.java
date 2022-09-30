@@ -19,7 +19,6 @@
 package org.fenixedu.academic.ui.struts.action.academicAdministration;
 
 import org.apache.struts.actions.ForwardAction;
-import org.fenixedu.academic.ui.struts.action.commons.FacesEntryPoint;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.StrutsApplication;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
@@ -82,12 +81,5 @@ public class AcademicAdministrationApplication extends ForwardAction {
 
 	@StrutsApplication(bundle = BUNDLE, path = "payments", hint = HINT, titleKey = "label.payments.management", accessGroup = "academic(MANAGE_STUDENT_PAYMENTS_ADV)")
 	public static class AcademicAdminPaymentsApp {
-	}
-
-	// Faces Entry Points
-
-	@StrutsFunctionality(app = AcademicAdminDCPApp.class, path = "curricular-plans-management", titleKey = "label.manager.course.structure", accessGroup = "academic(MANAGE_DEGREE_CURRICULAR_PLANS)")
-	@Mapping(path = "/bolonha/curricularPlans/curricularPlansManagement", module = "academicAdministration")
-	public static class CurricularPlansManagement extends FacesEntryPoint {
 	}
 }

@@ -25,14 +25,12 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.academic.domain.CurricularCourse;
-import org.fenixedu.academic.ui.struts.action.academicAdministration.AcademicAdministrationApplication.CurricularPlansManagement;
 import org.fenixedu.academic.ui.struts.action.base.FenixDispatchAction;
 import org.fenixedu.bennu.struts.annotations.Forward;
 import org.fenixedu.bennu.struts.annotations.Forwards;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 
-@Mapping(path = "/viewAllCurriculumLinesOfCurricularCourse", module = "academicAdministration",
-        functionality = CurricularPlansManagement.class)
+@Mapping(path = "/viewAllCurriculumLinesOfCurricularCourse", module = "academicAdministration")
 @Forwards({ @Forward(name = "viewCurriculumLinesOfCurricularCourse",
         path = "/academicAdministration/bolonha/enrolments/information/viewCurriculumLinesOfCurricularCourse.jsp") })
 public class ViewAllCurriculumLinesOfCurricularCourseDA extends FenixDispatchAction {

@@ -19,10 +19,8 @@
 package org.fenixedu.academic.ui.struts.action.BolonhaManager;
 
 import org.apache.struts.actions.ForwardAction;
-import org.fenixedu.academic.ui.struts.action.commons.FacesEntryPoint;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.StrutsApplication;
-import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 @StrutsApplication(bundle = "BolonhaManagerResources", path = "bolonha", titleKey = "bolonhaManager", hint = "Bolonha Manager",
         accessGroup = "role(BOLONHA_MANAGER)")
@@ -38,18 +36,6 @@ public class BolonhaManagerApplication extends ForwardAction {
     @StrutsApplication(bundle = "BolonhaManagerResources", path = "curricular-plans",
             titleKey = "navigation.curricularPlansManagement", accessGroup = "role(BOLONHA_MANAGER)", hint = "Bolonha Manager")
     public static class CurricularPlansManagementApp {
-
-    }
-
-    @StrutsFunctionality(app = CompetenceCourseManagementApp.class, path = "view", titleKey = "label.view")
-    @Mapping(module = "bolonhaManager", path = "/competenceCourses/competenceCoursesManagement")
-    public static class CompetenceCoursesManagement extends FacesEntryPoint {
-
-    }
-
-    @StrutsFunctionality(app = CurricularPlansManagementApp.class, path = "view", titleKey = "label.view")
-    @Mapping(module = "bolonhaManager", path = "/curricularPlans/curricularPlansManagement")
-    public static class CurricularPlansManagement extends FacesEntryPoint {
 
     }
 

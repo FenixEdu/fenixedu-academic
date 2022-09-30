@@ -19,10 +19,8 @@
 package org.fenixedu.academic.ui.struts.action.manager;
 
 import org.apache.struts.actions.ForwardAction;
-import org.fenixedu.academic.ui.struts.action.commons.FacesEntryPoint;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.portal.StrutsApplication;
-import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
 @StrutsApplication(bundle = "ManagerResources", path = "manager", titleKey = "MANAGER", hint = "Manager",
         accessGroup = "#managers")
@@ -57,22 +55,9 @@ public class ManagerApplications extends ForwardAction {
     public static class ManagerPaymentsApp {
     }
 
-    @StrutsApplication(path = "students", titleKey = "label.students", bundle = "AcademicAdminOffice",
-            accessGroup = ACCESS_GROUP, hint = HINT)
+    @StrutsApplication(path = "students", titleKey = "label.students", bundle = "AcademicAdminOffice", accessGroup = ACCESS_GROUP,
+            hint = HINT)
     public static class ManagerStudentsApp {
     }
 
-    // Faces Entry Points
-
-    @StrutsFunctionality(app = ManagerPaymentsApp.class, path = "update-gratuity-situations",
-            titleKey = "title.gratuity.situations")
-    @Mapping(path = "/gratuity/updateGratuitySituations", module = "manager")
-    public static class UpdateGratuitySituations extends FacesEntryPoint {
-    }
-
-    @StrutsFunctionality(app = ManagerExecutionsApp.class, path = "create-execution-degree",
-            titleKey = "label.manager.createExecutionDegrees")
-    @Mapping(path = "/degree/chooseDegreeType", module = "manager")
-    public static class CreateExecutionDegree extends FacesEntryPoint {
-    }
 }
