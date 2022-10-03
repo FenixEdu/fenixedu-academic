@@ -77,19 +77,21 @@ public class InfoLessonInstance extends InfoShowOccupation {
     }
 
     public String getShiftTypeCodesPrettyPrint() {
-        if (getLessonInstance().getCourseLoad() != null) {
-            return getLessonInstance().getCourseLoad().getType().getSiglaTipoAula();
-        } else {
-            return getLessonInstance().getLesson().getShift().getShiftTypesCodePrettyPrint();
-        }
+//        if (getLessonInstance().getCourseLoad() != null) {
+//            return getLessonInstance().getCourseLoad().getType().getSiglaTipoAula();
+//        } else {
+//            return getLessonInstance().getLesson().getShift().getShiftTypesCodePrettyPrint();
+//        }
+        return getLessonInstance().getLesson().getShift().getShiftTypesCodePrettyPrint();
     }
 
     public String getShiftTypesPrettyPrint() {
-        if (getLessonInstance().getCourseLoad() != null) {
-            return BundleUtil.getString(Bundle.ENUMERATION, getLessonInstance().getCourseLoad().getType().getName());
-        } else {
-            return getLessonInstance().getLesson().getShift().getShiftTypesPrettyPrint();
-        }
+//        if (getLessonInstance().getCourseLoad() != null) {
+//            return BundleUtil.getString(Bundle.ENUMERATION, getLessonInstance().getCourseLoad().getType().getName());
+//        } else {
+//            return getLessonInstance().getLesson().getShift().getShiftTypesPrettyPrint();
+//        }
+        return getLessonInstance().getLesson().getShift().getShiftTypesPrettyPrint();
     }
 
     private Lesson getLesson() {

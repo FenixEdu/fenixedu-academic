@@ -83,7 +83,7 @@ public class CourseLoad extends CourseLoad_Base {
     @Override
     protected void checkForDeletionBlockers(Collection<String> blockers) {
         super.checkForDeletionBlockers(blockers);
-        if (!getLessonInstancesSet().isEmpty() || !getShiftsSet().isEmpty()) {
+        if (!getShiftsSet().isEmpty()) {
             blockers.add(BundleUtil.getString(Bundle.RESOURCE_ALLOCATION, "error.CourseLoad.cannot.be.deleted"));
         }
     }

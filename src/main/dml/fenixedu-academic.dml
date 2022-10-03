@@ -4169,13 +4169,6 @@ relation CourseLoadShift {
     }
 }
 
-relation CourseLoadLessonInstance {
-    CourseLoad playsRole courseLoad;
-    LessonInstance playsRole lessonInstances {
-        multiplicity *;
-    }
-}
-
 relation AlumniStudent {
     Alumni playsRole alumni;
     student.Student playsRole student {

@@ -172,7 +172,7 @@ public class Summary extends Summary_Base {
         if (lessonInstance == null) {
             new LessonInstance(this, lesson);
         } else {
-            lessonInstance.summaryAndCourseLoadManagement(this, lesson);
+            lessonInstance.setSummary(this);
         }
     }
 
@@ -324,9 +324,9 @@ public class Summary extends Summary_Base {
         }
     }
 
-    public ShiftType getShiftType() {
-        return getLessonInstance().getCourseLoad().getType();
-    }
+//    public ShiftType getShiftType() {
+//        return getLessonInstance().getCourseLoad().getType();
+//    }
 
     public boolean isExtraSummary() {
         return getIsExtraLesson().booleanValue();

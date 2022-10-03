@@ -89,7 +89,8 @@ public class LessonInstance extends LessonInstance_Base {
 
         setLesson(lesson);
 
-        summaryAndCourseLoadManagement(summary, lesson);
+//        summaryAndCourseLoadManagement(summary, lesson);
+        setSummary(summary);
         lesson.refreshPeriodAndInstancesInSummaryCreation(nextPossibleDay);
         lessonInstanceSpaceOccupationManagement(room);
     }
@@ -149,20 +150,20 @@ public class LessonInstance extends LessonInstance_Base {
             occupation.delete();
         }
 
-        super.setCourseLoad(null);
+//        super.setCourseLoad(null);
         super.setLesson(null);
         setRootDomainObject(null);
         deleteDomainObject();
     }
 
-    public void summaryAndCourseLoadManagement(Summary summary, Lesson lesson) {
-        CourseLoad courseLoad = null;
-        if (lesson != null && summary != null) {
-            courseLoad = lesson.getExecutionCourse().getCourseLoadByShiftType(summary.getSummaryType());
-        }
-        setSummary(summary);
-        setCourseLoad(courseLoad);
-    }
+//    public void summaryAndCourseLoadManagement(Summary summary, Lesson lesson) {
+//        CourseLoad courseLoad = null;
+//        if (lesson != null && summary != null) {
+//            courseLoad = lesson.getExecutionCourse().getCourseLoadByShiftType(summary.getSummaryType());
+//        }
+//        setSummary(summary);
+//        setCourseLoad(courseLoad);
+//    }
 
     private int getUnitMinutes() {
         return Minutes.minutesBetween(getStartTime(), getEndTime()).getMinutes();
@@ -208,13 +209,13 @@ public class LessonInstance extends LessonInstance_Base {
         super.setSummary(summary);
     }
 
-    @Override
-    public void setCourseLoad(CourseLoad courseLoad) {
-        if (courseLoad == null) {
-            throw new DomainException("error.lessonInstance.empty.courseLoad");
-        }
-        super.setCourseLoad(courseLoad);
-    }
+//    @Override
+//    public void setCourseLoad(CourseLoad courseLoad) {
+//        if (courseLoad == null) {
+//            throw new DomainException("error.lessonInstance.empty.courseLoad");
+//        }
+//        super.setCourseLoad(courseLoad);
+//    }
 
     @Override
     public void setLesson(Lesson lesson) {
