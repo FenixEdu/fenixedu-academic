@@ -185,8 +185,8 @@ public class StatuteType extends StatuteType_Base {
 
             final DateTime statuteBegin =
                     Optional.ofNullable(ss.getBeginDate()).orElseGet(() -> new LocalDate(0, 1, 1)).toDateTimeAtStartOfDay();
-            final DateTime statuteEnd =
-                    Optional.ofNullable(ss.getEndDate()).orElseGet(() -> new LocalDate(9999, 1, 1)).toDateTimeAtStartOfDay();
+            final DateTime statuteEnd = Optional.ofNullable(ss.getEndDate()).orElseGet(() -> new LocalDate(9999, 1, 1))
+                    .toDateTimeAtStartOfDay().plusDays(1).minusMillis(1);
 
             return new Interval(statuteBegin, statuteEnd).overlaps(datesInterval);
         };
