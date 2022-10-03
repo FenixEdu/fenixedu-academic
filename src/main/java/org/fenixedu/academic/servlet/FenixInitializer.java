@@ -29,7 +29,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.Installation;
-import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevelType;
 import org.fenixedu.academic.domain.organizationalStructure.UnitNamePart;
 import org.fenixedu.academic.service.StudentWarningsDefaultCheckers;
 import org.fenixedu.academic.service.StudentWarningsService;
@@ -63,8 +62,6 @@ public class FenixInitializer implements ServletContextListener {
 
         registerHealthchecks();
         registerDefaultStudentWarningCheckers();
-
-        CompetenceCourseLevelType.bootstrap();
     }
 
     private void registerDefaultStudentWarningCheckers() {

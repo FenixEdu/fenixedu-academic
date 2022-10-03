@@ -38,10 +38,9 @@ import org.apache.commons.lang.WordUtils;
 import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReference;
-import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
-import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevel;
+import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevelType;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLoad;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CurricularStage;
@@ -51,11 +50,9 @@ import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.service.services.bolonhaManager.CompetenceCourseManagementAccessControl;
-import org.fenixedu.academic.util.UniqueAcronymCreator;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.StringNormalizer;
 import org.fenixedu.commons.i18n.LocalizedString;
-import org.joda.time.YearMonthDay;
 
 public class CompetenceCourse extends CompetenceCourse_Base {
 
@@ -75,8 +72,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public CompetenceCourse(String name, String nameEn, Boolean basic, AcademicPeriod academicPeriod,
-            CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, CurricularStage curricularStage, Unit unit,
-            ExecutionInterval startInterval, final GradeScale gradeScale) {
+            CompetenceCourseLevelType competenceCourseLevel, CompetenceCourseType type, CurricularStage curricularStage,
+            Unit unit, ExecutionInterval startInterval, final GradeScale gradeScale) {
 
         this();
         super.setCurricularStage(curricularStage);
@@ -367,15 +364,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     @Deprecated
     public void setRegime(RegimeType regimeType) {
         findInformationMostRecentUntil(null).setAcademicPeriod(regimeType.convertToAcademicPeriod());
-    }
-
-    public CompetenceCourseLevel getCompetenceCourseLevel(final ExecutionInterval interval) {
-        final CompetenceCourseInformation information = findInformationMostRecentUntil(interval);
-        return information != null ? information.getCompetenceCourseLevel() : null;
-    }
-
-    public CompetenceCourseLevel getCompetenceCourseLevel() {
-        return getCompetenceCourseLevel(null);
     }
 
     public Collection<CompetenceCourseLoad> getCompetenceCourseLoads(final ExecutionInterval interval) {

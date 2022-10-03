@@ -42,26 +42,26 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
         this(information.getName(), information.getNameEn(), justification, information.getRegime(), information.getObjectives(),
                 information.getObjectivesEn(), information.getProgram(), information.getProgramEn(),
                 information.getEvaluationMethod(), information.getEvaluationMethodEn(), information.getCompetenceCourse(),
-                information.getCompetenceCourseLevel(), information.getExecutionPeriod(), requester,
-                information.getTheoreticalHours(1), information.getProblemsHours(1), information.getLaboratorialHours(1),
-                information.getSeminaryHours(1), information.getFieldWorkHours(1), information.getTrainingPeriodHours(1),
-                information.getTutorialOrientationHours(1), information.getOtherHours(1), information.getAutonomousWorkHours(1),
-                information.getEctsCredits(1), information.getTheoreticalHours(2), information.getProblemsHours(2),
-                information.getLaboratorialHours(2), information.getSeminaryHours(2), information.getFieldWorkHours(2),
-                information.getTrainingPeriodHours(2), information.getTutorialOrientationHours(2), information.getOtherHours(2),
-                information.getAutonomousWorkHours(2), information.getEctsCredits(2), information.getBibliographicReferences(),
+                information.getExecutionPeriod(), requester, information.getTheoreticalHours(1), information.getProblemsHours(1),
+                information.getLaboratorialHours(1), information.getSeminaryHours(1), information.getFieldWorkHours(1),
+                information.getTrainingPeriodHours(1), information.getTutorialOrientationHours(1), information.getOtherHours(1),
+                information.getAutonomousWorkHours(1), information.getEctsCredits(1), information.getTheoreticalHours(2),
+                information.getProblemsHours(2), information.getLaboratorialHours(2), information.getSeminaryHours(2),
+                information.getFieldWorkHours(2), information.getTrainingPeriodHours(2),
+                information.getTutorialOrientationHours(2), information.getOtherHours(2), information.getAutonomousWorkHours(2),
+                information.getEctsCredits(2), information.getBibliographicReferences(),
                 information.getCompetenceCourseGroupUnit());
     }
 
     public CompetenceCourseInformationChangeRequest(String name, String nameEn, String justification, RegimeType regime,
             String objectives, String objectivesEn, String program, String programEn, String evaluationMethod,
-            String evaluationMethodEn, CompetenceCourse course, CompetenceCourseLevel level, ExecutionInterval period,
-            Person requester, Double theoreticalHours, Double problemsHours, Double laboratorialHours, Double seminaryHours,
-            Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours, Double otherHours,
-            Double autonomousWorkHours, Double ectsCredits, Double secondTheoreticalHours, Double secondProblemsHours,
-            Double secondLaboratorialHours, Double secondSeminaryHours, Double secondFieldWorkHours,
-            Double secondTrainingPeriodHours, Double secondTutorialOrientationHours, Double secondOtherHours,
-            Double secondAutonomousWorkHours, Double secondEctsCredits, BibliographicReferences references, Unit group) {
+            String evaluationMethodEn, CompetenceCourse course, ExecutionInterval period, Person requester,
+            Double theoreticalHours, Double problemsHours, Double laboratorialHours, Double seminaryHours, Double fieldWorkHours,
+            Double trainingPeriodHours, Double tutorialOrientationHours, Double otherHours, Double autonomousWorkHours,
+            Double ectsCredits, Double secondTheoreticalHours, Double secondProblemsHours, Double secondLaboratorialHours,
+            Double secondSeminaryHours, Double secondFieldWorkHours, Double secondTrainingPeriodHours,
+            Double secondTutorialOrientationHours, Double secondOtherHours, Double secondAutonomousWorkHours,
+            Double secondEctsCredits, BibliographicReferences references, Unit group) {
         this();
         if (course.isRequestDraftAvailable(period)) {
             throw new DomainException("error.can.only.exist.one.request.draft.per.execution.period");
@@ -72,22 +72,21 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
         setCompetenceCourse(course);
         setExecutionPeriod(period);
         edit(name, nameEn, justification, regime, objectives, objectivesEn, program, programEn, evaluationMethod,
-                evaluationMethodEn, level, requester, theoreticalHours, problemsHours, laboratorialHours, seminaryHours,
-                fieldWorkHours, trainingPeriodHours, tutorialOrientationHours, otherHours, autonomousWorkHours, ectsCredits,
+                evaluationMethodEn, requester, theoreticalHours, problemsHours, laboratorialHours, seminaryHours, fieldWorkHours,
+                trainingPeriodHours, tutorialOrientationHours, otherHours, autonomousWorkHours, ectsCredits,
                 secondTheoreticalHours, secondProblemsHours, secondLaboratorialHours, secondSeminaryHours, secondFieldWorkHours,
                 secondTrainingPeriodHours, secondTutorialOrientationHours, secondOtherHours, secondAutonomousWorkHours,
                 secondEctsCredits, references, group);
     }
 
     public void edit(String name, String nameEn, String justification, RegimeType regime, String objectives, String objectivesEn,
-            String program, String programEn, String evaluationMethod, String evaluationMethodEn, CompetenceCourseLevel level,
-            Person requester, Double theoreticalHours, Double problemsHours, Double laboratorialHours, Double seminaryHours,
-            Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours, Double otherHours,
-            Double autonomousWorkHours, Double ectsCredits, Double secondTheoreticalHours, Double secondProblemsHours,
-            Double secondLaboratorialHours, Double secondSeminaryHours, Double secondFieldWorkHours,
-            Double secondTrainingPeriodHours, Double secondTutorialOrientationHours, Double secondOtherHours,
-            Double secondAutonomousWorkHours, Double secondEctsCredits, BibliographicReferences references,
-            Unit group) {
+            String program, String programEn, String evaluationMethod, String evaluationMethodEn, Person requester,
+            Double theoreticalHours, Double problemsHours, Double laboratorialHours, Double seminaryHours, Double fieldWorkHours,
+            Double trainingPeriodHours, Double tutorialOrientationHours, Double otherHours, Double autonomousWorkHours,
+            Double ectsCredits, Double secondTheoreticalHours, Double secondProblemsHours, Double secondLaboratorialHours,
+            Double secondSeminaryHours, Double secondFieldWorkHours, Double secondTrainingPeriodHours,
+            Double secondTutorialOrientationHours, Double secondOtherHours, Double secondAutonomousWorkHours,
+            Double secondEctsCredits, BibliographicReferences references, Unit group) {
 
         if (name == null || nameEn == null || justification == null || regime == null || objectives == null
                 || objectivesEn == null || program == null || programEn == null || evaluationMethod == null
@@ -96,10 +95,6 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
                 || tutorialOrientationHours == null || otherHours == null || autonomousWorkHours == null || ectsCredits == null) {
 
             throw new DomainException("error.fields.are.required");
-        }
-
-        if (level == null) {
-            level = CompetenceCourseLevel.UNKNOWN;
         }
 
         setName(name);
@@ -114,7 +109,6 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
         setEvaluationMethodEn(evaluationMethodEn);
         setRequester(requester);
         setApproved(null);
-        setCompetenceCourseLevel(level);
 
         setTheoreticalHours(theoreticalHours);
         setProblemsHours(problemsHours);
@@ -189,46 +183,47 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
 
     @Atomic
     public void approve(Person analisedBy) {
-        if (!CompetenceCourseManagementAccessControl.isLoggedPersonAllowedToApproveChangeRequestsPredicate(this)) {
-            check(null);
-        }
-        if (getApproved() != null) {
-            throw new DomainException("error.request.already.processed");
-        }
-        setApproved(true);
-        setAnalizedBy(analisedBy);
-
-        CompetenceCourse course = getCompetenceCourse();
-
-        ExecutionInterval executionSemester = getExecutionInterval();
-        CompetenceCourseInformation information = course.findInformation(executionSemester);
-        if (information != null) {
-            information.edit(getName(), getNameEn(), information.getBasic(), getCompetenceCourseLevel(),
-                    getCompetenceCourseGroupUnit());
-            information.setAcademicPeriod(getRegime().convertToAcademicPeriod());
-            information.edit(getObjectives(), getProgram(), getEvaluationMethod(), getObjectivesEn(), getProgramEn(),
-                    getEvaluationMethodEn());
-
-            information.setBibliographicReferences(getBibliographicReferences());
-
-            for (; !information.getCompetenceCourseLoadsSet().isEmpty(); information.getCompetenceCourseLoadsSet().iterator()
-                    .next().delete()) {
-                ;
-            }
-            createLoads(information);
-
-        } else {
-            information = new CompetenceCourseInformation(getName(), getNameEn(), course.isBasic(),
-                    getRegime().convertToAcademicPeriod(), getCompetenceCourseLevel(), getExecutionInterval(),
-                    getCompetenceCourseGroupUnit());
-            information.edit(getObjectives(), getProgram(), getEvaluationMethod(), getObjectivesEn(), getProgramEn(),
-                    getEvaluationMethodEn());
-            information.setAcronym(course.getAcronym());
-            information.setBibliographicReferences(getBibliographicReferences());
-            course.addCompetenceCourseInformations(information);
-
-            createLoads(information);
-        }
+        throw new UnsupportedOperationException();
+//        if (!CompetenceCourseManagementAccessControl.isLoggedPersonAllowedToApproveChangeRequestsPredicate(this)) {
+//            check(null);
+//        }
+//        if (getApproved() != null) {
+//            throw new DomainException("error.request.already.processed");
+//        }
+//        setApproved(true);
+//        setAnalizedBy(analisedBy);
+//
+//        CompetenceCourse course = getCompetenceCourse();
+//
+//        ExecutionInterval executionSemester = getExecutionInterval();
+//        CompetenceCourseInformation information = course.findInformation(executionSemester);
+//        if (information != null) {
+//            information.edit(getName(), getNameEn(), information.getBasic(), getCompetenceCourseLevel(),
+//                    getCompetenceCourseGroupUnit());
+//            information.setAcademicPeriod(getRegime().convertToAcademicPeriod());
+//            information.edit(getObjectives(), getProgram(), getEvaluationMethod(), getObjectivesEn(), getProgramEn(),
+//                    getEvaluationMethodEn());
+//
+//            information.setBibliographicReferences(getBibliographicReferences());
+//
+//            for (; !information.getCompetenceCourseLoadsSet().isEmpty(); information.getCompetenceCourseLoadsSet().iterator()
+//                    .next().delete()) {
+//                ;
+//            }
+//            createLoads(information);
+//
+//        } else {
+//            information = new CompetenceCourseInformation(getName(), getNameEn(), course.isBasic(),
+//                    getRegime().convertToAcademicPeriod(), getCompetenceCourseLevel(), getExecutionInterval(),
+//                    getCompetenceCourseGroupUnit());
+//            information.edit(getObjectives(), getProgram(), getEvaluationMethod(), getObjectivesEn(), getProgramEn(),
+//                    getEvaluationMethodEn());
+//            information.setAcronym(course.getAcronym());
+//            information.setBibliographicReferences(getBibliographicReferences());
+//            course.addCompetenceCourseInformations(information);
+//
+//            createLoads(information);
+//        }
     }
 
     private void createLoads(CompetenceCourseInformation information) {

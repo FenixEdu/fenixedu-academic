@@ -1,4 +1,5 @@
 - Refactor: Remove persistent relation between CourseLoad and LessonInstance
+- Refactor: Remove deprecated enum CompetenceCourseLevel
 
 35.0.1 (03-10-2022)
 - Bug Fix: On statute types find, end date should be inclusive

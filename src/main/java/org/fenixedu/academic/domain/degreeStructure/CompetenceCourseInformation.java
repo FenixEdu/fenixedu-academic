@@ -83,7 +83,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 
     public CompetenceCourseInformation(final CompetenceCourseInformation existingInformation) {
         this(existingInformation.getName(), existingInformation.getNameEn(), existingInformation.getBasic(),
-                existingInformation.getAcademicPeriod(), existingInformation.getCompetenceCourseLevel(),
+                existingInformation.getAcademicPeriod(), existingInformation.getLevelType(),
                 existingInformation.getExecutionInterval(), existingInformation.getCompetenceCourseGroupUnit());
         setCompetenceCourse(existingInformation.getCompetenceCourse());
         for (CompetenceCourseLoad load : existingInformation.getCompetenceCourseLoadsSet()) {
@@ -101,7 +101,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     }
 
     public CompetenceCourseInformation(final String name, final String nameEn, final Boolean basic,
-            final AcademicPeriod academicPeriod, final CompetenceCourseLevel competenceCourseLevel,
+            final AcademicPeriod academicPeriod, final CompetenceCourseLevelType competenceCourseLevel,
             final ExecutionInterval interval, final Unit unit) {
 
         this();
@@ -110,7 +110,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setNameEn(nameEn);
         setBasic(basic);
         setAcademicPeriod(academicPeriod);
-        setCompetenceCourseLevel(competenceCourseLevel);
+        setLevelType(competenceCourseLevel);
         setBibliographicReferences(new BibliographicReferences());
         setExecutionInterval(interval);
         setCompetenceCourseGroupUnit(unit);
@@ -125,18 +125,15 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 //    }
 
     private void checkParameters(final String name, final String nameEn, final Boolean basic, final AcademicPeriod academicPeriod,
-            CompetenceCourseLevel competenceCourseLevel) {
+            CompetenceCourseLevelType competenceCourseLevel) {
 
         if (name == null || nameEn == null || basic == null || academicPeriod == null) {
             throw new DomainException("competence.course.information.invalid.parameters");
         }
-        if (competenceCourseLevel == null) {
-            competenceCourseLevel = CompetenceCourseLevel.UNKNOWN;
-        }
     }
 
     private void checkParameters(final String name, final String nameEn, final Boolean basic, final AcademicPeriod academicPeriod,
-            final CompetenceCourseLevel competenceCourseLevel, final Unit unit) {
+            final CompetenceCourseLevelType competenceCourseLevel, final Unit unit) {
 
         checkParameters(name, nameEn, basic, academicPeriod, competenceCourseLevel);
         if (unit == null || !unit.isCompetenceCourseGroupUnit()) {
@@ -145,12 +142,12 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     }
 
     public void edit(final String name, final String nameEn, final Boolean basic,
-            final CompetenceCourseLevel competenceCourseLevel, final Unit unit) {
+            final CompetenceCourseLevelType competenceCourseLevel, final Unit unit) {
         checkParameters(name, nameEn, basic, getAcademicPeriod(), competenceCourseLevel, unit);
         setName(name);
         setNameEn(nameEn);
         setBasic(basic);
-        setCompetenceCourseLevel(competenceCourseLevel);
+        setLevelType(competenceCourseLevel);
         setCompetenceCourseGroupUnit(unit);
     }
 
@@ -217,16 +214,16 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setRegime(input.equals(AcademicPeriod.YEAR) ? RegimeType.ANUAL : RegimeType.SEMESTRIAL);
     }
 
-    @Override
-    public void setCompetenceCourseLevel(CompetenceCourseLevel competenceCourseLevel) {
-        super.setCompetenceCourseLevel(competenceCourseLevel);
-        
-        if (competenceCourseLevel != null) {
-            CompetenceCourseLevelType.findByCode(competenceCourseLevel.name()).ifPresent(lt -> setLevelType(lt));
-        } else {
-            setLevelType(null);
-        }
-    }
+//    @Override
+//    public void setCompetenceCourseLevel(CompetenceCourseLevel competenceCourseLevel) {
+//        super.setCompetenceCourseLevel(competenceCourseLevel);
+//        
+//        if (competenceCourseLevel != null) {
+//            CompetenceCourseLevelType.findByCode(competenceCourseLevel.name()).ifPresent(lt -> setLevelType(lt));
+//        } else {
+//            setLevelType(null);
+//        }
+//    }
 
     public LocalizedString getNameI18N() {
         LocalizedString result = new LocalizedString();
@@ -341,7 +338,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setExecutionPeriod(null);
         setCompetenceCourse(null);
         setCompetenceCourseGroupUnit(null);
-        setCompetenceCourseLevel(null);
+        setLevelType(null);
         for (; !getCompetenceCourseLoadsSet().isEmpty(); getCompetenceCourseLoadsSet().iterator().next().delete()) {
             ;
         }

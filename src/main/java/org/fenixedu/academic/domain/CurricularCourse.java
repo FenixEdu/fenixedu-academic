@@ -33,7 +33,6 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
 import org.fenixedu.academic.domain.degree.DegreeType;
-import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevel;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
@@ -711,14 +710,6 @@ public class CurricularCourse extends CurricularCourse_Base {
     @Override
     public Set<CurricularCourse> getAllCurricularCourses(ExecutionInterval executionInterval) {
         return getAllCurricularCourses();
-    }
-
-    public CompetenceCourseLevel getCompetenceCourseLevel() {
-        return getCompetenceCourse() != null ? getCompetenceCourse().getCompetenceCourseLevel() : null;
-    }
-
-    public boolean hasCompetenceCourseLevel() {
-        return getCompetenceCourseLevel() != null;
     }
 
     public boolean hasExecutionDegreeByYearAndCampus(ExecutionYear executionYear, Space campus) {

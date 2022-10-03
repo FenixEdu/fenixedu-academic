@@ -25,7 +25,6 @@ import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
-import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevel;
 import org.fenixedu.academic.domain.degreeStructure.RegimeType;
 
 public class CompetenceCourseInformationRequestBean implements Serializable {
@@ -54,8 +53,6 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
 
     private String evaluationMethodEn;
 
-    private CompetenceCourseLevel competenceCourseLevel;
-
     private BibliographicReferences references;
 
     private boolean showOldCompetenceCourses;
@@ -69,7 +66,6 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
         setProgramEn(request.getProgramEn());
         setEvaluationMethod(request.getEvaluationMethod());
         setEvaluationMethodEn(request.getEvaluationMethodEn());
-        setCompetenceCourseLevel(request.getCompetenceCourseLevel());
         setExecutionPeriod(request.getExecutionPeriod());
         setReferences(request.getBibliographicReferences());
         setName(request.getName());
@@ -85,7 +81,6 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
         setProgramEn(information.getProgramEn());
         setEvaluationMethod(information.getEvaluationMethod());
         setEvaluationMethodEn(information.getEvaluationMethodEn());
-        setCompetenceCourseLevel(information.getCompetenceCourseLevel());
         setExecutionPeriod(information.getExecutionPeriod());
         setReferences(information.getBibliographicReferences());
         setName(information.getName());
@@ -136,14 +131,6 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
 
     public void setCompetenceCourse(CompetenceCourse course) {
         competenceCourse = course;
-    }
-
-    public CompetenceCourseLevel getCompetenceCourseLevel() {
-        return competenceCourseLevel;
-    }
-
-    public void setCompetenceCourseLevel(CompetenceCourseLevel competenceCourseLevel) {
-        this.competenceCourseLevel = competenceCourseLevel;
     }
 
     public String getEvaluationMethod() {
@@ -217,7 +204,6 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
         setProgramEn(information.getProgramEn());
         setEvaluationMethod(information.getEvaluationMethod());
         setEvaluationMethodEn(information.getEvaluationMethodEn());
-        setCompetenceCourseLevel(information.getCompetenceCourseLevel());
         setReferences(information.getBibliographicReferences());
         setName(information.getName());
         setNameEn(information.getNameEn());
@@ -230,7 +216,6 @@ public class CompetenceCourseInformationRequestBean implements Serializable {
         setProgramEn(null);
         setEvaluationMethod(null);
         setEvaluationMethodEn(null);
-        setCompetenceCourseLevel(null);
         setReferences(null);
         setName(null);
         setNameEn(null);
