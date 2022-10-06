@@ -2462,15 +2462,6 @@ relation DefaultEvaluationSeason {
     }
 }
 
-relation EvaluationSeasonPeriods {
-    public EvaluationSeason playsRole evaluationSeason {
-        multiplicity *;
-    }
-    protected OccupationPeriodReference playsRole period {
-        multiplicity *;
-    }
-}
-
 relation EnrolmentEvaluationSeason {
     public Enrolment playsRole enrolment {
         multiplicity *;

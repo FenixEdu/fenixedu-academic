@@ -48,67 +48,11 @@ public class OccupationPeriodReference extends OccupationPeriodReference_Base {
         this(period, degree, type, degree.getExecutionYear().getExecutionSemesterFor(semester), curricularYears);
     }
 
-    /**
-     * The magic of the following code handles having an interface that assumes specific periods for each season, and a domain
-     * that supports custom configuration of all existing seasons. The interface should be redone to allow the user to link the
-     * OccupationPeriodReferences with the seasons or lessons, or whatever they are used for.
-     */
-    @Deprecated
-    @Override
-    public OccupationPeriodType getPeriodType() {
-        switch (super.getPeriodType()) {
-        case EXAMS:
-            if (getEvaluationSeasonSet().stream().anyMatch(EvaluationSeason::isSpecial)) {
-                return OccupationPeriodType.EXAMS_SPECIAL_SEASON;
-            }
-            break;
-        case GRADE_SUBMISSION:
-            if (getEvaluationSeasonSet().stream().anyMatch(EvaluationSeason::isSpecial)) {
-                return OccupationPeriodType.GRADE_SUBMISSION_SPECIAL_SEASON;
-            }
-        }
-        return super.getPeriodType();
-    }
-
-    /**
-     * The magic of the following code handles having an interface that assumes specific periods for each season, and a domain
-     * that supports custom configuration of all existing seasons. The interface should be redone to allow the user to link the
-     * OccupationPeriodReferences with the seasons or lessons, or whatever they are used for.
-     */
-    @Deprecated
-    @Override
-    public void setPeriodType(OccupationPeriodType periodType) {
-        switch (periodType) {
-        case EXAMS:
-            addEvaluationSeason(EvaluationSeason.readNormalSeason());
-            addEvaluationSeason(EvaluationSeason.readImprovementSeason());
-            super.setPeriodType(periodType);
-            break;
-        case EXAMS_SPECIAL_SEASON:
-            addEvaluationSeason(EvaluationSeason.readSpecialSeason());
-            super.setPeriodType(OccupationPeriodType.EXAMS);
-            break;
-        case GRADE_SUBMISSION:
-            addEvaluationSeason(EvaluationSeason.readNormalSeason());
-            addEvaluationSeason(EvaluationSeason.readImprovementSeason());
-            super.setPeriodType(periodType);
-            break;
-        case GRADE_SUBMISSION_SPECIAL_SEASON:
-            addEvaluationSeason(EvaluationSeason.readSpecialSeason());
-            super.setPeriodType(OccupationPeriodType.GRADE_SUBMISSION);
-            break;
-        default:
-            super.setPeriodType(periodType);
-            break;
-        }
-    }
-
     public void delete() {
         setOccupationPeriod(null);
         setExecutionDegree(null);
         setRootDomainObject(null);
         setExecutionInterval(null);
-        getEvaluationSeasonSet().forEach(s -> removeEvaluationSeason(s));
 
         deleteDomainObject();
     }

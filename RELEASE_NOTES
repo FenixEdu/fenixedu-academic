@@ -1,3 +1,5 @@
+- Refactor: Remove persistent relation between EvaluationSeason and OccupationPeriodReference
+
 36.0.0 (06-10-2022)
 - Refactor: Remove persistent relation between CourseLoad and LessonInstance
 - Refactor: Remove deprecated enum CompetenceCourseLevel
