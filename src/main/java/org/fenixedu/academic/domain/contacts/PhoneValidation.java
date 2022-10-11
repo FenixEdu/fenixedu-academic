@@ -19,12 +19,6 @@
 package org.fenixedu.academic.domain.contacts;
 
 import org.apache.commons.lang.RandomStringUtils;
-import org.fenixedu.academic.domain.Country;
-import org.fenixedu.academic.domain.Person;
-import org.fenixedu.academic.ui.struts.action.externalServices.PhoneValidationUtils;
-import org.fenixedu.academic.util.PhoneUtil;
-
-import pt.ist.fenixframework.Atomic;
 
 public class PhoneValidation extends PhoneValidation_Base {
 
@@ -51,24 +45,4 @@ public class PhoneValidation extends PhoneValidation_Base {
         }
     }
 
-    @Override
-    @Atomic
-    public void triggerValidationProcess() {
-        if (!isValid()) {
-            generateToken();
-            final String number = getNumber();
-            final String token = getToken();
-            final Person person = (Person) getPartyContact().getParty();
-            final Country country = person.getCountry();
-            final String language = Country.isCPLPCountry(country) ? "pt" : "en";
-
-            if (PhoneUtil.shouldReceiveValidationCall(number)) {
-                PhoneValidationUtils.getInstance().makeCall(PhoneUtil.getInternacionalFormatNumber(number), token, language);
-            } else if (PhoneUtil.shouldReceiveValidationSMS(number)) {
-                PhoneValidationUtils.getInstance().sendSMS(PhoneUtil.getInternacionalFormatNumber(number), token);
-            }
-
-            person.incValidationRequest();
-        }
-    }
 }

@@ -48,7 +48,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
-import org.fenixedu.academic.predicate.AcademicPredicates;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
@@ -352,10 +351,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public List<DegreeCurricularPlan> getDegreeCurricularPlansForYear(final ExecutionYear year) {
         return getDegreeCurricularPlansSet().stream().filter(dcp -> dcp.hasAnyExecutionDegreeFor(year))
                 .collect(Collectors.toUnmodifiableList());
-    }
-
-    public boolean getCanBeAccessedByUser() {
-        return AcademicPredicates.MANAGE_DEGREE_CURRICULAR_PLANS.evaluate(this);
     }
 
     public List<ExecutionDegree> getExecutionDegrees() {

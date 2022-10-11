@@ -32,7 +32,6 @@ import org.fenixedu.academic.domain.Installation;
 import org.fenixedu.academic.domain.organizationalStructure.UnitNamePart;
 import org.fenixedu.academic.service.StudentWarningsDefaultCheckers;
 import org.fenixedu.academic.service.StudentWarningsService;
-import org.fenixedu.academic.ui.struts.action.externalServices.PhoneValidationUtils;
 import org.fenixedu.bennu.core.api.SystemResource;
 import org.fenixedu.bennu.core.rest.Healthcheck;
 import org.slf4j.Logger;
@@ -56,7 +55,6 @@ public class FenixInitializer implements ServletContextListener {
 
         Installation.ensureInstallation();
         loadUnitNames();
-        startContactValidationServices();
 
         registerChecksumFilterRules();
 
@@ -91,10 +89,6 @@ public class FenixInitializer implements ServletContextListener {
     @Override
     public void contextDestroyed(ServletContextEvent arg0) {
 
-    }
-
-    private void startContactValidationServices() {
-        PhoneValidationUtils.getInstance();
     }
 
     private void loadUnitNames() {

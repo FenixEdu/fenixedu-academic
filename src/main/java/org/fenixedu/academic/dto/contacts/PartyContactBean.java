@@ -154,7 +154,7 @@ public abstract class PartyContactBean implements Serializable {
         if (isValueChanged) {
             if (!getContact().waitsValidation()) {
                 PartyContact contact;
-                if (getContact().getCurrentPartyContact() != null) {
+                if (getContact().getCurrentPartyContact() != null) { // has ongoing validation
                     contact = getContact().getCurrentPartyContact();
                     contact.getPartyContactValidation().reset();
                 } else {

@@ -22,11 +22,8 @@ import org.fenixedu.academic.domain.EvaluationSeason;
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
-import org.fenixedu.academic.ui.renderers.converters.CurriculumModuleEnroledWrapperConverter;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-
-import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 @SuppressWarnings("serial")
 public class ImprovementBolonhaStudentEnrolmentBean extends BolonhaStudentEnrollmentBean {
@@ -43,11 +40,6 @@ public class ImprovementBolonhaStudentEnrolmentBean extends BolonhaStudentEnroll
     private static StudentCurriculumGroupBean createBean(final StudentCurricularPlan scp, final ExecutionInterval interval,
             final EvaluationSeason evaluationSeason) {
         return ImprovementStudentCurriculumGroupBean.create(scp.getRoot(), interval, evaluationSeason);
-    }
-
-    @Override
-    public Converter getDegreeModulesToEvaluateConverter() {
-        return new CurriculumModuleEnroledWrapperConverter();
     }
 
     @Override

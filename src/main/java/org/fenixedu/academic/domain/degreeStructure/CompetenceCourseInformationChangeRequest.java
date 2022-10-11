@@ -18,8 +18,6 @@
  */
 package org.fenixedu.academic.domain.degreeStructure;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
-
 import org.fenixedu.academic.domain.CompetenceCourse;
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.Person;
@@ -171,14 +169,15 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
 
     @Atomic
     public void reject(Person analisedBy) {
-        if (!CompetenceCourseManagementAccessControl.isLoggedPersonAllowedToApproveChangeRequestsPredicate(this)) {
-            check(null);
-        }
-        if (getApproved() != null) {
-            throw new DomainException("error.request.already.processed");
-        }
-        setApproved(false);
-        setAnalizedBy(analisedBy);
+        throw new UnsupportedOperationException();
+//        if (!CompetenceCourseManagementAccessControl.isLoggedPersonAllowedToApproveChangeRequestsPredicate(this)) {
+//            check(null);
+//        }
+//        if (getApproved() != null) {
+//            throw new DomainException("error.request.already.processed");
+//        }
+//        setApproved(false);
+//        setAnalizedBy(analisedBy);
     }
 
     @Atomic

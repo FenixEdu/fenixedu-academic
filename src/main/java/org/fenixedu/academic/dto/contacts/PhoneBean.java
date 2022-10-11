@@ -82,6 +82,6 @@ public class PhoneBean extends PartyContactBean {
 
     @Override
     public boolean isToBeValidated() {
-        return Phone.requiresValidation();
+        return false;
     }
 }

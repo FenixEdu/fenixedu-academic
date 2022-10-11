@@ -49,7 +49,6 @@ import org.fenixedu.academic.domain.student.registrationStates.RegistrationState
 import org.fenixedu.academic.domain.util.email.ExecutionCourseSender;
 import org.fenixedu.academic.domain.util.email.Recipient;
 import org.fenixedu.academic.dto.student.StudentStatuteBean;
-import org.fenixedu.academic.ui.struts.action.teacher.ManageExecutionCourseDA;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
@@ -95,7 +94,7 @@ public class AttendsSearchController extends ExecutionCourseController {
 
     @Override
     protected Class<?> getFunctionalityType() {
-        return ManageExecutionCourseDA.class;
+        return null; //ManageExecutionCourseDA.class;
     }
 
     @Override

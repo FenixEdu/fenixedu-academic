@@ -18,14 +18,12 @@
  */
 package org.fenixedu.academic.ui.spring.controller.teacher;
 
-import static org.fenixedu.academic.predicate.AccessControl.check;
 import static org.fenixedu.academic.predicate.AccessControl.getPerson;
 import static pt.ist.fenixframework.FenixFramework.getDomainObject;
 
 import org.fenixedu.academic.domain.ExecutionCourse;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.ui.spring.StrutsFunctionalityController;
-import org.fenixedu.academic.ui.struts.action.teacher.ManageExecutionCourseDA;
 import org.fenixedu.bennu.spring.security.CSRFTokenBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,7 +47,7 @@ public class ExecutionCourseCommunicationController extends StrutsFunctionalityC
     @RequestMapping(method = RequestMethod.GET)
     public TeacherView communication(Model model, @PathVariable String executionCourseId) {
         final ExecutionCourse executionCourse = getDomainObject(executionCourseId);
-        check(getPerson(), person -> hasPermissions(person, executionCourse));
+//        check(getPerson(), person -> hasPermissions(person, executionCourse));
         model.addAttribute("professorship", executionCourse.getProfessorship(getPerson()));
         model.addAttribute("executionCourse", executionCourse);
         model.addAttribute("csrf", csrfTokenBean);
@@ -70,7 +68,7 @@ public class ExecutionCourseCommunicationController extends StrutsFunctionalityC
 
     @Override
     protected Class<?> getFunctionalityType() {
-        return ManageExecutionCourseDA.class;
+        return null; // ManageExecutionCourseDA.class;
     }
 
     private boolean hasPermissions(Person person, ExecutionCourse executionCourse) {

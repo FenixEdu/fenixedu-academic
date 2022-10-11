@@ -22,7 +22,6 @@ import org.fenixedu.academic.domain.contacts.MobilePhone;
 import org.fenixedu.academic.domain.contacts.PartyContact;
 import org.fenixedu.academic.domain.contacts.PartyContactType;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
-import org.fenixedu.academic.ui.struts.action.externalServices.PhoneValidationUtils;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -70,15 +69,7 @@ public class MobilePhoneBean extends PartyContactBean {
     }
 
     @Override
-    public String getValidationMessageKey() {
-        if (!PhoneValidationUtils.getInstance().shouldRun()) {
-            return "label.contact.validation.message.MobilePhoneValidated";
-        }
-        return super.getValidationMessageKey();
-    }
-
-    @Override
     public boolean isToBeValidated() {
-        return MobilePhone.requiresValidation();
+        return false;
     }
 }

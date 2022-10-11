@@ -62,8 +62,6 @@ import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicYearCE;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicYears;
 import org.fenixedu.academic.dto.CurricularPeriodInfoDTO;
-import org.fenixedu.academic.predicate.AcademicPredicates;
-import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.commons.i18n.I18N;
@@ -707,12 +705,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         this.getRoot().collectChildDegreeModulesIncludingFullPath(clazz, result, path, executionYear);
 
         return result;
-    }
-
-    public Boolean getUserCanBuild() {
-        Person person = AccessControl.getPerson();
-        return AcademicPredicates.MANAGE_DEGREE_CURRICULAR_PLANS.evaluate(this.getDegree())
-                || this.getCurricularPlanMembersGroup().isMember(person.getUser());
     }
 
     public Boolean getCanModify() {

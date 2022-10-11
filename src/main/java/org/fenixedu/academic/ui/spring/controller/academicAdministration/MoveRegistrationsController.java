@@ -25,7 +25,6 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.log.StudentRegistrationTransferLog;
 import org.fenixedu.academic.domain.student.Student;
 import org.fenixedu.academic.ui.spring.StrutsFunctionalityController;
-import org.fenixedu.academic.ui.struts.action.administrativeOffice.student.StudentOperationsDispatchAction;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.exceptions.AuthorizationException;
 import org.springframework.stereotype.Controller;
@@ -100,6 +99,6 @@ public class MoveRegistrationsController extends StrutsFunctionalityController {
 
     @Override
     protected Class<?> getFunctionalityType() {
-        return StudentOperationsDispatchAction.class;
+        return null; // StudentOperationsDispatchAction.class;
     }
 }

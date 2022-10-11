@@ -31,12 +31,9 @@ import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumModule;
 import org.fenixedu.academic.dto.student.IStudentCurricularPlanBean;
-import org.fenixedu.academic.ui.renderers.converters.DegreeModuleToEnrolKeyConverter;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.LocalDate;
-
-import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class BolonhaStudentEnrollmentBean implements Serializable, IStudentCurricularPlanBean {
 
@@ -161,10 +158,6 @@ public class BolonhaStudentEnrollmentBean implements Serializable, IStudentCurri
         for (final CurriculumModule curriculumModule : curriculumModules) {
             this.curriculumModulesToRemove.add(curriculumModule);
         }
-    }
-
-    public Converter getDegreeModulesToEvaluateConverter() {
-        return new DegreeModuleToEnrolKeyConverter();
     }
 
     public String getFuncionalityTitle() {
