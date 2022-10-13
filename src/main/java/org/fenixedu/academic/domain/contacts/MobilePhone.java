@@ -148,9 +148,4 @@ public class MobilePhone extends MobilePhone_Base {
         logRefuseAux(person, "label.partyContacts.MobilePhone");
     }
 
-    @Override
-    public boolean isToBeValidated() {
-        return false;
-    }
-
 }

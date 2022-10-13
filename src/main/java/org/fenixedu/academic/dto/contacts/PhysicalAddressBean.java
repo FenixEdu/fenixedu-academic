@@ -26,8 +26,6 @@ import org.fenixedu.academic.domain.contacts.PhysicalAddressData;
 import org.fenixedu.academic.domain.contacts.PhysicalAddressValidation;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 
-import pt.ist.fenixframework.Atomic;
-
 public class PhysicalAddressBean extends PartyContactBean {
 
     private static final String CONTACT_NAME = "PhysicalAddress";
@@ -41,6 +39,7 @@ public class PhysicalAddressBean extends PartyContactBean {
     private String parishOfResidence;
     private String districtSubdivisionOfResidence;
     private String districtOfResidence;
+    private boolean fiscalAddress;
     private PhysicalAddressValidationBean validationBean;
 
     private Country countryOfResidence;
@@ -59,6 +58,7 @@ public class PhysicalAddressBean extends PartyContactBean {
         setParishOfResidence(physicalAddress.getParishOfResidence());
         setDistrictSubdivisionOfResidence(physicalAddress.getDistrictSubdivisionOfResidence());
         setDistrictOfResidence(physicalAddress.getDistrictOfResidence());
+        setFiscalAddress(physicalAddress.isFiscalAddress());
         setCountryOfResidence(physicalAddress.getCountryOfResidence());
         if (physicalAddress.getPartyContactValidation() != null) {
             final PartyContactValidation partyContactValidation = physicalAddress.getPartyContactValidation();
@@ -132,29 +132,28 @@ public class PhysicalAddressBean extends PartyContactBean {
         this.countryOfResidence = countryOfResidence;
     }
 
+    public boolean isFiscalAddress() {
+        return fiscalAddress;
+    }
+
+    public void setFiscalAddress(boolean fiscalAddress) {
+        this.fiscalAddress = fiscalAddress;
+    }
+
     @Override
     public String getContactName() {
         return CONTACT_NAME;
     }
 
     @Override
-    @Atomic
-    public boolean edit() {
-        final boolean isValueChanged = super.edit();
-        if (isValueChanged) {
-            ((PhysicalAddress) getContact()).edit(new PhysicalAddressData(getAddress(), getAreaCode(), getAreaOfAreaCode(),
-                    getArea(), getParishOfResidence(), getDistrictSubdivisionOfResidence(), getDistrictOfResidence(),
-                    getCountryOfResidence()));
-        }
-        return isValueChanged;
-    }
-
-    @Override
     public PartyContact createNewContact() {
-        final PhysicalAddress newPhysicalAddress = PhysicalAddress.createPhysicalAddress(getParty(), new PhysicalAddressData(getAddress(), getAreaCode(),
-                getAreaOfAreaCode(), getArea(), getParishOfResidence(), getDistrictSubdivisionOfResidence(),
-                getDistrictOfResidence(), getCountryOfResidence()), getType(), getDefaultContact());
-        
+        final PhysicalAddress newPhysicalAddress = PhysicalAddress.createPhysicalAddress(getParty(),
+                new PhysicalAddressData(getAddress(), getAreaCode(), getAreaOfAreaCode(), getArea(), getParishOfResidence(),
+                        getDistrictSubdivisionOfResidence(), getDistrictOfResidence(), getCountryOfResidence()),
+                getType(), getDefaultContact());
+
+        newPhysicalAddress.setFiscalAddress(isFiscalAddress());
+
         return newPhysicalAddress;
     }
 
@@ -183,8 +182,4 @@ public class PhysicalAddressBean extends PartyContactBean {
         return getAddress();
     }
 
-    @Override
-    public boolean isToBeValidated() {
-        return PhysicalAddress.requiresValidation();
-    }
 }

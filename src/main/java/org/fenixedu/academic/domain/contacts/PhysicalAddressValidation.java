@@ -18,36 +18,13 @@
  */
 package org.fenixedu.academic.domain.contacts;
 
-import java.util.function.Predicate;
-
-import pt.ist.fenixframework.Atomic;
-
 public class PhysicalAddressValidation extends PhysicalAddressValidation_Base {
-
-    public static final Predicate<PartyContactValidation> PREDICATE = new Predicate<PartyContactValidation>() {
-
-        @Override
-        public boolean test(PartyContactValidation t) {
-            return t instanceof PhysicalAddressValidation;
-        }
-
-    };
-
-    public static final Predicate<PartyContactValidation> PREDICATE_FILE = new Predicate<PartyContactValidation>() {
-
-        @Override
-        public boolean test(PartyContactValidation t) {
-            return PREDICATE.test(t) && ((PhysicalAddressValidation) t).getFile() != null;
-        }
-
-    };
 
     public PhysicalAddressValidation(PhysicalAddress physicalAddress) {
         super();
         setPartyContact(physicalAddress);
     }
 
-    @Atomic
     public void setFile(String filename, String displayName, byte[] content) {
         new PhysicalAddressValidationFile(this, filename, displayName, content);
     }

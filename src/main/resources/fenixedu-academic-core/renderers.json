@@ -3,7 +3,5 @@
     "bundles": [ ],
     "defaultBundle": "ApplicationResources"
   },
-  "modules": [
-    { "name": "external", "configFile": "struts-external.xml" }
-  ]
+  "modules": [ ]
 }

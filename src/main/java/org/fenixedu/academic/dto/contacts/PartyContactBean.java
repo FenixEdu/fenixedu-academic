@@ -151,6 +151,7 @@ public abstract class PartyContactBean implements Serializable {
         boolean isValueChanged = isValueChanged();
         boolean createdNewContact = false;
         String newValue = getPresentationValue();
+
         if (isValueChanged) {
             if (!getContact().waitsValidation()) {
                 PartyContact contact;
@@ -160,14 +161,10 @@ public abstract class PartyContactBean implements Serializable {
                 } else {
                     contact = createNewContact();
 
-                    if(getContact() != null && getContact().isPhysicalAddress()) {
-                        ((PhysicalAddress) contact).setFiscalAddress(((PhysicalAddress) getContact()).isFiscalAddress());
-                    }
-                    
                     contact.setPrevPartyContact(getContact());
                     createdNewContact = true;
                 }
-                
+
                 setContact(contact);
             }
         }
@@ -192,11 +189,10 @@ public abstract class PartyContactBean implements Serializable {
             }
         }
 
-        changes =
-                changes || (getContact().getDefaultContact().booleanValue() != isDefault)
-                        || (getContact().getVisibleToPublic().booleanValue() != getVisibleToPublic().booleanValue())
-                        || (getContact().getVisibleToStudents().booleanValue() != getVisibleToStudents().booleanValue())
-                        || (getContact().getVisibleToStaff().booleanValue() != getVisibleToStaff().booleanValue());
+        changes = changes || (getContact().getDefaultContact().booleanValue() != isDefault)
+                || (getContact().getVisibleToPublic().booleanValue() != getVisibleToPublic().booleanValue())
+                || (getContact().getVisibleToStudents().booleanValue() != getVisibleToStudents().booleanValue())
+                || (getContact().getVisibleToStaff().booleanValue() != getVisibleToStaff().booleanValue());
 
         if (changes) {
             if (!isInstitutional()) {
@@ -209,15 +205,6 @@ public abstract class PartyContactBean implements Serializable {
         }
 
         return changes;
-    }
-
-    public boolean hasPartyContact() {
-        /*
-         * if (getContact() != null && isValueChanged()) { return
-         * getParty().hasPartyContact(getContact().getClass(), getType(),
-         * getValue()); } return false;
-         */
-        return false;
     }
 
     public static PartyContactBean createFromDomain(PartyContact partyContact) {
@@ -245,7 +232,4 @@ public abstract class PartyContactBean implements Serializable {
         return "label.contact.validation.message." + getContact().getClass().getSimpleName();
     }
 
-    public boolean isToBeValidated() {
-        return true;
-    }
 }

@@ -29,8 +29,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixframework.Atomic;
-
 public class EmailAddress extends EmailAddress_Base {
 
     static {
@@ -140,7 +138,6 @@ public class EmailAddress extends EmailAddress_Base {
         return true;
     }
 
-    @Atomic
     public void edit(final String value) {
         if (!isInstitutionalType()) {
             if (!StringUtils.equals(value, getValue())) {

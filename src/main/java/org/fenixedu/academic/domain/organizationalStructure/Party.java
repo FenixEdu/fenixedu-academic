@@ -49,7 +49,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.StringNormalizer;
 import org.fenixedu.commons.i18n.LocalizedString;
-import org.joda.time.DateTime;
 
 public abstract class Party extends Party_Base implements Comparable<Party> {
 
@@ -978,8 +977,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     public List<PhysicalAddress> getValidAddressesForFiscalData() {
         return getPendingOrValidPartyContacts(PhysicalAddress.class).stream().map(PhysicalAddress.class::cast)
                 .filter(pa -> pa.isActiveAndValid()).filter(pa -> pa.getCountryOfResidence() != null)
-                .filter(pa -> pa.getCurrentPartyContact() == null || !pa.getCurrentPartyContact().isToBeValidated())
-                .collect(Collectors.toList());
+                .filter(pa -> pa.getCurrentPartyContact() == null).collect(Collectors.toList());
     }
 
     public boolean hasDefaultPhysicalAddress() {

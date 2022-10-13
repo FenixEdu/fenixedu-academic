@@ -18,44 +18,17 @@
  */
 package org.fenixedu.academic.domain.contacts;
 
-import java.util.function.Predicate;
-
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixframework.Atomic;
-
 public abstract class PartyContactValidation extends PartyContactValidation_Base {
     private static final int MAX_TRIES = 3;
-
-    public static class PartyContactValidationPredicate implements Predicate<PartyContactValidation> {
-
-        private final PartyContactValidationState state;
-
-        public PartyContactValidationPredicate(final PartyContactValidationState state) {
-            this.state = state;
-        }
-
-        @Override
-        public boolean test(final PartyContactValidation t) {
-            return t.getState().equals(state);
-        }
-
-    }
-
-    public static final PartyContactValidationPredicate PREDICATE_INVALID =
-            new PartyContactValidationPredicate(PartyContactValidationState.INVALID);
-    public static final PartyContactValidationPredicate PREDICATE_VALID =
-            new PartyContactValidationPredicate(PartyContactValidationState.VALID);
-    public static final PartyContactValidationPredicate PREDICATE_REFUSED =
-            new PartyContactValidationPredicate(PartyContactValidationState.REFUSED);
 
     public PartyContactValidation() {
         super();
         reset();
     }
 
-    @Atomic
     public void delete() {
         setContactRoot(null);
         setPartyContact(null);
@@ -92,8 +65,7 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
         return isValid();
     }
 
-    @Atomic
-    public Boolean processValidation(final String token) {
+    public boolean processValidation(final String token) {
 
         if (isRefused()) {
             return false;
@@ -172,32 +144,6 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
 
     public boolean isRefused() {
         return isState(PartyContactValidationState.REFUSED);
-    }
-
-    @Override
-    @Atomic
-    public void setState(final PartyContactValidationState state) {
-        switch (state) {
-        case INVALID:
-            setInvalid();
-            break;
-        case REFUSED:
-            setRefused();
-            break;
-        case VALID:
-            setValid();
-            break;
-        }
-    }
-
-    public void triggerValidationProcess() {
-        // TODO Auto-generated method stub
-    }
-
-    public void triggerValidationProcessIfNeeded() {
-        if (getToken() == null) {
-            triggerValidationProcess();
-        }
     }
 
 }

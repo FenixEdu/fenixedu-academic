@@ -19,12 +19,9 @@
 package org.fenixedu.academic.dto.contacts;
 
 import org.fenixedu.academic.domain.contacts.PartyContact;
-import org.fenixedu.academic.domain.contacts.PartyContactType;
 import org.fenixedu.academic.domain.contacts.Phone;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 import org.fenixedu.academic.util.PhoneUtil;
-
-import pt.ist.fenixframework.Atomic;
 
 public class PhoneBean extends PartyContactBean {
 
@@ -44,18 +41,6 @@ public class PhoneBean extends PartyContactBean {
     @Override
     public String getContactName() {
         return CONTACT_NAME;
-    }
-
-    @Override
-    @Atomic
-    public boolean edit() {
-        boolean isValueChanged = super.edit();
-        if (isValueChanged) {
-            if (!getType().equals(PartyContactType.INSTITUTIONAL)) {
-                ((Phone) getContact()).edit(getValue());
-            }
-        }
-        return isValueChanged;
     }
 
     @Override
@@ -80,8 +65,4 @@ public class PhoneBean extends PartyContactBean {
         return !getValue().equals(((Phone) getContact()).getNumber());
     }
 
-    @Override
-    public boolean isToBeValidated() {
-        return false;
-    }
 }

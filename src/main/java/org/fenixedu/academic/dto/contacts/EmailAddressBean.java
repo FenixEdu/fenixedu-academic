@@ -22,8 +22,6 @@ import org.fenixedu.academic.domain.contacts.EmailAddress;
 import org.fenixedu.academic.domain.contacts.PartyContact;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
 
-import pt.ist.fenixframework.Atomic;
-
 public class EmailAddressBean extends PartyContactBean {
 
     private static final String CONTACT_NAME = "EmailAddress";
@@ -45,24 +43,8 @@ public class EmailAddressBean extends PartyContactBean {
     }
 
     @Override
-    public EmailAddress getContact() {
-        // TODO Auto-generated method stub
-        return (EmailAddress) super.getContact();
-    }
-
-    @Override
-    @Atomic
-    public boolean edit() {
-        boolean isValueChanged = super.edit();
-        if (isValueChanged) {
-            getContact().edit(getValue());
-        }
-        return isValueChanged;
-    }
-
-    @Override
     public boolean isValueChanged() {
-        return !getValue().equals(getContact().getValue());
+        return !((EmailAddress) getContact()).getValue().equals(getValue());
     }
 
     @Override

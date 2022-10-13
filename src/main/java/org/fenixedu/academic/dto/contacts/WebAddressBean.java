@@ -19,11 +19,8 @@
 package org.fenixedu.academic.dto.contacts;
 
 import org.fenixedu.academic.domain.contacts.PartyContact;
-import org.fenixedu.academic.domain.contacts.PartyContactType;
 import org.fenixedu.academic.domain.contacts.WebAddress;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
-
-import pt.ist.fenixframework.Atomic;
 
 public class WebAddressBean extends PartyContactBean {
 
@@ -46,18 +43,6 @@ public class WebAddressBean extends PartyContactBean {
     }
 
     @Override
-    @Atomic
-    public boolean edit() {
-        final boolean isValueChanged = super.edit();
-        if (isValueChanged) {
-            if (!getType().equals(PartyContactType.INSTITUTIONAL)) {
-                ((WebAddress) getContact()).edit(getValue());
-            }
-        }
-        return isValueChanged;
-    }
-
-    @Override
     public PartyContact createNewContact() {
         return WebAddress.createWebAddress(getParty(), getValue(), getType(), getDefaultContact(), getVisibleToPublic(),
                 getVisibleToStudents(), getVisibleToStaff());
@@ -68,8 +53,4 @@ public class WebAddressBean extends PartyContactBean {
         return !((WebAddress) getContact()).getUrl().equals(getValue());
     }
 
-    @Override
-    public boolean isToBeValidated() {
-        return false;
-    }
 }

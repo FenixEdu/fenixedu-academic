@@ -23,17 +23,11 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.Country;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
-import org.fenixedu.academic.predicate.AccessControl;
-import org.fenixedu.academic.util.Bundle;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.joda.time.DateTime;
-
-import pt.ist.fenixframework.Atomic;
 
 public class PhysicalAddress extends PhysicalAddress_Base {
 
@@ -67,7 +61,7 @@ public class PhysicalAddress extends PhysicalAddress_Base {
         super();
         new PhysicalAddressValidation(this);
     }
-    
+
     protected PhysicalAddress(final Party party, final PartyContactType type, final boolean defaultContact,
             final PhysicalAddressData data) {
         this(party, type, defaultContact, data, true);
@@ -82,7 +76,7 @@ public class PhysicalAddress extends PhysicalAddress_Base {
         setVisibleToStaff(Boolean.FALSE);
         edit(data, hasCheckRules);
 
-        if(hasCheckRules) {
+        if (hasCheckRules) {
             checkRules();
         }
     }
@@ -100,17 +94,17 @@ public class PhysicalAddress extends PhysicalAddress_Base {
     public void edit(final PhysicalAddressData data) {
         edit(data, true);
     }
-    
+
     protected void edit(final PhysicalAddressData data, final boolean hasCheckRules) {
         if (data == null) {
             return;
         }
-        
+
         if (!data.equals(new PhysicalAddressData(this))) {
-            if(isFiscalAddress() && getCountryOfResidence() != data.getCountryOfResidence()) {
+            if (isFiscalAddress() && getCountryOfResidence() != data.getCountryOfResidence()) {
                 throw new DomainException("error.PhysicalAddress.cannot.change.countryOfResidence.in.fiscal.address");
             }
-            
+
             super.setAddress(data.getAddress());
             super.setAreaCode(data.getAreaCode());
             super.setAreaOfAreaCode(data.getAreaOfAreaCode());
@@ -126,12 +120,10 @@ public class PhysicalAddress extends PhysicalAddress_Base {
             setLastModifiedDate(new DateTime());
         }
 
-        if(hasCheckRules) {
+        if (hasCheckRules) {
             checkRules();
         }
     }
-    
-    
 
     // Called from renders with edit clause.
     public void edit(final PartyContactType type, final Boolean defaultContact, final String address, final String areaCode,
@@ -145,7 +137,7 @@ public class PhysicalAddress extends PhysicalAddress_Base {
     }
 
     private void checkRules() {
-        if(getCountryOfResidence() == null) {
+        if (getCountryOfResidence() == null) {
             throw new DomainException("error.PhysicalAddres.countryOfResidence.required");
         }
     }
@@ -161,29 +153,22 @@ public class PhysicalAddress extends PhysicalAddress_Base {
 
     @Override
     public void deleteWithoutCheckRules() {
-        if(getParty().getFiscalAddress() == this) {
+        if (getParty().getFiscalAddress() == this) {
             throw new DomainException("error.domain.contacts.PhysicalAddress.cannot.remove.fiscal.address");
         }
-        
+
         setCountryOfResidence(null);
         super.deleteWithoutCheckRules();
     }
 
     @Override
     public void delete() {
-        if(getParty().getFiscalAddress() == this) {
+        if (getParty().getFiscalAddress() == this) {
             throw new DomainException("error.domain.contacts.PhysicalAddress.cannot.remove.fiscal.address");
         }
-        
+
         setCountryOfResidence(null);
         super.delete();
-    }
-
-    @Override
-    protected void checkRulesToDelete() {
-        if (getParty().getPartyContacts(getClass()).size() == 1) {
-            throw new DomainException("error.domain.contacts.PhysicalAddress.cannot.remove.last.physicalAddress");
-        }
     }
 
     public String getPostalCode() {
@@ -197,18 +182,6 @@ public class PhysicalAddress extends PhysicalAddress_Base {
     @Override
     public boolean hasValue(final String value) {
         return false;
-    }
-
-    @Atomic
-    @Override
-    public void setValid() {
-        if (!isValid()) {
-            final PhysicalAddressValidation physicalAddressValidation = (PhysicalAddressValidation) getPartyContactValidation();
-            physicalAddressValidation.setValid();
-            final String userName = AccessControl.getPerson() == null ? "-" : AccessControl.getPerson().getUsername();
-            physicalAddressValidation.setDescription(
-                    BundleUtil.getString(Bundle.ACADEMIC, "label.contacts.physicalAddress.validation.description", userName));
-        }
     }
 
     @Override
@@ -237,39 +210,30 @@ public class PhysicalAddress extends PhysicalAddress_Base {
         logRefuseAux(person, "label.partyContacts.PhysicalAddress");
     }
 
-    @Override
-    public boolean isToBeValidated() {
-        return requiresValidation();
-    }
-    
     public boolean isFiscalAddress() {
         return Boolean.TRUE.equals(super.getFiscalAddress());
     }
 
-    public static boolean requiresValidation() {
-        return FenixEduAcademicConfiguration.getPhysicalAddressRequiresValidation();
-    }
-    
     public String getUiFiscalPresentationValue() {
         final List<String> compounds = new ArrayList<>();
-        
-        if(StringUtils.isNotEmpty(getAddress())) {
+
+        if (StringUtils.isNotEmpty(getAddress())) {
             compounds.add(getAddress());
         }
-        
-        if(StringUtils.isNotEmpty(getAreaCode())) {
+
+        if (StringUtils.isNotEmpty(getAreaCode())) {
             compounds.add(getAreaCode());
         }
-        
-        if(StringUtils.isNotEmpty(getDistrictSubdivisionOfResidence())) {
+
+        if (StringUtils.isNotEmpty(getDistrictSubdivisionOfResidence())) {
             compounds.add(getDistrictSubdivisionOfResidence());
         }
-        
-        if(getCountryOfResidence() != null) {
+
+        if (getCountryOfResidence() != null) {
             compounds.add(getCountryOfResidence().getLocalizedName().getContent());
         }
-        
+
         return String.join(" ", compounds);
     }
-    
+
 }

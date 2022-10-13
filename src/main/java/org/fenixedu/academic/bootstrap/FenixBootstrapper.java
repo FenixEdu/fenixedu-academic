@@ -322,7 +322,7 @@ public class FenixBootstrapper {
                 true);
         for (PartyContact partyContact : person.getPartyContactsSet()) {
             partyContact.setValid();
-            partyContact.getPartyContactValidation().setState(PartyContactValidationState.VALID);
+//            partyContact.getPartyContactValidation().setState(PartyContactValidationState.VALID);
         }
         Authenticate.mock(adminUser, "TODO: CHANGE ME");
         AcademicOperationType.MANAGE_AUTHORIZATIONS.grant(adminUser);

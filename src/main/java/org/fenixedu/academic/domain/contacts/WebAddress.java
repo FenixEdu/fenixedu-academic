@@ -114,19 +114,13 @@ public class WebAddress extends WebAddress_Base {
     }
 
     @Override
-    public void setValid() {
-        if (getPrevPartyContact() != null) {
-            getPrevPartyContact().deleteWithoutCheckRules();
-        }
-    }
-
-    @Override
     public void logCreate(Person person) {
         logCreateAux(person, "label.partyContacts.WebAddress");
     }
 
     @Override
-    public void logEdit(Person person, boolean propertiesChanged, boolean valueChanged, boolean createdNewContact, String newValue) {
+    public void logEdit(Person person, boolean propertiesChanged, boolean valueChanged, boolean createdNewContact,
+            String newValue) {
         logEditAux(person, propertiesChanged, valueChanged, createdNewContact, newValue, "label.partyContacts.WebAddress");
     }
 
@@ -161,8 +155,4 @@ public class WebAddress extends WebAddress_Base {
         logDeleteAux(person, "label.partyContacts.WebAddress");
     }
 
-    @Override
-    public boolean isToBeValidated() {
-        return false;
-    }
 }

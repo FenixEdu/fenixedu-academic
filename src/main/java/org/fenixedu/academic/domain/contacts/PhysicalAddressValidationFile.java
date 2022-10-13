@@ -18,13 +18,13 @@
  */
 package org.fenixedu.academic.domain.contacts;
 
-import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.util.FileUtils;
 import org.fenixedu.bennu.core.domain.User;
 
 public class PhysicalAddressValidationFile extends PhysicalAddressValidationFile_Base {
 
-    public PhysicalAddressValidationFile(PhysicalAddressValidation validation, String filename, String displayName, byte[] content) {
+    public PhysicalAddressValidationFile(PhysicalAddressValidation validation, String filename, String displayName,
+            byte[] content) {
         super();
         init(displayName, filename, content);
         setPyhsicalAddressValidation(validation);
@@ -42,6 +42,6 @@ public class PhysicalAddressValidationFile extends PhysicalAddressValidationFile
 
     @Override
     public boolean isAccessible(User user) {
-        return RoleType.OPERATOR.isMember(user);
+        return false;
     }
 }

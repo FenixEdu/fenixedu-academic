@@ -86,10 +86,4 @@ public class FenixEduAcademicConfiguration {
         return ConfigurationInvocationHandler.getConfiguration(ConfigurationProperties.class);
     }
 
-    public static boolean getPhysicalAddressRequiresValidation() {
-        Boolean physicalAddressRequiresValidation = getConfiguration().getPhysicalAddressRequiresValidation();
-        //keep old behaviour if property is not configured
-        return physicalAddressRequiresValidation != null ? physicalAddressRequiresValidation : true;
-    }
-
 }

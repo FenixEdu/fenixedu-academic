@@ -20,10 +20,7 @@ package org.fenixedu.academic.dto.contacts;
 
 import org.fenixedu.academic.domain.contacts.MobilePhone;
 import org.fenixedu.academic.domain.contacts.PartyContact;
-import org.fenixedu.academic.domain.contacts.PartyContactType;
 import org.fenixedu.academic.domain.organizationalStructure.Party;
-
-import pt.ist.fenixframework.Atomic;
 
 public class MobilePhoneBean extends PartyContactBean {
 
@@ -46,18 +43,6 @@ public class MobilePhoneBean extends PartyContactBean {
     }
 
     @Override
-    @Atomic
-    public boolean edit() {
-        boolean isValueChanged = super.edit();
-        if (isValueChanged) {
-            if (!getType().equals(PartyContactType.INSTITUTIONAL)) {
-                ((MobilePhone) getContact()).edit(getValue());
-            }
-        }
-        return isValueChanged;
-    }
-
-    @Override
     public PartyContact createNewContact() {
         return MobilePhone.createMobilePhone(getParty(), getValue(), getType(), getDefaultContact(), getVisibleToPublic(),
                 getVisibleToStudents(), getVisibleToStaff());
@@ -68,8 +53,4 @@ public class MobilePhoneBean extends PartyContactBean {
         return !((MobilePhone) getContact()).getNumber().equals(getValue());
     }
 
-    @Override
-    public boolean isToBeValidated() {
-        return false;
-    }
 }

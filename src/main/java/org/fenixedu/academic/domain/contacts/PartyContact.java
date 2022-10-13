@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -36,8 +35,6 @@ import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
-
-import pt.ist.fenixframework.Atomic;
 
 public abstract class PartyContact extends PartyContact_Base {
 
@@ -245,12 +242,10 @@ public abstract class PartyContact extends PartyContact_Base {
         return false;
     }
 
-    @Atomic
     public void deleteWithoutCheckRules() {
         processDelete();
     }
 
-    @Atomic
     public void delete() {
         if (isActiveAndValid()) {
             checkRulesToDelete();
@@ -334,23 +329,16 @@ public abstract class PartyContact extends PartyContact_Base {
         return getActive() && !isValid();
     }
 
-    public void triggerValidationProcess() {
-        if (getPartyContactValidation() != null) {
-            getPartyContactValidation().triggerValidationProcess();
-        }
-    }
-
-    public void triggerValidationProcessIfNeeded() {
-        if (getPartyContactValidation() != null) {
-            getPartyContactValidation().triggerValidationProcessIfNeeded();
-        }
-    }
-
     public abstract boolean hasValue(String value);
 
     public void setValid() {
         if (getPartyContactValidation() != null) {
             getPartyContactValidation().setValid();
+        }
+
+        // for contacts without validation
+        if (getPrevPartyContact() != null) {
+            getPrevPartyContact().deleteWithoutCheckRules();
         }
     }
 
@@ -563,7 +551,4 @@ public abstract class PartyContact extends PartyContact_Base {
         return ContactRoot.getInstance().getPartyContactsSet().stream().filter(type::isInstance).collect(Collectors.toSet());
     }
 
-    public boolean isToBeValidated() {
-        return true;
-    }
 }
