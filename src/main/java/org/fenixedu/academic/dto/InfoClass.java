@@ -59,18 +59,18 @@ public class InfoClass extends InfoObject {
         return getSchoolClass().toString();
     }
 
-    public InfoExecutionDegree getInfoExecutionDegree() {
-        return InfoExecutionDegree.newInfoFromDomain(getSchoolClass().getExecutionDegree());
-    }
+//    public InfoExecutionDegree getInfoExecutionDegree() {
+//        return InfoExecutionDegree.newInfoFromDomain(getSchoolClass().getExecutionDegree());
+//    }
 
     public AcademicInterval getAcademicInterval() {
         return getSchoolClass().getAcademicInterval();
     }
 
-    @Deprecated
-    public InfoExecutionPeriod getInfoExecutionPeriod() {
-        return InfoExecutionPeriod.newInfoFromDomain(getSchoolClass().getExecutionPeriod());
-    }
+//    @Deprecated
+//    public InfoExecutionPeriod getInfoExecutionPeriod() {
+//        return InfoExecutionPeriod.newInfoFromDomain(getSchoolClass().getExecutionPeriod());
+//    }
 
     public static InfoClass newInfoFromDomain(final SchoolClass schoolClass) {
         return schoolClass == null ? null : new InfoClass(schoolClass);

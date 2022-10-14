@@ -140,13 +140,13 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
     /**
      * @return
      */
-    public List<InfoCurricularCourse> getCurricularCourses() {
-        final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
-        for (final CurricularCourse curricularCourse : getDegreeCurricularPlan().getCurricularCoursesSet()) {
-            infoCurricularCourses.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
-        }
-        return infoCurricularCourses;
-    }
+//    public List<InfoCurricularCourse> getCurricularCourses() {
+//        final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
+//        for (final CurricularCourse curricularCourse : getDegreeCurricularPlan().getCurricularCoursesSet()) {
+//            infoCurricularCourses.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
+//        }
+//        return infoCurricularCourses;
+//    }
 
     public String getDescription() {
         return showEnVersion ? getDescriptionEn() : getDegreeCurricularPlan().getDescription();
@@ -175,13 +175,13 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
         return getDegreeCurricularPlan().getAnotation();
     }
 
-    public List<InfoExecutionDegree> getInfoExecutionDegrees() {
-        final List<InfoExecutionDegree> infoExeutionDegrees = new ArrayList<InfoExecutionDegree>();
-        for (final ExecutionDegree executionDegree : getDegreeCurricularPlan().getExecutionDegreesSet()) {
-            infoExeutionDegrees.add(InfoExecutionDegree.newInfoFromDomain(executionDegree));
-        }
-        return infoExeutionDegrees;
-    }
+//    public List<InfoExecutionDegree> getInfoExecutionDegrees() {
+//        final List<InfoExecutionDegree> infoExeutionDegrees = new ArrayList<InfoExecutionDegree>();
+//        for (final ExecutionDegree executionDegree : getDegreeCurricularPlan().getExecutionDegreesSet()) {
+//            infoExeutionDegrees.add(InfoExecutionDegree.newInfoFromDomain(executionDegree));
+//        }
+//        return infoExeutionDegrees;
+//    }
 
     @Override
     public String getExternalId() {

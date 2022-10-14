@@ -79,7 +79,6 @@ import org.fenixedu.academic.domain.studentCurriculum.Substitution;
 import org.fenixedu.academic.domain.studentCurriculum.curriculumLine.CurriculumLineLocationBean;
 import org.fenixedu.academic.domain.studentCurriculum.curriculumLine.MoveCurriculumLinesBean;
 import org.fenixedu.academic.dto.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
-import org.fenixedu.academic.dto.administrativeOffice.studentEnrolment.NoCourseGroupEnrolmentBean;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.academic.service.AcademicPermissionService;
 import org.fenixedu.academic.util.predicates.AndPredicate;
@@ -1007,12 +1006,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                 Authenticate.getUser().getUsername(), optionalCurricularCourse);
     }
 
-    @Deprecated
-    final public RuleResult createNoCourseGroupCurriculumGroupEnrolment(final NoCourseGroupEnrolmentBean bean) {
-        return org.fenixedu.academic.domain.studentCurriculum.StudentCurricularPlanEnrolment
-                .createManager(EnrolmentContext.createForNoCourseGroupCurriculumGroupEnrolment(this, bean)).manage();
-    }
-
     @Atomic
     public RuleResult removeCurriculumModulesFromNoCourseGroupCurriculumGroup(final List<CurriculumModule> curriculumModules,
             final ExecutionInterval executionInterval, final NoCourseGroupCurriculumGroupType groupType) {
@@ -1334,10 +1327,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     private void checkPermission(final Person responsiblePerson, final CurriculumLineLocationBean bean) {
 
-        final boolean hasUpdateRegistrationAfterConclusionPermission =
-                AcademicAccessRule.isProgramAccessibleToFunction(AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION,
-                        getDegree(), responsiblePerson.getUser())
-                        || AcademicPermissionService.hasAccess("ACADEMIC_OFFICE_CONCLUSION", getDegree(), responsiblePerson.getUser());
+        final boolean hasUpdateRegistrationAfterConclusionPermission = AcademicAccessRule.isProgramAccessibleToFunction(
+                AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION, getDegree(), responsiblePerson.getUser())
+                || AcademicPermissionService.hasAccess("ACADEMIC_OFFICE_CONCLUSION", getDegree(), responsiblePerson.getUser());
 
         if (bean.getCurriculumGroup().getParentCycleCurriculumGroup() != null
                 && bean.getCurriculumGroup().getParentCycleCurriculumGroup().isConclusionProcessed()

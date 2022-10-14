@@ -136,10 +136,10 @@ public class InfoExecutionCourse extends InfoObject {
 //        return getExecutionCourse().getEqualLoad();
 //    }
 
-    @Deprecated
-    public InfoExecutionPeriod getInfoExecutionPeriod() {
-        return InfoExecutionPeriod.newInfoFromDomain(getExecutionCourse().getExecutionPeriod());
-    }
+//    @Deprecated
+//    public InfoExecutionPeriod getInfoExecutionPeriod() {
+//        return InfoExecutionPeriod.newInfoFromDomain(getExecutionCourse().getExecutionPeriod());
+//    }
 
     public AcademicInterval getAcademicInterval() {
         return getExecutionCourse().getAcademicInterval();
@@ -155,35 +155,35 @@ public class InfoExecutionCourse extends InfoObject {
         return result;
     }
 
-    public List<InfoEvaluation> getAssociatedInfoEvaluations() {
-        final List<InfoEvaluation> result = new ArrayList<InfoEvaluation>();
+//    public List<InfoEvaluation> getAssociatedInfoEvaluations() {
+//        final List<InfoEvaluation> result = new ArrayList<InfoEvaluation>();
+//
+//        for (final Evaluation nonAffiliatedTeacher : getExecutionCourse().getAssociatedEvaluationsSet()) {
+//            result.add(InfoEvaluation.newInfoFromDomain(nonAffiliatedTeacher));
+//        }
+//
+//        return result;
+//    }
 
-        for (final Evaluation nonAffiliatedTeacher : getExecutionCourse().getAssociatedEvaluationsSet()) {
-            result.add(InfoEvaluation.newInfoFromDomain(nonAffiliatedTeacher));
-        }
+//    public List<InfoCurricularCourse> getAssociatedInfoCurricularCourses() {
+//        if (filteredAssociatedInfoCurricularCourses == null) {
+//            List<InfoCurricularCourse> result = new ArrayList<InfoCurricularCourse>();
+//
+//            for (final CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCoursesSet()) {
+//                final InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+//                result.add(infoCurricularCourse);
+//            }
+//
+//            setFilteredAssociatedInfoCurricularCourses(result);
+//            return result;
+//        } else {
+//            return getFilteredAssociatedInfoCurricularCourses();
+//        }
+//    }
 
-        return result;
-    }
-
-    public List<InfoCurricularCourse> getAssociatedInfoCurricularCourses() {
-        if (filteredAssociatedInfoCurricularCourses == null) {
-            List<InfoCurricularCourse> result = new ArrayList<InfoCurricularCourse>();
-
-            for (final CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCoursesSet()) {
-                final InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
-                result.add(infoCurricularCourse);
-            }
-
-            setFilteredAssociatedInfoCurricularCourses(result);
-            return result;
-        } else {
-            return getFilteredAssociatedInfoCurricularCourses();
-        }
-    }
-
-    public boolean getCanRemoveCurricularCourses() {
-        return getAssociatedInfoCurricularCourses().size() > 1;
-    }
+//    public boolean getCanRemoveCurricularCourses() {
+//        return getAssociatedInfoCurricularCourses().size() > 1;
+//    }
 
     public Collection<CourseLoad> getCourseLoads() {
         return getExecutionCourse().getCourseLoadsSet();
@@ -219,16 +219,16 @@ public class InfoExecutionCourse extends InfoObject {
         this.occupancy = occupancy;
     }
 
-    private List<InfoCurricularCourse> filteredAssociatedInfoCurricularCourses;
-
-    private List<InfoCurricularCourse> getFilteredAssociatedInfoCurricularCourses() {
-        return filteredAssociatedInfoCurricularCourses;
-    }
-
-    public void setFilteredAssociatedInfoCurricularCourses(
-            final List<InfoCurricularCourse> filteredAssociatedInfoCurricularCourses) {
-        this.filteredAssociatedInfoCurricularCourses = filteredAssociatedInfoCurricularCourses;
-    }
+//    private List<InfoCurricularCourse> filteredAssociatedInfoCurricularCourses;
+//
+//    private List<InfoCurricularCourse> getFilteredAssociatedInfoCurricularCourses() {
+//        return filteredAssociatedInfoCurricularCourses;
+//    }
+//
+//    public void setFilteredAssociatedInfoCurricularCourses(
+//            final List<InfoCurricularCourse> filteredAssociatedInfoCurricularCourses) {
+//        this.filteredAssociatedInfoCurricularCourses = filteredAssociatedInfoCurricularCourses;
+//    }
 
     @Override
     public String toString() {

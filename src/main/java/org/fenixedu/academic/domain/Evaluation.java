@@ -22,10 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
-import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
-import org.fenixedu.academic.dto.InfoEvaluation;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.EvaluationType;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -110,9 +107,9 @@ public abstract class Evaluation extends Evaluation_Base {
         return null;
     }
 
-    public InfoEvaluation newInfoFromDomain() {
-        InfoEvaluation infoEvaluation = new InfoEvaluation();
-        infoEvaluation.copyFromDomain(this);
-        return infoEvaluation;
-    }
+//    public InfoEvaluation newInfoFromDomain() {
+//        InfoEvaluation infoEvaluation = new InfoEvaluation();
+//        infoEvaluation.copyFromDomain(this);
+//        return infoEvaluation;
+//    }
 }

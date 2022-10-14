@@ -1,6 +1,7 @@
 - Refactor: Remove deprecated degree curricular plan members group slot 
 - Refactor: Cleanup party contacts validations
 - Refactor: Remove legacy services and filters
+- Refactor: Remove legacy dtos
 
 37.0.0 (13-10-2022)
 - Refactor: Remove legacy Struts functionalities

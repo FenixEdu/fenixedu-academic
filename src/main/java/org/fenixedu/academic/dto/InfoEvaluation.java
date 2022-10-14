@@ -61,9 +61,8 @@ public class InfoEvaluation extends InfoShowOccupation {
         boolean resultado = false;
         if (obj instanceof InfoEvaluation) {
             InfoEvaluation infoEvaluation = (InfoEvaluation) obj;
-            resultado =
-                    this.getPublishmentMessage().equals(infoEvaluation.getPublishmentMessage())
-                            && this.getEvaluationType() == infoEvaluation.getEvaluationType();
+            resultado = this.getPublishmentMessage().equals(infoEvaluation.getPublishmentMessage())
+                    && this.getEvaluationType() == infoEvaluation.getEvaluationType();
         }
         return resultado;
     }
@@ -148,7 +147,9 @@ public class InfoEvaluation extends InfoShowOccupation {
      */
     public static InfoEvaluation newInfoFromDomain(Evaluation evaluation) {
         if (evaluation != null) {
-            return evaluation.newInfoFromDomain();
+            InfoEvaluation infoEvaluation = new InfoEvaluation();
+            infoEvaluation.copyFromDomain(evaluation);
+            return infoEvaluation;
         }
         return null;
     }
