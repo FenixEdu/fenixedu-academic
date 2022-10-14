@@ -189,7 +189,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         createDefaultCourseGroups();
 
-        setCurricularPlanMembersGroup(creator.getUser().groupOf());
         setDegreeStructure(curricularPeriod);
         setState(DegreeCurricularPlanState.ACTIVE);
 
@@ -354,7 +353,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             if (getDegreeStructure() != null) {
                 getDegreeStructure().delete();
             }
-            setMembersGroup(null);
             setRootDomainObject(null);
             deleteDomainObject();
         } else {
@@ -715,16 +713,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         final Collection<ExecutionDegree> executionDegrees = getExecutionDegreesSet();
         return executionDegrees.size() > 1 ? false : executionDegrees.isEmpty()
                 || executionDegrees.iterator().next().getExecutionYear().isCurrent();
-    }
-
-    @Deprecated
-    public Group getCurricularPlanMembersGroup() {
-        return getMembersGroup() != null ? getMembersGroup().toGroup() : Group.nobody();
-    }
-
-    @Deprecated
-    public void setCurricularPlanMembersGroup(final Group group) {
-        setMembersGroup(group.toPersistentGroup());
     }
 
     @Atomic

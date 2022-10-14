@@ -1,3 +1,4 @@
+- Refactor: Remove deprecated degree curricular plan members group slot 
 - Refactor: Cleanup party contacts validations
 - Refactor: Remove legacy services and filters
 

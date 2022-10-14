@@ -4976,15 +4976,6 @@ relation PersistentAlumniGroupDegree {
 	}
 }
 
-relation DegreeCurricularPlanMembers {
-	protected DegreeCurricularPlan playsRole degreeCurricularPlanAsMembers {
-		multiplicity *;
-	}
-	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole membersGroup {
-		multiplicity 0..1;
-	}
-}
-
 relation DepartmentCompetenceCourseMembersGroup {
 	protected Department playsRole departmentAsMembers {
 		multiplicity *;
