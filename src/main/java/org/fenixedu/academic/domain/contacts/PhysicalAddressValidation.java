@@ -29,4 +29,12 @@ public class PhysicalAddressValidation extends PhysicalAddressValidation_Base {
         new PhysicalAddressValidationFile(this, filename, displayName, content);
     }
 
+    @Override
+    public void delete() {
+        if (getFile() != null) {
+            getFile().delete();
+        }
+        super.delete();
+    }
+
 }
