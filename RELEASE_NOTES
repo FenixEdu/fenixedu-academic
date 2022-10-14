@@ -1,4 +1,5 @@
 - Refactor: Cleanup party contacts validations
+- Refactor: Remove legacy services and filters
 
 37.0.0 (13-10-2022)
 - Refactor: Remove legacy Struts functionalities

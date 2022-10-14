@@ -20,14 +20,6 @@ package org.fenixedu.academic.service.services.teacher;
 
 import org.fenixedu.academic.domain.Evaluation;
 import org.fenixedu.academic.domain.ExecutionCourse;
-import org.fenixedu.academic.domain.Mark;
-import org.fenixedu.academic.service.filter.ExecutionCourseLecturingTeacherAuthorizationFilter;
-import org.fenixedu.academic.service.services.exceptions.FenixServiceException;
-import org.fenixedu.academic.service.services.exceptions.NotAuthorizedException;
-import org.fenixedu.bennu.core.signals.Signal;
-
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Fernanda Quitério
@@ -35,30 +27,6 @@ import pt.ist.fenixframework.FenixFramework;
 public class PublishMarks {
 
     public static final String MARKS_PUBLISHED_SIGNAL = "academic.PublishMarks.marks.published";
-
-    protected Object run(String executionCourseCode, String evaluationCode, String publishmentMessage, String announcementTitle)
-            throws FenixServiceException {
-
-        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
-        final Evaluation evaluation = FenixFramework.getDomainObject(evaluationCode);
-
-        if (publishmentMessage == null || publishmentMessage.length() == 0) {
-            evaluation.setPublishmentMessage(" ");
-        } else {
-            evaluation.setPublishmentMessage(publishmentMessage);
-        }
-
-        Signal.emit(MARKS_PUBLISHED_SIGNAL, new MarkPublishingBean(executionCourse, evaluation, announcementTitle));
-
-        for (Mark mark : evaluation.getMarksSet()) {
-            if (!mark.getMark().equals(mark.getPublishedMark())) {
-                // update published mark
-                mark.setPublishedMark(mark.getMark());
-            }
-        }
-
-        return Boolean.TRUE;
-    }
 
     public static class MarkPublishingBean {
 
@@ -84,17 +52,6 @@ public class PublishMarks {
             return title;
         }
 
-    }
-
-    // Service Invokers migrated from Berserk
-
-    private static final PublishMarks serviceInstance = new PublishMarks();
-
-    @Atomic
-    public static Object runPublishMarks(String executionCourseCode, String evaluationCode, String publishmentMessage,
-            Boolean sendSMS, String announcementTitle) throws FenixServiceException, NotAuthorizedException {
-        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
-        return serviceInstance.run(executionCourseCode, evaluationCode, publishmentMessage, announcementTitle);
     }
 
 }

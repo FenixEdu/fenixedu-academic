@@ -49,7 +49,6 @@ import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
-import org.fenixedu.academic.service.services.bolonhaManager.CompetenceCourseManagementAccessControl;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.StringNormalizer;
 import org.fenixedu.commons.i18n.LocalizedString;
@@ -234,18 +233,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     private CompetenceCourseInformation getOldestCompetenceCourseInformation() {
         return getCompetenceCourseInformationsSet().stream().min(CompetenceCourseInformation.COMPARATORY_BY_EXECUTION_INTERVAL)
                 .orElse(null);
-    }
-
-    public boolean isLoggedPersonAllowedToView() {
-        return CompetenceCourseManagementAccessControl.isLoggedPersonAllowedToViewCompetenceCourse(this);
-    }
-
-    public boolean isLoggedPersonAllowedToViewChangeRequests() {
-        return CompetenceCourseManagementAccessControl.isLoggedPersonAllowedToViewChangeRequests(this, null);
-    }
-
-    public boolean isLoggedPersonAllowedToCreateChangeRequests(ExecutionInterval interval) {
-        return CompetenceCourseManagementAccessControl.isLoggedPersonAllowedToManageChangeRequests(this, interval);
     }
 
     public boolean isRequestDraftAvailable(ExecutionInterval interval) {

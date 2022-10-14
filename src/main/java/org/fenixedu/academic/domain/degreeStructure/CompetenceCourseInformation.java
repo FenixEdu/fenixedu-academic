@@ -35,7 +35,6 @@ import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.Bibl
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
-import org.fenixedu.academic.service.services.bolonhaManager.CompetenceCourseManagementAccessControl;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.LocalizedString;
 
@@ -509,10 +508,6 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
             }
         }
         return false;
-    }
-
-    public boolean isLoggedPersonAllowedToEdit() {
-        return CompetenceCourseManagementAccessControl.isLoggedPersonAllowedToManageCompetenceCourseInformation(this);
     }
 
     public ExecutionYear getExecutionYear() {
