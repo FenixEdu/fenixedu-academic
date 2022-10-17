@@ -437,6 +437,7 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
         DegreeCurricularPlanState state;
         Boolean applyPreviousYearsEnrolmentRule;
         CurricularRuleValidationType curricularRuleValidationType;
+       	LocalizedString enrolmentInstructions;
     }
     
     class DegreeInfo  {

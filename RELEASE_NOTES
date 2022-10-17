@@ -1,3 +1,4 @@
+- Improvement: Add enrolmentInstructions slot to degree curricular plan
 - Refactor: Remove deprecated degree curricular plan members group slot 
 - Refactor: Cleanup party contacts validations
 - Refactor: Remove legacy services and filters
