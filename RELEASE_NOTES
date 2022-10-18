@@ -1,3 +1,5 @@
+- Refactor: Remove unused struts actions and related services
+
 38.0.0 (17-10-2022)
 - Improvement: Add enrolmentInstructions slot to degree curricular plan
 - Refactor: Remove deprecated degree curricular plan members group slot 
