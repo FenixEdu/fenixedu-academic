@@ -89,7 +89,7 @@ public class InfoRoomOccupation extends InfoObject {
      * @return Returns the infoRoom.
      */
     public InfoRoom getInfoRoom() {
-        return InfoRoom.newInfoFromDomain(getRoomOccupation().getRoom());
+        return InfoRoom.newInfoFromDomain(getRoomOccupation().getSpace());
     }
 
 }

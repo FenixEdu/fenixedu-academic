@@ -38,8 +38,8 @@ public class LessonJsonAdapter implements JsonViewer<Lesson> {
         object.addProperty("dayOfWeek", lesson.getDiaSemana().getDiaSemanaString());
         object.addProperty("beginTime", lesson.getBeginHourMinuteSecond().toString(timeFormatter));
         object.addProperty("endTime", lesson.getEndHourMinuteSecond().toString(timeFormatter));
-        if (lesson.getRoomOccupation() != null && lesson.getRoomOccupation().getRoom() != null) {
-            object.addProperty("room", lesson.getRoomOccupation().getRoom().getPresentationName());
+        if (lesson.getRoomOccupation() != null && lesson.getRoomOccupation().getSpace() != null) {
+            object.addProperty("room", lesson.getRoomOccupation().getSpace().getPresentationName());
         }
         return object;
     }

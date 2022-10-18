@@ -244,7 +244,7 @@ public class LessonInstance extends LessonInstance_Base {
     }
 
     public Space getRoom() {
-        return getLessonInstanceSpaceOccupation() != null ? getLessonInstanceSpaceOccupation().getRoom() : null;
+        return getLessonInstanceSpaceOccupation() != null ? getLessonInstanceSpaceOccupation().getSpace() : null;
     }
 
     public DiaSemana getDayOfweek() {

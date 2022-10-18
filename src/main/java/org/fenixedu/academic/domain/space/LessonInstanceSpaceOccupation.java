@@ -19,7 +19,6 @@
 package org.fenixedu.academic.domain.space;
 
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -32,7 +31,6 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
-import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation_Base {
@@ -86,7 +84,7 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
     }
 
     @Override
-    public String getPresentationString() {
+    public String getSubject() {
         if (!getLessonInstancesSet().isEmpty()) {
             return getLessonInstancesSet().iterator().next().getLesson().getShift().getExecutionCourse().getSigla();
         }

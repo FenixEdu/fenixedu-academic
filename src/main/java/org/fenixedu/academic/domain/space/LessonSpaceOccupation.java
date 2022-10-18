@@ -31,7 +31,6 @@ import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
-import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import com.google.common.collect.Lists;
@@ -122,7 +121,7 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
     }
 
     @Override
-    public String getPresentationString() {
+    public String getSubject() {
         return getLesson().getShift().getExecutionCourse().getSigla();
     }
 

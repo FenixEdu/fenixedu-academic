@@ -1,4 +1,5 @@
 - Refactor: Remove unused struts actions and related services
+- Refactor: Remove uneessary intermediate class SpaceOccupation
 
 38.0.0 (17-10-2022)
 - Improvement: Add enrolmentInstructions slot to degree curricular plan

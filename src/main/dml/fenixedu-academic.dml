@@ -1243,17 +1243,14 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
         IDDocumentType value;
     }
 
-        class space.SpaceOccupation extends .org.fenixedu.spaces.domain.occupation.Occupation {
+    class space.EventSpaceOccupation extends .org.fenixedu.spaces.domain.occupation.Occupation {                
+    }
+
+        class space.LessonSpaceOccupation extends space.EventSpaceOccupation {
         }
 
-            class space.EventSpaceOccupation extends space.SpaceOccupation {                
-            }
-
-                class space.LessonSpaceOccupation extends space.EventSpaceOccupation {
-                }
-
-                class space.LessonInstanceSpaceOccupation extends space.EventSpaceOccupation {          
-                }
+        class space.LessonInstanceSpaceOccupation extends space.EventSpaceOccupation {          
+        }
                 
     class serviceRequests.AcademicServiceRequestSituation  {
         AcademicServiceRequestSituationType academicServiceRequestSituationType;

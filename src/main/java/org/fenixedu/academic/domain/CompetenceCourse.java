@@ -94,14 +94,14 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     }
 
-    public void addCompetenceCourseLoad(Double theoreticalHours, Double problemsHours, Double laboratorialHours,
-            Double seminaryHours, Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours,
-            Double otherHours, Double autonomousWorkHours, Double ectsCredits, Integer order, AcademicPeriod academicPeriod) {
-        checkIfCanEdit(false);
-        findInformationMostRecentUntil(null).addCompetenceCourseLoads(new CompetenceCourseLoad(theoreticalHours, problemsHours,
-                laboratorialHours, seminaryHours, fieldWorkHours, trainingPeriodHours, tutorialOrientationHours, otherHours,
-                autonomousWorkHours, ectsCredits, order, academicPeriod));
-    }
+//    public void addCompetenceCourseLoad(Double theoreticalHours, Double problemsHours, Double laboratorialHours,
+//            Double seminaryHours, Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours,
+//            Double otherHours, Double autonomousWorkHours, Double ectsCredits, Integer order, AcademicPeriod academicPeriod) {
+//        checkIfCanEdit(false);
+//        findInformationMostRecentUntil(null).addCompetenceCourseLoads(new CompetenceCourseLoad(theoreticalHours, problemsHours,
+//                laboratorialHours, seminaryHours, fieldWorkHours, trainingPeriodHours, tutorialOrientationHours, otherHours,
+//                autonomousWorkHours, ectsCredits, order, academicPeriod));
+//    }
 
     public BibliographicReference getBibliographicReference(Integer oid) {
         return findInformationMostRecentUntil(null).getBibliographicReferences().getBibliographicReference(oid);
@@ -204,11 +204,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 //        setCurricularStage(curricularStage);
 //    }
 
-    private void checkIfCanEdit(boolean scientificCouncilEdit) {
-        if (!scientificCouncilEdit && this.getCurricularStage().equals(CurricularStage.APPROVED)) {
-            throw new DomainException("competenceCourse.approved");
-        }
-    }
+//    private void checkIfCanEdit(boolean scientificCouncilEdit) {
+//        if (!scientificCouncilEdit && this.getCurricularStage().equals(CurricularStage.APPROVED)) {
+//            throw new DomainException("competenceCourse.approved");
+//        }
+//    }
 
 //    public void edit(String objectives, String program, String evaluationMethod, String objectivesEn, String programEn,
 //            String evaluationMethodEn) {
@@ -836,28 +836,28 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         super.addCompetenceCourseInformationChangeRequests(request);
     }
 
-    public boolean hasOneCourseLoad(final ExecutionYear executionYear) {
-        final CompetenceCourseInformation information = findInformationMostRecentUntil(executionYear);
-        return information != null && information.getCompetenceCourseLoadsSet().size() == 1;
-    }
+//    public boolean hasOneCourseLoad(final ExecutionYear executionYear) {
+//        final CompetenceCourseInformation information = findInformationMostRecentUntil(executionYear);
+//        return information != null && information.getCompetenceCourseLoadsSet().size() == 1;
+//    }
 
-    public boolean matchesName(String name) {
-        name = StringNormalizer.normalize(name).replaceAll("[^0-9a-zA-Z]", " ").trim();
-        for (final CompetenceCourseInformation information : getCompetenceCourseInformationsSet()) {
-            if (StringNormalizer.normalize(information.getName()).matches(".*" + name.replaceAll(" ", ".*") + ".*")) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean matchesCode(String code) {
-        if (getCode() == null) {
-            return false;
-        }
-        code = StringNormalizer.normalize(code).replaceAll("[^0-9a-zA-Z]", " ").trim();
-        return (StringNormalizer.normalize(getCode()).matches(".*" + code.replaceAll(" ", ".*") + ".*"));
-    }
+//    public boolean matchesName(String name) {
+//        name = StringNormalizer.normalize(name).replaceAll("[^0-9a-zA-Z]", " ").trim();
+//        for (final CompetenceCourseInformation information : getCompetenceCourseInformationsSet()) {
+//            if (StringNormalizer.normalize(information.getName()).matches(".*" + name.replaceAll(" ", ".*") + ".*")) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+//
+//    public boolean matchesCode(String code) {
+//        if (getCode() == null) {
+//            return false;
+//        }
+//        code = StringNormalizer.normalize(code).replaceAll("[^0-9a-zA-Z]", " ").trim();
+//        return (StringNormalizer.normalize(getCode()).matches(".*" + code.replaceAll(" ", ".*") + ".*"));
+//    }
 
     public ExecutionInterval getStartExecutionInterval() {
         return getOldestCompetenceCourseInformation().getExecutionInterval();
@@ -876,19 +876,19 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return Bennu.getInstance().getCompetenceCoursesSet().stream().collect(Collectors.toSet());
     }
 
-    static public Collection<CompetenceCourse> searchBolonhaCompetenceCourses(String searchName, String searchCode) {
-        final Set<CompetenceCourse> result = new TreeSet<CompetenceCourse>(COMPETENCE_COURSE_COMPARATOR_BY_NAME);
-        for (final CompetenceCourse competenceCourse : Bennu.getInstance().getCompetenceCoursesSet()) {
-            if ((!searchName.isEmpty()) && (!competenceCourse.matchesName(searchName))) {
-                continue;
-            }
-            if ((!searchCode.isEmpty()) && (!competenceCourse.matchesCode(searchCode))) {
-                continue;
-            }
-            result.add(competenceCourse);
-        }
-        return result;
-    }
+//    static public Collection<CompetenceCourse> searchBolonhaCompetenceCourses(String searchName, String searchCode) {
+//        final Set<CompetenceCourse> result = new TreeSet<CompetenceCourse>(COMPETENCE_COURSE_COMPARATOR_BY_NAME);
+//        for (final CompetenceCourse competenceCourse : Bennu.getInstance().getCompetenceCoursesSet()) {
+//            if ((!searchName.isEmpty()) && (!competenceCourse.matchesName(searchName))) {
+//                continue;
+//            }
+//            if ((!searchCode.isEmpty()) && (!competenceCourse.matchesCode(searchCode))) {
+//                continue;
+//            }
+//            result.add(competenceCourse);
+//        }
+//        return result;
+//    }
 
 //    static public Collection<CompetenceCourse> readApprovedBolonhaCompetenceCourses() {
 //        final Set<CompetenceCourse> result = new TreeSet<CompetenceCourse>(COMPETENCE_COURSE_COMPARATOR_BY_NAME);

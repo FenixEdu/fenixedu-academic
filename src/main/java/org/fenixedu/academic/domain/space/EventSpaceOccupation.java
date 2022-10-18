@@ -18,7 +18,8 @@
  */
 package org.fenixedu.academic.domain.space;
 
-import org.apache.commons.lang.StringUtils;
+import java.util.Set;
+
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.spaces.domain.Space;
 
@@ -36,17 +37,14 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
         super.addSpace(resource);
     }
 
+    @Deprecated
     public Space getRoom() {
         return getSpace();
     }
 
-    @Override
-    public String getSubject() {
-        return getPresentationString();
-    }
-
-    public String getPresentationString() {
-        return StringUtils.EMPTY;
+    public Space getSpace() {
+        Set<Space> spaces = getSpaces();
+        return spaces.isEmpty() ? null : spaces.iterator().next();
     }
 
     @Override

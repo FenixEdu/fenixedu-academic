@@ -299,7 +299,7 @@ public class Lesson extends Lesson_Base {
 
     public Space getSala() {
         if (getLessonSpaceOccupation() != null) {
-            return getLessonSpaceOccupation().getRoom();
+            return getLessonSpaceOccupation().getSpace();
         } else if (hasAnyLessonInstances() && wasFinished()) {
             return getLastLessonInstance().getRoom();
         }
@@ -1133,7 +1133,7 @@ public class Lesson extends Lesson_Base {
             if (lessonInstance != null) {
 
                 if (lessonInstance.getLessonInstanceSpaceOccupation() != null) {
-                    location.add(lessonInstance.getLessonInstanceSpaceOccupation().getRoom());
+                    location.addAll(lessonInstance.getLessonInstanceSpaceOccupation().getSpaces());
                 }
                 String summary = null;
                 if (lessonInstance.getSummary() != null) {
@@ -1151,7 +1151,7 @@ public class Lesson extends Lesson_Base {
                         url + "/sumarios", summary, getShift());
             } else {
                 if (getLessonSpaceOccupation() != null) {
-                    location.add(getLessonSpaceOccupation().getRoom());
+                    location.add(getLessonSpaceOccupation().getSpace());
                 }
                 DateTime endDate = new DateTime(aDay.getYear(), aDay.getMonthOfYear(), aDay.getDayOfMonth(),
                         getEndHourMinuteSecond().getHour(), getEndHourMinuteSecond().getMinuteOfHour(),
