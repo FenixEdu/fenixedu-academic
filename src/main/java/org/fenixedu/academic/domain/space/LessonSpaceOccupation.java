@@ -89,11 +89,6 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
         return getLesson() == null ? null : getLesson().getPeriod();
     }
 
-//    @Override
-//    protected boolean intersects(YearMonthDay startDate, YearMonthDay endDate) {
-//        return getPeriod() != null && getPeriod().nestedOccupationPeriodsIntersectDates(startDate, endDate);
-//    }
-
     @Override
     public List<Interval> getIntervals() {
         return new ArrayList<>(getLesson().getAllLessonIntervalsWithoutInstanceDates());
@@ -106,67 +101,6 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
         }
         super.setLesson(lesson);
     }
-
-//    @Override
-//    public FrequencyType getFrequency() {
-//        return getLesson().getFrequency();
-//    }
-
-//    @Override
-//    public Group getAccessGroup() {
-//        return getSpace().getOccupationsGroupWithChainOfResponsability();
-//    }
-
-//    @Override
-//    public LocalDate getBeginDate() {
-//        return getPeriod() != null ? getPeriod().getStartYearMonthDay().toLocalDate() : null;
-//    }
-//
-//    @Override
-//    public LocalDate getEndDate() {
-//        return getPeriod() != null ? getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay()
-//                .toLocalDate() : null;
-//    }
-//
-//    @Override
-//    public DiaSemana getDayOfWeek() {
-//        return getLesson().getDiaSemana();
-//    }
-//
-//    @Override
-//    public HourMinuteSecond getStartTimeDateHourMinuteSecond() {
-//        return getLesson().getBeginHourMinuteSecond();
-//    }
-//
-//    @Override
-//    public HourMinuteSecond getEndTimeDateHourMinuteSecond() {
-//        return getLesson().getEndHourMinuteSecond();
-//    }
-
-//    @Override
-//    public Boolean getDailyFrequencyMarkSaturday() {
-//        return null;
-//    }
-//
-//    @Override
-//    public Boolean getDailyFrequencyMarkSunday() {
-//        return null;
-//    }
-
-//    @Override
-//    public boolean isOccupiedByExecutionCourse(final ExecutionCourse executionCourse, final DateTime start, final DateTime end) {
-//        final Lesson lesson = getLesson();
-//        if (lesson.getExecutionCourse() == executionCourse) {
-//            final List<Interval> intervals =
-//                    getEventSpaceOccupationIntervals(start.toYearMonthDay(), end.toYearMonthDay().plusDays(1));
-//            for (final Interval interval : intervals) {
-//                if (start.isBefore(interval.getEnd()) && end.isAfter(interval.getStart())) {
-//                    return true;
-//                }
-//            }
-//        }
-//        return false;
-//    }
 
     @Override
     public String getUrl() {
@@ -191,11 +125,6 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
     public String getPresentationString() {
         return getLesson().getShift().getExecutionCourse().getSigla();
     }
-
-//    @Override
-//    protected boolean overlaps(final Interval interval) {
-//        return getLesson().overlaps(interval);
-//    }
 
     @Override
     public String getType() {

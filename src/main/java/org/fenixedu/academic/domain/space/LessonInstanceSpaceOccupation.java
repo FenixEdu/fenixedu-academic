@@ -80,72 +80,10 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
         }
     }
 
-//    @Override
-//    protected boolean intersects(YearMonthDay startDate, YearMonthDay endDate) {
-//        return true;
-//    }
-
     @Override
     public List<Interval> getIntervals() {
         return getLessonInstancesSet().stream().map(LessonInstance::getInterval).collect(Collectors.toList());
     }
-
-//    @Override
-//    public LocalDate getBeginDate() {
-//        return getLessonInstancesSet().stream().map(LessonInstance::getDate).min(Comparator.naturalOrder()).orElse(null);
-//    }
-//    
-//    @Override
-//    public LocalDate getEndDate() {
-//        return getLessonInstancesSet().stream().map(LessonInstance::getDate).max(Comparator.naturalOrder()).orElse(null);
-//    }
-//
-//    @Override
-//    public HourMinuteSecond getStartTimeDateHourMinuteSecond() {
-//        return null;
-//    }
-//
-//    @Override
-//    public HourMinuteSecond getEndTimeDateHourMinuteSecond() {
-//        return null;
-//    }
-//
-//    @Override
-//    public FrequencyType getFrequency() {
-//        return null;
-//    }
-//
-//    @Override
-//    public DiaSemana getDayOfWeek() {
-//        return null;
-//    }
-
-//    @Override
-//    public Boolean getDailyFrequencyMarkSaturday() {
-//        return null;
-//    }
-//
-//    @Override
-//    public Boolean getDailyFrequencyMarkSunday() {
-//        return null;
-//    }
-
-//    @Override
-//    public Group getAccessGroup() {
-//        return getSpace().getOccupationsGroupWithChainOfResponsability();
-//    }
-
-//    @Override
-//    public boolean isOccupiedByExecutionCourse(final ExecutionCourse executionCourse, final DateTime start, final DateTime end) {
-//        for (final LessonInstance lessonInstance : getLessonInstancesSet()) {
-//            final Lesson lesson = lessonInstance.getLesson();
-//            if (lesson.getExecutionCourse() == executionCourse && start.isBefore(lessonInstance.getEndDateTime())
-//                    && end.isAfter(lessonInstance.getBeginDateTime())) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
 
     @Override
     public String getPresentationString() {
@@ -154,17 +92,6 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
         }
         return "";
     }
-
-//    @Override
-//    protected boolean overlaps(final Interval interval) {
-//        for (final LessonInstance instance : getLessonInstancesSet()) {
-//            final Interval lessonInterval = instance.getInterval();
-//            if (interval.overlaps(lessonInterval)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
 
     @Override
     public String getUrl() {
