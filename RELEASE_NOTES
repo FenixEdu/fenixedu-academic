@@ -1,3 +1,4 @@
+39.0.0 (19-10-2022)
 - Refactor: Remove unused struts actions and related services
 - Refactor: Remove uneessary intermediate class SpaceOccupation
 
