@@ -2071,30 +2071,6 @@ relation AnyCurricularCourseDegreeType {
     }
 }
 
-//Deprecated
-relation AnyCurricularCourseSingleDegreeType {
-    curricularRules.AnyCurricularCourse playsRole participatingAnyCurricularCourseCurricularRules {
-        multiplicity *;
-    }
-    degree.DegreeType playsRole bolonhaDegreeType;
-}
-
-//Deprecated
-relation AnyCurricularCourseSingleDegree {
-    curricularRules.AnyCurricularCourse playsRole participatingAnyCurricularCourseCurricularRules {
-        multiplicity *;
-    }
-    Degree playsRole degree;
-}
-
-//Deprecated
-relation AnyCurricularCourseDepartmentUnit {
-    curricularRules.AnyCurricularCourse playsRole participatingAnyCurricularCourseCurricularRules {
-        multiplicity *;
-    }
-    organizationalStructure.Unit playsRole departmentUnit;
-}
-
 relation AttendsEnrolment {
     Attends playsRole attends {
         multiplicity *;

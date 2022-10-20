@@ -28,10 +28,8 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
-import org.fenixedu.academic.domain.Degree;
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.curricularRules.executors.verifyExecutors.VerifyRuleExecutor;
-import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.OptionalCurricularCourse;
@@ -213,9 +211,6 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 
     @Override
     protected void removeOwnParameters() {
-        setDegree(null);
-        setDepartmentUnit(null);
-        setBolonhaDegreeType(null);
         getCompetenceCourseLevelTypesSet().clear();
         getCompetenceCoursesSet().clear();
         getDegreeTypesSet().clear();
@@ -233,39 +228,6 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 
     public boolean hasMaximumCredits() {
         return getMaximumCredits() != null && getMaximumCredits().doubleValue() != 0d;
-    }
-
-    //To remove
-    @Deprecated
-    @Override
-    public void setBolonhaDegreeType(DegreeType bolonhaDegreeType) {
-        super.setBolonhaDegreeType(bolonhaDegreeType);
-        getDegreeTypesSet().clear();
-        if (bolonhaDegreeType != null) {
-            getDegreeTypesSet().add(bolonhaDegreeType);
-        }
-    }
-
-    //To remove
-    @Deprecated
-    @Override
-    public void setDegree(Degree degree) {
-        super.setDegree(degree);
-        getDegreesSet().clear();
-        if (degree != null) {
-            getDegreesSet().add(degree);
-        }
-    }
-
-    //To remove
-    @Deprecated
-    @Override
-    public void setDepartmentUnit(Unit departmentUnit) {
-        super.setDepartmentUnit(departmentUnit);
-        getUnitsSet().clear();
-        if (departmentUnit != null) {
-            getUnitsSet().add(departmentUnit);
-        }
     }
 
     @Override

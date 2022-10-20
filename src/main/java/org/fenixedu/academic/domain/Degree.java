@@ -271,11 +271,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             degreeInfo.delete();
         }
 
-        for (; !getParticipatingAnyCurricularCourseCurricularRulesSet()
-                .isEmpty(); getParticipatingAnyCurricularCourseCurricularRulesSet().iterator().next().delete()) {
-            ;
-        }
-
         // checkDeletion assures that site is deletable
         if (getSender() != null) {
             getSender().setFromName(getSender().getFromName()); // persist from name in sender

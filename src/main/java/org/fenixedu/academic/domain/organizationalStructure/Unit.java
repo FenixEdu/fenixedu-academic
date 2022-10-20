@@ -216,7 +216,6 @@ public class Unit extends Unit_Base {
         setUnitAcronym(null);
         setAdministrativeOffice(null);
 
-        getParticipatingAnyCurricularCourseCurricularRulesSet().forEach(acc -> acc.delete()); // if department unit
         super.setDepartment(null); // if department unit
         super.setDegree(null); // if degree unit
 
