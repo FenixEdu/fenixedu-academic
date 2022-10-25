@@ -44,8 +44,6 @@ import org.fenixedu.academic.domain.curricularRules.CurricularRule;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleType;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleValidationType;
 import org.fenixedu.academic.domain.curricularRules.DegreeModulesSelectionLimit;
-import org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup;
-import org.fenixedu.academic.domain.degreeStructure.BranchType;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.DegreeModule;
@@ -100,6 +98,14 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     protected void checkInitConstraints(final CurriculumGroup parent, final CourseGroup courseGroup) {
         if (parent.getRootCurriculumGroup().hasCourseGroup(courseGroup)) {
             throw new DomainException("error.studentCurriculum.CurriculumGroup.duplicate.courseGroup", courseGroup.getName());
+        }
+
+        if (courseGroup.isBranchCourseGroup()) {
+            final CycleCurriculumGroup cycle = parent.getParentCycleCurriculumGroup();
+            if (cycle != null && cycle.getBranchCurriculumGroups().stream()
+                    .anyMatch(cg -> cg.getDegreeModule().getBranchType() == courseGroup.getBranchType())) {
+                throw new DomainException("error.BranchCurriculumGroup.parent.cycle.cannot.have.another.branch.with.same.type");
+            }
         }
     }
 
@@ -604,66 +610,19 @@ public class CurriculumGroup extends CurriculumGroup_Base {
         return result;
     }
 
-    public Set<BranchCurriculumGroup> getBranchCurriculumGroups() {
-        final Set<BranchCurriculumGroup> result = new HashSet<BranchCurriculumGroup>(1);
+    public Set<CurriculumGroup> getBranchCurriculumGroups() {
+        if (isBranchCurriculumGroup()) {
+            return Set.of(this);
+        }
 
+        final Set<CurriculumGroup> result = new HashSet<>();
         for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
             if (curriculumModule instanceof CurriculumGroup) {
-                final CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumModule;
-                result.addAll(curriculumGroup.getBranchCurriculumGroups());
+                result.addAll(((CurriculumGroup) curriculumModule).getBranchCurriculumGroups());
             }
         }
 
         return result;
-    }
-
-    public Set<BranchCurriculumGroup> getBranchCurriculumGroups(final BranchType branchType) {
-        final Set<BranchCurriculumGroup> result = new HashSet<BranchCurriculumGroup>(1);
-
-        for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-            if (curriculumModule instanceof CurriculumGroup) {
-                final CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumModule;
-                result.addAll(curriculumGroup.getBranchCurriculumGroups(branchType));
-            }
-        }
-
-        return result;
-    }
-
-    public boolean hasBranchCurriculumGroup(final BranchType type) {
-        for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-            if (curriculumModule instanceof CurriculumGroup) {
-                final CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumModule;
-                if (curriculumGroup.hasBranchCurriculumGroup(type)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public Set<BranchCurriculumGroup> getMajorBranchCurriculumGroups() {
-        return getBranchCurriculumGroups(BranchType.MAJOR);
-    }
-
-    public Set<BranchCurriculumGroup> getMinorBranchCurriculumGroups() {
-        return getBranchCurriculumGroups(BranchType.MINOR);
-    }
-
-    public Set<BranchCourseGroup> getBranchCourseGroups(BranchType branchType) {
-        final Set<BranchCourseGroup> result = new HashSet<BranchCourseGroup>();
-        for (final BranchCurriculumGroup group : getBranchCurriculumGroups(branchType)) {
-            result.add(group.getDegreeModule());
-        }
-        return result;
-    }
-
-    public Set<BranchCourseGroup> getMajorBranchCourseGroups() {
-        return getBranchCourseGroups(BranchType.MAJOR);
-    }
-
-    public Set<BranchCourseGroup> getMinorBranchCourseGroups() {
-        return getBranchCourseGroups(BranchType.MINOR);
     }
 
     @Override
@@ -1457,4 +1416,8 @@ public class CurriculumGroup extends CurriculumGroup_Base {
         return getCurriculumModulesSet().stream().flatMap(m -> m.getCurriculumLineStream());
     }
 
+    @Override
+    public boolean isBranchCurriculumGroup() {
+        return getDegreeModule() != null && getDegreeModule().isBranchCourseGroup();
+    }
 }

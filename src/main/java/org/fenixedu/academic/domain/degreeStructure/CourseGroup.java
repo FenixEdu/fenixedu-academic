@@ -842,4 +842,10 @@ public class CourseGroup extends CourseGroup_Base {
         return getProgramConclusion() == null ? null : getProgramConclusion().getGraduationTitle(locale,
                 getDegreeNameWithTitleSuffix(executionYear, locale));
     }
+
+    @Override
+    public boolean isBranchCourseGroup() {
+        return getBranchType() != null;
+    }
+
 }

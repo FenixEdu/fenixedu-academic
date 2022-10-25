@@ -1065,11 +1065,9 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
         class degreeStructure.CourseGroup extends degreeStructure.DegreeModule {
         	boolean isOptional;
         	LocalizedString conclusionTitle;
+        	BranchType branchType;
         }
 
-        	class degreeStructure.BranchCourseGroup extends degreeStructure.CourseGroup {
-        		BranchType branchType;
-        	}
 
             class degreeStructure.CycleCourseGroup extends degreeStructure.CourseGroup {
                 CycleType cycleType;
@@ -1498,9 +1496,6 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
 
                 class studentCurriculum.ExternalCurriculumGroup extends studentCurriculum.CycleCurriculumGroup {
                 }
-
-            class studentCurriculum.BranchCurriculumGroup extends studentCurriculum.CurriculumGroup {
-            }
 
             class studentCurriculum.NoCourseGroupCurriculumGroup extends studentCurriculum.CurriculumGroup {
             }

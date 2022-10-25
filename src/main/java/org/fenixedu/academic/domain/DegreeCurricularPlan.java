@@ -34,6 +34,7 @@ import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.curricularPeriod.CurricularPeriod;
@@ -41,7 +42,6 @@ import org.fenixedu.academic.domain.curricularRules.CurricularRule;
 import org.fenixedu.academic.domain.curricularRules.CurricularRuleValidationType;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
-import org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.BranchType;
 import org.fenixedu.academic.domain.degreeStructure.Context;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
@@ -63,7 +63,6 @@ import org.fenixedu.academic.domain.time.calendarStructure.AcademicYearCE;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicYears;
 import org.fenixedu.academic.dto.CurricularPeriodInfoDTO;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.fenixedu.spaces.domain.Space;
@@ -648,9 +647,16 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return new CourseGroup(parentCourseGroup, name, nameEn, begin, end, programConclusion);
     }
 
-    public BranchCourseGroup createBranchCourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
+    public CourseGroup createBranchCourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
             final BranchType branchType, final ExecutionInterval begin, final ExecutionInterval end) {
-        return new BranchCourseGroup(parentCourseGroup, name, nameEn, branchType, begin, end);
+        if (branchType == null) {
+            throw new DomainException("error.degreeStructure.BranchCourseGroup.branch.type.cannot.be.null");
+        }
+
+        final CourseGroup result = new CourseGroup(parentCourseGroup, name, nameEn, begin, end);
+        result.setBranchType(branchType);
+
+        return result;
     }
 
 //    public CurricularCourse createCurricularCourse(final Double weight, final CompetenceCourse competenceCourse,
@@ -1030,65 +1036,20 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return studentCurricularPlans;
     }
 
-    public Set<CourseGroup> getAllCoursesGroups() {
-        final Set<DegreeModule> courseGroups = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME) {
-            @Override
-            public boolean add(final DegreeModule degreeModule) {
-                return degreeModule instanceof CourseGroup && super.add(degreeModule);
-            }
-        };
-        courseGroups.add(getRoot());
-        getRoot().getAllDegreeModules(courseGroups);
-        return (Set) courseGroups;
+    public Collection<CourseGroup> getAllCoursesGroups() {
+        return getAllDegreeModules().filter(dm -> dm.isCourseGroup()).map(CourseGroup.class::cast).collect(Collectors.toSet());
     }
 
-    public Set<BranchCourseGroup> getAllBranches() {
-        final Set<DegreeModule> branches = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME) {
-            @Override
-            public boolean add(final DegreeModule degreeModule) {
-                return degreeModule instanceof BranchCourseGroup && super.add(degreeModule);
-            }
-        };
-        branches.add(getRoot());
-        getRoot().getAllDegreeModules(branches);
-        return (Set) branches;
+    public Collection<CourseGroup> getAllBranches() {
+        return getAllCoursesGroups().stream().filter(cg -> cg.isBranchCourseGroup()).collect(Collectors.toSet());
     }
 
-    public Set<BranchCourseGroup> getBranchesByType(final org.fenixedu.academic.domain.degreeStructure.BranchType branchType) {
-        final Set<BranchCourseGroup> branchesByType = new TreeSet<>(DegreeModule.COMPARATOR_BY_NAME);
-        final Set<BranchCourseGroup> branches = getAllBranches();
-        if (branches == null) {
-            return null;
-        }
-        for (BranchCourseGroup branch : branches) {
-            if (branch.getBranchType() == branchType) {
-                branchesByType.add(branch);
-            }
-        }
-        return branchesByType;
-    }
+    public Stream<DegreeModule> getAllDegreeModules() {
+        final Set<DegreeModule> degreeModules = new HashSet<>();
+        degreeModules.add(getRoot());
+        getRoot().getAllDegreeModules(degreeModules);
 
-    public Set<BranchCourseGroup> getMajorBranches() {
-        return getBranchesByType(org.fenixedu.academic.domain.degreeStructure.BranchType.MAJOR);
-    }
-
-    public Set<BranchCourseGroup> getMinorBranches() {
-        return getBranchesByType(org.fenixedu.academic.domain.degreeStructure.BranchType.MINOR);
-    }
-
-    public boolean hasBranches() {
-        return getAllBranches().isEmpty() ? false : true;
-    }
-
-    public boolean hasBranchesByType(final org.fenixedu.academic.domain.degreeStructure.BranchType branchType) {
-        return getBranchesByType(branchType).isEmpty() ? false : true;
-    }
-
-    public Set<DegreeModule> getAllDegreeModules() {
-        final Set<DegreeModule> degreeModules = new TreeSet<>(DegreeModule.COMPARATOR_BY_NAME);
-        final RootCourseGroup rootCourseGroup = getRoot();
-        rootCourseGroup.getAllDegreeModules(degreeModules);
-        return degreeModules;
+        return degreeModules.stream();
     }
 
     public static Set<DegreeCurricularPlan> getDegreeCurricularPlans(final java.util.function.Predicate<DegreeType> predicate) {

@@ -44,6 +44,7 @@ import org.fenixedu.academic.domain.curricularRules.executors.RuleResult;
 import org.fenixedu.academic.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import org.fenixedu.academic.domain.curriculum.EnrollmentCondition;
 import org.fenixedu.academic.domain.degree.DegreeType;
+import org.fenixedu.academic.domain.degreeStructure.BranchType;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
@@ -55,7 +56,6 @@ import org.fenixedu.academic.domain.enrolment.IDegreeModuleToEvaluate;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.curriculum.Curriculum;
-import org.fenixedu.academic.domain.studentCurriculum.BranchCurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.Credits;
 import org.fenixedu.academic.domain.studentCurriculum.CreditsManager;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
@@ -1536,24 +1536,20 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return getDegreeCurricularPlan().isEmpty();
     }
 
-    public Set<BranchCurriculumGroup> getBranchCurriculumGroups() {
+    public Set<CurriculumGroup> getBranchCurriculumGroups() {
         return getRoot().getBranchCurriculumGroups();
     }
 
-    public Set<BranchCurriculumGroup> getMajorBranchCurriculumGroups() {
-        return getRoot().getMajorBranchCurriculumGroups();
-    }
-
-    public Set<BranchCurriculumGroup> getMinorBranchCurriculumGroups() {
-        return getRoot().getMinorBranchCurriculumGroups();
-    }
-
+    @Deprecated
     public String getMajorBranchNames() {
-        return getMajorBranchCurriculumGroups().stream().map(b -> b.getName().getContent()).collect(Collectors.joining(","));
+        return getBranchCurriculumGroups().stream().filter(cg -> cg.getDegreeModule().getBranchType() == BranchType.MAJOR)
+                .map(b -> b.getName().getContent()).collect(Collectors.joining(","));
     }
 
+    @Deprecated
     public String getMinorBranchNames() {
-        return getMinorBranchCurriculumGroups().stream().map(b -> b.getName().getContent()).collect(Collectors.joining(","));
+        return getBranchCurriculumGroups().stream().filter(cg -> cg.getDegreeModule().getBranchType() == BranchType.MINOR)
+                .map(b -> b.getName().getContent()).collect(Collectors.joining(","));
     }
 
     public Double getApprovedEctsCredits() {

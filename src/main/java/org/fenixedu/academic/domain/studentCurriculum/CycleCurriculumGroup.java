@@ -27,7 +27,6 @@ import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicAccessRule;
 import org.fenixedu.academic.domain.accessControl.academicAdministration.AcademicOperationType;
-import org.fenixedu.academic.domain.degreeStructure.BranchCourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.BranchType;
 import org.fenixedu.academic.domain.degreeStructure.CourseGroup;
 import org.fenixedu.academic.domain.degreeStructure.CycleCourseGroup;
@@ -194,38 +193,6 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     @Override
     public CycleCurriculumGroup getParentCycleCurriculumGroup() {
         return this;
-    }
-
-    /**
-     *
-     * Cycle can have only one branch by type
-     *
-     * @param branchType
-     */
-    public BranchCurriculumGroup getBranchCurriculumGroup(final BranchType branchType) {
-        final Set<BranchCurriculumGroup> groups = getBranchCurriculumGroups(branchType);
-        return groups.isEmpty() ? null : groups.iterator().next();
-    }
-
-    public BranchCurriculumGroup getMajorBranchCurriculumGroup() {
-        return getBranchCurriculumGroup(BranchType.MAJOR);
-    }
-
-    public BranchCurriculumGroup getMinorBranchCurriculumGroup() {
-        return getBranchCurriculumGroup(BranchType.MINOR);
-    }
-
-    public BranchCourseGroup getBranchCourseGroup(final BranchType branchType) {
-        final Set<BranchCourseGroup> groups = getBranchCourseGroups(branchType);
-        return groups.isEmpty() ? null : groups.iterator().next();
-    }
-
-    public BranchCourseGroup getMajorBranchCourseGroup() {
-        return getBranchCourseGroup(BranchType.MAJOR);
-    }
-
-    public BranchCourseGroup getMinorBranchCourseGroup() {
-        return getBranchCourseGroup(BranchType.MINOR);
     }
 
 }

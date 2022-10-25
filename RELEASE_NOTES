@@ -1,3 +1,5 @@
+- Refactor: Remove branch group subclasses
+
 39.0.1 (20-10-2022)
 - Refactor: Remove AnyCurricularCourse rule legacy deprecated slots 
 
