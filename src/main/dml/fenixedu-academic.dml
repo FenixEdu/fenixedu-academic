@@ -5130,6 +5130,18 @@ class schedule.shiftCapacity.ShiftCapacityStrategy {
 	    schedule.shiftCapacity.ShiftCapacityType playsRole types { multiplicity *; }
 	}	
 
+class Employee {
+	String number;
+	boolean active;
+}
+	relation EmployeeRoot {
+	    Employee playsRole employees { multiplicity *; }
+	    .org.fenixedu.bennu.core.domain.Bennu playsRole root;
+	}
+	relation EmployeePerson {
+	    Employee playsRole employee;
+	    Person playsRole person { multiplicity 1..1; }
+	}
 	
 //DEPRECATED
 class studentCurriculum.BranchCurriculumGroup extends studentCurriculum.CurriculumGroup {}
