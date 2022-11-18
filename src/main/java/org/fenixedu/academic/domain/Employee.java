@@ -8,9 +8,10 @@ import org.fenixedu.bennu.core.domain.Bennu;
 
 public class Employee extends Employee_Base {
 
-    public Employee() {
+    public Employee(final Person person) {
         super();
         setRoot(Bennu.getInstance());
+        setPerson(person);
         setActive(true);
     }
 
