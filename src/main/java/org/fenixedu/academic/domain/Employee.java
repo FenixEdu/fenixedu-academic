@@ -11,6 +11,7 @@ public class Employee extends Employee_Base {
     public Employee() {
         super();
         setRoot(Bennu.getInstance());
+        setActive(true);
     }
 
     @Override
@@ -30,7 +31,7 @@ public class Employee extends Employee_Base {
         return StringUtils.isBlank(number) ? Optional.empty() : findAll().filter(e -> number.equals(e.getNumber())).findAny();
     }
 
-    protected void delete() {
+    public void delete() {
         setRoot(null);
         setPerson(null);
         super.deleteDomainObject();
