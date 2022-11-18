@@ -30,13 +30,13 @@ import java.util.stream.Stream;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.spaces.domain.Space;
 import org.joda.time.Interval;
 
 public class Teacher extends Teacher_Base {
@@ -86,6 +86,23 @@ public class Teacher extends Teacher_Base {
             throw new DomainException("error.teacher.no.person");
         }
         super.setPerson(person);
+    }
+    
+    @Override
+    public void setNumber(String number) {
+        if (findByNumber(number).filter(t -> t != this).isPresent()) {
+            throw new IllegalStateException("Teacher already exists with same number");
+        }
+
+        super.setNumber(number);
+    }
+
+    public static Stream<Teacher> findAll() {
+        return Bennu.getInstance().getTeachersSet().stream();
+    }
+
+    public static Optional<Teacher> findByNumber(String number) {
+        return StringUtils.isBlank(number) ? Optional.empty() : findAll().filter(t -> number.equals(t.getNumber())).findAny();
     }
 
     /*

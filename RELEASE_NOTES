@@ -1,4 +1,5 @@
 - New feature: Entity employee
+- Improvement: Add number to teacher
 
 39.1.0 (26-10-2022)
 - Refactor: Remove branch group subclasses

@@ -748,6 +748,7 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
         }
 
     class Teacher  {
+		String number;    
     }
 
 	class TeacherAuthorization {
