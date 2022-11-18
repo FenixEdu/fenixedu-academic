@@ -154,6 +154,7 @@ public class DegreeInfo extends DegreeInfo_Base {
         setAdditionalInfo(degreeInfo.getAdditionalInfo());
         setLinks(degreeInfo.getLinks());
         setLearningLanguages(degreeInfo.getLearningLanguages());
+        setPrevailingScientificArea(degreeInfo.getPrevailingScientificArea());
 
         setTestIngression(degreeInfo.getTestIngression());
         setClassifications(degreeInfo.getClassifications());

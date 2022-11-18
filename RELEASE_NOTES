@@ -1,6 +1,7 @@
 - New feature: Entity employee
 - Improvement: Add number to teacher
 - Improvement: Add hours to shift professorship
+- Bug fix: On degree info creation, fill prevailingScientificArea from previous version
 
 39.1.0 (26-10-2022)
 - Refactor: Remove branch group subclasses
