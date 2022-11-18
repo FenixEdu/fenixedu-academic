@@ -1,5 +1,6 @@
 - New feature: Entity employee
 - Improvement: Add number to teacher
+- Improvement: Add hours to shift professorship
 
 39.1.0 (26-10-2022)
 - Refactor: Remove branch group subclasses
