@@ -1,4 +1,5 @@
 - Refactor: Replace usage of RegistrationStateType by RegistrationStateTypeEnum
+- Refactor: Remove RegistrationStateType
 
 39.2.0 (19-11-2022)
 - New feature: Entity employee
