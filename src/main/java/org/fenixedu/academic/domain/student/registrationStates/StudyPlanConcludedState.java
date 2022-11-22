@@ -30,10 +30,10 @@ public class StudyPlanConcludedState extends StudyPlanConcludedState_Base {
         registration.getPerson().getUser().openLoginPeriod();
     }
 
-    @Override
-    public RegistrationStateType getStateType() {
-        return RegistrationStateType.STUDYPLANCONCLUDED;
-    }
+//    @Override
+//    public RegistrationStateType getStateType() {
+//        return RegistrationStateType.STUDYPLANCONCLUDED;
+//    }
 
     @Override
     public RegistrationStateTypeEnum getStateTypeEnum() {

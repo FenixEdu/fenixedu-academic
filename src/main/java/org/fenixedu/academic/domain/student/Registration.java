@@ -77,7 +77,7 @@ import org.fenixedu.academic.domain.student.curriculum.ConclusionProcess;
 import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculum;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
-import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
+//import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateTypeEnum;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumLine;
@@ -1303,16 +1303,16 @@ public class Registration extends Registration_Base {
         return false;
     }
 
-    @Deprecated
-    public Set<RegistrationStateType> getRegistrationStatesTypes(final ExecutionYear executionYear) {
-        final Set<RegistrationStateType> result = new HashSet<>();
-
-        for (final RegistrationState registrationState : getRegistrationStates(executionYear)) {
-            result.add(registrationState.getStateType());
-        }
-
-        return result;
-    }
+//    @Deprecated
+//    public Set<RegistrationStateType> getRegistrationStatesTypes(final ExecutionYear executionYear) {
+//        final Set<RegistrationStateType> result = new HashSet<>();
+//
+//        for (final RegistrationState registrationState : getRegistrationStates(executionYear)) {
+//            result.add(registrationState.getStateType());
+//        }
+//
+//        return result;
+//    }
 
     public Set<RegistrationStateTypeEnum> getRegistrationStatesTypesEnums(final ExecutionYear executionYear) {
         return getRegistrationStates(executionYear).stream().map(RegistrationState::getStateTypeEnum).collect(Collectors.toSet());
@@ -1338,22 +1338,22 @@ public class Registration extends Registration_Base {
         return getRegistrationStatesSet().stream().max(RegistrationState.EXECUTION_INTERVAL_AND_DATE_COMPARATOR).orElse(null);
     }
 
-    @Deprecated
-    public RegistrationStateType getLastStateType() {
-        final RegistrationState registrationState = getLastState();
-        return registrationState == null ? null : registrationState.getStateType();
-    }
+//    @Deprecated
+//    public RegistrationStateType getLastStateType() {
+//        final RegistrationState registrationState = getLastState();
+//        return registrationState == null ? null : registrationState.getStateType();
+//    }
 
     public RegistrationStateTypeEnum getLastStateTypeEnum() {
         final RegistrationState registrationState = getLastState();
         return registrationState == null ? null : registrationState.getStateTypeEnum();
     }
 
-    @Deprecated
-    public RegistrationStateType getActiveStateType() {
-        final RegistrationState activeState = getActiveState();
-        return activeState != null ? activeState.getStateType() : RegistrationStateType.REGISTERED;
-    }
+//    @Deprecated
+//    public RegistrationStateType getActiveStateType() {
+//        final RegistrationState activeState = getActiveState();
+//        return activeState != null ? activeState.getStateType() : RegistrationStateType.REGISTERED;
+//    }
 
     public RegistrationStateTypeEnum getActiveStateTypeEnum() {
         final RegistrationState activeState = getActiveState();
@@ -1476,10 +1476,10 @@ public class Registration extends Registration_Base {
                 .max(RegistrationState.EXECUTION_INTERVAL_AND_DATE_COMPARATOR).orElse(null);
     }
 
-    @Deprecated
-    public boolean hasStateType(final ExecutionYear executionYear, final RegistrationStateType registrationStateType) {
-        return getRegistrationStatesTypes(executionYear).contains(registrationStateType);
-    }
+//    @Deprecated
+//    public boolean hasStateType(final ExecutionYear executionYear, final RegistrationStateType registrationStateType) {
+//        return getRegistrationStatesTypes(executionYear).contains(registrationStateType);
+//    }
 
     public boolean hasStateType(final ExecutionYear executionYear, final RegistrationStateTypeEnum registrationStateType) {
         return getRegistrationStatesTypesEnums(executionYear).contains(registrationStateType);
@@ -1826,7 +1826,7 @@ public class Registration extends Registration_Base {
     }
 
     final public boolean isInactive() {
-        return getActiveStateType().isInactive();
+        return getActiveStateTypeEnum().isInactive();
     }
 
     public Space getCampus() {

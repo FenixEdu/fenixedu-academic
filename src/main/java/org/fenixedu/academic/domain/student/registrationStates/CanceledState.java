@@ -34,10 +34,10 @@ public class CanceledState extends CanceledState_Base {
         init(registration, person, dateTime);
     }
 
-    @Override
-    public RegistrationStateType getStateType() {
-        return RegistrationStateType.CANCELED;
-    }
+//    @Override
+//    public RegistrationStateType getStateType() {
+//        return RegistrationStateType.CANCELED;
+//    }
 
     @Override
     public RegistrationStateTypeEnum getStateTypeEnum() {

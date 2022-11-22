@@ -34,10 +34,10 @@ public class MobilityState extends MobilityState_Base {
         init(registration, person, dateTime);
     }
 
-    @Override
-    public RegistrationStateType getStateType() {
-        return RegistrationStateType.MOBILITY;
-    }
+//    @Override
+//    public RegistrationStateType getStateType() {
+//        return RegistrationStateType.MOBILITY;
+//    }
 
     @Override
     public RegistrationStateTypeEnum getStateTypeEnum() {

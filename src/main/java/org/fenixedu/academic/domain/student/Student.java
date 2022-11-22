@@ -42,7 +42,7 @@ import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
-import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
+import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateTypeEnum;
 import org.fenixedu.academic.domain.studentCurriculum.ExternalEnrolment;
 import org.fenixedu.academic.dto.student.StudentStatuteBean;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -196,7 +196,7 @@ public class Student extends Student_Base {
         for (; !getRegistrationsSet().isEmpty(); getRegistrationsSet().iterator().next().delete()) {
             ;
         }
-        
+
         for (; !getPersonalIngressionsDataSet().isEmpty(); getPersonalIngressionsDataSet().iterator().next().delete()) {
             ;
         }
@@ -322,7 +322,7 @@ public class Student extends Student_Base {
         for (final Registration registration : super.getRegistrationsSet()) {
             final RegistrationState registrationState = registration.getActiveState();
             if (registrationState != null) {
-                if (registrationState.getStateType().isActive()) {
+                if (registrationState.getStateTypeEnum().isActive()) {
                     return true;
                 }
             }
@@ -379,10 +379,10 @@ public class Student extends Student_Base {
     }
 
     public boolean shouldHaveStudentRole() {
-        final boolean activeRegistration = getRegistrationStream().map(r -> r.getLastStateType()).filter(st -> st != null)
-                .anyMatch(st -> st.isActive() && st != RegistrationStateType.SCHOOLPARTCONCLUDED
-                        || st == RegistrationStateType.FLUNKED || st == RegistrationStateType.INTERRUPTED
-                        || st == RegistrationStateType.MOBILITY);
+        final boolean activeRegistration = getRegistrationStream().map(r -> r.getLastStateTypeEnum()).filter(st -> st != null)
+                .anyMatch(st -> st.isActive() && st != RegistrationStateTypeEnum.SCHOOLPARTCONCLUDED
+                        || st == RegistrationStateTypeEnum.FLUNKED || st == RegistrationStateTypeEnum.INTERRUPTED
+                        || st == RegistrationStateTypeEnum.MOBILITY);
         if (activeRegistration) {
             return true;
         }

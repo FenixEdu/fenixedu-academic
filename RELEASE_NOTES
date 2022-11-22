@@ -1,3 +1,5 @@
+- Refactor: Replace usage of RegistrationStateType by RegistrationStateTypeEnum
+
 39.2.0 (19-11-2022)
 - New feature: Entity employee
 - Improvement: Add number to teacher

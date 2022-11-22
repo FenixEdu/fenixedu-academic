@@ -65,7 +65,7 @@ public class StudentCandidacy extends StudentCandidacy_Base {
                 .filter(c -> c.isActive() && c.getExecutionDegree() == executionDegree).findFirst().orElse(null);
         if (existentCandidacy != null) {
             if (existentCandidacy.getRegistration() == null
-                    || existentCandidacy.getRegistration().getActiveStateType().isActive()) {
+                    || existentCandidacy.getRegistration().getActiveStateTypeEnum().isActive()) {
                 throw new DomainException("error.candidacy.already.created");
             }
         }

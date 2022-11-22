@@ -56,10 +56,10 @@ public class ConcludedState extends ConcludedState_Base {
         }
     }
 
-    @Override
-    public RegistrationStateType getStateType() {
-        return RegistrationStateType.CONCLUDED;
-    }
+//    @Override
+//    public RegistrationStateType getStateType() {
+//        return RegistrationStateType.CONCLUDED;
+//    }
 
     @Override
     public RegistrationStateTypeEnum getStateTypeEnum() {

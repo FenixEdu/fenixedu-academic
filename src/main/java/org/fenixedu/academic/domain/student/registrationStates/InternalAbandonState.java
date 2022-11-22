@@ -34,10 +34,10 @@ public class InternalAbandonState extends InternalAbandonState_Base {
         init(registration, person, dateTime);
     }
 
-    @Override
-    public RegistrationStateType getStateType() {
-        return RegistrationStateType.INTERNAL_ABANDON;
-    }
+//    @Override
+//    public RegistrationStateType getStateType() {
+//        return RegistrationStateType.INTERNAL_ABANDON;
+//    }
 
     @Override
     public RegistrationStateTypeEnum getStateTypeEnum() {

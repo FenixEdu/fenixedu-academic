@@ -33,10 +33,10 @@ public class TransitionalState extends TransitionalState_Base {
         init(registration, responsiblePerson, stateDate);
     }
 
-    @Override
-    public RegistrationStateType getStateType() {
-        return RegistrationStateType.TRANSITION;
-    }
+//    @Override
+//    public RegistrationStateType getStateType() {
+//        return RegistrationStateType.TRANSITION;
+//    }
 
     @Override
     public RegistrationStateTypeEnum getStateTypeEnum() {

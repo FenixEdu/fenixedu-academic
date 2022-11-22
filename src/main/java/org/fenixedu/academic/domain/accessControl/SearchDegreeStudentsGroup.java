@@ -284,9 +284,9 @@ public class SearchDegreeStudentsGroup implements Serializable {
             return new Comparator<StudentCurricularPlan>() {
                 @Override
                 public int compare(StudentCurricularPlan left, StudentCurricularPlan right) {
-                    int result = left.getRegistration().getLastRegistrationState(getExecutionYear()).getStateType()
+                    int result = left.getRegistration().getLastRegistrationState(getExecutionYear()).getStateTypeEnum()
                             .getDescription().compareTo(right.getRegistration().getLastRegistrationState(getExecutionYear())
-                                    .getStateType().getDescription());
+                                    .getStateTypeEnum().getDescription());
                     return result == 0 ? left.getRegistration().getStudent().getNumber()
                             .compareTo(right.getRegistration().getStudent().getNumber()) : result;
                 }

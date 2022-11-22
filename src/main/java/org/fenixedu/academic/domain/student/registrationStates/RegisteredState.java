@@ -34,10 +34,10 @@ public class RegisteredState extends RegisteredState_Base {
         init(registration, person, dateTime);
     }
 
-    @Override
-    public RegistrationStateType getStateType() {
-        return RegistrationStateType.REGISTERED;
-    }
+//    @Override
+//    public RegistrationStateType getStateType() {
+//        return RegistrationStateType.REGISTERED;
+//    }
 
     @Override
     public RegistrationStateTypeEnum getStateTypeEnum() {

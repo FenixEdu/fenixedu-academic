@@ -186,7 +186,7 @@ public class AttendsSearchController extends ExecutionCourseController {
                         RegistrationState registrationState =
                                 attends.getRegistration().getLastRegistrationState(attends.getExecutionYear());
                         addCell(getLabel("label.registration.state"),
-                                registrationState == null ? "" : registrationState.getStateType().getDescription());
+                                registrationState == null ? "" : registrationState.getStateTypeEnum().getDescription());
 
                         addCell(getLabel("label.Degree"),
                                 attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan().getPresentationName());
