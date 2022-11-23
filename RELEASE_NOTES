@@ -1,3 +1,4 @@
+40.0.0 (23-11-2022)
 - Refactor: Replace usage of RegistrationStateType by RegistrationStateTypeEnum
 - Refactor: Remove RegistrationStateType
 
