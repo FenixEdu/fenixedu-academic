@@ -1416,10 +1416,25 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
 		String comment;
     }
     
+    class student.registrationStates.RegistrationStateType  {
+        String code (REQUIRED);
+        LocalizedString name (REQUIRED);
+    	boolean active;
+    	RegistrationStateTypeEnum typeEnum;
+    }   
+		relation RegistrationStateTypeRoot {
+		    student.registrationStates.RegistrationStateType playsRole registrationStateTypes { multiplicity *; }
+		    .org.fenixedu.bennu.core.domain.Bennu playsRole root;
+		}
+    
     class student.registrationStates.RegistrationState  {
         String remarks;
         DateTime stateDate;
     }
+		relation RegistrationStateTypeRegistrationState {
+		    student.registrationStates.RegistrationStateType playsRole type;
+		    student.registrationStates.RegistrationState playsRole registrationStates { multiplicity *; }
+		}    
 
         class student.registrationStates.CanceledState extends student.registrationStates.RegistrationState {
         }

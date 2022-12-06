@@ -35,12 +35,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
-/**
- * 
- * @author - Shezad Anavarali (shezad@ist.utl.pt)
- * 
- */
-public abstract class RegistrationState extends RegistrationState_Base {
+public class RegistrationState extends RegistrationState_Base {
 
     static {
         getRelationRegistrationStateRegistration().addListener(new RelationAdapter<RegistrationState, Registration>() {
@@ -132,55 +127,69 @@ public abstract class RegistrationState extends RegistrationState_Base {
 //
 //        return newState;
 //    }
-    
-    private static RegistrationState createState(Registration registration, Person person, DateTime dateTime,
-            RegistrationStateTypeEnum stateType) {
 
-        RegistrationState newState = null;
-        switch (stateType) {
-        case REGISTERED:
-            newState = new RegisteredState(registration, person, dateTime);
-            break;
-        case CANCELED:
-            newState = new CanceledState(registration, person, dateTime);
-            break;
-        case CONCLUDED:
-            newState = new ConcludedState(registration, person, dateTime);
-            break;
-        case FLUNKED:
-            newState = new FlunkedState(registration, person, dateTime);
-            break;
-        case INTERRUPTED:
-            newState = new InterruptedState(registration, person, dateTime);
-            break;
-        case SCHOOLPARTCONCLUDED:
-            newState = new SchoolPartConcludedState(registration, person, dateTime);
-            break;
-        case STUDYPLANCONCLUDED:
-            newState = new StudyPlanConcludedState(registration, person, dateTime);
-            break;
-        case INTERNAL_ABANDON:
-            newState = new InternalAbandonState(registration, person, dateTime);
-            break;
-        case EXTERNAL_ABANDON:
-            newState = new ExternalAbandonState(registration, person, dateTime);
-            break;
-        case MOBILITY:
-            newState = new MobilityState(registration, person, dateTime);
-            break;
-        case TRANSITION:
-            newState = new TransitionalState(registration, person, dateTime);
-            break;
-        case TRANSITED:
-            newState = new TransitedState(registration, person, dateTime);
-            break;
-        case INACTIVE:
-            newState = new InactiveState(registration, person, dateTime);
-            break;
-        }
+    private static RegistrationState createState(Registration registration, Person person, DateTime dateTime,
+            RegistrationStateType stateType) {
+        final RegistrationState newState = new RegistrationState();
+        newState.init(registration, person, dateTime);
+        newState.setType(stateType);
 
         return newState;
-    }    
+    }
+
+    @Deprecated
+    private static RegistrationState createState(Registration registration, Person person, DateTime dateTime,
+            RegistrationStateTypeEnum stateTypeEnum) {
+
+        final RegistrationState newState = new RegistrationState();
+        newState.init(registration, person, dateTime);
+        final RegistrationStateType stateType = RegistrationStateType.findByCode(stateTypeEnum.getName()).orElseThrow();
+        newState.setType(stateType);
+
+//        switch (stateTypeEnum) {
+//        case REGISTERED:
+//            newState = new RegisteredState(registration, person, dateTime);
+//            break;
+//        case CANCELED:
+//            newState = new CanceledState(registration, person, dateTime);
+//            break;
+//        case CONCLUDED:
+//            newState = new ConcludedState(registration, person, dateTime);
+//            break;
+//        case FLUNKED:
+//            newState = new FlunkedState(registration, person, dateTime);
+//            break;
+//        case INTERRUPTED:
+//            newState = new InterruptedState(registration, person, dateTime);
+//            break;
+//        case SCHOOLPARTCONCLUDED:
+//            newState = new SchoolPartConcludedState(registration, person, dateTime);
+//            break;
+//        case STUDYPLANCONCLUDED:
+//            newState = new StudyPlanConcludedState(registration, person, dateTime);
+//            break;
+//        case INTERNAL_ABANDON:
+//            newState = new InternalAbandonState(registration, person, dateTime);
+//            break;
+//        case EXTERNAL_ABANDON:
+//            newState = new ExternalAbandonState(registration, person, dateTime);
+//            break;
+//        case MOBILITY:
+//            newState = new MobilityState(registration, person, dateTime);
+//            break;
+//        case TRANSITION:
+//            newState = new TransitionalState(registration, person, dateTime);
+//            break;
+//        case TRANSITED:
+//            newState = new TransitedState(registration, person, dateTime);
+//            break;
+//        case INACTIVE:
+//            newState = new InactiveState(registration, person, dateTime);
+//            break;
+//        }
+
+        return newState;
+    }
 
     protected void init(Registration registration, Person responsiblePerson, DateTime stateDate) {
         setStateDate(stateDate != null ? stateDate : new DateTime());
@@ -193,8 +202,10 @@ public abstract class RegistrationState extends RegistrationState_Base {
     }
 
 //    public abstract RegistrationStateType getStateType();
-    
-    public abstract RegistrationStateTypeEnum getStateTypeEnum();
+
+    public RegistrationStateTypeEnum getStateTypeEnum() {
+        return getType() != null ? getType().getTypeEnum() : null;
+    }
 
     public ExecutionYear getExecutionYear() {
         return getExecutionInterval().getExecutionYear();
@@ -214,6 +225,7 @@ public abstract class RegistrationState extends RegistrationState_Base {
             setExecutionInterval(null);
             setRegistration(null);
             setResponsiblePerson(null);
+            setType(null);
             setRootDomainObject(null);
             super.deleteDomainObject();
         } finally {
@@ -252,14 +264,23 @@ public abstract class RegistrationState extends RegistrationState_Base {
 //        registration.getStudent().updateStudentRole();
 //        return createdState;
 //    }
-    
+
+    @Deprecated
     public static RegistrationState createRegistrationState(Registration registration, Person responsible, DateTime creation,
             RegistrationStateTypeEnum stateType, ExecutionInterval executionInterval) {
         RegistrationState createdState = RegistrationState.createState(registration, responsible, creation, stateType);
         createdState.setExecutionInterval(executionInterval);
         registration.getStudent().updateStudentRole();
         return createdState;
-    }    
+    }
+
+    public static RegistrationState createRegistrationState(Registration registration, Person responsible, DateTime creation,
+            RegistrationStateType stateType, ExecutionInterval executionInterval) {
+        RegistrationState createdState = RegistrationState.createState(registration, responsible, creation, stateType);
+        createdState.setExecutionInterval(executionInterval);
+        registration.getStudent().updateStudentRole();
+        return createdState;
+    }
 
 //    public static RegistrationState createRegistrationState(RegistrationStateBean bean) {
 //        final Registration registration = bean.getRegistration();
