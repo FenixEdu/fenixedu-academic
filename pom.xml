@@ -301,21 +301,22 @@
 		</dependency>
     </dependencies>
 
-	<distributionManagement>
-		<repository>
-			<id>ulisboa-repo</id>
-			<url>https://nexjen.ulisboa.pt/nexus/content/repositories/releases/</url>
-		</repository>
-		<snapshotRepository>
-			<id>ulisboa-repo</id>
-			<url>https://nexjen.ulisboa.pt/nexus/content/repositories/snapshots/</url>
-		</snapshotRepository>
-	</distributionManagement>
+
+    	 <distributionManagement>
+                <repository>
+                        <id>qubIT-oss</id>
+                        <url>https://repository-oss.omnis.cloud/nexus/repository/releases/</url>
+                </repository>
+                <snapshotRepository>
+                        <id>qubIT-oss</id>
+                        <url>https://repository-oss.omnis.cloud/nexus/repository/snapshots/</url>
+                </snapshotRepository>
+        </distributionManagement>
 
 	<repositories>
 		<repository>
-			<id>ulisboa-repo</id>
-			<url>https://nexjen.ulisboa.pt/nexus/content/groups/public/</url>
+			<id>qubIT-oss</id>
+                        <url>https://repository-oss.omnis.cloud/nexus/repository/releases/</url>
 		</repository>
 		<repository>
 			<id>fenixedu-maven-repository</id>
