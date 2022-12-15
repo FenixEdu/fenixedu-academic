@@ -1967,11 +1967,11 @@ public class Registration extends Registration_Base {
     }
 
     public void setHomologationDate(final LocalDate homologationDate) {
-        setHomologationDate(new YearMonthDay(homologationDate));
+        setHomologationDate(homologationDate == null ? null : new YearMonthDay(homologationDate));
     }
 
     public void setStudiesStartDate(final LocalDate studiesStartDate) {
-        setStudiesStartDate(new YearMonthDay(studiesStartDate));
+        setStudiesStartDate(studiesStartDate == null ? null : new YearMonthDay(studiesStartDate));
     }
 
     public Collection<CurriculumLineLog> getCurriculumLineLogs(final ExecutionInterval executionInterval) {
