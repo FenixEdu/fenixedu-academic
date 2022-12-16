@@ -31,8 +31,10 @@ public class PhysicalAddressValidation extends PhysicalAddressValidation_Base {
 
     @Override
     public void delete() {
-        if (getFile() != null) {
-            getFile().delete();
+        final PhysicalAddressValidationFile file = getFile();
+        if (file != null) {
+            setFile(null);
+            file.delete();
         }
         super.delete();
     }

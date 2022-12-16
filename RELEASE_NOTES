@@ -1,5 +1,6 @@
 - Refactor: Rename creationDateDateTime attribute of external enrolment (step 1)
-- Bug fix: allow set homologation date and studies start date with null
+- Bug fix: Allow set homologation date and studies start date with null
+- Bug fix: Disconnect file from PhysicalAddressValidation on delete
 
 40.1.0 (06-12-2022)
 - Refactor: Create domain entity RegistrationStateType
