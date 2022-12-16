@@ -1,6 +1,7 @@
 - Refactor: Rename creationDateDateTime attribute of external enrolment (step 1)
 - Bug fix: Allow set homologation date and studies start date with null
 - Bug fix: Disconnect file from PhysicalAddressValidation on delete
+- Bug fix: Correcting 404 and 403 redirect to login page to contain callback url
 
 40.1.0 (06-12-2022)
 - Refactor: Create domain entity RegistrationStateType
