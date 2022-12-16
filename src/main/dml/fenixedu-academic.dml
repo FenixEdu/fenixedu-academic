@@ -1577,7 +1577,7 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
         YearMonthDay evaluationDate;
         Grade grade (REQUIRED);
         degreeStructure.RegimeType regime;
-        Grade normalizedEctsGrade;
+        Grade ectsGrade;
     }
 
     class time.calendarStructure.AcademicCalendarEntry  {

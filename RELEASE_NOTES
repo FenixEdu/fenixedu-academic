@@ -1,3 +1,4 @@
+- Refactor: Rename normalizedEctsGrade attribute of external enrolment
 - Refactor: Rename creationDateDateTime attribute of external enrolment (step 1)
 - Bug fix: Allow set homologation date and studies start date with null
 - Bug fix: Disconnect file from PhysicalAddressValidation on delete
