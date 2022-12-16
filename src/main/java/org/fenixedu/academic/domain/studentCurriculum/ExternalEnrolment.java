@@ -69,6 +69,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
         super();
         setRootDomainObject(Bennu.getInstance());
         setCreationDateDateTime(new DateTime());
+        setWhenCreated(new DateTime());
         if (AccessControl.getPerson() != null) {
             setCreatedBy(AccessControl.getPerson().getUsername());
         }
