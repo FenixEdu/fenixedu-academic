@@ -11,6 +11,8 @@ import org.fenixedu.commons.i18n.LocalizedString;
 
 public class RegistrationStateType extends RegistrationStateType_Base {
 
+    public static final String REGISTERED_CODE = "REGISTERED";
+
     protected RegistrationStateType() {
         super();
         setRoot(Bennu.getInstance());
@@ -33,6 +35,10 @@ public class RegistrationStateType extends RegistrationStateType_Base {
         }
 
         super.setCode(code);
+    }
+
+    public boolean isRegistered() {
+        return REGISTERED_CODE.equals(getCode());
     }
 
     public static Stream<RegistrationStateType> findAll() {

@@ -18,6 +18,8 @@
  */
 package org.fenixedu.academic.domain.student;
 
+import static org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType.REGISTERED_CODE;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -77,6 +79,7 @@ import org.fenixedu.academic.domain.student.curriculum.ConclusionProcess;
 import org.fenixedu.academic.domain.student.curriculum.Curriculum;
 import org.fenixedu.academic.domain.student.curriculum.ICurriculum;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
+import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 //import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateTypeEnum;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
@@ -159,7 +162,8 @@ public class Registration extends Registration_Base {
         setStartDate(now.toYearMonthDay());
         setDegree(degree);
         setRegistrationYear(executionYear);
-        RegistrationState.createRegistrationState(this, AccessControl.getPerson(), now, RegistrationStateTypeEnum.REGISTERED,
+        final RegistrationStateType registeredState = RegistrationStateType.findByCode(REGISTERED_CODE).orElseThrow();
+        RegistrationState.createRegistrationState(this, AccessControl.getPerson(), now, registeredState,
                 executionYear.getFirstExecutionPeriod());
     }
 
@@ -1349,19 +1353,18 @@ public class Registration extends Registration_Base {
         return registrationState == null ? null : registrationState.getStateTypeEnum();
     }
 
-//    @Deprecated
-//    public RegistrationStateType getActiveStateType() {
-//        final RegistrationState activeState = getActiveState();
-//        return activeState != null ? activeState.getStateType() : RegistrationStateType.REGISTERED;
-//    }
-
+    @Deprecated
     public RegistrationStateTypeEnum getActiveStateTypeEnum() {
         final RegistrationState activeState = getActiveState();
         return activeState != null ? activeState.getStateTypeEnum() : RegistrationStateTypeEnum.REGISTERED;
     }
 
+    public RegistrationStateType getActiveStateType() {
+        return getActiveState().getType();
+    }
+
     public boolean isActive() {
-        return getActiveStateTypeEnum().isActive();
+        return getActiveStateType().getActive();
     }
 
     public boolean hasAnyActiveState(final ExecutionInterval executionInterval) {

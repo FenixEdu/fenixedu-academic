@@ -220,7 +220,7 @@ public class RegistrationState extends RegistrationState_Base {
         try {
 
             org.fenixedu.academic.domain.student.RegistrationStateLog.createRegistrationStateLog(getRegistration(),
-                    Bundle.MESSAGING, "log.registration.registrationstate.removed", getStateTypeEnum().getDescription(),
+                    Bundle.MESSAGING, "log.registration.registrationstate.removed", getType().getName().getContent(),
                     getRemarks());
             setExecutionInterval(null);
             setRegistration(null);
