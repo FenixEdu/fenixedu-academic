@@ -1570,8 +1570,6 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
 
     class studentCurriculum.ExternalEnrolment  {
         String createdBy;
-        //Deprecated
-        DateTime creationDateDateTime;
         DateTime whenCreated;
         Double ectsCredits (REQUIRED);
         YearMonthDay evaluationDate;
