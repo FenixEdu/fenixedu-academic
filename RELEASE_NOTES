@@ -1,4 +1,5 @@
 - Refactor: Remove creationDateDateTime attribute from ExternalEnrolment
+- Refactor: Rename creationDateDateTime attribute of external enrolment (step 2/2)
 
 40.2.0 (20-12-2022)
 - Refactor: Replace usage of RegistrationStateTypeEnum by RegistrationStateType

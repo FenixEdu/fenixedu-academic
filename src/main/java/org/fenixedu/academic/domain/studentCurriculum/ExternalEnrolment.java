@@ -68,7 +68,6 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     protected ExternalEnrolment() {
         super();
         setRootDomainObject(Bennu.getInstance());
-        setCreationDateDateTime(new DateTime());
         setWhenCreated(new DateTime());
         if (AccessControl.getPerson() != null) {
             setCreatedBy(AccessControl.getPerson().getUsername());
@@ -248,14 +247,6 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
         return BigDecimal.valueOf(getWeigth());
     }
 
-//    public boolean isResultOfMobility() {
-//        if (getExecutionInterval() == null) {
-//            return false;
-//        }
-//
-//        return getRegistration().getRegistrationStatesTypes(getExecutionYear()).contains(RegistrationStateType.MOBILITY);
-//    }
-
     @Override
     public boolean isAnual() {
         return getRegime() != null ? getRegime() == RegimeType.ANUAL : false;
@@ -269,21 +260,6 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     @Override
     public LocalizedString getPresentationName() {
         return getName();
-    }
-
-    @Deprecated
-    public java.util.Date getCreationDate() {
-        org.joda.time.DateTime dt = getCreationDateDateTime();
-        return dt == null ? null : new java.util.Date(dt.getMillis());
-    }
-
-    @Deprecated
-    public void setCreationDate(java.util.Date date) {
-        if (date == null) {
-            setCreationDateDateTime(null);
-        } else {
-            setCreationDateDateTime(new org.joda.time.DateTime(date.getTime()));
-        }
     }
 
     @Override
@@ -302,6 +278,11 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 
     public ExecutionInterval getExecutionInterval() {
         return super.getExecutionPeriod();
+    }
+
+    @Override
+    public DateTime getCreationDateDateTime() {
+        return getWhenCreated();
     }
 
 }
