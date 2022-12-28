@@ -678,9 +678,14 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public Stream<Unit> getParentUnits(final Predicate<Unit> predicate, ExecutionInterval interval) {
         final Predicate<Unit> nullSafePredicate = predicate != null ? predicate : u -> true;
-        final CompetenceCourseInformation mostRecentCompetenceCourseInformationUntil = findInformationMostRecentUntil(interval);
-        return mostRecentCompetenceCourseInformationUntil != null ? mostRecentCompetenceCourseInformationUntil
-                .getCompetenceCourseGroupUnit().getAllParentUnits().stream().filter(nullSafePredicate) : Stream.empty();
+        
+        final CompetenceCourseInformation information = findInformationMostRecentUntil(interval);
+        if (information == null) {
+            return Stream.empty();
+        }
+        
+        final Unit courseGroupUnit = information.getCompetenceCourseGroupUnit();
+        return Stream.concat(Stream.of(courseGroupUnit), courseGroupUnit.getAllParentUnits().stream()).filter(nullSafePredicate);
     }
 
     public boolean isAnual() {

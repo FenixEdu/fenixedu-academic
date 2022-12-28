@@ -1,6 +1,8 @@
 - Refactor: Remove creationDateDateTime attribute from ExternalEnrolment
 - Refactor: Rename creationDateDateTime attribute of external enrolment (step 2/2)
 - Refactor: Remove RegistrationStateType bootstrap on system init
+- Bug fix: Competence course parent units method should include course group unit aggregator
+
 
 40.2.0 (20-12-2022)
 - Refactor: Replace usage of RegistrationStateTypeEnum by RegistrationStateType
