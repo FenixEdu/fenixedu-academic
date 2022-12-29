@@ -1426,6 +1426,10 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
 		    student.registrationStates.RegistrationStateType playsRole registrationStateTypes { multiplicity *; }
 		    .org.fenixedu.bennu.core.domain.Bennu playsRole root;
 		}
+		relation ProgramConclusionRegistrationStateType {
+		    student.registrationStates.RegistrationStateType playsRole targetStateType;
+		    degreeStructure.ProgramConclusion playsRole programConclusions { multiplicity *; }
+		} 		
     
     class student.registrationStates.RegistrationState  {
         String remarks;

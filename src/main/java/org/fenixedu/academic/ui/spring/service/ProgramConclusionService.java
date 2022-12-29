@@ -39,7 +39,7 @@ import pt.ist.fenixframework.Atomic;
  * @author Sérgio Silva (sergio.silva@tecnico.ulisboa.pt)
  *
  */
-
+@Deprecated
 @Service
 public class ProgramConclusionService {
 

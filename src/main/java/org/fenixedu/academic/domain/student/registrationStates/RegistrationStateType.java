@@ -4,14 +4,13 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.commons.i18n.LocalizedString;
 
 public class RegistrationStateType extends RegistrationStateType_Base {
 
     public static final String REGISTERED_CODE = "REGISTERED";
+    public static final String CONCLUDED_CODE = "CONCLUDED";
 
     protected RegistrationStateType() {
         super();
@@ -41,6 +40,10 @@ public class RegistrationStateType extends RegistrationStateType_Base {
         return REGISTERED_CODE.equals(getCode());
     }
 
+    public boolean isConcluded() {
+        return CONCLUDED_CODE.equals(getCode());
+    }
+
     public static Stream<RegistrationStateType> findAll() {
         return Bennu.getInstance().getRegistrationStateTypesSet().stream();
     }
@@ -52,17 +55,6 @@ public class RegistrationStateType extends RegistrationStateType_Base {
     public void delete() {
         setRoot(null);
         super.deleteDomainObject();
-    }
-
-    public static void bootstrap() {
-        Stream.of(RegistrationStateTypeEnum.values()).forEach(typeEnum -> findByCode(typeEnum.getName()).orElseGet(() -> {
-
-            final String code = typeEnum.getName();
-            final LocalizedString name = BundleUtil.getLocalizedString(Bundle.ENUMERATION, typeEnum.getQualifiedName());
-            final boolean active = typeEnum.isActive();
-
-            return create(code, name, active, typeEnum);
-        }));
     }
 
 }

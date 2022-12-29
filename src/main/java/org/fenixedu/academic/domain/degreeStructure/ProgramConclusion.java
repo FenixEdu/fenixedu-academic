@@ -29,6 +29,7 @@ import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.curriculum.ConclusionProcess;
+import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateType;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationStateTypeEnum;
 import org.fenixedu.academic.domain.studentCurriculum.CurriculumGroup;
 import org.fenixedu.academic.domain.studentCurriculum.CycleCurriculumGroup;
@@ -57,6 +58,7 @@ public class ProgramConclusion extends ProgramConclusion_Base {
         setRoot(Bennu.getInstance());
     }
 
+    @Deprecated
     public ProgramConclusion(LocalizedString name, LocalizedString description, LocalizedString graduationTitle,
             LocalizedString graduationLevel, boolean isAverageEditable, boolean isAlumniProvider, boolean isSkipValidation,
             RegistrationStateTypeEnum targetState) {
@@ -65,9 +67,30 @@ public class ProgramConclusion extends ProgramConclusion_Base {
                 targetState);
     }
 
+    public ProgramConclusion(String code, LocalizedString name, LocalizedString description, LocalizedString graduationTitle,
+            LocalizedString graduationLevel, boolean isAverageEditable, boolean isAlumniProvider, boolean isSkipValidation,
+            RegistrationStateType targetStateType) {
+        this();
+        edit(code, name, description, graduationTitle, graduationLevel, isAverageEditable, isAlumniProvider, isSkipValidation,
+                targetStateType);
+    }
+
+    @Deprecated
     public void edit(LocalizedString name, LocalizedString description, LocalizedString graduationTitle,
             LocalizedString graduationLevel, boolean isAverageEditable, boolean isAlumniProvider, boolean isSkipValidation,
             RegistrationStateTypeEnum targetState) {
+
+        final RegistrationStateType targetStateType =
+                targetState != null ? RegistrationStateType.findByCode(targetState.name()).orElse(null) : null;
+
+        edit(null, name, description, graduationTitle, graduationLevel, isAverageEditable, isAlumniProvider, isSkipValidation,
+                targetStateType);
+    }
+
+    public void edit(String code, LocalizedString name, LocalizedString description, LocalizedString graduationTitle,
+            LocalizedString graduationLevel, boolean isAverageEditable, boolean isAlumniProvider, boolean isSkipValidation,
+            RegistrationStateType targetStateType) {
+        setCode(code);
         setName(name);
         setDescription(description);
         setGraduationTitle(graduationTitle);
@@ -75,7 +98,18 @@ public class ProgramConclusion extends ProgramConclusion_Base {
         setAverageEditable(isAverageEditable);
         setAlumniProvider(isAlumniProvider);
         setSkipValidation(isSkipValidation);
-        setTargetState(targetState);
+        setTargetStateType(targetStateType);
+
+        setTargetState(targetStateType != null ? targetStateType.getTypeEnum() : null);
+    }
+
+    @Override
+    public void setCode(String code) {
+        if (findByCode(code).filter(pc -> pc != this).isPresent()) {
+            throw new DomainException("error.ProgramConclusion.code.already.exists", code);
+        }
+
+        super.setCode(code);
     }
 
     public boolean isAverageEditable() {
@@ -151,7 +185,7 @@ public class ProgramConclusion extends ProgramConclusion_Base {
     }
 
     public boolean isTerminal() {
-        return RegistrationStateTypeEnum.CONCLUDED.equals(getTargetState());
+        return getTargetStateType() != null && getTargetStateType().isConcluded();
     }
 
     public boolean isConclusionProcessed(Registration registration) {
@@ -187,6 +221,7 @@ public class ProgramConclusion extends ProgramConclusion_Base {
     public void delete() {
         DomainException.throwWhenDeleteBlocked(getDeletionBlockers());
         setRoot(null);
+        setTargetStateType(null);
         super.deleteDomainObject();
     }
 
@@ -207,9 +242,12 @@ public class ProgramConclusion extends ProgramConclusion_Base {
                 .anyMatch(pc -> pc.groupFor(studentCurricularPlan).map(CurriculumGroup::isConcluded).orElse(false));
     }
 
+    public static Stream<ProgramConclusion> findAll() {
+        return Bennu.getInstance().getProgramConclusionSet().stream();
+    }
+
     public static Optional<ProgramConclusion> findByCode(String code) {
-        return Bennu.getInstance().getProgramConclusionSet().stream()
-                .filter(pc -> pc.getCode() != null && pc.getCode().equals(code)).findAny();
+        return findAll().filter(pc -> pc.getCode() != null && pc.getCode().equals(code)).findAny();
     }
 
 }

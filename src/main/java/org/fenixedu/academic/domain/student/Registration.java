@@ -1702,11 +1702,11 @@ public class Registration extends Registration_Base {
 
         ProgramConclusion conclusion = curriculumGroup.getDegreeModule().getProgramConclusion();
 
-        if (conclusion != null && conclusion.getTargetState() != null
-                && !conclusion.getTargetState().equals(getActiveStateTypeEnum())) {
+        if (conclusion != null && conclusion.getTargetStateType() != null
+                && !conclusion.getTargetStateType().equals(getActiveStateType())) {
             final ExecutionYear conclusionYear = curriculumGroup.getConclusionYear();
             RegistrationState.createRegistrationState(this, AccessControl.getPerson(), new DateTime(),
-                    conclusion.getTargetState(), conclusionYear != null ? conclusionYear.getLastExecutionPeriod() : null);
+                    conclusion.getTargetStateType(), conclusionYear != null ? conclusionYear.getLastExecutionPeriod() : null);
         }
 
     }
