@@ -114,6 +114,15 @@ public class Attends extends Attends_Base {
         return false;
     }
 
+    /**
+     * @return true if attends has an enrolment and at least one enrolment evaluation for this attends execution interval
+     */
+    public boolean isValid() {
+        final Enrolment enrolment = getEnrolment();
+        return enrolment != null && !enrolment.isAnnulled()
+                && enrolment.getEvaluationsSet().stream().anyMatch(ee -> ee.getExecutionInterval() == getExecutionInterval());
+    }
+
     public boolean isFor(final ExecutionInterval interval) {
         return getExecutionCourse().getExecutionInterval() == interval;
     }
