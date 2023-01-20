@@ -80,7 +80,13 @@ response.setStatus(404);
                  <script>
                          var link = document.getElementById("goToLogin");
                          var href = link.href;
-                         link.href= href + "?callback=" + window.location.href;
+                         var callback = window.location.href;
+                         if (callback != null) {
+                           callback = callback.split("#")[0];
+                           link.href= href + "?callback=" + callback;
+                         }else {
+                           link.href = href;
+                         }                        
                  </script>
 			</c:if>
 		</div>

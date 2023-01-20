@@ -1,4 +1,5 @@
 - Refactor: Program Conclusion - remove RegistrationStateTypeEnum slot 
+- Bug fix: Corrected issue in callback URL when using CAS
 
 40.3.2 (16-01-2023)
 - Refactor: Set CET/DET school level as higher education
