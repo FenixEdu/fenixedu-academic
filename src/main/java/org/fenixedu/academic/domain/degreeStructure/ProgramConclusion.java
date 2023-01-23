@@ -99,8 +99,6 @@ public class ProgramConclusion extends ProgramConclusion_Base {
         setAlumniProvider(isAlumniProvider);
         setSkipValidation(isSkipValidation);
         setTargetStateType(targetStateType);
-
-        setTargetState(targetStateType != null ? targetStateType.getTypeEnum() : null);
     }
 
     @Override

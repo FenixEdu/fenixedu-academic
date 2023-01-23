@@ -1087,7 +1087,6 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
         protected boolean averageEditable;
         protected boolean alumniProvider;
         protected boolean skipValidation;
-        public RegistrationStateTypeEnum targetState;
     }
 	
     class BusinessArea  {
