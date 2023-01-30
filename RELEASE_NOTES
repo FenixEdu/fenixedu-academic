@@ -1,4 +1,5 @@
 - Improvement: Change description of 'Not Approved' enrolment state 
+- Improvement: Made compatible with new access control API
 
 40.3.3 (28-01-2023)
 - Refactor: Program Conclusion - remove RegistrationStateTypeEnum slot 

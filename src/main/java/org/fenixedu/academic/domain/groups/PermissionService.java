@@ -49,7 +49,10 @@ public class PermissionService {
     public static <T extends DomainObject> Set<T> getObjects(AccessControlPermission permission, Class<T> clazz, User user) {
         return (Set<T>) permission.getProfileSet().stream().flatMap(p -> getAllParents(p).stream()).filter(
                 p -> clazz != null && clazz.getName().equals(p.getObjectsClass()) && profileMembershipProvider.apply(p, user))
-                .flatMap(p -> p.provideObjects().stream()).collect(Collectors.toSet());
+                .flatMap(p -> {
+                    Set<DomainObject> provideObjects = p.provideObjects();
+                    return provideObjects.stream();
+                }).collect(Collectors.toSet());
     }
 
     private static Set<AccessControlProfile> getAllParents(AccessControlProfile profile) {
