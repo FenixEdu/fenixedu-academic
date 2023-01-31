@@ -31,8 +31,6 @@ package org.fenixedu.academic.domain;
 import java.text.Collator;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -40,9 +38,6 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
-import org.fenixedu.academic.domain.degree.DegreeType;
-import org.fenixedu.academic.domain.degreeStructure.CycleType;
-import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.predicate.AccessControl;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
@@ -155,24 +150,6 @@ public class Department extends Department_Base {
     public LocalizedString getNameI18n() {
         return new LocalizedString().with(org.fenixedu.academic.util.LocaleUtils.PT, getRealName())
                 .with(org.fenixedu.academic.util.LocaleUtils.EN, getRealNameEn());
-    }
-
-    public Integer getCompetenceCourseInformationChangeRequestsCount() {
-        int count = 0;
-        for (CompetenceCourse course : CompetenceCourse.findByUnit(getDepartmentUnit(), true).collect(Collectors.toSet())) {
-            count += course.getCompetenceCourseInformationChangeRequestsSet().size();
-        }
-
-        return count;
-    }
-
-    public Integer getDraftCompetenceCourseInformationChangeRequestsCount() {
-        int count = 0;
-        for (CompetenceCourse course : CompetenceCourse.findByUnit(getDepartmentUnit(), true).collect(Collectors.toSet())) {
-            count += course.getDraftCompetenceCourseInformationChangeRequestsCount();
-        }
-
-        return count;
     }
 
     @Deprecated

@@ -991,46 +991,6 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
 		    degreeStructure.CompetenceCourseInformation playsRole competenceCourseInformations { multiplicity *; }
 		}	    
     
-    class degreeStructure.CompetenceCourseInformationChangeRequest  {
-        String justification;
-        Boolean approved;
-        
-        String name;
-        String nameEn;
-        
-        degreeStructure.RegimeType regime;
-        String objectives;
-        String objectivesEn;
-        String program;
-        String programEn;
-        String evaluationMethod;
-        String evaluationMethodEn;
-        
-        Double theoreticalHours;
-        Double problemsHours;
-        Double laboratorialHours; 
-        Double seminaryHours;
-        Double fieldWorkHours;
-        Double trainingPeriodHours;
-        Double tutorialOrientationHours;
-        Double otherHours;
-        Double autonomousWorkHours;
-        Double ectsCredits;
-        
-        Double secondTheoreticalHours;
-        Double secondProblemsHours;
-        Double secondLaboratorialHours; 
-        Double secondSeminaryHours;
-        Double secondFieldWorkHours;
-        Double secondTrainingPeriodHours;
-        Double secondTutorialOrientationHours;
-        Double secondOtherHours;
-        Double secondAutonomousWorkHours;
-        Double secondEctsCredits;
-        
-        BibliographicReferences bibliographicReferences;
-    }
-
     class degreeStructure.CompetenceCourseLoad  {
         Double autonomousWorkHours;
         AcademicPeriod academicPeriod;
@@ -4072,48 +4032,6 @@ relation LessonInstanceLessonInstanceSpaceOccupations {
 relation SummaryLessonInstance {
     Summary playsRole summary;
     LessonInstance playsRole lessonInstance;
-}
-
-relation CompetenceCourseInformationChangeRequester {
-    degreeStructure.CompetenceCourseInformationChangeRequest playsRole competenceCourseInformationChangeRequests {
-        multiplicity *;
-    }
-    Person playsRole requester;
-}
-
-relation CompetenceCourseInformationChangeApprover {
-    degreeStructure.CompetenceCourseInformationChangeRequest playsRole approvedCompetenceCourseInformationChangeRequests {
-        multiplicity *;
-    }
-    Person playsRole analizedBy;
-}
-
-relation CompetenceCourseInformationChangeRequestExecutionPeriod {
-    degreeStructure.CompetenceCourseInformationChangeRequest playsRole competenceCourseInformationChangeRequests {
-        multiplicity *;
-    }
-    ExecutionInterval playsRole executionPeriod;
-}
-
-relation CompetenceCourseInformationChangeRequestCompetenceCourse {
-    degreeStructure.CompetenceCourseInformationChangeRequest playsRole competenceCourseInformationChangeRequests {
-        multiplicity *;
-    }
-    CompetenceCourse playsRole competenceCourse;
-}
-
-relation CompetenceCourseInformationChangeRequestCompetenceCourseGroupUnit {
-    degreeStructure.CompetenceCourseInformationChangeRequest playsRole competenceCourseInformationChangeRequests {
-        multiplicity *;
-    }
-    organizationalStructure.Unit playsRole competenceCourseGroupUnit;
-}
-
-relation CompetenceCourseInformationChangeRequestRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    degreeStructure.CompetenceCourseInformationChangeRequest playsRole competenceCourseInformationChangeRequests {
-        multiplicity *;
-    }
 }
 
 relation CompetenceCourseInformationExecutionPeriod {

@@ -490,26 +490,6 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 //        return getRegime() == RegimeType.SEMESTRIAL;
 //    }
 
-    public List<CompetenceCourseInformationChangeRequest> getCompetenceCourseInformationChangeRequest() {
-        final List<CompetenceCourseInformationChangeRequest> requests = new ArrayList<>();
-        for (final CompetenceCourseInformationChangeRequest request : this.getCompetenceCourse()
-                .getCompetenceCourseInformationChangeRequestsSet()) {
-            if (request.getExecutionPeriod().equals(this.getExecutionPeriod())) {
-                requests.add(request);
-            }
-        }
-        return requests;
-    }
-
-    public boolean isCompetenceCourseInformationChangeRequestDraftAvailable() {
-        for (final CompetenceCourseInformationChangeRequest request : getCompetenceCourseInformationChangeRequest()) {
-            if (request.getApproved() == null) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public ExecutionYear getExecutionYear() {
         return getExecutionPeriod().getExecutionYear();
     }

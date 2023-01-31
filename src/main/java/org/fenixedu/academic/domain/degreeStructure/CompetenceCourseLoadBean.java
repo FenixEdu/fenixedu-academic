@@ -58,31 +58,6 @@ public class CompetenceCourseLoadBean implements Serializable {
         sameInformationForBothPeriods = true;
     }
 
-    public CompetenceCourseLoadBean(CompetenceCourseInformationChangeRequest request) {
-        setAcademicPeriod(request.getRegime() == RegimeType.SEMESTRIAL ? AcademicPeriod.SEMESTER : AcademicPeriod.YEAR);
-        setTheoreticalHours(request.getTheoreticalHours());
-        setProblemsHours(request.getProblemsHours());
-        setLaboratorialHours(request.getLaboratorialHours());
-        setSeminaryHours(request.getSeminaryHours());
-        setFieldWorkHours(request.getFieldWorkHours());
-        setTrainingPeriodHours(request.getTrainingPeriodHours());
-        setTutorialOrientationHours(request.getTutorialOrientationHours());
-        setOtherHours(request.getOtherHours());
-        setAutonomousWorkHours(request.getAutonomousWorkHours());
-        setEctsCredits(request.getEctsCredits());
-
-        setSecondTheoreticalHours(request.getSecondTheoreticalHours());
-        setSecondProblemsHours(request.getSecondProblemsHours());
-        setSecondLaboratorialHours(request.getSecondLaboratorialHours());
-        setSecondSeminaryHours(request.getSecondSeminaryHours());
-        setSecondFieldWorkHours(request.getSecondFieldWorkHours());
-        setSecondTrainingPeriodHours(request.getSecondTrainingPeriodHours());
-        setSecondTutorialOrientationHours(request.getSecondTutorialOrientationHours());
-        setSecondOtherHours(request.getSecondOtherHours());
-        setSecondAutonomousWorkHours(request.getSecondAutonomousWorkHours());
-        setSecondEctsCredits(request.getSecondEctsCredits());
-    }
-
     public CompetenceCourseLoadBean(CompetenceCourseLoad competenceCourseLoad) {
         this();
         setTheoreticalHours(competenceCourseLoad.getTheoreticalHours());

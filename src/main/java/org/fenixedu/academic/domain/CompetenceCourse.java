@@ -39,7 +39,6 @@ import org.fenixedu.academic.domain.curriculum.grade.GradeScale;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences;
 import org.fenixedu.academic.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformation;
-import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLevelType;
 import org.fenixedu.academic.domain.degreeStructure.CompetenceCourseLoad;
 import org.fenixedu.academic.domain.degreeStructure.Context;
@@ -50,7 +49,6 @@ import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.commons.StringNormalizer;
 import org.fenixedu.commons.i18n.LocalizedString;
 
 public class CompetenceCourse extends CompetenceCourse_Base {
@@ -233,10 +231,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     private CompetenceCourseInformation getOldestCompetenceCourseInformation() {
         return getCompetenceCourseInformationsSet().stream().min(CompetenceCourseInformation.COMPARATORY_BY_EXECUTION_INTERVAL)
                 .orElse(null);
-    }
-
-    public boolean isRequestDraftAvailable(ExecutionInterval interval) {
-        return getChangeRequestDraft(interval) != null;
     }
 
     /**
@@ -697,26 +691,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return getCurricularStage() == CurricularStage.APPROVED;
     }
 
-//    public void transfer(Unit competenceCourseGroupUnit, ExecutionInterval interval, String justification, Person requester) {
-//
-//        CompetenceCourseInformation information = null;
-//        for (CompetenceCourseInformation existingInformation : getCompetenceCourseInformationsSet()) {
-//            if (existingInformation.getExecutionInterval() == interval) {
-//                information = existingInformation;
-//            }
-//        }
-//        if (information == null) {
-//            CompetenceCourseInformation latestInformation = findInformationMostRecentUntil(interval);
-//            information = new CompetenceCourseInformation(latestInformation);
-//            information.setExecutionInterval(interval);
-//        }
-//
-//        CompetenceCourseInformationChangeRequest changeRequest =
-//                new CompetenceCourseInformationChangeRequest(information, justification, requester);
-//        changeRequest.setCompetenceCourseGroupUnit(competenceCourseGroupUnit);
-//        changeRequest.approve(requester);
-//    }
-
     public LocalizedString getNameI18N() {
         return getNameI18N(null);
     }
@@ -793,44 +767,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public boolean isDissertation() {
         return getType() == CompetenceCourseType.DISSERTATION;
-    }
-
-    public Integer getDraftCompetenceCourseInformationChangeRequestsCount() {
-        int count = 0;
-        for (CompetenceCourseInformationChangeRequest request : getCompetenceCourseInformationChangeRequestsSet()) {
-            if (request.getApproved() == null) {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    public Set<CompetenceCourseInformationChangeRequest> getCompetenceCourseInformationChangeRequests(
-            final ExecutionInterval interval) {
-        Set<CompetenceCourseInformationChangeRequest> changeRequests = new HashSet<CompetenceCourseInformationChangeRequest>();
-        for (CompetenceCourseInformationChangeRequest request : getCompetenceCourseInformationChangeRequestsSet()) {
-            if (request.getExecutionPeriod() == interval) {
-                changeRequests.add(request);
-            }
-        }
-        return changeRequests;
-    }
-
-    public CompetenceCourseInformationChangeRequest getChangeRequestDraft(final ExecutionInterval interval) {
-        for (CompetenceCourseInformationChangeRequest request : getCompetenceCourseInformationChangeRequests(interval)) {
-            if (request.getApproved() == null) {
-                return request;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public void addCompetenceCourseInformationChangeRequests(CompetenceCourseInformationChangeRequest request) {
-        if (isRequestDraftAvailable(request.getExecutionPeriod())) {
-            throw new DomainException("error.can.only.exist.one.request.draft.per.execution.period");
-        }
-        super.addCompetenceCourseInformationChangeRequests(request);
     }
 
 //    public boolean hasOneCourseLoad(final ExecutionYear executionYear) {
