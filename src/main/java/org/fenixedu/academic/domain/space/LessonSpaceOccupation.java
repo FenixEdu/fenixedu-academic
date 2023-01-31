@@ -38,8 +38,6 @@ import com.google.common.collect.Lists;
 public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
 
     public LessonSpaceOccupation(Space allocatableSpace, Lesson lesson) {
-//        check(this, SpacePredicates.checkPermissionsToManageLessonSpaceOccupations);
-
         super();
 
         if (lesson != null && lesson.getLessonSpaceOccupation() != null) {
@@ -51,7 +49,7 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
         if (getPeriod() == null) {
             throw new DomainException("error.LessonSpaceOccupation.empty.period");
         }
-        if (allocatableSpace != null /* && !allocatableSpace.isFree(this) */
+        if (allocatableSpace != null
                 && !allocatableSpace.isFree(Lists.newArrayList(lesson.getAllLessonIntervalsWithoutInstanceDates()))) {
             throw new DomainException("error.LessonSpaceOccupation.room.is.not.free", allocatableSpace.getName(),
                     getPeriod().getStartYearMonthDay().toString("dd-MM-yyy"),

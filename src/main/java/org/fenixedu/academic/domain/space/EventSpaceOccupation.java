@@ -30,7 +30,7 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
     }
 
     public void setResource(Space resource) {
-        if (!SpaceUtils.isRoom(resource)) {
+        if (!SpaceUtils.isAllocatable(resource)) {
             throw new DomainException("error.EventSpaceOccupation.invalid.resource");
         }
         getSpaceSet().clear();

@@ -20,23 +20,18 @@ package org.fenixedu.academic.domain.space;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.fenixedu.academic.domain.Lesson;
-import org.fenixedu.academic.domain.LessonInstance;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.spaces.domain.Space;
 import org.fenixedu.spaces.domain.SpaceClassification;
-import org.fenixedu.spaces.domain.occupation.Occupation;
 
 public class SpaceUtils {
     public static final String SCHOOL_SPACES = "School Spaces";
     public static final String CAMPUS = "Campus";
     public static final String BUILDING = "Building";
     public static final String FLOOR = "Floor";
-    public static final String ROOM_SUBDIVISION = "Room Subdivision";
     public static final String ROOM = "Room";
 
     public static Stream<Space> allocatableSpaces() {
@@ -48,47 +43,27 @@ public class SpaceUtils {
     }
 
     public static boolean isAllocatable(Space space) {
-        return space.getClassification().isAllocatable();
+        return space != null && space.getClassification().isAllocatable();
     }
 
     private static boolean isCampus(Space space) {
-        return SpaceClassification.getByName(CAMPUS).equals(space.getClassification());
+        return space.getClassification().equals(SpaceClassification.getByName(CAMPUS));
     }
 
     private static boolean isBuilding(Space space) {
-        return SpaceClassification.getByName(BUILDING).equals(space.getClassification());
+        return space.getClassification().equals(SpaceClassification.getByName(BUILDING));
     }
 
     private static boolean isFloor(Space space) {
-        return SpaceClassification.getByName(FLOOR).equals(space.getClassification());
-    }
-
-    private static boolean isRoomSubdivision(Space space) {
-        return SpaceClassification.getByName(ROOM_SUBDIVISION).equals(space.getClassification());
+        return space.getClassification().equals(SpaceClassification.getByName(FLOOR));
     }
 
     public static boolean isRoom(Space space) {
-        return !(isCampus(space) || isBuilding(space) || isFloor(space) || isRoomSubdivision(space));
+        return !(isCampus(space) || isBuilding(space) || isFloor(space));
     }
 
     public static Stream<Space> findSpaceByName(String name) {
         return Space.getSpaces().filter(space -> name.equals(space.getName()));
-    }
-
-    // This method is a hack because of a bad refactor. The new Occupation API does not allow sharing of occupation for different events.
-    // TODO : remove this stuff in fenix v4 after refactor is complete.
-    public static Occupation getFirstOccurrenceOfResourceAllocationByClass(final Space space, final Lesson lesson) {
-        for (final Occupation resourceAllocation : space.getOccupationSet()) {
-            if (resourceAllocation instanceof LessonInstanceSpaceOccupation) {
-                final LessonInstanceSpaceOccupation lessonInstanceSpaceOccupation =
-                        (LessonInstanceSpaceOccupation) resourceAllocation;
-                final Set<LessonInstance> instancesSet = lessonInstanceSpaceOccupation.getLessonInstancesSet();
-                if (!instancesSet.isEmpty() && instancesSet.iterator().next().getLesson() == lesson) {
-                    return resourceAllocation;
-                }
-            }
-        }
-        return null;
     }
 
     public static Space getDefaultCampus() {

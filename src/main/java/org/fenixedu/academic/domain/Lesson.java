@@ -28,12 +28,12 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.fenixedu.academic.domain.exceptions.DomainException;
@@ -108,84 +108,11 @@ public class Lesson extends Lesson_Base {
         }
     }
 
-//    public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, Shift shift, FrequencyType frequency,
-//            ExecutionInterval executionInterval, YearMonthDay beginDate, YearMonthDay endDate, Space room) {
-//
-//        super();
-//
-//        OccupationPeriod period = null;
-//        if (shift != null) {
-//            final ExecutionCourse executionCourse = shift.getExecutionCourse();
-//            final Interval maxLessonsInterval = executionCourse.getMaxLessonsInterval();
-//            if (beginDate == null || beginDate.isBefore(maxLessonsInterval.getStart().toLocalDate())) {
-//                throw new DomainException("error.Lesson.invalid.begin.date");
-//            }
-//            if (endDate == null || endDate.isAfter(maxLessonsInterval.getEnd().toLocalDate())) {
-//                throw new DomainException("error.invalid.new.date");
-//            }
-//
-//            period = OccupationPeriod.createOccupationPeriodForLesson(executionCourse, beginDate, endDate);
-//        }
-//
-//        setRootDomainObject(Bennu.getInstance());
-//        setDiaSemana(diaSemana);
-//        setInicio(inicio);
-//        setFim(fim);
-//        setShift(shift);
-//        setFrequency(frequency);
-//        setPeriod(period);
-//
-//        checkShiftLoad(shift);
-//
-//        if (room != null) {
-//            new LessonSpaceOccupation(room, this);
-//        }
-//    }
-
-//    public void edit(YearMonthDay newBeginDate, YearMonthDay newEndDate, DiaSemana diaSemana, Calendar inicio, Calendar fim,
-//            FrequencyType frequency, Boolean createLessonInstances, Space newRoom) {
-//
-//        if (newBeginDate != null && newEndDate != null && newBeginDate.isAfter(newEndDate)) {
-//            throw new DomainException("error.Lesson.new.begin.date.after.new.end.date");
-//        }
-//
-//        final ExecutionCourse executionCourse = getShift().getExecutionCourse();
-//        final Interval maxLessonsInterval = executionCourse.getMaxLessonsInterval();
-//        if (newBeginDate == null || newBeginDate.isBefore(maxLessonsInterval.getStart().toLocalDate())) {
-//            throw new DomainException("error.Lesson.invalid.new.begin.date");
-//        }
-//        if (newEndDate == null || newEndDate.isAfter(maxLessonsInterval.getEnd().toLocalDate())) {
-//            throw new DomainException("error.invalid.new.end.date");
-//        }
-//
-//        refreshPeriodAndInstancesInEditOperation(newBeginDate, newEndDate, createLessonInstances);
-//
-//        if (wasFinished() && (getLessonSpaceOccupation() != null || !hasAnyLessonInstances())) {
-//            throw new DomainException("error.Lesson.empty.period");
-//        }
-//
-//        setDiaSemana(diaSemana);
-//        setInicio(inicio);
-//        setFim(fim);
-//        setFrequency(frequency);
-//
-//        checkShiftLoad(getShift());
-//
-//        lessonSpaceOccupationManagement(newRoom);
-//    }
-
     public void edit(final Space newRoom) {
         lessonSpaceOccupationManagement(newRoom);
     }
 
     public void delete() {
-        final Shift shift = getShift();
-        final boolean isLastLesson = isLastLesson(shift);
-
-        if (isLastLesson && !shift.getStudentsSet().isEmpty()) {
-            throw new DomainException("error.deleteLesson.with.Shift.with.students", prettyPrint());
-        }
-
         if (hasAnyAssociatedSummaries()) {
             throw new DomainException("error.deleteLesson.with.summaries", prettyPrint());
         }
@@ -207,15 +134,6 @@ public class Lesson extends Lesson_Base {
         super.setShift(null);
         setRootDomainObject(null);
         deleteDomainObject();
-    }
-
-    private boolean isLastLesson(final Shift shift) {
-        for (final Lesson lesson : shift.getAssociatedLessonsSet()) {
-            if (lesson != this) {
-                return false;
-            }
-        }
-        return true;
     }
 
     @jvstm.cps.ConsistencyPredicate
@@ -250,12 +168,8 @@ public class Lesson extends Lesson_Base {
                 if (newRoom == null) {
                     lessonInstance.setLessonInstanceSpaceOccupation(null);
                 } else {
-                    LessonInstanceSpaceOccupation allocation = (LessonInstanceSpaceOccupation) SpaceUtils
-                            .getFirstOccurrenceOfResourceAllocationByClass(newRoom, this);
-                    if (allocation == null) {
-                        allocation = new LessonInstanceSpaceOccupation(newRoom);
-                    }
-                    allocation.edit(lessonInstance);
+                    LessonInstanceSpaceOccupation.findOccupationForLessonAndSpace(this, newRoom).ifPresentOrElse(
+                            o -> o.add(lessonInstance), () -> new LessonInstanceSpaceOccupation(newRoom, lessonInstance));
                 }
             }
         }
@@ -297,6 +211,7 @@ public class Lesson extends Lesson_Base {
         return getShift().getExecutionPeriod();
     }
 
+    @Deprecated
     public Space getSala() {
         if (getLessonSpaceOccupation() != null) {
             return getLessonSpaceOccupation().getSpace();
@@ -306,30 +221,18 @@ public class Lesson extends Lesson_Base {
         return null;
     }
 
+    @Deprecated
     public boolean hasSala() {
         return getSala() != null;
     }
 
-    public void deleteLessonInstanceIn(YearMonthDay day) {
-
-        // throw new UnsupportedOperationException();
-
-        if (day == null) {
-            return;
+    public Stream<Space> getSpaces() {
+        final LessonSpaceOccupation spaceOccupation = getLessonSpaceOccupation();
+        if (spaceOccupation != null) {
+            return spaceOccupation.getSpaces().stream();
         }
-        LessonInstance lessonInstance = getLessonInstanceFor(day);
-        if (lessonInstance == null) {
-            throw new UnsupportedOperationException();
-            // if (!wasFinished() &&
-            // !getPeriod().getStartYearMonthDay().isAfter(day)) {
-            // edit(day.plusDays(1),
-            // getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay(),
-            // getDiaSemana(),
-            // getInicio(), getFim(), getFrequency(), true, day);
-            // }
-        } else {
-            lessonInstance.delete();
-        }
+
+        return getLessonInstancesSet().stream().flatMap(LessonInstance::getSpaces);
     }
 
     public void refreshPeriodAndInstancesInSummaryCreation(YearMonthDay newBeginDate) {
@@ -347,16 +250,6 @@ public class Lesson extends Lesson_Base {
             createAllLessonInstances(instanceDates);
         }
     }
-
-//    private void refreshPeriodAndInstancesInEditOperation(YearMonthDay newBeginDate, YearMonthDay newEndDate,
-//            Boolean createLessonInstances) {
-//
-//        removeExistentInstancesWithoutSummaryAfterOrEqual(newBeginDate);
-//        SortedSet<YearMonthDay> instanceDates =
-//                getAllLessonInstancesDatesToCreate(getLessonStartDay(), newBeginDate.minusDays(1), createLessonInstances);
-//        refreshPeriod(newBeginDate, newEndDate);
-//        createAllLessonInstances(instanceDates);
-//    }
 
     private void createAllLessonInstances(SortedSet<YearMonthDay> instanceDates) {
         for (YearMonthDay day : instanceDates) {
@@ -379,42 +272,6 @@ public class Lesson extends Lesson_Base {
             return possibleLessonDates;
         }
         return new TreeSet<YearMonthDay>();
-    }
-
-    private void removeExistentInstancesWithoutSummaryAfterOrEqual(YearMonthDay newBeginDate) {
-        Map<Boolean, List<LessonInstance>> instances = getLessonInstancesAfterOrEqual(newBeginDate);
-        if (instances.get(Boolean.TRUE).isEmpty()) {
-            List<LessonInstance> instancesWithoutSummary = instances.get(Boolean.FALSE);
-            for (Iterator<LessonInstance> iter = instancesWithoutSummary.iterator(); iter.hasNext();) {
-                LessonInstance instance = iter.next();
-                iter.remove();
-                instance.delete();
-            }
-        } else {
-            throw new DomainException("error.Lesson.invalid.new.begin.date");
-        }
-    }
-
-    private Map<Boolean, List<LessonInstance>> getLessonInstancesAfterOrEqual(YearMonthDay day) {
-
-        Map<Boolean, List<LessonInstance>> result = new HashMap<Boolean, List<LessonInstance>>();
-        result.put(Boolean.TRUE, new ArrayList<LessonInstance>());
-        result.put(Boolean.FALSE, new ArrayList<LessonInstance>());
-
-        if (day != null) {
-            Collection<LessonInstance> lessonInstances = getLessonInstancesSet();
-            for (LessonInstance lessonInstance : lessonInstances) {
-                if (lessonInstance.getSummary() != null && !lessonInstance.getDay().isBefore(day)) {
-                    List<LessonInstance> list = result.get(Boolean.TRUE);
-                    list.add(lessonInstance);
-                } else if (lessonInstance.getSummary() == null && !lessonInstance.getDay().isBefore(day)) {
-                    List<LessonInstance> list = result.get(Boolean.FALSE);
-                    list.add(lessonInstance);
-                }
-            }
-        }
-
-        return result;
     }
 
     private void refreshPeriod(YearMonthDay newBeginDate, YearMonthDay newEndDate) {

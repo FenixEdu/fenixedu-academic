@@ -139,9 +139,9 @@ public class FenixBootstrapper {
             CoreConfiguration.supportedLocales().stream().forEach(l -> floor.with(l, SpaceUtils.FLOOR));
             sc.addChildren(new SpaceClassification("1.3", floor.build()));
 
-            Builder roomSubdivision = new LocalizedString.Builder();
-            CoreConfiguration.supportedLocales().stream().forEach(l -> roomSubdivision.with(l, SpaceUtils.ROOM_SUBDIVISION));
-            sc.addChildren(new SpaceClassification("1.4", roomSubdivision.build()));
+//            Builder roomSubdivision = new LocalizedString.Builder();
+//            CoreConfiguration.supportedLocales().stream().forEach(l -> roomSubdivision.with(l, SpaceUtils.ROOM_SUBDIVISION));
+//            sc.addChildren(new SpaceClassification("1.4", roomSubdivision.build()));
 
             Builder room = new LocalizedString.Builder();
             CoreConfiguration.supportedLocales().stream().forEach(l -> room.with(l, SpaceUtils.ROOM));

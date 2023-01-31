@@ -22,10 +22,10 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.space.LessonInstanceSpaceOccupation;
-import org.fenixedu.academic.domain.space.SpaceUtils;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.academic.util.DiaSemana;
 import org.fenixedu.academic.util.HourMinuteSecond;
@@ -74,12 +74,10 @@ public class LessonInstance extends LessonInstance_Base {
 
         HourMinuteSecond beginTime = lesson.getBeginHourMinuteSecond();
         HourMinuteSecond endTime = lesson.getEndHourMinuteSecond();
-        DateTime beginDateTime =
-                new DateTime(day.getYear(), day.getMonthOfYear(), day.getDayOfMonth(), beginTime.getHour(),
-                        beginTime.getMinuteOfHour(), beginTime.getSecondOfMinute(), 0);
-        DateTime endDateTime =
-                new DateTime(day.getYear(), day.getMonthOfYear(), day.getDayOfMonth(), endTime.getHour(),
-                        endTime.getMinuteOfHour(), endTime.getSecondOfMinute(), 0);
+        DateTime beginDateTime = new DateTime(day.getYear(), day.getMonthOfYear(), day.getDayOfMonth(), beginTime.getHour(),
+                beginTime.getMinuteOfHour(), beginTime.getSecondOfMinute(), 0);
+        DateTime endDateTime = new DateTime(day.getYear(), day.getMonthOfYear(), day.getDayOfMonth(), endTime.getHour(),
+                endTime.getMinuteOfHour(), endTime.getSecondOfMinute(), 0);
 
         setRootDomainObject(Bennu.getInstance());
         setBeginDateTime(beginDateTime);
@@ -126,12 +124,10 @@ public class LessonInstance extends LessonInstance_Base {
 
         HourMinuteSecond beginTime = lesson.getBeginHourMinuteSecond();
         HourMinuteSecond endTime = lesson.getEndHourMinuteSecond();
-        DateTime beginDateTime =
-                new DateTime(day.getYear(), day.getMonthOfYear(), day.getDayOfMonth(), beginTime.getHour(),
-                        beginTime.getMinuteOfHour(), beginTime.getSecondOfMinute(), 0);
-        DateTime endDateTime =
-                new DateTime(day.getYear(), day.getMonthOfYear(), day.getDayOfMonth(), endTime.getHour(),
-                        endTime.getMinuteOfHour(), endTime.getSecondOfMinute(), 0);
+        DateTime beginDateTime = new DateTime(day.getYear(), day.getMonthOfYear(), day.getDayOfMonth(), beginTime.getHour(),
+                beginTime.getMinuteOfHour(), beginTime.getSecondOfMinute(), 0);
+        DateTime endDateTime = new DateTime(day.getYear(), day.getMonthOfYear(), day.getDayOfMonth(), endTime.getHour(),
+                endTime.getMinuteOfHour(), endTime.getSecondOfMinute(), 0);
 
         setRootDomainObject(Bennu.getInstance());
         setBeginDateTime(beginDateTime);
@@ -191,13 +187,8 @@ public class LessonInstance extends LessonInstance_Base {
 
     private void lessonInstanceSpaceOccupationManagement(Space space) {
         if (space != null) {
-            final Lesson lesson = getLesson();
-            LessonInstanceSpaceOccupation instanceSpaceOccupation =
-                    (LessonInstanceSpaceOccupation) SpaceUtils.getFirstOccurrenceOfResourceAllocationByClass(space, lesson);
-
-            instanceSpaceOccupation =
-                    instanceSpaceOccupation == null ? new LessonInstanceSpaceOccupation(space) : instanceSpaceOccupation;
-            instanceSpaceOccupation.edit(this);
+            LessonInstanceSpaceOccupation.findOccupationForLessonAndSpace(getLesson(), space).ifPresentOrElse(o -> o.add(this),
+                    () -> new LessonInstanceSpaceOccupation(space, this));
         }
     }
 
@@ -228,23 +219,29 @@ public class LessonInstance extends LessonInstance_Base {
     public YearMonthDay getDay() {
         return getBeginDateTime().toYearMonthDay();
     }
-    
+
     public LocalDate getDate() {
         return getBeginDateTime().toLocalDate();
     }
 
     public HourMinuteSecond getStartTime() {
-        return new HourMinuteSecond(getBeginDateTime().getHourOfDay(), getBeginDateTime().getMinuteOfHour(), getBeginDateTime()
-                .getSecondOfMinute());
+        return new HourMinuteSecond(getBeginDateTime().getHourOfDay(), getBeginDateTime().getMinuteOfHour(),
+                getBeginDateTime().getSecondOfMinute());
     }
 
     public HourMinuteSecond getEndTime() {
-        return new HourMinuteSecond(getEndDateTime().getHourOfDay(), getEndDateTime().getMinuteOfHour(), getEndDateTime()
-                .getSecondOfMinute());
+        return new HourMinuteSecond(getEndDateTime().getHourOfDay(), getEndDateTime().getMinuteOfHour(),
+                getEndDateTime().getSecondOfMinute());
     }
 
+    @Deprecated
     public Space getRoom() {
         return getLessonInstanceSpaceOccupation() != null ? getLessonInstanceSpaceOccupation().getSpace() : null;
+    }
+
+    public Stream<Space> getSpaces() {
+        final LessonInstanceSpaceOccupation spaceOccupation = getLessonInstanceSpaceOccupation();
+        return spaceOccupation != null ? spaceOccupation.getSpaces().stream() : Stream.empty();
     }
 
     public DiaSemana getDayOfweek() {

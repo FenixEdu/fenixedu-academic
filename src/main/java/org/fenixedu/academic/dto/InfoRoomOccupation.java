@@ -22,13 +22,7 @@
  */
 package org.fenixedu.academic.dto;
 
-import java.util.Calendar;
-import java.util.Date;
-
-import org.fenixedu.academic.domain.FrequencyType;
-import org.fenixedu.academic.domain.space.EventSpaceOccupation;
-import org.fenixedu.academic.util.DiaSemana;
-import org.fenixedu.academic.util.HourMinuteSecond;
+import org.fenixedu.spaces.domain.occupation.Occupation;
 
 /**
  * @author Ana e Ricardo
@@ -36,17 +30,17 @@ import org.fenixedu.academic.util.HourMinuteSecond;
  */
 public class InfoRoomOccupation extends InfoObject {
 
-    private EventSpaceOccupation roomOccupationDomainReference;
+    private Occupation roomOccupationDomainReference;
 
-    public InfoRoomOccupation(final EventSpaceOccupation roomOccupation) {
+    public InfoRoomOccupation(final Occupation roomOccupation) {
         roomOccupationDomainReference = roomOccupation;
     }
 
-    public static InfoRoomOccupation newInfoFromDomain(final EventSpaceOccupation roomOccupation) {
+    public static InfoRoomOccupation newInfoFromDomain(final Occupation roomOccupation) {
         return roomOccupation == null ? null : new InfoRoomOccupation(roomOccupation);
     }
 
-    private EventSpaceOccupation getRoomOccupation() {
+    private Occupation getRoomOccupation() {
         return roomOccupationDomainReference;
     }
 
@@ -89,7 +83,7 @@ public class InfoRoomOccupation extends InfoObject {
      * @return Returns the infoRoom.
      */
     public InfoRoom getInfoRoom() {
-        return InfoRoom.newInfoFromDomain(getRoomOccupation().getSpace());
+        return InfoRoom.newInfoFromDomain(getRoomOccupation().getSpaces().stream().findAny().orElse(null));
     }
 
 }

@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain.space;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -35,32 +36,24 @@ import org.joda.time.YearMonthDay;
 
 public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation_Base {
 
-    public LessonInstanceSpaceOccupation(Space allocatableSpace) {
-//        check(this, SpacePredicates.checkPermissionsToManageLessonInstanceSpaceOccupationsWithTeacherCheck);
-
+    public LessonInstanceSpaceOccupation(Space space, LessonInstance lessonInstance) {
         super();
-
-//        Occupation allocation =
-//                SpaceUtils.getFirstOccurrenceOfResourceAllocationByClass(allocatableSpace, lesson);
-//        if (allocation != null) {
-//            throw new DomainException("error.LessonInstanceSpaceOccupation.occupation.for.this.space.already.exists");
-//        }
-
-        setResource(allocatableSpace);
+        checkIfSpaceIsFree(space, lessonInstance);
+        setResource(space);
+        addLessonInstances(lessonInstance);
     }
 
-    public void edit(LessonInstance lessonInstance) {
-        if (getLessonInstancesSet().contains(lessonInstance)) {
-            removeLessonInstances(lessonInstance);
-        }
-
-        Space space = getSpace();
+    private void checkIfSpaceIsFree(Space space, LessonInstance lessonInstance) {
         if (!space.isFree(lessonInstance.getInterval())) {
             throw new DomainException("error.LessonInstanceSpaceOccupation.room.is.not.free", space.getName(),
                     lessonInstance.getDay().toString("dd-MM-yy"));
         }
+    }
 
-        addLessonInstances(lessonInstance);
+    public void add(LessonInstance lessonInstance) {
+        getLessonInstancesSet().removeIf(li -> li == lessonInstance);
+        checkIfSpaceIsFree(getSpace(), lessonInstance);
+        getLessonInstancesSet().add(lessonInstance);
     }
 
     @Override
@@ -140,6 +133,12 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
             return intervals.get(intervals.size() - 1).getEnd();
         }
         return null;
+    }
+
+    public static Optional<LessonInstanceSpaceOccupation> findOccupationForLessonAndSpace(Lesson lesson, Space space) {
+        return space.getOccupationSet().stream().filter(LessonInstanceSpaceOccupation.class::isInstance)
+                .map(LessonInstanceSpaceOccupation.class::cast)
+                .filter(o -> o.getLessonInstancesSet().stream().anyMatch(li -> li.getLesson() == lesson)).findAny();
     }
 
 }
