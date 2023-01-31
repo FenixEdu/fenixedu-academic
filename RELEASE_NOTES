@@ -1,4 +1,5 @@
 - Refactor: Cleanup lessons, spaces and occupations code
+- Refactor: Remove unused service for execution courses creation
 
 40.3.4 (30-01-2023)
 - Improvement: Change description of 'Not Approved' enrolment state 
