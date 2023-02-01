@@ -92,15 +92,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     }
 
-//    public void addCompetenceCourseLoad(Double theoreticalHours, Double problemsHours, Double laboratorialHours,
-//            Double seminaryHours, Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours,
-//            Double otherHours, Double autonomousWorkHours, Double ectsCredits, Integer order, AcademicPeriod academicPeriod) {
-//        checkIfCanEdit(false);
-//        findInformationMostRecentUntil(null).addCompetenceCourseLoads(new CompetenceCourseLoad(theoreticalHours, problemsHours,
-//                laboratorialHours, seminaryHours, fieldWorkHours, trainingPeriodHours, tutorialOrientationHours, otherHours,
-//                autonomousWorkHours, ectsCredits, order, academicPeriod));
-//    }
-
     public BibliographicReference getBibliographicReference(Integer oid) {
         return findInformationMostRecentUntil(null).getBibliographicReferences().getBibliographicReference(oid);
     }
@@ -138,81 +129,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         result.addAll(getSecondaryBibliographicReferences(interval));
         return result;
     }
-
-//    public void createBibliographicReference(String year, String title, String authors, String reference, String url,
-//            BibliographicReferenceType type) {
-//        checkIfCanEdit(false);
-//        CompetenceCourseInformation info = findInformationMostRecentUntil(null);
-//        info.setBibliographicReferences(info.getBibliographicReferences().with(year, title, authors, reference, url, type));
-//    }
-
-//    public void editBibliographicReference(Integer index, String year, String title, String authors, String reference, String url,
-//            BibliographicReferenceType type) {
-//        CompetenceCourseInformation info = findInformationMostRecentUntil(null);
-//        info.setBibliographicReferences(
-//                info.getBibliographicReferences().replacing(index, year, title, authors, reference, url, type));
-//    }
-
-//    public void deleteBibliographicReference(Integer index) {
-//        CompetenceCourseInformation info = findInformationMostRecentUntil(null);
-//        info.setBibliographicReferences(info.getBibliographicReferences().without(index));
-//    }
-
-//    public void switchBibliographicReferencePosition(Integer oldPosition, Integer newPosition) {
-//        CompetenceCourseInformation info = findInformationMostRecentUntil(null);
-//        info.setBibliographicReferences(info.getBibliographicReferences().movingBibliographicReference(oldPosition, newPosition));
-//    }
-
-//    public void edit(String name, String nameEn, Boolean basic, CompetenceCourseLevel competenceCourseLevel,
-//            CompetenceCourseType type, CurricularStage curricularStage) {
-//        changeCurricularStage(curricularStage);
-//        setType(type);
-//
-//        findInformationMostRecentUntil(null).edit(name.trim(), nameEn.trim(), basic, competenceCourseLevel);
-//
-//        // unique acronym creation
-//        String acronym = null;
-//        try {
-//            final UniqueAcronymCreator<CompetenceCourse> uniqueAcronymCreator =
-//                    new UniqueAcronymCreator<CompetenceCourse>(CompetenceCourse::getName, CompetenceCourse::getAcronym,
-//                            (Set<CompetenceCourse>) CompetenceCourse.readBolonhaCompetenceCourses());
-//            acronym = uniqueAcronymCreator.create(this).getLeft();
-//        } catch (Exception e) {
-//            throw new DomainException("competence.course.unable.to.create.acronym");
-//        }
-//        findInformationMostRecentUntil(null).setAcronym(acronym);
-//    }
-
-//    public void editAcronym(String acronym) {
-//        Set<CompetenceCourse> bolonhaCompetenceCourses = (Set<CompetenceCourse>) CompetenceCourse.readBolonhaCompetenceCourses();
-//        for (final CompetenceCourse competenceCourse : bolonhaCompetenceCourses) {
-//            if (!competenceCourse.equals(this) && competenceCourse.getAcronym().equalsIgnoreCase(acronym.trim())) {
-//                throw new DomainException("competenceCourse.existing.acronym", competenceCourse.getName(),
-//                        competenceCourse.getDepartmentUnit().getDepartment().getRealName());
-//            }
-//        }
-//
-//        findInformationMostRecentUntil(null).setAcronym(acronym);
-//    }
-
-//    public void changeCurricularStage(CurricularStage curricularStage) {
-//        if (curricularStage.equals(CurricularStage.APPROVED)) {
-//            super.setCreationDateYearMonthDay(new YearMonthDay());
-//        }
-//        setCurricularStage(curricularStage);
-//    }
-
-//    private void checkIfCanEdit(boolean scientificCouncilEdit) {
-//        if (!scientificCouncilEdit && this.getCurricularStage().equals(CurricularStage.APPROVED)) {
-//            throw new DomainException("competenceCourse.approved");
-//        }
-//    }
-
-//    public void edit(String objectives, String program, String evaluationMethod, String objectivesEn, String programEn,
-//            String evaluationMethodEn) {
-//        findInformationMostRecentUntil(null).edit(objectives, program, evaluationMethod, objectivesEn, programEn,
-//                evaluationMethodEn);
-//    }
 
     public void delete() {
         setGradeScale(null);
@@ -652,16 +568,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         super.setCurricularStage(curricularStage);
     }
 
-//    public ScientificAreaUnit getScientificAreaUnit() {
-//        return getScientificAreaUnit(null);
-//    }
-
-//    public ScientificAreaUnit getScientificAreaUnit(ExecutionInterval interval) {
-//        CompetenceCourseInformation mostRecentCompetenceCourseInformationUntil = findInformationMostRecentUntil(interval);
-//        return mostRecentCompetenceCourseInformationUntil != null ? mostRecentCompetenceCourseInformationUntil
-//                .getScientificAreaUnit() : null;
-//    }
-
     public Stream<Unit> getParentUnits(final Predicate<Unit> predicate, ExecutionInterval interval) {
         final Predicate<Unit> nullSafePredicate = predicate != null ? predicate : u -> true;
 
@@ -677,15 +583,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     public boolean isAnual() {
         return isAnual(null);
     }
-
-//    public boolean isAnual(final ExecutionYear executionYear) {
-//        final CompetenceCourseInformation information = findInformationMostRecentUntil(executionYear);
-//        return information != null ? information.isAnual() : null;
-//    }
-
-//    public boolean isSemestrial(final ExecutionYear executionYear) {
-//        return getRegime(executionYear) == RegimeType.SEMESTRIAL;
-//    }
 
     public boolean isApproved() {
         return getCurricularStage() == CurricularStage.APPROVED;
@@ -769,29 +666,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return getType() == CompetenceCourseType.DISSERTATION;
     }
 
-//    public boolean hasOneCourseLoad(final ExecutionYear executionYear) {
-//        final CompetenceCourseInformation information = findInformationMostRecentUntil(executionYear);
-//        return information != null && information.getCompetenceCourseLoadsSet().size() == 1;
-//    }
-
-//    public boolean matchesName(String name) {
-//        name = StringNormalizer.normalize(name).replaceAll("[^0-9a-zA-Z]", " ").trim();
-//        for (final CompetenceCourseInformation information : getCompetenceCourseInformationsSet()) {
-//            if (StringNormalizer.normalize(information.getName()).matches(".*" + name.replaceAll(" ", ".*") + ".*")) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-//
-//    public boolean matchesCode(String code) {
-//        if (getCode() == null) {
-//            return false;
-//        }
-//        code = StringNormalizer.normalize(code).replaceAll("[^0-9a-zA-Z]", " ").trim();
-//        return (StringNormalizer.normalize(getCode()).matches(".*" + code.replaceAll(" ", ".*") + ".*"));
-//    }
-
     public ExecutionInterval getStartExecutionInterval() {
         return getOldestCompetenceCourseInformation().getExecutionInterval();
     }
@@ -808,30 +682,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     static public Collection<CompetenceCourse> findAll() {
         return Bennu.getInstance().getCompetenceCoursesSet().stream().collect(Collectors.toSet());
     }
-
-//    static public Collection<CompetenceCourse> searchBolonhaCompetenceCourses(String searchName, String searchCode) {
-//        final Set<CompetenceCourse> result = new TreeSet<CompetenceCourse>(COMPETENCE_COURSE_COMPARATOR_BY_NAME);
-//        for (final CompetenceCourse competenceCourse : Bennu.getInstance().getCompetenceCoursesSet()) {
-//            if ((!searchName.isEmpty()) && (!competenceCourse.matchesName(searchName))) {
-//                continue;
-//            }
-//            if ((!searchCode.isEmpty()) && (!competenceCourse.matchesCode(searchCode))) {
-//                continue;
-//            }
-//            result.add(competenceCourse);
-//        }
-//        return result;
-//    }
-
-//    static public Collection<CompetenceCourse> readApprovedBolonhaCompetenceCourses() {
-//        final Set<CompetenceCourse> result = new TreeSet<CompetenceCourse>(COMPETENCE_COURSE_COMPARATOR_BY_NAME);
-//        for (final CompetenceCourse competenceCourse : Bennu.getInstance().getCompetenceCoursesSet()) {
-//            if (competenceCourse.isApproved()) {
-//                result.add(competenceCourse);
-//            }
-//        }
-//        return result;
-//    }
 
     @Deprecated
     public java.util.Date getCreationDate() {
