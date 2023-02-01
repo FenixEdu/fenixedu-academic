@@ -1,3 +1,4 @@
+40.4.0 (01-02-2023)
 - Refactor: Cleanup lessons, spaces and occupations code
 - Refactor: Remove unused service for execution courses creation
 - Refactor: Remove deprecated method to find competence course information
