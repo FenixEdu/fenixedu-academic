@@ -284,10 +284,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return getRegistration().getPerson();
     }
 
-    final public Department getDepartment() {
-        return getDegree().getUnit().getDepartment();
-    }
-
     final public Degree getDegree() {
         return getDegreeCurricularPlan().getDegree();
     }

@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Teacher;
@@ -37,7 +36,6 @@ import org.fenixedu.academic.domain.TeacherAuthorization;
 import org.fenixedu.academic.domain.TeacherCategory;
 import org.fenixedu.academic.domain.organizationalStructure.PartyTypeEnum;
 import org.fenixedu.academic.domain.organizationalStructure.Unit;
-import org.fenixedu.academic.domain.organizationalStructure.UnitAcronym;
 import org.fenixedu.academic.domain.organizationalStructure.UnitUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
@@ -85,16 +83,6 @@ public class AuthorizationService {
     private String message(String code, Object... args) {
         return messageSource.getMessage(code, args, I18N.getLocale());
     }
-
-//    /***
-//     * Get all active deparments
-//     * 
-//     * @return {@link Department}
-//     */
-//    @Deprecated
-//    public List<Department> getDepartments() {
-//        return Department.readActiveDepartments();
-//    }
 
     public List<Unit> getDepartmentsUnits() {
         return UnitUtils.readAllActiveUnitsByType(PartyTypeEnum.DEPARTMENT).stream().filter(u -> u.isInternal())
@@ -220,9 +208,9 @@ public class AuthorizationService {
     }
 
     /**
-     * Get all valid teacher authorizations for the specific {@link Department} and {@link ExecutionInterval}
+     * Get all valid teacher authorizations for the specific {@link Unit} and {@link ExecutionInterval}
      * 
-     * @param search {@link Department} and {@link ExecutionInterval} filter
+     * @param search {@link Unit} and {@link ExecutionInterval} filter
      * @return
      */
     public List<TeacherAuthorization> searchAuthorizations(final SearchBean search) {

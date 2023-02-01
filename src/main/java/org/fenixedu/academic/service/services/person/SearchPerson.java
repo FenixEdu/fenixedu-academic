@@ -28,10 +28,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.academic.domain.Degree;
-import org.fenixedu.academic.domain.Department;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
-import org.fenixedu.academic.domain.Teacher;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.person.IDDocumentType;
 import org.fenixedu.academic.domain.person.RoleType;
@@ -58,8 +56,6 @@ public class SearchPerson implements Serializable {
         private RoleType role;
 
         private Degree degree;
-
-        private Department department;
 
         private DegreeType degreeType;
 
@@ -107,16 +103,12 @@ public class SearchPerson implements Serializable {
             if (degreeTypeString != null && degreeTypeString.length() > 0) {
                 degreeType = FenixFramework.getDomainObject(degreeTypeString);
             }
-
-            if (!StringUtils.isEmpty(departmentId)) {
-                department = FenixFramework.getDomainObject(departmentId);
-            }
         }
 
         public boolean emptyParameters() {
             return StringUtils.isEmpty(this.email) && StringUtils.isEmpty(this.username)
                     && StringUtils.isEmpty(this.documentIdNumber) && this.role == null && this.degree == null
-                    && this.department == null && this.degreeType == null && this.nameWords == null && this.studentNumber == null
+                    && this.degreeType == null && this.nameWords == null && this.studentNumber == null
                     && this.idDocumentType == null && StringUtils.isEmpty(this.getPaymentCode());
         }
 
@@ -134,10 +126,6 @@ public class SearchPerson implements Serializable {
 
         public DegreeType getDegreeType() {
             return degreeType;
-        }
-
-        public Department getDepartment() {
-            return department;
         }
 
         public String getDocumentIdNumber() {
@@ -203,10 +191,6 @@ public class SearchPerson implements Serializable {
 
         public void setDegree(Degree degree) {
             this.degree = degree;
-        }
-
-        public void setDepartment(Department department) {
-            this.department = department;
         }
 
         public void setDegreeType(DegreeType degreeType) {
@@ -279,16 +263,7 @@ public class SearchPerson implements Serializable {
                     }
                 }
             }
-            final Department department = searchParameters.getDepartment();
-            if (department != null) {
-                for (final Iterator<Person> peopleIterator = persons.iterator(); peopleIterator.hasNext();) {
-                    final Person person = peopleIterator.next();
-                    final Teacher teacher = person.getTeacher();
-                    if (teacher == null || teacher.getUnit().orElse(null) != department.getDepartmentUnit()) {
-                        peopleIterator.remove();
-                    }
-                }
-            }
+
         } else {
             persons = new ArrayList<Person>(0);
         }

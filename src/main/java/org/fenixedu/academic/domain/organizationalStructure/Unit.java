@@ -216,7 +216,6 @@ public class Unit extends Unit_Base {
         setUnitAcronym(null);
         setAdministrativeOffice(null);
 
-        super.setDepartment(null); // if department unit
         super.setDegree(null); // if degree unit
 
         super.delete();

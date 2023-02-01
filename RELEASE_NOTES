@@ -1,3 +1,5 @@
+- Refactor: Remove deprecated entity Department
+
 40.4.0 (01-02-2023)
 - Refactor: Cleanup lessons, spaces and occupations code
 - Refactor: Remove unused service for execution courses creation

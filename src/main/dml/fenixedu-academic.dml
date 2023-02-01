@@ -483,14 +483,6 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
 		LocalizedString professionalStatute;
     }
 
-    class Department  {
-        String code;
-        String name;
-        String realName;
-        String realNameEn;
-        Boolean active;
-    }
-
     class District  {
         String code (REQUIRED);
         String name (REQUIRED);
@@ -2356,20 +2348,6 @@ relation DegreeUnit {
     organizationalStructure.Unit playsRole unit;
 }
 
-relation DepartmentDegree {
-    Department playsRole departments {
-        multiplicity *;
-    }
-    Degree playsRole degrees {
-        multiplicity *;
-    }
-}
-
-relation DepartmentUnit {
-    Department playsRole department;
-    organizationalStructure.Unit playsRole departmentUnit;
-}
-
 relation DissertationEnrolmentConclusionProcess {
     protected Enrolment playsRole dissertationEnrolment;
     student.curriculum.ConclusionProcessVersion playsRole conclusionProcessVersions {
@@ -3356,13 +3334,6 @@ relation RootDomainObjectDegreeInfoFuture {
 relation RootDomainObjectDegreeModule {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     degreeStructure.DegreeModule playsRole degreeModules {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectDepartment {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    Department playsRole departments {
         multiplicity *;
     }
 }
@@ -4485,15 +4456,6 @@ relation TeacherRevokedTeacherAuthorization {
     }
 }
 
-relation DepartmentTeacherAuthorizations {
-    Department playsRole department {
-        multiplicity 0..1;
-    }
-    TeacherAuthorization playsRole teacherAuthorization {
-    	multiplicity *;
-	}
-}
-
 relation UnitTeacherAuthorizations {
     organizationalStructure.Unit playsRole unit {
         multiplicity 0..1;
@@ -4501,15 +4463,6 @@ relation UnitTeacherAuthorizations {
     TeacherAuthorization playsRole teacherAuthorizations {
     	multiplicity *;
 	}
-}
-
-relation DepartmentRevokedTeacherAuthorizations {
-    Department playsRole revokedDepartment {
-        multiplicity 0..1;
-    }
-    TeacherAuthorization playsRole revokedTeacherAuthorization {
-        multiplicity *;
-    }
 }
 
 relation UnitRevokedTeacherAuthorizations {
@@ -4880,15 +4833,6 @@ relation PersistentAlumniGroupDegree {
 	}
 	public Degree playsRole degree {
 		multiplicity 0..1;
-	}
-}
-
-relation DepartmentCompetenceCourseMembersGroup {
-	protected Department playsRole departmentAsMembers {
-		multiplicity *;
-	}
-	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole membersGroup {
-		multiplicity 1..1;
 	}
 }
 

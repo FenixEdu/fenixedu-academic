@@ -87,7 +87,7 @@ public class Teacher extends Teacher_Base {
         }
         super.setPerson(person);
     }
-    
+
     @Override
     public void setNumber(String number) {
         if (findByNumber(number).filter(t -> t != this).isPresent()) {
@@ -129,27 +129,6 @@ public class Teacher extends Teacher_Base {
     }
 
     /**
-     * Gets the latest department of the teacher for the given interval
-     * 
-     * @param interval the time frame to consider
-     * @return an {@code Optional} of the department.
-     */
-    @Deprecated
-    public Optional<Department> getDepartment(AcademicInterval interval) {
-        return getTeacherAuthorization(interval).map(a -> a.getDepartment());
-    }
-
-    /**
-     * Same as {@link #getDepartment(AcademicInterval)} for the current semester
-     * 
-     * @return The department or null
-     */
-    @Deprecated
-    public Department getDepartment() {
-        return getDepartment(AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.SEMESTER)).orElse(null);
-    }
-
-    /**
      * Gets the latest unit of the teacher (usually the unit represents a department)
      * 
      * @return an {@code Optional} of the unit.
@@ -158,26 +137,6 @@ public class Teacher extends Teacher_Base {
         return getTeacherAuthorizationStream().max(Comparator.comparing(TeacherAuthorization::getExecutionInterval))
                 .map(TeacherAuthorization::getUnit);
     }
-
-//    /**
-//     * Gets the last department the teacher had up to the given interval (inclusive). Useful when we don't want to consider
-//     * authorization interruptions, and a teacher once belonging to a department stays with that status.
-//     * 
-//     * @param interval the time frame to consider
-//     * @return an {@code Optional} of the department.
-//     */
-//    public Department getLastDepartment(AcademicInterval interval) {
-//        return getLastTeacherAuthorization(interval).map(a -> a.getDepartment()).orElse(null);
-//    }
-//
-//    /**
-//     * Same as {@link #getLastDepartment(AcademicInterval)} for the current semester
-//     * 
-//     * @return The department or null
-//     */
-//    public Department getLastDepartment() {
-//        return getLastDepartment(AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.SEMESTER));
-//    }
 
     /**
      * Gets the latest category of the teacher in the given interval.

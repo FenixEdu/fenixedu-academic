@@ -37,7 +37,6 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
         this();
         setTeacher(teacher);
         setUnit(unit);
-        setDepartment(unit.getDepartment()); // deprecated
         setExecutionSemester(executionInterval);
         setTeacherCategory(teacherCategory);
         setContracted(contracted);
@@ -70,9 +69,7 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
     public void revoke() {
         setRevokedTeacher(getTeacher());
         setTeacher(null);
-        setRevokedDepartment(getDepartment()); // deprecated
         setRevokedUnit(getUnit());
-        setDepartment(null); // deprecated
         setUnit(null);
         setRevokedExecutionSemester(getExecutionInterval());
         setExecutionSemester(null);
@@ -82,14 +79,7 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
         setRootDomainObject(null);
     }
 
-    @Deprecated
-    @Override
-    public Department getDepartment() {
-        if (getRevokedRootDomainObject() != null) {
-            return getRevokedDepartment();
-        }
-        return super.getDepartment();
-    }
+
 
     @Override
     public Unit getUnit() {
@@ -147,14 +137,12 @@ public class TeacherAuthorization extends TeacherAuthorization_Base implements C
 
     public void delete() {
         super.setTeacher(null);
-        super.setDepartment(null);
         super.setUnit(null);
         super.setExecutionSemester(null);
         super.setAuthorizer(null);
         super.setTeacherCategory(null);
         super.setRootDomainObject(null);
 
-        super.setRevokedDepartment(null);
         super.setRevokedExecutionSemester(null);
         super.setRevokedTeacher(null);
         super.setRevokedUnit(null);
