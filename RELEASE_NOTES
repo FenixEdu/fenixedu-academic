@@ -1,3 +1,5 @@
+- Improvement: Revert description of 'Not Approved' enrolment state 
+
 40.5.0 (06-02-2023)
 - Refactor: Remove deprecated entity Department
 
