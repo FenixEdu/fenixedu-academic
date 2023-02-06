@@ -1,4 +1,5 @@
 - Improvement: Revert description of 'Not Approved' enrolment state 
+- Refactor: Infer if registration is active via registration state type
 
 40.5.0 (06-02-2023)
 - Refactor: Remove deprecated entity Department

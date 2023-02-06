@@ -293,7 +293,7 @@ public class RegistrationState extends RegistrationState_Base {
 //    }
 
     public boolean isActive() {
-        return getStateTypeEnum().isActive();
+        return getType().getActive();
     }
 
 }
