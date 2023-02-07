@@ -21,6 +21,7 @@ package org.fenixedu.academic.domain.accessControl;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -32,6 +33,7 @@ import org.fenixedu.academic.domain.ExecutionDegree;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.Professorship;
 import org.fenixedu.academic.domain.Teacher;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.annotation.GroupArgument;
@@ -197,13 +199,12 @@ public class TeacherGroup extends FenixGroup {
     }
 
     private static boolean functionsAt(final ExecutionCourse executionCourse, final Space campus) {
-        final ExecutionYear executionYear = executionCourse.getExecutionYear();
         for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
             final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
-            for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
-                if (executionDegree.getCampus() == campus && executionDegree.getExecutionYear() == executionYear) {
-                    return true;
-                }
+            final Space dcpCampus =
+                    Optional.ofNullable(degreeCurricularPlan.getDegree().getUnit()).map(Unit::getCampus).orElse(null);
+            if (dcpCampus == campus) {
+                return true;
             }
         }
         return false;

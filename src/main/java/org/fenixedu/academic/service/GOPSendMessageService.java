@@ -70,18 +70,6 @@ public class GOPSendMessageService implements NotificationService {
         return null;
     }
 
-    private static Set<String> getGOPEmail(Collection<ExecutionDegree> degrees) {
-        Set<String> emails = new HashSet<String>();
-        for (ExecutionDegree executionDegree : degrees) {
-            String emailFromApplicationResources =
-                    BundleUtil.getString(Bundle.APPLICATION, "email.gop." + executionDegree.getCampus().getName());
-            if (!StringUtils.isEmpty(emailFromApplicationResources)) {
-                emails.add(emailFromApplicationResources);
-            }
-        }
-        return emails;
-    }
-
     @Override
     public boolean notify(OccupationRequest request) {
         MessageResources messages = MessageResources.getMessageResources("resources/ResourceAllocationManagerResources");

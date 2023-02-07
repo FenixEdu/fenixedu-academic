@@ -38,14 +38,10 @@ import java.util.stream.Collectors;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry;
-import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicInterval;
-import org.fenixedu.academic.domain.time.calendarStructure.AcademicYearCE;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
-import org.fenixedu.spaces.domain.Space;
 
 /**
  * 
@@ -128,18 +124,15 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         setRootDomainObject(Bennu.getInstance());
     }
 
-    protected ExecutionDegree(DegreeCurricularPlan degreeCurricularPlan, ExecutionYear executionYear, Space campus,
-            Boolean publishedExamMap) {
+    protected ExecutionDegree(DegreeCurricularPlan degreeCurricularPlan, ExecutionYear executionYear, Boolean publishedExamMap) {
         this();
 
-        if (degreeCurricularPlan == null || executionYear == null || campus == null) {
+        if (degreeCurricularPlan == null || executionYear == null) {
             throw new DomainException("execution.degree.null.args.to.constructor");
         }
 
         setDegreeCurricularPlan(degreeCurricularPlan);
         setExecutionYear(executionYear);
-        setCampus(campus);
-
     }
 
     @Override
@@ -162,7 +155,6 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
         setExecutionYear(null);
         setDegreeCurricularPlan(null);
-        setCampus(null);
 
         for (OccupationPeriodReference reference : getOccupationPeriodReferencesSet()) {
             reference.delete();

@@ -972,20 +972,20 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return getDegreeCurricularPlan().getPresentationName(executionYear);
     }
 
-    final public Space getCurrentCampus() {
-        final Space currentCampus = getDegreeCurricularPlan().getCurrentCampus();
-        return currentCampus == null ? getLastCampus() : currentCampus;
-    }
-
-    final public Space getCampus(final ExecutionYear executionYear) {
-        final Space result = getDegreeCurricularPlan().getCampus(executionYear);
-        return result == null ? getLastCampus() : result;
-    }
-
-    final public Space getLastCampus() {
-        final Space lastScpCampus = getDegreeCurricularPlan().getCampus(getLastExecutionYear());
-        return lastScpCampus == null ? getDegreeCurricularPlan().getLastCampus() : lastScpCampus;
-    }
+//    final public Space getCurrentCampus() {
+//        final Space currentCampus = getDegreeCurricularPlan().getCurrentCampus();
+//        return currentCampus == null ? getLastCampus() : currentCampus;
+//    }
+//
+//    final public Space getCampus(final ExecutionYear executionYear) {
+//        final Space result = getDegreeCurricularPlan().getCampus(executionYear);
+//        return result == null ? getLastCampus() : result;
+//    }
+//
+//    final public Space getLastCampus() {
+//        final Space lastScpCampus = getDegreeCurricularPlan().getCampus(getLastExecutionYear());
+//        return lastScpCampus == null ? getDegreeCurricularPlan().getLastCampus() : lastScpCampus;
+//    }
 
     final public void createOptionalEnrolment(final CurriculumGroup curriculumGroup, final ExecutionInterval executionInterval,
             final OptionalCurricularCourse optionalCurricularCourse, final CurricularCourse curricularCourse,

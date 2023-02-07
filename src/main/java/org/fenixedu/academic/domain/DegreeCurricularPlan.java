@@ -53,7 +53,6 @@ import org.fenixedu.academic.domain.degreeStructure.OptionalCurricularCourse;
 import org.fenixedu.academic.domain.degreeStructure.ProgramConclusion;
 import org.fenixedu.academic.domain.degreeStructure.RootCourseGroup;
 import org.fenixedu.academic.domain.exceptions.DomainException;
-import org.fenixedu.academic.domain.space.SpaceUtils;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarEntry;
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
@@ -412,19 +411,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public ExecutionYear getMostRecentExecutionYear() {
         return getMostRecentExecutionDegree().getExecutionYear();
-    }
-
-    public ExecutionDegree getExecutionDegreeByYearAndCampus(final ExecutionYear executionYear, final Space campus) {
-        for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
-            if (executionDegree.getExecutionYear() == executionYear && executionDegree.getCampus() == campus) {
-                return executionDegree;
-            }
-        }
-        return null;
-    }
-
-    public boolean hasExecutionDegreeByYearAndCampus(final ExecutionYear executionYear, final Space campus) {
-        return getExecutionDegreeByYearAndCampus(executionYear, campus) != null;
     }
 
     public boolean hasAnyExecutionDegreeFor(final ExecutionYear executionYear) {
@@ -844,8 +830,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return null;
     }
 
-    public ExecutionDegree createExecutionDegree(final ExecutionYear executionYear, final Space campus,
-            final Boolean publishedExamMap) {
+    public ExecutionDegree createExecutionDegree(final ExecutionYear executionYear) {
 
         if (isDraft()) {
             throw new DomainException("degree.curricular.plan.not.approved.cannot.create.execution.degree", this.getName());
@@ -856,7 +841,14 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                     executionYear.getYear());
         }
 
-        return new ExecutionDegree(this, executionYear, campus, publishedExamMap);
+        return new ExecutionDegree(this, executionYear, Boolean.FALSE);
+    }
+
+    @Deprecated
+    public ExecutionDegree createExecutionDegree(final ExecutionYear executionYear, final Space campus,
+            final Boolean publishedExamMap) {
+
+        return createExecutionDegree(executionYear);
     }
 
     /**
@@ -950,34 +942,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public boolean isPast() {
         return getState().equals(DegreeCurricularPlanState.PAST);
-    }
-
-    public Space getCampus(final ExecutionYear executionYear) {
-        for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
-            if (executionDegree.getExecutionYear() == executionYear) {
-                return executionDegree.getCampus();
-            }
-        }
-
-        return null;
-    }
-
-    public Space getCurrentCampus() {
-        for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
-            final ExecutionYear executionYear = executionDegree.getExecutionYear();
-            if (executionYear.isCurrent()) {
-                return executionDegree.getCampus();
-            }
-        }
-
-        return null;
-    }
-
-    public Space getLastCampus() {
-        if (!getExecutionDegreesSet().isEmpty()) {
-            return getMostRecentExecutionDegree().getCampus();
-        }
-        return SpaceUtils.getDefaultCampus();
     }
 
     @Override

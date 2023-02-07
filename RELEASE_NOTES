@@ -1,3 +1,5 @@
+- Refactor: Remove deprecated relation between execution degree and campus
+
 40.5.1 (06-02-2023)
 - Improvement: Revert description of 'Not Approved' enrolment state 
 - Refactor: Infer if registration is active via registration state type

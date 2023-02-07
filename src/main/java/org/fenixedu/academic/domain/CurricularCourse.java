@@ -712,10 +712,6 @@ public class CurricularCourse extends CurricularCourse_Base {
         return getAllCurricularCourses();
     }
 
-    public boolean hasExecutionDegreeByYearAndCampus(ExecutionYear executionYear, Space campus) {
-        return getDegreeCurricularPlan().hasExecutionDegreeByYearAndCampus(executionYear, campus);
-    }
-
     public boolean hasAnyExecutionDegreeFor(ExecutionYear executionYear) {
         return getDegreeCurricularPlan().hasAnyExecutionDegreeFor(executionYear);
     }

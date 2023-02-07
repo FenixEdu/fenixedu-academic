@@ -2517,13 +2517,6 @@ relation PersonSender {
     util.email.PersonSender playsRole sender;
 }
 
-relation ExecutionDegreeCampus {
-    ExecutionDegree playsRole executionDegrees {
-        multiplicity *;
-    }
-    .org.fenixedu.spaces.domain.Space playsRole campus;
-}
-
 relation ExecutionDegreeCoordinator {
     ExecutionDegree playsRole executionDegree;
     Coordinator playsRole coordinatorsList {

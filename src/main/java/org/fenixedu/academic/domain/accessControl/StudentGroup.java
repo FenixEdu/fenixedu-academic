@@ -38,6 +38,7 @@ import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.degreeStructure.CycleType;
+import org.fenixedu.academic.domain.organizationalStructure.Unit;
 import org.fenixedu.academic.domain.person.RoleType;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.domain.student.registrationStates.RegistrationState;
@@ -367,8 +368,10 @@ public class StudentGroup extends FenixGroup {
         Set<Registration> registrations = new HashSet<>();
         for (final ExecutionYear executionYear : ExecutionYear.findCurrents()) {
             for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
-                if (executionDegree.getCampus().equals(campus)) {
-                    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+                final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+                final Space dcpCampus =
+                        Optional.ofNullable(degreeCurricularPlan.getDegree().getUnit()).map(Unit::getCampus).orElse(null);
+                if (dcpCampus == campus) {
                     for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan
                             .getStudentCurricularPlansSet()) {
                         final Registration registration = studentCurricularPlan.getRegistration();
@@ -418,7 +421,8 @@ public class StudentGroup extends FenixGroup {
                 if (cycle != null && !isActiveRegistrationsWithAtLeastOneEnrolment(registration, cycle, executionYear)) {
                     continue;
                 }
-                if (campus != null && registration.getCampus() != campus) {
+                if (campus != null
+                        && Optional.ofNullable(registration.getDegree().getUnit()).map(Unit::getCampus).orElse(null) != campus) {
                     continue;
                 }
                 if (executionCourse != null && !registration.getAttendingExecutionCoursesFor().contains(executionCourse)) {

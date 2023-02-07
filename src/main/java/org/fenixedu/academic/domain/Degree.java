@@ -660,16 +660,16 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
                 executionYear);
     }
 
-    public Collection<Space> getCampus(final ExecutionYear executionYear) {
-        Set<Space> result = new HashSet<>();
-        for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
-            final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
-            if (executionDegree != null && executionDegree.getCampus() != null) {
-                result.add(executionDegree.getCampus());
-            }
-        }
-        return new ArrayList<>(result);
-    }
+//    public Collection<Space> getCampus(final ExecutionYear executionYear) {
+//        Set<Space> result = new HashSet<>();
+//        for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
+//            final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
+//            if (executionDegree != null && executionDegree.getCampus() != null) {
+//                result.add(executionDegree.getCampus());
+//            }
+//        }
+//        return new ArrayList<>(result);
+//    }
 
     public boolean isFirstCycle() {
         return getDegreeType().isFirstCycle();

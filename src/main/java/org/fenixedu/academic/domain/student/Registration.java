@@ -1832,18 +1832,18 @@ public class Registration extends Registration_Base {
         return getActiveStateTypeEnum().isInactive();
     }
 
-    public Space getCampus() {
-        return getLastStudentCurricularPlan().getLastCampus();
-    }
+//    public Space getCampus() {
+//        return getLastStudentCurricularPlan().getLastCampus();
+//    }
+//
+//    public Space getCampus(final ExecutionYear executionYear) {
+//        final StudentCurricularPlan scp = getStudentCurricularPlan(executionYear);
+//        return scp == null ? getLastStudentCurricularPlan().getCampus(executionYear) : scp.getCampus(executionYear);
+//    }
 
-    public Space getCampus(final ExecutionYear executionYear) {
-        final StudentCurricularPlan scp = getStudentCurricularPlan(executionYear);
-        return scp == null ? getLastStudentCurricularPlan().getCampus(executionYear) : scp.getCampus(executionYear);
-    }
-
-    final public String getIstUniversity() {
-        return getCampus().getName();
-    }
+//    final public String getIstUniversity() {
+//        return getCampus().getName();
+//    }
 
     @Override
     final public void setStudentCandidacy(final StudentCandidacy studentCandidacy) {
