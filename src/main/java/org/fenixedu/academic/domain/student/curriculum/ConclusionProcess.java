@@ -20,6 +20,7 @@ package org.fenixedu.academic.domain.student.curriculum;
 
 import java.math.BigDecimal;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import org.fenixedu.academic.domain.Degree;
@@ -30,6 +31,7 @@ import org.fenixedu.academic.domain.degree.DegreeType;
 import org.fenixedu.academic.domain.exceptions.DomainException;
 import org.fenixedu.academic.domain.student.Registration;
 import org.fenixedu.academic.dto.student.RegistrationConclusionBean;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.LocalizedString;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -149,26 +151,47 @@ abstract public class ConclusionProcess extends ConclusionProcess_Base {
     public boolean isActive() {
         return getLastVersion() != null && getLastVersion().isActive();
     }
-    
+
     private boolean isDeletable() {
         return !isActive();
     }
-    
+
     public void delete() {
-        if(!isDeletable()) {
+        if (!isDeletable()) {
             throw new DomainException("error.ProgramConclusionProcess.delete.impossible");
         }
-        
-        while(!getVersionsSet().isEmpty()) {
+
+        while (!getVersionsSet().isEmpty()) {
             getVersionsSet().iterator().next().delete();
         }
-        
+
         super.setGroup(null);
         super.setConclusionYear(null);
         super.setLastVersion(null);
         super.setRootDomainObject(null);
 
         super.deleteDomainObject();
+    }
+
+    public static Set<ConclusionProcess> findAll() {
+        return Bennu.getInstance().getConclusionProcessesSet();
+    }
+
+    public boolean isNumberInvalid(String number) {
+        return findAll().stream().filter(cp -> cp.getNumber() != null).anyMatch(cp -> cp.getNumber() == number);
+    }
+
+    @Override
+    public void setNumber(String number) {
+        boolean numberInvalid = isNumberInvalid(number);
+        if (numberInvalid) {
+            throw new DomainException("error.ProgramConclusionProcess.addNumber.numberAlreadyExists");
+        }
+        super.setNumber(number);
+    }
+
+    public void deleteNumber() {
+        this.setNumber(null);
     }
 
 }

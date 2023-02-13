@@ -1250,6 +1250,7 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
     }
         
     class student.curriculum.ConclusionProcess  {
+    String number;
     }
 
         class student.curriculum.ProgramConclusionProcess extends student.curriculum.ConclusionProcess {
@@ -1265,6 +1266,7 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
         String curriculum (REQUIRED);
         String notes;
         protected boolean active (REQUIRED);
+        String number;
     }
 
     class student.curriculum.ExtraCurricularActivity  {

@@ -106,12 +106,12 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
     private boolean isDeletable() {
         return getLastVersionConclusionProcess() == null || !isActive();
     }
-    
+
     public void delete() {
-        if(!isDeletable()) {
+        if (!isDeletable()) {
             throw new DomainException("error.ConclusionProcessVersion.delete.impossible");
         }
-        
+
         super.getLastVersionConclusionProcess();
         super.setConclusionProcess(null);
         super.setConclusionYear(null);
@@ -120,7 +120,7 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
         super.setResponsible(null);
 
         super.setRootDomainObject(null);
-        
+
         super.deleteDomainObject();
     }
 
@@ -225,6 +225,10 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
         } else {
             setCreationDateTime(new org.joda.time.DateTime(date.getTime()));
         }
+    }
+
+    public void deleteNumber() {
+        setNumber(null);
     }
 
 }
