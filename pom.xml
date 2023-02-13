@@ -11,7 +11,7 @@
 
 	<groupId>com.qubit.solution.fenixedu</groupId>
     <artifactId>fenixedu-academic-core</artifactId>
-    <version>40.5.1</version>
+    <version>40.6.0</version>
     <packaging>jar</packaging>
 
     <name>FenixEdu Academic</name>
