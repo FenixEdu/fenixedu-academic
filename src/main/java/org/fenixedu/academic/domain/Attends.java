@@ -119,8 +119,10 @@ public class Attends extends Attends_Base {
      */
     public boolean isValid() {
         final Enrolment enrolment = getEnrolment();
-        return enrolment != null && !enrolment.isAnnulled()
-                && enrolment.getEvaluationsSet().stream().anyMatch(ee -> ee.getExecutionInterval() == getExecutionInterval());
+        final ExecutionInterval executionInterval = getExecutionInterval();
+
+        return enrolment != null && !enrolment.isAnnulled() && (enrolment.getExecutionInterval() == executionInterval
+                || enrolment.getEvaluationsSet().stream().anyMatch(ee -> ee.getExecutionInterval() == executionInterval));
     }
 
     public boolean isFor(final ExecutionInterval interval) {

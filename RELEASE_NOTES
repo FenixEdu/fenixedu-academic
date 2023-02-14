@@ -1,3 +1,5 @@
+- Bug fix: When checking if attends is valid, test also enrolment execution interval
+
 40.6.0 (13-02-2023)
 - Refactor: Remove deprecated relation between execution degree and campus
 - New Feature: Add conclusion number to conclusionProcess and conclusionProcessVersion
