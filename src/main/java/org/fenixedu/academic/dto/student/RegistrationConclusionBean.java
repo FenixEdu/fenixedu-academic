@@ -362,4 +362,11 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
         this.studentCurricularPlan = studentCurricularPlan;
     }
+
+    public String getConclusionNumber() {
+        if (isConclusionProcessed()) {
+            return this.getConclusionProcess().getNumber();
+        }
+        return null;
+    }
 }
