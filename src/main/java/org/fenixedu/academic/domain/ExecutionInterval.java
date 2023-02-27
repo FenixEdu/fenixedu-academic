@@ -362,12 +362,28 @@ public class ExecutionInterval extends ExecutionInterval_Base implements Compara
                 .collect(Collectors.toSet());
     }
 
+    @Deprecated
     public static ExecutionInterval findFirstChild() {
         return findAllChilds().stream().min(Comparator.naturalOrder()).orElse(null);
     }
 
+    public static Optional<ExecutionInterval> findFirstChild(final AcademicCalendarEntry calendar) {
+        final AcademicCalendarEntry calendarToCheck =
+                calendar != null ? calendar.getRootEntry() : AcademicCalendarEntry.findDefaultCalendar();
+        
+        return findAllChilds().stream().filter(ei -> ei.getAcademicCalendar() == calendarToCheck).min(Comparator.naturalOrder());
+    }
+
+    @Deprecated
     public static ExecutionInterval findLastChild() {
         return findAllChilds().stream().max(Comparator.naturalOrder()).orElse(null);
+    }
+
+    public static Optional<ExecutionInterval> findLastChild(final AcademicCalendarEntry calendar) {
+        final AcademicCalendarEntry calendarToCheck =
+                calendar != null ? calendar.getRootEntry() : AcademicCalendarEntry.findDefaultCalendar();
+        
+        return findAllChilds().stream().filter(ei -> ei.getAcademicCalendar() == calendarToCheck).max(Comparator.naturalOrder());
     }
 
     public AcademicPeriod getAcademicPeriod() {

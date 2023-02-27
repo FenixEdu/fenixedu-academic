@@ -25,6 +25,7 @@ import org.fenixedu.academic.domain.ExecutionInterval;
 import org.fenixedu.academic.domain.ExecutionYear;
 import org.fenixedu.academic.domain.StudentCurricularPlan;
 import org.fenixedu.academic.domain.exceptions.DomainException;
+import org.fenixedu.academic.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
@@ -202,10 +203,12 @@ public class StudentStatute extends StudentStatute_Base {
             return false;
         }
 
-        ExecutionInterval thisStatuteBegin =
-                getBeginExecutionInterval() != null ? getBeginExecutionInterval() : ExecutionInterval.findFirstChild();
-        ExecutionInterval thisStatuteEnd =
-                getEndExecutionInterval() != null ? getEndExecutionInterval() : ExecutionInterval.findLastChild();
+        final AcademicCalendarRootEntry calendar = registration.getDegree().getCalendar();
+
+        ExecutionInterval thisStatuteBegin = getBeginExecutionInterval() != null ? getBeginExecutionInterval() : ExecutionInterval
+                .findFirstChild(calendar).orElseThrow();
+        ExecutionInterval thisStatuteEnd = getEndExecutionInterval() != null ? getEndExecutionInterval() : ExecutionInterval
+                .findLastChild(calendar).orElseThrow();
 
         return statuteBegin.isAfterOrEquals(thisStatuteBegin) && statuteBegin.isBeforeOrEquals(thisStatuteEnd)
                 || statuteEnd.isAfterOrEquals(thisStatuteBegin) && statuteEnd.isBeforeOrEquals(thisStatuteEnd);
@@ -231,7 +234,6 @@ public class StudentStatute extends StudentStatute_Base {
                 + (getEndExecutionInterval() != null ? getEndExecutionInterval().getQualifiedName() : " - ");
     }
 
-    
     public boolean hasSeniorStatuteForRegistration(final Registration registration) {
         return false;
     }
