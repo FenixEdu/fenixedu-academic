@@ -782,10 +782,12 @@ public class Person extends Person_Base {
     }
 
     public boolean isPhotoAvailableToPerson(final Person requester) {
-        if (isPhotoPubliclyAvailable()) {
-            return true;
-        }
-        return requester != null && RoleType.PERSON.isMember(requester.getUser());
+        //Return always true until review this option  
+        return true;
+//        if (isPhotoPubliclyAvailable()) {
+//            return true;
+//        }
+//        return requester != null && RoleType.PERSON.isMember(requester.getUser());
     }
 
     @Override
