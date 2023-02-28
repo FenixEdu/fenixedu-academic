@@ -19,6 +19,7 @@
 package org.fenixedu.academic.servlet;
 
 import java.util.Properties;
+import java.util.function.Function;
 
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -29,11 +30,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.fenixedu.academic.FenixEduAcademicConfiguration;
 import org.fenixedu.academic.domain.Installation;
+import org.fenixedu.academic.domain.degreeStructure.CourseLoadType;
 import org.fenixedu.academic.domain.organizationalStructure.UnitNamePart;
 import org.fenixedu.academic.service.StudentWarningsDefaultCheckers;
 import org.fenixedu.academic.service.StudentWarningsService;
+import org.fenixedu.academic.util.Bundle;
 import org.fenixedu.bennu.core.api.SystemResource;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.rest.Healthcheck;
+import org.fenixedu.commons.i18n.LocalizedString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,6 +65,45 @@ public class FenixInitializer implements ServletContextListener {
 
         registerHealthchecks();
         registerDefaultStudentWarningCheckers();
+
+        bootstrapCourseLoadTypes();
+    }
+
+    @Atomic
+    private void bootstrapCourseLoadTypes() {
+
+        if (CourseLoadType.findAll().findAny().isEmpty()) {
+
+            logger.info(">>> Bootstrapping CourseLoadTypes...");
+
+            Function<String, LocalizedString> nameProvider = type -> BundleUtil.getLocalizedString(Bundle.ENUMERATION,
+                    CourseLoadType.class.getName() + "." + type + ".name");
+
+            Function<String, LocalizedString> initialsProvider = type -> BundleUtil.getLocalizedString(Bundle.ENUMERATION,
+                    CourseLoadType.class.getName() + "." + type + ".initials");
+
+            CourseLoadType.create(CourseLoadType.THEORETICAL, nameProvider.apply(CourseLoadType.THEORETICAL),
+                    initialsProvider.apply(CourseLoadType.THEORETICAL), true);
+            CourseLoadType.create(CourseLoadType.THEORETICAL_PRACTICAL, nameProvider.apply(CourseLoadType.THEORETICAL_PRACTICAL),
+                    initialsProvider.apply(CourseLoadType.THEORETICAL_PRACTICAL), true);
+            CourseLoadType.create(CourseLoadType.PRACTICAL_LABORATORY, nameProvider.apply(CourseLoadType.PRACTICAL_LABORATORY),
+                    initialsProvider.apply(CourseLoadType.PRACTICAL_LABORATORY), true);
+            CourseLoadType.create(CourseLoadType.FIELD_WORK, nameProvider.apply(CourseLoadType.FIELD_WORK),
+                    initialsProvider.apply(CourseLoadType.FIELD_WORK), true);
+            CourseLoadType.create(CourseLoadType.SEMINAR, nameProvider.apply(CourseLoadType.SEMINAR),
+                    initialsProvider.apply(CourseLoadType.SEMINAR), true);
+            CourseLoadType.create(CourseLoadType.INTERNSHIP, nameProvider.apply(CourseLoadType.INTERNSHIP),
+                    initialsProvider.apply(CourseLoadType.INTERNSHIP), true);
+            CourseLoadType.create(CourseLoadType.TUTORIAL_ORIENTATION, nameProvider.apply(CourseLoadType.TUTORIAL_ORIENTATION),
+                    initialsProvider.apply(CourseLoadType.TUTORIAL_ORIENTATION), true);
+            CourseLoadType.create(CourseLoadType.OTHER, nameProvider.apply(CourseLoadType.OTHER),
+                    initialsProvider.apply(CourseLoadType.OTHER), true);
+
+            CourseLoadType.create(CourseLoadType.AUTONOMOUS_WORK, nameProvider.apply(CourseLoadType.AUTONOMOUS_WORK),
+                    initialsProvider.apply(CourseLoadType.AUTONOMOUS_WORK), true);
+
+            logger.info(">>> Finished!");
+        }
     }
 
     private void registerDefaultStudentWarningCheckers() {

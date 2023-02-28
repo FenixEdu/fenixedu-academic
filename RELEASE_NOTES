@@ -1,3 +1,4 @@
+- Refactor: New entities CourseLoadType and CourseLoadDuration
 - Refactor: Add first/last execution interval finders by calendar
 
 40.6.2 (15-02-2023)

@@ -997,6 +997,38 @@ valueType org.fenixedu.academic.domain.util.i18n.Languages as Languages {
         Double tutorialOrientationHours;
         Double otherHours;
     }
+    
+    class degreeStructure.CourseLoadType {
+        String code (REQUIRED);
+        LocalizedString name (REQUIRED);
+        LocalizedString initials (REQUIRED);
+        int displayOrder (REQUIRED);
+        boolean allowShifts;
+    }   
+		relation CourseLoadTypeRoot {
+		    degreeStructure.CourseLoadType playsRole courseLoadTypes { multiplicity *; }
+		    .org.fenixedu.bennu.core.domain.Bennu playsRole root;
+		}
+		relation CourseLoadTypeShift {
+		    degreeStructure.CourseLoadType playsRole courseLoadType;
+		    Shift playsRole shifts { multiplicity *; }
+		}   		   
+		 
+    class degreeStructure.CourseLoadDuration {
+	    BigDecimal hours (REQUIRED);
+    }       
+		relation CourseLoadDurationRoot {
+		    degreeStructure.CourseLoadDuration playsRole courseLoadDurations { multiplicity *; }
+		    .org.fenixedu.bennu.core.domain.Bennu playsRole root;
+		}
+		relation CourseLoadDurationCourseLoadType {
+		    degreeStructure.CourseLoadDuration playsRole courseLoadDurations { multiplicity *; }
+		    degreeStructure.CourseLoadType playsRole courseLoadType { multiplicity 1..1; }
+		}
+		relation CourseLoadDurationCompetenceCourseInformation {
+		    degreeStructure.CourseLoadDuration playsRole courseLoadDurations { multiplicity *; }
+		    degreeStructure.CompetenceCourseInformation playsRole competenceCourseInformation { multiplicity 1..1; }
+		}
 
     class degreeStructure.Context  {
         Integer childOrder;

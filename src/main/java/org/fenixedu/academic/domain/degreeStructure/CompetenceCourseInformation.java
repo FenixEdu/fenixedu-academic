@@ -25,6 +25,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
@@ -289,6 +290,8 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     }
 
     public void delete() {
+        getCourseLoadDurationsSet().forEach(CourseLoadDuration::delete); // must be the initial instruction, in order to perform validations
+
         setExecutionPeriod(null);
         setCompetenceCourse(null);
         setCompetenceCourseGroupUnit(null);
@@ -443,6 +446,30 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 
     public ExecutionYear getExecutionYear() {
         return getExecutionPeriod().getExecutionYear();
+    }
+
+    public Optional<CourseLoadDuration> findLoadDurationByType(final CourseLoadType courseLoadType) {
+        return getCourseLoadDurationsSet().stream().filter(duration -> duration.getCourseLoadType() == courseLoadType).findAny();
+    }
+
+    List<ExecutionInterval> getExecutionIntervalsRange() {
+
+        final Optional<CompetenceCourseInformation> nextCCI =
+                getCompetenceCourse().getCompetenceCourseInformationsSet().stream().sorted(COMPARATORY_BY_EXECUTION_INTERVAL)
+                        .dropWhile(cci -> cci != this).dropWhile(cci -> cci == this).findFirst();
+
+        final ExecutionInterval endExecutionInterval = nextCCI.map(cci -> cci.getExecutionInterval().getPrevious())
+                .orElseGet(() -> ExecutionInterval.findLastChild(getExecutionInterval().getAcademicCalendar()).orElse(null));
+
+        ExecutionInterval executionInterval = getExecutionInterval();
+
+        final List<ExecutionInterval> result = new ArrayList<>();
+        while (executionInterval != null && executionInterval.isBeforeOrEquals(endExecutionInterval)) {
+            result.add(executionInterval);
+            executionInterval = executionInterval.getNext();
+        }
+
+        return result;
     }
 
 }

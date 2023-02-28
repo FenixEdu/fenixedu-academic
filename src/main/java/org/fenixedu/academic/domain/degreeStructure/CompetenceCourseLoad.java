@@ -18,6 +18,9 @@
  */
 package org.fenixedu.academic.domain.degreeStructure;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+
 import org.fenixedu.academic.domain.time.calendarStructure.AcademicPeriod;
 import org.fenixedu.bennu.core.domain.Bennu;
 
@@ -35,6 +38,16 @@ public class CompetenceCourseLoad extends CompetenceCourseLoad_Base implements C
                 existingLoad.getSeminaryHours(), existingLoad.getFieldWorkHours(), existingLoad.getTrainingPeriodHours(),
                 existingLoad.getTutorialOrientationHours(), existingLoad.getOtherHours(), existingLoad.getAutonomousWorkHours(),
                 existingLoad.getEctsCredits(), existingLoad.getLoadOrder(), existingLoad.getAcademicPeriod());
+    }
+
+    public CompetenceCourseLoad(CompetenceCourseInformation courseInformation, Double theoreticalHours, Double problemsHours,
+            Double laboratorialHours, Double seminaryHours, Double fieldWorkHours, Double trainingPeriodHours,
+            Double tutorialOrientationHours, Double otherHours, Double autonomousWorkHours, Double ectsCredits, Integer order,
+            AcademicPeriod academicPeriod) {
+        this();
+        setCompetenceCourseInformation(courseInformation);
+        setInformation(theoreticalHours, problemsHours, laboratorialHours, seminaryHours, fieldWorkHours, trainingPeriodHours,
+                tutorialOrientationHours, otherHours, autonomousWorkHours, ectsCredits, order, academicPeriod);
     }
 
     public CompetenceCourseLoad(Double theoreticalHours, Double problemsHours, Double laboratorialHours, Double seminaryHours,
@@ -111,4 +124,111 @@ public class CompetenceCourseLoad extends CompetenceCourseLoad_Base implements C
         super.setLoadOrder(order);
     }
 
+    @Override
+    public void setTheoreticalHours(Double theoreticalHours) {
+        super.setTheoreticalHours(theoreticalHours);
+
+        final Double otherLoadIfAnual = getOtherLoadIfAnual().map(CompetenceCourseLoad::getTheoreticalHours).orElse(null);
+        updateCourseLoadDuration(CourseLoadType.THEORETICAL, theoreticalHours, otherLoadIfAnual);
+    }
+
+    @Override
+    public void setProblemsHours(Double problemsHours) {
+        super.setProblemsHours(problemsHours);
+
+        final Double otherLoadIfAnual = getOtherLoadIfAnual().map(CompetenceCourseLoad::getProblemsHours).orElse(null);
+        updateCourseLoadDuration(CourseLoadType.THEORETICAL_PRACTICAL, problemsHours, otherLoadIfAnual);
+    }
+
+    @Override
+    public void setLaboratorialHours(Double laboratorialHours) {
+        super.setLaboratorialHours(laboratorialHours);
+
+        final Double otherLoadIfAnual = getOtherLoadIfAnual().map(CompetenceCourseLoad::getLaboratorialHours).orElse(null);
+        updateCourseLoadDuration(CourseLoadType.PRACTICAL_LABORATORY, laboratorialHours, otherLoadIfAnual);
+    }
+
+    @Override
+    public void setSeminaryHours(Double seminaryHours) {
+        super.setSeminaryHours(seminaryHours);
+
+        final Double otherLoadIfAnual = getOtherLoadIfAnual().map(CompetenceCourseLoad::getSeminaryHours).orElse(null);
+        updateCourseLoadDuration(CourseLoadType.SEMINAR, seminaryHours, otherLoadIfAnual);
+    }
+
+    @Override
+    public void setFieldWorkHours(Double fieldWorkHours) {
+        super.setFieldWorkHours(fieldWorkHours);
+
+        final Double otherLoadIfAnual = getOtherLoadIfAnual().map(CompetenceCourseLoad::getFieldWorkHours).orElse(null);
+        updateCourseLoadDuration(CourseLoadType.FIELD_WORK, fieldWorkHours, otherLoadIfAnual);
+    }
+
+    @Override
+    public void setTrainingPeriodHours(Double trainingPeriodHours) {
+        super.setTrainingPeriodHours(trainingPeriodHours);
+
+        final Double otherLoadIfAnual = getOtherLoadIfAnual().map(CompetenceCourseLoad::getTrainingPeriodHours).orElse(null);
+        updateCourseLoadDuration(CourseLoadType.INTERNSHIP, trainingPeriodHours, otherLoadIfAnual);
+    }
+
+    @Override
+    public void setTutorialOrientationHours(Double tutorialOrientationHours) {
+        super.setTutorialOrientationHours(tutorialOrientationHours);
+
+        final Double otherLoadIfAnual = getOtherLoadIfAnual().map(CompetenceCourseLoad::getTutorialOrientationHours).orElse(null);
+        updateCourseLoadDuration(CourseLoadType.TUTORIAL_ORIENTATION, tutorialOrientationHours, otherLoadIfAnual);
+    }
+
+    @Override
+    public void setOtherHours(Double otherHours) {
+        super.setOtherHours(otherHours);
+
+        final Double otherLoadIfAnual = getOtherLoadIfAnual().map(CompetenceCourseLoad::getOtherHours).orElse(null);
+        updateCourseLoadDuration(CourseLoadType.OTHER, otherHours, otherLoadIfAnual);
+    }
+
+    @Override
+    public void setAutonomousWorkHours(Double autonomousWorkHours) {
+        super.setAutonomousWorkHours(autonomousWorkHours);
+
+        final Double otherLoadIfAnual = getOtherLoadIfAnual().map(CompetenceCourseLoad::getAutonomousWorkHours).orElse(null);
+        updateCourseLoadDuration(CourseLoadType.AUTONOMOUS_WORK, autonomousWorkHours, otherLoadIfAnual);
+    }
+
+    private Optional<CompetenceCourseLoad> getOtherLoadIfAnual() {
+        final CompetenceCourseInformation courseInformation = getCompetenceCourseInformation();
+        return courseInformation != null && courseInformation.isAnual() ? getCompetenceCourseInformation()
+                .getCompetenceCourseLoadsSet().stream().filter(ccl -> ccl != this).findAny() : Optional.empty();
+    }
+
+    private void updateCourseLoadDuration(String loadTypeCode, Double hours, Double otherHoursIfAnual) {
+        final CompetenceCourseInformation courseInformation = getCompetenceCourseInformation();
+        if (courseInformation == null) {
+            return; // being created.. //TODO fix this!
+        }
+
+        CourseLoadType.findByCode(loadTypeCode).ifPresent(loadType -> {
+            final Optional<CourseLoadDuration> duration = courseInformation.findLoadDurationByType(loadType);
+
+            final Double totalHours = sumHours(hours, otherHoursIfAnual);
+
+            if (totalHours != null && totalHours.doubleValue() != 0d) {
+                duration.orElseGet(() -> CourseLoadDuration.create(courseInformation, loadType, null))
+                        .setHours(BigDecimal.valueOf(totalHours));
+            } else {
+                duration.ifPresent(CourseLoadDuration::delete);
+            }
+        });
+    }
+
+    private static Double sumHours(Double hours1, Double hours2) {
+        if (hours1 == null) {
+            return hours2;
+        }
+        if (hours2 == null) {
+            return hours1;
+        }
+        return Double.valueOf(hours1.doubleValue() + hours2.doubleValue());
+    }
 }
