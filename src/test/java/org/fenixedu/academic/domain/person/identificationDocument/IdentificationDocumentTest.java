@@ -13,6 +13,7 @@ import java.util.Optional;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.academic.domain.StudentTest;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.joda.time.YearMonthDay;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -119,5 +120,96 @@ public class IdentificationDocumentTest {
         Optional<IdentificationDocument> identificationDocumentOpt =
                 IdentificationDocument.find("NON_EXISTENT_VALUE", identificationDocumentType);
         assertFalse(identificationDocumentOpt.isPresent());
+    }
+
+    @Test
+    public void testIdentificationDocument_emissionDateSync() {
+        IdentificationDocumentType identificationDocumentType =
+                IdentificationDocumentType.findByCode(ID_DOCUMENT_TYPE).orElse(null);
+        IdentificationDocument identificationDocument =
+                IdentificationDocument.find(ID_DOCUMENT_VALUE, identificationDocumentType).orElse(null);
+        assertNotNull(identificationDocument);
+        assertNotNull(identificationDocument.getPerson());
+
+        YearMonthDay emissionDate = new YearMonthDay(2025, 1, 15);
+        identificationDocument.setEmissionDateOfDocumentIdYearMonthDay(emissionDate);
+
+        assertEquals(emissionDate, identificationDocument.getEmissionDateOfDocumentIdYearMonthDay());
+        assertEquals(emissionDate, person.getEmissionDateOfDocumentIdYearMonthDay());
+    }
+
+    @Test
+    public void testIdentificationDocument_emissionLocationSync() {
+        IdentificationDocumentType identificationDocumentType =
+                IdentificationDocumentType.findByCode(ID_DOCUMENT_TYPE).orElse(null);
+        IdentificationDocument identificationDocument =
+                IdentificationDocument.find(ID_DOCUMENT_VALUE, identificationDocumentType).orElse(null);
+        assertNotNull(identificationDocument);
+        assertNotNull(identificationDocument.getPerson());
+
+        String emissionLocation = "Lisbon";
+        identificationDocument.setEmissionLocationOfDocumentId(emissionLocation);
+
+        assertEquals(emissionLocation, identificationDocument.getEmissionLocationOfDocumentId());
+        assertEquals(emissionLocation, person.getEmissionLocationOfDocumentId());
+    }
+
+    @Test
+    public void testIdentificationDocument_expirationDateSync() {
+        IdentificationDocumentType identificationDocumentType =
+                IdentificationDocumentType.findByCode(ID_DOCUMENT_TYPE).orElse(null);
+        IdentificationDocument identificationDocument =
+                IdentificationDocument.find(ID_DOCUMENT_VALUE, identificationDocumentType).orElse(null);
+        assertNotNull(identificationDocument);
+        assertNotNull(identificationDocument.getPerson());
+
+        YearMonthDay expirationDate = new YearMonthDay(2030, 12, 31);
+        identificationDocument.setExpirationDateOfDocumentIdYearMonthDay(expirationDate);
+
+        assertEquals(expirationDate, identificationDocument.getExpirationDateOfDocumentIdYearMonthDay());
+        assertEquals(expirationDate, person.getExpirationDateOfDocumentIdYearMonthDay());
+    }
+
+    @Test
+    public void testIdentificationDocument_createWithPersonDates() {
+        Person testPerson = StudentTest.createStudent("TestStudent", "teststudent").getPerson();
+
+        YearMonthDay emissionDate = new YearMonthDay(2019, 6, 1);
+        testPerson.setEmissionDateOfDocumentIdYearMonthDay(emissionDate);
+        testPerson.setEmissionLocationOfDocumentId("Porto");
+        YearMonthDay expirationDate = new YearMonthDay(2029, 6, 1);
+        testPerson.setExpirationDateOfDocumentIdYearMonthDay(expirationDate);
+
+        IdentificationDocumentType identificationDocumentType =
+                IdentificationDocumentType.findByCode(ID_DOCUMENT_TYPE).orElse(null);
+        IdentificationDocument identificationDocument =
+                IdentificationDocument.create(testPerson, "NEW_DOC_VALUE", identificationDocumentType);
+
+        assertNotNull(identificationDocument.getPerson());
+        assertEquals(emissionDate, identificationDocument.getEmissionDateOfDocumentIdYearMonthDay());
+        assertEquals("Porto", identificationDocument.getEmissionLocationOfDocumentId());
+        assertEquals(expirationDate, identificationDocument.getExpirationDateOfDocumentIdYearMonthDay());
+    }
+
+    @Test
+    public void testIdentificationDocument_settersWithNullPerson() {
+        IdentificationDocumentType identificationDocumentType =
+                IdentificationDocumentType.findByCode(ID_DOCUMENT_TYPE).orElse(null);
+        IdentificationDocument identificationDocument =
+                IdentificationDocument.create(null, "NO_PERSON_DOC", identificationDocumentType);
+
+        assertNull(identificationDocument.getPerson());
+
+        YearMonthDay emissionDate = new YearMonthDay(2020, 1, 15);
+        identificationDocument.setEmissionDateOfDocumentIdYearMonthDay(emissionDate);
+        assertEquals(emissionDate, identificationDocument.getEmissionDateOfDocumentIdYearMonthDay());
+
+        String emissionLocation = "Lisbon";
+        identificationDocument.setEmissionLocationOfDocumentId(emissionLocation);
+        assertEquals(emissionLocation, identificationDocument.getEmissionLocationOfDocumentId());
+
+        YearMonthDay expirationDate = new YearMonthDay(2030, 12, 31);
+        identificationDocument.setExpirationDateOfDocumentIdYearMonthDay(expirationDate);
+        assertEquals(expirationDate, identificationDocument.getExpirationDateOfDocumentIdYearMonthDay());
     }
 }

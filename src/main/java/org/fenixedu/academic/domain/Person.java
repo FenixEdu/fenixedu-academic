@@ -1030,6 +1030,11 @@ public class Person extends Person_Base {
         logSetterNullString("log.personInformation.edit.generalTemplate.personalId", getEmissionLocationOfDocumentId(), arg,
                 "label.documentIdEmissionLocation");
         super.setEmissionLocationOfDocumentId(arg);
+
+        final IdentificationDocument identificationDocument = getDefaultIdentificationDocument();
+        if (identificationDocument != null) {
+            identificationDocument.syncEmissionLocationOfDocumentIdFromPerson(arg);
+        }
     }
 
     @Override
@@ -1037,12 +1042,34 @@ public class Person extends Person_Base {
         logSetterNullYearMonthDay("log.personInformation.edit.generalTemplate.personalId",
                 getEmissionDateOfDocumentIdYearMonthDay(), arg, "label.documentIdEmissionDate");
         super.setEmissionDateOfDocumentIdYearMonthDay(arg);
+
+        final IdentificationDocument identificationDocument = getDefaultIdentificationDocument();
+        if (identificationDocument != null) {
+            identificationDocument.syncEmissionDateOfDocumentIdYearMonthDayFromPerson(arg);
+        }
     }
 
     @Override
     public void setExpirationDateOfDocumentIdYearMonthDay(final YearMonthDay arg) {
         logSetterNullYearMonthDay("log.personInformation.edit.generalTemplate.personalId",
                 getExpirationDateOfDocumentIdYearMonthDay(), arg, "label.documentIdExpirationDate");
+        super.setExpirationDateOfDocumentIdYearMonthDay(arg);
+
+        final IdentificationDocument identificationDocument = getDefaultIdentificationDocument();
+        if (identificationDocument != null) {
+            identificationDocument.syncExpirationDateOfDocumentIdYearMonthDayFromPerson(arg);
+        }
+    }
+
+    public void syncEmissionLocationOfDocumentIdFromIdentificationDocument(final String arg) {
+        super.setEmissionLocationOfDocumentId(arg);
+    }
+
+    public void syncEmissionDateOfDocumentIdYearMonthDayFromIdentificationDocument(final YearMonthDay arg) {
+        super.setEmissionDateOfDocumentIdYearMonthDay(arg);
+    }
+
+    public void syncExpirationDateOfDocumentIdYearMonthDayFromIdentificationDocument(final YearMonthDay arg) {
         super.setExpirationDateOfDocumentIdYearMonthDay(arg);
     }
 

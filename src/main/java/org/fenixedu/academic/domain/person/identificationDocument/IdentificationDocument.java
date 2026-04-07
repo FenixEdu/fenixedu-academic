@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
 import org.fenixedu.academic.domain.Person;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.joda.time.YearMonthDay;
 
 public class IdentificationDocument extends IdentificationDocument_Base {
 
@@ -20,6 +21,13 @@ public class IdentificationDocument extends IdentificationDocument_Base {
         identificationDocument.setPerson(person);
         identificationDocument.setValue(value);
         identificationDocument.setIdentificationDocumentType(identificationDocumentType);
+
+        if (person != null) {
+            identificationDocument.setEmissionDateOfDocumentIdYearMonthDay(person.getEmissionDateOfDocumentIdYearMonthDay());
+            identificationDocument.setEmissionLocationOfDocumentId(person.getEmissionLocationOfDocumentId());
+            identificationDocument.setExpirationDateOfDocumentIdYearMonthDay(person.getExpirationDateOfDocumentIdYearMonthDay());
+        }
+
         return identificationDocument;
     }
 
@@ -29,6 +37,48 @@ public class IdentificationDocument extends IdentificationDocument_Base {
 
         setRootDomainObject(null);
         this.deleteDomainObject();
+    }
+
+    @Override
+    public void setEmissionLocationOfDocumentId(final String value) {
+        super.setEmissionLocationOfDocumentId(value);
+
+        final Person person = getPerson();
+        if (person != null) {
+            person.syncEmissionLocationOfDocumentIdFromIdentificationDocument(value);
+        }
+    }
+
+    @Override
+    public void setEmissionDateOfDocumentIdYearMonthDay(final YearMonthDay value) {
+        super.setEmissionDateOfDocumentIdYearMonthDay(value);
+
+        final Person person = getPerson();
+        if (person != null) {
+            person.syncEmissionDateOfDocumentIdYearMonthDayFromIdentificationDocument(value);
+        }
+    }
+
+    @Override
+    public void setExpirationDateOfDocumentIdYearMonthDay(final YearMonthDay value) {
+        super.setExpirationDateOfDocumentIdYearMonthDay(value);
+
+        final Person person = getPerson();
+        if (person != null) {
+            person.syncExpirationDateOfDocumentIdYearMonthDayFromIdentificationDocument(value);
+        }
+    }
+
+    public void syncEmissionLocationOfDocumentIdFromPerson(final String value) {
+        super.setEmissionLocationOfDocumentId(value);
+    }
+
+    public void syncEmissionDateOfDocumentIdYearMonthDayFromPerson(final YearMonthDay value) {
+        super.setEmissionDateOfDocumentIdYearMonthDay(value);
+    }
+
+    public void syncExpirationDateOfDocumentIdYearMonthDayFromPerson(final YearMonthDay value) {
+        super.setExpirationDateOfDocumentIdYearMonthDay(value);
     }
 
     public static Optional<IdentificationDocument> find(final String idDocumentValue,
