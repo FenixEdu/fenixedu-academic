@@ -1,3 +1,5 @@
+- Refactor: Add document emission date and location, and expiration date to IdentificationDocument [#qubIT-Fenix-6491]
+
 54.8.0 (02-04-2026)
 - Refactor: Remove deprecated constructors of PersonBean and replace old id document references [#qubIT-Fenix-6491]
 - Refactor: Remove deprecated builder methods of StudentGroup [#qubIT-Fenix-7429]
